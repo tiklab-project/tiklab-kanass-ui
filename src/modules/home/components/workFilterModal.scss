@@ -1,0 +1,44 @@
+.drop-box {
+    border-radius: 3px;
+    box-shadow: var(--ds-overlay,0 4px 8px -2px rgba(9,30,66,0.25),0 0 1px rgba(9,30,66,0.31));
+    position: absolute;
+    top: 36px;
+    left: 0;
+    width: 300px;
+    z-index: 100;
+    background: #fff;
+    .worktype-checkbox {
+        display: flex;
+        flex-direction: column;
+        .worktype-button {
+            padding: 0 20px;
+            text-align: right;
+        }
+    }
+    .worktype-title {
+        padding-left: 20px;
+        margin-bottom: 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .ant-checkbox-wrapper {
+        margin: 8px 0 8px 20px;
+    }
+    .ant-divider-horizontal {
+        margin: 10px 0;
+    }
+    .process-work {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 20px;
+    }
+    .process-work:hover {
+        background-color: #EBECF0;
+    }
+}
+.show-workfilterbox {
+    display: block;
+}
+.hidden-workfilterbox {
+    display: none;
+}

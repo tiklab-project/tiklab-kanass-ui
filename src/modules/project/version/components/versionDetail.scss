@@ -1,0 +1,40 @@
+.plan-detail {
+    height: calc(100vh - 50px);
+    background-color: #fff;
+    padding: 10px 10px;
+    .plan-detail-top {
+        .plan-name {
+            color: #5d70ea;
+            font-size: 18px;
+            font-weight: 600;
+            height: 50px;
+            line-height: 50px;
+        }
+        
+        .plan-info {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 40px;
+            line-height: 40px;
+            margin-bottom: 20px;
+            // .plan-info :nth-child(1) {
+            //     margin-right: 20px;
+            // }
+            .plan-date {
+                display: flex;
+                margin-right: 20px;
+                background: #e5e8ff;
+                padding: 0 10px;
+                border-radius: 5px;
+                .plan-lable {
+                    font-weight: 600;
+                }
+            }
+        }
+
+    }
+    .ant-table {
+        margin-top: 20px;
+    }
+}

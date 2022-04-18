@@ -1,0 +1,84 @@
+.project {
+    .project-content {
+        height: 100%;
+        .ant-layout-sider {
+            background-color: #fff;
+            height: 100%;
+            border-right: 2px solid #E5E8FF;
+            // 项目的导航样式
+            .project-aside {
+                height: 100%;
+                background:$side-color;
+                .project-title {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 20px;
+                    font-weight: 600;
+                    color: #000;
+                    border-bottom: 1px solid #e5e8ff;
+                }
+                .project-menu {
+                    list-style-type:none;
+                    padding: 0px;
+                    .icon {
+                        margin-right: 10px;
+                    }
+                    li:hover {
+                        background-color: $side-hover;
+                    }
+                    .project-menu-submenu {
+                        height: 40px;
+                        display: flex;
+                        line-height: 40px;
+                        padding-left: 40px;
+                        width: 100%;
+                        cursor: pointer;
+                        align-items: center;
+                    }
+                    .project-menu-select {
+                        background-color: $side-select;
+                        border-left: 3px solid #0053ca;
+                    }
+                }
+                .hidden-menu {
+                    display: none;
+                }
+            }
+        }
+        .project-table {
+            background: #fff;
+            padding: 10px 20px;
+            .ant-row {
+                height: 100%;
+                .ant-col {
+                    height: 100%;
+                    background-color: #fff;
+                    padding: 20px 20px;
+                }
+            }
+        }
+    }
+    .Project-gide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        img{
+            width: 200px;
+            height: 200px;
+        }
+        .gide-right {
+            div {
+                margin-bottom: 20px;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            padding: 20px;
+        }
+    }
+    
+}

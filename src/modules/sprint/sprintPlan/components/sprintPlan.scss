@@ -1,0 +1,44 @@
+.sprint-plan {
+    .sprint-plan-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-direction: row;
+        .sprint-plan-box {
+            flex: 1;
+            min-height: 500px;
+            border: 1px solid #d5d5d5;
+            margin-right: 20px;
+            border-radius: 10px;
+            .sprint-plan-box-top {
+                height: 25px;
+                width: 100%;
+                background-color: #d5d5d5;
+                text-align: center;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+            .sprint-plan-item-box {
+                margin: 10px;
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                flex-direction: row;
+                border: 1px solid #d5d5d5;
+                padding: 10px;
+                border-radius: 10px;
+                align-items: center;
+            }
+            .box::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+                width: 0 !important;
+                height: 0 !important; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+            }
+            .box {
+                -ms-overflow-style: none;  //IE 10+
+                overflow: -moz-scrollbars-none;  //Firefox
+            }
+        }
+    }
+    
+
+}

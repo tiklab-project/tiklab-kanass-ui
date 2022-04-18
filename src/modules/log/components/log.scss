@@ -1,0 +1,72 @@
+.log {
+    height: 100%;
+}
+
+// .log-table {
+//     margin-left: 10px;
+//     height: 100%;
+// }
+// .log-content {
+//     height: 100%;
+// }
+
+.log-content {
+    height: 100%;
+    .log-table {
+        height: 100%;
+        padding: 20px;
+        background-color: #fff;
+        margin-left: 10px;
+        .top-botton {
+            display: flex;
+            justify-content: space-between;
+        }
+        .log-from {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+    }
+}
+.log-aside {
+    height: 100%;
+    background:$side-color;
+    .log-title {
+        height: 40px;
+        display: flex;
+        line-height: 40px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font-weight: 600;
+        color: #000;
+        border-bottom: 1px solid #f0f2f5;
+    }
+    .log-menu {
+        list-style-type:none;
+        padding: 0px;
+        .icon {
+            margin-right: 10px;
+        }
+        li:hover {
+            background-color: $side-hover;
+        }
+        .log-menu-submenu {
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            padding-left: 40px;
+            width: 100%;
+            cursor: pointer;
+            align-items: center;
+        }
+        .log-menu-select {
+            background-color: $side-select;
+            border-left: 3px solid #0053ca;
+        }
+    }
+    .hidden-menu {
+        display: none;
+    }
+}

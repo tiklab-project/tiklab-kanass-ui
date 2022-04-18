@@ -1,0 +1,160 @@
+
+.home {
+    .ant-row {
+        height: 100%;
+    }
+    background: #f0f2f5;
+    height: 100%;
+    .ant-col {
+        background-color: #fff;
+    }
+    .title {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 20px;
+        background: #f4f5f7;
+        border-radius: 5px;
+        display: inline-flex;
+        justify-content: space-between;
+        .name {
+            font-weight: 600;
+        }
+        .more {
+            color: #0053ca;
+        }
+    }
+    .upper-box {
+        margin: 20px auto;
+        height: 23vh;
+        width: 90%;
+        border: solid 1px #D7D7D7;
+        border-radius: 5px;
+        overflow: hidden;
+        .project {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            overflow: auto;
+            .project-item {
+                width: 240px;
+                height: 130px;
+                margin: 0 20px;
+                border: 1px #D7D7D7 solid;
+                box-sizing: content-box;
+                flex-shrink: 0;
+                border-radius: 5px;
+                box-shadow: rgba(9,30,66,0.25) 0px 1px 1px, rgba(9,30,66,0.31) 0px 0px 1px;
+                .item-top {
+                    background-color: #B3D4FF;
+                    box-sizing: content-box;
+                    height: 25px;
+                    width: 100%;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+                .item-title {
+                    padding: 0 10px;
+                    margin-top: -10px;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    .project-icon {
+                        width: 24px;
+                        height: 24px;
+                        margin-right: 10px;
+                    }
+                }
+                .process-work, .end-work{
+                    font-size: 12px;
+                    display: inline-flex;
+                    padding: 0 20px;
+                    width: 100%;
+                    justify-content: space-between;
+                    height: 30px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+    .lower-box {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 90%;
+        height: 60vh;
+        .work-box {
+            border: 1px #D7D7D7 solid;
+            flex: 1;
+            margin-right: 20px;
+            border-radius: 5px;
+            .home-work {
+                display: flex;
+                margin: 50px;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                .work-item {
+                    box-shadow: rgba(9,30,66,0.25) 0px 1px 1px, rgba(9,30,66,0.31) 0px 0px 1px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 130px;
+                    width: 47%;
+                    margin-bottom: 50px;
+                    .work-icon {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 40px;
+                    }
+                    .work-count {
+                        .work-num, .work-text {
+                            // width: 30px;
+                            text-align: center;
+                            width: 100px;
+                            height: 30px;
+                            line-height: 30px;
+                            font-weight: 600;
+                        }
+                        .work-text {
+                            color: #999;
+                            
+                        }
+                    }
+                }
+            }
+        }
+        .sprint-box {
+            border: 1px #D7D7D7 solid;
+            flex: 1;
+            border-radius: 5px;
+            .sprint {
+                margin-top: 10px;
+            }
+            .sprint-item {
+                &-left {
+                    display: flex;
+                    align-items: center;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .sprint-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 30px;
+                    margin-right: 10px;
+                }
+                .name {
+                    color: #0053ca
+                }
+                .sprint-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,225 @@
+.project-linemap{
+    padding: 20px;
+    background-color: #fff;
+}
+.linemap-time {
+    margin-top: 20px;
+    ul{
+        margin: 0;
+        padding: 0;
+    }
+    position: relative;
+    // overflow: auto;
+    height: 76vh;
+    .linemap-time::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+        width: 0 !important;
+        height: 0 !important; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+    }
+    .linemap-time {
+        -ms-overflow-style: none;  //IE 10+
+        overflow: -moz-scrollbars-none;  //Firefox
+    }
+    .time-table {
+        border-bottom: 1px solid  $table-head;
+        text-align: center;
+        max-height: 80vh;
+        overflow: hidden;
+        position: relative;
+        flex: 1;
+        .table-border {
+            border-bottom: 1px solid $table-head;
+            height: 50px;
+            line-height: 50px;
+        }
+        .table-hearder {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            background-color: $table-head;
+            overflow: hidden;
+        　　text-overflow: ellipsis;
+        　　white-space: nowrap;
+            font-weight: 600;
+            position: relative;
+            top: 0;
+            .table-hearder-gatter  {
+                width: 1000px;
+                height: 50px;
+                border-left: 1px solid  $side-color;
+                font-weight: 600;
+                overflow: auto;
+            }
+            .table-hearder-gatter::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+                width: 0 !important;
+                height: 0 !important; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+            }
+            .table-hearder-gatter {
+                -ms-overflow-style: none;  //IE 10+
+                overflow: -moz-scrollbars-none;  //Firefox
+            }
+            .table-hearder-text {
+                height: 50px;
+                flex: 1;
+            }
+            .table-timer {
+                .table-month {
+                    height: 25px;
+                    line-height: 25px;
+                    background-color:  $table-head;
+                    display: inline-flex;
+                    .table-month-td {
+                        border-right: solid #fff 1px;
+                        font-size: 12px;
+                        overflow: auto;
+                    }
+                    // width: 7200px;
+                }
+            }
+            .table-date {
+                height: 25px;
+                display: inline-flex;
+                text-align: center;
+                border-bottom: 1px solid  $side-color;
+                line-height: 25px;
+            }
+            .table-day {
+                border-right: $table-head solid 1px;
+                font-size: 12px;
+            }
+        }
+        .table-hidden {
+            display: none;
+        }
+        .table-tr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            .table-td {
+                height: 50px;
+                flex: 1;
+                position: relative;
+                overflow: hidden;
+            　　text-overflow: ellipsis;
+            　　white-space: nowrap;
+                .table-icon {
+                    display: inline-block;
+                    position: absolute;
+                    left: 10px;
+                    top: 18px;
+                }
+            }
+            .table-gatter {
+                width: 1000px;
+            }
+        }
+        
+
+    }
+    .table-body  {
+        max-height: calc(100% - 50px);
+        overflow-y: hidden;
+        ul:nth-child(2n+0)
+        {
+            background:#f7f7f7;
+        }
+    }
+    .table-pic::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+        width: 0 !important;
+        height: 0 !important; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+    }
+    .table-pic {
+        -ms-overflow-style: none;  //IE 10+
+        overflow: -moz-scrollbars-none;  //Firefox
+    }
+    .table-pic {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 1000px;
+        // overflow: auto;
+        max-height: calc(100% - 50px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        .table-overflow {
+            overflow: auto;
+        }
+        .table-overflow {
+            height: 100%;
+            .gantt-box {
+                max-height: calc(100% - 50px) !important;
+            }
+        }
+        // .table-overflow::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+        //     width : 1000px;  /*高宽分别对应横竖滚动条的尺寸*/
+        //     height: 8px; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+        // }
+        // .table-overflow::-webkit-scrollbar-thumb {
+        //     /*滚动条里面小方块*/
+        //     border-radius   : 10px;
+        //     background-color: #E1E8F4;
+        // }
+        // .table-overflow::-webkit-scrollbar-track {
+        //     box-shadow   : inset 0 0 5px ;
+        //     background   : $table-head;
+        //     border-radius: 10px;
+        // }
+    }
+}
+.top-botton {
+    text-align: right;
+    .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+        z-index: 1;
+        color: #ffff;
+        background: $table-head;
+        border-color: $table-head;
+    }
+    .ant-radio-button-wrapper-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
+        border-right-color: $table-head;
+    }
+}
+.scroll-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    .scroll-box {
+        width: 1000px;
+        height: 10px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        position: relative;
+        .scroll-slider {
+            width: 100px;
+            height: 10px;
+            background-color: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
+.scroll-col {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 50;
+    right: 0;
+    .scroll-box {
+        width: 10px;
+        height: calc(80vh - 50px);
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        position: relative;
+        .scroll-slider {
+            width: 10px;
+            height: 100px;
+            background-color: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}

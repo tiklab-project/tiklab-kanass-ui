@@ -1,0 +1,41 @@
+.sprint-statistics {
+    background-color: #fff;
+    height: calc(100vh - 180px);
+    overflow: hidden;
+    .statistics-Aside{
+        .statistics-aside {
+            background: $side-color;
+            width: 180px;
+            height: 100%;
+            ul, li {
+                padding: 0;
+            }
+            .statistics-menu {
+                list-style-type:none;
+                
+                // height: 82vh;
+                .statistics-menu-submenu {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    align-items: center;
+                    padding-left: 20px;
+                    cursor: pointer;
+                    i{
+                        margin-right: 10px;
+                    }
+                }
+                .statistics-menu-select {
+                    background-color: $side-select;
+                }
+            }
+        }
+    }
+    .bar-pie{
+        overflow: visible;
+    }
+    .statistics-content {
+        overflow: auto;
+    }
+}

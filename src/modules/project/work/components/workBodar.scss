@@ -1,0 +1,52 @@
+.work-bodar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .work-bodar-box {
+        width: 20vw;
+        // height: calc(100vh - 200px);
+        min-height: 100px;
+        border: 1px solid #d0e5f2;
+        border-radius: 10px;
+        padding: 10px;
+        overflow: auto;
+        flex-shrink: 0;
+        margin-left: 20px;
+        .work-bodar-title {
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+        .work-bodar-item{
+            // height: 100px;
+            margin: 0 auto;
+            border: 1px solid #d0e5f2;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            .work-bodar-id {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor:pointer;
+                color: $blue-main;
+            }
+        }
+    }
+    .work-bodar-box::-webkit-scrollbar {  //chrome 和Safari，电脑端微信浏览器
+        width: 0 !important;
+        height: 0 !important; //这样在电脑端微信浏览器横向滚动会无效。不加!important则可
+    }
+    
+    .work-bodar-box {
+        -ms-overflow-style: none;  //IE 10+
+        overflow: -moz-scrollbars-none;  //Firefox
+    }
+}
+.work-bodar-name {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px;
+}
