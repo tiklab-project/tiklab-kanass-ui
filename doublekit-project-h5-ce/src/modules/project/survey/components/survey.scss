@@ -1,0 +1,10 @@
+.project-info-item {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    line-height: 80px;
+    :nth-child(1){
+        font-weight: 600;
+        width: 200px;
+    }
+}
