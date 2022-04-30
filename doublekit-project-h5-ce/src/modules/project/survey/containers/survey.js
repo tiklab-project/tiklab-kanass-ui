@@ -156,7 +156,7 @@ const Survey = (props) => {
         burnDown.setOption(option)
     }
     return (
-        <div style={{ backgroundColor: "#F4F5F7" }}>
+        <div style={{ backgroundColor: "#F4F5F7" }} className="project-survey">
             <Card
                 headerStyle={{
                     color: '#1677ff',

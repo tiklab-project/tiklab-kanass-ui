@@ -22,7 +22,7 @@ import {
     UserOutline,
 } from 'antd-mobile-icons';
 import "../components/projectTabBar.scss"
-import { verifyUserSaasHOC } from "doublekit-portal-h5";
+import { verifyUserHOC } from "doublekit-portal-h5";
 const ProjectTabBar = (props) => {
     const route = props.route;
     // const history = useHistory()
@@ -65,5 +65,5 @@ const ProjectTabBar = (props) => {
     )
 }
 
-const IndexSaasHoc = verifyUserSaasHOC(ProjectTabBar, "project")
+const IndexSaasHoc = verifyUserHOC(ProjectTabBar, "project")
 export default inject("portalLoginStore")(observer(IndexSaasHoc));

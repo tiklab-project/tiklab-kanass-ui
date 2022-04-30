@@ -1,6 +1,6 @@
 {
     "name": "doublekit-project-h5-ce",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "description": "doublekit project",
     "main": "es/dist.js",
     "files": [
@@ -16,7 +16,7 @@
     "author": "",
     "license": "ISC",
     "publishConfig": {
-        "registry": "http://192.168.2.102:8081/repository/npm-hosted/"
+        "registry": "http://172.12.1.11:8081/repository/npm-hosted/"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -83,9 +83,10 @@
         "axios": "^0.21.0",
         "babel-plugin-import": "^1.13.3",
         "core-js": "^3.21.1",
+        "doublekit-core-h5": "0.0.0",
         "doublekit-core-ui": "^1.0.0",
         "doublekit-portal-h5": "^1.0.0",
-        "doublekit-portal-ui": "^1.0.0",
+        "doublekit-privilege-ui": "^1.0.0",
         "echarts": "^5.3.1",
         "i18next": "^19.8.4",
         "i18next-browser-languagedetector": "^6.0.1",

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-26 15:30:39
+ * @LastEditTime: 2022-04-22 10:47:30
  */
 import React, { useEffect, useState } from 'react';
 import { NavBar, Avatar, SearchBar, Button, Modal } from 'antd-mobile';
@@ -67,41 +67,42 @@ const Project = (props) => {
                     </Button>
                     <Modal
                         visible={visible}
-                        content={<ProjectAddEidtModal {...props} visible = {visible} setVisible = {setVisible} setProjectList = {setProjectList}/>}
+                        content={<ProjectAddEidtModal {...props} visible={visible} setVisible={setVisible} setProjectList={setProjectList} />}
                         closeOnAction
-                        showCloseButton ={true}
+                        showCloseButton={true}
                         onClose={() => {
                             setVisible(false)
                         }}
                     />
-
                 </div>
-                {
-                    projectList && projectList.length > 0 && projectList.map(item => {
-                        return <div className="project-list" key={item.id}>
-                            <div className='project-left'>
-                                <div className='project-icon'>
-                                    <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
-                                </div>
-                                <div>
-                                    <div className='project-title'>{item.projectName}</div>
-                                    <div onClick={() => goProdetail(item.id, item.projectType.id)}>
-                                        {item.master.name}
+                <div className="project-box">
+                    {
+                        projectList && projectList.length > 0 && projectList.map(item => {
+                            return <div className="project-list" key={item.id}>
+                                <div className='project-left'>
+                                    <div className='project-icon'>
+                                        <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
+                                    </div>
+                                    <div>
+                                        <div className='project-title'>{item.projectName}</div>
+                                        <div onClick={() => goProdetail(item.id, item.projectType.id)}>
+                                            {item.master.name}
+                                        </div>
                                     </div>
                                 </div>
+                                <div className='project-type'>
+                                    {item.projectType.name}
+                                </div>
+                                <div>
+                                    未开始333
+                                </div>
+                                <div>
+                                    <EyeOutline />
+                                </div>
                             </div>
-                            <div className='project-type'>
-                                {item.projectType.name}
-                            </div>
-                            <div>
-                                未开始
-                            </div>
-                            <div>
-                                <EyeOutline />
-                            </div>
-                        </div>
-                    })
-                }
+                        })
+                    }
+                </div>
             </div>
         </div>
     )

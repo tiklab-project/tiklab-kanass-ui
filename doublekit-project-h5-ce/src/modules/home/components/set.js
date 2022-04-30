@@ -8,7 +8,6 @@
  */
 import React, { useEffect, useState } from 'react';
 import { NavBar, List } from 'antd-mobile';
-import { loginOutAcc} from "doublekit-portal-h5";
 import { getUser } from "doublekit-core-ui"
 const Set = (props) => {
     const copId = getUser() ? getUser().corpid : null;

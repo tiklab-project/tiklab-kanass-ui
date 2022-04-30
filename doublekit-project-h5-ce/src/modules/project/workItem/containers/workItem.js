@@ -4,13 +4,14 @@
  * @Author: 袁婕轩
  * @Date: 2022-03-19 17:06:05
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-19 19:07:05
+ * @LastEditTime: 2022-04-22 11:32:13
  */
 import React, { useEffect, useState } from 'react';
-import { NavBar, Avatar, SearchBar, Button, Modal } from 'antd-mobile';
+import { NavBar, Avatar, SearchBar,Button } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "../components/workItem.scss";
+import { withRouter } from 'react-router';
 // import ProjectAddEidtModal from "./components/projectAddEditModal";
 const WorkItem = (props) => {
     const { workItemStore } = props;
@@ -24,10 +25,39 @@ const WorkItem = (props) => {
             }
         })
     }, [])
-    
+
 
     return (
         <div className="home">
+            <div className='workItem-search'>
+                <SearchBar
+                    placeholder='请输入内容'
+                    style={{
+                        '--border-radius': '100px',
+                    }}
+                />
+                {/* <Button size='mini' color='primary'>
+                        添加项目
+                    </Button> */}
+                <Button
+                    size='mini'
+                    color='primary'
+                    onClick={() => {
+                        props.history.push("/workItemAdd")
+                    }}
+                >
+                    添加事项
+                </Button>
+                {/* <Modal
+                    visible={visible}
+                    content={<ProjectAddEidtModal {...props} visible={visible} setVisible={setVisible} setProjectList={setProjectList} />}
+                    closeOnAction
+                    showCloseButton={true}
+                    onClose={() => {
+                        setVisible(false)
+                    }}
+                /> */}
+            </div>
             <div className='workItem'>
                 {
                     workItemList && workItemList.length > 0 && workItemList.map(item => {
@@ -38,7 +68,7 @@ const WorkItem = (props) => {
                                 </div>
                                 <div>
                                     <div className='workItem-title'>{item.title}</div>
-                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail"})}>
+                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
                                         {item.builder.name}
                                     </div>
                                 </div>
@@ -59,4 +89,4 @@ const WorkItem = (props) => {
         </div>
     )
 }
-export default inject("workItemStore")(observer(WorkItem));
+export default withRouter(inject("workItemStore")(observer(WorkItem)));

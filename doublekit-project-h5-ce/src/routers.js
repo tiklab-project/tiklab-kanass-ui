@@ -11,14 +11,18 @@ import AsyncComponent from './common/lazy/SyncComponent'
 import { Redirect } from "react-router-dom";
 
 const ProjectTabBar = AsyncComponent(() => import('./modules/home/containers/projectTabBar'))
-const SaasTabBar = AsyncComponent(() => import('./modules/home/containers/SaasTabBar'))
 const Project = AsyncComponent(() => import('./modules/project/project/containers/project'))
 const ProjectDetailTab = AsyncComponent(() => import('./modules/project/common/projectDetailTab'))
-const QywxEnter = AsyncComponent(() => import('./modules/qiyeWeixin/components/qywxEnter.js'))
 
 const Set = AsyncComponent(() => import('./modules/home/components/set'))
+const Wechat = AsyncComponent(() => import("./modules/home/containers/wechat"))
 const routes = [
-    
+    {
+        path: "/project",
+        exact: true,
+        component: Wechat,
+        
+    },
     {
         path: "/index",
         component: ProjectTabBar,

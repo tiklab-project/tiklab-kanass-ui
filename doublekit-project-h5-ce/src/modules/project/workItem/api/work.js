@@ -16,3 +16,78 @@ export function FindWorkItemList(data){
         data 
     })
 }
+
+//获取优先级类型
+export function FindAllWorkPriority(data){
+    return service.request({
+        url: "/workPriority/findAllWorkPriority ",
+        method: "post",
+        data 
+    })
+}
+//获取事项类型
+export function FindAllWorkType(data){
+    return service.request({
+        url: "/workType/findAllWorkType",
+        method: "post",
+        data 
+    })
+}
+//获取事项状态
+export function FindAllStateNode(data){
+    return service.request({
+        url: "/stateNode/findAllStateNode",
+        method: "post",
+        data 
+    })
+}
+
+// 获取用户列表
+export function FindDmUserPage(data){
+    return service.request({
+        url: "/dmUser/findDmUserPage",
+        method: "post",
+        data 
+    })
+}
+
+//根据对象查询迭代列表
+export function FindSprintList(data){
+    return service.request({
+        url: "/sprint/findSprintList",
+        method: "post",
+        data 
+    })
+}
+
+export function FindModuleList(data){
+    return service.request({
+        url: "/module/findModuleList",
+        method: "post",
+        data 
+    })
+}
+
+export function Upload(data){
+    return service.request({
+        url: "/dfs/upload",
+        method: "post",
+        data 
+    })
+}
+
+export function FindWorkAttachList(data){
+    return service.request({
+        url: "/workAttach/findWorkAttachList",
+        method: "post",
+        data 
+    })
+}
+
+export function CreateWorkAttach(data){
+    return service.request({
+        url: "/workAttach/createWorkAttach",
+        method: "post",
+        data 
+    })
+}

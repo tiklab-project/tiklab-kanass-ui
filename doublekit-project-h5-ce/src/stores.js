@@ -8,11 +8,11 @@
  */
 import { createContext } from 'react';
 
-import { PROJECT_STORE, ProjectStore } from "../src/modules/project/project/store/project";
-import { PROJECTSURVEY_STORE, ProjectSurveyStore } from "../src/modules/project/survey/store/surveyStore";
-import { WORKITEM_STORE, WorkItemStore } from "../src/modules/project/workItem/store/workItemStore";
-import { SPRINT_STORE, SprintStore } from "../src/modules/project/sprint/store/sprintStore";
-import { QYWX_STORE, QywxStore } from "../src/modules/qiyeWeixin/store/qywxStore";
+import { PROJECT_STORE, ProjectStore } from "./modules/project/project/store/project";
+import { PROJECTSURVEY_STORE, ProjectSurveyStore } from "./modules/project/survey/store/surveyStore";
+import { WORKITEM_STORE, WorkItemStore } from "./modules/project/workItem/store/workItemStore";
+import { SPRINT_STORE, SprintStore } from "./modules/project/sprint/store/sprintStore";
+import { QYWX_STORE, QywxStore } from "./modules/qiyeWeixin/store/qywxStore";
 import {LOGIN_STATUS,LoginStore} from "doublekit-portal-h5"
 function createStores() {
     return {

@@ -6,17 +6,17 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-03-25 11:41:43
  */
-const api =  'http://192.168.10.9:8081/';
+const api =  'http://192.168.10.9:8080/';
 const base_url = JSON.stringify(api);
 
 
-const url = "http://192.168.10.9:8081/";
+const url = "http://192.168.10.9:8080/";
 const plugin_base_url = JSON.stringify(url);
 
 let pluginAddressUrl = `${url}/config.json`;
 pluginAddressUrl = JSON.stringify(pluginAddressUrl);
 
-const img_url = JSON.stringify('http://192.168.10.9:8081')
+const img_url = JSON.stringify('http://192.168.10.9:8080')
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
@@ -30,7 +30,7 @@ const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
 const tenant_type= JSON.stringify('mult')
-const acc_url = JSON.stringify("http://www.portal.local.doublekit.net/")
+const acc_url = JSON.stringify("http://portal.local.doublekit.net/")
 
 module.exports = {
     base_url,

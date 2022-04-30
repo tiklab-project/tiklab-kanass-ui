@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2022-03-19 15:40:56
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-21 09:44:18
+ * @LastEditTime: 2022-04-22 11:05:30
  */
 import React from "react";
 import { NavBar, Tabs, SearchBar, Button, Modal } from 'antd-mobile';
@@ -30,7 +30,7 @@ const ProjectDetailTab = (props) => {
                     项目详情
                 </div>
             </NavBar>
-            <Tabs>
+            <Tabs style={{"--content-padding": 0}}>
                 <Tabs.Tab title='概况' key='survey'>
                     <Survey />
                 </Tabs.Tab>
