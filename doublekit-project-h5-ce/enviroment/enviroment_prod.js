@@ -31,6 +31,7 @@ const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
 const cookieDomain=  JSON.stringify('doublekit.cn');
+const acc_url = JSON.stringify("/")
 module.exports = {
     base_url,
     userProduction,
@@ -44,5 +45,6 @@ module.exports = {
     client,
     img_url,
     isSaas,
-    cookieDomain
+    cookieDomain,
+    acc_url
 }

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { NavBar, List } from 'antd-mobile';
 import { getUser } from "doublekit-core-ui"
 const Set = (props) => {
-    const copId = getUser() ? getUser().corpid : null;
+    // const copId = getUser() ? getUser().corpid : null;
     return (
         <div className="home">
             <NavBar

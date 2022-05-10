@@ -33,7 +33,7 @@ const ProjectTabBar = (props) => {
     }
     const tabs = [
         {
-            key: '/index/project',
+            key: '/index/home',
             title: '首页',
             icon: <AppOutline />,
             badge: Badge.dot,

@@ -18,8 +18,8 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 module.exports = {
     output: {
-        filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[hash:8].js',
+        filename: 'mobilejs/[name].[hash:8].js',
+        chunkFilename: 'mobilejs/[name].[hash:8].js',
         path: DIST_PATH,
         publicPath: '/',
     },
@@ -88,12 +88,6 @@ module.exports = {
                         options: {
                             resources: './src/index.scss'
                         }
-                    },
-                    {
-                        loader: 'sass-resources-loader',
-                        options: {
-                            resources: './src/index.scss'
-                        }
                     }
                 ],
             },
@@ -130,7 +124,7 @@ module.exports = {
             title: '项目管理',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
-            filename: 'index.html',
+            filename: 'mobile.html',
             inject: 'body',
             minify: {
                 collapseWhitespace: true,
@@ -141,8 +135,8 @@ module.exports = {
         // new webpack.DefinePlugin(devMode ? envData_dev : envData_prod),
         new webpack.DefinePlugin(envData_dev),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css',
-            chunkFilename: 'css/[id].css',
+            filename: 'mobilecss/[name].css',
+            chunkFilename: 'mobilecss/[id].css',
             ignoreOrder: true
         }),
         new CssMinimizerPlugin(),
