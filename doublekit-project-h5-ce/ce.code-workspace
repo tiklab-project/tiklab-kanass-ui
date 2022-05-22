@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../../doublekit-project-saas-ui/doublekit-project-h5-saas"
+		},
+		{
+			"path": "../../doublekit-project-saas-ui/doublekit-project-saas-web"
 		}
 	],
 	"settings": {}

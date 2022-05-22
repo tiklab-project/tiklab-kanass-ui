@@ -30,7 +30,7 @@ const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
 const tenant_type= JSON.stringify('mult')
-const acc_url = JSON.stringify("http://portal.dev.doublekit.net")
+// const acc_url = JSON.stringify("http://portal.dev.doublekit.net")
 
 module.exports = {
     base_url,
@@ -46,5 +46,5 @@ module.exports = {
     isSaas,
     img_url,
     tenant_type,
-    acc_url
+    // acc_url
 }

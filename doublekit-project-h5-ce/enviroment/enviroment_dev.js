@@ -31,6 +31,7 @@ const client = JSON.stringify('');
 const isSaas = false
 const plugin_url =  JSON.stringify( 'http://localhost:8080/plugins/config.json')
 const cookieDomain=  JSON.stringify('doublekit.cn');
+
 module.exports = {
     base_url,
     userProduction,

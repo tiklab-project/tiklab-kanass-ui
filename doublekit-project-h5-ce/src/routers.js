@@ -14,8 +14,10 @@ const ProjectTabBar = AsyncComponent(() => import('./modules/home/containers/pro
 const Project = AsyncComponent(() => import('./modules/project/project/containers/project'))
 const ProjectDetailTab = AsyncComponent(() => import('./modules/project/common/projectDetailTab'))
 
+const WorkItemAdd = AsyncComponent(() => import('./modules/project/workItem/components/workItemAdd'))
 const Set = AsyncComponent(() => import('./modules/home/components/set'))
 const Wechat = AsyncComponent(() => import("./modules/home/containers/wechat"))
+const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/components/workItemDesc"))
 const routes = [
     {
         path: "/project",
@@ -58,12 +60,28 @@ const routes = [
                 component: ProjectDetailTab,
                 key: 'ProjectDetail'
             },
+            {
+                path: "/project/workItemAdd",
+                exact: true,
+                component: WorkItemAdd,
+                key: 'WorkItemAdd'
+            },
         ]
+    },
+    {
+        path: "/workItemAdd",
+        component: WorkItemAdd,
+        key: 'WorkItemAdd',
+    },
+    {
+        path: "/workItemDesc",
+        component: WorkItemDesc,
+        key: 'WorkItemDesc',
     },
     {
         path: "/",
         exact: true,
-        component: () => <Redirect to="/index/project"/>,
+        component: () => <Redirect to="/index/home"/>,
     },
     
 ]

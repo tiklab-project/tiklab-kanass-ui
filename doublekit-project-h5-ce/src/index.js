@@ -18,11 +18,11 @@ import "./assets/font-icon/iconfont"
 import "./index.scss";
 import {observer} from "mobx-react"
 
-
 const Index = observer(() => {
     console.log(store)
+    const allStore = {...store}
     return (
-        <Provider {...store}>
+        <Provider {...allStore}>
             <HashRouter >
                 {renderRoutes(routers) }
             </HashRouter>

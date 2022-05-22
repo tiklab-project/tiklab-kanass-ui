@@ -7,30 +7,22 @@
  * @LastEditTime: 2022-04-23 18:55:37
  */
 import React, { useEffect, useState } from 'react';
-import {
-    NavBar, Input, Button, Dialog, Form, Picker, DatePicker,
+import {NavBar, Input, Button, Dialog, Form, Picker, DatePicker,
     Selector, Slider, Stepper, Toast, ImageUploader
 } from 'antd-mobile';
-import { BankcardOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "./workItem.scss";
 import { withRouter } from 'react-router';
-import "./workItemAdd.scss"
-// import ImageUploader from 'antd-mobile/es/components/image-uploader'
+import "./workItemAdd.scss";
+import { CloseCircleFill } from 'antd-mobile-icons';
+import { toJS } from 'mobx';
 
 const WorkItemAdd = (props) => {
     const { workItemStore } = props;
     const { findAllWorkType, workTypeList, getProjectUserList, projectUserList,
         findAllWorkPriority, workPriorityList, findSprintList, sprintList,
-        findModuleList, moduleList, upload, createWorkAttach } = workItemStore;
-    const back = () => {
-        props.history.goBack();
-    }
-    const onFinish = (values) => {
-        Dialog.alert({
-            content: <pre>{JSON.stringify(values, null, 2)}</pre>,
-        })
-    }
+        findModuleList, moduleList, upload, createWorkAttach,slateValue,setFormValue,formValue,addWork } = workItemStore;
+   
     const [form] = Form.useForm();
 
     const [workItemTypePickerVisible, setWorkItemTypePickerVisible] = useState(false);
@@ -39,17 +31,38 @@ const WorkItemAdd = (props) => {
     const [reportPickerVisible, setReportPickerVisible] = useState(false);
     const [sprintVisible, setSprintVisible] = useState(false);
     const [moduleVisible, setModuleVisible] = useState(false);
-    const [imageList, setImageList] = useState([{
-        url: 'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=60',
-    }])
+    const [imageList, setImageList] = useState([])
 
     useEffect(() => {
         findAllWorkType()
-        getProjectUserList("1c253fc2046a4468784d7f5191c0d94b")
+        getProjectUserList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
         findAllWorkPriority()
-        findSprintList("1c253fc2046a4468784d7f5191c0d94b")
-        findModuleList("1c253fc2046a4468784d7f5191c0d94b")
+        findSprintList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
+        findModuleList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
+        form.setFieldsValue(formValue)
     }, [])
+
+    const back = () => {
+        props.history.goBack();
+    }
+    const onFinish = (values) => {
+        console.log(slateValue,values);
+        const params = {
+            title: values.title,
+            project: "1c253fc2046a4468784d7f5191c0d94b",
+            workType: values.workItemType[0],
+            workPriority: values.workPriority[0],
+            module: values.module[0],
+            sprint: values.sprint[0],
+            assigner: values.assigner[0],
+            reporter: values.reporter[0],
+            desc: toJS(slateValue)
+        }
+        Dialog.alert({
+            content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+        })
+    }
+
     const mockUpload = async (file) => {
         setImageList([{
             url: 'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=60',
@@ -84,6 +97,12 @@ const WorkItemAdd = (props) => {
         console.log(fileList[0].name)
     };
 
+    const goDeasc = () => {
+        props.history.push("/workItemDesc")
+        setFormValue(form.getFieldsValue())
+    }
+    
+
     return (
         <div>
             <NavBar
@@ -99,7 +118,7 @@ const WorkItemAdd = (props) => {
                 </div>
             </NavBar>
             <Form
-                name='form'
+                form={form}
                 onFinish={onFinish}
                 footer={
                     <Button block type='submit' color='primary' size='large'>
@@ -107,7 +126,6 @@ const WorkItemAdd = (props) => {
                     </Button>
                 }
             >
-                <Form.Header>添加事项</Form.Header>
                 <Form.Item name='title' label='事项名称' rules={[{ required: true }]}>
                     <Input placeholder='请输入事项名称' />
                 </Form.Item>
@@ -141,10 +159,6 @@ const WorkItemAdd = (props) => {
                         setWorkItemTypePickerVisible(true)
                     }}
                 >
-
-                    {
-                        console.log(workTypeList)
-                    }
                     <Picker
                         style={{
                             '--title-font-size': '13px',
@@ -425,7 +439,7 @@ const WorkItemAdd = (props) => {
                 <div className='form-upload'>
                     <div>上传文件</div>
                     <div className='upload'>
-                        <input type="file" onChange={handleUpload} />
+                        <input type="file" onChange={handleUpload} className= "upload-file"/>
                         <span>
                             <svg aria-hidden="true">
                                 <use xlinkHref="#icon-shangchuanwenjian"></use>
@@ -461,7 +475,11 @@ const WorkItemAdd = (props) => {
                         upload={mockUpload}
                     />
                 </div>
-
+                <div style={{ paddingLeft: "16px" }}>
+                    <div>添加描述</div>
+                    <Button onClick={()=> goDeasc() }>添加描述</Button>
+                    {/* <WorkItemDesc slateValue = {slateValue} setSlateValue = {setSlateValue} {...props}/> */}
+                </div>
 
 
             </Form>
@@ -469,4 +487,4 @@ const WorkItemAdd = (props) => {
     )
 }
 
-export default withRouter(inject("workItemStore")(observer(WorkItemAdd)));
+export default withRouter(inject("workItemStore", "slatestore")(observer(WorkItemAdd)));

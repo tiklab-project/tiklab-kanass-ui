@@ -91,3 +91,12 @@ export function CreateWorkAttach(data){
         data 
     })
 }
+
+//添加事项
+export function AddWork(data){
+    return service.request({
+        url: "/workItem/createWorkItem",
+        method: "post",
+        data
+    })
+}

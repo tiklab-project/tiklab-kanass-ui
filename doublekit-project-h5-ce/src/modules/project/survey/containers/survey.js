@@ -11,7 +11,7 @@ import { Card, Toast, Button } from 'antd-mobile';
 import "../components/survey.scss";
 import { inject, observer } from "mobx-react";
 import moment from 'moment';
-
+import * as echarts from "echarts"
 const Survey = (props) => {
     const {projectSurveyStore} = props;
     const {findProject,findProjectBurnDowmChartPage} = projectSurveyStore;

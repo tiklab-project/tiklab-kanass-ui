@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
-    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach } from "../api/work";
+    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork } from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -29,6 +29,24 @@ export class WorkItemStore {
             currentPage: 1,
         }
     };
+    
+    @observable slateValue = [
+		{
+			type: "paragraph",
+			children: [{ text: "" }],
+		},
+	]
+    @observable formValue = {};
+
+    @action
+    setFormValue = (value) => {
+        this.formValue = value;
+    }
+
+    @action
+    setSlateValue = (value) => {
+        this.slateValue = value;
+    }
 
     @action
     getWorkConditionPage = async (value) => {
@@ -64,9 +82,9 @@ export class WorkItemStore {
 
     //获取已选择人员
     @action
-    getProjectUserList = async(projectId) => {
+    getProjectUserList = async(value) => {
         const params = {
-            domainId: projectId,
+            domainId: value.projectId,
             pageParam: {
                 pageSize: 10,
                 currentPage: 1
@@ -99,9 +117,9 @@ export class WorkItemStore {
     }
 
     @action
-    findSprintList = async(projectId) => {
+    findSprintList = async(value) => {
         const params = {
-            projectId: projectId,
+            projectId: value.projectId,
             pageParam: {
                 pageSize: 10,
                 currentPage: 1
@@ -120,9 +138,9 @@ export class WorkItemStore {
     }
 
     @action
-    findModuleList = async(projectId) => {
+    findModuleList = async(value) => {
         const params = {
-            projectId: projectId,
+            projectId: value.projectId,
             pageParam: {
                 pageSize: 10,
                 currentPage: 1
@@ -169,6 +187,61 @@ export class WorkItemStore {
         }
         const data = CreateWorkAttach(params);
         return data;
+    }
+
+    @action
+    addWork = (value) => {
+        const params = {
+            title: value.title,
+            planBeginTime: value.planBeginTime,
+            planEndTime: value.planEndTime,
+            planTakeupTime: value.planTakeupTime,
+            project: {
+                id: value.project
+            },
+            workType: {
+                id: value.workType
+            },
+            parentWorkItem: {
+                id: value.parentWorkItem
+            },
+            workPriority: {
+                id: value.workPriority
+            },
+            workStatus: {
+                id: value.workStatus
+            },
+            module: {
+                id: value.module
+            },
+            sprint: {
+                id: value.sprint || "nullstring"
+            },
+            assigner: {
+                id: value.assigner
+            },
+            reporter: {
+                id: value.reporter
+            },
+            builder: {
+                id: value.builder
+            },
+            desc: value.desc || undefined,
+            preDependWorkItem: {
+                id: value.predependworkitem || "nullstring"
+            },
+            extData: JSON.stringify(value.extData)
+
+        }
+        return new Promise((resolve, reject) => {
+            AddWork(params).then(response => {
+                this.getsprintlist()
+                resolve(response)
+            }).catch(error => {
+                console.log(error)
+                reject()
+            })
+        })
     }
 }
 export const WORKITEM_STORE = "workItemStore"

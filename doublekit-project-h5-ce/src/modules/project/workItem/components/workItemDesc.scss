@@ -1,0 +1,13 @@
+.workItemDesc-title {
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    justify-content: space-between;
+    .back-icon {
+        width: 15px;
+        height: 15px;
+    }
+}
