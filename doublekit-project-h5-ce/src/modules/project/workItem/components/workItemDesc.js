@@ -20,7 +20,7 @@ const WorkItemDesc = (props) => {
 				</svg>
                 <span onClick={()=> saveDesc()}>确定</span>
 			</div>
-            <DocumentEditor value = {toJS(slateValue)} onChange = {setSlateValue} {...props}/>
+            <DocumentEditor value = {toJS(slateValue)} onChange = {setSlateValue} showMenu = {true} {...props}/>
         </div>
     )
 }

@@ -100,3 +100,11 @@ export function AddWork(data){
         data
     })
 }
+
+export function FindWorkItem(data){
+    return service.request({
+        url: "/workItem/findWorkItem",
+        method: "post",
+        data 
+    })
+}

@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
-    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork } from "../api/work";
+    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem } from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -17,7 +17,9 @@ export class WorkItemStore {
     @observable projectUserList = [];
     @observable workPriorityList = [];
     @observable sprintList = [];
-    @observable moduleList = []
+    @observable moduleList = [];
+    @observable workItem = [];
+    
     @observable searchCondition = {
         parentIdIsNull: true,
         orderParams: [{
@@ -162,7 +164,7 @@ export class WorkItemStore {
     upload = async(file) => {
         const params = new FormData();
         params.append("uploadFile",file)
-        const data = Upload(params);
+        const data = await Upload(params);
         return data;
     }
 
@@ -172,25 +174,31 @@ export class WorkItemStore {
             workItemId: value,
         }
         const data = await FindWorkAttachList(params);
-        return data;
+        // console.log(data.data)
+        // if(data.code === 0){
+        //     console.log(data.data)
+        //     this.workAttachList = data.data
+        // }
+        return data.data;
     }
 
     @action
-    createWorkAttach = (workId, fileName) => {
+    createWorkAttach = async(value) => {
         const params = {
             workItem: {
-                id: workId
+                id: value.workId
             },
             attachment: {
-                fileName: fileName
+                fileName: value.fileName
             }
         }
-        const data = CreateWorkAttach(params);
-        return data;
+        const data = await CreateWorkAttach(params);
+        
+        return data.data;
     }
 
     @action
-    addWork = (value) => {
+    addWork = async(value) => {
         const params = {
             title: value.title,
             planBeginTime: value.planBeginTime,
@@ -226,22 +234,35 @@ export class WorkItemStore {
             builder: {
                 id: value.builder
             },
-            desc: value.desc || undefined,
+            desc: JSON.stringify(value.desc) || undefined,
             preDependWorkItem: {
                 id: value.predependworkitem || "nullstring"
             },
             extData: JSON.stringify(value.extData)
 
         }
-        return new Promise((resolve, reject) => {
-            AddWork(params).then(response => {
-                this.getsprintlist()
-                resolve(response)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        // return new Promise((resolve, reject) => {
+        //     AddWork(params).then(response => {
+        //         this.getsprintlist()
+        //         resolve(response)
+        //     }).catch(error => {
+        //         console.log(error)
+        //         reject()
+        //     })
+        // })
+        const data = await AddWork(params);
+        return data.data;
     }
+
+    @action
+    findWorkItem = async(value) => {
+        const params = new FormData()
+        params.append("id", value.id)
+        const data = await FindWorkItem(params)
+
+        return data;
+
+    }
+
 }
 export const WORKITEM_STORE = "workItemStore"

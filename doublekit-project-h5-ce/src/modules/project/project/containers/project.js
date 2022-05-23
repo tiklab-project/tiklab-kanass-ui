@@ -84,8 +84,9 @@ const Project = (props) => {
                                         <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                     </div>
                                     <div>
-                                        <div className='project-title'>{item.projectName}</div>
-                                        <div onClick={() => goProdetail(item.id, item.projectType.id)}>
+                                        <div className='project-title' 
+                                            onClick={() => goProdetail(item.id, item.projectType.id)}>{item.projectName}</div>
+                                        <div>
                                             {item.master.name}
                                         </div>
                                     </div>

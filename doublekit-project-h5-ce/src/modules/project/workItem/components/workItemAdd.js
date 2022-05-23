@@ -16,12 +16,13 @@ import { withRouter } from 'react-router';
 import "./workItemAdd.scss";
 import { CloseCircleFill } from 'antd-mobile-icons';
 import { toJS } from 'mobx';
-
+import { getUser } from 'doublekit-core-h5';
 const WorkItemAdd = (props) => {
     const { workItemStore } = props;
     const { findAllWorkType, workTypeList, getProjectUserList, projectUserList,
         findAllWorkPriority, workPriorityList, findSprintList, sprintList,
-        findModuleList, moduleList, upload, createWorkAttach,slateValue,setFormValue,formValue,addWork } = workItemStore;
+        findModuleList, moduleList, upload, createWorkAttach,slateValue,
+        setFormValue,formValue,addWork,getWorkConditionPage } = workItemStore;
    
     const [form] = Form.useForm();
 
@@ -32,13 +33,13 @@ const WorkItemAdd = (props) => {
     const [sprintVisible, setSprintVisible] = useState(false);
     const [moduleVisible, setModuleVisible] = useState(false);
     const [imageList, setImageList] = useState([])
-
+    const projectId = localStorage.getItem("projectId")
     useEffect(() => {
         findAllWorkType()
-        getProjectUserList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
+        getProjectUserList({projectId: projectId})
         findAllWorkPriority()
-        findSprintList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
-        findModuleList({projectId: "1c253fc2046a4468784d7f5191c0d94b"})
+        findSprintList({projectId: projectId})
+        findModuleList({projectId: projectId})
         form.setFieldsValue(formValue)
     }, [])
 
@@ -48,16 +49,28 @@ const WorkItemAdd = (props) => {
     const onFinish = (values) => {
         console.log(slateValue,values);
         const params = {
-            title: values.title,
-            project: "1c253fc2046a4468784d7f5191c0d94b",
-            workType: values.workItemType[0],
-            workPriority: values.workPriority[0],
-            module: values.module[0],
-            sprint: values.sprint[0],
-            assigner: values.assigner[0],
-            reporter: values.reporter[0],
-            desc: toJS(slateValue)
+            title: values.title ? values.title : null,
+            project: projectId,
+            workType: values.workItemType ? values.workItemType[0] : null,
+            workPriority: values.workPriority ? values.workPriority[0] : null,
+            module: values.module ? values.module[0]: null,
+            sprint: values.sprint ? values.sprint[0] : null,
+            assigner: values.assigner ? values.assigner[0] : null,
+            builder: values.builder ? values.builder[0] : getUser().userId, 
+            reporter: values.reporter ? values.reporter[0] : null,
+            desc: slateValue ? toJS(slateValue): null,
+            planTakeupTime: values.planTakeupTime ? values.planTakeupTime: null,
         }
+
+        addWork(params).then(res => {
+            console.log(res)
+            getWorkConditionPage({projectId: localStorage.getItem("projectId")}).then((data) => {
+                if (data.code === 0) {
+                    props.history.push("/project/projectDetail")
+                    // setWorkItemList(data.data.dataList)
+                }
+            })
+        })
         Dialog.alert({
             content: <pre>{JSON.stringify(values, null, 2)}</pre>,
         })
@@ -126,7 +139,7 @@ const WorkItemAdd = (props) => {
                     </Button>
                 }
             >
-                <Form.Item name='title' label='事项名称' rules={[{ required: true }]}>
+                <Form.Item name='title' label='事项名称'  rules={[{required: true}]}>
                     <Input placeholder='请输入事项名称' />
                 </Form.Item>
                 <Form.Item
@@ -180,12 +193,12 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="负责人"
                     name="assigan"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择负责人',
-                        }
-                    ]}
+                    // rules={[
+                    //     {
+                    //         // required: true,
+                    //         message: '请选择负责人',
+                    //     }
+                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('assigan') ? (
@@ -229,12 +242,12 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="报告人"
                     name="reporter"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择报告人',
-                        }
-                    ]}
+                    // rules={[
+                    //     {
+                    //         // required: true,
+                    //         message: '请选择报告人',
+                    //     }
+                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('reporter') ? (
@@ -278,12 +291,12 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="优先级"
                     name="workPriority"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择优先级',
-                        }
-                    ]}
+                    // rules={[
+                    //     {
+                    //         // required: true,
+                    //         message: '请选择优先级',
+                    //     }
+                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('workPriority') ? (
@@ -328,12 +341,12 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="迭代"
                     name="sprint"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择迭代',
-                        }
-                    ]}
+                    // rules={[
+                    //     {
+                    //         // required: true,
+                    //         message: '请选择迭代',
+                    //     }
+                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('sprint') ? (
@@ -376,12 +389,12 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="模块"
                     name="module"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择所属模块',
-                        }
-                    ]}
+                    // rules={[
+                    //     {
+                    //         // required: true,
+                    //         message: '请选择所属模块',
+                    //     }
+                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('module') ? (
@@ -423,13 +436,13 @@ const WorkItemAdd = (props) => {
                 </Form.Item>
                 <Form.Item
                     initialValue={0}
-                    rules={[
-                        {
-                            max: 5,
-                            min: 1,
-                            type: 'number',
-                        },
-                    ]}
+                    // rules={[
+                    //     {
+                    //         max: 5,
+                    //         min: 1,
+                    //         type: 'number',
+                    //     },
+                    // ]}
                     name='planTakeupTime'
                     label='计划时长'
                 >
@@ -446,9 +459,6 @@ const WorkItemAdd = (props) => {
                             </svg>
                         </span>
                     </div>
-                    {
-                        console.log(fileList)
-                    }
                     {
                         fileList && fileList.length > 0 && fileList.map(item => {
                             return <div className='show-file'>
@@ -477,7 +487,7 @@ const WorkItemAdd = (props) => {
                 </div>
                 <div style={{ paddingLeft: "16px" }}>
                     <div>添加描述</div>
-                    <Button onClick={()=> goDeasc() }>添加描述</Button>
+                    <Button onClick={()=> goDeasc()}>添加描述</Button>
                     {/* <WorkItemDesc slateValue = {slateValue} setSlateValue = {setSlateValue} {...props}/> */}
                 </div>
 

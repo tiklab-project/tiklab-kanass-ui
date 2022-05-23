@@ -15,15 +15,16 @@ import { withRouter } from 'react-router';
 // import ProjectAddEidtModal from "./components/projectAddEditModal";
 const WorkItem = (props) => {
     const { workItemStore } = props;
-    const { getWorkConditionPage } = workItemStore;
+    const { getWorkConditionPage,workList } = workItemStore;
     const [workItemList, setWorkItemList] = useState();
 
     useEffect(() => {
-        getWorkConditionPage().then((data) => {
-            if (data.code === 0) {
-                setWorkItemList(data.data.dataList)
-            }
-        })
+        getWorkConditionPage({projectId: localStorage.getItem("projectId")})
+        // .then((data) => {
+        //     // if (data.code === 0) {
+        //     //     setWorkItemList(data.data.dataList)
+        //     // }
+        // })
     }, [])
 
 
@@ -60,16 +61,16 @@ const WorkItem = (props) => {
             </div>
             <div className='workItem'>
                 {
-                    workItemList && workItemList.length > 0 && workItemList.map(item => {
-                        return <div className="workItem-list">
+                    workList && workList.length > 0 && workList.map(item => {
+                        return <div className="workItem-list" key = {item.id}>
                             <div className='workItem-left'>
                                 <div className='workItem-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
-                                    <div className='workItem-title'>{item.title}</div>
+                                    <div className='workItem-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
                                     <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
-                                        {item.builder.name}
+                                        {item.builder ?item.builder.name : "admin"}
                                     </div>
                                 </div>
                             </div>

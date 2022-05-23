@@ -18,6 +18,8 @@ const WorkItemAdd = AsyncComponent(() => import('./modules/project/workItem/comp
 const Set = AsyncComponent(() => import('./modules/home/components/set'))
 const Wechat = AsyncComponent(() => import("./modules/home/containers/wechat"))
 const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/components/workItemDesc"))
+const WorkItemDetail = AsyncComponent(() => import("./modules/project/workItem/components/workItemDetail"))
+
 const routes = [
     {
         path: "/project",
@@ -77,6 +79,11 @@ const routes = [
         path: "/workItemDesc",
         component: WorkItemDesc,
         key: 'WorkItemDesc',
+    },
+    {
+        path: "/workItemDetail/:id",
+        component: WorkItemDetail,
+        key: 'WorkItemDetail',
     },
     {
         path: "/",
