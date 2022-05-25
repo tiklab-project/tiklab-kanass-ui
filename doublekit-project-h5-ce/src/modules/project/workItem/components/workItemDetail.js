@@ -6,7 +6,7 @@ import { DocumentEditor } from "doublekit-slate-h5-ui";
 import "./workItemDetail.scss";
 const WorkItemDetail = (props) => {
     const { workItemStore } = props;
-    const { findWorkItem, upload, createWorkAttach, findWorkAttachList } = workItemStore;
+    const { findWorkItem, upload, createWorkAttach, findWorkAttachList,editWork } = workItemStore;
     const workItemId = props.match.params.id;
     const [workItemInfo, setWorkItemInfo] = useState();
     const [workAttachList, setWorkAttachList] = useState();
@@ -43,17 +43,6 @@ const WorkItemDetail = (props) => {
         e.preventDefault();
 
         let file = e.target.files[0];
-        // const formdata = new FormData();
-        // formdata.append('file', file);
-
-        // let list = []
-        // for (var value of formdata.values()) {
-        //     console.log(value);
-        //     fileList.push(value)
-        // }
-        // // fileList.push(list)
-        // setFileList([...fileList])
-        // console.log(fileList[0].name)
         upload(file).then(res => {
             console.log(res)
             if(res.code === 0){
@@ -64,25 +53,35 @@ const WorkItemDetail = (props) => {
                     if(res.code === 0)
                     console.log(res)
                     findWorkAttachList(workItemId).then(res=> {
-                        if(res.code === 0){
-                            console.log(res)
-                        }
+                        setWorkAttachList(res)
                     })
                 })
-				// if (select) {
-				// 	if(type === "txt") {
-				// 		wrapAttachment(editor, `${base_url}/file/${res.data.data.fileName}`, res.data.data.fileMeta.originFileName)
-				// 	}else if(type === "png" || type === "jpeg" || type === "jpg"){
-				// 		wrapImage(editor, `${base_url}/file/${res.data.data.fileName}`)
-				// 	}
-					
-				// }
 			}
         })
     };
 
+    const [editorType, setEditorType] = useState(false);
+    const [slateButton, setSlateButton] = useState("编辑");
+
+    const editorDesc = () => {
+        if(editorType){
+            setEditorType(false);
+            setSlateButton("编辑");
+            let data = {
+                id: workItemId,
+                desc: JSON.stringify(slateValue),
+                updateField: "desc"
+            }
+            editWork(data)
+        }else {
+            setEditorType(true);
+            setSlateButton("保存");
+            
+        }
+    }
+
     return (
-        <div>
+        <div style={{width: "100vw"}}>
             <NavBar
                 style={{
                     '--height': '36px',
@@ -137,13 +136,13 @@ const WorkItemDetail = (props) => {
                     { workItemInfo && workItemInfo.buildTime }
                     </span>
                 </div>
-                <div className='form-upload'>
+                <div className='upload'>
                     <div className="uplpad-list">
                         <div>上传文件</div>
                         <div className="upload-icon">
                             <input type="file" onChange={handleUpload} className= "upload-file"/>
                             <span>
-                                <svg aria-hidden="true">
+                                <svg aria-hidden="true" style={{width: "100%", height: "100%"}}>
                                     <use xlinkHref="#icon-shangchuanwenjian"></use>
                                 </svg>
                             </span>
@@ -165,29 +164,18 @@ const WorkItemDetail = (props) => {
                             </div>
                         })
                     }
-                    {/* {
-                        fileList && fileList.length > 0 && fileList.map(item => {
-                            return <div className="show-file">
-                                <span>
-                                    <svg aria-hidden="true">
-                                        <use xlinkHref="#icon-a-wenjianjiawenjian"></use>
-                                    </svg>
-                                </span>
-                                <span>
-                                    {item.name}
-                                </span>
-                            </div>
-                        })
-                    } */}
                 </div>
-                <div>
+                <div className="workItem-info-item">
                     <span>
                         描述
                     </span>
-                    <span>
-                        <DocumentEditor value = {slateValue}/>
-                    </span>
+                    {/* <span onClick={() => editorDesc()}>
+                        {slateButton}
+                    </span> */}
                 </div>
+                <span>
+                    <DocumentEditor value = {slateValue} onChange = {setSlateValue} showMenu = {editorType} {...props}/>
+                </span>
             </Card>
         </div>
     )

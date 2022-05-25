@@ -124,7 +124,7 @@ const WorkItemAdd = (props) => {
                     '--border-bottom': '1px #eee solid',
                 }}
                 backArrow={true}
-                onBack={back}
+                onBack={()=> props.history.goBack()}
             >
                 <div className="title-top">
                     添加事项
@@ -449,7 +449,7 @@ const WorkItemAdd = (props) => {
                     <Stepper />
 
                 </Form.Item>
-                <div className='form-upload'>
+                {/* <div className='form-upload'>
                     <div>上传文件</div>
                     <div className='upload'>
                         <input type="file" onChange={handleUpload} className= "upload-file"/>
@@ -484,7 +484,7 @@ const WorkItemAdd = (props) => {
                         onChange={setImageList}
                         upload={mockUpload}
                     />
-                </div>
+                </div> */}
                 <div style={{ paddingLeft: "16px" }}>
                     <div>添加描述</div>
                     <Button onClick={()=> goDeasc()}>添加描述</Button>

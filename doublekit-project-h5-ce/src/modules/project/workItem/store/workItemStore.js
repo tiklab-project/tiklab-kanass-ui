@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
-    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem } from "../api/work";
+    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem, EditWork } from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -241,16 +241,80 @@ export class WorkItemStore {
             extData: JSON.stringify(value.extData)
 
         }
+        const data = await AddWork(params);
+        return data.data;
+    }
+
+    @action
+    editWork = async(value) => {
+        if (value.workType) {
+            value.updateField = "workType"
+            value.workType = {
+                id: value.workType
+            }
+        }
+        if (value.workPriority) {
+            value.updateField = "workPriority"
+            value.workPriority = {
+                id: value.workPriority
+            }
+        }
+        if (value.workStatus) {
+            value.updateField = "workStatus"
+            value.workStatus = {
+                id: value.workStatus
+            }
+        }
+        if (value.module) {
+            value.module = {
+                id: value.module
+            }
+        }
+        if (value.sprint) {
+            value.sprint = {
+                id: value.sprint
+            }
+        }
+        if (value.assigner) {
+            value.assigner = {
+                id: value.assigner
+            }
+        }
+        if (value.reporter) {
+            value.reporter = {
+                id: value.reporter
+            }
+        }
+        if (value.builder) {
+            value.builder = {
+                id: value.builder
+            }
+        }
+        if (value.attachment) {
+            value.fileName = {
+                id: value.attachment
+            }
+        }
+        if (value.preDependWorkItem) {
+            value.preDependWorkItem = {
+                id: value.preDependWorkItem
+            }
+        }
+        if (value.preDependWorkItem) {
+            value.extData = JSON.stringify(value.extData)
+        }
+        // if (value.preDependWorkItem) {
+        //     value.extData = JSON.stringify(value.extData)
+        // }
         // return new Promise((resolve, reject) => {
-        //     AddWork(params).then(response => {
-        //         this.getsprintlist()
+        //     EditWork(value).then(response => {
         //         resolve(response)
         //     }).catch(error => {
         //         console.log(error)
         //         reject()
         //     })
         // })
-        const data = await AddWork(params);
+        const data = await EditWork(value);
         return data.data;
     }
 

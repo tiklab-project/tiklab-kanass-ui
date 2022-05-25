@@ -8,7 +8,8 @@
         width: 200px;
     }
 }
-.form-upload {
+
+.upload {
     // padding-left: 16px;
     .uplpad-list {
         display: flex;
@@ -24,9 +25,12 @@
         .upload-file {
             opacity: 0;
             width: 30px;
-            height: 30px;
+            // height: 30px;
             z-index: 2;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
         }
         span {
             width: 100%;

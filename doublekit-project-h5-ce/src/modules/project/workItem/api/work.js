@@ -108,3 +108,12 @@ export function FindWorkItem(data){
         data 
     })
 }
+
+//编辑事项
+export function EditWork(data){
+    return service.request({
+        url: "/workItem/updateWorkItem",
+        method: "post",
+        data 
+    })
+}
