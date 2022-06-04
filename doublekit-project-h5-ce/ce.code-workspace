@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../../doublekit-project-saas-ui/doublekit-project-saas-web"
+		},
+		{
+			"path": "../../doublekit-project-app"
 		}
 	],
 	"settings": {}
