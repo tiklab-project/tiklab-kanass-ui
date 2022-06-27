@@ -16,7 +16,7 @@
 			"path": "../../doublekit-wiki-ui/doublekit-wiki-editor"
 		},
 		{
-			"path": "../doublekit-project-plugin-ui"
+			"path": "../../doublekit-project-plugin-ui"
 		}
 	],
 	"settings": {}
