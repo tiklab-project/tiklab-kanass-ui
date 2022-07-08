@@ -4,19 +4,10 @@
 			"path": "../doublekit-project-web"
 		},
 		{
-			"path": "."
-		},
-		{
-			"path": "../../doublekit-project-saas-ui/doublekit-project-h5-saas"
-		},
-		{
 			"path": "../../doublekit-project-saas-ui/doublekit-project-saas-web"
 		},
 		{
-			"path": "../../doublekit-wiki-ui/doublekit-wiki-editor"
-		},
-		{
-			"path": "../../doublekit-project-plugin-ui"
+			"path": "../../doublekit-eam-ui"
 		}
 	],
 	"settings": {}
