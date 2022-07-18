@@ -9,13 +9,8 @@
 import React, { useState } from 'react';
 import { Badge, TabBar } from 'antd-mobile';
 import { renderRoutes } from "react-router-config";
-import{inject, observer} from "mobx-react"
 import {
-    Route,
-    Switch,
-    useHistory,
     useLocation,
-    MemoryRouter as Router,
 } from 'react-router-dom'
 import {
     AppOutline,
