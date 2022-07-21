@@ -7,7 +7,19 @@
 			"path": "../../doublekit-project-saas-ui/doublekit-project-saas-web"
 		},
 		{
-			"path": "../../doublekit-eam-ui 3"
+			"path": "../../doublekit-wiki-ui/doublekit-wiki-ui"
+		},
+		{
+			"path": "../../doublekit-wiki-saas-ui/doublekit-wiki-saas-web"
+		},
+		{
+			"path": "../../doublekit-project-saas-ui/doublekit-project-h5-saas"
+		},
+		{
+			"path": "../../doublekit-wiki-saas-ui/doublekit-wiki-h5-ui"
+		},
+		{
+			"path": "."
 		}
 	],
 	"settings": {}
