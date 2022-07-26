@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../../doublekit-wiki-ui/doublekit-wiki-editor"
 		}
 	],
 	"settings": {}
