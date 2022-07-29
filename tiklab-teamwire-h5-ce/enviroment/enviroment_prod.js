@@ -15,7 +15,7 @@ const plugin_base_url = JSON.stringify(url);
 let pluginAddressUrl = `/pluginConfig/getPluginConfig`;
 pluginAddressUrl = JSON.stringify(pluginAddressUrl);
 
-const img_url = JSON.stringify("http://192.168.2.92:5100")
+const upload_url = JSON.stringify("http://192.168.2.92:5100")
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
 const userProduction = true;
 
@@ -43,7 +43,7 @@ module.exports = {
     appSecret,
     version,
     client,
-    img_url,
+    upload_url,
     isSaas,
     cookieDomain,
     acc_url

@@ -16,7 +16,7 @@ const plugin_base_url = JSON.stringify(url);
 let pluginAddressUrl = `${url}/config.json`;
 pluginAddressUrl = JSON.stringify(pluginAddressUrl);
 
-const img_url = JSON.stringify('http://192.168.10.18:8080')
+const upload_url = JSON.stringify('http://192.168.10.18:8080')
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
@@ -44,7 +44,7 @@ module.exports = {
     version,
     client,
     isSaas,
-    img_url,
+    upload_url,
     tenant_type,
     // acc_url
 }
