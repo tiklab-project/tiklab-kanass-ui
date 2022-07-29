@@ -8,7 +8,7 @@
  */
 import React, { useEffect } from "react";
 import { inject, observer } from "mobx-react";
-import {getUser,removeUser} from 'doublekit-core-ui';
+import {getUser,removeUser} from 'tiklab-core-ui';
 const QywxInstall = () => {
     useEffect(() => {
         removeUser()

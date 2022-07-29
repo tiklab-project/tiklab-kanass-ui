@@ -1,4 +1,4 @@
-import { Axios } from 'doublekit-core-ui';
+import { Axios } from 'tiklab-core-ui';
 
 class WorkService {
 

@@ -13,8 +13,7 @@ import { PROJECTSURVEY_STORE, ProjectSurveyStore } from "./modules/project/surve
 import { WORKITEM_STORE, WorkItemStore } from "./modules/project/workItem/store/workItemStore";
 import { SPRINT_STORE, SprintStore } from "./modules/project/sprint/store/sprintStore";
 import { QYWX_STORE, QywxStore } from "./modules/qiyeWeixin/store/qywxStore";
-import {LOGIN_STATUS,LoginStore} from "doublekit-portal-h5";
-import {SlateStore,SLATE_STORE} from "doublekit-slate-h5-ui"
+import {SlateStore,SLATE_STORE} from "tiklab-slate-h5-ui"
 function createStores() {
     return {
         [PROJECT_STORE]:new ProjectStore(),

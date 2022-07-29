@@ -30,7 +30,7 @@ const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
 const tenant_type= JSON.stringify('mult')
-// const acc_url = JSON.stringify("http://portal.dev.doublekit.net")
+// const acc_url = JSON.stringify("http://portal.dev.tiklab.net")
 
 module.exports = {
     base_url,

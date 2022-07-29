@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { DocumentEditor } from "doublekit-slate-h5-ui";
+import { DocumentEditor } from "tiklab-slate-h5-ui";
 import { inject, observer, toJs } from "mobx-react";
 import { toJS } from "mobx";
 import "./workItemDesc.scss"

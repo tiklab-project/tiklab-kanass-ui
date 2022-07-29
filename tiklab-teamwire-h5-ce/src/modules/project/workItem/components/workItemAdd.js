@@ -16,7 +16,7 @@ import { withRouter } from 'react-router';
 import "./workItemAdd.scss";
 import { CloseCircleFill } from 'antd-mobile-icons';
 import { toJS } from 'mobx';
-import { getUser } from 'doublekit-core-h5';
+import { getUser } from 'tiklab-core-ui';
 const WorkItemAdd = (props) => {
     const { workItemStore } = props;
     const { findAllWorkType, workTypeList, getProjectUserList, projectUserList,

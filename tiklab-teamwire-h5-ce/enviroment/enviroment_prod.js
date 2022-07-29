@@ -30,7 +30,7 @@ const appSecret = JSON.stringify('');
 const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
-const cookieDomain=  JSON.stringify('doublekit.cn');
+const cookieDomain=  JSON.stringify('tiklab.cn');
 const acc_url = JSON.stringify("/")
 module.exports = {
     base_url,

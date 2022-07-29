@@ -8,11 +8,11 @@
  */
 import zhCnTrans from "./cn/translation.json";
 
-import {form_cn, form_en} from 'doublekit-form-ui'
-import {flow_cn, flow_en} from 'doublekit-flow-ui'
-import{privilege_en,privilege_cn} from "doublekit-privilege-ui"
-import {message_cn, message_en} from 'doublekit-message-ui';
-import {orga_cn, orga_en} from 'doublekit-user-ui';
+import {form_cn, form_en} from 'tiklab-form-ui'
+import {flow_cn, flow_en} from 'tiklab-flow-ui'
+import{privilege_en,privilege_cn} from "tiklab-privilege-ui"
+import {message_cn, message_en} from 'tiklab-message-ui';
+import {orga_cn, orga_en} from 'tiklab-user-ui';
 const resources = {
     zh: {
         translation: {...zhCnTrans, ...form_cn, ...flow_cn, ...privilege_cn,...message_cn, ...orga_cn},

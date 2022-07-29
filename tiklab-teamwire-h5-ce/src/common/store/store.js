@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-07-26 18:33:26
  */
 import { observable,action } from "mobx";
-import { initPlugins } from "doublekit-plugin-ui";
+import { initPlugins } from "tiklab-plugin-ui";
 export class OverAllStore {
     @observable pluginData = [];
 

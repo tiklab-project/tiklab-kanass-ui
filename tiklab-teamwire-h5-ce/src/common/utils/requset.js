@@ -8,7 +8,7 @@
  */
 import axios from "axios";
 
-import {Axios as service } from "doublekit-core-h5";
+import {Axios as service } from "tiklab-core-ui";
 
 const serviceLoc = axios.create({
     baseURL: base_url,

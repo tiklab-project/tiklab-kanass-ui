@@ -11,7 +11,7 @@ import { SpinLoading } from 'antd-mobile';
 import { inject, observer } from "mobx-react";
 import "./QywxEnter.scss"
 import { withRouter } from "react-router";
-import {getUser,removeUser} from 'doublekit-core-ui';
+import {getUser,removeUser} from 'tiklab-core-ui';
 
 const QywxEnter = (props) => {
     const {qywxStore} = props;
@@ -29,13 +29,13 @@ const QywxEnter = (props) => {
     useEffect(()=> {
         const ticket = getUser() ? getUser().ticket : undefined;
         const suite_id = "ww30f817a7f03854bd";
-        const redirect_url = "http://www.dev.project.doublekit.net/#/qywxenter";
+        const redirect_url = "http://www.dev.project.tiklab.net/#/qywxenter";
         const encode = encodeURI(redirect_url);
         const corpid = getUser() ? getUser().corpid : undefined;
         
         if(ticket && corpid){
             setSep("登录成功")
-            window.location.href = "http://www.dev.project.doublekit.net/#/";
+            window.location.href = "http://www.dev.project.tiklab.net/#/";
         }else {
             if(!code){
                 const url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + suite_id + "&redirect_uri=" + encode + "&response_type=code&scope=snsapi_privateinfo#wechat_redirect";

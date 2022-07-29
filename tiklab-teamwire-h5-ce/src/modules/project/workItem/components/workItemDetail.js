@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavBar,Card } from "antd-mobile";
 import { inject,observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { DocumentEditor } from "doublekit-slate-h5-ui";
+import { DocumentEditor } from "tiklab-slate-h5-ui";
 import "./workItemDetail.scss";
 const WorkItemDetail = (props) => {
     const { workItemStore } = props;

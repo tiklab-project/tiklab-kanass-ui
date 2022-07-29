@@ -1,5 +1,5 @@
 import React from "react";
-import { InternalWechat,useAuthConfig } from "doublekit-eam-ui";
+import { InternalWechat,useAuthConfig } from "tiklab-eam-ui";
 
 const Wechat = (props) => {
     
