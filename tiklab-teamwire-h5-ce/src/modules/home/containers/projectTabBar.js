@@ -17,7 +17,8 @@ import {
     UserOutline,
 } from 'antd-mobile-icons';
 import "../components/projectTabBar.scss"
-import { verifyUserHoc } from "tiklab-eam-ui";
+// import {verifyUserHoc} from "tiklab-eam-ui/es/_utils";
+import {verifyUserHoc} from "tiklab-eam-ui";
 const ProjectTabBar = (props) => {
     const route = props.route;
     // const history = useHistory()
@@ -60,5 +61,5 @@ const ProjectTabBar = (props) => {
     )
 }
 
-const IndexSaasHoc = verifyUserHoc(ProjectTabBar, "project")
-export default IndexSaasHoc;
+const IndexSaasHoc = verifyUserHoc(ProjectTabBar, "teamwire")
+export default ProjectTabBar;

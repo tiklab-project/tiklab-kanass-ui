@@ -124,7 +124,7 @@ module.exports = {
             title: '项目管理',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
-            filename: 'mobile.html',
+            filename: 'index.html',
             inject: 'body',
             minify: {
                 collapseWhitespace: true,

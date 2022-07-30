@@ -20,7 +20,6 @@ function createStores() {
         [PROJECTSURVEY_STORE]:new ProjectSurveyStore(),
         [WORKITEM_STORE]:new WorkItemStore(),
         [SPRINT_STORE]:new SprintStore(),
-        [LOGIN_STATUS]:new LoginStore(),
         [QYWX_STORE]:new QywxStore(),
         [SLATE_STORE]:new SlateStore(),
     }

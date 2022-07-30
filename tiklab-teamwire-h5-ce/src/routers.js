@@ -16,17 +16,10 @@ const ProjectDetailTab = AsyncComponent(() => import('./modules/project/common/p
 
 const WorkItemAdd = AsyncComponent(() => import('./modules/project/workItem/components/workItemAdd'))
 const Set = AsyncComponent(() => import('./modules/home/components/set'))
-const Wechat = AsyncComponent(() => import("./modules/home/containers/wechat"))
 const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/components/workItemDesc"))
 const WorkItemDetail = AsyncComponent(() => import("./modules/project/workItem/components/workItemDetail"))
 
 const routes = [
-    {
-        path: "/project",
-        exact: true,
-        component: Wechat,
-        
-    },
     {
         path: "/index",
         component: ProjectTabBar,
