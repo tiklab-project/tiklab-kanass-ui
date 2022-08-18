@@ -6,17 +6,17 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-03-25 11:41:43
  */
-const api =  'http://192.168.10.18:8080/';
+const api =  'http://192.168.10.17:8081/';
 const base_url = JSON.stringify(api);
 
 
-const url = "http://192.168.10.18:8080/";
+const url = "http://192.168.10.17:8081/";
 const plugin_base_url = JSON.stringify(url);
 
 let pluginAddressUrl = `${url}/config.json`;
 pluginAddressUrl = JSON.stringify(pluginAddressUrl);
 
-const upload_url = JSON.stringify('http://192.168.10.18:8080')
+const upload_url = JSON.stringify('http://192.168.10.17:8081')
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
@@ -28,9 +28,9 @@ const appKey = JSON.stringify('');
 const appSecret = JSON.stringify('');
 const version = JSON.stringify('');
 const client = JSON.stringify('');
-const isSaas = false;
+const isSaas = true;
+const DEPLOY_MODE= JSON.stringify('saas')
 const tenant_type= JSON.stringify('mult')
-// const acc_url = JSON.stringify("http://portal.dev.tiklab.net")
 
 module.exports = {
     base_url,
@@ -46,5 +46,5 @@ module.exports = {
     isSaas,
     upload_url,
     tenant_type,
-    // acc_url
+    DEPLOY_MODE
 }

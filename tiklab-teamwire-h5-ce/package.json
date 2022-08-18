@@ -102,6 +102,7 @@
         "sass-resources-loader": "^2.2.1",
         "start": "^5.1.0",
         "tiklab-core-ui": "1.0.0",
+        "tiklab-eam-saas-ui": "^1.0.0",
         "tiklab-eam-ui": "^1.0.0",
         "tiklab-privilege-ui": "^1.0.0",
         "tiklab-slate-h5-ui": "^1.0.1",

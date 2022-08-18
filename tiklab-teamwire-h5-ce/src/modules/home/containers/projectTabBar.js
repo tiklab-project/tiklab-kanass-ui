@@ -16,12 +16,11 @@ import {
     AppOutline,
     UserOutline,
 } from 'antd-mobile-icons';
-import "../components/projectTabBar.scss"
-// import {verifyUserHoc} from "tiklab-eam-ui/es/_utils";
-import {verifyUserHoc} from "tiklab-eam-ui";
+import "../components/projectTabBar.scss";
+import {verifyUserHoc} from "tiklab-eam-saas-ui";
+
 const ProjectTabBar = (props) => {
     const route = props.route;
-    // const history = useHistory()
     const location = useLocation()
     const { pathname } = location
     const setRouteActive = (value) => {
@@ -41,8 +40,6 @@ const ProjectTabBar = (props) => {
         },
     ]
 
-    const [activeKey, setActiveKey] = useState('todo')
-
     return (
         <div>
             <div>
@@ -60,6 +57,5 @@ const ProjectTabBar = (props) => {
 
     )
 }
-
 const IndexSaasHoc = verifyUserHoc(ProjectTabBar, "teamwire")
-export default ProjectTabBar;
+export default IndexSaasHoc;
