@@ -52,3 +52,12 @@ export function FindProjectBurnDowmChartPage (data){
         data 
     })
 }
+
+export function UpdateproList(data){
+    return service.request({
+        url: "/project/updateProject",
+        method: "post",
+        data 
+        
+    })
+}

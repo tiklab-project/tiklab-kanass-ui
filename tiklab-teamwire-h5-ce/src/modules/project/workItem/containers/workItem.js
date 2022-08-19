@@ -16,7 +16,6 @@ import { withRouter } from 'react-router';
 const WorkItem = (props) => {
     const { workItemStore } = props;
     const { getWorkConditionPage,workList } = workItemStore;
-    const [workItemList, setWorkItemList] = useState();
 
     useEffect(() => {
         getWorkConditionPage({projectId: localStorage.getItem("projectId")})
@@ -37,9 +36,6 @@ const WorkItem = (props) => {
                         '--border-radius': '100px',
                     }}
                 />
-                {/* <Button size='mini' color='primary'>
-                        添加项目
-                    </Button> */}
                 <Button
                     size='mini'
                     color='primary'
@@ -49,15 +45,6 @@ const WorkItem = (props) => {
                 >
                     添加事项
                 </Button>
-                {/* <Modal
-                    visible={visible}
-                    content={<ProjectAddEidtModal {...props} visible={visible} setVisible={setVisible} setProjectList={setProjectList} />}
-                    closeOnAction
-                    showCloseButton={true}
-                    onClose={() => {
-                        setVisible(false)
-                    }}
-                /> */}
             </div>
             <div className='workItem'>
                 {

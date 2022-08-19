@@ -17,7 +17,6 @@ const WorkItemDetail = (props) => {
 		},
 	])
     useEffect(()=> {
-        console.log(props.match.params.id)
         const workItemId = props.match.params.id;
         
         findWorkItem({id: workItemId}).then(res => {

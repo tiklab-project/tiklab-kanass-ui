@@ -16,3 +16,19 @@ export function FindSprintPage(data){
         data 
     })
 }
+
+export function FindDmUserPage(data){
+    return service.request({
+        url: "/dmUser/findDmUserPage",
+        method: "post",
+        data 
+    })
+}
+
+export function CreateSprint(data){
+    return service.request({
+        url: "/sprint/createSprint",
+        method: "post",
+        data
+    })
+}

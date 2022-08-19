@@ -1,8 +1,8 @@
 .workItem-info-item {
     display: flex;
     justify-content: space-between;
-    height: 80px;
-    line-height: 80px;
+    height: 40px;
+    line-height: 40px;
     :nth-child(1){
         font-weight: 600;
         width: 200px;
@@ -15,8 +15,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center ;
-        height: 80px;
-        line-height: 80px;
+        height: 40px;
+        line-height: 40px;
     }
     .upload-icon {
         position: relative;

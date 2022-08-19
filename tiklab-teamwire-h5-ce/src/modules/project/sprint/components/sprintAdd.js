@@ -7,45 +7,30 @@
  * @LastEditTime: 2022-03-24 10:52:06
  */
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Picker, Button, DatePicker, Toast } from 'antd-mobile';
+import { Form, Input, Picker, Button, DatePicker, NavBar,Toast } from 'antd-mobile';
 import { CloseCircleFill } from 'antd-mobile-icons';
-import "./projectAddEditModal.scss";
 import { inject, observer } from 'mobx-react';
 import dayjs from 'dayjs';
-const ProjectAddEidtModal = (props) => {
-    const { projectStore, visible, setVisible, setProjectList } = props;
-    const { findAllUser, findAllProjectType, addProject, findProjectPage } = projectStore;
+import { withRouter } from 'react-router';
+const SprintAdd = (props) => {
+    const { sprintStore } = props;
+    const {getUseList, createSprint} = sprintStore
     const [form] = Form.useForm();
     const [userList, setUserList] = useState([]);
-    const [projectTypeList, setProjectTypeList] = useState([]);
+    const projectId = localStorage.getItem("projectId");
     useEffect(() => {
-        if (visible) {
-            findAllUser().then(data => {
-                if (data.code === 0) {
-                    const list = data.data;
-                    const userPickList = [];
-                    list && list.length > 0 && list.map(item => {
-                        userPickList.push({ value: item.id, label: item.name });
-                        return 0;
-                    })
-                    setUserList([userPickList]);
-                }
-            })
-
-            findAllProjectType().then(data => {
-                if (data.code === 0) {
-                    const list = data.data;
-                    const projectTypeList = [];
-                    list && list.length > 0 && list.map(item => {
-                        projectTypeList.push({ value: item.id, label: item.name });
-                        return 0;
-                    })
-                    setProjectTypeList([projectTypeList]);
-                }
-            })
-        }
-
-    }, [visible])
+        getUseList(projectId).then(res => {
+            if(res.code === 0){
+                const dataList = res.data.dataList;
+                const list = [];
+                dataList && dataList.length > 0 && dataList.map(item => {
+                    list.push({ value: item.user.id, label: item.user.name });
+                    return 0;
+                })
+                setUserList([list])
+            }
+        })
+    }, [])
     // 状态类型
     const status = [
         [{
@@ -62,69 +47,53 @@ const ProjectAddEidtModal = (props) => {
         }]
     ]
 
-    const limits = [
-        [{
-            label: "全员可见",
-            value: "0"
-        },
-        {
-            label: "项目成员可见",
-            value: "1"
-        }]
-    ]
 
     const [statusPickerVisible, setStatusPickerVisible] = useState(false);
     const [userPickerVisible, setUserPickerVisible] = useState(false);
     const [planStartPickerVisible, setPlanStartPickerVisible] = useState(false);
-    const [projectTypePickerVisible, setProjectTypePickerVisible] = useState(false);
     const [planEndPickerVisible, setPlanEndPickerVisible] = useState(false);
-    const [projectLimitsVisible, setProjectLimitsVisible] = useState(false);
 
 
     const onFinish = (values) => {
         const data = {
-            projectName: values.projectName,
-            projectKey: values.projectKey,
-            projectType: {
-                id: values.projectType[0]
-            },
-            master: {
-                id: values.master[0]
-            },
-            desc: values.desc,
+            sprintName: values.sprintName,
+            master: values.master[0],
             startTime: dayjs(values.startTime).format('YYYY-MM-DD'),
             endTime: dayjs(values.endTime).format("YYYY-MM-DD"),
-            projectState: values.projectState[0],
-            projectLimits: values.projectLimits[0],
-            iconUrl: values.iconUrl
-        }
-        addProject(data).then(data => {
-            if (data.code === 0) {
-                findProjectPage().then(data => {
-                    setVisible(false)
-                    if (data.code === 0) {
-                        setProjectList(data.data.dataList)
-                    }
-
-                })
+            desc: values.desc,
+            project: {
+                id: projectId
             }
-            if (data.code !== 0) {
+        }
+        createSprint(data).then(data => {
+            if(data.code === 0){
                 Toast.show({
-                    icon: 'fail',
-                    content: data.msg,
+                    content: '添加成功'
                 })
+                props.history.goBack()
             }
         })
     }
 
     return (
         <div>
+            <NavBar
+                style={{
+                    '--height': '36px',
+                    '--border-bottom': '1px #eee solid',
+                }}
+                onBack={()=> props.history.goBack()}
+            >
+                <div className="title-top">
+                    添加迭代
+                </div>
+            </NavBar>
             <Form
                 initialValues={{
                     remember: true,
                 }}
                 form={form}
-                className='project-add-form'
+                className='sprint-add-form'
                 onFinish={onFinish}
                 footer={
                     <Button block type='submit' color='primary' size='small'>
@@ -132,49 +101,33 @@ const ProjectAddEidtModal = (props) => {
                     </Button>
                 }
             >
-                <Form.Header>添加项目</Form.Header>
+                <Form.Header>添加迭代</Form.Header>
                 <Form.Item
-                    label="项目名称"
-                    name="projectName"
+                    label="迭代名称"
+                    name="sprintName"
 
                     rules={[
                         {
                             required: true,
-                            message: '请输入项目名称',
+                            message: '请输入迭代名称',
                         },
                     ]}
                 >
-                    <Input placeholder="项目名称" />
-                </Form.Item>
-                <Form.Item
-                    label="项目Key"
-                    name="projectKey"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入项目键值',
-                        },
-                        {
-                            pattern: /^[A-Za-z]+$/,
-                            message: '只能包含字母!'
-                        }
-                    ]}
-                >
-                    <Input placeholder="项目键值" />
+                    <Input placeholder="迭代名称" />
                 </Form.Item>
 
                 <Form.Item
-                    label="项目类型"
-                    name="projectType"
+                    label="迭代状态"
+                    name="sprintState"
                     rules={[
                         {
                             required: true,
-                            message: '请选择项目类型',
+                            message: '请选择迭代状态',
                         },
                     ]}
                     trigger='onConfirm'
                     arrow={
-                        form.getFieldValue('projectType') ? (
+                        form.getFieldValue('sprintState') ? (
                             <CloseCircleFill
                                 style={{
                                     color: 'var(--adm-color-light)',
@@ -182,57 +135,7 @@ const ProjectAddEidtModal = (props) => {
                                 }}
                                 onClick={e => {
                                     e.stopPropagation()
-                                    form.setFieldsValue({ projectType: null })
-                                }}
-                            />
-                        ) : (
-                            true
-                        )
-                    }
-                    onClick={() => {
-                        setProjectTypePickerVisible(true)
-                    }}
-                >
-
-                    <Picker
-                        style={{
-                            '--title-font-size': '13px',
-                            '--header-button-font-size': '13px',
-                            '--item-font-size': '13px',
-                            '--item-height': '30px',
-                        }}
-                        columns={projectTypeList}
-                        visible={projectTypePickerVisible}
-                        onClose={() => {
-                            setProjectTypePickerVisible(false)
-                        }}
-                    >
-                        {
-                            value => value.length > 0 ? value[0].label : "请选择项目类型"
-                        }
-                    </Picker>
-                </Form.Item>
-
-                <Form.Item
-                    label="项目状态"
-                    name="projectState"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择项目状态',
-                        },
-                    ]}
-                    trigger='onConfirm'
-                    arrow={
-                        form.getFieldValue('projectState') ? (
-                            <CloseCircleFill
-                                style={{
-                                    color: 'var(--adm-color-light)',
-                                    fontSize: 14,
-                                }}
-                                onClick={e => {
-                                    e.stopPropagation()
-                                    form.setFieldsValue({ projectState: null })
+                                    form.setFieldsValue({ sprintState: null })
                                 }}
                             />
                         ) : (
@@ -262,55 +165,7 @@ const ProjectAddEidtModal = (props) => {
                     </Picker>
                 </Form.Item>
 
-                <Form.Item
-                    label="项目可见范围"
-                    name="projectLimits"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择项目状态',
-                        },
-                    ]}
-                    trigger='onConfirm'
-                    arrow={
-                        form.getFieldValue('projectLimits') ? (
-                            <CloseCircleFill
-                                style={{
-                                    color: 'var(--adm-color-light)',
-                                    fontSize: 14,
-                                }}
-                                onClick={e => {
-                                    e.stopPropagation()
-                                    form.setFieldsValue({ projectLimits: null })
-                                }}
-                            />
-                        ) : (
-                            true
-                        )
-                    }
-                    onClick={() => {
-                        setProjectLimitsVisible(true)
-                    }}
-                >
-                    <Picker
-                        style={{
-                            '--title-font-size': '13px',
-                            '--header-button-font-size': '13px',
-                            '--item-font-size': '13px',
-                            '--item-height': '30px',
-                        }}
-                        columns={limits}
-                        visible={projectLimitsVisible}
-                        onClose={() => {
-                            setProjectLimitsVisible(false)
-                        }}
-                    >
-                        {
-                            value => value.length > 0 ? value[0].label : "请选择可见范围"
-                        }
-                    </Picker>
-                </Form.Item>
-
+                
                 <Form.Item
                     label="负责人"
                     name="master"
@@ -341,7 +196,7 @@ const ProjectAddEidtModal = (props) => {
                         setUserPickerVisible(true)
                     }}
                 >
-                    {/* <Input placeholder="项目名称" /> */}
+                    {/* <Input placeholder="迭代名称" /> */}
                     <Picker
                         style={{
                             '--title-font-size': '13px',
@@ -391,7 +246,6 @@ const ProjectAddEidtModal = (props) => {
                         setPlanStartPickerVisible(true)
                     }}
                 >
-                    {/* <Input placeholder="项目名称" /> */}
                     <DatePicker
                         visible={planStartPickerVisible}
                         onClose={() => {
@@ -434,7 +288,7 @@ const ProjectAddEidtModal = (props) => {
                         setPlanEndPickerVisible(true)
                     }}
                 >
-                    {/* <Input placeholder="项目名称" /> */}
+                    {/* <Input placeholder="迭代名称" /> */}
                     <DatePicker
                         visible={planEndPickerVisible}
                         onClose={() => {
@@ -448,19 +302,19 @@ const ProjectAddEidtModal = (props) => {
                 </Form.Item>
 
                 <Form.Item
-                    label="项目描述"
+                    label="迭代描述"
                     name="desc"
                     rules={[
                         {
                             required: false,
-                            message: '请输入项目描述',
+                            message: '请输入迭代描述',
                         },
                     ]}
                 >
-                    <Input placeholder="项目描述" />
+                    <Input placeholder="迭代描述" />
                 </Form.Item>
             </Form>
         </div>
     )
 }
-export default inject("projectStore")(observer(ProjectAddEidtModal));
+export default withRouter(inject("sprintStore")(observer(SprintAdd)));

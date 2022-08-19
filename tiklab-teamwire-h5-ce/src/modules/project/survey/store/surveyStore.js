@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { StatProjectWorkItemByBusStatus,StatProjectManageSprint,FindProject,
-    FindDynamicPage,FindProjectBurnDowmChartPage } from "../api/surveyApi";
+    FindDynamicPage,FindProjectBurnDowmChartPage,UpdateproList } from "../api/surveyApi";
 export class ProjectSurveyStore {
 
     @action
@@ -69,5 +69,13 @@ export class ProjectSurveyStore {
         const data = await FindProjectBurnDowmChartPage(params);
         return data;
     }
+
+
+    @action
+    updateProject = (values) => {
+        const data = UpdateproList(values);
+        return data;
+    }
+
 }
 export const PROJECTSURVEY_STORE = "projectSurveyStore"

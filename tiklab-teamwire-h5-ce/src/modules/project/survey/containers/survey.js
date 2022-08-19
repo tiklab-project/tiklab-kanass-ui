@@ -7,16 +7,21 @@
  * @LastEditTime: 2022-03-19 19:01:21
  */
 import React, { useEffect,useState } from "react";
-import { Card, Toast, Button } from 'antd-mobile';
+import { Card, Picker, Input } from 'antd-mobile';
 import "../components/survey.scss";
 import { inject, observer } from "mobx-react";
 import moment from 'moment';
 import * as echarts from "echarts"
 const Survey = (props) => {
     const {projectSurveyStore} = props;
-    const {findProject,findProjectBurnDowmChartPage} = projectSurveyStore;
+    const {findProject,findProjectBurnDowmChartPage, updateProject} = projectSurveyStore;
     const [project, setProject] = useState();
+    const [projectKey, setProjectKey] = useState();
     const projectId = localStorage.getItem("projectId");
+    const [basicColumns, setbasicColumns] = useState([]);
+    const [visible, setVisible] = useState(false)
+    const [value, setValue] = useState()
+    const [nameValue, setNameValue] = useState()
 
     useEffect(() => {
         const timerXaixs = ["2022-03-09", "2022-03-10", "2022-03-11", "2022-03-12",
@@ -28,6 +33,7 @@ const Survey = (props) => {
 
         findProject(projectId).then(res => {
             setProject(res.data)
+            setNameValue(res.data.projectName)
         })
 
     }, [])
@@ -63,6 +69,7 @@ const Survey = (props) => {
         }
 
     },[project])
+
     const statusSet = (value) => {
         let data = ""
         switch (value) {
@@ -82,6 +89,7 @@ const Survey = (props) => {
         }
         return data;
     }
+
     const modelName = (value) => {
         let data = ""
         switch (value) {
@@ -101,7 +109,6 @@ const Survey = (props) => {
         return data;
     }
 
-
     const typeName = (value) => {
         let data = ""
         switch (value) {
@@ -120,6 +127,7 @@ const Survey = (props) => {
         }
         return data;
     }
+
     const burnDownChart = (timerXaixs, workCountYaixs, Yaxis) => {
         const burnDown = echarts.init(document.getElementById('burn-down'));
         let option;
@@ -155,6 +163,39 @@ const Survey = (props) => {
         };
         burnDown.setOption(option)
     }
+
+    const status = [
+        [
+            { label: '未开始', value: '1' },
+            { label: '已启动', value: '2' },
+            { label: '已结束', value: '3' }
+        ]
+    ]
+    const showStatusPicker = (value) => {
+        setbasicColumns(status)
+        setVisible(true)
+        setValue([project[value]])
+        setProjectKey(value)
+    }
+
+    const changeProjectInfo = (value) => {
+        project[projectKey] = value[0]
+
+        const data = {
+            id: projectId,
+            [projectKey] : value[0]
+        }
+        updateProject(data)
+    }
+
+    const updataProjectName = (value) => {
+        const data = {
+            id: projectId,
+            projectName : value
+        }
+        updateProject(data)
+        setNameValue(value)
+    }
     return (
         <div style={{ backgroundColor: "#F4F5F7" }} className="project-survey">
             <Card
@@ -163,32 +204,42 @@ const Survey = (props) => {
                 }}
                 title='项目详情'
                 style={{ backgroundColor: "#fff" }}
-            >
+            >   
+                 <div className="project-info-item name-item">
+                    <span>
+                        项目名称：
+                    </span>
+                    <span>
+                        {project && <Input
+                            placeholder='请输入内容'
+                            value={nameValue}
+                            onChange={val => {
+                                updataProjectName(val)
+                            }}
+                            style = {{
+                                "--font-size" : "12px",
+                                "--text-align" : "right"
+                            }}
+                        />}
+                    </span>
+
+                </div>
                 <div className="project-info-item">
                     <span>
                         项目动态：
                     </span>
-                    <span>
+                    <span onClick={() => showStatusPicker("projectState")}>
                         {project && statusSet(project.projectState)}
                     </span>
 
                 </div>
                 <div className="project-info-item">
                     <span>
-                        负责人：
+                        创建人：
                     </span>
                     <span>
                     {project && project.master.name}
                     </span>
-                </div>
-                <div className="project-info-item">
-                    <span>
-                        项目进度：
-                    </span>
-                    <span>
-                    {project && project.quantityNumber}
-                    </span>
-
                 </div>
                 <div className="project-info-item">
                     <span>
@@ -228,6 +279,15 @@ const Survey = (props) => {
 
                 </div>
             </Card>
+            <Picker
+                columns={basicColumns}
+                visible={visible}
+                onClose={() => {
+                    setVisible(false)
+                }}
+                value={value}
+                onConfirm={value => changeProjectInfo(value)}
+            />
         </div>
 
     )

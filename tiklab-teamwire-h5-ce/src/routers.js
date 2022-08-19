@@ -18,7 +18,9 @@ const WorkItemAdd = AsyncComponent(() => import('./modules/project/workItem/comp
 const Set = AsyncComponent(() => import('./modules/home/components/set'))
 const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/components/workItemDesc"))
 const WorkItemDetail = AsyncComponent(() => import("./modules/project/workItem/components/workItemDetail"))
-
+const SprintAdd = AsyncComponent(() => import("./modules/project/sprint/components/sprintAdd"))
+const VersionAdd = AsyncComponent(() => import("./modules/project/version/components/versionAdd"))
+const MilestoneAdd = AsyncComponent(() => import("./modules/project/milestone/components/milestoneAdd"))
 const routes = [
     {
         path: "/index",
@@ -61,7 +63,14 @@ const routes = [
                 component: WorkItemAdd,
                 key: 'WorkItemAdd'
             },
+           
         ]
+    },
+    {
+        path: "/sprintAdd",
+        exact: true,
+        component: SprintAdd,
+        key: 'SprintAdd'
     },
     {
         path: "/workItemAdd",
@@ -72,6 +81,18 @@ const routes = [
         path: "/workItemDesc",
         component: WorkItemDesc,
         key: 'WorkItemDesc',
+    },
+    {
+        path: "/versionAdd",
+        exact: true,
+        component: VersionAdd,
+        key: 'VersionAdd'
+    },
+    {
+        path: "/milestoneAdd",
+        exact: true,
+        component: MilestoneAdd,
+        key: 'MilestoneAdd'
     },
     {
         path: "/workItemDetail/:id",

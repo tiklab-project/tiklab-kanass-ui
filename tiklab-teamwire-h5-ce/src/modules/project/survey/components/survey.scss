@@ -1,12 +1,17 @@
 .project-info-item {
     display: flex;
     justify-content: space-between;
-    height: 80px;
-    line-height: 80px;
-    :nth-child(1){
+    height: 40px;
+    line-height: 40px;
+    span:nth-child(1){
         font-weight: 600;
         width: 200px;
     }
+}
+.name-item {
+    display: flex;
+    align-items: center;
+
 }
 .project-survey {
     height: calc(100vh - 95px);

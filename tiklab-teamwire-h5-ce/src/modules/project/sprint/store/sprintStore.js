@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-19 19:20:36
  */
 import { observable, action } from "mobx";
-import { FindSprintPage } from "../api/sprint";
+import { FindSprintPage, FindDmUserPage, CreateSprint } from "../api/sprint";
 
 export class SprintStore {
     @observable workList = [];
@@ -40,6 +40,25 @@ export class SprintStore {
     @action
     setSearchCondition = (value) => {
         Object.assign(this.searchCondition, { ...value })
+    }
+
+    @action
+    getUseList = async(projectId) => {
+        const params = {
+            domainId: projectId,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await FindDmUserPage(params);
+        return data;
+    }
+
+    @action
+    createSprint = async(value) => {
+        const data = await CreateSprint(value);
+        return data;
     }
 }
 export const SPRINT_STORE = "sprintStore"

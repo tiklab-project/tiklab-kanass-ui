@@ -19,6 +19,7 @@ import { NavBar, Avatar, SearchBar, Button, Modal } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "../components/sprint.scss";
+import { withRouter } from 'react-router';
 
 // import ProjectAddEidtModal from "./components/projectAddEditModal";
 const Sprint = (props) => {
@@ -38,6 +39,23 @@ const Sprint = (props) => {
     return (
         <div className="home">
             <div className='sprint'>
+                <div className='sprint-search'>
+                    <SearchBar
+                        placeholder='请输入内容'
+                        style={{
+                            '--border-radius': '100px',
+                        }}
+                    />
+                    <Button
+                        size='mini'
+                        color='primary'
+                        onClick={() => {
+                            props.history.push("/sprintAdd")
+                        }}
+                    >
+                        添加迭代
+                    </Button>
+                </div>
                 {
                     sprintList && sprintList.length > 0 && sprintList.map(item => {
                         return <div className="sprint-list">
@@ -52,11 +70,8 @@ const Sprint = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className='sprint-type'>
-                                {item.workType.name}
-                            </div> */}
                             <div>
-                            {item.sprintState.name}
+                                {item.sprintState.name}
                             </div>
                             <div>
                                 <EyeOutline />
@@ -68,4 +83,4 @@ const Sprint = (props) => {
         </div>
     )
 }
-export default inject("sprintStore")(observer(Sprint));
+export default withRouter(inject("sprintStore")(observer(Sprint)));

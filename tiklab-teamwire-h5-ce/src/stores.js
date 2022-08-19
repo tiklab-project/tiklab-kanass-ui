@@ -12,6 +12,9 @@ import { PROJECT_STORE, ProjectStore } from "./modules/project/project/store/pro
 import { PROJECTSURVEY_STORE, ProjectSurveyStore } from "./modules/project/survey/store/surveyStore";
 import { WORKITEM_STORE, WorkItemStore } from "./modules/project/workItem/store/workItemStore";
 import { SPRINT_STORE, SprintStore } from "./modules/project/sprint/store/sprintStore";
+import { VERSION_STORE, VersionStore } from "./modules/project/version/store/versionStore";
+import { MILESTONE_STORE, MilestoneStore } from "./modules/project/milestone/store/milestoneStore";
+import { MODULE_STORE, ModuleStore } from "./modules/project/module/store/moduleStore";
 import { QYWX_STORE, QywxStore } from "./modules/qiyeWeixin/store/qywxStore";
 import {SlateStore,SLATE_STORE} from "tiklab-slate-h5-ui"
 function createStores() {
@@ -21,6 +24,9 @@ function createStores() {
         [WORKITEM_STORE]:new WorkItemStore(),
         [SPRINT_STORE]:new SprintStore(),
         [QYWX_STORE]:new QywxStore(),
+        [VERSION_STORE]:new VersionStore(),
+        [MILESTONE_STORE]:new MilestoneStore(),
+        [MODULE_STORE]:new ModuleStore(),
         [SLATE_STORE]:new SlateStore(),
     }
 }
