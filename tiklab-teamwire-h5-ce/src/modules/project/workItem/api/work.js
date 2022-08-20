@@ -117,3 +117,21 @@ export function EditWork(data){
         data 
     })
 }
+
+//获取事项节点
+export function FindFlowDef(data){
+    return service.request({
+        url: "/flow/findFlowDef",
+        method: "post",
+        data 
+    })
+}
+
+// 获取自定义状态列表
+export function GetStateList (data){
+    return service.request({
+        url: "/stateNode/findToNodeList",
+        method: "post",
+        data 
+    })
+}

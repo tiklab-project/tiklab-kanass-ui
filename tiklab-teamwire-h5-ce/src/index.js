@@ -19,6 +19,7 @@ import "./index.scss";
 import {observer} from "mobx-react"
 
 const Index = observer(() => {
+    console.log(base_url)
     const allStore = {...store}
     return (
         <Provider {...allStore}>

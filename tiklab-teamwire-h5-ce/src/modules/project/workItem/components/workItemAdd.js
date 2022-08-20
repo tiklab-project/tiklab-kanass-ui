@@ -7,9 +7,7 @@
  * @LastEditTime: 2022-04-23 18:55:37
  */
 import React, { useEffect, useState } from 'react';
-import {NavBar, Input, Button, Dialog, Form, Picker, DatePicker,
-    Selector, Slider, Stepper, Toast, ImageUploader
-} from 'antd-mobile';
+import {NavBar, Input, Button, Dialog, Form, Picker, DatePicker,Stepper } from 'antd-mobile';
 import { inject, observer } from 'mobx-react';
 import "./workItem.scss";
 import { withRouter } from 'react-router';
@@ -17,6 +15,8 @@ import "./workItemAdd.scss";
 import { CloseCircleFill } from 'antd-mobile-icons';
 import { toJS } from 'mobx';
 import { getUser } from 'tiklab-core-ui';
+import dayjs from 'dayjs';
+
 const WorkItemAdd = (props) => {
     const { workItemStore } = props;
     const { findAllWorkType, workTypeList, getProjectUserList, projectUserList,
@@ -34,6 +34,10 @@ const WorkItemAdd = (props) => {
     const [moduleVisible, setModuleVisible] = useState(false);
     const [imageList, setImageList] = useState([])
     const projectId = localStorage.getItem("projectId")
+
+    const [planStartPickerVisible, setPlanStartPickerVisible] = useState(false);
+    const [planEndPickerVisible, setPlanEndPickerVisible] = useState(false);
+
     useEffect(() => {
         findAllWorkType()
         getProjectUserList({projectId: projectId})
@@ -60,6 +64,8 @@ const WorkItemAdd = (props) => {
             reporter: values.reporter ? values.reporter[0] : null,
             desc: slateValue ? toJS(slateValue): null,
             planTakeupTime: values.planTakeupTime ? values.planTakeupTime: null,
+            planBeginTime: dayjs(values.startTime).format('YYYY-MM-DD HH:mm:ss'),
+            planEndTime: dayjs(values.endTime).format("YYYY-MM-DD HH:mm:ss")
         }
 
         addWork(params).then(res => {
@@ -242,12 +248,6 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="报告人"
                     name="reporter"
-                    // rules={[
-                    //     {
-                    //         // required: true,
-                    //         message: '请选择报告人',
-                    //     }
-                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('reporter') ? (
@@ -291,12 +291,6 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="优先级"
                     name="workPriority"
-                    // rules={[
-                    //     {
-                    //         // required: true,
-                    //         message: '请选择优先级',
-                    //     }
-                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('workPriority') ? (
@@ -318,7 +312,6 @@ const WorkItemAdd = (props) => {
                         setWorkPriorityVisible(true)
                     }}
                 >
-                    {/* <Input placeholder="项目名称" /> */}
                     <Picker
                         style={{
                             '--title-font-size': '13px',
@@ -341,12 +334,6 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="迭代"
                     name="sprint"
-                    // rules={[
-                    //     {
-                    //         // required: true,
-                    //         message: '请选择迭代',
-                    //     }
-                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('sprint') ? (
@@ -389,12 +376,6 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="模块"
                     name="module"
-                    // rules={[
-                    //     {
-                    //         // required: true,
-                    //         message: '请选择所属模块',
-                    //     }
-                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('module') ? (
@@ -430,65 +411,99 @@ const WorkItemAdd = (props) => {
                         }}
                     >
                         {
-                            value => value.length > 0 ? value[0].label : "请选择迭代"
+                            value => value.length > 0 ? value[0].label : "请选择模块"
                         }
                     </Picker>
                 </Form.Item>
+
+                <Form.Item
+                    name="startTime"
+                    label="计划开始日期"
+                    trigger='onConfirm'
+                    
+                    arrow={
+                        form.getFieldValue('startTime') ? (
+                            <CloseCircleFill
+                                style={{
+                                    color: 'var(--adm-color-light)',
+                                    fontSize: 14,
+                                }}
+                                onClick={e => {
+                                    e.stopPropagation()
+                                    form.setFieldsValue({ startTime: null })
+                                }}
+                            />
+                        ) : (
+                            true
+                        )
+                    }
+                    onClick={() => {
+                        setPlanStartPickerVisible(true)
+                    }}
+                >
+                    <DatePicker
+                        visible={planStartPickerVisible}
+                        precision = 'second'
+                        onClose={() => {
+                            setPlanStartPickerVisible(false)
+                        }}
+                    >
+                        {value =>
+                            value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期'
+                        }
+                    </DatePicker>
+                </Form.Item>
+
+                <Form.Item
+                    name="endTime"
+                    label="计划结束日期"
+                    precision = 'second'
+                    trigger='onConfirm'
+                    arrow={
+                        form.getFieldValue('endTime') ? (
+                            <CloseCircleFill
+                                style={{
+                                    color: 'var(--adm-color-light)',
+                                    fontSize: 14,
+                                }}
+                                onClick={e => {
+                                    e.stopPropagation()
+                                    form.setFieldsValue({ endTime: null })
+                                }}
+                            />
+                        ) : (
+                            true
+                        )
+                    }
+                    onClick={() => {
+                        setPlanEndPickerVisible(true)
+                    }}
+                >
+                    {/* <Input placeholder="迭代名称" /> */}
+                    <DatePicker
+                        visible={planEndPickerVisible}
+                        precision = 'second'
+                        onClose={() => {
+                            setPlanEndPickerVisible(false)
+                        }}
+                    >
+                        {value =>
+                            value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期'
+                        }
+                    </DatePicker>
+                </Form.Item>
+
                 <Form.Item
                     initialValue={0}
-                    // rules={[
-                    //     {
-                    //         max: 5,
-                    //         min: 1,
-                    //         type: 'number',
-                    //     },
-                    // ]}
                     name='planTakeupTime'
                     label='计划时长'
                 >
                     <Stepper />
 
                 </Form.Item>
-                {/* <div className='form-upload'>
-                    <div>上传文件</div>
-                    <div className='upload'>
-                        <input type="file" onChange={handleUpload} className= "upload-file"/>
-                        <span>
-                            <svg aria-hidden="true">
-                                <use xlinkHref="#icon-shangchuanwenjian"></use>
-                            </svg>
-                        </span>
-                    </div>
-                    {
-                        fileList && fileList.length > 0 && fileList.map(item => {
-                            return <div className='show-file'>
-                                <span>
-                                    <svg aria-hidden="true">
-                                        <use xlinkHref="#icon-a-wenjianjiawenjian"></use>
-                                    </svg>
-                                </span>
-                                <span>
-                                    {item.name}
-                                </span>
-                            </div>
-                        })
-                    }
-                </div>
-                <div style={{ paddingLeft: "16px" }}>
-                    <div><label>
-                        图片附件
-                    </label></div>
-                    <ImageUploader
-                        style={{ '--cell-size': '90px' }}
-                        value={imageList}
-                        onChange={setImageList}
-                        upload={mockUpload}
-                    />
-                </div> */}
                 <div style={{ paddingLeft: "16px" }}>
                     <div>添加描述</div>
-                    <Button onClick={()=> goDeasc()}>添加描述</Button>
-                    {/* <WorkItemDesc slateValue = {slateValue} setSlateValue = {setSlateValue} {...props}/> */}
+                    <Button onClick={()=> goDeasc()} className = "desc-addbutton">添加描述</Button>
                 </div>
 
 

@@ -17,7 +17,7 @@ import {
     UserOutline,
 } from 'antd-mobile-icons';
 import "../components/projectTabBar.scss";
-import {verifyUserHoc} from "tiklab-eam-saas-ui";
+import {verifyUserHoc} from "tiklab-eam-ui";
 
 const ProjectTabBar = (props) => {
     const route = props.route;

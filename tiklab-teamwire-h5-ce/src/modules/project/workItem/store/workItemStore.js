@@ -8,7 +8,8 @@
  */
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
-    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem, EditWork } from "../api/work";
+    FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem, EditWork, 
+    FindFlowDef, GetStateList} from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -18,6 +19,8 @@ export class WorkItemStore {
     @observable workPriorityList = [];
     @observable sprintList = [];
     @observable moduleList = [];
+    @observable flowDefList = [];
+    @observable statesList = [];
     @observable workItem = [];
     
     @observable searchCondition = {
@@ -326,6 +329,47 @@ export class WorkItemStore {
 
         return data;
 
+    }
+
+    // 获取当前事项流程的节点
+    @action
+    findFlowDef = async (value) => {
+        const param = new FormData()
+        param.append("id", value.id)
+        const data = await FindFlowDef(param);
+    
+        if(data.code === 0){
+            const list = data.data;
+            const flow = [];
+            list && list.length > 0 && list.map(item => {
+                flow.push({ value: item.id, label: item.moduleName });
+                return 0;
+            })
+            this.flowDefList = flow;
+        }
+        return data;
+    }
+
+     // 获取状态列表
+     @action
+     getStateList = async(value) => {
+        const params = new FormData()
+        params.append("nodeId", value.nodeId)
+        const data = await GetStateList(params)
+        if (data.code === 0) {
+            if (data.data && data.data.length > 0) {
+                const list = data.data;
+                const flow = [];
+                list && list.length > 0 && list.map(item => {
+                    flow.push({ value: item.id, label: item.name });
+                    return 0;
+                })
+                this.statesList = flow
+            } else {
+                this.statesList = null
+            }
+        }
+        return data;
     }
 
 }
