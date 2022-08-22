@@ -65,32 +65,20 @@ const ModuleList = (props) => {
                             'width': "100%"
                         }}
                     />
-                    {/* <Button
-                        size='mini'
-                        color='primary'
-                        onClick={() => {
-                            props.history.push("/moduleAdd")
-                        }}
-                    >
-                        添加里程碑
-                    </Button> */}
                 </div>
                 {
                     moduleList && moduleList.length > 0 && moduleList.map(item => {
-                        return <div className="module-list">
+                        return <div className="module-list" key = {item.id}>
                             <div className='module-left'>
                                 <div className='module-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
                                     <div >
-                                        <span className='module-title'>{item.name}</span>
-                                        <span onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
-                                            {item.master ? item.master.name : "admin"}
-                                        </span>
+                                        <span className='module-title'>{item.moduleName}</span>
                                     </div>
                                     <div>
-                                        {item.moduleTime}
+                                        {item.master ? item.master.name : "admin"}
                                     </div>
                                 </div>
                             </div>

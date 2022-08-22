@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-19 19:20:36
  */
 import { observable, action } from "mobx";
-import { FindMilestoneList, CreateMilestone,FindDmUserPage } from "../api/milestone";
+import { FindMilestoneList, CreateMilestone,FindDmUserPage, UpdateMilestone, FindMilestone } from "../api/milestone";
 
 export class MilestoneStore {
 
@@ -33,6 +33,20 @@ export class MilestoneStore {
             }
         }
         const data = await FindDmUserPage(params);
+        return data;
+    }
+
+    @action
+    updateMilestone = async (value) => {
+        let data = await UpdateMilestone(value);
+        return data;
+    }
+
+    @action
+    findMilestone = async (value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        let data = await FindMilestone(params);
         return data;
     }
 }

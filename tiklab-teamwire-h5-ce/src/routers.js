@@ -20,23 +20,43 @@ const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/com
 const WorkItemDetail = AsyncComponent(() => import("./modules/project/workItem/components/workItemDetail"))
 const SprintAdd = AsyncComponent(() => import("./modules/project/sprint/components/sprintAdd"))
 const VersionAdd = AsyncComponent(() => import("./modules/project/version/components/versionAdd"))
+const VersionDetail = AsyncComponent(() => import("./modules/project/version/components/versionDetail"))
+
+
 const MilestoneAdd = AsyncComponent(() => import("./modules/project/milestone/components/milestoneAdd"))
+const MilestoneDetail = AsyncComponent(() => import("./modules/project/milestone/components/milestoneDetail"))
+
+const SprintWorkItem = AsyncComponent(() => import("./modules/project/sprint/components/sprintWorkItem"))
+const SprintDetail = AsyncComponent(() => import("./modules/project/sprint/components/sprintDetail"))
+
+const ProjectSet = AsyncComponent(() => import("./modules/projectSet/containers/projectSet"))
+const ProjectSetDetail = AsyncComponent(() => import("./modules/projectSet/components/projectSetDetail"))
+
+const Log = AsyncComponent(() => import("./modules/log/log"))
+
+
 const routes = [
     {
         path: "/index",
         component: ProjectTabBar,
         routes: [
-            // {
-            //     path: "/index",
-            //     exact: true,
-            //     component: Project,
-            //     key: 'project'
-            // },
             {
                 path: "/index/home",
                 exact: true,
                 component: Project,
                 key: 'project'
+            },
+            {
+                path: "/index/projectSet",
+                exact: true,
+                component: ProjectSet,
+                key: 'ProjectSetect'
+            },
+            {
+                path: "/index/log",
+                exact: true,
+                component: Log,
+                key: 'Log'
             },
             {
                 path: "/index/set",
@@ -67,6 +87,11 @@ const routes = [
         ]
     },
     {
+        path: "/projectSetDetail/:id",
+        component: ProjectSetDetail,
+        key: 'ProjectSetDetail',
+    },
+    {
         path: "/sprintAdd",
         exact: true,
         component: SprintAdd,
@@ -89,15 +114,43 @@ const routes = [
         key: 'VersionAdd'
     },
     {
+        path: "/versionDetail/:id",
+        exact: true,
+        component: VersionDetail,
+        key: 'VersionDetail'
+    },
+    {
         path: "/milestoneAdd",
         exact: true,
         component: MilestoneAdd,
         key: 'MilestoneAdd'
     },
     {
+        path: "/milestoneDetail/:id",
+        exact: true,
+        component: MilestoneDetail,
+        key: 'MilestoneDetail'
+    },
+    {
         path: "/workItemDetail/:id",
         component: WorkItemDetail,
         key: 'WorkItemDetail',
+    },
+    {
+        path: "/sprintWorkItem/:id",
+        component: SprintWorkItem,
+        key: 'SprintWorkItem',
+    },
+   
+    {
+        path: "/sprintWorkItemAdd/:id",
+        component: WorkItemAdd,
+        key: 'WorkItemAdd',
+    },
+    {
+        path: "/sprintDetail/:id",
+        component: SprintDetail,
+        key: 'SprintDetail',
     },
     {
         path: "/",

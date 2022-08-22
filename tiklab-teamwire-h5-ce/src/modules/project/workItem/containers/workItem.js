@@ -7,23 +7,18 @@
  * @LastEditTime: 2022-04-22 11:32:13
  */
 import React, { useEffect, useState } from 'react';
-import { NavBar, Avatar, SearchBar,Button } from 'antd-mobile';
+import {  Avatar, SearchBar,Button } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "../components/workItem.scss";
 import { withRouter } from 'react-router';
-// import ProjectAddEidtModal from "./components/projectAddEditModal";
 const WorkItem = (props) => {
     const { workItemStore } = props;
-    const { getWorkConditionPage,workList } = workItemStore;
+    const { getWorkConditionPage,workList,setSearchConditionNull } = workItemStore;
 
     useEffect(() => {
+        setSearchConditionNull()
         getWorkConditionPage({projectId: localStorage.getItem("projectId")})
-        // .then((data) => {
-        //     // if (data.code === 0) {
-        //     //     setWorkItemList(data.data.dataList)
-        //     // }
-        // })
     }, [])
 
 

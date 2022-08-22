@@ -65,7 +65,7 @@ export function SearchMilestoneById(data){
  * @param {*} data 
  * @returns 
  */
-export function EditMilestoneById(data){
+export function UpdateMilestone(data){
     return service.request({
         url: "/milestone/updateMilestone",
         method: "post",
@@ -73,6 +73,13 @@ export function EditMilestoneById(data){
     })
 }
 
+export function FindMilestone(data){
+    return service.request({
+        url: "/milestone/findMilestone",
+        method: "post",
+        data 
+    })
+}
 
 
 // 查找所有用户类型

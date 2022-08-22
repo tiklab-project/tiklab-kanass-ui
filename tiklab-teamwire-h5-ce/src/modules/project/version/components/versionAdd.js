@@ -37,7 +37,6 @@ const VersionAdd = (props) => {
 
 
     const [statusPickerVisible, setStatusPickerVisible] = useState(false);
-    const [userPickerVisible, setUserPickerVisible] = useState(false);
     const [planStartPickerVisible, setPlanStartPickerVisible] = useState(false);
     const [planEndPickerVisible, setPlanEndPickerVisible] = useState(false);
 

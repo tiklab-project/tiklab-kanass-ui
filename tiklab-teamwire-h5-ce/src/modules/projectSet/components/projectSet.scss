@@ -3,9 +3,8 @@
         font-size: 14px;
         
     }
-    .sprint {
-        background-color: #fff;
-        .sprint-search {
+    .projectset {
+        .title {
             span {
                 height: 80px;
                 line-height: 80px;
@@ -14,45 +13,37 @@
             font-weight: 600;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background-color: #fff;
-        }
-        .title {
-            span {
-                height: 40px;
-                line-height: 40px;
-            }
-            padding: 0 20px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
             margin: 10px 0;
+            background: #fff;
         }
-        .sprint-list {
+        .projectset-box {
+            height: calc(100vh - 140px);
+            overflow: auto;
+        }
+        .projectset-list {
             display: flex;
-            // width: 100vw;
+            width: 100vw;
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
             box-sizing: border-box;
             border-top: solid 1px var(--adm-border-color);
             line-height: 40px;
-            .sprint-left {
+            .projectset-left {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-                width: 30vw;
-                .sprint-icon {
+                .projectset-icon {
                     margin-right: 10px;
                 }
             }
-            .sprint-type {
+            .projectset-type {
                 width: 20vw;
                 height: 40px; 
                 line-height: 40px;
                 overflow: hidden;
             }
-            .sprint-title {
+            .projectset-title {
                 font-size: 16px;
                 font-weight: 600;
                 color: var(--adm-color-primary)
@@ -60,7 +51,7 @@
         }
     }
     .adm-search-bar  {
-        width: 70vw;
+        width: 63vw;
         .adm-input {
             font-size: 13px;
         }

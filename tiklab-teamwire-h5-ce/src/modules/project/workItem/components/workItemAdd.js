@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-23 18:55:37
  */
 import React, { useEffect, useState } from 'react';
-import {NavBar, Input, Button, Dialog, Form, Picker, DatePicker,Stepper } from 'antd-mobile';
+import { NavBar, Input, Button, Dialog, Form, Picker, DatePicker, Stepper } from 'antd-mobile';
 import { inject, observer } from 'mobx-react';
 import "./workItem.scss";
 import { withRouter } from 'react-router';
@@ -19,11 +19,13 @@ import dayjs from 'dayjs';
 
 const WorkItemAdd = (props) => {
     const { workItemStore } = props;
+    const path = props.match.path;
+    const sprintId = props.match.params.id ? props.match.params.id : null
     const { findAllWorkType, workTypeList, getProjectUserList, projectUserList,
         findAllWorkPriority, workPriorityList, findSprintList, sprintList,
-        findModuleList, moduleList, upload, createWorkAttach,slateValue,
-        setFormValue,formValue,addWork,getWorkConditionPage } = workItemStore;
-   
+        findModuleList, moduleList, upload, createWorkAttach, slateValue,
+        setFormValue, formValue, addWork, getWorkConditionPage } = workItemStore;
+
     const [form] = Form.useForm();
 
     const [workItemTypePickerVisible, setWorkItemTypePickerVisible] = useState(false);
@@ -32,6 +34,7 @@ const WorkItemAdd = (props) => {
     const [reportPickerVisible, setReportPickerVisible] = useState(false);
     const [sprintVisible, setSprintVisible] = useState(false);
     const [moduleVisible, setModuleVisible] = useState(false);
+
     const [imageList, setImageList] = useState([])
     const projectId = localStorage.getItem("projectId")
 
@@ -40,37 +43,34 @@ const WorkItemAdd = (props) => {
 
     useEffect(() => {
         findAllWorkType()
-        getProjectUserList({projectId: projectId})
+        getProjectUserList({ projectId: projectId })
         findAllWorkPriority()
-        findSprintList({projectId: projectId})
-        findModuleList({projectId: projectId})
+        findSprintList({ projectId: projectId })
+        findModuleList({ projectId: projectId })
         form.setFieldsValue(formValue)
     }, [])
 
-    const back = () => {
-        props.history.goBack();
-    }
     const onFinish = (values) => {
-        console.log(slateValue,values);
         const params = {
             title: values.title ? values.title : null,
             project: projectId,
             workType: values.workItemType ? values.workItemType[0] : null,
             workPriority: values.workPriority ? values.workPriority[0] : null,
-            module: values.module ? values.module[0]: null,
+            module: values.module ? values.module[0] : null,
             sprint: values.sprint ? values.sprint[0] : null,
             assigner: values.assigner ? values.assigner[0] : null,
-            builder: values.builder ? values.builder[0] : getUser().userId, 
+            builder: values.builder ? values.builder[0] : getUser().userId,
             reporter: values.reporter ? values.reporter[0] : null,
-            desc: slateValue ? toJS(slateValue): null,
-            planTakeupTime: values.planTakeupTime ? values.planTakeupTime: null,
+            desc: slateValue ? toJS(slateValue) : null,
+            planTakeupTime: values.planTakeupTime ? values.planTakeupTime : null,
             planBeginTime: dayjs(values.startTime).format('YYYY-MM-DD HH:mm:ss'),
             planEndTime: dayjs(values.endTime).format("YYYY-MM-DD HH:mm:ss")
         }
-
+        if(path === "/sprintWorkItemAdd/:id") {
+            params.sprint = sprintId;
+        }
         addWork(params).then(res => {
-            console.log(res)
-            getWorkConditionPage({projectId: localStorage.getItem("projectId")}).then((data) => {
+            getWorkConditionPage({ projectId: localStorage.getItem("projectId") }).then((data) => {
                 if (data.code === 0) {
                     props.history.push("/project/projectDetail")
                     // setWorkItemList(data.data.dataList)
@@ -99,6 +99,7 @@ const WorkItemAdd = (props) => {
     }
 
     const [fileList, setFileList] = useState([])
+
     const handleUpload = (e) => {
         e.preventDefault();
 
@@ -120,7 +121,7 @@ const WorkItemAdd = (props) => {
         props.history.push("/workItemDesc")
         setFormValue(form.getFieldsValue())
     }
-    
+
 
     return (
         <div>
@@ -130,7 +131,7 @@ const WorkItemAdd = (props) => {
                     '--border-bottom': '1px #eee solid',
                 }}
                 backArrow={true}
-                onBack={()=> props.history.goBack()}
+                onBack={() => props.history.goBack()}
             >
                 <div className="title-top">
                     添加事项
@@ -145,7 +146,7 @@ const WorkItemAdd = (props) => {
                     </Button>
                 }
             >
-                <Form.Item name='title' label='事项名称'  rules={[{required: true}]}>
+                <Form.Item name='title' label='事项名称' rules={[{ required: true }]}>
                     <Input placeholder='请输入事项名称' />
                 </Form.Item>
                 <Form.Item
@@ -199,12 +200,6 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     label="负责人"
                     name="assigan"
-                    // rules={[
-                    //     {
-                    //         // required: true,
-                    //         message: '请选择负责人',
-                    //     }
-                    // ]}
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('assigan') ? (
@@ -331,48 +326,47 @@ const WorkItemAdd = (props) => {
                     </Picker>
                 </Form.Item>
 
-                <Form.Item
-                    label="迭代"
-                    name="sprint"
-                    trigger='onConfirm'
-                    arrow={
-                        form.getFieldValue('sprint') ? (
-                            <CloseCircleFill
-                                style={{
-                                    color: 'var(--adm-color-light)',
-                                    fontSize: 14,
-                                }}
-                                onClick={e => {
-                                    e.stopPropagation()
-                                    form.setFieldsValue({ sprint: null })
-                                }}
-                            />
-                        ) : (
-                            true
-                        )
-                    }
-                    onClick={() => {
-                        setSprintVisible(true)
-                    }}
-                >
-                    <Picker
-                        style={{
-                            '--title-font-size': '13px',
-                            '--header-button-font-size': '13px',
-                            '--item-font-size': '13px',
-                            '--item-height': '30px',
-                        }}
-                        columns={[sprintList]}
-                        visible={sprintVisible}
-                        onClose={() => {
-                            setSprintVisible(false)
-                        }}
-                    >
-                        {
-                            value => value.length > 0 ? value[0].label : "请选择迭代"
+                {
+                    path !== "/sprintWorkItemAdd/:id" && <Form.Item
+                        label="迭代"
+                        name="sprint"
+                        trigger='onConfirm'
+                        arrow={
+                            form.getFieldValue('sprint') ? (
+                                <CloseCircleFill
+                                    style={{
+                                        color: 'var(--adm-color-light)',
+                                        fontSize: 14,
+                                    }}
+                                    onClick={e => {
+                                        e.stopPropagation()
+                                        form.setFieldsValue({ sprint: null })
+                                    }}
+                                />
+                            ) : true
                         }
-                    </Picker>
-                </Form.Item>
+                        onClick={() => { setSprintVisible(true) }}
+                    >
+                        <Picker
+                            style={{
+                                '--title-font-size': '13px',
+                                '--header-button-font-size': '13px',
+                                '--item-font-size': '13px',
+                                '--item-height': '30px',
+                            }}
+                            columns={[sprintList]}
+                            visible={sprintVisible}
+                            onClose={() => {
+                                setSprintVisible(false)
+                            }}
+                        >
+                            {
+                                value => value.length > 0 ? value[0].label : "请选择迭代"
+                            }
+                        </Picker>
+                    </Form.Item>
+                }
+
                 <Form.Item
                     label="模块"
                     name="module"
@@ -420,7 +414,7 @@ const WorkItemAdd = (props) => {
                     name="startTime"
                     label="计划开始日期"
                     trigger='onConfirm'
-                    
+
                     arrow={
                         form.getFieldValue('startTime') ? (
                             <CloseCircleFill
@@ -443,7 +437,7 @@ const WorkItemAdd = (props) => {
                 >
                     <DatePicker
                         visible={planStartPickerVisible}
-                        precision = 'second'
+                        precision='second'
                         onClose={() => {
                             setPlanStartPickerVisible(false)
                         }}
@@ -457,7 +451,7 @@ const WorkItemAdd = (props) => {
                 <Form.Item
                     name="endTime"
                     label="计划结束日期"
-                    precision = 'second'
+                    precision='second'
                     trigger='onConfirm'
                     arrow={
                         form.getFieldValue('endTime') ? (
@@ -482,7 +476,7 @@ const WorkItemAdd = (props) => {
                     {/* <Input placeholder="迭代名称" /> */}
                     <DatePicker
                         visible={planEndPickerVisible}
-                        precision = 'second'
+                        precision='second'
                         onClose={() => {
                             setPlanEndPickerVisible(false)
                         }}
@@ -503,7 +497,7 @@ const WorkItemAdd = (props) => {
                 </Form.Item>
                 <div style={{ paddingLeft: "16px" }}>
                     <div>添加描述</div>
-                    <Button onClick={()=> goDeasc()} className = "desc-addbutton">添加描述</Button>
+                    <Button onClick={() => goDeasc()} className="desc-addbutton">添加描述</Button>
                 </div>
 
 

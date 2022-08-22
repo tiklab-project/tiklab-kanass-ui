@@ -34,6 +34,16 @@ const ProjectTabBar = (props) => {
             badge: Badge.dot,
         },
         {
+            key: '/index/projectSet',
+            title: '项目集',
+            icon: <UserOutline />,
+        },
+        {
+            key: '/index/log',
+            title: '日志',
+            icon: <UserOutline />,
+        },
+        {
             key: '/index/set',
             title: '设置',
             icon: <UserOutline />,

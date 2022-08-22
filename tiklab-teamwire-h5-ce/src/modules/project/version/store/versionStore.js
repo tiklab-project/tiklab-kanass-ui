@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-19 19:20:36
  */
 import { observable, action } from "mobx";
-import { FindVersionList, CreateVersion } from "../api/version";
+import { FindVersionList, CreateVersion, FindVersion, EditVersion } from "../api/version";
 
 export class VersionStore {
 
@@ -22,5 +22,20 @@ export class VersionStore {
         let data = await CreateVersion(value);
         return data;
     }
+
+    @action
+    updateVersion = async (value) => {
+        let data = await EditVersion(value);
+        return data;
+    }
+
+    @action
+    findVersion = async (value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        let data = await FindVersion(params);
+        return data;
+    }
+
 }
 export const VERSION_STORE = "versionStore"

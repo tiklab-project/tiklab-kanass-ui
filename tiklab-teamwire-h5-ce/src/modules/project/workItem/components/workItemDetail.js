@@ -170,7 +170,7 @@ const WorkItemDetail = (props) => {
         <div style={{width: "100vw"}}>
             <NavBar
                 style={{
-                    '--height': '36px',
+                    '--height': '40px',
                     '--border-bottom': '1px #eee solid',
                 }}
                 backArrow={true}
@@ -327,7 +327,6 @@ const WorkItemDetail = (props) => {
                 onClose={() => {
                     setWorkPriorityVisible(false)
                 }}
-                // value={value}
                 onConfirm={(value,extend) => updatePriority(value,extend)}
             />
              <DatePicker

@@ -36,7 +36,7 @@ const Project = (props) => {
         <div className="home">
             <NavBar
                 style={{
-                    '--height': '36px',
+                    '--height': '40px',
                     '--border-bottom': '1px #eee solid',
                 }}
                 backArrow={false}

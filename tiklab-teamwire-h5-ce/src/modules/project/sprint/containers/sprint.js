@@ -21,7 +21,6 @@ import { inject, observer } from 'mobx-react';
 import "../components/sprint.scss";
 import { withRouter } from 'react-router';
 
-// import ProjectAddEidtModal from "./components/projectAddEditModal";
 const Sprint = (props) => {
     const { sprintStore } = props;
     const { getSprintConditionPage } = sprintStore;
@@ -35,6 +34,11 @@ const Sprint = (props) => {
         })
     }, [])
     
+    const goSprintDetail = (sprint) => {
+        props.history.push({ pathname: `/sprintWorkItem/${sprint.id}`})
+        
+        localStorage.setItem("sprint", JSON.stringify(sprint))
+    }
 
     return (
         <div className="home">
@@ -58,14 +62,14 @@ const Sprint = (props) => {
                 </div>
                 {
                     sprintList && sprintList.length > 0 && sprintList.map(item => {
-                        return <div className="sprint-list">
+                        return <div className="sprint-list" key = {item.id}>
                             <div className='sprint-left'>
                                 <div className='sprint-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
-                                    <div className='sprint-title'>{item.sprintName}</div>
-                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail"})}>
+                                    <div className='sprint-title' onClick={() => goSprintDetail(item) }>{item.sprintName}</div>
+                                    <div >
                                         {item.master ? item.master.name : "admin" }
                                     </div>
                                 </div>

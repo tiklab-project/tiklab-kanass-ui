@@ -32,3 +32,19 @@ export function CreateSprint(data){
         data
     })
 }
+
+export function FindSprint(data){
+    return service.request({
+        url: "/sprint/findSprint",
+        method: "post",
+        data
+    })
+}
+
+export function UpdateSprint(data){
+    return service.request({
+        url: "/sprint/updateSprint",
+        method: "post",
+        data
+    })
+}

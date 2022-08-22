@@ -1,0 +1,14 @@
+.version-detail {
+    padding: 0 10px;
+}
+.version-info-item {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #f7f7f7;
+    :nth-child(1){
+        font-weight: 600;
+        width: 200px;
+    }
+}

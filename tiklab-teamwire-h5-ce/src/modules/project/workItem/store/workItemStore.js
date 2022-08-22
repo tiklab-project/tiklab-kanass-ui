@@ -71,6 +71,24 @@ export class WorkItemStore {
     }
 
     @action
+    setSearchConditionNull = () => {
+        const that = this;
+        function setValue() {
+            that.searchCondition = {
+                sortParams: [{
+                    name: "title",
+                    orderType: "asc"
+                }],
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1,
+                }
+            }
+        }
+        setValue();
+    }
+
+    @action
     findAllWorkType = async() => {
         const data = await FindAllWorkType();
         if (data.code === 0) {

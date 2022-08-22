@@ -76,15 +76,15 @@ const MilestoneList = (props) => {
                 </div>
                 {
                     milestoneList && milestoneList.length > 0 && milestoneList.map(item => {
-                        return <div className="milestone-list">
+                        return <div className="milestone-list" key = {item.id}>
                             <div className='milestone-left'>
                                 <div className='milestone-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
                                     <div >
-                                        <span className='milestone-title'>{item.name}</span>
-                                        <span onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                        <span className='milestone-title' onClick={() => props.history.push({ pathname: `/milestoneDetail/${item.id}` })}>{item.name}</span>
+                                        <span>
                                             {item.master ? item.master.name : "admin"}
                                         </span>
                                     </div>

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-22 11:05:30
  */
 import React from "react";
-import { NavBar, Tabs, SearchBar, Button, Modal } from 'antd-mobile';
+import { NavBar, Tabs } from 'antd-mobile';
 import "./projectDeailTab.scss";
 import Survey from "../survey/containers/survey";
 import WorkItem from "../workItem/containers/workItem";
@@ -23,7 +23,7 @@ const ProjectDetailTab = (props) => {
         <div>
             <NavBar
                 style={{
-                    '--height': '36px',
+                    '--height': '40px',
                     '--border-bottom': '1px #eee solid',
                 }}
                 backArrow={true}
@@ -49,7 +49,7 @@ const ProjectDetailTab = (props) => {
                 <Tabs.Tab title='里程碑' key='milestone'>
                     <MilestoneList />
                 </Tabs.Tab>
-                <Tabs.Tab title='模板' key='module'>
+                <Tabs.Tab title='模块' key='module'>
                     <ModuleList />
                 </Tabs.Tab>
             </Tabs>

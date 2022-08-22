@@ -76,15 +76,15 @@ const VersionList = (props) => {
                 </div>
                 {
                     versionList && versionList.length > 0 && versionList.map(item => {
-                        return <div className="version-list">
+                        return <div className="version-list" key = {item.id} >
                             <div className='version-left'>
                                 <div className='version-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
                                     <div >
-                                        <span className='version-title'>{item.name}</span>
-                                        <span onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                        <span className='version-title' onClick={() => props.history.push({ pathname: `/versionDetail/${item.id}` })}>{item.name}</span>
+                                        <span>
                                             {item.master ? item.master.name : "admin"}
                                         </span>
                                     </div>
