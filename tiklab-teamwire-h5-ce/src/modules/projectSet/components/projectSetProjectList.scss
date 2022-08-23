@@ -1,10 +1,10 @@
-.workItem-list {
+.projectset-project-list {
     
     .title-top {
         font-size: 14px;
         
     }
-    .workItem-search {
+    .projectset-project-search {
         span {
             height: 80px;
             line-height: 80px;
@@ -16,7 +16,7 @@
         padding: 10px;
         background-color: #fff;
     }
-    .workItem {
+    .projectset-project {
         background: #fff;
         border-radius: 5px;
         height: calc(100vh - 92px);
@@ -32,7 +32,7 @@
             justify-content: space-between;
             margin: 10px 0;
         }
-        .workItem-list {
+        .projectset-project-list {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,22 +40,22 @@
             box-sizing: border-box;
             border-top: solid 1px var(--adm-border-color);
             line-height: 30px;
-            .workItem-left {
+            .projectset-project-left {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
                 width: 30vw;
-                .workItem-icon {
+                .projectset-project-icon {
                     margin-right: 10px;
                 }
             }
-            .workItem-type {
+            .projectset-project-type {
                 width: 20vw;
                 height: 40px; 
                 line-height: 40px;
                 overflow: hidden;
             }
-            .workItem-title {
+            .projectset-project-title {
                 font-size: 16px;
                 font-weight: 600;
                 color: var(--adm-color-primary)

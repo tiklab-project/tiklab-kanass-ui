@@ -24,8 +24,6 @@ const ProjectSet = (props) => {
     }, [])
 
     const goProjectSetdetail = (id) => {
-        // localStorage.setItem("projectId", id);
-        // localStorage.setItem("projectTypeId", projectTypeId);
         props.history.push({ pathname: `/ProjectSetDetail/${id}` })
     }
 

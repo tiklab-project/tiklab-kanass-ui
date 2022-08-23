@@ -14,7 +14,8 @@ import WorkItem from "../workItem/containers/workItem";
 import Sprint from "../sprint/containers/sprint";
 import Version from "../version/containers/versionList";
 import MilestoneList from "../milestone/containers/milestoneList";
-import ModuleList from "../module/containers/moduleList"
+import ModuleList from "../module/containers/moduleList";
+import StatisticsList from "../statistics/components/statisticsList"
 const ProjectDetailTab = (props) => {
     const back = () => {
         window.history.back(-1);
@@ -51,6 +52,9 @@ const ProjectDetailTab = (props) => {
                 </Tabs.Tab>
                 <Tabs.Tab title='模块' key='module'>
                     <ModuleList />
+                </Tabs.Tab>
+                <Tabs.Tab title='统计' key='statistics'>
+                    <StatisticsList />
                 </Tabs.Tab>
             </Tabs>
         </div>

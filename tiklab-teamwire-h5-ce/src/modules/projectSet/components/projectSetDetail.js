@@ -4,7 +4,7 @@ import ProjectSetSurvey from "./ProjectSetSurvey";
 import ProjectSetProjectList from "./ProjectSetProjectList"
 const ProjectSetDetail = (props) => {
     return (
-        <div className="home">
+        <div className="projectset-detail">
             <NavBar
                 style={{
                     '--height': '40px',
@@ -18,7 +18,7 @@ const ProjectSetDetail = (props) => {
                 <Tabs.Tab title='概况' key='survey'>
                     <ProjectSetSurvey />
                 </Tabs.Tab>
-                <Tabs.Tab title='事项' key='workItem'>
+                <Tabs.Tab title='项目' key='workItem'>
                     <ProjectSetProjectList />
                 </Tabs.Tab>
             </Tabs>

@@ -1,0 +1,122 @@
+
+.statistics-list {
+    background: #fff;
+    border-right: 2px solid #e5e8ff;
+    height: 100%;
+    ul, li {
+        padding: 0;
+    }
+    &-title {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-bottom: 1px #e5e8ff solid;
+        
+    }
+    .statistics-menu-firstmenu:hover {
+        cursor: pointer;
+        background-color: #f7f7f7;
+    }
+    .statistics-menu-submenu:hover {
+        cursor: pointer;
+        background-color: #f7f7f7;
+    }
+    .statistics-menu {
+        list-style-type:none;
+        &-firstmenu {
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            width: 100%;
+            align-items: center;
+            padding-left: 20px;
+            border-bottom: 1px solid #f7f7f7;
+            i{
+                margin-right: 10px;
+            }
+        }
+        &-select {
+            background-color: #f7f7f7;
+            color: #0053ca;
+        }
+        &-submenu {
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            width: 100%;
+            align-items: center;
+            padding-left: 40px;
+            padding-right: 20px;
+            cursor: pointer;
+            font-size: 12px; 
+        }
+    }
+    
+}
+    
+    .statistics-content{
+        overflow: auto;
+        .ant-tabs {
+            overflow: visible;
+        }
+    }
+    .statistics-work{
+        padding: 10px;
+        &-table {
+            margin-top: 20px;
+        }
+        &-content {
+            padding: 20px 0;
+        }
+
+    }
+    .statistics-list-popover {
+        margin: 0;
+        padding: 0;
+        div:hover{
+            background-color: #E3E8F0;
+            color: #0053ca;
+        }
+        div {
+            width: 100px;
+            cursor: pointer;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+    }
+    .ant-popover-inner-content {
+        padding: 0;
+    }
+    .statistics-menu-icon {
+        margin-right: 10px;
+    }
+    .adm-tabs-content {
+        background-color: #fff;
+    }
+    .statistics-work-content {
+        font-size: 12px;
+        .statistics-filter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .statistics-dropdown {
+                
+               
+            }
+            .statistics-dropdown-value {
+                flex: 1;
+                border: 1px solid #f7f7f7;
+                margin:0 10px;
+                padding: 5px;
+                border-radius: 5px;
+            }
+            .statistics-work-botton {
+                width: 50px;
+                height: 40px;
+                line-height: 40px;
+            }
+        }
+        
+    }

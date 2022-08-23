@@ -32,8 +32,10 @@ const SprintDetail = AsyncComponent(() => import("./modules/project/sprint/compo
 const ProjectSet = AsyncComponent(() => import("./modules/projectSet/containers/projectSet"))
 const ProjectSetDetail = AsyncComponent(() => import("./modules/projectSet/components/projectSetDetail"))
 
-const Log = AsyncComponent(() => import("./modules/log/log"))
+const Log = AsyncComponent(() => import("./modules/log/containers/log"))
 
+const StatisticsWork = AsyncComponent(() => import("./modules/project/statistics/components/statisticsWork"))
+const StatisticsBulidAndEndWork = AsyncComponent(() => import("./modules/project/statistics/components/statisticsBulidAndEndWork"))
 
 const routes = [
     {
@@ -151,6 +153,16 @@ const routes = [
         path: "/sprintDetail/:id",
         component: SprintDetail,
         key: 'SprintDetail',
+    },
+    {
+        path: "/statisticWork/:id",
+        component: StatisticsWork,
+        key: 'StatisticsWork',
+    },
+    {
+        path: "/bulidend/:id",
+        component: StatisticsBulidAndEndWork,
+        key: 'StatisticsBulidAndEndWork',
     },
     {
         path: "/",

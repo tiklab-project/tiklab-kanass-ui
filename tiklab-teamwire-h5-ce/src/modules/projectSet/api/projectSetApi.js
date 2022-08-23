@@ -46,3 +46,30 @@ export function FindAllProjectSetType(data){
         
     })
 }
+
+export function FindProjectSet(data){
+    return service.request({
+        url: "/projectSet/findProjectSet",
+        method: "post",
+        data 
+        
+    })
+}
+
+export function UpdateProjectSet(data){
+    return service.request({
+        url: "/projectSet/updateProjectSet",
+        method: "post",
+        data 
+        
+    })
+}
+
+export function FindProjectList(data){
+    return service.request({
+        url: "/projectSet/findProjectList",
+        method: "post",
+        data 
+        
+    })
+}

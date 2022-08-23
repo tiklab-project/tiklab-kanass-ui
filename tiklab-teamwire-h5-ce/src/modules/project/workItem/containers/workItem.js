@@ -23,7 +23,7 @@ const WorkItem = (props) => {
 
 
     return (
-        <div className="home">
+        <div className="workItem-list">
             <div className='workItem-search'>
                 <SearchBar
                     placeholder='请输入内容'
