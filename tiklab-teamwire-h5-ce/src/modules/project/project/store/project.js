@@ -10,6 +10,8 @@ import { observable, action } from "mobx";
 import { FindProjectPage,FindAllUser,FindAllProjectType,AddproList } from "../api/projectApi";
 export class ProjectStore {
     @observable ProjectList = [];
+    @observable activeIndex = "survey";
+
     @observable searchProjectCondition = {
         orderParams: [{
             name: "projectName",
@@ -21,6 +23,10 @@ export class ProjectStore {
         }
     }
 
+    @action
+    setActiveIndex = (value) => {
+        this.activeIndex = value
+    }
     @action
 	findProjectPage = async(value) => {
         Object.assign(this.searchProjectCondition,value)

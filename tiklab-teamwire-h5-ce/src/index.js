@@ -17,7 +17,7 @@ import "./assets/font-icon/iconfont"
 // import './common/language/i18n';
 import "./index.scss";
 import {observer} from "mobx-react"
-
+import "./assets/index";
 const Index = observer(() => {
     console.log(base_url)
     const allStore = {...store}

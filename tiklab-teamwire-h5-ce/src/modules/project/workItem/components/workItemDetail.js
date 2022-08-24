@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const WorkItemDetail = (props) => {
     const { workItemStore } = props;
     const { findWorkItem, upload, createWorkAttach, findWorkAttachList,
-        editWork, findFlowDef, statesList, getStateList,findAllWorkPriority, workPriorityList } = workItemStore;
+        editWork, findFlowDef, statesList, getStateList,findAllWorkPriority, workPriorityList, setSlateValue } = workItemStore;
     const workItemId = props.match.params.id;
     const [workItemInfo, setWorkItemInfo] = useState();
     const [workAttachList, setWorkAttachList] = useState();
@@ -20,7 +20,7 @@ const WorkItemDetail = (props) => {
     const [planEndPickerVisible, setPlanEndPickerVisible] = useState(false);
 
     const [updateField, setUpdateField] = useState()
-    const [slateValue, setSlateValue] = useState([
+    const [slateValue, setSlateLocalValue] = useState([
 		{
 			type: "paragraph",
 			children: [{ text: "" }],
@@ -40,7 +40,7 @@ const WorkItemDetail = (props) => {
             }
             getStateList(params)
             if(res.data.desc){
-                setSlateValue(JSON.parse(res.data.desc))
+                setSlateLocalValue(JSON.parse(res.data.desc))
             }
         })
         findWorkAttachList(workItemId).then(res => {
@@ -115,12 +115,12 @@ const WorkItemDetail = (props) => {
 
     const updatePlanBegin = (updateData) => {
         let data = {
-            planBeginTime: dayjs(updateData).format('YYYY-MM-DD HH:mm:ss'),
+            planBeginTime: dayjs(updateData).format('YYYY-MM-DD'),
             id: workItemId,
             updateField: updateField
         }
         editWork(data)
-        workItemInfo.planBeginTime = dayjs(updateData).format('YYYY-MM-DD HH:mm:ss')
+        workItemInfo.planBeginTime = dayjs(updateData).format('YYYY-MM-DD')
     
     }
 
@@ -133,12 +133,12 @@ const WorkItemDetail = (props) => {
 
     const updatePlanEnd = (updateData) => {
         let data = {
-            planEndTime: dayjs(updateData).format('YYYY-MM-DD HH:mm:ss'),
+            planEndTime: dayjs(updateData).format('YYYY-MM-DD'),
             id: workItemId,
             updateField: updateField
         }
         editWork(data)
-        workItemInfo.planEndTime = dayjs(updateData).format('YYYY-MM-DD HH:mm:ss')
+        workItemInfo.planEndTime = dayjs(updateData).format('YYYY-MM-DD')
     }
 
     const showStatusPicker = (key) => {
@@ -166,6 +166,10 @@ const WorkItemDetail = (props) => {
         workItemInfo.workStatus.name = extend.items[0].label
     }
 
+    const goDesc = () => {
+        props.history.push(`/workItemEditDesc/${workItemInfo.id}`)
+        setSlateValue(slateValue)
+    }
     return (
         <div style={{width: "100vw"}}>
             <NavBar
@@ -307,9 +311,12 @@ const WorkItemDetail = (props) => {
                     <span>
                         描述
                     </span>
+                    <span onClick = {() =>goDesc()}>
+                        编辑
+                    </span>
                 </div>
                 <span>
-                    <DocumentEditor value = {slateValue} onChange = {setSlateValue} showMenu = {editorType} {...props}/>
+                    <DocumentEditor value = {slateValue} onChange = {setSlateLocalValue} showMenu = {editorType} {...props}/>
                 </span>
             </Card>
             <Picker
@@ -331,7 +338,7 @@ const WorkItemDetail = (props) => {
             />
              <DatePicker
                 visible={planStartPickerVisible}
-                precision = 'second'
+                precision = 'day'
                 onClose={() => {
                     setPlanStartPickerVisible(false)
                 }}
@@ -340,7 +347,7 @@ const WorkItemDetail = (props) => {
             </DatePicker>
             <DatePicker
                 visible={planEndPickerVisible}
-                precision = 'second'
+                precision = 'day'
                 onClose={() => {
                     setPlanEndPickerVisible(false)
                 }}

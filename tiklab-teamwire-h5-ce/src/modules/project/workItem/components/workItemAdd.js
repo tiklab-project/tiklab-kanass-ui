@@ -72,30 +72,14 @@ const WorkItemAdd = (props) => {
         addWork(params).then(res => {
             getWorkConditionPage({ projectId: localStorage.getItem("projectId") }).then((data) => {
                 if (data.code === 0) {
-                    props.history.push("/project/projectDetail")
-                    // setWorkItemList(data.data.dataList)
+                    // props.history.push("/project/projectDetail")
+                    props.history.goBack()
                 }
             })
         })
         Dialog.alert({
             content: <pre>{JSON.stringify(values, null, 2)}</pre>,
         })
-    }
-
-    const mockUpload = async (file) => {
-        setImageList([{
-            url: 'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=60',
-        }])
-        upload(file).then(data => {
-            console.log(data.data.fileName)
-            const fileName = data.data.fileName;
-            if (data.code === 0) {
-                createWorkAttach("project1-13", fileName)
-            }
-        })
-        return {
-            url: URL.createObjectURL(file),
-        }
     }
 
     const [fileList, setFileList] = useState([])

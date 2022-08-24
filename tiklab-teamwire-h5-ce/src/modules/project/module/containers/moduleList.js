@@ -53,7 +53,13 @@ const ModuleList = (props) => {
         }
         return data;
     }
-
+    const searchModule = (value) => {
+        findModuleList({ moduleName: value }).then((data) => {
+            if (data.code === 0) {
+                setModuleList(data.data)
+            }
+        })
+    }
     return (
         <div className="home">
             <div className='module'>
@@ -64,6 +70,7 @@ const ModuleList = (props) => {
                             '--border-radius': '100px',
                             'width': "100%"
                         }}
+                        onChange = {(value) => searchModule(value)}
                     />
                 </div>
                 {

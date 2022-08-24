@@ -15,7 +15,7 @@ const Project = AsyncComponent(() => import('./modules/project/project/container
 const ProjectDetailTab = AsyncComponent(() => import('./modules/project/common/projectDetailTab'))
 
 const WorkItemAdd = AsyncComponent(() => import('./modules/project/workItem/components/workItemAdd'))
-const Set = AsyncComponent(() => import('./modules/home/components/set'))
+const SystemSet = AsyncComponent(() => import('./modules/systemSet/components/systemSet'))
 const WorkItemDesc = AsyncComponent(() => import("./modules/project/workItem/components/workItemDesc"))
 const WorkItemDetail = AsyncComponent(() => import("./modules/project/workItem/components/workItemDetail"))
 const SprintAdd = AsyncComponent(() => import("./modules/project/sprint/components/sprintAdd"))
@@ -37,6 +37,11 @@ const Log = AsyncComponent(() => import("./modules/log/containers/log"))
 const StatisticsWork = AsyncComponent(() => import("./modules/project/statistics/components/statisticsWork"))
 const StatisticsBulidAndEndWork = AsyncComponent(() => import("./modules/project/statistics/components/statisticsBulidAndEndWork"))
 
+
+const ProjectType = AsyncComponent(() => import("./modules/systemSet/components/projectType"))
+const WorkPriorityList = AsyncComponent(() => import("./modules/systemSet/components/workPriorityList"))
+const WorkTypeList = AsyncComponent(() => import("./modules/systemSet/components/workTypeList"))
+const ProjectSelectList = AsyncComponent(() => import("./modules/projectSet/components/projectSelectList"))
 const routes = [
     {
         path: "/index",
@@ -63,7 +68,7 @@ const routes = [
             {
                 path: "/index/set",
                 exact: true,
-                component: Set,
+                component: SystemSet,
                 key: 'set'
             },
         ]
@@ -106,6 +111,11 @@ const routes = [
     },
     {
         path: "/workItemDesc",
+        component: WorkItemDesc,
+        key: 'WorkItemDesc',
+    },
+    {
+        path: "/workItemEditDesc/:id",
         component: WorkItemDesc,
         key: 'WorkItemDesc',
     },
@@ -155,14 +165,34 @@ const routes = [
         key: 'SprintDetail',
     },
     {
-        path: "/statisticWork/:id",
+        path: "/statistics/work/:id",
         component: StatisticsWork,
         key: 'StatisticsWork',
     },
     {
-        path: "/bulidend/:id",
+        path: "/statistics/bulidend/:id",
         component: StatisticsBulidAndEndWork,
         key: 'StatisticsBulidAndEndWork',
+    },
+    {
+        path: "/projectType",
+        component: ProjectType,
+        key: 'ProjectType',
+    },
+    {
+        path: "/workPriorityList",
+        component: WorkPriorityList,
+        key: 'WorkPriorityList',
+    },
+    {
+        path: "/workTypeList",
+        component: WorkTypeList,
+        key: 'WorkTypeList',
+    },
+    {
+        path: "/projectSelectList/:id",
+        component: ProjectSelectList,
+        key: 'ProjectSelectList',
     },
     {
         path: "/",

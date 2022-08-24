@@ -28,7 +28,7 @@ export function FindAllUser(data){
     })
 }
 
-export function AddproList(data){
+export function CreateProjectSet(data){
     return service.request({
         url: "/projectSet/createProjectSet",
         method: "post",
@@ -68,6 +68,24 @@ export function UpdateProjectSet(data){
 export function FindProjectList(data){
     return service.request({
         url: "/projectSet/findProjectList",
+        method: "post",
+        data 
+        
+    })
+}
+
+export function FindProjectIsOrNotRe(data){
+    return service.request({
+        url: "/projectSet/findProjectIsOrNotRe",
+        method: "post",
+        data 
+        
+    })
+}
+
+export function AddRelevance(data){
+    return service.request({
+        url: "/projectSet/addRelevance",
         method: "post",
         data 
         

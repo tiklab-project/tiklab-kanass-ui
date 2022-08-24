@@ -126,7 +126,6 @@ const LogStatistics = (props) => {
             endTime: endDate,
             currentPage: 1
         }
-        console.log(values)
         findMatterWorkingHours(values).then(res => {
             if (res.code === 0) {
                 setUserStatistic(res.data.headerDay)
@@ -139,9 +138,9 @@ const LogStatistics = (props) => {
     return (
         <Fragment>
             <div className="log-filter">
-                <div className="log-filter-search">
+                {/* <div className="log-filter-search">
                     <SearchBar placeholder='请输入内容' />
-                </div>
+                </div> */}
                 <div className="log-filter-picker">
                     <div className="picker-user" onClick={() => showTypePicker()}>
                         {type.label}
@@ -173,7 +172,7 @@ const LogStatistics = (props) => {
                         </div>
                         {
                             userStatistic && userStatistic.map(item => {
-                                return (<div className="statistics-table-tr">
+                                return (<div className="statistics-table-tr" key={item.dateTime}>
                                     <div>{item.dateTime}</div>
                                     <div>{item.weekDay}</div>
                                 </div>
@@ -182,8 +181,8 @@ const LogStatistics = (props) => {
                         }
                     </div>
                     {
-                        hourStatistic && hourStatistic.map(item => {
-                            return (<div className="table-row">
+                        hourStatistic && hourStatistic.map((item, index) => {
+                            return (<div className="table-row" key={index}>
                                 <div className="statistics-user">
                                     {item.name}
                                 </div>
@@ -191,8 +190,8 @@ const LogStatistics = (props) => {
                                     {item.totalNumber}
                                 </div>
                                 {
-                                    item.statisticsList.map(staticticsItem => {
-                                        return (<div className="statistics-table-tr">
+                                    item.statisticsList.map((staticticsItem,index) => {
+                                        return (<div className="statistics-table-tr" key= {index}>
                                                 {staticticsItem}
                                             </div>
                                         )
@@ -203,8 +202,6 @@ const LogStatistics = (props) => {
                             )
                         })
                     }
-
-
                 </div>
             </div>
 

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-22 11:32:13
  */
 import React, { useEffect, useState } from 'react';
-import {  Avatar, SearchBar,Button } from 'antd-mobile';
+import {  Avatar, SearchBar,Button,Empty } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "./projectSetProjectList.scss";
@@ -16,11 +16,11 @@ const ProjectSetProjectList = (props) => {
     const { projectSetStore } = props;
     const { findProjectList } = projectSetStore;
     const projectSetId = props.match.params.id;
-
+    const programId = props.match.params.id;
+    console.log(props)
     const [projectList, setProjectList] = useState()
 
     useEffect(() => {
-        // setSearchConditionNull()
         findProjectList({projectSetId: projectSetId}).then(res => {
             if(res.code === 0){
                 setProjectList(res.data.dataList)
@@ -34,6 +34,14 @@ const ProjectSetProjectList = (props) => {
         localStorage.setItem("projectTypeId", projectTypeId);
     }
 
+    const searchProject = (value) => {
+        findProjectList({projectName: value}).then(res => {
+            if(res.code === 0){
+                setProjectList(res.data.dataList)
+            }
+        })
+    }
+
     return (
         <div className="projectset-project-list">
             <div className='projectset-project-search'>
@@ -42,20 +50,21 @@ const ProjectSetProjectList = (props) => {
                     style={{
                         '--border-radius': '100px',
                     }}
+                    onChange={(value) => searchProject(value)}
                 />
                 <Button
                     size='mini'
                     color='primary'
                     onClick={() => {
-                        props.history.push("/workItemAdd")
+                        props.history.push(`/projectSelectList/${programId}`)
                     }}
                 >
-                    添加事项
+                    添加项目
                 </Button>
             </div>
             <div className='projectset-project'>
                 {
-                    projectList && projectList.length > 0 && projectList.map(item => {
+                    projectList && projectList.length > 0 ? projectList.map(item => {
                         return <div className="projectset-project-list" key = {item.id}>
                             <div className='projectset-project-left'>
                                 <div className='projectset-project-icon'>
@@ -79,6 +88,8 @@ const ProjectSetProjectList = (props) => {
                             </div>
                         </div>
                     })
+                    :
+                    <Empty description='暂无数据' />
                 }
             </div>
         </div>

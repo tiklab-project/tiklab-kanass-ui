@@ -47,8 +47,7 @@ const StatisticsList = (props) => {
 
     //选择左侧菜单
     const selectKey = (id, type) => {
-        debugger
-        let url = `/${type}/${id}`;
+        let url = `/statistics/${type}/${id}`;
         setReportId(id)
         setSelectRouter(id)
         props.history.push(url);
@@ -81,11 +80,9 @@ const StatisticsList = (props) => {
             <div className="statistics-menu">
                 {
                     reportList && reportList.map(item => {
-                        return <div>
+                        return <div key={item.key}>
                             <div className={`statistics-menu-firstmenu ${item.id === selectRouter ? "statistics-menu-select" : ""}`}
                                 key={item.key}
-
-                                
                             >
                                 <div className="statistics-menu-icon">
                                     {

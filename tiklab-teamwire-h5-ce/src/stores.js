@@ -18,6 +18,7 @@ import { MODULE_STORE, ModuleStore } from "./modules/project/module/store/module
 import { PROJECTSET_STORE, ProjectSetStore } from "./modules/projectSet/store/projectSet";
 import { LOG_STORE, LogStore } from "./modules/log/store/logStore";
 import { STATISTICS_STORE, StatisticStore } from "./modules/project/statistics/store/statisticStore";
+import { SYSTEMSET_STORE, SystemSetStore } from "./modules/systemSet/store/systemSet";
 
 import { QYWX_STORE, QywxStore } from "./modules/qiyeWeixin/store/qywxStore";
 import {SlateStore,SLATE_STORE} from "tiklab-slate-h5-ui"
@@ -34,7 +35,7 @@ function createStores() {
         [PROJECTSET_STORE]:new ProjectSetStore(),
         [LOG_STORE]:new LogStore(),
         [STATISTICS_STORE]:new StatisticStore(),
-
+        [SYSTEMSET_STORE]:new SystemSetStore(),
         [SLATE_STORE]:new SlateStore(),
     }
 }

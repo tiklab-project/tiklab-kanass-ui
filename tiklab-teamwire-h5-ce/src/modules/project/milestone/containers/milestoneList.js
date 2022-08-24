@@ -53,6 +53,13 @@ const MilestoneList = (props) => {
         }
         return data;
     }
+    const searchMilestone = (value) => {
+        findMilestoneList({ name: value }).then((data) => {
+            if (data.code === 0) {
+                setMilestoneList(data.data)
+            }
+        })
+    }
 
     return (
         <div className="home">
@@ -63,6 +70,7 @@ const MilestoneList = (props) => {
                         style={{
                             '--border-radius': '100px',
                         }}
+                        onChange = {(value) => searchMilestone(value)}
                     />
                     <Button
                         size='mini'

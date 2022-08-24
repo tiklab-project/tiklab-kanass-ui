@@ -53,6 +53,13 @@ const VersionList = (props) => {
         }
         return data;
     }
+    const searchVersion = (value) => {
+        findVersionList({ name: value }).then((data) => {
+            if (data.code === 0) {
+                setVersionList(data.data)
+            }
+        })
+    }
 
     return (
         <div className="home">
@@ -63,6 +70,7 @@ const VersionList = (props) => {
                         style={{
                             '--border-radius': '100px',
                         }}
+                        onChange = {(value) => searchVersion(value)}
                     />
                     <Button
                         size='mini'

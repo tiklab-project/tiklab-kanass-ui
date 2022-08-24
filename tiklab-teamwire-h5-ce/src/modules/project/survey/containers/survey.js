@@ -24,13 +24,6 @@ const Survey = (props) => {
     const [nameValue, setNameValue] = useState()
 
     useEffect(() => {
-        const timerXaixs = ["2022-03-09", "2022-03-10", "2022-03-11", "2022-03-12",
-            "2022-03-13", "2022-03-14", "2022-03-15"
-        ];
-        const workCountYaixs = [10,7,5,4,3,2,1];
-        const Yaxis = [10,8,6,4,2,2,0];
-        // burnDownChart(timerXaixs, workCountYaixs, Yaxis)
-
         findProject(projectId).then(res => {
             setProject(res.data)
             setNameValue(res.data.projectName)
@@ -90,43 +83,6 @@ const Survey = (props) => {
         return data;
     }
 
-    const modelName = (value) => {
-        let data = ""
-        switch (value) {
-            case "workItem":
-                data = "事项";
-                break;
-            case "sprint":
-                data = "迭代";
-                break;
-            case "project":
-                data = "项目";
-                break;
-            default:
-                break;
-
-        }
-        return data;
-    }
-
-    const typeName = (value) => {
-        let data = ""
-        switch (value) {
-            case "add":
-                data = "添加";
-                break;
-            case "update":
-                data = "更新";
-                break;
-            case "delete":
-                data = "删除";
-                break;
-            default:
-                break;
-
-        }
-        return data;
-    }
 
     const burnDownChart = (timerXaixs, workCountYaixs, Yaxis) => {
         const burnDown = echarts.init(document.getElementById('burn-down'));
@@ -275,7 +231,7 @@ const Survey = (props) => {
                 title='项目详情'
                 style={{ backgroundColor: "#fff",marginTop: "10px" }}
             >
-                <div className="burn-down" id="burn-down" style={{ width: "100%", height: "500px" }}>
+                <div className="burn-down" id="burn-down" style={{ width: "100%", height: "300px" }}>
 
                 </div>
             </Card>

@@ -77,7 +77,7 @@ export class StatisticStore {
                 {
                     title: '事项统计',
                     icon: 'iconsmile',
-                    type: 'statisticWork',
+                    type: 'work',
                     id: 'workall',
                     children: []
                 },

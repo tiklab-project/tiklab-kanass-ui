@@ -16,6 +16,7 @@ const Project = (props) => {
     const { projectStore } = props;
     const { findProjectPage } = projectStore;
     const [projectList, setProjectList] = useState([]);
+
     useEffect(() => {
         findProjectPage().then((data) => {
             if (data.code === 0) {
@@ -31,7 +32,24 @@ const Project = (props) => {
         props.history.push({ pathname: "/project/projectDetail" })
     }
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
+
+    const status =  {
+        1: "未开始",
+        2: "已启动",
+        3: "已结束",
+    }
+
+    const searchProject = (value) => {
+        const params = {
+            projectName: value
+        }
+        findProjectPage(params).then((data) => {
+            if (data.code === 0) {
+                setProjectList(data.data.dataList)
+            }
+        })
+    }
     return (
         <div className="home">
             <NavBar
@@ -52,10 +70,8 @@ const Project = (props) => {
                         style={{
                             '--border-radius': '100px',
                         }}
+                        onChange = {(value) => searchProject(value)}
                     />
-                    {/* <Button size='mini' color='primary'>
-                        添加项目
-                    </Button> */}
                     <Button
                         size='mini'
                         color='primary'
@@ -95,7 +111,7 @@ const Project = (props) => {
                                     {item.projectType.name}
                                 </div>
                                 <div>
-                                    未开始333
+                                    {status[item.projectState]}
                                 </div>
                                 <div>
                                     <EyeOutline />

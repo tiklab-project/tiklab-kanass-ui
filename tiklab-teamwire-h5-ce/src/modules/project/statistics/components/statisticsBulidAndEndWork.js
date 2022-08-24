@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, Select, Button, InputNumber } from 'antd';
-import { NavBar, Tabs } from 'antd-mobile';
+import { NavBar, Form, Button, Input, Picker } from 'antd-mobile';
 import { observer, inject } from "mobx-react";
 import ReportAddOrEdit from "./reportAddOrEdit"
 import echarts from "../../../../common/echarts/echarts";
 import { withRouter } from "react-router";
-
+import "./statisticsBulidAndEndWork.scss"
+import { number } from "echarts";
 
 const StatisticsBulidAndEndWork = (props) => {
     const { staisticStore } = props;
@@ -15,42 +15,89 @@ const StatisticsBulidAndEndWork = (props) => {
     const [visible, setVisible] = useState(false);
     const [fromData, setFromData] = useState()
     const projectId = localStorage.getItem("projectId");
-    const columns = [
-        {
-            title: '时间',
-            dataIndex: 'time',
-            key: 'name',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: '创建数量',
-            dataIndex: 'buildCount',
-            key: 'num',
-        },
-        {
-            title: '完成数量',
-            dataIndex: 'endCount',
-            key: 'pre',
-        }
-    ];
+
     let [xaixs, setXaixs] = useState([]);
     let [buildYaixs, setBuildYaixs] = useState([]);
     let [endYaixs, setEndYaixs] = useState([]);
     const [statisticsWorkList, setStatisticsWorkList] = useState([])
+
+    const [cellTime, setCellTime] = useState({
+        value: "day",
+        label: "天"
+    })
+    const [datePickerVisible, setDatePickerVisible] = useState(false)
+
+    const [collectionType, setCollectionType] = useState({
+        value: "count",
+        label: "计数"
+    },)
+    const [collectionPickerVisible, setCollectionPickerVisible] = useState(false)
+
+    const [dateRanger, setDateRanger] = useState(7)
     const reportId = props.match.params.id;
 
+    const dateList = [
+        {
+            value: "day",
+            label: "天"
+        },
+        {
+            value: "week",
+            label: "周"
+        },
+        {
+            value: "month",
+            label: "月"
+        },
+        {
+            value: "quarter",
+            label: "季度"
+        },
+        {
+            value: "year",
+            label: "年"
+        }
+    ]
+
+    const dateObject = {
+        day: "天",
+        week: "周",
+        month: "月",
+        quarter: "季度",
+        year: "年"
+    } 
+    const countType = [
+        {
+            value: "count",
+            label: "计数"
+        },
+        {
+            value: "countTotal",
+            label: "累计"
+        }
+    ]
+
+    const countObject = {
+        count: "计数",
+        countTotal: "累计"
+    }
     useEffect(() => {
         // echarts.dispose()
-        if (reportId !== "statisticBulidWork") {
+        if (reportId !== "bulidendall") {
             findReport({ id: reportId }).then(data => {
                 if (data.code === 0) {
                     let reportData = data.data.reportData;
                     reportData = JSON.parse(reportData);
-                    form.setFieldsValue({
-                        dateRanger: reportData.dateRanger,
-                        cellTime: reportData.cellTime,
-                        collectionType: reportData.collectionType
+                    setCellTime({
+                        value: reportData.cellTime,
+                        label: dateObject[reportData.cellTime]
                     })
+                    setCollectionType({
+                        value: reportData.collectionType,
+                        label: countObject[reportData.collectionType]
+                    })
+                    setDateRanger(reportData.dateRanger)
+
                     const params = {
                         dateRanger: reportData.dateRanger,
                         cellTime: reportData.cellTime,
@@ -60,6 +107,15 @@ const StatisticsBulidAndEndWork = (props) => {
                     setStatisticsData(params)
                 }
             })
+        }
+        if(reportId === "bulidendall"){
+            const params = {
+                dateRanger: "7",
+                cellTime: "day",
+                collectionType: "count",
+                projectId: projectId
+            }
+            setStatisticsData(params)
         }
         return;
     }, [reportId])
@@ -121,21 +177,24 @@ const StatisticsBulidAndEndWork = (props) => {
         });
     }
 
-    const addReport = (values) => {
+    const addReport = () => {
+        const values = {
+            dateRanger: dateRanger,
+            cellTime: cellTime.value,
+            collectionType: collectionType.value
+        }
         setFromData(values)
         setVisible(true)
     }
 
     const viewReport = () => {
-        form.validateFields().then((values) => {
-            const params = {
-                dateRanger: values.dateRanger,
-                cellTime: values.cellTime,
-                collectionType: values.collectionType,
-                projectId: projectId
-            }
-            setStatisticsData(params)
-        })
+        const params = {
+            dateRanger: dateRanger,
+            cellTime: cellTime.value,
+            collectionType: collectionType.value,
+            projectId: projectId
+        }
+        setStatisticsData(params)
     }
 
     const clickTab = (key) => {
@@ -150,57 +209,13 @@ const StatisticsBulidAndEndWork = (props) => {
         }
     }
 
+    const selectDate = (value,extend) => {
+        setCellTime(extend.items[0])   
+    }
 
-    // useEffect(() => {
-    //     if (workPie) {
-    //         setPie()
-    //     }
-    // }, [workPie])
-
-    const onGenderChange = (value) => {
-
-    };
-
-    const onFinish = (values) => {
-        console.log(values);
-    };
-
-    const onFinishFailed = (values) => {
-        console.log(values);
-    };
-    const dateList = [
-        {
-            value: "day",
-            title: "天"
-        },
-        {
-            value: "week",
-            title: "周"
-        },
-        {
-            value: "month",
-            title: "月"
-        },
-        {
-            value: "quarter",
-            title: "季度"
-        },
-        {
-            value: "year",
-            title: "年"
-        }
-    ]
-    const countType = [
-        {
-            value: "count",
-            title: "计数"
-        },
-        {
-            value: "countTotal",
-            title: "累计"
-        }
-    ]
-
+    const selectCollection = (value,extend) => {
+        setCollectionType(extend.items[0])
+    }
     return (
         <div className="statistics-work">
             <NavBar
@@ -212,62 +227,74 @@ const StatisticsBulidAndEndWork = (props) => {
                 onBack={() => props.history.goBack()}
             >
                 <div className="title-top">
-                    迭代详情
+                    事项创建与解决统计
                 </div>
             </NavBar>
-            <div className="statistics-work-content">
-                <Form
-                    name="form"
-                    form={form}
-                    initialValues={{ remember: true }}
-                    onFinish={addReport}
-                    onFinishFailed={onFinishFailed}
-                    labelAlign="left"
-                    layout="inline"
-                >
-                    <Form.Item name="cellTime" label="期间" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="请选择期间"
-                            onChange={onGenderChange}
-                        >
-                            {
-                                dateList && dateList.map(item => {
-                                    return <Option value={item.value} key={item.value}>{item.title}</Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name="dateRanger" label="统计时长" rules={[{ required: true }]}>
-                        <InputNumber min={1} max={500} />
-                    </Form.Item>
-                    <Form.Item name="collectionType" label="统计方式" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="请选择统计方式"
-                            onChange={onGenderChange}
-                        >
-                            {
-                                countType && countType.map(item => {
-                                    return <Option value={item.value} key={item.value}>{item.title}</Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="button" onClick={() => viewReport()}>
+            <div className="statistics-buidlend-content">
+                <div className="statistics-buidlend-filter">
+                    <div className="statistics-filter-form">
+                        <div className="statistics-filter-item">
+                            <div className="statistics-filter-label">期间:   </div>
+                            <div
+                                className="statistics-filter-value"
+                                onClick={() => setDatePickerVisible(true)}
+                            >
+                                {cellTime.label}
+                            </div>
+                        </div>
+                        <div className="statistics-filter-item">
+                            <div className="statistics-filter-label">统计时长:   </div>
+                            <div className="statistics-filter-value">
+                                <Input
+                                    placeholder='请输入数字'
+                                    type = {"number"}
+                                    style = {{"--font-size": "13px"}}
+                                    value={dateRanger}
+                                    onChange={val => {
+                                        setDateRanger(val)
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="statistics-filter-item">
+                            <div className="statistics-filter-label">统计方式:   </div>
+                            <div className="statistics-filter-value" onClick={() => setCollectionPickerVisible(true)}>{collectionType.label}</div>
+                        </div>
+                    </div>
+                    <div className="statistics-filter-botton">
+                        <Button size='mini' color='primary' style={{ marginRight: "10px" }} onClick={() => viewReport()}>
                             查看报表
                         </Button>
-                        <Button type="primary" htmlType="submit">
+                        <Button size='mini' color='primary' onClick={() => addReport()}>
                             保存报表
                         </Button>
-                    </Form.Item>
-                </Form>
-                <div id="workBar" style={{ width: "90vw", height: "500px" }}></div>            
-                {/* <Tabs activeKey={activeKey} type="card" size="small" onChange={clickTab}>
-                    <Tabs.Tab title="柱状图" key="bar">
-                       
-                    </Tabs.Tab>
-                   
-                </Tabs> */}
+                    </div>
+
+                </div>
+                <div id="workBar" style={{ width: "90vw", height: "500px" }}></div>
+                <Picker
+                    columns={[dateList]}
+                    visible={datePickerVisible}
+                    onClose={() => {
+                        setDatePickerVisible(false)
+                    }}
+                    onConfirm={(value,extend) => selectDate(value,extend)}
+                />
+                <Picker
+                    columns={[countType]}
+                    visible={collectionPickerVisible}
+                    onClose={() => {
+                        setCollectionPickerVisible(false)
+                    }}
+                    onConfirm={(value,extend) => selectCollection(value,extend)}
+                />
+                <ReportAddOrEdit
+                    fromData={fromData}
+                    visible={visible}
+                    setVisible={setVisible}
+                    reportType="bulidend"
+                    {...props}
+                />
             </div>
         </div>
     )

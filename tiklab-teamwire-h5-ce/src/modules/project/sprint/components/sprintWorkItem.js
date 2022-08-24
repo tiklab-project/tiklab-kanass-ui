@@ -47,6 +47,10 @@ const SprintWorkItem = (props) => {
     const goEditSprint = () => {
         props.history.push(`/sprintDetail/${sprint.id}`)
     }
+
+    const searchWorkItem = (value) => {
+        getWorkConditionPage({title: value})
+    }
     return (
         <div>
             <NavBar
@@ -72,6 +76,7 @@ const SprintWorkItem = (props) => {
                     style={{
                         '--border-radius': '100px',
                     }}
+                    onChange = {(value) => searchWorkItem(value)}
                 />
                 <Button
                     size='mini'

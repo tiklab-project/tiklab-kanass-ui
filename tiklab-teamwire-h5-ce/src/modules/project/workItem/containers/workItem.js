@@ -21,6 +21,9 @@ const WorkItem = (props) => {
         getWorkConditionPage({projectId: localStorage.getItem("projectId")})
     }, [])
 
+    const searchWorkItem = (value) => {
+        getWorkConditionPage({title: value})
+    }
 
     return (
         <div className="workItem-list">
@@ -30,6 +33,7 @@ const WorkItem = (props) => {
                     style={{
                         '--border-radius': '100px',
                     }}
+                    onChange = {(value) => searchWorkItem(value)}
                 />
                 <Button
                     size='mini'

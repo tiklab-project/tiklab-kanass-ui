@@ -7,9 +7,8 @@
  * @LastEditTime: 2022-02-26 20:07:35
  */
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
+import { Modal, Form, Input,Button } from 'antd-mobile';
 import { observer, inject } from "mobx-react";
-import 'moment/locale/zh-cn';
 
 const layout = {
     labelCol: {
@@ -22,7 +21,7 @@ const layout = {
 
 const ReportAddOrEdit = (props) => {
     const [form] = Form.useForm();
-    const projectId =  JSON.parse(localStorage.getItem("project")).id;
+    const projectId = localStorage.getItem("projectId");
     const { setVisible, visible, fromData, staisticStore, reportType } = props;
     const { createReport, findReportList, findReport, reportId, updateReport } = staisticStore;
     const showModal = () => {
@@ -86,28 +85,38 @@ const ReportAddOrEdit = (props) => {
             onCancel={onCancel}
             cancelText="取消"
             okText="确定"
-        >
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{
-                    remember: true,
-                }}
-                form={form}
-            >
-                <Form.Item
-                    label="报表名称"
-                    name="title"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入报表名称',
-                        },
-                    ]}
+            content={
+                <Form
+                    {...layout}
+                    name="basic"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    form={form}
+                    footer={
+                        <Button block type='submit' color='primary' size='small'>
+                            提交
+                        </Button>
+                    }
+                    onFinish={onFinish}
                 >
-                    <Input placeholder="报表名称" />
-                </Form.Item>
-            </Form>
+                    <Form.Item
+                        label="报表名称"
+                        name="title"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入报表名称',
+                            },
+                        ]}
+                    >
+                        <Input placeholder="报表名称" />
+                    </Form.Item>
+                </Form>
+            }
+            
+        >
+
         </Modal>
     );
 };

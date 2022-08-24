@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-22 11:05:30
  */
-import React from "react";
+import React,{useState} from "react";
 import { NavBar, Tabs } from 'antd-mobile';
 import "./projectDeailTab.scss";
 import Survey from "../survey/containers/survey";
@@ -15,11 +15,17 @@ import Sprint from "../sprint/containers/sprint";
 import Version from "../version/containers/versionList";
 import MilestoneList from "../milestone/containers/milestoneList";
 import ModuleList from "../module/containers/moduleList";
-import StatisticsList from "../statistics/components/statisticsList"
+import StatisticsList from "../statistics/components/statisticsList";
+import { inject, observer } from 'mobx-react';
+
 const ProjectDetailTab = (props) => {
+    const {projectStore} = props;
+    const {activeIndex,setActiveIndex} = projectStore;
     const back = () => {
         window.history.back(-1);
     }
+    
+
     return (
         <div>
             <NavBar
@@ -29,12 +35,17 @@ const ProjectDetailTab = (props) => {
                 }}
                 backArrow={true}
                 onBack={back}
+                
             >
                 <div className="project-detail-top" style={{fontSize: "15px"}}>
                     项目详情
                 </div>
             </NavBar>
-            <Tabs style={{"--content-padding": 0}}>
+            <Tabs 
+                style={{"--content-padding": 0}} 
+                activeKey={activeIndex}
+                onChange={key => setActiveIndex(key)}
+            >
                 <Tabs.Tab title='概况' key='survey'>
                     <Survey />
                 </Tabs.Tab>
@@ -60,4 +71,4 @@ const ProjectDetailTab = (props) => {
         </div>
     )
 }
-export default ProjectDetailTab
+export default inject("projectStore")(observer(ProjectDetailTab));

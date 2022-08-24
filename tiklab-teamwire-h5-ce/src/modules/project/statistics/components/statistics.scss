@@ -92,31 +92,30 @@
     .statistics-menu-icon {
         margin-right: 10px;
     }
-    .adm-tabs-content {
-        background-color: #fff;
-    }
+    
     .statistics-work-content {
         font-size: 12px;
         .statistics-filter {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .statistics-dropdown {
-                
-               
-            }
+            padding-bottom: 10px;
             .statistics-dropdown-value {
                 flex: 1;
                 border: 1px solid #f7f7f7;
                 margin:0 10px;
                 padding: 5px;
                 border-radius: 5px;
+                background: #f7f7f7;
             }
             .statistics-work-botton {
                 width: 50px;
                 height: 40px;
                 line-height: 40px;
             }
+        }
+        .adm-tabs-content {
+            background-color: #fff;
         }
         
     }

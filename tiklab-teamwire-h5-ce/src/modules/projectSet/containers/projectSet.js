@@ -10,11 +10,16 @@ import React, { useEffect, useState } from 'react';
 import { NavBar, Avatar, SearchBar, Button, Modal } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
-import "../components/projectSet.scss"
+import "../components/projectSet.scss";
+import ProjectSetAdd from "../components/projectSetAdd";
+
 const ProjectSet = (props) => {
     const { projectSetStore } = props;
     const { findProjectSetPage } = projectSetStore;
     const [projectsetList, setProjectSetList] = useState([]);
+    const [visible, setVisible] = useState(false);
+    console.log(props)
+    
     useEffect(() => {
         findProjectSetPage().then((data) => {
             if (data.code === 0) {
@@ -25,6 +30,13 @@ const ProjectSet = (props) => {
 
     const goProjectSetdetail = (id) => {
         props.history.push({ pathname: `/ProjectSetDetail/${id}` })
+    }
+    const searchProjectSet = (value) => {
+        findProjectSetPage({name: value}).then((data) => {
+            if (data.code === 0) {
+                setProjectSetList(data.data.dataList)
+            }
+        })
     }
 
     return (
@@ -47,16 +59,24 @@ const ProjectSet = (props) => {
                         style={{
                             '--border-radius': '100px',
                         }}
+                        onChange = {(value) => searchProjectSet(value)}
                     />
                     <Button
                         size='mini'
                         color='primary'
-                        onClick={() => {
-                            setVisible(true)
-                        }}
+                        onClick={() => setVisible(true)}
                     >
                         添加项目集
                     </Button>
+                    <Modal
+                        visible={visible}
+                        content={<ProjectSetAdd {...props} visible={visible} setVisible={setVisible} setProjectSetList={setProjectSetList} />}
+                        closeOnAction
+                        showCloseButton={true}
+                        onClose={() => {
+                            setVisible(false)
+                        }}
+                    />
                 </div>
                 <div className="projectset-box">
                     {
@@ -75,7 +95,7 @@ const ProjectSet = (props) => {
                                     </div>
                                 </div>
                                 <div>
-                                    未开始333
+                                    {item.master.name}
                                 </div>
                                 <div>
                                     <EyeOutline />

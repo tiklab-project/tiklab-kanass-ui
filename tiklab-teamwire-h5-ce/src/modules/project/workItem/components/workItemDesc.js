@@ -6,18 +6,28 @@ import "./workItemDesc.scss"
 import { withRouter } from "react-router";
 const WorkItemDesc = (props) => {
     const {workItemStore} = props;
-    const {slateValue, setSlateValue} = workItemStore;
-
+    const {slateValue, setSlateValue, editWork} = workItemStore;
+    const workItemId = props.match.params.id ? props.match.params.id : null
+    console.log(props)
     const saveDesc = () => {
-        console.log(slateValue)
+        if(workItemId){
+            const value = {
+                id: workItemId,
+                desc: JSON.stringify(slateValue),
+                updateField: "desc"
+            }
+            editWork(value)
+        }
         props.history.goBack()
+        
     }
     return (
         <div>
             <div className="workItemDesc-title">
-				<svg aria-hidden="true" className="back-icon">
+				<svg aria-hidden="true" className="back-icon" onClick={saveDesc}>
 					<use xlinkHref="#icon-fanhui"></use>
 				</svg>
+                <span>事项描述</span>
                 <span onClick={()=> saveDesc()}>确定</span>
 			</div>
             <DocumentEditor value = {toJS(slateValue)} onChange = {setSlateValue} showMenu = {true} {...props}/>

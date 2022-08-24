@@ -11,9 +11,9 @@ import { NavBar, Tabs, SearchBar, Button, Modal } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import LogContent from '../components/logContent';
-import LogStatistics from "../components/logStatistics"
-const Log = (props) => {
+import LogStatistics from "../components/logStatistics";
 
+const Log = (props) => {
     return (
         <div className="log">
             <NavBar
@@ -22,6 +22,7 @@ const Log = (props) => {
                     '--border-bottom': '1px #eee solid',
                 }}
                 onBack={()=> props.history.goBack()}
+                backArrow={false}
             >
                 <div>日志</div>
             </NavBar>

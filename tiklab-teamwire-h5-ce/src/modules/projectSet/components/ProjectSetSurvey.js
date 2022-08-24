@@ -14,7 +14,6 @@ import dayjs from 'dayjs';
 import { withRouter } from "react-router";
 const ProjectSetSurvey = (props) => {
     const {projectSurveyStore, projectSetStore} = props;
-    // const {findProject,findProjectBurnDowmChartPage, updateProject} = projectSurveyStore;
     const {findProjectSet, updateProjectSet} = projectSetStore;
     const [projectSet, setProjectSet] = useState();
     const [projectKey, setProjectKey] = useState();

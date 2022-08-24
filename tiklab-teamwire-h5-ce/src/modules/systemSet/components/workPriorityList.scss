@@ -1,0 +1,31 @@
+.workPriority {
+    .workPriority-content {
+        .workPriority-box {
+            height: calc(100vh - 140px);
+            overflow: auto;
+        }
+        .workPriority-list {
+            display: flex;
+            width: 100vw;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            border-top: solid 1px var(--adm-border-color);
+            line-height: 40px;
+            .workPriority-left {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .workPriority-icon {
+                    margin-right: 10px;
+                }
+            }
+            .workPriority-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--adm-color-primary)
+            }
+        }
+    }
+}

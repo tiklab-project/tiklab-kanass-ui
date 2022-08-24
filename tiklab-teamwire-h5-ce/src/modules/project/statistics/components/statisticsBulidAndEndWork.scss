@@ -1,0 +1,29 @@
+.statistics-buidlend-filter {
+    .statistics-filter-form {
+        
+    }
+    .statistics-filter-item {
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        border-bottom: 1px solid #f7f7f7;
+        align-items: center;
+    }
+    .statistics-filter-label {
+        width: 100px;
+        
+    }
+    .statistics-filter-value {
+        flex: 1;
+        height: 30px;
+        line-height: 30px;
+        background: #f7f7f7;
+        padding: 0 20px;
+        border-radius: 5px;
+    }
+    .statistics-filter-botton {
+        width: 100%;
+        text-align: right;
+        padding: 10px 0
+    }
+}

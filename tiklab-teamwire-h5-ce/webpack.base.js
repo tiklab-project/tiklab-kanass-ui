@@ -43,6 +43,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)/,
+                exclude: [path.resolve(__dirname, "./src/assets/svg")],
                 // exclude: /node_modules/,
                 use: {
                     loader: 'url-loader',
@@ -56,6 +57,7 @@ module.exports = {
             },
             {
                 test: /\.(eot|woff2?|ttf|svg)$/,
+                exclude: [path.resolve(__dirname, "./src/assets/svg")],
                 use: [
                     {
                         loader: 'url-loader',
@@ -65,6 +67,15 @@ module.exports = {
                             outputPath: 'fonts/',
                         }
                     }
+                ]
+            },
+            {
+                test: /\.svg$/,
+                exclude: /node_modules/,
+                include: [path.resolve(__dirname,'./src/assets/svg')],
+                use: [
+                    { loader: 'svg-sprite-loader', options: {symbolId: 'icon-[name]'} },
+                    { loader: 'svgo-loader', options: {} },
                 ]
             },
             {
@@ -91,6 +102,7 @@ module.exports = {
                     }
                 ],
             },
+
             {
                 test: sassModuleRegex,
                 use: [

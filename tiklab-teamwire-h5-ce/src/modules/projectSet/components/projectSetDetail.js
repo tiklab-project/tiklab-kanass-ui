@@ -1,8 +1,12 @@
 import React from "react";
 import { NavBar, Tabs } from 'antd-mobile';
 import ProjectSetSurvey from "./ProjectSetSurvey";
-import ProjectSetProjectList from "./ProjectSetProjectList"
+import ProjectSetProjectList from "./ProjectSetProjectList";
+import { inject, observer } from 'mobx-react';
+
 const ProjectSetDetail = (props) => {
+    const { projectSetStore } = props;
+    const { activeIndex, setActiveIndex} = projectSetStore;
     return (
         <div className="projectset-detail">
             <NavBar
@@ -14,7 +18,7 @@ const ProjectSetDetail = (props) => {
             >
                 <div>项目集详情</div>
             </NavBar>
-            <Tabs style={{"--content-padding": 0}}>
+            <Tabs style={{"--content-padding": 0}} activeKey = {activeIndex} onChange = {(key) => setActiveIndex(key)}>
                 <Tabs.Tab title='概况' key='survey'>
                     <ProjectSetSurvey />
                 </Tabs.Tab>
@@ -25,4 +29,4 @@ const ProjectSetDetail = (props) => {
         </div>
     )
 }
-export default ProjectSetDetail;
+export default inject("projectSetStore")(observer(ProjectSetDetail));

@@ -25,9 +25,9 @@ const Sprint = (props) => {
     const { sprintStore } = props;
     const { getSprintConditionPage } = sprintStore;
     const [sprintList, setsprintList] = useState();
-
+    const projectId = localStorage.getItem("projectId");
     useEffect(() => {
-        getSprintConditionPage().then((data) => {
+        getSprintConditionPage({projectId: projectId}).then((data) => {
             if (data.code === 0) {
                 setsprintList(data.data.dataList)
             }
@@ -40,6 +40,13 @@ const Sprint = (props) => {
         localStorage.setItem("sprint", JSON.stringify(sprint))
     }
 
+    const searchSprint = (value) => {
+        getSprintConditionPage({sprintName: value}).then((data) => {
+            if (data.code === 0) {
+                setsprintList(data.data.dataList)
+            }
+        })
+    }
     return (
         <div className="home">
             <div className='sprint'>
@@ -49,6 +56,7 @@ const Sprint = (props) => {
                         style={{
                             '--border-radius': '100px',
                         }}
+                        onChange = {(value) => searchSprint(value)}
                     />
                     <Button
                         size='mini'

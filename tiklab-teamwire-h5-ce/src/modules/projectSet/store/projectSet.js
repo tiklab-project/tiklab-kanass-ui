@@ -7,10 +7,11 @@
  * @LastEditTime: 2022-03-18 17:32:10
  */
 import { observable, action } from "mobx";
-import { FindProjectSetPage,FindAllUser,FindAllProjectSetType,AddproList, 
-    FindProjectSet, UpdateProjectSet, FindProjectList } from "../api/projectSetApi";
+import { FindProjectSetPage,FindAllUser,FindAllProjectSetType,CreateProjectSet, 
+    FindProjectSet, UpdateProjectSet, FindProjectList, FindProjectIsOrNotRe, AddRelevance} from "../api/projectSetApi";
 export class ProjectSetStore {
     @observable ProjectSetList = [];
+    @observable activeIndex = "survey";
     @observable searchProjectSetCondition = {
         orderParams: [{
             name: "name",
@@ -34,6 +35,11 @@ export class ProjectSetStore {
     }
 
     @action
+    setActiveIndex = (value) => {
+        this.activeIndex = value
+    }
+
+    @action
 	findProjectSetPage = async(value) => {
         Object.assign(this.searchProjectSetCondition,value)
 		const data = await FindProjectSetPage(this.searchProjectSetCondition);
@@ -47,9 +53,8 @@ export class ProjectSetStore {
     }
 
     @action
-    addProjectSet = async(values) => {
-
-        const data = await AddproList(values);
+    createProjectSet = async(values) => {
+        const data = await CreateProjectSet(values);
         return data;
     }
 
@@ -77,6 +82,18 @@ export class ProjectSetStore {
     findProjectList = async (values) => {
         Object.assign(this.projectPageParams, { ...values })
         const data = await FindProjectList(this.projectPageParams);
+        return data;
+    }
+
+    @action
+    findProjectIsOrNotRe = async () => {
+        const data = await FindProjectIsOrNotRe();
+        return data;
+    }
+
+    @action
+    addRelevance = async(value) => {
+        const data = await AddRelevance(value);
         return data;
     }
 }
