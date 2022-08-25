@@ -9,15 +9,13 @@
 import React, { useState } from 'react';
 import { Badge, TabBar } from 'antd-mobile';
 import { renderRoutes } from "react-router-config";
-import {
-    useLocation,
-} from 'react-router-dom'
+import { useLocation} from 'react-router-dom'
 import {
     AppOutline,
     UserOutline,
 } from 'antd-mobile-icons';
 import "../components/projectTabBar.scss";
-import {verifyUserHoc} from "tiklab-eam-ui";
+import {verifyUserHoc} from "tiklab-eam-saas-ui";
 
 const ProjectTabBar = (props) => {
     const route = props.route;
@@ -34,6 +32,11 @@ const ProjectTabBar = (props) => {
             badge: Badge.dot,
         },
         {
+            key: '/index/project',
+            title: '项目',
+            icon: <UserOutline />,
+        },
+        {
             key: '/index/projectSet',
             title: '项目集',
             icon: <UserOutline />,
@@ -42,12 +45,7 @@ const ProjectTabBar = (props) => {
             key: '/index/log',
             title: '日志',
             icon: <UserOutline />,
-        },
-        {
-            key: '/index/set',
-            title: '设置',
-            icon: <UserOutline />,
-        },
+        }
     ]
 
     return (

@@ -22,15 +22,12 @@ const SystemSet = (props) => {
                 <SafeArea position='top' />
             </div>
             <div className="systemset-top">
-                <div className="systemset-top-left">
-                    <svg className="systemset-icon-logo" aria-hidden="true">
-                        <use xlinkHref="#icon-templateList"></use>
+                <div className="systemset-top-left" >
+                    <svg className="systemset-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
+                        <use xlinkHref="#icon-left"></use>
                     </svg>
                     <div className="systemset-title">设置</div>
                 </div>
-                {/* <div className="systemset-top-right">
-                    <span style={{ color: "#5D70EA", fontSize: "14px" }} onClick={() =>  props.history.push("/templateAdd")}>添加</span>
-                </div> */}
             </div>
             <div className="systemset-set-middle">
                 <div className="systemset-set-contant systemset-user">

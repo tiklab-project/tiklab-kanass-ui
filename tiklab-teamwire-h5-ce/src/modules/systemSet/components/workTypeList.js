@@ -38,7 +38,7 @@ const WorkTypeList = (props) => {
                 onBack={()=> props.history.goBack()}
             >
                 <div className="title-top">
-                    项目类型列表
+                    事项类型
                 </div>
             </NavBar>
             <div className='workType-content'>

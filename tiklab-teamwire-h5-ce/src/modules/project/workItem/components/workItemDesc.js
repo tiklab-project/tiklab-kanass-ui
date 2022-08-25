@@ -16,9 +16,13 @@ const WorkItemDesc = (props) => {
                 desc: JSON.stringify(slateValue),
                 updateField: "desc"
             }
-            editWork(value)
+            editWork(value).then(res => {
+                if(res.code === 0){
+                    props.history.goBack()
+                }
+            })
         }
-        props.history.goBack()
+        
         
     }
     return (

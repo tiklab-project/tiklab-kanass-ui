@@ -51,19 +51,17 @@ const Project = (props) => {
         })
     }
     return (
-        <div className="home">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={false}
-            >
-                <div className="title-top">
-                    项目列表
+        <div className="project">
+            <div className="project-top">
+                <div className="project-top-left" onClick={() => props.history.push("/index/set")}>
+                    <svg className="project-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-templateList"></use>
+                    </svg>
                 </div>
-            </NavBar>
-            <div className='project'>
+                <div className="project-title">项目</div>
+                <div></div>
+            </div>
+            <div className='project-content'>
                 <div className='title'>
                     <SearchBar
                         placeholder='请输入内容'

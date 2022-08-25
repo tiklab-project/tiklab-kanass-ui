@@ -19,14 +19,27 @@ import { PROJECTSET_STORE, ProjectSetStore } from "./modules/projectSet/store/pr
 import { LOG_STORE, LogStore } from "./modules/log/store/logStore";
 import { STATISTICS_STORE, StatisticStore } from "./modules/project/statistics/store/statisticStore";
 import { SYSTEMSET_STORE, SystemSetStore } from "./modules/systemSet/store/systemSet";
+import {WORKLOG_STORE, WorkLogStore} from "./modules/project/workItem/store/workLogStore";
+import {WORKRELATION_STORE, WorkRelation} from "./modules/project/workItem/store/workRelationStore";
+import {WORKCHILD_STORE, WorkChild} from "./modules/project/workItem/store/workChildStore";
+import {WORKCOMMENT_STORE, WorkCommentStore} from "./modules/project/workItem/store/workCommentStore";
+import {WORKWIKI_STORE, WorkWikiStore} from "./modules/project/workItem/store/workWikiStore";
+import {HOME_STORE, HomeStore} from "./modules/home/store/homeStore";
 
 import { QYWX_STORE, QywxStore } from "./modules/qiyeWeixin/store/qywxStore";
-import {SlateStore,SLATE_STORE} from "tiklab-slate-h5-ui"
+import {SlateStore,SLATE_STORE} from "tiklab-slate-h5-ui";
 function createStores() {
     return {
         [PROJECT_STORE]:new ProjectStore(),
         [PROJECTSURVEY_STORE]:new ProjectSurveyStore(),
         [WORKITEM_STORE]:new WorkItemStore(),
+        [WORKLOG_STORE]:new WorkLogStore(),
+        [WORKRELATION_STORE]:new WorkRelation(),
+        [WORKCHILD_STORE]:new WorkChild(),
+        [WORKCOMMENT_STORE]:new WorkCommentStore(),
+        [WORKWIKI_STORE]: new WorkWikiStore(),
+        [HOME_STORE]: new HomeStore(),
+
         [SPRINT_STORE]:new SprintStore(),
         [QYWX_STORE]:new QywxStore(),
         [VERSION_STORE]:new VersionStore(),

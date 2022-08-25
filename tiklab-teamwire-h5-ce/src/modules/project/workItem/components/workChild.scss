@@ -1,0 +1,25 @@
+.work-child {
+    .child-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        &-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+}
+.work-child-search {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.ant-modal.work-child-addmodel {
+    top: 30px;
+    .ant-table {
+        height: calc(100vh - 340px);
+        overflow: auto;
+    }
+}

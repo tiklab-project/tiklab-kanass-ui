@@ -42,6 +42,11 @@ const ProjectType = AsyncComponent(() => import("./modules/systemSet/components/
 const WorkPriorityList = AsyncComponent(() => import("./modules/systemSet/components/workPriorityList"))
 const WorkTypeList = AsyncComponent(() => import("./modules/systemSet/components/workTypeList"))
 const ProjectSelectList = AsyncComponent(() => import("./modules/projectSet/components/projectSelectList"))
+
+const WorkLog = AsyncComponent(() =>import("./modules/project/workItem/components/workLog"))
+const WorkRelation = AsyncComponent(() =>import("./modules/project/workItem/components/workRelation"))
+
+const Home = AsyncComponent(() => import("./modules/home/components/home"))
 const routes = [
     {
         path: "/index",
@@ -49,6 +54,12 @@ const routes = [
         routes: [
             {
                 path: "/index/home",
+                exact: true,
+                component: Home,
+                key: 'project'
+            },
+            {
+                path: "/index/project",
                 exact: true,
                 component: Project,
                 key: 'project'
@@ -64,14 +75,14 @@ const routes = [
                 exact: true,
                 component: Log,
                 key: 'Log'
-            },
-            {
-                path: "/index/set",
-                exact: true,
-                component: SystemSet,
-                key: 'set'
-            },
+            }
         ]
+    },
+    {
+        path: "/set",
+        exact: true,
+        component: SystemSet,
+        key: 'set'
     },
     {
         path: "/project",
@@ -118,6 +129,16 @@ const routes = [
         path: "/workItemEditDesc/:id",
         component: WorkItemDesc,
         key: 'WorkItemDesc',
+    },
+    {
+        path: "/workLog",
+        component: WorkLog,
+        key: 'WorkLog',
+    },
+    {
+        path: "/workRelation",
+        component: WorkRelation,
+        key: 'WorkRelation',
     },
     {
         path: "/versionAdd",

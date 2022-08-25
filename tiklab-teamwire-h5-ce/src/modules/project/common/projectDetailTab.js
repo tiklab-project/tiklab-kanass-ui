@@ -27,7 +27,7 @@ const ProjectDetailTab = (props) => {
     
 
     return (
-        <div>
+        <div className="project-detail">
             <NavBar
                 style={{
                     '--height': '40px',

@@ -52,5 +52,12 @@
     justify-content: space-between;
     height: 40px;
     line-height: 40px;
-    
+}
+.workItem-detail {
+    .adm-tabs-tab {
+        font-size: 13px;
+    }
+    .adm-tabs-content {
+        background-color: rgb(244, 245, 247);
+    }
 }

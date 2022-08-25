@@ -135,3 +135,12 @@ export function GetStateList (data){
         data 
     })
 }
+
+// 获取自定义状态列表
+export function FindWorkTypeListByCode (data){
+    return service.request({
+        url: "/workType/findWorkTypeListByCode",
+        method: "post",
+        data 
+    })
+}

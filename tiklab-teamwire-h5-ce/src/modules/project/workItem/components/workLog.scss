@@ -1,24 +1,11 @@
-
-.sprintWorkItem-search {
-    .adm-search-bar {
-        flex: 1;
-        margin-right: 20px;
-    }
-    span {
-        height: 80px;
-        line-height: 80px;
-    }
-    padding: 0 20px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
+.workLog-search {
     padding: 10px;
     background-color: #fff;
 }
-.sprint-workItem {
+.workLog-content {
     background: #fff;
     border-radius: 5px;
-    height: calc(100vh - 92px);
+    height: calc(100vh - 140px);
     overflow: auto;
     .title {
         span {
@@ -31,31 +18,28 @@
         justify-content: space-between;
         margin: 10px 0;
     }
-    
-    .sprintWorkItem-list {
+    .workLog-list {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 10px 20px;
         box-sizing: border-box;
-        border-top: solid 1px var(--adm-border-color);
         line-height: 30px;
-        .sprintWorkItem-left {
+        .workLog-left {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             width: 30vw;
-            .sprintWorkItem-icon {
+            .workLog-icon {
                 margin-right: 10px;
             }
         }
-        .sprintWorkItem-type {
-            width: 20vw;
+        .workLog-time {
             height: 40px; 
             line-height: 40px;
             overflow: hidden;
         }
-        .sprintWorkItem-title {
+        .workLog-title {
             font-size: 16px;
             font-weight: 600;
             color: var(--adm-color-primary)

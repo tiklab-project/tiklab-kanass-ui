@@ -38,7 +38,7 @@ const ProjectType = (props) => {
                 onBack={()=> props.history.goBack()}
             >
                 <div className="title-top">
-                    项目类型列表
+                    项目类型
                 </div>
             </NavBar>
             <div className='projectType-content'>

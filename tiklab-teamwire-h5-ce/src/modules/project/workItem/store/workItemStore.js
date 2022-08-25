@@ -9,7 +9,7 @@
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
     FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem, EditWork, 
-    FindFlowDef, GetStateList} from "../api/work";
+    FindFlowDef, GetStateList, FindWorkTypeListByCode} from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -22,7 +22,8 @@ export class WorkItemStore {
     @observable flowDefList = [];
     @observable statesList = [];
     @observable workItem = [];
-    
+    @observable activeIndex = "workDetail";
+
     @observable searchCondition = {
         parentIdIsNull: true,
         orderParams: [{
@@ -42,6 +43,11 @@ export class WorkItemStore {
 		},
 	]
     @observable formValue = {};
+
+    @action
+    setActiveIndex = (value) => {
+        this.activeIndex = value
+    }
 
     @action
     setFormValue = (value) => {
@@ -336,7 +342,7 @@ export class WorkItemStore {
         //     })
         // })
         const data = await EditWork(value);
-        return data.data;
+        return data;
     }
 
     @action
@@ -388,6 +394,16 @@ export class WorkItemStore {
             }
         }
         return data;
+    }
+
+    @action
+    findWorkTypeListByCode = async(value) => {
+        const params = new FormData()
+        params.append("code", value.code)
+        const data = await FindWorkTypeListByCode(params)
+
+        return data;
+
     }
 
 }
