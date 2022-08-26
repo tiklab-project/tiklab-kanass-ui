@@ -69,7 +69,7 @@ export class StatisticStore {
     }
 
     @action
-    findReportList = async (value, projectType) => {
+    findReportList = async (value) => {
         const data = await FindReportList(value);
         if (data.code === 0) {
             const list = data.data;

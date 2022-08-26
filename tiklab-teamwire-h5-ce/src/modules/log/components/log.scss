@@ -1,22 +1,5 @@
-.sprint {
-    .sprint-detail {
-        padding: 0 10px;
-    }
-
-    .sprint-info-item {
-        display: flex;
-        justify-content: space-between;
-        height: 40px;
-        line-height: 40px;
-        border-bottom: 1px solid #f7f7f7;
-
-        :nth-child(1) {
-            font-weight: 600;
-            width: 200px;
-        }
-    }
-
-    .sprint-detail-top {
+.log {
+    .log-top {
         height: 50px;
         display: flex;
         justify-content: space-between;
@@ -25,22 +8,30 @@
         background-color: #fff;
         box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
 
-        .sprint-detail-top-left {
+        .log-top-left,
+        .log-top-right {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 18px;
         }
 
-        .sprint-detail-icon-logo {
+        .log-icon-logo {
             width: 20px;
             height: 20px;
         }
 
-        .sprint-detail-title {
+        .log-title {
             font-weight: 600;
             font-size: 16px;
         }
     }
 
+    .adm-tabs-tab {
+        font-size: 13px;
+    }
+
+    // .adm-tabs-content {
+    //     background-color: rgb(244, 245, 247);
+    // }
 }

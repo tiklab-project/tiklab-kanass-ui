@@ -217,19 +217,16 @@ const StatisticsBulidAndEndWork = (props) => {
         setCollectionType(extend.items[0])
     }
     return (
-        <div className="statistics-work">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={() => props.history.goBack()}
-            >
-                <div className="title-top">
-                    事项创建与解决统计
+        <div className="statistics-buidlend">
+            <div className="statistics-buidlend-top">
+                <div className="statistics-buidlend-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="statistics-buidlend-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="statistics-buidlend-title">事项创建与解决统计</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div className="statistics-buidlend-content">
                 <div className="statistics-buidlend-filter">
                     <div className="statistics-filter-form">

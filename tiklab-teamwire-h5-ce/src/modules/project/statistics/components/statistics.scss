@@ -2,7 +2,7 @@
 .statistics-list {
     background: #fff;
     border-right: 2px solid #e5e8ff;
-    height: 100%;
+    height: calc(100vh - 150px);
     ul, li {
         padding: 0;
     }
@@ -61,16 +61,16 @@
             overflow: visible;
         }
     }
-    .statistics-work{
-        padding: 10px;
-        &-table {
-            margin-top: 20px;
-        }
-        &-content {
-            padding: 20px 0;
-        }
+    // .statistics-work{
+    //     padding: 10px;
+    //     &-table {
+    //         margin-top: 20px;
+    //     }
+    //     &-content {
+    //         padding: 20px 0;
+    //     }
 
-    }
+    // }
     .statistics-list-popover {
         margin: 0;
         padding: 0;
@@ -93,29 +93,4 @@
         margin-right: 10px;
     }
     
-    .statistics-work-content {
-        font-size: 12px;
-        .statistics-filter {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 10px;
-            .statistics-dropdown-value {
-                flex: 1;
-                border: 1px solid #f7f7f7;
-                margin:0 10px;
-                padding: 5px;
-                border-radius: 5px;
-                background: #f7f7f7;
-            }
-            .statistics-work-botton {
-                width: 50px;
-                height: 40px;
-                line-height: 40px;
-            }
-        }
-        .adm-tabs-content {
-            background-color: #fff;
-        }
-        
-    }
+    

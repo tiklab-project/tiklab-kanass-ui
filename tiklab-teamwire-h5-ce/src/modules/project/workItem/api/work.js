@@ -144,3 +144,12 @@ export function FindWorkTypeListByCode (data){
         data 
     })
 }
+
+// 动态
+export function FindDynamicPage (data){
+    return service.request({
+        url: "/dynamic/findDynamicPage",
+        method: "post",
+        data 
+    })
+}

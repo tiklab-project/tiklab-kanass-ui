@@ -52,25 +52,17 @@ const SprintWorkItem = (props) => {
         getWorkConditionPage({title: value})
     }
     return (
-        <div>
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                right={right}
-                onBack={back}
-            >
-                <div 
-                    className="project-detail-top" 
-                    style={{fontSize: "15px"}}
-                    onClick = {() => showSprintPicker()}
-                >
-                    {sprint.sprintName}
+        <div className="sprint-workItem">
+            <div className="sprint-workItem-top">
+                <div className="sprint-workItem-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="sprint-workItem-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
-            <div className='sprintWorkItem-search'>
+                <div className="sprint-workItem-title">{sprint.sprintName}</div>
+                <div></div>
+            </div>
+            <div className='sprint-workItem-search'>
                 <SearchBar
                     placeholder='请输入内容'
                     style={{
@@ -89,22 +81,22 @@ const SprintWorkItem = (props) => {
                 </Button>
             </div>
             <div>
-                <div className='sprint-workItem'>
+                <div className='sprint-workItem-list'>
                     {
                         workList && workList.length > 0 && workList.map(item => {
-                            return <div className="sprintWorkItem-list" key = {item.id}>
-                                <div className='sprintWorkItem-left'>
-                                    <div className='sprintWorkItem-icon'>
+                            return <div className="sprint-workItem-item" key = {item.id}>
+                                <div className='sprint-workItem-left'>
+                                    <div className='sprint-workItem-icon'>
                                         <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                     </div>
                                     <div>
-                                        <div className='sprintWorkItem-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
+                                        <div className='sprint-workItem-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
                                         <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
                                             {item.builder ?item.builder.name : "admin"}
                                         </div>
                                     </div>
                                 </div>
-                                <div className='sprintWorkItem-type'>
+                                <div className='sprint-workItem-type'>
                                     {item.workType.name}
                                 </div>
                                 <div>

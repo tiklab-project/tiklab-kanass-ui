@@ -7,7 +7,8 @@ import WorkLog from "./workLog";
 import WorkRelation from "./workRelation";
 import WorkChild from "./workChild";
 import WorkComment from "./workComment";
-import WorkWiki from "./workWiki"
+import WorkWiki from "./workWiki";
+import WorkItemDynamic from "./workItemDynamic"
 import "./workItemDetail.scss";
 import dayjs from 'dayjs';
 const WorkItemDetail = (props) => {
@@ -191,18 +192,15 @@ const WorkItemDetail = (props) => {
     }
     return (
         <div style={{ width: "100vw" }} className="workItem-detail">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={() => props.history.goBack()}
-            >
-                <div className="title-top">
-                    {workItemInfo && workItemInfo.title}
+            <div className="workItem-detail-top">
+                <div className="workItem-detail-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="workItem-detail-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="workItem-detail-title"> {workItemInfo && workItemInfo.title}</div>
+                <div></div>
+            </div>
             <Tabs
                 style={{ "--content-padding": 0 }}
                 activeKey={activeIndex}
@@ -369,7 +367,7 @@ const WorkItemDetail = (props) => {
                     <WorkWiki />
                 </Tabs.Tab>
                 <Tabs.Tab title='动态' key='dynamic'>
-                    <WorkRelation />
+                    <WorkItemDynamic />
                 </Tabs.Tab>
             </Tabs>
 

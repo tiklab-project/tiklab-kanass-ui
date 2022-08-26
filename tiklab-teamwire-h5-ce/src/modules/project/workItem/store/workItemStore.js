@@ -9,7 +9,7 @@
 import { observable, action } from "mobx";
 import { FindWorkItemList,FindAllWorkType,FindDmUserPage,FindAllWorkPriority,FindSprintList,
     FindModuleList, Upload,FindWorkAttachList,CreateWorkAttach,AddWork,FindWorkItem, EditWork, 
-    FindFlowDef, GetStateList, FindWorkTypeListByCode} from "../api/work";
+    FindFlowDef, GetStateList, FindWorkTypeListByCode, FindDynamicPage} from "../api/work";
 
 export class WorkItemStore {
     @observable workList = [];
@@ -63,9 +63,13 @@ export class WorkItemStore {
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
         this.searchCondition.parentIdIsNull = null
-        let data = await FindWorkItemList(this.searchCondition);
+        const data = await FindWorkItemList(this.searchCondition);
+        if(this.searchCondition.pageParam.currentPage === 1){
+            this.workList= []
+        }
         if(data.code === 0){
-            this.workList = data.data.dataList;
+            if(data.data.dataList.length >0)
+            this.workList.push(...data.data.dataList);
             this.total = data.data.totalRecord;
         }
         return data;
@@ -404,6 +408,23 @@ export class WorkItemStore {
 
         return data;
 
+    }
+
+    @action
+    findDynamicPage = async(value)=> {
+        const params={
+            projectId: value,
+            sortParams: [{
+                name: "title",
+                orderType:"asc"
+            }],
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await FindDynamicPage(params);
+        return data;
     }
 
 }

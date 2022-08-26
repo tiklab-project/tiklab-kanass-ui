@@ -28,18 +28,24 @@ const ProjectTabBar = (props) => {
         {
             key: '/index/home',
             title: '首页',
-            icon: <AppOutline />,
+            icon:   <svg className="tabbar-icon" aria-hidden="true">
+                <use xlinkHref="#icon-home"></use>
+            </svg>,
             badge: Badge.dot,
         },
         {
             key: '/index/project',
             title: '项目',
-            icon: <UserOutline />,
+            icon: <svg className="tabbar-icon" aria-hidden="true">
+                <use xlinkHref="#icon-wiki"></use>
+            </svg>,
         },
         {
             key: '/index/projectSet',
             title: '项目集',
-            icon: <UserOutline />,
+            icon: <svg className="tabbar-icon" aria-hidden="true">
+                <use xlinkHref="#icon-templateList"></use>
+            </svg>,
         },
         {
             key: '/index/log',
@@ -56,7 +62,7 @@ const ProjectTabBar = (props) => {
             <div className='bottom'>
                 <TabBar activeKey={pathname} onChange={value => setRouteActive(value)}>
                     {tabs.map(item => (
-                        <TabBar.Item key={item.key} title={item.title} />
+                        <TabBar.Item key={item.key} title={item.title} icon={item.icon}/>
                     ))}
                 </TabBar>
             </div>

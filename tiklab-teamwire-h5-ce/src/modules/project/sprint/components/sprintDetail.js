@@ -89,19 +89,16 @@ const SprintDetail = (props) => {
     }
 
     return (
-        <div style={{width: "100vw"}}>
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    迭代详情
+        <div style={{width: "100vw"}} className="sprint">
+            <div className="sprint-detail-top">
+                <div className="sprint-detail-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="sprint-detail-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="sprint-detail-title"></div>
+                <div></div>
+            </div>
             <div
                 className="sprint-detail"
                 style={{ backgroundColor: "#fff" }}

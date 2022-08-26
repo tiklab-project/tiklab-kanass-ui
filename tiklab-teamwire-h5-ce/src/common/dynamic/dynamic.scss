@@ -1,0 +1,47 @@
+.dynamic-item {
+    padding: 0 20px;
+    border-bottom: 1px solid #f7f7f7;
+    &-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        line-height: 40px;
+        height: 40px;
+        .dynamic-item-title-left {
+            display: flex;
+        }
+    }
+    .update-content {
+        line-height: 40px;
+        height: 40px;
+        padding: 0 30px;
+    }
+    .dynamic-type {
+        line-height: 40px;
+        height: 40px;
+        padding: 0 30px;
+    }
+    .dynamic-user, .dynamic-title {
+        color: #5d70ea;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .dynamic-title, .dynamic-user-name{
+        height: 40px;
+        line-height: 40px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        overflow: hidden;
+        max-width: 60px;
+    }
+    .dynamic-user {
+        overflow: hidden;
+    }
+    .dynamic-user-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+}

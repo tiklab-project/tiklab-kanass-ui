@@ -12,6 +12,7 @@ import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "./recentProject.scss"
 import { getUser } from 'tiklab-core-ui';
+import { withRouter } from 'react-router';
 const RecentProject = (props) => {
     const { homeStore } = props;
     const { statProjectWorkItem } = homeStore;
@@ -26,9 +27,8 @@ const RecentProject = (props) => {
         })
     }, [])
 
-    const goProdetail = (id, projectTypeId) => {
+    const goProdetail = (id) => {
         localStorage.setItem("projectId", id);
-        localStorage.setItem("projectTypeId", projectTypeId);
         // workStore.setWorkId("")
         props.history.push({ pathname: "/project/projectDetail" })
     }
@@ -55,7 +55,7 @@ const RecentProject = (props) => {
                         }}
                         onChange = {(value) => searchProject(value)}
                     />
-                    <Button
+                    {/* <Button
                         size='mini'
                         color='primary'
                         onClick={() => {
@@ -63,7 +63,7 @@ const RecentProject = (props) => {
                         }}
                     >
                         添加项目
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="recent-project-box">
                     {
@@ -75,7 +75,7 @@ const RecentProject = (props) => {
                                     </div>
                                     <div>
                                         <div className='recent-project-title' 
-                                            onClick={() => goProdetail(item.id, item.projectType.id)}>{item.project.projectName}</div>
+                                            onClick={() => goProdetail(item.project.id)}>{item.project.projectName}</div>
                                         {/* <div>
                                             {item.master.name}
                                         </div> */}
@@ -85,7 +85,6 @@ const RecentProject = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div>
                                     <EyeOutline />
                                 </div>
@@ -97,4 +96,4 @@ const RecentProject = (props) => {
         </div>
     )
 }
-export default inject("homeStore")(observer(RecentProject));
+export default withRouter(inject("homeStore")(observer(RecentProject)));

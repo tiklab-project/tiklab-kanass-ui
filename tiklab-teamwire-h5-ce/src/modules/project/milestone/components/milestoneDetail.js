@@ -92,18 +92,15 @@ const MilestoneDetail = (props) => {
 
     return (
         <div style={{ width: "100vw" }}>
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={() => props.history.goBack()}
-            >
-                <div className="title-top">
-                    里程碑详情
+            <div className="milestone-top">
+                <div className="milestone-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="milestone-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="milestone-title">项目</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div
                 className="milestone-detail"
                 style={{ backgroundColor: "#fff" }}

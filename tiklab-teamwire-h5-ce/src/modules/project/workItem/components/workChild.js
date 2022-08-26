@@ -35,8 +35,8 @@ const WorkChild = (props) => {
 
 
     return (
-        <Fragment>
-            <div className='workLog-search'>
+        <div className="workChild">
+            <div className='workChild-search'>
                 <SearchBar
                     placeholder='请输入内容'
                     style={{
@@ -54,22 +54,22 @@ const WorkChild = (props) => {
                     添加事项
                 </Button> */}
             </div>
-            <div className='workLog-content'>
+            <div className='workChild-content'>
                 {
                     childWorkList && childWorkList.length > 0 && childWorkList.map(item => {
-                        return <div className="workLog-list" key = {item.id}>
-                            <div className='workLog-left'>
-                                <div className='workLog-icon'>
+                        return <div className="workChild-list" key = {item.id}>
+                            <div className='workChild-left'>
+                                <div className='workChild-icon'>
                                     <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
                                 </div>
                                 <div>
-                                    <div className='workLog-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
-                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                    <div className='workChild-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
+                                    <div>
                                         {item.builder ?item.builder.name : "admin"}
                                     </div>
                                 </div>
                             </div>
-                            <div className='workLog-time'>
+                            <div className='workChild-time'>
                                 {item.workStatus.name}
                             </div>
                             <div>
@@ -82,7 +82,7 @@ const WorkChild = (props) => {
                     })
                 }
             </div>
-        </Fragment>
+        </div>
     )
 }
 export default withRouter(inject("workItemStore", "workChild")(observer(WorkChild)));

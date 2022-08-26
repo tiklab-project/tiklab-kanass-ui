@@ -1,5 +1,34 @@
 .version-detail {
-    padding: 0 10px;
+    .version-detail-top {
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        background-color: #fff;
+        box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
+        margin-bottom: 10px;
+
+        .version-detail-top-left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .version-detail-icon-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        .version-detail-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+    .version-detail-content {
+        padding: 0 10px;
+    }
 }
 .version-info-item {
     display: flex;

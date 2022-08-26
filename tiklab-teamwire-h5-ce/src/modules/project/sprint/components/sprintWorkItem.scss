@@ -1,5 +1,33 @@
 
-.sprintWorkItem-search {
+.sprint-workItem {
+    .sprint-workItem-top {
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        background-color: #fff;
+        box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
+
+        .sprint-workItem-top-left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .sprint-workItem-icon-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        .sprint-workItem-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+}
+.sprint-workItem-search {
     .adm-search-bar {
         flex: 1;
         margin-right: 20px;
@@ -13,9 +41,8 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background-color: #fff;
 }
-.sprint-workItem {
+.sprint-workItem-list {
     background: #fff;
     border-radius: 5px;
     height: calc(100vh - 92px);
@@ -32,7 +59,7 @@
         margin: 10px 0;
     }
     
-    .sprintWorkItem-list {
+    .sprint-workItem-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -40,22 +67,22 @@
         box-sizing: border-box;
         border-top: solid 1px var(--adm-border-color);
         line-height: 30px;
-        .sprintWorkItem-left {
+        .sprint-workItem-left {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             width: 30vw;
-            .sprintWorkItem-icon {
+            .sprint-workItem-icon {
                 margin-right: 10px;
             }
         }
-        .sprintWorkItem-type {
+        .sprint-workItem-type {
             width: 20vw;
             height: 40px; 
             line-height: 40px;
             overflow: hidden;
         }
-        .sprintWorkItem-title {
+        .sprint-workItem-title {
             font-size: 16px;
             font-weight: 600;
             color: var(--adm-color-primary)

@@ -5,7 +5,7 @@ import { observer, inject } from "mobx-react";
 import echarts from "../../../../common/echarts/echarts";
 import { withRouter } from "react-router";
 import ReportAddOrEdit from "./reportAddOrEdit";
-import "./statistics.scss"
+import "./statisticsWork.scss"
 
 
 const StatisticsWork = (props) => {
@@ -201,18 +201,15 @@ const StatisticsWork = (props) => {
     }
     return (
         <div className="statistics-work">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    迭代详情
+            <div className="statistics-work-top">
+                <div className="statistics-work-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="statistics-work-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="statistics-work-title">事项状态统计</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div className="statistics-work-content">
                 <div className="statistics-filter">
                     <div className="statistics-dropdown">统计项:

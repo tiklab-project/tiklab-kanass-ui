@@ -28,19 +28,15 @@ const ProjectDetailTab = (props) => {
 
     return (
         <div className="project-detail">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={back}
-                
-            >
-                <div className="project-detail-top" style={{fontSize: "15px"}}>
-                    项目详情
+             <div className="project-top">
+                <div className="project-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="project-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="project-title">项目详情</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <Tabs 
                 style={{"--content-padding": 0}} 
                 activeKey={activeIndex}

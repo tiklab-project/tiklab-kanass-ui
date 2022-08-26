@@ -9,35 +9,38 @@
 import React, { useEffect, useState } from 'react';
 import { NavBar, Tabs } from 'antd-mobile';
 import { inject, observer } from 'mobx-react';
-import RecentProject from "./recentProject"
+import RecentProject from "./recentProject";
+import ProcessWorkItem from "./processWorkItem";
+import SystemDynamic from "./systemDynamic"
+import "./home.scss"
 const Home = (props) => {
     const { homeStore } = props;
     const { setActiveIndex, activeIndex} = homeStore;
 
     return (
         <div className="home">
-            <NavBar
-                style={{
-                    '--height': '36px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={false}
-            >
-                <div>首页</div>
-            </NavBar>
+            <div className="home-top">
+                <div className="home-top-left" onClick={() => props.history.push("/set")}>
+                    <svg className="home-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-templateList"></use>
+                    </svg>
+                </div>
+                <div className="home-title">项目</div>
+                <div></div>
+            </div>
             <Tabs 
-                style={{"--content-padding": 0}} 
+                style={{"--content-padding": 0}}
                 activeKey={activeIndex}
                 onChange={key => setActiveIndex(key)}
             >
-                <Tabs.Tab title='最近访问项目' key='survey'>
+                <Tabs.Tab title='最近访问项目' key='home'>
                     <RecentProject />
                 </Tabs.Tab>
                 <Tabs.Tab title='待办事项' key='workItem'>
-                    <div>1</div>
+                    <ProcessWorkItem />
                 </Tabs.Tab>
-                <Tabs.Tab title='动态' key='sprint'>
-                   <div>2</div>
+                <Tabs.Tab title='动态' key='dynamic'>
+                   <SystemDynamic />
                 </Tabs.Tab>
             </Tabs>
         </div>

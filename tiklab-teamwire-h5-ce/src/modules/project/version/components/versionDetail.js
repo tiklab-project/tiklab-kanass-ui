@@ -106,21 +106,18 @@ const VersionDetail = (props) => {
     }
 
     return (
-        <div style={{width: "100vw"}}>
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                backArrow={true}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    版本详情
+        <div style={{width: "100vw"}} className = "version-detail">
+            <div className="version-detail-top">
+                <div className="version-detail-top-left" onClick={() => props.history.goBack()}>
+                    <svg className="version-detail-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="version-detail-title">{versionInfo && versionInfo.name }</div>
+                <div></div>
+            </div>
             <div
-                className="version-detail"
+                className="version-detail-content"
                 style={{ backgroundColor: "#fff" }}
             >
                 <div className="version-info-item">

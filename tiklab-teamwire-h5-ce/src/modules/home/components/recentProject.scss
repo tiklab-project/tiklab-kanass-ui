@@ -1,10 +1,7 @@
 .recent-project {
-    .title-top {
-        font-size: 14px;
-        
-    }
+    background-color: #fff;
     .recent-project-top {
-        height: 50px;
+        height: 40px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -38,10 +35,6 @@
     }
     .recent-project-content {
         .title {
-            span {
-                height: 80px;
-                line-height: 80px;
-            }
             padding: 0 10px;
             font-weight: 600;
             display: flex;
@@ -50,7 +43,7 @@
             background: #fff;
         }
         .recent-project-box {
-            height: calc(100vh - 140px);
+            height: calc(100vh - 200px);
             overflow: auto;
         }
         .recent-project-list {
@@ -61,7 +54,7 @@
             padding: 10px 20px;
             box-sizing: border-box;
             border-top: solid 1px var(--adm-border-color);
-            line-height: 50px;
+            line-height: 40px;
             .recent-project-left {
                 display: flex;
                 justify-content: flex-start;

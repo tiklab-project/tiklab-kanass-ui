@@ -7,24 +7,43 @@
  * @LastEditTime: 2022-04-22 11:32:13
  */
 import React, { useEffect, useState } from 'react';
-import {  Avatar, SearchBar,Button } from 'antd-mobile';
+import { Avatar, SearchBar, Button, InfiniteScroll } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { inject, observer } from 'mobx-react';
 import "../components/workItem.scss";
 import { withRouter } from 'react-router';
 const WorkItem = (props) => {
     const { workItemStore } = props;
-    const { getWorkConditionPage,workList,setSearchConditionNull } = workItemStore;
-
+    const { getWorkConditionPage, workList, setSearchConditionNull } = workItemStore;
+    const [currentPage, setCurrentPage] = useState(1)
+    const [hasMore, setHasMore] = useState(true)
     useEffect(() => {
         setSearchConditionNull()
-        getWorkConditionPage({projectId: localStorage.getItem("projectId")})
+        getWorkConditionPage({ projectId: localStorage.getItem("projectId") })
     }, [])
 
     const searchWorkItem = (value) => {
-        getWorkConditionPage({title: value})
+        getWorkConditionPage({ title: value })
     }
 
+    const loadMore = async () => {
+        const value = {
+            projectId: localStorage.getItem("projectId"),
+            pageParam: {
+                pageSize: 10,
+                currentPage: currentPage + 1,
+            }
+        }
+        setCurrentPage(currentPage + 1)
+        const data = await getWorkConditionPage(value);
+        if (data.code === 0) {
+            if (data.data.dataList.length > 0) {
+                setHasMore(true)
+            } else {
+                setHasMore(false)
+            }
+        }
+    }
     return (
         <div className="workItem-list">
             <div className='workItem-search'>
@@ -33,7 +52,7 @@ const WorkItem = (props) => {
                     style={{
                         '--border-radius': '100px',
                     }}
-                    onChange = {(value) => searchWorkItem(value)}
+                    onChange={(value) => searchWorkItem(value)}
                 />
                 <Button
                     size='mini'
@@ -47,31 +66,37 @@ const WorkItem = (props) => {
             </div>
             <div className='workItem'>
                 {
-                    workList && workList.length > 0 && workList.map(item => {
-                        return <div className="workItem-list" key = {item.id}>
-                            <div className='workItem-left'>
-                                <div className='workItem-icon'>
-                                    <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
-                                </div>
-                                <div>
-                                    <div className='workItem-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
-                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
-                                        {item.builder ?item.builder.name : "admin"}
+                    workList && workList.length > 0 && <div>
+                        {workList.map(item => {
+                            return <div className="workItem-list" key={item.id}>
+                                <div className='workItem-left'>
+                                    <div className='workItem-icon'>
+                                        <Avatar fallback={<AppOutline />} style={{ '--size': '32px' }} />
+                                    </div>
+                                    <div>
+                                        <div className='workItem-title' onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.title}</div>
+                                        <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                            {item.builder ? item.builder.name : "admin"}
+                                        </div>
                                     </div>
                                 </div>
+                                <div className='workItem-type'>
+                                    {item.workType && item.workType.name}
+                                </div>
+                                <div>
+                                    未开始
+                                </div>
+                                <div>
+                                    <EyeOutline />
+                                </div>
                             </div>
-                            <div className='workItem-type'>
-                                {item.workType.name}
-                            </div>
-                            <div>
-                                未开始
-                            </div>
-                            <div>
-                                <EyeOutline />
-                            </div>
-                        </div>
-                    })
+                        })}
+                        <InfiniteScroll loadMore={loadMore} hasMore={hasMore} threshold={20} />
+                    </div>
+
+
                 }
+                
             </div>
         </div>
     )

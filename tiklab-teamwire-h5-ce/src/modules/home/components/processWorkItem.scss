@@ -1,6 +1,11 @@
-.project {
-    .project-top {
-        height: 50px;
+.process-workItem {
+    background-color: #fff;
+    .title-top {
+        font-size: 14px;
+        
+    }
+    .process-workItem-top {
+        height: 40px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -8,36 +13,32 @@
         background-color: #fff;
         box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
     
-        .project-top-left, .project-top-right {
+        .process-workItem-top-left, .process-workItem-top-right {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 18px;
         }
-        .project-icon-logo {
+        .process-workItem-icon-logo {
             width: 20px;
             height: 20px;
         }
-        .project-title {
+        .process-workItem-title {
             font-weight: 600;
             font-size: 16px;
         }
-        .project-icon-search {
+        .process-workItem-icon-search {
             margin-right: 20px;
             width: 25px;
             height: 25px;
         }
-        .project-icon-add {
+        .process-workItem-icon-add {
             width: 25px;
             height: 25px;
         }
     }
-    .project-content {
+    .process-workItem-content {
         .title {
-            span {
-                height: 80px;
-                line-height: 80px;
-            }
             padding: 0 10px;
             font-weight: 600;
             display: flex;
@@ -45,11 +46,11 @@
             margin: 10px 0;
             background: #fff;
         }
-        .project-box {
-            height: calc(100vh - 140px);
+        .process-workItem-box {
+            height: calc(100vh - 200px);
             overflow: auto;
         }
-        .project-list {
+        .process-workItem-list {
             display: flex;
             width: 100vw;
             justify-content: space-between;
@@ -57,23 +58,22 @@
             padding: 10px 20px;
             box-sizing: border-box;
             border-top: solid 1px var(--adm-border-color);
-            line-height: 50px;
-            .project-left {
+            line-height: 40px;
+            .process-workItem-left {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
                 width: 30vw;
-                .project-icon {
+                .process-workItem-icon {
                     margin-right: 10px;
                 }
             }
-            .project-type {
-                width: 20vw;
+            .process-workItem-type {
                 height: 40px; 
                 line-height: 40px;
                 overflow: hidden;
             }
-            .project-title {
+            .process-workItem-title {
                 font-size: 16px;
                 font-weight: 600;
                 color: var(--adm-color-primary)

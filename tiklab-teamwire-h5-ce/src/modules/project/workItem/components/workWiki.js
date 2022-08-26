@@ -100,7 +100,7 @@ const WorkWiki = (props) => {
                             </div>
                             <div>
                                 <div className='work-wiki-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.workItem.title}</div>
-                                <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                <div>
                                     {item.worker ?item.worker.name : "admin"}
                                 </div>
                             </div>

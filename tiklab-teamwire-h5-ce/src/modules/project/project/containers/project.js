@@ -53,7 +53,7 @@ const Project = (props) => {
     return (
         <div className="project">
             <div className="project-top">
-                <div className="project-top-left" onClick={() => props.history.push("/index/set")}>
+                <div className="project-top-left" onClick={() => props.history.push("/set")}>
                     <svg className="project-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
@@ -67,6 +67,8 @@ const Project = (props) => {
                         placeholder='请输入内容'
                         style={{
                             '--border-radius': '100px',
+                            '--padding-left': '12px',
+                            marginRight: "10px"
                         }}
                         onChange = {(value) => searchProject(value)}
                     />

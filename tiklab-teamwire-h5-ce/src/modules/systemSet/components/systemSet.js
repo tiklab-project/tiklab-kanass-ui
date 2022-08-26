@@ -36,7 +36,7 @@ const SystemSet = (props) => {
                         </svg>
                         <div className="user-middle">
                             <div className="user-middle-top">{getUser().name}</div>
-                            <div className="user-middle-bottom">0关注 | 0粉丝</div>
+                            <div className="user-middle-bottom">字节加速 | 开发部</div>
                         </div>
                         <svg className="systemset-set-icon" aria-hidden="true">
                             <use xlinkHref="#icon-rightxi"></use>

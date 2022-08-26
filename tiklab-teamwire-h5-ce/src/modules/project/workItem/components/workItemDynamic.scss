@@ -1,5 +1,12 @@
-.project {
-    .project-top {
+.system-dynamic {
+    background-color: #fff;
+    height: calc(100vh - 150px);
+    overflow: auto;
+    .title-top {
+        font-size: 14px;
+        
+    }
+    .system-dynamic-top {
         height: 50px;
         display: flex;
         justify-content: space-between;
@@ -8,31 +15,32 @@
         background-color: #fff;
         box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
     
-        .project-top-left, .project-top-right {
+        .system-dynamic-top-left, .system-dynamic-top-right {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 18px;
         }
-        .project-icon-logo {
+        .system-dynamic-icon-logo {
             width: 20px;
             height: 20px;
         }
-        .project-title {
+        .system-dynamic-title {
             font-weight: 600;
             font-size: 16px;
         }
-        .project-icon-search {
+        .system-dynamic-icon-search {
             margin-right: 20px;
             width: 25px;
             height: 25px;
         }
-        .project-icon-add {
+        .system-dynamic-icon-add {
             width: 25px;
             height: 25px;
         }
     }
-    .project-content {
+    .system-dynamic-content {
+        height: 100%;
         .title {
             span {
                 height: 80px;
@@ -45,11 +53,11 @@
             margin: 10px 0;
             background: #fff;
         }
-        .project-box {
-            height: calc(100vh - 140px);
+        .system-dynamic-box {
+            // height: calc(100vh - 200px);
             overflow: auto;
         }
-        .project-list {
+        .system-dynamic-list {
             display: flex;
             width: 100vw;
             justify-content: space-between;
@@ -58,22 +66,20 @@
             box-sizing: border-box;
             border-top: solid 1px var(--adm-border-color);
             line-height: 50px;
-            .project-left {
+            .system-dynamic-left {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-                width: 30vw;
-                .project-icon {
+                .system-dynamic-icon {
                     margin-right: 10px;
                 }
             }
-            .project-type {
-                width: 20vw;
+            .system-dynamic-type {
                 height: 40px; 
                 line-height: 40px;
                 overflow: hidden;
             }
-            .project-title {
+            .system-dynamic-title {
                 font-size: 16px;
                 font-weight: 600;
                 color: var(--adm-color-primary)

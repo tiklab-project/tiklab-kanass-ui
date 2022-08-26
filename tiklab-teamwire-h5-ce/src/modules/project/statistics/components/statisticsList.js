@@ -24,7 +24,7 @@ const StatisticsList = (props) => {
     // 树的展开与闭合
     const [expandedTree, setExpandedTree] = useState([])
 
-    const projectId = props.match.params.id;
+    const projectId = localStorage.getItem("projectId");
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
@@ -81,9 +81,7 @@ const StatisticsList = (props) => {
                 {
                     reportList && reportList.map(item => {
                         return <div key={item.key}>
-                            <div className={`statistics-menu-firstmenu ${item.id === selectRouter ? "statistics-menu-select" : ""}`}
-                                key={item.key}
-                            >
+                            <div className={`statistics-menu-firstmenu ${item.id === selectRouter ? "statistics-menu-select" : ""}`}>
                                 <div className="statistics-menu-icon">
                                     {
                                         item.children && item.children.length>0?

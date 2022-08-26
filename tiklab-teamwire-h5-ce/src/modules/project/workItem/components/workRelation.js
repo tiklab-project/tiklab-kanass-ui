@@ -37,15 +37,6 @@ const WorkRelation = (props) => {
                     }}
                     onChange = {(value) => searchWorkItem(value)}
                 />
-                {/* <Button
-                    size='mini'
-                    color='primary'
-                    onClick={() => {
-                        props.history.push("/workItemAdd")
-                    }}
-                >
-                    添加事项
-                </Button> */}
             </div>
             <div className='work-relation-content'>
                 {
@@ -57,7 +48,7 @@ const WorkRelation = (props) => {
                                 </div>
                                 <div>
                                     <div className='work-relation-title'  onClick={() => props.history.push(`/workItemDetail/${item.id}`)}>{item.relateWorkItem.title}</div>
-                                    <div onClick={() => props.history.push({ pathname: "/project/projectDetail" })}>
+                                    <div>
                                         {item.relateWorkItem.builder ?item.relateWorkItem.builder.name : "admin"}
                                     </div>
                                 </div>

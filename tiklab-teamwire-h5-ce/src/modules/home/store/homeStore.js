@@ -1,8 +1,8 @@
 import { observable, action } from "mobx";
-import { StatProjectWorkItem } from "../api/home"
+import { StatProjectWorkItem, StatWorkItemProcess, FindDynamicPage } from "../api/home"
 export class HomeStore {
     @observable ProjectList = [];
-    @observable activeIndex = [];
+    @observable activeIndex = "project";
 
     @action
     setActiveIndex = (value) => {
@@ -16,6 +16,29 @@ export class HomeStore {
 		const data = await StatProjectWorkItem(params);
         return data;
     }
+
+    @action
+	statWorkItemProcess = async() => {
+		const data = await StatWorkItemProcess();
+        return data;
+    }
+
+    @action
+    findDynamicPage = async(value)=> {
+        const params={
+            sortParams: [{
+                name: "title",
+                orderType:"asc"
+            }],
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await FindDynamicPage(params);
+        return data;
+    }
+
 }
 
 export const HOME_STORE = "homeStore"

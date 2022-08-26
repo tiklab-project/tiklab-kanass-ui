@@ -7,25 +7,24 @@
  * @LastEditTime: 2022-04-22 10:47:30
  */
 import React, { useEffect, useState } from 'react';
-import { NavBar, Tabs, SearchBar, Button, Modal } from 'antd-mobile';
-import { AppOutline, EyeOutline } from 'antd-mobile-icons'
+import { AppOutline, EyeOutline } from 'antd-mobile-icons';
+import { Tabs } from 'antd-mobile';
 import { inject, observer } from 'mobx-react';
 import LogContent from '../components/logContent';
 import LogStatistics from "../components/logStatistics";
-
+import "../components/log.scss"
 const Log = (props) => {
     return (
         <div className="log">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                onBack={()=> props.history.goBack()}
-                backArrow={false}
-            >
-                <div>日志</div>
-            </NavBar>
+             <div className="log-top">
+                <div className="log-top-left" onClick={() => props.history.push("/set")}>
+                    <svg className="log-icon-logo" aria-hidden="true">
+                        <use xlinkHref="#icon-templateList"></use>
+                    </svg>
+                </div>
+                <div className="log-title">项目集</div>
+                <div></div>
+            </div>
             <Tabs style={{"--content-padding": 0}}>
                 <Tabs.Tab title='日志' key='survey'>
                     <LogContent />
