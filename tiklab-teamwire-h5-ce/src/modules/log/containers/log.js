@@ -22,8 +22,8 @@ const Log = (props) => {
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
                 </div>
-                <div className="log-title">项目集</div>
-                <div></div>
+                <div className="log-title">日志</div>
+                <div style={{width: "30px"}}></div>
             </div>
             <Tabs style={{"--content-padding": 0}}>
                 <Tabs.Tab title='日志' key='survey'>

@@ -5,14 +5,16 @@ import { inject, observer } from 'mobx-react';
 import Dynamic from '../../../../common/dynamic/dynamic';
 import "./workItemDynamic.scss"
 import { getUser } from 'tiklab-core-ui';
+import { withRouter } from 'react-router';
 const WorkItemDynamic = (props) => {
     const { workItemStore } = props;
     const { findDynamicPage } = workItemStore;
 
     const [dynamicList, setDynamicList] = useState([]);
-
+    const workItemId = props.match.params.id;
+    const projectId = localStorage.getItem("projectId")
     useEffect(() => {
-        findDynamicPage().then((data) => {
+        findDynamicPage({projectId: projectId, modelId: workItemId}).then((data) => {
             if (data.code === 0) {
                 setDynamicList(data.data.dataList)
             }
@@ -51,4 +53,4 @@ const WorkItemDynamic = (props) => {
         </div>
     )
 }
-export default inject("workItemStore")(observer(WorkItemDynamic));
+export default withRouter(inject("workItemStore")(observer(WorkItemDynamic)));

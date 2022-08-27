@@ -7,28 +7,13 @@
     background-color: #fff;
     box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
 
-    .systemset-top-left, .systemset-top-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 18px;
-    }
     .systemset-title {
-        margin-left: 20px;
         font-weight: 600;
+        font-size: 16px;
     }
     .systemset-icon-logo {
         width: 30px;
         height: 30px;
-    }
-    .systemset-icon-search {
-        margin-right: 20px;
-        width: 25px;
-        height: 25px;
-    }
-    .systemset-icon-add {
-        width: 25px;
-        height: 25px;
     }
 }
 .systemset-set {
@@ -67,9 +52,6 @@
         align-items: center;
     }
 }
-.systemset-set-middle {
-    
-}
 .systemset-user {
     display: flex;
     align-items: center;
@@ -86,6 +68,8 @@
             height: 40px;
             line-height: 40px;
             font-size: 14px;
+            width: 100px;
+            overflow: hidden;
         }
     }
 }

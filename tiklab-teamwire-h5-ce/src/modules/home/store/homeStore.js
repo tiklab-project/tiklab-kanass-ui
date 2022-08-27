@@ -2,7 +2,7 @@ import { observable, action } from "mobx";
 import { StatProjectWorkItem, StatWorkItemProcess, FindDynamicPage } from "../api/home"
 export class HomeStore {
     @observable ProjectList = [];
-    @observable activeIndex = "project";
+    @observable activeIndex = "home";
 
     @action
     setActiveIndex = (value) => {

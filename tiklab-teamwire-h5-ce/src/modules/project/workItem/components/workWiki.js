@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-10-09 15:25:16
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Avatar, SearchBar,Button } from 'antd-mobile';
+import { Avatar, SearchBar,Button, Empty } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { observer, inject } from "mobx-react";
 import "./workWiki.scss"
@@ -92,7 +92,7 @@ const WorkWiki = (props) => {
         </div>
         <div className='work-wiki-content'>
             {
-                workDoucumentList && workDoucumentList.length > 0 && workDoucumentList.map(item => {
+                workDoucumentList && workDoucumentList.length > 0 ? workDoucumentList.map(item => {
                     return <div className="work-wiki-list" key = {item.id}>
                         <div className='work-wiki-left'>
                             <div className='work-wiki-icon'>
@@ -116,6 +116,8 @@ const WorkWiki = (props) => {
                         </div>
                     </div>
                 })
+                :
+                <Empty description='暂无数据' />
             }
         </div>
     </div>

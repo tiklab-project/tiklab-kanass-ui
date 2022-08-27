@@ -30,17 +30,15 @@ const WorkTypeList = (props) => {
 
     return (
         <div className="workType">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    事项类型
+            <div className="workTypeList-top">
+                <div className="workTypeList-top-left" >
+                    <svg className="workTypeList-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="workTypeList-title">事项类型</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div className='workType-content'>
                 <div className="workType-box">
                     {

@@ -15,14 +15,18 @@ const WorkItemDetail = (props) => {
     const { workItemStore } = props;
     const { findWorkItem, upload, createWorkAttach, findWorkAttachList,
         editWork, findFlowDef, statesList, getStateList, findAllWorkPriority,
-        workPriorityList, setSlateValue, activeIndex, setActiveIndex, findWorkTypeListByCode } = workItemStore;
+        workPriorityList, setSlateValue, activeIndex, setActiveIndex, 
+        findWorkTypeListByCode,sprintList,findSprintList, moduleList, findModuleList } = workItemStore;
     const workItemId = props.match.params.id;
+    const projectId = localStorage.getItem("projectId")
     const [workItemInfo, setWorkItemInfo] = useState();
     const [workAttachList, setWorkAttachList] = useState();
     const [basicColumns, setbasicColumns] = useState([]);
 
     const [visible, setVisible] = useState(false);
     const [workPriorityVisible, setWorkPriorityVisible] = useState(false);
+    const [workSprintVisible, setWorkSprintVisible] = useState(false);
+    const [workModuleVisible, setWorkModuleVisible] = useState(false);
     const [planStartPickerVisible, setPlanStartPickerVisible] = useState(false);
     const [planEndPickerVisible, setPlanEndPickerVisible] = useState(false);
     const [workTask, setWorkTask] = useState()
@@ -37,7 +41,8 @@ const WorkItemDetail = (props) => {
 
     useEffect(() => {
         const workItemId = props.match.params.id;
-
+        findSprintList({projectId: projectId})
+        findModuleList({projectId: projectId})
         findWorkItem({ id: workItemId }).then(res => {
             if (res.code === 0) {
                 setWorkItemInfo(res.data)
@@ -117,6 +122,20 @@ const WorkItemDetail = (props) => {
 
     }
 
+    const showSprintPicker = (key) => {
+        // findAllWorkPriority()
+        setWorkSprintVisible(true)
+        setUpdateField(key)
+
+    }
+
+    const showModulePicker = (key) => {
+        // findAllWorkPriority()
+        setWorkModuleVisible(true)
+        setUpdateField(key)
+
+    }
+
     const updatePriority = (updateData, extend) => {
         let data = {
             [updateField]: updateData[0],
@@ -125,6 +144,26 @@ const WorkItemDetail = (props) => {
         }
         editWork(data)
         workItemInfo.workPriority = { name: extend.items[0].label }
+    }
+
+    const updateSprint = (updateData, extend) => {
+        let data = {
+            [updateField]: updateData[0],
+            id: workItemId,
+            updateField: updateField
+        }
+        editWork(data)
+        workItemInfo.sprint = { name: extend.items[0].label }
+    }
+
+    const updateModule = (updateData, extend) => {
+        let data = {
+            [updateField]: updateData[0],
+            id: workItemId,
+            updateField: updateField
+        }
+        editWork(data)
+        workItemInfo.module = { moduleName: extend.items[0].label }
     }
 
     const showPlanBeginPicker = (key) => {
@@ -199,7 +238,7 @@ const WorkItemDetail = (props) => {
                     </svg>
                 </div>
                 <div className="workItem-detail-title"> {workItemInfo && workItemInfo.title}</div>
-                <div></div>
+                <div style={{width: "30px"}}></div>
             </div>
             <Tabs
                 style={{ "--content-padding": 0 }}
@@ -269,11 +308,27 @@ const WorkItemDetail = (props) => {
                             </span>
                         </div>
                         <div className="workItem-info-item">
-                            <span>
+                            <span onClick={() => showPriorityPicker("workPriority")}>
                                 负责人
                             </span>
                             <span>
                                 {workItemInfo && workItemInfo.master ? workItemInfo.master.name : "admin"}
+                            </span>
+                        </div>
+                        <div className="workItem-info-item">
+                            <span>
+                                迭代
+                            </span>
+                            <span onClick={() => showSprintPicker("sprint")}>
+                                {workItemInfo && workItemInfo.sprint ? workItemInfo.sprint.sprintName : "无"}
+                            </span>
+                        </div>
+                        <div className="workItem-info-item">
+                            <span>
+                                模块
+                            </span>
+                            <span onClick={() => showModulePicker("module")}>
+                                {workItemInfo && workItemInfo.module ? workItemInfo.module.moduleName : "无"}
                             </span>
                         </div>
                         <div className="workItem-info-item">
@@ -387,6 +442,22 @@ const WorkItemDetail = (props) => {
                     setWorkPriorityVisible(false)
                 }}
                 onConfirm={(value, extend) => updatePriority(value, extend)}
+            />
+            <Picker
+                columns={[sprintList]}
+                visible={workSprintVisible}
+                onClose={() => {
+                    setWorkSprintVisible(false)
+                }}
+                onConfirm={(value, extend) => updateSprint(value, extend)}
+            />
+            <Picker
+                columns={[moduleList]}
+                visible={workModuleVisible}
+                onClose={() => {
+                    setWorkModuleVisible(false)
+                }}
+                onConfirm={(value, extend) => updateModule(value, extend)}
             />
             <DatePicker
                 visible={planStartPickerVisible}

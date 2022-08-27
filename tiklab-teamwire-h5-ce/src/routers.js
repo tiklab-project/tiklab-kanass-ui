@@ -26,7 +26,7 @@ const VersionDetail = AsyncComponent(() => import("./modules/project/version/com
 const MilestoneAdd = AsyncComponent(() => import("./modules/project/milestone/components/milestoneAdd"))
 const MilestoneDetail = AsyncComponent(() => import("./modules/project/milestone/components/milestoneDetail"))
 
-const SprintWorkItem = AsyncComponent(() => import("./modules/project/sprint/components/sprintWorkItem"))
+const SprintWorkItem = AsyncComponent(() => import("./modules/project/sprint/containers/sprint"))
 const SprintDetail = AsyncComponent(() => import("./modules/project/sprint/components/sprintDetail"))
 
 const ProjectSet = AsyncComponent(() => import("./modules/projectSet/containers/projectSet"))

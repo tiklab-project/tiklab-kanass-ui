@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Avatar, SearchBar,Button } from 'antd-mobile';
+import { Avatar, SearchBar,Empty } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { observer, inject } from "mobx-react";
 import "./workRelation.scss"
@@ -40,7 +40,7 @@ const WorkRelation = (props) => {
             </div>
             <div className='work-relation-content'>
                 {
-                    selectWorkRelationList && selectWorkRelationList.length > 0 && selectWorkRelationList.map(item => {
+                    selectWorkRelationList && selectWorkRelationList.length > 0 ? selectWorkRelationList.map(item => {
                         return <div className="work-relation-list" key = {item.id}>
                             <div className='work-relation-left'>
                                 <div className='work-relation-icon'>
@@ -64,6 +64,8 @@ const WorkRelation = (props) => {
                             </div>
                         </div>
                     })
+                    :
+                    <Empty description='暂无数据' />
                 }
             </div>
         </div>

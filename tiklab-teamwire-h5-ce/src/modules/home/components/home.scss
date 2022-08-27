@@ -16,13 +16,7 @@
         padding: 0 10px;
         background-color: #fff;
         box-shadow: var(--ds-shadow-overlay, 0 0 1px rgba(9, 30, 66, 0.31), 0 5px 10px -8px rgba(9, 30, 66, 0.25));
-    
-        .home-top-left, .home-top-right {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
-        }
+
         .home-icon-logo {
             width: 20px;
             height: 20px;
@@ -30,15 +24,6 @@
         .home-title {
             font-weight: 600;
             font-size: 16px;
-        }
-        .home-icon-search {
-            margin-right: 20px;
-            width: 25px;
-            height: 25px;
-        }
-        .home-icon-add {
-            width: 25px;
-            height: 25px;
         }
     }
 }

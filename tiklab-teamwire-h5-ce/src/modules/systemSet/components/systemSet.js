@@ -26,8 +26,9 @@ const SystemSet = (props) => {
                     <svg className="systemset-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
                         <use xlinkHref="#icon-left"></use>
                     </svg>
-                    <div className="systemset-title">设置</div>
                 </div>
+                <div className="systemset-title">设置</div>
+                <div style={{width: "30px"}}></div>
             </div>
             <div className="systemset-set-middle">
                 <div className="systemset-set-contant systemset-user">
@@ -52,7 +53,7 @@ const SystemSet = (props) => {
                         </div>
                     </div>
                     <div className="systemset-set-item" onClick={() => props.history.push(`/workPriorityList`)}>
-                        <div>事项类型</div>
+                        <div>事项优先级</div>
                         <div className="item-right">
                             <svg className="systemset-set-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-rightxi"></use>
@@ -60,7 +61,7 @@ const SystemSet = (props) => {
                         </div>
                     </div>
                     <div className="systemset-set-item"  onClick={() => props.history.push(`/workTypeList`)}>
-                        <div>事项优先级</div>
+                        <div>事项类型</div>
                         <div className="item-right">
                             <svg className="systemset-set-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-rightxi"></use>

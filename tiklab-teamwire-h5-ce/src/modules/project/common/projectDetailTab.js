@@ -11,7 +11,7 @@ import { NavBar, Tabs } from 'antd-mobile';
 import "./projectDeailTab.scss";
 import Survey from "../survey/containers/survey";
 import WorkItem from "../workItem/containers/workItem";
-import Sprint from "../sprint/containers/sprint";
+import Sprint from "../sprint/components/sprintList";
 import Version from "../version/containers/versionList";
 import MilestoneList from "../milestone/containers/milestoneList";
 import ModuleList from "../module/containers/moduleList";

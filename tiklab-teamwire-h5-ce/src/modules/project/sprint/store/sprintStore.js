@@ -12,7 +12,9 @@ import { FindSprintPage, FindDmUserPage, CreateSprint, FindSprint, UpdateSprint 
 export class SprintStore {
     @observable workList = [];
     @observable total = [];
-    
+    @observable activeIndex = "survey";
+
+
     @observable searchCondition = {
         parentIdIsNull: true,
         orderParams: [{
@@ -24,6 +26,11 @@ export class SprintStore {
             currentPage: 1,
         }
     };
+
+    @action
+    setActiveIndex = async (value) => {
+        this.activeIndex = value;
+    }
 
     @action
     getSprintConditionPage = async (value) => {

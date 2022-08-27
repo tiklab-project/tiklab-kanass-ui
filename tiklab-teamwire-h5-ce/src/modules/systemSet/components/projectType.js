@@ -30,17 +30,15 @@ const ProjectType = (props) => {
 
     return (
         <div className="projectType">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    项目类型
+            <div className="projectType-top">
+                <div className="projectType-top-left" >
+                    <svg className="projectType-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="projectType-title">项目类型</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div className='projectType-content'>
                 <div className="projectType-box">
                     {

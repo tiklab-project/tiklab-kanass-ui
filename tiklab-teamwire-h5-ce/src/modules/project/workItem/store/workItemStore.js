@@ -413,7 +413,9 @@ export class WorkItemStore {
     @action
     findDynamicPage = async(value)=> {
         const params={
-            projectId: value,
+            projectId: value.projectId, 
+            modelId: value.modelId,
+
             sortParams: [{
                 name: "title",
                 orderType:"asc"

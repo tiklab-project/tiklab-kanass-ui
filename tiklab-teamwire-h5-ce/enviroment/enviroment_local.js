@@ -43,7 +43,6 @@ module.exports = {
     appSecret,
     version,
     client,
-    
     upload_url,
     isSaas,
     tenant_type,

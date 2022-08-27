@@ -50,7 +50,9 @@ const ProjectTabBar = (props) => {
         {
             key: '/index/log',
             title: '日志',
-            icon: <UserOutline />,
+            icon:  <svg className="tabbar-icon" aria-hidden="true">
+                <use xlinkHref="#icon-file"></use>
+            </svg>,
         }
     ]
 

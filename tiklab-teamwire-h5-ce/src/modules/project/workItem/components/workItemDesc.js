@@ -31,7 +31,7 @@ const WorkItemDesc = (props) => {
 				<svg aria-hidden="true" className="back-icon" onClick={saveDesc}>
 					<use xlinkHref="#icon-fanhui"></use>
 				</svg>
-                <span>事项描述</span>
+                <span className="workItemDesc-name">事项描述</span>
                 <span onClick={()=> saveDesc()}>确定</span>
 			</div>
             <DocumentEditor value = {toJS(slateValue)} onChange = {setSlateValue} showMenu = {true} {...props}/>

@@ -90,15 +90,15 @@ const SprintDetail = (props) => {
 
     return (
         <div style={{width: "100vw"}} className="sprint">
-            <div className="sprint-detail-top">
+            {/* <div className="sprint-detail-top">
                 <div className="sprint-detail-top-left" onClick={() => props.history.goBack()}>
                     <svg className="sprint-detail-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-left"></use>
                     </svg>
                 </div>
                 <div className="sprint-detail-title"></div>
-                <div></div>
-            </div>
+                <div style={{width: "30px"}}></div>
+            </div> */}
             <div
                 className="sprint-detail"
                 style={{ backgroundColor: "#fff" }}

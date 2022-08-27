@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavBar, Avatar, Picker, Button, SearchBar } from 'antd-mobile';
+import { Empty, Avatar, Picker, Button, SearchBar } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
@@ -53,7 +53,7 @@ const SprintWorkItem = (props) => {
     }
     return (
         <div className="sprint-workItem">
-            <div className="sprint-workItem-top">
+            {/* <div className="sprint-workItem-top">
                 <div className="sprint-workItem-top-left" onClick={() => props.history.goBack()}>
                     <svg className="sprint-workItem-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-left"></use>
@@ -61,7 +61,7 @@ const SprintWorkItem = (props) => {
                 </div>
                 <div className="sprint-workItem-title">{sprint.sprintName}</div>
                 <div></div>
-            </div>
+            </div> */}
             <div className='sprint-workItem-search'>
                 <SearchBar
                     placeholder='请输入内容'
@@ -83,7 +83,7 @@ const SprintWorkItem = (props) => {
             <div>
                 <div className='sprint-workItem-list'>
                     {
-                        workList && workList.length > 0 && workList.map(item => {
+                        workList && workList.length > 0 ? workList.map(item => {
                             return <div className="sprint-workItem-item" key = {item.id}>
                                 <div className='sprint-workItem-left'>
                                     <div className='sprint-workItem-icon'>
@@ -107,6 +107,8 @@ const SprintWorkItem = (props) => {
                                 </div>
                             </div>
                         })
+                        :
+                        <Empty description='暂无数据' />
                     }
                 </div>
             </div>

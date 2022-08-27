@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
 import { observer, inject } from "mobx-react";
-import {  Avatar, SearchBar,Button } from 'antd-mobile';
+import {  Avatar, SearchBar,Empty } from 'antd-mobile';
 import { AppOutline, EyeOutline } from 'antd-mobile-icons'
 import "./workChild.scss"
 import { withRouter } from "react-router";
@@ -56,7 +56,7 @@ const WorkChild = (props) => {
             </div>
             <div className='workChild-content'>
                 {
-                    childWorkList && childWorkList.length > 0 && childWorkList.map(item => {
+                    childWorkList && childWorkList.length > 0 ? childWorkList.map(item => {
                         return <div className="workChild-list" key = {item.id}>
                             <div className='workChild-left'>
                                 <div className='workChild-icon'>
@@ -80,6 +80,8 @@ const WorkChild = (props) => {
                             </div>
                         </div>
                     })
+                    :
+                    <Empty description='暂无数据' />
                 }
             </div>
         </div>

@@ -30,17 +30,15 @@ const WorkPriorityList = (props) => {
 
     return (
         <div className="workPriority">
-            <NavBar
-                style={{
-                    '--height': '40px',
-                    '--border-bottom': '1px #eee solid',
-                }}
-                onBack={()=> props.history.goBack()}
-            >
-                <div className="title-top">
-                    项目优先级
+            <div className="workPriority-top">
+                <div className="workPriority-top-left" >
+                    <svg className="workPriority-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
+                        <use xlinkHref="#icon-left"></use>
+                    </svg>
                 </div>
-            </NavBar>
+                <div className="workPriority-title">事项优先级</div>
+                <div style={{width: "30px"}}></div>
+            </div>
             <div className='workPriority-content'>
                 <div className="workPriority-box">
                     {

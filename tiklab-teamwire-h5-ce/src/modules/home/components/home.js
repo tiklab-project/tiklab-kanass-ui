@@ -25,8 +25,8 @@ const Home = (props) => {
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
                 </div>
-                <div className="home-title">项目</div>
-                <div></div>
+                <div className="home-title">首页</div>
+                <div style={{width: "30px"}}></div>
             </div>
             <Tabs 
                 style={{"--content-padding": 0}}

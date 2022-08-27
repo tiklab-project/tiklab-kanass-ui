@@ -98,7 +98,7 @@ const MilestoneDetail = (props) => {
                         <use xlinkHref="#icon-left"></use>
                     </svg>
                 </div>
-                <div className="milestone-title">项目</div>
+                <div className="milestone-title">{milestoneInfo && milestoneInfo.name}</div>
                 <div style={{width: "30px"}}></div>
             </div>
             <div

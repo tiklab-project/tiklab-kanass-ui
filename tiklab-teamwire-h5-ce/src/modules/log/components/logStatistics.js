@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-02-10 10:05:52
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, SearchBar, Picker, DatePicker } from 'antd-mobile'
+import { Button, Empty, Picker, DatePicker } from 'antd-mobile'
 import { observer, inject } from "mobx-react";
 import "./logStatistics.scss"
 import { DownFill } from 'antd-mobile-icons'
@@ -161,49 +161,54 @@ const LogStatistics = (props) => {
                     <div className="filter-submit" onClick={() => submit()}>确定</div>
                 </div>
             </div>
-            <div className="log-statistics-box">
-                <div className="log-statistics-table">
-                    <div className="table-head">
-                        <div className="statistics-user">
-                            成员
-                        </div>
-                        <div className="statistics-total">
-                            总计
+            {
+                userStatistic && userStatistic.length > 0 ? <div className="log-statistics-box">
+                    <div className="log-statistics-table">
+                        <div className="table-head">
+                            <div className="statistics-user">
+                                成员
+                            </div>
+                            <div className="statistics-total">
+                                总计
+                            </div>
+                            {
+                                userStatistic && userStatistic.map(item => {
+                                    return (<div className="statistics-table-tr" key={item.dateTime}>
+                                        <div>{item.dateTime}</div>
+                                        <div>{item.weekDay}</div>
+                                    </div>
+                                    )
+                                })
+                            }
                         </div>
                         {
-                            userStatistic && userStatistic.map(item => {
-                                return (<div className="statistics-table-tr" key={item.dateTime}>
-                                    <div>{item.dateTime}</div>
-                                    <div>{item.weekDay}</div>
+                            hourStatistic && hourStatistic.map((item, index) => {
+                                return (<div className="table-row" key={index}>
+                                    <div className="statistics-user">
+                                        {item.name}
+                                    </div>
+                                    <div className="statistics-total">
+                                        {item.totalNumber}
+                                    </div>
+                                    {
+                                        item.statisticsList.map((staticticsItem, index) => {
+                                            return (<div className="statistics-table-tr" key={index}>
+                                                {staticticsItem}
+                                            </div>
+                                            )
+                                        })
+                                    }
                                 </div>
+
                                 )
                             })
                         }
                     </div>
-                    {
-                        hourStatistic && hourStatistic.map((item, index) => {
-                            return (<div className="table-row" key={index}>
-                                <div className="statistics-user">
-                                    {item.name}
-                                </div>
-                                <div className="statistics-total">
-                                    {item.totalNumber}
-                                </div>
-                                {
-                                    item.statisticsList.map((staticticsItem,index) => {
-                                        return (<div className="statistics-table-tr" key= {index}>
-                                                {staticticsItem}
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-
-                            )
-                        })
-                    }
                 </div>
-            </div>
+                :
+                <Empty description='暂无数据' />
+            }
+
 
             <Picker
                 columns={typeColums}

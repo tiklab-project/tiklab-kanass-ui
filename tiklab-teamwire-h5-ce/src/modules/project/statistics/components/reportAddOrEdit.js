@@ -63,6 +63,7 @@ const ReportAddOrEdit = (props) => {
                     if (data.code === 0) {
                         findReportList({ projectId: projectId })
                         setVisible(false);
+                        props.history.goBack()
                     }
                 })
             }
