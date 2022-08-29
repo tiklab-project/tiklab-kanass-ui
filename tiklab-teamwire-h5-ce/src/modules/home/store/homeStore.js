@@ -3,6 +3,12 @@ import { StatProjectWorkItem, StatWorkItemProcess, FindDynamicPage } from "../ap
 export class HomeStore {
     @observable ProjectList = [];
     @observable activeIndex = "home";
+    @observable systemSetVisible = false;
+
+    @action
+    setSystemSetVisible = (value) => {
+        this.systemSetVisible = value
+    }
 
     @action
     setActiveIndex = (value) => {

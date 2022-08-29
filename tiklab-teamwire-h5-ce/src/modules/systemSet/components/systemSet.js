@@ -8,13 +8,7 @@ const SystemSet = (props) => {
     const {systemSetStore} = props;
     // const {findUser} = systemSetStore;
 
-    useEffect(()=> {
-        // findUser(getUser().userId).then(res => {
-        //     if(res.code === 0){
-        //         console.log(res)
-        //     }
-        // })
-    },[])
+
 
     return (
         <div className="systemset-set">
@@ -22,11 +16,11 @@ const SystemSet = (props) => {
                 <SafeArea position='top' />
             </div>
             <div className="systemset-top">
-                <div className="systemset-top-left" >
+                {/* <div className="systemset-top-left" >
                     <svg className="systemset-icon-logo" aria-hidden="true" onClick={() => props.history.goBack()}>
                         <use xlinkHref="#icon-left"></use>
                     </svg>
-                </div>
+                </div> */}
                 <div className="systemset-title">设置</div>
                 <div style={{width: "30px"}}></div>
             </div>

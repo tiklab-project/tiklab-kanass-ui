@@ -41,8 +41,7 @@ export class LogStore {
 	findWorkLogPage = async(value) => {
         Object.assign(this.selectLogCondition, {...value} )
 		const data = await FindWorkLogPage(this.selectLogCondition);
-        // this.LogAllList = data;
-
+        
         if(data.code === 0){
             this.logList = data.data.dataList;
             this.selectLogCondition.pageParam.total = data.data.totalRecord

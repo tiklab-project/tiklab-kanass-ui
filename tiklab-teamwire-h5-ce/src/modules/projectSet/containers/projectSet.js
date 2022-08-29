@@ -14,11 +14,12 @@ import "../components/projectSet.scss";
 import ProjectSetAdd from "../components/projectSetAdd";
 
 const ProjectSet = (props) => {
-    const { projectSetStore } = props;
+    const { projectSetStore, homeStore } = props;
     const { findProjectSetPage } = projectSetStore;
     const [projectsetList, setProjectSetList] = useState([]);
     const [visible, setVisible] = useState(false);
-    console.log(props)
+    const { setActiveIndex, activeIndex, setSystemSetVisible, systemSetVisible } = homeStore;
+
     
     useEffect(() => {
         findProjectSetPage().then((data) => {
@@ -42,7 +43,7 @@ const ProjectSet = (props) => {
     return (
         <div className="projectset">
             <div className="projectset-top">
-                <div className="projectset-top-left" onClick={() => props.history.push("/set")}>
+                <div className="projectset-top-left" onClick={() => setSystemSetVisible(true)}>
                     <svg className="projectset-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
@@ -106,4 +107,4 @@ const ProjectSet = (props) => {
         </div>
     )
 }
-export default inject("projectSetStore")(observer(ProjectSet));
+export default inject("projectSetStore", "homeStore")(observer(ProjectSet));

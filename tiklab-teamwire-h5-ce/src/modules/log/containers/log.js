@@ -14,10 +14,12 @@ import LogContent from '../components/logContent';
 import LogStatistics from "../components/logStatistics";
 import "../components/log.scss"
 const Log = (props) => {
+    const {homeStore} = props;
+    const { setSystemSetVisible, systemSetVisible } = homeStore;
     return (
         <div className="log">
              <div className="log-top">
-                <div className="log-top-left" onClick={() => props.history.push("/set")}>
+                <div className="log-top-left" onClick={() => setSystemSetVisible(true)}>
                     <svg className="log-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
@@ -36,4 +38,4 @@ const Log = (props) => {
         </div>
     )
 }
-export default inject("projectStore")(observer(Log));
+export default inject("homeStore")(observer(Log));

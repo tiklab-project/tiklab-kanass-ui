@@ -13,8 +13,9 @@ import { inject, observer } from 'mobx-react';
 import "../components/project.scss";
 import ProjectAddEidtModal from "../components/projectAddEditModal";
 const Project = (props) => {
-    const { projectStore } = props;
+    const { projectStore, homeStore } = props;
     const { findProjectPage } = projectStore;
+    const { setSystemSetVisible, systemSetVisible } = homeStore;
     const [projectList, setProjectList] = useState([]);
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const Project = (props) => {
     return (
         <div className="project">
             <div className="project-top">
-                <div className="project-top-left" onClick={() => props.history.push("/set")}>
+                <div className="project-top-left" onClick={() => setSystemSetVisible(true)}>
                     <svg className="project-icon-logo" aria-hidden="true">
                         <use xlinkHref="#icon-templateList"></use>
                     </svg>
@@ -124,4 +125,4 @@ const Project = (props) => {
         </div>
     )
 }
-export default inject("projectStore")(observer(Project));
+export default inject("projectStore", "homeStore")(observer(Project));

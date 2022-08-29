@@ -11,39 +11,44 @@ import { NavBar, Tabs } from 'antd-mobile';
 import { inject, observer } from 'mobx-react';
 import RecentProject from "./recentProject";
 import ProcessWorkItem from "./processWorkItem";
-import SystemDynamic from "./systemDynamic"
+import SystemDynamic from "./systemDynamic";
+
 import "./home.scss"
 const Home = (props) => {
     const { homeStore } = props;
-    const { setActiveIndex, activeIndex} = homeStore;
+    const { setActiveIndex, activeIndex, setSystemSetVisible, systemSetVisible } = homeStore;
 
     return (
-        <div className="home">
-            <div className="home-top">
-                <div className="home-top-left" onClick={() => props.history.push("/set")}>
-                    <svg className="home-icon-logo" aria-hidden="true">
-                        <use xlinkHref="#icon-templateList"></use>
-                    </svg>
+        <div>
+            
+            <div className="home">
+                <div className="home-top">
+                    <div className="home-top-left" onClick={() => setSystemSetVisible(true)}>
+                        <svg className="home-icon-logo" aria-hidden="true">
+                            <use xlinkHref="#icon-templateList"></use>
+                        </svg>
+                    </div>
+                    <div className="home-title">首页</div>
+                    <div style={{ width: "30px" }}></div>
                 </div>
-                <div className="home-title">首页</div>
-                <div style={{width: "30px"}}></div>
+                <Tabs
+                    style={{ "--content-padding": 0 }}
+                    activeKey={activeIndex}
+                    onChange={key => setActiveIndex(key)}
+                >
+                    <Tabs.Tab title='最近访问项目' key='home'>
+                        <RecentProject />
+                    </Tabs.Tab>
+                    <Tabs.Tab title='待办事项' key='workItem'>
+                        <ProcessWorkItem />
+                    </Tabs.Tab>
+                    <Tabs.Tab title='动态' key='dynamic'>
+                        <SystemDynamic />
+                    </Tabs.Tab>
+                </Tabs>
             </div>
-            <Tabs 
-                style={{"--content-padding": 0}}
-                activeKey={activeIndex}
-                onChange={key => setActiveIndex(key)}
-            >
-                <Tabs.Tab title='最近访问项目' key='home'>
-                    <RecentProject />
-                </Tabs.Tab>
-                <Tabs.Tab title='待办事项' key='workItem'>
-                    <ProcessWorkItem />
-                </Tabs.Tab>
-                <Tabs.Tab title='动态' key='dynamic'>
-                   <SystemDynamic />
-                </Tabs.Tab>
-            </Tabs>
         </div>
+
     )
 }
 

@@ -79,9 +79,9 @@ const StatisticsList = (props) => {
         <div className="statistics-list">
             <div className="statistics-menu">
                 {
-                    reportList && reportList.map(item => {
-                        return <div key={item.key}>
-                            <div className={`statistics-menu-firstmenu ${item.id === selectRouter ? "statistics-menu-select" : ""}`}>
+                    reportList && reportList.map((item, index) => {
+                        return <div key={index}>
+                            <div className={`statistics-menu-firstmenu ${item.id === selectRouter ? "statistics-menu-select" : ""}`} key={item.key}>
                                 <div className="statistics-menu-icon">
                                     {
                                         item.children && item.children.length>0?
@@ -111,8 +111,6 @@ const StatisticsList = (props) => {
                                             </Popover>
 
                                         </div>
-                                    } else {
-                                        return;
                                     }
                                 })
                             }

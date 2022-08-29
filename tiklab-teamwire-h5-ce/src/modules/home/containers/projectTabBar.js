@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-22 15:44:02
  */
 import React, { useState } from 'react';
-import { Badge, TabBar } from 'antd-mobile';
+import { Badge, TabBar,Popup } from 'antd-mobile';
 import { renderRoutes } from "react-router-config";
 import { useLocation} from 'react-router-dom'
 import {
@@ -16,9 +16,13 @@ import {
 } from 'antd-mobile-icons';
 import "../components/projectTabBar.scss";
 import {verifyUserHoc} from "tiklab-eam-saas-ui";
+import SystemSet from "../../systemSet/components/systemSet";
+import { inject, observer } from 'mobx-react';
 
 const ProjectTabBar = (props) => {
     const route = props.route;
+    const {homeStore} = props;
+    const { setSystemSetVisible, systemSetVisible } = homeStore;
     const location = useLocation()
     const { pathname } = location
     const setRouteActive = (value) => {
@@ -58,6 +62,16 @@ const ProjectTabBar = (props) => {
 
     return (
         <div>
+            <Popup
+              visible={systemSetVisible}
+              onMaskClick={() => {
+                setSystemSetVisible(false)
+              }}
+              position='left'
+              bodyStyle={{ width: '80vw' }}
+            >
+              <SystemSet />
+            </Popup>
             <div>
                 {renderRoutes(route.routes)}
             </div>
@@ -73,5 +87,5 @@ const ProjectTabBar = (props) => {
 
     )
 }
-const IndexSaasHoc = verifyUserHoc(ProjectTabBar, "teamwire")
+const IndexSaasHoc = verifyUserHoc(inject("homeStore")(observer(ProjectTabBar)), "teamwire")
 export default IndexSaasHoc;

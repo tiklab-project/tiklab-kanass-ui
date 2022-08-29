@@ -148,7 +148,6 @@ const UserLog = (props)=> {
                         </Form.Item>
                     </Form>
                 </div>
-                {/* <Pagination simple defaultCurrent={1} total={dateTotal} current= {current} onChange={(value)=>changeDataPage(value)}/> */}
             </div>
             <Table columns={columns} dataSource={userLog} rowKey={(record) => record.worker}/>
         </Fragment>
