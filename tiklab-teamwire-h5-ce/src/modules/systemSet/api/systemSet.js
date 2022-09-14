@@ -3,7 +3,7 @@ import {service} from "../../../common/utils/requset";
 // 根据id 查找目录的第一级文档
 export function FindUser(data){
     return service.request({
-        url: "/user/findUser",
+        url: "/user/user/findUser",
         method: "post",
         data
     })

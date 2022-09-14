@@ -69,6 +69,12 @@ export class LogStore {
 		const data = await FindAllProject();
         return data;
     }
+
+    @action
+	findAllProject = async() => {
+		const data = await FindAllProject();
+        return data;
+    }
 }
 
 export const LOG_STORE = "logStore"

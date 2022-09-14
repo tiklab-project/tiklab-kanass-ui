@@ -136,7 +136,7 @@ module.exports = {
             title: '项目管理',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
-            filename: 'index.html',
+            filename: 'mobile.html',
             inject: 'body',
             minify: {
                 collapseWhitespace: true,
@@ -144,14 +144,12 @@ module.exports = {
                 removeAttributeQuotes: true
             }
         }),
-        // new webpack.DefinePlugin(devMode ? envData_dev : envData_prod),
         new webpack.DefinePlugin(envData_dev),
         new MiniCssExtractPlugin({
             filename: 'mobilecss/[name].css',
             chunkFilename: 'mobilecss/[id].css',
             ignoreOrder: true
         }),
-        new CssMinimizerPlugin(),
-        // new CheckVersion()
+        new CssMinimizerPlugin()
     ]
 };

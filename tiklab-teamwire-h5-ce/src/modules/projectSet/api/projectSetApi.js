@@ -21,7 +21,7 @@ export function FindProjectSetPage(data){
 // 查找所有用户
 export function FindAllUser(data){
     return service.request({
-        url: "/user/findAllUser",
+        url: "/user/user/findAllUser",
         method: "post",
         data 
         

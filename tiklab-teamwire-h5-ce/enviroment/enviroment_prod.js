@@ -29,9 +29,10 @@ const appKey = JSON.stringify('');
 const appSecret = JSON.stringify('');
 const version = JSON.stringify('');
 const client = JSON.stringify('');
-const isSaas = false;
-const cookieDomain=  JSON.stringify('tiklab.cn');
-const acc_url = JSON.stringify("/")
+const isSaas = true;
+const DEPLOY_MODE= JSON.stringify('saas')
+const tenant_type= JSON.stringify('mult')
+
 module.exports = {
     base_url,
     userProduction,
@@ -45,6 +46,6 @@ module.exports = {
     client,
     upload_url,
     isSaas,
-    cookieDomain,
-    acc_url
+    DEPLOY_MODE,
+    tenant_type
 }
