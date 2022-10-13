@@ -45,7 +45,7 @@ export function FindAllStateNode(data){
 // 获取用户列表
 export function FindDmUserPage(data){
     return service.request({
-        url: "/dmUser/findDmUserPage",
+        url: "/user/dmUser/findDmUserPage",
         method: "post",
         data 
     })

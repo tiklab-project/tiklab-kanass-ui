@@ -85,7 +85,7 @@ export function FindMilestone(data){
 // 查找所有用户类型
 export function FindDmUserPage(data){
     return service.request({
-        url: "/dmUser/findDmUserPage",
+        url: "/user/dmUser/findDmUserPage",
         method: "post",
         data 
     })

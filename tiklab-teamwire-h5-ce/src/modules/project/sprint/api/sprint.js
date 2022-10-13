@@ -19,7 +19,7 @@ export function FindSprintPage(data){
 
 export function FindDmUserPage(data){
     return service.request({
-        url: "/dmUser/findDmUserPage",
+        url: "/user/dmUser/findDmUserPage",
         method: "post",
         data 
     })
