@@ -52,12 +52,3 @@ export function FindAllProject(data){
         
     })
 }
-
-export function FindAllProject(data){
-    return service.request({
-        url: "/project/findAllProject",
-        method: "post",
-        data 
-        
-    })
-}

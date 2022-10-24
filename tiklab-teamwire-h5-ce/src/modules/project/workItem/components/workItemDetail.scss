@@ -33,7 +33,6 @@
     }
 }
 .upload {
-    // padding-left: 16px;
     .uplpad-list {
         display: flex;
         justify-content: space-between;
@@ -48,7 +47,6 @@
         .upload-file {
             opacity: 0;
             width: 30px;
-            // height: 30px;
             z-index: 2;
             position: absolute;
             top: 0;
