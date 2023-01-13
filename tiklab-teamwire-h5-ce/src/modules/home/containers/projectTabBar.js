@@ -10,12 +10,9 @@ import React, { useState } from 'react';
 import { Badge, TabBar,Popup } from 'antd-mobile';
 import { renderRoutes } from "react-router-config";
 import { useLocation} from 'react-router-dom'
-import {
-    AppOutline,
-    UserOutline,
-} from 'antd-mobile-icons';
 import "../components/projectTabBar.scss";
 import {verifyUserHoc} from "tiklab-eam-saas-ui";
+// import {verifyUserHoc} from "tiklab-eam-ui";
 import SystemSet from "../../systemSet/components/systemSet";
 import { inject, observer } from 'mobx-react';
 
