@@ -1,0 +1,27 @@
+
+.project-botton {
+    padding: 5px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+}
+.project-primary {
+    background-color: var(--tiklab-blue);
+    color: #ffffff;
+    font-weight: 500;
+}
+.project-primary:hover {
+    background-color: var( --tiklab-blue);
+}
+.project-dashed {
+    color: #42526E;
+    font-weight: 500;
+    background-color: var(--tiklab-gray);
+}
+
+.project-dashed:hover {
+    background-color: var(--tiklab-gray-400);
+}

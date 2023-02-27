@@ -1,0 +1,48 @@
+.project-version {
+    height: calc(100vh - 55px);
+    padding: var(--tiklab-padding-item);;
+    .version-name {
+        color: var(--tiklab-blue);
+    }
+    .version-name:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .version-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .version-breadcrumb {
+        display: flex;
+        align-items: center;
+        padding: 10px 0px;
+        font-size: 15px;
+        font-weight: var(--tiklab-font-weight-bold);
+        &-icon {
+            width: 25px;
+            height: 25px;
+        }
+        &-second {
+            width: 20px;
+            height: 15px;
+            margin: 0 6px;
+        }
+    }
+    
+
+    .version-filter {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .version-search {
+        width: 200px;
+        border-radius: 4px;;
+        
+    }
+    .span-botton {
+        cursor: pointer;
+    }
+    
+}

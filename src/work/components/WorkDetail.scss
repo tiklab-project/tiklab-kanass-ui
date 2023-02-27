@@ -1,0 +1,317 @@
+.work-change-alert {
+    height: 40px;
+    background-color: transparent;
+    line-height: 40px;
+    width: calc(100% - 40px);
+    position: absolute;
+    animation: mymove 200ms;
+    top: 12px;
+    z-index: 4;
+
+    .work-change-alert-content {
+        width: 300px;
+        margin: 0 auto;
+        border: #b7eb8f 1px solid;
+        text-align: center;
+        background: #f6ffed;
+    }
+}
+
+@keyframes mymove {
+    from {
+        top: 0px;
+    }
+
+    to {
+        top: 12px;
+    }
+}
+
+.work-table-detail {
+    top: var(--tiklab-head-height) !important;
+    height: calc(100vh - 48px) !important;
+
+    .ant-drawer-body {
+        padding: 0;
+    }
+
+    .ant-modal-content {
+        height: 90vh;
+        overflow: hidden;
+    }
+
+    .work-detail::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    .ant-modal-body {
+        height: calc(100% - 110px);
+    }
+
+    .work-detail {
+        height: 100%;
+        overflow: auto;
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+    }
+}
+
+
+.work-detail {
+    height: 100%;
+    flex: 1;
+    position: relative;
+    flex-direction: column;
+    overflow: hidden;
+    display: flex;
+
+    .ant-form-item {
+        margin-bottom: 10px;
+    }
+
+    .work-detail-parent-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #999;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .work-detail-crumb {
+        display: flex;
+        height: 30px;
+        line-height: 30px;
+        color: #999;
+        cursor: pointer;
+        padding: 0 15px;
+
+        .work-detail-crumb-item:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .work-detail-crumb-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 5px;
+        }
+    }
+
+    .work-detail-parent-title:hover {
+        color: var(--tiklab-blue);
+        text-decoration: underline;
+    }
+
+    .work-detail-top {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 10px;
+        padding: 0 15px;
+
+        .work-item-title-top {
+            display: flex;
+            align-items: center;
+
+            .work-detail-tab-botton {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+
+                .work-botton {
+                    text-align: center;
+                    padding: 5px 10px;
+                    border-radius: 2px;
+
+                    .icon {
+                        margin-right: 5px;
+                    }
+                }
+
+                .botton-background {
+                    border: 0;
+                    background: transparent;
+                }
+
+                .botton-background:hover {
+                    background-color: #ECEDF0;
+                }
+
+                .more {
+                    text-align: right;
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .work-item-title-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .work-detail-top-name {
+            flex: 1;
+
+            .work-item-title:focus-visible {
+                outline: 0;
+                border: 2px solid var(--tiklab-blue);
+                min-width: 100px;
+                border-radius: 2px;
+                padding: 0 10px;
+                background-color: transparent;
+            }
+
+            .work-item-title:hover {
+                background-color: var(--tiklab-gray-400);
+            }
+
+            .work-item-title:focus {
+                background-color: #fff;
+            }
+
+            .work-item-title-focus {
+                background-color: #fff;
+                border: 1px solid var(--tiklab-blue);
+                padding: 0 20px 0 10px;
+            }
+
+            .work-item-title {
+                outline: 0;
+                box-shadow: none;
+                flex: 1;
+                height: 35px;
+                line-height: 35px;
+                border-radius: 2px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 14px;
+                
+                margin-right: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .work-item-title-left {
+                    outline: 0;
+                }
+
+                .work-item-title-right {
+                    display: flex;
+                    gap: 20px;
+                    font-size: 12px;
+                    align-items: center;
+
+                    .title-change-true {
+                        background: var(--tiklab-blue);
+                        color: #fff;
+                        height: 20px;
+                        line-height: 20px;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        border-radius: 4px;
+
+                        .svg-icon {
+                            width: 12px;
+                            height: 12px;
+                        }
+                    }
+
+                    .title-change-cancel {
+                        background: #f7f7f7;
+                        height: 20px;
+                        line-height: 20px;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        border-radius: 4px;
+                    }
+                }
+            }
+
+            .work-item-info {
+                display: flex;
+                align-items: flex-start;
+                font-size: 14px;
+                gap: 20px;
+                .work-item-info-item {
+                    margin-right: 2px;
+                    height: 32px;
+                    line-height: 32px;
+                    border-radius: 4px;
+                    display: flex;
+                    .ant-input-number {
+                        border: 0;
+                        background-color: transparent;
+                    }
+                }
+
+                .work-item-info-title {
+                    margin-right: 10px;
+                    color: #999;
+                    font-size: 13px;
+                }
+
+                .ant-select-selector {
+                    border: 0;
+                }
+
+                .tiklab-profile {
+                    .ant-avatar {
+                        width: 16px !important;
+                        height: 16px !important;
+                    }
+                }
+            }
+            .page-simple {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+
+
+    }
+
+    .other-title {
+        font-weight: var(--tiklab-font-weight-bold);
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+
+    .work-detail-tab {
+        flex: 1;
+        overflow: auto;
+    }
+}
+
+.work-flow-transition {
+    width: 120px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+    .work-flow-item {
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    .work-flow-item:hover {
+        background-color: var(--tiklab-gray-400);
+    }
+
+    .work-flow-view {
+        padding: 10px 15px;
+        cursor: pointer;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .work-flow-view:hover {
+        color: var(--tiklab-blue);
+    }
+
+}

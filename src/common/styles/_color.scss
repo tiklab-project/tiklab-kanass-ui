@@ -1,0 +1,119 @@
+$white: #fff;
+$gray-f5: #F5F5F5;
+$gray-100: #FAFAFA;
+$gray-200: #F8F8F8;
+$gray-300: #F4F4F4;
+$gray-400: #EAEAEA;
+$gray-500: #DCDCDC;
+$gray-600: #C4C4C4;
+$gray-700: #bbbbbb;
+$gray-800: #444444;
+$gray-900: #2F2F2F;
+$black: #000;
+
+$blue: #0063FF;
+$purple: #8995FF;
+$red: #ff8989;
+$yellow: #FFCE21;
+$green: #136545;
+$bottom:#f0f2f5;
+
+
+$table-head: #E6EDFA;
+$side-hover:  #EDF0F5;
+$entry-color: #F0F2F5;
+$form-input-color: #e3e8f07d;
+
+:root {
+    --tiklab-white: #fff;  
+    --tiklab-black: #000;
+    --tiklab-blue: #5d70ea;
+    --tiklab-gray-200: #ececec;
+    --tiklab-gray-300: #EDF0F5;
+    --tiklab-gray-400: #e3e8f0;
+    --tiklab-gray-500: #999;
+    --tiklab-gray-600: #fafafa;
+    --tiklab-gray: #efefef;
+    
+    --tiklab-padding: 20px;
+    --tiklab-padding-resove: -20px;
+    --tiklab-padding-item: 15px;
+    --tiklab-padding-resove-item:-15px;
+    
+
+    --tiklab-font-12: 12px;
+    --tiklab-font-13: 13px;
+    --tiklab-font-14: 14px;
+    --tiklab-font-15: 15px;
+    --tiklab-font-16: 16px;
+
+    --tiklab-icon-size-16: 16px;
+    --tiklab-icon-size-20: 20px;
+    --tiklab-icon-size-22: 22px;
+    --tiklab-icon-size-32: 32px;
+
+    --tiklab-head-height: 48px;
+    
+    --tiklab-font-weight-bold: bold;
+}
+
+
+@mixin first-level {
+    font-size: var(--tiklab-font-16);
+    font-weight: var(--tiklab-font-weight-bold);
+}
+
+@mixin second-level {
+    font-size: var(--tiklab-font-13);
+}
+
+
+@mixin page-padding {
+    padding: var(--tiklab-padding-item);
+}
+
+.img-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.svg-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.menu-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+.status-img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+.first-level {
+    font-size: var(--tiklab-font-16);
+    font-weight: var(--tiklab-font-weight-bold);
+}
+
+.list-img {
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+}
+.botton-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.header-icon {
+    width: 25px;
+    height: 25px;
+    path {
+        fill: #fff;
+    }
+    
+}

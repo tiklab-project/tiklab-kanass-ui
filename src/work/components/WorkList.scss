@@ -1,0 +1,19 @@
+.work-list {
+    display: flex;
+    height: calc(100vh - 49px);
+    background: #fff;
+    border-top: 1px solid #f7f7f7;
+    .work-list-detail {
+        width: 100%;
+        height: 100%;
+    }
+}
+.work-list::-webkit-scrollbar { 
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.work-list{
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}

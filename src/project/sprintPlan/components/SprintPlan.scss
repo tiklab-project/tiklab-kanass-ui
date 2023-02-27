@@ -1,0 +1,100 @@
+.project-plan {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    .plan-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-direction: row;
+        padding: 20px 0;
+        height: calc(100vh - 106px);
+        overflow: auto;
+        .plan-left {
+            flex: 1;
+            min-height: 500px;
+            border: 1px solid #d5d5d5;
+            margin-right: 20px;
+            border-radius: 4px;
+            height: 100%;
+            .plan-left-top {
+                height: 25px;
+                width: 100%;
+                background-color: #d5d5d5;
+                text-align: center;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                display: flex;
+            }
+            .plan-left-content {
+                overflow: auto;
+                height: calc(100% - 25px);
+            }
+            .plan-item-box {
+                margin: 10px;
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                flex-direction: row;
+                border: 1px solid #d5d5d5;
+                padding: 10px;
+                border-radius: 4px;
+                align-items: center;
+                cursor: pointer;
+            }
+            .box::-webkit-scrollbar {
+                width: 0 !important;
+                height: 0 !important;
+            }
+            .box {
+                -ms-overflow-style: none;
+                overflow: -moz-scrollbars-none;
+            }
+        }
+        
+        .plan-right {
+            overflow: auto;
+            .plan-right-item {
+                border: 1px solid #d5d5d5;
+                min-height: 300px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+            }
+            .plan-right-item-top {
+                height: 25px;
+                width: 100%;
+                background-color: #d5d5d5;
+                text-align: center;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                display: flex;
+            }
+            .plan-item-box {
+                margin: 10px;
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                flex-direction: row;
+                border: 1px solid #d5d5d5;
+                padding: 10px;
+                border-radius: 4px;
+                align-items: center;
+                cursor: pointer;
+            }
+        }
+        .plan-right-item:nth-last-child(1){
+            margin-bottom: 0;
+        }
+        .plan-right::-webkit-scrollbar { 
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .plan-right {
+            -ms-overflow-style: none;
+            overflow: -moz-scrollbars-none;
+        }
+    }
+    
+
+}

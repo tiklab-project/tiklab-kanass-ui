@@ -1,0 +1,140 @@
+.sprint-detail-side {
+    background-color: var(--tiklab-gray);
+    border-right: 1px solid #f0f0f0;
+
+    .ant-layout-sider-children {
+        .sprint-aside-content {
+            height: calc(100vh - var(--tiklab-head-height));
+            display: flex;
+            flex-direction: column;
+            background: var(--tiklab-gray);
+
+            ul {
+                padding: 0;
+                margin: 0;
+            }
+
+            .sprint-set-icon {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+
+            .sprint-set-title {
+                border-top: 1px solid #f0f2f5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                margin-bottom: 10px;
+            }
+
+            .setting:hover {
+                background-color: var(--tiklab-gray-400);
+            }
+
+            .setting {
+                border-top: 1px solid #f0f2f5;
+                cursor: pointer;
+                span {
+                    margin: 0 10px 0 10px;
+                }
+
+                .icon {
+                    margin-left: 10px;
+                }
+            }
+
+            .sprint-menu {
+                list-style-type: none;
+                cursor: pointer;
+                flex: 1;
+                .sprint-back-project {
+                    margin-bottom: 10px;
+                    border-bottom: 1px solid #d7d7d7;
+                }
+                .sprint-menu-submenu {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    align-items: center;
+                    padding-left: 20px;
+                    cursor: pointer;
+
+                    i {
+                        margin-right: 10px;
+                    }
+                }
+
+                .sprint-menu-submenu-icon {
+                    display: flex;
+                    width: 100%;
+                    align-items: center;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                    padding: 5px 0;
+                    cursor: pointer;
+
+                    .sprint-aside-icon {
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+
+                .sprint-menu-submenu-icon:hover {
+                    background-color: var(--tiklab-gray-400);
+                }
+
+                .sprint-menu-submenu:hover {
+                    background-color: var(--tiklab-gray-300);
+                }
+
+                .sprint-menu-select {
+                    background-color: var(--tiklab-gray-400);
+                    border-left: 3px solid var(--tiklab-blue);
+                }
+            }
+
+            .hidden-menu {
+                display: none;
+            }
+
+            .sprint-expend {
+                position: absolute;
+                right: -10px;
+                width: 20px;
+                height: 20px;
+                background: #fff;
+                border-radius: 20px;
+                bottom: 120px;
+                line-height: 20px;
+                display: none;
+                z-index: 2;
+
+                .right {
+                    width: 20px;
+                    height: 20px;
+                    font-size: 20px;
+                    font-weight: 600;
+
+                }
+
+                .right:hover {
+                    color: var(--tiklab-blue);
+                }
+            }
+        }
+    }
+
+    .ant-layout-sider-children:hover {
+        .sprint-expend {
+            display: block;
+        }
+    }
+
+    .sprint-notext {
+        display: none;
+    }
+}

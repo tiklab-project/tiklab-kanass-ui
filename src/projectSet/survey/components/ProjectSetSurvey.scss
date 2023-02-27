@@ -1,0 +1,278 @@
+.projectSet-survey {
+    height: calc(100vh - var(--tiklab-head-height));
+    padding: var(--tiklab-padding-item);;
+    overflow: auto;
+    background-color: var(--tiklab-gray-600);
+    .more {
+        color: var(--tiklab-blue);
+        margin-left: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .projectSet-survey-top {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        .survey-top-left {
+            flex: 1;
+            height: 100px;
+            border-radius: 4px;
+            height: fit-content;
+            background-color: #ffffff;
+            .projectSet-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+            }
+            .projectSet-info-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+            .projectSet-info-content {
+                flex: 1;
+            }
+            .projectSet-info-content-item {
+                height: 40px;
+                line-height: 40px;
+            }
+            .projectSet-infobottom {
+                display: flex;
+                flex-wrap: wrap;
+                padding: 10px;
+                margin-left: 30px;
+            }
+            .projectSet-info-item {
+                width: 50%;
+                display: flex;
+                height: 40px;
+                line-height: 40px;
+                font-size: 13px;
+                .projectSet-info-title {
+                    width: 100px;
+                    color: #999;
+                }
+            }
+        }
+        .projectSet-process-project {
+            flex: 1;
+            border-radius: 4px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .more {
+                    color: var(----tiklab-blue);
+                }
+            }
+            &-list {
+                margin-top: 10px;
+            }
+            .projectSet-process-project-item {
+                .projectSet-process-project-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .projectSet-process-project-process {
+                    width: 80px;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .projectSet-process-project-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .name {
+                    color: var(--tiklab-blue)
+                }
+                .projectSet-process-project-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+        
+    }
+    .projectSet-survey-middle {
+        display: flex;
+        justify-content: space-between;
+        
+        .projectSet-pending-workitem {
+            flex: 1;
+            border-radius: 4px;
+            background-color: #ffffff;
+            margin-top: 15px;
+            padding-bottom: 15px;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .more {
+                    color: var(--tiklab-blue);
+                }
+            }
+            &-list {
+                margin-top: 10px;
+                .dynamic-item {
+                    padding: 0 20px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                }
+            }
+            .projectSet-pending-workitem-item {
+                .projectSet-pending-workitem-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .projectSet-pending-workitem-process {
+                    width: 80px;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .projectSet-pending-workitem-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .name {
+                    color: var(--tiklab-blue)
+                }
+                .projectSet-pending-workitem-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+        .projectSet-sprint-box {
+            background-color: #ffffff;
+            border-radius: 4px;
+            flex: 1;
+            margin: 15px 0  0;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .more {
+                    color: var(--tiklab-blue);
+                }
+            }
+            .projectSet-sprint-list {
+                margin-top: 10px;
+            }
+            .projectSet-sprint-item {
+                .projectSet-sprint-item-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .projectSet-sprint-item-icon {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 10px;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .projectSet-sprint-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .projectSet-sprint-name {
+                    .name {
+                        color: var(--tiklab-blue)
+                    }
+                }
+                
+                .projectSet-sprint-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+            .dynamic-box {
+                background-color: #fff;
+                border-radius: 4px;
+                flex: 1;
+                padding-bottom: 15px;
+                &-title {
+                    width: 100%;
+                    height: 40px;
+                    line-height: 40px;
+                    font-weight: var(--tiklab-font-weight-bold);
+                    padding: 0 10px; 
+                    display: flex;
+                    justify-content: space-between;
+                    .more {
+                        color: var(--tiklab-blue);
+                        margin-left: 10px;
+                    }
+                }
+                .dynamic-list {
+                    margin-top: 10px;
+                    .dynamic-item {
+                        padding: 0 20px;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                    }
+                }
+                .dynamic-item {
+                    .dynamic-item-left {
+                        display: flex;
+                        align-items: center;
+                    }
+                    .dynamic-icon {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 4px;
+                        margin-right: 10px;
+                    }
+                    .dynamic-name {
+                        .name {
+                            color: var(--tiklab-blue)
+                        }
+                    }
+                    
+                    .dynamic-date {
+                        color: #999;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+    
+}

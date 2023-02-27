@@ -1,0 +1,342 @@
+.project-survey::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.project-survey {
+    padding: var(--tiklab-padding-item);
+
+    .project-work-statistics {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            background-color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        &-icon {
+            width: var(--tiklab-icon-size-32);
+            height: var(--tiklab-icon-size-32);
+            margin-right: 10px;
+        }
+
+        .work-statistics-num,
+        .work-statistics-text {
+            text-align: center;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+    }
+
+    .title {
+        line-height: 50px;
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+        background: #F4F5F7;
+        padding-left: 20px;
+        border-radius: 4px;
+    }
+
+    .upper-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        .project-box {
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            width: 500px;
+
+            .project-title {
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+                font-weight: var(--tiklab-font-weight-bold);
+                height: 40px;
+                line-height: 40px;
+                margin-bottom: 10px;
+                &-icon {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .project-container {
+                .tiklab-profile .ant-avatar {
+                    width: 24px !important;
+                    height: 24px !important;
+                }
+
+                .project-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                    .item-content {
+                        .item-top, .item-bottom {
+                            height: 30px;
+                            line-height: 30px;
+                        }
+                        .item-bottom {
+                            color: var(--tiklab-gray-500);
+                            font-size: 12px;
+                        }
+                        .item-progress {
+                            width: 300px;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+
+                .project-work {
+                    display: flex;
+                    gap: 20px;
+                }
+
+            }
+        }
+
+        .burn-down-box {
+            width: calc(100% - 520px);
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+
+            .burn-down {
+                width: calc(100% - 20px);
+                ;
+                height: calc(100% - 20px);
+                ;
+            }
+        }
+
+    }
+
+    .third-box {
+        margin-top: 20px;
+
+        .dynamic-box {
+            background-color: #fff;
+            border-radius: 4px;
+            padding-bottom: 20px;
+
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px;
+                display: flex;
+                justify-content: space-between;
+
+                .more {
+                    color: var(--tiklab-blue);
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            .dynamic-list {
+                .dynamic-item {
+                    padding: 10px 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .pending-todo {
+            border-radius: 4px;
+            background-color: #fff;
+            padding-bottom: 20px;
+
+            .todo-list-item {
+                padding: 0 20px;
+                margin-bottom: 10px;
+            }
+
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px;
+                display: flex;
+                justify-content: space-between;
+
+                .more {
+                    color: var(--tiklab-blue);
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            &-list {
+                margin-top: 10px;
+            }
+
+            .pending-todo-item {
+                .pending-todo-left {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .pending-todo-process {
+                    width: 80px;
+                }
+
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+
+                .pending-todo-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+
+                .name {
+                    color: var(--tiklab-blue)
+                }
+
+                .pending-workitem-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .bottom-box {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .sprint-box {
+            background-color: #fff;
+            border-radius: 4px;
+            width: calc(50% - 10px);
+
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px;
+                display: flex;
+                justify-content: space-between;
+
+                .more {
+                    color: var(--tiklab-blue);
+                }
+            }
+
+            .sprint-list {
+                margin-top: 10px;
+            }
+
+            .sprint-item {
+                .sprint-item-left {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .sprint-item-icon {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 10px;
+                }
+
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+
+                .sprint-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+
+                .sprint-name {
+                    .name {
+                        color: var(--tiklab-blue)
+                    }
+                }
+
+                .sprint-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .epic-box {
+            background-color: #fff;
+            width: calc(50% - 10px);
+            border-radius: 4px;
+
+            &-title {
+                height: 40px;
+                line-height: 40px;
+                padding-left: 10px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+
+            &-timeline {
+                display: flex;
+                padding: 20px;
+                justify-content: center;
+
+                .timeline-item {
+                    text-align: center;
+                    color: var(--tiklab-blue);
+
+                    .timeline-text {
+                        height: 40px;
+                        line-height: 40px;
+                    }
+
+                    .timeline-center {
+                        display: flex;
+                        align-items: center;
+
+                        .time-point {
+                            &-icon {
+                                width: 20px;
+                                height: 20px;
+                                margin: 0 5px;
+                            }
+                        }
+                    }
+                }
+
+                .time-line {
+                    width: 50px;
+                    height: 1px;
+                    background: #d7d7d7;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,91 @@
+.change-projectSet {
+    position: relative;
+
+    .projectSet-change-title {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        color: #000;
+        font-weight: 600;
+        cursor: pointer;
+        .projectSet-text {
+            margin: 0 10px;
+
+            .type {
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+
+        span {
+            width: 100px;
+            height: 100%;
+            overflow: hidden;
+
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        .projectSet-aside-icon {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    .projectSet-change-icon {
+        padding: 10px 0 10px 20px;
+        border-bottom: 1px solid var(--tiklab-gray-200);
+        display: flex;
+        align-items: center;
+        .projectSet-aside-icon {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    .title {
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+    .change-projectSet-botton {
+        height: 40px;
+        line-height: 40px;
+        width: 100%;
+        text-align: center;
+    }
+    .change-projectSet-box {
+        position: absolute;
+        top: 0;
+        left: 80px;
+        z-index: 100;
+        width: 200px;
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+        .change-projectSet-head {
+            height: 40px;
+            line-height: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 0 20px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+    }
+    .change-projectSet-name {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 20px;
+    }
+
+    .change-projectSet-selectName {
+        background-color: var(--tiklab-gray-400);
+    }
+   
+    .menu-show {
+        display: block;
+    }
+    .menu-hidden {
+        display: none;
+    }
+}

@@ -1,0 +1,29 @@
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    .page-breadcrumb {
+        font-size: var(--tiklab-font-16);
+    font-weight: var(--tiklab-font-weight-bold);
+        display: flex;
+        align-items: center;
+        .page-link:hover {
+            cursor: pointer;
+            color: var(--tiklab-blue);
+            text-decoration: underline;
+        }
+
+
+        &-icon {
+            width: 25px;
+            height: 25px;
+        }
+
+        &-second {
+            width: 20px;
+            height: 15px;
+            margin: 0 6px;
+        }
+    }
+}

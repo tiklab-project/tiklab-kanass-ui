@@ -1,0 +1,14 @@
+.work-dynamic {
+    background: #fff;
+    border-radius: 4px;
+    .workitem-dynamic-title {
+        height: 40px;
+        line-height: 40px;
+        font-size: 13px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+    .todo-item {
+        margin-bottom: 10px;
+    }
+}
+

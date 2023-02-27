@@ -1,0 +1,14 @@
+.todo-list-page {
+    padding: var(--tiklab-padding-item);;
+    background: #fff;
+    .todo-filter {
+        padding: 15px 0;
+        width: 100%;
+        display: flex;
+        gap: 20px;
+    }
+    .todo-item {
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,231 @@
+.project-recent-box {
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-top: 15px;
+    .home-project {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        overflow: auto;
+        gap: 20px;
+        padding-bottom: 20px;
+        .project-item:hover {
+            border-radius: 4px 4px 0 0;
+            border-bottom: 2px solid var(--tiklab-blue);
+            transition: 500;
+        }
+        .project-item {
+            width: 240px;
+            padding: 15px;
+            box-sizing: content-box;
+            flex-shrink: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: var(--tiklab-gray-600);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--tiklab-gray-600);
+            .item-title {
+                margin-bottom: 10px;
+                display: inline-flex;
+                align-items: center;
+                font-size: 16px;
+                .project-icon {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 10px;
+                }
+                .item-icon {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 10px; 
+                }
+            }
+            .item-work {
+                display: flex;
+                gap: 20px;
+            }
+            .process-work, .end-work{
+                font-size: 12px;
+                display: inline-flex;
+                width: 100%;
+                justify-content: space-between;
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+    }
+}
+.project {
+    padding: var(--tiklab-padding-item);;
+    overflow: auto;
+    height: calc(100vh - var(--tiklab-head-height));
+    .ant-avatar {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .table-box {
+        margin-top: 0;
+    }
+    .project-filter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        line-height: 50px;
+        gap: 20px;
+        .vertical-bar {
+            width: 1px;
+            height: 15px;
+            background-color: #d7d7d7;
+            margin: 0 10px;
+        }
+        .active-tabs {
+            color: #000;
+            border-bottom: 2px solid var(--tiklab-blue);
+        }
+        .filter-search {
+            width: 150px;
+            border-radius: 4px;; 
+        }
+    }
+    .project-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+        line-height: 50px;
+        .project-tab{
+            font-size: var(--tiklab-font-13);;
+            cursor: pointer;
+            height: 50px;
+            line-height: 50px;
+            margin-right: 20px;
+        }
+        .project-tab:last-child {
+            margin-right: 0;
+        }
+    }
+    .project-num {
+        font-size: 12px;
+        color: #606060;
+    }
+    
+    
+    .project-content {
+        
+        background-color: #fff;
+        .ant-layout-sider {
+            background-color: #fff;
+            height: 100%;
+            border-right: 2px solid var(--tiklab-gray-200);
+            .project-aside {
+                height: 100%;
+                background:var(--tiklab-gray);
+                .project-title {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 20px;
+                    font-weight: var(--tiklab-font-weight-bold);
+                    color: #000;
+                    border-bottom: 1px solid var(--tiklab-gray-200);
+                }
+                .project-menu {
+                    list-style-type:none;
+                    padding: 0px;
+                    .icon {
+                        margin-right: 10px;
+                    }
+                    li:hover {
+                        background-color: #EDF0F5;
+                    }
+                    .project-menu-submenu {
+                        height: 40px;
+                        display: flex;
+                        line-height: 40px;
+                        padding-left: 40px;
+                        width: 100%;
+                       
+                        align-items: center;
+                    }
+                    .project-menu-submenu:hover {
+                        cursor: pointer;
+                        color: var(--tiklab-blue);
+                    }
+                    .project-menu-select {
+                        background-color: var(--tiklab-gray-400);
+                        border-left: 3px solid var(--tiklab-blue);
+                    }
+                }
+                .hidden-menu {
+                    display: none;
+                }
+            }
+        }
+        .project-table {
+            background: #fff;
+            padding: 10px;
+            .ant-row {
+                height: 100%;
+                .ant-col {
+                    height: 100%;
+                    background-color: #fff;
+                    padding: 20px 20px;
+                }
+            }
+            
+        }
+        .table-box {
+            .project-name {
+                display: flex;
+                align-items: center;
+                .project-key {
+                    color: var(--tiklab-gray-500);
+                    line-height: 25px;
+                }
+                .project-text {
+                    cursor: pointer;
+                    color: var(--tiklab-blue);
+                    line-height: 25px;
+                }
+                .project-text:hover {
+                    text-decoration: underline;
+                }
+            }
+            .project-status {
+                padding: 5px 6px;
+                background: var(--tiklab-gray-400);
+                border-radius: 4px;
+                font-size: 13px;
+                width: fit-content;
+            }
+            .ant-select-selector {
+                padding: 0;
+            }
+        }
+    }
+    .project-gide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        img{
+            width: 200px;
+            height: 200px;
+        }
+        .gide-right {
+            div {
+                margin-bottom: 20px;
+                font-size: 16px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+            padding: 20px;
+        }
+    }
+    
+}

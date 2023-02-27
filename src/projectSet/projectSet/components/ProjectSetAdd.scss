@@ -1,0 +1,134 @@
+.projectSet-addmodel {
+    top: 0;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    max-width: 100vw;
+    .ant-modal-header {
+        display: none;
+    }
+    .ant-modal-body {
+        padding: 0 !important;
+        height: 100%;
+        overflow: auto;
+        padding: 0!important;
+        background-color: var(--tiklab-gray-600);
+        .add-model-page {
+            
+            height: 100%;
+            padding-bottom: 20px;
+            .add-model-head {
+                font-size: var(--tiklab-font-16);
+                font-weight: var(--tiklab-font-weight-bold);
+                height: 56px;
+                line-height: 56px;
+                font-size: 20px;
+            }
+        }
+    }
+    .projectSet-type-col {
+        padding: var(--tiklab-padding-item);;
+    }
+    .projectSetadd-close {
+        cursor: pointer;
+    }
+
+    .projectSet-add-page {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        padding: 10px 20px;
+        .projectSet-add-title {
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+
+    }
+    .projectSet-limits-list {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+
+        
+
+        .add-model:hover {
+            box-shadow: var(--ds-shadow-raised,0px 1px 1px rgba(9,30,66,0.13), 0px 0px 1px rgba(9,30,66,0.13));
+        }
+    
+        .add-model-select {
+            border: 1px solid var(--tiklab-blue);
+            box-shadow: 0 0 3px var(--tiklab-gray-400)56;
+        }
+    
+        .add-model {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 100px 0;
+            justify-content: space-around;
+            background: #ffffff;
+            cursor: pointer;
+            .type-info {
+                flex: 1;
+                padding: 0 10px;
+            }
+            .type-icon {
+                img {
+                    width: 60px;
+                }
+            }
+    
+            .type-name {
+                font-size: 20px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+    
+            .type-desc {
+                line-height: 40px;
+                color: var(--tiklab-gray-500);
+            }
+        }
+
+
+    }
+
+    .add-step {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        .step-common {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .step-number, .step-number {
+                width: 25px;
+                height: 25px;
+                text-align: center;
+                border-radius: 25px;
+                line-height: 25px;
+                border: 2px solid var(--tiklab-gray-400);
+                box-sizing: content-box;
+            }
+            .step-title {
+                height: 30px;
+                line-height: 30px;
+                font-size: 13px;
+            }
+        }
+        .step-select {
+            color: var(--tiklab-blue);
+            .step-number, .step-number {
+                border: 2px solid var(--tiklab-blue);
+            }
+        }
+    
+        .step-line {
+            height: 1px;
+            flex: 1;
+            background-color: var(--tiklab-gray-400);
+            margin: 0 20px;
+        }
+    }
+}

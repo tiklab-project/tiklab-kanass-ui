@@ -1,0 +1,23 @@
+.work-wiki {
+    .wiki-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .wiki-top-title {
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+
+    .ant-table table {
+        border-bottom: 0;
+    }
+
+    .wiki-table {
+        background: #fff;
+        padding: 15px;
+        border-radius: 4px;
+    }
+}

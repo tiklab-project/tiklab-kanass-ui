@@ -1,0 +1,361 @@
+/**
+* @name: header
+* @author: mahai
+* @date: 2021-09-01 16:52
+* @description：header
+* @update: 2021-09-01 16:52
+*/
+
+.frame {
+    height: 100vh;
+    overflow: hidden;
+
+    .frame-header {
+        display: flex;
+        align-items: center;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        justify-content: space-between;
+        position: relative;
+        z-index: 3;
+        background-color: var(--tiklab-blue);
+        &-logo {
+            height: var(--tiklab-head-height);
+            width: 100px;
+            margin-right: 20px;
+            margin-left: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        &-link {
+            display: flex;
+            flex-direction: row;
+            margin-left: 15px;
+
+            &-active {
+                color: #f7f7f7;
+                background: rgba(255,255,255, 0.3);
+            }
+
+            &-item {
+                cursor: pointer;
+                margin-right: 10px;
+                padding: 0 10px;
+                overflow: hidden;
+                color: #fff;
+                height: 48px;
+                line-height: 48px;
+            }
+        }
+
+        &-left {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 100%;
+            padding-left: 22px;
+        }
+
+        &-right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+
+            &-search-wrap {
+                position: relative;
+                margin-right: 20px;
+            }
+
+            &-text {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                height: 100%;
+                padding-right: 10px;
+                gap: 20px;
+                a {
+                    padding: 0 10px;
+                }
+
+                .badge {
+                    position: relative;
+
+                    .dot {
+                        width: 7px;
+                        height: 7px;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: -5px;
+                        right: 3px;
+                        background: #ff8989;
+                    }
+                }
+
+                .messageNum {
+                    font-size: 25px;
+                    color: var(--tiklab-blue);
+                }
+
+            }
+
+
+
+
+        }
+
+        &-icon {
+            position: relative;
+            text-align: center;
+
+            .ant-avatar {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+
+
+        &-set,
+        &-language,
+        &-help {
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+        }
+
+        &-set:hover,
+        &-language:hover,
+        &-help:hover {
+            background-color: #5d70ea66;
+
+        }
+        &-language {
+            .ant-badge {
+                height: 20px;
+            }
+        }
+        
+
+        &-set:hover::after,
+        &-language:hover::after,
+        &-user:hover::after,
+        &-name:hover::after,
+        &-help:hover::after  {
+            content: attr(data-title);
+            display: block;
+            border-radius: 4px;
+            color: #fff;
+            background-color: rgba($color: #000000, $alpha: 0.7);
+            position: absolute;
+            top: 30px;
+            padding: 5px;
+            font-size: 12px;
+            z-index: 2;
+            width: max-content;
+        }
+
+        &-name:hover::after {
+            right: 0;
+        }
+
+
+        &-dropdown {
+            margin: 0 10px;
+
+            >span {
+                cursor: pointer;
+                color: #444444;
+            }
+        }
+    }
+
+    .frame-search-content {
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        z-index: 1;
+        overflow: auto;
+
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .frame-header-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .frame-content {
+        height: calc(100vh - 48px);
+    }
+
+}
+
+
+
+.show {
+    max-height: 350px;
+    transition: max-height .3s ease-in;
+    transform-origin: 50% 0;
+    animation: slide-down 0.3s ease-in;
+    -webkit-animation: slide-down 0.3s ease-in;
+    padding: 20px;
+}
+
+.hidden {
+    max-height: 0;
+    overflow: auto;
+    transition: max-height .3s ease-out;
+}
+
+@keyframes slide-down {
+    0% {
+        transform: scale(1, 0);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+@-webkit-keyframes slide-down {
+    0% {
+        -webkit-transform: scale(1, 0);
+    }
+
+    100% {
+        -webkit-transform: scale(1, 1);
+    }
+}
+
+.user-box {
+    width: 250px;
+    background: #fff;
+    box-shadow: var(--ds-shadow-overlay, 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
+    border-radius: 4px;
+
+    .user-head {
+        font-size: 15px;
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: 15px 20px 10px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        padding: 0px 20px 10px;
+        .tiklab-profile .ant-avatar {
+            width: 32px!important;
+            height: 32px!important;
+        }
+        .user-info-text {
+            padding-left: 10px;
+        }
+    }
+
+    .user-logout {
+        border-top: 2px solid #EFEFF2;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: inline-flex;
+        width: 100%;
+        align-items: center;
+    }
+
+    .user-logout:hover {
+        background-color: #F4F5F7;
+    }
+
+    .user-info-email {
+        color: #6B778C;
+        font-size: 12px;
+
+    }
+    .user-language {
+        position: relative;
+        .language-text {
+            border-top: 2px solid #EFEFF2;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: inline-flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .language-left {
+            display: flex;
+            align-items: center;
+        }
+        .language-box-select {
+            background-color: #f0f0f0;
+        }
+        .language-box {
+            position: absolute;
+            top: 2;
+            left: -100px;
+            z-index: 1;
+            width: 100px;
+            background: #fff;
+            box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+            .language-box-item {
+                line-height: 40px;
+                height: 40px;
+                padding: 0 20px;
+            }
+
+            .language-box-item:hover {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+
+}
+
+.help-box {
+    width: 200px;
+    background: #fff;
+    box-shadow: var(--ds-shadow-overlay, 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
+    border-radius: 4px;
+
+    .help-head {
+        font-size: 15px;
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: 10px 20px 10px;
+    }
+    .help-item {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .help-item-left {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .help-item:hover {
+        background-color: #F4F5F7;
+    }
+
+    .help-item-icon {
+        margin: 0 10px;
+    }
+
+}

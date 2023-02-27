@@ -1,0 +1,67 @@
+.work-child {
+    .child-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .work-title {
+        color: var(--tiklab-blue);
+        cursor: pointer;
+    }
+    .child-create-input {
+        height: 35px;
+        border-radius: 4px;
+        border: 1px solid var(--tiklab-blue);
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        align-items: center;
+        color: #999;
+        margin-bottom: 10px;
+        .ant-input:hover {
+            border: 0;
+        }
+        .ant-input {
+            width: 80%;
+            border: 0;
+        }
+        .ant-input:focus {
+            box-shadow: none;
+        }
+        .child-create-submit {
+            display: flex;
+            gap: 10px;
+            .create-submit {
+                cursor: pointer;
+                color: var(--tiklab-blue);
+            }
+
+            .create-cancel {
+                cursor: pointer;
+            }
+        }
+    }
+
+
+
+    .child-top-title {
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+    .child-top-botton {
+        display: flex;
+        gap: 10px;
+    }
+    .child-content {
+        background: #fff;
+        border-radius: 4px;
+        position: relative;
+        height: calc(100% - 90px);
+        .ant-table {
+            overflow: auto;
+            max-height: calc(100% - 100px);
+            border-top: 1px solid #f0f0f0;
+        }
+    }
+}

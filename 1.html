@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display: flex;
+            align-items: center;
+            font-size: 14px;
+            justify-content: space-between;">
+        <div style="display: flex;align-items: center;">
+            <div  style="width: 25px;
+                   height: 25px;
+                   line-height: 25px;
+                   background-color: #ccc;
+                   border-radius: 32px;
+                   text-align: center;
+                   color: #fff;">${createUserIcon}</div>
+            <div style="display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    padding: 0 20px;
+                ">
+                <div>
+                    <span style="padding-right: 10px;">
+                        ${master.nickname}
+                    </span>
+                    更新了
+                    <span style="
+                        color: #5d70ea;
+                        font-size: 13px;
+                        font-weight: 500;">
+                        ${workItemTitel}
+                    </span>
+                    负责人
+                </div>
+                <div style="line-height: 40px;
+                        display: flex;
+                        align-items: center;
+                        height: 40px;">
+                    <div style="padding: 5px 10px;
+                            background-color: #F4F5F7;
+                            font-size: 12px;
+                            height: 15px;
+                            line-height: 15px;
+                            border-radius: 5px;
+                            margin-right: 10px;">
+                        ${oldValue.nickname}
+                    </div>
+                    ————
+                    <div style="padding: 5px 10px;
+                            background-color: #F4F5F7;
+                            font-size: 12px;
+                            height: 15px;
+                            line-height: 15px;
+                            border-radius: 5px;
+                            margin-left: 10px;">
+                        ${newValue.nickname}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="font-size: 13px;">
+            ${receiveTime}
+        </div>
+    </div>
+</body>
+
+</html>

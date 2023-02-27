@@ -1,0 +1,51 @@
+
+.work-list-col {
+    padding: var(--tiklab-padding-item);
+}
+.work-table {
+    padding: 0 15px;
+    .work-first-col {
+        display: flex;
+        align-items: center;
+    }
+    .work-icon {
+        img {
+            margin-right: 5px;
+        }
+    }
+    .work-info {
+        display: flex;
+        align-items: center;
+        .tiklab-profile {
+            .ant-avatar{
+                width: 16px !important;
+                height: 16px !important;
+            }
+        }
+    }
+    .work-status {
+        padding: 5px 6px;
+        background: #eaedf1cf;
+        border-radius: 4px;
+        font-size: 13px;
+        width: fit-content;
+        color: #fff;
+    }
+    .work-name {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        .work-key {
+            color: var(--tiklab-gray-500);
+            line-height: 25px;
+        }
+        .work-text {
+            cursor: pointer;
+            color: var(--tiklab-blue);
+            line-height: 25px;
+        }
+        .work-text:hover {
+            text-decoration: underline;
+        }
+    }
+}

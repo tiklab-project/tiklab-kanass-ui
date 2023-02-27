@@ -1,0 +1,141 @@
+.project-select-type {
+    padding: 10px 0;
+
+    .project-type-head {
+        font-size: 14px;
+        padding-bottom: 8px;
+        line-height: 30px;
+    }
+
+    .project-type-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+    }
+
+    .project-type-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 4px;
+        padding: 10 20px;
+        max-width: 300px;
+        background-color: #fff;
+
+        .type-info {
+            margin-left: 20px;
+
+            .type-name {
+                font-weight: bold;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .type-desc {
+                font-size: var(--tiklab-font-12);
+                color: var(--tiklab-gray-500);
+            }
+        }
+
+    }
+}
+
+.project-addinfo {
+    .ant-form-item {
+        margin: 0 0 15px;
+    }
+    .ant-input {
+        border: 0;
+    }
+    .ant-picker {
+        border: 0;
+    }
+    .project-icon-box {
+        width: 320px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .upload-icon {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+
+
+    .project-type-head {
+        font-size: 20px;
+        font-weight: var(--tiklab-font-weight-bold);
+        margin-bottom: 10px;
+    }
+
+    .project-limit {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .project-limits {
+            padding: 15px 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            width: 220px;
+
+            .limits-title {
+                font-size: 16px;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .limits-desc {
+                font-size: 13px;
+                color: #ccc;
+            }
+        }
+
+        .limit-select {
+            border: 1px solid var(--tiklab-blue);
+            box-shadow: 0 0 3px var(--tiklab-gray-400)56;
+        }
+    }
+
+    .project-icon {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        box-sizing: content-box;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .project-add-submit {
+        display: flex;
+
+        .project-dashed {
+            margin-right: 10px;
+        }
+    }
+
+    .icon-select {
+        border: 1px solid var(--tiklab-blue);
+        box-shadow: 0 0 3px #0063FF56;
+        border-radius: 4px;
+    }
+}
+
+.project-previous {
+    line-height: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    width: 56px;
+}
+
+.previous-icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}

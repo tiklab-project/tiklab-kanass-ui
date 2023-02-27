@@ -1,0 +1,77 @@
+.frame-header-drawer {
+    top: var(--tiklab-head-height);
+    .ant-drawer-header {
+        padding: 9px 20px;
+        border-bottom: 0
+    }
+    .ant-drawer-close {
+        padding: 12px 20px;
+    }
+    .ant-drawer-body {
+        padding: 0;
+        overflow: hidden;
+        .ant-tabs-nav {
+            padding: 0 20px;
+        }
+    }
+    .message-box {
+        height: calc(100vh - 170px);
+        overflow: auto;
+        padding: 0 20px;
+        .message-list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            cursor: pointer;
+            .message-status {
+                width: 6px;
+                height: 6px;
+                
+                border-radius: 6px;
+                margin-left: 15px;
+                
+            }
+            .status-unread {
+                background: #ff0000;
+            }
+            .status-read {
+                background-color: #00ff00;
+            }
+        }
+        .message-item-text {
+            flex: 1;
+            margin-left: 10px;
+            .message-item-title {
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                font-size: 16px;
+                .message-item-time{
+                    padding: 0 10px;
+                    font-size: 12px;
+                    color: #999;
+                }
+            }
+            .message-item-desc {
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+        .message-item-id {
+            font-size: 12px;
+            color: #999;
+        }
+        .message-list-bottom {
+            text-align: center;
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        .message-list-bottom:hover {
+            color: var(--tiklab-blue);
+        }
+        
+    }
+}

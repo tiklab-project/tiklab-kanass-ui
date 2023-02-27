@@ -1,0 +1,80 @@
+.insight-list {
+    background-color: #fff;
+    padding: 20px 15px;
+    .insight-search-add {
+        padding: 15px 0px;
+        text-align: right;
+        display: flex;
+        justify-content: space-between;
+    
+    }
+    .action-botton {
+        color: var(--tiklab-blue);
+    }
+    .action-delete {
+        color: red;
+    }
+    .insight-tabs-search {
+        display: flex;
+        justify-content: space-between;
+    }
+    .table-box {
+        margin-top: 0;
+    }
+    .insight-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+        line-height: 50px;
+        
+        .insight-tab {
+            padding: 0 10px;
+            color: #707070;
+            font-size: 13px;
+            cursor: pointer;
+            height: 50px;
+            line-height: 50px;
+        }
+        .active-tabs {
+            font-weight: var(--tiklab-font-weight-bold);
+            color: #000;
+        }
+    }
+    .insight-name {
+        color: var(--tiklab-blue);
+        cursor: pointer;
+    }
+    .insight-name:hover {
+        text-decoration: underline;
+    }
+
+    .insight-filter {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+        line-height: 50px;
+        .vertical-bar {
+            width: 1px;
+            height: 15px;
+            background-color: #d7d7d7;
+            margin: 0 10px;
+        }
+        .active-tabs {
+            font-weight: var(--tiklab-font-weight-bold);
+            color: #000;
+            border-bottom: 2px solid var(--tiklab-blue);
+        }
+        .filter-search {
+            width: 120px;
+            border-radius: 4px;; 
+        }
+    }
+}
+.insight-delete-modal {
+    .ant-modal-body {
+        padding: 24px !important;
+    }
+    
+}

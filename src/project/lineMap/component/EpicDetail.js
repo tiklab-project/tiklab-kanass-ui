@@ -1,0 +1,251 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2022-04-09 16:39:00
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 19:09:13
+ */
+import React, { Fragment, useEffect, useState, useRef } from "react";
+import { observer, inject } from "mobx-react";
+import { DatePicker, Select, Row, Col } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import moment from 'moment';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import "./EpicDetail.scss";
+import EpicPlan from "./EpicPlan"
+import { withRouter } from "react-router";
+import Button from "../../../common/button/Button";
+
+const EpicDetail = (props) => {
+    const { epicStore } = props;
+    const { findEpic, findEpicList, updateEpic, deleteEpic } = epicStore;
+    const [epicInfo, setEpicInfo] = useState()
+    const epicId = props.match.params.epicId;
+    const path = props.match.path.split("/")[2];
+    const [showMenu, setShowMenu] = useState(false);
+
+    const [dropDown, showDropdown] = useState(false);
+    const modelRef = useRef();
+    // 项目id
+    const projectId = props.match.params.id;
+    const [epicList, setEpicList] = useState([])
+    useEffect(() => {
+        if (epicId !== "") {
+            findEpic({ id: epicId }).then(data => {
+                setEpicInfo(data.data)
+
+            })
+        }
+        findEpicList({ projectId: projectId }).then((res) => {
+            if (res.code === 0) {
+                setEpicList(res.data)
+            }
+            // setLoading(false)
+        })
+
+        return;
+    }, [epicId])
+
+
+
+    const setStatusName = (value) => {
+        let name = ""
+        switch (value) {
+            case "0":
+                name = "未开始"
+                break;
+            case "1":
+                name = "进行中"
+                break;
+            case "2":
+                name = "已结束"
+                break;
+            default:
+                name = "未开始"
+                break;
+        }
+        return name;
+    }
+    const [fieldName, setFieldName] = useState("")
+    const changeStyle = (value) => {
+        setFieldName(value)
+    }
+    const dateFormat = 'YYYY-MM-DD';
+
+    useEffect(() => {
+        window.addEventListener("mousedown", closeModal, false);
+        return () => {
+            window.removeEventListener("mousedown", closeModal, false);
+        }
+    }, [])
+
+
+    const closeModal = (e) => {
+        if (!modelRef.current) {
+            return;
+        }
+        if (!modelRef.current.contains(e.target) && modelRef.current !== e.target) {
+            setShowMenu(false)
+        }
+    }
+
+    const selectKeyFun = (item) => {
+        props.history.push(`/index/${path}/${projectId}/epic/${item.id}`)
+        setShowMenu(false)
+    }
+
+    const changeDate = (key, value, dateString) => {
+        updateEpic({ id: epicId, [key]: dateString })
+    }
+
+    const inputRef = useRef()
+
+    const [editName, setEditName] = useState(false)
+    const updateNameByBlur = (event, id) => {
+        event.stopPropagation();
+        event.preventDefault()
+        updateTitle()
+    }
+
+    const updateNameByKey = (event) => {
+        if (event.keyCode === 13) {
+            event.stopPropagation();
+            event.preventDefault()
+            updateTitle()
+        }
+    }
+
+    const updateTitle = () => {
+        const name = inputRef.current.textContent;
+        const params = {
+            epicName: name,
+            id: epicId
+        }
+
+        if (inputRef.current.textContent !== epicInfo.title) {
+            updateEpic(params).then(res => {
+                if (res.code === 0) {
+                    epicInfo.epicName = inputRef.current.textContent;
+                }
+            })
+        }
+        inputRef.current.blur()
+        setEditName(false)
+    }
+
+    const deEpic = () => {
+        deleteEpic({id: epicId}).then(res => {
+            if(res.code === 0){
+                props.history.push(`/index/projectScrumDetail/${projectId}/linemap`)
+            }
+        })
+    }
+
+    return (
+        <Row >
+            <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                <div className="epic-detail">
+                    {
+                        epicInfo && <Fragment>
+                            <div className="epic-detail-top">
+                                <div className="epic-breadcrumb">
+                                    <span className="epic-breadcrumb-first" onClick={() => props.history.push(`/index/projectScrumDetail/${projectId}/linemap`)}>需求集</span>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-right1"></use>
+                                    </svg>
+                                    <div className="epic-breadcrumb-dropdown" onMouseEnter={() => showDropdown(true)}
+                                        onMouseLeave={() => showDropdown(false)}>
+                                        <div
+                                            onClick={() => setShowMenu(true)}
+                                            style={{ cursor: "pointer" }}
+                                            className="epic-breadcrumb-text"
+
+                                        >
+                                            {epicInfo?.epicName}
+                                            <DownOutlined style={{ fontSize: '12px', marginLeft: "10px" }} />
+                                        </div>
+                                        <div
+                                            className={`epic-breadcrumb-dropdown-modal ${showMenu ? "epic-menu-show" : "epic-menu-hidden"}`}
+                                            ref={modelRef}
+                                        >
+                                            <ul className="epic-menu">
+                                                {
+                                                    epicList && epicList.map(item => {
+                                                        return <div className={`epic-menu-submenu ${item.id === epicInfo?.id ? "epic-menu-select" : ""}`}
+                                                            key={item.id}
+                                                            onClick={() => selectKeyFun(item)}
+                                                        >
+                                                            {/* <svg className="icon" aria-hidden="true">
+                                                            <use xlinkHref={`#icon-${item.icon}`}></use>
+                                                        </svg> */}
+                                                            <span>
+                                                                {item.epicName}
+                                                            </span>
+                                                        </div>
+                                                    })
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <Button onClick = {() => deEpic()}>删除</Button>
+                            </div>
+
+                            <div className="epic-title">
+                                <div className={`${editName ? "epic-name-edit" : "epic-name"}`}
+                                    onBlur={() => updateNameByBlur(event, "blur")}
+                                    onKeyDown={() => updateNameByKey(event, "enter")}
+                                    onClick={() => setEditName(true)}
+                                    contentEditable={editName}
+                                    suppressContentEditableWarning
+                                    ref={inputRef}
+                                >
+                                    {epicInfo?.epicName}
+                                </div>
+                            </div>
+                            <div className="epic-info">
+                                <div className="epic-date">
+                                    <div className="epic-lable">开始日期：</div>
+                                    <DatePicker
+                                        locale={locale}
+                                        format={dateFormat}
+                                        allowClear={false}
+                                        className="work-select"
+                                        bordered={fieldName === "planStartTime" ? true : false}
+                                        showarrow={fieldName === "planStartTime" ? "true" : "false"}
+                                        onFocus={() => changeStyle("planStartTime")}
+                                        onBlur={() => setFieldName("")}
+                                        onChange={(data, dateString) => changeDate("startTime", data, dateString)}
+                                        suffixIcon={false}
+                                        defaultValue={moment(epicInfo.startTime, dateFormat)}
+                                    />
+                                </div>
+                                <div className="epic-date">
+                                    <div className="epic-lable">发布日期：</div>
+                                    <DatePicker
+                                        locale={locale}
+                                        format={dateFormat}
+                                        allowClear={false}
+                                        className="work-select"
+                                        bordered={fieldName === "endTime" ? true : false}
+                                        showarrow={fieldName === "endTime" ? "true" : "false"}
+                                        onFocus={() => changeStyle("endTime")}
+                                        onBlur={() => setFieldName("")}
+                                        suffixIcon={false}
+                                        defaultValue={moment(epicInfo.endTime, dateFormat)}
+                                        onChange={(data, dateString) => changeDate("endTime", data, dateString)}
+                                    />
+                                </div>
+                            </div>
+                            <EpicPlan epicId={epicId} />
+
+                        </Fragment>
+                    }
+                </div>
+            </Col>
+        </Row>
+    )
+
+}
+export default withRouter(inject("epicStore")(observer(EpicDetail)));

@@ -1,0 +1,21 @@
+.work-log {
+    .worklog-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .worklog-top-title {
+            font-size: 16px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+
+    }
+    .ant-table table {
+        border-bottom: 0;
+    }
+    .worklog-table {
+        background: #fff;
+        padding: 15px 0;
+        border-radius: 4px;
+    }
+}

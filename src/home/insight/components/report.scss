@@ -1,0 +1,11 @@
+.report-action {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 13px;
+    .report-action-edit {
+        margin-right: 10px;
+        color: var(--tiklab-blue);
+        
+    }
+}

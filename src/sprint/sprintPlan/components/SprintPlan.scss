@@ -1,0 +1,111 @@
+.sprint-detail-row {
+    height: 100%;
+}
+
+.sprint-plan {
+    padding: 10px;
+    height: 100%;
+    background: #fff;
+
+    .sprint-plan-content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+        height: 100%;
+        gap: 20px;
+        overflow: auto;
+        .sprint-plan-box {
+            border-radius: 4px;
+            background: #f7f7f7;
+            padding-bottom: 10px;
+            width: 500px;
+
+            .sprint-plan-box-top {
+                width: 100%;
+                text-align: center;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                position: sticky;
+                top: 0;
+                background: #f7f7f7;
+                .sprint-plan-title {
+                    height: 40px;
+                    line-height: 40px;
+                }
+
+                .sprint-plan-filter {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    height: 50px;
+                    line-height: 50px;
+                    padding: 0 20px;
+                    justify-content: space-around;
+
+                    .select-view {
+                        position: relative;
+                        cursor: pointer;
+                        height: 30px;
+                        line-height: 30px;
+                        padding: 0 10px;
+                        background: #f0f0f0;
+                        border-radius: 4px;
+                    }
+                }
+            }
+
+            .sprint-plan-box-content {
+                height: calc(100% - 100px);
+            }
+
+            .sprint-plan-list {
+                overflow: auto;
+                padding: 0 20px;
+            }
+
+            .sprint-plan-item-box {
+                margin: 0 auto;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                padding: 10px;
+                font-size: 13px;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .work-item-id {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .work-item-title {
+                    line-height: 30px;
+                    cursor: pointer;
+                    .work-item-title-left {
+                        color: var(--tiklab-blue);
+                        font-weight: var(--tiklab-font-weight-bold);
+                    }
+                }
+
+            }
+
+            .box::-webkit-scrollbar {
+                width: 0 !important;
+                height: 0 !important;
+            }
+
+            .sprint-plan-list {
+                -ms-overflow-style: none;
+                overflow: -moz-scrollbars-none;
+
+            }
+        }
+    }
+
+
+}

@@ -1,0 +1,108 @@
+.work {
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    overflow: hidden;
+    flex: 1;
+    
+    .priorityDes{
+        table {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+        }
+        table td,
+        table th {
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 3px 5px;
+        }
+        table th {
+            border-bottom: 2px solid #ccc;
+            text-align: center;
+        }
+    
+        /* blockquote 样式 */
+        blockquote {
+            display: block;
+            border-left: 8px solid #d0e5f2;
+            padding: 5px 10px;
+            margin: 10px 0;
+            line-height: 1.4;
+            font-size: 100%;
+            background-color: #f1f1f1;
+        }
+    
+        /* code 样式 */
+        code {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            background-color: #f1f1f1;
+            border-radius: 3px;
+            padding: 3px 5px;
+            margin: 0 3px;
+        }
+        pre code {
+            display: block;
+        }
+    }
+}
+
+.work-col {
+    height: 100%;
+}
+.work-list-col {
+    padding: var(--tiklab-padding-item);
+}
+.work-head {
+    box-shadow: 0 0 4px 0 rgb(0,0,0,0.1), 0 0.5px 0 0 rgb(0,0,0,0,8);
+    min-height: 55px;
+    z-index: 1000;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    .work-head-left {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .ant-form-item {
+            margin: 10px 16px 10px 0;
+        }
+
+    }
+    .work-head-right {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .right-item {
+            margin: 10px 16px 10px 0;
+        }
+    }
+}
+.work-addmodel {
+    .desc-preview {
+        border-radius: 4px;
+        background: var(--tiklab-gray-300);
+    }
+    .ant-modal-content {
+        .ant-modal-body {
+            overflow: auto;
+            padding: 0;
+            .ant-select-selector:focus {
+                background-color: #fff;
+            }
+            .ant-modal-title {
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+        } 
+    }
+}
+
+.empty-work {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

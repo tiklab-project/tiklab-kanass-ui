@@ -1,0 +1,95 @@
+
+
+.new-insight {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    .project-breadcrumb-icon {
+        width: 25px;
+        height: 25px;
+    }
+    .new-insight-left {
+        flex: 1;
+        .insight-head-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .new-insight-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 10px 10px;
+            border-bottom: #EBECF0 2px solid;
+
+            .insight-head-title {
+                font-size: 16px;
+                font-weight: var(--tiklab-font-weight-bold);
+                height: 40px;
+                line-height: 40px;
+                display: inline-flex;
+                align-items: center;
+            }
+
+            .insight-head-action {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .action-botton {
+
+                    width: 60px;
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 4px;
+                    text-align: center;
+                    margin-left: 10px;
+
+                }
+
+                .action-save {
+                    background: var(--tiklab-blue);
+                    color: #fff;
+                }
+
+                .action-cancel {
+                    background: #CED0D0;
+                    color: #666;
+                }
+            }
+        }
+    }
+
+    .new-insight-content {
+        margin: 0 5px;
+        .ant-empty {
+            margin-top: 100px;
+        }
+        .empty-action-save {
+            background: var(--tiklab-blue);
+            color: #fff;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 0 auto;
+        }
+    }
+
+
+}
+
+.new-insight-report {
+    width: 250px;
+}
+
+.show-report {
+    display: block;
+}
+
+.hidden-report {
+    display: none;
+}
+

@@ -1,0 +1,52 @@
+.work-statistics {
+    width: 300px;
+    border-radius: 5px;
+    background-color: #fff;
+    .work-statistics-title {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-weight: 600;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .work-statistics-list {
+        display: flex;
+        justify-content: space-between;
+        height: calc(100% - 40px);
+        flex-direction: column;
+        padding: 20px;
+        .work-statistics-item {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* height: 100px; */
+            width: 100%;
+            /* margin-bottom: 50px; */
+            border: 1px solid #d7d7d7;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 5px;
+            .work-icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+            }
+            .work-count {
+                .work-num, .work-text {
+                    text-align: center;
+                    width: 100px;
+                    height: 25px;
+                    line-height: 25px;
+                    font-weight: 600;
+                }
+                .work-text {
+                    color: #999;
+                    
+                }
+            }
+        }
+    }
+}

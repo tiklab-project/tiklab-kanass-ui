@@ -1,0 +1,27 @@
+.work-gantt-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+.work-gantt-filter {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.bug-page {
+    text-align: center;
+    margin-top: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .bug-botton {
+        color: var(--tiklab-blue);
+        cursor: pointer;
+    }
+    .bug-botton:hover {
+        text-decoration: underline;
+    }
+}

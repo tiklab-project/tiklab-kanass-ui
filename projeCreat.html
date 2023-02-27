@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display: flex;
+            align-items: center;
+            font-size: 14px;
+            justify-content: space-between;">
+        <div style="display: flex;align-items: center;">
+            <div  style="width: 25px;
+                   height: 25px;
+                   line-height: 25px;
+                   background-color: #ccc;
+                   border-radius: 32px;
+                   text-align: center;
+                   color: #fff;">${createUserIcon}</div>
+            <div style="display: flex;
+                    flex-direction: column;
+                    padding: 0 20px;
+                ">
+                <div>
+                    <span style="padding-right: 10px;">
+                        ${user.nickname}
+                    </span>
+                    创建了${workItem.title}
+                </div>
+                <div style="line-height: 40px;
+                        display: flex;
+                        align-items: center;
+                        height: 40px;">
+                    <div style="
+                            font-size: 12px;
+                            height: 15px;
+                            line-height: 15px;
+                            border-radius: 5px;
+                            margin-right: 10px;">
+                        <img src="/images/${workItem.icon}" alt="" width="16px" height="16px">
+                    </div>
+                    <div style="color: #5d70ea;
+                            cursor: pointer;
+                            font-size: 12px;
+                            height: 15px;
+                            line-height: 15px;
+                            border-radius: 5px;">
+                        ${workItem.title}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="font-size: 13px;">
+            ${createdTime}
+        </div>
+    </div>
+</body>
+
+</html>

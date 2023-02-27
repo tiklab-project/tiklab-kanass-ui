@@ -1,0 +1,162 @@
+.workitem-tab {
+    height: 100%;
+    .workitem-detail-row {
+        height: calc(100% - 60px);
+        overflow: auto;
+        background: #fff;
+        margin: 20px 0;
+        padding: 0 15px;
+    }
+
+    .workitem-tabs {
+        display: flex;
+        gap: 32px;
+        height: 32px;
+        line-height: 32px;
+        border-bottom: 1px solid var(--tiklab-gray-200);
+        padding: 0 15px;
+
+        .tabs-bar-select {
+            border-bottom: 2px solid var(--tiklab-blue);
+            color: var(--tiklab-blue);
+        }
+        
+        .tabs-bar  {
+            cursor: pointer;
+        }
+        .tabs-more {
+            position: relative;
+
+            .tabs-more-button {
+                height: 32px;
+                line-height: 32px;
+                display: flex;
+                align-items: center;
+            }
+
+            .tabs-dropdown {
+                position: absolute;
+                background-color: #fff;
+                z-index: 3;
+                width: 100px;
+                border-radius: 5px;
+                box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+                .tabs-dropdown-item {
+                    padding: 0 20px;
+                    height: 40px;
+                    line-height: 40px;
+                }
+
+                .tabs-dropdown-item:hover {
+                    background-color: var(--tiklab-gray-300);
+                }
+                .tabs-dropdown-select {
+                    background-color: var(--tiklab-gray-400);
+                }
+            }
+           
+            .tabs-dropdown-show {
+                display: block;
+            }
+
+            .tabs-dropdown-hidden {
+                display: none;
+            }
+        }
+    }
+
+    .workitem-tabs-content {
+        .detail-top {
+            display: flex;
+            justify-content: space-between;
+
+            .work-item-title {
+                border-bottom: 1px solid rgb(223, 225, 230);
+            }
+
+            .right {
+                width: 48%;
+                border-radius: 4px;
+                flex: 1;
+            }
+
+            .left {
+                width: 48%;
+                border-radius: 4px;
+                flex: 1;
+
+            }
+        }
+        .desc-preview {
+            border-radius: 4px;
+            background: var(--tiklab-gray-600);
+        }
+
+        .work-attach-box {
+            background: var(--tiklab-gray-600);
+        }
+        .work-detail-box {
+            margin-bottom: 15px;
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 20px;
+            .ant-select-selection-placeholder {
+                color: rgba(0,0,0, 0.85);
+            }
+            .ant-select:hover {
+                background-color: #f7f8fa;
+            }
+            .ant-picker-borderless {
+                cursor: pointer;
+            }
+            .ant-picker-borderless:hover {
+                background-color: #f7f8fa !important;
+            }
+            .ant-input-number {
+                margin-right: 10px;
+            }
+
+            .ant-input-number:hover {
+                background-color: #f7f8fa;
+            }
+            .ant-upload-drag {
+                border: 0;
+                background-color: var(--tiklab-gray-600);
+            }
+            .ant-avatar {
+                width: 20px;
+                height: 20px;
+            }
+
+            .ant-upload-drag-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0 !important;
+            }
+
+            .ant-form-item-label>label {
+                color: var(--tiklab-gray-500);
+                font-size: 13px;
+            }
+    
+            .ant-upload-select-text {
+                margin-bottom: 10px;
+            }
+    
+            .work-detail-upload {
+                height: 80px;
+            }
+            
+          
+            .desc-botton {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: 10px;
+                gap: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,267 @@
+import React, { Fragment, useEffect, useState } from "react";
+import { Tabs, Input, Table, Space, Button, Row, Col } from 'antd';
+import EpicPlanAddmodal from "./EpicPlanAddModal";
+import { observer, inject } from "mobx-react";
+import { withRouter } from "react-router";
+import InputSearch from "../../../common/input/InputSearch"
+import "./EpicPlan.scss"
+
+const EpicPlan = (props) => {
+    const { versionPlanStore, epicStore, epicId } = props
+    const { getSelectVersionPlanList, versionPlanList,
+        addVersionPlan, searchAllVersionPlan } = versionPlanStore;
+    const [epicChild, setEpicChild] = useState()
+    const [selectWorkItemList, setSelectWorkItemList] = useState()
+    const { findWorkItemListByEpic, deleteEpicWorkItem } = epicStore;
+    const [epicWorkIds, setEpicWorkIds] = useState()
+    useEffect(() => {
+        findWorkItemListByEpic({ epicId: epicId }).then(res => {
+            if (res.code === 0) {
+                setEpicChild(res.data)
+                let ids = []
+                res.data.workItem.map(item => {
+                    ids.push(item.id)
+                })
+                setEpicWorkIds(ids)
+            }
+        })
+        return
+    }, [epicId])
+
+
+    //删除用户
+    const deleteWorkItem = (id) => {
+        const value = {
+            epicId: epicId,
+            workItem: { id: id }
+        }
+        deleteEpicWorkItem(value).then(res=> {
+            if(res.code === 0){
+                findWorkItemListByEpic({ epicId: epicId }).then(res => {
+                    if (res.code === 0) {
+                        setEpicChild(res.data)
+                        let ids = []
+                        res.data.workItem.map(item => {
+                            ids.push(item.id)
+                        })
+                        setEpicWorkIds(ids)
+                    }
+                })
+            }
+        })
+    }
+
+
+    // 搜索用户
+    const onSearch = (value) => {
+        findWorkItemListByEpic({ epicId: epicId, epicName: value }).then(res => {
+            if (res.code === 0) {
+                setEpicChild(res.data)
+            }
+        })
+    }
+
+
+    const columns = [
+        {
+            title: "事项名称",
+            dataIndex: "title",
+            key: "title"
+        },
+        {
+            title: "负责人",
+            dataIndex: ["assigner", "name"],
+            key: "type"
+
+        },
+        {
+            title: "事项状态",
+            dataIndex: ["workStatusNode", "name"],
+            key: "status",
+        },
+        {
+            title: "操作",
+            key: "action",
+            render: (text, record) => (
+                <span className="delete-workitem" onClick={() => deleteWorkItem(record.id)}>
+                    删除
+                </span>
+            )
+        }
+    ];
+
+    const setStatusName = (value) => {
+        let name = ""
+        switch (value) {
+            case "0":
+                name = "未开始"
+                break;
+            case "1":
+                name = "进行中"
+                break;
+            case "2":
+                name = "已结束"
+                break;
+            default:
+                name = "未开始"
+                break;
+        }
+        return name;
+    }
+
+    const [expandedTree, setExpandedTree] = useState([])
+    const isExpandedTree = (key) => {
+        return expandedTree.some(item => item === key)
+    }
+    const setOpenOrClose = (key) => {
+        if (isExpandedTree(key)) {
+            setExpandedTree(expandedTree.filter(item => item !== key))
+        } else {
+            setExpandedTree(expandedTree.concat(key))
+        }
+        console.log(expandedTree)
+    }
+
+    const epicTable = (data, fid, level) => {
+        return (
+            <div className={`epic-table-child ${isExpandedTree(fid) ? "epic-table-hidden" : ''}`}>
+                {
+                    data && data.map(item => {
+                        return <Fragment>
+                            <div className="epic-child-item" key = {item.id}>
+                                <div className="epic-item epic-item-title">
+                                    <div className="epic-item-name" style={{ paddingLeft: level * 18 + 5 }}>
+                                        {
+                                            ((item.children && item.children.length > 0) || (item.childrenWorkItem && item.childrenWorkItem.length > 0)) ?
+                                            <>
+                                                {
+                                                    isExpandedTree(item.id) ?
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-down"></use>
+                                                        </svg>
+                                                        :
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-right"></use>
+                                                        </svg>
+                                                }
+                                            </>
+                                            :
+                                            <div style={{width: "18px", height: "18px"}}></div>
+                                        }
+
+                                        <div className="epicName">{item.epicName}</div>
+                                    </div>
+
+                                </div>
+                                <div className="epic-item epic-item-master">{item.master?.name}</div>
+                                <div className="epic-item epic-item-status">{setStatusName(item.status)}</div>
+                                <div className="epic-item epic-item-data">{item.startTime} ~ {item.endTime}</div>
+                                <div className="epic-item epic-item-type">需求集</div>
+                                <div className="epic-item epic-item-action"></div>
+                            </div>
+                            {
+                                item.children && item.children.length > 0 && epicTable(item.children, item.id, level + 1)
+                            }
+                            {
+                                item.childrenWorkItem && item.childrenWorkItem.length > 0 && workTable(item.childrenWorkItem, item.id, level + 1)
+                            }
+                        </Fragment>
+                    })
+                }
+            </div>
+        )
+    }
+
+    const workTable = (data, fid, level) => {
+        return (
+            <div className={`epic-table-workitem ${isExpandedTree(fid) ? "epic-table-hidden" : ''}`}>
+                {
+                    data && data?.map(item => {
+                        return <Fragment>
+                            <div className="epic-workitem-item" key = {item.id}>
+                                <div className="workitem-row workitem-row-title">
+                                    <div
+                                        className="workitem-row-name"
+                                        style={{ paddingLeft: level * 18 + 5 }}
+                                    >
+                                        {
+                                            (item.children && item.children.length > 0) ?
+                                            <>
+                                                {
+                                                    isExpandedTree(item.id) ?
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-down"></use>
+                                                        </svg>
+                                                        :
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-right"></use>
+                                                        </svg>
+                                                }
+                                            </>
+                                            :
+                                            <div style={{width: "18px", height: "18px"}}></div>
+                                        }
+                                        <div className="workitemName">{item.title}</div>
+                                    </div>
+
+                                </div>
+                                <div className="workitem-row workitem-row-assigner">{item.assigner?.name}</div>
+                                <div className="workitem-row workitem-row-status">{item.workStatusNode.name}</div>
+                                <div className="workitem-row workitem-row-data">{item.planBeginTime} ~ {item.planEndTime}</div>
+                                <div className="workitem-row workitem-row-type">事项</div>
+                                <div className="workitem-row workitem-row-action" onClick={() => deleteWorkItem(item.id)}>{fid === 0 && "删除"}</div>
+                            </div>
+                            {
+                                item.children && item.children.length > 0 && workTable(item.children, item.id, level + 1)
+                            }
+
+                        </Fragment>
+
+                    })
+                }
+            </div>
+        )
+    }
+    return (
+        <div className="epic-workitem">
+            <div className="epic-workitem-title">
+                关联需求
+                <EpicPlanAddmodal
+                    name="添加需求"
+                    type="add"
+                    setselectWorkItemList={setSelectWorkItemList}
+                    epicId={epicId}
+                    epicWorkIds={epicWorkIds}
+                    setEpicChild = {setEpicChild}
+                    {...props}
+                />
+            </div>
+            <div className="search-add">
+                <InputSearch
+                    placeholder="需求名称"
+                    allowClear
+                    style={{ width: 300 }}
+                    onChange={onSearch}
+                />
+
+            </div>
+            <div className="epic-table">
+                <div className="epic-table-header">
+                    <div className="epic-header-td header-name">标题</div>
+                    <div className="epic-header-td header-master">负责</div>
+                    <div className="epic-header-td header-status">状态</div>
+                    <div className="epic-header-td header-data">日期</div>
+                    <div className="epic-header-td header-type">类型</div>
+                    <div className="epic-header-td header-action">操作</div>
+                </div>
+                {
+                    epicTable(epicChild?.epic, 0, 0)
+                }
+                {
+                    workTable(epicChild?.workItem, 0, 0)
+                }
+            </div>
+        </div>
+    )
+}
+export default withRouter(inject("systemRoleStore", "versionPlanStore", "versionStore", "epicStore")(observer(EpicPlan)));

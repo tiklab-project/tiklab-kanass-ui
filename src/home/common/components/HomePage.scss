@@ -1,0 +1,413 @@
+
+.home {
+    height: calc(100vh - var(--tiklab-head-height));
+    overflow: auto;
+    background: var(--tiklab-gray-600);
+    position: relative;
+    z-index: 0;
+    padding: 0 20px;
+    .home-tab {
+        display: flex;
+        gap: 30px;
+        height: 50px;
+        line-height: 50px;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 20px;
+        position: sticky;
+        top: 0;
+        background: var(--tiklab-gray-600);
+        z-index: 1;
+        .home-tab-item {
+            cursor: pointer;
+        }
+        .home-tab-select {
+            font-weight: var(--tiklab-font-weight-bold);
+            border-bottom: 2px solid var(--tiklab-blue);
+        }
+    }
+    .home-content {
+        background: var(--tiklab-gray-600);
+    }
+    .title {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+        display: inline-flex;
+        justify-content: space-between;
+        .name {
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        .more:hover{
+            text-decoration:underline;
+        }
+        .more {
+            color: var(--tiklab-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+    }
+    .upper-box {
+        overflow: hidden;
+        background-color: #fff;
+        border-radius: 4px;
+        padding: 0 10px 10px;
+        .home-project {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            overflow: auto;
+            gap: 20px;
+            padding-bottom: 10px;
+            .project-item:hover {
+                border-radius: 4px 4px 0 0;
+                border-bottom: 2px solid var(--tiklab-blue);
+                transition: 500;
+            }
+            .project-item {
+                width: 240px;
+                padding: 15px;
+                box-sizing: content-box;
+                flex-shrink: 0;
+                border-radius: 4px;
+                cursor: pointer;
+                background-color: var(--tiklab-gray-600);
+                box-sizing: border-box;
+                border-bottom: 2px solid var(--tiklab-gray-600);
+                .item-title {
+                    margin-bottom: 10px;
+                    font-weight: var(--tiklab-font-weight-bold);
+                    display: inline-flex;
+                    align-items: center;
+                    font-size: 16px;
+                    .project-icon {
+                        width: 30px;
+                        height: 30px;
+                        margin-right: 10px;
+                    }
+                    .item-icon {
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 10px; 
+                    }
+                }
+                .item-work {
+                    display: flex;
+                    gap: 20px;
+                }
+                .process-work, .end-work{
+                    font-size: 12px;
+                    display: inline-flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    height: 30px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+    .center-box {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin-top: 15px;
+        .dynamic-item {
+            padding: 0 20px;
+            margin-bottom: 10px;
+        }
+        .calendar-box {
+            width: calc(60% - 150px);
+            border-radius: 4px;
+            background-color: #fff;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .anticon-left {
+                    padding-right: 10px;
+                }
+                .anticon-right {
+                    padding-left: 10px;
+                }
+            }
+        }
+        .pending-workitem {
+            border-radius: 4px;
+            width: calc(40% - 180px);
+            background-color: #fff;
+            padding-bottom: 20px;
+            flex: 1;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 20px; 
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .more:hover{
+                    text-decoration:underline;
+                }
+                .more {
+                    color: var(--tiklab-blue);
+                    margin-left: 10px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            &-list {
+                margin-top: 10px;
+                cursor: pointer;
+            }
+            .pending-workitem-item {
+                .pending-workitem-left {
+                    display: flex;
+                    align-items: center;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                cursor: pointer;
+                .pending-workitem-name {
+                    width: 100px;
+                    overflow: hidden;
+                }
+                .pending-workitem-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .pending-workitem-process {
+                    width: 50px;
+                    text-align: center;
+                    
+                }
+                .name {
+                    color: var(--tiklab-blue);
+                    overflow: hidden;
+                    height: 40px;
+                    line-height: 40px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .name:hover {
+                    text-decoration: underline;
+                }
+                .pending-workitem-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    .foot-box {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin: 15px auto;
+        .dynamic-box {
+            background-color: #fff;
+            border-radius: 4px;
+            flex: 1;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 20px; 
+                display: flex;
+                justify-content: space-between;
+                .more:hover{
+                    text-decoration:underline;
+                }
+                .more {
+                    color: var(--tiklab-blue);
+                    margin-left: 10px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .dynamic-list {
+                margin-top: 10px;
+                padding-bottom: 20px;
+            }
+            
+            .dynamic-item {
+                padding: 0 20px 10px;
+                cursor: pointer;
+                .dynamic-item-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .dynamic-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .dynamic-name {
+                    .name {
+                        color: var(--tiklab-blue);
+                    }
+                }
+                
+                .dynamic-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+            .dynamic-list-bottom {
+                text-align: center;
+                font-size: 12px;
+                height: 40px;
+                line-height: 40px;
+                cursor: pointer;
+            }
+            .dynamic-list-bottom:hover {
+                color: var(---tiklab-blue);
+                text-decoration: underline;
+            }
+        }
+
+        .sprint-box {
+            background-color: #fff;
+            border-radius: 4px;
+            flex: 1;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .more:hover{
+                    text-decoration:underline;
+                }
+                .more {
+                    color: var(--tiklab-blue);
+                    margin-left: 10px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .sprint-list {
+                margin-top: 10px;
+            }
+            .sprint-item {
+                .sprint-item-left {
+                    display: flex;
+                    align-items: center;
+                }
+                width: 100%;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .sprint-item-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .sprint-name {
+                    .name {
+                        color: var(--tiklab-blue);
+                        overflow: hidden;
+                        height: 40px;
+                        line-height: 40px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    width: 80px;
+                }
+                .sprint-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+        .info-box {
+            background-color: #fff;
+            border-radius: 4px;
+            flex: 1;
+            &-title {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                font-weight: var(--tiklab-font-weight-bold);
+                padding: 0 10px; 
+                display: flex;
+                justify-content: space-between;
+                .more:hover{
+                    text-decoration:underline;
+                }
+                .more {
+                    color: var(--tiklab-blue);
+                    margin-left: 10px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .info-list {
+                margin-top: 10px;
+                padding: 0 10px;
+            }
+            .info-item:hover {
+                background: #f7f7f7;
+            }
+            .info-item {
+                .info-item-left {
+                    display: flex;
+                    align-items: center;
+                }
+                width: 100%;
+                padding: 10px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .info-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                }
+                .info-name {
+                    .name {
+                        color: var(--tiklab-blue)
+                    }
+                }
+                .info-content {
+                    width: 100px;
+                    overflow: hidden;
+                    height: 40px;
+                    line-height: 40px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .info-date {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

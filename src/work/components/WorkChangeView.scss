@@ -1,0 +1,87 @@
+.work-change-view {
+    position: relative;
+    cursor: pointer;
+    .change-view-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+    .workitem-svg-icon {
+        height: 20px;
+        width: 20px;
+    }
+    .change-view-dropdown {
+        position: absolute;
+        background-color: #fff;
+        width: 230px;
+        border-radius: 4px;
+        z-index: 3;
+        right: 0;
+        box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+    }
+
+    .dropdown-head {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        font-weight: var(--tiklab-font-weight-bold);
+        border-bottom: 1px solid #F0F0F0;
+    }
+    .dropdown-buy-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 20px;
+        color: #999;
+    }
+    .dropdown-buy-item:hover {
+        background-color: var(--tiklab-gray-300);
+    }
+
+    .dropdown-item {
+        display: flex;
+        line-height: 40px;
+        height: 40px;
+        align-items: center;
+        padding: 0 20px;
+        
+        .dropdown-item-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            color: var(--tiklab-blue);
+        }
+
+    }
+    .view-list {
+        display: flex;
+        justify-items: center;
+        padding: 10 20px;
+        border-top: 1px solid #f0f0f0;
+        .view-list-type {
+            font-size: 12px;
+            padding: 0 10px;
+            height: 23px;
+            line-height: 23px;
+            border-radius: 4px;
+            font-weight: var(--tiklab-font-weight-bold);
+            cursor: pointer;
+        }
+        
+        .list-type-select {
+            background: var(--tiklab-gray-400);
+        }
+    }
+    .view-type-select {
+        background-color: var(--tiklab-gray-400);
+    }
+    .dropdown-item:hover {
+        background-color: var(--tiklab-gray-300);
+    }
+
+
+   
+}

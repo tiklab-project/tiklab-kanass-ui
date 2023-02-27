@@ -1,0 +1,157 @@
+.epic-detail {
+    height: calc(100vh - var(--tiklab-head-height));
+    background-color: #fff;
+    .epic-detail-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .epic-breadcrumb {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        font-size: 15px;
+        line-height: 30px;
+        font-weight: 600;
+        .epic-breadcrumb-icon {
+            width: 25px;
+            height: 25px;
+        }
+        &-first {
+            cursor: pointer;
+        }
+
+        &-first:hover {
+            color: var(--tiklab-blue)
+        }
+        &-second {
+            width: 20px;
+            height: 15px;
+            margin: 0 6px;
+        }
+        .epic-breadcrumb-dropdown {
+            .epic-breadcrumb-text {
+                cursor: pointer;
+                height: 30px;
+                line-height: 30px;
+                padding: 0 10px;
+                border-radius: 4px;
+            }
+            .epic-breadcrumb-text:hover {
+                color: var(--tiklab-blue);
+                border: 1px solid var(--tiklab-blue);
+            }
+            &-modal {
+                width: 100px;
+                background-color: #fff;
+                position: absolute;
+                z-index: 2;
+                border-radius: 4px;
+                margin-top: 5px;
+                box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%)
+            }
+            .epic-menu {
+                list-style-type: none;
+                cursor: pointer;
+                flex: 1;
+                &-submenu:first-of-type {
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+            
+                &-submenu:last-child {
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+                
+                &-submenu:hover {
+                    background-color: var(--tiklab-gray-400);
+                }
+                &-submenu {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    align-items: center;
+                    padding-left: 10px;
+                }
+                
+                &-select {
+                    background-color: var(--tiklab-gray-400);
+                }
+            }
+        }
+    }
+    .epic-title {
+        font-size: 15px;
+        font-weight: 600;
+        
+        .epic-name {
+            width: fit-content;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .epic-name:hover {
+            min-width: fit-content;
+            background-color: var(--tiklab-gray-400);
+        }
+        .epic-name-edit {
+            width: 50%;
+            border: var(--tiklab-blue) 2px solid;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    }
+    .epic-info {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px 10px;
+        color: #182B4D;
+        gap: 10px;
+        .epic-date {
+            display: flex;
+            border-radius: 4px;
+        }
+    }
+    
+    .epic-menu-hidden {
+        display: none;
+    }
+    
+    .epic-menu-show {
+        display: block;
+    }
+
+    .epic-workitem {
+        padding: 0 10px;
+
+        .workitem-title {
+            font-size: 15px;
+            font-weight: var(--tiklab-font-weight-bold);
+            /* color: var(--tiklab-blue); */
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .ant-table {
+        margin-top: 20px;
+    }
+    .epic-workitem-title {
+        font-size: 15px;
+        font-weight: var(--tiklab-font-weight-bold);
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .delete-workitem {
+        cursor: pointer;
+        color: var(--tiklab-blue);
+    }
+}

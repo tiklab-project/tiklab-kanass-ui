@@ -1,0 +1,109 @@
+.work-add-page {
+    // display: flex;
+    // justify-content: space-between;
+    gap: 20px;
+    max-height: 640px;
+    min-height: 500px;
+    .work-add-page-left {
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+            display: inline-block;
+            margin-right: 4px;
+            color: #ff4d4f;
+            font-size: 14px;
+            font-family: SimSun,sans-serif;
+            line-height: 1;
+            content: "*";
+        }
+        
+        .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+            content: ":";
+            position: relative;
+            top: -0.5px;
+            margin: 0 8px 0 2px;
+            color: #2B2B2B;
+        }
+        .work-add-page-title {
+            font-size: var(--tiklab-font-16);
+            font-weight: var(--tiklab-font-weight-bold);
+            padding: 15px 0;
+        }
+        .work-add-left-form {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .work-add-desc {
+                flex: 1;
+            }
+            .ant-form-item {
+                flex-direction: row;
+                .ant-form-item-control {
+                    height: calc(100% - 30px);
+                    .ant-form-item-control-input {
+                        height: 100%;
+                        .edit {
+                            height: 100%;
+                        }
+                        .edit-box {
+                            height: calc(100% - 96px);
+                        }
+                    }
+                }
+            }
+        }
+        .work-add-button {
+            display: flex;
+            gap: 10px;
+            padding: 15px 0;
+            justify-content: flex-end;
+        }
+        .desc-botton {
+            display: flex;
+            gap: 10px;
+            height: 40px;
+            line-height: 40px;
+            .desc-cancel {
+                cursor: pointer;
+            }
+            .desc-true {
+                cursor: pointer;
+                color: var(--tiklab-blue);
+            }
+        }
+        .ant-upload-drag-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0 !important;
+        }
+        .ant-form-item {
+            margin: 0 0 14px;
+        }
+        .ant-upload-drag {
+            background: var(--tiklab-gray-300);
+            
+        }
+    }
+    .work-add-page-right {
+        background-color: var(--tiklab-gray-600);
+        flex: 1;
+        padding: 15px;
+        overflow: auto;
+        .ant-form-item {
+            margin: 0 0 15px;
+        }
+        .ant-input {
+            margin-left: 10px;
+        }
+        .ant-input-number {
+            margin-left: 10px;
+        }
+        .ant-form-item-label {
+            padding-left: 11px;
+        }
+    }
+}

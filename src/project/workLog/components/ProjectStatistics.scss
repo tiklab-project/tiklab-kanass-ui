@@ -1,0 +1,34 @@
+.projectlog-statistics-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--tiklab-gray-200);
+    .projectlog-statistics-title {
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+    .projectlog-statistics-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+        line-height: 50px;
+        .projectlog-statistics-tab{
+            font-size: var(--tiklab-font-13);;
+            cursor: pointer;
+            height: 50px;
+            line-height: 50px;
+            margin-right: 20px;
+        }
+        .projectlog-statistics-tab:last-child {
+            margin-right: 0;
+        }
+        .active-tabs {
+            font-weight: var(--tiklab-font-weight-bold);
+            color: #000;
+            border-bottom: 2px solid var(--tiklab-blue);
+        }
+        
+    }
+}

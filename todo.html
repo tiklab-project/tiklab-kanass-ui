@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display: flex;
+            align-items: center;
+            font-size: 14px;
+            justify-content: space-between;">
+        <div style="display: flex;align-items: center;">
+            <div  style="width: 32px;
+                   height: 32px;
+                   line-height: 32px;
+                   background-color: #ccc;
+                   border-radius: 32px;
+                   text-align: center;
+                   color: #fff;">${createUserIcon}</div>
+            <div style="display: flex;
+                    flex-direction: column;
+                    padding: 0 20px;"
+            >
+                <div>
+                    <span style="font-weight: 600;">
+                        ${createUser.name}
+                    </span>
+                    向您分配了事项
+                </div>
+                <div style="line-height: 30px;
+                        display: flex;
+                        align-items: center;
+                        height: 30px;">
+                   <img src="${workTypeIcon}" alt="" width="16px" height="16px">
+                   
+                   <div style="color: #5d70ea; margin-left: 10px;">${workItemTitel}</div> 
+                </div>
+
+            </div>
+        </div>
+        <div style="font-size: 13px;">
+            ${receiveTime}
+        </div>
+    </div>
+</body>
+
+</html>

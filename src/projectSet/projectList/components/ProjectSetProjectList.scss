@@ -1,0 +1,44 @@
+.projectSetDetail {
+    padding: 10px;
+
+    .ant-col {
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    .workTable {
+        .ant-table {
+            margin: 0 !important;
+        }
+    }
+
+    .table-box {
+        .project-name {
+            display: flex;
+            align-items: center;
+
+            .project-icon {
+                margin-right: 10px;
+            }
+
+            .project-key {
+                color: var(--tiklab-gray-500);
+                line-height: 25px;
+            }
+
+            .project-text {
+                cursor: pointer;
+                color: var(--tiklab-blue);
+                line-height: 25px;
+            }
+
+            .project-text:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .workTable>td {
+        padding: 0px;
+    }
+}

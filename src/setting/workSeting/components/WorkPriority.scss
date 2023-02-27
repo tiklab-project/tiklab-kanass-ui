@@ -1,0 +1,21 @@
+.work-priority-search-add {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.project-priority-add-icon-box {
+    width: 320px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .project-priority-add-icon {
+        margin-right: 10px;
+        box-sizing: content-box;
+    }
+    .icon-select {
+        border: 2px solid var(--tiklab-blue);
+    }
+}
+.work-priority {
+    padding: var(--tiklab-padding-item);;
+}

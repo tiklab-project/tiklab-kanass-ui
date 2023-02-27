@@ -1,0 +1,27 @@
+.projectSet-relevance {
+    
+    .projectSet-box {
+        display: flex;
+        flex-direction: row;
+        .projectSet-box-left, .projectSet-box-right{
+            flex: 1;
+            border: 1px solid #f0f2f5;
+            padding: 10px;
+        }
+        .projectSet-box-right {
+            .title {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .checkbox {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            line-height: 40px;
+            height: 40px;
+        }
+    }
+    
+}

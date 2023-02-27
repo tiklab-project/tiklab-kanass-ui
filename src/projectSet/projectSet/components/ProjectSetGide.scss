@@ -1,0 +1,18 @@
+.projectSet-gide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 48px);
+    img{
+        width: 200px;
+        height: 200px;
+    }
+    .gide-right {
+        div {
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        padding: 20px;
+    }
+}

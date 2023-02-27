@@ -1,0 +1,136 @@
+@import "_color";
+@import "_base";
+@import "_normalize";
+
+
+.ant-modal-close-x {
+    display: flex !important; 
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-form-item-control-input-content .ant-btn {
+    margin-right: 8px;
+}
+
+.ant-breadcrumb {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.span-botton {
+    color: var(--tiklab-blue);
+    cursor: pointer;
+}
+
+.delete {
+    color: red;
+}
+.table-box {
+    margin-top: 24px;
+}
+.ant-table-tbody>tr>td {
+    border-bottom: 0;
+    padding: 8px;
+}
+.ant-table-thead>tr>th {
+    background: #fff; 
+    font-weight: 400;
+    padding: 8px;
+    
+}
+.ant-table table {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+
+.ant-modal-mask   {
+    background-color: #4a60848f !important;
+}
+
+.ant-modal-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.ant-modal {
+    top: 0;
+}
+.ant-table-tbody>tr.ant-table-row:hover>td {
+    background: #EDF0F5;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--tiklab-blue);
+}
+.ant-btn-primary{
+    background-color: var(--tiklab-blue);
+}
+
+.ant-btn-link {
+    color: var(--tiklab-blue);
+}
+.ant-modal-title {
+	font-weight: 600;
+}
+
+.ant-modal-header {
+    border-bottom: 0;
+}
+
+.ant-modal-footer {
+    border-top: 0;
+}
+
+.icon {
+    width: 15px; 
+    height: 15px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    margin-right: 5px;
+}
+.button-icon {
+    width: 15px; 
+    height: 15px;
+    margin-right: 5px;
+}
+
+.search-add{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .search {
+        border-radius: 4px;;
+        margin-right: 10px;
+    }
+}
+
+.portal-layout-content {
+    overflow: hidden !important;
+}
+.ant-divider-horizontal {
+    margin: 12px 0 24px;
+}
+.ant-modal {
+    .ant-modal-body {
+        padding: 0 24px;
+    }
+}
+.ant-form-item-explain {
+    font-size: 13px;
+}
+.ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: "*";
+}
+
+.ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    display: none;
+    content: "";
+}

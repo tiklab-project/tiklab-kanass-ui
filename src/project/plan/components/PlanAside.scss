@@ -1,0 +1,30 @@
+.plan-aside {
+    width: 250px;
+    border-right: 2px solid var(--tiklab-gray-200);
+    .plan-aside-title {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-bottom: 1px var(--tiklab-gray-200) solid;
+    }
+    .plan-aside-item {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        
+        &-icon {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+        }
+    }
+    .plan-aside-focus {
+        background-color: var(--tiklab-gray-400);
+        border-left: 3px solid var(--tiklab-gray-400);
+    }
+    .plan-aside-item:hover {
+        background-color: #edf0f5;
+    }
+
+}

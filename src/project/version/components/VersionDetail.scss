@@ -1,0 +1,157 @@
+.version-detail {
+    height: calc(100vh - var(--tiklab-head-height));
+    background-color: #fff;
+
+    .version-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 10px;
+
+        .version-name {
+            font-size: 18px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+    }
+    .version-title {
+        font-size: 15px;
+        font-weight: 600;
+        
+        .version-name {
+            width: fit-content;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .version-name:hover {
+            min-width: fit-content;
+            background-color: var(--tiklab-gray-400);
+        }
+        .version-name-edit {
+            width: 50%;
+            border: var(--tiklab-blue) 2px solid;
+            border-radius: 4px;
+            line-height: 40px;
+            padding: 0 10px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .version-info {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px 10px;
+        gap: 10px;
+        color: #182B4D;
+        .version-date {
+            display: flex;
+            border-radius: 4px;
+        }
+    }
+    .version-breadcrumb {
+        display: flex;
+        align-items: center;
+        padding: 10px 0px;
+        font-size: 15px;
+        line-height: 50px;
+        height: 50px;
+        font-weight: 600;
+        .version-breadcrumb-icon {
+            width: 25px;
+            height: 25px;
+        }
+        &-first {
+           cursor: pointer;
+        }
+
+        &-first:hover {
+            color: var(--tiklab-blue)
+        }
+        &-second {
+            width: 20px;
+            height: 15px;
+            margin: 0 6px;
+        }
+        .version-breadcrumb-dropdown {
+            .version-breadcrumb-text {
+                cursor: pointer;
+                height: 30px;
+                line-height: 30px;
+                padding: 0 10px;
+                border-radius: 4px;
+            }
+            .version-breadcrumb-text:hover {
+                color: var(--tiklab-blue);
+                border: 1px solid var(--tiklab-blue);
+            }
+            &-modal {
+                width: 100px;
+                background-color: #fff;
+                position: absolute;
+                z-index: 2;
+                border-radius: 4px;
+                margin-top: 5px;
+                box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%)
+            }
+            .version-menu {
+                list-style-type: none;
+                cursor: pointer;
+                flex: 1;
+                &-submenu:first-of-type {
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+            
+                &-submenu:last-child {
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+                
+                &-submenu:hover {
+                    background-color: var(--tiklab-gray-400);
+                }
+                &-submenu {
+                    height: 40px;
+                    display: flex;
+                    line-height: 40px;
+                    width: 100%;
+                    align-items: center;
+                    padding-left: 10px;
+                    padding: 0 10px;
+                }
+                
+                &-select {
+                    background-color: var(--tiklab-gray-400);
+                }
+            }
+        }
+    }
+    .version-menu-hidden {
+        display: none;
+    }
+    
+    .version-menu-show {
+        display: block;
+    }
+
+    .version-workitem {
+        padding: 0 10px;
+
+        .workitem-title {
+            font-size: 15px;
+            font-weight: var(--tiklab-font-weight-bold);
+            /* color: var(--tiklab-blue); */
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .ant-table {
+        margin-top: 20px;
+    }
+}

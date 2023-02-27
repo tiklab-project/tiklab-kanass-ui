@@ -1,0 +1,53 @@
+.work-type-addmodel {
+    .work-type-icon-box {
+        width: 320px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        .upload-icon {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    .work-type-icon {
+        margin-right: 10px;
+        box-sizing: content-box;
+        
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    .icon-select {
+        border: 2px solid #b4fab7;
+    }
+    .form-add {
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        cursor: pointer;
+        color: var(--tiklab-blue);
+    }
+}
+.work-type-search-add {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.work-type-name {
+    display: flex;
+    align-items: center;
+    .work-type-icon {
+        margin-right: 10px;
+    }
+}
+.work-type {
+    padding: var(--tiklab-padding-item);;
+}
+.add-botton {
+    display: flex;
+    justify-content: space-between;
+    .project-primary {
+        margin-right: 10px;
+    }
+}

@@ -1,0 +1,101 @@
+.work-view {
+    position: relative;
+
+    .worklist-filter-button {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+    .worklist-filter-button:hover {
+         background-color: var(--tiklab-gray);
+    }
+    .worklist-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .work-view-dropdown {
+        position: absolute;
+        background-color: #fff;
+        width: 250px;
+        border-radius: 4px;
+        z-index: 3;
+        box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+        right: 0;
+    }
+
+    .work-view-head {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        font-weight: var(--tiklab-font-weight-bold);
+        border-bottom: 1px solid #F0F0F0;
+    }
+
+    .work-view-item {
+        display: flex;
+        line-height: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        gap: 10px;
+        .view-item-name {
+            flex: 1;
+        }
+
+        .view-sort-botton {
+            width: 40px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .sort-type {
+            margin: 0 10px;
+            font-size: 12px;
+            padding: 0 10px;
+            height: 23px;
+            line-height: 23px;
+            border-radius: 4px;
+            font-weight: var(--tiklab-font-weight-bold);
+            cursor: pointer;
+        }
+
+        .view-list-type:hover {
+            color: var(--tiklab-blue);
+        }
+
+        .sort-select {
+            background-color: #d7d7d7;
+            color: var(--tiklab-blue);
+        }
+    }
+
+    .sort-type:hover {
+        background-color: #e3e8ff;
+    }
+
+    .work-view-item:hover {
+        background-color: var(--tiklab-gray-300);
+
+    }
+
+    .sort-type-select {
+        background-color: var(--tiklab-gray-400);
+    }
+
+    .worklist-view-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .view-list {
+        border-top: 1px solid #f0f0f0;
+        padding: 10px 20px;
+    }
+}

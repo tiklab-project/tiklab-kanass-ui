@@ -1,0 +1,14 @@
+.log-detail {
+    .log-detail-item {
+        line-height: 25px;
+        margin-bottom: 20px;
+        .log-detail-label {
+            width: 80px;
+            color: var(--tiklab-gray-500);;
+        }
+        .log-detail-content {
+            overflow-wrap: anywhere;
+            flex: 1;
+        }
+    }
+}

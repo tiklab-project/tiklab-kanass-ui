@@ -1,0 +1,66 @@
+.work-table-second {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    .work-table-row {
+        flex: 1;
+    }
+    .work-table-filter {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+       
+
+        .worklist-icon {
+            width: 15px;
+            height: 15px;
+        }
+
+        .select-content {
+            padding: 5px 10px;
+            background-color: var(--tiklab-gray);
+        }
+
+        .select-content:hover {
+            background-color: var(--tiklab-gray-400);
+            color: var(--tiklab-black);
+        }
+        .worklist-table-search {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .search-input {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                border: 2px solid #f0f0f0;
+                height: 32px;
+                line-height: 32px;
+                border-radius: 4px;
+            }
+
+            .search-cancel {
+                cursor: pointer;
+            }
+
+            .search-cancel:hover {
+                color: var(--tiklab-blue);
+            }
+
+            .worklist-icon {
+                width: 15px;
+                height: 15px;
+            }
+        }
+        .filter-modal {
+            right: 0;
+        }
+    }
+    .work-view {
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,14 @@
+
+.version-plan-search {
+    display: flex;
+    margin-bottom: 20px;
+    
+}
+.version-plan-addmodel{
+    top: 30px;
+    .ant-table-content {
+        height: calc(100vh - 330px);
+        overflow: auto;
+    }
+    
+}

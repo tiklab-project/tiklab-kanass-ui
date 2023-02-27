@@ -1,0 +1,65 @@
+.project-operate {
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 100%;
+    background-color: #fff;
+    .project-breadcrumb {
+        display: flex;
+        align-items: center;
+        padding: 10px 0px;
+        font-size: 15px;
+        font-weight: var(--tiklab-font-weight-bold);
+        margin-right: 20px;
+        &-icon {
+            width: 25px;
+            height: 25px;
+        }
+        &-second {
+            width: 20px;
+            height: 15px;
+            margin: 0 6px;
+        }
+    }
+    &-title  {
+        height: 40px;
+        line-height: 40px;
+        font-weight: var(--tiklab-font-weight-bold);
+        font-size: 16px;
+        display: flex;
+        margin-bottom: 10px;
+        .operate-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    }
+    .project-operate-table {
+        text-align: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+        .project-operate-col {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            .project-operate-row {
+                flex: 1;
+            }
+            .ant-progress {
+                margin-right: 10px;
+            }
+        }
+        .head {
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+            color: #7A869A;
+        }
+    }
+    .project-operate-page {
+        text-align: right;
+        margin-bottom: 15px;
+    }
+}

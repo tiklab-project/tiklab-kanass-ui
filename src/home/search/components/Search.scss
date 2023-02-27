@@ -1,0 +1,237 @@
+.search {
+    .search-box {
+        height: 30px;
+        width: 200px;
+        background: #fff;
+        display: flex;
+        border-radius: 7px;
+        padding: 0 10px;
+        border: 2px solid #dddd;
+        align-items: center;
+
+        .search-input {
+            border: none;
+            height: 100%;
+            width: 90%;
+            outline: none;
+            margin-left: 10px;
+            color: #000;
+        }
+    }
+
+    .search-box:focus-within {
+        width: 500px;
+        border: 2px var(--tiklab-gray-400) solid;
+    }
+}
+
+.hidden-box {
+    display: none;
+}
+
+.show-box {
+    width: 500px;
+    min-height: 100px;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+    margin-top: 5px;
+    border-radius: 3px;
+    z-index: 1;
+    padding: 15px 0;
+    color: #000;
+
+    .sort-box {
+
+        .sort-title {
+            color: #202d407a;
+            font-size: 12px;
+            padding-left: 10px;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .item-box {
+            .item-one {
+                padding: 0 10px;
+                display: flex;
+                align-items: center;
+                height: 40px;
+                background-color: #f5f7fa;
+                margin-bottom: 10px;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                span {
+                    width: 100px;
+                    text-align: left;
+                    margin-left: 20px;
+                    overflow: hidden;
+                }
+            }
+
+        }
+    }
+
+    .recent-box {
+        padding: 0 15px;
+        .recent-work {
+            margin-bottom: 10px;
+            .recent-work-title {
+                font-size: 13px;
+                color: #999;
+                font-weight: 500;
+                padding-bottom: 10px;
+            }
+
+            .recent-work-list {
+                .work-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-bottom: 20px;
+                    .work-item-img {
+                        display: flex;
+                        align-items: center;
+                        color: #333;
+                        img{
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 10px;
+                        }
+                    }
+                    .work-item-project, .work-item-status {
+                        font-size: 12px;
+                        color: #999;
+                    }
+                    
+                }
+            }
+        }
+
+        .recent-project {
+            .recent-project-title {
+                font-size: 13px;
+                color: #999;
+                font-weight: 500;
+                padding: 10px 0;
+            }
+            .recent-project-list {
+                .project-item {
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 20px;
+                    .project-item-img {
+                        img{
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 10px;
+                        }
+                        width: 60%;
+                        display: flex;
+                        align-items: center;
+                        color: #333;
+                    }
+                    .project-type {
+                        font-size: 12px;
+                        color: #999;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.search-resule {
+    .search-box {
+        height: 50px;
+        width: 100%;
+        background: #fff;
+        display: flex;
+        border-radius: 7px;
+        border: 2px solid #dddd;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+
+        .search-input {
+            border: none;
+            height: 100%;
+            width: 90%;
+            outline: none;
+            margin-left: 10px;
+        }
+
+        .search-botton {
+            width: 100px;
+            height: 100%;
+            line-height: 44px;
+            text-align: center;
+            background-color: powderblue;
+            color: #999;
+            font-weight: var(--tiklab-font-weight-bold);
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+
+    .search-contant-list {
+        margin-bottom: 20px;
+    }
+
+    .project-box {
+        .project-contant {
+            line-height: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 10px 0;
+
+            .project-title {
+                color: var(--tiklab-blue);
+                font-size: 18px;
+                font-weight: var(--tiklab-font-weight-bold);
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .project-item-name {
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+        }
+
+        .project-card-item {
+            box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+            width: 30%;
+            margin: 10px;
+            border-radius: 4px;
+            padding: 10px;
+            line-height: 30px;
+
+            .project-card-contant {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                img {
+                    width: 36px;
+                }
+
+                .project-card-title {
+                    color: #202d40;
+                    font-weight: var(--tiklab-font-weight-bold);
+                }
+
+                .project-card-item-name {
+                    color: #d5d5d5
+                }
+            }
+
+            .project-card-bottom {
+                border-top: 1px solid #f0f0f0;
+                font-size: 12px;
+            }
+        }
+    }
+}

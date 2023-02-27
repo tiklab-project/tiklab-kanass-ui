@@ -1,0 +1,94 @@
+
+.projectSet-set {
+    height: calc(100vh - var(--tiklab-head-height));
+    .ant-row {
+        overflow: auto;
+    }
+    .ant-layout {
+        background-color: #fff;
+    }
+    .ant-layout-sider {
+        background-color: var(--tiklab-gray-600);
+        .ant-layout-sider-children {
+            position: fixed;
+            width: 180px;
+            
+        }
+    }
+    
+    .projectSet-set-content{
+        .projectSet-set-content-col {
+            background: #fff;
+            height: 100%;
+        }
+    }
+    .projectSet-back {
+        padding: 0 20px;
+        font-weight: 600;
+        color: var(--tiklab-blue);
+        cursor: pointer;
+        height: 40px;
+        line-height: 40px;
+    }
+    .projectSet-back:hover {
+        background-color: #f0f2f5;
+    }
+}
+
+.projectSet-aside {
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    background: var(--tiklab-gray-600);
+    .projectSet-title {
+        height: 40px;
+        display: flex;
+        line-height: 40px;
+        width: 100%;
+        align-items: center;
+        padding: 0 20px;
+        span{
+            width: 100px;
+            height: 100%;
+            overflow: hidden;
+            i{
+                margin-right: 10px;
+            }
+        }
+    }
+    .title {
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+    .setting {
+        border-top: 1px solid #f0f2f5;
+    }
+    
+    .projectSet-menu {
+        list-style-type:none;
+        height: calc(100% - 40px);
+        cursor: pointer;
+        .projectSet-menu-submenu {
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            width: 100%;
+            align-items: center;
+            padding-left: 20px;
+            i{
+                margin-right: 10px;
+            }
+        }
+        .projectSet-menu-submenu:hover {
+            background-color: var(--tiklab-gray-300);
+        }
+
+        .projectSet-menu-select {
+            background-color: var(--tiklab-gray-400);
+        }
+    }
+    .hidden-menu {
+        display: none;
+    }
+}

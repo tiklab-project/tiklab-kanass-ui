@@ -1,0 +1,59 @@
+.stage {
+    padding: 15px;
+    .stage-contant {
+        padding: 15px 0;
+    }
+    .stage-action {
+        display: flex;
+        justify-content: space-between;
+
+        padding: 15px 0;
+        
+    }
+    .add-stage-botton {
+        height: 40px;
+        line-height: 40px;
+        margin: 5 auto;
+        width: 150px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .add-stage-botton:hover {
+        background-color: var(--tiklab-gray-300);
+    }
+    .stage-name {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        .stage-name-left {
+            display: flex;
+            align-items: center;
+        }
+        .stage-name-left-name:hover {
+            color: var(--tiklab-blue);
+        }
+        .add-child-stage {
+            height: 18px;
+            width: 18px;
+            border-radius: 4px;
+            padding: 3px;
+            .add-icon {
+            
+                display: none;
+                width: 12px;
+                height: 12px;
+                
+            }
+        }
+        
+    }
+    .stage-name:hover .add-child-stage {
+        background-color: var(--tiklab-gray-400);
+    }
+    .stage-name:hover .add-icon {
+        display: block;
+    }
+}
+

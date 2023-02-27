@@ -1,0 +1,24 @@
+.dynamic-list-page {
+    background: #fff;
+    height: 100%;
+    overflow: auto;
+    .dynamic-list-top {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: #fff;
+        padding: 15px 15px 0;
+    }
+    .dynamic-list {
+        padding: 0 15px 15px;
+    }
+    .dynamic-filter {
+        padding: 15px 0;
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        .dynamic-list-item {
+            padding-bottom: 10px;
+        }
+    }
+}

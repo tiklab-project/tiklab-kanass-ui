@@ -1,0 +1,52 @@
+.statistics-aside {
+    background: #fff;
+    width: 250px;
+    border-right: 2px solid var(--tiklab-gray-200);
+    height: 100%;
+
+    .statistics-type-title {
+        padding: 0 20px;
+        height: 30px;
+        line-height: 30px;
+        font-weight: 500;
+        color: #777;
+        display: flex;
+        align-items: center;
+    }
+    
+    &-title {
+        padding: 10px 20px;
+        font-size: var(--tiklab-font-16);
+        font-weight: var(--tiklab-font-weight-bold);
+        border-bottom: 1px var(--tiklab-gray-200) solid;
+
+    }
+
+    .statistics-menu-firstmenu:hover {
+        cursor: pointer;
+        background-color: var(--tiklab-gray-300);
+    }
+
+    .statistics-menu-submenu:hover {
+        cursor: pointer;
+        background-color: var(--tiklab-gray-300);
+    }
+
+    .statistics-menu {
+        list-style-type: none;
+
+        &-firstmenu {
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            width: 100%;
+            align-items: center;
+            padding-left: 38px;
+        }
+
+        &-select {
+            background-color: var(--tiklab-gray-400);
+        }
+    }
+
+}

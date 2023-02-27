@@ -1,0 +1,91 @@
+.work-bodar {
+    height: calc(100% - 100px);
+    background: #f7f7f7;
+    overflow: auto;
+}
+.work-bodar-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    .work-bodar-box-border {
+        border-radius: 4px;
+        min-height: 100%;
+        border: 2px var(--tiklab-blue) dashed;
+    }
+    .work-bodar-box {
+        min-height: 100px;
+        width: 250px;
+        border-radius: 4px;
+        height: fit-content;
+        flex-shrink: 0;
+       
+        .work-bodar-title {
+            line-height: 40px;
+            position: sticky;
+            text-align: center;
+            background: #f7f7f7;
+            top: 0;
+            z-index: 2;
+            padding: 15px 0;
+            .work-bodar-title-content {
+                background-color: #fff;
+            }
+            .work-bodar-num {
+                font-size: 12px;
+                margin-left: 10px;
+            }
+        }
+        .work-bodar-item{
+            margin: 0 auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 13px;
+            background-color: #fff;
+            width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .work-item-id {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                justify-content: space-between;
+            }
+            .work-item-title {
+                line-height: 30px;
+                cursor: pointer;
+                .work-item-title-left {
+                    color: var(--tiklab-blue);
+                    font-weight: var(--tiklab-font-weight-bold);
+                }
+            }
+        }
+        .work-bodar-item-move {
+            background-color: #d0e5f2;
+        }
+    }
+    .work-bodar-box::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+    }
+    
+    .work-bodar-box {
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+    }
+}
+.work-bodar-name {
+    font-size: 16px;
+    font-weight: var(--tiklab-font-weight-bold);
+    padding: 20px;
+}
+.work-bodar-filterform {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
