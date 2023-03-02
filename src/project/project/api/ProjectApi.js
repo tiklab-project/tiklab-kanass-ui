@@ -7,7 +7,6 @@
  * @LastEditTime: 2021-09-27 16:06:43
  */
 import {service} from "../../../common/utils/requset";
-// import '../mock/mockdatapro.js';
 
 // 请求接口
 export function GetAllProList(data){
@@ -108,7 +107,6 @@ export function GetUseList(data){
         url: "/user/user/findAllUser",
         method: "post",
         data 
-        
     })
 }
 //上传事项icon

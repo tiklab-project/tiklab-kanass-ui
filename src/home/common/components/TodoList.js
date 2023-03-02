@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 待办事项列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Empty, Select } from "antd";
@@ -8,14 +17,45 @@ import { withRouter } from "react-router";
 const TodoList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList, findProjectList, findSprintList, findProjectSetList, findProjectSetProjectList } = homeStore;
+    //登录者id
     const userId = getUser().userId;
-
+    // 项目集列表
     const [projectSetList, setProjectSetList] = useState()
+    // 项目列表
     const [projectList, setProjectList] = useState();
+    // 迭代列表
     const [sprintList, setSprintList] = useState()
+    // 面包屑第一个标题
     const [firstText, setFirstText] = useState();
-    const [firstUrl, setFirstUrl] = useState();
+
     useEffect(() => {
+        getSerchList()
+
+        // 根据不同的url 设置不同的面包屑
+        if(props.route?.path === "/index/projectScrumDetail/:id/workTodo" || props.route?.path === "/index/projectNomalDetail/:id/workTodo"){
+            const projectId = props.match.params.id;
+            setFirstText("项目概况")
+            findTodopage({ userId: userId, projectId:  projectId })
+        }  
+        if(props.match?.path === "/index/home/todoList"){
+            setFirstText(null)
+            findTodopage({ userId: userId})
+        }
+
+        if(props.route?.path === "/index/projectSetdetail/:id/workTodo"){
+            setFirstText("项目集概况")
+        }
+
+        if(props.route?.path === "/index/:id/sprintdetail/:sprint/workTodo"){
+            setFirstText("迭代概况")
+        }
+        return;
+    }, [])
+
+    /**
+     * 获取搜索参数的列表
+     */
+    const getSerchList = () => {
         findProjectSetList({}).then(res => {
             if(res.code === 0){
                 setProjectSetList(res.data)
@@ -31,39 +71,33 @@ const TodoList = (props) => {
                 setSprintList(res.data)
             }
         })
-        if(props.route?.path === "/index/projectScrumDetail/:id/workTodo" || props.route?.path === "/index/projectNomalDetail/:id/workTodo"){
-            const projectId = props.match.params.id;
-            setFirstText("项目概况")
-            findTodopage({ userId: userId, projectId:  projectId })
-        }  
-        if(props.match?.path === "/index/home/todoList"){
-            setFirstText(null)
-            findTodopage({ userId: userId})
-        }
+    }
 
-        if(props.route?.path === "/index/projectSetdetail/:id/workTodo"){
-            setFirstText("项目集概况")
-        }
-
-        if(props.route?.path === "/index/projectScrumDetail/:id/sprintdetail/:sprint/workTodo" || 
-        props.route?.path === "/index/projectNomalDetail/:id/sprintdetail/:sprint/workTodo"){
-            setFirstText("迭代概况")
-        }
-        return;
-    }, [])
-
+    /**
+     * 筛选待办事项
+     * @param {搜索字段} key 
+     * @param {搜索值} value 
+     */
     const searchTodo = (key,value) => {
         const params = {
             [key]: value
         }
-        findtodopage({}, params)
+        findTodopage({}, params)
     }
 
+    /**
+     * 筛选不同项目集的待办
+     * @param {项目集id} value 
+     */
     const searchProjectSet = (value) => {
         findProjectSetProjectList({projectSetId: value})
     }
 
-    const goOpLogDetail = (url) => {
+    /**
+     * 跳转的待办详情
+     * @param {跳转地址} url 
+     */
+    const goTodoDetail = (url) => {
         window.location.href = url
     }
 
@@ -86,10 +120,6 @@ const TodoList = (props) => {
                     key="projectSet"
                     onSelect={(value) => searchProjectSet(value)}
                     width = {100}
-                    // bordered={fieldName === "project" ? true : false}
-                    // showArrow={fieldName === "project" ? true : false}
-                    // onMouseEnter={() => changeStyle("project")}
-                    // onMouseLeave={() => setFieldName("")}
                 >
                     {
                         projectSetList && projectSetList.map((item) => {
@@ -138,7 +168,7 @@ const TodoList = (props) => {
                         return <div
                             dangerouslySetInnerHTML={{ __html: item.data }}
                             className="todo-item"
-                            onClick={() => goOpLogDetail(item.link)}
+                            onClick={() => goTodoDetail(item.link)}
                         />
                     })
                     :

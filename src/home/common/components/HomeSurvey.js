@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 首页
+ * @Descripttion: 首页概况
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -15,42 +15,50 @@ import { Empty } from 'antd';
 import { withRouter } from 'react-router';
 
 const HomeSurvey = (props) => {
-    const { homeStore, workStore, route } = props
-    const { statProjectWorkItem, manageSprint, createRecent, opLogList, findLogpage,
+    const { homeStore } = props
+    const { statProjectWorkItem, createRecent, opLogList, findLogpage,
         findTodopage, todoTaskList, statWorkItemByBusStatus, setActiveKey
     } = homeStore;
+
+    // 登录者id
     const userId = getUser().userId;
-    const [projectList, setProjectList] = useState();
+    //最近查看的项目列表
+    const [recentProjectList, setRecentProjectList] = useState();
 
 
     useEffect(() => {
-        statProjectWorkItem(userId).then((res) => {
-            if (res.code === 0 && res.data.length > 0) {
-                setProjectList(res.data.slice(0, 3))
-            }
-        });
+        getRecentProject()
+        // 获取待办列表
         findTodopage({ userId: userId })
-        getDynamicList(1)
+        // 获取日志列表
+        findLogpage({ userId: userId })
         return;
     }, [])
 
-    const getDynamicList = (currentPage) => {
-        const value = {
-            currentPage: currentPage
-        }
-        findLogpage({ userId: userId })
+    /**
+     * 获取最近查看的项目列表
+     */
+    const getRecentProject = () => {
+            statProjectWorkItem(userId).then((res) => {
+            if (res.code === 0 && res.data.length > 0) {
+                setRecentProjectList(res.data.slice(0, 3))
+            }
+        });
     }
 
-    const goProdetail = (project) => {
-        // localStorage.setItem("project", JSON.stringify(project));
-        // localStorage.setItem("projectId", project.id);
-        // localStorage.setItem("projectTypeId", project.projectType.id);
+    /**
+     * 跳转到项目详情页面
+     * @param {项目信息} project 
+     */
+    const goProjectDetail = (project) => {
         const params = {
             name: project.projectName,
             model: "project",
             modelId: project.id,
             projectId: project.id
         }
+
+        // 创建最近访问的信息
         createRecent(params)
         if (project.projectType.type === "scrum") {
             props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
@@ -58,19 +66,31 @@ const HomeSurvey = (props) => {
         if (project.projectType.type === "nomal") {
             props.history.push(`/index/projectNomalDetail/${project.id}/survey`)
         }
+
+        // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
 
+    /**
+     * 跳转到待办列表
+     */
     const goTodoWorkItemList = () => {
         props.history.push(`/index/home/todoList`)
-        // sessionStorage.setItem("menuKey", "work")
         setActiveKey("todoList")
     }
 
-
+    /**
+     * 跳转到日志详情
+     * @param {地址} url 
+     */
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
+
+    /**
+     * 跳转到待办详情
+     * @param {跳转地址} url 
+     */
     const goTodoDetail = (url) => {
         window.location.href = url
     }
@@ -80,19 +100,12 @@ const HomeSurvey = (props) => {
             <div className="upper-box">
                 <div className="title">
                     <div className="name">最近项目</div>
-                    {/* {
-                        projectList && projectList.length > 4 && <div className="more">
-                            <svg aria-hidden="true" className="svg-icon">
-                                <use xlinkHref="#icon-rightjump"></use>
-                            </svg>
-                        </div>
-                    } */}
                 </div>
                 <div className="home-project">
                     {
-                        projectList && projectList.map((item, index) => {
+                        recentProjectList && recentProjectList.map((item, index) => {
                             if (index < 4) {
-                                return <div className="project-item" key={item.project.id} onClick={() => goProdetail(item.project)}>
+                                return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
                                     <div className="item-title">
                                         {
                                             item.project.iconUrl ?

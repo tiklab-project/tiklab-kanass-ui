@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 页面主题框架
+ * @Descripttion: 入口页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../../../assets/images/logo_tw5.png";
 import { renderRoutes } from "react-router-config";
-import LocalHeader from "../components/Header";
+import LocalHeader from "./Header";
 import "../components/Header.scss";
 import "../components/HomePage.scss";
 
@@ -18,9 +18,10 @@ import { connect } from 'tiklab-plugin-ui/es/_utils';
 import Search from "../../search/container/Search";
 
 const Layout = (props) => {
-    const route = props.route ? props.route.routes : [];
+    // 路由
+    const route = props.route.routes;
 
-
+    // 系统顶部菜单
     const routers = [
         {
             to: '/index/home/survey',
@@ -48,8 +49,8 @@ const Layout = (props) => {
             key: 'statistics'
         }
     ]
-    // const [component, ModalComponent, editOrAddModal] = useWorkAppConfig(false, productIcons);
 
+    // 退出登录
     const projectLogout = () => {
         props.history.push({
             pathname: '/logout',
@@ -77,10 +78,10 @@ const Layout = (props) => {
 }
 
 
-const IndexHoc = verifyUserHoc(Layout, '/noAuth')
+const HomeIndex = verifyUserHoc(Layout, '/noAuth')
 function mapStateToProps(state) {
     return {
         pluginStore: state.pluginStore
     }
 }
-export default connect(mapStateToProps)(IndexHoc);
+export default connect(mapStateToProps)(HomeIndex);

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 消息抽屉
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
 import React, { useState, useRef } from 'react';
 import { Drawer, Tabs, Badge, Avatar, } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -8,17 +16,22 @@ import { useEffect } from 'react';
 
 
 const MessageList = (props) => {
-    const todoMessageList = useRef()
-
     const { homeStore } = props;
-    const [placement, setPlacement] = useState('left');
     const { findMessageDispatchItemPage, messageTotal, messageList, isMessageReachBottom, updateMessageDispatchItem } = homeStore;
+    // 当前的tab的key
     const [currenTab, setCurrentTab] = useState("0")
+    // 当前的页数
     const [currentPage, setCurrentPage] = useState(0)
+    // 未读消息条数，显示在图标上
     const [unReadMessage, setUnReadMessage] = useState(0)
+    //抽屉的打开与关闭
     const [open, setOpen] = useState(false);
+    // 消息的ref 
     const messageRef = useRef()
 
+    /**
+     * 获取消息列表
+     */
     useEffect(() => {
         if (open) {
             findMessageDispatchItemPage({ page: 1, status: currenTab })
@@ -30,13 +43,21 @@ const MessageList = (props) => {
         })
     }, [open])
 
+     /**
+     * 挂载监听点击事件
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
     },[])
-
+    
+    /**
+     * 点击抽屉之外的地方关闭抽屉
+     * @param {抽屉dom} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!messageRef.current) {
             return;
@@ -46,32 +67,39 @@ const MessageList = (props) => {
         }
     }
 
-
+    /**
+     * 翻页
+     */
     const changePage = () => {
         const current = currentPage + 1
         setCurrentPage(current)
         findMessageDispatchItemPage({ page: current, status: currenTab })
     }
 
-
+    /**
+     * 关闭抽屉
+     */
     const onClose = () => {
         setOpen(false);
     };
-    const onChange = (e) => {
+
+    /**
+     * tab 切换
+     * @param {tab key} e 
+     */
+    const changTab = (e) => {
         // setPlacement(e.target.value);
         setCurrentTab(e)
         findMessageDispatchItemPage({ page: 1, status: e })
 
     };
 
-    const goToWork = (id) => {
-        props.history.push(`/index/work/workone/${id}`)
-        setOpen(false)
-    }
-
+    /**
+     * 查看消息详情
+     * @param {跳转地址} link 
+     * @param {改变消息为已读} id 
+     */
     const goToMessage = (link,id) => {
-        // props.history.push(link)
-        
         const value = {
             id: id,
             status: "1"
@@ -79,6 +107,7 @@ const MessageList = (props) => {
         updateMessageDispatchItem(value)
         window.location.href = link
     }
+    
     return (
         <div ref = {messageRef}>
             <a className="frame-header-language" data-title="消息提示" onClick={() => setOpen(true)}>
@@ -93,7 +122,7 @@ const MessageList = (props) => {
                 closable={true}
                 onClose={onClose}
                 visible={open}
-                key={placement}
+                key={"left"}
                 className="frame-header-drawer"
                 mask={false}
                 destroyOnClose={true}
@@ -101,9 +130,9 @@ const MessageList = (props) => {
                 getContainer = {false}
             >
                 <div className="message-content">
-                    <Tabs onChange={onChange} size = "small" activeKey = {currenTab}>
+                    <Tabs onChange={changTab} size = "small" activeKey = {currenTab}>
                         <Tabs.TabPane tab="未读" key="0">
-                            <div className="message-box" ref={todoMessageList}>
+                            <div className="message-box">
                                 {
                                     messageList && messageList.length > 0 && messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
@@ -125,7 +154,7 @@ const MessageList = (props) => {
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="已读" key="1">
-                            <div className="message-box" ref={todoMessageList}>
+                            <div className="message-box">
                                 {
                                     messageList && messageList.length > 0 && messageList.map(item => {
                                         return <div className="message-list" key={item.id} >

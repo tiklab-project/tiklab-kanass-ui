@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 仪表盘添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { useEffect, useState } from "react";
 import { Input, Modal, Form } from 'antd';
 import { withRouter } from "react-router";
@@ -15,11 +24,14 @@ const layout = {
 const InsightAddModal = (props) => {
     const { visible, setVisible, insightStore, setInsightList } = props;
     const { createInsight, findInsightList } = insightStore;
+    // 添加表单
     const [form] = Form.useForm();
 
-    const onFinish = () => {
+    /**
+     * 创建仪表盘
+     */
+    const CreatInsight = () => {
         form.validateFields().then((values) => {
-            console.log(values)
             createInsight(values).then(res => {
                 if(res.code === 0){
                     setVisible(false)
@@ -33,6 +45,9 @@ const InsightAddModal = (props) => {
         })
     }
 
+    /**
+     * 关闭弹窗
+     */
     const onCancel = () => {
         setVisible(false)
     }
@@ -42,7 +57,7 @@ const InsightAddModal = (props) => {
             <Modal
                 title={"编辑"}
                 visible={visible}
-                onOk={onFinish}
+                onOk={CreatInsight}
                 onCancel={onCancel}
                 cancelText="取消"
                 okText="确定"

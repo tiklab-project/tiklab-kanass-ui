@@ -1,13 +1,23 @@
+/*
+ * @Descripttion: 我的事项统计数量
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from 'react';
 import "./MyWorkStatistics.scss";
 
 const MyWorkStatistics = (props) => {
     const { statWorkItemByBusStatus } = props;
+    // 各个状态事项数量统计列表
     const [workStatusList, setWorkStatusList] = useState();
      useEffect(() => {
-        // StatWorkItemByBusStatus().then(res => {
-        //     setWorkStatusList(res.data)
-        // })
+        /**
+         * 获取各个状态事项数量统计列表
+         */
         statWorkItemByBusStatus().then(res => {
             if(res.code === 0) {
                 setWorkStatusList(res.data)
@@ -15,9 +25,11 @@ const MyWorkStatistics = (props) => {
         })
      },[])
 
+     /**
+      * 跳转到不同事项列表
+      * @param {列表顺序} index 
+      */
      const goWorkItemList = (index) => {
-        // setWorkTabs("all")
-
         switch (index) {
             case 0:
                 props.history.push({ pathname: "/index/work/worklist/all"})
@@ -34,7 +46,6 @@ const MyWorkStatistics = (props) => {
             default:
                 break;
         }
-       
         sessionStorage.setItem("menuKey", "work")
 
     }

@@ -37,8 +37,6 @@ export class ProjectStore {
 
     @action
     findJoinProjectList = (value) => {
-        // const params = new FormData()
-        // params.append("masterId", value.id)
         FindJoinProjectList(value).then(response => {
             this.prolist = response.data;
         }).catch(error => {
@@ -149,12 +147,7 @@ export class ProjectStore {
         const params = new FormData()
         params.append("id", values)
 
-        const that = this;
         const data = await Searchpro(params);
-        // if(data.code === 0){
-        //     that.project = response.data;
-        //     that.projectName = response.data.projectName;
-        // }
         return data;
 
     }
@@ -208,17 +201,14 @@ export class ProjectStore {
         return data;
     }
 
-
     @action
     findProjectFocusList = async (value) => {
-
         const data = await FindProjectFocusList(value)
         return data;
     }
 
     @action
     deleteProjectFocusByQuery = async (value) => {
-
         const data = await DeleteProjectFocusByQuery(value)
         return data;
     }

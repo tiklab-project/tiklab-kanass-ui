@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 完成事项趋势
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, DatePicker, Empty } from 'antd';
@@ -11,16 +20,29 @@ const { RangePicker } = DatePicker;
 const EndWorkItemTrend = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsEndWorkItemCount, findAllProject, reportList } = insightStore;
+
+    // 仪表盘是否处于编辑模块
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
+    // 表单
     const [form] = Form.useForm();
+    // 所有项目的列表
     const [projectList, setProjectList] = useState([]);
-    const [list, setList] = useState()
+    // 统计数据
+    const [List, setList] = useState()
+
     useEffect(() => {
+        /**
+         * 查找所有项目列表
+         */
         findAllProject().then(res => {
             setProjectList(res.data)
         })
     }, [])
 
+
+    /**
+     * 处于编辑状态，初始化筛选表单
+     */
     useEffect(() => {
         const data  =condition.data.data;
         
@@ -127,10 +149,7 @@ const EndWorkItemTrend = (props) => {
         // setVisible(true)
     }
 
-
-    const onFinishFailed = (values) => {
-        console.log(values);
-    };
+    // 统计的时间单位
     const dateList = [
         {
             value: "day",
@@ -152,7 +171,9 @@ const EndWorkItemTrend = (props) => {
             value: "year",
             title: "年"
         }
-    ]
+    ]   
+
+    // 统计的事项类型
     const workItemType = [
         {
             value: "all",
@@ -171,6 +192,8 @@ const EndWorkItemTrend = (props) => {
             title: "缺陷"
         }
     ]
+
+    // 删除当前统计模块
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }
@@ -181,7 +204,6 @@ const EndWorkItemTrend = (props) => {
                     <div className="end-trend-title">
                         <div>
                             完成项目趋势
-
                         </div>
                         {
                             !isView && <div className="report-action">
@@ -204,7 +226,7 @@ const EndWorkItemTrend = (props) => {
                 {
                     isEditor ? <div className="end-trend-content" id="end-trend" >
                         {
-                            list && list.length <=0 &&
+                            List && List.length <=0 &&
                             <Empty />
                         }
                     </div>
@@ -214,7 +236,6 @@ const EndWorkItemTrend = (props) => {
                             form={form}
                             initialValues={{ remember: true }}
                             onFinish={editReport}
-                            onFinishFailed={onFinishFailed}
                             wrapperCol={{ span: 12 }}
                             labelCol={{ span: 6 }}
                             layout = "vertical"

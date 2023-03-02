@@ -15,11 +15,12 @@ import { Modal, Tabs } from "antd";
 const ReportList = (props) => {
     const { insightStore, showReportList, setShowReportList, reportIndex, setReportIndex } = props;
     const { addReportList } = insightStore;
-    const [xcoordinate, setXcoordinate] = useState(0);
-    const [ycoordinate, setYcoordinate] = useState(0);
-    console.log(reportIndex)
-    const addReport = (item) => {
 
+    /**
+     * 添加报告
+     * @param {仪表盘信息，高度，宽度} item 
+     */
+    const addReport = (item) => {
         const isRight = reportIndex % 2 === 0 ? true : false;
         const x = isRight ? 12 : 0;
         const y = Math.floor((reportIndex - 1 ) / 2) * 12;
@@ -38,60 +39,10 @@ const ReportList = (props) => {
         };
         setReportIndex(reportIndex + 1)
         addReportList(reportList)
-        console.log(reportList)
         setShowReportList(false)
     }
-    const report = [
-        {
-            icon: projectOperateImg,
-            title: "项目进展",
-            desc: "以表格形式展示项目进展",
-            type: "projectOperate"
-        },
-        {
-            icon: newTrendImg,
-            title: "新增事项趋势",
-            desc: "折线图形式展示事项新增趋势",
-            type: "newTrend"
-        },
-        {
-            icon: endTrendImg,
-            title: "完成事项趋势",
-            desc: "折线图形式展示事项完成趋势",
-            type: "endTrend"
-        },
-        {
-            icon: projectUserImg,
-            title: "项目成员",
-            desc: "柱状图形式对比项目成员个数",
-            type: "projectUser"
-        },
-        {
-            icon: projectWorkImg,
-            title: "项目事项",
-            desc: "柱状图对比展示事项个数",
-            type: "projectWork"
-        },
-        {
-            icon: workSitustionImg,
-            title: "事项概览",
-            desc: "显示各个状态的事项个数",
-            type: "workSitustion"
-        },
-        {
-            icon: workTrendImg,
-            title: "事项趋势",
-            desc: "显示每天新增，完成，剩余的事项",
-            type: "workTrend"
-        },
-        {
-            icon: userWorkImg,
-            title: "成员事项",
-            desc: "显示每个成员的事项个数",
-            type: "userWork"
-        }
-    ];
 
+    // 报告列表
     const reportList = [
         {
             title: "项目集",
@@ -193,14 +144,6 @@ const ReportList = (props) => {
             }}
         >
 
-            {/* <div className="report-list-title">
-                    <span>
-                        添加报表
-                    </span>
-                    <span>
-                        <CloseOutlined />
-                    </span>
-                </div> */}
             <Tabs defaultActiveKey="1">
                 {
                     reportList && reportList.map(report => {
@@ -232,30 +175,6 @@ const ReportList = (props) => {
                     })
                 }
             </Tabs>
-            {/* {
-                    report.map((item => {
-                        return (
-                            <div className="report-list-item" key={item.type}>
-                                <div className="report-icon">
-                                    <img src={item.icon} alt="" width={280} height={160} />
-                                </div>
-                                <div className="report-content">
-                                    <div>
-                                        <div className="report-content-title">{item.title}</div>
-                                        <div className="report-content-desc">{item.desc}</div>
-                                    </div>
-
-
-                                    <div className="report-add" onClick={() => addReport(item.type)}>
-                                        添加
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }))
-                } */}
-
-
         </Modal>
     )
 }

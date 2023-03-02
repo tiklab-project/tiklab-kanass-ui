@@ -14,9 +14,6 @@ const NewWorkItemTrend = (props) => {
     const [form] = Form.useForm();
     const [projectList, setProjectList] = useState([]);
 
-    const startTime = moment().subtract(7, "days").startOf("days");
-    const endTime = moment().endOf("days");
-    const dateFormat = 'YYYY-MM-DD';
 
     useEffect(() => {
 

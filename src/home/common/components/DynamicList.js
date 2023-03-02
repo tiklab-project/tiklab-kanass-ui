@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 动态列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-11 13:36:22
+ */
+
 import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { inject, observer } from "mobx-react";
@@ -43,17 +52,6 @@ const DynamicList = (props) => {
         // getSelectUserList(option);
     }
 
-    // useEffect(() => {
-    //     const dynamicValue = {
-    //         pageSize: 20
-    //     }
-    //     findDynamicPage(dynamicValue).then(res => {
-    //         if(res.code === 0) {
-    //             setDynamicList(res.data.dataList)
-    //         }
-    //     })
-    //     return;
-    // },[])
     return (
         <div className="dynamic-list-page">
             <div className="dynamic-list-top">

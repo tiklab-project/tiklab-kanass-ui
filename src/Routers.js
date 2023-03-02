@@ -54,7 +54,7 @@ const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirec
 const ProjectUserGroup = AsyncComponent(()=> import("./setting/user/ProjectUserGroup"))
 const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/ProjectSystemUserGroup"))
 
-const Index = AsyncComponent(() => import('./home/common/containers/Potal'))
+const Index = AsyncComponent(() => import('./home/common/components/HomeIndex'))
 // const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/homeSurvey'))

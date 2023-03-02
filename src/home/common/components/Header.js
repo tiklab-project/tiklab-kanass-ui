@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 页面头部
+ * @Descripttion: 系统头部
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-08 10:44:07
@@ -16,45 +16,43 @@ import MessageList from "./MessageList"
 import { observer, inject } from "mobx-react";
 import { WorkAppConfig } from 'tiklab-eam-ui';
 import { Profile } from "tiklab-eam-ui"
-import { useEffect } from 'react';
 
 
 const Header = props => {
-    const {
-        logo,
-        languageSelectData = [], // 切换语言包的数据
-        routers,
-        homeStore
-    } = props;
-
+    const { logo, languageSelectData = [], routers} = props;
+    // 被点击菜单的key
     const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
-
-    useEffect(() => {
-        
-    }, [])
-
-    const { currentLink, setCurrentLink } = homeStore;
-
+    // 语言包
     const { i18n } = useTranslation();
-
     const [lan, setLan] = useState(i18n.language);
-    
+    //当前的系统语言
+    const [showLanguage, setShowLanguage] = useState(false);
+    // 登录者的信息
+    const user = getUser();
+
+    /**
+     * 加载语言包
+     * @param {key} param0 
+     */
     const onClickLan = ({ key }) => {
         i18n.changeLanguage(languageSelectData[key].value)
         setLan(languageSelectData[key].value)
     };
 
-    const [showLanguage, setShowLanguage] = useState(false);
-
-    const user = getUser();
-
+    /**
+     * 点击菜单跳转
+     * @param {菜单信息} item 
+     */
     const changeCurrentLink = item => {
         localStorage.removeItem("sprintId")
         props.history.push(item.to)
-        setCurrentLink(item.key)
         sessionStorage.setItem("menuKey", item.key)
     }
 
+    /**
+     * 渲染左侧菜单
+     * @returns 
+     */
     const renderRouter = () => {
         if (routers) {
             return (
@@ -69,7 +67,9 @@ const Header = props => {
         }
     }
 
-
+    /**
+     * 退出登录
+     */
     const logOut = () => {
         props.history.push({
             pathname: '/logout',
@@ -77,6 +77,9 @@ const Header = props => {
         })
     }
 
+    /**
+     * 个人中心下拉框
+     */
     const useMenu = (
         <div className="user-box">
             <div className='user-head'>
@@ -132,25 +135,17 @@ const Header = props => {
         </div>
     );
 
-
-    const goSet = (url) => {
-        props.history.push(url)
-        setCurrentLink("set")
+    /**
+     * 跳转到系统设置
+     */
+    const goSet = () => {
+        props.history.push("/index/setting/projectType")
         sessionStorage.setItem("menuKey", "set")
     };
 
-
-    const languageMenu = (
-        <Menu>
-            <Menu.Item key="0">
-                中文
-            </Menu.Item>
-            <Menu.Item key="1" >
-                英文
-            </Menu.Item>
-        </Menu>
-    );
-
+    /**
+     * 帮助下拉框
+     */
     const helpMenu = (
         <div className="help-box">
             <div className="help-head">
@@ -223,7 +218,7 @@ const Header = props => {
                     </div>
                     <div className={'frame-header-right-text'}>
                         <div className="frame-header-icon">
-                            <div className="frame-header-set" data-title="系统设置" onClick={() => goSet("/index/setting/projectType")}>
+                            <div className="frame-header-set" data-title="系统设置" onClick={() => goSet()}>
                                 <Space>
                                     <svg aria-hidden="true" className="header-icon">
                                         <use xlinkHref="#icon-iconsetsys"></use>
