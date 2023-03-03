@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目的更多菜单弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
 import React, { useEffect, useRef, useState } from "react";
 import "./MoreMenuModal.scss";
 import { useTranslation } from 'react-i18next';
@@ -5,23 +13,35 @@ import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 
 const MoreMenuModel = (props) => {
-    const { isShowText, prolist, searchpro, setWorkType, project } = props;
+    const { isShowText, searchpro, setWorkType } = props;
     const projectId = props.match.params.id;
-    const path = props.location.pathname.split("/")[4];
-    const type = props.location.pathname.split("/")[2];
-    const [showMenu, setShowMenu] = useState(false);
-    const [selectProject, setSelectProject] = useState(false)
 
+    // 获取当前被激活的菜单
+    const path = props.location.pathname.split("/")[4];
+    // 获取项目的类型
+    const type = props.location.pathname.split("/")[2];
+    // 菜单的形式，宽菜单，窄菜单
+    const [showMenu, setShowMenu] = useState(false);
+    // 菜单弹窗ref
     const modelRef = useRef()
+    // 更多点击按钮的的ref
     const setButton = useRef()
     const { t } = useTranslation();
+    // 当前被点击菜单的key
     const paths = ["statistics"]
 
+    /**
+     * 显示菜单弹窗
+     */
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
+        // 设置弹窗的位置在按钮旁边
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
+    /**
+     * 更多菜单数组
+     */
     const moreMenu = [
         {
             title: `${t('statistic')}`,
@@ -32,6 +52,9 @@ const MoreMenuModel = (props) => {
         }
     ]
 
+    /**
+     * 监听菜单的弹窗的显示与不显示
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -39,6 +62,11 @@ const MoreMenuModel = (props) => {
         }
     }, [showMenu])
 
+    /**
+     * 关闭弹窗
+     * @param {点击的位置} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
@@ -49,41 +77,9 @@ const MoreMenuModel = (props) => {
     }
 
     /**
-     * 切换项目
-     * @param {id} id 
+     * 点击菜单
+     * @param {菜单key} key 
      */
-    const selectProjectId = (id, typeId) => {
-        // 切换选中项目，获取项目详情
-        searchpro(id).then(data => {
-
-            if (data.code === 0) {
-                localStorage.setItem("project", JSON.stringify(data.data));
-                console.log(data.data)
-                if (data.data.projectType.type === "scrum") {
-                    props.history.push(`/index/projectScrumDetail/${id}/survey`)
-                }
-                if (data.data.projectType.type === "nomal") {
-                    props.history.push(`/index/projectNomalDetail/${id}/survey`)
-                }
-                localStorage.setItem("projectId", id);
-                // 重置事项id
-                setWorkType(null)
-                // 关闭切换弹窗
-                setShowMenu(false)
-                location.reload();
-            }
-        });
-        // 讲当前项目id存入localStorage
-    }
-
-    const handleMouseOver = (id) => {
-        setSelectProject(id)
-    }
-
-    const handleMouseOut = () => {
-        setSelectProject("")
-    }
-
     const selectMenu = (key) => {
         props.history.push(key)
         setShowMenu(false)
@@ -108,19 +104,13 @@ const MoreMenuModel = (props) => {
                         <svg aria-hidden="true" style={{width: "28px", height: "28px"}}>
                             <use xlinkHref={`#icon-more`}></use>
                         </svg>
-                        {/* <span>
-                            更多
-                        </span> */}
                     </div>
             }
-
-
             <div
                 className={`change-project-box ${showMenu ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
                 style={{}}
             >
-                {/* <div className="change-project-head">更多</div> */}
                 {
                     moreMenu && moreMenu.map((item,index) => {
                         return <div className={`project-menu-submenu`}
@@ -140,4 +130,4 @@ const MoreMenuModel = (props) => {
         </div>
     )
 }
-export default withRouter(inject("projectDetailStore")(observer(MoreMenuModel)));
+export default withRouter(MoreMenuModel);

@@ -9,7 +9,7 @@
 import { observable, action, extendObservable } from "mobx";
 import { StatProjectWorkItem,StatWorkItemByBusStatus,
     ManageSprint,GetWorkType,CreateRecent, FindWorkStatusListBySorts,
-    StatWorkItemProcess,FindMessageDispatchItemPage, FindDynamicPage, 
+    StatTodoWorkItem,FindMessageDispatchItemPage, FindDynamicPage, 
     FindRecentList, UpdateMessageDispatchItem, Findlogpage, Findtodopage, 
     FindAllProject, FindSprintList, FindProjectSetList, FindProjectSetProjectList } from "../api/HomeApi";
 
@@ -87,7 +87,7 @@ export class HomeStore {
     }
 
     @action
-	statWorkItemProcess = async(value) => {
+	statTodoWorkItem = async(value) => {
         const params={
             bgroup : "teamwire",
             status: 1,
@@ -96,7 +96,7 @@ export class HomeStore {
                 currentPage: 1
             },
         }
-		const data = await StatWorkItemProcess(params);
+		const data = await StatTodoWorkItem(params);
         return data;
     }
 

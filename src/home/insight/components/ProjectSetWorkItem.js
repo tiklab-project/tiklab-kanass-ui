@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 项目集的项目事项对比
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, Empty } from 'antd';
@@ -8,29 +17,40 @@ import * as echarts from 'echarts';
 const ProjectSetWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsProjectWorkItemCount, findAllProjectSet, reportList } = insightStore;
+    // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
+    // 统计条件的表单
     const [form] = Form.useForm();
+    // 项目集列表
     const [projectSetList, setProjectSetList] = useState([])
+    // 统计项目成员的列表
     const [projectWorkitem, setProjectWorkitem] = useState([])
+
     useEffect(() => {
-         findAllProjectSet().then(res => {
+        /**
+         * 查找所有项目集并设置默认项目集
+         */
+        findAllProjectSet().then(res => {
             setProjectSetList(res.data)
         })
     }, [])
 
+    /**
+     * 处于编辑状态时，初始化筛选表单
+     */
     useEffect(() => {
-        if(isEditor){
+        if (isEditor) {
             const params = { projectSetId: condition.data.data.projectSetId }
-            form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
+            form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
             statisticsProjectWorkItem(params)
         }
-        
-    },[isEditor])
+
+    }, [isEditor])
 
     /**
      * 处理统计数据
      */
-     const statisticsProjectWorkItem = (value) => {
+    const statisticsProjectWorkItem = (value) => {
         const chartDom = document.getElementById('project-workitem')
         statisticsProjectWorkItemCount(value).then(res => {
             if (res.code === 0) {
@@ -91,6 +111,10 @@ const ProjectSetWorkItem = (props) => {
         })
     }
 
+    /**
+     * 编辑保存统计条件
+     * @param {表单数据} value 
+     */
     const editReport = (values) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
@@ -98,18 +122,16 @@ const ProjectSetWorkItem = (props) => {
         statisticsProjectWorkItem(values)
     }
 
+    /**
+     * 删除表单
+     */
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }
-    
-
-    const onFinishFailed = (values) => {
-        console.log(values);
-    };
 
     return (
         <Fragment>
-            <div className="project-workitem"  key = {condition.i} data-grid={condition}>
+            <div className="project-workitem" key={condition.i} data-grid={condition}>
                 <div className="project-workitem-top">
                     <div className="project-workitem-title">
                         <div>
@@ -139,36 +161,35 @@ const ProjectSetWorkItem = (props) => {
                         }
                     </div>
                         :
-                    <Form
-                        name="form"
-                        form={form}
-                        initialValues={{ remember: true }}
-                        onFinish={editReport}
-                        onFinishFailed={onFinishFailed}
-                        wrapperCol={{ span: 12 }}
-                        labelCol={{ span: 6 }}
-                        layout = "vertical"
-                    >   
-                        <Form.Item name="projectSetId" label="项目集" rules={[{ required: true }]}>
-                            <Select
-                                placeholder="请选择项目集"
-                            >
-                                {
-                                    projectSetList && projectSetList.map(item => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
-                    
-                        <Form.Item
-                            wrapperCol={{ offset: 6, span: 8 }}
+                        <Form
+                            name="form"
+                            form={form}
+                            initialValues={{ remember: true }}
+                            onFinish={editReport}
+                            wrapperCol={{ span: 12 }}
+                            labelCol={{ span: 6 }}
+                            layout="vertical"
                         >
-                            <Button type="primary" htmlType="submit">
-                                保存
-                            </Button>
-                        </Form.Item>
-                    </Form>
+                            <Form.Item name="projectSetId" label="项目集" rules={[{ required: true }]}>
+                                <Select
+                                    placeholder="请选择项目集"
+                                >
+                                    {
+                                        projectSetList && projectSetList.map(item => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item
+                                wrapperCol={{ offset: 6, span: 8 }}
+                            >
+                                <Button type="primary" htmlType="submit">
+                                    保存
+                                </Button>
+                            </Form.Item>
+                        </Form>
                 }
             </div>
 

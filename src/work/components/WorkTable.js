@@ -14,10 +14,6 @@ const WorkTableContent = (props) => {
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
     const [isWorkList, setIsWorkList] = useState(true)
-    const modelRef = useRef();
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
-    const urlPath = props.match.path;
-    const sprintId = props.match.params?.sprint
     console.log(props)
     const goProdetail = (record, index) => {
         console.log(record, "record")

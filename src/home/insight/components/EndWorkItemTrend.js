@@ -41,7 +41,7 @@ const EndWorkItemTrend = (props) => {
 
 
     /**
-     * 处于编辑状态，初始化筛选表单
+     * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
         const data  =condition.data.data;
@@ -129,6 +129,10 @@ const EndWorkItemTrend = (props) => {
         })
     }
 
+    /**
+     * 编辑报表统计条件
+     * @param {表单数据} values 
+     */
     const editReport = (values) => {
         const params = {
             startDate: values.dateRanger[0].startOf("day").format("YYYY-MM-DD HH:mm:ss"),
@@ -144,9 +148,6 @@ const EndWorkItemTrend = (props) => {
 
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;
-        console.log(params, index, reportList)
-        // setFromData(params)
-        // setVisible(true)
     }
 
     // 统计的时间单位

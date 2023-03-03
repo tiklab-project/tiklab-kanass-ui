@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 自定义纵向滚动轴
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-18 18:28:57
@@ -8,8 +8,12 @@
  */
 import React, {useRef,useEffect} from "react";
 
-const CowScroll =(props)=> {
+const ColScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore} = props;
+    // 滑块
+    const colScrollRef = useRef();
+    // 滚动轴
+    const boxColScrollRef = useRef();
 
     /**
      * 纵向滚动轴的拖动
@@ -35,19 +39,22 @@ const CowScroll =(props)=> {
         ganttOuterDom.scrollTo({ top: ganttSilder })
     }
 
-    const colScrollRef = useRef();
-    const boxColScrollRef = useRef()
+    /**
+     * 移动滑块
+     */
     const colScroll = () => {
         const scrollSlider = colScrollRef.current;
         const boxScroll = boxColScrollRef.current
         const sliderTop = scrollSlider.offsetTop;
         scrollSlider.onmousedown = (e) => {
             const iEvent = e || event;
-            const startY = iEvent.clientY;//当你第一次单击的时候，存储x轴的坐标。
+            //当第一次单击的时候，存储x轴的坐标。
+            const startY = iEvent.clientY;
 
             //判断鼠标是否点在右边还是左边，看图1理解
             document.onmousemove = (ev) => {
-                if (ev.clientY < startY) { //左边
+                // 向上移动
+                if (ev.clientY < startY) {
                     scrollSlider.style.top = sliderTop + (ev.clientY - startY) + "px";
                     if (scrollSlider.offsetTop <= 0) {
                         scrollSlider.style.top = "0px";
@@ -56,6 +63,7 @@ const CowScroll =(props)=> {
                         scrollSlider.style.top = boxScroll.offsetHeight - scrollSlider.offsetHeight + "px";
                     }
                 }
+                // 向下移动
                 if (ev.clientY > startY) {
                     scrollSlider.style.top = sliderTop + (ev.clientY - startY) + "px";
                     if (scrollSlider.offsetTop >= boxScroll.offsetHeight - scrollSlider.offsetHeight) {
@@ -87,4 +95,4 @@ const CowScroll =(props)=> {
     )
 }
 
-export default CowScroll;
+export default ColScroll;

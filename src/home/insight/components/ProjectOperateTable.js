@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目的事项进展
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Progress, Pagination, Empty, Select, Form, Button } from 'antd';
@@ -7,18 +15,28 @@ const { Option } = Select;
 const ProjectOperateTable = (props) => {
     const { insightStore, index, condition, editInsight,isView } = props;
     const { statisticsProjectOperateList, findAllProjectSet, projectSetId, setProjectSetId, reportList } = insightStore;
+    // 项目进展列表
     const [projectOperateList, setProjectOPerteList] = useState([])
+    // 项目集列表
     const [projectSetList, setProjectSetList] = useState([])
+    // 是否编辑状态
     const [isEditor, setIsEditor] = useState(editInsight ? true : false)
+    // 统计表单
     const [form] = Form.useForm();
 
     useEffect(() => {
+        /**
+         * 查找所有项目集并设置默认项目集
+         */
         findAllProjectSet().then(res => {
             setProjectSetList(res.data)
             setProjectSetId(res.data[0].id)
         })
     }, [])
 
+    /**
+     * 处于编辑状态时，初始化筛选表单
+     */
     useEffect(() => {
         if (isEditor) {
             form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
@@ -30,6 +48,10 @@ const ProjectOperateTable = (props) => {
         }
     }, [isEditor])
 
+    /**
+     * 编辑保存统计条件
+     * @param {表单数据} value 
+     */
     const editReport = (value) => {
         statisticsProjectOperateList(value).then(res => {
             if (res.code === 0) {
@@ -42,6 +64,9 @@ const ProjectOperateTable = (props) => {
         console.log(index, reportList)
     }
 
+    /**
+     * 删除报表
+     */
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }

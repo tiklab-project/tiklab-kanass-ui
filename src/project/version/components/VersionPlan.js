@@ -1,38 +1,62 @@
+/*
+ * @Descripttion: 版本规划关联事项
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2022-04-09 16:39:00
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 19:09:13
+ */
+
 import React, { useEffect, useState } from "react";
-import { Tabs, Input, Table, Space, Button, Row, Col } from 'antd';
+import { Table, Space } from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
 import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
-import WorkBorderDetail from "../../../work/components/workBorderDetail";
-const { TabPane } = Tabs;
-const { Search } = Input;
+import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
+
 
 const VersionPlan = (props) => {
     const { versionPlanStore, workStore, actionPlanId } = props
     const { getSelectVersionPlanList, versionPlanList, selectVersionPlanList,
         addVersionPlan, deleVersionPlan, searchAllVersionPlan } = versionPlanStore;
-    const projectId = props.match.params.id;
-    const [isModalVisible, setIsModalVisible] = useState(false);
     const { setWorkId, setWorkIndex, setWorkShowType } = workStore;
+    // 项目id
+    const projectId = props.match.params.id;
+    // 显示事项详情抽屉
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    
+    /**
+     * 获取版本管理的事项
+     */
     useEffect(() => {
         getSelectVersionPlanList({ projectId: projectId, versionId: actionPlanId })
         return
     }, [actionPlanId])
 
 
-    //删除用户
+    /**
+     * 删除规划的事项
+     * @param {*} id 
+     */
     const deleteVersionPlan = (id) => {
         deleVersionPlan({ id: id })
     }
 
-
-    // 搜索用户
+    /**
+     * 根据标题搜索版本的关联事项
+     * @param {标题} value 
+     */
     const onSearch = (value) => {
         getSelectVersionPlanList({ title: value })
     }
 
+    /**
+     * 显示事项详情抽屉
+     * @param {事项id} id 
+     * @param {*} index 
+     */
     const goWorkItem = (id, index) => {
         setWorkIndex(index)
         setWorkId(id)

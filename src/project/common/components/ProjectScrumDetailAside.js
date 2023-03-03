@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 项目详情页面左侧导航栏
+ * @Descripttion: 敏捷开发项目详情页面左侧导航栏
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -11,30 +11,24 @@ import React, { Fragment, useState, useEffect } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout, Button } from "antd";
-import { Modal } from 'antd';
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
-import { getUser} from 'tiklab-core-ui'
 import SetScrumMenu from "./SetScrumMenu";
 import ProjectChangeModal from "./ProjectChangeModal";
 import MoreMenuModel from "./MoreMenuModal";
 const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
-    const { searchpro, workStore, prolist,systemRoleStore, project } = props;
-    const { setWorkType, setWorkId } = workStore;
+    const { searchpro, workStore, prolist, project } = props;
+    const { setWorkType } = workStore;
     //语言包
     const { t, i18n } = useTranslation();
-    const tenant = getUser().tenant;
-    // 当前选中路由
+    // 项目id
     const projectId = props.match.params.id;
-    const [selectKey, setSelectKey] = useState(`/index/projectScrumDetail/${projectId}survey`);
+    // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
-    // 是否显示切换弹窗
-    const [visible, setVisible] = useState(false)
-
+    // 当前选中菜单key
     const path = props.location.pathname.split("/")[4];
-    const isPublish = project?.projectLimits === "0" ? true : false
     // 路由
     const scrumProrouter = [
         {
@@ -90,17 +84,9 @@ const ProdeScrumAside = (props) => {
 
     const prorouter = scrumProrouter;
     useEffect(() => {
-        
-        if(props.location.pathname.indexOf(`/index/projectScrumDetail/${projectId}/work`) >= 0){
-            setSelectKey(`/index/projectScrumDetail/${projectId}/work/all`)
-        }else {
-            setSelectKey(props.location.pathname)
-        }
-
         setWorkType(null)
         return
     }, [projectId, props.location.pathname])
-
 
     /**
      * 点击左侧菜单
@@ -117,28 +103,6 @@ const ProdeScrumAside = (props) => {
      */
     const toggleCollapsed = () => {
         SetIsShowText(!isShowText)
-    }
-
-    const showModal = () => {
-        setVisible(true)
-    };
-
-    /**
-     * 隐藏切换项目弹窗
-     */
-    const hiddenModal = () => {
-        setVisible(false)
-    };
-
-    
-
-
-
-    /**
-     * 跳转到项目设置
-     */
-    const goProjectSet = () => {
-        props.history.push(`/index/projectScrumDetail/${projectId}/projectSetDetail/basicInfo`)
     }
 
     return (

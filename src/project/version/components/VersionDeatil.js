@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本详情
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
@@ -20,60 +20,52 @@ import Button from "../../../common/button/Button";
 const VersionDetail = (props) => {
     const { versionStore } = props;
     const { findVersion, versionList, getVersionList, deleVersion, editVersion } = versionStore;
+    // 版本信息
     const [planInfo, setPlanInfo] = useState()
+    // 当前版本id
     const actionPlanId = props.match.params.versionId;
+    // 项目类型
     const path = props.match.path.split("/")[2];
-    const [showMenu, setShowMenu] = useState(false);
-
-    const [dropDown, showDropdown] = useState(false);
+    // 鼠标放置，修改背景
+    const [mouseActive, setMouseActive] = useState(false);
+    // 切换版本染成
     const modelRef = useRef();
     // 项目id
     const projectId = props.match.params.id;
+    // 标题ref
     const inputRef = useRef();
+    // 日期模型
+    const dateFormat = 'YYYY-MM-DD';
+    // 修改的字段key
+    const [fieldName, setFieldName] = useState("")
+    // 标题是否是编辑模式
+    const [editName, setEditName] = useState(false)
 
+    /**
+     * 获取版本详情，获取版本列表用于切换
+     */
     useEffect(() => {
         if (actionPlanId !== "") {
             findVersion(actionPlanId).then(data => {
                 setPlanInfo(data.data)
             })
         }
-        getVersionList({ projectId: projectId }).then((res) => {
-            console.log(res)
-            // if(res.code === 0){
-            //     this.versionList = res.data.dataList
-            // }
-            // setLoading(false)
-        })
+        getVersionList({ projectId: projectId })
 
         return;
     }, [actionPlanId])
-
-
     
-    const setStatusName = (value) => {
-        let name = ""
-        switch (value) {
-            case "0":
-                name = "未开始"
-                break;
-            case "1":
-                name = "进行中"
-                break;
-            case "2":
-                name = "已结束"
-                break;
-            default:
-                name = "未开始"
-                break;
-        }
-        return name;
-    }
-    const [fieldName, setFieldName] = useState("")
+    /**
+     * 点击不同的信息，修改点击信息的样式
+     * @param {修改字段key} value 
+     */
     const changeStyle = (value) => {
         setFieldName(value)
     }
-    const dateFormat = 'YYYY-MM-DD';
-
+    
+    /**
+     * 监听鼠标点击关闭切换版本弹窗
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -81,28 +73,46 @@ const VersionDetail = (props) => {
         }
     }, [])
 
-
+    /**
+     * 关闭切换弹窗
+     * @param {点击event} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
         }
         if (!modelRef.current.contains(e.target) && modelRef.current !== e.target) {
-            setShowMenu(false)
+            setMouseActive(false)
         }
     }
 
-    const selectKeyFun = (item) => {
+    /**
+     * 切换阶段
+     * @param {*} item 
+     */
+    const changeVersion = (item) => {
         props.history.push(`/index/${path}/${projectId}/versionDetail/${item.id}`)
-        setShowMenu(false)
+        setMouseActive(false)
     }
 
-    const [editName, setEditName] = useState(false)
+    
+     /**
+     * 失去焦点更新标题
+     * @param {dom} event 
+     * @param {*} id 
+     */
     const updateNameByBlur = (event, id) => {
         event.stopPropagation();
         event.preventDefault()
         updateTitle()
     }
 
+    /**
+     * 点击回车更新标题
+     * @param {dom} event 
+     * @param {*} id 
+     */
     const updateNameByKey = (event) => {
         if (event.keyCode === 13) {
             event.stopPropagation();
@@ -111,6 +121,9 @@ const VersionDetail = (props) => {
         }
     }
 
+    /**
+     * 更新标题
+     */
     const updateTitle = () => {
         const name = inputRef.current.textContent;
         const params = {
@@ -152,10 +165,9 @@ const VersionDetail = (props) => {
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>
-                                    <div className="version-breadcrumb-dropdown" onMouseEnter={() => showDropdown(true)}
-                                        onMouseLeave={() => showDropdown(false)}>
+                                    <div className="version-breadcrumb-dropdown">
                                         <div
-                                            onClick={() => setShowMenu(true)}
+                                            onClick={() => setMouseActive(true)}
                                             style={{ cursor: "pointer" }}
                                             className="version-breadcrumb-text"
 
@@ -164,7 +176,7 @@ const VersionDetail = (props) => {
                                             <DownOutlined style={{ fontSize: '12px', marginLeft: "10px" }} />
                                         </div>
                                         <div
-                                            className={`version-breadcrumb-dropdown-modal ${showMenu ? "version-menu-show" : "version-menu-hidden"}`}
+                                            className={`version-breadcrumb-dropdown-modal ${mouseActive ? "version-menu-show" : "version-menu-hidden"}`}
                                             ref={modelRef}
                                         >
                                             <ul className="version-menu">
@@ -172,7 +184,7 @@ const VersionDetail = (props) => {
                                                     versionList && versionList.map(item => {
                                                         return <div className={`version-menu-submenu ${item.id === planInfo?.id ? "version-menu-select" : ""}`}
                                                             key={item.key}
-                                                            onClick={() => selectKeyFun(item)}
+                                                            onClick={() => changeVersion(item)}
                                                         >
                                                             {/* <svg className="icon" aria-hidden="true">
                                                                 <use xlinkHref={`#icon-${item.icon}`}></use>

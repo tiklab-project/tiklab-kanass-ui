@@ -1,38 +1,32 @@
+/*
+ * @Descripttion: 瀑布式开发开发项目详情页面左侧设置按钮
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-16 10:58:01
+ */
+
 import React, { useEffect, useRef, useState } from "react";
 import "./setMenu.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 const SetNomalMenu = (props) => {
     const { isShowText } = props;
-    const [showMenu, setShowMenu] = useState(false);
-    const modelRef = useRef()
-    const setButton = useRef()
     const projectId = props.match.params.id;
-    console.log(props, isShowText)
-    const showMoreMenu = () => {
+
+    /**
+     * 跳转到项目设置页面
+     */
+    const goProjectSetting = () => {
         props.history.push(`/index/projectNomalDetail/${projectId}/projectSetDetail/basicInfo`)
     }
 
-    useEffect(() => {
-        window.addEventListener("mousedown", closeModal, false);
-        return () => {
-            window.removeEventListener("mousedown", closeModal, false);
-        }
-    }, [showMenu])
-
-    const closeModal = (e) => {
-        if (!modelRef.current) {
-            return;
-        }
-        if (!modelRef.current.contains(e.target) && modelRef.current !== e.target) {
-            setShowMenu(false)
-        }
-    }
 
     return (
         <div className="menu-model">
             {
-                isShowText ? <div onClick={() => showMoreMenu()} ref={setButton} className="project-title setting">
+                isShowText ? <div onClick={() => goProjectSetting()}className="project-title setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>
@@ -41,7 +35,7 @@ const SetNomalMenu = (props) => {
                     </span>
                 </div>
                 :
-                <div onClick={() => showMoreMenu()} ref={setButton} className = "project-set-icon setting">
+                <div onClick={() => goProjectSetting()} className = "project-set-icon setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>
@@ -53,4 +47,4 @@ const SetNomalMenu = (props) => {
         </div>
     )
 }
-export default withRouter(inject("projectDetailStore")(observer(SetNomalMenu)));
+export default withRouter(SetNomalMenu);

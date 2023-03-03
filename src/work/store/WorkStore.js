@@ -1,6 +1,6 @@
 import { observable, action, extendObservable } from "mobx";
 import { GetAllProList } from "../../project/project/api/ProjectApi";
-import { getModuleList } from "../../project/projectSetting/module/api/ModuleApi";
+import { getModuleList } from "../../project/setting/module/api/ModuleApi";
 import {
     AddWork, SearchWorkById, DetWork,
     EditWork, FindPriority, WorkType, FindDmUserPage, WorkStatus, WorkList,

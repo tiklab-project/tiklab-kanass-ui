@@ -8,7 +8,7 @@
  */
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
-import WorkDetail from "./workDetail";
+import WorkDetail from "./WorkDetail";
 import "./WorkDetail.scss"
 import { observer, inject } from "mobx-react";
 

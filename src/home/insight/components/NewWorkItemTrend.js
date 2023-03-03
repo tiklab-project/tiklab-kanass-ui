@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 新增事项报告
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, DatePicker } from 'antd';
@@ -10,18 +19,23 @@ const { RangePicker } = DatePicker;
 const NewWorkItemTrend = (props) => {
     const { insightStore, index, isView, editInsight,condition } = props;
     const { statisticsNewWorkItemCount, findAllProject, reportList } = insightStore;
+    // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
+    // 统计条件的表单
     const [form] = Form.useForm();
+    // 所有的项目列表
     const [projectList, setProjectList] = useState([]);
 
-
     useEffect(() => {
-
+        // 获取所有项目列表
         findAllProject().then(res => {
             setProjectList(res.data)
         })
     }, [])
 
+    /**
+     * 处于编辑状态，初始化统计条件表单
+     */
     useEffect(() => {
         const data  =condition.data.data;
         if (isEditor) {
@@ -51,7 +65,6 @@ const NewWorkItemTrend = (props) => {
      * 处理统计数据
      */
     const setStatisticsData = (value) => {
-
         const chartDom = document.getElementById('new-trend')
         statisticsNewWorkItemCount(value).then(res => {
             if (res.code === 0) {
@@ -108,8 +121,11 @@ const NewWorkItemTrend = (props) => {
         })
     }
 
+    /**
+     * 编辑统计条件
+     * @param {表单数据} values 
+     */
     const editReport = (values) => {
-
         const params = {
             startDate: values.dateRanger[0].startOf("day").format("YYYY-MM-DD HH:mm:ss"),
             endDate: values.dateRanger[1].endOf("day").format("YYYY-MM-DD HH:mm:ss"),
@@ -123,17 +139,16 @@ const NewWorkItemTrend = (props) => {
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;
         console.log(params, index, reportList)
-        // setFromData(params)
-        // setVisible(true)
     }
 
+    /**
+     * 删除报表
+     */
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }
 
-    const onFinishFailed = (values) => {
-        console.log(values);
-    };
+    // 统计的时间单位
     const dateList = [
         {
             value: "day",
@@ -156,6 +171,8 @@ const NewWorkItemTrend = (props) => {
             title: "年"
         }
     ]
+
+    // 事项类型
     const workItemType = [
         {
             value: "all",
@@ -209,7 +226,6 @@ const NewWorkItemTrend = (props) => {
                             form={form}
                             initialValues={{ remember: true }}
                             onFinish={editReport}
-                            onFinishFailed={onFinishFailed}
                             wrapperCol={{ span: 12 }}
                             labelCol={{ span: 6 }}
                             layout = "vertical"

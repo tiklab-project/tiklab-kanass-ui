@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { PlayCircleTwoTone } from '@ant-design/icons';
 import { observer, inject } from "mobx-react";
 import WorkBorderDetail from "./WorkBorderDetail";
 import "./WorkBodar.scss";

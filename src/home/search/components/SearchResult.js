@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 全局搜索结果页
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React,{Fragment, useEffect, useRef, useState} from "react";
 import { Pagination } from 'antd';
 import "./Search.scss";
@@ -9,8 +18,15 @@ const { TabPane } = Tabs;
 const SearchResult = (props) => {
     const {searchStore,workStore} = props
     const {getSearchSore,sortList,searchForPage,keyword,searchCondition,setKeyWord,searchList,getSearch} = searchStore;
+    // 设置事项id
     const {setWorkId} = workStore;
+    // 最后一个翻页所需的当前页最后的条数
     const [lastRecord,setLastRecord] = useState()
+    // 搜索结果条数
+    const [itemList,setItem] = useState([])
+    // 当前tab key
+    const [tabs,setTabs] = useState()
+    // tab的文字显示
     const table = (data) => {
         switch(data){
             case "Project": 
@@ -19,12 +35,9 @@ const SearchResult = (props) => {
                 return "事项";
         }
     }
-    const [itemList,setItem] = useState([])
-    const [tabs,setTabs] = useState()
-    const [serchKey, setSearchKey] = useState()
+    
+
     useEffect(() => {
-        
-        setSearchKey(props.match.params.key)
         if(sortList.length !== 0){
             setTabs(sortList[0].index)
             searchForPage({currentPage: 1,index: sortList[0].index,keyword: keyword}).then((res)=> {

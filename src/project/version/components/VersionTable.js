@@ -11,7 +11,6 @@ import { Input, Table, Space, Row, Col, DatePicker } from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import { SearchOutlined } from '@ant-design/icons';
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -21,7 +20,7 @@ const { RangePicker } = DatePicker;
 const VersionTable = (props) => {
     // 解析 props
     const path = props.match.path.split("/")[2];
-    const { versionStore, actionPlanId, setActionPlanId } = props
+    const { versionStore } = props
     const { versionList, getVersionList, deleVersion } = versionStore;
 
     // 项目id
@@ -33,28 +32,11 @@ const VersionTable = (props) => {
     // 加载中
     const [loading, setLoading] = useState(false)
 
+    // 跳转到版本详情
     const goDetail = (id) => {
         props.history.push(`/index/${path}/${projectId}/versionDetail/${id}`)
     }
 
-    const setStatusName = (value) => {
-        let name = ""
-        switch (value) {
-            case "0":
-                name = "未开始"
-                break;
-            case "1":
-                name = "进行中"
-                break;
-            case "2":
-                name = "已结束"
-                break;
-            default:
-                name = "未开始"
-                break;
-        }
-        return name;
-    }
     const statusName = {
         "0": "未开始",
         "1": "进行中",
@@ -135,10 +117,6 @@ const VersionTable = (props) => {
     const findVersion = (value) => {
         setLoading(true)
         getVersionList(value).then((res) => {
-            console.log(res)
-            // if(res.code === 0){
-            //     this.versionList = res.data.dataList
-            // }
             setLoading(false)
         })
     }
@@ -153,14 +131,6 @@ const VersionTable = (props) => {
         // 重置分页参数，从第一页开始搜索
         // setPageParam({ current: 1, pageSize: 10 })
     };
-
-    /**
-     * 翻页
-     * @param {*} pagination 
-     */
-    const pageTurning = (pagination) => {
-        setPageParam(pagination)
-    }
 
     return (
         <div className="project-version">

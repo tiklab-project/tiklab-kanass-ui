@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目成员
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:56:02
@@ -12,6 +12,7 @@ import { inject, observer } from "mobx-react";
 import { Row, Col } from "antd";
 
 const User = props => {
+    // 项目id
     const projectId = props.match.params.id;
     return (
         <Row>

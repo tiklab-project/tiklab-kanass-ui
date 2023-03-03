@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 表单显示判断
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, {Fragment} from "react";
 import { inject, observer } from "mobx-react";
 import ProjectOperateTable from "./ProjectOperateTable";
@@ -10,7 +19,9 @@ import WorkItemTrend from "./WorkItemTrend";
 import UserWorkItem from "./UserWorkItem";
 import "./Report.scss"
 const ReportItem = (props) => {
-    const {reportType, index, condition} = props;
+    // 表单类型
+    const {reportType } = props;
+    
     return (
         <Fragment>
             {

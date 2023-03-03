@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 规划页面
+ * @Descripttion: 规划迭代的事项
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-02-22 16:14:13
@@ -18,21 +18,25 @@ const SprintPlan = (props) => {
     const projectId = props.match.params.id;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
         getSprintList, sprintList, setSprint, delSprint } = projectSprintPlanStore;
-
     // 被移动事项的id
     const [startId, setStartId] = useState()
-
     // 被移动事项的初始迭代id
     const [startSprintId, setStartSprintId] = useState()
 
 
     useEffect(() => {
+        /**
+         * 获取没被规划的事项
+         */
         getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
 
-        // 获取已经规划迭代的事项列表
+        /**
+         * 获取已经规划迭代的事项列表
+         */
         getWorkList({ projectId: projectId, sprintIdIsNull: false })
-
-        // 获取所有迭代列表
+        /**
+         * 获取所有迭代列表
+         */
         getSprintList({ projectId: projectId })
         return
     }, [])
@@ -114,15 +118,6 @@ const SprintPlan = (props) => {
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-plan">
-                    {/* <Breadcrumb>
-                <Breadcrumb.Item>
-                    <a href="/#/index/prodetail/sprint">迭代列表</a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <a href="/">迭代规划</a>
-                </Breadcrumb.Item>
-            </Breadcrumb>
-            <Divider /> */}
                     <Breadcrumb
                         firstText="迭代列表"
                         firstUrl={"/index/prodetail/sprint"}

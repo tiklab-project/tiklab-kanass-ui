@@ -1,4 +1,12 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, Fragment } from "react";
+/*
+ * @Descripttion: 日志详情抽屉
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-07-28 16:55:28
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-18 09:46:31
+ */
+import React, { useState, useEffect } from "react";
 import { Input } from "antd";
 import { Button, Drawer } from 'antd';
 import "./LogDetail.scss";
@@ -7,11 +15,20 @@ const { TextArea } = Input;
 const LogDetail = (props) => {
     const { logDetailVisable, setLogDetailVisable, logId, listIndex, logStore } = props;
     const { findWorkLog, updateWorkLog, logList } = logStore;
+    // 日志信息
     const [logDetail, setLogDetail] = useState()
+    // 用时
     const [takeupTime, setTakeupTime] = useState()
+    // 修改日志的字段key
     const [fieldName, setFieldName] = useState("")
+    // 日志内容
     const [workContent, setWorkContent] = useState()
+    // 登录人id
     const userId = getUser().userId;
+
+    /**
+     * 查找日志信息
+     */
     useEffect(() => {
         if (logDetailVisable) {
             findWorkLog({ id: logId }).then(res => {
@@ -22,10 +39,19 @@ const LogDetail = (props) => {
         }
 
     }, [logDetailVisable])
+
+    /**
+     * 关闭日志详情抽屉
+     */
     const onClose = () => {
         setLogDetailVisable(false);
     };
 
+    /**
+     * 修改日志
+     * @param {修改值} value 
+     * @param {字段} field 
+     */
     const changeWorkLog = (value, field) => {
         if (field === "takeupTime") {
             setTakeupTime(value.target.value)
@@ -75,7 +101,7 @@ const LogDetail = (props) => {
                     </div>
                     <div className="log-detail-item">
                         <div className="log-detail-label">填写人</div>
-                        <div className="log-detail-content">{logDetail?.worker?.name}</div>
+                        <div className="log-detail-content">{logDetail?.user?.name}</div>
                     </div>
                     <div className="log-detail-item">
                         <div className="log-detail-label">记录时间</div>
@@ -85,7 +111,7 @@ const LogDetail = (props) => {
                     <div className="log-detail-item">
                         <div className="log-detail-label">工时</div>
                         {
-                            userId === logDetail.worker.id ? <Input
+                            userId === logDetail.user.id ? <Input
                                 suffix="小时"
                                 type="number"
                                 style={{ width: "100px", marginLeft: "-10px" }}
@@ -106,7 +132,7 @@ const LogDetail = (props) => {
                     <div className="log-detail-item">
                         <div className="log-detail-label">工作内容</div>
                         {
-                            userId === logDetail.worker.id ?
+                            userId === logDetail.user.id ?
                                 
                                 <TextArea
                                     rows={3}

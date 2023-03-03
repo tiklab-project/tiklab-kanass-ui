@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 日志统计页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-07-28 16:55:28
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-18 09:46:31
+ */
 import React, { useEffect } from "react";
 import { observer, inject } from "mobx-react";
 import { Table, Tabs, Row, Col, Space } from 'antd';
@@ -9,31 +17,35 @@ import { useState } from "react";
 import Button from "../../../common/button/Button";
 import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
-const { TabPane } = Tabs;
 
 const LogContent = (props) => {
     const { logStore } = props;
     const { findWorkLogPage, logList, selectLogCondition } = logStore;
-
+    // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
+    // 选中的tab key
     const [activeTab, setActiveTab] = useState("allLog")
-    const type = props.match.params.type;
+    // 登录者id
     const userId = getUser().userId;
-    const projectId = props.match.params.id;
+    // 点击的日志的索引，用于详情修改，列表回显
     const [listIndex, setListIndex]= useState()
+    // 日志详情弹窗显示参数
     const [logDetailVisable, setLogDetailVisable] = useState(false);
+    // 点击显示详情的日志id
     const [logId, setLogId] = useState()
 
-    useEffect(() => {
-        // getList()
-    }, [type])
-
+    /**
+     * 显示日志详情
+     * @param {日志id} id 
+     * @param {日志索引} index 
+     */
     const goLogDetail = (id, index) => {
         console.log(id)
         setLogId(id);
         setLogDetailVisable(true);
         setListIndex(index)
     }
+
     const columns = [
         {
             title: "事项",
@@ -76,14 +88,24 @@ const LogContent = (props) => {
             align: "left",
         }
     ];
+
+    /**
+     * 翻页
+     * @param {页面信息} pagination 
+     */
     const changePage = (pagination) => {
-        if (type === "allLog") {
+        if (activeTab === "allLog") {
             findWorkLogPage({ worker: null, projectId: null, pageParam: { current: pagination.current } })
         }
-        if (type === "myLog") {
+        if (activeTab === "myLog") {
             findWorkLogPage({ worker: userId, pageParam: { current: pagination.current } })
         }
     }
+
+    /**
+     * 切换tab
+     * @param {tab key } value 
+     */
     const changeTabs = value => {
         setActiveTab(value)
         if (value === "allLog") {

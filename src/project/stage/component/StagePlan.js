@@ -1,5 +1,13 @@
+
+/*
+ * @Descripttion: 阶段的事项列表 
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-19 11:10:30
+ */
 import React, { Fragment, useEffect, useState } from "react";
-import { Tabs, Input, Table, Space, Button, Row, Col } from 'antd';
 import StagePlanAddmodal from "./StagePlanAddModal";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
@@ -8,16 +16,67 @@ import "./StagePlan.scss"
 
 const StagePlan = (props) => {
     const { versionPlanStore, stageStore, stageId } = props
-    const { getSelectVersionPlanList, versionPlanList,
-        addVersionPlan, searchAllVersionPlan } = versionPlanStore;
-    const [selectWorkItemList, setselectWorkItemList] = useState();
-    const [stageChild, setStageChild] = useState()
+    const { getSelectVersionPlanList} = versionPlanStore;
     const { findWorkItemListByStage, deleteStageWorkItem } = stageStore;
+    // 阶段的子级阶段
+    const [stageChild, setStageChild] = useState()
+    // 阶段关联的事项ids
     const [stageWorkIds, setStageWorkIds] = useState()
+    // 已展开子级的阶段id集合
+    const [expandedTree, setExpandedTree] = useState([])
+
+    /**
+     * 判断树是否展开
+     * @param {上级的id} key 
+     * @returns 
+     */
+    const isExpandedTree = (key) => {
+        return expandedTree.some(item => item === key)
+    }
+
+    /**
+     * 树的展开与闭合
+     * @param {上级的id} key 
+     */
+    const setOpenOrClose = (key) => {
+        if (isExpandedTree(key)) {
+            setExpandedTree(expandedTree.filter(item => item !== key))
+        } else {
+            setExpandedTree(expandedTree.concat(key))
+        }
+        console.log(expandedTree)
+    }
+
+    /**
+     * 阶段状态显示
+     * @param {*} value 
+     * @returns 
+     */
+    const setStatusName = (value) => {
+        let name = ""
+        switch (value) {
+            case "0":
+                name = "未开始"
+                break;
+            case "1":
+                name = "进行中"
+                break;
+            case "2":
+                name = "已结束"
+                break;
+            default:
+                name = "未开始"
+                break;
+        }
+        return name;
+    }
+
+    /**
+     * 获取阶段关联的事项id集合
+     */
     useEffect(() => {
         findWorkItemListByStage({ stageId: stageId }).then(res => {
             if(res.code === 0){
-                setselectWorkItemList(res.data)
                 setStageChild(res.data)
                 let ids = []
                 res.data.workItem.map(item => {
@@ -30,7 +89,10 @@ const StagePlan = (props) => {
     }, [stageId])
 
 
-    //删除用户
+    /**
+     * 删除阶段关联的事项
+     * @param {事项id} id 
+     */
     const deleteWorkItem = (id) => {
         const value = {
             stageId: stageId,
@@ -40,7 +102,6 @@ const StagePlan = (props) => {
             if(res.code === 0){
                 findWorkItemListByStage({ stageId: stageId }).then(res => {
                     if(res.code === 0){
-                        setselectWorkItemList(res.data)
                         setStageChild(res.data)
                         let ids = []
                         res.data.workItem.map(item => {
@@ -53,41 +114,21 @@ const StagePlan = (props) => {
         })
     }
 
-
-    // 搜索用户
+    /**
+     * 按标题搜索需求
+     * @param {标题} value 
+     */
     const onSearch = (value) => {
         getSelectVersionPlanList({ title: value })
     }
 
-
-    const columns = [
-        {
-            title: "事项名称",
-            dataIndex: "title",
-            key: "title"
-        },
-        {
-            title: "负责人",
-            dataIndex: ["assigner", "name"],
-            key: "type"
-
-        },
-        {
-            title: "事项状态",
-            dataIndex: ["workStatusNode", "name"],
-            key: "status",
-        },
-        {
-            title: "操作",
-            key: "action",
-            render: (text, record) => (
-                <span className="delete-workitem" onClick={() => deleteWorkItem(record.id)}>
-                    删除
-                </span>
-            ),
-        },
-    ];
-
+    /**
+     * 阶段列表
+     * @param {阶段列表} data 
+     * @param {上级id} fid 
+     * @param {层级} level 
+     * @returns 
+     */
     const stageTable = (data, fid, level) => {
         return (
             <div className={`stage-table-child ${isExpandedTree(fid) ? "stage-table-hidden" : ''}`}>
@@ -138,6 +179,13 @@ const StagePlan = (props) => {
         )
     }
 
+    /**
+     * 事项列表
+     * @param {事项列表} data 
+     * @param {上级事项} fid 
+     * @param {层级} level 
+     * @returns 
+     */
     const workTable = (data, fid, level) => {
         return (
             <div className={`stage-table-workitem ${isExpandedTree(fid) ? "stage-table-hidden" : ''}`}>
@@ -189,38 +237,7 @@ const StagePlan = (props) => {
         )
     }
 
-    const [expandedTree, setExpandedTree] = useState([])
-    const isExpandedTree = (key) => {
-        return expandedTree.some(item => item === key)
-    }
-    const setOpenOrClose = (key) => {
-        if (isExpandedTree(key)) {
-            setExpandedTree(expandedTree.filter(item => item !== key))
-        } else {
-            setExpandedTree(expandedTree.concat(key))
-        }
-        console.log(expandedTree)
-    }
-
-    const setStatusName = (value) => {
-        let name = ""
-        switch (value) {
-            case "0":
-                name = "未开始"
-                break;
-            case "1":
-                name = "进行中"
-                break;
-            case "2":
-                name = "已结束"
-                break;
-            default:
-                name = "未开始"
-                break;
-        }
-        return name;
-    }
-
+    
     return (
         <div className="stage-workitem">
             <div className="stage-workitem-title">
@@ -228,7 +245,6 @@ const StagePlan = (props) => {
                 <StagePlanAddmodal
                     name="添加需求"
                     type="add"
-                    setselectWorkItemList = {setselectWorkItemList}
                     stageId={stageId}
                     stageWorkIds = {stageWorkIds}
                     setStageChild = {setStageChild}

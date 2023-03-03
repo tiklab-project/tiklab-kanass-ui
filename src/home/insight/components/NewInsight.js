@@ -28,15 +28,25 @@ const NewInsight = (props) => {
     const [insightDetail, setInsightDetail] = useState();
     // 是否显示可添加的报告列表弹窗
     const [showReportList, setShowReportList] = useState(false);
+    // 当前仪表盘在列表中的索引，用于设置添加仪表盘时的位置
     const [reportIndex, setReportIndex] = useState(1)
+
+
     useEffect(() => {
-        const params = new FormData();
+        getInsightById()
+    }, [])
+
+    /**
+     * 获取仪表盘的详情
+     */
+    const getInsightById = () => {
+         const params = new FormData();
         params.append("id", props.match.params.id)
         findInsight(params).then(res => {
             if (res.code === 0) {
                 if (res.data.data) {
-
                     const report = JSON.parse(res.data.data)
+                    console.log(report)
                     setReportList(report)
                     const index = report.lg.length + 1
                     setReportIndex(index)
@@ -47,7 +57,11 @@ const NewInsight = (props) => {
 
             }
         })
-    }, [])
+    }
+
+    /**
+     * 保存编辑之后的仪表盘
+     */
     const saveInsight = () => {
         const insightId = props.match.params.id
         const params = {
@@ -70,10 +84,16 @@ const NewInsight = (props) => {
 
     }
 
-    const onLayoutChange = (layout, layouts) => {
+    /**
+     * 添加仪表盘模块到仪表盘
+     * @param {模块数据} layout 
+     * @param {模块数据列表} layouts 
+     */
+    const addLayout = (layout, layouts) => {
         console.log(layout, layouts, reportList)
         const list = reportList.lg.map((item, index) => {
             const data = item.data;
+            // 把新的仪表盘的位置信息添加到仪表盘报告列表中
             item = layout[index];
             item.data = data;
             return item
@@ -105,7 +125,7 @@ const NewInsight = (props) => {
                                 rowHeight={30}
                                 measureBeforeMount={true}
                                 breakpoints={{ lg: 1200 }}
-                                onLayoutChange={onLayoutChange}
+                                onLayoutChange={addLayout}
                             >
                                 {
                                     reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
@@ -137,12 +157,8 @@ const NewInsight = (props) => {
                                     </div>
                                 </Empty>
                         }
-
-
                     </div>
                 </div>
-
-
             </div>
             <ReportList
                 showReportList={showReportList}

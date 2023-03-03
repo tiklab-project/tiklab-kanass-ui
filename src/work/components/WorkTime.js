@@ -11,10 +11,9 @@ const WorkTime=(props) => {
     const [ganttWidth,setGanttWidth] = useState()  
     const [ganttHeight,setGanttHeight] = useState() 
 
-    const {workStore,projectDetailStore } =props
+    const {workStore } =props
     const projectId = props.match.params.id;
     const {workListTime} = workStore;
-    const {sprintId} = projectDetailStore;
     const [ganttdata,setGantt] = useState()
     const [expandedTree, setExpandedTree] = useState([])
     const [graph,getGraph] = useState()
@@ -87,9 +86,9 @@ const WorkTime=(props) => {
         if(props.location.pathname === "/index/work/worklist"){
             initValues = {project: null,sprint: null}
         }
-        if(props.location.pathname === "/index/sprintdetail/sprintwork"){
-            initValues = {project: projectId,sprint: sprintId}
-        }
+        // if(props.location.pathname === "/index/sprintdetail/sprintwork"){
+        //     initValues = {project: projectId,sprint: sprintId}
+        // }
         if(props.location.pathname === "/index/prodetail/work"){
             initValues = {project: projectId,sprint: null}
         }
@@ -360,6 +359,5 @@ const WorkTime=(props) => {
 }
 
 export default inject(
-    "workStore",
-    "projectDetailStore"
+    "workStore"
 )(observer(WorkTime));

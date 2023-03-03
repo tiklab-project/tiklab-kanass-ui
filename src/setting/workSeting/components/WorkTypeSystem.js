@@ -33,9 +33,6 @@ const WorkTypeSystem = (props) => {
         })
     }
 
-    const onSearch = (value) => {
-        getSystemWorkTypeList({ name: value })
-    }
 
   
 

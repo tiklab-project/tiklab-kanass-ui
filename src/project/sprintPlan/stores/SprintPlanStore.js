@@ -1,18 +1,30 @@
+/*
+ * @Descripttion: 规划迭代的事项store
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-22 16:14:13
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-02-15 17:09:18
+ */
 import { observable, action } from "mobx";
 import {GetNoPlanWorkList,GetWorkList,GetSprintList,SetSprint} from "../api/SprintPlan";
 
 export class ProjectSprintPlanStore {
     // 没被规划迭代列表
-    @observable noPlanWorkList = [];
+    @observable 
+    noPlanWorkList = [];
 
     // 规划事项列表 
-    @observable planWorkList = [];
+    @observable 
+    planWorkList = [];
 
     //迭代列表
-    @observable sprintList = [];
+    @observable 
+    sprintList = [];
 
-    // 页面参数
-    @observable searchCondition = {
+    // 查询的分页参数
+    @observable 
+    searchCondition = {
         currentPage: 1
     };
 

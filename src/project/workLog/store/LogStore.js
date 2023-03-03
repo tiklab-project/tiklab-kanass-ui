@@ -11,15 +11,22 @@ import {FindAllWorkLog,FindProjectUserLog,FindUserProjectLog, FindWorkLogPage,
     FindAllUser, FindProjectWorkItemLog, FindWorkItemList, AddWorkLog, FindWorkLog, UpdateWorkLog } from "../api/LogApi";
 
 export class LogStore {
-    @observable logList = [];
-    @observable userList = [];
+    // 工时列表
+    @observable 
+    logList = [];
+    // 成员列表
+    @observable 
+    userList = [];
+
+    // 查找成员日志的分页参数
     @observable selectUserCondition = {
         currentPage: 0
     }
+    // 查找事项日志的分页参数
     @observable selectWorkCondition = {
         currentPage: 0
     }
-    
+    // 统计日志的分页参数
     @observable selectLogCondition = {
         orderParams: [{
             name: "id",
@@ -32,6 +39,10 @@ export class LogStore {
         }
     }
 
+    /**
+     * 查找所有的日志
+     * @returns 
+     */
     @action
 	findAllWorkLog = async() => {
 		const data = await FindAllWorkLog();
@@ -39,6 +50,10 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 查找所有的人员
+     * @returns 
+     */
     @action
 	findAllUser = async() => {
 		const data = await FindAllUser();
@@ -46,6 +61,11 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 根据id 查找日志
+     * @param {日志id} value 
+     * @returns 
+     */
     @action
 	findWorkLog = async(value) => {
         const params = new FormData();
@@ -54,7 +74,11 @@ export class LogStore {
         return data;
     }
     
-
+    /**
+     * 按照分页查找事项的日志
+     * @param {*} value 
+     * @returns 
+     */
     @action
 	findWorkLogPage = async(value) => {
         Object.assign(this.selectLogCondition, {...value} )
@@ -68,6 +92,11 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 查询项目每个成员的工时
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findProjectUserLog = async(value) => {
         this.selectUserCondition = {...this.selectUserCondition,...value}
@@ -76,6 +105,11 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 查找项目下每个事项的工时
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findProjectWorkItemLog = async(value) => {
         this.selectUserCondition = {...this.selectUserCondition,...value}
@@ -84,6 +118,11 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 查询成员负责的每个项目的工时
+     * @param {*} value 
+     * @returns 
+     */
     @action
 	findUserProjectLog = async(value) => {
         this.selectWorkCondition = {...this.selectWorkCondition,...value};
@@ -91,6 +130,11 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 查找事项列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findWorkItemList = async(value) => {
         
@@ -98,11 +142,22 @@ export class LogStore {
         return data;
     }
 
+    /**
+     * 添加日志
+     * @param {*} value 
+     * @returns 
+     */
     @action
     addWorkLog = async(value) => {
         const data = await AddWorkLog(value);
         return data;
     }
+
+    /**
+     * 更新日志
+     * @param {*} value 
+     * @returns 
+     */
     @action
     updateWorkLog = async(value) => {
         const data = await UpdateWorkLog(value);

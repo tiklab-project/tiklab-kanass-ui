@@ -16,15 +16,14 @@ import {STATISTICS_STORE, StatisticsStore} from "./statistics/store/statisticSto
 //需求集
 import {EPIC_STORE,EpicStore} from "./project/lineMap/store/EpicStore";
 
-import {MODULE_STORE, ModuleStore} from "./project/projectSetting/module/store/ModuleStore";
+import {MODULE_STORE, ModuleStore} from "./project/setting/module/store/ModuleStore";
 import {SPRINT_STORE, SprintStore} from "./project/sprint/store/SprintStore";
 import {EDITION_STORE, VersionStore} from "./project/version/store/VersionStores";
 import {EDITIONPLAN_STORE,VersionPlanStore} from "./project/version/store/VersionPlanStores";
 import {AFFAIR_STORE, WorkStore} from "./work/store/WorkStore";
 import {ORGA_STORE,OrgaStore} from "./setting/workSeting/store/workStore";
-import {PROJECTDETAIL_STORE,ProjectDetailStore} from "./project/common/store/projectDetailStore";
 import {WORKLOG_STORE,WorkLogStore} from "./work/store/WorkLogStore";
-import {PROJECTWORK_STORE,ProjectWorkStore} from "./project/projectSetting/projectWorkType/store/ProjectWorkStore";
+import {PROJECTWORK_STORE,ProjectWorkStore} from "./project/setting/projectWorkType/store/ProjectWorkStore";
 
 import {WORKDYNAMIC_STORE,WorkDynamicStore} from "./work/store/WorkDynamicStore";
 import {PROJECTYPE_STORE,ProjectTypeStore} from "./setting/projectType/store/projectTypestore";
@@ -40,11 +39,11 @@ import {PROJECTSET_STORE, ProjectSetStore} from "./projectSet/projectSet/store/P
 import {LINEMAP_STORE, LineMapStore} from "./project/lineMap/store/LineMapStore";
 import {LOG_STORE,LogStore} from "./project/workLog/store/LogStore";
 import {WORKWIKI_STORE,WorkWikiStore} from "./work/store/WorkWikiStore";
-import {PROJECTSURVEY_STORE,ProjectSurveyStore} from "./project/survey/store/ProjectSurveyStore";
+import {PROJECTSURVEY_STORE,ProjectSurveyStore} from "./project/overview/store/ProjectSurveyStore";
 import {WORKCOMMENT_STORE,WorkCommentStore} from "./work/store/WorkCommentStore";
 
-import {SPRINTSURVEY_STORE,SprintSurveyStore} from "./sprint/sprintSurvey/store/sprintSurveyStore";
-import {SPRINTPLAN_STORE,SprintPlanStore} from "./sprint/sprintPlan/stores/SprintPlanStore";
+import {SPRINTSURVEY_STORE,SprintSurveyStore} from "./sprint/overview/store/sprintSurveyStore";
+import {SPRINTPLAN_STORE,SprintPlanStore} from "./sprint/plan/stores/SprintPlanStore";
 import {SPRINTDETAIL_STORE,SprintDetailStore } from "./sprint/common/store/sprintDetailStore"
 // import {SPRINTPLAN_STORE,SprintPlanStore} from "./sprint/common/components/sprint";
 
@@ -53,7 +52,7 @@ import {PLANSPRINT_STORE,ProjectSprintPlanStore} from "./project/sprintPlan/stor
 import {MILESTONE_STORE,MilestoneStore} from "./project/milestone/store/MilestoneStore";
 import {PLAN_STORE,PlanStore} from "./project/plan/store/PlanStores";
 import {PLANWORKITEM_STORE,PlanWorkItemStore} from "./project/plan/store/PlanWorkItemStores";
-import {BASICINFO_STORE,BasicInfoStore} from "./projectSet/survey/store/basicInfoStore";
+import {BASICINFO_STORE,BasicInfoStore} from "./projectSet/overview/store/basicInfoStore";
 
 
 import {STAGE_STORE,StageStore} from "./project/stage/store/StageStore";
@@ -69,7 +68,6 @@ function createStores() {
         [ORGA_STORE]:new OrgaStore(),
         [STATISTICS_STORE]:new StatisticsStore(),
 
-        [PROJECTDETAIL_STORE]: new ProjectDetailStore(),
         [WORKLOG_STORE]: new WorkLogStore(),
         [PROJECTWORK_STORE]: new ProjectWorkStore(),
 

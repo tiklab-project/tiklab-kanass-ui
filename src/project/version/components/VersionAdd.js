@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 版本添加，编辑弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-07 14:56:02
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-21 11:22:59
+ */
 import React from "react";
 import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -7,11 +15,12 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 
 const VersionAddmodal = (props) => {
-    const [form] = Form.useForm();
-    const [visible, setVisible] = React.useState(false);
     const { versionStore, findVersion } = props;
     const { editVersion, addVersion, searchVersionById } = versionStore;
-
+    const [form] = Form.useForm();
+    // 弹窗显示
+    const [visible, setVisible] = React.useState(false);
+    // 项目id
     const projectId = props.match.params.id;
     const layout = {
         labelCol: {
@@ -23,7 +32,9 @@ const VersionAddmodal = (props) => {
     };
 
 
-    //提交用户列表
+    /**
+     * 表单提交，编辑或者添加版本
+     */
     const submitVersion = () => {
         form.validateFields().then((fieldsValue) => {
             const values = {
@@ -47,12 +58,17 @@ const VersionAddmodal = (props) => {
 
     }
 
-    // 表单验证
+    /**
+     * 重置表单
+     */
     const onFinishFailed = () => {
         form.resetFields();
         setVisible(false);
     }
 
+    /**
+     * 显示编辑弹窗，若是编辑模式，初始化表单
+     */
     const showModal = () => {
         setVisible(true);
         if (props.type === "edit") {

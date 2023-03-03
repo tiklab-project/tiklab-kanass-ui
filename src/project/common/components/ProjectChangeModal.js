@@ -1,3 +1,13 @@
+
+/*
+ * @Descripttion: 项目切换菜单
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
 import { useTranslation } from 'react-i18next';
@@ -6,21 +16,28 @@ import { inject, observer } from "mobx-react";
 
 const ProjectChangeModal = (props) => {
     const { isShowText, prolist, searchpro, setWorkType, project } = props;
-    const projectId = props.match.params.id;
-
+    //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
+    // 选择要切换的项目
     const [selectProject, setSelectProject] = useState(false)
-
+    // 弹窗的ref
     const modelRef = useRef()
+    // 点击按钮的ref
     const setButton = useRef()
     const { t } = useTranslation();
 
+    /**
+     * 显示菜单
+     */
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
+        // 设置弹窗的位置在按钮旁边
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
-    
+     /**
+     * 监听切换弹窗的显示与不显示
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -28,6 +45,11 @@ const ProjectChangeModal = (props) => {
         }
     }, [showMenu])
 
+    /**
+     * 关闭弹窗
+     * @param {点击的位置} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
@@ -65,10 +87,18 @@ const ProjectChangeModal = (props) => {
         // 讲当前项目id存入localStorage
     }
 
+    /**
+     * 鼠标放到项目上，项目列表变色
+     * @param {项目id} id 
+     */
     const handleMouseOver = (id) => {
         setSelectProject(id)
     }
 
+    /**
+     * 鼠标移走，项目列表恢复原来颜色
+     * @param {项目id} id 
+     */
     const handleMouseOut = () => {
         setSelectProject("")
     }
@@ -148,7 +178,6 @@ const ProjectChangeModal = (props) => {
                             key={item.id}
                             onMouseOver={() => handleMouseOver(item.id)}
                             onMouseOut={handleMouseOut}
-
                         >
                             {
                                 item.iconUrl ?
@@ -174,4 +203,4 @@ const ProjectChangeModal = (props) => {
         </div>
     )
 }
-export default withRouter(inject("projectDetailStore")(observer(ProjectChangeModal)));
+export default withRouter(ProjectChangeModal);

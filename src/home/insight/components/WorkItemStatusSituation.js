@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 项目的事项进展概况统计
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./WorkItemStatusSituation.scss";
@@ -5,10 +14,16 @@ import { Form, Select, Button, DatePicker } from 'antd';
 const WorkItemStatusSituation = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = insightStore;
+    // 事项的各个状态的数据统计列表
     const [workItemStatusCount, setWorkItemStatusCount] = useState();
+    // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
+    // 所有的项目列表
     const [projectList, setProjectList] = useState([]);
+    // 统计条件的表单
     const [form] = Form.useForm();
+
+    // 事项类型
     const workItemType = [
         {
             value: "all",
@@ -28,6 +43,9 @@ const WorkItemStatusSituation = (props) => {
         }
     ]
 
+     /**
+     * 处于编辑状态，初始化统计条件表单
+     */
     useEffect(() => {
         if (isEditor) {
             const data = condition.data.data
@@ -46,6 +64,10 @@ const WorkItemStatusSituation = (props) => {
 
     }, [isEditor])
 
+    /**
+     * 编辑统计条件
+     * @param {表单数据} values 
+     */
     const editReport = (values) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
@@ -55,6 +77,9 @@ const WorkItemStatusSituation = (props) => {
         })
     }
 
+    /**
+     * 删除报表
+     */
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }

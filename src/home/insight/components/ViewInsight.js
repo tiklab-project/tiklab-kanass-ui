@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 仪表盘查看视图
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./ViewInsight.scss";
@@ -14,10 +23,15 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const ViewInsight = (props) => {
     const { insightStore } = props;
-    const { updateInsight, findInsight } = insightStore;
+    const { findInsight } = insightStore;
+    // 仪表盘详情
     const [insightDetail, setInsightDetail] = useState()
+    // 仪表盘报告列表
     const [reportList, setReportList] = useState()
     useEffect(() => {
+         /**
+         * 获取仪表盘的详情
+         */
         const params = new FormData();
         params.append("id", props.match.params.id)
         findInsight(params).then(res => {
@@ -29,18 +43,18 @@ const ViewInsight = (props) => {
                     })
                     setReportList(list)
                     setInsightDetail(res.data)
-                    console.log(reportList)
                 }
 
             }
         })
     }, [])
 
+    /**
+     * 跳转到编辑视图
+     */
     const goEditInsight = () => {
         props.history.push(`/index/home/insight/newInsight/${props.match.params.id}`)
     }
-
-
 
     return (
         <div className="view-insight">

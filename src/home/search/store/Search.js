@@ -2,18 +2,35 @@ import { observable, action } from "mobx";
 import { Search,SearchSort,SearchForPage } from "../api/SearchApi";
 //删除事项
 export class SearchStore{
-    @observable searchList = []
-    @observable sortList = []
-    @observable keyword = ""
-    @observable searchCondition = {
+    // 搜索结果列表
+    @observable 
+    searchList = []
+
+    @observable 
+    sortList = []
+
+    // 搜索关键字
+    @observable 
+    keyword = ""
+
+    // 搜索分页参数
+    @observable 
+    searchCondition = {
         pageSize: 10,
         currentPage: 1
     }
 
+    // 设置搜索关键字
     @action
     setKeyWord = (value) => {
         this.keyword = value
     }
+
+    /**
+     * 获取搜索结果
+     * @param {搜索关键字} value 
+     * @returns 
+     */
     @action
     getSearch = (value) => {
         const params = new FormData();
@@ -35,6 +52,11 @@ export class SearchStore{
         })
     }
 
+    /**
+     * 获取搜索结果
+     * @param {*} value 
+     * @returns 
+     */
     @action
     getSearchSore = (value) => {
         const params = new FormData();
@@ -56,6 +78,11 @@ export class SearchStore{
         })
     }
 
+    /**
+     * 按照分页搜索
+     * @param {搜索参数} value 
+     * @returns 
+     */
     @action
     searchForPage = (value) => {
         Object.assign(this.searchCondition, {...value})

@@ -53,7 +53,7 @@ export function FindWorkStatusListBySorts(data){
 }
 
 //统计待办事项
-export function StatWorkItemProcess(data){
+export function StatTodoWorkItem(data){
     return service.request({
         url: "/todo/findtodopage",
         method: "post",

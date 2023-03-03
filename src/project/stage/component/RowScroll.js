@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 自定义横向滚动轴
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-18 14:45:06
@@ -11,15 +11,18 @@ import React,{useRef,useEffect} from "react";
 
 const RowScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore,ganttWidth,scrollLeft} = props;
+    // 滑块
     const rowScrollRef = useRef();
+    // 滚动轴
     const boxRowScrollRef = useRef();
 
     useEffect(() => {
+        // 滑块dom
         const scrollSlider = rowScrollRef.current;
+        // 滚动轴dom
         const boxScroll = boxRowScrollRef.current;
-
+        // 滑块起始位置
         const left = scrollLeft / (ganttWidth - 1000) * (boxScroll.offsetWidth - scrollSlider.offsetWidth);
-
         scrollSlider.style.left = left + "px";
         return;
     }, [scrollLeft])
@@ -48,7 +51,9 @@ const RowScroll =(props)=> {
         ganttOuterDom.scrollTo({left:ganttSilder})
     }
     
-    
+    /**
+     * 滑块移动
+     */
     const rowScroll = () => {
         const scrollSlider = rowScrollRef.current;
         const boxScroll = boxRowScrollRef.current
@@ -59,7 +64,8 @@ const RowScroll =(props)=> {
             
             //判断鼠标是否点在右边还是左边
             document.onmousemove=(ev) => {
-                if(ev.clientX < startX){ //左边
+                //向左移动
+                if(ev.clientX < startX){ 
                     scrollSlider.style.left = sliderLeft+(ev.clientX-startX)+"px";
                     if(scrollSlider.offsetLeft <=0){
                         scrollSlider.style.left = "0px";
@@ -68,6 +74,7 @@ const RowScroll =(props)=> {
                         scrollSlider.style.left = boxScroll.offsetWidth - scrollSlider.offsetWidth + "px";
                     }
                 }
+                // 向右移动
                 if(ev.clientX > startX){
                     scrollSlider.style.left = sliderLeft+(ev.clientX-startX)+"px";
                     if(scrollSlider.offsetLeft >= boxScroll.offsetWidth - scrollSlider.offsetWidth ){

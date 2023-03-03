@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 项目详情页面左侧导航栏
+ * @Descripttion: 瀑布式开发的项目详情页面左侧导航栏
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -13,31 +13,24 @@ import { Layout, Button } from "antd";
 import { Modal } from 'antd';
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
-import { getUser} from 'tiklab-core-ui'
 import SetNomalMenu from "./SetNomalMenu";
 import ProjectChangeModal from "./ProjectChangeModal";
 import MoreMenuModal from "./MoreMenuModal";
 const { Sider } = Layout;
 
 const ProdeNomalAside = (props) => {
-    const { searchpro, workStore, prolist,systemRoleStore, project } = props;
-    const {getInitProjectPermissions} = systemRoleStore;
+    const { searchpro, workStore, prolist,project } = props;
     const { setWorkType, setWorkId } = workStore;
     //语言包
     const { t, i18n } = useTranslation();
-    const tenant = getUser().tenant;
-    // 当前选中路由
+    // 项目id
     const projectId = props.match.params.id;
-    // const project =JSON.parse(localStorage.getItem("project"));
-    const [selectKey, setSelectKey] = useState(`/index/projectNomalDetail/${projectId}/survey`);
+    // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
-    // 切换项目窗口弹窗，鼠标移入与移出效果
-    const [selectProject, setSelectProject] = useState(false)
-    // 是否显示切换弹窗
-    const [visible, setVisible] = useState(false)
+    // 当前选中菜单key
     const path = props.location.pathname.split("/")[4];
     
-     // 路由
+     // 菜单路由
      const normalProrouter = [
         {
             title: `${t('survey')}`,
@@ -89,16 +82,8 @@ const ProdeNomalAside = (props) => {
             encoded: "log",
         }
     ];
-    const prorouter = normalProrouter;
     
     useEffect(() => {
-        // 初次进入激活导航菜单
-        if(props.location.pathname.indexOf(`/index/projectNomalDetail/${projectId}/work`) >= 0){
-            setSelectKey(`/index/projectNomalDetail/${projectId}/work/all`)
-        }else {
-            setSelectKey(props.location.pathname)
-        }
-
         setWorkType(null)
         return
     }, [projectId,props.location.pathname])
@@ -109,7 +94,6 @@ const ProdeNomalAside = (props) => {
      * @param {*} key 
      */
     const selectMenu = (key) => {
-        setSelectKey(key)
         props.history.push(key)
 
     }
@@ -121,57 +105,6 @@ const ProdeNomalAside = (props) => {
         SetIsShowText(!isShowText)
     }
 
-    const showModal = () => {
-        setVisible(true)
-    };
-
-    /**
-     * 隐藏切换项目弹窗
-     */
-    const hiddenModal = () => {
-        setVisible(false)
-    };
-
-    /**
-     * 切换项目
-     * @param {id} id 
-     */
-    const selectProjectId = (id,typeId) => {
-        searchpro(id).then(data => {
-            if(data.code === 0){
-                localStorage.setItem("project", JSON.stringify(data.data));
-                if(data.data.projectType.type === "scrum"){
-                    props.history.push(`/index/projectScrumDetail/${id}/survey`)
-                }
-                if(data.data.projectType.type === "nomal"){
-                    props.history.push(`/index/projectNomalDetail/${id}/survey`)
-                }
-
-                localStorage.setItem("projectId", id);
-                // 重置事项id
-                setWorkType(null)
-                // 关闭切换弹窗
-                setVisible(false)
-                // 强制刷新
-                location.reload();
-            }
-        });
-    }
-
-    const handleMouseOver = (id) => {
-        setSelectProject(id)
-    }
-
-    const handleMouseOut = () => {
-        setSelectProject("")
-    }
-
-    /**
-     * 跳转到项目设置
-     */
-    const goProjectSet = () => {
-        props.history.push(`/index/projectNomalDetail/${projectId}/projectSetDetail/basicInfo`)
-    }
 
     return (
         <Fragment>
@@ -186,7 +119,7 @@ const ProdeNomalAside = (props) => {
                     />
                     <ul className="project-menu">
                         {
-                            prorouter && prorouter.map((item,index) =>  {
+                            normalProrouter && normalProrouter.map((item,index) =>  {
                                 return isShowText ? 
                                     <div className={`project-menu-submenu ${ path.indexOf(item.key) !== -1 ? "project-menu-select" : ""}`}
                                         key={index}
@@ -232,26 +165,7 @@ const ProdeNomalAside = (props) => {
                 </div>
             </Sider>
 
-            <Modal
-                className="project-modal"
-                title="选择项目"
-                visible={visible}
-                onCancel={hiddenModal}
-                closable = {false}
-                footer={[
-                    <Button key="back" onClick={hiddenModal}>取消</Button>]}
-            >
-                {
-                    prolist && prolist.map((item) => {
-                        return <div className={`project-name ${item.id === selectProject ? "project-selectName" : ""}`}
-                            onClick={() => selectProjectId(item.id,item.projectType.id)}
-                            key={item.id}
-                            onMouseOver={() => handleMouseOver(item.id)}
-                            onMouseOut={handleMouseOut}
-                        >{item.projectName}</div>
-                    })
-                }
-            </Modal>
+           
         </Fragment>
     )
 

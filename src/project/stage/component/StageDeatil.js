@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 阶段详情
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
@@ -20,17 +20,31 @@ import Button from "../../../common/button/Button";
 const StageDetail = (props) => {
     const { stageStore } = props;
     const { findStage, findStageList, updateStage, deleteStage } = stageStore;
+    // 日期格式
+    const dateFormat = 'YYYY-MM-DD';
+    // 阶段信息
     const [stageInfo, setStageInfo] = useState()
+    // 阶段id
     const stageId = props.match.params.stageId;
+    // 项目类型
     const path = props.match.path.split("/")[2];
-    const [showMenu, setShowMenu] = useState(false);
-
-    const [dropDown, showDropdown] = useState(false);
+    // 鼠标放置，添加背景色
+    const [mouseActive, setMouseActive] = useState(false);
+    // 修改的字段key
+    const [fieldName, setFieldName] = useState("")
+    // 阶段切换下拉框
     const modelRef = useRef();
+    // 输入
     const inputRef = useRef()
     // 项目id
     const projectId = props.match.params.id;
+    // 阶段列表
     const [stageList, setStageList] = useState([])
+    // 标题是否是编辑模式
+    const [editName, setEditName] = useState(false)
+    /**
+     * 获取阶段详情，获取阶段列表用于切换
+     */
     useEffect(() => {
         if (stageId !== "") {
             findStage({ id: stageId }).then(data => {
@@ -41,38 +55,22 @@ const StageDetail = (props) => {
             if (res.code === 0) {
                 setStageList(res.data)
             }
-            // setLoading(false)
         })
 
         return;
     }, [stageId])
 
-
-
-    const setStatusName = (value) => {
-        let name = ""
-        switch (value) {
-            case "0":
-                name = "未开始"
-                break;
-            case "1":
-                name = "进行中"
-                break;
-            case "2":
-                name = "已结束"
-                break;
-            default:
-                name = "未开始"
-                break;
-        }
-        return name;
-    }
-    const [fieldName, setFieldName] = useState("")
+    /**
+     * 点击不同的信息，修改点击信息的样式
+     * @param {修改字段key} value 
+     */
     const changeStyle = (value) => {
         setFieldName(value)
     }
-    const dateFormat = 'YYYY-MM-DD';
-
+    
+    /**
+     * 监听鼠标点击关闭切换阶段弹窗
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -80,25 +78,43 @@ const StageDetail = (props) => {
         }
     }, [])
 
-
+    /**
+     * 关闭切换弹窗
+     * @param {点击event} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
         }
         if (!modelRef.current.contains(e.target) && modelRef.current !== e.target) {
-            setShowMenu(false)
+            setMouseActive(false)
         }
     }
 
-    const selectKeyFun = (item) => {
+    /**
+     * 切换阶段
+     * @param {*} item 
+     */
+    const changeStage = (item) => {
         props.history.push(`/index/${path}/${projectId}/stageDetail/${item.id}`)
-        setShowMenu(false)
+        setMouseActive(false)
     }
 
+    /**
+     * 修改日期
+     * @param {修改的字段key} key 
+     * @param {*} value 
+     * @param {日期} dateString 
+     */
     const changeDate = (key, value, dateString) => {
         updateStage({ id: stageId, [key]: dateString })
     }
-    const deStage = () => {
+
+    /**
+     * 删除节点
+     */
+    const deleStage = () => {
         deleteStage({ id: stageId }).then(res => {
             if (res.code === 0) {
                 props.history.push(`/index/projectNomalDetail/${projectId}/stage`)
@@ -106,13 +122,24 @@ const StageDetail = (props) => {
         })
     }
 
-    const [editName, setEditName] = useState(false)
-    const updateNameByBlur = (event, id) => {
+    
+
+    /**
+     * 失去焦点更新标题
+     * @param {dom} event 
+     * @param {*} id 
+     */
+    const updateNameByBlur = (event) => {
         event.stopPropagation();
         event.preventDefault()
         updateTitle()
     }
 
+    /**
+     * 点击回车更新标题
+     * @param {dom} event 
+     * @param {*} id 
+     */
     const updateNameByKey = (event) => {
         if (event.keyCode === 13) {
             event.stopPropagation();
@@ -121,6 +148,9 @@ const StageDetail = (props) => {
         }
     }
 
+    /**
+     * 更新标题
+     */
     const updateTitle = () => {
         const name = inputRef.current.textContent;
         const params = {
@@ -128,6 +158,7 @@ const StageDetail = (props) => {
             id: stageId
         }
 
+        // 输入框修改更新
         if (inputRef.current.textContent !== stageInfo.title) {
             updateStage(params).then(res => {
                 if (res.code === 0) {
@@ -155,10 +186,9 @@ const StageDetail = (props) => {
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-right1"></use>
                                         </svg>
-                                        <div className="stage-breadcrumb-dropdown" onMouseEnter={() => showDropdown(true)}
-                                            onMouseLeave={() => showDropdown(false)}>
+                                        <div className="stage-breadcrumb-dropdown" >
                                             <div
-                                                onClick={() => setShowMenu(true)}
+                                                onClick={() => setMouseActive(true)}
                                                 style={{ cursor: "pointer" }}
                                                 className="stage-breadcrumb-text"
 
@@ -167,7 +197,7 @@ const StageDetail = (props) => {
                                                 <DownOutlined style={{ fontSize: '12px', marginLeft: "10px" }} />
                                             </div>
                                             <div
-                                                className={`stage-breadcrumb-dropdown-modal ${showMenu ? "stage-menu-show" : "stage-menu-hidden"}`}
+                                                className={`stage-breadcrumb-dropdown-modal ${mouseActive ? "stage-menu-show" : "stage-menu-hidden"}`}
                                                 ref={modelRef}
                                             >
                                                 <ul className="stage-menu">
@@ -175,11 +205,8 @@ const StageDetail = (props) => {
                                                         stageList && stageList.map(item => {
                                                             return <div className={`stage-menu-submenu ${item.id === stageInfo?.id ? "stage-menu-select" : ""}`}
                                                                 key={item.id}
-                                                                onClick={() => selectKeyFun(item)}
+                                                                onClick={() => changeStage(item)}
                                                             >
-                                                                {/* <svg className="icon" aria-hidden="true">
-                                                                <use xlinkHref={`#icon-${item.icon}`}></use>
-                                                            </svg> */}
                                                                 <span>
                                                                     {item.stageName}
                                                                 </span>
@@ -190,7 +217,7 @@ const StageDetail = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button onClick={() => deStage()}>删除</Button>
+                                    <Button onClick={() => deleStage()}>删除</Button>
                                 </div>
                             </div>
                             <div className="stage-title">

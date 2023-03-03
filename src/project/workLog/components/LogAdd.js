@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 日志添加
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-07-28 16:55:28
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-18 09:46:31
+ */
 import React, { useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
@@ -7,11 +15,20 @@ const LogAdd = (props) => {
     const { showLogAdd, setShowLogAdd, logStore } = props;
     const { findWorkItemList, addWorkLog } = logStore;
     const [addLog] = Form.useForm();
+    // 搜索的事项列表
     const [workItemList, setWorkItemList] = useState([])
+    // 用时
     const [planTakeupTime, setPlanTakeupTime]  = useState(0)
+    // 剩余时间
     const [surplusTime, setSurplusTime]  = useState(0)
+    // 项目id
     const [projectId, setProjectId] = useState()
-    const handleOk = () => {
+    // 搜索关键字
+    const [value, setValue] = useState();
+    /**
+     * 添加日志
+     */
+    const creatLog = () => {
         addLog.validateFields().then((fieldsValue) => {
             console.log(fieldsValue)
             const params = {
@@ -30,14 +47,18 @@ const LogAdd = (props) => {
         })
     }
 
-    const handleCancel = () => {
+    /**
+     * 关闭弹窗
+     */
+    const closeModal = () => {
         setShowLogAdd(false)
     }
 
-    const changeDate = () => { }
-
+    /**
+     * 按照名称关键字搜索事项列表
+     * @param {名称} value 
+     */
     const searchWorkItem = (value) => {
-        // findWorkItemList()
         console.log(value)
         if (value) {
             findWorkItemList({ title: value }).then(res => {
@@ -47,10 +68,14 @@ const LogAdd = (props) => {
             })
         }
     }
-    const [value, setValue] = useState();
+    
 
-    const handleChange = (newValue, option) => {
-        console.log(newValue, option)
+    /**
+     * 根据搜索结果改变工时信息
+     * @param {*} newValue 
+     * @param {*} option 
+     */
+    const changeSearchTitle = (newValue, option) => {
         setPlanTakeupTime(option.planTakeupTime)
         setSurplusTime(option.setSurplusTime)
         setProjectId(option.projectId)
@@ -61,8 +86,8 @@ const LogAdd = (props) => {
         <Modal
             title={"添加日志"}
             visible={showLogAdd}
-            onOk={handleOk}
-            onCancel={handleCancel}
+            onOk={creatLog}
+            onCancel={closeModal}
             destroyOnClose={true}
             closable={false}
         >
@@ -88,7 +113,7 @@ const LogAdd = (props) => {
                         showSearch
                         value={value}
                         onSearch={searchWorkItem}
-                        onChange={handleChange}
+                        onChange={changeSearchTitle}
                         optionFilterProp='children'
                     >
                         {
@@ -105,54 +130,6 @@ const LogAdd = (props) => {
                     </Select>
                 </Form.Item>
 
-                {/* <Form.Item
-                    label="记录人"
-                    name="worker"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请填写记录人',
-                        },
-                    ]}
-                >
-                    <Select
-                        allowClear
-                    >
-                        <Select.Option value={userInfo.userId} key={userInfo.userId}>{userInfo.name}</Select.Option>
-                    </Select>
-                </Form.Item> */}
-
-                {/* <Form.Item
-                    label="记录时间"
-                    name="workDate"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请选择记录时间',
-                        },
-                    ]}
-                >
-                    <DatePicker style={{ width: '100%' }} showTime onChange={changeDate} />
-                </Form.Item> */}
-
-                {/* <Form.Item
-                    label="预计用时"
-                    name="versionTime"
-                >
-                    <Input suffix="1/小时" bordered={false} disabled={true} style={{ width: '30%' }} />
-                </Form.Item>
-
-                <Form.Item
-                    label="剩余用时"
-                    name="surplusTime"
-                >
-                    <Input suffix="/小时"
-                        bordered={false}
-                        disabled={true}
-                        style={{ width: '30%' }}
-                        value="sbsbsbbsbbsfsbsbs"
-                    />
-                </Form.Item> */}
                 <Form.Item
                     label="剩余用时"
                     name="surplusTime"

@@ -32,19 +32,3 @@ export function UpdataWorkItem(data){
 //     })
 // }
 // 搜索用户
-export function SearchVersionPlan(data){
-    return serviceLoc.request({
-        url: "/searchVersionPlan",
-        method: "post",
-        data 
-    })
-}
-
-// 从未选择用户中查找用户
-export function SearchAllVersionPlan(data){
-    return serviceLoc.request({
-        url: "/searchAllVersionPlan",
-        method: "post",
-        data 
-    })
-}

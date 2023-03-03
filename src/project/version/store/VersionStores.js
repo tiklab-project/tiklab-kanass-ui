@@ -1,21 +1,44 @@
+/*
+ * @Descripttion: 版本store
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-03-02 13:28:22
+ */
 import { observable, action } from "mobx";
 import {VersionList,EditVersion,AddVersion,DeleVersion,SearchVersionById,FindVersion} from "../api/Version";
 
 export class VersionStore {
-    @observable versionList = [];
+    // 版本列表
+    @observable 
+    versionList = [];
+    // 版本信息
     @observable versionItem = [];
+    // 搜索版本的标题
     @observable searchVersionName = [];
-    @observable searchCondition = {
+    // 查找版本的分页参数
+    @observable 
+    searchCondition = {
         currentPage: 1
     };
+    // 版本id
     @observable versionId = "";
-    // @observable actionPlanId = "";
-    // 获取规划的id
+
+    /**
+     * 设置版本id
+     * @param {版本id} value 
+     */
     @action 
     getVersionId = (value) => {
         this.versionId = value
     }
-    // 获取所有成员
+    
+    /**
+     * 查找项目下的版本
+     * @param {项目id} value 
+     * @returns 
+     */
     @action
 	getVersionList = async(value) => {
         Object.assign(this.searchCondition, {...value})
@@ -37,16 +60,13 @@ export class VersionStore {
             this.versionList = data.data.dataList
         }
         return data;
-        // .then(response => {
-        //     if(response.code=== 0){
-        //         this.versionList = response.data.dataList;
-        //     }
-        // }).catch(error => {
-        //     console.log(error)
-        // })
     }
     
-    //添加已选择人员
+    /**
+     * 添加版本
+     * @param {版本信息} value 
+     * @returns 
+     */
     @action
 	addVersion = (value) => {
         let params = {
@@ -60,11 +80,6 @@ export class VersionStore {
         }
         return new Promise((resolve,reject)=>{
             AddVersion(params).then(response => {
-                // this.versionList = response.data.versionList;
-                
-                // if(response.code=== 0){
-                //     this.getVersionList()
-                // }
                 resolve()
             }).catch(error => {
                 reject()
@@ -73,7 +88,11 @@ export class VersionStore {
         })
 		
     }
-    //添加已选择人员
+    
+    /**
+     * 删除版本
+     * @param {版本id} params 
+     */
     @action
 	deleVersion = (params) => {
         const param = new FormData()
@@ -88,7 +107,12 @@ export class VersionStore {
             console.log(error)
         })
     }
-    //搜索已选择人员
+    
+    /**
+     * 根据id查找版本
+     * @param {版本id} params 
+     * @returns 
+     */
     @action
 	searchVersionById = (params) => {
         
@@ -104,8 +128,12 @@ export class VersionStore {
         })
 		
     }
-    //编辑版本
-
+    
+    /**
+     * 修改版本
+     * @param {版本信息} value 
+     * @returns 
+     */
     @action
 	editVersion = async(value) => {
         let params = {
@@ -122,6 +150,11 @@ export class VersionStore {
         return data;
     }
 
+    /**
+     * 根据id查找版本
+     * @param {版本id} value 
+     * @returns 
+     */
     @action
     findVersion = (value) => {
         const params = new FormData();

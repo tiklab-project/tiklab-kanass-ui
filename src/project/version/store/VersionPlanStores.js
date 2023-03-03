@@ -1,17 +1,34 @@
+/*
+ * @Descripttion: 版本事项关联关系store
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-03-02 13:28:22
+ */
 import { observable, action } from "mobx";
-import {VersionPlanList,SelectVersionPlanList,UpdataWorkItem,SearchVersionPlan,SearchAllVersionPlan} from "../api/VersionPlan";
+import {VersionPlanList,SelectVersionPlanList,UpdataWorkItem} from "../api/VersionPlan";
 export class VersionPlanStore {
-    @observable versionPlanList = [];
+    // 版本关联事项列表
+    @observable 
+    versionPlanList = [];
+
+    // 已被版本关联的事项列表
     @observable selectVersionPlanList = [];
-    @observable searchVersionPlanName = [];
+    // 版本搜索条件
     @observable searchCondition = {
         currentPage: 1
     };
+    // 搜索被关联的事项列表条件
     @observable searchSelectCondition = {
         currentPage: 1
     };
 
-    // 获取所有版本规划
+    /**
+     * 获取未被关联的版本事项
+     * @param {*} value 
+     * @returns 
+     */
     @action
 	getVersionPlanList = (value) => {
         Object.assign(this.searchCondition, {...value})
@@ -40,8 +57,11 @@ export class VersionPlanStore {
         })
     }
 
-
-    //获取已选择规划事项
+    /**
+     * 获取已被版本关联的事项列表
+     * @param {版本id} value 
+     * @returns 
+     */
     @action
 	getSelectVersionPlanList = (value) => {
         if(value){
@@ -71,7 +91,12 @@ export class VersionPlanStore {
         })
 		
     }
-    //添加已选择人员
+    
+    /**
+     * 添加版本的关联事项
+     * @param {*} params 
+     * @returns 
+     */
     @action
 	addVersionPlan = (params) => {
         let value = {
@@ -92,7 +117,12 @@ export class VersionPlanStore {
             })
         })
     }
-    //添加已选择人员
+
+    /**
+     * 删除事项与版本的关联关系
+     * @param {*} params 
+     * @returns 
+     */
     @action
 	deleVersionPlan = (params) => {
         let value = {
@@ -112,26 +142,6 @@ export class VersionPlanStore {
             console.log(error)
         })
     }
-    //搜索已选择人员
-    @action
-	searchVersionPlan = (params) => {
-        this.searchVersionPlanName = params
-		SearchVersionPlan(params).then(response => {
-            // console.log(response)
-            this.selectVersionPlanList = response.data.selectVersionPlanList;
-        }).catch(error => {
-            console.log(error)
-        })
-    }
-    //搜索已未选择人员
-    @action
-	searchAllVersionPlan = (params) => {
-		SearchAllVersionPlan(params).then(response => {
-            // console.log(response)
-            this.versionPlanList = response.data.versionPlanList;
-        }).catch(error => {
-            console.log(error)
-        })
-    }
+
 }
 export const EDITIONPLAN_STORE = "versionPlanStore"

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-12 13:27:06
  */
 import React, { Fragment, useEffect } from "react";
-import Worklist from "../components/workList";
+import Worklist from "../components/WorkList";
 import WorkTableContent from "../components/WorkTable";
 import WorkBodar from "../components/WorkBodar";
 import { observer, inject } from "mobx-react";
@@ -15,7 +15,7 @@ import { useSelector } from "tiklab-plugin-ui/es/_utils";
 import { RemoteUmdComponent } from "tiklab-plugin-ui"
 import WorkGantt from "../components/WorkGantt.js";
 import WorkBreadCrumb from "../components/WorkBreadCrumb";
-import WorkTableFilter from "../components/workTableFilter";
+import WorkTableFilter from "../components/WorkTableFilter";
 import { Form, Row, Col } from "antd";
 import "../components/Work.scss"
 

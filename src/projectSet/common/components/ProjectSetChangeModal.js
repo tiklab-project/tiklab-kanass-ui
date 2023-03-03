@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目集切换弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-07 14:56:02
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-21 11:22:59
+ */
 import React, { useEffect, useRef, useState } from "react";
 import "./ProjectSetChangeModal.scss";
 import { withRouter } from "react-router";
@@ -6,12 +14,12 @@ import { inject, observer } from "mobx-react";
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText } = props;
     const { findAllProjectSet, projectSetAllList, findProjectSet } = projectSetStore;
+    // 
     const setButton = useRef()
-
 
     const [showMenu, setShowMenu] = useState(false);
     const [selectProject, setSelectProject] = useState(false)
-
+    // 弹窗
     const modelRef = useRef()
 
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
@@ -46,13 +54,6 @@ const ProjectSetChangeModal = (props) => {
     }
 
 
-    const selectKeyFun = (item) => {
-        setSelectKey(item.key)
-        props.history.push(item.key)
-        setProjectSetBreadcumbText(item)
-        setShowMenu(false)
-
-    }
 
     /**
      * 切换项目

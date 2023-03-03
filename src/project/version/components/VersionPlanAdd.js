@@ -1,4 +1,13 @@
-import React, {useEffect} from "react";
+/*
+ * @Descripttion: 版本规划关联事项
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2022-04-09 16:39:00
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 19:09:13
+ */
+
+import React, {useState} from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./versionPlanAdd.scss"
 import {observer, inject} from "mobx-react";
@@ -7,15 +16,19 @@ import Button from "../../../common/button/Button";
 const { Search } = Input;
 
 const  VersionPlanAddmodal = (props) => {
-    const {projectStore,workStore,actionPlanId,versionPlanStore,
-            addVersionPlan} = props;
-    const {projectName} = projectStore;
-    const {workType,workTypeList} = workStore;
-    const [visible, setVisible] = React.useState(false);
-    const [selectedRowKeys,setSelectedRowKeys] = React.useState([]);
+    const {workStore,actionPlanId,versionPlanStore,addVersionPlan} = props;
+    const {workTypeList} = workStore;
     const {getVersionPlanList,versionPlanList} = versionPlanStore;
+    // 弹窗的显示
+    const [visible, setVisible] = useState(false);
+    // 选择的事项id集合
+    const [selectedRowKeys,setSelectedRowKeys] = useState([]);
+    // 项目id
     const projectId = props.match.params.id;
 
+    /**
+     * 显示弹窗
+     */
     const showModal = () => {
         setVisible(true);
         getVersionPlanList({projectId:projectId})
@@ -44,20 +57,26 @@ const  VersionPlanAddmodal = (props) => {
         }
     ];
     
-
+    /**
+     * 关闭弹窗
+     */
     const onCancel = () => {
         setVisible(false);
     };
     
-
-    // 选择用户
+    /**
+     * 勾线事项
+     * @param {*} selected 
+     * @param {*} selectedRows 
+     */
     const selectVersionPlan=(selected, selectedRows)=> {
         setSelectedRowKeys(selected)
-        // setSelectedVersionPlanList(selectedRows)
     }
 
 
-    //提交用户列表
+    /**
+     * 提交数据，添加版本关联的事项
+     */
     const submitVersionPlanList = ()=> {
         for(let i=0;i<selectedRowKeys.length;i++) {
             let params = {id: selectedRowKeys[i], version: actionPlanId}

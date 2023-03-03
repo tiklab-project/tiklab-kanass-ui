@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 全局搜索框加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
+
 import React, { Fragment, useEffect, useState } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss"
@@ -10,20 +19,27 @@ const Search = (props) => {
     const { searchStore, workStore, homeStore } = props;
     const { getSearch, searchList, getSearchSore, setKeyWord } = searchStore;
     const { setWorkId } = workStore;
-    const { statProjectWorkItem, statWorkItemProcess } = homeStore;
-    const [projectList, setProjectList] = useState();
-    const [workItemProcessList, setWorkItemProcessList] = useState();
+    const { statProjectWorkItem, statTodoWorkItem } = homeStore;
 
+    // 最近查看的项目列表
+    const [projectList, setProjectList] = useState();
+    // 待办事项列表
+    const [workItemProcessList, setWorkItemProcessList] = useState();
+    // 查找结果的弹窗是否显示
+    const [show, setShow] = useState("hidden")
+    // 登录者id
     const userId = getUser().userId;
 
     useEffect(() => {
+        // 获取最近查看的项目列表
         statProjectWorkItem(userId).then((res) => {
             if (res.code === 0 && res.data.length > 0) {
                 setProjectList(res.data)
             }
         })
 
-        statWorkItemProcess({pageSize: 1}).then((res) => {
+        // 获取待办事项列表
+        statTodoWorkItem({pageSize: 1}).then((res) => {
             if (res.code === 0) {
                 if (res.data.length > 5) {
                     setWorkItemProcessList(res.data.dataList.slice(0, 5))
@@ -37,7 +53,10 @@ const Search = (props) => {
         return
     }, [])
 
-    // 输入中
+    /**
+     * 改变查找关键字时候，重新搜索
+     * @param {查找关键字} value 
+     */
     const changeValue = (value) => {
         console.log(searchList, show)
         setShow("show")
@@ -45,23 +64,35 @@ const Search = (props) => {
 
     }
 
-
-    const [show, setShow] = useState("hidden")
+    /**
+     * 跳转到项目详情
+     * @param {项目id} id 
+     */
     const toProject = async (id) => {
         localStorage.setItem("projectId", id)
         await props.history.push("/index/prodetail/survey")
         setShow("hidden")
 
-    }
-    const toWorkItem = async (id, pid) => {
+    }  
+
+    /**
+     * 跳转到事项详情
+     * @param {事项id} id 
+     * @param {项目id} pid 
+     */
+    const toWorkItem = async (id, projectId) => {
         setWorkId(id)
-        localStorage.setItem("projectId", pid)
+        localStorage.setItem("projectId", projectId)
         await props.history.push("/index/prodetail/work")
         setShow("hidden")
         // location.reload();
 
     }
 
+    /**
+     * 点击回车跳转到结果页面
+     * @param {键盘值} value 
+     */
     const submit = (value) => {
         if (value.keyCode === 13) {
             getSearchSore(value.target.value)
@@ -70,9 +101,17 @@ const Search = (props) => {
             setShow("hidden")
         }
     }
+
+    /**
+     * 隐藏结果弹窗
+     */
     const hiddenBox = () => {
         setShow("hidden")
     }
+
+    /**
+     * 显示结果弹窗
+     */
     const showBox = () => {
         setShow("show")
     }

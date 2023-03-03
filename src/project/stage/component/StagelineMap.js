@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 路线图表格页面 
+ * @Descripttion: 阶段路线图表格页面 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
@@ -17,22 +17,27 @@ import { withRouter } from "react-router";
 const LineMapStage = (props) => {
     // 获取当前年月日
     const { data, setShowStageAddModal, setAddChild, setParentId } = props;
+    // 当前日期
     const todayDate = new Date()
+    // 当前年份
     const currentYear = todayDate.getFullYear()
+    // 当前月份
     const currentMonth = todayDate.getMonth()
+    // 当前日期
     const currentDay = todayDate.getDate()
-
+    // 日历
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
     const [ganttWidth, setGanttWidth] = useState()
-
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
+    // 展开的子级的上级id
     const [expandedTree, setExpandedTree] = useState([])
-
+    // 项目id
     const projectId = props.match.params.id;
     // 画布
     const [graph, getGraph] = useState()
+
 
     useEffect(() => {
         setdateArray(getDate())
@@ -105,7 +110,9 @@ const LineMapStage = (props) => {
         return
     }, [ganttdata])
 
-    //原始数据变化重新计算路线渲染数据
+    /**
+     * 原始数据变化重新计算路线渲染数据
+     */
     useEffect(() => {
         if (data.length > 0) {
             setGantt(setNode(data))
@@ -113,33 +120,25 @@ const LineMapStage = (props) => {
         return
     }, [data])
 
+    /**
+     * 树展开，重新设置图纸数据
+     */
     useEffect(() => {
-        console.log(expandedTree,data)
         if (data.length > 0) {
-            // setGantt()
-            // gantt = setNode(data)
             setGantt(setNode(data))
         }
         return
     }, [expandedTree])
 
 
-    // useEffect(()=> {
-    //     let gantt;
-    //     if(data && data.length > 0){
-    //         setGantt()
-    //         gantt = setNode(data)
-    //         setGantt(gantt)
-    //         // setGanttHeight(gantt.length  * 50)
-    //     }
-
-    //     return
-    // },[data,expandedTree])
-
     // 画布节点数据
     let ylength = 0;
 
-    //路线节点数据
+    /**
+     * 路线节点数据
+     * @param {*} data 
+     * @returns 
+     */
     const setNode = (data) => {
         let nodes = [];
         let edges = []
@@ -285,11 +284,19 @@ const LineMapStage = (props) => {
         setAddChild("child")
     }
 
-    // 树的展开与闭合
-    
+    /**
+     * 判断树是否展开
+     * @param {上级的id} key 
+     * @returns 
+     */
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
+
+    /**
+     * 树的展开与闭合
+     * @param {上级的id} key 
+     */
     const setOpenOrClose = (key) => {
         if (isExpandedTree(key)) {
             setExpandedTree(expandedTree.filter(item => item !== key))
@@ -299,7 +306,13 @@ const LineMapStage = (props) => {
         console.log(expandedTree)
     }
 
-    //绘制表格
+    /**
+     * 绘制表格
+     * @param {阶段数据} data 
+     * @param {上级id} fid 
+     * @param 层级 deep 
+     * @returns 
+     */
     const tableTd = (data, fid, deep) => {
         return (data && data.map((item) => {
             return (
@@ -368,8 +381,6 @@ const LineMapStage = (props) => {
     const timerColOuter = useRef();
     const timerColCore = useRef();
 
-    //  const ganttOuter = useRef();
-    //  const ganttCore = useRef();
 
 
     return (

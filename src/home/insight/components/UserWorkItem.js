@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目成员事项对比
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-25 14:38:38
+ */
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, DatePicker } from 'antd';
@@ -7,17 +15,31 @@ import * as echarts from 'echarts';
 
 const UserWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
-    const { statisticsUserWorkItemCount, findAllProjectSet, reportList} = insightStore;
+    const { statisticsUserWorkItemCount, findAllProjectSet,findAllProject, reportList} = insightStore;
+    // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
+    // 统计条件的表单
     const [form] = Form.useForm();
+    // 项目集列表
     const [projectSetList, setProjectSetList] = useState([])
-
+    // 所有项目的列表
+    const [projectList, setProjectList] = useState([]);
     useEffect(() => {
+         /**
+         * 查找所有项目集并设置默认项目集
+         */
          findAllProjectSet().then(res => {
             setProjectSetList(res.data)
         })
+
+        findAllProject().then(res => {
+            setProjectList(res.data)
+        })
     }, [])
 
+     /**
+     * 处于编辑状态时，初始化筛选表单
+     */
     useEffect(() => {
         if(isEditor){
             const params = { projectId: condition.data.data.projectId }
@@ -121,6 +143,10 @@ const UserWorkItem = (props) => {
         })
     }
 
+    /**
+     * 编辑保存统计条件
+     * @param {表单数据} value 
+     */
     const editReport = (values) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
@@ -128,10 +154,9 @@ const UserWorkItem = (props) => {
         statisticsUserWorkItem(values)
     }
 
-    const onFinishFailed = (values) => {
-        console.log(values);
-    };
-
+    /**
+     * 删除报表
+     */
     const deleteReport = () => {
         reportList.lg.splice(index, 1)
     }
@@ -142,7 +167,7 @@ const UserWorkItem = (props) => {
                 <div className="user-workitem-top">
                     <div className="user-workitem-title">
                         <div>
-                            项目成员对比
+                            项目的成员事项对比
                         </div>
                         {
                             !isView && <div className="report-action">
@@ -169,18 +194,17 @@ const UserWorkItem = (props) => {
                         form={form}
                         initialValues={{ remember: true }}
                         onFinish={editReport}
-                        onFinishFailed={onFinishFailed}
                         wrapperCol={{ span: 12 }}
                         labelCol={{ span: 6 }}
                         layout = "vertical"
                     >   
-                        <Form.Item name="projectSet" label="项目集" rules={[{ required: true }]}>
+                        <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
                             <Select
-                                placeholder="请选择项目集"
+                                placeholder="请选择项目"
                             >
                                 {
-                                    projectSetList && projectSetList.map(item => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    projectList && projectList.map(item => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
                                     })
                                 }
                             </Select>

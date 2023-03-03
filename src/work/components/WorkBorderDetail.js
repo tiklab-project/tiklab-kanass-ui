@@ -15,8 +15,6 @@ import { observer, inject } from "mobx-react";
 const WorkBorderDetail = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, workStore, modelRef } = props;
-    const { setWorkId, setWorkIndex } = workStore;
-    const [title, setTitle] = useState("查看事项");
 
     const showModal = (id, index, title) => {
         setIsModalVisible(true);
