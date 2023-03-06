@@ -6,10 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-02-17 11:19:17
  */
-import {
-    GetUseList, FindProjectList, FindProjectIsOrNotRe, UpdateProject, AddRelevance
-} from "../api/ProjectSetProject";
 import { observable, action } from "mobx";
+import {Service} from "../../../common/utils/requset";
 
 export class ProjectSetProjectStore {
     @observable uselist = [];
@@ -46,49 +44,66 @@ export class ProjectSetProjectStore {
     setVisible = (value) => {
         this.visible = value
     }
-    // 获取成员列表
+
+    /**
+     * 获取全部系统成员
+     * @returns 
+     */
     @action
-    getUseList = () => {
-        GetUseList().then(response => {
-            this.uselist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getUseList = async() => {
+        const data = await Service("/user/user/findAllUser")
+        if(data === 0){
+            this.uselist = data.data;
+        }
+        return data
     }
-    //获取关联项目
+
+    /**
+     * 获取项目集关联项目
+     * @param {项目集id} values 
+     * @returns 
+     */
     @action
     findProjectList = async (values) => {
-        console.log(data)
         Object.assign(this.projectPageParams, { ...values })
-        const data = await FindProjectList(this.projectPageParams);
+        const data = await Service("/projectSet/findProjectList", this.projectPageParams);
         
         this.projectRelevance = data.data
         return data;
     }
 
+    /**
+     * 获取已被关联项目和未被关联项目
+     * @returns 
+     */
     @action
     findProjectIsOrNotRe = async () => {
-        const data = await FindProjectIsOrNotRe();
+        const data = await Service("/projectSet/findProjectIsOrNotRe");
         if (data.code === 0) {
             this.noRelatedProjects = data.data.noRelatedProjects;
-            console.log(this.noRelatedProjects)
             this.relatedProjects = data.data.relatedProjects;
         }
         return data;
     }
 
-    // 取消关联项目
+    /**
+     * 更新项目的项目集字段，用来取消项目集的项目关联
+     * @param {*} value 
+     * @returns 
+     */
     @action
     updateProject = async (value) => {
-        const data = await UpdateProject(value);
-
+        const data = await Service("/project/updateProject", value);
         return data;
     }
 
-    // 添加关联
+    /**
+     * 添加项目集的关联项目
+     * @param {*} value 
+     * @returns 
+     */
     addRelevance = async (value) => {
-
-        const data = await AddRelevance(value);
+        const data = await Service("/projectSet/addRelevance", value);
 
         return data;
     }

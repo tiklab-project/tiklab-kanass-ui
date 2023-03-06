@@ -6,13 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-02-26 18:12:22
  */
-import {
-    GetStaticsUserList, CreateReport, FindReportList, FindReport,
-    StatisticWorkItem, DeleteReport, StatisticBuildAndEndWorkItem, UpdateReport,
-    StatisticsNewWorkItemCount, StatisticsEndWorkItemCount,StatisticsWorkItemTotalCountList,
-    StatisticsEndWorkItemTotalCountList, FindDmUserPage, FindProjectList
-} from "../api/StatisticsApi";
-
+import {Service} from "../../common/utils/requset";
 import { observable, action } from "mobx";
 
 export class StatisticsStore {
@@ -55,67 +49,36 @@ export class StatisticsStore {
             children: []
         }
     ]
-    // @action
-    // getStaticsWorkList = () => {
-    //     return new Promise((resolve, reiect) => {
-    //         GetStaticsWorkList().then(response => {
-    //             if (response.data.length > 0) {
-    //                 // debugger
-    //                 this.workXaixs = []
-    //                 this.workYaixs = []
-    //                 this.workPreData = []
-    //                 this.statisticsWorkList = response.data;
-    //                 response.data.map((item) => {
-    //                     this.workXaixs.push(item.workStatus.name)
-    //                     this.workYaixs.push(item.groupCount)
-    //                     this.workPreData.push({ name: item.workStatus.name, value: item.percent })
-    //                     return 0;
-    //                 })
-    //             } else {
-    //                 this.statisticsWorkList = [];
-    //             }
-    //             resolve()
-    //         }).catch(error => {
-    //             reiect(error)
-    //         })
-    //     })
-
-    // }
 
     @action
-    getStaticsUserList = () => {
-        return new Promise((resolve, reiect) => {
-            GetStaticsUserList().then(response => {
-                if (response.data.length !== 0) {
-                    this.UserXaixs = []
-                    this.UserYaixs = []
-                    this.UserPreData = []
-                    this.statisticsUserList = response.data;
-                    response.data.map((item, index) => {
-                        this.UserXaixs.push(item.assigner.name)
-                        this.UserYaixs.push(item.groupCount)
-                        this.UserPreData.push({ name: item.assigner.name, value: item.percent })
-                        return 0;
-                    })
-                }
-
-                resolve()
-            }).catch(error => {
-                reiect(error)
-            })
-        })
-
-    }
-
-    @action
-    createReport = async (value) => {
-        const data = await CreateReport(value);
+    getStaticsUserList = async() => {
+        const data = await Service("/workItemStat/statWorkItemByAssigner", value)
+        if(data.code === 0){
+            if (data.data.length !== 0) {
+                this.UserXaixs = []
+                this.UserYaixs = []
+                this.UserPreData = []
+                this.statisticsUserList = data.data;
+                data.data.map((item, index) => {
+                    this.UserXaixs.push(item.assigner.name)
+                    this.UserYaixs.push(item.groupCount)
+                    this.UserPreData.push({ name: item.assigner.name, value: item.percent })
+                    return 0;
+                })
+            }
+        }
         return data;
     }
 
     @action
-    findReportList = async (value, projectType) => {
-        const data = await FindReportList(value);
+    createReport = async (value) => {
+        const data = await Service("/report/createReport", value)
+        return data;
+    }
+
+    @action
+    findReportList = async (value) => {
+        const data = await Service("/report/findReportList", value)
         if (data.code === 0) {
             const list = data.data;
             this.setReportList([
@@ -214,7 +177,7 @@ export class StatisticsStore {
     findReport = async (value) => {
         const params = new FormData();
         params.append("id", value.id)
-        const data = await FindReport(params);
+        const data = await Service("/report/findReport", params)
         return data;
     }
 
@@ -224,8 +187,8 @@ export class StatisticsStore {
     }
 
     @action
-    statisticWorkItem = async (value) => {
-        const data = await StatisticWorkItem(value);
+    statisticWorkItem = async (value) => {;
+        const data = await Service("/statistic/statisticWorkItem", value)
         return data;
     }
 
@@ -233,43 +196,43 @@ export class StatisticsStore {
     deleteReport = async (value) => {
         const params = new FormData();
         params.append("id", value.id)
-        const data = await DeleteReport(params);
+        const data = await Service("/report/deleteReport", value)
         return data;
     }
 
     @action
     statisticBuildAndEndWorkItem = async (value) => {
-        const data = await StatisticBuildAndEndWorkItem(value);
+        const data = await Service("/statistic/statisticBuildAndEndWorkItem", value)
         return data;
     }
 
     @action
     updateReport = async (value) => {
-        const data = await UpdateReport(value);
+        const data = await Service("/report/updateReport", value)
         return data;
     }
 
     @action
     statisticsNewWorkItemCount = async (value) => {
-        const data = await StatisticsNewWorkItemCount(value);
+        const data = await Service("/projectInsightReportController/statisticsNewWorkItemCount", value)
         return data;
     }
 
     @action
     statisticsEndWorkItemCount = async (value) => {
-        const data = await StatisticsEndWorkItemCount(value);
+        const data = await Service("/projectInsightReportController/statisticsEndWorkItemCount", value)
         return data;
     }
 
     @action
     statisticsWorkItemTotalCountList = async (value) => {
-        const data = await StatisticsWorkItemTotalCountList(value);
+        const data = await Service("/projectInsightReportController/statisticsWorkItemTotalCountList", value)
         return data;
     }
 
     @action
     statisticsEndWorkItemTotalCountList = async (value) => {
-        const data = await StatisticsEndWorkItemTotalCountList(value);
+        const data = await Service("/projectInsightReportController/statisticsEndWorkItemTotalCountList", value)
         return data;
     }
 
@@ -279,7 +242,7 @@ export class StatisticsStore {
             domainId: value.projectId,
             pageParam : { pageSize: 10, currentPage: 1 }
         }
-        const data = await FindDmUserPage(params);
+        const data = await Service("/dmUser/findDmUserPage", params)
         return data;
     }
 
@@ -297,8 +260,7 @@ export class StatisticsStore {
             },
             projectSetId: values.projectSetId
         }
-        const data = await FindProjectList(params);
-        
+        const data = await Service("/projectSet/findProjectList", params)
         this.projectRelevance = data.data
         return data;
     }

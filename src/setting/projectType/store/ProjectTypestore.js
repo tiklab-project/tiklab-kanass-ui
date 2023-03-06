@@ -1,9 +1,5 @@
 import { observable, action } from "mobx";
-import {
-    GetProjectTypeList, AddProjectTypeList, EditProjectTypeList,
-    FindProjectTypeListById, DeleteProjectTypeList
-} from "../api/ProjectType";
-
+import {Service} from "../../../common/utils/requset";
 export class ProjectTypeStore {
     @observable projectTypelist = [];
 
@@ -17,7 +13,7 @@ export class ProjectTypeStore {
 
     // 事件类型
     @action
-    getProjectTypeList = (page, name) => {
+    getProjectTypeList = async(page, name) => {
         Object.assign(this.projectTypePage, { ...page })
         this.projectTypeName = name
         const params = {
@@ -31,63 +27,44 @@ export class ProjectTypeStore {
                 currentPage: this.projectTypePage.current
             }
         }
-        return new Promise((resolve, reject) => {
-            GetProjectTypeList(params).then(response => {
-                // this.projectTypelist = response.data;
-                if (response.code === 0) {
-                    this.projectTypelist = response.data.dataList;
-                    this.projectTypePage.total = response.data.totalRecord;
-                }
-                resolve(response.data.dataList)
-            }).catch(error => {
-                console.log(error)
-            })
-        })
+        const data = await Service("/projectType/findProjectTypePage", params)
+        if (data.code === 0) {
+            this.projectTypelist = data.data.dataList;
+            this.projectTypePage.total = data.data.totalRecord;
+        }
+        return data.data.dataList;
 
     }
+
     @action
     addProjectTypeList = async(value) => {
-        const data = AddProjectTypeList(value)
-        // if (data.code === 0) {
-        //     this.getProjectTypeList()
-        // }
+        const data = await Service("/projectType/createProjectType", value)
         return data;
     }
-    @action
-    editProjectTypeList = (value) => {
-        EditProjectTypeList(value).then(response => {
-            // this.projectTypelist = response.data;
-            if (response.code === 0) {
 
-                this.getProjectTypeList()
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+    @action
+    editProjectTypeList = async(value) => {
+        const data = await Service("/projectType/updateProjectType", value)
+        if (data.code === 0) {
+            this.getProjectTypeList()
+        }
+        return data;
     }
     // 根据id查找
     @action
-    findProjectTypeListById = (id) => {
+    findProjectTypeListById = async(id) => {
         const params = new FormData()
         params.append("id", id)
-
-        return new Promise((resolve, reject) => {
-            FindProjectTypeListById(params).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/projectType/findProjectType", params)
+        return data;
 
     }
     // 根据id删除
     @action
     deleteProjectTypeList = async(id) => {
-
         const params = new FormData()
         params.append("id", id)
-        const data = await DeleteProjectTypeList(params);
+        const data = await Service("/projectType/deleteProjectType", params)
         if(data.code === 0){
             this.getProjectTypeList(this.projectTypePage, this.projectTypeName).then((res) => {
                 if (res.length === 0) {

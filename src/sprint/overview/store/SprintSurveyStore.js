@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-04 09:00:09
  */
 import { observable, action } from "mobx";
-import { statSprintProcessWorkItem,statSprintWorkItemByBusStatus,findSprint,findSprintBurnDowmChartPage,Findlogpage, Findtodopage } from "../api/sprintSurveyApi";
+import {Service} from "../../../common/utils/requset";
 export class SprintSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
@@ -18,7 +18,7 @@ export class SprintSurveyStore {
         const params = new FormData();
         params.append("sprintId",value.sprintId)
         params.append("masterId",value.masterId)
-		const data = await statSprintProcessWorkItem(params);
+        const data = await Service("/workItemStat/statSprintProcessWorkItem", value)
         return data;
     }
 
@@ -26,7 +26,7 @@ export class SprintSurveyStore {
 	StatSprintWorkItemByBusStatus = async(value) => {
         const params = new FormData();
         params.append("sprintId",value.sprintId)
-		const data = await statSprintWorkItemByBusStatus(params);
+        const data = await Service("/workItemStat/statSprintWorkItemByBusStatus", value)
         return data;
     }
 
@@ -35,7 +35,7 @@ export class SprintSurveyStore {
 	FindSprint = async(value) => {
         const params = new FormData();
         params.append("id",value.sprintId)
-		const data = await findSprint(params);
+        const data = await Service("/sprint/findSprint", params)
         return data;
     }
 
@@ -53,7 +53,7 @@ export class SprintSurveyStore {
                 currentPage: 1
             }
         }
-        const data = await findSprintBurnDowmChartPage(params);
+        const data = await Service("/sprintBurnDowmChart/findSprintBurnDowmChartPage", params)
         return data;
     }
 
@@ -66,7 +66,7 @@ export class SprintSurveyStore {
             },
             bgroup: "teamwire"
         }
-        const data = await Findlogpage(params);
+        const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
             this.opLogList = data.data.dataList
         }
@@ -83,7 +83,7 @@ export class SprintSurveyStore {
             bgroup: "teamwire",
             userId: value.userId
         }
-        const data = await Findtodopage(params);
+        const data = await Service("/todo/findtodopage", params)
         if(data.code === 0) {
             this.todoTaskList = data.data.dataList;
         }

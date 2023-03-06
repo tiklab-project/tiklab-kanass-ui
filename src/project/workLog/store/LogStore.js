@@ -7,9 +7,7 @@
  * @LastEditTime: 2022-01-24 09:32:54
  */
 import { observable, action } from "mobx";
-import {FindAllWorkLog,FindProjectUserLog,FindUserProjectLog, FindWorkLogPage, 
-    FindAllUser, FindProjectWorkItemLog, FindWorkItemList, AddWorkLog, FindWorkLog, UpdateWorkLog } from "../api/LogApi";
-
+import { Service } from "../../../common/utils/requset"
 export class LogStore {
     // 工时列表
     @observable 
@@ -45,7 +43,7 @@ export class LogStore {
      */
     @action
 	findAllWorkLog = async() => {
-		const data = await FindAllWorkLog();
+        const data = await Service("/workLog/findAllWorkLog", params);
         this.LogAllList = data;
         return data;
     }
@@ -56,7 +54,7 @@ export class LogStore {
      */
     @action
 	findAllUser = async() => {
-		const data = await FindAllUser();
+        const data = await Service("/user/user/findAllUser");
         this.userList = data.data;
         return data;
     }
@@ -70,7 +68,7 @@ export class LogStore {
 	findWorkLog = async(value) => {
         const params = new FormData();
         params.append("id", value.id)
-		const data = await FindWorkLog(params);
+        const data = await Service("/workLog/findWorkLog");
         return data;
     }
     
@@ -82,9 +80,7 @@ export class LogStore {
     @action
 	findWorkLogPage = async(value) => {
         Object.assign(this.selectLogCondition, {...value} )
-		const data = await FindWorkLogPage(this.selectLogCondition);
-        // this.LogAllList = data;
-
+        const data = await Service("/workLog/findWorkLogPage", params);
         if(data.code === 0){
             this.logList = data.data.dataList;
             this.selectLogCondition.pageParam.total = data.data.totalRecord
@@ -100,8 +96,7 @@ export class LogStore {
     @action
     findProjectUserLog = async(value) => {
         this.selectUserCondition = {...this.selectUserCondition,...value}
-        
-		const data = await FindProjectUserLog(this.selectUserCondition);
+        const data = await Service("/workLog/findProjectUserLog", this.selectUserCondition);
         return data;
     }
 
@@ -113,8 +108,7 @@ export class LogStore {
     @action
     findProjectWorkItemLog = async(value) => {
         this.selectUserCondition = {...this.selectUserCondition,...value}
-        
-		const data = await FindProjectWorkItemLog(this.selectUserCondition);
+        const data = await Service("/workLog/findProjectWorkItemLog", this.selectUserCondition);
         return data;
     }
 
@@ -126,7 +120,7 @@ export class LogStore {
     @action
 	findUserProjectLog = async(value) => {
         this.selectWorkCondition = {...this.selectWorkCondition,...value};
-		const data = await FindUserProjectLog(this.selectWorkCondition);
+        const data = await Service("/workLog/findUserProjectLog", this.selectWorkCondition);
         return data;
     }
 
@@ -137,8 +131,7 @@ export class LogStore {
      */
     @action
     findWorkItemList = async(value) => {
-        
-		const data = await FindWorkItemList(value);
+        const data = await Service("/workItem/findWorkItemList", value);
         return data;
     }
 
@@ -149,7 +142,7 @@ export class LogStore {
      */
     @action
     addWorkLog = async(value) => {
-        const data = await AddWorkLog(value);
+        const data = await Service("/workLog/createWorkLog", value);
         return data;
     }
 
@@ -160,7 +153,7 @@ export class LogStore {
      */
     @action
     updateWorkLog = async(value) => {
-        const data = await UpdateWorkLog(value);
+        const data = await Service("/workLog/updateWorkLog", value);
         return data;
     }
     

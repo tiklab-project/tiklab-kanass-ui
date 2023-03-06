@@ -83,10 +83,6 @@ const ProjectSetAddInfo = (props) => {
         })
     }
 
-    const onReset = () => {
-        form.resetFields();
-    };
-
     const checkLimit = (_, value) => {
         console.log(value)
         if (value) {

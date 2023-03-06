@@ -1,15 +1,5 @@
 import { observable, action, extendObservable } from "mobx";
-import { GetAllProList } from "../../project/project/api/ProjectApi";
-import { getModuleList } from "../../project/setting/module/api/ModuleApi";
-import {
-    AddWork, SearchWorkById, DetWork,
-    EditWork, FindPriority, WorkType, FindDmUserPage, WorkStatus, WorkList,
-    UploadFile, WorkBoardList, FindWorkAttachList, CreateWorkAttach,
-    FindFormConfig, FindToNodeList,WorkChildrenListByListTree, FindWorkItemPageTreeByQuery,
-    FindFlowDef,FindWorkItemList, FindWorkUserGroupBoardList,FindWorkTypeIds,FindSprintList,
-    FindTaskWorkType, FindStateNodeList, StatWorkItemOverdue, FindWorkItem,CreateRecent,
-    FindWorkTypeList, FindFieldList, FindDmFlowList
-} from "../api/WorkApi";
+import { Service } from "../../common/utils/requset";
 
 export class WorkStore {
     @observable workBoardList = [];
@@ -174,7 +164,7 @@ export class WorkStore {
     //查找所有项目
     @action
     findProjectList = async () => {
-        const data = await GetAllProList()
+        const data = await Service("/project/findAllProject")
         this.projectList = data.data;
     }
 
@@ -189,7 +179,7 @@ export class WorkStore {
                 orderType: "asc"
             }]
         }
-        const data = await getModuleList(params);
+        const data = await Service("/module/findModuleList",params);
         if(data.code === 0){
             this.moduleList = data.data;
         }
@@ -207,7 +197,7 @@ export class WorkStore {
                 orderType: "asc"
             }]
         }
-        const data = await FindSprintList(params);
+        const data = await Service("/sprint/findSprintList",params);
         if (data.code === 0) {
             this.sprintList = data.data;
         }
@@ -224,7 +214,7 @@ export class WorkStore {
                 currentPage: 1
             }
         }
-        const data = await FindDmUserPage(params)
+        const data = await Service("/dmUser/findDmUserPage",params);
         if(data.code === 0){
             const list = data.data.dataList;
             const newList = [];
@@ -244,24 +234,18 @@ export class WorkStore {
 
     //获取事项列表
     @action
-    getWorkAllList = (value) => {
-
-        return new Promise((resolve, reject) => {
-            WorkList(value).then(response => {
-                this.workAllList = response.data;
-
-                resolve(response.data.dataList)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    getWorkAllList = async(value) => {
+        const data = await Service("/workItem/findAllWorkItem",value);
+        if(data.code === 0){
+            this.workAllList = data.data;
+        }
+        return data;
     }
 
     // 获取看板视图事项列表
     getWorkBoardList = async (value) => {
         this.setSearchCondition(value)
-        const data = await WorkBoardList(this.searchCondition);
+        const data = await Service("/workItem/findWorkBoardList",this.searchCondition);
         if (data.code === 0) {
             this.workBoardList = data.data;
             const listLength = this.workBoardList.length
@@ -279,8 +263,7 @@ export class WorkStore {
     // 获取人员分组的看板视图事项列表
     findWorkUserGroupBoardList = async (value) => {
         this.setSearchCondition(value)
-        const data = await FindWorkUserGroupBoardList(this.searchCondition);
-
+        const data = await Service("/workItem/findWorkUserGroupBoardList",this.searchCondition);
         if (data.code === 0) {
             this.workUserGroupBoardList = data.data.map((item, index) => {
                 const listLength = item.workBoardList.length
@@ -332,7 +315,7 @@ export class WorkStore {
     getWorkConditionPageTree = async (value) => {
         this.setSearchCondition(value)
         let data = [];
-        data = await FindWorkItemPageTreeByQuery(this.searchCondition);
+        data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             if(this.searchCondition.pageParam.currentPage === 1 || this.workShowType !== "list" ){
                 this.workList = data.data.dataList
@@ -352,7 +335,7 @@ export class WorkStore {
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
-        let data = await FindWorkItemList(this.searchCondition);
+        let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
             this.workList = data.data.dataList;
             this.currentPage = this.searchCondition.pageParam.currentPage;
@@ -367,14 +350,13 @@ export class WorkStore {
     @action
     getWorkGanttListTree = async(value) => {
         this.setSearchCondition(value)
-
-        const data = await FindWorkItemPageTreeByQuery(this.searchCondition);
+        const data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         return data.data;
     }
 
     //按照条件查找事项  子事项
     @action
-    getWorkListTree = (value) => {
+    getWorkListTree = async(value) => {
         this.setSearchCondition(value)
         const params = {
             projectId: this.searchCondition.project,
@@ -392,19 +374,11 @@ export class WorkStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-
-        return new Promise((resolve, reject) => {
-            WorkChildrenListByListTree(params).then(response => {
-                if (response.code === 0) {
-                    this.workListTime = response.data;
-                    resolve(response.data)
-                }
-
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/findWorkItemListTree",params);
+        if (data.code === 0) {
+            this.workListTime = data.data;
+        }
+        return data;
     }
 
     //添加事项列表
@@ -453,30 +427,25 @@ export class WorkStore {
             extData: JSON.stringify(value.extData)
 
         }
-        const data = await AddWork(params);
+        const data = await Service("/workItem/createWorkItem",params);
         return data
     }
 
     // 根据id查找事项列表
     @action
-    searchWorkById = (id, index) => {
+    searchWorkById = async(id, index) => {
         const param = new FormData()
         param.append("id", id)
-
-        return new Promise((resolve, reject) => {
-            SearchWorkById(param).then(response => {
-                this.workInfo = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/findWorkItem",param);
+        if(data.code === 0){
+            this.workInfo = data.data;
+        }
+        return data;
     }
 
     // 创建事项附件
     @action
-    createWorkAttach = (workId, fileName) => {
+    createWorkAttach = async(workId, fileName) => {
         const params = {
             workItem: {
                 id: workId
@@ -485,57 +454,35 @@ export class WorkStore {
                 fileName: fileName
             }
         }
-        return new Promise((resolve, reject) => {
-            CreateWorkAttach(params).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workAttach/createWorkAttach",params);
+        return data;
     }
 
     // 根据id查找事项附件
     @action
-    findWorkAttachList = (value) => {
+    findWorkAttachList = async(value) => {
         const values = {
             workItemId: value,
         }
-        return new Promise((resolve, reject) => {
-            FindWorkAttachList(values).then(response => {
-                this.attachList = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workAttach/findWorkAttachList",values);
+        if(data.code === 0){
+            this.attachList = data.data;
+        }
+        return data;        
     }
 
     //删除事项
     @action
-    detWork = (value) => {
+    detWork = async(value) => {
         const params = new FormData()
         params.append("id", value)
-        return new Promise((resolve, reject) => {
-            DetWork(params).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/deleteWorkItem",params);
+        return data;
     }
 
     //编辑事项
     @action
     editWork = async(value) => {
-        // if (value.workType || String(value.workType) === "0") {
-        //     value.updateField = "workType"
-        //     value.workType = {
-        //         id: value.workType
-        //     }
-        // }
         if (value.workPriority || String(value.workPriority) === "0") {
             value.updateField = "workPriority"
             value.workPriority = {
@@ -598,7 +545,7 @@ export class WorkStore {
             value.eachType = value.eachType
         }
 
-        const data = await EditWork(value)
+        const data = await Service("/workItem/updateWorkItem",params);
         if(data.code === 0){
             return data;
         }
@@ -606,7 +553,7 @@ export class WorkStore {
 
     // 修改事项状态
     @action
-    changeWorkStatus = (value) => {
+    changeWorkStatus = async(value) => {
         let params = {
             updateField : "workStatus",
             id: value.id,
@@ -614,46 +561,27 @@ export class WorkStore {
                 id: value.workStatus
             }
         }
-        return new Promise((resolve, reject) => {
-            EditWork(params).then(response => {
-                resolve(response)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/updateWorkItem",params);
+        return data;
     }
 
     // 修改字段
-    updateWorkItem = (value) => {
-        return new Promise((resolve, reject) => {
-            EditWork(value).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    updateWorkItem = async(value) => {
+        const data = await Service("/workItem/updateWorkItem",params);
+        return data;
 
     }
 
     // 修改计划日期
-    changePercent = (value) => {
-        return new Promise((resolve, reject) => {
-            EditWork(value).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    changePercent = async(value) => {
+        const data = await Service("/workItem/updateWorkItem",value);
+        return data.data;
     }
 
     //获取优先级类型
     @action
     findPriority = async() => {
-
-        const data = await FindPriority();
+        const data = await Service("/workPriority/findAllWorkPriority");
         if(data.code === 0){
             this.priorityList = data.data;
         }
@@ -662,47 +590,35 @@ export class WorkStore {
 
     //获取事项类型
     @action
-    getWorkTypeList = (value) => {
-        // const params = {
-        //     projectId: value.projectId,
-        //     scope: 1
-        // }
-        return new Promise((resolve, reject) => {
-            FindWorkTypeList(value).then(response => {
-                this.workTypeList = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    getWorkTypeList = async(value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+        if(data.code === 0){
+            this.workTypeList = data.data;
+        }
+        return data.data;
     }
 
     //获取自定义的数据类型
     @action
     findWorkTypeList = async(value) => {
-       const data = await FindWorkTypeList(value);
+       const data = await Service("/workTypeDm/findWorkTypeDmList",value);
        return data;
     }
 
     //获取事项状态
     @action
-    getWorkStatus = () => {
+    getWorkStatus = async() => {
         const params = {
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
             }
         }
-        return new Promise((resolve, reject) => {
-            WorkStatus(params).then(response => {
-                this.workStatusList = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/stateNode/findAllStateNode",params);
+        if(data.code === 0){
+            this.workStatusList = data.data;
+        }
+        return data.data;
     }
 
     // 获取当前事项流程的节点
@@ -710,7 +626,7 @@ export class WorkStore {
     findFlowDef = async (value) => {
         const param = new FormData()
         param.append("id", value.id)
-        const data = await FindFlowDef(param);
+        const data = await Service("/flow/findFlowDef",param);
         if (data.code === 0) {
             if (data.data) {
                 this.statesList = data.data.stateNodeList
@@ -728,23 +644,16 @@ export class WorkStore {
 
     // 上传文件
     @action
-    uploadFile = () => {
-        return new Promise((resolve, reject) => {
-            UploadFile().then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    uploadFile = async() => {
+        const data = await Service("/dfs/upload");
+        return data.data;
     }
 
     // 根据事项类型，获取自定义表单
     findFormConfig = async(value) => {
         const param = new FormData()
         param.append("formId", value.id)
-         
-        const data = await FindFormConfig(param);
+        const data = await Service("/workType/findFormConfig", param);
         if(data.code === 0){
             this.formList = data.data?.customFieldList;
         }
@@ -755,8 +664,7 @@ export class WorkStore {
     findToNodeList = async(value) => {
         const params = new FormData()
         params.append("nodeId", value.nodeId);
-
-        const data = await FindToNodeList(params);
+        const data = await Service("/stateNode/findToNodeList", params);
         if(data.code === 0){
             if (data.data && data.data.length > 0) {
                 this.statesList = data.data
@@ -771,8 +679,7 @@ export class WorkStore {
     findWorkTypeIds = async(value) => {
         const params = new FormData()
         params.append("code", value.code)
-        const data = await FindWorkTypeIds(params)
-
+        const data = await Service("/workType/findWorkTypeIds", params);
         return data;
 
     }
@@ -782,7 +689,7 @@ export class WorkStore {
         const params = new FormData()
         params.append("code", value.code)
         params.append("projectId", value.projectId)
-        const data = await FindTaskWorkType(params)
+        const data = await Service("/workTypeDm/findTaskWorkType", params);
 
         return data;
 
@@ -790,8 +697,7 @@ export class WorkStore {
 
     @action
     findStateNodeList = async(value) => {
-        const data = await FindStateNodeList(value)
-
+        const data = await Service("/stateNodeFlow/findStateNodeFlowList", value)
         return data;
 
     }
@@ -810,7 +716,7 @@ export class WorkStore {
                 currentPage: 1
             }
         }
-        const data = await StatWorkItemOverdue(params);
+        const data = await Service("/workItemStat/statWorkItemOverdue", params)
         if (data.code === 0) {
             this.workList = data.data.dataList;
             this.currentPage = this.searchCondition.pageParam.currentPage;
@@ -825,10 +731,7 @@ export class WorkStore {
     findWorkItem = async(value) => {
         const params = new FormData()
         params.append("id", value.id)
-        const data = await FindWorkItem(params);
-        // debugger
-        console.log(data)
-        
+        const data = await Service("/workItem/findWorkItem", params)
         if(data.code === 0){
             this.workList = [data.data];
             this.currentPage = this.searchCondition.pageParam.currentPage;
@@ -841,14 +744,14 @@ export class WorkStore {
 
     @action
     createRecent = async (value) => {
-        const data = await CreateRecent(value)
+        const data = await Service("/recent/createRecent", value)
         return data;
 
     }
 
     @action
     findFieldList = async (value) => {
-        const data = await FindFieldList(value)
+        const data = await Service("/field/findFieldList", value)
         return data;
 
     }
@@ -856,16 +759,14 @@ export class WorkStore {
     //获取项目内事项类型
     @action
     findWorkTypeDmList = async (value) => {
-        
-        const data = await FindWorkTypeList(value)
-        console.log(data)
+        const data = await Service("/workTypeDm/findWorkTypeDmList", value);
         return data;
 
     }
 
     @action
     findDmFlowList = async (value) => {
-        const data = await FindDmFlowList(value)
+        const data = await Service("/dmFlow/findDmFlowList", value);
         return data;
 
     }

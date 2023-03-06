@@ -1,6 +1,5 @@
 import { observable, action, extendObservable } from "mobx";
-import {GetNoPlanWorkList,GetWorkList,GetSprintList,SetSprint} from "../api/SprintPlanApi";
-
+import {Service} from "../../../common/utils/requset";
 export class SprintPlanStore {
     @observable noPlanWorkList = [];
     @observable planWorkList = [];
@@ -35,51 +34,31 @@ export class SprintPlanStore {
     }
 
     @action
-	getNoPlanWorkList = (value) => {
+	getNoPlanWorkList = async(value) => {
         this.setNoPlanSearchCondition(value)
-		GetNoPlanWorkList(this.noPlanSearchCondition).then(response => {
-            if(response.code=== 0){
-                this.noPlanWorkList = response.data;
-                // this.noPlanTotal = 
-            }
-			
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/workItem/findWorkItemList", value)
+		if(data.code=== 0){
+            this.noPlanWorkList = data.data;
+        }
+        return data;
     }
-
     @action
     setSearchCondition = (value) => {
         this.searchCondition = extendObservable(this.searchCondition,  { ...value })
     }
 
     @action
-	getWorkList = (value) => {
+	getWorkList = async(value) => {
         this.setSearchCondition(value)
-        // const params={
-        //     projectId: value.projectId,
-        //     sprintId: value.sprintId,
-        //     sortParams: [{
-        //         name: "title",
-        //         orderType:"asc"
-        //     }],
-        //     pageParam: {
-        //         pageSize: 10,
-        //         currentPage: this.searchCondition.currentPage
-        //     }
-        // }
-		GetWorkList(this.searchCondition).then(response => {
-            if(response.code=== 0){
-                this.planWorkList = response.data;
-            }
-			
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/workItem/findWorkItemList", this.searchCondition)
+        if(data.code === 0){
+            this.planWorkList = data.data;
+        }
+		return data;
     }
 
     @action
-	getSprintList = (value) => {
+	getSprintList = async(value) => {
         const params={
             projectId: value.projectId,
             sortParams: [{
@@ -91,59 +70,36 @@ export class SprintPlanStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-		GetSprintList(params).then(response => {
-            if(response.code=== 0){
-                this.sprintList = response.data;
-            }
-			
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/sprint/findSprintList", params)
+        if(data.code=== 0){
+            this.sprintList = data.data;
+        }
+        return data;
     }
 
     @action
-	setSprint = (value) => {
+	setSprint = async(value) => {
         const params={
             id: value.startId,
             sprint: {
                 id: value.endId
             }
         }
-        return new Promise((resolve,reject)=> {
-            SetSprint(params).then(response => {
-                if(response.code=== 0){
-                    // this.getNoPlanWorkList()
-                    // this.getWorkList()
-                    resolve(response.code)
-                }
-                
-            }).catch(error => {
-                console.log(error)
-            })
-        })
+        const data = await Service("/workItem/updateWorkItem", params)
+        return data;
 		
     }
 
     @action
-	delSprint = (value) => {
+	delSprint = async(value) => {
         const params={
             id: value.startId,
             sprint: {
                 id: "nullstring"
             }
         }
-        return new Promise((resolve,reject)=> {
-            SetSprint(params).then(response => {
-                if(response.code=== 0){
-                    // this.getNoPlanWorkList()
-                    // this.getWorkList()
-                    resolve(response.code)
-                }
-                
-            }).catch(error => {
-                console.log(error)
-            })
-        })
+        const data = await Service("/workItem/updateWorkItem", params)
+        return data;
 		
     }
 }

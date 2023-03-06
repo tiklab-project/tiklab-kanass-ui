@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import {GetWorkLogList,AddWorkLog,DeleteWorKLog,EditWorKLog,SearchWorKLog} from "../api/WorkLogApi";
+import {Service} from "../../common/utils/requset";
 export class WorkLogStore {
     @observable workLogList = [];
     @observable workLogDeatil = [];
@@ -14,7 +14,7 @@ export class WorkLogStore {
     };
     //查找所有工时
     @action
-    getWorkLogList = (value,page) => {
+    getWorkLogList = async(value,page) => {
         this.workId = value.workItemId;
         if(page){
             Object.assign(this.workLogPage, {...page})
@@ -30,24 +30,17 @@ export class WorkLogStore {
                 currentPage: this.workLogPage.current
             }
         }
-        return new Promise((resolve,reject)=> {
-            GetWorkLogList(params).then(response => {
-                if(response.code=== 0){
-                    this.workLogList = response.data.dataList;
-                    this.workLogPage.total = response.data.totalRecord
-                }
-                resolve(response.data.dataList) 
-                
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workLog/findWorkLogPage", params)
+        if(data.code=== 0){
+            this.workLogList = data.data.dataList;
+            this.workLogPage.total = data.data.totalRecord
+        }
+        return data;
     }
 
     //添加工时
     @action
-    addWorkLog = (value) => {
+    addWorkLog = async(value) => {
         let params = {
             workItem: {
                 id: value.workItem
@@ -62,31 +55,29 @@ export class WorkLogStore {
             takeupTime: value.takeupTime,
             workContent: value.workContent
         }
-        AddWorkLog(params).then(response => {
+        const data = await Service("/workLog/createWorkLog", params)
+        if(data.code === 0){
             this.getWorkLogList({workItemId:this.workId})
-        }).catch(error => {
-            console.log(error)
-            
-        })
+        }
+        return data;
 		
     }
 
     //删除工时
     @action
-    deleteWorKLog = (value) => {
+    deleteWorKLog = async(value) => {
         const param = new FormData()
         param.append("id", value)
-
-		DeleteWorKLog(param).then(response => {
+        const data = await Service("/workLog/deleteWorkLog", param)
+        if(data.code === 0){
             this.getWorkLogList({workItemId:this.workId})
-        }).catch(error => {
-            console.log(error)
-        })
+        }
+        return data;
     }
 
     //编辑工时
     @action
-    editWorKLog = (value) => {
+    editWorKLog = async(value) => {
         console.log(value)
         let params = {
             id: value.id,
@@ -100,42 +91,29 @@ export class WorkLogStore {
             takeupTime: value.takeupTime,
             workContent: value.workContent
         }
-        return new Promise((resolve,reject)=> {
-            EditWorKLog(params).then(response => {
-                resolve()
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
+        const data = await Service("/workLog/updateWorkLog", params)
+        return data;
     }
 
     //查找工时
     @action
-    searchWorKLog = (value) => {
+    searchWorKLog = async(value) => {
         const params = new FormData()
         params.append("id", value)
-        
-        return new Promise((resolve,reject)=> {
-            SearchWorKLog(params).then(response => {
-                this.workLogDeatil = response.data;
-                console.log(this.workLogDeatil)
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-            })
-        })
+        const data = await Service("/workLog/findWorkLog", params)
+        if(data.code === 0){
+            this.workLogDeatil = data.data;
+        }
+        return data
         
     }
 
     // 获取计划用时
     @action
     setPlanTime = (value) => {
-        // debugger
         this.PlanTime = value
     }
 
-    //
 }
 
 export const WORKLOG_STORE = "workLogStore"

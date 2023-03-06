@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import {PlanList,EditPlan,AddPlan,DelePlan,SearchPlanById,FindDmUserPage} from "../api/Plan";
+import { Service } from "../../../common/utils/requset"
 
 export class PlanStore {
     @observable planList = [];
@@ -15,9 +15,14 @@ export class PlanStore {
     getPlanId = (value) => {
         this.planId = value
     }
-    // 获取所有成员
+
+    /**
+     * 获取计划列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
-	getPlanList = (value) => {
+	getPlanList = async(value) => {
         Object.assign(this.searchCondition, {...value})
         const params={
             projectId: this.searchCondition.projectId,
@@ -32,61 +37,68 @@ export class PlanStore {
             },
             parentIdIsNull: true,
         }
-		PlanList(params).then(response => {
-            if(response.code=== 0){
-                this.planList = response.data.dataList;
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/plan/findPlanPageTree", params)
+        if(data.code=== 0){
+            this.planList = data.data.dataList;
+        }
+        return data;
     }
     
-    //添加已选择人员
+    /**
+     * 添加计划
+     * @param {*} value 
+     * @returns 
+     */
     @action
-	addPlan = (value) => {
-        return new Promise((resolve,reject)=>{
-            AddPlan(value).then(response => {
-                if(response.code=== 0){
-                    this.getPlanList()
-                }
-                resolve()
-            }).catch(error => {
-                reject()
-                console.log(error)
-            })
-        })
+	addPlan = async(value) => {
+        const data = await Service("/plan/createPlan", value)
+        if(data.code=== 0){
+            this.getPlanList()
+        }
+        return data;
 		
     }
-    //添加已选择人员
+
+    /**
+     * 根据计划id删除计划
+     * @param {计划id} params 
+     * @returns 
+     */
     @action
 	delePlan = async(params) => {
         const param = new FormData()
         param.append("id", params.id)
-		const data= await DelePlan(param)
+        const data = await Service("/plan/deletePlan", value)
         if(data.code=== 0 ){
             this.getPlanList()
         }
         return data;
     }
-    //搜索已选择人员
+
+    /**
+     * 根据id获取计划
+     * @param {计划id} params 
+     * @returns 
+     */
     @action
-	searchPlanById = (params) => {
+	searchPlanById = async(params) => {
         const param = new FormData()
         param.append("id", params.id)
-        return new Promise((resolve,reject)=> {
-            SearchPlanById(param).then(response => {
-                this.planItem = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                reject(error)
-            })
-        })
-		
+        const data = await Service("/plan/findPlan", param);
+        if(data.code === 0){
+            this.planItem = data.data;
+        }
+        return data;
     }
-    //编辑版本
 
+
+    /**
+     * 编辑计划
+     * @param {*} value 
+     * @returns 
+     */
     @action
-	editPlan = (value) => {
+	editPlan = async(value) => {
         let params = {
             id: value.id,
             planName: value.planName,
@@ -96,21 +108,19 @@ export class PlanStore {
             project:  value.project,
             planState: value.planState
         }
-        return new Promise((resolve,reject)=> {
-            EditPlan(params).then(response => {
-                if(response.code=== 0 ){
-                    this.getPlanList()
-                }
-                resolve()
-            }).catch(error => {
-                console.log(error)
-            })
-        })
+        const data = await Service("/plan/updatePlan", params);
+        if(data.code=== 0 ){
+            this.getPlanList()
+        }
 		
     }
 
+    /**
+     * 获取项目成员
+     * @param {*} projectId 
+     */
     @action
-    getUseList = (projectId) => {
+    getUseList = async(projectId) => {
         const params={
             domainId: projectId,
             pageParam: {
@@ -118,11 +128,11 @@ export class PlanStore {
                 currentPage: 1
             }
         }
-		FindDmUserPage(params).then(response => {
-			this.uselist = response.data.dataList;
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/dmUser/findDmUserPage", params);
+		if(data.code === 0){
+            this.uselist = data.data.dataList;
+        }
+        return data;
     }
 }
 export const PLAN_STORE = "planStore"

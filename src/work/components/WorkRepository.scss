@@ -1,0 +1,23 @@
+.work-repository {
+    .repository-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .repository-top-title {
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+
+    .ant-table table {
+        border-bottom: 0;
+    }
+
+    .repository-table {
+        background: #fff;
+        padding: 15px;
+        border-radius: 4px;
+    }
+}

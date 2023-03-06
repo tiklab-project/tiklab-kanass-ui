@@ -10,10 +10,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./MoreMenuModal.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { inject, observer } from "mobx-react";
 
 const MoreMenuModel = (props) => {
-    const { isShowText, searchpro, setWorkType } = props;
+    const { isShowText } = props;
     const projectId = props.match.params.id;
 
     // 获取当前被激活的菜单

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import { observable, action } from "mobx";
-import {VersionPlanList,SelectVersionPlanList,UpdataWorkItem} from "../api/VersionPlan";
+import { Service } from "../../../common/utils/requset"
 export class VersionPlanStore {
     // 版本关联事项列表
     @observable 
@@ -30,7 +30,7 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	getVersionPlanList = (value) => {
+	getVersionPlanList = async(value) => {
         Object.assign(this.searchCondition, {...value})
         const params={
             projectId: this.searchCondition.projectId,
@@ -46,15 +46,11 @@ export class VersionPlanStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-        return new Promise((resolve,reject)=>{
-            VersionPlanList(params).then(response => {
-                this.versionPlanList = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/findWorkItemList", params)
+        if(data.code === 0){
+            this.versionPlanList = data.data;
+        }
+        return data;
     }
 
     /**
@@ -63,7 +59,7 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	getSelectVersionPlanList = (value) => {
+	getSelectVersionPlanList = async(value) => {
         if(value){
             Object.assign(this.searchSelectCondition, {...value})
         }
@@ -80,15 +76,11 @@ export class VersionPlanStore {
                 currentPage: this.searchSelectCondition.currentPage
             }
         }
-        return new Promise((resolve,reject)=>{
-            SelectVersionPlanList(params).then(response => {
-                this.selectVersionPlanList = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workItem/findWorkItemList", params)
+        if(data.code === 0){
+            this.selectVersionPlanList = data.data;
+        }
+        return data;
 		
     }
     
@@ -98,24 +90,19 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	addVersionPlan = (params) => {
+	addVersionPlan = async(params) => {
         let value = {
             id: params.id,
             projectVersion: {
                 id: params.version
             }
         }
-        return new Promise((resolve,reject)=>{
-            UpdataWorkItem(value).then(response => {
-                if(response.code=== 0){
-                    this.getSelectVersionPlanList()
-                }
-                resolve()
-            }).catch(error => {
-                reject()
-                console.log(error)
-            })
-        })
+
+        const data = await Service("/workItem/updateWorkItem", value)
+        if(data.code === 0){
+            this.getSelectVersionPlanList()
+        }
+        return data;
     }
 
     /**
@@ -124,23 +111,18 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	deleVersionPlan = (params) => {
+	deleVersionPlan = async(params) => {
         let value = {
             id: params.id,
             projectVersion: {
                 id: "nullstring"
             }
         }
-		UpdataWorkItem(value).then(response => {
-            if(response.code=== 0){
-                this.getSelectVersionPlanList()
-            }
-            resolve()
-            // this.versionPlanList = response.data.versionPlanList
-            // this.searchVersionPlan(this.searchVersionPlanName)
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/workItem/updateWorkItem", value)
+        if(data.code === 0){
+            this.getSelectVersionPlanList()
+        }
+        return data;
     }
 
 }

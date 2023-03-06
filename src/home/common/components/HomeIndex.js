@@ -15,7 +15,7 @@ import "../components/HomePage.scss";
 
 import { verifyUserHoc } from 'tiklab-eam-ui';
 import { connect } from 'tiklab-plugin-ui/es/_utils';
-import Search from "../../search/container/Search";
+import Search from "../../search/components/Search";
 
 const Layout = (props) => {
     // 路由

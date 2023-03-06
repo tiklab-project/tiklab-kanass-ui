@@ -14,17 +14,20 @@ import { inject, observer } from "mobx-react";
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText } = props;
     const { findAllProjectSet, projectSetAllList, findProjectSet } = projectSetStore;
-    // 
+    // 点击显示弹窗按钮
     const setButton = useRef()
-
+    // 弹窗的显示与不显示控制参数
     const [showMenu, setShowMenu] = useState(false);
+    // 要切换到的项目
     const [selectProject, setSelectProject] = useState(false)
     // 弹窗
     const modelRef = useRef()
-
+    // 项目集信息
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
 
-
+    /**
+     * 监听鼠标点击事件，控制弹窗的显示与不显示
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -32,6 +35,9 @@ const ProjectSetChangeModal = (props) => {
         }
     }, [showMenu])
 
+    /**
+     * 获取全部项目集，用于切换
+     */
     useEffect(() => {
         findAllProjectSet().then(res => {
             console.log(projectSetAllList)
@@ -39,11 +45,19 @@ const ProjectSetChangeModal = (props) => {
         return
     }, [])
 
+    /**
+     * 显示弹窗框，并设置弹出框的位置
+     */
     const showDropDown = () => {
         setShowMenu(!showMenu)
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
+    /**
+     * 关闭弹窗
+     * @param {点击dom} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
@@ -52,8 +66,6 @@ const ProjectSetChangeModal = (props) => {
             setShowMenu(false)
         }
     }
-
-
 
     /**
      * 切换项目
@@ -72,10 +84,17 @@ const ProjectSetChangeModal = (props) => {
 
     }
 
+    /**
+     * 鼠标放置，改变当前列表的背景色
+     * @param {项目集id} id 
+     */
     const handleMouseOver = (id) => {
         setSelectProject(id)
     }
 
+    /**
+     * 鼠标离开，恢复原来背景
+     */
     const handleMouseOut = () => {
         setSelectProject("")
     }

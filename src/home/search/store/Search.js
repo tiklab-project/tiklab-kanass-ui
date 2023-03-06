@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import { Search,SearchSort,SearchForPage } from "../api/SearchApi";
+import { Service } from "../../../common/utils/requset"
 //删除事项
 export class SearchStore{
     // 搜索结果列表
@@ -32,24 +32,18 @@ export class SearchStore{
      * @returns 
      */
     @action
-    getSearch = (value) => {
+    getSearch = async(value) => {
         const params = new FormData();
         if(value){
             params.append('keyword', value ); 
         }else {
             params.append('keyword', null ); 
         }
-        return new Promise((resolve,reject)=>{
-            Search(params).then(response => {
-                if(response.code=== 0){
-                    this.searchList = response.data.responseList;
-                }
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/search/searchForTop", params)
+        if(data.code === 0){
+            this.searchList = data.data.responseList;
+        }
+        return data;
     }
 
     /**
@@ -58,24 +52,18 @@ export class SearchStore{
      * @returns 
      */
     @action
-    getSearchSore = (value) => {
+    getSearchSore = async(value) => {
         const params = new FormData();
         if(value){
             params.append('keyword', value ); 
         }else {
             params.append('keyword', null ); 
         }
-        return new Promise((resolve,reject)=>{
-            SearchSort(params).then(response => {
-                if(response.code=== 0){
-                    this.sortList = response.data.responseList;
-                }
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/search/searchForCount", params)
+        if(data.code === 0){
+            this.sortList = data.data.responseList;
+        }
+        return data;
     }
 
     /**
@@ -84,7 +72,7 @@ export class SearchStore{
      * @returns 
      */
     @action
-    searchForPage = (value) => {
+    searchForPage = async(value) => {
         Object.assign(this.searchCondition, {...value})
         const params={
             index: this.searchCondition.index,
@@ -95,17 +83,11 @@ export class SearchStore{
                 lastRecord: this.searchCondition.lastRecord,
             }
         }
-        return new Promise((resolve, reject)=> {
-            SearchForPage(params).then(response => {
-                console.log(response)
-                if(response.code=== 0){
-                    this.searchCondition.total = response.data.totalRecord;
-                }
-                resolve(response)
-            }).catch(error => {
-                reject(error)
-            })
-        })
+        const data = await Service("/search/searchForPage", params)
+        if(data.code === 0){
+            this.searchCondition.total = response.data.totalRecord;
+        }
+        return data;
     }
 }
 

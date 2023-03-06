@@ -9,7 +9,7 @@ const { Search } = Input;
 const EpicPlanAddmodal = (props) => {
     const {workStore,epicId, epicStore, setselectWorkItemList, epicWorkIds, setEpicChild } = props;
     const { findWorkItemPageTreeByQuery, createEpicWorkItem, findWorkItemListByEpic } = epicStore;
-    const {workType,workTypeList} = workStore;
+    const {workTypeList} = workStore;
     const [visible, setVisible] = React.useState(false);
     const [selectedRowKeys,setSelectedRowKeys] = React.useState([]);
     const projectId = props.match.params.id;

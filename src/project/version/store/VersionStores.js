@@ -7,8 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import { observable, action } from "mobx";
-import {VersionList,EditVersion,AddVersion,DeleVersion,SearchVersionById,FindVersion} from "../api/Version";
-
+import { Service } from "../../../common/utils/requset"
 export class VersionStore {
     // 版本列表
     @observable 
@@ -54,7 +53,7 @@ export class VersionStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-		const data = await VersionList(params)
+        const data = await Service("/projectVersion/findVersionPage", params)
         if(data.code === 0){
             
             this.versionList = data.data.dataList
@@ -68,7 +67,7 @@ export class VersionStore {
      * @returns 
      */
     @action
-	addVersion = (value) => {
+	addVersion = async(value) => {
         let params = {
             name: value.name,
             versionState: value.versionState,
@@ -78,14 +77,8 @@ export class VersionStore {
                 id: value.project
             }
         }
-        return new Promise((resolve,reject)=>{
-            AddVersion(params).then(response => {
-                resolve()
-            }).catch(error => {
-                reject()
-                console.log(error)
-            })
-        })
+        const data = await Service("/projectVersion/createVersion", params)
+        return data;
 		
     }
     
@@ -94,18 +87,15 @@ export class VersionStore {
      * @param {版本id} params 
      */
     @action
-	deleVersion = (params) => {
+	deleVersion = async(params) => {
         const param = new FormData()
         param.append("id", params.id)
 
-
-		DeleVersion(param).then(response => {
-            if(response.code=== 0 ){
-                this.getVersionList()
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/projectVersion/deleteVersion", params)
+        if(data.code=== 0 ){
+            this.getVersionList()
+        }
+        return data;
     }
     
     /**
@@ -114,19 +104,15 @@ export class VersionStore {
      * @returns 
      */
     @action
-	searchVersionById = (params) => {
+	searchVersionById = async(params) => {
         
         const param = new FormData()
         param.append("id", params.id)
-        return new Promise((resolve,reject)=> {
-            SearchVersionById(param).then(response => {
-                this.versionItem = response.data;
-                resolve(response.data)
-            }).catch(error => {
-                reject(error)
-            })
-        })
-		
+        const data = await Service("/projectVersion/findVersion", params);
+        if(data.code === 0){
+             this.versionItem = data.data;
+        }
+        return data;
     }
     
     /**
@@ -146,7 +132,7 @@ export class VersionStore {
             },
             versionState: value.versionState
         }
-        const data = await EditVersion(params)
+        const data = await Service("/projectVersion/updateVersion", params);
         return data;
     }
 
@@ -156,10 +142,10 @@ export class VersionStore {
      * @returns 
      */
     @action
-    findVersion = (value) => {
+    findVersion = async(value) => {
         const params = new FormData();
         params.append("id",value)
-        const data = FindVersion(params);
+        const data = await Service("/projectVersion/findVersion", params);
         return data;
     }
 }

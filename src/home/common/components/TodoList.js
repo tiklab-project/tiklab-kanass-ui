@@ -169,6 +169,7 @@ const TodoList = (props) => {
                             dangerouslySetInnerHTML={{ __html: item.data }}
                             className="todo-item"
                             onClick={() => goTodoDetail(item.link)}
+                            key = {item.id}
                         />
                     })
                     :

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Input, Upload, Select, message } from 'antd';
+import { Modal, Form } from 'antd';
 import { withRouter } from "react-router";
 
 const ProjectIconChange = (props) => {

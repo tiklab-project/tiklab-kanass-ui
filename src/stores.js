@@ -38,7 +38,7 @@ import {PROJECTSET_STORE, ProjectSetStore} from "./projectSet/projectSet/store/P
 
 import {LINEMAP_STORE, LineMapStore} from "./project/lineMap/store/LineMapStore";
 import {LOG_STORE,LogStore} from "./project/workLog/store/LogStore";
-import {WORKWIKI_STORE,WorkWikiStore} from "./work/store/WorkWikiStore";
+import {WORKREPOSITORY_STORE,WorkRepositoryStore} from "./work/store/WorkRepositoryStore";
 import {PROJECTSURVEY_STORE,ProjectSurveyStore} from "./project/overview/store/ProjectSurveyStore";
 import {WORKCOMMENT_STORE,WorkCommentStore} from "./work/store/WorkCommentStore";
 
@@ -48,7 +48,7 @@ import {SPRINTDETAIL_STORE,SprintDetailStore } from "./sprint/common/store/sprin
 // import {SPRINTPLAN_STORE,SprintPlanStore} from "./sprint/common/components/sprint";
 
 // 规划所有迭代事项
-import {PLANSPRINT_STORE,ProjectSprintPlanStore} from "./project/sprintPlan/stores/SprintPlanStore";
+import {PLANSPRINT_STORE,ProjectSprintPlanStore} from "./project/sprint/store/SprintPlanStore";
 import {MILESTONE_STORE,MilestoneStore} from "./project/milestone/store/MilestoneStore";
 import {PLAN_STORE,PlanStore} from "./project/plan/store/PlanStores";
 import {PLANWORKITEM_STORE,PlanWorkItemStore} from "./project/plan/store/PlanWorkItemStores";
@@ -90,7 +90,7 @@ function createStores() {
 
         [LINEMAP_STORE]: new LineMapStore(),
         [LOG_STORE]: new LogStore(),
-        [WORKWIKI_STORE]: new WorkWikiStore(),
+        [WORKREPOSITORY_STORE]: new WorkRepositoryStore(),
         [EAM_STORE]: new EamStore(),
         [HOME_STORE]: new HomeStore(),
         [PROJECTSURVEY_STORE]: new ProjectSurveyStore(),

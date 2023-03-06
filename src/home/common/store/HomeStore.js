@@ -6,12 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-25 13:21:47
  */
+import {Service} from "../../../common/utils/requset"
 import { observable, action, extendObservable } from "mobx";
-import { StatProjectWorkItem,StatWorkItemByBusStatus,
-    ManageSprint,GetWorkType,CreateRecent, FindWorkStatusListBySorts,
-    StatTodoWorkItem,FindMessageDispatchItemPage, FindDynamicPage, 
-    FindRecentList, UpdateMessageDispatchItem, Findlogpage, Findtodopage, 
-    FindAllProject, FindSprintList, FindProjectSetList, FindProjectSetProjectList } from "../api/HomeApi";
 
 import { getUser } from 'tiklab-core-ui';
 
@@ -49,43 +45,47 @@ export class HomeStore {
         this.currentLink = value
     }
 
+    /**
+     * 获取当前登陆者最近点击的项目
+     * @param {登录者id} value 
+     * @returns 
+     */
     @action
 	statProjectWorkItem = async(value) => {
         const params = new FormData();
         params.append("recentMasterId",value)
-		const data = await StatProjectWorkItem(params);
+        const data = await Service("/workItemStat/statProjectWorkItem", params)
         return data;
     }
 
+    /**
+     * 获取事项的业务状态统计列表，(进行中，已完成，逾期)
+     * @returns 
+     */
     @action
 	statWorkItemByBusStatus = async() => {
-        // const params = new FormData();
-        // params.append("projectId",value)
-		const data = await StatWorkItemByBusStatus();
+        const data = await Service("/workItemStat/statWorkItemByBusStatus")
         return data;
     }
-
+    
+    /**
+     * 获取我管理的项目下的迭代
+     * @param {项目id} value 
+     * @returns 
+     */
     @action
 	manageSprint = async(value) => {
         const params = new FormData();
         params.append("projectId",value)
-		const data = await ManageSprint(params);
+        const data = await Service("/workItemStat/statManageSprint", params)
         return data;
     }
 
-    //获取事项类型
-    @action
-    workType= async() => {
-        const data = await GetWorkType();
-        return data;
-    }
-
-    @action
-    findWorkStatusListBySorts= async(value) => {
-        const data = await FindWorkStatusListBySorts(value);
-        return data;
-    }
-
+    /**
+     * 统计待办事项
+     * @param {每页条数} value 
+     * @returns 
+     */
     @action
 	statTodoWorkItem = async(value) => {
         const params={
@@ -96,24 +96,15 @@ export class HomeStore {
                 currentPage: 1
             },
         }
-		const data = await StatTodoWorkItem(params);
+        const data = await Service("/todo/findtodopage", params)
         return data;
     }
 
-    // @action
-    // findMessageDispatchItemPage = async(value) => {
-    //     const params = {
-    //         receiver: value.receiver,
-    //         sendType: value.sendType,
-    //         pageParam: {
-    //             pageSize: 7,
-    //             currentPage:1
-    //         }
-    //     }
-	// 	const data = await FindMessageDispatchItemPage(params);
-    //     return data;
-    // }
-
+    /**
+     * 获取动态列表
+     * @param {当前页数} value 
+     * @returns 
+     */
     @action
     findDynamicPage = async(value)=> {
         const params={
@@ -126,7 +117,7 @@ export class HomeStore {
                 currentPage: value.currentPage
             }
         }
-        const data = await FindDynamicPage(params);
+        const data = await Service("/dynamic/findDynamicPage", params)
         if(data.code === 0) {
             if(value.currentPage === 1){
                 this.dynamicList = data.data.dataList
@@ -146,20 +137,23 @@ export class HomeStore {
         return data;
     }
 
+    /**
+     * 创建最近点击的
+     * @param {最近点击的} value 
+     * @returns 
+     */
     @action
     createRecent = async (value) => {
-        const data = await CreateRecent(value)
+        const data = await Service("/recent/createRecent", value)
         return data;
 
     }
-
-    @action
-    findRecentList = async (value) => {
-        const data = await FindRecentList(value)
-        return data;
-
-    }
-
+    
+    /**
+     * 获取消息列表 
+     * @param {页数，状态（已读，未读）} value 
+     * @returns 
+     */
     @action
     findMessageDispatchItemPage = async (value) => {
         const params = {
@@ -172,7 +166,8 @@ export class HomeStore {
             status: value.status,
             bgroup: "teamwire"
         }
-        const data = await FindMessageDispatchItemPage(params)
+        
+        const data = await Service("/message/messageItem/findMessageItemPage", params)
         if(data.code === 0){
             this.messageTotal = data.data.totalPage;
             if(value.page === 1){
@@ -192,12 +187,22 @@ export class HomeStore {
         return data;
     }
 
+    /**
+     * 更新信息状态
+     * @param {信息id，状态} value 
+     * @returns 
+     */
     @action
     updateMessageDispatchItem = async (value) => {
-        const data = await UpdateMessageDispatchItem(value)
+        const data = await Service("/message/messageItem/updateMessageItem", value)
         return data;
     }
 
+    /**
+     * 获取系统操作日志列表
+     * @param {成员id, 项目id} value 
+     * @returns 
+     */
     @action
     findLogpage = async(value)=> {
         const params={
@@ -209,12 +214,10 @@ export class HomeStore {
             userId: value.userId,
             content: {
                 projectId: value.projectId
-                // project: {
-                //     id: value.projectId,
-                // }
             }
         }
-        const data = await Findlogpage(params);
+        
+        const data = await Service("/oplog/findlogpage", params);
         if(data.code === 0) {
             this.opLogList = data.data.dataList
         }
@@ -226,9 +229,13 @@ export class HomeStore {
         this.todoCondition = extendObservable(this.todoCondition,  { ...value })
     }
 
+    /**
+     *成员id, 项目id
+     * @param {待办} value 
+     * @returns 
+     */
     @action
     findTodopage = async(value)=> {
-        // extendObservable(this.todoCondition.content, {...contentValue});
         const params={
             pageParam: {
                 pageSize: 20,
@@ -241,35 +248,53 @@ export class HomeStore {
             }
         }
         this.setTodoCondition(value)
-        const data = await Findtodopage(params);
+        const data = await Service("/todo/findtodopage", params);
         if(data.code === 0) {
             this.todoTaskList = data.data.dataList;
         }
         return data;
     }
 
+    /**
+     * 获取全部项目列表
+     * @returns 
+     */
     @action
     findProjectList = async () => {
-        const data = await FindAllProject()
+        const data = await Service("/project/findAllProject");
         return data;
     }
     
-
+    /**
+     * 获取迭代列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findSprintList = async (value) => {
-        const data = await FindSprintList(value)
+        const data = await Service("/sprint/findSprintList", value);
         return data;
     }
 
+    /**
+     * 获取项目集列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findProjectSetList = async (value) => {
-        const data = await FindProjectSetList(value)
+        const data = await Service("/projectSet/findProjectSetList", value);
         return data;
     }
 
+    /**
+     * 项目集下项目列表
+     * @param {} value 
+     * @returns 
+     */
     @action
     findProjectSetProjectList = async (value) => {
-        const data = await FindProjectSetProjectList(value)
+        const data = await Service("/projectSet/findProjectList", value);
         return data;
     }
     

@@ -7,10 +7,7 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import { observable, action } from "mobx";
-import {FindWorkTypeDmList,AddWorkTypeList,UpdateWorkTypeDm,
-        FindWorkTypeDm,DeleteWorkType,GreatIcon,FindIconList, FindDmFormList, 
-        FindDmFlowPage, FindSelectWorkTypeDmList, CreateWorkTypeDm, GetWorkTypeList} from "../api/WorkType";
-
+import { Service } from "../../../../common/utils/requset"
 export class ProjectWorkStore {
     // 所有事项类型列表
     @observable 
@@ -42,7 +39,7 @@ export class ProjectWorkStore {
      */
     @action
 	createWorkTypeDm = async(value) => {
-        const data = await CreateWorkTypeDm(value);
+        const data = await Service("/workTypeDm/createWorkTypeDm", value)
         if(data.code=== 0){
             return data;
         }
@@ -61,8 +58,7 @@ export class ProjectWorkStore {
                 sortType:"asc"
             }]
         }
-
-        const data = await FindWorkTypeDmList(params);
+        const data = await Service("/workTypeDm/findWorkTypeDmList", params)
         if(data.code=== 0){
             this.workAllTypeList = data.data;
         }
@@ -83,7 +79,7 @@ export class ProjectWorkStore {
             }]
         }
 
-        const data = await FindSelectWorkTypeDmList(params);
+        const data = await Service("/workType/findWorkTypeList", params)
         if(data.code=== 0){
             this.workSelectTypeList = data.data;
         }
@@ -105,7 +101,7 @@ export class ProjectWorkStore {
             }]
         }
 
-        const data = await GetWorkTypeList(params);
+        const data = await Service("/workType/findWorkTypeList", params)
         if(data.code=== 0){
             this.workSystemTypeList = data.data;
         }
@@ -128,8 +124,7 @@ export class ProjectWorkStore {
                 id : value.flow
             }
         }
-		const data = await UpdateWorkTypeDm(params)
-
+        const data = await Service("/workTypeDm/updateWorkTypeDm", params)
         return data;
     }
 
@@ -139,19 +134,11 @@ export class ProjectWorkStore {
      * @returns 
      */
     @action
-	findWorkTypeDmtById = (id) => {
+	findWorkTypeDmtById = async(id) => {
         const params = new FormData()
         params.append("id", id)
-
-        return new Promise((resolve,reject)=> {
-            FindWorkTypeDm(params).then(response => {
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
-		
+        const data = await Service("/workTypeDm/findWorkTypeDm", params)
+        return data;
     }
 
      /**
@@ -163,8 +150,8 @@ export class ProjectWorkStore {
      deleteWorkTypeCustomList =async(value) => {
         const params = new FormData();
         params.append("id", value.id)
-         const data = await DeleteWorkType(params);
-         return data;
+        const data = await Service("/workTypeDm/deleteWorkTypeDm", params)
+        return data;
      }
 
     /**
@@ -184,14 +171,12 @@ export class ProjectWorkStore {
     getFormList = async(value) => {
         const params = {
             domainId: value.projectId,
-            // group: "custom",
             pageParam: {
                 pageSize: 10, 
                 currentPage: 1
             }
         }
-        const data = await FindDmFormList(params)
-        console.log(data)
+        const data = await Service("/dmForm/findDmFormList", params)
         if(data.code=== 0){
             this.formList = data.data
         }
@@ -211,7 +196,7 @@ export class ProjectWorkStore {
                 currentPage: 1
             }
         }
-        const data = await FindDmFlowPage(params)
+        const data = await Service("/dmFlow/findDmFlowPage", params)
         if(data.code=== 0){
             this.flowList = data.data.dataList
         }
@@ -223,7 +208,7 @@ export class ProjectWorkStore {
      */
     @action
     creatIcon = async(value) => {
-        const data = await GreatIcon(value)
+        const data = await Service("/icon/createIcon", value)
         return data;
 		
     }
@@ -233,7 +218,7 @@ export class ProjectWorkStore {
      */
     @action
     findIconList = async(params) => {
-        const data = await FindIconList(params)
+        const data = await Service("/icon/findIconList", params)
         return data;
     }
 }

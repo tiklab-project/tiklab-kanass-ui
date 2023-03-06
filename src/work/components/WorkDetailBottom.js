@@ -9,7 +9,7 @@ import WorkChild from "./WorkChild";
 import WorkLog from "./WorkLog";
 import WorkComment from "./WorkComment";
 import WorkDynamic from "./WorkDynamic";
-import WorkWiki from "./WorkWiki";
+import WorkRepository from "./WorkRepository";
 import WorkBasicInfoDefect from "./WorkBasicInfoDefect";
 import WorkBasicInfoDemand from "./WorkBasicInfoDemand";
 import WorkBasicInfoEpic from "./WorkBasicInfoEpic";
@@ -205,7 +205,7 @@ const WorkDetailBottom = (props) => {
                                 {
                                     tabValue === 8 &&
                                     <div className="tabs-tabpanel">
-                                        <WorkWiki {...props} />
+                                        <WorkRepository {...props} />
                                     </div>
                                 }
                             </div>
@@ -275,7 +275,7 @@ const WorkDetailBottom = (props) => {
                         {
                             tabValue === 8 &&
                             <div className="tabs-tabpanel">
-                                <WorkWiki {...props} />
+                                <WorkRepository {...props} />
                             </div>
                         }
                     </div>

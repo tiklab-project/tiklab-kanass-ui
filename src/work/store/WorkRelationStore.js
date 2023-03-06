@@ -1,7 +1,5 @@
 import { observable, action } from "mobx";
-import {WorkRelationList,SelectWorkRelationList,AddWorkRelation,
-        DeleWorkRelation,SearchWorkRelation,SearchAllWorkRelation} from "../api/WorkRelationApi";
-
+import {Service} from "../../common/utils/requset";
 
 export class WorkRelation {
     @observable workRelationList = [];
@@ -26,7 +24,7 @@ export class WorkRelation {
     @action
 	getWorkRelationList = async(value) => {
         Object.assign(this.searchCondition, {...value})
-        const data = await WorkRelationList(this.searchCondition)
+        const data = await Service("/workItem/findWorkItemPage", this.searchCondition)
         if(data.code=== 0){
             if(this.searchCondition.pageParam.currentPage === 1){
                 this.workRelationList = data.data.dataList;
@@ -41,7 +39,7 @@ export class WorkRelation {
 
     //获取已选择人员
     @action
-	getSelectWorkRelationList = (value) => {
+	getSelectWorkRelationList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value})
         const params={
             workItemId: this.searchSelectCondition.workItemId,
@@ -55,17 +53,11 @@ export class WorkRelation {
                 currentPage: this.searchSelectCondition.currentPage
             }
         }
-        return new Promise((resolve,reject)=>{
-            SelectWorkRelationList(params).then(response => {
-                if(response.code=== 0){
-                    this.selectWorkRelationList = response.data;
-                }
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/workRelate/findWorkRelateList", params)
+        if(data.code=== 0){
+            this.selectWorkRelationList = data.data;
+        }
+        return data;
     }
 
 
@@ -80,47 +72,21 @@ export class WorkRelation {
                 id: value.workItem
             }
         }
-            
-        const data = await AddWorkRelation(params);
+        const data = await Service("/workRelate/createWorkRelate", params)
         return data;
     }
 
     //添加已选择人员
     @action
-	deleWorkRelation = (value) => {
-
+	deleWorkRelation = async(value) => {
         const params = new FormData()
         params.append("id", value)
-        
-		DeleWorkRelation(params).then(response => {
-            if(response.code=== 0){
-                this.getSelectWorkRelationList()
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/workRelate/deleteWorkRelate", params)
+		if(data.code=== 0){
+            this.getSelectWorkRelationList()
+        }
+        return data;
     }
 
-
-
-    //搜索已选择人员
-    @action
-	searchWorkRelation = (params) => {
-        this.searchWorkRelationName = params
-		SearchWorkRelation(params).then(response => {
-            this.selectWorkRelationList = response.data.selectWorkRelationList;
-        }).catch(error => {
-            console.log(error)
-        })
-    }
-    //搜索已未选择人员
-    @action
-	searchAllWorkRelation = (params) => {
-		SearchAllWorkRelation(params).then(response => {
-            this.workRelationList = response.data.workRelationList;
-        }).catch(error => {
-            console.log(error)
-        })
-    }
 }
 export const WORKRELATION_STORE = "workRelation"

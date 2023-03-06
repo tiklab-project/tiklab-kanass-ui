@@ -7,9 +7,7 @@
  * @LastEditTime: 2022-01-19 11:10:30
  */
 import { observable, action, extendObservable } from "mobx";
-import {CreateStage, FindDmUserPage, FindStageList, FindStage, FindWorkItemPageTreeByQuery, 
-    CreateStageWorkItem, FindWorkItemListByStage, DeleteStageWorkItem, UpdateStage, DeleteStage} from "../api/StageApi";
-
+import { Service } from "../../../common/utils/requset"
 export class StageStore {
     // 成员列表
     @observable 
@@ -35,7 +33,7 @@ export class StageStore {
      */
     @action
 	createStage = async(param) => {
-		const data = await CreateStage(param);
+        const data = await Service("/stage/createStage", param)
         return data;
     }
 
@@ -44,7 +42,7 @@ export class StageStore {
      * @param {项目id} value 
      */
     @action
-    getUseList = (value) => {
+    getUseList = async(value) => {
         const params = {
             domainId: value.projectId,
             pageParam: {
@@ -52,11 +50,11 @@ export class StageStore {
                 currentPage: 1
             }
         }
-        FindDmUserPage(params).then(response => {
-            this.uselist = response.data.dataList;
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/dmUser/findDmUserPage", params)
+        if(data.code === 0){
+            this.uselist = data.data.dataList
+        }
+        return data;
     }
 
     /**
@@ -66,7 +64,7 @@ export class StageStore {
      */
     @action
     findStageList = async(value) => {
-        const data = await FindStageList(value)
+        const data = await Service("/stage/findStageListTree", value)
         if(data.code === 0){
             return data
         }
@@ -80,8 +78,8 @@ export class StageStore {
     @action
     findStage = async(value) => {
         const params = new FormData();
-        params.append("id", value.id)
-        const data = await FindStage(params)
+        params.append("id", value.id);
+        const data = await Service("/stage/findStage", params);
         if(data.code === 0){
             return data;
         }
@@ -95,7 +93,7 @@ export class StageStore {
     @action
     findWorkItemPageTreeByQuery = async(value) => {
         this.searchCondition = extendObservable(this.searchCondition,  { ...value })
-        const data = await FindWorkItemPageTreeByQuery(this.searchCondition)
+        const data = await Service("/workItem/findWorkItemListTree", this.searchCondition);
         if(data.code === 0){
             return data;
         }
@@ -108,7 +106,7 @@ export class StageStore {
      */
     @action
     createStageWorkItem = async(value) => {
-        const data = await CreateStageWorkItem(value)
+        const data = await Service("/stageWorkItem/createStageWorkItem", value);
         if(data.code === 0){
             return data;
         }
@@ -121,7 +119,7 @@ export class StageStore {
      */
     @action
     findWorkItemListByStage = async(value) => {
-        const data = await FindWorkItemListByStage(value)
+        const data = await Service("/stageWorkItem/findStageChildWorkItemAndStage", value);
         if(data.code === 0){
             return data;
         }
@@ -134,7 +132,7 @@ export class StageStore {
      */
     @action
     deleteStageWorkItem = async(value) => {
-        const data = await DeleteStageWorkItem(value)
+        const data = await Service("/stageWorkItem/deleteStageWorkItemCondition", value);
         if(data.code === 0){
             return data;
         }
@@ -147,7 +145,7 @@ export class StageStore {
      */
     @action
     updateStage = async(value) => {
-        const data = await UpdateStage(value)
+        const data = await Service("/stage/updateStage", value);
         if(data.code === 0){
             return data;
         }
@@ -162,7 +160,7 @@ export class StageStore {
     deleteStage = async(value) => {
         const params = new FormData()
         params.append("id", value.id)
-        const data = await DeleteStage(params)
+        const data = await Service("/stage/deleteStage", value);
         if(data.code === 0){
             return data;
         }

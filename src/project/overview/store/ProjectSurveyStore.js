@@ -7,94 +7,131 @@
  * @LastEditTime: 2021-12-02 09:58:09
  */
 import { observable, action } from "mobx";
-import { StatWorkItemByBusStatus,StatProjectManageSprint,FindProject,
-    FindDynamicPage,FindProjectBurnDowmChartPage, FindMilestoneList, 
-    StatProjectWorkItemProcess,Findlogpage, Findtodopage } from "../api/SurveyApi";
+import { Service } from "../../../common/utils/requset"
 export class ProjectSurveyStore {
-
+    /**
+     * 获取不同事项状态的统计
+     * @param {项目id} projectId 
+     * @param {成员id} masterId 
+     * @returns 
+     */
     @action
-	statWorkItemByBusStatus = async(projectId, masterId) => {
+    statWorkItemByBusStatus = async (projectId, masterId) => {
         const params = new FormData();
-        params.append("projectId",projectId)
-        if(masterId){
-           params.append("masterId",masterId) 
+        params.append("projectId", projectId)
+        if (masterId) {
+            params.append("masterId", masterId)
         }
-        
-		const data = await StatWorkItemByBusStatus(params);
+        const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", value)
         return data;
     }
 
+    /**
+     * 统计我管理的项目下迭代
+     * @param {*} value 
+     * @returns 
+     */
     @action
-	statProjectManageSprint = async(value) => {
+    statProjectManageSprint = async (value) => {
         const params = new FormData();
-        params.append("masterId",value.masterId)
-        params.append("projectId",value.projectId)
-		const data = await StatProjectManageSprint(params);
+        params.append("masterId", value.masterId)
+        params.append("projectId", value.projectId)
+        const data = await Service("/workItemStat/statProjectManageSprint", value)
         return data;
     }
+
+    /**
+     * 根据id获取项目的信息
+     * @param {*} projectId 
+     * @returns 
+     */
     @action
-    findProject = async(projectId)=> {
+    findProject = async (projectId) => {
         const params = new FormData();
-        params.append("id",projectId);
-        const data = await FindProject(params);
+        params.append("id", projectId);
+        const data = await Service("/project/findProject", value)
         return data;
     }
-    
+
+    /**
+     * 获取项目的动态
+     * @param {项目id} projectId 
+     * @returns 
+     */
     @action
-    findDynamicPage = async(projectId)=> {
-        const params={
+    findDynamicPage = async (projectId) => {
+        const params = {
             projectId: projectId,
             sortParams: [{
                 name: "title",
-                orderType:"asc"
+                orderType: "asc"
             }],
             pageParam: {
                 pageSize: 4,
                 currentPage: 1
             }
         }
-        const data = await FindDynamicPage(params);
+        const data = await Service("/dynamic/findDynamicPage", params)
         return data;
     }
 
-    // 燃尽图
+    /**
+     * 项目燃尽图
+     * @param {项目id} projectId 
+     * @returns 
+     */
     @action
-    findProjectBurnDowmChartPage = async(projectId)=> {
-        const params={
+    findProjectBurnDowmChartPage = async (projectId) => {
+        const params = {
             projectId: projectId,
             sortParams: [{
                 name: "recordTime",
-                orderType:"desc"
+                orderType: "desc"
             }],
             pageParam: {
                 pageSize: 7,
                 currentPage: 1
             }
         }
-        const data = await FindProjectBurnDowmChartPage(params);
+        const data = await Service("/projectBurnDowmChart/findProjectBurnDowmChartPage", params)
         return data;
     }
 
+    /**
+     * 获取项目下里程碑
+     * @param {项目id} projectId 
+     * @returns 
+     */
     @action
-    findMilestoneList = async(projectId)=> {
+    findMilestoneList = async (projectId) => {
         const params = {
             projectId: projectId
         }
-        const data = await FindMilestoneList(params);
+        const data = await Service("/milestone/findMilestoneList", params)
         return data;
     }
 
+    /**
+     * 获取项目的进行中事项
+     * @param {*} value 
+     * @returns 
+     */
     @action
-	statProjectWorkItemProcess = async(value) => {
+    statProjectWorkItemProcess = async (value) => {
         const params = new FormData();
-        params.append("projectId",value)
-		const data = await StatProjectWorkItemProcess(params);
+        params.append("projectId", value)
+        const data = await Service("/workItemStat/statProjectWorkItemProcess", params)
         return data;
     }
 
+    /**
+     * 获取待办事项
+     * @param {*} value 
+     * @returns 
+     */
     @action
-    findtodopage = async(value)=> {
-        const params={
+    findtodopage = async (value) => {
+        const params = {
             pageParam: {
                 pageSize: 20,
                 currentPage: value.currentPage
@@ -105,14 +142,18 @@ export class ProjectSurveyStore {
                 projectId: value.projectId
             }
         }
-        const data = await Findtodopage(params);
+        const data = await Service("/todo/findtodopage", params)
         return data;
     }
 
-
+    /**
+     * 获取日志列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
-    findlogpage = async(value)=> {
-        const params={
+    findlogpage = async (value) => {
+        const params = {
             pageParam: {
                 pageSize: 20,
                 currentPage: value.currentPage
@@ -123,7 +164,7 @@ export class ProjectSurveyStore {
             }
 
         }
-        const data = await Findlogpage(params);
+        const data = await Service("/oplog/findlogpage", params)
         return data;
     }
 }

@@ -6,13 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-02-17 11:19:17
  */
-import {
-    GetUseList, GreateProjectSet, FindProjectSetList, DeleteProjectSet, FindProjectSet,
-    UpdateProjectSet, FindProjectList, FindProjectIsOrNotRe, UpdateProject, AddRelevance,CreateProjectSetFocus,
-    FindProjectSetFocusList, DeleteProjectSetFocusByQuery, FindAllProjectSet, FindRecentProjectSetList, 
-    FindFocusProjectSetList, CreateRecent
-} from "../api/ProjectSet";
 import { observable, action } from "mobx";
+import {Service} from "../../../common/utils/requset";
 
 export class ProjectSetStore {
     @observable uselist = [];
@@ -50,74 +45,106 @@ export class ProjectSetStore {
     setVisible = (value) => {
         this.visible = value
     }
-    // 获取成员列表
+
+    /**
+     * 获取全部系统成员
+     * @returns 
+     */
     @action
-    getUseList = () => {
-        GetUseList().then(response => {
-            this.uselist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getUseList = async() => {
+        const data = await Service("/user/user/findAllUser")
+        if(data === 0){
+            this.uselist = data.data;
+        }
+        return data
     }
 
-    // 添加项目集
+    /**
+     * 添加项目集
+     * @param {*} values 
+     * @returns 
+     */
     @action
     addProjectSetSet = async (values) => {
-        const data = await GreateProjectSet(values);
+        const data = await Service("/projectSet/createProjectSet", values);
         return data;
     }
 
-    // 获取项目集列表
+    /**
+     * 获取项目集列表
+     * @param {*} value 
+     * @returns 
+     */
     @action
-    getProjectSetlist = (value) => {
-        FindProjectSetList(value).then(response => {
-            this.projectSetList = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getProjectSetlist = async(value) => {
+        const data = await Service("/projectSet/findProjectSetList", value);
+        if(data.code === 0){
+            this.projectSetList = data.data;
+        }
+        return data;
     }
 
-    // 删除项目集
+    /**
+     * 删除项目集
+     * @param {项目集id} values 
+     * @returns 
+     */
     @action
     deleProjectSet = async(values) => {
         const param = new FormData()
         param.append("id", values)
-        const that = this;
-        const data = await DeleteProjectSet(param);
+        const data = await Service("/projectSet/deleteProjectSet", param);
         if(data.code === 0){
             that.getProjectSetlist()
         }
         return data;
     }
 
-    // 按照id查找项目
+    // 
+    /**
+     * 按照id查找项目集
+     * @param {项目集id} values 
+     * @returns 
+     */
     @action
     findProjectSet = async(values) => {
         const param = new FormData()
         param.append("id", values)
-        const data = await FindProjectSet(param);
+        const data = await Service("/projectSet/findProjectSet", param);
         return data;
     }
 
-    //更新项目集
+    /**
+     * 更新项目集
+     * @param {*} values 
+     * @returns 
+     */
     @action
     updateProjectSet = async(values) => {
-        const data = await UpdateProjectSet(values);
+        const data = await Service("/projectSet/updateProjectSet", values);
         return data;
     }
 
-    //获取关联项目
+    /**
+     * 获取项目集关联项目
+     * @param {*} values 
+     * @returns 
+     */
     @action
     findProjectList = async(values) => {
         Object.assign(this.projectPageParams, { ...values })
-        const data = await FindProjectList(this.projectPageParams);
+        const data = await Service("/projectSet/findProjectList", values);
         this.projectRelevance = data.data
         return data;
     }
 
+    /**
+     * 获取项目集已关联和未关联的项目列表
+     * @returns 
+     */
     @action
     findProjectIsOrNotRe = async() => {
-        const data = await FindProjectIsOrNotRe();
+        const data = await Service("/projectSet/findProjectIsOrNotRe", values);
         if (data.code === 0) {
             this.noRelatedProjects = data.data.noRelatedProjects;
             console.log(this.noRelatedProjects)
@@ -126,26 +153,34 @@ export class ProjectSetStore {
         return data;
     }
 
-    // 取消关联项目
+    /**
+     * 更新项目集与项目的关联
+     * @param {*} value 
+     * @returns 
+     */
     @action
     updateProject = async(value) => {
-        const data = await UpdateProject(value);
-
+        const data = await Service("/project/updateProject", value);
         return data;
     }
 
-    // 添加关联
+    /**
+     * 添加项目集的关联项目
+     * @param {*} value 
+     * @returns 
+     */
     addRelevance = async(value) => {
-
-        const data = await AddRelevance(value);
+        const data = await Service("/projectSet/addRelevance ", value);
 
         return data;
     }
 
-    //查找所有项目集
+    /**
+     * 查找所有项目集
+     * @returns 
+     */
     findAllProjectSet = async() => {
-        const data = await FindAllProjectSet();
-        console.log(data)
+        const data = await Service("/projectSet/findAllProjectSet");
         if(data.code === 0){
             this.projectSetAllList = data.data;
         }
@@ -153,26 +188,32 @@ export class ProjectSetStore {
         return data;
     }
 
-
+    /**
+     * 添加项目集收藏
+     * @param {*} value 
+     * @returns 
+     */
     @action
     createProjectSetFocus = async(value) => {
-
-        const data = await CreateProjectSetFocus(value)
+        const data = await Service("/projectSetFocus/createProjectSetFocus", value);
         return data;
     }
 
-
+    /**
+     * 
+     * @param {*} value 
+     * @returns 
+     */
     @action
     findProjectSetFocusList = async(value) => {
 
-        const data = await FindProjectSetFocusList(value)
+        const data = await Service("/projectSetFocus/findProjectSetFocusList", value);
         return data;
     }
 
     @action
     deleteProjectSetFocusByQuery = async(value) => {
-
-        const data = await DeleteProjectSetFocusByQuery(value)
+        const data = await Service("/projectSetFocus/deleteProjectSetFocusByQuery", value);
         return data;
     }
 
@@ -184,7 +225,7 @@ export class ProjectSetStore {
                 orderType: "asc"
             }]
         }
-        const data = await FindRecentProjectSetList(params)
+        const data = await Service("/projectSet/findRecentProjectSetList", params);
         if(data.code === 0){
             this.projectSetList = data.data;
         }
@@ -199,7 +240,7 @@ export class ProjectSetStore {
                 orderType: "asc"
             }]
         }
-        const data = await FindFocusProjectSetList(value)
+        const data = await Service("/projectSet/findFocusProjectSetList", params);
         if(data.code === 0){
             this.projectSetList = data.data;
         }
@@ -208,7 +249,7 @@ export class ProjectSetStore {
 
     @action
     createRecent = async (value) => {
-        const data = await CreateRecent(value)
+        const data = await Service("/recent/createRecent", value);
         return data;
 
     }

@@ -7,32 +7,27 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import { observable, action } from "mobx";
-import {
-    FindSprintList, AddsprintList, DelesprintList,
-    SearchsprintList, EditsprintList, FindDmUserPage, FindAllSprintState,
-    CreateSprintFocus, FindSprintFocusList, DeleteProjectFocusByQuery, FindFocusSprintList
-} from "../api/SprintApi"
-
+import { Service } from "../../../common/utils/requset"
 
 export class SprintStore {
     // 迭代列表
-    @observable 
+    @observable
     sprintlist = [];
 
     // 搜索迭代的名字
-    @observable 
+    @observable
     searchSprintName = [];
 
     // 搜索迭代的id
-    @observable 
+    @observable
     searchSprintId = [];
 
     // 成员列表
-    @observable 
+    @observable
     uselist = [];
 
     // 迭代查询分页参数
-    @observable 
+    @observable
     sprintPageParams = {
         orderParams: [{
             name: "sprintName",
@@ -45,11 +40,11 @@ export class SprintStore {
     };
 
     // 迭代总数
-    @observable 
+    @observable
     totalRecord = "";
 
     // 迭代状态列表
-    @observable 
+    @observable
     sprintStateList = []
     // 筛选状态
     @observable filterType = "pending"
@@ -58,7 +53,7 @@ export class SprintStore {
      * 设置筛选状态
      * @param {*} value 
      */
-    @action 
+    @action
     setFilterType = (value) => {
         this.filterType = value
     }
@@ -67,12 +62,12 @@ export class SprintStore {
      * 获取迭代列表
      */
     @action
-    getsprintlist = () => {
-        FindSprintList().then(response => {
-            this.sprintlist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getsprintlist = async() => {
+        const data = await Service("/sprint/findAllSprint", params)
+        if (data.code === 0) {
+            this.sprintlist = data.data;
+        }
+        return data;
     }
 
     /**
@@ -81,10 +76,10 @@ export class SprintStore {
      * @returns 
      */
     @action
-    findSprintList = async(value) => {
-        Object.assign(this.sprintPageParams, {...value})
-        const data = await FindSprintList(this.sprintPageParams)
-        if(data.code === 0) {
+    findSprintList = async (value) => {
+        Object.assign(this.sprintPageParams, { ...value })
+        const data = await Service("/sprint/findSprintList", this.sprintPageParams)
+        if (data.code === 0) {
             this.sprintlist = data.data;
         }
         return data.data;
@@ -96,12 +91,11 @@ export class SprintStore {
      * @returns 
      */
     @action
-    findFocusSprintList = async(value) => {
+    findFocusSprintList = async (value) => {
         Object.assign(this.sprintPageParams, { ...value })
-        const data = await FindFocusSprintList(this.sprintPageParams)
-        if(data.code === 0) {
+        const data = await Service("/sprint/findFocusSprintList", this.sprintPageParams)
+        if (data.code === 0) {
             this.sprintlist = data.data;
-            // this.totalRecord = response.data.totalRecord;
         }
         return data.data;
     }
@@ -113,7 +107,7 @@ export class SprintStore {
      */
     @action
     addsprintlist = async (values) => {
-        const data = await AddsprintList(values)
+        const data = await Service("/sprint/createSprint", values)
         if (data.code === 0) {
             this.findSprintList(values.project.id, this.searchSprintName)
         }
@@ -126,12 +120,12 @@ export class SprintStore {
      * @returns 
      */
     @action
-    delesprintList = async(values) => {
+    delesprintList = async (values) => {
         const param = new FormData()
         param.append("id", values)
 
-        const data = await DelesprintList(param);
-        if(data.code === 0){
+        const data = await Service("/sprint/deleteSprint", values)
+        if (data.code === 0) {
             return data;
         }
     }
@@ -142,12 +136,12 @@ export class SprintStore {
      * @returns 
      */
     @action
-    searchSprint = async(values) => {
+    searchSprint = async (values) => {
 
-        const param =  new FormData()
+        const param = new FormData()
         param.append("id", values)
-        const data = await SearchsprintList(param)
-        if(data.code === 0){
+        const data = await Service("/sprint/findSprint", values)
+        if (data.code === 0) {
             return data;
         }
 
@@ -159,8 +153,8 @@ export class SprintStore {
      * @returns 
      */
     @action
-    editSprint = async(values) => {
-        const data = await EditsprintList(values)
+    editSprint = async (values) => {
+        const data = await Service("/sprint/updateSprint", values)
         if (data.code === 0) {
             this.findSprintList(values.project.id, this.searchSprintName)
         }
@@ -181,7 +175,7 @@ export class SprintStore {
      * @param {项目id} projectId 
      */
     @action
-    getUseList = (projectId) => {
+    getUseList = async (projectId) => {
         const params = {
             domainId: projectId,
             pageParam: {
@@ -189,23 +183,23 @@ export class SprintStore {
                 currentPage: 1
             }
         }
-        FindDmUserPage(params).then(response => {
-            this.uselist = response.data.dataList;
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/dmUser/findDmUserPage", params)
+        if (data.code === 0) {
+            this.uselist = data.data.dataList;
+        }
+        return data;
     }
 
     /**
      * 查找全部迭代状态
      */
     @action
-    findAllSprintState = () => {
-        FindAllSprintState().then(response => {
-            this.sprintStateList = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    findAllSprintState = async () => {
+        const data = await Service("/sprintState/findAllSprintState")
+        if (data.code === 0) {
+            this.sprintStateList = data.data;
+        }
+        return data;
     }
 
     /**
@@ -214,9 +208,9 @@ export class SprintStore {
      * @returns 
      */
     @action
-    createSprintFocus = async(value) => {
-       const data = await CreateSprintFocus(value);
-       return data;
+    createSprintFocus = async (value) => {
+        const data = await Service("/sprintFocus/createSprintFocus", value)
+        return data;
     }
 
     /**
@@ -225,9 +219,9 @@ export class SprintStore {
      * @returns 
      */
     @action
-    findSprintFocusList = async(value) => {
-       const data = await FindSprintFocusList(value);
-       return data;
+    findSprintFocusList = async (value) => {
+        const data = await Service("/sprintFocus/findSprintFocusList", value)
+        return data;
     }
 
     /**
@@ -236,9 +230,9 @@ export class SprintStore {
      * @returns 
      */
     @action
-    deleteSprintFocus = async(value) => {
-       const data = await DeleteProjectFocusByQuery(value);
-       return data;
+    deleteSprintFocus = async (value) => {
+        const data = await Service("/sprintFocus/deleteSprintFocusByQuery", value)
+        return data;
     }
 }
 

@@ -1,11 +1,5 @@
 import { observable, action } from "mobx";
-import {StatisticsProjectOperateList, StatisticsNewWorkItemCount,StatisticsEndWorkItemCount,
-    StatisticsPorcessWorkItemCount,StatisticsNewBugCountList, StatisticsProcessBugCount, StatisticsProjectUserCount, 
-    StatisticsProjectWorkItemCount, StatisticsProjectOperate, StatisticsDayWorkItemCount,
-    StatisticsWorkItemStatusCount,StatisticsUserWorkItemCount,FindAllProjectSet, FindAllProject,
-    CreateInsight, FindInsightList, UpdateInsight, FindInsight, DeleteInsight
-    } from "../api/insightApi"
-
+import {Service} from "../../../common/utils/requset"
 export class InsightStore {
     // 项目集id
     @observable 
@@ -34,7 +28,6 @@ export class InsightStore {
      */
     @action
     addReportList = (value) => {
-        console.log(this.reportList)
         this.reportList.lg.push(value)
     }
 
@@ -65,7 +58,7 @@ export class InsightStore {
 	statisticsProjectOperateList = async(params) => {
         const value = new FormData();
         value.append("projectSetId", params.projectSetId)
-		const data = await StatisticsProjectOperateList(value);
+        const data = await Service("/projectInsightReportController/statisticsProjectOperateList", value)
         return data;
     }
 
@@ -76,7 +69,7 @@ export class InsightStore {
      */
     @action
 	statisticsNewWorkItemCount = async(params) => {
-		const data = await StatisticsNewWorkItemCount(params);
+        const data = await Service("/projectInsightReportController/statisticsNewWorkItemCount", params)
         return data;
     }
 
@@ -87,7 +80,7 @@ export class InsightStore {
      */
     @action
 	statisticsEndWorkItemCount = async(params) => {
-		const data = await StatisticsEndWorkItemCount(params);
+        const data = await Service("/projectInsightReportController/statisticsEndWorkItemCount", params)
         return data;
     }
 
@@ -98,7 +91,7 @@ export class InsightStore {
      */
     @action
 	statisticsPorcessWorkItemCount = async(params) => {
-		const data = await StatisticsPorcessWorkItemCount(params);
+        const data = await Service("/projectInsightReportController/statisticsPorcessWorkItemCount", params)
         return data;
     }
 
@@ -109,7 +102,7 @@ export class InsightStore {
      */
     @action
     statisticsNewBugCountList = async(params) => {
-		const data = await StatisticsNewBugCountList(params);
+        const data = await Service("/projectInsightReportController/statisticsNewBugCount", params)
         return data;
     }
 
@@ -120,7 +113,7 @@ export class InsightStore {
      */
     @action
     statisticsProcessBugCount = async(params) => {
-		const data = await StatisticsProcessBugCount(params);
+        const data = await Service("/projectInsightReportController/statisticsProcessBugCount", params)
         return data;
     }
 
@@ -133,7 +126,7 @@ export class InsightStore {
     statisticsProjectUserCount = async(params) => {
         const value = new FormData();
         value.append("projectSetId", params.projectSetId)
-		const data = await StatisticsProjectUserCount(value);
+        const data = await Service("/projectInsightReportController/statisticsProjectUserCount", params)
         return data;
     }
 
@@ -146,7 +139,7 @@ export class InsightStore {
     statisticsProjectWorkItemCount = async(params) => {
         const value = new FormData();
         value.append("projectSetId", params.projectSetId)
-		const data = await StatisticsProjectWorkItemCount(value);
+        const data = await Service("/projectInsightReportController/statisticsProjectWorkItemCount", params)
         return data;
     }
 
@@ -157,7 +150,7 @@ export class InsightStore {
      */
     @action
     statisticsProjectOperate = async(params) => {
-		const data = await StatisticsProjectOperate(params);
+        const data = await Service("/projectInsightReportController/statisticsProjectOperate", params)
         return data;
     }
 
@@ -168,7 +161,7 @@ export class InsightStore {
      */
     @action
     statisticsDayWorkItemCount = async(params) => {
-		const data = await StatisticsDayWorkItemCount(params);
+        const data = await Service("/projectInsightReportController/statisticsDayWorkItemCount", params)
         return data;
     }
 
@@ -179,8 +172,7 @@ export class InsightStore {
      */
     @action
     statisticsWorkItemStatusCount = async(params) => {
-
-		const data = await StatisticsWorkItemStatusCount(params);
+        const data = await Service("/projectInsightReportController/statisticsWorkItemStatusCount", params)
         return data;
     }
 
@@ -191,7 +183,7 @@ export class InsightStore {
      */
     @action
     statisticsUserWorkItemCount = async(params) => {
-		const data = await StatisticsUserWorkItemCount(params);
+        const data = await Service("/projectInsightReportController/statisticsUserWorkItemCount", params)
         return data;
     }   
 
@@ -200,7 +192,7 @@ export class InsightStore {
      */
     @action
     findAllProjectSet = async() => {
-		const data = await FindAllProjectSet();
+        const data = await Service("/projectSet/findAllProjectSet")
         return data;
     }
 
@@ -210,7 +202,7 @@ export class InsightStore {
      */
     @action
     findAllProject = async() => {
-		const data = await FindAllProject();
+        const data = await Service("/project/findAllProject")
         return data;
     }
 
@@ -221,7 +213,7 @@ export class InsightStore {
      */
     @action
     createInsight = async(params) => {
-		const data = await CreateInsight(params);
+        const data = await Service("/insight/createInsight", params)
         return data;
     }
 
@@ -241,7 +233,7 @@ export class InsightStore {
                 currentPage: 1
             }
         }
-		const data = await FindInsightList(params);
+        const data = await Service("/insight/findInsightList", params)
         return data;
     }
 
@@ -252,7 +244,7 @@ export class InsightStore {
      */
     @action
     updateInsight = async(params) => {
-		const data = await UpdateInsight(params);
+        const data = await Service("/insight/updateInsight", params)
         return data;
     }
 
@@ -263,7 +255,7 @@ export class InsightStore {
      */
     @action
     findInsight = async(params) => {
-		const data = await FindInsight(params);
+        const data = await Service("/insight/findInsight", params)
         return data;
     }
 
@@ -274,7 +266,7 @@ export class InsightStore {
      */
     @action
     deleteInsight = async(params) => {
-        const data = await DeleteInsight(params);
+        const data = await Service("/insight/deleteInsight", params)
         return data;
     }
 }

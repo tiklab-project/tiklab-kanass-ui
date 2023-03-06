@@ -31,7 +31,7 @@ const ProjectMessageManagement = AsyncComponent(() => import('./setting/message/
 const ProjectMessageNotice = AsyncComponent(() => import('./setting/message/ProjectMessageNotice'))
 const ProjectMessageNoticeSystem = AsyncComponent(() => import('./setting/message/ProjectMessageNoticeSystem'))
 
-const Setting = AsyncComponent(() => import('./setting/common/containers/Setting'))
+const Setting = AsyncComponent(() => import('./setting/common/components/Setting'))
 const WorkTypeList = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeList'))
 const WorkTypeSystem = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeSystem'))
 const workPriority = AsyncComponent(() => import('./setting/workSeting/components/WorkPriority'))
@@ -47,7 +47,7 @@ const ProjectFeature = AsyncComponent(() => import('./setting/privilege/ProjectF
 const ProjectRole = AsyncComponent(() => import('./setting/privilege/ProjectRole'))
 
 //组织用户
-const Oragn = AsyncComponent(() => import('./setting/common/containers/Organ'))
+const Oragn = AsyncComponent(() => import('./setting/common/components/Organ'))
 const OrgaContent = AsyncComponent(() => import('./setting/orga/Orga'))
 const OrgaUser = AsyncComponent(() => import('./setting/orga/User'))
 const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirectory"))
@@ -58,39 +58,39 @@ const Index = AsyncComponent(() => import('./home/common/components/HomeIndex'))
 // const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
-const WorkAll = AsyncComponent(() => import('./work/containers/Work'))
+const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
 // 项目
-const Project = AsyncComponent(() => import('./project/project/containers/Project'))
-const ProjectNomalDetail = AsyncComponent(() => import('./project/common/containers/ProjectNomalDetail'))
-const ProjectScrumDetail = AsyncComponent(() => import('./project/common/containers/ProjectScrumDetail'))
-const ProdeNomalSetAside = AsyncComponent(() => import('./project/setting/common/containers/ProjectNomalSet'))
-const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/containers/ProjectScrumSet'))
-const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/containers/WorkType'))
+const Project = AsyncComponent(() => import('./project/project/components/Project'))
+const ProjectNomalDetail = AsyncComponent(() => import('./project/common/components/ProjectNomalLayout'))
+const ProjectScrumDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
+const ProdeNomalSetAside = AsyncComponent(() => import('./project/setting/common/components/ProjectNomalSet'))
+const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
+const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 
-const Survey = AsyncComponent(() => import('./project/overview/containers/Survey'))
+const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
-const PlanSprint = AsyncComponent(() => import('./project/sprintPlan/containers/SprintPlan'))
+const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
-const Work = AsyncComponent(() => import('./work/containers/Work'))
+const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
-const Milestone = AsyncComponent(() => import('./project/milestone/containers/MilestoneList'))
+const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 
-const Linemap = AsyncComponent(() => import('./project/lineMap/container/LineMap'))
+const Linemap = AsyncComponent(() => import('./project/lineMap/component/LineMap'))
 
 const Version = AsyncComponent(() => import('./project/version/components/VersionTable'))
 const VersionDetail = AsyncComponent(() => import('./project/version/components/VersionDeatil.js'))
 
 const VersionPlan = AsyncComponent(() => import('./project/version/components/VersionPlan'))
 const PrivilegeDomainUser = AsyncComponent(() => import('./project/user/User'));
-const Plan = AsyncComponent(() => import('./project/plan/containers/Plan'));
+const Plan = AsyncComponent(() => import('./project/plan/components/Plan'));
 const PlanWorkItem = AsyncComponent(() => import('./project/plan/components/PlanWorkItem'));
 
-const Module = AsyncComponent(() => import('./project/setting/module/containers/ModuleList'))
-const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/containers/BasicInfo'))
+const Module = AsyncComponent(() => import('./project/setting/module/components/ModuleList'))
+const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/components/BasicInfo'))
 
 // 项目权限
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
@@ -108,27 +108,27 @@ const StatisticsProjectWorkLog = AsyncComponent(()=> import('./statistics/compon
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
 // 迭代
-const SprintHome = AsyncComponent(() => import('./sprint/common/containers/SprintDetail'))
-const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/containers/SprintSurvey"))
-const SprintPlan = AsyncComponent(() => import("./sprint/plan/containers/SprintPlan"))
-const SprintWork = AsyncComponent(() => import("./work/containers/Work"))
+const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
+const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
+const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
+const SprintWork = AsyncComponent(() => import("./work/components/Work"))
 
 //迭代统计
-const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/containers/SprintStatistics'))
+const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
 // 搜索页面
 const SearchResult = AsyncComponent(() => import('./home/search/components/SearchResult'))
 
 // 项目集
-const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/containers/ProjectSet'))
+const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
 const ProjectSetList = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSetTable'))
-const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/containers/ProjectSetDeatail'))
-const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/containers/ProjectSetProjectList'))
-const ProjectSetSurvey = AsyncComponent(() => import('./projectSet/overview/containter/ProjectSetSurvey'))
+const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
+const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
+const ProjectSetSurvey = AsyncComponent(() => import('./projectSet/overview/components/ProjectSetSurvey'))
 const ProjectSetDomainRole = AsyncComponent(() => import('./projectSet/user/ProjectSetDomainRole'));
 const ProjectSetUser = AsyncComponent(() => import('./projectSet/user/ProjectSetUser'));
-const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/containers/ProjectSetSetting"))
-const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/containers/ProjectSetBasicInfo"))
-const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/containers/ProjectSetStatistics"))
+const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/components/ProjectSetSetting"))
+const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/components/ProjectSetBasicInfo"))
+const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/components/ProjectSetStatistics"))
 // 工时
 // const Log = AsyncComponent(() => import('./project/workLog/containers/Log'))
 // const ProjectLogStatistics = AsyncComponent(() => import('./project/workLog/components/ProjectStatistics'))

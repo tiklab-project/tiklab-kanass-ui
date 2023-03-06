@@ -1,6 +1,5 @@
 import { observable, action } from "mobx";
-import {SelectWorkChildList,AddWorkChild, DeleWorkChild,
-    FindEpicSelectWorkItemList,FindSelectWorkItemList} from "../api/WorkChildApi";
+import {Service} from "../../common/utils/requset";
 export class WorkChild {
     @observable workChildList = [];
     @observable selectWorkChildList = [];
@@ -40,7 +39,7 @@ export class WorkChild {
     @action
     findEpicSelectWorkItemList = async(value) => {
         Object.assign(this.searchCondition, {...value})
-        const data = await FindEpicSelectWorkItemList(this.searchCondition);
+        const data = await Service("/workItem/findEpicSelectWorkItemList", this.searchCondition)
         if(data.code === 0){
             if(this.searchCondition.pageParam.currentPage === 1){
                 this.selectWorkChildList = data.data.dataList;
@@ -57,7 +56,7 @@ export class WorkChild {
     @action
     findSelectWorkItemList = async(value) => {
         Object.assign(this.searchCondition, {...value})
-        const data = await FindSelectWorkItemList(this.searchCondition);
+        const data = await Service("/workItem/findSelectWorkItemList", this.searchCondition)
         if(data.code === 0){
             if(this.searchCondition.pageParam.currentPage === 1){
                 this.selectWorkChildList = data.data.dataList;
@@ -79,11 +78,7 @@ export class WorkChild {
     @action
 	getWorkChildList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value});
-        const data = await SelectWorkChildList(this.searchSelectCondition);
-        // if(data.code === 0){
-        //     this.childWorkItemTotal = data.data.totalRecord;
-        //     this.childWorkList = data.data.dataList
-        // }
+        const data = await Service("/workItem/findSelectWorkItemList", this.searchSelectCondition)
         return data;
     }
     //添加已选择事项
@@ -98,29 +93,23 @@ export class WorkChild {
                 id: value.projectId
             }
         }
-        const data = await AddWorkChild(params);
+        const data = await Service("/workItem/updateWorkItem", params)
         return data;
     }
 
     //添加已选择事项
     @action
-	deleWorkChild = (value) => {
+	deleWorkChild = async(value) => {
         let params = {
             id: value.id,
             parentWorkItem: {
                 id: "nullstring"
             }
         }
-        return new Promise((resolve,reject)=> {
-            DeleWorkChild(params).then(response => {
-                if(response.code=== 0){
-                    this.getWorkChildList()
-                }
-                resolve(response)
-            }).catch(error => {
-                reject(error)
-            })
-        })
+        const data = await Service("/workItem/updateWorkItem", params)
+        if(data.code === 0){
+            this.getWorkChildList()
+        }
 		
     }
 }

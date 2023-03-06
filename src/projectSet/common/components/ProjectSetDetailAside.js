@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 项目详情页面左侧导航栏
+ * @Descripttion: 项目集详情页面左侧导航栏
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -21,19 +21,17 @@ const { Sider } = Layout;
 
 const ProjectSetDetailAside = (props) => {
     const { systemRoleStore } = props;
+    // 切换宽菜单与窄菜单的参数
     const [isShowText, SetIsShowText] = useState(false)
     const { t, i18n } = useTranslation();
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/index/prodetail/survey`);
-    
-    // 切换项目窗口弹窗，鼠标移入与移出效果
-    
-    // 是否显示切换弹窗
-    const [visible, setVisible] = useState(false)
+    // 当前项目集详情
     const projectSet = JSON.parse(localStorage.getItem("projectSet"))
+    // 项目集id
     const projectSetId = props.match.params.projectSetId;
      // 路由
-     const normalProrouter = [
+     const projectSetRouter = [
         {
             title: `概览`,
             icon: 'survey',
@@ -52,28 +50,16 @@ const ProjectSetDetailAside = (props) => {
             key: `/index/projectSetdetail/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
         }
-        // ,
-        // {
-        //     title: "成员",
-        //     icon: 'project',
-        //     key: `/index/projectSetdetail/${projectSetId}/user`,
-        //     encoded: "User",
-        // },
-        // {
-        //     title: "权限",
-        //     icon: 'project',
-        //     key: `/index/projectSetdetail/${projectSetId}/dominRole`,
-        //     encoded: "DominRole",
-        // }
     ];
 
-    const prorouter = normalProrouter;
+    /**
+     * 初次进入设置激活导航菜单样式
+     */
     useEffect(() => {
         // 初次进入激活导航菜单
         setSelectKey(props.location.pathname)
-
+        // 获取项目集权限
         systemRoleStore.getInitProjectPermissions(getUser().userId, projectSetId)
-        
         return
     }, [projectSet,props.location.pathname])
 
@@ -95,9 +81,6 @@ const ProjectSetDetailAside = (props) => {
         SetIsShowText(!isShowText)
     }
 
-    const showModal = () => {
-        setVisible(true)
-    };
 
     return (
         <Fragment>
@@ -106,7 +89,7 @@ const ProjectSetDetailAside = (props) => {
                     <ProjectSetChangeModal isShowText = {isShowText}/>
                     <ul className="projectSet-menu">
                         {
-                            prorouter && prorouter.map((item,index) =>  {return isShowText ? 
+                            projectSetRouter && projectSetRouter.map((item,index) =>  {return isShowText ? 
                                 <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
                                         key={index}
                                         onClick={() => selectMenu(item.key)}

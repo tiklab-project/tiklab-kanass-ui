@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-20 10:11:51
  */
 import { observable, action } from "mobx";
-import { GetMonthCalendar,GetMonthCalendarDay,GetMonthCalendarWeek } from "../api/WorkCalendarApi";
+import { Service } from "../../common/utils/requset";
 
 export class WorkCalendarStore {
     @observable workCalendarListPre = [];
@@ -17,53 +17,29 @@ export class WorkCalendarStore {
     @observable workCalendarWeekList = [];
 
     @action
-    getMonthCalendar = (month) => {
-        // debugger
-        return new Promise((resolve,reject)=> {
-            GetMonthCalendar().then(response => {
-                console.log(response)
-                // return
-                this.workCalendarListPre = response.data[month - 1];
-                this.workCalendarListCur = response.data[month]
-                this.workCalendarListNext = response.data[month + 1];
-                resolve(response.data) 
-                
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    getMonthCalendar = async (month) => {
+        const data = await Service("/calendar", this.searchCondition)
+        if (data.code === 0) {
+            this.workCalendarListPre = data.data[month - 1];
+            this.workCalendarListCur = data.data[month]
+            this.workCalendarListNext = data.data[month + 1];
+        }
+        return data;
     }
 
     @action
-    getMonthCalendarDay = (month) => {
-        // debugger
-        return new Promise((resolve,reject)=> {
-            GetMonthCalendarDay().then(response => {
-                console.log(response)
-                this.workCalendarDayList = response.data.dayData;
-                resolve(response.data.dayData) 
-                
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    getMonthCalendarDay = async(month) => {
+        const data = await Service("/calendarDay", this.searchCondition)
+        return data;
     }
 
     @action
-    getMonthCalendarWeek = () => {
-        return new Promise((resolve,reject)=> {
-            GetMonthCalendarWeek().then(response => {
-                console.log(response)
-                this.workCalendarWeekList = response.data.weekData;
-                resolve(response.data.weekData) 
-                
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+    getMonthCalendarWeek = async() => {
+        const data = await Service("/calendarWeek", this.searchCondition)
+        if(data.data === 0){
+            this.workCalendarWeekList = data.data.weekData;
+        }
+        return data;
     }
 }
 

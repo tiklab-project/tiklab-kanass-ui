@@ -1,12 +1,5 @@
 import { observable, action } from "mobx";
-import {
-    FindProjectList, AddproList, DeleproList, Searchpro, UpdateproList,
-    GetProjectTypeList, GetUseList, GetAllProList, FindJoinProjectList,
-    GreatIcon,FindIconList, CreateRecent,FindRecentProjectPage, 
-    CreateProjectFocus, FindProjectFocusList, DeleteProjectFocusByQuery, 
-    FindFocusProjectList, StatProjectWorkItem
-} from "../api/ProjectApi";
-
+import { Service } from "../../../common/utils/requset"
 export class ProjectStore {
     @observable prolist = [];
     @observable projectTypelist = [];
@@ -26,22 +19,22 @@ export class ProjectStore {
     };
 
     @action
-    findProjectList = (value) => {
+    findProjectList = async(value) => {
         Object.assign(this.projectPageParams, { ...value })
-        FindProjectList(this.projectPageParams).then(response => {
-            this.prolist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/project/findProjectList", this.projectPageParams)
+        if(data.code === 0){
+            this.prolist = data.data;
+        }
+        return data;
     }
 
     @action
-    findJoinProjectList = (value) => {
-        FindJoinProjectList(value).then(response => {
-            this.prolist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    findJoinProjectList = async(value) => { 
+        const data = await Service("/project/findJoinProjectList", value)
+        if(data.code === 0){
+            this.prolist = data.data;
+        }
+        return data
     }
     
     @action
@@ -57,7 +50,7 @@ export class ProjectStore {
                 currentPage: this.projectPageParams.current
             }
         }
-        const data = await FindRecentProjectPage(params);
+        const data = await Service("/project/findRecentProjectPage", params)
         if(data.code === 0){
             this.prolist = data.data;
         }
@@ -65,12 +58,12 @@ export class ProjectStore {
     }
 
     @action
-    getAllProlist = () => {
-        GetAllProList(params).then(response => {
-            this.allProlist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getAllProlist = async() => {
+        const data = await Service("/project/findAllProject", params)
+        if(data.code === 0){
+            this.allProlist = data.data;
+        }
+        return data;
     }
 
     @action
@@ -86,7 +79,7 @@ export class ProjectStore {
             endTime: values.endTime,
             iconUrl: values.iconUrl
         }
-        const data = await AddproList(param)
+        const data = await Service("/project/createProject", param)
         if(data.code === 0){
             this.findProjectList()
         }
@@ -94,80 +87,64 @@ export class ProjectStore {
     }
 
     @action
-    deleproList = async (values) => {
+    deleproList = async(values) => {
         const param = new FormData()
         param.append("id", values)
-
-        const that = this;
-        const data = DeleproList(param);
+        const data = await Service("/project/deleteProject", param)
         if (data.code === 0) {
-            that.findProjectList()
+            this.findProjectList()
         }
         return data;
     }
 
 
     @action
-    updateProject = (values) => {
-        const that = this;
-        return new Promise((resolve, reject) => {
-            UpdateproList(values).then(response => {
-                if (response.code === 0) {
-                    that.findProjectList()
-                }
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
+    updateProject = async(values) => {
+        const data = await Service("/project/updateProject", values)
+        if(data.code === 0){
+            if (data.code === 0) {
+                this.findProjectList()
             }
-        )
-
+        }
+        return data;
     }
 
     @action
-    searchproList = (values) => {
+    searchproList = async(values) => {
         const param = new FormData()
         param.append("id", values)
-        const that = this;
-        return new Promise((resolve, reject) => {
-                Searchpro(param).then(response => {
-                    that.prolist = [response.data];
-                    resolve(response.data)
-                }).catch(error => {
-                    console.log(error)
-                    reject()
-                })
-            }
-        )
+        const data = await Service("/project/findProject", values)
+        if(data.code === 0){
+            this.prolist = [data.data];
+        }
+        return data;
     }
 
     @action
     searchpro = async(values) => {
         const params = new FormData()
         params.append("id", values)
-
-        const data = await Searchpro(params);
+        const data = await Service("/project/findProject", values)
         return data;
 
     }
 
     @action
-    getProjectTypeList = () => {
-        GetProjectTypeList().then(response => {
-            this.projectTypelist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getProjectTypeList = async() => {
+        const data = await Service("/projectType/findAllProjectType")
+        if(data.code === 0){
+            this.projectTypelist = data.data;
+        }
+        return data;
     }
 
     @action
-    getUseList = () => {
-        GetUseList().then(response => {
-            this.uselist = response.data;
-        }).catch(error => {
-            console.log(error)
-        })
+    getUseList = async() => {
+        const data = await Service("/user/user/findAllUser")
+        if(data.code === 0){
+            this.uselist = data.data;
+        }
+        return data;
     }
 
     /**
@@ -175,7 +152,7 @@ export class ProjectStore {
     */
     @action
     creatIcon = async (value) => {
-        const data = await GreatIcon(value)
+        const data = await Service("/icon/createIcon", value)
         return data;
 
     }
@@ -183,39 +160,39 @@ export class ProjectStore {
     //获取项目icon
     @action
     findIconList = async (params) => {
-        const data = await FindIconList(params)
+        const data = await Service("/icon/findIconList", params)
         return data;
     }
 
     @action
     createRecent = async (value) => {
-        const data = await CreateRecent(value)
+        const data = await Service("/recent/createRecent", value)
         return data;
 
     }
 
     @action
     createProjectFocus = async (value) => {
-
-        const data = await CreateProjectFocus(value)
+        const data = await Service("/projectFocus/createProjectFocus", value)
         return data;
     }
 
     @action
     findProjectFocusList = async (value) => {
-        const data = await FindProjectFocusList(value)
+        const data = await Service("/projectFocus/findProjectFocusList", value)
         return data;
     }
 
     @action
     deleteProjectFocusByQuery = async (value) => {
-        const data = await DeleteProjectFocusByQuery(value)
+        const data = await Service("/projectFocus/deleteProjectFocusByQuery", value)
+
         return data;
     }
 
     @action
     findFocusProjectList = async (value) => {
-        const data = await FindFocusProjectList(value);
+        const data = await Service("/project/findFocusProjectList", value)
         if(data.code === 0){
             this.prolist = data.data;
         }
@@ -228,7 +205,7 @@ export class ProjectStore {
 	statProjectWorkItem = async(value) => {
         const params = new FormData();
         params.append("recentMasterId",value)
-		const data = await StatProjectWorkItem(params);
+        const data = await Service("/workItemStat/statProjectWorkItem", params)
         return data;
     }
 }

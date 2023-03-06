@@ -7,20 +7,9 @@
  * @LastEditTime: 2022-03-03 16:49:56
  */
 import { observable, action } from "mobx";
-import {FindDynamicList, Findlogpage} from "../api/WorkDynamicApi";
-
+import {Service} from "../../common/utils/requset";
 export class WorkDynamicStore {
     @observable dynamicList = [];
-
-    // @action
-    // findDynamicList = async(value) => {
-    //     const data = await FindDynamicList(value);
-    //     if(data.code === 0){
-    //         this.dynamicList = data.data;
-    //     }
-    //     return data;
-    // }
-
     @action
     findlogpage = async(value)=> {
         const params={
@@ -33,7 +22,7 @@ export class WorkDynamicStore {
                 workItemId: value.workItemId
             }
         }
-        const data = await Findlogpage(params);
+        const data = await Service("/oplog/findlogpage", params)
       
         return data;
     }

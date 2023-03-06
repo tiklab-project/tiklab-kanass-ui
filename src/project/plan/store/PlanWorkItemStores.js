@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import {GetWorkItem,FindUnPlanWorkItemPage,CreatePlanWorkItem,DeletePlanWorkItem,WorkType} from "../api/PlanWorkItem";
+import { Service } from "../../../common/utils/requset"
 export class PlanWorkItemStore {
     @observable planWorkItemList = [];
     @observable selectPlanWorkItemList = [];
@@ -15,10 +15,9 @@ export class PlanWorkItemStore {
 
     // 获取已选择规划事项
     @action
-	getWorkItemList = (value) => {
+	getWorkItemList = async(value) => {
         Object.assign(this.searchCondition, {...value})
         const params={
-            // projectId: this.searchCondition.projectId,
             title: this.searchCondition.title,
             workTypeId: this.searchCondition.workTypeId,
             planId: this.searchCondition.planId,
@@ -31,21 +30,18 @@ export class PlanWorkItemStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-        return new Promise((resolve,reject)=>{
-            GetWorkItem(params).then(response => {
-                this.planWorkItemList = response.data.dataList;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+
+        const data = await Service("/workItem/findWorkItemPage", params)
+        if(data.code === 0){
+            this.planWorkItemList = data.data.dataList;
+        }
+        return data;
     }
 
 
     //获取未选择规划事项
     @action
-	findUnPlanWorkItemPage = (value) => {
+	findUnPlanWorkItemPage = async(value) => {
         Object.assign(this.searchSelectCondition, {...value})
         const params={
             projectId: this.searchSelectCondition.projectId,
@@ -61,29 +57,25 @@ export class PlanWorkItemStore {
                 currentPage: this.searchSelectCondition.currentPage
             }
         }
-        return new Promise((resolve,reject)=>{
-            FindUnPlanWorkItemPage(params).then(response => {
-                this.selectPlanWorkItemList = response.data.dataList;
-                this.searchSelectCondition.total = response.data.totalRecord;
-                resolve(response.data)
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
-		
+        const data = await Service("/workItem/findUnPlanWorkItemPage", params);
+        if(data.code === 0){
+            this.selectPlanWorkItemList = data.data.dataList;
+            this.searchSelectCondition.total = data.data.totalRecord;
+        }
+        return data;
     }
     //添加已选择事项
     @action
 	createPlanWorkItem = async(params) => {
-        const data = await CreatePlanWorkItem(params);
+        const data = await Service("/planWorkItem/createPlanWorkItem", params);
+        
         return data;
 		
     }
     //添加已选择事项
     @action
 	delePlanWorkItem = async(params) => {
-        const data = await DeletePlanWorkItem(params);
+        const data = await Service("/planWorkItem/deletePlanWorkItemCondition", params);
         return data;
     }
     
@@ -91,7 +83,7 @@ export class PlanWorkItemStore {
     //获取事项类型
     @action
     getWorkTypeList= async() => {
-        const data = await WorkType();
+        const data = await Service("/workTypeDm/findWorkTypeDmList", params);
         if(data.code === 0){
             this.workTypeList = data.data;
         }

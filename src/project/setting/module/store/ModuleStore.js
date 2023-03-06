@@ -7,8 +7,7 @@
  * @LastEditTime: 2021-05-08 17:27:13
  */
 import { observable, action } from "mobx";
-import { Getmodule,Addmodule,Delemodule,SearchmoduleById,EditmoduleById,FindModulePage } from "../api/ModuleApi";
-
+import { Service } from "../../../../common/utils/requset"
 export class ModuleStore {
     // 模块列表
     @observable 
@@ -31,14 +30,12 @@ export class ModuleStore {
      * 获取模块列表
      */
     @action
-	getmodule = () => {
-		Getmodule().then(response => {
-            if(response.code=== 0){
-                this.modulelist = response.data;
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+	getmodule = async() => {
+        const data = await Service("/module/findAllModule")
+        if(data.code=== 0){
+            this.modulelist = data.data;
+        }
+        return data;
     }
     
     /**
@@ -46,14 +43,12 @@ export class ModuleStore {
      * @param {*} values 
      */
     @action
-	addModule = (values) => {
-		Addmodule(values).then(response => {
-            if(response.code=== 0){
-                this.findModulePage(values.project.id,this.searchModuleName)
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+	addModule = async(values) => {
+        const data = await Service("/module/createModule", values)
+        if(data.code === 0){
+            this.findModulePage(values.project.id,this.searchModuleName)
+        }
+        return data;
     }
 
     /**
@@ -62,24 +57,18 @@ export class ModuleStore {
      * @param {*} projectId 
      */
     @action
-	deleModule = (moduleId,projectId) => {
+	deleModule = async(moduleId,projectId) => {
         const param = new FormData()
         param.append("id", moduleId)
-
-		Delemodule(param).then(response => {
-            if(response.code=== 0){
-                // 删除当前页最后一条，返回上一页
-                const that = this;
-                this.findModulePage(projectId,this.searchModuleName).then((res)=> {
-                    if(res.data.dataList.length === 0){
-                        that.modulePageParam.current--
-                    }
-                })
-                
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+        const data = await Service("/module/deleteModule", param)
+		if(data.code=== 0){
+            this.findModulePage(projectId,this.searchModuleName).then((res)=> {
+                if(res.data.dataList.length === 0){
+                    that.modulePageParam.current--
+                }
+            })
+        }
+        return data;
     }
 
     /**
@@ -88,20 +77,11 @@ export class ModuleStore {
      * @returns 
      */
     @action
-	searchModuleById = (values) => {
+	searchModuleById = async(values) => {
         const param = new FormData()
         param.append("id", values)
-        
-        return new Promise(function(resolve, reject){
-            SearchmoduleById(param).then(response => {
-                if(response.code=== 0){
-                    resolve(response.data)
-                }
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
-        })
+        const data = await Service("/module/findModule", param)
+        return data;
 		
     }
 
@@ -110,14 +90,12 @@ export class ModuleStore {
      * @param {*} values 
      */
     @action
-	editModuleById = (values) => {
-		EditmoduleById(values).then(response => {
-            if(response.code===0){
-                this.findModulePage(values.project.id,this.searchModuleName)
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+	editModuleById = async(values) => {
+        const data = await Service("/module/updateModule", param)
+        if(data.code===0){
+            this.findModulePage(values.project.id,this.searchModuleName)
+        }
+        return data;
     }
 
     /**
@@ -127,7 +105,7 @@ export class ModuleStore {
      * @returns 
      */
     @action
-	findModulePage = (projectId,moduleName) => {
+	findModulePage = async(projectId,moduleName) => {
         this.searchSprintId = projectId
         this.searchModuleName = moduleName
         const params={
@@ -142,22 +120,12 @@ export class ModuleStore {
                 currentPage: this.modulePageParam.current
             }
         }
-        return new Promise((resolve,reject)=>{
-            FindModulePage(params)
-                .then(response => {
-                    if(response.code===0){
-                        this.modulelist = response.data.dataList
-                        this.modulePageParam.totalRecord = response.data.totalRecord
-                        }
-                        resolve(response.data)
-                    })
-                .catch(error => {
-                    console.log(error)
-                    reject(error)
-                })
-            }
-
-        )
+        const data = await Service("/module/findModulePage", params)
+        if(data.code===0){
+            this.modulelist = data.data.dataList
+            this.modulePageParam.totalRecord = data.data.totalRecord
+        }
+        return data;
     }
 
     /**

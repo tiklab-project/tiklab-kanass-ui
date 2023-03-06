@@ -1,7 +1,6 @@
 
 import { observable, action } from "mobx";
-import { StatProjectSetSetWorkItemProcess,FindDynamicPage, FindProjectList,Findlogpage, Findtodopage, } from "../api/basicInfoApi";
-
+import {Service} from "../../../common/utils/requset"
 export class BasicInfoStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
@@ -22,7 +21,7 @@ export class BasicInfoStore {
     statProjectSetWorkItemProcess = async (values) => {
         const params = new FormData();
         params.append("ids", values)
-        const data = await StatProjectSetSetWorkItemProcess(params);
+        const data = await Service("/workItemStat/statProjectWorkItem", params)
         return data;
     }
 
@@ -39,7 +38,7 @@ export class BasicInfoStore {
                 currentPage: 1
             }
         }
-        const data = await FindDynamicPage(params);
+        const data = await Service("/dynamic/findDynamicPage", params)
         return data;
     }
 
@@ -47,7 +46,7 @@ export class BasicInfoStore {
     @action
     findPrecessProjectList = async (values) => {
         Object.assign(this.projectPageParams, { ...values })
-        const data = await FindProjectList(this.projectPageParams);
+        const data = await Service("/projectSet/findProjectList", this.projectPageParams)
         this.projectRelevance = data.data.dataList
         return data;
     }
@@ -61,7 +60,7 @@ export class BasicInfoStore {
             },
             bgroup: "teamwire"
         }
-        const data = await Findlogpage(params);
+        const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
             this.opLogList = data.data.dataList
         }
@@ -79,7 +78,7 @@ export class BasicInfoStore {
             bgroup: "teamwire",
             userId: value.userId
         }
-        const data = await Findtodopage(params);
+        const data = await Service("/todo/findtodopage", params)
         if(data.code === 0) {
             this.todoTaskList = data.data.dataList;
         }

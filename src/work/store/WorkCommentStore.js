@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-11-26 14:34:25
  */
 import { observable, action } from "mobx";
-import { CreateWorkComment,FindWorkCommentPage,UpdateWorkComment,DeleteWorkComment } from "../api/WorkCommentApi"
+import {Service} from "../../common/utils/requset";
 export class WorkCommentStore {
     @observable workCommentPage = {
         current: 1,
@@ -17,7 +17,7 @@ export class WorkCommentStore {
 
     @action
     createWorkComment = async(value) => {
-		const data = await CreateWorkComment(value);
+        const data = await Service("/workComment/createWorkComment", value)
         return data;
     }
 
@@ -35,13 +35,13 @@ export class WorkCommentStore {
                 currentPage: this.workCommentPage.current
             }
         }
-		const data = await FindWorkCommentPage(params);
+        const data = await Service("/workComment/findWorkCommentPage", params)
         return data;
     }
 
     @action
     updateWorkComment = async(value) => {
-		const data = await UpdateWorkComment(value);
+        const data = await Service("/workComment/updateWorkComment", value)
         return data;
     }
 
@@ -49,7 +49,7 @@ export class WorkCommentStore {
     deleteWorkComment = async(value) => {
         const params = new FormData();
         params.append("id",value.id)
-		const data = await DeleteWorkComment(params);
+        const data = await Service("/workComment/deleteWorkComment", params)
         return data;
     }
 }
