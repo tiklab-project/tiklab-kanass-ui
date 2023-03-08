@@ -440,7 +440,7 @@ export class WorkStore {
         if(data.code === 0){
             this.workInfo = data.data;
         }
-        return data;
+        return data.data;
     }
 
     // 创建事项附件
@@ -545,7 +545,7 @@ export class WorkStore {
             value.eachType = value.eachType
         }
 
-        const data = await Service("/workItem/updateWorkItem",params);
+        const data = await Service("/workItem/updateWorkItem",value);
         if(data.code === 0){
             return data;
         }

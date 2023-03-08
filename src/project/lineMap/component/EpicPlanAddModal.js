@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./EpicPlanAddModal.scss"
 import {observer, inject} from "mobx-react";

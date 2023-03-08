@@ -12,18 +12,34 @@ import { observable, action, extendObservable } from "mobx";
 import { getUser } from 'tiklab-core-ui';
 
 export class HomeStore {
-    @observable ProjectList = [];
-    @observable currentLink = "home";
-    @observable messageTotal = 0;
-    @observable messageList = [];
-    @observable isMessageReachBottom = true;
-
-    @observable dynamicTotal = 0;
-    @observable dynamicList = [];
-    @observable opLogList = [];
-    @observable todoTaskList = [];
-    @observable activeKey = "survey";
-
+    // 项目列表
+    @observable 
+    ProjectList = [];
+    // 消息总条数
+    @observable 
+    messageTotal = 0;
+    // 消息列表
+    @observable 
+    messageList = [];
+    // 消息列表是否到最后一页
+    @observable 
+    isMessageReachBottom = true;
+    // 动态总数
+    @observable 
+    dynamicTotal = 0;
+    // 动态列表
+    @observable 
+    dynamicList = [];
+    // 日志列表
+    @observable 
+    opLogList = [];
+    // 待办列表
+    @observable 
+    todoTaskList = [];
+    // 当天被激活的tab
+    @observable 
+    activeKey = "survey";
+    // 待办的条件分页
     @observable todoCondition = {
         pageParam: {
             pageSize: 20,
@@ -33,17 +49,14 @@ export class HomeStore {
         content: {}
     }
     
-    
+    // 是否是动态最后一页
     @observable isDynamicReachBottom = true;
-
+    // 设置被激活tab
     @action
     setActiveKey = (value) => {
         this.activeKey = value
     }
-    @action
-    setCurrentLink = (value) => {
-        this.currentLink = value
-    }
+ 
 
     /**
      * 获取当前登陆者最近点击的项目
@@ -241,6 +254,10 @@ export class HomeStore {
                 pageSize: 20,
                 currentPage: 1
             },
+            orderParams: [{
+                name: "timestamp",
+                orderType:"asc"
+            }],
             bgroup: "teamwire",
             userId: value.userId,
             content: {

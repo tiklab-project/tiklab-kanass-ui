@@ -1,10 +1,10 @@
 import React,{useEffect, useState} from 'react';
-import {PreliminaryTypeList} from "tiklab-form-ui";
+import {PreliminaryType} from "tiklab-form-ui";
 
 const WorkTypeForm = props => {
 
     return(
-        <PreliminaryTypeList 
+        <PreliminaryType 
             {...props} 
             formId={props.match.params.id}
             breadcrumbProps={[

@@ -1,8 +1,8 @@
 import React from "react";
-import {LogTypeList} from "tiklab-oplog-ui";
+import { LogType } from "tiklab-security-ui";
 
 const ProjectLogTypeList = props =>{
-    return <LogTypeList {...props} bgroup={"teamwire"}/>
+    return <LogType {...props} bgroup={"teamwire"}/>
 }
 
 export default ProjectLogTypeList

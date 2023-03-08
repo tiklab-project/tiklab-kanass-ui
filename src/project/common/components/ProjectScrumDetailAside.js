@@ -10,7 +10,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
-import { Layout, Button } from "antd";
+import { Layout } from "antd";
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import SetScrumMenu from "./SetScrumMenu";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default function AsyncComponent (importComponent){
+export default function AsyncComponent (importComponent) {
     class LazyComponent extends Component{
         constructor(props) {
             super(props);

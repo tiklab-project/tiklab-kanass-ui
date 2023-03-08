@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-12-02 09:58:09
  */
-import { observable, action } from "mobx";
+import { action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class ProjectSurveyStore {
     /**
@@ -22,7 +22,7 @@ export class ProjectSurveyStore {
         if (masterId) {
             params.append("masterId", masterId)
         }
-        const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", value)
+        const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", params)
         return data;
     }
 
@@ -49,7 +49,7 @@ export class ProjectSurveyStore {
     findProject = async (projectId) => {
         const params = new FormData();
         params.append("id", projectId);
-        const data = await Service("/project/findProject", value)
+        const data = await Service("/project/findProject", params)
         return data;
     }
 

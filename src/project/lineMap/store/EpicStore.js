@@ -115,7 +115,7 @@ export class EpicStore {
      * @returns 
      */
     @action
-    findWorkItemListByEpic = async(value) => {
+    findEpicChildWorkItemAndEpic = async(value) => {
         const data = await Service("/epicWorkItem/findEpicChildWorkItemAndEpic", value)
         if(data.code === 0){
             return data;

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-18 09:20:30
  */
 import React from "react";
-import { DomainRoleList } from 'tiklab-privilege-ui';
+import { DomainRole } from 'tiklab-privilege-ui';
 import { inject, observer } from "mobx-react";
 import { Row, Col } from "antd";
 
@@ -17,7 +17,7 @@ const ProjectDomainRole = props => {
     return (
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                <DomainRoleList
+                <DomainRole
                     {...props}
                     domainId={projectId}
                     bgroup = {"teamwire"}

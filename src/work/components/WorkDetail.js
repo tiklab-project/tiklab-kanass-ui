@@ -16,7 +16,7 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import Button from "../../common/button/Button";
-import { Profile } from "tiklab-eam-ui";
+import UserIcon from "../../common/UserIcon/UserIcon";
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
@@ -383,7 +383,7 @@ const WorkDetail = (props) => {
                                     <div className="work-item-info">
                                         <div className="work-item-info-item">
                                             <span className="work-item-info-title">类型: </span>
-                                            <span>{workInfo?.workTypeSys.name}</span>
+                                            <span>{workInfo?.workTypeSys?.name}</span>
                                         </div>
                                         <div className="work-item-info-item">
                                             <span className="work-item-info-title">ID: </span>
@@ -431,7 +431,7 @@ const WorkDetail = (props) => {
                                                     >
                                                         {
                                                             userList && userList.map((item) => {
-                                                                return <Select.Option value={item.user.id} key={item.id}><Space><Profile />{item.user.name}</Space></Select.Option>
+                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon />{item.user.name}</Space></Select.Option>
                                                             })
                                                         }
                                                     </Select>

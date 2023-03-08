@@ -8,13 +8,13 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import React, { useState }  from "react";
-import { ProjectFlowList } from 'tiklab-flow-ui';
+import { ProjectFlow } from 'tiklab-flow-ui';
 import { withRouter } from "react-router";
 
 const ProjectProjectFlowList = (props) => {
     const projectId = props.match.params.id;
     return (
-        <ProjectFlowList domainId={projectId} />
+        <ProjectFlow domainId={projectId} />
 
     )
 }

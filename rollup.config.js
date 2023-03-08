@@ -101,7 +101,7 @@
              return {
                  input: [
                      'src/ui.js',
-                     ...getFiles('./src/modules', extensions),
+                     ...getFiles('./src', extensions),
                  ],
                  output: { ...esOutput, dir: 'es', format: 'es', sourcemap: IS_DEV},
                  external,
@@ -111,7 +111,7 @@
              return {
                  input: [
                      'src/ui.js',
-                     ...getFiles('./src/modules', extensions),
+                     ...getFiles('./src', extensions),
                  ],
                  preserveModules: true, // rollup-plugin-styles 还是需要使用
                  output: { ...esOutput, dir: 'lib', format: 'cjs', sourcemap: IS_DEV},

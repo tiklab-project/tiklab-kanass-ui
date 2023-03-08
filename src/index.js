@@ -11,15 +11,13 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
-import enableAxiosCE from "tiklab-enable-axios-ce"
 import { store } from "./stores"
 import { orgStores } from "tiklab-user-ui/es/store";
 import { privilegeStores } from 'tiklab-privilege-ui/es/store'
-import { getUser } from 'tiklab-core-ui'
+import { getUser, enableAxiosCE } from 'tiklab-core-ui'
 import { formStores } from 'tiklab-form-ui/es/store'
 import { flowStores } from 'tiklab-flow-ui/es/store'
 import { messageModuleStores } from 'tiklab-message-ui/es/store';
-import { useVersion } from 'tiklab-eam-ui/es/_utils';
 import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -27,10 +25,9 @@ import { renderRoutes } from "react-router-config";
 import './common/language/i18n'
 import "./index.scss"
 import { observer } from "mobx-react"
-import { createContainer, initFetch } from 'tiklab-plugin-ui/es/_utils';
+import { pluginLoader, PluginProvider } from "tiklab-plugin-core-ui";
 import "./assets/index";
-import resources from "./common/language/resources"
-
+import resources from "./common/language/resources";
 enableAxiosCE()
 const Index = observer((props) => {
 
@@ -66,28 +63,31 @@ const Index = observer((props) => {
     });
 
     useEffect(() => {
-        initFetch(fetchMethod, Routers, resources,i18n).then(res => {
+        pluginLoader(Routers, resources,i18n).then(res => {
             setPluginData(res)
             setVisable(false)
         })
     }, []);
 
-    const CounterContainer = createContainer();
 
     // if(visable) return <div>加载。。。</div>
 
     return (
-        <CounterContainer.Provider initialState={pluginData}>
+        
+        <PluginProvider store={pluginData}>
+            {
+                console.log(pluginData)
+            }
             <Provider {...allStore}>
                 <ConfigProvider locale={zhCN}>
                     <HashRouter>
                         {
-                            renderRoutes(pluginData.routes)
+                            renderRoutes(pluginData?.routes)
                         }
                     </HashRouter>
                 </ConfigProvider>
             </Provider>
-        </CounterContainer.Provider>
+        </PluginProvider>
     )
 });
 

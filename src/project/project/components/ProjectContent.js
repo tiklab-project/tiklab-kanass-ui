@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { useState } from "react";
-import { Profile } from "tiklab-eam-ui";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 import InputSearch from "../../../common/input/InputSearch"
 const { Option } = Select;
 
@@ -63,7 +63,7 @@ const ProjectContent = (props) => {
 
     const goProdetail = (project) => {
         // localStorage.setItem("projectId", project.id);
-        // localStorage.setItem("project", JSON.stringify(project));
+        localStorage.setItem("project", JSON.stringify(project));
         const params = {
             name: project.projectName,
             model: "project",
@@ -224,7 +224,7 @@ const ProjectContent = (props) => {
             align: "left",
             render: (text, record) => (
                 <Space>
-                    <Profile />
+                    <UserIcon />
                     {text}
                 </Space>
             )

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../tiklab-teamwire-saas-ui "
+		},
+		{
+			"path": "../tiklab-kanass-ui"
+		},
+		{
+			"path": "../tiklab-app/tiklab"
+		}
+	],
+	"settings": {}
+}

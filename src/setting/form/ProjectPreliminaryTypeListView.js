@@ -1,9 +1,9 @@
 import React from "react";
-import {PreliminaryTypeList} from 'tiklab-form-ui';
+import {PreliminaryType} from 'tiklab-form-ui';
 
 const ProjectProjectDirectoryView = (props) => {
     return (
-        <PreliminaryTypeList isBase = {false} />
+        <PreliminaryType isBase = {false} />
     )
 }
 export default ProjectProjectDirectoryView;

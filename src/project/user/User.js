@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-21 11:22:59
  */
 import React from "react";
-import { DomainUserList } from 'tiklab-user-ui';
+import { DomainUser } from 'tiklab-user-ui';
 import { inject, observer } from "mobx-react";
 import { Row, Col } from "antd";
 
@@ -18,7 +18,7 @@ const User = props => {
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-user" style={{ paddingRight: "8px" }}>
-                    <DomainUserList
+                    <DomainUser
                         {...props}
                         domainId={projectId}
                         bgroup = {"teamwire"}

@@ -11,7 +11,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./setMenu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { inject, observer } from "mobx-react";
 
 const SetScrumMenu = (props) => {
     const { isShowText} = props;

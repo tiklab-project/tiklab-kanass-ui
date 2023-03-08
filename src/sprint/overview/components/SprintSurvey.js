@@ -11,7 +11,7 @@ import "../components/sprintSurvey.scss";
 import { Row, Col, Progress, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
-import { Profile } from "tiklab-eam-ui"
+import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 
 const SprintSurvey = (props) => {
@@ -147,7 +147,7 @@ const SprintSurvey = (props) => {
                             </div>
                             <div className="sprint-container">
                                 <div className="sprint-item">
-                                    <Profile userInfo={sprintInfo?.master} className="item-icon" />
+                                    <UserIcon userInfo={sprintInfo?.master} className="item-icon" />
                                     <div className="item-content">
                                         <div className="item-top">{sprintInfo?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>

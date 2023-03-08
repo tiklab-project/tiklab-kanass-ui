@@ -28,12 +28,11 @@ let env = "local";
 env = JSON.stringify(env)
 const appKey = JSON.stringify('');
 const appSecret = JSON.stringify('');
-const version = JSON.stringify('');
-const client = JSON.stringify('');
+const version = JSON.stringify('ce');
+const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
-
 module.exports = {
     base_url,
     userProduction,

@@ -13,8 +13,8 @@ import LocalHeader from "./Header";
 import "../components/Header.scss";
 import "../components/HomePage.scss";
 
-import { verifyUserHoc } from 'tiklab-eam-ui';
-import { connect } from 'tiklab-plugin-ui/es/_utils';
+import { UserVerify } from 'tiklab-eam-ui';
+import { connect } from 'tiklab-plugin-core-ui/es';
 import Search from "../../search/components/Search";
 
 const Layout = (props) => {
@@ -78,7 +78,7 @@ const Layout = (props) => {
 }
 
 
-const HomeIndex = verifyUserHoc(Layout, '/noAuth')
+const HomeIndex = UserVerify(Layout, '/noAuth')
 function mapStateToProps(state) {
     return {
         pluginStore: state.pluginStore

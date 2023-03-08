@@ -7,12 +7,13 @@
  * @LastEditTime: 2022-04-16 10:58:01
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./setMenu.scss";
 import { withRouter } from "react-router";
-import { inject, observer } from "mobx-react";
 const SetNomalMenu = (props) => {
+    // 是否是宽菜单
     const { isShowText } = props;
+    // 项目id
     const projectId = props.match.params.id;
 
     /**

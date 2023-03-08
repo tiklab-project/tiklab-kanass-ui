@@ -7,12 +7,12 @@
  * @LastEditTime: 2022-01-27 11:39:35
  */
 import React from "react";
-import { OrgaList} from 'tiklab-user-ui';
+import { Orga } from 'tiklab-user-ui';
 
-const Orga = () => {
+const OrgaList = () => {
     return (
-        <OrgaList bgroup = "teamwire"/>
+        <Orga bgroup = "teamwire"/>
     )
 }
 
-export default Orga
+export default OrgaList

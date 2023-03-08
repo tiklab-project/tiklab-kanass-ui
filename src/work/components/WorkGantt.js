@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { useSelector } from "tiklab-plugin-ui/es/_utils";
-import { RemoteUmdComponent } from "tiklab-plugin-ui";
+import { useSelector } from "tiklab-plugin-core-ui/es";
+import { RemoteComponent } from "tiklab-plugin-core-ui/es";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
 
@@ -43,7 +43,7 @@ const WorkGantt = (props) => {
         <div>
             {
                 workList && workList.length > 0 ?
-                    <RemoteUmdComponent
+                    <RemoteComponent
                         point="work-gantt"
                         pluginStore={pluginStore}
                         isModalType={true}

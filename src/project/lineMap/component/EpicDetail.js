@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 史诗详情
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
@@ -20,17 +20,29 @@ import Button from "../../../common/button/Button";
 const EpicDetail = (props) => {
     const { epicStore } = props;
     const { findEpic, findEpicList, updateEpic, deleteEpic } = epicStore;
+    // 史诗信息
     const [epicInfo, setEpicInfo] = useState()
+    // 史诗id
     const epicId = props.match.params.epicId;
+    // 项目类型
     const path = props.match.path.split("/")[2];
+    // 是否显示切换史诗弹窗
     const [showMenu, setShowMenu] = useState(false);
-
-    
-    const [dropDown, showDropdown] = useState(false);
+    // 弹窗ref
     const modelRef = useRef();
     // 项目id
     const projectId = props.match.params.id;
+    // 史诗列表
     const [epicList, setEpicList] = useState([])
+    // 日历格式
+    const dateFormat = 'YYYY-MM-DD';
+    // 史诗标题ref
+    const inputRef = useRef()
+    // 编辑的史诗名称
+    const [editName, setEditName] = useState(false)
+    /**
+     * 获取史诗信息和史诗列表
+     */
     useEffect(() => {
         if (epicId !== "") {
             findEpic({ id: epicId }).then(data => {
@@ -47,41 +59,32 @@ const EpicDetail = (props) => {
 
         return;
     }, [epicId])
-
-
-
-    const setStatusName = (value) => {
-        let name = ""
-        switch (value) {
-            case "0":
-                name = "未开始"
-                break;
-            case "1":
-                name = "进行中"
-                break;
-            case "2":
-                name = "已结束"
-                break;
-            default:
-                name = "未开始"
-                break;
-        }
-        return name;
-    }
+    // 要修改字段的key
     const [fieldName, setFieldName] = useState("")
+    
+    /**
+     * 聚焦改变样式
+     * @param {值} value 
+     */
     const changeStyle = (value) => {
         setFieldName(value)
     }
-    const dateFormat = 'YYYY-MM-DD';
-
+    
+    /**
+     * 监听鼠标点击事件，控制弹窗的显示与不显示
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
-    }, [])
+    }, [showMenu])
 
-
+    /**
+     * 关闭弹窗
+     * @param {鼠标点击dom} e 
+     * @returns 
+     */
     const closeModal = (e) => {
         if (!modelRef.current) {
             return;
@@ -91,24 +94,33 @@ const EpicDetail = (props) => {
         }
     }
 
-    const selectKeyFun = (item) => {
-        props.history.push(`/index/${path}/${projectId}/epic/${item.id}`)
+    /**
+     * 切换史诗
+     * @param {史诗id} item 
+     */
+    const selectKeyFun = (epicId) => {
+        props.history.push(`/index/${path}/${projectId}/epic/${epicId}`)
         setShowMenu(false)
     }
 
+    /**
+     * 修改发布日期，开始日期
+     * @param {修改字段的key} key 
+     * @param {*} value 
+     * @param {带格式的日期} dateString 
+     */
     const changeDate = (key, value, dateString) => {
         updateEpic({ id: epicId, [key]: dateString })
     }
 
-    const inputRef = useRef()
-
-    const [editName, setEditName] = useState(false)
+    // 失去焦点编辑标题
     const updateNameByBlur = (event, id) => {
         event.stopPropagation();
         event.preventDefault()
         updateTitle()
     }
 
+    //回车修改标题
     const updateNameByKey = (event) => {
         if (event.keyCode === 13) {
             event.stopPropagation();
@@ -117,6 +129,7 @@ const EpicDetail = (props) => {
         }
     }
 
+    // 掉接口更新标题
     const updateTitle = () => {
         const name = inputRef.current.textContent;
         const params = {
@@ -135,6 +148,7 @@ const EpicDetail = (props) => {
         setEditName(false)
     }
 
+    // 删除史诗
     const deEpic = () => {
         deleteEpic({id: epicId}).then(res => {
             if(res.code === 0){
@@ -155,8 +169,7 @@ const EpicDetail = (props) => {
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>
-                                    <div className="epic-breadcrumb-dropdown" onMouseEnter={() => showDropdown(true)}
-                                        onMouseLeave={() => showDropdown(false)}>
+                                    <div className="epic-breadcrumb-dropdown">
                                         <div
                                             onClick={() => setShowMenu(true)}
                                             style={{ cursor: "pointer" }}
@@ -175,7 +188,7 @@ const EpicDetail = (props) => {
                                                     epicList && epicList.map(item => {
                                                         return <div className={`epic-menu-submenu ${item.id === epicInfo?.id ? "epic-menu-select" : ""}`}
                                                             key={item.id}
-                                                            onClick={() => selectKeyFun(item)}
+                                                            onClick={() => selectKeyFun(item.id)}
                                                         >
                                                             {/* <svg className="icon" aria-hidden="true">
                                                             <use xlinkHref={`#icon-${item.icon}`}></use>

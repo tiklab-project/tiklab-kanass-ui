@@ -11,8 +11,7 @@ import Worklist from "./WorkList";
 import WorkTableContent from "./WorkTable";
 import WorkBodar from "./WorkBodar";
 import { observer, inject } from "mobx-react";
-import { useSelector } from "tiklab-plugin-ui/es/_utils";
-import { RemoteUmdComponent } from "tiklab-plugin-ui"
+import { useSelector, RemoteComponent } from "tiklab-plugin-core-ui";
 import WorkGantt from "./WorkGantt.js";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
@@ -24,7 +23,7 @@ const Work = (props) => {
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
         getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType } = workStore;
     const pluginStore = useSelector(state => state.pluginStore);
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
+    const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
@@ -236,7 +235,7 @@ const Work = (props) => {
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                             <WorkBreadCrumb />
                             <WorkTableFilter form={form} />
-                            <RemoteUmdComponent
+                            <RemoteComponent
                                 point="work-calendar"
                                 pluginStore={pluginStore}
                                 extraProps={{ workCalendarStore: workCalendarStore }}

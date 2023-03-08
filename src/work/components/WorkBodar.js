@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import WorkBorderDetail from "./WorkBorderDetail";
 import "./WorkBodar.scss";
-import { Profile } from 'tiklab-eam-ui';
+import UserIcon from '../../common/UserIcon/UserIcon';
 
 const WorkBodar = (props) => {
     const { workStore, form } = props;
@@ -164,7 +164,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <Profile userInfo={workItem.user} />
+                                                        <UserIcon userInfo={workItem.user} />
                                                     </div>
 
                                                 </div>
@@ -228,7 +228,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <Profile userInfo={workItem.user} />
+                                                        <UserIcon userInfo={workItem.user} />
                                                     </div>
                                                 </div>
                                             })

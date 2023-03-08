@@ -12,7 +12,7 @@ import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import moment from 'moment';
 import MyWorkStatistics from "./MyWorkStatistics";
-import { Profile } from "tiklab-eam-ui"
+import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"
 import { Row, Col, Empty, Progress } from "antd";
 
@@ -225,7 +225,7 @@ const Survey = (props) => {
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
-                                    <Profile userInfo={project?.master} className="item-icon" />
+                                    <UserIcon userInfo={project?.master} className="item-icon" />
                                     <div className="item-content">
                                         <div className="item-top">{project?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>

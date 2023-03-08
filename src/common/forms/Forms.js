@@ -1,17 +1,17 @@
 import React,{Fragment, useState} from "react";
 import UserSelect from "./UserSelect";
-import SelfInput from "./input";
-import SelfInputNumber from "./inputNumber";
+import SelfInput from "./SelfInput";
+import SelfInputNumber from "./SelfInputNumber";
 import SelfSwitch from "./SelfSwitch";
-import SelfRadio from "./radio";
-import SelfDatePicker from "./datePicker";
+import SelfRadio from "./SelfRadio";
+import SelfDatePicker from "./SelfDatePicker";
 import SelfTextArea from "./SelfTextArea";
-import SelfSelect from "./select";
-import SelfCheckbox from "./checkbox";
+import SelfSelect from "./SelfSelect";
+import SelfCheckbox from "./SelfCheckbox";
 import SelfTimePicker from "./SelfTimePicker";
-import Area from "./area";
+import Area from "./Area";
 import SelfDateTimePicker from "./SelfDateTimePicker";
-import SelfRangePicker from "./selfRangePicker";
+import SelfRangePicker from "./SelfRangePicker";
 
 const Forms = (props) => {
     const {formType,selectKey,type} = props;

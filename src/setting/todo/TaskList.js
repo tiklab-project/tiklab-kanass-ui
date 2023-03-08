@@ -1,8 +1,8 @@
 import React from "react";
-import {TaskList} from "tiklab-todotask-ui";
+import {Task} from "tiklab-todotask-ui/es";
 
 const TaskListContent = props =>{
-    return <TaskList {...props} bgroup={"teamwire"}/>
+    return <Task {...props} bgroup={"teamwire"}/>
 }
 
 export default TaskListContent;

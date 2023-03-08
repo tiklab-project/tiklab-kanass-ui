@@ -14,9 +14,8 @@ import { withRouter } from 'react-router';
 import { getUser } from 'tiklab-core-ui';
 import MessageList from "./MessageList"
 import { observer, inject } from "mobx-react";
-import { WorkAppConfig } from 'tiklab-eam-ui';
-import { Profile } from "tiklab-eam-ui"
-
+import { AppLink } from 'tiklab-integration-ui';
+import UserIcon from '../../../common/UserIcon/UserIcon';
 
 const Header = props => {
     const { logo, languageSelectData = [], routers} = props;
@@ -86,7 +85,7 @@ const Header = props => {
                 个人资料
             </div>
             <div className='user-info'>
-                <Profile />
+                <UserIcon />
                 <div className='user-info-text'>
                     <div className='user-info-name'>{user.name}</div>
                     <div className='user-info-email'>{user.phone || "暂无"}</div>
@@ -206,7 +205,7 @@ const Header = props => {
         <Row className="frame-header">
             <Col span={12}>
                 <div className={'frame-header-left'}>
-                    <WorkAppConfig isSSO={false} />
+                    <AppLink isSSO={false} />
                     {logo && <div className={'frame-header-logo'}><img src={logo} alt={'logo'} /></div>}
                     {renderRouter()}
                 </div>
@@ -243,7 +242,7 @@ const Header = props => {
                             <div className="frame-header-name" data-title="个人资料与设置">
                                 <Dropdown overlay={useMenu} trigger={"click"}>
                                     <Space>
-                                        <Profile />
+                                        <UserIcon />
                                     </Space>
                                 </Dropdown>
                             </div>

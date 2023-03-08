@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Tabs, Input, Table, Space, Button, Row, Col } from 'antd';
 import EpicPlanAddmodal from "./EpicPlanAddModal";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
@@ -7,15 +6,19 @@ import InputSearch from "../../../common/input/InputSearch"
 import "./EpicPlan.scss"
 
 const EpicPlan = (props) => {
-    const { versionPlanStore, epicStore, epicId } = props
-    const { getSelectVersionPlanList, versionPlanList,
-        addVersionPlan, searchAllVersionPlan } = versionPlanStore;
+    const { epicStore, epicId } = props;
+    const { findEpicChildWorkItemAndEpic, deleteEpicWorkItem } = epicStore;
+    // 史诗的下级事项和下级史诗
     const [epicChild, setEpicChild] = useState()
-    const [selectWorkItemList, setSelectWorkItemList] = useState()
-    const { findWorkItemListByEpic, deleteEpicWorkItem } = epicStore;
+    const [setSelectWorkItemList] = useState()
+    // 史诗的子级事项id集合
     const [epicWorkIds, setEpicWorkIds] = useState()
+
+    /**
+     * 通过史诗id获取史诗的下级事项和下级史诗
+     */
     useEffect(() => {
-        findWorkItemListByEpic({ epicId: epicId }).then(res => {
+        findEpicChildWorkItemAndEpic({ epicId: epicId }).then(res => {
             if (res.code === 0) {
                 setEpicChild(res.data)
                 let ids = []
@@ -29,7 +32,10 @@ const EpicPlan = (props) => {
     }, [epicId])
 
 
-    //删除用户
+    /**
+     * 删除史诗与事项的关联
+     * @param {事项id} id 
+     */
     const deleteWorkItem = (id) => {
         const value = {
             epicId: epicId,
@@ -61,35 +67,11 @@ const EpicPlan = (props) => {
         })
     }
 
-
-    const columns = [
-        {
-            title: "事项名称",
-            dataIndex: "title",
-            key: "title"
-        },
-        {
-            title: "负责人",
-            dataIndex: ["assigner", "name"],
-            key: "type"
-
-        },
-        {
-            title: "事项状态",
-            dataIndex: ["workStatusNode", "name"],
-            key: "status",
-        },
-        {
-            title: "操作",
-            key: "action",
-            render: (text, record) => (
-                <span className="delete-workitem" onClick={() => deleteWorkItem(record.id)}>
-                    删除
-                </span>
-            )
-        }
-    ];
-
+    /**
+     * 根据值获取状态的显示文字
+     * @param {状态值} value 
+     * @returns 
+     */
     const setStatusName = (value) => {
         let name = ""
         switch (value) {
@@ -109,10 +91,22 @@ const EpicPlan = (props) => {
         return name;
     }
 
+    // 展开的子级的上级id
     const [expandedTree, setExpandedTree] = useState([])
+
+    /**
+     * 判断树是否展开
+     * @param {上级的id} key 
+     * @returns 
+     */
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
+
+    /**
+     * 树的展开与闭合
+     * @param {上级的id} key 
+     */
     const setOpenOrClose = (key) => {
         if (isExpandedTree(key)) {
             setExpandedTree(expandedTree.filter(item => item !== key))
@@ -122,6 +116,13 @@ const EpicPlan = (props) => {
         console.log(expandedTree)
     }
 
+    /**
+     * 渲染下级史诗列表
+     * @param {史诗列表} data 
+     * @param {上级id} fid 
+     * @param {层级} level 
+     * @returns 
+     */
     const epicTable = (data, fid, level) => {
         return (
             <div className={`epic-table-child ${isExpandedTree(fid) ? "epic-table-hidden" : ''}`}>
@@ -172,6 +173,13 @@ const EpicPlan = (props) => {
         )
     }
 
+     /**
+     * 渲染下级事项列表
+     * @param {史诗列表} data 
+     * @param {上级id} fid 
+     * @param {层级} level 
+     * @returns 
+     */
     const workTable = (data, fid, level) => {
         return (
             <div className={`epic-table-workitem ${isExpandedTree(fid) ? "epic-table-hidden" : ''}`}>

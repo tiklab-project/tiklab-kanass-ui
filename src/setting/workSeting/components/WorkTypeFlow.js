@@ -1,10 +1,10 @@
 import React,{useEffect, useState} from 'react';
-import {SystemFlowList} from "tiklab-flow-ui";
+import {SystemFlow} from "tiklab-flow-ui";
 
 const WorkTypeFlow = props => {
 
     return(
-        <SystemFlowList 
+        <SystemFlow
             {...props} 
             id= {props.match.params.id}
             breadcrumbProps={[

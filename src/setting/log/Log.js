@@ -1,5 +1,5 @@
 import React from 'react';
-import {MyLogList as List} from 'tiklab-oplog-ui'
+import {MyLog as List} from 'tiklab-security-ui'
 
 const LogList = (props) => {
     return <List bgroup = "teamwire" {...props}/>

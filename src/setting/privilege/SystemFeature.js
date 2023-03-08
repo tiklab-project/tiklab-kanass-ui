@@ -1,14 +1,14 @@
-import React, { Fragment, useEffect,useState } from "react";
-import { SystemFeatureList } from 'tiklab-privilege-ui';
+import React from "react";
+import { SystemFeature } from 'tiklab-privilege-ui';
 import { inject, observer } from "mobx-react";
 
 // 系统功能管理
-const SystemFeature = props => {
+const SystemFeatureList = props => {
 
 
     return (
         // <div className="test">
-            <SystemFeatureList
+            <SystemFeature
                 bgroup={'teamwire'}
                 {...props}
             />
@@ -16,4 +16,4 @@ const SystemFeature = props => {
     )
 }
 
-export default inject("privilegeSystemStore")(observer(SystemFeature));
+export default inject("privilegeSystemStore")(observer(SystemFeatureList));

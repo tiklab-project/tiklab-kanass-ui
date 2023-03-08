@@ -1,9 +1,9 @@
 import React from "react";
-import {PreliminaryList} from 'tiklab-form-ui';
+import {Preliminary} from 'tiklab-form-ui';
 
 const ProjectPreliminaryList = (props) => {
     return (
-        <PreliminaryList isBase = {false} />
+        <Preliminary isBase = {false} />
     )
 }
 export default ProjectPreliminaryList;

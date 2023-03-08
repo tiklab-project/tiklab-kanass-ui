@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Table, Space, Row, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTable.scss";
-import { Profile } from "tiklab-eam-ui";
+import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import WorkDetail from "./WorkDetail";
@@ -69,7 +69,7 @@ const WorkTableContent = (props) => {
             dataIndex: ['assigner', 'name'],
             key: 'assignerId',
             render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><Profile /></div>
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon /></div>
                 <div className="work-info-text">{text}</div>
             </div>
         },

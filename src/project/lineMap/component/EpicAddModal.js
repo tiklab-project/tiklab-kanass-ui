@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
+/*
+ * @Descripttion: 史诗添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2022-01-18 18:28:57
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-19 09:18:04
+ */
+import React, { useEffect } from "react";
+import { Modal, Select, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 const { RangePicker } = DatePicker;
 import { withRouter } from "react-router";
 const { TextArea } = Input;
 const EpicAddModal = (props) => {
-    const {showEpicAddMoal, setShowEpicAddModal,epicStore, setEpicList, addChild, parent} = props;
+    const {showEpicAddModal, setShowEpicAddModal,epicStore, setEpicList, addChild, parent} = props;
     const {createEpic, uselist,getUseList, findEpicList} = epicStore
     const [form] = Form.useForm();
-
+    // 项目id
     const projectId = props.match.params.id;
-    
+    // 表单布局
     const layout = {
         labelCol: {
             span: 6,
@@ -19,12 +27,16 @@ const EpicAddModal = (props) => {
             span: 24,
         },
     };
-
+    /**
+     * 获取项目成员列表
+     */
     useEffect(()=> {
         getUseList({projectId: projectId})
     },[])
 
-    //提交用户列表
+    /**
+     * 提交表单，添加或者编辑
+     */
     const submitVersion = () => {
         form.validateFields().then((fieldsValue) => {
             const values = {
@@ -52,26 +64,13 @@ const EpicAddModal = (props) => {
 
     }
 
-    // 表单验证
+    /**
+     * 取消添加或者编辑
+     */
     const onFinishFailed = () => {
         form.resetFields();
         setShowEpicAddModal(false);
     }
-
-    // const showModal = () => {
-    //     setVisible(true);
-    //     if (props.type === "edit") {
-    //         searchVersionById({ id: props.id }).then((res) => {
-    //             form.setFieldsValue({
-    //                 name: res.name,
-    //                 project: res.project.id,
-    //                 publishDate: res.publishDate ? moment(res.publishDate) : null,
-    //                 startTime: res.startTime ? moment(res.startTime) : null,
-    //                 versionState: res.versionState
-    //             })
-    //         })
-    //     }
-    // };
 
     // 状态类型
     const status = [
@@ -93,7 +92,7 @@ const EpicAddModal = (props) => {
         <div className="addmodel">
             <Modal
                 title={"添加需求集"}
-                visible={showEpicAddMoal}
+                visible={showEpicAddModal}
                 width={520}
                 onOk={submitVersion}
                 onCancel={onFinishFailed}

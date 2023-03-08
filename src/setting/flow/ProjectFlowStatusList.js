@@ -1,9 +1,9 @@
 import React from "react";
-import {FlowStatusList} from 'tiklab-flow-ui';
+import {NodeStatus} from 'tiklab-flow-ui';
 
 const ProjectFlowStatusList = (props) => {
     return (
-        <FlowStatusList />
+        <NodeStatus />
     )
 }
 export default ProjectFlowStatusList;

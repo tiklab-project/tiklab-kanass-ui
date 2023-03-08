@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 史诗页面 
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-19 11:10:30
+ */
 import React, { useState, useEffect } from "react";
 import Button from "../../../common/button/Button";
 import EpicLineMap from "./EpicLineMap";
@@ -8,13 +16,21 @@ import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 const EpicPage = (props) => {
     const { epicStore } = props;
-    const [epicList, setEpicList] = useState([])
-    const [parent, setParentId] = useState();
-    const [addChild, setAddChild] = useState();
-    const [showEpicAddMoal, setShowEpicAddModal] = useState(false);
     const { findEpicList } = epicStore;
+    // 史诗列表
+    const [epicList, setEpicList] = useState([])
+    // 若添加下级史诗，父级的id
+    const [parent, setParentId] = useState();
+    // 添加史诗的类型，第一级或者子级
+    const [addChild, setAddChild] = useState();
+    // 显示史诗添加弹窗
+    const [showEpicAddModal, setShowEpicAddModal] = useState(false);
+    // 项目id
     const projectId = props.match.params.id;
 
+    /**
+     * 获取第一级史诗
+     */
     useEffect(() => {
         findEpicList({ projectId: projectId, epicParentNull: true }).then(res => {
             if (res.code === 0) {
@@ -22,6 +38,11 @@ const EpicPage = (props) => {
             }
         })
     }, [])
+
+    /**
+     * 根据史诗名称搜索史诗
+     * @param {*} value 
+     */
     const onSearch = (value) => {
         findEpicList({ projectId: projectId, epicName: value }).then(res => {
             if (res.code === 0) {
@@ -29,11 +50,16 @@ const EpicPage = (props) => {
             }
         })
     }
+
+    /**
+     * 添加史诗
+     */
     const addEpic = () => {
         setShowEpicAddModal(true)
         setAddChild("father")
         setParentId(null)
     }
+    
     return <div className="epic">
         <div className="epic-action">
             <InputSearch
@@ -51,7 +77,7 @@ const EpicPage = (props) => {
             setAddChild={setAddChild} />
         </div>
         <EpicAddModal
-            showEpicAddMoal={showEpicAddMoal}
+            showEpicAddModal={showEpicAddModal}
             setShowEpicAddModal={setShowEpicAddModal}
             setEpicList={setEpicList}
             parent={parent}

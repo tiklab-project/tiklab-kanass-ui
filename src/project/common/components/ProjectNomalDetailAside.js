@@ -9,8 +9,7 @@
 
 import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
-import { Layout, Button } from "antd";
-import { Modal } from 'antd';
+import { Layout } from "antd";
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import SetNomalMenu from "./SetNomalMenu";
@@ -39,13 +38,6 @@ const ProdeNomalAside = (props) => {
             key: "survey",
             encoded: "Survey",
         },
-        // {
-        //     title: `${t('line_photo')}`,
-        //     icon: 'line',
-        //     url: `/index/projectNomalDetail/${projectId}/linemap`,
-        //     key: "linemap",
-        //     encoded: "Pannel",
-        // },
         {
             title: "计划",
             icon: 'survey',

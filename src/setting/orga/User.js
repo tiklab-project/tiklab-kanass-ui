@@ -7,10 +7,10 @@
  * @LastEditTime: 2022-01-04 10:39:18
  */
 import React from "react";
-import { UserList} from 'tiklab-user-ui';
+import { User} from 'tiklab-user-ui';
 const OrgaUser = props => {
     return (
-        <UserList
+        <User
             bgroup = "teamwire"
             {...props}
         />

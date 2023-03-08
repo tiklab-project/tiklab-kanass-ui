@@ -40,7 +40,7 @@ const WorkTableFilter = (props) => {
                 setFlowIds(list)
             }
         })
-        // getAllWorkItem()
+       return
     }, [])
 
 

@@ -111,7 +111,6 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-const SprintWork = AsyncComponent(() => import("./work/components/Work"))
 
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
@@ -1158,20 +1157,12 @@ const Routers = [
                         ]
                     },
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workItem/:statetype",
-                        component: SprintWork,
-                    },
-                    {
                         path: "/index/:id/sprintdetail/:sprint/workItem",
                         component: Work,
                     },
                     {
                         path: "/index/:id/sprintdetail/:sprint/workDetail",
                         component: WorkTableDetail,
-                    },
-                    {
-                        path: "/index/:id/sprintdetail/:sprint/workItem/:statetype/:workitemid",
-                        component: SprintWork,
                     },
                     {
                         path: "/index/:id/sprintdetail/:sprint/survey",

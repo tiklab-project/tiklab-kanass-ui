@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-12 15:19:17
  */
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col } from 'antd';
+import { Layout } from 'antd';
 import ProdeNomalAside from "./ProjectNomalDetailAside";
 import "../components/ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";

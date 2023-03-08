@@ -3,7 +3,7 @@ import { Form, Input, Select } from 'antd';
 import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
-import { SelectSimple, SelectItem } from "../../../common/select";
+import { SelectSimple, SelectItem } from "../../common/select";
 const WorkFilterForm = (props) => {
     // 查找表单
     const [form] = Form.useForm();
@@ -24,6 +24,7 @@ const WorkFilterForm = (props) => {
         getWorkTypeList({projectId: projectId});
         getWorkStatus()
         getAllWorkItem()
+        return
     }, [])
 
 

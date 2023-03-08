@@ -12,7 +12,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { inject, observer } from "mobx-react";
 
 const ProjectChangeModal = (props) => {
     const { isShowText, prolist, searchpro, setWorkType, project } = props;
@@ -182,7 +181,7 @@ const ProjectChangeModal = (props) => {
                             {
                                 item.iconUrl ?
                                     <img
-                                        src={('images/' + item.iconUrl)}
+                                        src={('/images/' + item.iconUrl)}
                                         className="img-icon"
                                         title={item.projectName}
                                         alt=""
@@ -190,7 +189,7 @@ const ProjectChangeModal = (props) => {
                                     :
                                     <img
                                         className="img-icon"
-                                        src={('images/project1.png')}
+                                        src={('/images/project1.png')}
                                         title={item.projectName}
                                         alt=""
                                     />

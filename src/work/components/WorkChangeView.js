@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./WorkChangeView.scss";
 import { Radio, Popconfirm } from 'antd';
 import Button from "../../common/button/Button";
-import { useSelector } from "tiklab-plugin-ui/es/_utils";
+import { useSelector } from "tiklab-plugin-core-ui/es";
 import { withRouter } from "react-router";
 import { getVersionInfo } from "tiklab-core-ui"
 const WorkFilterSort = (props) => {

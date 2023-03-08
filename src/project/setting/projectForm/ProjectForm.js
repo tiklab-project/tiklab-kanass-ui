@@ -9,12 +9,12 @@
  */
 
 import React from "react";
-import {ProjectFormList} from 'tiklab-form-ui';
+import {ProjectForm} from 'tiklab-form-ui';
 
-const ProjectForm = (props) => {
+const ProjectFormList = (props) => {
     const projectId = props.match.params.id;
     return (
-        <ProjectFormList domainId = {projectId}/>
+        <ProjectForm domainId = {projectId}/>
     )
 }
-export default ProjectForm;
+export default ProjectFormList;

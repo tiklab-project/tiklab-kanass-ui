@@ -8,7 +8,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
-import { Profile } from "tiklab-eam-ui";
+import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 
 import "./WorkBasicInfo.scss";
@@ -399,7 +399,7 @@ const WorkBasicInfo = (props) => {
                                 >
                                     {
                                         userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.id}><Space><Profile />{item.user.name}</Space></Select.Option>
+                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon />{item.user.name}</Space></Select.Option>
                                         })
                                     }
                                 </Select>
