@@ -26,12 +26,14 @@ const Work = (props) => {
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    console.log(props)
     useEffect(() => {
         if (props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
             goSprintWorkItem()
         }
 
-        if (props.match.path === "/index/work/worklist") {
+        if (props.match.path === "/index/work") {
+            
             goSystemWorkItem()
         }
 

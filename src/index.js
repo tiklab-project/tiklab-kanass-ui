@@ -12,8 +12,7 @@ import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
 import { store } from "./stores"
-import { orgStores } from "tiklab-user-ui/es/store";
-import { privilegeStores } from 'tiklab-privilege-ui/es/store'
+import { orgStores, privilegeStores } from "tiklab-user-ui/es/store";
 import { getUser, enableAxiosCE } from 'tiklab-core-ui'
 import { formStores } from 'tiklab-form-ui/es/store'
 import { flowStores } from 'tiklab-flow-ui/es/store'
@@ -28,18 +27,20 @@ import { observer } from "mobx-react"
 import { pluginLoader, PluginProvider } from "tiklab-plugin-core-ui";
 import "./assets/index";
 import resources from "./common/language/resources";
+import {useVersion} from "tiklab-eam-ui/es/utils"
 enableAxiosCE()
 const Index = observer((props) => {
 
     const { i18n } = useTranslation();
     const [visable, setVisable] = useState(true);
+    useVersion()
     useEffect(() => {
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|ios|iPad|Android|Mobile|BlackBerry|IEMobile |MQQBrowser|JUC|Fennec|woSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
             window.location.href = `${mobile_url}${window.location.search}${window.location.hash}`;// 手机
         }
         return;
     }, [])
-
+    
     // useLoadLanguage(resources,fetchMethod, pluginAddressUrl, "zh")
     const allStore = {
         ...privilegeStores,
@@ -75,9 +76,6 @@ const Index = observer((props) => {
     return (
         
         <PluginProvider store={pluginData}>
-            {
-                console.log(pluginData)
-            }
             <Provider {...allStore}>
                 <ConfigProvider locale={zhCN}>
                     <HashRouter>

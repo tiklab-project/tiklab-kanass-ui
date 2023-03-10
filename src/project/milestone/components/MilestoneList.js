@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col } from "antd";
 import MilestoneAddEditModal from "./MilestoneAddEditModal";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import "../components/milestone.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 

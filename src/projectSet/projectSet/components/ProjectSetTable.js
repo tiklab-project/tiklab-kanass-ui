@@ -31,7 +31,8 @@ const ProjectSetTable = (props) => {
 
     useEffect(() => {
         // findAllProjectSet()
-        findProjectSetFocus()
+        findRecentProjectSetList({})
+        // findProjectSetFocus()
         getUseList()
         return;
     }, [])

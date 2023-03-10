@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect,useState } from "react";
-import { SystemRole } from 'tiklab-privilege-ui';
+import { SystemRole } from 'tiklab-user-ui';
 import { inject, observer } from "mobx-react";
 const SystemRoleWrap = props => {
 

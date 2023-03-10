@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { DownOutlined, CodepenOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Form, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";

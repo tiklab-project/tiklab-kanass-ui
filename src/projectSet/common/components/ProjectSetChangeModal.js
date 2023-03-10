@@ -13,7 +13,8 @@ import { inject, observer } from "mobx-react";
 
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText } = props;
-    const { findAllProjectSet, projectSetAllList, findProjectSet } = projectSetStore;
+    const { findAllProjectSet, findProjectSet } = projectSetStore;
+    const [projectSetAllList, setProjectSetAllList] = useState()
     // 点击显示弹窗按钮
     const setButton = useRef()
     // 弹窗的显示与不显示控制参数
@@ -40,7 +41,7 @@ const ProjectSetChangeModal = (props) => {
      */
     useEffect(() => {
         findAllProjectSet().then(res => {
-            console.log(projectSetAllList)
+            setProjectSetAllList(res.data)
         })
         return
     }, [])

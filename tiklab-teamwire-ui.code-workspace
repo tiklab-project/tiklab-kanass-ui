@@ -11,7 +11,11 @@
 		},
 		{
 			"path": "../tiklab-app/tiklab"
+		},
+		{
+			"path": "../tiklab-app-saas/TiklabSaas"
 		}
 	],
-	"settings": {}
+	"settings": {
+	}
 }

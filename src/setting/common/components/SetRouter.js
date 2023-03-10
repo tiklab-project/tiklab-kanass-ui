@@ -201,6 +201,13 @@ const setDevEamRouter= [
         code: 11,
     },
     {
+        title: "产品授权",
+        icon: 'plugin',
+        key: '/index/setting/product',
+        encoded: "SysPlugin",
+        code: 13,
+    },
+    {
         title: "基础数据",
         icon: 'systemcenter',
         key: '/index/setting/systemFeature',
@@ -523,6 +530,13 @@ const setPrdEamRouter= [
         key: '/index/setting/version',
         encoded: "SysPlugin",
         code: 11,
+    },
+    {
+        title: "产品授权",
+        icon: 'plugin',
+        key: '/index/setting/product',
+        encoded: "SysPlugin",
+        code: 13,
     }
 ];
 
@@ -698,6 +712,13 @@ const setDevRouter= [
         code: 11,
     },
     {
+        title: "产品授权",
+        icon: 'plugin',
+        key: '/index/setting/product',
+        encoded: "SysPlugin",
+        code: 13,
+    },
+    {
         title: "基础数据",
         icon: 'systemcenter',
         key: '/index/setting/systemFeature',
@@ -824,7 +845,8 @@ const setDevRouter= [
                 code: 12-17,
             },
         ]
-    }
+    },
+   
 ];
 
 const setPrdRouter= [
@@ -997,6 +1019,13 @@ const setPrdRouter= [
         key: '/index/setting/version',
         encoded: "SysPlugin",
         code: 11,
+    },
+    {
+        title: "产品授权",
+        icon: 'plugin',
+        key: '/index/setting/product',
+        encoded: "SysPlugin",
+        code: 13,
     }
 ];
 export  {setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter};

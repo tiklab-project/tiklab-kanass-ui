@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { Select, Menu, Dropdown, Form, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";

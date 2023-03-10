@@ -16,13 +16,15 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { withRouter } from 'react-router';
 
 const ProjectSetProjectList = (props) => {
-    const { projectSetStore, workStore } = props;
-    const { findProjectList, updateProject, projectRelevance, projectSetAllList, findAllProjectSet } = projectSetStore;
+    const { projectSetStore } = props;
+    const { findProjectList, updateProject, projectRelevance, findAllProjectSet } = projectSetStore;
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
-
+    const [projectSetAllList, setProjectSetAllList] = useState()
     useEffect(() => {
 
-        findAllProjectSet()
+        findAllProjectSet().then(res => {
+            setProjectSetAllList(res.data)
+        })
         findProjectList({ projectSetId: projectSetId })
         return;
     }, [projectSetId])
@@ -324,4 +326,4 @@ const ProjectSetProjectList = (props) => {
     </Row>
 }
 
-export default withRouter(inject("projectSetStore", "workStore")(observer(ProjectSetProjectList)));
+export default withRouter(inject("projectSetStore")(observer(ProjectSetProjectList)));

@@ -14,7 +14,6 @@ export class ProjectSetProjectStore {
     @observable projectSetList = [];
     @observable projectRelevance = [];
     @observable noRelatedProjects = [];
-    @observable projectSetAllList = [];
     @observable relatedProjects = [];
     @observable projectSetPageParams = {
         current: 1,

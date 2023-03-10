@@ -11,7 +11,7 @@ import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Input, Row, Col } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import "../components/sprint.scss";
 import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";

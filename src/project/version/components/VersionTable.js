@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col, DatePicker } from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";

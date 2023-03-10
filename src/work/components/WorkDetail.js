@@ -12,7 +12,7 @@ import { Form, Space, Empty, Dropdown, Row, Col, Select, InputNumber, Pagination
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import Button from "../../common/button/Button";

@@ -68,7 +68,7 @@ export class LogStore {
 	findWorkLog = async(value) => {
         const params = new FormData();
         params.append("id", value.id)
-        const data = await Service("/workLog/findWorkLog");
+        const data = await Service("/workLog/findWorkLog", params);
         return data;
     }
     

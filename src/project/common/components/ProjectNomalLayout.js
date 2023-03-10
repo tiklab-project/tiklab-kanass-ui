@@ -28,7 +28,6 @@ const ProjectNomalDetail = (props) => {
         searchpro(projectId).then(res => {
             if(res.code === 0) {
                 localStorage.setItem("project", JSON.stringify(res.data));
-                setProject(res.data)
                 const isPublish = res.data?.projectLimits === "0" ? true : false
                 systemRoleStore.getInitProjectPermissions(getUser().userId, props.match.params.id, isPublish)
             }

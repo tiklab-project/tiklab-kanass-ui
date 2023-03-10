@@ -9,7 +9,6 @@
 import zhCnTrans from "./cn/translation.json";
 
 import {eam_cn} from "tiklab-eam-ui/es/utils";
-import {privilege_cn} from "tiklab-privilege-ui/es/utils";
 import {flow_cn} from "tiklab-flow-ui/es/utils";
 import {message_cn} from "tiklab-message-ui/es/utils";
 import pluginManage_cn from "tiklab-plugin-manager-ui/es/utils/language";
@@ -19,7 +18,7 @@ import {oplog_cn} from "tiklab-security-ui/es/utils";
 import { todoTask_cn } from "tiklab-todotask-ui/es/utils";
 const resources = {
     zh: {
-        translation: {...zhCnTrans, ...eam_cn, ...privilege_cn, ...flow_cn, ...message_cn, ...pluginManage_cn, ...form_cn, ...orga_cn, ...todoTask_cn, ...oplog_cn},
+        translation: {...zhCnTrans, ...eam_cn, ...flow_cn, ...message_cn, ...pluginManage_cn, ...form_cn, ...orga_cn, ...todoTask_cn, ...oplog_cn},
     }
 }
 

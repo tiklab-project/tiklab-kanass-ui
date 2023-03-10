@@ -15,7 +15,6 @@ export class ProjectSetStore {
     @observable allProjectSetList = [];
     @observable projectRelevance = [];
     @observable noRelatedProjects = [];
-    @observable projectSetAllList = [];
     @observable relatedProjects = [];
     @observable projectSetPageParams = {
         current: 1,
@@ -133,7 +132,7 @@ export class ProjectSetStore {
     @action
     findProjectList = async(values) => {
         Object.assign(this.projectPageParams, { ...values })
-        const data = await Service("/projectSet/findProjectList", values);
+        const data = await Service("/projectSet/findProjectList", this.projectPageParams);
         this.projectRelevance = data.data
         return data;
     }
@@ -144,7 +143,7 @@ export class ProjectSetStore {
      */
     @action
     findProjectIsOrNotRe = async() => {
-        const data = await Service("/projectSet/findProjectIsOrNotRe", values);
+        const data = await Service("/projectSet/findProjectIsOrNotRe");
         if (data.code === 0) {
             this.noRelatedProjects = data.data.noRelatedProjects;
             console.log(this.noRelatedProjects)
@@ -182,7 +181,7 @@ export class ProjectSetStore {
     findAllProjectSet = async() => {
         const data = await Service("/projectSet/findAllProjectSet");
         if(data.code === 0){
-            this.projectSetAllList = data.data;
+            this.projectSetList = data.data;
         }
         
         return data;

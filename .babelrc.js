@@ -66,28 +66,6 @@ const plugins = [
         [
             "import",
             {
-                "libraryName": "tiklab-privilege-ui",
-                "libraryDirectory": "es",
-                "style": true,
-                "customName": (name) => {
-                    let split = name.split('-');
-                    const fullName = split.reduce((total, currentValue, currentIndex, arr) => {
-                        if(currentIndex=== 0) {
-                            return total += currentValue;
-                        }
-                        const UpBit = currentValue.slice(0,1).toUpperCase();
-                        const lowBit = currentValue.slice(1,currentValue.length);
-                        const name = UpBit + lowBit
-                        return total += name;
-                    },'');
-                    return `tiklab-privilege-ui/es/${fullName}`;
-                }
-            },
-            "tiklab-privilege-ui"
-        ],
-        [
-            "import",
-            {
                 "libraryName": "tiklab-plugin-ui",
                 "libraryDirectory": "es",
                 "style": true,

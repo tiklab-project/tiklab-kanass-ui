@@ -15,7 +15,7 @@ const ProjectSetAdd = (props) => {
     const { projectStore, name, projectSetStore } = props;
     const {  getUseList, creatIcon, findIconList } = projectStore;
         
-    const { addProjectSetSet, getProjectSetlist } = projectSetStore;
+    const { addProjectSetSet, getProjectSetlist, findAllProjectSet } = projectSetStore;
 
 
     const [currentStep, setCurrentStep] = useState(1)
@@ -121,7 +121,7 @@ const ProjectSetAdd = (props) => {
                             {/* <Steps /> */}
                             <div>
 
-                                <ProjectSetAddInfo addProjectSetSet={addProjectSetSet} getProjectSetlist = {getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
+                                <ProjectSetAddInfo findAllProjectSet = {findAllProjectSet} addProjectSetSet={addProjectSetSet} getProjectSetlist = {getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
                             </div>
                         </Col>
                     </Row>

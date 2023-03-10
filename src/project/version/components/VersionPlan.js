@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Space } from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";

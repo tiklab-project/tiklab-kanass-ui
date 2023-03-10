@@ -47,7 +47,6 @@ const ProjectFeature = AsyncComponent(() => import('./setting/privilege/ProjectF
 const ProjectRole = AsyncComponent(() => import('./setting/privilege/ProjectRole'))
 
 //组织用户
-const Oragn = AsyncComponent(() => import('./setting/common/components/Organ'))
 const OrgaContent = AsyncComponent(() => import('./setting/orga/Orga'))
 const OrgaUser = AsyncComponent(() => import('./setting/orga/User'))
 const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirectory"))
@@ -70,6 +69,7 @@ const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/com
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
+
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
@@ -128,11 +128,6 @@ const ProjectSetUser = AsyncComponent(() => import('./projectSet/user/ProjectSet
 const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/components/ProjectSetSetting"))
 const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/components/ProjectSetBasicInfo"))
 const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/components/ProjectSetStatistics"))
-// 工时
-// const Log = AsyncComponent(() => import('./project/workLog/containers/Log'))
-// const ProjectLogStatistics = AsyncComponent(() => import('./project/workLog/components/ProjectStatistics'))
-// const UserStatistics = AsyncComponent(() => import('./project/workLog/components/UserStatistics'))
-// const LogContent = AsyncComponent(() => import('./project/workLog/components/LogContent.js'))
 
 // 导入外部数据
 const LoadData = AsyncComponent(() => import('./setting/loadData/LoadData'))
@@ -152,7 +147,7 @@ const LogTemplateList = AsyncComponent(() => import('./setting/log/MyLogTemplate
 const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLogTypeList'))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'))
-
+const ProductAuth = AsyncComponent(() => import('./setting/version/Product'))
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
@@ -695,6 +690,11 @@ const Routers = [
                     {
                         path: "/index/setting/version",
                         component: LicenceVersion,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/product",
+                        component: ProductAuth,
                         exact: true
                     },
                     {

@@ -11,7 +11,7 @@ import React, {useState} from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./versionPlanAdd.scss"
 import {observer, inject} from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import Button from "../../../common/button/Button";
 const { Search } = Input;
 

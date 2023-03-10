@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Breadcrumb, Input, Table, Space, Button, Divider, Layout, Row, Col, } from 'antd';
 import PlanWorkItemAddmodal from "./PlanWorkItemAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import "./Plan.scss"
 
 const { Search } = Input;

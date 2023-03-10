@@ -9,7 +9,7 @@
 
 import React from "react";
 import { Modal, Form,Input } from 'antd';
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { inject, observer } from "mobx-react";
 import Button from "../../../../common/button/Button";
 import { withRouter } from "react-router";

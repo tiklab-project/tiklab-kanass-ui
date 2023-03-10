@@ -124,7 +124,7 @@ export class ProjectStore {
     searchpro = async(values) => {
         const params = new FormData()
         params.append("id", values)
-        const data = await Service("/project/findProject", values)
+        const data = await Service("/project/findProject", params)
         return data;
 
     }

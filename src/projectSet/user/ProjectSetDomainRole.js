@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-18 09:20:30
  */
 import React from "react";
-import { DomainRole } from 'tiklab-privilege-ui';
+import { DomainRole } from 'tiklab-user-ui';
 import { inject, observer } from "mobx-react";
 
 const ProjectSetDomainRole = props => {

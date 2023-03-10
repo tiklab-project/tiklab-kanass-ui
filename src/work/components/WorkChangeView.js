@@ -13,6 +13,7 @@ const WorkFilterSort = (props) => {
     const treeDropDown = useRef();
     const gantte = useRef()
     const pluginStore = useSelector(state => state.pluginStore);
+    console.log(pluginStore)
     const versionInfo = getVersionInfo()
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -135,7 +136,7 @@ const WorkFilterSort = (props) => {
                         })
                     }
                     {
-                        pluginStore.filter(item => item.point === "work-calendar").length > 0 && versionInfo.expired === false ? <div
+                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
                             onClick={() => changeWorkView("time")}>
                             <svg className="svg-icon" aria-hidden="true">

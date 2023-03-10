@@ -15,7 +15,7 @@ import moment from 'moment';
 import "../components/ProjectSetBasicInfo.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectSetIcon from "./changeProjectSetIcon";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-user-ui";
 
 const { RangePicker } = DatePicker;
 const ProjectSetBasicInfo = props => {
