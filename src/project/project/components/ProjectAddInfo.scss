@@ -21,8 +21,11 @@
         border-radius: 4px;
         padding: 10 20px;
         max-width: 300px;
-        background-color: #fff;
-
+        background-color: #f9f9f9;
+        .type-icon {
+            width: 30px;
+            height: 30px;
+        }
         .type-info {
             margin-left: 20px;
 
@@ -47,9 +50,11 @@
     }
     .ant-input {
         border: 0;
+        background: #f9f9f9;
     }
     .ant-picker {
         border: 0;
+        background: #f9f9f9;
     }
     .project-icon-box {
         width: 320px;

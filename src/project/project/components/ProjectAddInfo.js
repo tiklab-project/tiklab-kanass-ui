@@ -5,6 +5,7 @@ import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
 import { useState } from "react";
 import { getUser } from "tiklab-core-ui";
+import { withRouter } from "react-router-dom";
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -84,7 +85,7 @@ const ProjectAddInfo = (props) => {
                 }
                 if (res.code === 0) {
                     message.success('添加成功');
-                    setVisible(false);
+                    props.history.goBack()
                     setCurrentStep("0")
                 }
             })
@@ -143,8 +144,8 @@ const ProjectAddInfo = (props) => {
                 <div className="project-type-head">项目类型</div>
                 <div className="project-type-content">
                     <div className="project-type-box">
-                        <div className="type-img">
-                            <img src={`/images/${workType.iconUrl}`} alt="" className="img-icon" />
+                        <div>
+                            <img src={`/images/${workType.iconUrl}`} alt="" className="type-icon" />
                         </div>
                         <div className="type-info">
                             <div className="type-name">{workType.name}</div>
@@ -256,4 +257,4 @@ const ProjectAddInfo = (props) => {
     )
 }
 
-export default ProjectAddInfo;
+export default withRouter(ProjectAddInfo);

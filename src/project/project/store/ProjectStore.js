@@ -7,6 +7,8 @@ export class ProjectStore {
     @observable project = [];
     @observable allProlist = [];
     @observable projectName = "";
+    @observable activeTabs = "2"
+    
     @observable projectPageParams = {
         orderParams: [{
             name: "projectName",
@@ -17,6 +19,11 @@ export class ProjectStore {
             currentPage: 1
         }
     };
+
+    @action
+    setActiveTabs = (value) => {
+        this.activeTabs = value
+    }
 
     @action
     findProjectList = async(value) => {

@@ -62,6 +62,7 @@ const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicLis
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
+const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
 const ProjectNomalDetail = AsyncComponent(() => import('./project/common/components/ProjectNomalLayout'))
 const ProjectScrumDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
 const ProdeNomalSetAside = AsyncComponent(() => import('./project/setting/common/components/ProjectNomalSet'))
@@ -218,6 +219,13 @@ const Routers = [
                 path: "/index/project",
                 exact: true,
                 component: Project,
+                key: 'project'
+
+            },
+            {
+                path: "/index/projectAdd",
+                exact: true,
+                component: ProjectAdd,
                 key: 'project'
 
             },

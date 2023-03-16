@@ -1,24 +1,23 @@
 import React, { Fragment, useEffect } from "react";
 import { Input, Table, Space, Select } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import ProjectAddmodal from "./ProjectAddModal";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { useState } from "react";
 import UserIcon from "../../../common/UserIcon/UserIcon";
-import InputSearch from "../../../common/input/InputSearch"
+import InputSearch from "../../../common/input/InputSearch";
+import Button from "../../../common/button/Button"
 const { Option } = Select;
 
 const ProjectContent = (props) => {
     const { workStore, projectStore, systemRoleStore } = props;
-    const { findProjectList, prolist, statProjectWorkItem, updateProject, createRecent, findRecentProjectPage,
-        findJoinProjectList, createProjectFocus, findProjectFocusList, deleteProjectFocusByQuery, findFocusProjectList
+    const { findProjectList, prolist, statProjectWorkItem, createRecent, findRecentProjectPage,
+        findJoinProjectList, createProjectFocus, findProjectFocusList, 
+        deleteProjectFocusByQuery, findFocusProjectList, activeTabs, setActiveTabs
     } = projectStore;
 
     const userId = getUser().userId;
-    const [activeTabs, setActiveTabs] = useState("2");
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
 
@@ -281,10 +280,12 @@ const ProjectContent = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <ProjectAddmodal
+                {/* <ProjectAddmodal
                     name="添加项目"
                     type="add"
-                />
+                /> */}
+                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} >
+                </Button>
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="title">

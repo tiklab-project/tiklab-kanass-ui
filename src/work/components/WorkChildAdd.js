@@ -25,7 +25,8 @@ const WorkChildAddmodal = (props) => {
             pageParam: {
                 currentPage: 1,
                 pageSize: 20
-            }
+            },
+            projectId: projectId
         })
         findPriority()
         return;
