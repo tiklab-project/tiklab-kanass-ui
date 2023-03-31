@@ -104,7 +104,7 @@ export class WorkLogStore {
         if(data.code === 0){
             this.workLogDeatil = data.data;
         }
-        return data
+        return data.data
         
     }
 

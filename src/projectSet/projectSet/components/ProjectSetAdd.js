@@ -12,7 +12,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 const ProjectSetAdd = (props) => {
     const [form] = Form.useForm();
     const [visible, setVisible] = React.useState(false);
-    const { projectStore, name, projectSetStore } = props;
+    const { projectStore, name, projectSetStore, setAllProjectSetList } = props;
     const {  getUseList, creatIcon, findIconList } = projectStore;
         
     const { addProjectSetSet, getProjectSetlist, findAllProjectSet } = projectSetStore;
@@ -95,7 +95,7 @@ const ProjectSetAdd = (props) => {
         <>
             <div >
                 <Button 
-                style={{ width: "fit-content" }}
+                    style={{ width: "fit-content" }}
                     type="primary" onClick={showModal} buttonText={name} >
                 </Button>
                 <Modal
@@ -118,10 +118,9 @@ const ProjectSetAdd = (props) => {
                             style={{ height: "100%" }}
                         >
                             <Head />
-                            {/* <Steps /> */}
                             <div>
 
-                                <ProjectSetAddInfo findAllProjectSet = {findAllProjectSet} addProjectSetSet={addProjectSetSet} getProjectSetlist = {getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
+                                <ProjectSetAddInfo findAllProjectSet = {findAllProjectSet} addProjectSetSet={addProjectSetSet} setAllProjectSetList = {setAllProjectSetList} getProjectSetlist = {getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
                             </div>
                         </Col>
                     </Row>

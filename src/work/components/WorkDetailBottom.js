@@ -224,7 +224,7 @@ const WorkDetailBottom = (props) => {
                         {
                             tabValue === 2 &&
                             <div className="tabs-tabpanel">
-                                <WorkRelation type="需求" {...props} />
+                                <WorkRelation type="需求" {...props} projectId={workInfo.project.id}/>
                             </div>
                         }
                         {

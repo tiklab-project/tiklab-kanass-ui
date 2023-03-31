@@ -16,15 +16,11 @@ import { withRouter } from 'react-router';
 
 const ProjectSet = (props) => {
     const { projectSetStore,route } = props;
-    const { getProjectSetlist, projectSetList, findAllProjectSet } = projectSetStore;
-    const [allProjectSetList, setAllProjectSetList] = useState([])
+    const { getProjectSetlist, findAllProjectSet, allProjectSetList } = projectSetStore;
+    // const [allProjectSetList, setAllProjectSetList] = useState([])
     //初始化获取项目列表
     useEffect(() => {
-        findAllProjectSet().then(res => {
-            if(res.code === 0){
-                setAllProjectSetList(res.data)
-            }
-        })
+        findAllProjectSet()
         return;
     }, [])
 

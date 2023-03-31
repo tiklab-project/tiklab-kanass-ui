@@ -35,8 +35,8 @@ const WorkLog = (props) => {
         },
         {
             title: '记录人',
-            dataIndex: ['worker', 'name'],
-            key: 'worker',
+            dataIndex: ['user', 'name'],
+            key: 'user',
         },
         {
             title: '记录日期',
@@ -76,7 +76,7 @@ const WorkLog = (props) => {
         userInfo.name = user.name;
         setUserInfo(userInfo)
         AddLog.setFieldsValue({
-            worker: userInfo.userId
+            user: userInfo.userId
         })
     }
 
@@ -155,7 +155,7 @@ const WorkLog = (props) => {
                     workDate: moment(res.workDate, dateFormat),
                     takeupTime: res.takeupTime,
                     workContent: res.workContent,
-                    worker: res.worker.id,
+                    user: res.user.id,
                     surplusTime: remainTime,
                     versionTime: versionTime
                 }

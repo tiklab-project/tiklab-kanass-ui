@@ -61,7 +61,7 @@ const ProjectSetDetailAside = (props) => {
         // 获取项目集权限
         systemRoleStore.getInitProjectPermissions(getUser().userId, projectSetId)
         return
-    }, [projectSet,props.location.pathname])
+    }, [projectSetId,props.location.pathname])
 
 
     /**

@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目概况
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -18,12 +18,10 @@ import { Row, Col, Empty, Progress } from "antd";
 
 const Survey = (props) => {
     // 基于准备好的dom，初始化echarts实例
-    const { projectSurveyStore, homeStore, workStore } = props;
+    const { projectSurveyStore } = props;
     const { statWorkItemByBusStatus, statProjectManageSprint, findProject,
-        findDynamicPage, findProjectBurnDowmChartPage, findMilestoneList,
-        statProjectWorkItemProcess, findlogpage, findtodopage } = projectSurveyStore;
-
-
+        findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage } = projectSurveyStore;
+    
     const masterId = getUser().userId;
     const projectId = props.match.params.id;
     const [workStatusList, setWorkStatusList] = useState();
@@ -362,6 +360,7 @@ const Survey = (props) => {
                                             dangerouslySetInnerHTML={{ __html: item.data }}
                                             className="dynamic-item"
                                             onClick={() => goOpLogDetail(item.link)}
+                                            key = {item.id}
                                         />
                                     })
                                         :

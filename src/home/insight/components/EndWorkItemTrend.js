@@ -72,7 +72,7 @@ const EndWorkItemTrend = (props) => {
      * 处理统计数据
      */
     const setStatisticsData = (params) => {
-        const chartDom = document.getElementById('end-trend')
+        const chartDom = document.getElementById(`end-trend-${index}`)
         statisticsEndWorkItemCount(params).then(res => {
             if (res.code === 0) {
                 const list = res.data;
@@ -225,7 +225,7 @@ const EndWorkItemTrend = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="end-trend-content" id="end-trend" >
+                    isEditor ? <div className="end-trend-content" id={`end-trend-${index}`} >
                         {
                             List && List.length <=0 &&
                             <Empty />

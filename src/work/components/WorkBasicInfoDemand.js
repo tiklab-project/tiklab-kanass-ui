@@ -86,7 +86,7 @@ const WorkBasicInfo = (props) => {
 
     const [selectItemList, setSelectItemList] = useState()
     useEffect(() => {
-        findFormConfig({ id: workInfo.workTypeSys.form.id })
+        findFormConfig({ id: workInfo.workType.form.id })
         findFieldList({code: "demandType"}).then(res => {
             if (res.code === 0) {
                 setSelectItemList(res.data[0].selectItemList)

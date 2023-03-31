@@ -16,9 +16,8 @@ import Button from "../../../common/button/Button";
 const { Search } = Input;
 
 const  VersionPlanAddmodal = (props) => {
-    const {workStore,actionPlanId,versionPlanStore,addVersionPlan} = props;
-    const {workTypeList} = workStore;
-    const {getVersionPlanList,versionPlanList} = versionPlanStore;
+    const {actionPlanId,versionPlanStore,addVersionPlan} = props;
+    const {getVersionPlanList,versionPlanList, workTypeList, getWorkTypeList} = versionPlanStore;
     // 弹窗的显示
     const [visible, setVisible] = useState(false);
     // 选择的事项id集合
@@ -32,6 +31,7 @@ const  VersionPlanAddmodal = (props) => {
     const showModal = () => {
         setVisible(true);
         getVersionPlanList({projectId:projectId})
+        getWorkTypeList({projectId:projectId})
         
     };
 
@@ -78,25 +78,26 @@ const  VersionPlanAddmodal = (props) => {
      * 提交数据，添加版本关联的事项
      */
     const submitVersionPlanList = ()=> {
-        for(let i=0;i<selectedRowKeys.length;i++) {
-            let params = {id: selectedRowKeys[i], version: actionPlanId}
-            addVersionPlan(params).then(()=>{
-                if(i === selectedRowKeys.length - 1){
-                    // setSelectedVersionPlanList([])
-                    setSelectedRowKeys([])
-                    setVisible(false)
-                }else {
-                    info()
-                }
-            })  
+        if(selectedRowKeys.length > 0){
+            for(let i=0; i<selectedRowKeys.length; i++) {
+                let params = {id: selectedRowKeys[i], version: actionPlanId}
+                addVersionPlan(params).then((res)=>{
+
+                    if(i === selectedRowKeys.length - 1){
+                        // setSelectedVersionPlanList([])
+                        if(res.code === 0){
+                            setSelectedRowKeys([])
+                            setVisible(false)
+                            message.info('添加成功');
+                        }
+                    }
+                })  
+            }
+        }else {
+            message.warning('请选择事项');
         }
+       
     }
-
-
-    //没有选择用户提升
-    const info = () => {
-        message.info('请选择事项');
-    };
 
 
     // 搜索版本
@@ -105,7 +106,7 @@ const  VersionPlanAddmodal = (props) => {
     }
 
     const searchUnselectVersionPlanByStatus = (value) => {
-        searchUnselectVersionPlanByStatus({workTypeId: value})
+        getVersionPlanList({workTypeId: value})
     }
     return (
         <>
@@ -137,6 +138,7 @@ const  VersionPlanAddmodal = (props) => {
                         placeholder="事项类型"
                         onChange={searchUnselectVersionPlanByStatus}
                         onClear={searchUnselectVersionPlanByStatus}
+                        allowClear
                     >
                     { 
                         workTypeList && workTypeList.map((item)=> {
@@ -146,11 +148,11 @@ const  VersionPlanAddmodal = (props) => {
                     </Select>
 
                     <Search
-                        placeholder="成员名字、手机号、邮箱"
+                        placeholder="标题"
                         allowClear
                         style={{ width: 200}}
                         onSearch={searchUnselectVersionPlan}
-
+                        onChange = {e => console.log(e)}
                     />
                 </div>
                 

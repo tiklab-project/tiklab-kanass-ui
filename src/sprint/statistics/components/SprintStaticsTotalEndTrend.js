@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Form, Select, DatePicker, Row, Col } from 'antd';
 import { observer, inject } from "mobx-react";
-import ProjectReportAddOrEdit from "./ReportAddOrEdit"
-import echarts from "../../common/echarts/echarts";
+// import ProjectReportAddOrEdit from "./ReportAddOrEdit"
+import echarts from "../../../common/echarts/echarts";
 import moment from "moment";
 import { withRouter } from "react-router";
 
 const { RangePicker } = DatePicker;
 
 
-const ProjectStaticsTotalEndTrend = (props) => {
-    const { statisticsStore } = props;
-    const { findReport, statisticsEndWorkItemTotalCountList, findProjectList } = statisticsStore;
+const SprintStaticsTotalEndTrend = (props) => {
+    const { statisticsStore, sprintstatisticStore } = props;
+    const { statisticsEndWorkItemTotalCountList, findProjectList } = statisticsStore;
+    const { statisticsSprintEndWorkItemTotalCountList } = sprintstatisticStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
     const [fromData, setFromData] = useState()
@@ -54,60 +55,54 @@ const ProjectStaticsTotalEndTrend = (props) => {
      */
     const setStatisticsData = (params) => {
         const chartDom = document.getElementById('workBar')
-        statisticsEndWorkItemTotalCountList(params).then(res => {
+        statisticsSprintEndWorkItemTotalCountList(params).then(res => {
             if (res.code === 0) {
-                const list = res.data;
+                const data = res.data;
                 let seriesValue = []
-                if (list.projectCountList.length > 0) {
-                    const legendDate = list.projectCountList.map(item => {
-                        seriesValue.push({
-                            name: item.project.projectName,
-                            type: 'line',
-                            stack: 'Total',
-                            data: item.countList
-                        })
-                        return item.project.projectName
-                    })
-                    const dateList = list.dateList;
-                    dateList.pop();
-                    const axisValue = dateList.map(item => {
-                        return item.slice(0, 10)
-                    })
-                    let myChart = echarts.init(chartDom);
-                    let option = {
-                        title: {
-                            text: '事项累计完成趋势'
-                        },
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data: legendDate
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        toolbox: {
-                            feature: {
-                                saveAsImage: {}
-                            }
-                        },
-                        xAxis: {
-                            type: 'category',
-                            boundaryGap: false,
-                            data: axisValue
-                        },
-                        yAxis: {
-                            type: 'value'
-                        },
-                        series: seriesValue
-                    };
-                    myChart.setOption(option);
-                }
-
+                seriesValue.push({
+                    name: data.sprint.sprintName,
+                    type: 'line',
+                    stack: 'Total',
+                    data: data.countList
+                })
+                const dateList = data.dateList;
+                dateList.pop();
+                const axisValue = dateList.map(item => {
+                    return item.slice(0, 10)
+                })
+                let myChart = echarts.init(chartDom);
+                let option = {
+                    title: {
+                        text: '事项累计完成趋势'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: data.sprint.sprintName
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: axisValue
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: seriesValue
+                };
+                myChart.setOption(option);
             }
         })
     }
@@ -272,17 +267,17 @@ const ProjectStaticsTotalEndTrend = (props) => {
 
                 <div id="workBar" style={{ height: "500px", marginTop: "20px" }} />
 
-                <ProjectReportAddOrEdit
+                {/* <ProjectReportAddOrEdit
                     fromData={fromData}
                     visible={visible}
                     setVisible={setVisible}
                     reportType="endtotaltrend"
                     type="work"
                     {...props}
-                />
+                /> */}
             </div>
         </div>
     )
 
 }
-export default withRouter(inject('statisticsStore')(observer(ProjectStaticsTotalEndTrend)));
+export default withRouter(inject('statisticsStore', 'sprintstatisticStore')(observer(SprintStaticsTotalEndTrend)));

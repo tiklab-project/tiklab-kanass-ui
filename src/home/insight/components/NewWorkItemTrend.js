@@ -65,7 +65,7 @@ const NewWorkItemTrend = (props) => {
      * 处理统计数据
      */
     const setStatisticsData = (value) => {
-        const chartDom = document.getElementById('new-trend')
+        const chartDom = document.getElementById(`new-trend-${index}`)
         statisticsNewWorkItemCount(value).then(res => {
             if (res.code === 0) {
                 const list = res.data;
@@ -219,7 +219,7 @@ const NewWorkItemTrend = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="new-trend-content" id="new-trend" />
+                    isEditor ? <div className="new-trend-content" id={`new-trend-${index}`} />
                         :
                         <Form
                             name="form"

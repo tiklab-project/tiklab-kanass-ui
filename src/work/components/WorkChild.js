@@ -8,7 +8,6 @@ import Button from "../../common/button/Button";
 const WorkChild = (props) => {
     const { treePath, workStore,workChild,workType, projectId,type } = props;
 
-    console.log(workType)
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);

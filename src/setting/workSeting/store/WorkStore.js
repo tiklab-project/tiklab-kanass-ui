@@ -260,7 +260,7 @@ export class OrgaStore {
         if(data.code=== 0){
             this.fromList = data.data
         }
-        return data;
+        return data.data;
     }
 
     // 获取所有流程列表
@@ -270,7 +270,7 @@ export class OrgaStore {
         if(data.code=== 0){
             this.flowList = data.data
         }
-        return data;
+        return data.data;
 		
     }
 

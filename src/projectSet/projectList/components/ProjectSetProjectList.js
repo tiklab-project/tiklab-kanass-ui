@@ -21,7 +21,6 @@ const ProjectSetProjectList = (props) => {
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
     const [projectSetAllList, setProjectSetAllList] = useState()
     useEffect(() => {
-
         findAllProjectSet().then(res => {
             setProjectSetAllList(res.data)
         })
@@ -36,7 +35,7 @@ const ProjectSetProjectList = (props) => {
     const deleProjectSet = (id) => {
         const values = {
             id: id,
-            projectSetId: 0
+            projectSetId: "nullString"
         }
 
         updateProject(values).then((data) => {

@@ -9,10 +9,11 @@
 import React, { useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router";
 const { TextArea } = Input;
 
 const LogAdd = (props) => {
-    const { showLogAdd, setShowLogAdd, logStore } = props;
+    const { showLogAdd, setShowLogAdd, logStore, changeTabs, activeTab } = props;
     const { findWorkItemList, addWorkLog } = logStore;
     const [addLog] = Form.useForm();
     // 搜索的事项列表
@@ -21,8 +22,10 @@ const LogAdd = (props) => {
     const [planTakeupTime, setPlanTakeupTime]  = useState(0)
     // 剩余时间
     const [surplusTime, setSurplusTime]  = useState(0)
+
     // 项目id
-    const [projectId, setProjectId] = useState()
+    const projectId = props.match.params.id;
+    // const [projectId, setProjectId] = useState()
     // 搜索关键字
     const [value, setValue] = useState();
     /**
@@ -30,7 +33,6 @@ const LogAdd = (props) => {
      */
     const creatLog = () => {
         addLog.validateFields().then((fieldsValue) => {
-            console.log(fieldsValue)
             const params = {
                 project: {
                     id: projectId
@@ -42,6 +44,7 @@ const LogAdd = (props) => {
                 workContent: fieldsValue.workContent
             }
             addWorkLog(params).then(res => {
+                changeTabs(activeTab)
                 setShowLogAdd(false)
             })
         })
@@ -61,7 +64,7 @@ const LogAdd = (props) => {
     const searchWorkItem = (value) => {
         console.log(value)
         if (value) {
-            findWorkItemList({ title: value }).then(res => {
+            findWorkItemList({ title: value, projectId:  projectId}).then(res => {
                 if (res.code === 0) {
                     setWorkItemList(res.data)
                 }
@@ -78,7 +81,7 @@ const LogAdd = (props) => {
     const changeSearchTitle = (newValue, option) => {
         setPlanTakeupTime(option.planTakeupTime)
         setSurplusTime(option.setSurplusTime)
-        setProjectId(option.projectId)
+        // setProjectId(option.projectId)
         setValue(newValue);
     };
 
@@ -170,4 +173,4 @@ const LogAdd = (props) => {
     )
 }
 
-export default inject('logStore')(observer(LogAdd));
+export default withRouter(inject('logStore')(observer(LogAdd)));

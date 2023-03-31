@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Space, Row, Col } from 'antd';
+import { Table, Space, Row, Col, Spin } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
@@ -9,7 +9,7 @@ import WorkDetail from "./WorkDetail";
 const WorkTableContent = (props) => {
     const path = props.match.path.split("/")[2];
     const { workStore, form } = props
-    const { workList, total, searchCondition, getWorkConditionPageTree, setIndexParams,
+    const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray, setWorkIndex } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
@@ -194,10 +194,10 @@ const WorkTableContent = (props) => {
     const deleteWork = (id) => {
         detWork(id).then(() => {
             if (viewType === "tree") {
-                getWorkConditionPageTree(values)
+                getWorkConditionPageTree()
             }
             if (viewType === "tile") {
-                getWorkConditionPage(values)
+                getWorkConditionPage()
             }
         })
     }
@@ -242,6 +242,7 @@ const WorkTableContent = (props) => {
                             <WorkTableFilter form={form} />
                         </div>
                         <div style={{ overflow: "hidden" }} className="work-table">
+                        <Spin spinning={tableLoading} delay={500}>
                             <Table
                                 columns={columns}
                                 dataSource={workList}
@@ -272,6 +273,7 @@ const WorkTableContent = (props) => {
                                     )
                                 }}
                             />
+                        </Spin>
                         </div>
                     </>
                         :

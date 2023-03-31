@@ -87,11 +87,11 @@ export class VersionStore {
      * @param {版本id} params 
      */
     @action
-	deleVersion = async(params) => {
+	deleVersion = async(value) => {
         const param = new FormData()
-        param.append("id", params.id)
+        param.append("id", value)
 
-        const data = await Service("/projectVersion/deleteVersion", params)
+        const data = await Service("/projectVersion/deleteVersion", param)
         if(data.code=== 0 ){
             this.getVersionList()
         }

@@ -140,7 +140,7 @@ export class SprintStore {
 
         const param = new FormData()
         param.append("id", values)
-        const data = await Service("/sprint/findSprint", values)
+        const data = await Service("/sprint/findSprint", param)
         if (data.code === 0) {
             return data;
         }

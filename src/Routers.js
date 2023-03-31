@@ -112,7 +112,8 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-
+const SprintStaticsTotalNewTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalNewTrend"))
+const SprintStaticsTotalEndTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalEndTrend"))
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
 // 搜索页面
@@ -1138,12 +1139,12 @@ const Routers = [
                             },
                             {
                                 path: "/index/:id/sprintdetail/:sprint/statistics/workNewTotalTrend",
-                                component: StaticsTotalNewTrend,
+                                component: SprintStaticsTotalNewTrend,
                                 exact: true
                             },
                             {
                                 path: "/index/:id/sprintdetail/:sprint/statistics/workEndTotalTrend",
-                                component: StaticsTotalEndTrend,
+                                component: SprintStaticsTotalEndTrend,
                                 exact: true
                             },
                             {

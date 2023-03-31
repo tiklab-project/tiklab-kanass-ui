@@ -8,7 +8,7 @@
  */
 import React, { Fragment } from "react";
 import StatisticsAsicde from "./sprintStatisticsAside";
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router";
 import "../components/sprintStatistics.scss"
@@ -24,7 +24,11 @@ const SprintStatistics = (props) => {
             </Sider>
 
             <Layout className="porject-statistics-content" style={{ background: "#fff" }}>
-                {renderRoutes(route.routes)}
+                <Row>
+                    <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                        {renderRoutes(route.routes)}
+                    </Col>
+                </Row>
             </Layout>
         </Layout>
     )

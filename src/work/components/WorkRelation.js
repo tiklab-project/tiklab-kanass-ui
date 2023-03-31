@@ -26,7 +26,6 @@ const WorkRelation = (props) => {
                         return array;
                     })
                 }
-
                 setSelectIds(array)
             })
         }

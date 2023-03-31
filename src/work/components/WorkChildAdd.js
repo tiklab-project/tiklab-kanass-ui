@@ -188,9 +188,9 @@ const WorkChildAddmodal = (props) => {
                                     return <div className="child-add-work-item" onClick={() => creatWorkChild(item.id)} key={item.id}>
                                         <div className="work-item-icon">
                                             {
-                                                item.workType?.iconUrl ?
+                                                item.workTypeSys?.iconUrl ?
                                                     <img
-                                                        src={'/images/' + item.workType?.iconUrl}
+                                                        src={'/images/' + item.workTypeSys?.iconUrl}
                                                         alt=""
                                                         className="svg-icon"
 

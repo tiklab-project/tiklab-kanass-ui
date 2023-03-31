@@ -13,7 +13,7 @@ const WorkListHead = (props) => {
     const { workStore, form } = props;
     const { getWorkConditionPageTree, getWorkConditionPage, setWorkShowType, setViewType,
         workShowType, viewType, workTypeList, workId, setWorkIndex, setWorkId,
-        searchCondition, getWorkBoardList, getWorkTypeList, setWorkBreadCrumbText,getWorkStatus, 
+        searchCondition, getWorkBoardList, getWorkTypeList, setWorkBreadCrumbText, getWorkStatus,
         getSelectUserList } = workStore;
     const workAddModel = useRef()
     const [stateType, setState] = useState();
@@ -24,7 +24,7 @@ const WorkListHead = (props) => {
 
     const layout = "inline";
     const [userList, setUserList] = useState();
-    
+
     useEffect(() => {
         // getWorkTypeList({projectId: projectId});
         getWorkStatus()
@@ -102,18 +102,18 @@ const WorkListHead = (props) => {
         return <Menu onClick={(value) => selectAddType(value, id)}>
             {
                 workTypeList && workTypeList.map((item) => {
-                    return <Menu.Item key={item.id}  type = {item} icon= {
+                    return <Menu.Item key={item.id} type={item} icon={
                         item.workType.iconUrl ? <img
                             src={('images/' + item.workType.iconUrl)}
                             alt=""
                             className="img-icon"
                         />
-                        :
-                        <img
-                            src={('images/workType1.png')}
-                            alt=""
-                            className="img-icon"
-                        />
+                            :
+                            <img
+                                src={('images/workType1.png')}
+                                alt=""
+                                className="img-icon"
+                            />
                     }>
                         {item.workType.name}
                     </Menu.Item>
@@ -169,39 +169,40 @@ const WorkListHead = (props) => {
                     事项
                 </div>
                 <div className="worklist-head-left">
-                    <div className="worklist-button-icon">
-                        <Dropdown trigger="click" overlay={menu} className="right-item">
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-add2"></use>
-                            </svg>
-                        </Dropdown>
-                    </div>
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
-                         <div style={{ positon: "relative" }} className="worklist-button-icon">
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-more"></use>
-                            </svg>
+                        <div className="worklist-button-icon">
+                            <Dropdown trigger="click" overlay={menu} className="right-item">
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-add2"></use>
+                                </svg>
+                            </Dropdown>
                         </div>
                     </PrivilegeProjectButton>
-                   
-                    <WorkFilterSort 
-                        getPageList= {getPageList}
-                        getPageTree = {getPageTree}
-                        getWorkConditionPage = {getWorkConditionPage}
-                        getWorkConditionPageTree = {getWorkConditionPageTree}
-                        getWorkBoardList = {getWorkBoardList}
-                        viewType = {viewType}
-                        workShowType = {workShowType}
-                        setWorkShowType = {setWorkShowType}
-                        setViewType ={setViewType}
+                    <div style={{ positon: "relative" }} className="worklist-button-icon">
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-more"></use>
+                        </svg>
+                    </div>
+
+
+                    <WorkFilterSort
+                        getPageList={getPageList}
+                        getPageTree={getPageTree}
+                        getWorkConditionPage={getWorkConditionPage}
+                        getWorkConditionPageTree={getWorkConditionPageTree}
+                        getWorkBoardList={getWorkBoardList}
+                        viewType={viewType}
+                        workShowType={workShowType}
+                        setWorkShowType={setWorkShowType}
+                        setViewType={setViewType}
                     />
                 </div>
             </div>
-            <div style={{padding: "0 10px"}}>
-               <WorkFilterForm  labelHidden = {true} layout = {layout}/> 
+            <div style={{ padding: "0 10px" }}>
+                <WorkFilterForm labelHidden={true} layout={layout} />
             </div>
-            
-            
+
+
             <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
         </div>
     )

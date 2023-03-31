@@ -13,15 +13,9 @@ import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
 const ProjectSetGide = (props) => {
     const { projectSetStore } = props;
-    const { getUseList, visible, setVisible, type, setType } = projectSetStore;
+    const { getUseList } = projectSetStore;
     const [name, setName] = useState("添加项目集")
-    /**
-     * 添加项目集
-     */
-    const addProjectSet = () => {
-        setVisible(true)
-        setType("add")
-    }
+
     useEffect(() => {
         getUseList()
     })

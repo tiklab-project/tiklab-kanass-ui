@@ -23,6 +23,7 @@ import { ConfigProvider } from 'antd';
 import { renderRoutes } from "react-router-config";
 import './common/language/i18n'
 import "./index.scss"
+import "tiklab-slate-ui/es/tiklab-slate.css"
 import { observer } from "mobx-react"
 import { pluginLoader, PluginProvider } from "tiklab-plugin-core-ui";
 import "./assets/index";

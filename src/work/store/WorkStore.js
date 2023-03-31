@@ -6,6 +6,8 @@ export class WorkStore {
     @observable workUserGroupBoardList = [];
     @observable workList = [];
     @observable workListTime = [];
+    // 加载中
+    @observable tableLoading = false;
     @observable alertText = "保存中";
     @observable isShowAlert = false;
 
@@ -67,9 +69,9 @@ export class WorkStore {
 
     //事项状态
     @observable workType = ""
-    @observable workTabs = "all";
+    @observable tabValue = {id: "all", type: "system"};
     @observable detailCrumbArray = [];
-
+     
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;
@@ -138,8 +140,8 @@ export class WorkStore {
     }
 
     @action
-    setWorkTabs = (value) => {
-        this.workTabs = value
+    setTabValue = (value) => {
+        this.tabValue = value
     }
 
     // 看板视图当前事项的状态的index
@@ -313,10 +315,12 @@ export class WorkStore {
      */
     @action
     getWorkConditionPageTree = async (value) => {
+        this.tableLoading = true;
         this.setSearchCondition(value)
         let data = [];
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
+            this.tableLoading = false;
             if(this.searchCondition.pageParam.currentPage === 1 || this.workShowType !== "list" ){
                 this.workList = data.data.dataList
             }
@@ -335,8 +339,10 @@ export class WorkStore {
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
+        this.tableLoading = true;
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
+            this.tableLoading = true;
             this.workList = data.data.dataList;
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;

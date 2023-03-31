@@ -159,7 +159,6 @@ const Work = (props) => {
                         setWorkId(res.dataList[0].id)
                         setDetailCrumbArray([{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
                     }
-                    
                 }
             } else {
                 setWorkIndex(0)

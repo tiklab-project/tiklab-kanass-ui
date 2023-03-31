@@ -131,7 +131,8 @@ const WorkItemTrend = (props) => {
             startDate: values.dateRanger[0].startOf("day").format("YYYY-MM-DD HH:mm:ss"),
             endDate: values.dateRanger[1].endOf("day").format("YYYY-MM-DD HH:mm:ss"),
             cellTime: values.cellTime,
-            workItemTypeCode: values.workItemTypeCode
+            workItemTypeCode: values.workItemTypeCode,
+            projectId: values.projectId
         }
         console.log(params, index)
         setIsEditor(!isEditor)
@@ -197,8 +198,7 @@ const WorkItemTrend = (props) => {
                 <div className="workitem-trend-top">
                     <div className="workitem-trend-title">
                         <div>
-                            新建事项趋势
-
+                            事项趋势
                         </div>
                         {
                             !isView && <div className="report-action">
@@ -218,7 +218,7 @@ const WorkItemTrend = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="workitem-trend-content" id="workitem-trend" />
+                    isEditor ? <div className="workitem-trend-content" id={`workitem-trend-${index}`} />
                         :
                     <Form
                         name="form"

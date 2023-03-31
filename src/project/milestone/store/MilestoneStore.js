@@ -58,7 +58,7 @@ export class MilestoneStore {
     deleMilestone = async (milestoneId) => {
         const param = new FormData()
         param.append("id", milestoneId)
-        const data = await Service("/milestone/deleteMilestone", value)
+        const data = await Service("/milestone/deleteMilestone", param)
         if (data.code === 0) {
             this.findMilestonePage().then((res) => {
                 if (res.dataList.length === 0) {

@@ -74,7 +74,7 @@ const SprintPlan = (props) => {
             // dragEvent.parentNode.removeChild( dragEvent );
             // event.target.appendChild( dragEvent );
             setSprint(params).then((res) => {
-                if (res === 0) {
+                if (res.code === 0) {
                     getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
                     getWorkList({ projectId: projectId, sprintIdIsNull: false })
                 }
@@ -91,7 +91,7 @@ const SprintPlan = (props) => {
         if (startSprintId && Sid !== startSprintId) {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
-                if (res === 0) {
+                if (res.code === 0) {
                     getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
                     getWorkList({ projectId: projectId, sprintIdIsNull: false })
                 }

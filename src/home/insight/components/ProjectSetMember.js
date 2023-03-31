@@ -56,7 +56,8 @@ const ProjectSetMember = (props) => {
         const chartDom = document.getElementById('project-user')
         statisticsProjectUserCount(value).then(res => {
             if (res.code === 0) {
-                const projectUserList = res.data;
+                const projectUserList = res.data.projectUserCountList;
+                const projectSet = res.data.projectSet;
                 const axisValue = []
                 const yAxisValue = []
                 console.log(projectUserList)
@@ -69,6 +70,10 @@ const ProjectSetMember = (props) => {
                     console.log(axisValue, yAxisValue)
                     let myChart = echarts.init(chartDom);
                     let option = {
+                        title: {
+                            text: projectSet.name
+                            
+                        },
                         tooltip: {
                             trigger: 'axis',
                             axisPointer: {
@@ -84,17 +89,17 @@ const ProjectSetMember = (props) => {
                         },
                         xAxis: {
                             type: 'value',
-                            boundaryGap: [0, 0.01]
+                            boundaryGap: [0, 1]
                         },
                         yAxis: {
                             type: 'category',
-                            data: ['项目1']
+                            data: axisValue
                         },
                         series: [
                             {
                                 name: '项目成员',
                                 type: 'bar',
-                                data: [2]
+                                data: yAxisValue
                             }
                         ]
                     };
@@ -129,7 +134,7 @@ const ProjectSetMember = (props) => {
                 <div className="projectset-user-top">
                     <div className="projectset-user-title">
                         <div>
-                            项目成员对比sa
+                            项目成员对比
                         </div>
                         {
                             !isView && <div className="report-action">

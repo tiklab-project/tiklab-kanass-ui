@@ -24,6 +24,8 @@ export class VersionPlanStore {
         currentPage: 1
     };
 
+    @observable workTypeList = [];
+
     /**
      * 获取未被关联的版本事项
      * @param {*} value 
@@ -123,6 +125,15 @@ export class VersionPlanStore {
             this.getSelectVersionPlanList()
         }
         return data;
+    }
+
+    @action
+    getWorkTypeList = async(value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+        if(data.code === 0){
+            this.workTypeList = data.data;
+        }
+        return data.data;
     }
 
 }

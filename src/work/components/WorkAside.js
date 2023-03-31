@@ -4,12 +4,13 @@ import { getUser } from 'tiklab-core-ui';
 import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
+import { Spin } from 'antd';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
     const workAsideList = useRef()
     const { form, workStore } = props;
-    const { searchCondition, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
+    const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
         workId, viewType, setWorkIndex, workList, total, currentPage, createRecent, totalPage,
         setWorkList, setDetailCrumbArray } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
@@ -165,11 +166,11 @@ const WorkAside = (props) => {
 
     const TreeSecondDom = (children, faIndex, faid, deep) => {
         return (
-            <div className={`work-aside-ul ${isExpandedTree(faid) ? null : 'work-aside-hidden'} `} key = {faIndex}>
+            <div className={`work-aside-ul ${isExpandedTree(faid) ? null : 'work-aside-hidden'} `} key={faIndex}>
                 {
                     children && children.map((childItem, index) => {
                         return (
-                            <div key = {childItem.id}>
+                            <div key={childItem.id}>
                                 <div
                                     key={childItem.id}
                                     style={{ paddingLeft: deep * 16 + 28 }}
@@ -213,7 +214,7 @@ const WorkAside = (props) => {
                                     </div>
                                 </div>
                                 {
-                                    childItem.children && childItem.children.length > 0 && TreeSecondDom(childItem.children,faIndex, childItem.id, deep + 1)
+                                    childItem.children && childItem.children.length > 0 && TreeSecondDom(childItem.children, faIndex, childItem.id, deep + 1)
                                 }
                             </div>
                         )
@@ -269,12 +270,12 @@ const WorkAside = (props) => {
                         <div className="work-aside-item-second" id={item.id}>{item.title}</div>
                     </div>
                     <div className="work-aside-status">
-                    {item.workStatusNode.name}
+                        {item.workStatusNode.name}
                     </div>
 
                 </div>
                 {
-                    item.children && item.children.length > 0 && TreeSecondDom(item.children,index, item.id, deep + 1)
+                    item.children && item.children.length > 0 && TreeSecondDom(item.children, index, item.id, deep + 1)
                 }
             </div>
 
@@ -307,22 +308,20 @@ const WorkAside = (props) => {
                 <WorkListFilter showWorkListFilter={showWorkListFilter} />
             </div>
             <div className="work-aside-option">
-                <div className={`work-aside-fixed ${showWorkListFilter ? "work-aside-fixed-small" : "work-aside-fixed-big"}`} ref={workAsideList} onScroll={onScroll}>
-                    <div className="work-aside-contant" >
-                        <div className="work-aside-ul">
-                            {
-                                workList && workList.map((item, index) => {
-                                    return TreeDom(item, index, 0)
-                                })
-                            }
+                <Spin spinning={tableLoading} delay={500}>
+                    <div className={`work-aside-fixed ${showWorkListFilter ? "work-aside-fixed-small" : "work-aside-fixed-big"}`} ref={workAsideList} onScroll={onScroll}>
+                        <div className="work-aside-contant" >
+                            <div className="work-aside-ul">
+                                {
+                                    workList && workList.map((item, index) => {
+                                        return TreeDom(item, index, 0)
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                {/* <>
-                    {isReachBottom ?
-                        <div className="work-aside-bottom" onClick={() => changePage()}>点击加载</div>
-                        : <div className="work-aside-bottom">第{currentPage}页/总{totalPage}页</div>}
-                </> */}
+                </Spin>
+
                 <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
                     {
                         currentPage < totalPage && isHover === true ?

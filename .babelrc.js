@@ -44,7 +44,7 @@ const plugins = [
         [
             "import",
             {
-                "libraryName": "tiklab-plugin-ui",
+                "libraryName": "tiklab-plugin-manager-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -58,10 +58,10 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `tiklab-plugin-ui/es/${fullName}`;
+                    return `tiklab-plugin-manager-ui/es/${fullName}`;
                 }
             },
-            "tiklab-plugin-ui"
+            "tiklab-plugin-manager-ui"
         ],
         [
             "import",

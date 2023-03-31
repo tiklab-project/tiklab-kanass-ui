@@ -214,25 +214,25 @@ export class StatisticsStore {
 
     @action
     statisticsNewWorkItemCount = async (value) => {
-        const data = await Service("/projectInsightReportController/statisticsNewWorkItemCount", value)
+        const data = await Service("/projectInsightReport/statisticsNewWorkItemCount", value)
         return data;
     }
 
     @action
     statisticsEndWorkItemCount = async (value) => {
-        const data = await Service("/projectInsightReportController/statisticsEndWorkItemCount", value)
+        const data = await Service("/projectInsightReport/statisticsEndWorkItemCount", value)
         return data;
     }
 
     @action
     statisticsWorkItemTotalCountList = async (value) => {
-        const data = await Service("/projectInsightReportController/statisticsWorkItemTotalCountList", value)
+        const data = await Service("/projectInsightReport/statisticsWorkItemTotalCountList", value)
         return data;
     }
 
     @action
     statisticsEndWorkItemTotalCountList = async (value) => {
-        const data = await Service("/projectInsightReportController/statisticsEndWorkItemTotalCountList", value)
+        const data = await Service("/projectInsightReport/statisticsEndWorkItemTotalCountList", value)
         return data;
     }
 

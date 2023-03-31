@@ -7,7 +7,7 @@ import { SelectSimple, SelectItem } from "../../common/select";
 const WorkChildAddmodal = (props) => {
     const { projectStore, workStore, workRelation, selectIds, showAddRelation, selectChild, relationAddRef, projectId } = props;
 
-    const { workTypeList, workId, findProjectList, projectList } = workStore;
+    const { workTypeList, workId } = workStore;
     const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const relationAdd = useRef();
@@ -143,7 +143,7 @@ const WorkChildAddmodal = (props) => {
                         <div className="relation-add-table-title">选择事项</div>
                         {
                             workRelationList && workRelationList.length > 0 ? 
-                            <div className="relation-add-table">
+                            <div className="relation-add-list">
                                 {
                                     workRelationList && workRelationList.map(item => {
                                         return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>

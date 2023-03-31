@@ -15,6 +15,7 @@ import * as echarts from 'echarts';
 
 const UserWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
+    console.log(condition)
     const { statisticsUserWorkItemCount, findAllProjectSet,findAllProject, reportList} = insightStore;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
@@ -53,10 +54,10 @@ const UserWorkItem = (props) => {
      * 处理统计数据
      */
      const statisticsUserWorkItem = (data) => {
-        const chartDom = document.getElementById('user-workitem')
+        const chartDom = document.getElementById(`user-workitem-${index}`)
         statisticsUserWorkItemCount(data).then(res => {
             if (res.code === 0) {
-                const userList = res.data;
+                const userList = res.data.userCount;
                 const types = ["demand", "task", "bug"];
                 const series = [];
                 const yAxisValue = [];
@@ -113,7 +114,7 @@ const UserWorkItem = (props) => {
                 let myChart = echarts.init(chartDom);
                 let option = {
                     title: {
-                        text: '项目成员'
+                        text: res.data.project.projectName
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -187,7 +188,7 @@ const UserWorkItem = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="user-workitem-content" id="user-workitem" />
+                    isEditor ? <div className="user-workitem-content" id={`user-workitem-${index}`} />
                     :
                     <Form
                         name="form"

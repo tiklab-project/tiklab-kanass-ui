@@ -33,7 +33,7 @@ const ProjectStaticsTotalEndTrend = (props) => {
             cellTime: "day",
             startDate: startTime.format("YYYY-MM-DD HH:mm:ss"),
             endDate: endTime.format("YYYY-MM-DD HH:mm:ss"),
-            workItemTypeCode: null,
+            workItemTypeCode: "all",
             projectId: projectId,
             projectSetId: projectSetId,
             sprintId: sprintId

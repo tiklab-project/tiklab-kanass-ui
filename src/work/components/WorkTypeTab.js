@@ -9,13 +9,13 @@ const WorkTypeTab = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 解析store数据
     const { getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, getWorkGanttListTree,
-        setWorkId, setWorkIndex, viewType, findWorkTypeDmList } = workStore;
+        workShowType, getWorkBoardList, setWorkId, setWorkIndex, 
+        viewType, findWorkTypeDmList, tabValue, setTabValue } = workStore;
 
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
 
-    const [tabValue, setTabValue] = useState({id: "all", type: "system"});
+    // const [tabValue, setTabValue] = useState({id: "all", type: "system"});
     const [moreTabValue, setMoreTabValue] = useState();
     const [showMoreTab, setShowMoreTab] = useState(false);
     const tabsDropDown = useRef();
@@ -56,17 +56,30 @@ const WorkTypeTab = (props) => {
     const selectCustomType = (value) => {
         setMoreTabValue(value)
         search({workTypeId: value.id})
-        setTabValue({id: value.id, type: "custom"})
+        setTabValue({id: value.id, type: "custom",
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }})
         setShowMoreTab(false)
     }
 
     const selectType = (value) => {
         if(value === "all"){
             search({workTypeId: ""})
-            setTabValue({id: "all", type: "system"})
+            setTabValue({id: "all", type: "system",
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }})
         }else {
             setTabValue({id: value.id, type: "system"})
-            search({workTypeId: value.id})
+            search({
+                workTypeId: value.id,
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }})
         }
         
         
@@ -98,9 +111,6 @@ const WorkTypeTab = (props) => {
         if (workShowType === "bodar") {
             getWorkBoardList(values)
         }
-        // if (workShowType === "time") {
-        //     getWorkGanttListTree(values)
-        // }
     };
 
 

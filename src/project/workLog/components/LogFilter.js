@@ -13,53 +13,18 @@ import "./LogFilter.scss"
 import moment from "moment";
 import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
-import { useState } from "react";
 const { RangePicker } = DatePicker;
 
 const LogFilter = (props) => {
-    const { workStore, logStore, type } = props;
-    const { findProjectList, projectList } = workStore;
+    const {logStore, type, dateValue, setDateValue } = props;
     const { findWorkLogPage, logList } = logStore;
     // 项目id
     const projectId = props.match.params.id;
-    const [dateValue, setDateValue] = useState()
     // 定义时间格式
     const dateFormat = 'YYYY/MM/DD';
     const userId = getUser().userId
 
-    /**
-     * 获取项目列表
-     */
-    useEffect(() => {
-        findProjectList()
-        getList()
-        return;
-    }, [])
-
-    /**
-     * 进入页面获取一周的日志列表
-     */
-    const getList = () => {
-        if (type === "allLog") {
-            const data = {
-                projectId: projectId,
-                startTime: moment().subtract(7, 'days').startOf("day").format("YYYY-MM-DD"),
-                endTime: moment().add(1, 'days').format("YYYY-MM-DD"),
-            }
-            findWorkLogPage(data)
-        }
-        if (type === "myLog") {
-            const data = {
-                worker: userId,
-                projectId: projectId,
-                startTime: moment().subtract(7, 'days').format('YYYY-MM-DD'),
-                endTime: moment().add(1, 'days').format('YYYY-MM-DD'),
-            }
-            findWorkLogPage(data)
-        }
-        console.log([moment().subtract(7, 'days'), moment()])
-        setDateValue([moment().subtract(7, 'days'), moment()])
-    }
+   
 
     /**
      * 根据搜索条件查询日志

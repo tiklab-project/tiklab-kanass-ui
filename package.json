@@ -159,7 +159,10 @@
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^5.4.0",
         "webpack-parallel-uglify-plugin": "^1.1.2",
-        "yarn": "^1.22.17"
+        "yarn": "^1.22.17",
+        "slate": "^0.66.0",
+        "slate-history": "^0.65.3",
+        "slate-react": "^0.66.0"
     },
     "dependencies": {
         "@ant-design/icons": "^4.3.0",
@@ -197,7 +200,7 @@
         "tiklab-plugin-core-ui": "^1.0.1",
         "tiklab-plugin-manager-ui": "^1.0.1",
         "tiklab-security-ui": "^1.0.1",
-        "tiklab-slate-ui": "^1.0.0",
+        "tiklab-slate-ui": "^1.0.1",
         "tiklab-todotask-ui": "^1.0.1",
         "tiklab-user-ui": "^1.0.1"
     }

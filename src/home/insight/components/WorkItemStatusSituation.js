@@ -47,6 +47,9 @@ const WorkItemStatusSituation = (props) => {
      * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
+        findAllProject().then(res => {
+            setProjectList(res.data)
+        })
         if (isEditor) {
             const data = condition.data.data
             const params = {
@@ -54,9 +57,7 @@ const WorkItemStatusSituation = (props) => {
                 workItemTypeCode: data.workItemTypeCode
             }
             form.setFieldsValue(params)
-            findAllProject().then(res => {
-                setProjectList(res.data)
-            })
+            
             statisticsWorkItemStatusCount(params).then(res => {
                 setWorkItemStatusCount(res.data)
             })

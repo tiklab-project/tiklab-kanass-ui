@@ -24,7 +24,11 @@ const ProjectSetStatistics = (props) => {
             </Sider>
 
             <Layout className="projectSet-statistics-content" style={{ background: "#fff" }}>
-                {renderRoutes(route.routes)}
+                <Row>
+                    <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                        {renderRoutes(route.routes)}
+                    </Col>
+                </Row>
             </Layout>
         </Layout>
     )

@@ -84,7 +84,7 @@ const WorkBasicInfo = (props) => {
     }
 
     useEffect(() => {
-        findFormConfig({ id: workInfo.workTypeSys.form.id })
+        findFormConfig({ id: workInfo.workType.form.id })
 
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {

@@ -11,9 +11,7 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const path = require('path');
 const baseWebpackConfig = require('./webpack.base');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const TerserPlugin  = require('terser-webpack-plugin');
-const { SourceMapDevToolPlugin } = require("webpack");
 const PORT = 3000;
 
 module.exports = merge(baseWebpackConfig, {

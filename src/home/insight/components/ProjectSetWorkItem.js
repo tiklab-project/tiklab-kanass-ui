@@ -16,6 +16,7 @@ import * as echarts from 'echarts';
 
 const ProjectSetWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
+    console.log(index)
     const { statisticsProjectWorkItemCount, findAllProjectSet, reportList } = insightStore;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
@@ -51,7 +52,7 @@ const ProjectSetWorkItem = (props) => {
      * 处理统计数据
      */
     const statisticsProjectWorkItem = (value) => {
-        const chartDom = document.getElementById('project-workitem')
+        const chartDom = document.getElementById(`project-workitem-${index}`)
         statisticsProjectWorkItemCount(value).then(res => {
             if (res.code === 0) {
                 const projectList = res.data.project;
@@ -155,7 +156,7 @@ const ProjectSetWorkItem = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="project-workitem-content" id="project-workitem">
+                    isEditor ? <div className="project-workitem-content" id={`project-workitem-${index}`}>
                         {
                             projectWorkitem.length <= 0 && <Empty />
                         }

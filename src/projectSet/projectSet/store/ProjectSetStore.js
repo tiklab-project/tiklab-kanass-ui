@@ -94,7 +94,7 @@ export class ProjectSetStore {
         param.append("id", values)
         const data = await Service("/projectSet/deleteProjectSet", param);
         if(data.code === 0){
-            that.getProjectSetlist()
+            this.getProjectSetlist()
         }
         return data;
     }
@@ -182,6 +182,7 @@ export class ProjectSetStore {
         const data = await Service("/projectSet/findAllProjectSet");
         if(data.code === 0){
             this.projectSetList = data.data;
+            this.allProjectSetList = data.data
         }
         
         return data;

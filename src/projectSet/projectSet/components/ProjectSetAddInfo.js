@@ -44,7 +44,7 @@ const iconList = [
 ]
 
 const ProjectSetAddInfo = (props) => {
-    const { addProjectSetSet, findAllProjectSet, setVisible, setCurrentStep } = props;
+    const { addProjectSetSet, findAllProjectSet, setVisible } = props;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -77,6 +77,7 @@ const ProjectSetAddInfo = (props) => {
                     message.success('添加成功');
                     setVisible(false);
                     findAllProjectSet()
+                    
                     // props.history.push(`/index/projectSetdetail/${res.data}/survey`)
                 }
             })

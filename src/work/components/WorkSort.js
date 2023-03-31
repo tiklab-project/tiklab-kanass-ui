@@ -22,7 +22,7 @@ const WorkSort = (props) => {
             title: "标题"
         },
         {
-            value: "workType",
+            value: "work_type_id",
             title: "类型"
         },
         {
@@ -30,7 +30,7 @@ const WorkSort = (props) => {
             title: "经办人"
         },
         {
-            value: "workStatus",
+            value: "work_status_id",
             title: "状态"
         }
     ]

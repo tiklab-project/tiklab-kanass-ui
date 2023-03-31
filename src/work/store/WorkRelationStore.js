@@ -57,7 +57,7 @@ export class WorkRelation {
         if(data.code=== 0){
             this.selectWorkRelationList = data.data;
         }
-        return data;
+        return data.data;
     }
 
 

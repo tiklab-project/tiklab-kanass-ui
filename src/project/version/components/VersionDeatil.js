@@ -183,7 +183,7 @@ const VersionDetail = (props) => {
                                                 {
                                                     versionList && versionList.map(item => {
                                                         return <div className={`version-menu-submenu ${item.id === planInfo?.id ? "version-menu-select" : ""}`}
-                                                            key={item.key}
+                                                            key={item.id}
                                                             onClick={() => changeVersion(item)}
                                                         >
                                                             {/* <svg className="icon" aria-hidden="true">

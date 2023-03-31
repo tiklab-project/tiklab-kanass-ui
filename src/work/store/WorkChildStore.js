@@ -78,7 +78,7 @@ export class WorkChild {
     @action
 	getWorkChildList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value});
-        const data = await Service("/workItem/findSelectWorkItemList", this.searchSelectCondition)
+        const data = await Service("/workItem/findWorkItemPage", this.searchSelectCondition)
         return data;
     }
     //添加已选择事项
@@ -110,6 +110,7 @@ export class WorkChild {
         if(data.code === 0){
             this.getWorkChildList()
         }
+        return data;
 		
     }
 }

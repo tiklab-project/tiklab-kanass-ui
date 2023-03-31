@@ -12,7 +12,8 @@ import {HOME_STORE,HomeStore} from "./home/common/store/HomeStore"
 //仪表盘
 import {INSIGHT_STORE,InsightStore} from "./home/insight/store/InsightStore";
 import {PRO_STORE,ProjectStore} from "./project/project/store/ProjectStore";
-import {STATISTICS_STORE, StatisticsStore} from "./statistics/store/statisticStore"
+import {STATISTICS_STORE, StatisticsStore} from "./statistics/store/statisticStore";
+import {SPRINT_STATISTICS_STORE, SprintStatisticStore} from "./sprint/statistics/store/SprintStatisticStore";
 //需求集
 import {EPIC_STORE,EpicStore} from "./project/lineMap/store/EpicStore";
 
@@ -57,7 +58,7 @@ import {BASICINFO_STORE,BasicInfoStore} from "./projectSet/overview/store/basicI
 
 import {STAGE_STORE,StageStore} from "./project/stage/store/StageStore";
 
-import {SlateStore, SLATE_STORE} from "tiklab-slate-ui";
+// import {SlateStore, SLATE_STORE} from "tiklab-slate-ui";
 
 function createStores() {
     return {
@@ -67,6 +68,7 @@ function createStores() {
         [AFFAIR_STORE]:new WorkStore(),
         [ORGA_STORE]:new OrgaStore(),
         [STATISTICS_STORE]:new StatisticsStore(),
+        [SPRINT_STATISTICS_STORE]:new SprintStatisticStore(),
 
         [WORKLOG_STORE]: new WorkLogStore(),
         [PROJECTWORK_STORE]: new ProjectWorkStore(),
@@ -99,7 +101,7 @@ function createStores() {
         [MILESTONE_STORE]: new MilestoneStore(),
         [SPRINTDETAIL_STORE]: new SprintDetailStore(),
         
-        [SLATE_STORE]:new SlateStore(),
+        // [SLATE_STORE]:new SlateStore(),
         [BASICINFO_STORE]:new BasicInfoStore(),
 
         [INSIGHT_STORE]: new InsightStore(),

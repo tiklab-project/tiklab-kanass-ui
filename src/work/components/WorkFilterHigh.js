@@ -22,11 +22,6 @@ const WorkFilterHigh = (props) => {
         viewType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList } = workStore;
 
-    const [ stateNodeList, setStateNodeList] = useState([])
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-
-    const [flowIds, setFlowIds] = useState();
-
     useEffect(() => {
         findPriority()
         getsprintlist(projectId)
@@ -179,8 +174,9 @@ const WorkFilterHigh = (props) => {
                 onValuesChange={(changedValues, allValues) => changeField(changedValues, allValues)}
                 {...formItemLayout}
 
-            >
-                <Form.Item name="workStatusIds" label={labelHidden ? null : "状态123"} rules={[{ required: false }]} >
+            >   
+            {
+                workShowType !== "list" &&  <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"
                         placeholder="状态"
@@ -196,6 +192,8 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
+            }
+               
 
                 <Form.Item name="createdDate" label={labelHidden ? null : "创建日期"} rules={[{ required: false }]} >
                     <RangePicker getPopupContainer={() => heightFilter.current} />

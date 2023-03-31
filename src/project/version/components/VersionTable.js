@@ -85,12 +85,12 @@ const VersionTable = (props) => {
             width: "100px",
             render: (text, record) => (
                 <Space size="middle">
-                    <VersionAddmodal
+                    {/* <VersionAddmodal
                         name="编辑"
                         type="edit"
                         id={record.id}
                         {...props}
-                    />
+                    /> */}
                     <PrivilegeProjectButton code={'VersionDelete'} domainId={projectId}  {...props}>
                         <span className="span-botton  delete" onClick={() => deleVersion(record.id)}>
                             <svg className="svg-icon" aria-hidden="true">

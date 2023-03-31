@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Row, Col, Select, InputNumber, Pagination } from "antd";
+import { Form, Space, Empty, Dropdown, Skeleton, Col, Select, InputNumber, Pagination } from "antd";
 // import "../../common/components/projectDetail.scss";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
@@ -39,9 +39,11 @@ const WorkDetail = (props) => {
     const [isFocus, setIsFocus] = useState()
     const path = props.match.path.split("/")[2];
     const [isTableDetail, setIsTableDetail] = useState(false)
-
+    const [infoLoading, setInfoLoading] = useState(false)
     const getWorkDetail = (id, index) => {
+        setInfoLoading(true)
         searchWorkById(id, index).then((res) => {
+            setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
                 setStatusList(res.workStatus.id);
@@ -54,12 +56,6 @@ const WorkDetail = (props) => {
     }
 
     useEffect(() => {
-        const pathUrl = props.match.path;
-        // if (pathUrl === "/index/:id/sprintdetail/:sprint/workItem" || pathUrl === "/index/projectScrumDetail/:id/work" ||
-        //     pathUrl === "/index/work/worklist" || pathUrl === "/index/projectNomalDetail/:id/work"
-        // ) {
-        //     setIsTableDetail(true)
-        // }
         setWorkInfo()
         if (workId && workId.length > 0) {
             getWorkTypeList({ projectId: projectId });
@@ -236,7 +232,7 @@ const WorkDetail = (props) => {
                     return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item.id, item.name)}>{item.name}</div>
                 })
             }
-            <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workStatus?.flow.id}`)}>查看工作流</div>
+            <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workTypeSys?.flow.id}`)}>查看工作流</div>
 
         </div>
 
@@ -261,7 +257,7 @@ const WorkDetail = (props) => {
 
 
     return (
-        <>
+        <Skeleton loading={infoLoading} active>
             {
                 workInfo ? <div className="work-detail">
                     <>
@@ -480,7 +476,7 @@ const WorkDetail = (props) => {
                     </div>
 
             }
-        </>
+        </Skeleton>
 
     )
 };

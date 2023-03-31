@@ -90,7 +90,6 @@ const NewInsight = (props) => {
      * @param {模块数据列表} layouts 
      */
     const addLayout = (layout, layouts) => {
-        console.log(layout, layouts, reportList)
         const list = reportList.lg.map((item, index) => {
             const data = item.data;
             // 把新的仪表盘的位置信息添加到仪表盘报告列表中
@@ -100,7 +99,6 @@ const NewInsight = (props) => {
 
         })
         setReportList({ lg: list })
-        console.log(list, reportList)
     }
 
     return (

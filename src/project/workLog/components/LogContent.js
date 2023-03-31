@@ -17,10 +17,13 @@ import { useState } from "react";
 import Button from "../../../common/button/Button";
 import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
+import moment from "moment";
 
 const LogContent = (props) => {
     const { logStore } = props;
     const { findWorkLogPage, logList, selectLogCondition } = logStore;
+    const [dateValue, setDateValue] = useState()
+
     // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
     // 选中的tab key
@@ -33,6 +36,40 @@ const LogContent = (props) => {
     const [logDetailVisable, setLogDetailVisable] = useState(false);
     // 点击显示详情的日志id
     const [logId, setLogId] = useState()
+    const projectId = props.match.params.id;
+
+     /**
+     * 获取项目列表
+     */
+     useEffect(() => {
+        getList()
+        return;
+    }, [])
+
+    /**
+     * 进入页面获取一周的日志列表
+     */
+    const getList = () => {
+        if (activeTab === "allLog") {
+            const data = {
+                projectId: projectId,
+                startTime: moment().subtract(7, 'days').startOf("day").format("YYYY-MM-DD"),
+                endTime: moment().add(1, 'days').format("YYYY-MM-DD"),
+            }
+            findWorkLogPage(data)
+        }
+        if (activeTab === "myLog") {
+            const data = {
+                worker: userId,
+                projectId: projectId,
+                startTime: moment().subtract(7, 'days').format('YYYY-MM-DD'),
+                endTime: moment().add(1, 'days').format('YYYY-MM-DD'),
+            }
+            findWorkLogPage(data)
+        }
+        console.log([moment().subtract(7, 'days'), moment()])
+        setDateValue([moment().subtract(7, 'days'), moment()])
+    }
 
     /**
      * 显示日志详情
@@ -65,8 +102,8 @@ const LogContent = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["worker", "name"],
-            key: "worker",
+            dataIndex: ["user", "name"],
+            key: "user",
             align: "left",
         },
         {
@@ -95,10 +132,10 @@ const LogContent = (props) => {
      */
     const changePage = (pagination) => {
         if (activeTab === "allLog") {
-            findWorkLogPage({ worker: null, projectId: null, pageParam: { current: pagination.current } })
+            findWorkLogPage({ worker: null, projectId: projectId, pageParam: { current: pagination.current } })
         }
         if (activeTab === "myLog") {
-            findWorkLogPage({ worker: userId, pageParam: { current: pagination.current } })
+            findWorkLogPage({ worker: userId, projectId: projectId, pageParam: { current: pagination.current } })
         }
     }
 
@@ -109,10 +146,10 @@ const LogContent = (props) => {
     const changeTabs = value => {
         setActiveTab(value)
         if (value === "allLog") {
-            findWorkLogPage({ worker: null, projectId: null })
+            findWorkLogPage({ worker: null, projectId: projectId })
         }
         if (value === "myLog") {
-            findWorkLogPage({ worker: userId })
+            findWorkLogPage({ worker: userId, projectId: projectId })
         }
     }
 
@@ -127,7 +164,7 @@ const LogContent = (props) => {
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
                             添加日志
                         </Button>
-                        <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} />
+                        <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} changeTabs = {changeTabs} activeTab = {activeTab}/>
                     </Breadcumb>
                     <div className="log-tab-filter">
                         <div className="log-tabs">
@@ -147,7 +184,7 @@ const LogContent = (props) => {
                             </div>
 
                         </div>
-                        <LogFilter type={activeTab} />
+                        <LogFilter type={activeTab} dateValue = {dateValue} setDateValue = {setDateValue}/>
                     </div>
                     <Table
                         className="log-list"
