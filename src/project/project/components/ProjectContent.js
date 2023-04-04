@@ -289,8 +289,7 @@ const ProjectContent = (props) => {
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="title">
-                    <div
-                    >
+                    <div>
                         最近项目
                     </div>
                 </div>

@@ -117,7 +117,6 @@ const WorkFilterForm = (props) => {
             }
         }
         const states = ["DONE"]
-        debugger
         getStateNodeList({ excNodeStatus: states }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues)

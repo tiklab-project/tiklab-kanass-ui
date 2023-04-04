@@ -101,6 +101,10 @@
             border-radius: 4px;
             width: 100%;
             margin-bottom: 20px;
+            .edit {
+                border: 1px solid #f0f0f0;
+                border-radius: 3px;
+            }
             .ant-select-selection-placeholder {
                 color: rgba(0,0,0, 0.85);
             }
