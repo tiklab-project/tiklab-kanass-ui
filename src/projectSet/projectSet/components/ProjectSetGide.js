@@ -8,9 +8,10 @@
  */
 import React, { useState, useEffect } from "react";
 import GideImge from "../../../assets/images/projectGide.png"
-import ProjectSetAdd from "./ProjectSetAdd"
+import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
+import { withRouter } from "react-router";
 const ProjectSetGide = (props) => {
     const { projectSetStore } = props;
     const { getUseList } = projectSetStore;
@@ -26,20 +27,13 @@ const ProjectSetGide = (props) => {
             </div>
             <div className="gide-right">
                 <div>您还没有项目集合，请先</div>
-                {/* <Button type="primary" onClick={() => addProjectSet()}>添加项目集</Button> */}
-                <ProjectSetAdd
-                    name={name}
-                />
+                <Button
+                        style={{ width: "fit-content" }}
+                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
+                    </Button>
             </div>
-            {/* <ProjectSetAdd
-                visible = {visible}
-                setVisible = {setVisible}
-                name= {"项目集"}
-                type={type}
-                setType = {setType}
-            /> */}
            
         </div>
     )
 }
-export default inject('projectSetStore')(observer(ProjectSetGide));
+export default withRouter(inject('projectSetStore')(observer(ProjectSetGide)));

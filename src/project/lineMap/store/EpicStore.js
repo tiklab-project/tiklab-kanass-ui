@@ -60,7 +60,6 @@ export class EpicStore {
      */
     @action
     findEpicList = async(value) => {
-        console.log(value)
         const data = await Service("/epic/findEpicListTree", value)
         if(data.code === 0){
             return data
@@ -76,7 +75,7 @@ export class EpicStore {
     findEpic = async(value) => {
         const params = new FormData();
         params.append("id", value.id)
-        const data = await Service("/epic/findEpic", value)
+        const data = await Service("/epic/findEpic", params)
         if(data.code === 0){
             return data;
         }
@@ -157,7 +156,7 @@ export class EpicStore {
     deleteEpic = async(value) => {
         const params = new FormData()
         params.append("id", value.id)
-        const data = await Service("/epic/deleteEpic", value)
+        const data = await Service("/epic/deleteEpic", params)
         if(data.code === 0){
             return data;
         }

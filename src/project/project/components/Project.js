@@ -9,17 +9,26 @@
 import React, { Fragment, useEffect } from 'react';
 import { Layout, Row, Col } from 'antd';
 import Procontent from "./ProjectContent";
+import ProjectGide from "./ProjectGide"
 import "../components/project.scss";
 import { observer, inject } from "mobx-react";
-
+import { getUser } from 'tiklab-core-ui';
 const Project = (props) => {
-
+    const { projectStore } = props;
+    const userId = getUser().userId;
+    const { findJoinProjectList, prolist } = projectStore;
+    useEffect(() => {
+        findJoinProjectList({ creator: userId });
+    }, [])
     return (
         <div className="project">
             <Layout className="project-content">
                 <Row>
-                    <Col sm = {24} md = {24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                        <Procontent /> 
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                        {
+                            prolist && prolist.length > 0 ?
+                            <Procontent /> : <ProjectGide /> 
+                        }
                     </Col>
                 </Row>
             </Layout>

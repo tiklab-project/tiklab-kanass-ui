@@ -4,7 +4,7 @@ import 'moment/locale/zh-cn';
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
 import "./ProjectSetAdd.scss";
-import Button from "../../../common/button/Button";
+
 import ProjectSetAddInfo from "./ProjectSetAddInfo";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
@@ -13,8 +13,8 @@ const ProjectSetAdd = (props) => {
     const [form] = Form.useForm();
     const [visible, setVisible] = React.useState(false);
     const { projectStore, name, projectSetStore, setAllProjectSetList } = props;
-    const {  getUseList, creatIcon, findIconList } = projectStore;
-        
+    const { getUseList, creatIcon, findIconList } = projectStore;
+
     const { addProjectSetSet, getProjectSetlist, findAllProjectSet } = projectSetStore;
 
 
@@ -81,7 +81,7 @@ const ProjectSetAdd = (props) => {
             <Breadcumb
                 firstText="添加项目集"
             >
-                <div onClick={() => setVisible(false)} className = "projectSetadd-close">
+                <div onClick={() => props.history.goBack()} className="projectSetadd-close">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-close"></use>
                     </svg>
@@ -92,43 +92,23 @@ const ProjectSetAdd = (props) => {
 
 
     return (
-        <>
-            <div >
-                <Button 
-                    style={{ width: "fit-content" }}
-                    type="primary" onClick={showModal} buttonText={name} >
-                </Button>
-                <Modal
-                    visible={visible}
-                    onCancel={onCancel}
-                    cancelText="取消"
-                    okText="确定"
-                    footer={false}
-                    className="projectSet-addmodel"
-                    mask={false}
-                    closable={false}
-                    width={"100vw"}
+        <div className="projectSet-add">
+            <Row>
+                <Col
+                    className="projectSet-type-col"
+                    lg={{ span: "18", offset: "3" }}
+                    xl={{ span: "14", offset: "5" }}
+                    xxl={{ span: "10", offset: "7" }}
+                    style={{ height: "100%" }}
                 >
-                    <Row>
-                        <Col 
-                            className="projectSet-type-col"
-                            lg={{ span: "18", offset: "3" }} 
-                            xl={{ span: "14", offset: "5" }} 
-                            xxl={{ span: "10", offset: "7" }} 
-                            style={{ height: "100%" }}
-                        >
-                            <Head />
-                            <div>
+                    <Head />
+                    <div>
 
-                                <ProjectSetAddInfo findAllProjectSet = {findAllProjectSet} addProjectSetSet={addProjectSetSet} setAllProjectSetList = {setAllProjectSetList} getProjectSetlist = {getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
-                            </div>
-                        </Col>
-                    </Row>
-
-
-                </Modal>
-            </div>
-        </>
+                        <ProjectSetAddInfo findAllProjectSet={findAllProjectSet} addProjectSetSet={addProjectSetSet} setAllProjectSetList={setAllProjectSetList} getProjectSetlist={getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
+                    </div>
+                </Col>
+            </Row>
+        </div>
     );
 };
 

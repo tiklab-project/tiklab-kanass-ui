@@ -118,6 +118,7 @@ const LogAdd = (props) => {
                         onSearch={searchWorkItem}
                         onChange={changeSearchTitle}
                         optionFilterProp='children'
+                        placeholder = "输入关键字搜索"
                     >
                         {
                             workItemList.length > 0 && workItemList.map((item) => {

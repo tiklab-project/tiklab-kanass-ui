@@ -80,13 +80,13 @@ const ProjectAddInfo = (props) => {
                 iconUrl: iconUrl
             }
             addProlist(data).then(res => {
-                if (res.code === 40000) {
-                    message.error(res.msg);
-                }
+                
                 if (res.code === 0) {
                     message.success('添加成功');
                     props.history.goBack()
                     setCurrentStep("0")
+                }else {
+                    message.error("添加失败")
                 }
             })
         })

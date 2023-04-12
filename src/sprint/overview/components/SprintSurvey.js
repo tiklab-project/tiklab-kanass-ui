@@ -26,6 +26,7 @@ const SprintSurvey = (props) => {
     const [workItemList, setWorkItemList] = useState();
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
+    const masterName = getUser().name;
     useEffect(() => {
         const data = {
             masterId: masterId,
@@ -147,7 +148,7 @@ const SprintSurvey = (props) => {
                             </div>
                             <div className="sprint-container">
                                 <div className="sprint-item">
-                                    <UserIcon userInfo={sprintInfo?.master} className="item-icon" />
+                                    <UserIcon userInfo={sprintInfo?.master} className="item-icon" name = {masterName}/>
                                     <div className="item-content">
                                         <div className="item-top">{sprintInfo?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>

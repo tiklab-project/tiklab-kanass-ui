@@ -21,7 +21,7 @@ import "../components/Work.scss"
 const Work = (props) => {
     const { workStore, workCalendarStore } = props;
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType } = workStore;
+        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType,searchCondition } = workStore;
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
@@ -33,7 +33,7 @@ const Work = (props) => {
         }
 
         if (props.match.path === "/index/work") {
-            
+
             goSystemWorkItem()
         }
 
@@ -53,7 +53,7 @@ const Work = (props) => {
 
         if (props.match.path === "/index/projectScrumDetail/:id/workone/:id" || props.match.path === "/index/projectNomalDetail/:id/workone/:id") {
             const id = props.match.params.id;
-            
+
             let initValues = {
                 pageParam: {
                     pageSize: 20,
@@ -154,7 +154,7 @@ const Work = (props) => {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
-                    if(workShowType === "list"){
+                    if (workShowType === "list") {
                         setWorkIndex(1)
                         setWorkId(res.dataList[0].id)
                         setDetailCrumbArray([{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
@@ -175,7 +175,7 @@ const Work = (props) => {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
-                    if(workShowType === "list"){
+                    if (workShowType === "list") {
                         setWorkIndex(1)
                         setWorkId(res.dataList[0].id)
                         setDetailCrumbArray([{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
@@ -191,8 +191,7 @@ const Work = (props) => {
     return (
         <Fragment>
             {
-                workShowType === "list" &&
-                <Worklist {...props} form={form}></Worklist>
+                workShowType === "list" &&  <Worklist {...props} form={form}></Worklist>
             }
             {
                 workShowType === "table" && <WorkTableContent {...props} form={form}></WorkTableContent>

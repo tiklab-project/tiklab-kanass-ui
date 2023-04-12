@@ -12,7 +12,7 @@ const EpicPlan = (props) => {
     const [epicChild, setEpicChild] = useState()
     const [setSelectWorkItemList] = useState()
     // 史诗的子级事项id集合
-    const [epicWorkIds, setEpicWorkIds] = useState()
+    let [epicWorkIds, setEpicWorkIds] = useState()
 
     /**
      * 通过史诗id获取史诗的下级事项和下级史诗
@@ -43,7 +43,7 @@ const EpicPlan = (props) => {
         }
         deleteEpicWorkItem(value).then(res=> {
             if(res.code === 0){
-                findWorkItemListByEpic({ epicId: epicId }).then(res => {
+                findEpicChildWorkItemAndEpic({ epicId: epicId }).then(res => {
                     if (res.code === 0) {
                         setEpicChild(res.data)
                         let ids = []
@@ -60,7 +60,7 @@ const EpicPlan = (props) => {
 
     // 搜索用户
     const onSearch = (value) => {
-        findWorkItemListByEpic({ epicId: epicId, epicName: value }).then(res => {
+        findEpicChildWorkItemAndEpic({ epicId: epicId, workItemName: value }).then(res => {
             if (res.code === 0) {
                 setEpicChild(res.data)
             }
@@ -149,7 +149,7 @@ const EpicPlan = (props) => {
                                             :
                                             <div style={{width: "18px", height: "18px"}}></div>
                                         }
-
+                                       
                                         <div className="epicName">{item.epicName}</div>
                                     </div>
 
@@ -209,6 +209,20 @@ const EpicPlan = (props) => {
                                             :
                                             <div style={{width: "18px", height: "18px"}}></div>
                                         }
+                                         {
+                                            item.workTypeSys?.iconUrl ?
+                                                <img
+                                                    src={('images/' + item.workTypeSys?.iconUrl)}
+                                                    alt=""
+                                                    className="img-icon"
+                                                />
+                                                :
+                                                <img
+                                                    src={('images/workType1.png')}
+                                                    alt=""
+                                                    className="img-icon"
+                                                />
+                                        }
                                         <div className="workitemName">{item.title}</div>
                                     </div>
 
@@ -240,6 +254,7 @@ const EpicPlan = (props) => {
                     setselectWorkItemList={setSelectWorkItemList}
                     epicId={epicId}
                     epicWorkIds={epicWorkIds}
+                    setEpicWorkIds = {setEpicWorkIds}
                     setEpicChild = {setEpicChild}
                     {...props}
                 />

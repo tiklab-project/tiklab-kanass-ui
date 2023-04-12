@@ -17,7 +17,6 @@ import { withRouter } from 'react-router';
 const ProjectSet = (props) => {
     const { projectSetStore,route } = props;
     const { getProjectSetlist, findAllProjectSet, allProjectSetList } = projectSetStore;
-    // const [allProjectSetList, setAllProjectSetList] = useState([])
     //初始化获取项目列表
     useEffect(() => {
         findAllProjectSet()
@@ -28,9 +27,7 @@ const ProjectSet = (props) => {
         <div className="projectSet">
             <Layout className="projectSet-content">
                 {allProjectSetList && allProjectSetList.length > 0 ?
-                    <ProjectSetContent />
-                    :
-                    <ProjectSetGide />
+                    <ProjectSetContent />:<ProjectSetGide />
                 }
             </Layout>
         </div>

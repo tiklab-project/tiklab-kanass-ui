@@ -41,7 +41,7 @@ const ProjectAuthConfig = (props) => {
             key: 'age',
         },
         {
-            title: 'ce',
+            title: '免费',
             dataIndex: 'ce',
             key: 'ce',
             render: (text) => {
@@ -49,7 +49,7 @@ const ProjectAuthConfig = (props) => {
             }
         },
         {
-            title: 'ee',
+            title: '付费',
             dataIndex: 'ee',
             key: 'ee',
             render: (text) => {

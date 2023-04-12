@@ -7,7 +7,7 @@ export class ProjectStore {
     @observable project = [];
     @observable allProlist = [];
     @observable projectName = "";
-    @observable activeTabs = "2"
+    @observable activeTabs = "1"
     
     @observable projectPageParams = {
         orderParams: [{

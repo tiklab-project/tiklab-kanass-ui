@@ -287,7 +287,9 @@ export class WorkStore {
 
     @action
     setSearchCondition = (value) => {
-        this.searchCondition = extendObservable(this.searchCondition,  { ...value })
+        console.log(this.searchCondition)
+        this.searchCondition = Object.assign(this.searchCondition,  { ...value })
+        console.log(this.searchCondition)
     }
 
     @action
@@ -315,6 +317,7 @@ export class WorkStore {
      */
     @action
     getWorkConditionPageTree = async (value) => {
+        
         this.tableLoading = true;
         this.setSearchCondition(value)
         let data = [];
@@ -331,6 +334,7 @@ export class WorkStore {
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
+            
         }
         return data.data;
 
@@ -563,7 +567,8 @@ export class WorkStore {
         let params = {
             updateField : "workStatus",
             id: value.id,
-            workStatus: {
+            flowId: value.flowId,
+            workStatusNode: {
                 id: value.workStatus
             }
         }
@@ -634,9 +639,9 @@ export class WorkStore {
         param.append("id", value.id)
         const data = await Service("/flow/findFlowDef",param);
         if (data.code === 0) {
-            if (data.data) {
-                this.statesList = data.data.stateNodeList
-            }
+            // if (data.data) {
+            //     this.statesList = data.data.stateNodeList
+            // }
         }
         return data;
     }

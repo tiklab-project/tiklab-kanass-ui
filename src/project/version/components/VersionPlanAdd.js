@@ -44,14 +44,14 @@ const  VersionPlanAddmodal = (props) => {
         },
         {
             title: "类型",
-            dataIndex: ["workType","name"],
+            dataIndex: ["workTypeSys","name"],
             key: "type",
             width: 150
             
         },
         {
             title: "状态",
-            dataIndex: ["workStatus","name"],
+            dataIndex: ["workStatusNode","name"],
             key: "status",
             width: 150
         }

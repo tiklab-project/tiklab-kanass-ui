@@ -124,7 +124,7 @@ export class SprintStore {
         const param = new FormData()
         param.append("id", values)
 
-        const data = await Service("/sprint/deleteSprint", values)
+        const data = await Service("/sprint/deleteSprint", param)
         if (data.code === 0) {
             return data;
         }

@@ -23,6 +23,7 @@ const Survey = (props) => {
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage } = projectSurveyStore;
     
     const masterId = getUser().userId;
+    const masterName = getUser().name;
     const projectId = props.match.params.id;
     const [workStatusList, setWorkStatusList] = useState();
     const [sprintList, setSprintList] = useState();
@@ -223,7 +224,7 @@ const Survey = (props) => {
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
-                                    <UserIcon userInfo={project?.master} className="item-icon" />
+                                    <UserIcon userInfo={project?.master} className="item-icon" name = {masterName}/>
                                     <div className="item-content">
                                         <div className="item-top">{project?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>

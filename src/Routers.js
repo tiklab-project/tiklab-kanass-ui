@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
+const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
 const ProjectProjectDirectoryView = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListView'))
@@ -122,6 +123,7 @@ const SearchResult = AsyncComponent(() => import('./home/search/components/Searc
 // 项目集
 const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
 const ProjectSetList = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSetTable'))
+const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
 const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
 const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
 const ProjectSetSurvey = AsyncComponent(() => import('./projectSet/overview/components/ProjectSetSurvey'))
@@ -224,6 +226,12 @@ const Routers = [
 
             },
             {
+                path:"/index/404",
+                exact: true,
+                component: ProjectNotFound,
+                key: 'NotFound'
+            },
+            {
                 path: "/index/projectAdd",
                 exact: true,
                 component: ProjectAdd,
@@ -251,34 +259,7 @@ const Routers = [
                 exact: true,
                 component: ViewInsight,
             },
-           
-            // 临时，搜索
-            // {
-            //     path: "/index/log",
-            //     exact: false,
-            //     component: Log,
-            //     key: "log",
-            //     routes: [
-            //         {
-            //             path: "/index/log/projectLogStatistics",
-            //             exact: false,
-            //             component: ProjectLogStatistics,
-            //             key: "ProjectSet"
-            //         },
-            //         {
-            //             path: "/index/log/userStatistics",
-            //             exact: false,
-            //             component: UserStatistics,
-            //             key: "ProjectSet"
-            //         },
-            //         {
-            //             path: "/index/log/list",
-            //             exact: false,
-            //             component: LogContent,
-            //             key: "ProjectSet"
-            //         }
-            //     ]
-            // },
+        
             {
                 path: "/index/dynamic",
                 exact: false,
@@ -286,18 +267,25 @@ const Routers = [
                 key: "dynamic"
             },
             {
-                path: "/index/projectSet",
+                path: "/index/projectSetList",
                 exact: false,
                 component: ProjectSet,
                 key: "ProjectSet",
-                routes: [
-                    {
-                        path: "/index/projectSet/projectSetList",
-                        exact: false,
-                        component: ProjectSetList,
-                        key: "ProjectSet"
-                    }
-                ]
+                // routes: [
+                //     {
+                //         path: "/index/projectSet/projectSetList",
+                //         exact: false,
+                //         component: ProjectSetList,
+                //         key: "ProjectSet"
+                //     },
+                    
+                // ]
+            },
+            {
+                path: "/index/projectSetAdd",
+                exact: false,
+                component: ProjectSetAdd,
+                key: "ProjectSet"
             },
            
             {

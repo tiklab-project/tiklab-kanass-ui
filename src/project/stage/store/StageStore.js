@@ -66,7 +66,7 @@ export class StageStore {
     findStageList = async(value) => {
         const data = await Service("/stage/findStageListTree", value)
         if(data.code === 0){
-            return data
+            return data;
         }
     }
 

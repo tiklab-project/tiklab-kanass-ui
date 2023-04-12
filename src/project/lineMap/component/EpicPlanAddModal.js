@@ -7,8 +7,8 @@ import { useState } from "react";
 const { Search } = Input;
 
 const EpicPlanAddmodal = (props) => {
-    const {workStore,epicId, epicStore, setselectWorkItemList, epicWorkIds, setEpicChild } = props;
-    const { findWorkItemPageTreeByQuery, createEpicWorkItem, findWorkItemListByEpic } = epicStore;
+    const {workStore,epicId, epicStore, setEpicWorkIds, epicWorkIds, setEpicChild } = props;
+    const { findWorkItemPageTreeByQuery, createEpicWorkItem, findEpicChildWorkItemAndEpic } = epicStore;
     const {workTypeList} = workStore;
     const [visible, setVisible] = React.useState(false);
     const [selectedRowKeys,setSelectedRowKeys] = React.useState([]);
@@ -59,15 +59,18 @@ const EpicPlanAddmodal = (props) => {
     }
 
 
-    //提交用户列表
+    /**
+     * 添加计划
+     */
     const submitVersionPlanList = ()=> {
         for(let i=0;i<selectedRowKeys.length;i++) {
             let params = {workItem: {id: selectedRowKeys[i]}, epicId: epicId}
             createEpicWorkItem(params).then(()=>{
+                epicWorkIds.push(selectedRowKeys[i])
                 if(i === selectedRowKeys.length - 1){
-                    findWorkItemListByEpic({ epicId: epicId }).then(res => {
+                    findEpicChildWorkItemAndEpic({ epicId: epicId }).then(res => {
                         if(res.code === 0){
-                            setselectWorkItemList(res.data)
+                            // setselectWorkItemList(res.data)
                             setEpicChild(res.data)
                         }
                     })
@@ -78,6 +81,7 @@ const EpicPlanAddmodal = (props) => {
                 }
             })  
         }
+        setEpicWorkIds(epicWorkIds)
     }
 
 

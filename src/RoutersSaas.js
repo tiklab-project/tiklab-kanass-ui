@@ -2,9 +2,9 @@ import React from "react";
 import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
 
-const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
+const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
 const ProjectProjectDirectoryView = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListView'))
@@ -47,7 +47,6 @@ const ProjectFeature = AsyncComponent(() => import('./setting/privilege/ProjectF
 const ProjectRole = AsyncComponent(() => import('./setting/privilege/ProjectRole'))
 
 //组织用户
-const Oragn = AsyncComponent(() => import('./setting/common/components/Organ'))
 const OrgaContent = AsyncComponent(() => import('./setting/orga/Orga'))
 const OrgaUser = AsyncComponent(() => import('./setting/orga/User'))
 const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirectory"))
@@ -63,6 +62,7 @@ const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicLis
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
+const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
 const ProjectNomalDetail = AsyncComponent(() => import('./project/common/components/ProjectNomalLayout'))
 const ProjectScrumDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
 const ProdeNomalSetAside = AsyncComponent(() => import('./project/setting/common/components/ProjectNomalSet'))
@@ -70,6 +70,7 @@ const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/com
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
+
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
@@ -111,7 +112,8 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-
+const SprintStaticsTotalNewTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalNewTrend"))
+const SprintStaticsTotalEndTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalEndTrend"))
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
 // 搜索页面
@@ -120,6 +122,7 @@ const SearchResult = AsyncComponent(() => import('./home/search/components/Searc
 // 项目集
 const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
 const ProjectSetList = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSetTable'))
+const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
 const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
 const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
 const ProjectSetSurvey = AsyncComponent(() => import('./projectSet/overview/components/ProjectSetSurvey'))
@@ -128,11 +131,6 @@ const ProjectSetUser = AsyncComponent(() => import('./projectSet/user/ProjectSet
 const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/components/ProjectSetSetting"))
 const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/components/ProjectSetBasicInfo"))
 const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/components/ProjectSetStatistics"))
-// 工时
-// const Log = AsyncComponent(() => import('./project/workLog/containers/Log'))
-// const ProjectLogStatistics = AsyncComponent(() => import('./project/workLog/components/ProjectStatistics'))
-// const UserStatistics = AsyncComponent(() => import('./project/workLog/components/UserStatistics'))
-// const LogContent = AsyncComponent(() => import('./project/workLog/components/LogContent.js'))
 
 // 导入外部数据
 const LoadData = AsyncComponent(() => import('./setting/loadData/LoadData'))
@@ -152,7 +150,7 @@ const LogTemplateList = AsyncComponent(() => import('./setting/log/MyLogTemplate
 const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLogTypeList'))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'))
-
+const ProductAuth = AsyncComponent(() => import('./setting/version/Product'))
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
@@ -222,6 +220,19 @@ const Routers = [
 
             },
             {
+                path:"/index/404",
+                exact: true,
+                component: ProjectNotFound,
+                key: 'NotFound'
+            },
+            {
+                path: "/index/projectAdd",
+                exact: true,
+                component: ProjectAdd,
+                key: 'project'
+
+            },
+            {
                 path: "/index/workTodo",
                 exact: true,
                 component: WorkTodo,
@@ -242,34 +253,7 @@ const Routers = [
                 exact: true,
                 component: ViewInsight,
             },
-           
-            // 临时，搜索
-            // {
-            //     path: "/index/log",
-            //     exact: false,
-            //     component: Log,
-            //     key: "log",
-            //     routes: [
-            //         {
-            //             path: "/index/log/projectLogStatistics",
-            //             exact: false,
-            //             component: ProjectLogStatistics,
-            //             key: "ProjectSet"
-            //         },
-            //         {
-            //             path: "/index/log/userStatistics",
-            //             exact: false,
-            //             component: UserStatistics,
-            //             key: "ProjectSet"
-            //         },
-            //         {
-            //             path: "/index/log/list",
-            //             exact: false,
-            //             component: LogContent,
-            //             key: "ProjectSet"
-            //         }
-            //     ]
-            // },
+        
             {
                 path: "/index/dynamic",
                 exact: false,
@@ -277,18 +261,25 @@ const Routers = [
                 key: "dynamic"
             },
             {
-                path: "/index/projectSet",
+                path: "/index/projectSetList",
                 exact: false,
                 component: ProjectSet,
                 key: "ProjectSet",
-                routes: [
-                    {
-                        path: "/index/projectSet/projectSetList",
-                        exact: false,
-                        component: ProjectSetList,
-                        key: "ProjectSet"
-                    }
-                ]
+                // routes: [
+                //     {
+                //         path: "/index/projectSet/projectSetList",
+                //         exact: false,
+                //         component: ProjectSetList,
+                //         key: "ProjectSet"
+                //     },
+                    
+                // ]
+            },
+            {
+                path: "/index/projectSetAdd",
+                exact: false,
+                component: ProjectSetAdd,
+                key: "ProjectSet"
             },
            
             {
@@ -690,6 +681,11 @@ const Routers = [
                     {
                         path: "/index/setting/version",
                         component: LicenceVersion,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/product",
+                        component: ProductAuth,
                         exact: true
                     },
                     {
@@ -1125,12 +1121,12 @@ const Routers = [
                             },
                             {
                                 path: "/index/:id/sprintdetail/:sprint/statistics/workNewTotalTrend",
-                                component: StaticsTotalNewTrend,
+                                component: SprintStaticsTotalNewTrend,
                                 exact: true
                             },
                             {
                                 path: "/index/:id/sprintdetail/:sprint/statistics/workEndTotalTrend",
-                                component: StaticsTotalEndTrend,
+                                component: SprintStaticsTotalEndTrend,
                                 exact: true
                             },
                             {

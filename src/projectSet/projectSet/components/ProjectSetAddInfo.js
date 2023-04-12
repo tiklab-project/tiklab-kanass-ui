@@ -75,7 +75,7 @@ const ProjectSetAddInfo = (props) => {
                 }
                 if (res.code === 0) {
                     message.success('添加成功');
-                    setVisible(false);
+                    props.history.goBack()
                     findAllProjectSet()
                     
                     // props.history.push(`/index/projectSetdetail/${res.data}/survey`)

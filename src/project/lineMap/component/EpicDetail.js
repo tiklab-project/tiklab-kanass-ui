@@ -46,8 +46,9 @@ const EpicDetail = (props) => {
     useEffect(() => {
         if (epicId !== "") {
             findEpic({ id: epicId }).then(data => {
-                setEpicInfo(data.data)
-
+                if(data.code === 0){
+                    setEpicInfo(data.data)
+                }
             })
         }
         findEpicList({ projectId: projectId }).then((res) => {

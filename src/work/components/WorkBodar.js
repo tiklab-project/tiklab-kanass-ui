@@ -17,7 +17,7 @@ const WorkBodar = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isSameFlowBox, setIsSameFlowBox] = useState()
     const modelRef = useRef()
-
+    const [flowId, setFlowId] = useState()
 
     // 拖放效果
     const moveWorkItem = () => {
@@ -44,7 +44,7 @@ const WorkBodar = (props) => {
     }
 
 
-    const moveStart = (workId, statuId, index, workIndex) => {
+    const moveStart = (workId, statuId, index, workIndex, flowId) => {
         // event.preventDefault();
         // const dragEvent = event.target
         // dragEvent.style.background = "#d0e5f2";
@@ -57,6 +57,7 @@ const WorkBodar = (props) => {
         setStartWorkBoxIndex(workIndex)
 
         findStatusList(statuId)
+        setFlowId(flowId)
 
     }
 
@@ -65,16 +66,17 @@ const WorkBodar = (props) => {
         event.preventDefault();
     }
 
-    const changeStatus = (targetStatusId, index) => {
+    const changeStatus = (targetStatusId, index,item) => {
+        console.log(item)
         event.preventDefault();
         const value = {
             workStatus: targetStatusId,
-            id: moveWorkId
+            id: moveWorkId,
+            flowId: flowId
         }
         if (targetStatusId !== moveStatusId) {
             //改变事件状态 
             let boardList = JSON.parse(JSON.stringify(workBoardList));
-            console.log(startBoxIndex, startWorkBoxIndex, index, targetStatusId)
             changeBorderList(startBoxIndex, startWorkBoxIndex, index, targetStatusId)
             changeWorkStatus(value).then((res) => {
                 if (res.code !== 0) {
@@ -111,7 +113,7 @@ const WorkBodar = (props) => {
                 {
                     boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {
                         return <div className={`work-bodar-box`}
-                            onDrop={() => changeStatus(item.state.id, index)}
+                            onDrop={() => changeStatus(item.state.id, index,item)}
                             onDragOver={dragover}
                             id={`targetBox${index}`}
                             key={item.state.id}
@@ -136,7 +138,7 @@ const WorkBodar = (props) => {
                                                     key={workItem.id}
                                                     onDrag={() => moveWorkItem()}
                                                     draggable={"true"}
-                                                    onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex)}
+                                                    onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                 >
                                                     <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
                                                         <div className="work-item-title-left" >
@@ -164,7 +166,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <UserIcon userInfo={workItem.user} />
+                                                        <UserIcon userInfo={workItem.user} name = {workItem.user?.name}/>
                                                     </div>
 
                                                 </div>
@@ -184,7 +186,7 @@ const WorkBodar = (props) => {
                             {
                                 item.workBoardList && item.workBoardList.map(workList => {
                                     return <div className="work-bodar-box"
-                                        onDrop={() => changeStatus(workList.state.id, index)}
+                                        onDrop={() => changeStatus(workList.state.id, index, workList)}
                                         onDragOver={dragover}
                                         id={`targetBox${index}`}
                                         key={workList.state.id}
@@ -200,7 +202,7 @@ const WorkBodar = (props) => {
                                                     key={workItem.id}
                                                     onDrag={() => moveWorkItem()}
                                                     draggable="true"
-                                                    onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex)}
+                                                    onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                 >
                                                     <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
                                                         <div className="work-item-title-left" >
@@ -228,7 +230,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <UserIcon userInfo={workItem.user} />
+                                                        <UserIcon userInfo={workItem.user} name = {workItem.user?.name}/>
                                                     </div>
                                                 </div>
                                             })

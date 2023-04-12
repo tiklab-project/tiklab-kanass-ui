@@ -22,15 +22,15 @@ const WorkSort = (props) => {
             title: "标题"
         },
         {
-            value: "work_type_id",
+            value: "work_type_sys_id",
             title: "类型"
         },
         {
-            value: "assigner",
+            value: "assigner_id",
             title: "经办人"
         },
         {
-            value: "work_status_id",
+            value: "work_status_node_id",
             title: "状态"
         }
     ]

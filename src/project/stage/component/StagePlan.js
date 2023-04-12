@@ -16,12 +16,12 @@ import "./StagePlan.scss"
 
 const StagePlan = (props) => {
     const { versionPlanStore, stageStore, stageId } = props
-    const { getSelectVersionPlanList} = versionPlanStore;
+    const { getSelectVersionPlanList } = versionPlanStore;
     const { findWorkItemListByStage, deleteStageWorkItem } = stageStore;
     // 阶段的子级阶段
     const [stageChild, setStageChild] = useState()
     // 阶段关联的事项ids
-    const [stageWorkIds, setStageWorkIds] = useState()
+    let [stageWorkIds, setStageWorkIds] = useState()
     // 已展开子级的阶段id集合
     const [expandedTree, setExpandedTree] = useState([])
 
@@ -76,7 +76,7 @@ const StagePlan = (props) => {
      */
     useEffect(() => {
         findWorkItemListByStage({ stageId: stageId }).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setStageChild(res.data)
                 let ids = []
                 res.data.workItem.map(item => {
@@ -96,12 +96,12 @@ const StagePlan = (props) => {
     const deleteWorkItem = (id) => {
         const value = {
             stageId: stageId,
-            workItem: {id: id}
+            workItem: { id: id }
         }
         deleteStageWorkItem(value).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 findWorkItemListByStage({ stageId: stageId }).then(res => {
-                    if(res.code === 0){
+                    if (res.code === 0) {
                         setStageChild(res.data)
                         let ids = []
                         res.data.workItem.map(item => {
@@ -119,7 +119,11 @@ const StagePlan = (props) => {
      * @param {标题} value 
      */
     const onSearch = (value) => {
-        getSelectVersionPlanList({ title: value })
+        findWorkItemListByStage({stageId: stageId, workItemName: value }).then(res => {
+            if (res.code === 0) {
+                setStageChild(res.data)
+            }
+        })
     }
 
     /**
@@ -135,25 +139,25 @@ const StagePlan = (props) => {
                 {
                     data && data.map(item => {
                         return <Fragment>
-                            <div className="stage-child-item" key = {item.id}>
+                            <div className="stage-child-item" key={item.id}>
                                 <div className="stage-item stage-item-title">
                                     <div className="stage-item-name" style={{ paddingLeft: level * 18 + 5 }}>
                                         {
                                             ((item.children && item.children.length > 0) || (item.childrenWorkItem && item.childrenWorkItem.length > 0)) ?
-                                            <>
-                                                {
-                                                    isExpandedTree(item.id) ?
-                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-down"></use>
-                                                        </svg>
-                                                        :
-                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-right"></use>
-                                                        </svg>
-                                                }
-                                            </>
-                                            :
-                                            <div style={{width: "18px", height: "18px"}}></div>
+                                                <>
+                                                    {
+                                                        isExpandedTree(item.id) ?
+                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-down"></use>
+                                                            </svg>
+                                                            :
+                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-right"></use>
+                                                            </svg>
+                                                    }
+                                                </>
+                                                :
+                                                <div style={{ width: "18px", height: "18px" }}></div>
                                         }
 
                                         <div className="stageName">{item.stageName}</div>
@@ -192,7 +196,7 @@ const StagePlan = (props) => {
                 {
                     data && data?.map(item => {
                         return <Fragment>
-                            <div className="stage-workitem-item" key = {item.id}>
+                            <div className="stage-workitem-item" key={item.id}>
                                 <div className="workitem-row workitem-row-title">
                                     <div
                                         className="workitem-row-name"
@@ -200,20 +204,34 @@ const StagePlan = (props) => {
                                     >
                                         {
                                             (item.children && item.children.length > 0) ?
-                                            <>
-                                                {
-                                                    isExpandedTree(item.id) ?
-                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-down"></use>
-                                                        </svg>
-                                                        :
-                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-right"></use>
-                                                        </svg>
-                                                }
-                                            </>
-                                            :
-                                            <div style={{width: "18px", height: "18px"}}></div>
+                                                <>
+                                                    {
+                                                        isExpandedTree(item.id) ?
+                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-down"></use>
+                                                            </svg>
+                                                            :
+                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-right"></use>
+                                                            </svg>
+                                                    }
+                                                </>
+                                                :
+                                                <div style={{ width: "18px", height: "18px" }}></div>
+                                        }
+                                        {
+                                            item.workTypeSys?.iconUrl ?
+                                                <img
+                                                    src={('images/' + item.workTypeSys?.iconUrl)}
+                                                    alt=""
+                                                    className="img-icon"
+                                                />
+                                                :
+                                                <img
+                                                    src={('images/workType1.png')}
+                                                    alt=""
+                                                    className="img-icon"
+                                                />
                                         }
                                         <div className="workitemName">{item.title}</div>
                                     </div>
@@ -237,7 +255,7 @@ const StagePlan = (props) => {
         )
     }
 
-    
+
     return (
         <div className="stage-workitem">
             <div className="stage-workitem-title">
@@ -246,8 +264,9 @@ const StagePlan = (props) => {
                     name="添加需求"
                     type="add"
                     stageId={stageId}
-                    stageWorkIds = {stageWorkIds}
-                    setStageChild = {setStageChild}
+                    stageWorkIds={stageWorkIds}
+                    setStageWorkIds = {setStageWorkIds}
+                    setStageChild={setStageChild}
                     {...props}
                 />
             </div>

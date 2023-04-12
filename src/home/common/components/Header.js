@@ -85,7 +85,7 @@ const Header = props => {
                 个人资料
             </div>
             <div className='user-info'>
-                <UserIcon />
+                <UserIcon name = {user.name}/>
                 <div className='user-info-text'>
                     <div className='user-info-name'>{user.name}</div>
                     <div className='user-info-email'>{user.phone || "暂无"}</div>
@@ -138,7 +138,7 @@ const Header = props => {
      * 跳转到系统设置
      */
     const goSet = () => {
-        props.history.push("/index/setting/projectType")
+        props.history.push("/index/setting/organ")
         sessionStorage.setItem("menuKey", "set")
     };
 
@@ -242,7 +242,7 @@ const Header = props => {
                             <div className="frame-header-name" data-title="个人资料与设置">
                                 <Dropdown overlay={useMenu} trigger={"click"}>
                                     <Space>
-                                        <UserIcon />
+                                        <UserIcon  size = "big" name = {user.name}/>
                                     </Space>
                                 </Dropdown>
                             </div>

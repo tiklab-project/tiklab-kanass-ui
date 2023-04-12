@@ -59,7 +59,7 @@ const ModuleList = (props) => {
             render: (text, record) => (
                 <Space size="middle">
                     <ModuleAddmodal
-                        name="编辑模块"
+                        name="编辑"
                         type="edit"
                         id={record.id}
                         projectId={projectId}
@@ -102,7 +102,8 @@ const ModuleList = (props) => {
      * @param {*} values 
      */
     const onSearch = (values) => {
-        setModuleName(values)
+        console.log(values)
+        setModuleName(values.target.value)
         // 重置分页参数，从第一页开始搜索
         setPageParam({ current: 1, pageSize: 10 })
     };

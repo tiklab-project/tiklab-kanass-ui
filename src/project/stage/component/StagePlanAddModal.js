@@ -14,7 +14,7 @@ import Button from "../../../common/button/Button";
 const { Search } = Input;
 
 const StagePlanAddModal = (props) => {
-    const {workStore,stageId, stageStore, stageWorkIds, setStageChild } = props;
+    const {workStore,stageId, stageStore, stageWorkIds, setStageWorkIds, setStageChild } = props;
     const { findWorkItemPageTreeByQuery, createStageWorkItem, findWorkItemListByStage } = stageStore;
     // 事项类型列表
     const {workTypeList} = workStore;
@@ -89,6 +89,7 @@ const StagePlanAddModal = (props) => {
         for(let i=0;i<selectedRowKeys.length;i++) {
             let params = {workItem: {id: selectedRowKeys[i]}, stageId: stageId}
             createStageWorkItem(params).then(()=>{
+                stageWorkIds.push(selectedRowKeys[i])
                 if(i === selectedRowKeys.length - 1){
                     findWorkItemListByStage({ stageId: stageId }).then(res => {
                         if(res.code === 0){
@@ -102,6 +103,7 @@ const StagePlanAddModal = (props) => {
                 }
             })  
         }
+        setSelectedRowKeys(stageWorkIds)
     }
 
 

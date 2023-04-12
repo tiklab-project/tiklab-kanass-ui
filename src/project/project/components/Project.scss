@@ -114,7 +114,7 @@
     
     
     .project-content {
-        
+        height: 100%;
         background-color: #fff;
         .ant-layout-sider {
             background-color: #fff;
@@ -167,18 +167,13 @@
                 }
             }
         }
-        .project-table {
-            background: #fff;
-            padding: 10px;
-            .ant-row {
+        .ant-row {
+            height: 100%;
+            .ant-col {
                 height: 100%;
-                .ant-col {
-                    height: 100%;
-                    background-color: #fff;
-                    padding: 20px 20px;
-                }
+                background-color: #fff;
+                padding: 20px 20px;
             }
-            
         }
         .table-box {
             .project-name {
@@ -225,6 +220,10 @@
                 font-weight: var(--tiklab-font-weight-bold);
             }
             padding: 20px;
+        }
+        .project-gide-botton {
+            color: var(--tiklab-blue);
+            cursor: pointer;
         }
     }
     

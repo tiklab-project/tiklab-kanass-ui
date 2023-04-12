@@ -107,7 +107,7 @@ const ProjectSetBasicInfo = props => {
     const handleOk = () => {
         deleProjectSet(projectSetId).then(response => {
             if (response.code === 0) {
-                props.history.push("/index/projectSet/projectSetList")
+                props.history.push("/index/projectSetList")
             }
         })
         setIsModalVisible(false);

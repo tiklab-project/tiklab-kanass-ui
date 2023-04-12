@@ -9,17 +9,17 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Table, Space, Row, Col } from 'antd';
 import "./ProjectSet.scss";
-import ProjectSetAdd from "./ProjectSetAdd";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from 'tiklab-core-ui';
+import Button from "../../../common/button/Button";
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
-    const { getProjectSetlist, projectSetList, getUseList, findProjectSetFocusList, 
-        deleteProjectSetFocusByQuery, createProjectSetFocus, findRecentProjectSetList, 
+    const { getProjectSetlist, projectSetList, getUseList, findProjectSetFocusList,
+        deleteProjectSetFocusByQuery, createProjectSetFocus, findRecentProjectSetList,
         findFocusProjectSetList, findAllProjectSet, createRecent } = projectSetStore;
 
     const [name, setName] = useState("添加项目集")
@@ -211,10 +211,10 @@ const ProjectSetTable = (props) => {
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcumb firstText="项目集">
-                    <ProjectSetAdd
-                        name={name}
-                        projectSetId={projectSetId}
-                    />
+                    <Button
+                        style={{ width: "fit-content" }}
+                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
+                    </Button>
                 </Breadcumb>
 
                 <div className="projectSet-search-tab">

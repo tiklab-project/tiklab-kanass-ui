@@ -40,12 +40,16 @@ const ModuleAddModal = (props) => {
     const showModal = () => {
         setVisible(true);
         if(props.type === "edit"){
+            debugger
             searchModuleById(props.id).then((res)=> {
-                form.setFieldsValue({
-                    moduleName: res.moduleName,
-                    id: res.id,
-                    desc: res.desc
-                })
+                if(res.code === 0){
+                    form.setFieldsValue({
+                        moduleName: res.data.moduleName,
+                        id: res.data.id,
+                        desc: res.data.desc
+                    })
+                }
+                
             })
         }
     };

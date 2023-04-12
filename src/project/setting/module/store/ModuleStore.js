@@ -91,7 +91,7 @@ export class ModuleStore {
      */
     @action
 	editModuleById = async(values) => {
-        const data = await Service("/module/updateModule", param)
+        const data = await Service("/module/updateModule", values)
         if(data.code===0){
             this.findModulePage(values.project.id,this.searchModuleName)
         }

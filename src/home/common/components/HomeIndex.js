@@ -34,7 +34,7 @@ const Layout = (props) => {
             key: 'project'
         },
         {
-            to: '/index/projectSet/projectSetList',
+            to: '/index/projectSetList',
             title: '项目集',
             key: 'projectSet'
         },

@@ -11,38 +11,38 @@ const setDevEamRouter= [
     {
         title: "用户与部门",
         icon: 'orgamanage',
-        key: '/index/setting/organ',
-        encoded: "SysOrga",
+        id: '/index/setting/organ',
+        purviewCode: "orga",
         code: 1,
         children: [
             {
                 title: "部门",
                 icon: 'orgamanage',
-                key: '/index/setting/organ',
-                encoded: "SysOrga",
+                id: '/index/setting/organ',
+                purviewCode: "orga",
                 code: 1-1,
                 
             },
             {
                 title: '用户',
                 icon: 'usermanage',
-                key: '/index/setting/user',
-                encoded: "SysUser",
+                id: '/index/setting/user',
+                purviewCode: "user",
                 code: 1-2,
             },
             {
                 title: '用户组',
                 icon: 'usermanage',
-                key: '/index/setting/usergroup',
-                encoded: "SysUser",
+                id: '/index/setting/usergroup',
+                purviewCode: "user_group",
                 code: 1-3,
             },
             {
         
                 title: "用户目录",
                 icon: 'category',
-                key: '/index/setting/directory',
-                encoded: "SysMessage",
+                id: '/index/setting/directory',
+                purviewCode: "user_dir",
                 code: 1-4,
             },
         ]
@@ -50,29 +50,29 @@ const setDevEamRouter= [
     {
         title: '权限',
         icon: 'systemcenter',
-        key: "/index/setting/systemRole",
-        encoded: "SysRoleSystem",
+        id: "/index/setting/systemRole",
+        purviewCode: "SysPermission",
         code: 2
     },
     {
         title: '事项管理',
         icon: 'workitemtype',
-        key: "/index/setting/workstatus",
-        encoded: "SysWork",
+        id: "/index/setting/workstatus",
+        purviewCode: "SysWork",
         code: 3,
         children: [
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktype',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktype',
+                purviewCode: "SysWorkType",
                 code: 3-1,
             },
             {
                 title: '事项优先级',
                 icon: 'workitemtype',
-                key: '/index/setting/workpriority',
-                encoded: "SysWorkPriority",
+                id: '/index/setting/workpriority',
+                purviewCode: "SysWorkPriority",
                 code: 3-2,
             },
         ]
@@ -80,22 +80,22 @@ const setDevEamRouter= [
     {
         title: "消息",
         icon: 'messagecenter',
-        key: '/index/setting/messageNotice',
-        encoded: "SysMessage",
+        id: '/index/setting/messageNotice',
+        purviewCode: "SysMessage",
         code: 4,
         children: [
             {
                 title: "消息通知方案",
                 icon: 'messagecenter',
-                key: '/index/setting/messageNotice',
-                encoded: "SysMessage",
+                id: '/index/setting/messageNotice',
+                purviewCode: "SysMessageNotice",
                 code: 4-1
             },
             {
                 title: '消息发送方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageSendType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageSendType',
+                purviewCode: "SysMessageSendType",
                 code: 4-2,
             }
         ]
@@ -103,30 +103,30 @@ const setDevEamRouter= [
     {
         title: '表单',
         icon: 'formcenter',
-        key: "/index/setting/preliminary",
-        encoded: "SysForm",
+        id: "/index/setting/preliminary",
+        purviewCode: "SysForm",
         code: 6,
         children: [
             
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryTypeView',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminaryTypeView',
+                purviewCode: "SysFieldType",
                 code: 6-1,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminary',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminary',
+                purviewCode: "SysFieldType",
                 code: 6-2,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/form',
-                encoded: "SysFormSet",
+                id: '/index/setting/form',
+                purviewCode: "SysFormList",
                 code: 6-3,
             }
         ]
@@ -134,22 +134,22 @@ const setDevEamRouter= [
     {
         title: "流程",
         icon: 'flowcenter',
-        key: '/index/setting/systemFlow',
-        encoded: "SysFlow",
+        id: '/index/setting/systemFlow',
+        purviewCode: "SysFlow",
         code: 7,
         children: [
             {
                 title: "流程",
                 icon: 'flowcenter',
-                key: '/index/setting/systemFlow',
-                encoded: "SysFlow",
+                id: '/index/setting/systemFlow',
+                purviewCode: "SysFlowList",
                 code: 7-1,
             },
             {
                 title: "状态",
                 icon: 'flowcenter',
-                key: '/index/setting/nodestatus',
-                encoded: "SysFlow",
+                id: '/index/setting/nodestatus',
+                purviewCode: "SysFlowNode",
                 code: 7-2
             }
         ]
@@ -157,22 +157,20 @@ const setDevEamRouter= [
     {
         title: "插件",
         icon: 'plugin',
-        key: '/index/setting/plugin',
-        encoded: "SysPlugin",
+        id: '/index/setting/plugin',
+        purviewCode: "SysPlugin",
         code: 8,
     },
     {
         title: "系统集成",
         icon: 'systemcenter',
-        key: '/index/setting/loadData',
-        encoded: "SysMessage",
+        id: '/index/setting/loadData',
         code: 9,
         children: [
             {
                 title: 'JIRA',
                 icon: 'systemcenter',
-                key: '/index/setting/loadData',
-                encoded: "SysMessageManagement",
+                id: '/index/setting/loadData',
                 code: 9-1,
             },
         ]
@@ -180,15 +178,15 @@ const setDevEamRouter= [
     {
         title: "安全",
         icon: 'systemcenter',
-        key: '/index/setting/log',
-        encoded: "SysMessage",
+        id: '/index/setting/log',
+        purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 icon: 'systemcenter',
-                key: '/index/setting/logList',
-                encoded: "logList",
+                id: '/index/setting/logList',
+                purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -196,142 +194,141 @@ const setDevEamRouter= [
     {
         title: "版本与许可证",
         icon: 'plugin',
-        key: '/index/setting/version',
-        encoded: "SysPlugin",
+        id: '/index/setting/version',
+        purviewCode: "SysVersion",
         code: 11,
     },
     {
         title: "产品授权",
         icon: 'plugin',
-        key: '/index/setting/product',
-        encoded: "SysPlugin",
+        id: '/index/setting/product',
+        purviewCode: "SysProductAuth",
         code: 13,
     },
     {
         title: "基础数据",
         icon: 'systemcenter',
-        key: '/index/setting/systemFeature',
-        encoded: "basicData",
+        id: '/index/setting/systemFeature',
         code: 12,
         children: [
             {
                 title: '用户组',
                 icon: 'projecttype',
-                key: '/index/setting/usersystemgroup',
-                encoded: "usersystemgroup",
+                id: '/index/setting/usersystemgroup',
+                purviewCode: "user_group",
                 code: 12-18,
             },
             {
                 title: '项目类型',
                 icon: 'projecttype',
-                key: '/index/setting/projectType',
-                encoded: "ProjectType",
+                id: '/index/setting/projectType',
+                purviewCode: "SysProjectType",
                 code: 12-1,
             },
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktypeSystem',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktypeSystem',
+                purviewCode: "SysWorkType",
                 code: 12-2,
             },
             {
                 title: '系统功能',
                 icon: 'systemcenter',
-                key: '/index/setting/systemFeature',
-                encoded: "SysFeatruestem",
+                id: '/index/setting/systemFeature',
+                purviewCode: "SysFeatrueSys",
                 code: 12-3,
             },
             {
                 title: '系统角色',
                 icon: 'systemcenter',
-                key: '/index/setting/systemRoleBuilt',
-                encoded: "SystemRoleBuilt",
+                id: '/index/setting/systemRoleBuilt',
+                purviewCode: "SysRoleSys",
                 code: 12-4,
             },
             {
                 title: '项目功能',
                 icon: 'projectpriviliage',
-                key: '/index/setting/projectFeature',
-                encoded: "SysFeatrueProject",
+                id: '/index/setting/projectFeature',
+                purviewCode: "SysFeatrueProject",
                 code: 12-5,
             },
             {
                 title: '项目角色',
                 icon: 'projectpriviliage',
-                key: '/index/setting/projectRole',
-                encoded: "SysRoleProject",
+                id: '/index/setting/projectRole',
+                purviewCode: "SysRoleProject",
                 code: 12-6
             },
             {
                 title: '消息通知方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageNoticeSystem',
-                encoded: "SysMessageTemplate",
+                id: '/index/setting/messageNoticeSystem',
+                purviewCode: "SysMessageNotice",
                 code: 12-7,
             },
             {
                 title: '消息类型',
                 icon: 'messagecenter',
-                key: '/index/setting/messageType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageType',
+                purviewCode: "SysMessageType",
                 code: 12-8,
             },
            
             {
                 title: '日志模板',
                 icon: 'systemcenter',
-                key: '/index/setting/myLogTemplateList',
-                encoded: "myLogTemplateList",
+                id: '/index/setting/myLogTemplateList',
+                purviewCode: "SysLogTemplate",
                 code: 12-10,
             },
             {
                 title: '日志类型',
                 icon: 'systemcenter',
-                key: '/index/setting/projectLogTypeList',
-                encoded: "projectLogTypeList",
+                id: '/index/setting/projectLogTypeList',
+                purviewCode: "SysLogType",
                 code: 12-11,
             },
             {
                 title: '待办模板',
                 icon: 'systemcenter',
-                key: '/index/setting/todoTempList',
-                encoded: "todoTempList",
+                id: '/index/setting/todoTempList',
+                purviewCode: "SysSetting",
                 code: 12-12,
             },
             {
                 title: '待办类型',
                 icon: 'systemcenter',
-                key: '/index/setting/todoTypeTask',
-                encoded: "todoTempList",
+                id: '/index/setting/todoTypeTask',
+                purviewCode: "SysSetting",
                 code: 12-13,
             },
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryType',
-                encoded: "SysField",
+                id: '/index/setting/preliminaryType',
+                purviewCode: "SysFieldType",
                 code: 12-14,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminarySystem',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminarySystem',
+                purviewCode: "SysField",
                 code: 12-15,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/formsystem',
-                encoded: "SysFormSet",
+                id: '/index/setting/formsystem',
+                purviewCode: "SysFormList",
                 code: 12-16,
             },
             {
                 title: "流程",
                 icon: 'flowcenter',
-                key: '/index/setting/systemFlowsystem',
-                encoded: "SysFlow",
+                id: '/index/setting/systemFlowsystem',
+                purviewCode: "SysFlow",
                 code: 12-17,
             }
         ]
@@ -342,38 +339,38 @@ const setPrdEamRouter= [
     {
         title: "用户与部门",
         icon: 'orgamanage',
-        key: '/index/setting/organ',
-        encoded: "SysOrga",
+        id: '/index/setting/organ',
+        purviewCode: "orga",
         code: 1,
         children: [
             {
                 title: "部门",
                 icon: 'orgamanage',
-                key: '/index/setting/organ',
-                encoded: "SysOrga",
+                id: '/index/setting/organ',
+                purviewCode: "orga",
                 code: 1-1,
                 
             },
             {
                 title: '用户',
                 icon: 'usermanage',
-                key: '/index/setting/user',
-                encoded: "SysUser",
+                id: '/index/setting/user',
+                purviewCode: "user",
                 code: 1-2,
             },
             {
                 title: '用户组',
                 icon: 'usermanage',
-                key: '/index/setting/usergroup',
-                encoded: "SysUser",
+                id: '/index/setting/usergroup',
+                purviewCode: "user_group",
                 code: 1-3,
             },
             {
         
                 title: "用户目录",
                 icon: 'category',
-                key: '/index/setting/directory',
-                encoded: "SysMessage",
+                id: '/index/setting/directory',
+                purviewCode: "user_dir",
                 code: 1-4,
             },
         ]
@@ -381,29 +378,29 @@ const setPrdEamRouter= [
     {
         title: '权限',
         icon: 'systemcenter',
-        key: "/index/setting/systemRole",
-        encoded: "SysRoleSystem",
+        id: "/index/setting/systemRole",
+        purviewCode: "SysPermission",
         code: 2
     },
     {
         title: '事项管理',
         icon: 'workitemtype',
-        key: "/index/setting/workstatus",
-        encoded: "SysWork",
+        id: "/index/setting/workstatus",
+        purviewCode: "SysWork",
         code: 3,
         children: [
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktype',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktype',
+                purviewCode: "SysWorkType",
                 code: 3-1,
             },
             {
                 title: '事项优先级',
                 icon: 'workitemtype',
-                key: '/index/setting/workpriority',
-                encoded: "SysWorkPriority",
+                id: '/index/setting/workpriority',
+                purviewCode: "SysWorkPriority",
                 code: 3-2,
             },
         ]
@@ -411,22 +408,22 @@ const setPrdEamRouter= [
     {
         title: "消息",
         icon: 'messagecenter',
-        key: '/index/setting/messageNotice',
-        encoded: "SysMessage",
+        id: '/index/setting/messageNotice',
+        purviewCode: "SysMessage",
         code: 4,
         children: [
             {
                 title: "消息通知方案",
                 icon: 'messagecenter',
-                key: '/index/setting/messageNotice',
-                encoded: "SysMessage",
+                id: '/index/setting/messageNotice',
+                purviewCode: "SysMessageNotice",
                 code: 4-1
             },
             {
                 title: '消息发送方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageSendType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageSendType',
+                purviewCode: "SysMessageSendType",
                 code: 4-2,
             }
         ]
@@ -434,30 +431,30 @@ const setPrdEamRouter= [
     {
         title: '表单',
         icon: 'formcenter',
-        key: "/index/setting/preliminary",
-        encoded: "SysForm",
+        id: "/index/setting/preliminary",
+        purviewCode: "SysForm",
         code: 6,
         children: [
             
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryTypeView',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminaryTypeView',
+                purviewCode: "SysFieldType",
                 code: 6-1,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminary',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminary',
+                purviewCode: "SysFieldType",
                 code: 6-2,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/form',
-                encoded: "SysFormSet",
+                id: '/index/setting/form',
+                purviewCode: "SysFormList",
                 code: 6-3,
             }
         ]
@@ -465,22 +462,22 @@ const setPrdEamRouter= [
     {
         title: "流程",
         icon: 'flowcenter',
-        key: '/index/setting/systemFlow',
-        encoded: "SysFlow",
+        id: '/index/setting/systemFlow',
+        purviewCode: "SysFlow",
         code: 7,
         children: [
             {
                 title: "流程",
                 icon: 'flowcenter',
-                key: '/index/setting/systemFlow',
-                encoded: "SysFlow",
+                id: '/index/setting/systemFlow',
+                purviewCode: "SysFlowList",
                 code: 7-1,
             },
             {
                 title: "状态",
                 icon: 'flowcenter',
-                key: '/index/setting/nodestatus',
-                encoded: "SysFlow",
+                id: '/index/setting/nodestatus',
+                purviewCode: "SysFlowNode",
                 code: 7-2
             }
         ]
@@ -488,22 +485,20 @@ const setPrdEamRouter= [
     {
         title: "插件",
         icon: 'plugin',
-        key: '/index/setting/plugin',
-        encoded: "SysPlugin",
+        id: '/index/setting/plugin',
+        purviewCode: "SysPlugin",
         code: 8,
     },
     {
         title: "系统集成",
         icon: 'systemcenter',
-        key: '/index/setting/loadData',
-        encoded: "SysMessage",
+        id: '/index/setting/loadData',
         code: 9,
         children: [
             {
                 title: 'JIRA',
                 icon: 'systemcenter',
-                key: '/index/setting/loadData',
-                encoded: "SysMessageManagement",
+                id: '/index/setting/loadData',
                 code: 9-1,
             },
         ]
@@ -511,15 +506,15 @@ const setPrdEamRouter= [
     {
         title: "安全",
         icon: 'systemcenter',
-        key: '/index/setting/log',
-        encoded: "SysMessage",
+        id: '/index/setting/log',
+        purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 icon: 'systemcenter',
-                key: '/index/setting/logList',
-                encoded: "logList",
+                id: '/index/setting/logList',
+                purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -527,15 +522,15 @@ const setPrdEamRouter= [
     {
         title: "版本与许可证",
         icon: 'plugin',
-        key: '/index/setting/version',
-        encoded: "SysPlugin",
+        id: '/index/setting/version',
+        purviewCode: "SysVersion",
         code: 11,
     },
     {
         title: "产品授权",
         icon: 'plugin',
-        key: '/index/setting/product',
-        encoded: "SysPlugin",
+        id: '/index/setting/product',
+        purviewCode: "SysProductAuth",
         code: 13,
     }
 ];
@@ -544,61 +539,68 @@ const setDevRouter= [
     {
         title: "用户与部门",
         icon: 'orgamanage',
-        key: '/index/setting/organ',
-        encoded: "SysOrga",
+        id: '/index/setting/organ',
+        purviewCode: "orga",
         code: 1,
         children: [
             {
                 title: "部门",
                 icon: 'orgamanage',
-                key: '/index/setting/organ',
-                encoded: "SysOrga",
+                id: '/index/setting/organ',
+                purviewCode: "orga",
                 code: 1-1,
                 
             },
             {
                 title: '用户',
                 icon: 'usermanage',
-                key: '/index/setting/user',
-                encoded: "SysUser",
+                id: '/index/setting/user',
+                purviewCode: "user",
                 code: 1-2,
+            },
+            {
+                title: '用户组',
+                icon: 'usermanage',
+                id: '/index/setting/usergroup',
+                purviewCode: "user_group",
+                code: 1-3,
             },
             {
         
                 title: "用户目录",
                 icon: 'category',
-                key: '/index/setting/directory',
-                encoded: "SysMessage",
-                code: 1-3,
+                id: '/index/setting/directory',
+                purviewCode: "user_dir",
+                code: 1-4,
             },
         ]
     },
     {
         title: '权限',
         icon: 'systemcenter',
-        key: "/index/setting/systemRole",
-        encoded: "SysRoleSystem",
+        id: "/index/setting/systemRole",
+        purviewCode: "SysPermission",
         code: 2
     },
     {
         title: '事项管理',
         icon: 'workitemtype',
-        key: "/index/setting/workstatus",
-        encoded: "SysWork",
+        id: "/index/setting/workstatus",
+        purviewCode: "SysWork",
         code: 3,
         children: [
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktype',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktype',
+                purviewCode: "SysWorkType",
                 code: 3-1,
             },
             {
                 title: '事项优先级',
                 icon: 'workitemtype',
-                key: '/index/setting/workpriority',
-                encoded: "SysWorkPriority",
+                id: '/index/setting/workpriority',
+                purviewCode: "SysWorkPriority",
                 code: 3-2,
             },
         ]
@@ -606,22 +608,22 @@ const setDevRouter= [
     {
         title: "消息",
         icon: 'messagecenter',
-        key: '/index/setting/messageNotice',
-        encoded: "SysMessage",
+        id: '/index/setting/messageNotice',
+        purviewCode: "SysMessage",
         code: 4,
         children: [
             {
                 title: "消息通知方案",
                 icon: 'messagecenter',
-                key: '/index/setting/messageNotice',
-                encoded: "SysMessage",
+                id: '/index/setting/messageNotice',
+                purviewCode: "SysMessageNotice",
                 code: 4-1
             },
             {
                 title: '消息发送方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageSendType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageSendType',
+                purviewCode: "SysMessageSendType",
                 code: 4-2,
             }
         ]
@@ -629,30 +631,30 @@ const setDevRouter= [
     {
         title: '表单',
         icon: 'formcenter',
-        key: "/index/setting/preliminary",
-        encoded: "SysForm",
+        id: "/index/setting/preliminary",
+        purviewCode: "SysForm",
         code: 6,
         children: [
             
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryTypeView',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminaryTypeView',
+                purviewCode: "SysFieldType",
                 code: 6-1,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminary',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminary',
+                purviewCode: "SysFieldType",
                 code: 6-2,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/form',
-                encoded: "SysFormSet",
+                id: '/index/setting/form',
+                purviewCode: "SysFormList",
                 code: 6-3,
             }
         ]
@@ -660,46 +662,59 @@ const setDevRouter= [
     {
         title: "流程",
         icon: 'flowcenter',
-        key: '/index/setting/systemFlow',
-        encoded: "SysFlow",
+        id: '/index/setting/systemFlow',
+        purviewCode: "SysFlow",
         code: 7,
+        children: [
+            {
+                title: "流程",
+                icon: 'flowcenter',
+                id: '/index/setting/systemFlow',
+                purviewCode: "SysFlowList",
+                code: 7-1,
+            },
+            {
+                title: "状态",
+                icon: 'flowcenter',
+                id: '/index/setting/nodestatus',
+                purviewCode: "SysFlowNode",
+                code: 7-2
+            }
+        ]
     },
     {
         title: "插件",
         icon: 'plugin',
-        key: '/index/setting/plugin',
-        encoded: "SysPlugin",
+        id: '/index/setting/plugin',
+        purviewCode: "SysPlugin",
         code: 8,
     },
     {
         title: "系统集成",
         icon: 'systemcenter',
-        key: '/index/setting/loadData',
-        encoded: "SysMessage",
+        id: '/index/setting/loadData',
         code: 9,
         children: [
             {
                 title: 'JIRA',
                 icon: 'systemcenter',
-                key: '/index/setting/loadData',
-                encoded: "SysMessageManagement",
+                id: '/index/setting/loadData',
                 code: 9-1,
             },
         ]
     },
-    
     {
         title: "安全",
         icon: 'systemcenter',
-        key: '/index/setting/log',
-        encoded: "SysMessage",
+        id: '/index/setting/log',
+        purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 icon: 'systemcenter',
-                key: '/index/setting/logList',
-                encoded: "logList",
+                id: '/index/setting/logList',
+                purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -707,145 +722,145 @@ const setDevRouter= [
     {
         title: "版本与许可证",
         icon: 'plugin',
-        key: '/index/setting/version',
-        encoded: "SysPlugin",
+        id: '/index/setting/version',
+        purviewCode: "SysVersion",
         code: 11,
     },
     {
         title: "产品授权",
         icon: 'plugin',
-        key: '/index/setting/product',
-        encoded: "SysPlugin",
+        id: '/index/setting/product',
+        purviewCode: "SysProductAuth",
         code: 13,
     },
     {
         title: "基础数据",
         icon: 'systemcenter',
-        key: '/index/setting/systemFeature',
-        encoded: "basicData",
+        id: '/index/setting/systemFeature',
         code: 12,
         children: [
             {
+                title: '用户组',
+                icon: 'projecttype',
+                id: '/index/setting/usersystemgroup',
+                purviewCode: "user_group",
+                code: 12-18,
+            },
+            {
                 title: '项目类型',
                 icon: 'projecttype',
-                key: '/index/setting/projectType',
-                encoded: "ProjectType",
+                id: '/index/setting/projectType',
+                purviewCode: "SysProjectType",
                 code: 12-1,
             },
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktypeSystem',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktypeSystem',
+                purviewCode: "SysWorkType",
                 code: 12-2,
             },
             {
                 title: '系统功能',
                 icon: 'systemcenter',
-                key: '/index/setting/systemFeature',
-                encoded: "SysFeatruestem",
+                id: '/index/setting/systemFeature',
+                purviewCode: "SysFeatrueSys",
                 code: 12-3,
             },
             {
                 title: '系统角色',
                 icon: 'systemcenter',
-                key: '/index/setting/systemRoleBuilt',
-                encoded: "SystemRoleBuilt",
+                id: '/index/setting/systemRoleBuilt',
+                purviewCode: "SysRoleSys",
                 code: 12-4,
             },
             {
                 title: '项目功能',
                 icon: 'projectpriviliage',
-                key: '/index/setting/projectFeature',
-                encoded: "SysFeatrueProject",
+                id: '/index/setting/projectFeature',
+                purviewCode: "SysFeatrueProject",
                 code: 12-5,
             },
             {
                 title: '项目角色',
                 icon: 'projectpriviliage',
-                key: '/index/setting/projectRole',
-                encoded: "SysRoleProject",
+                id: '/index/setting/projectRole',
+                purviewCode: "SysRoleProject",
                 code: 12-6
             },
             {
-                title: '消息模板',
+                title: '消息通知方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageTemplate',
-                encoded: "SysMessageTemplate",
+                id: '/index/setting/messageNoticeSystem',
+                purviewCode: "SysMessageNotice",
                 code: 12-7,
             },
             {
                 title: '消息类型',
                 icon: 'messagecenter',
-                key: '/index/setting/messageType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageType',
+                purviewCode: "SysMessageType",
                 code: 12-8,
             },
-            {
-                title: '消息发送方式',
-                icon: 'messagecenter',
-                key: '/index/setting/messageSendType',
-                encoded: "SysMessageType",
-                code: 12-9,
-            },
+           
             {
                 title: '日志模板',
                 icon: 'systemcenter',
-                key: '/index/setting/myLogTemplateList',
-                encoded: "myLogTemplateList",
+                id: '/index/setting/myLogTemplateList',
+                purviewCode: "SysLogTemplate",
                 code: 12-10,
             },
             {
                 title: '日志类型',
                 icon: 'systemcenter',
-                key: '/index/setting/projectLogTypeList',
-                encoded: "projectLogTypeList",
+                id: '/index/setting/projectLogTypeList',
+                purviewCode: "SysLogType",
                 code: 12-11,
             },
             {
                 title: '待办模板',
                 icon: 'systemcenter',
-                key: '/index/setting/todoTempList',
-                encoded: "todoTempList",
+                id: '/index/setting/todoTempList',
+                purviewCode: "SysSetting",
                 code: 12-12,
             },
             {
                 title: '待办类型',
                 icon: 'systemcenter',
-                key: '/index/setting/todoTypeTask',
-                encoded: "todoTempList",
+                id: '/index/setting/todoTypeTask',
+                purviewCode: "SysSetting",
                 code: 12-13,
             },
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryType',
-                encoded: "SysField",
+                id: '/index/setting/preliminaryType',
+                purviewCode: "SysFieldType",
                 code: 12-14,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminarySystem',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminarySystem',
+                purviewCode: "SysField",
                 code: 12-15,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/formsystem',
-                encoded: "SysFormSet",
+                id: '/index/setting/formsystem',
+                purviewCode: "SysFormList",
                 code: 12-16,
             },
             {
                 title: "流程",
                 icon: 'flowcenter',
-                key: '/index/setting/systemFlowsystem',
-                encoded: "SysFlow",
+                id: '/index/setting/systemFlowsystem',
+                purviewCode: "SysFlow",
                 code: 12-17,
-            },
+            }
         ]
-    },
+    }
    
 ];
 
@@ -853,61 +868,68 @@ const setPrdRouter= [
     {
         title: "用户与部门",
         icon: 'orgamanage',
-        key: '/index/setting/organ',
-        encoded: "SysOrga",
+        id: '/index/setting/organ',
+        purviewCode: "orga",
         code: 1,
         children: [
             {
                 title: "部门",
                 icon: 'orgamanage',
-                key: '/index/setting/organ',
-                encoded: "SysOrga",
+                id: '/index/setting/organ',
+                purviewCode: "orga",
                 code: 1-1,
                 
             },
             {
                 title: '用户',
                 icon: 'usermanage',
-                key: '/index/setting/user',
-                encoded: "SysUser",
+                id: '/index/setting/user',
+                purviewCode: "user",
                 code: 1-2,
+            },
+            {
+                title: '用户组',
+                icon: 'usermanage',
+                id: '/index/setting/usergroup',
+                purviewCode: "user_group",
+                code: 1-3,
             },
             {
         
                 title: "用户目录",
                 icon: 'category',
-                key: '/index/setting/directory',
-                encoded: "SysMessage",
-                code: 1-3,
+                id: '/index/setting/directory',
+                purviewCode: "user_dir",
+                code: 1-4,
             },
         ]
     },
     {
         title: '权限',
         icon: 'systemcenter',
-        key: "/index/setting/systemRole",
-        encoded: "SysRoleSystem",
+        id: "/index/setting/systemRole",
+        purviewCode: "SysPermission",
         code: 2
     },
     {
         title: '事项管理',
         icon: 'workitemtype',
-        key: "/index/setting/workstatus",
-        encoded: "SysWork",
+        id: "/index/setting/workstatus",
+        purviewCode: "SysWork",
         code: 3,
         children: [
             {
                 title: '事项类型',
                 icon: 'workitemtype',
-                key: '/index/setting/worktype',
-                encoded: "SysWorkType",
+                id: '/index/setting/worktype',
+                purviewCode: "SysWorkType",
                 code: 3-1,
             },
             {
                 title: '事项优先级',
                 icon: 'workitemtype',
-                key: '/index/setting/workpriority',
-                encoded: "SysWorkPriority",
+                id: '/index/setting/workpriority',
+                purviewCode: "SysWorkPriority",
                 code: 3-2,
             },
         ]
@@ -915,22 +937,22 @@ const setPrdRouter= [
     {
         title: "消息",
         icon: 'messagecenter',
-        key: '/index/setting/messageNotice',
-        encoded: "SysMessage",
+        id: '/index/setting/messageNotice',
+        purviewCode: "SysMessage",
         code: 4,
         children: [
             {
                 title: "消息通知方案",
                 icon: 'messagecenter',
-                key: '/index/setting/messageNotice',
-                encoded: "SysMessage",
+                id: '/index/setting/messageNotice',
+                purviewCode: "SysMessageNotice",
                 code: 4-1
             },
             {
                 title: '消息发送方式',
                 icon: 'messagecenter',
-                key: '/index/setting/messageSendType',
-                encoded: "SysMessageType",
+                id: '/index/setting/messageSendType',
+                purviewCode: "SysMessageSendType",
                 code: 4-2,
             }
         ]
@@ -938,30 +960,30 @@ const setPrdRouter= [
     {
         title: '表单',
         icon: 'formcenter',
-        key: "/index/setting/preliminary",
-        encoded: "SysForm",
+        id: "/index/setting/preliminary",
+        purviewCode: "SysForm",
         code: 6,
         children: [
             
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                key: '/index/setting/preliminaryTypeView',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminaryTypeView',
+                purviewCode: "SysFieldType",
                 code: 6-1,
             },
             {
                 title: '字段',
                 icon: 'formcenter',
-                key: '/index/setting/preliminary',
-                encoded: "SysFieldType",
+                id: '/index/setting/preliminary',
+                purviewCode: "SysFieldType",
                 code: 6-2,
             },
             {
                 title: '表单',
                 icon: 'formcenter',
-                key: '/index/setting/form',
-                encoded: "SysFormSet",
+                id: '/index/setting/form',
+                purviewCode: "SysFormList",
                 code: 6-3,
             }
         ]
@@ -969,46 +991,59 @@ const setPrdRouter= [
     {
         title: "流程",
         icon: 'flowcenter',
-        key: '/index/setting/systemFlow',
-        encoded: "SysFlow",
+        id: '/index/setting/systemFlow',
+        purviewCode: "SysFlow",
         code: 7,
+        children: [
+            {
+                title: "流程",
+                icon: 'flowcenter',
+                id: '/index/setting/systemFlow',
+                purviewCode: "SysFlowList",
+                code: 7-1,
+            },
+            {
+                title: "状态",
+                icon: 'flowcenter',
+                id: '/index/setting/nodestatus',
+                purviewCode: "SysFlowNode",
+                code: 7-2
+            }
+        ]
     },
     {
         title: "插件",
         icon: 'plugin',
-        key: '/index/setting/plugin',
-        encoded: "SysPlugin",
+        id: '/index/setting/plugin',
+        purviewCode: "SysPlugin",
         code: 8,
     },
     {
         title: "系统集成",
         icon: 'systemcenter',
-        key: '/index/setting/loadData',
-        encoded: "SysMessage",
+        id: '/index/setting/loadData',
         code: 9,
         children: [
             {
                 title: 'JIRA',
                 icon: 'systemcenter',
-                key: '/index/setting/loadData',
-                encoded: "SysMessageManagement",
+                id: '/index/setting/loadData',
                 code: 9-1,
             },
         ]
     },
-    
     {
         title: "安全",
         icon: 'systemcenter',
-        key: '/index/setting/log',
-        encoded: "SysMessage",
+        id: '/index/setting/log',
+        purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 icon: 'systemcenter',
-                key: '/index/setting/logList',
-                encoded: "logList",
+                id: '/index/setting/logList',
+                purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -1016,15 +1051,15 @@ const setPrdRouter= [
     {
         title: "版本与许可证",
         icon: 'plugin',
-        key: '/index/setting/version',
-        encoded: "SysPlugin",
+        id: '/index/setting/version',
+        purviewCode: "SysVersion",
         code: 11,
     },
     {
         title: "产品授权",
         icon: 'plugin',
-        key: '/index/setting/product',
-        encoded: "SysPlugin",
+        id: '/index/setting/product',
+        purviewCode: "SysProductAuth",
         code: 13,
     }
 ];

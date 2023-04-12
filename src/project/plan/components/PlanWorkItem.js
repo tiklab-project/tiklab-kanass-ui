@@ -43,13 +43,13 @@ const PlanWorkItem = (props) => {
         },
         {
             title: "类型",
-            dataIndex: ["workType", "name"],
+            dataIndex: ["workTypeSys", "name"],
             key: "type"
 
         },
         {
             title: "事项状态",
-            dataIndex: ["workStatus", "name"],
+            dataIndex: ["workStatusNode", "name"],
             key: "status",
         },
         {

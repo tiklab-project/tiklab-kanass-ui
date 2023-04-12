@@ -22,7 +22,7 @@ const ProjectContent = (props) => {
     const [recentProjectList, setRecentProjectList] = useState()
 
     useEffect(() => {
-        findRecentProjectPage()
+        findJoinProjectList({})
         statProjectWorkItem().then(res => {
             setRecentProjectList(res.data)
         })
@@ -223,7 +223,7 @@ const ProjectContent = (props) => {
             align: "left",
             render: (text, record) => (
                 <Space>
-                    <UserIcon />
+                    <UserIcon name = {text}/>
                     {text}
                 </Space>
             )
@@ -280,10 +280,6 @@ const ProjectContent = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                {/* <ProjectAddmodal
-                    name="添加项目"
-                    type="add"
-                /> */}
                 <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} >
                 </Button>
             </Breadcumb>

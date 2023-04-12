@@ -46,7 +46,7 @@ const WorkDetail = (props) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
-                setStatusList(res.workStatus.id);
+                findStatusList(res.workStatus.id);
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssignerId(res.assigner?.id)
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
@@ -72,10 +72,6 @@ const WorkDetail = (props) => {
         console.log(workId)
         return
     }, [workId]);
-
-    const setStatusList = (id) => {
-        findStatusList(id);
-    }
 
 
     const deleteWork = () => {
@@ -119,7 +115,7 @@ const WorkDetail = (props) => {
                 setWorkStatus(name)
                 searchWorkById(workId).then((res) => {
                     if (res) {
-                        setStatusList(res.workStatus.id)
+                        findStatusList(res.workStatus.id)
                     }
                 })
             }
@@ -427,7 +423,7 @@ const WorkDetail = (props) => {
                                                     >
                                                         {
                                                             userList && userList.map((item) => {
-                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon />{item.user.name}</Space></Select.Option>
+                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
                                                             })
                                                         }
                                                     </Select>

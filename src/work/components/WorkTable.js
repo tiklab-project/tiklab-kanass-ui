@@ -14,23 +14,11 @@ const WorkTableContent = (props) => {
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
     const [isWorkList, setIsWorkList] = useState(true)
-    console.log(props)
     const goProdetail = (record, index) => {
-        console.log(record, "record")
         setWorkId(record.id)
         setWorkIndex(index + 1)
         setDetailCrumbArray([{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsWorkList(false)
-        // if (projectId) {
-
-        //     props.history.push(`/index/${path}/${projectId}/WorkDetail`)
-        // }
-        // if (urlPath === "/index/work/worklist") {
-        //     props.history.push(`/index/work/WorkDetail`)
-        // }
-        // if (urlPath === "/index/sprintdetail/:sprint/workDetail") {
-        //     props.history.push(`/index/sprintdetail/${sprintId}/WorkDetail`)
-        // }
 
     }
 
@@ -69,7 +57,7 @@ const WorkTableContent = (props) => {
             dataIndex: ['assigner', 'name'],
             key: 'assignerId',
             render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon /></div>
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div className="work-info-text">{text}</div>
             </div>
         },
@@ -182,6 +170,7 @@ const WorkTableContent = (props) => {
                 currentPage: page,
             }
         }
+        console.log(searchCondition)
         if (viewType === "tree") {
             getWorkConditionPageTree(values)
         }
@@ -242,38 +231,38 @@ const WorkTableContent = (props) => {
                             <WorkTableFilter form={form} />
                         </div>
                         <div style={{ overflow: "hidden" }} className="work-table">
-                        <Spin spinning={tableLoading} delay={500}>
-                            <Table
-                                columns={columns}
-                                dataSource={workList}
-                                rowKey={(record) => record.id}
-                                onChange={sorter}
-                                pagination={{
-                                    total: total,
-                                    pageSize: 20,
-                                    current: searchCondition.pageParam.currentPage,
-                                    onChange: changePage,
-                                    position: ["bottomCenter"]
-                                }}
-                                expandable={{
-                                    expandIcon: ({ expanded, onExpand, record }) => (
-                                        record.children && record.children.length > 0 ? expanded ?
-                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                <use xlinkHref="#icon-workDown"></use>
-                                            </svg> :
-                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                <use xlinkHref="#icon-workRight"></use>
-                                            </svg>
-                                            :
-                                            <>
+                            <Spin spinning={tableLoading} delay={500}>
+                                <Table
+                                    columns={columns}
+                                    dataSource={workList}
+                                    rowKey={(record) => record.id}
+                                    // onChange={sorter}
+                                    pagination={{
+                                        total: total,
+                                        pageSize: 20,
+                                        current: searchCondition.pageParam.currentPage,
+                                        onChange: changePage,
+                                        position: ["bottomCenter"]
+                                    }}
+                                    expandable={{
+                                        expandIcon: ({ expanded, onExpand, record }) => (
+                                            record.children && record.children.length > 0 ? expanded ?
                                                 <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-point"></use>
+                                                    <use xlinkHref="#icon-workDown"></use>
+                                                </svg> :
+                                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                    <use xlinkHref="#icon-workRight"></use>
                                                 </svg>
-                                            </>
-                                    )
-                                }}
-                            />
-                        </Spin>
+                                                :
+                                                <>
+                                                    <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                        <use xlinkHref="#icon-point"></use>
+                                                    </svg>
+                                                </>
+                                        )
+                                    }}
+                                />
+                            </Spin>
                         </div>
                     </>
                         :
