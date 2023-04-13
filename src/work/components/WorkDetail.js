@@ -153,7 +153,10 @@ const WorkDetail = (props) => {
         if (inputRef.current.textContent !== workInfo.title) {
             editWork(params).then(res => {
                 if (res.code === 0) {
-                    document.getElementById(workId).innerHTML = inputRef.current.textContent;
+                    if(document.getElementById(workId)){
+                        document.getElementById(workId).innerHTML = inputRef.current.textContent;
+                    }
+                    
                     workInfo.title = inputRef.current.textContent;
 
                 }

@@ -196,7 +196,7 @@ const ProjectSetAddInfo = (props) => {
                         </div>
                     </Form.Item>
                     <div className="projectSet-add-submit">
-                        <Button htmlType="button" onClick={() => setVisible(false)}>
+                        <Button htmlType="button" onClick={() => props.history.goBack()}>
                             取消
                         </Button>
 

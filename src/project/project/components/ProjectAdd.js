@@ -128,9 +128,6 @@ const ProjectAdd = (props) => {
                 >
                     <Head />
                     <Steps />
-                    {
-                        console.log(steps[currentStep].content)
-                    }
                     {steps[currentStep].content}
                     {/* <step1 /> */}
                 </Col>

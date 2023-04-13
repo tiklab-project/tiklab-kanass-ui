@@ -36,7 +36,7 @@ export class ProjectSurveyStore {
         const params = new FormData();
         params.append("masterId", value.masterId)
         params.append("projectId", value.projectId)
-        const data = await Service("/workItemStat/statProjectManageSprint", value)
+        const data = await Service("/workItemStat/statProjectManageSprint", params)
         return data;
     }
 

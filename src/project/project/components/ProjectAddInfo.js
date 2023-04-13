@@ -244,6 +244,9 @@ const ProjectAddInfo = (props) => {
                         <Button htmlType="button" onClick={() => setCurrentStep(0)}>
                             上一步
                         </Button>
+                        <Button htmlType="button" onClick={() => props.history.goBack()}>
+                            取消
+                        </Button>
 
                         <Button type="primary" htmlType="submit" onClick={onFinish}>
                             提交
