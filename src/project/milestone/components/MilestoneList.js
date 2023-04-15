@@ -34,10 +34,7 @@ const MilestoneList = (props) => {
         {
             title: "里程碑名称",
             dataIndex: "name",
-            key: "name",
-            // render: (text, record) => (
-            //     <Link to={`/index/milestonedetail/${record.id}`}>{text}</Link>
-            // ),
+            key: "name"
         },
         {
             title: "所属项目",

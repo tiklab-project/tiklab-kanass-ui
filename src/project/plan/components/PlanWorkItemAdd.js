@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 计划事项规划弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-08 16:06:35
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 15:27:15
+ */
 import React,{useEffect,useState} from "react";
 import { Modal, Button,Table,message,Input,Select } from 'antd';
 import {observer, inject} from "mobx-react";
@@ -21,7 +29,6 @@ const  PlanWorkItemAddmodal = (props) => {
         findUnPlanWorkItemPage({projectId:projectId,planId:planId})
         
     };
-
 
 
     const columns=[

@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 计划列表
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-08 16:06:35
@@ -18,6 +18,7 @@ import InputSearch from "../../../common/input/InputSearch";
 const Plan = (props) => {
     const { planStore } = props
     const { getPlanList, planList, addPlan } = planStore
+    // 项目id
     const projectId = props.match.params.id;
 
     /**

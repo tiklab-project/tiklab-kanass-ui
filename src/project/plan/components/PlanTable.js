@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 计划列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-08 16:06:35
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 15:27:15
+ */
 import React, { useState, useEffect,useRef } from "react";
 import { Modal } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -7,18 +15,20 @@ import WorkAddModel from "../../../work/components/WorkAddModel";
 import "./Plan.scss"
 import PlanAddmodal from "./PlanAddModal";
 import { getUser } from 'tiklab-core-ui';
-//import "../../../assets/font-icon/iconfont";
 
 const PlanTable = (props) => {
     const { planStore,planWorkItemStore } = props
     const { getPlanList, planList,delePlan } = planStore;
     const {addPlanWorkItem,delePlanWorkItem,searchAllPlanWorkItem} = planWorkItemStore;
-    
+    // 删除事项确认框的显示与不显示
     const [isWorkModalVisible, setIsWorkModalVisible] = useState(false);
+    // 要删除计划的id
     const [dePlan,setDePlan] = useState();
-
+    // 项目id
     const projectId = props.match.params.id;
+    // 删除计划确认框的显示与不显示
     const [isPlanModalVisible, setIsPlanModalVisible] = useState(false);
+    // 要删除事项的id
     const [deWorkItemId,setDeWorkItemId] = useState();
     const [deWorkItemPlanId,setDeWorkItemPlanId] = useState();
 

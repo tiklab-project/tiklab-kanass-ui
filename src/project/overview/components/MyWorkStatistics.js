@@ -1,11 +1,21 @@
+/* @Descripttion: 项目事项统计组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-03-19 18:00:13
+ */
+
 import React, { Fragment, useEffect, useState } from 'react';
-import { getUser } from 'tiklab-core-ui';
 import "./MyWorkStatistics.scss";
-//import "../../assets/font-icon/iconfont";
 const MyWorkStatistics = (props) => {
     const { workStatusList, projectId } = props;
-    const masterId = getUser().userId;
     const path = props.match.path.split("/")[2];
+
+    /**
+     * 点击跳转到工作列表
+     * @param {tab key} index 
+     */
     const goWorkItemList = (index) => {
         switch (index) {
             case 0:
@@ -27,47 +37,33 @@ const MyWorkStatistics = (props) => {
         }
     }
 
+    /**
+     * 跳转到全部事项列表
+     */
     const goAllWorkItemList = () => {
         props.history.push(`/index/${path}/${projectId}/work/all`)
     }
 
-
+    /**
+     * 跳转到进行中事项列表
+     */
     const goProcess = () => {
         props.history.push({ pathname: `/index/${path}/${projectId}/work/process` })
     }
 
+    /**
+     * 跳转到待办事项列表
+     */
     const goTodoWorkItemList = () => {
         props.history.push(`/index/${path}/${projectId}/work/workTodo`)
     }
 
-
+    /**
+     * 跳转到已完成事项列表
+     */
     const goDoneWorkItemList = () => {
         props.history.push(`/index/${path}/${projectId}/work/done`)
     }
-
-    //  const goWorkItemList = (index) => {
-    //     // setWorkTabs("all")
-
-    //     switch (index) {
-    //         case 0:
-    //             props.history.push({ pathname: "/index/work/worklist/all"})
-    //             break;
-    //         case 1:
-    //             props.history.push({ pathname: "/index/work/worklist/done"})
-    //             break;
-    //         case 2:
-    //             props.history.push({ pathname: "/index/work/worklist/process"});
-    //             break
-    //         case 3:
-    //             props.history.push({ pathname: "/index/work/worklist/overdue"})
-    //             break;
-    //         default:
-    //             break;
-    //     }
-       
-    //     sessionStorage.setItem("menuKey", "work")
-
-    // }
 
     return <div className="work-statistics">
             <div className="work-statistics-title">

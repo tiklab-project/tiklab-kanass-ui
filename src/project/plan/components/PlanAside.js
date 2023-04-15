@@ -1,6 +1,13 @@
+/*
+ * @Descripttion: 计划添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-08 16:06:35
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 15:27:15
+ */
 import React, {useState} from "react";
 import "./PlanAside.scss";
-//import "../../../assets/font-icon/iconfont";
 
 const PlanAside = () => {
     const [menuType, setMenuType] = useState("pending");

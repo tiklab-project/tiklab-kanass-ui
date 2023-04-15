@@ -16,8 +16,9 @@ import 'moment/locale/zh-cn';
 import Button from "../../../common/button/Button";
 
 const MilestoneAddEditModal = (props) => {
-    // form ref
+    //里程碑添加表单
     const [form] = Form.useForm();
+    // 当前项目id
     const projectId = props.match.params.id;
     // 弹框显示
     const [visible, setVisible] = React.useState(false);

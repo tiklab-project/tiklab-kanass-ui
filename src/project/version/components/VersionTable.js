@@ -68,16 +68,17 @@ const VersionTable = (props) => {
         },
         {
             title: "发布日期",
-            dataIndex: "versionState",
-            key: "versionState",
+            dataIndex: "startTime",
+            key: "startTime",
             align: "left",
-            render: (text) => <span>{statusName[text]}</span>,
+            
         },
         {
             title: "状态",
             dataIndex: "versionState",
             key: "versionTime",
             align: "left",
+            render: (text) => <span>{statusName[text]}</span>,
         },
         {
             title: "操作",

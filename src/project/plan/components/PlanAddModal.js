@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 计划添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-08 16:06:35
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-04-09 15:27:15
+ */
 import React, { useState } from "react";
 import { Modal, Button,Select,DatePicker,Input,Form } from 'antd';
 import { observer,inject } from "mobx-react";
@@ -6,12 +14,16 @@ const { RangePicker } = DatePicker;
 
 const  PlanAddModal = (props) => {
     const [form] = Form.useForm();
+    // 弹窗的显示与不显示
     const [visible, setVisible] = React.useState(false);
     const {planStore,projectStore} = props;
+    // 项目id
     const projectId = props.match.params.id;
     // const {projectName} = projectStore;
     const {editPlan,addPlan,searchPlanById,getUseList,uselist} = planStore;
-    const [planInfo,setPlanInfo]= useState()
+    // 计划详情
+    const [planInfo,setPlanInfo]= useState();
+    // 日期格式
     const dateFormat = 'YYYY-MM-DD'
     const layout = {
         labelCol: {
@@ -23,7 +35,9 @@ const  PlanAddModal = (props) => {
     };
     
     
-    //提交计划列表
+    /**
+     * 编辑或者添加计划
+     */
     const submitPlan = ()=> {
         form.validateFields().then((fieldsValue) => {
             const values = {
@@ -55,12 +69,17 @@ const  PlanAddModal = (props) => {
         
     }
 
-    // 表单验证
+    /**
+     * 取消添加,关闭弹窗
+     */
     const onFinishFailed = () => {
         form.resetFields();
         setVisible(false);
     }
 
+    /**
+     * 显示弹窗
+     */
     const showModal = () => {
         setVisible(true);
         getUseList(projectId);
@@ -98,6 +117,7 @@ const  PlanAddModal = (props) => {
             id: "2"
         }
     ]
+
     return (
         <>
         <div className="addmodel">
@@ -143,23 +163,6 @@ const  PlanAddModal = (props) => {
                     >
                         <Input placeholder= "请输入计划名称"/>
                     </Form.Item>
-                    {/* <Form.Item
-                        label="所属项目"
-                        name="project"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请选择所属项目'
-                            }
-                        ]}
-                    >
-                        <Select
-                            placeholder= {projectName}
-                            allowClear
-                        >
-                            <Select.Option value={projectId}>{projectName}</Select.Option>
-                        </Select>
-                    </Form.Item> */}
                     {
                         props.type === "addChildren" || planInfo && planInfo.parentPlan && <Form.Item
                             label="上级计划"

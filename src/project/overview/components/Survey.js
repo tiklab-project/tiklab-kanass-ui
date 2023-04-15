@@ -22,30 +22,41 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, statProjectManageSprint, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage } = projectSurveyStore;
     
+    //当前用户id
     const masterId = getUser().userId;
+    //当前用户名字
     const masterName = getUser().name;
+    // 项目id
     const projectId = props.match.params.id;
+    // 事项状态列表
     const [workStatusList, setWorkStatusList] = useState();
+    // 迭代列表
     const [sprintList, setSprintList] = useState();
+    // 项目详情
     const [project, setProject] = useState();
+    // 待办列表
     const [todoList, setTodoList] = useState([]);
+    // 日志列表
     const [logList, setLogList] = useState([]);
+    // 里程碑列表
     const [milestoneList, setMilestoneList] = useState();
+    // 进度
     const [percent, setPercent] = useState()
-
+    // 项目类型
     const path = props.match.path.split("/")[2];
     useEffect(() => {
         const data = {
             masterId: masterId,
             projectId: projectId
         }
-
+        // 统计各个状态的事项
         statWorkItemByBusStatus(projectId).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data[3].groupCount / res.data[0].groupCount;
             setPercent(percent.toFixed(2))
         })
 
+        // 获取迭代列表
         statProjectManageSprint(data).then((res) => {
             if (res.code === 0) {
                 setSprintList(res.data.slice(0, 3))
@@ -53,22 +64,26 @@ const Survey = (props) => {
 
         })
 
+        // 获取项目详情
         findProject(projectId).then(res => {
             setProject(res.data)
         })
 
+        // 获取日志列表
         findlogpage({ projectId: projectId, currentPage: 1 }).then(res => {
             if (res.code === 0) {
                 setLogList(res.data.dataList)
             }
         })
 
+        // 获取待办列表
         findtodopage({ projectId: projectId, currentPage: 1 }).then(res => {
             if (res.code === 0) {
                 setTodoList(res.data.dataList)
             }
         })
 
+        // 获取里程碑列表
         findMilestoneList(projectId).then(res => {
             if (res.code === 0) {
                 console.log(res.data)
@@ -81,6 +96,7 @@ const Survey = (props) => {
 
     useEffect(() => {
         if (project) {
+            // 获取项目燃尽图列表
             findProjectBurnDowmChartPage(projectId).then(res => {
                 if (res.code === 0) {
                     let timerXaixs = [];
@@ -110,6 +126,7 @@ const Survey = (props) => {
         }
         return;
     }, [project])
+
     const statusSet = (value) => {
         let data = ""
         switch (value) {
@@ -169,28 +186,32 @@ const Survey = (props) => {
         burnDown.setOption(option)
     }
 
-
-
-    // const goWorkItemDetail = (id) => {
-    //     props.history.push(`/index/${path}/${projectId}/workone/${id}`)
-    // }
+    /**
+     * 跳转到待办事项列表
+     */
     const goTodoWorkItemList = () => {
         props.history.push(`/index/${path}/${projectId}/workTodo`)
     }
 
+     /**
+     * 跳转到动态列表
+     */
     const goDynamicList = () => {
         props.history.push(`/index/${path}/${projectId}/dynamic`)
     }
 
-    // const goTodoWorkItemList = () => {
-    //     props.history.push(`/index/workTodo`)
-    //     // sessionStorage.setItem("menuKey", "work")
-    // }
-
+    /**
+     * 跳转到动态所属事项
+     * @param {*} url 
+     */
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
 
+     /**
+     * 跳转到待办事项详情
+     * @param {*} url 
+     */
     const goTodoDetail = (url) => {
         window.location.href = url
     }
