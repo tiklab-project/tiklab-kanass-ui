@@ -77,7 +77,7 @@ const WorkTypeList = (props) => {
     }
 
     const goForm = (id) => {
-        props.history.push(`/index/setting/projectFormDetail/${id}`)
+        props.history.push(`/index/setting/FormDetail/${id}`)
     }
 
     const columns = [

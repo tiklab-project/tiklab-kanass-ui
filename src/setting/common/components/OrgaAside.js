@@ -66,9 +66,9 @@ const OrgaAside=(props)=>  {
                 <li key={item.code} title={item.title} className="orga-aside-li">
                     <div className="orga-aside-item orga-aside-first"  style={{paddingLeft: `${deep * 20 + 20}`}} onClick={() => setOpenOrClose(item.key)}>
                         <span to={item.key}>
-                            <svg className="svg-icon" aria-hidden="true">
+                            {/* <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-${item.icon}`}></use>
-                            </svg>
+                            </svg> */}
                             <span className="orga-aside-title">{item.title}</span>
                         </span>
                         <div className="orga-aside-item-icon">

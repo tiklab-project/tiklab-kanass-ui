@@ -50,7 +50,11 @@ const VersionTable = (props) => {
             dataIndex: "name",
             key: "name",
             render: (text, record) => (
-                <span className="version-name" onClick={() => goDetail(record.id)}>{text}</span>
+                <>
+                   
+                    <span className="version-name" onClick={() => goDetail(record.id)}>{text}11</span>
+                </>
+
             ),
         },
         {
@@ -71,7 +75,7 @@ const VersionTable = (props) => {
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-            
+
         },
         {
             title: "状态",
@@ -150,7 +154,7 @@ const VersionTable = (props) => {
                                 {...props}
                             />
                         </Breadcumb>
-                        
+
                         <div className="version-filter">
                             <InputSearch
                                 placeholder="版本名称"

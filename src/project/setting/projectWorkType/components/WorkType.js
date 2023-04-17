@@ -100,7 +100,7 @@ const WorkType = (props) => {
      * @param {表单id} id 
      */
     const goForm = (id) => {
-        props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFormDetail/${id}`)
+        props.history.push(`/index/${path}/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
     }
 
     const columns = [

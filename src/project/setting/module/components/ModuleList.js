@@ -20,7 +20,7 @@ const ModuleList = (props) => {
 
     // 解析 moduleStore
     const { modulelist, searchmodule, findModulePage, addModule, deleModule,
-        searchModuleById, editModuleById,  modulePageParam, setPageParam
+        searchModuleById, editModuleById, modulePageParam, setPageParam
     } = moduleStore;
 
     // 项目id
@@ -69,12 +69,9 @@ const ModuleList = (props) => {
                         searchModuleById={searchModuleById}
                     ></ModuleAddmodal>
                     {/* <PrivilegeProjectButton code={'ModuleDele'} disabled={"hidden"} domainId={projectId}  {...props}> */}
-                        <Button
-                            type="link"
-                            onClick={() => deleModule(record.id, projectId)}
-                        >
-                            删除
-                        </Button>
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleModule(record.id, projectId)} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-delete"></use>
+                    </svg>
                     {/* </PrivilegeProjectButton> */}
                 </Space>
             ),
@@ -157,7 +154,7 @@ const ModuleList = (props) => {
                                 loading={loading}
                                 onSearch={onSearch}
                                 onChange={changePage}
-                                pagination = {false}
+                                pagination={false}
                             />
                         </div>
                     </div>

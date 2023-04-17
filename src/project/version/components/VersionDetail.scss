@@ -149,6 +149,14 @@
             justify-content: space-between;
             align-items: center;
         }
+        .version-work-status {
+            padding: 2px 3px;
+            background: #ddd;
+            border-radius: 4px;
+            font-size: 10px;
+            width: fit-content;
+            color: #fff;
+        }
     }
 
     .ant-table {

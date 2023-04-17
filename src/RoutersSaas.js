@@ -881,11 +881,7 @@ const Routers = [
                                 component: ProjectFlowList,
                             },
                             {
-                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectForm",
-                                component: ProjectFormList,
-                            },
-                            {
-                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFormDetail/:id",
+                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFormDetail/:formId",
                                 component: FormDetail,
                                 exact: true
                             },

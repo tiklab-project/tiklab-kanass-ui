@@ -26,7 +26,7 @@ const VersionPlan = (props) => {
     const projectId = props.match.params.id;
     // 显示事项详情抽屉
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+
     /**
      * 获取版本管理的事项
      */
@@ -69,9 +69,26 @@ const VersionPlan = (props) => {
             dataIndex: "title",
             key: "title",
             render: (text, record, index) => (
-                <span style={{ cursor: "pointer", color: "var(--tiklab-blue)" }} onClick = {() => goWorkItem(record.id, index)}>
-                    {text}
-                </span>
+                <>
+                    {
+                        record.workTypeSys?.iconUrl ?
+                            <img
+                                src={('images/' + record.workTypeSys?.iconUrl)}
+                                alt=""
+                                className="img-icon"
+                            />
+                            :
+                            <img
+                                src={('images/workType1.png')}
+                                alt=""
+                                className="img-icon"
+                            />
+                    }
+                    <span style={{ cursor: "pointer", color: "var(--tiklab-blue)" }} onClick={() => goWorkItem(record.id, index)}>
+                        {text}
+                    </span>
+                </>
+
             )
         },
         {
@@ -84,6 +101,11 @@ const VersionPlan = (props) => {
             title: "事项状态",
             dataIndex: ["workStatusNode", "name"],
             key: "status",
+            render: (text, record) => (
+                <span className="version-work-status">
+                    {text}
+                </span>
+            )
         },
         {
             title: "操作",
@@ -104,7 +126,7 @@ const VersionPlan = (props) => {
                         </svg>
 
                     </PrivilegeProjectButton>
-                    
+
 
                 </Space>
             ),
@@ -141,7 +163,7 @@ const VersionPlan = (props) => {
                 rowKey={record => record.id}
                 pagination={false}
             />
-             <WorkBorderDetail
+            <WorkBorderDetail
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 {...props}

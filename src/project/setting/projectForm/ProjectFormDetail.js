@@ -7,11 +7,12 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import React from "react";
-import {FormDesign} from 'tiklab-form-ui';
+import {FormDesign as FormDesignList} from 'tiklab-form-ui';
 
 const ProjectFormDetail = (props) => {
+    
     return (
-        <FormDesign {...props} formIdTag={"id"} />
+        <FormDesignList {...props} formIdTag= ""/>
     )
 }
 export default ProjectFormDetail;

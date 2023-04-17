@@ -27,7 +27,6 @@ const ProjectSetSurvey = props => {
         findtodopage, todoTaskList } = basicInfoStore;
     const { findProjectList } = projectSetStore;
     const [workItemList, setWorkItemList] = useState();
-    const [dynamicList, setDynamicList] = useState();
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
     const projectSet = JSON.parse(localStorage.getItem("projectSet"))

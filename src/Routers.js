@@ -71,7 +71,7 @@ const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/com
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
-
+const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
@@ -594,6 +594,11 @@ const Routers = [
                         exact: true
                     },
                     {
+                        path: "/index/setting/FormDetail/:formId",
+                        component: FormDetail,
+                        exact: true
+                    },
+                    {
                         path: "/index/setting/formsystem",
                         component: FormListSystem,
                         exact: true
@@ -891,9 +896,8 @@ const Routers = [
                                 component: ProjectFormList,
                             },
                             {
-                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFormDetail/:id",
-                                component: FormDetail,
-                                exact: true
+                                path: "/index/projectNomalDetail/:id/projectSetDetail/ProjectFormDetail/:formId",
+                                component: ProjectFormDetail,
                             },
                             {
                                 path: "/index/projectNomalDetail/:id/projectSetDetail/projectFlowDetail/:id",
@@ -1084,9 +1088,8 @@ const Routers = [
                                 component: ProjectFormList,
                             },
                             {
-                                path: "/index/projectScrumDetail/:id/projectSetDetail/projectFormDetail/:id",
-                                component: FormDetail,
-                                exact: true
+                                path: "/index/projectScrumDetail/:id/projectSetDetail/ProjectFormDetail/:formId",
+                                component: ProjectFormDetail,
                             },
                             {
                                 path: "/index/projectScrumDetail/:id/projectSetDetail/projectFlowDetail/:id",

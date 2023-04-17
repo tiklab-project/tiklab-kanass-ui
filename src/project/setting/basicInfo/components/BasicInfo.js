@@ -27,7 +27,7 @@ const BasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 12,
+            span: 20,
         },
     };
     const formTailLayout = {
@@ -35,8 +35,8 @@ const BasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 8,
-            offset: 4,
+            span: 18,
+            offset: 4
         },
     };
     const [form] = Form.useForm();
@@ -164,11 +164,11 @@ const BasicInfo = props => {
                 </svg>
                 项目信息
             </div>
-            <div style={{fontSize: "12px", color: "#999"}}> 
+            <div style={{ fontSize: "12px", color: "#999" }}>
                 <svg aria-hidden="true" className="img-icon" fill="#fff">
                     <use></use>
                 </svg>
-            项目图标信息，可见范围，负责人等信息，可点击修改</div>
+                项目图标信息，可见范围，负责人等信息，可点击修改</div>
         </div>
     );
 
@@ -180,7 +180,7 @@ const BasicInfo = props => {
                 </svg>
                 删除项目
             </div>
-            <div style={{fontSize: "12px", color: "#999"}}> 
+            <div style={{ fontSize: "12px", color: "#999" }}>
                 <svg aria-hidden="true" className="img-icon" fill="#fff">
                     <use></use>
                 </svg>
@@ -205,35 +205,30 @@ const BasicInfo = props => {
                                     {...layout}
                                     labelAlign="left"
                                 >
-                                    <div>
-                                        {
-                                            iconUrl ?
-                                                <img
-                                                    src={('/images/' + iconUrl)}
-                                                    alt="" width={60} height={60}
-                                                />
-                                                :
-                                                <img
-                                                    src={('images/project1.png')}
-                                                    alt="" width={60} height={60}
-                                                />
-                                        }
-                                        <span>项目图标，可点击更改按钮修改icon</span>
+                                    <div className="project-form-icon-content">
+                                        <div>
+                                            {
+                                                iconUrl ?
+                                                    <img
+                                                        src={('/images/' + iconUrl)}
+                                                        alt="" width={60} height={60}
+                                                    />
+                                                    :
+                                                    <img
+                                                        src={('images/project1.png')}
+                                                        alt="" width={60} height={60}
+                                                    />
+                                            }
+                                            <span>项目图标，可点击更改按钮修改icon</span>
+                                        </div>
+
+                                        <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
+                                            <div className="change-botton" onClick={() => setVisible(true)}>
+                                                更改图标
+                                            </div>
+                                        </PrivilegeProjectButton>
                                     </div>
                                 </Form.Item>
-                                <Form.Item
-                                    {...formTailLayout}
-                                    labelAlign="left"
-                                >
-                                    <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
-                                        <div className="change-botton" onClick={() => setVisible(true)}>
-                                            更改图标
-                                        </div>
-                                    </PrivilegeProjectButton>
-                                </Form.Item>
-
-
-                                {/* </div> */}
 
                                 <Form
                                     {...layout}
@@ -326,34 +321,22 @@ const BasicInfo = props => {
                             </div>
                         </Panel>
                         <Panel header={projectDelete()} key="2">
-                            <div className="project-set-icon">
+                            <div className="project-set-delete">
                                 <div className="project-set-icon-block">
-                                    <div>
+                                    {/* <div>
 
-                                        <span>此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
-                                    </div>
-
+                                        <span></span>
+                                    </div> */}
+                                    此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                                 </div>
-                                <Form.Item
-                                    {...formTailLayout}
-                                    labelAlign="left"
-                                >
-                                    <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>
-                                        <div className="change-botton" onClick={() => showModal()}>
-                                            删除项目
-                                        </div>
-                                    </PrivilegeProjectButton>
-                                </Form.Item>
+                                <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>
+                                    <div className="change-botton" onClick={() => showModal()}>
+                                        删除项目
+                                    </div>
+                                </PrivilegeProjectButton>
                             </div>
                         </Panel>
                     </Collapse>
-
-
-
-
-
-
-
 
                 </div>
                 <Modal title="是否删除" visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>

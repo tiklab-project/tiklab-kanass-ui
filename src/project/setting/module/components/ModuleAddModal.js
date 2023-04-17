@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import { Modal, Form,Input } from 'antd';
+import { Modal, Form, Input } from 'antd';
 import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { inject, observer } from "mobx-react";
 import Button from "../../../../common/button/Button";
@@ -23,14 +23,14 @@ const ModuleAddModal = (props) => {
     // 项目id
     const projectId = props.match.params.id;
     // 解析props
-    const {editModuleById,searchModuleById,addModule} = props;
+    const { editModuleById, searchModuleById, addModule } = props;
     // 表单的宽度
     const layout = {
         labelCol: {
-        span: 6,
+            span: 6,
         },
         wrapperCol: {
-        span: 24,
+            span: 24,
         },
     };
 
@@ -39,17 +39,16 @@ const ModuleAddModal = (props) => {
      */
     const showModal = () => {
         setVisible(true);
-        if(props.type === "edit"){
-            debugger
-            searchModuleById(props.id).then((res)=> {
-                if(res.code === 0){
+        if (props.type === "edit") {
+            searchModuleById(props.id).then((res) => {
+                if (res.code === 0) {
                     form.setFieldsValue({
                         moduleName: res.data.moduleName,
                         id: res.data.id,
                         desc: res.data.desc
                     })
                 }
-                
+
             })
         }
     };
@@ -59,16 +58,16 @@ const ModuleAddModal = (props) => {
      */
     const onFinish = () => {
         form.validateFields().then((fieldsValue) => {
-            fieldsValue.project={id:props.projectid};
-            if(props.type ==="add"){
+            fieldsValue.project = { id: props.projectid };
+            if (props.type === "add") {
                 addModule(fieldsValue)
-            }else {
-                fieldsValue.id= props.id
+            } else {
+                fieldsValue.id = props.id
                 editModuleById(fieldsValue)
             }
             setVisible(false);
         })
-        
+
     };
 
     /**
@@ -81,19 +80,19 @@ const ModuleAddModal = (props) => {
 
     return (
         <div className="addmodel">
-            {   
-                props.type !== "edit"?
-                <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
-                    <Button type="primary" onClick={showModal}>
-                        +{props.name}
-                    </Button>
-                </PrivilegeProjectButton>
-                : 
-                <PrivilegeProjectButton code={'ModuleEdit'} domainId={projectId}  {...props}>
-                    <span onClick={showModal} className = "span-botton" >
-                        {props.name}
-                    </span>
-                </PrivilegeProjectButton>
+            {
+                props.type !== "edit" ?
+                    <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
+                        <Button type="primary" onClick={showModal}>
+                            +{props.name}
+                        </Button>
+                    </PrivilegeProjectButton>
+                    :
+                    <PrivilegeProjectButton code={'ModuleEdit'} domainId={projectId}  {...props}>
+                        <svg className="svg-icon" aria-hidden="true" onClick={showModal} style={{ cursor: "pointer" }}>
+                            <use xlinkHref="#icon-edit"></use>
+                        </svg>
+                    </PrivilegeProjectButton>
             }
             <Modal
                 title={props.name}
@@ -102,7 +101,7 @@ const ModuleAddModal = (props) => {
                 onCancel={onFinishFailed}
                 cancelText="取消"
                 okText="确定"
-                closable = {false}
+                closable={false}
             >
                 <Form
                     {...layout}
@@ -111,31 +110,31 @@ const ModuleAddModal = (props) => {
                         remember: true,
                     }}
                     form={form}
-                    layout = "vertical"
+                    layout="vertical"
                 >
                     <Form.Item
                         label="模块名称"
                         name="moduleName"
                         rules={[
-                        {
-                            required: true,
-                            message: '请输入模块名称',
-                        },
+                            {
+                                required: true,
+                                message: '请输入模块名称',
+                            },
                         ]}
                     >
-                        <Input placeholder= "请输入模块名称"/>
+                        <Input placeholder="请输入模块名称" />
                     </Form.Item>
                     <Form.Item
                         label="模块描述"
                         name="desc"
                         rules={[
-                        {
-                            required: false,
-                            message: '请输入模块描述',
-                        },
+                            {
+                                required: false,
+                                message: '请输入模块描述',
+                            },
                         ]}
                     >
-                        <Input placeholder= "请输入模块描述"/>
+                        <Input placeholder="请输入模块描述" />
                     </Form.Item>
                 </Form>
             </Modal>

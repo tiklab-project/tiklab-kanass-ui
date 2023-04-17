@@ -1,8 +1,8 @@
 
 
-.project-set-delete {
-    color: var(--tiklab-blue);
-}
+// .project-set-delete {
+//     color: var(--tiklab-blue);
+// }
 
 .project-info-title {
     display: flex;
@@ -22,6 +22,11 @@
         .project-form-icon {
             align-items: center;
         }
+        .project-form-icon-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
     .project-set-icon-block {
         display: flex;
@@ -38,6 +43,11 @@
         border-radius: 4px;
         width: 100px;
         font-size: 12px;
+    }
+    .project-set-delete {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 .project-info {

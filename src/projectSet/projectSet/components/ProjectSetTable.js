@@ -120,7 +120,7 @@ const ProjectSetTable = (props) => {
             </>
         },
         {
-            title: "项目数量",
+            title: "关联项目",
             dataIndex: "projectNumber",
             key: "projectNumber",
             align: "left",
@@ -218,7 +218,7 @@ const ProjectSetTable = (props) => {
                 </Breadcumb>
 
                 <div className="projectSet-search-tab">
-                    <div className="projectSet-filter">
+                    {/* <div className="projectSet-filter"> */}
                         <div className="projectSet-tabs">
                             {
                                 projectTab.map(item => {
@@ -233,8 +233,8 @@ const ProjectSetTable = (props) => {
                             }
                         </div>
                         <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目集名称"} />
-                        <span className="projectSet-num">{projectSetList && projectSetList.length}个项目集</span>
-                    </div>
+                        {/* <span className="projectSet-num">{projectSetList && projectSetList.length}个项目集</span> */}
+                    {/* </div> */}
                 </div>
                 <div>
                     <div className="table-box">
