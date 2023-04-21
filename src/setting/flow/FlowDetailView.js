@@ -1,9 +1,9 @@
 import React from "react";
 import {FlowChartLink} from 'tiklab-flow-ui';
 
-const ProjectFlowDetail = (props) => {
+const FlowDetailView = (props) => {
     return (
         <FlowChartLink {...props} flowIdTag={"id"} />
     )
 }
-export default ProjectFlowDetail;
+export default FlowDetailView;

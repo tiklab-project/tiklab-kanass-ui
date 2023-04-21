@@ -12,7 +12,7 @@ import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
 import { store } from "./stores"
-import { orgStores, privilegeStores } from "tiklab-user-ui/es/store";
+import { orgStores } from "tiklab-user-ui/es/store";
 import { getUser, enableAxiosCE } from 'tiklab-core-ui'
 import { formStores } from 'tiklab-form-ui/es/store'
 import { flowStores } from 'tiklab-flow-ui/es/store'
@@ -28,7 +28,8 @@ import { observer } from "mobx-react"
 import { pluginLoader, PluginProvider } from "tiklab-plugin-core-ui";
 import "./assets/index";
 import resources from "./common/language/resources";
-import {useVersion} from "tiklab-eam-ui/es/utils"
+import {useVersion} from "tiklab-eam-ui/es/utils";
+import {privilegeStores} from "tiklab-privilege-ui/es/store";
 enableAxiosCE()
 const Index = observer((props) => {
 

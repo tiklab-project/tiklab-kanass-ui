@@ -60,46 +60,13 @@ const Linemap = (props) => {
      * @param {*}} e 
      */
     const onChange = value => {
-        // setRoadList([])
         setType(value)
-        // if (value === "sprint") {
-        //     findSprintRoadMap(projectId).then((data) => {
-        //         if (data.code === 0) {
-        //             setSprintList(data.data)
-        //         }
-        //     })
-        // }
-        // if (value === "version") {
-        //     findVersionRoadMap(projectId).then((data) => {
-        //         if (data.code === 0) {
-        //             setVersionList(data.data)
-        //         }
-        //     })
-        // }
-        // if (value === "epic") {
-        //     findEpicRoadMap(projectId).then((data) => {
-        //         if (data.code === 0) {
-        //             setRoadList(data.data)
-        //         }
-        //     })
-        // }
     };
 
     return (
         <Row style={{ height: "100%" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-linemap">
-                    {/* <Breadcumb
-                        firstText="项目管理"
-                    >
-                        <div className="top-botton">
-                            <Select defaultValue="sprint" onChange={onChange}>
-                                <Select.Option value="sprint">迭代</Select.Option>
-                                <Select.Option value="version">版本</Select.Option>
-                                <Select.Option value="epic">史诗</Select.Option>
-                            </Select>
-                        </div>
-                    </Breadcumb> */}
                     <Breadcumb
                         firstText="项目管理"
                     ></Breadcumb>

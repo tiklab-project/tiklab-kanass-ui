@@ -26,6 +26,9 @@
                 justify-content: space-between;
                 align-items: center;
                 padding: 10px;
+                .svg-icon {
+                    margin-right: 10px;
+                }
             }
             .projectSet-info-icon {
                 width: 20px;
@@ -43,7 +46,6 @@
                 display: flex;
                 flex-wrap: wrap;
                 padding: 10px;
-                margin-left: 30px;
             }
             .projectSet-info-item {
                 width: 50%;

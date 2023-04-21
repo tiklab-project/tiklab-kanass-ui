@@ -72,7 +72,9 @@ const Header = props => {
     const logOut = () => {
         props.history.push({
             pathname: '/logout',
-            state: window.location.href
+            state:{
+                preRoute: props.location.pathname
+            }
         })
     }
 
@@ -142,6 +144,9 @@ const Header = props => {
         sessionStorage.setItem("menuKey", "set")
     };
 
+    const goToHomes = (value) => {
+        window.open( homes_url + value, '_blank')
+    }
     /**
      * 帮助下拉框
      */
@@ -150,7 +155,7 @@ const Header = props => {
             <div className="help-head">
                 帮助
             </div>
-            <div className="help-item">
+            <div className="help-item" onClick={() => goToHomes("/document/documentList")}>
                 <span className="help-item-left">
                     <svg aria-hidden="true" className="svg-icon">
                         <use xlinkHref="#icon-doc"></use>
@@ -162,7 +167,7 @@ const Header = props => {
                     <use xlinkHref="#icon-jump"></use>
                 </svg>
             </div>
-            <div className="help-item">
+            <div className="help-item" onClick={() => goToHomes("/question/questionList")}>
                 <span className="help-item-left">
                     <svg aria-hidden="true" className="svg-icon">
                         <use xlinkHref="#icon-cuservice"></use>
@@ -174,7 +179,7 @@ const Header = props => {
                     <use xlinkHref="#icon-jump"></use>
                 </svg>
             </div>
-            <div className="help-item">
+            <div className="help-item" onClick={() => goToHomes("/account/workOrder/workOrderList")}>
                 <span className="help-item-left">
                     <svg aria-hidden="true" className="svg-icon">
                         <use xlinkHref="#icon-workorder"></use>
@@ -186,7 +191,7 @@ const Header = props => {
                     <use xlinkHref="#icon-jump"></use>
                 </svg>
             </div>
-            <div className="help-item">
+            <div className="help-item" onClick={() => goToHomes("/account/group/onlineservice")}>
                 <span className="help-item-left">
                     <svg aria-hidden="true" className="svg-icon">
                         <use xlinkHref="#icon-community"></use>

@@ -7,14 +7,20 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-21 13:02:38
  */
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import { ProjectFlow } from 'tiklab-flow-ui';
 import { withRouter } from "react-router";
 
 const ProjectProjectFlowList = (props) => {
     const projectId = props.match.params.id;
+    const path = props.match.path.split("/")[2];
+    const [router, setRouter] = useState();
+    useEffect(() => {
+        setRouter(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail`)
+        return
+    },[])
     return (
-        <ProjectFlow domainId={projectId} />
+        <ProjectFlow domainId={projectId} viewRouter = {router} designRouter = {router} {...props}/>
 
     )
 }

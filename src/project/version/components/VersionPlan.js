@@ -155,7 +155,6 @@ const VersionPlan = (props) => {
                     style={{ width: 300 }}
                     onChange={onSearch}
                 />
-
             </div>
             <Table
                 columns={columns}

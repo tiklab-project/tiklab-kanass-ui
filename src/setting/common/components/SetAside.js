@@ -10,7 +10,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import { setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter } from "./SetRouter";
-import {PrivilegeButton} from "tiklab-user-ui"
+import { PrivilegeButton } from "tiklab-user-ui"
 const SetAside = (props) => {
     console.log(props)
     // 无子级菜单处理
@@ -45,7 +45,7 @@ const SetAside = (props) => {
 
     const renderMenu = (data, deep, index) => {
         return (
-            <PrivilegeButton code = {data.purviewCode}>
+            <PrivilegeButton code={data.purviewCode}>
                 <li
                     style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                     className={`orga-aside-li orga-aside-second ${data.id === selectKey ? "orga-aside-select" : ""}`}
@@ -54,10 +54,12 @@ const SetAside = (props) => {
                     code={data.encoded}
                 >
                     <span className="orga-aside-item-left">
+                        {
+                            data.icon && <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref={`#icon-${data.icon}`}></use>
+                            </svg>
+                        }
 
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref={`#icon-${data.icon}`}></use>
-                        </svg>
                         <span>{data.title}</span>
                     </span>
 
@@ -84,38 +86,41 @@ const SetAside = (props) => {
     const renderSubMenu = (item, deep, index) => {
 
         return (
-            <PrivilegeButton code = {item.purviewCode}>
+            <PrivilegeButton code={item.purviewCode}>
                 <li key={item.code} title={item.title} className="orga-aside-li">
-                <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.id)}>
-                    <span to={item.id} className="orga-aside-item-left">
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                        </svg>
-                        <span className="orga-aside-title">{item.title}</span>
-                    </span>
-                    <div className="orga-aside-item-icon">
-                        {
-                            item.children ?
-                                (isExpandedTree(item.id) ?
-                                    <DownOutlined style={{ fontSize: "10px" }} /> :
-                                    <UpOutlined style={{ fontSize: "10px" }} />
-                                ) : ""
-                        }
-                    </div>
-                </div>
+                    <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.id)}>
 
-                <ul title={item.title} className={`orga-aside-ul ${isExpandedTree(item.id) ? null : 'orga-aside-hidden'}`}>
-                    {
-                        item.children && item.children.map(item => {
-                            const deepnew = deep + 1
-                            return item.children && item.children.length ?
-                                renderSubMenu(item, deepnew, index) : renderMenu(item, deepnew, index)
-                        })
-                    }
-                </ul>
-            </li>
+                        {
+                            item.icon && <span to={item.id} className="orga-aside-item-left">
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref={`#icon-${item.icon}`}></use>
+                                </svg>
+                                <span className="orga-aside-title">{item.title}</span>
+                            </span>
+                        }
+                        <div className="orga-aside-item-icon">
+                            {
+                                item.children ?
+                                    (isExpandedTree(item.id) ?
+                                        <DownOutlined style={{ fontSize: "10px" }} /> :
+                                        <UpOutlined style={{ fontSize: "10px" }} />
+                                    ) : ""
+                            }
+                        </div>
+                    </div>
+
+                    <ul title={item.title} className={`orga-aside-ul ${isExpandedTree(item.id) ? null : 'orga-aside-hidden'}`}>
+                        {
+                            item.children && item.children.map(item => {
+                                const deepnew = deep + 1
+                                return item.children && item.children.length ?
+                                    renderSubMenu(item, deepnew, index) : renderMenu(item, deepnew, index)
+                            })
+                        }
+                    </ul>
+                </li>
             </PrivilegeButton>
-            
+
         )
     }
 

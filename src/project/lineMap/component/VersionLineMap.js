@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
-import { Graph } from '@antv/x6';
+import { Graph,Shape } from '@antv/x6';
 import "./LineMap.scss";
 import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
@@ -73,6 +73,19 @@ const VersionLineMap = (props) => {
             // },
             resizing: {
                 enabled: true
+            },
+            translating: {
+                restrict(cellView) {
+                    const cell = cellView.cell
+                    if (cell.isNode()) {
+                        const parent = cell.getParent()
+                        if (parent) {
+                            return parent.getBBox()
+                        }
+                    }
+
+                    return null
+                },
             }
         })
         console.log(graph)
@@ -93,9 +106,9 @@ const VersionLineMap = (props) => {
      */
     const [scrollLeft,setScrollLeft] = useState()
     useEffect(() => {
-        if (ganttdata !== undefined) {
-            setGarph()
-        }
+        // if (ganttdata !== undefined) {
+        //     setGarph()
+        // }
         const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * 24 : 365 * 24) : (isLeapYear(currentYear - 1) ? 366 * 24 : 365 * 24);
         setScrollLeft(scrollWidth)
 
@@ -109,7 +122,8 @@ const VersionLineMap = (props) => {
      */
     useEffect(() => {
         if (data.length > 0) {
-            setGantt(setNode(data))
+            setNode(data)
+            // setGantt(setNode(data))
         }
         return
     }, [data])
@@ -163,27 +177,42 @@ const VersionLineMap = (props) => {
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / (3600 * 1000));
-
-            nodes.push(
-                {
-                    id: item.id,
-                    x: xAxis,
-                    y: yAxis,
-                    width: length,
-                    height: 14,
-                    attrs: {
-                        body: {
-                            fill: 'var(--tiklab-blue)', // 背景颜色
-                            stroke: 'var(--tiklab-gray-400)',  // 边框颜色
-                        },
+            // nodes.push(
+            //     {
+            //         id: "parent" + item.id,
+            //         x: 0,
+            //         y: yAxis,
+            //         width: ganttWidth,
+            //         height: 14,
+            //         attrs: {
+            //             body: {
+            //                 stroke: '#fff',  // 边框颜色
+            //             },
+            //         }
+            //     }
+            // )
+            const rect = new Shape.Rect({
+                id: item.id,
+                x: xAxis,
+                y: yAxis,
+                width: length,
+                height: 14,
+                attrs: {
+                    body: {
+                        fill: 'var(--tiklab-blue)', // 背景颜色
+                        stroke: 'var(--tiklab-gray-400)',  // 边框颜色
                     },
-                    translate: {x: xAxis}
-                }
-            )
-            
+                },
+            })
+            // nodes.push(
+               
+            // )
+            rect.translate(0,0, {restrict: {x: 0, y: yAxis, width: ganttWidth, height: 14}})
+            console.log(rect)
+            graph.addNode(rect)
             // 连接线的数据
             if (item.preDependWorkItem && item.preDependWorkItem.id) {
-                edges.push({
+                const edge = new Shape.Edge({
                     // String，必须，起始节点 id
                     source: item.id,
                     // String，必须，目标节点 id
@@ -197,12 +226,13 @@ const VersionLineMap = (props) => {
                         },
                     },
                 })
+                graph.addEdge(edge)
             }
-            return nodes;
+            // return nodes;
         })
-        let item = { nodes: nodes, edges: edges }
-        console.log(item)
-        return item;
+        // let item = { nodes: nodes, edges: edges }
+        // console.log(item)
+        // return item;
     }
 
     /**

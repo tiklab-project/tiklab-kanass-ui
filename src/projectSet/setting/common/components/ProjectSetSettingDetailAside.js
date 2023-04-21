@@ -7,15 +7,15 @@
  * @LastEditTime: 2022-01-19 13:13:36
  */
 
-import React,{Fragment, useState,useEffect} from 'react';
-import {withRouter} from "react-router-dom";
-import { Layout,Button } from "antd";
+import React, { Fragment, useState, useEffect } from 'react';
+import { withRouter } from "react-router-dom";
+import { Layout, Button } from "antd";
 
 import { useTranslation } from 'react-i18next';
 import "./ProjectSetSettingDetailAside.scss"
-const {Sider} = Layout;
+const { Sider } = Layout;
 
-const ProjectSetSettingDetailAside =(props) => {
+const ProjectSetSettingDetailAside = (props) => {
     //语言包
     const { t } = useTranslation();
     const projectSetId = JSON.parse(localStorage.getItem("projectSet")).id;
@@ -41,17 +41,17 @@ const ProjectSetSettingDetailAside =(props) => {
         }
     ];
     // 当前选中路由
-    const [selectKey,setSelectKey] = useState(`/index/projectScrumDetail/${projectSetId}/projectSetDetail/basicInfo`);
+    const [selectKey, setSelectKey] = useState(`/index/projectScrumDetail/${projectSetId}/projectSetDetail/basicInfo`);
 
     // 菜单是否折叠
-    const [isShowText,SetIsShowText] = useState(true)
+    const [isShowText, SetIsShowText] = useState(true)
 
 
-    
+
     useEffect(() => {
         // 初次进入激活导航菜单
         setSelectKey(props.location.pathname)
-        return 
+        return
     }, [projectSetId])
 
 
@@ -59,10 +59,10 @@ const ProjectSetSettingDetailAside =(props) => {
      * 点击左侧菜单
      * @param {*} key 
      */
-    const selectKeyFun = (key)=>{
+    const selectKeyFun = (key) => {
         setSelectKey(key)
         props.history.push(key)
-        
+
     }
 
     const backProject = () => {
@@ -70,11 +70,11 @@ const ProjectSetSettingDetailAside =(props) => {
     }
 
 
-    return(
+    return (
         <Fragment>
-            <Sider trigger={null}  width="180">
+            <Sider trigger={null} width="180">
                 <div className="projectSet-aside">
-                    
+
                     <div className="projectSet-title title">
                         {/* <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-program"></use>
@@ -83,34 +83,25 @@ const ProjectSetSettingDetailAside =(props) => {
                     </div>
                     <ul className="projectSet-menu">
                         {
-                            prorouter && prorouter.map(Item=> {
-                                return  <div className={`projectSet-menu-submenu ${Item.key=== selectKey ? "projectSet-menu-select" : ""}`} 
-                                            key={Item.key} 
-                                            onClick={()=>selectKeyFun(Item.key)}
-                                        >
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref= {`#icon-${Item.icon}`}></use>
-                                            </svg>
-                                            <span className={`${isShowText ? "": "projectSet-notext"}`}>
-                                                {Item.title}
-                                            </span>
-                                        </div>
+                            prorouter && prorouter.map(Item => {
+                                return <div className={`projectSet-menu-submenu ${Item.key === selectKey ? "projectSet-menu-select" : ""}`}
+                                    key={Item.key}
+                                    onClick={() => selectKeyFun(Item.key)}
+                                >
+                                    {/* <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-${Item.icon}`}></use>
+                                    </svg> */}
+                                    <span className={`${isShowText ? "" : "projectSet-notext"}`}>
+                                        {Item.title}
+                                    </span>
+                                </div>
                             })
                         }
                     </ul>
                 </div>
-
-                {/* <div className="projectSet-back" onClick={()=> backProject(props.history.push("/index/projectSet"))}>
-                    <span style={{marginRight: "20px"}}>
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref="#iconfanhui"></use>
-                        </svg>
-                        返回项目
-                    </span>
-                </div> */}
             </Sider>
         </Fragment>
     )
-    
+
 }
 export default withRouter(ProjectSetSettingDetailAside);

@@ -16,7 +16,9 @@ import "../components/ProjectSetBasicInfo.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectSetIcon from "./changeProjectSetIcon";
 import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { Collapse } from 'antd';
 
+const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
 const ProjectSetBasicInfo = props => {
     const layout = {
@@ -27,11 +29,20 @@ const ProjectSetBasicInfo = props => {
             span: 12,
         },
     };
+    const formTailLayout = {
+        labelCol: {
+            span: 4,
+        },
+        wrapperCol: {
+            span: 18,
+            offset: 4
+        },
+    };
     const [form] = Form.useForm();
     const projectSetId = props.match.params.projectSetId;
     const { projectSetStore } = props;
 
-    const {deleProjectSet, updateProjectSet, findProjectSet, getUseList, uselist } = projectSetStore;
+    const { deleProjectSet, updateProjectSet, findProjectSet, getUseList, uselist } = projectSetStore;
     const [disable, setDisabled] = useState(true);
     const [iconUrl, setIconUrl] = useState();
     const [visible, setVisible] = useState(false);
@@ -116,6 +127,40 @@ const ProjectSetBasicInfo = props => {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+
+    const projectSetInfoDesc = () => (
+        <div>
+            <div className="projectSet-info-title">
+                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                    <use xlinkHref="#icon-projectDetail"></use>
+                </svg>
+                项目集信息
+            </div>
+            <div style={{ fontSize: "12px", color: "#999" }}>
+                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                    <use></use>
+                </svg>
+                项目集图标信息，可见范围，负责人等信息，可点击修改</div>
+        </div>
+    );
+    
+    const projectSetDelete = () => (
+        <div>
+            <div className="projectSet-info-title">
+                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                    <use xlinkHref="#icon-projectDelete"></use>
+                </svg>
+                删除项目
+            </div>
+            <div style={{ fontSize: "12px", color: "#999" }}>
+                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                    <use></use>
+                </svg>
+                删除项目
+            </div>
+        </div>
+    );
+
     return (
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -123,113 +168,115 @@ const ProjectSetBasicInfo = props => {
                     <Breadcumb
                         firstText="项目集信息"
                     />
-                    <div className="projectSet-set-icon">
-                        <div className="projectSet-set-title">
-                            项目集信息
-                        </div>
-                        <div className="projectSet-set-icon-block">
-                            <div>
-                                {
-                                    iconUrl ?
-                                        <img
-                                            src={('/images/' + iconUrl)}
-                                            alt="" width={60} height={60}
-                                        />
-                                        :
-                                        <img
-                                            src={('images/project1.png')}
-                                            alt="" width={60} height={60}
-                                        />
-                                }
-                                <span>项目集图标，可点击更改按钮修改icon</span>
-                            </div>
-                            <PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>
-                                <div className="change-botton" onClick={() => setVisible(true)}>
-                                    更改图标
-                                </div>
-                            </PrivilegeProjectButton>
-                           
-                        </div>
-                        <Form
-                            {...layout}
-                            name="basic"
-                            initialValues={{
-                                remember: true,
-                            }}
-                            form={form}
-                            onFinish={onFinish}
-                            onFieldsChange={() => setDisabled(false)}
-                            labelAlign = {"left"}
-                            onValuesChange = {onFinish}
-                        >
-                            <Form.Item
-                                label="项目集名称"
-                                name="name"
-                            >
-                                <Input placeholder="项目集名称" />
-                            </Form.Item>
-                           
-                            
-                            <Form.Item
-                                label="负责人"
-                                name="master"
-                                rules={[
-                                    {
-                                        required: false,
-                                        message: '请输入项目集编码',
-                                    }
-                                ]}
-                            >
-                                <Select
-                                    placeholder="负责人"
-                                    allowClear
-                                >
-                                    {
-                                        uselist && uselist.map((item, index) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-                            <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                <RangePicker locale={locale} />
-                            </Form.Item>
-                            <Form.Item
-                                label="项目集描述"
-                                name="remark"
-                            >
-                                <Input placeholder="项目集描述" />
-                            </Form.Item>
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }} >
-                                <Button onClick={() => cancel()}>
-                                    取消
-                                </Button>
-                                <Button  htmlType="submit" type = "primary" disabled={disable}>
-                                    保存
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </div>
+                    <Collapse expandIconPosition={"right"}>
+                        <Panel header={projectSetInfoDesc()} key="1" >
+                            <div className="projectSet-set-icon">
+                                <div className="projectSet-set-icon-block">
+                                    <div>
+                                        {
+                                            iconUrl ?
+                                                <img
+                                                    src={('/images/' + iconUrl)}
+                                                    alt="" width={60} height={60}
+                                                />
+                                                :
+                                                <img
+                                                    src={('images/project1.png')}
+                                                    alt="" width={60} height={60}
+                                                />
+                                        }
+                                        <span>项目集图标，可点击更改按钮修改icon</span>
+                                    </div>
+                                    <PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>
+                                        <div className="change-botton" onClick={() => setVisible(true)}>
+                                            更改图标
+                                        </div>
+                                    </PrivilegeProjectButton>
 
-                    <div className="projectSet-set-icon">
-                        <div className="projectSet-set-title">
-                            删除项目集
-                        </div>
-                        <div className="projectSet-set-icon-block">
-                            <div>
-                               
-                                <span>此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
-                            </div>
-                            <PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>
-                                <div className="change-botton" onClick={() => showModal()}>
-                                    删除项目集
                                 </div>
-                            </PrivilegeProjectButton>
-                            
-                        </div>
-                    </div>
+                                <Form
+                                    {...layout}
+                                    name="basic"
+                                    initialValues={{
+                                        remember: true,
+                                    }}
+                                    form={form}
+                                    onFinish={onFinish}
+                                    onFieldsChange={() => setDisabled(false)}
+                                    labelAlign={"left"}
+                                    onValuesChange={onFinish}
+                                >
+                                    <Form.Item
+                                        label="项目集名称"
+                                        name="name"
+                                    >
+                                        <Input placeholder="项目集名称" />
+                                    </Form.Item>
+
+
+                                    <Form.Item
+                                        label="负责人"
+                                        name="master"
+                                        rules={[
+                                            {
+                                                required: false,
+                                                message: '请输入项目集编码',
+                                            }
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="负责人"
+                                            allowClear
+                                        >
+                                            {
+                                                uselist && uselist.map((item, index) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
+                                        <RangePicker locale={locale} />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="项目集描述"
+                                        name="remark"
+                                    >
+                                        <Input placeholder="项目集描述" />
+                                    </Form.Item>
+                                    <Form.Item {...formTailLayout} >
+                                        <Button onClick={() => cancel()}>
+                                            取消
+                                        </Button>
+                                        <Button htmlType="submit" type="primary" disabled={disable}>
+                                            保存
+                                        </Button>
+                                    </Form.Item>
+                                </Form>
+                            </div>
+                        </Panel>
+                        <Panel header={projectSetDelete()} key="2" >
+                            <div className="projectSet-set-icon">
+                                <div className="projectSet-set-icon-block">
+                                    <div>
+
+                                        <span>此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
+                                    </div>
+                                    <PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>
+                                        <div className="change-botton" onClick={() => showModal()}>
+                                            删除项目集
+                                        </div>
+                                    </PrivilegeProjectButton>
+
+                                </div>
+                            </div>
+                        </Panel>
+                    </Collapse>
+
+
+
                 </div>
-                <Modal title="是否删除" visible={isModalVisible} closable = {false} onOk={handleOk} onCancel={handleCancel} okText = {"确定"} cancelText = {"取消"}>
+                <Modal title="是否删除" visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
                     此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                 </Modal>
                 <ProjectSetIcon

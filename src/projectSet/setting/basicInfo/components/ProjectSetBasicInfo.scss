@@ -4,6 +4,12 @@
     color: var(--tiklab-blue);
 }
 
+.projectSet-info-title {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+}
 
 .projectSet-set-basicinfo {
     padding: 10px;
@@ -13,9 +19,6 @@
         font-weight: var(--tiklab-font-weight-bold);
         font-size: 15px;
         margin-bottom: 10px;
-    }
-    .projectSet-set-icon {
-        border-bottom: 1px solid #d9d9d9;
     }
     .projectSet-set-icon-block {
         display: flex;

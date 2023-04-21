@@ -8,11 +8,12 @@ const { Option } = Select;
 const  WorkRepositoryAddmodal = (props) => {
     const {workRepositoryStore,workStore,setWorkDoucumentList} = props;
     const {workId} = workStore;
-    const {findDocumentPage,findDocumentPageByItemId,createWorkItemDocument,getRepositoryAllList} = workRepositoryStore;
+    const {findDocumentPage,findDocumentPageByItemId,createWorkItemDocument,getRepositoryAllList,findUnRelationWorkDocumentList} = workRepositoryStore;
     const [visible, setVisible] = useState(false);
     const [selectedRowKeys,setSelectedRowKeys] = useState([]);
+    const [selectedRow,setSelectedRow] = useState([]);
     const [doucumentList,setDoucumentList] = useState([])
-    const [repositoryallList,setRepositoryaLLList] = useState([]);
+    const [repositoryallList,setRepositoryaList] = useState([]);
     
     const showModal = () => {
         setVisible(true)
@@ -21,11 +22,18 @@ const  WorkRepositoryAddmodal = (props) => {
     useEffect(()=> {
         if(visible === true){
             findDocumentPage({workItemId:workId}).then((data)=> {
-                setDoucumentList([...data])
+                if(data.code === 0){
+                    setDoucumentList(data.dataList)
+                }
+                
             
             })
             getRepositoryAllList().then(data => {
-                setRepositoryaLLList([...data])
+                if(data.code === 0){
+                    console.log(data.data)
+                    setRepositoryaList(data.data)
+                }
+                // setRepositoryaList(data)
             })
 
         }
@@ -47,7 +55,7 @@ const  WorkRepositoryAddmodal = (props) => {
         },
         {
             title: "作者",
-            dataIndex: ["repository","master","name"],
+            dataIndex: ["master","name"],
             key: "assigner",
             width: 150
         }
@@ -59,12 +67,14 @@ const  WorkRepositoryAddmodal = (props) => {
     
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
-        const categoryQuery = {
+        const params = {
             repositoryId: value,
-            workItemId:workId
+            workItemId: workId
         }
-        findDocumentPage(categoryQuery).then((data)=> {
-            setDoucumentList([...data])
+        findUnRelationWorkDocumentList(params).then((data)=> {
+            if(data.code === 0){
+                setDoucumentList(data.data)
+            }
         })
     }
     const searchSelectWorkRepository = (value)=> {
@@ -74,22 +84,26 @@ const  WorkRepositoryAddmodal = (props) => {
             workItemId:workId
         }
         findDocumentPage(categoryQuery).then((data)=> {
-            setDoucumentList([...data])
+            if(data.code === 0){
+                setDoucumentList(data.data)
+            }
+           
         })
     }
     // 选择文档
-    const selectWorkRepository=(selected)=> {
+    const selectWorkRepository=(selected, selectedRows)=> {
+        console.log(selected, selectedRows)
         setSelectedRowKeys(selected)
+        setSelectedRow(selectedRows)
         // setSelectedWorkRepositoryList(selectedRows)
     }
     //提交用户列表
     const submitWorkRepositoryList = ()=> {
-        console.log(workId)
         const workItemDocument = [];
-        if(selectedRowKeys.length !== 0){
-            for(let i=0; i<selectedRowKeys.length; i++) {
+        if(selectedRow.length !== 0){
+            for(let i=0; i<selectedRow.length; i++) {
                 // createWorkItemDocument({id: selectedRowKeys[i],workitemId:workId })
-                workItemDocument.push({documentId: selectedRowKeys[i],workItemId: workId})
+                workItemDocument.push({documentId: selectedRow[i].id,workItemId: workId, repositoryId: selectedRow[i].repository.id})
             }
             createWorkItemDocument(workItemDocument).then((data)=> {
                 if(data.code === 0) {
@@ -156,7 +170,7 @@ const  WorkRepositoryAddmodal = (props) => {
                     dataSource={doucumentList} 
                     rowKey={record=> record.id}
                     rowSelection={{
-                        selectedRowKeys,
+                        selectedRow,
                         onChange: selectWorkRepository,
                         getCheckboxProps: (record) => ({
                             disabled: record.rele === true

@@ -12,14 +12,15 @@ import "../components/ProjectSetProjectList.scss";
 import ProjectSetRelevance from "./ProjectSetRelevance";
 import { inject, observer } from 'mobx-react';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-
+import InputSearch from "../../../common/input/InputSearch";
 import { withRouter } from 'react-router';
 
 const ProjectSetProjectList = (props) => {
     const { projectSetStore } = props;
     const { findProjectList, updateProject, projectRelevance, findAllProjectSet } = projectSetStore;
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
-    const [projectSetAllList, setProjectSetAllList] = useState()
+    const [projectSetAllList, setProjectSetAllList] = useState();
+    const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     useEffect(() => {
         findAllProjectSet().then(res => {
             setProjectSetAllList(res.data)
@@ -77,29 +78,29 @@ const ProjectSetProjectList = (props) => {
             key: "projectName",
             align: "left",
             render: (text, record) => <div className="project-name" onClick={() => goProdetail(record)} >
-                    <div className="project-icon">
-                        {
-                            record.iconUrl ?
-                                <img
-                                    src={('/images/' + record.iconUrl)}
-                                    alt="" 
-                                    className="list-img"
-                                />
-                                :
-                                <img
-                                    src={('/images/project1.png')}
-                                    alt=""
-                                    className="list-img"
-                                />
-                        }
+                <div className="project-icon">
+                    {
+                        record.iconUrl ?
+                            <img
+                                src={('/images/' + record.iconUrl)}
+                                alt=""
+                                className="list-img"
+                            />
+                            :
+                            <img
+                                src={('/images/project1.png')}
+                                alt=""
+                                className="list-img"
+                            />
+                    }
 
-                    </div>
-                    <div>
-                        <div className="project-key">{record.projectKey}</div>
-                        <div className="project-text">{text}</div>
-                    </div>
-                    
                 </div>
+                <div>
+                    <div className="project-key">{record.projectKey}</div>
+                    <div className="project-text">{text}</div>
+                </div>
+
+            </div>
         },
         {
             title: "项目类型",
@@ -144,7 +145,7 @@ const ProjectSetProjectList = (props) => {
             width: "20%",
             render: (text, record) => (
                 <>
-                   {record.startTime} - {record.endTime}
+                    {record.startTime} - {record.endTime}
                 </>
             )
         },
@@ -156,7 +157,7 @@ const ProjectSetProjectList = (props) => {
             width: "10%",
             render: (text, record) => (
                 <>
-                   {record.quantityNumber} / {record.worklItemNumber}
+                    {record.quantityNumber} / {record.worklItemNumber}
                 </>
             )
         },
@@ -281,36 +282,42 @@ const ProjectSetProjectList = (props) => {
         />
     }
 
+    const onSearch = (value) => {
+        findProjectList({ projectName: value })
+    }
     return <Row>
         <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
             <div className="projectSetDetail">
                 <Breadcumb
-                    firstText="项目集列表"
-                    secondText="关联项目"
+                    firstText={projectSet.name}
+                    secondText="项目"
                     firstUrl="/index/projectSet/projectSetList"
                 >
                     {/* <PrivilegeButton code={'RelationProject'} domainId={projectSetId}  {...props}> */}
-                        <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
+                    <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
                     {/* </PrivilegeButton> */}
 
                 </Breadcumb>
-                <div style={{ padding: "20px 0" }}>
+                <div>
                     <div className="search-add">
                         <div>
-                            <Select defaultValue="项目集列表" style={{ width: 120 }} onChange={(value) => changeProjectSet(value)}>
+                            {/* <Select defaultValue="项目集列表" style={{ width: 120 }} onChange={(value) => changeProjectSet(value)}>
                                 {
                                     projectSetAllList && projectSetAllList.map((item) => {
                                         return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                     })
                                 }
-                            </Select>
+                            </Select> */}
+                            <InputSearch
+                                placeholder="项目名称"
+                                allowClear
+                                style={{ width: 300 }}
+                                onChange={onSearch}
+                            />
                         </div>
                     </div>
 
                     <div className="table-box">
-                        {
-                            console.log(projectRelevance)
-                        }
                         <Table
                             columns={columns}
                             dataSource={projectRelevance}

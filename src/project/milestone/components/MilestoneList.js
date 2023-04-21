@@ -13,7 +13,7 @@ import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-user-ui";
 import "../components/milestone.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-
+import MilestoneTimeline from "./MilestoneTimeline"
 import { withRouter } from "react-router";
 
 const MilestoneList = (props) => {
@@ -131,21 +131,7 @@ const MilestoneList = (props) => {
                                 {...props}
                             />
                         </Breadcumb>
-                        {/* <div className="search-add">
-                            <Input
-                                className="search"
-                                onChange={(value) => onSearch(value)}
-                                placeholder="请输入迭代名字"
-                                suffix={
-                                    <SearchOutlined
-                                        style={{
-                                            color: 'rgba(0,0,0,.45)',
-                                        }}
-                                    />
-                                }
-                            />
-                            
-                        </div> */}
+                        <MilestoneTimeline milestonelist = {milestonelist}/>
                         <div className="project-milestone-contant">
 
                             <div className="table-box">

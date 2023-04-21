@@ -2,12 +2,13 @@ import React from "react";
 import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
 
+const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
+const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
-const ProjectProjectDirectoryView = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListView'))
 const ProjectPreliminaryListSystem = AsyncComponent(() => import('./setting/form/ProjectPreliminaryListSystem'))
 const ProjectPreliminaryList = AsyncComponent(() => import('./setting/form/ProjectPreliminaryList'))
 const FormList = AsyncComponent(() => import('./setting/form/ProjectFormList'))
@@ -18,8 +19,10 @@ const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail
 // const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
 const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowList'))
 const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowListSystem'))
+
 const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/ProjectFlowStatusList'))
-const FlowDetail = AsyncComponent(() => import('./setting/flow/ProjectFlowDetail'))
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/FlowDetailView'))    
+const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/FlowDetailDesign'))
 const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/ProjectNodeStatusList'))
 // 状态组件
 
@@ -70,7 +73,7 @@ const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/com
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
-
+const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
@@ -157,7 +160,12 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
-const Routers = [
+const RoutersSaas = [
+    {
+        path: "/login",
+        exact: true,
+        component: Login,
+    },
     {
         path: "/noAuth",
         exact: true,
@@ -498,11 +506,6 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/index/setting/flowDetail/:id",
-                        component: FlowDetail,
-                        exact: true
-                    },
-                    {
                         path: "/index/setting/worktype",
                         component: WorkTypeList,
                         exact: true
@@ -568,8 +571,8 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/index/setting/preliminaryTypeView",
-                        component: ProjectProjectDirectoryView,
+                        path: "/index/setting/preliminaryTypeSys",
+                        component: ProjectProjectDirectorySys,
                         exact: true
                     },
                     {
@@ -585,6 +588,11 @@ const Routers = [
                     {
                         path: "/index/setting/form",
                         component: FormList,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/FormDetail/:formId",
+                        component: FormDetail,
                         exact: true
                     },
                     {
@@ -605,6 +613,16 @@ const Routers = [
                     {
                         path: "/index/setting/systemFlow",
                         component: ProjectSystemFlowList,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/flowDetailView/:flowId",
+                        component: FlowDetailView,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/flowDetailDesign/:flowId",
+                        component: FlowDetailDesign,
                         exact: true
                     },
                     {
@@ -881,13 +899,16 @@ const Routers = [
                                 component: ProjectFlowList,
                             },
                             {
-                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFormDetail/:formId",
-                                component: FormDetail,
-                                exact: true
+                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectForm",
+                                component: ProjectFormList,
                             },
                             {
-                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFlowDetail/:id",
-                                component: FlowDetail,
+                                path: "/index/projectNomalDetail/:id/projectSetDetail/ProjectFormDetail/:formId",
+                                component: ProjectFormDetail,
+                            },
+                            {
+                                path: "/index/projectNomalDetail/:id/projectSetDetail/projectFlowDetail/:flowId",
+                                component: FlowDetailDesign,
                                 exact: true
                             }
                         ]
@@ -1074,13 +1095,12 @@ const Routers = [
                                 component: ProjectFormList,
                             },
                             {
-                                path: "/index/projectScrumDetail/:id/projectSetDetail/projectFormDetail/:id",
-                                component: FormDetail,
-                                exact: true
+                                path: "/index/projectScrumDetail/:id/projectSetDetail/ProjectFormDetail/:formId",
+                                component: ProjectFormDetail,
                             },
                             {
-                                path: "/index/projectScrumDetail/:id/projectSetDetail/projectFlowDetail/:id",
-                                component: FlowDetail,
+                                path: "/index/projectScrumDetail/:id/projectSetDetail/projectFlowDetail/:flowId",
+                                component: FlowDetailDesign,
                                 exact: true
                             }
                         ]
@@ -1181,4 +1201,4 @@ const Routers = [
         exact: true
     },
 ]
-export default Routers;
+export default RoutersSaas;

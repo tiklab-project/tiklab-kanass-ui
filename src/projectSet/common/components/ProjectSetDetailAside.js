@@ -30,8 +30,8 @@ const ProjectSetDetailAside = (props) => {
     const projectSet = JSON.parse(localStorage.getItem("projectSet"))
     // 项目集id
     const projectSetId = props.match.params.projectSetId;
-     // 路由
-     const projectSetRouter = [
+    // 路由
+    const projectSetRouter = [
         {
             title: `概览`,
             icon: 'survey',
@@ -61,7 +61,7 @@ const ProjectSetDetailAside = (props) => {
         // 获取项目集权限
         systemRoleStore.getInitProjectPermissions(getUser().userId, projectSetId)
         return
-    }, [projectSetId,props.location.pathname])
+    }, [projectSetId, props.location.pathname])
 
 
     /**
@@ -86,11 +86,12 @@ const ProjectSetDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='projectSet-detail-side'>
                 <div className={`projectSet-aside`}>
-                    <ProjectSetChangeModal isShowText = {isShowText}/>
+                    <ProjectSetChangeModal isShowText={isShowText} />
                     <ul className="projectSet-menu">
                         {
-                            projectSetRouter && projectSetRouter.map((item,index) =>  {return isShowText ? 
-                                <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
+                            projectSetRouter && projectSetRouter.map((item, index) => {
+                                return isShowText ?
+                                    <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
                                         key={index}
                                         onClick={() => selectMenu(item.key)}
                                     >
@@ -112,15 +113,24 @@ const ProjectSetDetailAside = (props) => {
                                             {item.title}
                                         </span>
                                     </div>
-                                    
+
                             })
                         }
                     </ul>
-                    <ProjectSetSetButton isShowText = {isShowText}/>
+                    <ProjectSetSetButton isShowText={isShowText} />
                     <div className="projectSet-expend" onClick={toggleCollapsed} >
-                        {
+                        {/* {
                             isShowText ? <i className="iconfont iconzuo-yuan right" title="收回"></i> :
-                            <i className="iconfont iconyou-yuan right" title="展开"></i>
+                                <i className="iconfont iconyou-yuan right" title="展开"></i>
+                        } */}
+                        {
+                            isShowText ? <svg className="menu-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-leftcircle"></use>
+                            </svg>
+                                :
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-rightcircle"></use>
+                                </svg>
                         }
                     </div>
                 </div>
@@ -130,4 +140,4 @@ const ProjectSetDetailAside = (props) => {
     )
 
 }
-export default withRouter(inject( "systemRoleStore")(observer(ProjectSetDetailAside)));
+export default withRouter(inject("systemRoleStore")(observer(ProjectSetDetailAside)));

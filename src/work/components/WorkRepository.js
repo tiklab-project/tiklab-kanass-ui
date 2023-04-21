@@ -16,7 +16,7 @@ const { Search } = Input;
 
 const WorkRepository = (props) => {
     const { workRepositoryStore, workStore } = props;
-    const { findDocumentPageByItemId, deleteWorkItemDocument } = workRepositoryStore;
+    const { findDocumentPageByItemId, deleteWorkItemDocument, findSystemUrl } = workRepositoryStore;
     const { workId } = workStore;
     const [workDoucumentList, setWorkDoucumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
@@ -44,12 +44,21 @@ const WorkRepository = (props) => {
             }
         })
     }
+    const goWikiDetail = (data) => {
+        findSystemUrl().then(res=> {
+            const kanassUrl = res.data.kanassUrl
+            window.open(`${kanassUrl}/#/index/repositorydetail/${data.repository.id}/doc/${data.id}`)
+        })
+    }
     const columns = [
         {
             title: "标题",
             dataIndex: "name",
             key: "name",
-            width: 150
+            width: 150,
+            render: (text, record) => (
+                <span onClick={() => goWikiDetail(record)} className="span-botton" >{text}</span>
+            ),
         },
         {
             title: "知识库",
@@ -59,7 +68,7 @@ const WorkRepository = (props) => {
         },
         {
             title: "作者",
-            dataIndex: ["repository", "master", "name"],
+            dataIndex: ["master", "name"],
             key: "assigner",
             width: 150
         },

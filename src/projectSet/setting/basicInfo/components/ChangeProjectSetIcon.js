@@ -74,21 +74,17 @@ const ChangeProjectSetIcon = (props) => {
                         <div className="projectSet-icon-box">
                             {
                                 iconList && iconList.map((item) => {
-                                    return <div className={`projectSet-icon ${item.iconUrl === projectSetIconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setprojectSetIconUrl(item.iconUrl) }}>
+                                    return <div 
+                                        className={`projectSet-icon ${item.iconUrl === projectSetIconUrl ? "icon-select" : null}`} 
+                                        key={item.id} 
+                                        onClick={() => { setprojectSetIconUrl(item.iconUrl) }}
+                                    >
                                         <img src={('images/' + item.iconUrl)} alt="" className="img-icon"/>
                                     </div>
                                 })
                             }
                         </div>
                     </Form.Item>
-                    {/* <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">
-                            提交
-                        </Button>
-                        <Button htmlType="button" onClick={onCancel}>
-                            取消
-                        </Button>
-                    </Form.Item> */}
                 </Form>
             </Modal>
 

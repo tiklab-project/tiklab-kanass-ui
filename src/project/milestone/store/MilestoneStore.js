@@ -109,7 +109,7 @@ export class MilestoneStore {
             projectId: this.milestonePageParam.projectId,
             name: this.milestonePageParam.name,
             orderParams: [{
-                name: "name",
+                name: "milestoneTime",
                 orderType: "asc"
             }],
             pageParam: {

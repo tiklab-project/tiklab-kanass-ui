@@ -33,6 +33,8 @@ const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
+const homes_url = JSON.stringify("http://192.168.10.19")
+const kanass_url =JSON.stringify("http://192.168.10.13:3004")
 module.exports = {
     base_url,
     userProduction,
@@ -46,5 +48,7 @@ module.exports = {
     client,
     upload_url,
     // acc_url,
-    mobile_url
+    mobile_url,
+    homes_url,
+    kanass_url
 }

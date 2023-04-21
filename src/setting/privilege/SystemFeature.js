@@ -1,5 +1,5 @@
 import React from "react";
-import { SystemFeature } from 'tiklab-user-ui';
+import { SystemFeature } from 'tiklab-privilege-ui';
 import { inject, observer } from "mobx-react";
 
 // 系统功能管理

@@ -24,7 +24,7 @@ const EpicLineMap = (props) => {
 
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
-    const [ganttWidth, setGanttWidth] = useState(0)
+    const [ganttWidth, setGanttWidth] = useState()
 
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
@@ -70,21 +70,11 @@ const EpicLineMap = (props) => {
                     },
                 ],
             },
+            interacting: {
+                nodeMovable: false
+            },
             resizing: {
                 enabled: true
-            },
-            translating: {
-                restrict(cellView) {
-                    const cell = cellView.cell
-                    if (cell.isNode()) {
-                        const parent = cell.getParent()
-                        if (parent) {
-                            return parent.getBBox()
-                        }
-                    }
-
-                    return null
-                },
             }
         })
         getGraph(graph)
@@ -176,21 +166,7 @@ const EpicLineMap = (props) => {
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / (3600 * 1000));
-            nodes.push(
-                {
-                    id: "parent" + item.id,
-                    x: 0,
-                    y: yAxis,
-                    width: ganttWidth,
-                    height: 14,
-                    attrs: {
-                        body: {
-                            stroke: '#fff',  // 边框颜色
-                        },
-                    },
-                    translate: (undefined, 30) 
-                }
-            )
+
             nodes.push(
                 {
                     id: item.id,
@@ -204,7 +180,16 @@ const EpicLineMap = (props) => {
                             stroke: 'var(--tiklab-gray-400)',  // 边框颜色
                         },
                     },
-                    parent: "parent" + item.id,
+                    translate: { 
+                        x: xAxis,
+                        restrict:
+                        {
+                            x: 0,
+                            y: yAxis,
+                            width: ganttdata,
+                            height: 14
+                        }
+                    }
                 }
             )
 
@@ -350,7 +335,7 @@ const EpicLineMap = (props) => {
                                                 </>
                                             }
                                         </div>
-                                        <div
+                                        <div 
                                             className="epic-name-left-name"
                                             onClick={() => props.history.push(`/index/projectScrumDetail/${projectId}/epic/${item.id}`)}>
                                             {item.epicName}

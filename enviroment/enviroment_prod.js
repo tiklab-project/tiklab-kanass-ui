@@ -33,7 +33,7 @@ const version = JSON.stringify('');
 const client = JSON.stringify('');
 const isSaas = false;
 const mobile_url = JSON.stringify("/mobile.html")
-
+const homes_url = JSON.stringify("http://tiklab.net")
 module.exports = {
     base_url,
     userProduction,
@@ -47,5 +47,6 @@ module.exports = {
     client,
     upload_url,
     isSaas,
-    mobile_url
+    mobile_url,
+    homes_url
 }

@@ -47,9 +47,30 @@ export class WorkRepositoryStore {
                 currentPage: this.findDoucmnetCondition.currentPage
             }
         }
-        const data = await Service("/workItemDocument/findDocumentPageByItemId", params)
-        return data.data;
+        const data = await Service("/workItemDocument/findWorkItemDocumentPage", params)
+        return data;
     }
+
+    @action
+    findRepositoryDocumentList = async(value) => {
+        const params={
+            repositoryId: value.repositoryId,
+            name: value.name
+        }
+        const data = await Service("/wikidocument/findDocumentList", params)
+        return data;
+    }
+
+    @action
+    findUnRelationWorkDocumentList = async(value) => {
+        const params={
+            repositoryId: value.repositoryId,
+            workItemId: value.workItemId
+        }
+        const data = await Service("/wikidocument/findUnRelationWorkDocumentList", params)
+        return data;
+    }
+
     @action
     createWorkItemDocument = async(params) => {
         const data = await Service("/workItemDocument/createWorkItemDocument", params)
@@ -58,13 +79,24 @@ export class WorkRepositoryStore {
 
     @action
     getRepositoryAllList = async(params) => {
-        const data = await Service("/api/kanass/repository/findAllRepository", params)
-        return data.data;
+        const data = await Service("/wikirepository/findAllRepository", params)
+        return data;
     }
 
     @action
     deleteWorkItemDocument = async(param) => {
         const data = await Service("/workItemDocument/deleteWorkItemDocumentRele", param)
+        return data;
+    }
+
+    /**
+     * 获取知识库的地址
+     * @param {*} param 
+     * @returns 
+     */
+    @action
+    findSystemUrl = async() => {
+        const data = await Service("/systemUrl/findSystemUrl")
         return data;
     }
 }

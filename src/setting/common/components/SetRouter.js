@@ -102,7 +102,7 @@ const setDevEamRouter= [
             
             {
                 title: '字段类型',
-                id: '/index/setting/preliminaryTypeView',
+                id: '/index/setting/preliminaryType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },
@@ -277,7 +277,7 @@ const setDevEamRouter= [
             },
             {
                 title: '字段类型',
-                id: '/index/setting/preliminaryType',
+                id: '/index/setting/preliminaryTypeSys',
                 purviewCode: "SysFieldType",
                 code: 12-14,
             },
@@ -407,7 +407,7 @@ const setPrdEamRouter= [
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                id: '/index/setting/preliminaryTypeView',
+                id: '/index/setting/preliminaryType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },
@@ -607,7 +607,7 @@ const setDevRouter= [
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                id: '/index/setting/preliminaryTypeView',
+                id: '/index/setting/preliminaryType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },
@@ -802,7 +802,7 @@ const setDevRouter= [
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                id: '/index/setting/preliminaryType',
+                id: '/index/setting/preliminaryTypeSys',
                 purviewCode: "SysFieldType",
                 code: 12-14,
             },
@@ -936,7 +936,7 @@ const setPrdRouter= [
             {
                 title: '字段类型',
                 icon: 'formcenter',
-                id: '/index/setting/preliminaryTypeView',
+                id: '/index/setting/preliminaryType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },

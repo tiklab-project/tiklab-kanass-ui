@@ -17,7 +17,6 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectIconChange from "./ProjectIconChange"
 import { PrivilegeProjectButton } from "tiklab-user-ui";
 import { Collapse } from 'antd';
-import { SettingOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;

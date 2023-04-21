@@ -49,7 +49,7 @@ export class ProjectSurveyStore {
     findProject = async (projectId) => {
         const params = new FormData();
         params.append("id", projectId);
-        const data = await Service("/project/findProject", params)
+        const data = await Service("/project/findProjectAndWorkNum", params)
         return data;
     }
 

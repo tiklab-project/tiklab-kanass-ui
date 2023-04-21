@@ -68,14 +68,23 @@ const SprintLineMap = (props) => {
                     },
                 ],
             },
-            // interacting: {
-            //     nodeMovable: false
-            // },
             resizing: {
                 enabled: true
+            },
+            translating: {
+                restrict(cellView) {
+                    const cell = cellView.cell
+                    if (cell.isNode()) {
+                        const parent = cell.getParent()
+                        if (parent) {
+                            return parent.getBBox()
+                        }
+                    }
+
+                    return null
+                },
             }
         })
-        console.log(graph)
         getGraph(graph)
         return;
     }, [])
@@ -163,7 +172,20 @@ const SprintLineMap = (props) => {
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / (3600 * 1000));
-
+            nodes.push(
+                {
+                    id: "parent" + item.id,
+                    x: 0,
+                    y: yAxis,
+                    width: ganttWidth,
+                    height: 14,
+                    attrs: {
+                        body: {
+                            stroke: '#fff',  // 边框颜色
+                        },
+                    }
+                }
+            )
             nodes.push(
                 {
                     id: item.id,
@@ -177,7 +199,7 @@ const SprintLineMap = (props) => {
                             stroke: 'var(--tiklab-gray-400)',  // 边框颜色
                         },
                     },
-                    translate: {x: xAxis}
+                    parent: "parent" + item.id,
                 }
             )
             
