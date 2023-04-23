@@ -3,11 +3,10 @@ import { Graph } from '@antv/x6';
 import { PlusCircleOutlined,MinusCircleOutlined } from '@ant-design/icons';
 import "./GanttTest.scss";
 import RowScroll from "./RowScroll";
-import ColScroll from "./colScroll"
-import { Pagination } from 'antd';
-
+import ColScroll from "./colScroll";
+import moment from "moment";
 const Gantt=(props) => {
-    const {workList}= props;
+    const {workList, editWork}= props;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -33,8 +32,8 @@ const Gantt=(props) => {
             width: graphWidth,
             // height: graphHeight,
             grid: {
-                size: 1,
-                visible: true,
+                size: 24,
+                visible: false,
                 type: 'doubleMesh',
                 args: [
                     { 
@@ -47,7 +46,83 @@ const Gantt=(props) => {
                         factor: 5,        // 主次网格线间隔
                     },
                 ],
+            },
+            resizing: {
+                enabled: true
+            },
+            translating: {
+                restrict(cellView) {
+                    const cell = cellView.cell
+                    if (cell.isNode()) {
+                        const cellRange = cell.getBBox()
+                        cellRange.x = 0;
+                        cellRange.width = graphWidth;
+                        return cellRange;
+                    }
+                    return null
+                },
             }
+        })
+
+
+        graph.on("node:change:size", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+
+            const workId = node.id;
+            
+            
+
+            const direction = options.relativeDirection;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            if (direction === "left") {
+                let params = { id: "", planBeginTime: "", updateField: "" };
+                params.id = workId;
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = startX * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.planBeginTime = day;
+                params.updateField = "planBeginTime"
+            }
+            if (direction === "right") {
+                let params = { id: "", planEndTime: "", updateField: "" };
+                params.id = workId;
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.planEndTime = day;
+                params.updateField = "planEndTime";
+                editWork(params);
+            }
+            
+            
+        })
+
+        graph.on("node:moved",({ node, options }) => {
+            console.log("sss")
+            const nodeBox = node.getBBox();
+            const workId = node.id;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            let params = { id: "", planBeginTime: "", planEndTime: "" };
+            params.id = workId;
+            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+            firstDate = Date.parse(firstDate);
+
+
+            let planBeginTime = startX * (1000 * 3600) + firstDate;
+            planBeginTime = moment(planBeginTime).format('YYYY-MM-DD');
+            params.planBeginTime = planBeginTime;
+            params.updateField = "planBeginTime"
+            editWork(params)
+
+            let planEndTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+            planEndTime = moment(planEndTime).format('YYYY-MM-DD');
+            params.planEndTime = planEndTime;
+            params.updateField = "planEndTime"
+            editWork(params)
         })
         getGraph(graph);
         return;
@@ -115,12 +190,12 @@ const Gantt=(props) => {
                 length = Math.abs(endPra-startPra);
                 length = Math.floor(length / (3600 * 1000));
                 
-                yAxis = ylength++ * 50 + 18;
+                yAxis = ylength++ * 50 + 13;
     
                 // 进度
                 percent = length * item.percent / 100
             }else {
-                yAxis = ylength++ * 50 + 18;
+                yAxis = ylength++ * 50 + 13;
                 xAxis = 0;
                 percent = 0;
                 length = 0;
@@ -131,7 +206,7 @@ const Gantt=(props) => {
                     x: xAxis,
                     y: yAxis,
                     width: length,
-                    height: 14,
+                    height: 24,
                     attrs: { 
                         body: {
                         fill: '#5d70ea', // 背景颜色
@@ -144,7 +219,7 @@ const Gantt=(props) => {
                     x: xAxis,
                     y: yAxis,
                     width: percent,
-                    height: 14,
+                    height: 24,
                     attrs: { 
                         body: {
                         fill: '#2ECC71', // 背景颜色

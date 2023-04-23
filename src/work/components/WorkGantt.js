@@ -6,10 +6,10 @@ import { useSelector } from "tiklab-plugin-core-ui/es";
 import { RemoteComponent } from "tiklab-plugin-core-ui/es";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
-
+import Gantt from "./GanttTest"
 const WorkGantt = (props) => {
     const { workStore, form } = props;
-    const { workList, getWorkConditionPageTree } = workStore;
+    const { workList, getWorkConditionPageTree, editWork } = workStore;
     const projectId = props.match.params.id ? props.match.params.id : null
     const filterType = props.match.params.statetype ? props.match.params.statetype : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -47,9 +47,9 @@ const WorkGantt = (props) => {
                         point="work-gantt"
                         pluginStore={pluginStore}
                         isModalType={true}
-                        extraProps={{ workList: workList, setWorkListTime: setWorkListTime, sprintId: sprintId, pathName: props.location.pathname }}
+                        extraProps={{ workList: workList, setWorkListTime: setWorkListTime, sprintId: sprintId, pathName: props.location.pathname, editWork: editWork }}
                     />
-                    // <Gantt workList = {workList}/>
+                    // <Gantt workList = {workList} editWork = {editWork}/>
                     :
                     <div style={{ marginTop: "50px" }}>
                         <Empty image="/images/nodata.png" description="暂时没有事项~" />

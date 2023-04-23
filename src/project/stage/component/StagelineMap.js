@@ -8,15 +8,15 @@
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { Graph } from '@antv/x6';
 import "./stagelineMap.scss";
 import RowScroll from "./RowScroll";
 import ColScroll from "./ColScroll"
 import { withRouter } from "react-router";
+import moment from 'moment';
 const LineMapStage = (props) => {
     // 获取当前年月日
-    const { data, setShowStageAddModal, setAddChild, setParentId } = props;
+    const { data, setShowStageAddModal, setAddChild, setParentId, updateStage } = props;
     // 当前日期
     const todayDate = new Date()
     // 当前年份
@@ -60,8 +60,8 @@ const LineMapStage = (props) => {
             container: document.getElementById("stage"),
             width: graphWidth,
             grid: {
-                size: 1,
-                visible: true,
+                size: 24,
+                visible: false,
                 type: 'doubleMesh',
                 args: [
                     {
@@ -80,8 +80,69 @@ const LineMapStage = (props) => {
             },
             resizing: {
                 enabled: true
+            },
+            translating: {
+                restrict(cellView) {
+                    const cell = cellView.cell
+                    if (cell.isNode()) {
+                        const cellRange = cell.getBBox()
+                        cellRange.x = 0;
+                        cellRange.width = graphWidth;
+                        return cellRange;
+                    }
+                    return null
+                },
             }
         })
+
+        graph.on("node:change:position", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+            const sprintId = node.id;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            let params = { id: "", startTime: "", endTime: "" };
+            params.id = sprintId;
+            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+            firstDate = Date.parse(firstDate);
+
+            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+            endTime = moment(endTime).format('YYYY-MM-DD');
+            params.endTime = endTime;
+
+            let startTime = startX * (1000 * 3600) + firstDate;
+            startTime = moment(startTime).format('YYYY-MM-DD');
+            params.startTime = startTime;
+            updateStage(params)
+        })
+
+        graph.on("node:change:size", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+
+            const sprintId = node.id;
+            let params = { id: "", startTime: "", endTime: "" };
+            params.id = sprintId;
+
+            const direction = options.relativeDirection;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            if (direction === "right") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.endTime = day;
+            }
+            if (direction === "left") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = startX * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.startTime = day;
+            }
+            updateStage(params)
+            
+        })
+
         getGraph(graph)
         return;
     }, [])
@@ -160,7 +221,7 @@ const LineMapStage = (props) => {
             xAxis = Math.floor(xAxis / (3600 * 1000));
 
             // 每个事项的y轴
-            let yAxis = ylength++ * 50 + 18;
+            let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
@@ -172,7 +233,7 @@ const LineMapStage = (props) => {
                     x: xAxis,
                     y: yAxis,
                     width: length,
-                    height: 14,
+                    height: 24,
                     attrs: {
                         body: {
                             fill: 'var(--tiklab-blue)', // 背景颜色

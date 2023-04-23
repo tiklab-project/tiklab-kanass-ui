@@ -11,8 +11,11 @@ import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
 import RowScroll from "./RowScroll";
-import ColScroll from "./CoLScroll"
+import ColScroll from "./CoLScroll";
+import moment from 'moment';
 const SprintLineMap = (props) => {
+    const { lineMapStore } = props;
+    const { updateSprint } = lineMapStore;
     // 获取当前年月日
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -53,8 +56,8 @@ const SprintLineMap = (props) => {
             container: document.getElementById(type),
             width: graphWidth,
             grid: {
-                size: 1,
-                visible: true,
+                size: 24,
+                visible: false,
                 type: 'doubleMesh',
                 args: [
                     {
@@ -75,17 +78,64 @@ const SprintLineMap = (props) => {
                 restrict(cellView) {
                     const cell = cellView.cell
                     if (cell.isNode()) {
-                        const parent = cell.getParent()
-                        if (parent) {
-                            return parent.getBBox()
-                        }
+                        const cellRange = cell.getBBox()
+                        cellRange.x = 0;
+                        cellRange.width = graphWidth;
+                        return cellRange;
                     }
-
                     return null
                 },
             }
         })
         getGraph(graph)
+
+        graph.on("node:change:position", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+            const sprintId = node.id;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            let params = { id: "", startTime: "", endTime: "" };
+            params.id = sprintId;
+            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+            firstDate = Date.parse(firstDate);
+
+            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+            endTime = moment(endTime).format('YYYY-MM-DD');
+            params.endTime = endTime;
+
+            let startTime = startX * (1000 * 3600) + firstDate;
+            startTime = moment(startTime).format('YYYY-MM-DD');
+            params.startTime = startTime;
+            updateSprint(params)
+        })
+
+        graph.on("node:change:size", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+
+            const sprintId = node.id;
+            let params = { id: "", startTime: "", endTime: "" };
+            params.id = sprintId;
+
+            const direction = options.relativeDirection;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            if (direction === "right") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.endTime = day;
+            }
+            if (direction === "left") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = startX * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.startTime = day;
+            }
+            updateSprint(params)
+            
+        })
         return;
     }, [])
 
@@ -100,7 +150,7 @@ const SprintLineMap = (props) => {
      * 解决异步问题
      * 路线渲染数据变化就从新渲染画布
      */
-    const [scrollLeft,setScrollLeft] = useState()
+    const [scrollLeft, setScrollLeft] = useState()
     useEffect(() => {
         if (ganttdata !== undefined) {
             setGarph()
@@ -134,7 +184,7 @@ const SprintLineMap = (props) => {
     const setNode = (data) => {
         let nodes = [];
         let edges = []
-        data.map((item) => {
+        data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
             if (type === "version") {
@@ -167,42 +217,28 @@ const SprintLineMap = (props) => {
             xAxis = Math.floor(xAxis / (3600 * 1000));
 
             // 每个事项的y轴
-            let yAxis = ylength++ * 50 + 18;
+            let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / (3600 * 1000));
             nodes.push(
                 {
-                    id: "parent" + item.id,
-                    x: 0,
-                    y: yAxis,
-                    width: ganttWidth,
-                    height: 14,
-                    attrs: {
-                        body: {
-                            stroke: '#fff',  // 边框颜色
-                        },
-                    }
-                }
-            )
-            nodes.push(
-                {
                     id: item.id,
                     x: xAxis,
                     y: yAxis,
                     width: length,
-                    height: 14,
+                    height: 24,
+                    index: index,
                     attrs: {
                         body: {
                             fill: 'var(--tiklab-blue)', // 背景颜色
                             stroke: 'var(--tiklab-gray-400)',  // 边框颜色
                         },
                     },
-                    parent: "parent" + item.id,
                 }
             )
-            
+
             // 连接线的数据
             if (item.preDependWorkItem && item.preDependWorkItem.id) {
                 edges.push({
@@ -331,12 +367,12 @@ const SprintLineMap = (props) => {
     /**
      * 纵向滚动轴的拖动
      */
-     const timerColOuter = useRef();
-     const timerColCore = useRef();
- 
+    const timerColOuter = useRef();
+    const timerColCore = useRef();
+
     //  const ganttOuter = useRef();
     //  const ganttCore = useRef();
- 
+
 
     return (
         <>
@@ -387,21 +423,21 @@ const SprintLineMap = (props) => {
                         </div>
                     </div>
                 </div>
-                <RowScroll 
-                    timerCore = {timerCore}
-                    timerOuter = {timerOuter}
-                    ganttCore = {ganttCore}
-                    ganttOuter = {ganttOuter}
-                    ganttWidth = {ganttWidth}
-                    scrollLeft = {scrollLeft}
+                <RowScroll
+                    timerCore={timerCore}
+                    timerOuter={timerOuter}
+                    ganttCore={ganttCore}
+                    ganttOuter={ganttOuter}
+                    ganttWidth={ganttWidth}
+                    scrollLeft={scrollLeft}
                 />
                 {
-                    data && data.length > 15 && <ColScroll 
-                    timerCore = {timerColCore}
-                    timerOuter = {timerColOuter}
-                    ganttCore = {ganttCore}
-                    ganttOuter = {ganttOuter}
-                />
+                    data && data.length > 15 && <ColScroll
+                        timerCore={timerColCore}
+                        timerOuter={timerColOuter}
+                        ganttCore={ganttCore}
+                        ganttOuter={ganttOuter}
+                    />
                 }
             </div>
         </>
@@ -409,5 +445,6 @@ const SprintLineMap = (props) => {
 }
 
 export default inject(
-    "workStore"
+    "workStore",
+    "lineMapStore"
 )(observer(SprintLineMap));

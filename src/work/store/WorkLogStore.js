@@ -78,7 +78,6 @@ export class WorkLogStore {
     //编辑工时
     @action
     editWorKLog = async(value) => {
-        console.log(value)
         let params = {
             id: value.id,
             workItem: {

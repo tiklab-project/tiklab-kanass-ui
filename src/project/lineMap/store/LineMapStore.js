@@ -24,6 +24,13 @@ export class LineMapStore {
         return data;
     }
 
+    @action
+	updateSprint = async(value) => {
+
+        const data = await Service("/sprint/updateSprint", value)
+        return data;
+    }
+
     /**
      * 获取版本路线图
      * @param {项目id} projectId 
@@ -37,6 +44,13 @@ export class LineMapStore {
         return data;
     }
 
+    @action
+	updateVersion = async(value) => {
+        const data = await Service("/projectVersion/updateVersion", value)
+        return data;
+    }
+
+    
     // 获取迭代路线图
     /**
      * 获取史诗路线图
@@ -48,6 +62,12 @@ export class LineMapStore {
         const param = new FormData()
         param.append("projectId", projectId)
         const data = await Service("/roadMap/findEpicRoadMap", param)
+        return data;
+    }
+
+    @action
+	updateEpic = async(value) => {
+        const data = await Service("/epic/updateEpic", value)
         return data;
     }
 }

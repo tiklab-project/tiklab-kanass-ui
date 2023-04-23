@@ -65,9 +65,9 @@ const WorkRelation = (props) => {
             render: (text, record) => <div className="work-name" >
                 <div className="work-title" onClick={() => goWorkItem(record.workItem) }>
                     {
-                        record.workItem.workType?.iconUrl ?
+                        record.workItem?.workType?.iconUrl ?
                             <img
-                                src={'/images/' + record.workItem.workType?.iconUrl}
+                                src={'/images/' + record.workItem?.workType?.iconUrl}
                                 alt=""
                                 className="svg-icon"
 

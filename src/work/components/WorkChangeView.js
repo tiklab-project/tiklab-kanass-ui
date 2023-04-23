@@ -136,7 +136,7 @@ const WorkFilterSort = (props) => {
                         })
                     }
                     {
-                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
+                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === true ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
                             onClick={() => changeWorkView("time")}>
                             <svg className="svg-icon" aria-hidden="true">

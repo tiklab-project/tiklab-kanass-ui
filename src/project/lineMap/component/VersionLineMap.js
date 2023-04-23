@@ -8,12 +8,15 @@
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
-import { Graph,Shape } from '@antv/x6';
+import { Graph, Shape } from '@antv/x6';
 import "./LineMap.scss";
 import RowScroll from "./RowScroll";
-import ColScroll from "./CoLScroll"
+import ColScroll from "./CoLScroll";
+import moment from 'moment';
 const VersionLineMap = (props) => {
     // 获取当前年月日
+    const { lineMapStore } = props;
+    const { updateVersion } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -53,8 +56,8 @@ const VersionLineMap = (props) => {
             container: document.getElementById(type),
             width: graphWidth,
             grid: {
-                size: 1,
-                visible: true,
+                size: 24,
+                visible: false,
                 type: 'doubleMesh',
                 args: [
                     {
@@ -68,9 +71,6 @@ const VersionLineMap = (props) => {
                     },
                 ],
             },
-            // interacting: {
-            //     nodeMovable: false
-            // },
             resizing: {
                 enabled: true
             },
@@ -78,17 +78,62 @@ const VersionLineMap = (props) => {
                 restrict(cellView) {
                     const cell = cellView.cell
                     if (cell.isNode()) {
-                        const parent = cell.getParent()
-                        if (parent) {
-                            return parent.getBBox()
-                        }
+                        const cellRange = cell.getBBox()
+                        cellRange.x = 0;
+                        cellRange.width = graphWidth;
+                        return cellRange;
                     }
-
                     return null
                 },
             }
         })
-        console.log(graph)
+        graph.on("node:change:position", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+            const sprintId = node.id;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            let params = { id: "", startTime: "", publishDate: "" };
+            params.id = sprintId;
+            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+            firstDate = Date.parse(firstDate);
+
+            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+            endTime = moment(endTime).format('YYYY-MM-DD');
+            params.publishDate = endTime;
+
+            let startTime = startX * (1000 * 3600) + firstDate;
+            startTime = moment(startTime).format('YYYY-MM-DD');
+            params.startTime = startTime;
+            updateVersion(params)
+        })
+
+        graph.on("node:change:size", ({ node, options }) => {
+            const nodeBox = node.getBBox();
+
+            const sprintId = node.id;
+            let params = { id: "", startTime: "", publishDate: "" };
+            params.id = sprintId;
+
+            const direction = options.relativeDirection;
+            const startX = nodeBox.x;
+            const nodeWidth = nodeBox.width;
+            if (direction === "right") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.publishDate = day;
+            }
+            if (direction === "left") {
+                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+                firstDate = Date.parse(firstDate);
+                const dataTime = startX * (1000 * 3600) + firstDate;
+                let day = moment(dataTime).format('YYYY-MM-DD');
+                params.startTime = day;
+            }
+            updateVersion(params)
+
+        })
         getGraph(graph)
         return;
     }, [])
@@ -104,11 +149,11 @@ const VersionLineMap = (props) => {
      * 解决异步问题
      * 路线渲染数据变化就从新渲染画布
      */
-    const [scrollLeft,setScrollLeft] = useState()
+    const [scrollLeft, setScrollLeft] = useState()
     useEffect(() => {
-        // if (ganttdata !== undefined) {
-        //     setGarph()
-        // }
+        if (ganttdata !== undefined) {
+            setGarph()
+        }
         const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * 24 : 365 * 24) : (isLeapYear(currentYear - 1) ? 366 * 24 : 365 * 24);
         setScrollLeft(scrollWidth)
 
@@ -122,8 +167,7 @@ const VersionLineMap = (props) => {
      */
     useEffect(() => {
         if (data.length > 0) {
-            setNode(data)
-            // setGantt(setNode(data))
+            setGantt(setNode(data))
         }
         return
     }, [data])
@@ -172,47 +216,29 @@ const VersionLineMap = (props) => {
             xAxis = Math.floor(xAxis / (3600 * 1000));
 
             // 每个事项的y轴
-            let yAxis = ylength++ * 50 + 18;
+            let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / (3600 * 1000));
-            // nodes.push(
-            //     {
-            //         id: "parent" + item.id,
-            //         x: 0,
-            //         y: yAxis,
-            //         width: ganttWidth,
-            //         height: 14,
-            //         attrs: {
-            //             body: {
-            //                 stroke: '#fff',  // 边框颜色
-            //             },
-            //         }
-            //     }
-            // )
-            const rect = new Shape.Rect({
-                id: item.id,
-                x: xAxis,
-                y: yAxis,
-                width: length,
-                height: 14,
-                attrs: {
-                    body: {
-                        fill: 'var(--tiklab-blue)', // 背景颜色
-                        stroke: 'var(--tiklab-gray-400)',  // 边框颜色
-                    },
-                },
-            })
-            // nodes.push(
-               
-            // )
-            rect.translate(0,0, {restrict: {x: 0, y: yAxis, width: ganttWidth, height: 14}})
-            console.log(rect)
-            graph.addNode(rect)
+            nodes.push(
+                {
+                    id: item.id,
+                    x: xAxis,
+                    y: yAxis,
+                    width: length,
+                    height: 24,
+                    attrs: {
+                        body: {
+                            fill: 'var(--tiklab-blue)', // 背景颜色
+                            stroke: 'var(--tiklab-gray-400)',  // 边框颜色
+                        },
+                    }
+                }
+            )
             // 连接线的数据
             if (item.preDependWorkItem && item.preDependWorkItem.id) {
-                const edge = new Shape.Edge({
+                edges.push({
                     // String，必须，起始节点 id
                     source: item.id,
                     // String，必须，目标节点 id
@@ -226,13 +252,11 @@ const VersionLineMap = (props) => {
                         },
                     },
                 })
-                graph.addEdge(edge)
             }
-            // return nodes;
+
         })
-        // let item = { nodes: nodes, edges: edges }
-        // console.log(item)
-        // return item;
+        let item = { nodes: nodes, edges: edges }
+        return item;
     }
 
     /**
@@ -339,12 +363,12 @@ const VersionLineMap = (props) => {
     /**
      * 纵向滚动轴的拖动
      */
-     const timerColOuter = useRef();
-     const timerColCore = useRef();
- 
+    const timerColOuter = useRef();
+    const timerColCore = useRef();
+
     //  const ganttOuter = useRef();
     //  const ganttCore = useRef();
- 
+
 
     return (
         <>
@@ -395,21 +419,21 @@ const VersionLineMap = (props) => {
                         </div>
                     </div>
                 </div>
-                <RowScroll 
-                    timerCore = {timerCore}
-                    timerOuter = {timerOuter}
-                    ganttCore = {ganttCore}
-                    ganttOuter = {ganttOuter}
-                    ganttWidth = {ganttWidth}
-                    scrollLeft = {scrollLeft}
+                <RowScroll
+                    timerCore={timerCore}
+                    timerOuter={timerOuter}
+                    ganttCore={ganttCore}
+                    ganttOuter={ganttOuter}
+                    ganttWidth={ganttWidth}
+                    scrollLeft={scrollLeft}
                 />
                 {
-                    data && data.length > 15 && <ColScroll 
-                    timerCore = {timerColCore}
-                    timerOuter = {timerColOuter}
-                    ganttCore = {ganttCore}
-                    ganttOuter = {ganttOuter}
-                />
+                    data && data.length > 15 && <ColScroll
+                        timerCore={timerColCore}
+                        timerOuter={timerColOuter}
+                        ganttCore={ganttCore}
+                        ganttOuter={ganttOuter}
+                    />
                 }
             </div>
         </>
@@ -417,5 +441,6 @@ const VersionLineMap = (props) => {
 }
 
 export default inject(
-    "workStore"
+    "workStore",
+    "lineMapStore"
 )(observer(VersionLineMap));

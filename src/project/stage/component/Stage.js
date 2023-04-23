@@ -18,7 +18,7 @@ import StageAddModal from "./StageAddModal";
 
 const Stage = (props) => {
     const { stageStore } = props;
-    const { findStageList } = stageStore;
+    const { findStageList, updateStage } = stageStore;
     // 阶段的列表
     const [stageList, setStageList] = useState([])
     // 添加子级的上级id
@@ -89,6 +89,7 @@ const Stage = (props) => {
                                 setShowStageAddModal={setShowStageAddModal} 
                                 setParentId={setParentId}
                                 setAddChild={setAddChild} 
+                                updateStage = {updateStage}
                             />
                         </div>
                         <StageAddModal

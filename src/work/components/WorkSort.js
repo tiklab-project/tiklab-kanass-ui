@@ -97,7 +97,6 @@ const WorkSort = (props) => {
                 </div>
         }
 
-
         {
             showSortDropDown && <div className={`work-view-dropdown`} ref={sortDropDown}>
                 <div className="work-view-head">切换排序</div>
