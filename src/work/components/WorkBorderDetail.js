@@ -14,7 +14,7 @@ import { observer, inject } from "mobx-react";
 
 const WorkBorderDetail = (props) => {
     const detailRef = useRef()
-    const { isModalVisible, setIsModalVisible, workStore, modelRef } = props;
+    const { isModalVisible, setIsModalVisible, showPage, modelRef } = props;
 
     const showModal = (id, index, title) => {
         setIsModalVisible(true);
@@ -46,7 +46,7 @@ const WorkBorderDetail = (props) => {
             closable={false}
             destroyOnClose={true}
         >
-            <WorkDetail detailRef={detailRef} {...props} />
+            <WorkDetail detailRef={detailRef} {...props} showPage = {showPage}/>
         </Drawer>
     );
 };

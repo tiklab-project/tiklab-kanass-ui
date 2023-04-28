@@ -19,7 +19,7 @@ const WorkBorderDetail = (props) => {
     return (
         <Row style={{ height: "100%", overflow: "auto" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                <WorkDetail detailRef={detailRef} {...props} />
+                <WorkDetail detailRef={detailRef} {...props} showPage = {true} />
             </Col>
         </Row>
     );

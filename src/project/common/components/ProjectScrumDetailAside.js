@@ -19,7 +19,7 @@ import MoreMenuModel from "./MoreMenuModal";
 const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
-    const { searchpro, workStore, prolist, project } = props;
+    const { searchpro, workStore, project } = props;
     const { setWorkType } = workStore;
     //语言包
     const { t, i18n } = useTranslation();
@@ -111,7 +111,6 @@ const ProdeScrumAside = (props) => {
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
                     <ProjectChangeModal  
                         isShowText = {isShowText} 
-                        prolist = {prolist} 
                         searchpro = {searchpro}
                         project = {project}
                         setWorkType= {setWorkType}

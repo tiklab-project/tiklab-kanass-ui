@@ -1,6 +1,6 @@
 import { observable, action, extendObservable } from "mobx";
 import { Service } from "../../common/utils/requset";
-
+import axios from "axios";
 export class WorkStore {
     @observable workBoardList = [];
     @observable workUserGroupBoardList = [];
@@ -782,6 +782,22 @@ export class WorkStore {
 
     }
 
+    @action
+    exportWorkItemXml = async () => {
+        // const data = await Axios("/exportfile/exportWorkItemXml", this.searchCondition);
+        const data = axios.request({
+            baseURL: base_url,
+            url: "/exportfile/exportWorkItemXml",
+            method: "post",
+            data: this.searchCondition,
+            headers: {
+                ticket: "6badca4a463a4723bfa20476d6862f5c21"
+            },
+            responseType: "blob"
+        })
+        return data;
+
+    }
     
 
 }

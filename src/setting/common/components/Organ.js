@@ -21,11 +21,11 @@ const Organ = (props) => {
                     <OrgaAside></OrgaAside>
                 </Sider>
                 
-                <Content
+                {/* <Content
                     className="orga-background"
                 >
                     {renderRoutes(route.routes)}
-                </Content>
+                </Content> */}
             </Layout>
         </Fragment>
         

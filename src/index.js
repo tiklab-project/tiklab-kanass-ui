@@ -55,9 +55,8 @@ const Index = observer((props) => {
     
     const userInfo = getUser()
 
-    if (userInfo && userInfo.userId) {
-        allStore.systemRoleStore.getSystemPermissions(userInfo.userId, "teamwire")
-    }
+  
+    
 
     const [pluginData, setPluginData] = useState({
         routes: Routers,

@@ -38,9 +38,9 @@ const ModuleList = (props) => {
             title: "模块名称",
             dataIndex: "moduleName",
             key: "moduleName",
-            render: (text, record) => (
-                <Link to={`/index/moduledetail/${record.id}`}>{text}</Link>
-            ),
+            // render: (text, record) => (
+            //     <Link to={`/index/moduledetail/${record.id}`}>{text}</Link>
+            // ),
         },
         {
             title: "所属项目",

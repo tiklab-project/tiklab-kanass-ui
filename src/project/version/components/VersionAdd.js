@@ -11,7 +11,7 @@ import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 
 const VersionAddmodal = (props) => {

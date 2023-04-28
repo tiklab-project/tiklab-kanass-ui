@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Select, Menu, Dropdown, Form, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
@@ -15,7 +15,7 @@ const WorkBreadCrumb = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage,
-        setWorkIndex, setWorkId, getWorkBoardList, } = workStore;
+        setWorkIndex, setWorkId, getWorkBoardList,exportWorkItemXml } = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
     const pluginStore = useSelector(state => state.pluginStore);
@@ -61,6 +61,42 @@ const WorkBreadCrumb = (props) => {
         }
     }
 
+    const exportFile = () => {
+        exportWorkItemXml().then(response=> {
+            console.log(response)
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file_name.xls');
+            document.body.appendChild(link);
+            link.click();
+        })
+    }
+    // const exportFile =() => {
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST', '/exportfile/exportWorkItemXml', true);
+    //     xhr.responseType = 'blob';
+    
+    //     xhr.onload = function() {
+    //         if (this.status === 200) {
+    //             debugger
+    //             var filename = 'my_excel_file.xlsx';
+    //             var blob = new Blob([this.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    //             var downloadUrl = window.URL.createObjectURL(blob);
+    //             var a = document.createElement('a');
+    //             a.href = downloadUrl;
+    //             a.download = filename;
+    //             document.body.appendChild(a);
+    //             a.click();
+    //             setTimeout(function() {
+    //                 document.body.removeChild(a);
+    //                 window.URL.revokeObjectURL(downloadUrl);  
+    //             }, 0); 
+    //         }
+    //     };
+    
+    //     xhr.send();
+    // }
     const menuPlugin = (
         <Menu>
             <Menu.Item>
@@ -71,9 +107,12 @@ const WorkBreadCrumb = (props) => {
                             okText="Yes"
                             cancelText="No"
                         >
-                            <div onClick={() => buy()}>导入?</div>
+                            <div onClick={() => buy()}>导入ss?</div>
                         </Popconfirm>
                 }
+            </Menu.Item>
+            <Menu.Item>
+                <div onClick={() => exportFile()}>导出</div> 
             </Menu.Item>
         </Menu>
     );

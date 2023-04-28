@@ -43,6 +43,15 @@ export class ProjectStore {
         }
         return data
     }
+
+    @action
+    findMyAllProjectList = async() => { 
+        const data = await Service("/project/findJoinProjectList", {})
+        if(data.code === 0){
+            this.allProlist = data.data;
+        }
+        return data
+    }
     
     @action
     findRecentProjectPage = async(value) => {

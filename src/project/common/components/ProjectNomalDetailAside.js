@@ -18,7 +18,7 @@ import MoreMenuModal from "./MoreMenuModal";
 const { Sider } = Layout;
 
 const ProdeNomalAside = (props) => {
-    const { searchpro, workStore, prolist,project } = props;
+    const { searchpro, workStore, project } = props;
     const { setWorkType, setWorkId } = workStore;
     //语言包
     const { t, i18n } = useTranslation();
@@ -104,7 +104,7 @@ const ProdeNomalAside = (props) => {
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
                     <ProjectChangeModal  
                         isShowText = {isShowText} 
-                        prolist = {prolist} 
+                        // prolist = {prolist} 
                         searchpro = {searchpro}
                         setWorkType= {setWorkType}
                         project = {project}

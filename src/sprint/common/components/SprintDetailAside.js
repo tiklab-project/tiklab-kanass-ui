@@ -34,7 +34,7 @@ const SprintDetailAside = (props) => {
     useEffect(() => {
         findSprint({ id: sprintId })
         return;
-    }, [])
+    }, [sprintId])
 
     // 路由
     const router = [

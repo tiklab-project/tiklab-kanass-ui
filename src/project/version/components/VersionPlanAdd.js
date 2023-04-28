@@ -11,13 +11,13 @@ import React, {useState} from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./versionPlanAdd.scss"
 import {observer, inject} from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 const { Search } = Input;
 
 const  VersionPlanAddmodal = (props) => {
     const {actionPlanId,versionPlanStore,addVersionPlan} = props;
-    const {getVersionPlanList,versionPlanList, workTypeList, getWorkTypeList} = versionPlanStore;
+    const {getUnPlanVersionWorkItemList,versionPlanList, workTypeList, getWorkTypeList} = versionPlanStore;
     // 弹窗的显示
     const [visible, setVisible] = useState(false);
     // 选择的事项id集合
@@ -30,7 +30,7 @@ const  VersionPlanAddmodal = (props) => {
      */
     const showModal = () => {
         setVisible(true);
-        getVersionPlanList({projectId:projectId})
+        getUnPlanVersionWorkItemList({projectId:projectId})
         getWorkTypeList({projectId:projectId})
         
     };
@@ -102,11 +102,11 @@ const  VersionPlanAddmodal = (props) => {
 
     // 搜索版本
     const searchUnselectVersionPlan = (value) => {
-        getVersionPlanList({title: value})
+        getUnPlanVersionWorkItemList({title: value})
     }
 
     const searchUnselectVersionPlanByStatus = (value) => {
-        getVersionPlanList({workTypeId: value})
+        getUnPlanVersionWorkItemList({workTypeId: value})
     }
     return (
         <>

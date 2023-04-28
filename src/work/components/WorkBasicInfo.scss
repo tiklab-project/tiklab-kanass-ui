@@ -93,9 +93,6 @@
             background: var(--tiklab-gray-600);
         }
 
-        .work-attach-box {
-            background: var(--tiklab-gray-600);
-        }
         .work-detail-box {
             margin-bottom: 15px;
             border-radius: 4px;
@@ -161,6 +158,10 @@
                 margin-top: 10px;
                 gap: 10px;
             }
+        }
+        .desc-preview {
+            padding: 10px;
+            background-color: var(--tiklab-gray-600);
         }
     }
 }

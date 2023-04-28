@@ -202,6 +202,7 @@ const WorkType = (props) => {
                     >
                         <div className="add-botton">
                             <WorkTypeAddmodal
+                                findWorkTypeDmList = {findWorkTypeDmList}
                                 name="添加事件类型"
                                 type="add"
                                 workAllTypeList = {workAllTypeList}

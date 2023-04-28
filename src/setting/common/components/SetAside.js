@@ -10,7 +10,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import { setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter } from "./SetRouter";
-import { PrivilegeButton } from "tiklab-user-ui"
+import { PrivilegeButton } from "tiklab-privilege-ui"
 const SetAside = (props) => {
     console.log(props)
     // 无子级菜单处理

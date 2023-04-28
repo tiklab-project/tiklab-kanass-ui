@@ -89,6 +89,7 @@ const SprintAddModal = (props) => {
                 editSprint(data)
             }
             setVisible(false);
+            form.resetFields();
         })
     };
 

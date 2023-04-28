@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 
 const SprintChangeModal = (props) => {
+    // console.log(props)
     const { isShowText, sprintDetailStore } = props;
     const { findSprintList,findSprint, sprintList, sprint } = sprintDetailStore;
     const [showMenu, setShowMenu] = useState(false);
@@ -11,11 +12,11 @@ const SprintChangeModal = (props) => {
 
     const modelRef = useRef()
     const setButton = useRef()
-    const sprintId = props.match.params.id;
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
-    console.log(props)
+    const sprintId = props.match.params.sprint;
+    const projectId = props.match.params.id;
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
+        setSelectSprint(sprintId)
         modelRef.current.style.left = setButton.current.clientWidth
     }
     useEffect(() => {
@@ -46,7 +47,7 @@ const SprintChangeModal = (props) => {
         // 切换选中项目，获取项目详情
         findSprint({id: id}).then(data => {
             if (data.code === 0) {
-                props.history.push(`/index/sprintdetail/${id}/survey`)
+                props.history.push(`/index/${projectId}/sprintdetail/${id}/survey`)
                 localStorage.setItem("sprintId", id);
                 setShowMenu(false)
             }
@@ -108,21 +109,24 @@ const SprintChangeModal = (props) => {
                 <div className="change-sprint-head">切换迭代</div>
                 {
                     sprintList && sprintList.map((item) => {
-                        return <div className={`change-sprint-name ${item.id === selectSprint ? "change-sprint-selectName" : ""}`}
-                            onClick={() => selectSprintId(item.id)}
-                            key={item.id}
-                            onMouseOver={() => handleMouseOver(item.id)}
-                            onMouseOut={handleMouseOut}
+                        if(item.id !== sprintId){
+                            return <div className={`change-sprint-name ${item.id === selectSprint ? "change-sprint-selectName" : ""}`}
+                                onClick={() => selectSprintId(item.id)}
+                                key={item.id}
+                                onMouseOver={() => handleMouseOver(item.id)}
+                                onMouseOut={handleMouseOut}
 
-                        >
-                            <img
-                                className="img-icon"
-                                src={('images/project1.png')}
-                                title={item.sprintName}
-                                alt=""
-                            />
-                            {item.sprintName}
-                        </div>
+                            >
+                                <img
+                                    className="img-icon"
+                                    src={('images/project1.png')}
+                                    title={item.sprintName}
+                                    alt=""
+                                />
+                                {item.sprintName}
+                            </div>
+                        }
+                        
                     })
                 }
             </div>

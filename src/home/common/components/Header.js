@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 10:16:03
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { Col, Row, Dropdown, Menu,  Space } from "antd";
 import { withRouter } from 'react-router';
@@ -18,7 +18,7 @@ import { AppLink } from 'tiklab-integration-ui';
 import UserIcon from '../../../common/UserIcon/UserIcon';
 
 const Header = props => {
-    const { logo, languageSelectData = [], routers} = props;
+    const { logo, languageSelectData = [], routers, systemRoleStore} = props;
     // 被点击菜单的key
     const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
     // 语言包
@@ -28,6 +28,12 @@ const Header = props => {
     const [showLanguage, setShowLanguage] = useState(false);
     // 登录者的信息
     const user = getUser();
+
+    useEffect(()=> {
+        if (user && user.userId) {
+            systemRoleStore.getSystemPermissions(user.userId, "teamwire")
+        }
+    },[])
 
     /**
      * 加载语言包
@@ -77,7 +83,7 @@ const Header = props => {
             }
         })
     }
-
+  
     /**
      * 个人中心下拉框
      */
@@ -259,4 +265,4 @@ const Header = props => {
         </Row>
     )
 }
-export default withRouter(inject('homeStore')(observer(Header)));
+export default withRouter(inject('homeStore', 'systemRoleStore')(observer(Header)));

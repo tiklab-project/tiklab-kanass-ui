@@ -15,8 +15,7 @@ import InputSearch from "../../../common/input/InputSearch"
 import "./StagePlan.scss"
 
 const StagePlan = (props) => {
-    const { versionPlanStore, stageStore, stageId } = props
-    const { getSelectVersionPlanList } = versionPlanStore;
+    const { versionPlanStore, stageStore, stageId } = props;
     const { findWorkItemListByStage, deleteStageWorkItem } = stageStore;
     // 阶段的子级阶段
     const [stageChild, setStageChild] = useState()

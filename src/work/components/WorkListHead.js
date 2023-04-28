@@ -7,7 +7,7 @@ import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";
 import "./WorkListHead.scss"
 import WorkFilterForm from "./WorkTypeTab";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 
 const WorkListHead = (props) => {
     const { workStore, form } = props;

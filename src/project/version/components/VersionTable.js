@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col, DatePicker } from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -174,6 +174,7 @@ const VersionTable = (props) => {
                                     dataSource={versionList}
                                     rowKey={(record) => record.id}
                                     pagination={false}
+                                    
                                     loading={loading}
                                     onSearch={onSearch}
                                     onChange={false}

@@ -16,9 +16,9 @@ import { getUser } from 'tiklab-core-ui';
 const Project = (props) => {
     const { projectStore } = props;
     const userId = getUser().userId;
-    const { findJoinProjectList, prolist } = projectStore;
+    const { findMyAllProjectList, allProlist } = projectStore;
     useEffect(() => {
-        findJoinProjectList({ creator: userId });
+        findMyAllProjectList();
     }, [])
     return (
         <div className="project">
@@ -26,7 +26,7 @@ const Project = (props) => {
                 <Row>
                     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                         {
-                            prolist && prolist.length > 0 ?
+                            allProlist && allProlist.length > 0 ?
                             <Procontent /> : <ProjectGide /> 
                         }
                     </Col>

@@ -73,7 +73,7 @@ const WorkTypeList = (props) => {
     const [loading, setLoading] = useState(false)
     const goFlow = (id) => {
         // props.history.push("/index/setting/systemFlow")
-        props.history.push(`/index/setting/flowDetail/${id}`)
+        props.history.push(`/index/setting/flowDetailDesign/${id}`)
     }
 
     const goForm = (id) => {
@@ -128,7 +128,7 @@ const WorkTypeList = (props) => {
             title: '使用到的项目',
             dataIndex: 'useNumber',
             key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}个项目</div>
+            render: (text, record) => <div>{text}个项目</div>
         },
         {
             title: "操作",

@@ -11,7 +11,7 @@ import { Layout, Col, Row } from 'antd';
 import SetAside from "./SetAside";
 import "../components/Orga.scss"
 import { renderRoutes } from "react-router-config";
-import {SystemNav} from "tiklab-user-ui";
+import {SystemNav} from "tiklab-privilege-ui";
 import {setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter}  from "./SetRouter"
 const { Sider, Content } = Layout;
 const Setting = (props) => {

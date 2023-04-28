@@ -12,9 +12,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-
+import { observer, inject } from "mobx-react";
 const ProjectChangeModal = (props) => {
-    const { isShowText, prolist, searchpro, setWorkType, project } = props;
+    const { isShowText, searchpro, setWorkType, project, projectStore } = props;
+    const { findMyAllProjectList, allProlist } = projectStore;
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
     // 选择要切换的项目
@@ -30,13 +31,14 @@ const ProjectChangeModal = (props) => {
      */
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
+        findMyAllProjectList()
         // 设置弹窗的位置在按钮旁边
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
-     /**
-     * 监听切换弹窗的显示与不显示
-     */
+    /**
+    * 监听切换弹窗的显示与不显示
+    */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -68,7 +70,6 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                console.log(data.data)
                 if (data.data.projectType.type === "scrum") {
                     props.history.push(`/index/projectScrumDetail/${id}/survey`)
                 }
@@ -109,14 +110,14 @@ const ProjectChangeModal = (props) => {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
                         {
                             project?.iconUrl ?
-                                <img 
+                                <img
                                     src={('/images/' + project?.iconUrl)}
                                     className="list-img"
-                                    alt="" 
+                                    alt=""
                                 />
                                 :
-                                <img 
-                                    src={('/images/project1.png')} 
+                                <img
+                                    src={('/images/project1.png')}
                                     className="list-img"
                                     alt=""
                                 />
@@ -136,31 +137,31 @@ const ProjectChangeModal = (props) => {
                             </svg>
                         </div>
                     </div>
-                    :
-                    <div className='project-title-icon' onClick={showMoreMenu} >
-                        {
-                            project?.iconUrl ?
-                                <img 
-                                    src={('images/' + project?.iconUrl)}
-                                    title={project?.projectName} alt="" 
-                                    className="list-img"
-                                    style={{marginRight: "0px"}}
-                                 />
-                                :
-                                <img 
-                                    src={('images/project1.png')}
-                                    className="list-img"
-                                    title={project?.projectName} 
-                                    style={{marginRight: "0px"}}
-                                    alt=""
-                                />
-                        }
-                        <div className={`project-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
-                            </svg>
+                        :
+                        <div className='project-title-icon' onClick={showMoreMenu} >
+                            {
+                                project?.iconUrl ?
+                                    <img
+                                        src={('images/' + project?.iconUrl)}
+                                        title={project?.projectName} alt=""
+                                        className="list-img"
+                                        style={{ marginRight: "0px" }}
+                                    />
+                                    :
+                                    <img
+                                        src={('images/project1.png')}
+                                        className="list-img"
+                                        title={project?.projectName}
+                                        style={{ marginRight: "0px" }}
+                                        alt=""
+                                    />
+                            }
+                            <div className={`project-toggleCollapsed`}>
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-down"></use>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
                 }
             </div>
 
@@ -171,35 +172,38 @@ const ProjectChangeModal = (props) => {
             >
                 <div className="change-project-head">切换项目</div>
                 {
-                    prolist && prolist.map((item) => {
-                        return <div className={`change-project-name ${item.id === selectProject ? "change-project-selectName" : ""}`}
-                            onClick={() => selectProjectId(item.id, item.projectType.id)}
-                            key={item.id}
-                            onMouseOver={() => handleMouseOver(item.id)}
-                            onMouseOut={handleMouseOut}
-                        >
-                            {
-                                item.iconUrl ?
-                                    <img
-                                        src={('/images/' + item.iconUrl)}
-                                        className="img-icon"
-                                        title={item.projectName}
-                                        alt=""
-                                    />
-                                    :
-                                    <img
-                                        className="img-icon"
-                                        src={('/images/project1.png')}
-                                        title={item.projectName}
-                                        alt=""
-                                    />
-                            }
-                            {item.projectName}
-                        </div>
+                    allProlist && allProlist.map((item) => {
+                        if (item.id !== project?.id) {
+                            return <div className={`change-project-name ${item.id === selectProject ? "change-project-selectName" : ""}`}
+                                onClick={() => selectProjectId(item.id, item.projectType.id)}
+                                key={item.id}
+                                onMouseOver={() => handleMouseOver(item.id)}
+                                onMouseOut={handleMouseOut}
+                            >
+                                {
+                                    item.iconUrl ?
+                                        <img
+                                            src={('/images/' + item.iconUrl)}
+                                            className="img-icon"
+                                            title={item.projectName}
+                                            alt=""
+                                        />
+                                        :
+                                        <img
+                                            className="img-icon"
+                                            src={('/images/project1.png')}
+                                            title={item.projectName}
+                                            alt=""
+                                        />
+                                }
+                                {item.projectName}
+                            </div>
+                        }
+
                     })
                 }
             </div>
         </div>
     )
 }
-export default withRouter(ProjectChangeModal);
+export default withRouter(inject('projectStore')(observer(ProjectChangeModal)));

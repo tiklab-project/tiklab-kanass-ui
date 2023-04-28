@@ -289,7 +289,7 @@ const StatisticsBulidAndEndWork = (props) => {
                        
                     </TabPane>
                 </Tabs> */}
-                 <div id="workBar" style={{ width: "100%", height: "500px" }}></div>
+                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }}></div>
                 <ProjectReportAddOrEdit
                     fromData={fromData}
                     visible={visible}

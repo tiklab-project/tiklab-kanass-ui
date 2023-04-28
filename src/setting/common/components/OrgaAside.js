@@ -10,7 +10,6 @@ import React,{Fragment,useState,useEffect} from 'react';
 import { DownOutlined,UpOutlined} from '@ant-design/icons';
 import {withRouter} from "react-router-dom";
 import orgaRouter from "./OrgaRouter"
-import { PrivilegeButton } from "tiklab-user-ui";
 
 const OrgaAside=(props)=>  {
     // 无子级菜单处理

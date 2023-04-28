@@ -30,6 +30,7 @@ const Work = (props) => {
     useEffect(() => {
         if (props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
             goSprintWorkItem()
+            setWorkShowType("table")
         }
 
         if (props.match.path === "/index/work") {

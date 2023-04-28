@@ -12,7 +12,7 @@ import { Form, Space, Empty, Dropdown, Skeleton, Col, Select, InputNumber, Pagin
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import Button from "../../common/button/Button";
@@ -20,7 +20,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
-    const { workStore, setIsWorkList } = props;
+    const { workStore, setIsWorkList, showPage } = props;
     const { workList, setWorkId, defaultCurrent, setDefaultCurrent, statesList, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
@@ -153,10 +153,10 @@ const WorkDetail = (props) => {
         if (inputRef.current.textContent !== workInfo.title) {
             editWork(params).then(res => {
                 if (res.code === 0) {
-                    if(document.getElementById(workId)){
+                    if (document.getElementById(workId)) {
                         document.getElementById(workId).innerHTML = inputRef.current.textContent;
                     }
-                    
+
                     workInfo.title = inputRef.current.textContent;
 
                 }
@@ -231,7 +231,10 @@ const WorkDetail = (props) => {
                     return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item.id, item.name)}>{item.name}</div>
                 })
             }
-            <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workTypeSys?.flow.id}`)}>查看工作流</div>
+            {
+                console.log(workInfo?.workTypeSys)
+            }
+            <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workType?.flow.id}`)}>查看工作流</div>
 
         </div>
 
@@ -263,8 +266,8 @@ const WorkDetail = (props) => {
                         {
                             (workShowType === "table" || detailCrumbArray?.length > 0) && <div className="work-detail-crumb">
                                 {
-                                    workShowType === "table" && <div className="work-detail-crumb-item"  onClick={() => setIsWorkList(true)}>事项
-                                        <svg className="img-icon" aria-hidden="true" style={{marginLeft: "5px"}}>
+                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => setIsWorkList(true)}>事项
+                                        <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
                                             <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>
                                     </div>
@@ -426,7 +429,7 @@ const WorkDetail = (props) => {
                                                     >
                                                         {
                                                             userList && userList.map((item) => {
-                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
+                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user.name} />{item.user.name}</Space></Select.Option>
                                                             })
                                                         }
                                                     </Select>
@@ -436,30 +439,37 @@ const WorkDetail = (props) => {
 
                                         </div>
                                     </div>
-                                    {
-                                        detailCrumbArray?.length < 2 && <div className="page-simple">
-                                            {
-                                                workIndex === 1 ? <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-pageLeftDisable"></use>
-                                                </svg>
-                                                    :
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex - 1)}>
-                                                        <use xlinkHref="#icon-pageLeft"></use>
-                                                    </svg>
-                                            }
+                                    <>
+                                        {
+                                            showPage && <>
+                                                {
+                                                    detailCrumbArray?.length < 2 && <div className="page-simple">
+                                                        {
+                                                            workIndex === 1 ? <svg className="svg-icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-pageLeftDisable"></use>
+                                                            </svg>
+                                                                :
+                                                                <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex - 1)}>
+                                                                    <use xlinkHref="#icon-pageLeft"></use>
+                                                                </svg>
+                                                        }
 
-                                            <span>{workIndex} / {total}</span>
-                                            {
-                                                workIndex === total ? <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-pageRightDisable"></use>
-                                                </svg>
-                                                    :
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex + 1)}>
-                                                        <use xlinkHref="#icon-pageRight"></use>
-                                                    </svg>
-                                            }
-                                        </div>
-                                    }
+                                                        <span>{workIndex} / {total}</span>
+                                                        {
+                                                            workIndex === total ? <svg className="svg-icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-pageRightDisable"></use>
+                                                            </svg>
+                                                                :
+                                                                <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex + 1)}>
+                                                                    <use xlinkHref="#icon-pageRight"></use>
+                                                                </svg>
+                                                        }
+                                                    </div>
+                                                }
+                                            </>
+                                        }
+                                    </>
+
 
                                 </div>
                             </div>

@@ -9,7 +9,7 @@
 import React,{useEffect,useState} from "react";
 import { Modal, Button,Table,message,Input,Select } from 'antd';
 import {observer, inject} from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./Plan.scss";
 
 const { Search } = Input;

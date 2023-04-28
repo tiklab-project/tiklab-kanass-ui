@@ -16,9 +16,10 @@ import {form_cn} from "tiklab-form-ui/es/utils";
 import { user_cn } from "tiklab-user-ui/es/utils";
 import {oplog_cn} from "tiklab-security-ui/es/utils";
 import { todoTask_cn } from "tiklab-todotask-ui/es/utils";
+import {privilege_cn} from "tiklab-privilege-ui/es/utils"
 const resources = {
     zh: {
-        translation: {...zhCnTrans, ...eam_cn, ...flow_cn, ...message_cn, ...pluginManage_cn, ...form_cn, ...user_cn, ...todoTask_cn, ...oplog_cn},
+        translation: {...zhCnTrans, ...eam_cn, ...flow_cn, ...message_cn, ...pluginManage_cn, ...form_cn, ...user_cn, ...todoTask_cn, ...oplog_cn, ...privilege_cn},
     }
 }
 

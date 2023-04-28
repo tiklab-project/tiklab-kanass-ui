@@ -21,7 +21,7 @@ const Survey = (props) => {
     const { projectSurveyStore } = props;
     const { statWorkItemByBusStatus, statProjectManageSprint, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage } = projectSurveyStore;
-    
+
     //当前用户id
     const masterId = getUser().userId;
     //当前用户名字
@@ -53,7 +53,7 @@ const Survey = (props) => {
         statWorkItemByBusStatus(projectId).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data[3].groupCount / res.data[0].groupCount;
-            setPercent(percent.toFixed(2))
+            setPercent(percent ? percent.toFixed(2) : 0)
         })
 
         // 获取迭代列表
@@ -193,9 +193,9 @@ const Survey = (props) => {
         props.history.push(`/index/${path}/${projectId}/workTodo`)
     }
 
-     /**
-     * 跳转到动态列表
-     */
+    /**
+    * 跳转到动态列表
+    */
     const goDynamicList = () => {
         props.history.push(`/index/${path}/${projectId}/dynamic`)
     }
@@ -208,10 +208,10 @@ const Survey = (props) => {
         window.location.href = url
     }
 
-     /**
-     * 跳转到待办事项详情
-     * @param {*} url 
-     */
+    /**
+    * 跳转到待办事项详情
+    * @param {*} url 
+    */
     const goTodoDetail = (url) => {
         window.location.href = url
     }
@@ -245,7 +245,7 @@ const Survey = (props) => {
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
-                                    <UserIcon userInfo={project?.master} className="item-icon" name = {masterName}/>
+                                    <UserIcon userInfo={project?.master} className="item-icon" name={masterName} />
                                     <div className="item-content">
                                         <div className="item-top">{project?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>
@@ -338,7 +338,7 @@ const Survey = (props) => {
                     <div className="center-box">
                         <MyWorkStatistics workStatusList={workStatusList} projectId={projectId} {...props}></MyWorkStatistics>
                     </div>
-                   
+
                     <div className="third-box">
                         <div className="pending-todo">
                             <div className="pending-todo-title">
@@ -382,7 +382,7 @@ const Survey = (props) => {
                                             dangerouslySetInnerHTML={{ __html: item.data }}
                                             className="dynamic-item"
                                             onClick={() => goOpLogDetail(item.link)}
-                                            key = {item.id}
+                                            key={item.id}
                                         />
                                     })
                                         :
@@ -399,7 +399,7 @@ const Survey = (props) => {
                             </div>
                             <div className="sprint-list">
                                 {
-                                    sprintList && sprintList.map((item) => {
+                                    sprintList && sprintList.length > 0 ? sprintList.map((item) => {
                                         return <div className="sprint-item"
                                             key={item.id}
                                             onClick={() => goSprintdetail(item.project.id, item.project.projectType.id, item.id)}>
@@ -421,6 +421,8 @@ const Survey = (props) => {
                                             </div>
                                         </div>
                                     })
+                                        :
+                                        <Empty image="/images/nodata.png" description="暂时没有迭代~" />
                                 }
                             </div>
                         </div>
@@ -430,55 +432,64 @@ const Survey = (props) => {
                                 里程碑
                             </div>
                             <div className="epic-box-timeline">
-                                <div className="timeline-item" key="first">
-                                    <div className="timeline-text"></div>
-                                    <div className="timeline-center">
-                                        <div className="time-point">
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-xiayiqu"></use>
-                                            </svg>
-                                        </div>
-                                        <div className="time-line">
 
-                                        </div>
-                                    </div>
-                                    <div className="timeline-text"></div>
-                                    <div className="timeline-text"></div>
-                                </div>
                                 {
-                                    milestoneList && milestoneList.map((item, index) => {
-                                        return <div className="timeline-item" key={item.id}>
-                                            <div className="timeline-text"> </div>
-                                            <div className="timeline-center">
-                                                <div className="time-line"></div>
-                                                <div className="time-point">
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-xiayiqu"></use>
-                                                    </svg>
+                                    milestoneList && milestoneList.length > 0 ?
+                                        <>
+                                            <div className="timeline-item" key="first">
+                                                <div className="timeline-text"></div>
+                                                <div className="timeline-center">
+                                                    <div className="time-point">
+                                                        <svg className="svg-icon" aria-hidden="true">
+                                                            <use xlinkHref="#icon-xiayiqu"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div className="time-line">
+
+                                                    </div>
                                                 </div>
-                                                <div className="time-line"></div>
+                                                <div className="timeline-text"></div>
+                                                <div className="timeline-text"></div>
                                             </div>
-                                            <div className="timeline-text">里程碑1</div>
-                                            <div className="timeline-text">2022-09-01</div>
-                                        </div>
-                                    })
+                                            {
+                                                milestoneList.map((item, index) => {
+                                                    return <div className="timeline-item" key={item.id}>
+                                                        <div className="timeline-text"> </div>
+                                                        <div className="timeline-center">
+                                                            <div className="time-line"></div>
+                                                            <div className="time-point">
+                                                                <svg className="svg-icon" aria-hidden="true">
+                                                                    <use xlinkHref="#icon-xiayiqu"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <div className="time-line"></div>
+                                                        </div>
+                                                        <div className="timeline-text">里程碑1</div>
+                                                        <div className="timeline-text">2022-09-01</div>
+                                                    </div>
+                                                })
+                                            }
+                                            <div className="timeline-item" key="end">
+                                                <div className="timeline-text"></div>
+                                                <div className="timeline-center">
+                                                    <div className="time-line">
+
+                                                    </div>
+                                                    <div className="time-point">
+                                                        <svg className="svg-icon" aria-hidden="true">
+                                                            <use xlinkHref="#icon-xiayiqu"></use>
+                                                        </svg>
+                                                    </div>
+
+                                                </div>
+                                                <div className="timeline-text"></div>
+                                                <div className="timeline-text"></div>
+                                            </div>
+                                        </>
+                                        :
+                                        <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
                                 }
-                                <div className="timeline-item" key="end">
-                                    <div className="timeline-text"></div>
-                                    <div className="timeline-center">
-                                        <div className="time-line">
 
-                                        </div>
-                                        <div className="time-point">
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-xiayiqu"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                    <div className="timeline-text"></div>
-                                    <div className="timeline-text"></div>
-                                </div>
                             </div>
                         </div>
                     </div>

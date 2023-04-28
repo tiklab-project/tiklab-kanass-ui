@@ -23,7 +23,6 @@ const ProjectSetTable = (props) => {
         findFocusProjectSetList, findAllProjectSet, createRecent } = projectSetStore;
 
     const [name, setName] = useState("添加项目集")
-    const [projectSetId, setProjectSetId] = useState()
 
     const [activeTabs, setActiveTabs] = useState("2")
     const [focusProjectSetList, setFocusProjectSetList] = useState([])

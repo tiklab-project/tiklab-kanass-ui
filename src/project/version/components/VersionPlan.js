@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Space } from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-user-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
@@ -19,8 +19,8 @@ import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 
 const VersionPlan = (props) => {
     const { versionPlanStore, workStore, actionPlanId } = props
-    const { getSelectVersionPlanList, versionPlanList, selectVersionPlanList,
-        addVersionPlan, deleVersionPlan, searchAllVersionPlan } = versionPlanStore;
+    const { findVersionWorkItemList, versionPlanList, selectVersionPlanList,
+        addVersionPlan, deleVersionPlan, searchAllVersionPlan, workItemTotal,searchSelectWorkItemCondition } = versionPlanStore;
     const { setWorkId, setWorkIndex, setWorkShowType } = workStore;
     // 项目id
     const projectId = props.match.params.id;
@@ -31,7 +31,7 @@ const VersionPlan = (props) => {
      * 获取版本管理的事项
      */
     useEffect(() => {
-        getSelectVersionPlanList({ projectId: projectId, versionId: actionPlanId })
+        findVersionWorkItemList({ projectId: projectId, versionId: actionPlanId })
         return
     }, [actionPlanId])
 
@@ -49,7 +49,7 @@ const VersionPlan = (props) => {
      * @param {标题} value 
      */
     const onSearch = (value) => {
-        getSelectVersionPlanList({ title: value })
+        findVersionWorkItemList({ title: value })
     }
 
     /**
@@ -133,6 +133,15 @@ const VersionPlan = (props) => {
         },
     ];
 
+    const pageDown = (pagination) => {
+        const params = {
+            pageParam: {
+                pageSize: 10,
+                currentPage: pagination.current
+            }
+        }
+        findVersionWorkItemList(params)
+    }
 
     return (
         <div className="version-workitem">
@@ -160,7 +169,15 @@ const VersionPlan = (props) => {
                 columns={columns}
                 dataSource={selectVersionPlanList}
                 rowKey={record => record.id}
-                pagination={false}
+                pagination={{
+                    hideOnSinglePage:true,
+                    defaultCurrent: 1, 
+                    total: workItemTotal,
+                    pageSize: searchSelectWorkItemCondition.pageParam.pageSize,
+                    currentPage: searchSelectWorkItemCondition.pageParam.currentPage,
+                    position: ["bottomCenter"]
+                }}
+                onChange = {(pagination) => pageDown(pagination)}
             />
             <WorkBorderDetail
                 isModalVisible={isModalVisible}

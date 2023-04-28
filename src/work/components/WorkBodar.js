@@ -247,6 +247,7 @@ const WorkBodar = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}
+                showPage = {true}
                 {...props}
             />
         </div>

@@ -22,7 +22,7 @@ const SprintSurvey = (props) => {
 
     const [workStatusList, setWorkStatusList] = useState();
 
-    const sprintId = localStorage.getItem("sprintId");
+    const sprintId = props.match.params.sprint;
     const [workItemList, setWorkItemList] = useState();
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
@@ -63,7 +63,7 @@ const SprintSurvey = (props) => {
         findtodopage({ userId: masterId })
 
         return;
-    }, [])
+    }, [sprintId])
 
     /**
      * 燃尽图

@@ -16,7 +16,7 @@ import { getUser } from "tiklab-core-ui";
 
 const ProjectScrumDetail = (props) => {
     const { projectStore, route, systemRoleStore } = props;
-    const { searchpro, findProjectList, prolist } = projectStore;
+    const { searchpro, findProjectList } = projectStore;
     // 项目id
     const projectId = props.match.params.id;
     // 项目详情
@@ -45,7 +45,6 @@ const ProjectScrumDetail = (props) => {
         <Layout className="project-prodetail">
             <ProdeScrumAside
                 projectName={"项目1"}
-                prolist={prolist}
                 project= {project}
                 searchpro={searchpro}
                 {...props}

@@ -16,7 +16,7 @@ import { getUser } from "tiklab-core-ui";
 
 const ProjectNomalDetail = (props) => {
     const { projectStore, route, systemRoleStore } = props;
-    const { searchpro, findProjectList, prolist } = projectStore;
+    const { searchpro, findProjectList } = projectStore;
     const projectId = props.match.params.id;
     // 项目详情
     const [project, setProject] = useState()
@@ -28,6 +28,7 @@ const ProjectNomalDetail = (props) => {
         searchpro(projectId).then(res => {
             if(res.code === 0) {
                 localStorage.setItem("project", JSON.stringify(res.data));
+                setProject(res.data)
                 const isPublish = res.data?.projectLimits === "0" ? true : false
                 systemRoleStore.getInitProjectPermissions(getUser().userId, props.match.params.id, isPublish)
             }
@@ -43,7 +44,6 @@ const ProjectNomalDetail = (props) => {
     return (
         <Layout className="project-prodetail">
             <ProdeNomalAside
-                prolist={prolist}
                 searchpro={searchpro}
                 project={project}
                 {...props}

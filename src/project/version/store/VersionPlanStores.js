@@ -16,15 +16,23 @@ export class VersionPlanStore {
     // 已被版本关联的事项列表
     @observable selectVersionPlanList = [];
     // 版本搜索条件
-    @observable searchCondition = {
+    @observable searchUnselectCondition = {
         currentPage: 1
     };
     // 搜索被关联的事项列表条件
-    @observable searchSelectCondition = {
-        currentPage: 1
+    @observable searchSelectWorkItemCondition = {
+        sortParams: [{
+            name: "title",
+            orderType:"asc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
     };
 
     @observable workTypeList = [];
+    @observable workItemTotal = 0
 
     /**
      * 获取未被关联的版本事项
@@ -32,12 +40,12 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	getVersionPlanList = async(value) => {
-        Object.assign(this.searchCondition, {...value})
+	getUnPlanVersionWorkItemList = async(value) => {
+        Object.assign(this.searchUnselectCondition, {...value})
         const params={
-            projectId: this.searchCondition.projectId,
-            title: this.searchCondition.title,
-            workTypeId: this.searchCondition.workTypeId,
+            projectId: this.searchUnselectCondition.projectId,
+            title: this.searchUnselectCondition.title,
+            workTypeId: this.searchUnselectCondition.workTypeId,
             versionIdIsNull: true,
             sortParams: [{
                 name: "title",
@@ -45,7 +53,7 @@ export class VersionPlanStore {
             }],
             pageParam: {
                 pageSize: 10,
-                currentPage: this.searchCondition.currentPage
+                currentPage: this.searchUnselectCondition.currentPage
             }
         }
         const data = await Service("/workItem/findWorkItemList", params)
@@ -61,26 +69,27 @@ export class VersionPlanStore {
      * @returns 
      */
     @action
-	getSelectVersionPlanList = async(value) => {
+	findVersionWorkItemList = async(value) => {
         if(value){
-            Object.assign(this.searchSelectCondition, {...value})
+            Object.assign(this.searchSelectWorkItemCondition, {...value})
         }
-        const params={
-            projectId: this.searchSelectCondition.projectId,
-            versionId: this.searchSelectCondition.versionId,
-            title: this.searchSelectCondition.title,
-            sortParams: [{
-                name: "title",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: this.searchSelectCondition.currentPage
-            }
-        }
-        const data = await Service("/workItem/findWorkItemList", params)
+        // const params={
+        //     projectId: this.searchSelectWorkItemCondition.projectId,
+        //     versionId: this.searchSelectWorkItemCondition.versionId,
+        //     title: this.searchSelectWorkItemCondition.title,
+        //     sortParams: [{
+        //         name: "title",
+        //         orderType:"asc"
+        //     }],
+        //     pageParam: {
+        //         pageSize: 10,
+        //         currentPage: this.searchSelectWorkItemCondition.currentPage
+        //     }
+        // }
+        const data = await Service("/workItem/findWorkItemPage", this.searchSelectWorkItemCondition)
         if(data.code === 0){
-            this.selectVersionPlanList = data.data;
+            this.selectVersionPlanList = data.data.dataList;
+            this.workItemTotal = data.data.totalRecord
         }
         return data;
 		
@@ -102,7 +111,7 @@ export class VersionPlanStore {
 
         const data = await Service("/workItem/updateWorkItem", value)
         if(data.code === 0){
-            this.getSelectVersionPlanList()
+            this.findVersionWorkItemList()
         }
         return data;
     }
@@ -122,7 +131,7 @@ export class VersionPlanStore {
         }
         const data = await Service("/workItem/updateWorkItem", value)
         if(data.code === 0){
-            this.getSelectVersionPlanList()
+            this.findVersionWorkItemList()
         }
         return data;
     }

@@ -50,7 +50,7 @@ const StatisticsAsicde = (props) => {
         },
     ]
 
-    const [selectRouter, setSelectRouter] = useState()
+    const [selectRouter, setSelectRouter] = useState("workItem")
     
     const [expandedTree, setExpandedTree] = useState([])
     const [reportList, setReportList] = useState([])

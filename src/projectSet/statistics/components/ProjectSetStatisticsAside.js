@@ -55,14 +55,10 @@ const StatisticsAsicde = (props) => {
         },
     ]
 
-    const [selectRouter, setSelectRouter] = useState()
+    const [selectRouter, setSelectRouter] = useState("workItem")
     
     const [expandedTree, setExpandedTree] = useState([])
-    const [reportList, setReportList] = useState([])
-    const { statisticsStore } = props;
-    const { findReportList, deleteReport } = statisticsStore;
     const projectSetId = props.match.params.projectSetId;
-    const path = props.match.path.split("/")[2];
     console.log(props)
     // useEffect(() => {
     //     findReportList({ projectId: projectId}).then(res => {

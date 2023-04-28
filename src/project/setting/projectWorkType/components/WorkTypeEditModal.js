@@ -27,7 +27,7 @@ const WorkTypeEditModal = (props) => {
     // 显示编辑弹窗
     const [visible, setVisible] = useState(false);
     const { projectWorkStore } = props;
-    const { editWorkType, getFormList, getFlowList, formList, 
+    const { editWorkType, getFormList, getFlowList, formList,
         flowList, findWorkTypeDmtById, findWorkTypeDmList } = projectWorkStore;
     // 项目id
     const projectId = props.match.params.id;
@@ -41,11 +41,14 @@ const WorkTypeEditModal = (props) => {
         getFlowList({ projectId: projectId })
         //根据id查找事项类型
         findWorkTypeDmtById(props.id).then((res) => {
-            form.setFieldsValue({
-                name: res.workType.name,
-                form: res.form.id,
-                flow: res.flow.id
-            })
+            if (res.code === 0) {
+                form.setFieldsValue({
+                    name: res.data.workType.name,
+                    form: res.data.form.id,
+                    flow: res.data.flow.id
+                })
+            }
+
         })
     };
 
@@ -57,9 +60,9 @@ const WorkTypeEditModal = (props) => {
             const data = { ...values }
             data.id = props.id;
             editWorkType(data).then(res => {
-                if(res.code === 0) {
+                if (res.code === 0) {
                     setVisible(false);
-                    findWorkTypeDmList({projectId: projectId})
+                    findWorkTypeDmList({ projectId: projectId })
                 }
             })
         })
@@ -128,7 +131,7 @@ const WorkTypeEditModal = (props) => {
                                     })
                                 }
                             </Select>
-                            
+
                         </Form.Item>
                         {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/index/setting/form")}>没有自定义表单，点击添加</div>}
                         <Form.Item

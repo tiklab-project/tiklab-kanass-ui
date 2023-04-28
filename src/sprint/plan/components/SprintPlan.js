@@ -3,6 +3,7 @@ import "../components/sprintPlan.scss";
 import { observer, inject } from "mobx-react";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
+import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 
 const SprintPlan = (props) => {
 
@@ -10,14 +11,14 @@ const SprintPlan = (props) => {
     const { sprintPlanStore, workStore } = props
     const projectId =JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = localStorage.getItem("sprintId")
-
+    // 显示事项详情
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList } = workStore;
-
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = workStore;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
         getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition } = sprintPlanStore;
     const [startId, setStartId] = useState()
-    const [startSprintId, setStartSprintId] = useState()
+    const [startSprintId, setStartSprintId] = useState();
     const [boxLength, setBoxLength] = useState(90)
     // 拖放效果
     useEffect(() => {
@@ -107,6 +108,18 @@ const SprintPlan = (props) => {
         getWorkList({ [field]: value })
     }
 
+    /**
+     * 显示事项详情抽屉
+     * @param {事项id} id 
+     * @param {*} index 
+     */
+    const goWorkItem = (id, index) => {
+        setWorkIndex(index)
+        setWorkId(id)
+        setIsModalVisible(true)
+        setWorkShowType("border")
+    }
+
     return (
         <div className="sprint-plan">
             <div className="sprint-plan-content">
@@ -177,7 +190,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                noPlanWorkList && noPlanWorkList.map((item) => {
+                                noPlanWorkList && noPlanWorkList.map((item,index) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
@@ -185,7 +198,7 @@ const SprintPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => showModal(item.id, workIndex, index, item.title)}>
+                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
                                             <div className="work-item-title-left" >
                                                 {
                                                     item.workTypeSys.iconUrl ?
@@ -208,9 +221,7 @@ const SprintPlan = (props) => {
                                                 <span >{item.id}</span>
                                             </div>
                                         </div>
-                                        <div className="work-item-id"
-                                            onClick={() => showModal(item.id, workIndex, index, item.title)}
-                                        >
+                                        <div className="work-item-id">
                                             <div userInfo={item.user} />
                                         </div>
                                     </div>
@@ -287,7 +298,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                planWorkList && planWorkList.map((item) => {
+                                planWorkList && planWorkList.map((item, index) => {
                                     if (item.sprint && item.sprint.id === sprintId) {
                                         return <div
                                             className="sprint-plan-item-box"
@@ -296,7 +307,7 @@ const SprintPlan = (props) => {
                                             onDragStart={() => moveStart(item.id, sprintId)}
                                             key={item.id}
                                         >
-                                            <div className="work-item-title" onClick={() => showModal(item.id, workIndex, index, item.title)}>
+                                            <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
                                                 <div className="work-item-title-left" >
                                                     {
                                                         item.workTypeSys.iconUrl ?
@@ -319,9 +330,7 @@ const SprintPlan = (props) => {
                                                     <span >{item.id}</span>
                                                 </div>
                                             </div>
-                                            <div className="work-item-id"
-                                                onClick={() => showModal(item.id, workIndex, index, item.title)}
-                                            >
+                                            <div className="work-item-id">
                                                 <div userInfo={item.user} />
                                             </div>
 
@@ -335,6 +344,13 @@ const SprintPlan = (props) => {
 
                 </div>
             </div>
+
+            <WorkBorderDetail
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+                showPage = {false}
+                {...props}
+            />
         </div>
 
     )
