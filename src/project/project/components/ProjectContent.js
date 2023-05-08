@@ -218,7 +218,7 @@ const ProjectContent = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
             render: (text, record) => (

@@ -343,29 +343,7 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="报告人" name="reporter"
-                                hasFeedback = {showValidateStatus === "reporter" ? true : false}
-                                validateStatus = {validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    bordered={fieldName === "reporter" ? true : false}
-                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("reporter")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
-                                    allowClear
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
+                            
 
                             <Form.Item 
                                 label="所属迭代" name="sprint"
@@ -498,8 +476,31 @@ const WorkBasicInfo = (props) => {
                                 />
                                 小时
                             </Form.Item>
+                            <Form.Item label="报告人" name="reporter"
+                                hasFeedback = {showValidateStatus === "reporter" ? true : false}
+                                validateStatus = {validateStatus}
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectWorkUser"
+                                    bordered={fieldName === "reporter" ? true : false}
+                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("reporter")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter = {() => setHoverFieldName("reporter")}
+                                    onMouseLeave = {() => setHoverFieldName("")}
+                                    allowClear
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
                             <Form.Item 
-                                name="predependworkitem" label="前置事项"
+                                name="predependworkitem" label=""
                                 hasFeedback = {showValidateStatus === "predependworkitem" ? true : false}
                                 validateStatus = {validateStatus}
                             >

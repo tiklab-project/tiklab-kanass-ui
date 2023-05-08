@@ -71,7 +71,7 @@ const WorkBasicInfo = (props) => {
             } else {
                 extDataForm.setFieldsValue("{}")
             }
-            
+
             let descReplace;
 
             if (workInfo.desc) {
@@ -84,7 +84,7 @@ const WorkBasicInfo = (props) => {
 
     useEffect(() => {
         findFormConfig({ id: workInfo.workType.form?.id })
-       
+
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
             initForm(workInfo)
@@ -171,14 +171,14 @@ const WorkBasicInfo = (props) => {
 
 
     const [validateStatus, setValidateStatus] = useState("validating")
-    const [showValidateStatus, setShowValidateStatus ] = useState(false)
+    const [showValidateStatus, setShowValidateStatus] = useState(false)
 
     /**
      * 字段更新
      */
     const updateSingle = (changedValues) => {
         console.log(Object.values(changedValues)[0])
-        if(!Object.values(changedValues)[0]) {
+        if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
             console.log(changedValues)
         }
@@ -300,9 +300,9 @@ const WorkBasicInfo = (props) => {
                             colon={false}
                         >
 
-                            <Form.Item label="优先级" name="workPriority" 
-                                hasFeedback = {showValidateStatus === "workPriority" ? true : false}
-                                validateStatus = {validateStatus}
+                            <Form.Item label="优先级" name="workPriority"
+                                hasFeedback={showValidateStatus === "workPriority" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <Select
                                     placeholder="无"
@@ -312,8 +312,8 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "workPriority" || hoverFieldName == "workPriority" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("workPriority")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("workPriority")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("workPriority")}
+                                    onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                 >
                                     {
@@ -342,34 +342,12 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="报告人" name="reporter"
-                                hasFeedback = {showValidateStatus === "reporter" ? true : false}
-                                validateStatus = {validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    bordered={fieldName === "reporter" ? true : false}
-                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("reporter")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
-                                    allowClear
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
 
-                            <Form.Item 
+
+                            <Form.Item
                                 label="所属迭代" name="sprint"
-                                hasFeedback = {showValidateStatus === "sprint" ? true : false}
-                                validateStatus = {validateStatus}
+                                hasFeedback={showValidateStatus === "sprint" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <Select
                                     placeholder="无"
@@ -379,8 +357,8 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "sprint" || hoverFieldName == "sprint" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("sprint")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("sprint")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("sprint")}
+                                    onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                 >
                                     {
@@ -391,8 +369,8 @@ const WorkBasicInfo = (props) => {
                                 </Select>
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
-                                hasFeedback = {showValidateStatus === "module" ? true : false}
-                                validateStatus = {validateStatus}
+                                hasFeedback={showValidateStatus === "module" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <Select
                                     placeholder="无"
@@ -402,8 +380,8 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "module" || hoverFieldName == "module" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("module")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("module")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("module")}
+                                    onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                 >
                                     {
@@ -416,8 +394,8 @@ const WorkBasicInfo = (props) => {
                             {
                                 parentWorkItem !== "" &&
                                 <Form.Item name="parentWorkItem" label="上级事项"
-                                    hasFeedback = {showValidateStatus === "parentWorkItem" ? true : false}
-                                    validateStatus = {validateStatus}
+                                    hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
+                                    validateStatus={validateStatus}
 
                                 >
                                     <Input
@@ -437,10 +415,10 @@ const WorkBasicInfo = (props) => {
                             labelAlign="left"
                             colon={false}
                         >
-                            <Form.Item 
+                            <Form.Item
                                 name="planBeginTime" label="计划开始日期" wrapperCol={{ span: 10 }}
-                                hasFeedback = {showValidateStatus === "planBeginTime" ? true : false}
-                                validateStatus = {validateStatus}
+                                hasFeedback={showValidateStatus === "planBeginTime" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <DatePicker
                                     locale={locale}
@@ -452,16 +430,16 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "planBeginTime" || hoverFieldName == "planBeginTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("planBeginTime")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("planBeginTime")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
-                                    // suffixIcon={false}
+                                    onMouseEnter={() => setHoverFieldName("planBeginTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                // suffixIcon={false}
                                 />
                             </Form.Item>
 
-                            <Form.Item 
+                            <Form.Item
                                 name="planEndTime" label="计划结束日期" wrapperCol={{ span: 10 }}
-                                hasFeedback = {showValidateStatus === "planEndTime" ? true : false}
-                                validateStatus = {validateStatus}
+                                hasFeedback={showValidateStatus === "planEndTime" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <DatePicker
                                     locale={locale}
@@ -473,14 +451,14 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "planEndTime" || hoverFieldName == "planEndTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("planEndTime")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("planEndTime")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("planEndTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
                                 />
                             </Form.Item>
 
                             <Form.Item name="planTakeupTime" label="计划用时"
-                                hasFeedback = {showValidateStatus === "planTakeupTime" ? true : false}
-                                validateStatus = {validateStatus}
+                                hasFeedback={showValidateStatus === "planTakeupTime" ? true : false}
+                                validateStatus={validateStatus}
                             >
                                 <InputNumber
                                     suffix="小时"
@@ -488,16 +466,16 @@ const WorkBasicInfo = (props) => {
                                     suffixIcon={fieldName === "planTakeupTime" || hoverFieldName == "planTakeupTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("planTakeupTime")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter = {() => setHoverFieldName("planTakeupTime")}
-                                    onMouseLeave = {() => setHoverFieldName("")}
-                                    onChange = {(value) => updataPlanTime(value)}
-                                    value = {planTakeupTimeValue}
-                                    // bordered={false}
+                                    onMouseEnter={() => setHoverFieldName("planTakeupTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    onChange={(value) => updataPlanTime(value)}
+                                    value={planTakeupTimeValue}
+                                // bordered={false}
                                 // disabled={true}
                                 />
                                 小时
                             </Form.Item>
-                            <Form.Item 
+                            {/* <Form.Item 
                                 name="predependworkitem" label="前置事项"
                                 hasFeedback = {showValidateStatus === "predependworkitem" ? true : false}
                                 validateStatus = {validateStatus}
@@ -506,6 +484,29 @@ const WorkBasicInfo = (props) => {
                                     bordered={false}
                                     disabled={true}
                                 />
+                            </Form.Item> */}
+                            <Form.Item label="报告人" name="reporter"
+                                hasFeedback={showValidateStatus === "reporter" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectWorkUser"
+                                    bordered={fieldName === "reporter" ? true : false}
+                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("reporter")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("reporter")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user.name} />{item.user.name}</Space></Select.Option>
+                                        })
+                                    }
+                                </Select>
                             </Form.Item>
                         </Form>
                     </div>
