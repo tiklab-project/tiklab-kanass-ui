@@ -21,13 +21,15 @@ import "../components/Work.scss"
 const Work = (props) => {
     const { workStore, workCalendarStore } = props;
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType,searchCondition } = workStore;
+        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType, setQuickFilterValue, setTabValue } = workStore;
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    console.log(props)
+
     useEffect(() => {
+        setQuickFilterValue({label: '所有', value: 'all'})
+        setTabValue({id: "all", type: "system"})
         if (props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
             goSprintWorkItem()
             setWorkShowType("table")
@@ -68,7 +70,6 @@ const Work = (props) => {
         }
 
         if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work") {
-            console.log("zoule")
             setWorkShowType("table")
             goProjectWorkItem()
         }
@@ -113,7 +114,6 @@ const Work = (props) => {
 
     // 由项目首页筛选进入事项页面
     const goProjectWorkItem = () => {
-        console.log("zoule")
         let initValues = {
             pageParam: {
                 pageSize: 20,

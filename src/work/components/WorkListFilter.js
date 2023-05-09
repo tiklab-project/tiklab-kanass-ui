@@ -7,15 +7,15 @@ import { observer, inject } from "mobx-react";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import { SelectSimple, SelectItem } from "../../common/select";
-
+import WorkQuickFilter from "./WorkQuickFilter"
 const WorkListFilter = (props) => {
     const { workStore, form, showWorkListFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { getWorkConditionPageTree, getWorkConditionPage,
-        workShowType, viewType, setWorkIndex, setWorkId, findStateNodeList,
-        searchCondition, getWorkBoardList, setSearchConditionNull, getWorkStatus,
-        setSearchCondition, statWorkItemOverdue, findProjectList, getSelectUserList,
+        workShowType, viewType, setWorkIndex, setWorkId,
+        searchCondition, getWorkBoardList, getWorkStatus,
+         findProjectList, getSelectUserList,
         userList, projectList, findDmFlowList } = workStore;
 
     const [showSearch, setShowSearch] = useState(false);
@@ -26,7 +26,6 @@ const WorkListFilter = (props) => {
         findProjectList();
         getSelectUserList(projectId)
         findDmFlowList({domainId: projectId}).then(res => {
-            console.log("flowId", res)
             if(res.code === 0){
                 const list = [];
                 res.data.map(item => {
@@ -110,135 +109,12 @@ const WorkListFilter = (props) => {
         }
     ]
 
-    const selectMenu = (type) => {
-        switch (type) {
-            case "all":
-                getAllWorkItem();
-                break;
-            case "pending":
-                getPendingWorkItem();
-                break;
-            case "ending":
-                getEndingWorkItem();
-                break;
-            case "creat":
-                getCreatWorkItem();
-                break;
-            case "overdue":
-                getOverdueWorkItem();
-                break;
-            default:
-                break;
-
-        }
-    }
     const getWorkList = () => {
         if (viewType === "tile") {
             getPageList();
         } else if (viewType === "tree") {
             getPageTree();
         }
-    }
-
-    const getAllWorkItem = () => {
-        setSearchConditionNull()
-        const initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        // initFrom(initValues)
-        getWorkList();
-
-    }
-
-    const getPendingWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        const states = ["DONE"]
-        getStateNodeList({ inNodeStatus: ['TODO', 'PROGRESS'], inFlowIds: flowIds}).then(data => {
-            console.log("pending", data)
-            initValues = { workStatusIds: data, ...initValues }
-            setSearchCondition(initValues)
-            getWorkList();
-        })
-    }
-
-    const getEndingWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        const states = "DONE"
-        getStateNodeList({ nodeStatus: 'DONE', inFlowIds: flowIds}).then(data => {
-            initValues = { workStatusIds: data, ...initValues }
-            setSearchCondition(initValues)
-            getWorkList();
-        })
-    }
-
-    const getCreatWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        // initFrom(initValues)
-        getWorkList();
-    }
-
-    const getOverdueWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        statWorkItemOverdue({ projectId: projectId, sprintId: sprintId }).then(res => {
-            if (res.dataList.length > 0) {
-                setWorkId(res.dataList[0].id)
-                setWorkIndex(1)
-            }
-
-        })
-    }
-
-    const getStateNodeList = async (value) => {
-        const stateNodeList = []
-        await findStateNodeList(value).then(res => {
-            if (res.code === 0) {
-                if (res.data.length > 0) {
-                    res.data.map(item => {
-                        stateNodeList.push(item.node.id)
-                    })
-                }
-            }
-        })
-        return stateNodeList;
     }
 
     const getPageTree = (value) => {
@@ -282,20 +158,7 @@ const WorkListFilter = (props) => {
         <div>
             {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
-                    <SelectSimple name="quickFilter"
-                        onChange={(value) => selectMenu(value)}
-                        title={"所有"} ismult={false}>
-                        {
-                            quickFilterList.map(item => {
-                                return <SelectItem
-                                    value={item.value}
-                                    label={item.name}
-                                    key={item.value}
-
-                                />
-                            })
-                        }
-                    </SelectSimple>
+                    <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
                     {
                         props.match.path == "/index/work/worklist/:statetype" ?
                             <SelectSimple name="workTypeIds"

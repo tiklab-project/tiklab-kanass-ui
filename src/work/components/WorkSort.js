@@ -52,7 +52,6 @@ const WorkSort = (props) => {
     }
 
     const upDownSort = (item) => {
-        console.log(item)
         setSortType(item)
         if(item.value === sortType.value){
             if(isAsc === "desc"){

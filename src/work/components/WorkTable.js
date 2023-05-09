@@ -170,7 +170,6 @@ const WorkTableContent = (props) => {
                 currentPage: page,
             }
         }
-        console.log(searchCondition)
         if (viewType === "tree") {
             getWorkConditionPageTree(values)
         }
@@ -231,7 +230,7 @@ const WorkTableContent = (props) => {
                             <WorkTableFilter form={form} />
                         </div>
                         <div style={{ overflow: "hidden" }} className="work-table">
-                            <Spin spinning={tableLoading} delay={500}>
+                            <Spin spinning={tableLoading} delay={500} >
                                 <Table
                                     columns={columns}
                                     dataSource={workList}

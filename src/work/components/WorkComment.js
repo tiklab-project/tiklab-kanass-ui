@@ -109,7 +109,6 @@ const WorkComment = (props) => {
      * 翻页
      */
     const changePage = (page, pageSize) => {
-        console.log(page, pageSize)
         getCommentList({ current: page })
     }
     return (<>

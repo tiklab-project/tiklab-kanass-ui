@@ -30,7 +30,6 @@ const  WorkRepositoryAddmodal = (props) => {
             })
             getRepositoryAllList().then(data => {
                 if(data.code === 0){
-                    console.log(data.data)
                     setRepositoryaList(data.data)
                 }
                 // setRepositoryaList(data)
@@ -92,10 +91,8 @@ const  WorkRepositoryAddmodal = (props) => {
     }
     // 选择文档
     const selectWorkRepository=(selected, selectedRows)=> {
-        console.log(selected, selectedRows)
         setSelectedRowKeys(selected)
         setSelectedRow(selectedRows)
-        // setSelectedWorkRepositoryList(selectedRows)
     }
     //提交用户列表
     const submitWorkRepositoryList = ()=> {

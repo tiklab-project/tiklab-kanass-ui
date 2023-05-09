@@ -184,8 +184,6 @@ const WorkCalendarWeek=(props) => {
         getHour()
         let timeDate = []
         getMonthCalendarWeek().then((res)=> {
-            console.log(res)
-            
             res.map((item,index)=> {
                 timeDate.push({data: []})
                 return item.data.map((itemDay,indexDay)=> {
@@ -202,7 +200,6 @@ const WorkCalendarWeek=(props) => {
                     
                 })
             })
-            console.log(timeDate)
             setTimeDate(timeDate)
         })
         return;
@@ -211,9 +208,6 @@ const WorkCalendarWeek=(props) => {
         <>
                 <div className="calendar-week">
                     <div className="week-hearder">
-                    {
-                        console.log(currentWeek,weekData)
-                    }
                         {
                             weekData.length>0 && weekData[currentWeek].map((item,index)=> {
                                 return  <div className={`calendar-day ${item.type}`} key={index}>

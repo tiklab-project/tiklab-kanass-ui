@@ -166,16 +166,8 @@ const WorkLog = (props) => {
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
-
-    // 选择日期之后
-    const changeDate = (dateString) => {
-        console.log(dateString.format('YYYY-MM-DD HH:mm:ss'))
-        setDate(dateString.format('YYYY-MM-DD HH:mm:ss'))
-    }
-
     // 改变页码
     const onChange = (pagination) => {
-        console.log(pagination)
         getGemianTime(pagination)
     }
 

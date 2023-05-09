@@ -23,6 +23,8 @@ export class WorkStore {
     @observable workStatusList = [];
     @observable workInfo = [];
     @observable workBreadCrumbText = "全部事项";
+    // 快捷搜索选中值
+    @observable quickFilterValue = {label: '所有', value: 'all'}
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -109,7 +111,6 @@ export class WorkStore {
 
     @action
     setWorkId = (value) => {
-        console.log(value)
         this.workId = value
     }
 
@@ -144,6 +145,11 @@ export class WorkStore {
         this.tabValue = value
     }
 
+    @action
+    setQuickFilterValue = (value) => {
+        this.quickFilterValue = value
+    }
+
     // 看板视图当前事项的状态的index
     setIndexParams = (workIndex, statusIndex) => {
         this.indexParams.workIndex = workIndex
@@ -152,7 +158,6 @@ export class WorkStore {
 
     // 看板视图移动位置后，列表交换
     changeBorderList = (startBoxIndex, startWorkBoxIndex, index, targetStatusId) => {
-        console.log(this.workBoardList)
         Object.assign(this.workBoardList[startBoxIndex].workItemList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
         this.workBoardList[index].workItemList.push(this.workBoardList[startBoxIndex].workItemList[startWorkBoxIndex])
         this.workBoardList[startBoxIndex].workItemList.splice(startWorkBoxIndex, 1)
@@ -276,20 +281,16 @@ export class WorkStore {
                         length = item.workBoardList[j].workItemList.length;
                     }
                 }
-                console.log(length)
                 item.length = length;
                 return item;
             })
-            console.log(this.workUserGroupBoardList)
         }
         return data;
     }
 
     @action
     setSearchCondition = (value) => {
-        console.log(this.searchCondition)
         this.searchCondition = Object.assign(this.searchCondition,  { ...value })
-        console.log(this.searchCondition)
     }
 
     @action
@@ -316,9 +317,10 @@ export class WorkStore {
      * @returns 
      */
     @action
-    getWorkConditionPageTree = async (value) => {
+    getWorkConditionPageTree = async(value) => {
         
         this.tableLoading = true;
+
         this.setSearchCondition(value)
         let data = [];
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
@@ -443,7 +445,7 @@ export class WorkStore {
 
     // 根据id查找事项列表
     @action
-    searchWorkById = async(id, index) => {
+    searchWorkById = async(id) => {
         const param = new FormData()
         param.append("id", id)
         const data = await Service("/workItem/findWorkItem",param);
@@ -493,13 +495,6 @@ export class WorkStore {
     //编辑事项
     @action
     editWork = async(value) => {
-        if (value.workPriority || String(value.workPriority) === "0") {
-            value.updateField = "workPriority"
-            value.workPriority = {
-                id: value.workPriority
-            }
-            value.flowId = value.flowId
-        }
         if (value.workStatusNode) {
             value.updateField = "workStatusNode"
             value.workStatusNode = {
@@ -508,49 +503,7 @@ export class WorkStore {
             value.workStatusCode = value.workStatusCode;
         }
 
-        if (value.module || String(value.module) === "0") {
-            value.module = {
-                id: value.module
-            }
-        }
-        if (value.sprint || String(value.sprint) === "0") {
-            value.sprint = {
-                id: value.sprint
-            }
-        }
-        if (value.assigner || String(value.assigner) === "0") {
-            value.assigner = {
-                id: value.assigner
-            }
-        }
-        if (value.reporter || String(value.reporter) === "0") {
-            value.reporter = {
-                id: value.reporter
-            }
-        }
-        if (value.builder || String(value.builder) === "0") {
-            value.builder = {
-                id: value.builder
-            }
-        }
-        if (value.parentWorkItem) {
-            value.parentWorkItem = {
-                id: value.parentWorkItem
-            }
-        }
-        if (value.attachment) {
-            value.fileName = {
-                id: value.attachment
-            }
-        }
-        if (value.preDependWorkItem) {
-            value.preDependWorkItem = {
-                id: value.preDependWorkItem
-            }
-        }
-        if (value.extData) {
-            value.extData = JSON.stringify(value.extData)
-        }
+        
         if (value.eachType) {
             value.eachType = value.eachType
         }

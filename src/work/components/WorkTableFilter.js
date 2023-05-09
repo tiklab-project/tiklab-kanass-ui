@@ -8,30 +8,28 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import WorkTypeTab from "./WorkTypeTab";
+import WorkQuickFilter from "./WorkQuickFilter";
 
 const WorkTableFilter = (props) => {
     // 查找表单
     const [form] = Form.useForm();
-    const { workStore, formItemLayout, labelHidden, layout } = props;
+    const { workStore } = props;
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     // 解析store数据
-    const { projectList, setSearchCondition, searchCondition,
+    const { projectList, searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId, 
-        setWorkIndex, viewType, setSearchConditionNull,findStateNodeList, 
-        statWorkItemOverdue,findProjectList, getSelectUserList, 
+        setWorkIndex, viewType,findProjectList, getSelectUserList, 
         getWorkTypeList, getWorkStatus, userList, findDmFlowList} = workStore;
     
     const [flowIds, setFlowIds] = useState();
 
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
         getWorkStatus()
         findDmFlowList({domainId: projectId}).then(res => {
-            console.log("flowId", res)
             if(res.code === 0){
                 const list = [];
                 res.data.map(item => {
@@ -77,34 +75,9 @@ const WorkTableFilter = (props) => {
     };
 
     const handleChange = (field, value) => {
-        console.log(value)
         search({ [field]: value })
     }
 
-
-    const selectMenu = (type) => {
-        // setWorkBreadCrumbText(option.children)
-        switch (type) {
-            case "all":
-                getAllWorkItem();
-                break;
-            case "pending":
-                getPendingWorkItem();
-                break;
-            case "ending":
-                getEndingWorkItem();
-                break;
-            case "creat":
-                getCreatWorkItem();
-                break;
-            case "overdue":
-                getOverdueWorkItem();
-                break;
-            default:
-                break;
-
-        }
-    }
     const getWorkList = () => {
         if (viewType === "tile") {
             getPageList();
@@ -112,95 +85,6 @@ const WorkTableFilter = (props) => {
             getPageTree();
         }
     }
-
-    const getAllWorkItem = () => {
-        setSearchConditionNull()
-        const initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        initFrom(initValues)
-        getWorkList();
-
-    }
-
-    const getPendingWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        const states = ["DONE"]
-        getStateNodeList({ inNodeStatus: ['TODO', 'PROGRESS'], inFlowIds: flowIds}).then(data => {
-            console.log("pending", data)
-            initValues = { workStatusIds: data, ...initValues }
-            setSearchCondition(initValues)
-            getWorkList();
-        })
-    }
-
-    const getEndingWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        const states = "DONE"
-        getStateNodeList({ nodeStatus: 'DONE', inFlowIds: flowIds}).then(data => {
-            initValues = { workStatusIds: data, ...initValues }
-            setSearchCondition(initValues)
-            getWorkList();
-        })
-    }
-
-    const getCreatWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            projectId: projectId,
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        initFrom(initValues)
-        getWorkList();
-    }
-
-    const getOverdueWorkItem = () => {
-        setSearchConditionNull()
-        let initValues = {
-            sprintId: sprintId,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchCondition(initValues)
-        initFrom(initValues)
-        statWorkItemOverdue({ projectId: projectId, sprintId: sprintId }).then(res => {
-            if (res.dataList.length > 0) {
-                setWorkId(res.dataList[0].id)
-                setWorkIndex(1)
-            }
-
-        })
-    }
-
 
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
@@ -249,44 +133,10 @@ const WorkTableFilter = (props) => {
         })
     }
 
-    const getStateNodeList = async (value) => {
-        const stateNodeList = []
-        await findStateNodeList(value).then(res => {
-            if (res.code === 0) {
-                if (res.data.length > 0) {
-                    res.data.map(item => {
-                        stateNodeList.push(item.node.id)
-                    })
-                }
-            }
-        })
-        return stateNodeList;
-    }
     const selectChange = (field, value) => {
         search({ [field]: value })
     }
-    const quickFilterList = [
-        {
-            value: "all",
-            name: "所有"
-        },
-        {
-            value: "pending",
-            name: "我的待办"
-        },
-        {
-            value: "ending",
-            name: "我的已办"
-        },
-        {
-            value: "creat",
-            name: "我创建的"
-        },
-        {
-            value: "overdue",
-            name: "已逾期"
-        }
-    ]
+    
 
     const sorter = (sortType, isAsc) => {
         const sortParams = [];
@@ -301,28 +151,13 @@ const WorkTableFilter = (props) => {
         if (viewType === "tile") {
             getWorkConditionPage()
         }
-        // setShowSortDropDown(false)
-        // setSortType(sortType)
-
     }
+
     return (
         <div className="work-table-second">
             <WorkTypeTab />
             <div className="work-table-filter">
-                <SelectSimple name="quickFilter"
-                    onChange={(value) => selectMenu(value)}
-                    title={"所有"} ismult={false}>
-                    {
-                        quickFilterList.map(item => {
-                            return <SelectItem
-                                value={item.value}
-                                label={item.name}
-                                key={item.value}
-
-                            />
-                        })
-                    }
-                </SelectSimple>
+                <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
                 {
                     props.match.path == "/index/work/worklist/:statetype" &&
                     <SelectSimple name="workTypeIds"
@@ -355,6 +190,9 @@ const WorkTableFilter = (props) => {
                         })
                     }
                 </SelectSimple>
+                {
+                    console.log(searchCondition)
+                }
                 <SelectSimple
                     name="workStatus"
                     onChange={(value) => handleChange("workStatusIds", value)}

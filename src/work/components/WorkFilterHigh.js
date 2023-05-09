@@ -27,27 +27,6 @@ const WorkFilterHigh = (props) => {
         getsprintlist(projectId)
         getModuleList(projectId)
         getWorkStatus()
-        console.log(workStatusList)
-        // findDmFlowList({ domainId: projectId }).then(res => {
-        //     console.log("flowId", res)
-        //     if (res.code === 0) {
-        //         const lisflowIds = [];
-        //         res.data.map(item => {
-        //             lisflowIds.push(item.flow.id)
-        //         })
-        //         setFlowIds(lisflowIds)
-        //         findStateNodeList({inFlowIds: lisflowIds}).then(res => {
-        //             if (res.code === 0) {
-        //                 if (res.data.length > 0) {
-        //                     res.data.map(item => {
-        //                         stateNodeList.push(item.node.id)
-        //                     })
-        //                 }
-        //             }
-        //             setStateNodeList(stateNodeList)
-        //         })
-        //     }
-        // })
     }, [])
 
     useEffect(() => {
@@ -56,7 +35,6 @@ const WorkFilterHigh = (props) => {
 
     //查找事务
     const changeField = (changedValues, allValues) => {
-        console.log(changedValues, allValues, Object.keys(changedValues))
         const field = Object.keys(changedValues)[0];
         let value;
         if (field === "createdDate") {
@@ -146,7 +124,6 @@ const WorkFilterHigh = (props) => {
     }
     const dateFormat = "YYYY-MM-DD"
     const initForm = () => {
-        console.log(searchCondition)
         form.setFieldsValue({
             workStatusIds: searchCondition.workStatusIds,
             createdDate: searchCondition.buildTimeEnd ? [moment(searchCondition.buildTimeStart, dateFormat), moment(searchCondition.buildTimeEnd, dateFormat)] : null,

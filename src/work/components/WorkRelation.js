@@ -50,10 +50,6 @@ const WorkRelation = (props) => {
             projectId: projectId
         }
         createRecent(params)
-        // console.log(props)
-        // if (props.route.path === "/index/prodetail/workMessage/:id") {
-        //     props.history.push("/index/prodetail/work")
-        // }
     }
 
     const columns = [

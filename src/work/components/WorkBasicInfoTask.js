@@ -28,15 +28,12 @@ const WorkBasicInfo = (props) => {
     };
     const [messageApi, contextHolder] = message.useMessage();
 
-    const { workStore, workLogStore, workInfo } = props;
-    const { workId, workIndex, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
-        formList, moduleList, sprintList, priorityList, editWork, userList,
-        alertText, setAlertText, isShowAlert, setIsShowAlert, findFieldList
+    const { workStore, workLogStore, workInfo, setWorkInfo } = props;
+    const { workId, workIndex, workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
+        formList, moduleList, sprintList, priorityList, editWork, userList, findFieldList
     } = workStore;
     const { setPlanTime } = workLogStore
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
-    // 富文本内容
-    const [priorityDes, setPriorityDes] = useState("")
 
     // 获取详情内容
     const [parentWorkItem, setParentWorkItem] = useState("")
@@ -74,13 +71,10 @@ const WorkBasicInfo = (props) => {
                 extDataForm.setFieldsValue("{}")
             }
 
-            let descReplace;
-
             if (workInfo.desc) {
                 setSlateValue(JSON.parse(workInfo.desc))
             }
 
-            setPriorityDes(descReplace)
         }
     }
     const [selectItemList, setSelectItemList] = useState()
@@ -182,11 +176,10 @@ const WorkBasicInfo = (props) => {
     /**
      * 字段更新
      */
-    const updateSingle = (changedValues) => {
-        console.log(Object.values(changedValues)[0])
+    const updateSingle = (changedValues, allValues) => {
+        const changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
-            console.log(changedValues)
         }
         if (changedValues.planEndTime) {
             changedValues.planEndTime = changedValues.planEndTime.format('YYYY-MM-DD HH:mm:ss')
@@ -194,12 +187,73 @@ const WorkBasicInfo = (props) => {
         if (changedValues.planBeginTime) {
             changedValues.planBeginTime = changedValues.planBeginTime.format('YYYY-MM-DD HH:mm:ss')
         }
+
+        if (changeKey === "workPriority") {
+            const priority = priorityList.filter(item => {
+                return item.id === changedValues.workPriority
+            })
+            changedValues.workPriority =  priority[0];
+        }
+
+        if (changeKey  === "module") {
+            changedValues.module = {
+                id: changedValues.module
+            }
+        }
+
+        if (changeKey  === "sprint") {
+            changedValues.sprint = {
+                id: changedValues.sprint
+            }
+        }
+
+        if (changeKey  === "assigner") {
+            changedValues.assigner = {
+                id: changedValues.assigner
+            }
+        }
+
+        if (changeKey  === "reporter") {
+            changedValues.reporter = {
+                id: changedValues.reporter
+            }
+        }
+        if (changeKey  === "builder") {
+            changedValues.builder = {
+                id: changedValues.builder
+            }
+        }
+        if (changeKey === "parentWorkItem") {
+            changedValues.parentWorkItem = {
+                id: changedValues.parentWorkItem
+            }
+        }
+        if (changeKey === "attachment") {
+            changedValues.fileName = {
+                id: changedValues.attachment
+            }
+        }
+        if (changeKey === "preDependWorkItem") {
+            changedValues.preDependWorkItem = {
+                id: changedValues.preDependWorkItem
+            }
+        }
+       
         let data = {
             ...changedValues,
             id: workId,
-            updateField: Object.keys(changedValues)[0]
+            updateField: changeKey
         }
-        editWork(data)
+        editWork(data).then(res => {
+            if(res.code === 0){
+                setWorkInfo({...workInfo, ...changedValues})
+                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
+                props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                    workList[workIndex-1] = { ...workList[workIndex-1], ...changedValues}
+                    setWorkList([...workList])
+                }
+            }
+        })
         setFieldName("")
     }
 
@@ -219,12 +273,12 @@ const WorkBasicInfo = (props) => {
      */
     const updateExtData = (changedValues) => {
         let extData = JSON.parse(workInfo.extData)
-        console.log(extData)
+
         let data = {
-            extData: {
+            extData: JSON.stringify({
                 ...extData,
                 ...changedValues,
-            },
+            }),
             id: workId
         }
         workInfo.extData = JSON.stringify({
@@ -250,7 +304,6 @@ const WorkBasicInfo = (props) => {
     ])
 
     const editorDesc = () => {
-
         let data = {
             id: workId,
             desc: JSON.stringify(slateValue),

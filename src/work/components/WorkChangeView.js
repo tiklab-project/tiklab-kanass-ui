@@ -13,7 +13,6 @@ const WorkFilterSort = (props) => {
     const treeDropDown = useRef();
     const gantte = useRef()
     const pluginStore = useSelector(state => state.pluginStore);
-    console.log(pluginStore)
     const versionInfo = getVersionInfo()
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -167,18 +166,6 @@ const WorkFilterSort = (props) => {
                         </Popconfirm>
                     }
 
-
-
-                    {/* {
-                        pluginStore.filter(item => item.point === "work-calendar").length > 0 && <div
-                            className={`dropdown-item ${"calendar" === workShowType ? "view-type-select" : ""}`}
-                            onClick={() => changeWorkView("calendar")}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-calendar`}></use>
-                            </svg>
-                            日历
-                        </div>
-                    } */}
                 </div>
 
                 <div className="view-list">

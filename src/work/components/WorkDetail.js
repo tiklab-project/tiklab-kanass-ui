@@ -21,12 +21,11 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, setIsWorkList, showPage } = props;
-    const { workList, setWorkId, defaultCurrent, setDefaultCurrent, statesList, detWork, workShowType,
+    const { workList,setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, workIndex, viewType, userList, searchWorkById,
-        alertText, setAlertText, isShowAlert, setIsShowAlert, createRecent, detailCrumbArray,
-        setDetailCrumbArray
+        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray
     } = workStore;
     const projectId = props.match.params.id;
     const workDeatilForm = useRef()
@@ -35,22 +34,19 @@ const WorkDetail = (props) => {
     const [workStatus, setWorkStatus] = useState("nostatus")
     const userId = getUser().userId;
     const [percentValue, setPercentValue] = useState(0)
-    const [assignerId, setAssignerId] = useState()
     const [isFocus, setIsFocus] = useState()
     const path = props.match.path.split("/")[2];
     const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
     const getWorkDetail = (id, index) => {
         setInfoLoading(true)
-        searchWorkById(id, index).then((res) => {
+        searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
                 findStatusList(res.workStatus.id);
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                setAssignerId(res.assigner?.id)
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
-                // setWorkTypeCode(res.workType.code)
             }
         })
     }
@@ -69,7 +65,6 @@ const WorkDetail = (props) => {
         if (workId === 0) {
             setWorkInfo(null)
         }
-        console.log(workId)
         return
     }, [workId]);
 
@@ -107,12 +102,17 @@ const WorkDetail = (props) => {
             updateField: "workStatusNode",
             workStatusNode: statusId,
             flowId: workInfo.workType.flow.id,
-            // workStatusCode: nodeStatus,
             id: workId
         }
         editWork(value).then((res) => {
             if (res.code === 0) {
                 setWorkStatus(name)
+                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
+                    props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                    workList[workIndex-1].workStatusNode = { id: statusId, name: name}
+                    setWorkList([...workList])
+                }
+
                 searchWorkById(workId).then((res) => {
                     if (res) {
                         findStatusList(res.workStatus.id)
@@ -150,14 +150,19 @@ const WorkDetail = (props) => {
             params["parentWorkItem"] = workInfo.parentWorkItem.id
         }
 
-        if (inputRef.current.textContent !== workInfo.title) {
+        if (name !== workInfo.title) {
             editWork(params).then(res => {
                 if (res.code === 0) {
                     if (document.getElementById(workId)) {
-                        document.getElementById(workId).innerHTML = inputRef.current.textContent;
+                        document.getElementById(workId).innerHTML = name;
                     }
-
-                    workInfo.title = inputRef.current.textContent;
+                    if(workShowType === "list"){
+                        workInfo.title = name;
+                    }else {
+                        workList[workIndex-1].title = name;
+                        setWorkList([...workList])
+                    }
+                    
 
                 }
             })
@@ -166,12 +171,7 @@ const WorkDetail = (props) => {
         setIsFocus(false)
     }
 
-    const updateByClick = (event) => {
-        event.stopPropagation();
-        event.preventDefault()
-        updateTitle()
 
-    }
     const updateNameByKey = (event) => {
 
         if (event.keyCode === 13) {
@@ -181,11 +181,7 @@ const WorkDetail = (props) => {
         }
 
     }
-    const cancelUpdate = (event) => {
-        event.stopPropagation();
-        event.preventDefault()
-        setIsFocus(false)
-    }
+
 
     const [fieldName, setFieldName] = useState("")
     const changeStyle = (value) => {
@@ -204,13 +200,20 @@ const WorkDetail = (props) => {
 
         editWork(data).then(res => {
             if (updateField === "assigner") {
-                setAssignerId(updateData.assigner)
+                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
+                props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                    const user = userList.filter(item => {
+                        return item.user.id === updateData.assigner
+                    })
+                    workList[workIndex-1].assigner = user[0].user;
+                    setWorkList([...workList])
+                }
             }
 
             if (res.code === 0) {
                 setValidateStatus("success")
                 setAlertText("保存成功！")
-                // assignerId()
+
                 setTimeout(() => {
                     setIsShowAlert(false)
 
@@ -231,9 +234,6 @@ const WorkDetail = (props) => {
                     return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item.id, item.name)}>{item.name}</div>
                 })
             }
-            {
-                console.log(workInfo?.workTypeSys)
-            }
             <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workType?.flow.id}`)}>查看工作流</div>
 
         </div>
@@ -241,16 +241,11 @@ const WorkDetail = (props) => {
     );
     const goCrumWork = (index, id) => {
         setWorkId(id)
-        console.log(index)
         const array = detailCrumbArray.slice(0, index + 1)
-
-        console.log(array)
         setDetailCrumbArray(array)
-        console.log(detailCrumbArray)
     }
 
     const changPage = (page) => {
-        console.log(page, workList)
         const workDetail = workList[page - 1]
         setWorkId(workDetail.id)
         setWorkIndex(page)
@@ -309,20 +304,6 @@ const WorkDetail = (props) => {
                         }
 
                         <div className="work-detail-top">
-                            {/* {
-                        workInfo?.workTypeSys.iconUrl ?
-                            <img
-                                src={('images/' + workInfo?.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="list-img "
-                            />
-                            :
-                            <img
-                                src={('images/workType1.png')}
-                                alt=""
-                                className="list-img"
-                            />
-                    } */}
 
                             <div className="work-detail-top-name">
                                 <div className="work-item-title-top">
@@ -476,7 +457,7 @@ const WorkDetail = (props) => {
                         </div>
                     </>
                     <div className="work-detail-tab">
-                        {workInfo && <WorkDetailBottom workInfo={workInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
+                        {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo = {setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
                     </div>
                 </div>
                     :

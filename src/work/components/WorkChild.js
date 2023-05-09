@@ -77,12 +77,9 @@ const WorkChild = (props) => {
 
     const goWorkItem = (record) => {
         setWorkId(record.id)
-        // setWorkIndex(index + 1)
-        console.log(detailCrumbArray)
         const newDetailCrumbArray = detailCrumbArray
         newDetailCrumbArray.push({id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl })
         setDetailCrumbArray(newDetailCrumbArray)
-        console.log(detailCrumbArray)
         const params = {
             name: record.title,
             model: "workItem",

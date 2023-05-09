@@ -38,7 +38,6 @@ const WorkBodar = (props) => {
                     list.push(item.id)
                 })
                 setIsSameFlowBox(list)
-                console.log(list)
             }
         })
     }
@@ -67,7 +66,6 @@ const WorkBodar = (props) => {
     }
 
     const changeStatus = (targetStatusId, index,item) => {
-        console.log(item)
         event.preventDefault();
         const value = {
             workStatus: targetStatusId,

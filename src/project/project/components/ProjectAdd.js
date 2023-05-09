@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Select, DatePicker, message, Row, Col, Steps, Breadcrumb } from 'antd';
+import { Modal, Form, Select, DatePicker, message, Row, Col, Steps, Breadcrumb, Spin } from 'antd';
 import 'moment/locale/zh-cn';
 import { observer, inject } from "mobx-react";
 import "./ProjectAdd.scss";
@@ -10,11 +10,10 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
     const { projectStore, name, type, id } = props;
-    const { searchpro, projectTypelist, getProjectTypeList, getUseList, uselist,
-        creatIcon, findIconList, updateProject, addProlist } = projectStore;
+    const { projectTypelist, getProjectTypeList, getUseList, findIconList, addProlist } = projectStore;
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()
-
+    const [loading, setLoading] = useState(false)
 
     const getIconList = () => {
         findIconList({ iconType: "project" })
@@ -95,7 +94,7 @@ const ProjectAdd = (props) => {
     const step2 = (
         <div>
 
-            <ProjectAddInfo addProlist={addProlist} workType={workType} setVisible={setVisible} setCurrentStep={setCurrentStep} />
+            <ProjectAddInfo addProlist={addProlist} workType={workType} setVisible={setVisible} setCurrentStep={setCurrentStep} setLoading = {setLoading}/>
         </div>
 
     )
@@ -118,20 +117,23 @@ const ProjectAdd = (props) => {
 
     return (
         <div className="project-add">
-            <Row>
-                <Col
-                    className="project-type-col"
-                    lg={{ span: "18", offset: "3" }}
-                    xl={{ span: "14", offset: "5" }}
-                    xxl={{ span: "10", offset: "7" }}
-                    style={{ height: "100%" }}
-                >
-                    <Head />
-                    <Steps />
-                    {steps[currentStep].content}
-                    {/* <step1 /> */}
-                </Col>
-            </Row>
+            <Spin spinning={loading} delay={500} tip = "添加中...">
+                <Row>
+                    <Col
+                        className="project-type-col"
+                        lg={{ span: "18", offset: "3" }}
+                        xl={{ span: "14", offset: "5" }}
+                        xxl={{ span: "10", offset: "7" }}
+                        style={{ height: "100%" }}
+                    >
+                        <Head />
+                        <Steps />
+                        {steps[currentStep].content}
+                        {/* <step1 /> */}
+                    </Col>
+                </Row>
+            </Spin>
+            
         </div>
     );
 };

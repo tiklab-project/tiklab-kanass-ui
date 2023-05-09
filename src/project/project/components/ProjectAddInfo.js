@@ -14,12 +14,6 @@ const layout = {
         span: 6,
     }
 };
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
 
 const iconList = [
     {
@@ -45,7 +39,7 @@ const iconList = [
 ]
 
 const ProjectAddInfo = (props) => {
-    const { addProlist, workType, setVisible, setCurrentStep } = props;
+    const { addProlist, workType, setVisible, setCurrentStep, setLoading } = props;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -60,6 +54,7 @@ const ProjectAddInfo = (props) => {
     const [iconUrl, setIconUrl] = useState("project1.png")
 
     const onFinish = () => {
+        setLoading(true)
         form.validateFields().then((values) => {
             const time = values["startTime"]
             const data = {
@@ -80,7 +75,7 @@ const ProjectAddInfo = (props) => {
                 iconUrl: iconUrl
             }
             addProlist(data).then(res => {
-                
+                setLoading(false)
                 if (res.code === 0) {
                     message.success('添加成功');
                     props.history.goBack()
@@ -88,6 +83,7 @@ const ProjectAddInfo = (props) => {
                 }else {
                     message.error("添加失败")
                 }
+                
             })
         })
     }

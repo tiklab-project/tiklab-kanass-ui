@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import "./Select.scss"
 const SelectSimple = (props) => {
-    const { onChange, ismult, title,children, selectValue,className } = props;
+    const { onChange, ismult, title, children, selectValue, className } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
 
@@ -15,12 +15,15 @@ const SelectSimple = (props) => {
     }, [showDropDown])
 
     useEffect(() => {
-        if(selectValue){
-           setSelectLength(selectValue.length) 
-           setSelectData(selectValue)
+        if (selectValue) {
+            setSelectLength(selectValue.length)
+            setSelectData(selectValue)
+        }else {
+            setSelectLength(0)
+            setSelectData([])
         }
-        
-    },[selectValue])
+        console.log(title, "sss")
+    }, [selectValue])
 
 
     const closeModal = (e) => {
@@ -32,28 +35,27 @@ const SelectSimple = (props) => {
         }
     }
 
-    
+
     const getValue = (e) => {
-    
-        if(ismult){
+        if (ismult) {
             const value = e.value;
             const checked = e.checked;
             const isIn = selectData.indexOf(value);
-            if(isIn === -1 && checked === true){
+            if (isIn === -1 && checked === true) {
                 selectData.push(value)
                 setSelectData(selectData)
             }
-            if(isIn !== -1 && checked === false){
+            if (isIn !== -1 && checked === false) {
                 selectData.splice(isIn, 1)
                 setSelectData(selectData)
             }
             setSelectLength(selectData.length)
             onChange(selectData)
-        }else {
+        } else {
             setSelectData(e)
-            onChange(e.value)
+            onChange(e)
         }
-       
+
     }
 
     const clear = () => {
@@ -65,43 +67,45 @@ const SelectSimple = (props) => {
         <div onClick={() => setShowDropDown(true)} className="select-content">
             {
                 ismult ?
-                <div >
-                    {title}
-                </div>
-                :
-                <div className={className}>
-                    {selectData.label ? selectData.label : title}
-                </div>
+                    <div >
+                        {title}
+                        
+                    </div>
+                    :
+                    <div className={className}>
+                        
+                        {selectData?.label ? selectData.label : title}
+                    </div>
             }
             <div className="select-view-icon">
                 {
-                    ismult && selectLength > 0 &&  <div className="select-number">{selectLength}</div>
+                    ismult && selectLength > 0 && <div className="select-number">{selectLength}</div>
                 }
                 <svg className="svg-icon" aria-hidden="true" >
                     <use xlinkHref={`#icon-downdrop`}></use>
                 </svg>
             </div>
-            
+
         </div>
         {
             showDropDown ? <div className="select-dropdown" ref={dropDown}>
                 {
-                   React.Children.map(children, (children,i) => {
-                        return React.cloneElement(children, {onChange: getValue, selectData: selectData,setShowDropDown: setShowDropDown, ismult: ismult})
+                    React.Children.map(children, (children, i) => {
+                        return React.cloneElement(children, { onChange: getValue, selectData: selectData, setShowDropDown: setShowDropDown, ismult: ismult })
                     })
                 }
                 {
-                    ismult && <div onClick={() => clear()} className = "select-dropdown-bottom">
+                    ismult && <div onClick={() => clear()} className="select-dropdown-bottom">
                         <div className="clear-botton">清空</div>
                     </div>
                 }
-                
+
             </div>
-            :
-            <></>
+                :
+                <></>
         }
 
-       
+
     </div>
 }
 
