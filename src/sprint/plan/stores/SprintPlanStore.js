@@ -81,6 +81,7 @@ export class SprintPlanStore {
 	setSprint = async(value) => {
         const params={
             id: value.startId,
+            updateField: "sprint",
             sprint: {
                 id: value.endId
             }
@@ -94,6 +95,7 @@ export class SprintPlanStore {
 	delSprint = async(value) => {
         const params={
             id: value.startId,
+            updateField: "sprint",
             sprint: {
                 id: "nullstring"
             }

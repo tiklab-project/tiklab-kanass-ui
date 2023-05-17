@@ -67,7 +67,7 @@ const UserWorkItem = (props) => {
                 const seriesBug = [];
 
                 userList.map((item, index) => {
-                    yAxisValue.push(item.user.name)
+                    yAxisValue.push(item.user.nickname ? item.user.nickname : item.user.name)
                     seriesWorkItem.push(item.workItemTypeCount.workItem)
                     seriesDemand.push(item.workItemTypeCount.demand)
                     seriesTask.push(item.workItemTypeCount.task)

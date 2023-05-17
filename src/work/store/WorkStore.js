@@ -348,7 +348,7 @@ export class WorkStore {
         this.tableLoading = true;
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
-            this.tableLoading = true;
+            this.tableLoading = false;
             this.workList = data.data.dataList;
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
@@ -530,11 +530,11 @@ export class WorkStore {
     }
 
     // 修改字段
-    updateWorkItem = async(value) => {
-        const data = await Service("/workItem/updateWorkItem",params);
-        return data;
+    // updateWorkItem = async(value) => {
+    //     const data = await Service("/workItem/updateWorkItem",params);
+    //     return data;
 
-    }
+    // }
 
     // 修改计划日期
     changePercent = async(value) => {

@@ -273,7 +273,7 @@ const WorkAddPage = (props) => {
                             >
                                 {
                                     userList && userList.map((item) => {
-                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user.name}</Select.Option>
+                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                     })
                                 }
                             </Select>

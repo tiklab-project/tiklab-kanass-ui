@@ -86,6 +86,7 @@ export class WorkChild {
 	addWorkChild = async(value) => {
         let params = {
             id: value.id,
+            updateField: "parentWorkItem",
             parentWorkItem: {
                 id: value.parentWorkId || "nullstring"
             },
@@ -102,6 +103,7 @@ export class WorkChild {
 	deleWorkChild = async(value) => {
         let params = {
             id: value.id,
+            updateField: "parentWorkItem",
             parentWorkItem: {
                 id: "nullstring"
             }

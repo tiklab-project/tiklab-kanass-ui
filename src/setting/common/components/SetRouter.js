@@ -165,13 +165,13 @@ const setDevEamRouter= [
         title: "安全",
         icon: 'systemcenter',
         id: '/index/setting/log',
-        purviewCode: "SysLog",
+        // purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 id: '/index/setting/logList',
-                purviewCode: "SysLogList",
+                // purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -182,13 +182,6 @@ const setDevEamRouter= [
         id: '/index/setting/version',
         purviewCode: "SysVersion",
         code: 11,
-    },
-    {
-        title: "产品授权",
-        icon: 'plugin',
-        id: '/index/setting/product',
-        purviewCode: "SysProductAuth",
-        code: 13,
     },
     {
         title: "基础数据",
@@ -254,13 +247,13 @@ const setDevEamRouter= [
             {
                 title: '日志模板',
                 id: '/index/setting/myLogTemplateList',
-                purviewCode: "SysLogTemplate",
+                // purviewCode: "SysLogTemplate",
                 code: 12-10,
             },
             {
                 title: '日志类型',
                 id: '/index/setting/projectLogTypeList',
-                purviewCode: "SysLogType",
+                // purviewCode: "SysLogType",
                 code: 12-11,
             },
             {
@@ -475,14 +468,14 @@ const setPrdEamRouter= [
         title: "安全",
         icon: 'systemcenter',
         id: '/index/setting/log',
-        purviewCode: "SysLog",
+        // purviewCode: "SysLog",
         code: 10,
         children: [
             {
                 title: '操作日志',
                 icon: 'systemcenter',
                 id: '/index/setting/logList',
-                purviewCode: "SysLogList",
+                // purviewCode: "SysLogList",
                 code: 10-1,
             }
         ]
@@ -493,13 +486,6 @@ const setPrdEamRouter= [
         id: '/index/setting/version',
         purviewCode: "SysVersion",
         code: 11,
-    },
-    {
-        title: "产品授权",
-        icon: 'plugin',
-        id: '/index/setting/product',
-        purviewCode: "SysProductAuth",
-        code: 13,
     }
 ];
 
@@ -695,13 +681,6 @@ const setDevRouter= [
         code: 11,
     },
     {
-        title: "产品授权",
-        icon: 'plugin',
-        id: '/index/setting/product',
-        purviewCode: "SysProductAuth",
-        code: 13,
-    },
-    {
         title: "基础数据",
         icon: 'systemcenter',
         id: '/index/setting/systemFeature',
@@ -775,14 +754,14 @@ const setDevRouter= [
                 title: '日志模板',
                 icon: 'systemcenter',
                 id: '/index/setting/myLogTemplateList',
-                purviewCode: "SysLogTemplate",
+                // purviewCode: "SysLogTemplate",
                 code: 12-10,
             },
             {
                 title: '日志类型',
                 icon: 'systemcenter',
                 id: '/index/setting/projectLogTypeList',
-                purviewCode: "SysLogType",
+                // purviewCode: "SysLogType",
                 code: 12-11,
             },
             {
@@ -1022,13 +1001,6 @@ const setPrdRouter= [
         id: '/index/setting/version',
         purviewCode: "SysVersion",
         code: 11,
-    },
-    {
-        title: "产品授权",
-        icon: 'plugin',
-        id: '/index/setting/product',
-        purviewCode: "SysProductAuth",
-        code: 13,
     }
 ];
 export  {setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter};

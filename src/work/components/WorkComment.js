@@ -148,7 +148,7 @@ const WorkComment = (props) => {
                                                         <svg className="svg-icon" aria-hidden="true">
                                                             <use xlinkHref="#icon-icontouxiang1"></use>
                                                         </svg>
-                                                        <span className="user-name">{item.user.name}</span>
+                                                        <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
                                                         <span className="user-date">{item.createTime}</span>
                                                     </div>
                                                     {

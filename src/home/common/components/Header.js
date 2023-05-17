@@ -93,9 +93,9 @@ const Header = props => {
                 个人资料
             </div>
             <div className='user-info'>
-                <UserIcon name = {user.name}/>
+                <UserIcon name = {user.nickname ? user.nickname : user.name}/>
                 <div className='user-info-text'>
-                    <div className='user-info-name'>{user.name}</div>
+                    <div className='user-info-name'>{user.nickname ? user.nickname : user.name}</div>
                     <div className='user-info-email'>{user.phone || "暂无"}</div>
                 </div>
             </div>
@@ -253,7 +253,7 @@ const Header = props => {
                             <div className="frame-header-name" data-title="个人资料与设置">
                                 <Dropdown overlay={useMenu} trigger={"click"}>
                                     <Space>
-                                        <UserIcon  size = "big" name = {user.name}/>
+                                        <UserIcon  size = "big" name = {user.nickname ? user.nickname : user.name}/>
                                     </Space>
                                 </Dropdown>
                             </div>

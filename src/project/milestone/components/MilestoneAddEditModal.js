@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import { Modal,Form,Input,DatePicker,Select} from 'antd';
+import { Modal, Form, Input, DatePicker, Select } from 'antd';
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
@@ -23,28 +23,27 @@ const MilestoneAddEditModal = (props) => {
     // 弹框显示
     const [visible, setVisible] = React.useState(false);
     // 解析props
-    const {milestoneStore} = props;
-    const {getUseList,uselist,addMilestone,editMilestoneById,searchMilestoneById} = milestoneStore;
-    
+    const { milestoneStore } = props;
+    const { getUseList, uselist, addMilestone, editMilestoneById, searchMilestoneById } = milestoneStore;
+
     // 表单的宽度
     const layout = {
         labelCol: {
             span: 6,
         },
         wrapperCol: {
-        span: 16,
+            span: 16,
         },
     };
 
     /**
      * 显示弹窗
      */
-    
     const showModal = () => {
         setVisible(true);
         getUseList(projectId)
-        if(props.type === "edit"){
-            searchMilestoneById(props.id).then((res)=> {
+        if (props.type === "edit") {
+            searchMilestoneById(props.id).then((res) => {
                 form.setFieldsValue({
                     name: res.name,
                     master: res.master.id,
@@ -62,17 +61,17 @@ const MilestoneAddEditModal = (props) => {
         form.validateFields().then((fieldsValue) => {
             let value = {
                 ...fieldsValue,
-                project: {id: projectId},
+                project: { id: projectId },
                 master: {
                     id: fieldsValue.master
                 },
                 milestoneStatus: "0",
                 milestoneTime: fieldsValue.milestoneTime.format("YYYY-MM-DD")
             }
-            if(props.type ==="add"){
+            if (props.type === "add") {
                 addMilestone(value)
-            }else {
-                value.id= props.id
+            } else {
+                value.id = props.id
                 editMilestoneById(value)
             }
             setVisible(false);
@@ -107,21 +106,21 @@ const MilestoneAddEditModal = (props) => {
 
     return (
         <div className="addmodel">
-            {   
-                props.type !== "edit"?
-                <PrivilegeProjectButton code={'MilestoneAdd'} disabled ={"hidden"} domainId={projectId}  {...props}>
-                    <Button type="primary" onClick={showModal}>
-                        添加里程碑
-                    </Button>
-                </PrivilegeProjectButton>: 
-                <PrivilegeProjectButton code={'MilestoneEdit'} disabled ={"hidden"} domainId={projectId}  {...props}>
-                    <svg className="svg-icon" aria-hidden="true" 
-                        onClick={() => showModal()} 
-                        style={{ cursor: "pointer", marginRight: "16px" }}
-                    >
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg>
-                </PrivilegeProjectButton>
+            {
+                props.type !== "edit" ?
+                    <PrivilegeProjectButton code={'MilestoneAdd'} disabled={"hidden"} domainId={projectId}  {...props}>
+                        <Button type="primary" onClick={showModal}>
+                            添加里程碑
+                        </Button>
+                    </PrivilegeProjectButton> :
+                    <PrivilegeProjectButton code={'MilestoneEdit'} disabled={"hidden"} domainId={projectId}  {...props}>
+                        <svg className="svg-icon" aria-hidden="true"
+                            onClick={() => showModal()}
+                            style={{ cursor: "pointer", marginRight: "16px" }}
+                        >
+                            <use xlinkHref="#icon-edit"></use>
+                        </svg>
+                    </PrivilegeProjectButton>
             }
             <Modal
                 title={props.name}
@@ -130,7 +129,7 @@ const MilestoneAddEditModal = (props) => {
                 onCancel={onFinishFailed}
                 cancelText="取消"
                 okText="确定"
-                closable = {false}
+                closable={false}
             >
                 <Form
                     {...layout}
@@ -139,19 +138,19 @@ const MilestoneAddEditModal = (props) => {
                         remember: true,
                     }}
                     form={form}
-                    layout = "vertical"
+                    layout="vertical"
                 >
                     <Form.Item
                         label="里程碑名称"
                         name="name"
                         rules={[
-                        {
-                            required: true,
-                            message: '请输入里程碑名称',
-                        },
+                            {
+                                required: true,
+                                message: '请输入里程碑名称',
+                            },
                         ]}
                     >
-                        <Input placeholder= "请输入里程碑名称"/>
+                        <Input placeholder="请输入里程碑名称" />
                     </Form.Item>
                     <Form.Item
                         label="负责人"
@@ -166,10 +165,10 @@ const MilestoneAddEditModal = (props) => {
                         <Select
                             placeholder="负责人"
                             allowClear
-                        >   
-                            {   
-                                uselist && uselist.map((item,index)=> {
-                                    return <Select.Option value={item.user.id} key={item.user.id}>{item.user.name}</Select.Option>
+                        >
+                            {
+                                uselist && uselist.map((item, index) => {
+                                    return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                 })
                             }
                         </Select>
@@ -189,17 +188,17 @@ const MilestoneAddEditModal = (props) => {
                             <Select
                                 placeholder="里程碑状态"
                                 allowClear
-                            >   
-                            {
-                                milestoneStatusList && milestoneStatusList.map((item,index)=> {
-                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                })
-                            }
+                            >
+                                {
+                                    milestoneStatusList && milestoneStatusList.map((item, index) => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    })
+                                }
                             </Select>
                         </Form.Item>
                     }
-                    <Form.Item 
-                        name="milestoneTime" 
+                    <Form.Item
+                        name="milestoneTime"
                         label="计划日期"
                         rules={[
                             {
@@ -216,4 +215,4 @@ const MilestoneAddEditModal = (props) => {
     );
 };
 
-export default inject("systemRoleStore","milestoneStore")(observer(MilestoneAddEditModal));
+export default inject("systemRoleStore", "milestoneStore")(observer(MilestoneAddEditModal));

@@ -73,7 +73,7 @@ const WorkLog = (props) => {
         let userInfo = { userId: "", name: "" }
         let user = getUser()
         userInfo.userId = user.userId;
-        userInfo.name = user.name;
+        userInfo.name = user?.nickname ? user?.nickname :  user?.name;
         setUserInfo(userInfo)
         AddLog.setFieldsValue({
             user: userInfo.userId

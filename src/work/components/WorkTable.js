@@ -54,7 +54,7 @@ const WorkTableContent = (props) => {
         },
         {
             title: '负责人',
-            dataIndex: ['assigner', 'name'],
+            dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>

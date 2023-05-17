@@ -410,7 +410,7 @@ const WorkDetail = (props) => {
                                                     >
                                                         {
                                                             userList && userList.map((item) => {
-                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user.name} />{item.user.name}</Space></Select.Option>
+                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
                                                             })
                                                         }
                                                     </Select>

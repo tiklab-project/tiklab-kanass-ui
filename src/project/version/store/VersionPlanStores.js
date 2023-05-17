@@ -104,6 +104,7 @@ export class VersionPlanStore {
 	addVersionPlan = async(params) => {
         let value = {
             id: params.id,
+            updateField: "projectVersion",
             projectVersion: {
                 id: params.version
             }
@@ -125,6 +126,7 @@ export class VersionPlanStore {
 	deleVersionPlan = async(params) => {
         let value = {
             id: params.id,
+            updateField: "projectVersion",
             projectVersion: {
                 id: "nullstring"
             }

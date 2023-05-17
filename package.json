@@ -51,7 +51,7 @@
         "react-router-dom": "^5.2.0",
         "svgo-loader": "^3.0.1",
         "tiklab-core-ui": "^1.0.1",
-        "tiklab-eam-saas-ui": ">=^1.0.1",
+        "tiklab-eam-cloud-ui": ">=^1.0.1",
         "tiklab-eam-ui": ">=^1.0.1",
         "tiklab-flow-ui": ">=^1.0.1",
         "tiklab-form-ui": ">=^1.0.1",

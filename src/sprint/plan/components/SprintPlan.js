@@ -159,7 +159,7 @@ const SprintPlan = (props) => {
                                     userList.map(item => {
                                         return <SelectItem
                                             value={item.id}
-                                            label={item.user.name}
+                                            label={ item.user?.nickname ? item.user?.nickname : item.user?.name}
                                             key={item.id}
                                             imgUrl={item.user?.iconUrl}
 
@@ -266,7 +266,7 @@ const SprintPlan = (props) => {
                                     userList.map(item => {
                                         return <SelectItem
                                             value={item.id}
-                                            label={item.user.name}
+                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
                                             key={item.id}
                                             imgUrl={item.user?.iconUrl}
 

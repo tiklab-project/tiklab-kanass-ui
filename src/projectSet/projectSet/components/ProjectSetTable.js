@@ -103,7 +103,7 @@ const ProjectSetTable = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
 
