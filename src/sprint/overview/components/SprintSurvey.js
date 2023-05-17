@@ -13,6 +13,7 @@ import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
+import moment from 'moment';
 
 const SprintSurvey = (props) => {
     const { sprintSurveyStore } = props;
@@ -34,6 +35,33 @@ const SprintSurvey = (props) => {
         }
         FindSprint({ sprintId: sprintId }).then(res => {
             setSprintInfo(res.data)
+            const sprint = res.data;
+            FindSprintBurnDowmChartPage(sprintId).then(res => {
+                if (res.code === 0) {
+                    let timerXaixs = [];
+                    let workCountYaixs = [];
+                    let Yaxis = [];
+                    if (res.data.dataList.length > 0) {
+                        res.data.dataList.map((item, index) => {
+                            timerXaixs.push(item.recordTime);
+                            workCountYaixs.push(item.remainWorkItemCount);
+                            Yaxis.push(item.totalWorkItemCount * (7 - index) / 7);
+                            return;
+                        })
+                    } else {
+                        timerXaixs.push(moment().format("YYYY-MM-DD"));
+                        Yaxis.push(sprint.workNumber);
+                        workCountYaixs.push(sprint.workNumber);
+                        let i = 1;
+                        for (i = 1; i <= 6; i++) {
+                            timerXaixs.push(moment().subtract(i, "days").format("YYYY-MM-DD"));
+                            workCountYaixs.push(sprint.workNumber);
+                            Yaxis.push(sprint.workNumber * (7 - i) / 7);
+                        }
+                    }
+                    burnDownChart(timerXaixs, workCountYaixs, Yaxis)
+                }
+            })
         })
         StatSprintWorkItemByBusStatus({ sprintId: sprintId }).then(res => {
             setWorkStatusList(res.data)
@@ -42,21 +70,7 @@ const SprintSurvey = (props) => {
             setWorkItemList(res.data)
         })
         // 燃尽图
-        FindSprintBurnDowmChartPage(sprintId).then(res => {
-
-            if (res.code === 0) {
-                let timerXaixs = [];
-                let workCountYaixs = [];
-                let Yaxis = [];
-                res.data.dataList.map((item, index) => {
-                    timerXaixs.push(item.recordTime);
-                    workCountYaixs.push(item.remainWorkItemCount);
-                    Yaxis.push(item.totalWorkItemCount * (7 - index) / 7);
-                    return;
-                })
-                burnDownChart(timerXaixs, workCountYaixs, Yaxis)
-            }
-        })
+       
 
         findlogpage()
 
@@ -114,29 +128,6 @@ const SprintSurvey = (props) => {
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
-                        {/* <div className="top-left">
-                            <div className="title">迭代信息</div>
-                            <div className="box-top">
-                                <div className="text sprint-status">迭代状态：{sprintInfo && sprintInfo.sprintState.name}</div>
-                                <div className="text sprint-assign">负责人：{sprintInfo && sprintInfo.master && sprintInfo.master.name || ""}</div>
-                            </div>
-                            <div className="box-middle">
-                                <div className="sprint-time">
-                                    <div className="text start-text">开始时间：</div>
-                                    <div className="text start-time">{sprintInfo && sprintInfo.startTime}</div>
-                                </div>
-                                <div className="sprint-time">
-                                    <div className="text end-text">结束时间：</div>
-                                    <div className="text end-time">{sprintInfo && sprintInfo.endTime}</div>
-                                </div>
-                            </div>
-                            <div className="box-bottom">
-                                <div>
-                                    迭代进度：
-                                </div>
-                                <Progress percent={50} status="active" />
-                            </div>
-                        </div> */}
                         <div className="sprint-info-box">
                             <div className="sprint-info-title">
                                 <img
@@ -148,7 +139,7 @@ const SprintSurvey = (props) => {
                             </div>
                             <div className="sprint-container">
                                 <div className="sprint-item">
-                                    <UserIcon userInfo={sprintInfo?.master} className="item-icon" name = {masterName}/>
+                                    <UserIcon userInfo={sprintInfo?.master} size = "big" className="item-icon" name = {masterName}/>
                                     <div className="item-content">
                                         <div className="item-top">{sprintInfo?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>
@@ -225,12 +216,10 @@ const SprintSurvey = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="top-right">
-                            <div className="title">剩余时间</div>
-                            <div className="sprint-day">
-                                <div className="sprint-white">
-                                    9
-                                </div>
+                       <div className="burn-down-box">
+                            <div className="burn-down-title">迭代燃尽图</div>
+                            <div className="burn-down" id="sprint-burn-down">
+
                             </div>
                         </div>
                     </div>

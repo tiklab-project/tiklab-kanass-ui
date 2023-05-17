@@ -234,6 +234,17 @@ export class SprintStore {
         const data = await Service("/sprintFocus/deleteSprintFocusByQuery", value)
         return data;
     }
+
+    /**
+     * 创建最近点击的
+     * @param {最近点击的} value 
+     * @returns 
+     */
+    @action
+    createRecent = async (value) => {
+        const data = await Service("/recent/createRecent", value)
+        return data;
+    }
 }
 
 export const SPRINT_STORE = "sprintStore"

@@ -70,6 +70,18 @@ export class LineMapStore {
         const data = await Service("/epic/updateEpic", value)
         return data;
     }
+
+    /**
+     * 创建最近点击的
+     * @param {最近点击的} value 
+     * @returns 
+     */
+    @action
+    createRecent = async (value) => {
+        const data = await Service("/recent/createRecent", value)
+        return data;
+       
+    }
 }
 
 export const LINEMAP_STORE = "lineMapStore"

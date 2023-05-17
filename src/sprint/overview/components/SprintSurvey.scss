@@ -128,27 +128,15 @@
                 }
             }
         }
-        .top-right {
-            .sprint-day {
-                width: 80%;
-                margin: 20px auto;
-                height: 200px;
-                background-color: #d5d7da;
-                border-radius: 4px;
-                border: 1px solid #d5d7da;
-                .sprint-white {
-                    width: 60%;
-                    margin: 20px auto;
-                    height: 160px;
-                    background-color: #fff;
-                    border-radius: 4px;
-                    border: 1px solid #d5d7da;
-                    text-align: center;
-                    line-height: 160px;
-                    font-size: 40px;
-                    color: #78BF03;
-                    font-weight: var(--tiklab-font-weight-bold);
-                }
+        .burn-down-box {
+            width: calc(100% - 520px);
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            height: 420px;
+            .burn-down {
+                width: calc(100% - 20px);
+                height: calc(100% - 20px);
             }
         }
         

@@ -17,8 +17,8 @@ import { withRouter } from "react-router";
 import moment from 'moment';
 const EpicLineMap = (props) => {
     // 获取当前年月日
-    const { data, setShowEpicAddModal, setAddChild, setParentId, lineMapStore } = props;
-    const { updateEpic } = lineMapStore;
+    const { data, setShowEpicAddModal, setAddChild, setParentId, lineMapStore, } = props;
+    const { updateEpic, createRecent } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -354,9 +354,20 @@ const EpicLineMap = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
+    const goEpicDetail = (item) => {
+        // const params = {
+        //     name: item.epicName,
+        //     model: "epic",
+        //     modelId: item.id,
+        //     projectId: projectId
+        // }
+        // createRecent(params)
+
+        props.history.push(`/index/projectScrumDetail/${projectId}/epic/${item.id}`)
+
+    }
     //绘制表格
     const tableTd = (data, fid, deep) => {
         return (data && data.length > 0 && data.map((item) => {
@@ -386,7 +397,7 @@ const EpicLineMap = (props) => {
                                         </div>
                                         <div
                                             className="epic-name-left-name"
-                                            onClick={() => props.history.push(`/index/projectScrumDetail/${projectId}/epic/${item.id}`)}>
+                                            onClick={() => goEpicDetail(item)}>
                                             {item.epicName}
                                         </div>
                                     </div>

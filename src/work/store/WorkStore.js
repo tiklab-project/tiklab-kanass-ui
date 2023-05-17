@@ -73,7 +73,12 @@ export class WorkStore {
     @observable workType = ""
     @observable tabValue = {id: "all", type: "system"};
     @observable detailCrumbArray = [];
-     
+    @observable isWorkList = true;
+    
+    @action
+    setIsWorkList = (value) => {
+        this.isWorkList = value
+    }
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;

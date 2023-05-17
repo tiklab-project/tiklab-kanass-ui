@@ -14,7 +14,7 @@ const WorkRelation = (props) => {
         addWorkRelation, searchAllWorkRelation, deleWorkRelation } = workRelation;
     const [selectIds, setSelectIds] = useState();
     const [addRelation, showAddRelation] = useState(false);
-    const relationAddRef = useRef();
+    const project = JSON.parse(localStorage.getItem("project"));
 
     useEffect(() => {
         if (!addRelation) {
@@ -47,7 +47,8 @@ const WorkRelation = (props) => {
             name: workItem.title,
             model: "workItem",
             modelId: workItem.id,
-            projectId: projectId
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
         }
         createRecent(params)
     }

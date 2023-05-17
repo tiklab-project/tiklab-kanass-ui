@@ -19,6 +19,8 @@ const WorkAside = (props) => {
     const [scrollHeight, setScrollHeight] = useState();
     const [offsetHeight, setOffsetHeight] = useState();
     const [currentPageAside, setCurrentPage] = useState(1)
+    const project = JSON.parse(localStorage.getItem("project"));
+
     useEffect(() => {
         setScrollHeight(workAsideList.current.scrollHeight)
         setOffsetHeight(workAsideList.current.offsetHeight)
@@ -36,7 +38,9 @@ const WorkAside = (props) => {
             name: workItem.title,
             model: "workItem",
             modelId: workItem.id,
-            projectId: projectId
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+            iconUrl: workItem.workTypeSys.iconUrl
         }
         createRecent(params)
         if (props.route.path === "/index/prodetail/workMessage/:id") {

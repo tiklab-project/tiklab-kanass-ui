@@ -21,8 +21,8 @@ const VersionTable = (props) => {
     // 解析 props
     const path = props.match.path.split("/")[2];
     const { versionStore } = props
-    const { versionList, getVersionList, deleVersion } = versionStore;
-
+    const { versionList, getVersionList, deleVersion, createRecent } = versionStore;
+    const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
 
@@ -33,7 +33,16 @@ const VersionTable = (props) => {
     const [loading, setLoading] = useState(false)
 
     // 跳转到版本详情
-    const goDetail = (id) => {
+    const goDetail = (id, name) => {
+        const params = {
+            name: name,
+            model: "version",
+            modelId: id,
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+        }
+        createRecent(params)
+        
         props.history.push(`/index/${path}/${projectId}/versionDetail/${id}`)
     }
 
@@ -52,7 +61,7 @@ const VersionTable = (props) => {
             render: (text, record) => (
                 <>
                    
-                    <span className="version-name" onClick={() => goDetail(record.id)}>{text}11</span>
+                    <span className="version-name" onClick={() => goDetail(record.id, text)}>{text}</span>
                 </>
 
             ),

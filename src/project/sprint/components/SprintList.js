@@ -24,8 +24,10 @@ const Sprint = (props) => {
     const { sprintStore } = props;
     const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList, 
         sprintlist, delesprintList,createSprintFocus, findSprintFocusList, 
-        deleteSprintFocus, findFocusSprintList,setFilterType
+        deleteSprintFocus, findFocusSprintList,setFilterType, createRecent
     } = sprintStore;
+
+    const project = JSON.parse(localStorage.getItem("project"));
     // 登录者id
     const masterId = getUser().userId;
     // 获取关注的迭代
@@ -52,7 +54,15 @@ const Sprint = (props) => {
      * 到迭代详情
      * @param {迭代id} id 
      */
-    const goSprintDetail = (id) => {
+    const goSprintDetail = (id, sprintName) => {
+        const params = {
+            name: sprintName,
+            model: "sprint",
+            modelId: id,
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+        }
+        createRecent(params)
         props.history.push({ pathname: `/index/${projectId}/sprintdetail/${id}/survey` })
         localStorage.setItem("sprintId", id);
     }
@@ -271,7 +281,7 @@ const Sprint = (props) => {
                                                     {
                                                         sprintlist && sprintlist.map((item, index) => {
                                                             return <div className="sprint-item" key={item.id}>
-                                                                <div className="name" onClick={() => goSprintDetail(item.id)}>
+                                                                <div className="name" onClick={() => goSprintDetail(item.id, item.sprintName)}>
                                                                     <svg className="icon" aria-hidden="true">
                                                                         <use xlinkHref="#icon-plan"></use>
                                                                     </svg>

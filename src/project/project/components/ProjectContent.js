@@ -67,7 +67,9 @@ const ProjectContent = (props) => {
             name: project.projectName,
             model: "project",
             modelId: project.id,
-            projectId: project.id
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+            iconUrl: project.iconUrl
         }
         createRecent(params)
         if (project.projectType.type === "scrum") {
@@ -84,7 +86,8 @@ const ProjectContent = (props) => {
             name: project.projectName,
             model: "project",
             modelId: project.id,
-            projectId: project.id
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
         }
         createRecent(params)
         if (project.projectType.type === "scrum") {

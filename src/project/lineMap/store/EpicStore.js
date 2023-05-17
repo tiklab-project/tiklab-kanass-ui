@@ -161,6 +161,5 @@ export class EpicStore {
             return data;
         }
     }
-
 }
 export const EPIC_STORE = "epicStore"

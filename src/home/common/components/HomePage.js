@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
-import "../components/HomePage.scss";
+import "./HomePage.scss";
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";

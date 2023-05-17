@@ -10,11 +10,24 @@ const WorkTableContent = (props) => {
     const path = props.match.path.split("/")[2];
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray, setWorkIndex } = workStore;
+        detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray, 
+        setWorkIndex, createRecent, isWorkList, setIsWorkList } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
-    const [isWorkList, setIsWorkList] = useState(true)
+    const project = JSON.parse(localStorage.getItem("project"));
+
+    // const [isWorkList, setIsWorkList] = useState(true)
     const goProdetail = (record, index) => {
+        const params = {
+            name: record.title,
+            model: "workItem",
+            modelId: record.id,
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+            iconUrl: record.workTypeSys.iconUrl
+        }
+        createRecent(params)
+
         setWorkId(record.id)
         setWorkIndex(index + 1)
         setDetailCrumbArray([{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])

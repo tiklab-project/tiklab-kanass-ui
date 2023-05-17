@@ -19,6 +19,8 @@ const WorkChild = (props) => {
 
     const { getWorkChildList,deleWorkChild, childWorkItemTotal } = workChild;
     const [childWorkList, setChildWorkList] = useState([]);
+    
+    const project = JSON.parse(localStorage.getItem("project"));
 
     useEffect(() => {
         findWorkChildList()
@@ -84,7 +86,9 @@ const WorkChild = (props) => {
             name: record.title,
             model: "workItem",
             modelId: record.id,
-            projectId: projectId
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+            iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
         if (props.route.path === "/index/prodetail/workMessage/:id") {

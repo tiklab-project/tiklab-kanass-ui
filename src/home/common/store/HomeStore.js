@@ -36,6 +36,12 @@ export class HomeStore {
     // 待办列表
     @observable 
     todoTaskList = [];
+
+    @observable 
+    endTaskList = [];
+
+    @observable 
+    overdueTaskList = [];
     // 当天被激活的tab
     @observable 
     activeKey = "survey";
@@ -51,6 +57,8 @@ export class HomeStore {
     
     // 是否是动态最后一页
     @observable isDynamicReachBottom = true;
+
+    @observable recentList = [];
     // 设置被激活tab
     @action
     setActiveKey = (value) => {
@@ -159,9 +167,38 @@ export class HomeStore {
     createRecent = async (value) => {
         const data = await Service("/recent/createRecent", value)
         return data;
-
     }
-    
+
+    /**
+     * 创建最近点击的
+     * @param {最近点击的} value 
+     * @returns 
+     */
+    @action
+    findRecentPage = async () => {
+        const params={
+            sortParams: [{
+                name: "recentTime",
+                orderType:"asc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/recent/findRecentPage", params)
+        if(data.code === 0){
+            this.recentList = data.data.dataList;
+        }
+        return data;
+    }
+
+    // 更新点击时间
+    @action
+    updateRecent = async (value) => {
+        const data = await Service("/recent/updateRecent", value)
+        return data;
+    }
     /**
      * 获取消息列表 
      * @param {页数，状态（已读，未读）} value 
@@ -249,6 +286,10 @@ export class HomeStore {
      */
     @action
     findTodopage = async(value)=> {
+        this.todoTaskList = [];
+        this.endTaskList = [];
+        this.overdueTaskList = [];
+                    
         const params={
             pageParam: {
                 pageSize: 20,
@@ -267,7 +308,19 @@ export class HomeStore {
         this.setTodoCondition(value)
         const data = await Service("/todo/findtodopage", params);
         if(data.code === 0) {
-            this.todoTaskList = data.data.dataList;
+            const list = data.data.dataList;
+            list.map(item => {
+                if(item.status === 1){
+                    this.todoTaskList.push(item)
+                }
+                if(item.status === 2){
+                    this.endTaskList.push(item)
+                }
+                if(item.status === 3){
+                    this.overdueTaskList.push(item)
+                }
+            })
+            // this.todoTaskList = data.data.dataList;
         }
         return data;
     }

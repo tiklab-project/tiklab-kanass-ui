@@ -9,7 +9,7 @@ const WorkBodar = (props) => {
     const { workBoardList, changeWorkStatus, setIndexParams,
         changeBorderList, reductionWorkBoardList, boardGroup, 
         workUserGroupBoardList, workBoardListLenght, findToNodeList,
-        setWorkId, setWorkIndex, setDetailCrumbArray } = workStore;
+        setWorkId, setWorkIndex, setDetailCrumbArray, createRecent } = workStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -18,7 +18,7 @@ const WorkBodar = (props) => {
     const [isSameFlowBox, setIsSameFlowBox] = useState()
     const modelRef = useRef()
     const [flowId, setFlowId] = useState()
-
+    const project = JSON.parse(localStorage.getItem("project"));
     // 拖放效果
     const moveWorkItem = () => {
         // const dragEvent = event.target
@@ -96,6 +96,16 @@ const WorkBodar = (props) => {
     // 点击打开详情弹窗
     const showModal = (workItem, index, statusid) => {
         // 为了删除事项后显示的事项详情定位
+        const params = {
+            name: workItem.title,
+            model: "workItem",
+            modelId: workItem.id,
+            project: {id: project.id},
+            projectType: {id: project.projectType.id},
+            iconUrl: workItem.workTypeSys.iconUrl
+        }
+        createRecent(params)
+
         setIndexParams(index, statusid)
         setWorkIndex(index)
         setWorkId(workItem.id)

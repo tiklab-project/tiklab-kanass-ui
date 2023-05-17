@@ -10,16 +10,17 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
-import MyWorkStatistics from "./MyWorkStatistics";
-import { Empty } from 'antd';
+import { Empty, Tabs } from 'antd';
 import { withRouter } from 'react-router';
+const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
-    const { homeStore } = props
-    const { statProjectWorkItem, createRecent, opLogList, findLogpage,
-        findTodopage, todoTaskList, statWorkItemByBusStatus, setActiveKey
+    const { homeStore, workStore } = props
+    const { statProjectWorkItem, createRecent,
+        findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
+        updateRecent, overdueTaskList, endTaskList
     } = homeStore;
-
+    const { setWorkId, setDetailCrumbArray, setWorkIndex, setIsWorkList } = workStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -30,8 +31,10 @@ const HomeSurvey = (props) => {
         getRecentProject()
         // 获取待办列表
         findTodopage({ userId: userId })
-        // 获取日志列表
-        findLogpage({ userId: userId })
+
+        findRecentPage().then(res => {
+            console.log(res)
+        })
         return;
     }, [])
 
@@ -39,7 +42,7 @@ const HomeSurvey = (props) => {
      * 获取最近查看的项目列表
      */
     const getRecentProject = () => {
-            statProjectWorkItem(userId).then((res) => {
+        statProjectWorkItem(userId).then((res) => {
             if (res.code === 0 && res.data.length > 0) {
                 setRecentProjectList(res.data.slice(0, 3))
             }
@@ -55,7 +58,9 @@ const HomeSurvey = (props) => {
             name: project.projectName,
             model: "project",
             modelId: project.id,
-            projectId: project.id
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
+            iconUrl: project.iconUrl
         }
 
         // 创建最近访问的信息
@@ -80,24 +85,172 @@ const HomeSurvey = (props) => {
     }
 
     /**
-     * 跳转到日志详情
-     * @param {地址} url 
-     */
-    const goOpLogDetail = (url) => {
-        window.location.href = url
-    }
-
-    /**
      * 跳转到待办详情
      * @param {跳转地址} url 
      */
     const goTodoDetail = (url) => {
+        // setWorkId(item.modelId)
+        // setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        // setIsWorkList(false)
         window.location.href = url
     }
 
+    const goProject = (item) => {
+        updateRecent({ id: item.id })
+        console.log(item)
+        if (item.projectType.type === "scrum") {
+            props.history.push(`/index/projectScrumDetail/${item.modelId}/survey`)
+        }
+        if (item.projectType.type === "nomal") {
+            props.history.push(`/index/projectNomalDetail/${item.modelId}/survey`)
+        }
+
+        // 存储用于被点击菜单的回显
+        sessionStorage.setItem("menuKey", "project")
+    }
+
+    const goWorkItem = (item) => {
+        updateRecent({ id: item.id })
+        setWorkId(item.modelId)
+        setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        setIsWorkList(false)
+        if (item.projectType.type === "scrum") {
+            props.history.push(`/index/projectScrumDetail/${item.project.id}/work`)
+        }
+        if (item.projectType.type === "nomal") {
+            props.history.push(`/index/projectNomalDetail/${item.project.id}/work`)
+        }
+
+    }
+
+    const goVersion = (item) => {
+        updateRecent({ id: item.id })
+        if (item.projectType.type === "scrum") {
+            props.history.push(`/index/projectScrumDetail/${item.project.id}/versionDetail/${item.modelId}`)
+        }
+        if (item.projectType.type === "nomal") {
+            props.history.push(`/index/projectNomalDetail/${item.project.id}/versionDetail/${item.modelId}`)
+        }
+
+    }
+
+    const goSprint = (item) => {
+        updateRecent({ id: item.id })
+        props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
+
+    }
+    const recentItem = (item) => {
+        let element;
+        switch (item.model) {
+            case "project":
+                element = <div className="project-item" key={item.id}>
+                    
+                    <div className="project-item-icon">
+                        {
+                            item.iconUrl ?
+                                <img
+                                    src={('/images/' + item.iconUrl)}
+                                    alt=""
+                                    className="list-img"
+                                />
+                                :
+                                <img
+                                    src={('/images/project1.png')}
+                                    alt=""
+                                    className="list-img"
+                                />
+
+                        }
+                    </div>
+                    <div className="project-item-content">
+                        <div className="content-name" onClick={() => goProject(item)}>{item.name}</div>
+                        <div className="content-type">项目</div>
+                    </div>
+                    <div className="item-time">
+                        {item.recentTime}
+                    </div>
+                </div>
+                break;
+            case "workItem":
+                element = <div className="work-item" key={item.id}>
+                    <div className="work-icon">
+                        {
+                            item.iconUrl ?
+                                <img
+                                    src={('/images/' + item.iconUrl)}
+                                    alt=""
+                                    className="list-img"
+                                />
+                                :
+                                <img
+                                    src={('/images/workType1.png')}
+                                    alt=""
+                                    className="list-img"
+                                />
+
+                        }
+                    </div>
+                    <div className="work-content">
+                        <div className="content-name" onClick={() => goWorkItem(item)}>{item.name}</div>
+                        <div className="content-type">{item.project.projectName}</div>
+                    </div>
+                    <div className="item-time">
+                        {item.recentTime}
+                    </div>
+                </div>
+                break;
+            case "version":
+                element = <div className="version-item" key={item.id}>
+                    <div className="version-icon">
+                        {
+                            item.iconUrl ?
+                                <img
+                                    src={('/images/' + item.iconUrl)}
+                                    alt=""
+                                    className="list-img"
+                                />
+                                :
+                                <img
+                                    src={('/images/version.png')}
+                                    alt=""
+                                    className="list-img"
+                                />
+
+                        }
+                    </div>
+                    <div className="version-content">
+                        <div className="content-name" onClick={() => goVersion(item)}>{item.name}</div>
+                        <div className="content-type">{item.project.projectName}</div>
+                    </div>
+                    <div className="item-time">
+                        {item.recentTime}
+                    </div>
+                </div>
+                break;
+            case "sprint":
+                element = <div className="sprint-item" key={item.id}>
+                    <div className="sprint-icon">
+                        <img
+                            src={('/images/sprint.png')}
+                            alt=""
+                            className="list-img"
+                        />
+                    </div>
+                    <div className="sprint-content">
+                        <div className="content-name" onClick={() => goSprint(item)}>{item.name}</div>
+                        <div className="content-type">{item.project.projectName}</div>
+                    </div>
+                    <div className="item-time">
+                        {item.recentTime}
+                    </div>
+                </div>
+                break;
+        }
+        return element;
+    }
     return (
         <div className="home-content">
-            <div className="upper-box">
+            <div className="recent-project">
                 <div className="title">
                     <div className="name">最近项目</div>
                 </div>
@@ -136,61 +289,73 @@ const HomeSurvey = (props) => {
                     }
                 </div>
             </div>
-            <div className="center-box">
-                <MyWorkStatistics {...props} statWorkItemByBusStatus={statWorkItemByBusStatus} />
-            </div>
-            <div className="center-box">
-                <div className="pending-workitem">
-                    <div className="pending-workitem-title">
-                        <span className="name">待办任务</span><div>
-                            <span className="more" onClick={() => goTodoWorkItemList()}>
-                                <svg aria-hidden="true" className="svg-icon">
-                                    <use xlinkHref="#icon-rightjump"></use>
-                                </svg>
-                            </span>
-                        </div>
-
-                    </div>
-                    <div className="pending-workitem-list">
-                        {
-                            todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                return <div
-                                    dangerouslySetInnerHTML={{ __html: item.data }}
-                                    className="dynamic-item"
-                                    key={item.id}
-                                    onClick={() => goTodoDetail(item.link)}
-                                />
-                            })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className="foot-box">
-                <div className="dynamic-box">
-                    <div className="dynamic-box-title">
-                        <span className="name">相关动态</span>
-                        <div className="more" onClick={() => { props.history.push(`/index/dynamic`) }}>
+            <div className="todo-work">
+                <div className="todo-work-title">
+                    <span className="name">待办任务</span><div>
+                        <span className="more" onClick={() => goTodoWorkItemList()}>
                             <svg aria-hidden="true" className="svg-icon">
                                 <use xlinkHref="#icon-rightjump"></use>
                             </svg>
-                        </div>
+                        </span>
                     </div>
-                    <div className="dynamic-list">
-                        {
-                            opLogList.length > 0 ? opLogList.map(item => {
-                                return <div
-                                    dangerouslySetInnerHTML={{ __html: item.data }}
-                                    className="dynamic-item"
-                                    key={item.id}
-                                    onClick={() => goOpLogDetail(item.link)}
-                                />
-                            })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                        }
-                    </div>
+                </div>
+                <div className="todo-work-list">
+                    <Tabs defaultActiveKey="1">
+                        <TabPane tab="进行中" key="todo">
+                            {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        key={item.id}
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
+                        </TabPane>
+                        <TabPane tab="已完成" key="end">
+                            {
+                                endTaskList.length > 0 ? endTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        key={item.id}
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
+                        </TabPane>
+                        <TabPane tab="已逾期" key="3">
+                            {
+                                overdueTaskList.length > 0 ? overdueTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        key={item.id}
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
+                        </TabPane>
+                    </Tabs>
+                </div>
+            </div>
+            <div className="recent-click">
+                <div className="recent-click-title">
+                    <span className="name">最近点击</span>
+                </div>
+                <div className="recent-click-list">
+                    {
+                        recentList && recentList.length > 0 && recentList.map(item => {
+                            return recentItem(item)
+                        })
+                    }
                 </div>
             </div>
         </div>

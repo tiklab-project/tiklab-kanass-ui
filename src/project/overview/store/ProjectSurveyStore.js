@@ -6,9 +6,10 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-12-02 09:58:09
  */
-import { action } from "mobx";
+import { action, observable } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class ProjectSurveyStore {
+    @observable recentList = [];
     /**
      * 获取不同事项状态的统计
      * @param {项目id} projectId 
@@ -165,6 +166,33 @@ export class ProjectSurveyStore {
 
         }
         const data = await Service("/oplog/findlogpage", params)
+        return data;
+    }
+
+    @action
+    findRecentPage = async () => {
+        const params={
+            sortParams: [{
+                name: "recentTime",
+                orderType:"asc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            },
+            projectId: JSON.parse(localStorage.getItem("project")).id
+        }
+        const data = await Service("/recent/findRecentPage", params)
+        if(data.code === 0){
+            this.recentList = data.data.dataList;
+        }
+        return data;
+    }
+
+    // 更新点击时间
+    @action
+    updateRecent = async (value) => {
+        const data = await Service("/recent/updateRecent", value)
         return data;
     }
 }
