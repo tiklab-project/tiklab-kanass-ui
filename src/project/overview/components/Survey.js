@@ -572,13 +572,15 @@ const Survey = (props) => {
                     </div>
                     <div className="recent-click">
                         <div className="recent-click-title">
-                            <span className="name">最近点击</span>
+                            <span className="name">我最近查看</span>
                         </div>
                         <div className="recent-click-list">
                             {
-                                recentList && recentList.length > 0 && recentList.map(item => {
+                                recentList && recentList.length > 0 ? recentList.map(item => {
                                     return recentItem(item)
                                 })
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
                             }
                         </div>
                     </div>

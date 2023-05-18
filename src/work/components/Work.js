@@ -21,7 +21,8 @@ import "../components/Work.scss"
 const Work = (props) => {
     const { workStore, workCalendarStore } = props;
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType, setQuickFilterValue, setTabValue } = workStore;
+        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType, 
+        setQuickFilterValue, setTabValue, setIsWorkList } = workStore;
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
@@ -76,6 +77,7 @@ const Work = (props) => {
 
 
         return () => {
+            setIsWorkList(true)
             // setWorkId("")
             // setWorkIndex("")
         };

@@ -268,7 +268,7 @@ const SprintSurvey = (props) => {
                                 </div>
                                 <div className="dynamic-list">
                                     {
-                                        opLogList > 0 ? opLogList.map(item => {
+                                        opLogList.length > 0 ? opLogList.map(item => {
                                             return <div
                                                 dangerouslySetInnerHTML={{ __html: item.data }}
                                                 className="dynamic-item"

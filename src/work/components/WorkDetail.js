@@ -268,6 +268,9 @@ const WorkDetail = (props) => {
                                     </div>
                                 }
                                 {
+                                    console.log(detailCrumbArray)
+                                }
+                                {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
                                         let html;
                                         if (!isTableDetail && index === 0) {

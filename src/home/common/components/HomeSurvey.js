@@ -20,7 +20,7 @@ const HomeSurvey = (props) => {
         findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
-    const { setWorkId, setDetailCrumbArray, setWorkIndex, setIsWorkList } = workStore;
+    const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = workStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -92,7 +92,20 @@ const HomeSurvey = (props) => {
         // setWorkId(item.modelId)
         // setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         // setIsWorkList(false)
-        window.location.href = url
+        // updateRecent({ id: item.id })
+        const workItemId = url.split("/")[6];
+        searchWorkById(workItemId).then((res) => {
+            console.log(res)
+            if (res) {
+                setDetailCrumbArray([{ id: workItemId, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                setWorkId(workItemId)
+                setIsWorkList(false)
+                
+                window.location.href = url
+                sessionStorage.setItem("menuKey", "work")
+            }
+        })
+        
     }
 
     const goProject = (item) => {
@@ -120,7 +133,7 @@ const HomeSurvey = (props) => {
         if (item.projectType.type === "nomal") {
             props.history.push(`/index/projectNomalDetail/${item.project.id}/work`)
         }
-
+        sessionStorage.setItem("menuKey", "project")
     }
 
     const goVersion = (item) => {
@@ -131,13 +144,13 @@ const HomeSurvey = (props) => {
         if (item.projectType.type === "nomal") {
             props.history.push(`/index/projectNomalDetail/${item.project.id}/versionDetail/${item.modelId}`)
         }
-
+        sessionStorage.setItem("menuKey", "project")
     }
 
     const goSprint = (item) => {
         updateRecent({ id: item.id })
         props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
-
+        sessionStorage.setItem("menuKey", "project")
     }
     const recentItem = (item) => {
         let element;
@@ -289,6 +302,19 @@ const HomeSurvey = (props) => {
                     }
                 </div>
             </div>
+           
+            <div className="recent-click">
+                <div className="recent-click-title">
+                    <span className="name">我最近查看</span>
+                </div>
+                <div className="recent-click-list">
+                    {
+                        recentList && recentList.length > 0 && recentList.map(item => {
+                            return recentItem(item)
+                        })
+                    }
+                </div>
+            </div>
             <div className="todo-work">
                 <div className="todo-work-title">
                     <span className="name">待办任务</span><div>
@@ -344,18 +370,6 @@ const HomeSurvey = (props) => {
                             }
                         </TabPane>
                     </Tabs>
-                </div>
-            </div>
-            <div className="recent-click">
-                <div className="recent-click-title">
-                    <span className="name">最近点击</span>
-                </div>
-                <div className="recent-click-list">
-                    {
-                        recentList && recentList.length > 0 && recentList.map(item => {
-                            return recentItem(item)
-                        })
-                    }
                 </div>
             </div>
         </div>
