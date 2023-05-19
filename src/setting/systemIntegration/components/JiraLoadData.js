@@ -9,8 +9,8 @@
 import React from "react";
 import { Upload, message, Button, Row, Col } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import "./LoadData.scss";
-import Breadcumb from "../../common/breadcrumb/Breadcrumb";
+import "./JiraLoadData.scss";
+import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { getUser } from 'tiklab-core-ui'
 const LoadData = props => {
     const ticket = getUser().ticket;

@@ -12,7 +12,6 @@ import { withRouter } from "react-router-dom";
 import { setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter } from "./SetRouter";
 import { PrivilegeButton } from "tiklab-privilege-ui"
 const SetAside = (props) => {
-    console.log(props)
     // 无子级菜单处理
     const [selectKey, setSelectKey] = useState("/index/organ/organ");
 

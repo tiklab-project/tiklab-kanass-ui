@@ -60,6 +60,20 @@ const ProdeScrumAside = (props) => {
             encoded: "Sprint",
         },
         {
+            title: "测试用例",
+            icon: 'sprint',
+            url: `/index/projectScrumDetail/${projectId}/test`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "知识库",
+            icon: 'sprint',
+            url: `/index/projectScrumDetail/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
             title: `${t('version')}`,
             icon: 'version',
             url: `/index/projectScrumDetail/${projectId}/version`,

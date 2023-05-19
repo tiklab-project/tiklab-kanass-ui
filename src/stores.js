@@ -22,7 +22,7 @@ import {SPRINT_STORE, SprintStore} from "./project/sprint/store/SprintStore";
 import {EDITION_STORE, VersionStore} from "./project/version/store/VersionStores";
 import {EDITIONPLAN_STORE,VersionPlanStore} from "./project/version/store/VersionPlanStores";
 import {AFFAIR_STORE, WorkStore} from "./work/store/WorkStore";
-import {ORGA_STORE,OrgaStore} from "./setting/workSeting/store/workStore";
+import {ORGA_STORE,OrgaStore} from "./setting/workSeting/store/WorkSetingStore";
 import {WORKLOG_STORE,WorkLogStore} from "./work/store/WorkLogStore";
 import {PROJECTWORK_STORE,ProjectWorkStore} from "./project/setting/projectWorkType/store/ProjectWorkStore";
 
@@ -58,7 +58,9 @@ import {BASICINFO_STORE,BasicInfoStore} from "./projectSet/overview/store/basicI
 
 import {STAGE_STORE,StageStore} from "./project/stage/store/StageStore";
 
-// import {SlateStore, SLATE_STORE} from "tiklab-slate-ui";
+import {URLDATA_STORE, UrlDataStore} from "./setting/systemIntegration/store/UrlDataStore";
+
+import {WIKIREPOSITORY_STORE, WikiRepositoryStore} from "./project/wiki/store/WikiRepositoryStore";
 
 function createStores() {
     return {
@@ -107,7 +109,10 @@ function createStores() {
         [INSIGHT_STORE]: new InsightStore(),
 
         [EPIC_STORE]: new EpicStore(),
-        [STAGE_STORE]: new StageStore()
+        [STAGE_STORE]: new StageStore(),
+        [URLDATA_STORE]: new UrlDataStore(),
+        [WIKIREPOSITORY_STORE]: new WikiRepositoryStore()  
+        
     };
 }
 

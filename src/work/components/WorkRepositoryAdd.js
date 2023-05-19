@@ -8,7 +8,7 @@ const { Option } = Select;
 const  WorkRepositoryAddmodal = (props) => {
     const {workRepositoryStore,workStore,setWorkDoucumentList} = props;
     const {workId} = workStore;
-    const {findDocumentPage,findDocumentPageByItemId,createWorkItemDocument,getRepositoryAllList,findUnRelationWorkDocumentList} = workRepositoryStore;
+    const {findDocumentPage,findDocumentPageByWorkItemId,createWorkItemDocument,getRepositoryAllList,findUnRelationWorkDocumentList} = workRepositoryStore;
     const [visible, setVisible] = useState(false);
     const [selectedRowKeys,setSelectedRowKeys] = useState([]);
     const [selectedRow,setSelectedRow] = useState([]);
@@ -104,7 +104,7 @@ const  WorkRepositoryAddmodal = (props) => {
             }
             createWorkItemDocument(workItemDocument).then((data)=> {
                 if(data.code === 0) {
-                    findDocumentPageByItemId({workItemId: workId}).then((data)=> {
+                    findDocumentPageByWorkItemId({workItemId: workId}).then((data)=> {
                         setWorkDoucumentList([...data])
                     })
                     setSelectedRowKeys([])

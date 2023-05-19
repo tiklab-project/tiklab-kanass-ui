@@ -159,6 +159,11 @@ const setDevEamRouter= [
                 id: '/index/setting/loadData',
                 code: 9-1,
             },
+            {
+                title: '地址配置',
+                id: '/index/setting/urlData',
+                code: 9-2,
+            }
         ]
     },
     {

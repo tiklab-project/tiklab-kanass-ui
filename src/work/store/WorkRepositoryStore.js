@@ -21,13 +21,13 @@ export class WorkRepositoryStore {
     };
 
     @action
-    findDocumentPageByItemId = async(value) => {
+    findDocumentPageByWorkItemId = async(value) => {
         const params = new FormData()
         params.append("workItemId", value.workItemId)
         if(value.name){
             params.append("name", value.name)
         }
-        const data = await Service("/workItemDocument/findDocumentPageByItemId", params)
+        const data = await Service("/workItemDocument/findDocumentPageByWorkItemId", params)
         return data.data;
     }
 

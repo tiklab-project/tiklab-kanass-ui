@@ -16,12 +16,12 @@ const { Search } = Input;
 
 const WorkRepository = (props) => {
     const { workRepositoryStore, workStore } = props;
-    const { findDocumentPageByItemId, deleteWorkItemDocument, findSystemUrl } = workRepositoryStore;
+    const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = workRepositoryStore;
     const { workId } = workStore;
     const [workDoucumentList, setWorkDoucumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
     useEffect(() => {
-        findDocumentPageByItemId({ workItemId: workId }).then((data) => {
+        findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
             setWorkDoucumentList([...data])
         })
         return;
@@ -29,7 +29,7 @@ const WorkRepository = (props) => {
 
     const searchSelectWorkRepository = (value) => {
         // getSelectWorkRelationList({title: value})
-        findDocumentPageByItemId({ workItemId: workId, name: value }).then((data) => {
+        findDocumentPageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
             setWorkDoucumentList([...data])
         })
     }
@@ -38,7 +38,7 @@ const WorkRepository = (props) => {
     const delectRepository = (id) => {
         deleteWorkItemDocument({ workItemId: workId, documentId: id }).then((data) => {
             if (data.code === 0) {
-                findDocumentPageByItemId({ workItemId: workId }).then((data) => {
+                findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
                     setWorkDoucumentList([...data])
                 })
             }
