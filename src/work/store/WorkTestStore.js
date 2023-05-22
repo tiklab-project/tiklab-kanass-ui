@@ -25,7 +25,7 @@ export class WorkWikiStore {
         if(value.name){
             params.append("name", value.name)
         }
-        const data = await Service("/workItemDocument/findDocumentPageByWorkItemId", params)
+        const data = await Service("/workTestCase/findTestCasePageByWorkItemId", params)
         return data.data;
     }
 

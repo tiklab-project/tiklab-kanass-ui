@@ -11,7 +11,7 @@ import WorkBasicInfoDefect from "./WorkBasicInfoDefect";
 import WorkBasicInfoDemand from "./WorkBasicInfoDemand";
 import WorkBasicInfoNomal from "./WorkBasicInfoNomal";
 import WorkBasicInfoTask from "./WorkBasicInfoTask";
-
+import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
@@ -203,6 +203,12 @@ const WorkDetailBottom = (props) => {
                                         <WorkRepository {...props} />
                                     </div>
                                 }
+                                {
+                                    tabValue === 9 &&
+                                    <div className="tabs-tabpanel">
+                                        <WorkTestCaseList {...props} />
+                                    </div>
+                                }
                             </div>
                             {/* </Col> */}
                         </div>
@@ -271,6 +277,12 @@ const WorkDetailBottom = (props) => {
                                 tabValue === 8 &&
                                 <div className="tabs-tabpanel">
                                     <WorkRepository {...props} />
+                                </div>
+                            }
+                            {
+                                tabValue === 9 &&
+                                <div className="tabs-tabpanel">
+                                    <WorkTestCaseList {...props} />
                                 </div>
                             }
                         </div>
