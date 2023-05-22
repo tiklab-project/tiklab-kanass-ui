@@ -2,35 +2,38 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Form, Table, Radio, Select } from 'antd';
 import { observer, inject } from "mobx-react";
 
-const WikiRepositoryAdd = (props) => {
+const TestRepositoryAdd = (props) => {
     const [form] = Form.useForm();
-    const { wikiAddvisible, setWikiAddvisible, wikiRepositoryStore, projectId, setProjectWikiList } = props;
-    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository } = wikiRepositoryStore;
+    const { testAddvisible, setTestAddvisible, testRepositoryStore, projectId, setProjectTestList } = props;
+    const { createProjectTestRepository, findProjectTestRepositoryList, findUnProjectTestRepository } = testRepositoryStore;
 
     const [repositoryList, setRepositoryList] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
 
     useEffect(() => {
-        findUnProjectWikiRepository({ projectId: projectId }).then(res => {
-            if (res.code === 0) {
-                setRepositoryList(res.data)
-            }
-        })
-    }, [])
+        if(testAddvisible){
+            findUnProjectTestRepository({ projectId: projectId }).then(res => {
+                if (res.code === 0) {
+                    setRepositoryList(res.data)
+                }
+            })
+        }
+        
+    }, [testAddvisible])
 
     //提交用户列表
     const submitRepositoryList = () => {
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
-                const value = {wikiRepository: {id: selectedRow[i].id}, project: {id: projectId}}
-                createProjectWikiRepository(value).then((data) => {
+                const value = {testRepository: {id: selectedRow[i].id}, project: {id: projectId}}
+                createProjectTestRepository(value).then((data) => {
                     if (data.code === 0) {
-                        findProjectWikiRepositoryList({ projectId: projectId }).then((res) => {
+                        findProjectTestRepositoryList({ projectId: projectId }).then((res) => {
                             if(res.code === 0){
-                                setProjectWikiList(res.data) 
+                                setProjectTestList(res.data) 
                             }
                         })
-                        setWikiAddvisible(false)
+                        setTestAddvisible(false)
                     }
                 })
             }
@@ -67,7 +70,7 @@ const WikiRepositoryAdd = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: ["user", "name"],
             key: "master",
             align: "left",
             width: "20%",
@@ -83,7 +86,7 @@ const WikiRepositoryAdd = (props) => {
 
     const onCancel = () => {
         form.resetFields();
-        setWikiAddvisible(false);
+        setTestAddvisible(false);
     };
 
     // 选择文档
@@ -95,8 +98,8 @@ const WikiRepositoryAdd = (props) => {
         <>
             <Fragment>
                 <Modal
-                    title={"添加知识库"}
-                    visible={wikiAddvisible}
+                    title={"添加用例测试仓库"}
+                    visible={testAddvisible}
                     onCancel={onCancel}
                     onOk={submitRepositoryList}
                     closable={false}
@@ -125,4 +128,4 @@ const WikiRepositoryAdd = (props) => {
     );
 };
 
-export default inject("wikiRepositoryStore")(observer(WikiRepositoryAdd));
+export default inject("testRepositoryStore")(observer(TestRepositoryAdd));

@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";
-export class WorkRepositoryStore {
+export class WorkWikiStore {
     @observable workDoucumentList = [];
     @observable doucumentList = [];
 
@@ -16,12 +16,10 @@ export class WorkRepositoryStore {
         currentPage: 1  
     };
 
-    @observable findWorkDoucmnetCondition = {
-        currentPage: 1  
-    };
+    @observable unRelationWorkCondition = {};
 
     @action
-    findDocumentPageByWorkItemId = async(value) => {
+    findTestCasePageByWorkItemId = async(value) => {
         const params = new FormData()
         params.append("workItemId", value.workItemId)
         if(value.name){
@@ -36,6 +34,7 @@ export class WorkRepositoryStore {
         Object.assign(this.findDoucmnetCondition, {...value})
         const params={
             repositoryId: this.findDoucmnetCondition.repositoryId,
+            repositoryIds: this.findDoucmnetCondition.repositoryIds,
             name: this.findDoucmnetCondition.name,
             workItemId: this.findDoucmnetCondition.workItemId,
             sortParams: [{
@@ -63,11 +62,13 @@ export class WorkRepositoryStore {
 
     @action
     findUnRelationWorkDocumentList = async(value) => {
-        const params={
-            repositoryId: value.repositoryId,
-            workItemId: value.workItemId
-        }
-        const data = await Service("/wikidocument/findUnRelationWorkDocumentList", params)
+        // const params={
+        //     repositoryId: value.repositoryId,
+        //     workItemId: value.workItemId,
+        //     repositoryIds: value.repositoryIds,
+        // }
+        Object.assign(this.unRelationWorkCondition, {...value}) 
+        const data = await Service("/wikidocument/findUnRelationWorkDocumentList", this.unRelationWorkCondition)
         return data;
     }
 
@@ -80,6 +81,12 @@ export class WorkRepositoryStore {
     @action
     getRepositoryAllList = async(params) => {
         const data = await Service("/wikirepository/findAllRepository", params)
+        return data;
+    }
+
+    @action
+    findProjectWikiRepositoryList = async(params) => {
+        const data = await Service("/projectWikiRepository/findProjectWikiRepositoryList", params)
         return data;
     }
 
@@ -100,4 +107,4 @@ export class WorkRepositoryStore {
         return data;
     }
 }
-export const WORKREPOSITORY_STORE = "workRepositoryStore"
+export const WORKWIKI_STORE = "workWikiStore"

@@ -11,31 +11,24 @@ import { Input, Table, Space, Row, Col, message } from "antd";
 import { observer, inject } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
-import "./wikiRepository.scss";
-import WikiRepositoryAdd from "./WikiRepositoryAdd";
+import "./TestRepository.scss";
+import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
-const WikiRepository = (props) => {
-    const { wikiRepositoryStore } = props;
-    const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList } = wikiRepositoryStore;
+const TestRepository = (props) => {
+    const { testRepositoryStore } = props;
+    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList } = testRepositoryStore;
 
     const projectId = props.match.params.id;
-    const [wikiAddvisible, setWikiAddvisible] = useState()
-    const [projectWikiList, setProjectWikiList] = useState()
+    const [testAddvisible, setTestAddvisible] = useState()
+    const [projectTestList, setProjectTestList] = useState()
 
     const delteRepository = (id) => {
-        // Modal.confirm({
-        //     title: 'Confirm',
-        //     content: 'Bla bla ...',
-        //     okText: '确认',
-        //     cancelText: '取消',
-        //     className: ""
-        //   });
-        deleteProjectWikiRepositoryByCondition({repositoryId:id, projectId: projectId }).then(data => {
+        deleteProjectTestRepositoryByCondition({repositoryId:id, projectId: projectId }).then(data => {
             if(data.code === 0){
                 message.info('删除成功');
-                findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
+                findProjectTestRepositoryList({ projectId: projectId }).then(res => {
                     if(res.code === 0){
-                       setProjectWikiList(res.data) 
+                       setProjectTestList(res.data) 
                     }
                 })
             }
@@ -44,7 +37,7 @@ const WikiRepository = (props) => {
     // 列表的列
     const columns = [
         {
-            title: "知识库名称",
+            title: "仓库名称",
             dataIndex: "name",
             key: "name",
             align: "left",
@@ -68,7 +61,7 @@ const WikiRepository = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: ["user", "name"],
             key: "master",
             align: "left",
             width: "20%",
@@ -94,9 +87,9 @@ const WikiRepository = (props) => {
 
     // 初始化
     useEffect(() => {
-        findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
+        findProjectTestRepositoryList({ projectId: projectId }).then(res => {
             if(res.code === 0){
-               setProjectWikiList(res.data) 
+               setProjectTestList(res.data) 
             }
             
         })
@@ -104,38 +97,38 @@ const WikiRepository = (props) => {
     }, []);
 
 
-    const showWikiRepository = () => {
-        setWikiAddvisible(true)
+    const showTestRepository = () => {
+        setTestAddvisible(true)
     }
 
     return (
-        <div className="wiki-repository">
+        <div className="test-repository">
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                    <div className="wiki-repository-list">
+                    <div className="test-repository-list">
 
                         <Breadcumb
                             firstText="知识库"
                         >
                             <div>
-                                <Button type="primary" onClick={() => showWikiRepository()}>
-                                    添加知识库
+                                <Button type="primary" onClick={() => showTestRepository()}>
+                                    添加测试用例仓库
                                 </Button>
                             </div>
                         </Breadcumb>
 
                         <Table
                             columns={columns}
-                            dataSource={projectWikiList}
+                            dataSource={projectTestList}
                             rowKey={(record) => record.id}
                             pagination={false}
                             onChange={false}
                         />
-                        <WikiRepositoryAdd 
+                        <TestRepositoryAdd 
                             projectId = {projectId} 
-                            wikiAddvisible={wikiAddvisible} 
-                            setWikiAddvisible={setWikiAddvisible} 
-                            setProjectWikiList = {setProjectWikiList}
+                            testAddvisible={testAddvisible} 
+                            setTestAddvisible={setTestAddvisible} 
+                            setProjectTestList = {setProjectTestList}
                         />
                     </div>
                 </Col>
@@ -145,4 +138,4 @@ const WikiRepository = (props) => {
     );
 };
 
-export default withRouter(inject("wikiRepositoryStore")(observer(WikiRepository)));
+export default withRouter(inject("testRepositoryStore")(observer(TestRepository)));

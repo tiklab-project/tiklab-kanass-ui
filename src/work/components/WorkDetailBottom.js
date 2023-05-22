@@ -6,7 +6,7 @@ import WorkChild from "./WorkChild";
 import WorkLog from "./WorkLog";
 import WorkComment from "./WorkComment";
 import WorkDynamic from "./WorkDynamic";
-import WorkRepository from "./WorkRepository";
+import WorkRepository from "./WorkDocumentList";
 import WorkBasicInfoDefect from "./WorkBasicInfoDefect";
 import WorkBasicInfoDemand from "./WorkBasicInfoDemand";
 import WorkBasicInfoNomal from "./WorkBasicInfoNomal";
@@ -128,6 +128,7 @@ const WorkDetailBottom = (props) => {
                             <div className={`tabs-dropdown-item ${tabValue === 6 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("动态", 6)}>动态</div>
                             <div className={`tabs-dropdown-item ${tabValue === 7 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("评论", 7)}>评论</div>
                             <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("知识库", 8)}>知识库</div>
+                            <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("测试用例", 9)}>测试用例</div>
                         </div>
                     </div>
                 </div>

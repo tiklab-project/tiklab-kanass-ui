@@ -1,40 +1,41 @@
 import React, {useEffect,useState} from "react";
 import { Modal, Button,Table,Select,message,Input } from 'antd';
 import {observer, inject} from "mobx-react";
+import { withRouter } from "react-router";
 
 const { Search } = Input;
 const { Option } = Select;
 
-const  WorkRepositoryAddmodal = (props) => {
-    const {workRepositoryStore,workStore,setWorkDoucumentList} = props;
+const WorkDocumentAddmodal = (props) => {
+    const {workWikiStore,workStore,setWorkDoucumentList} = props;
     const {workId} = workStore;
-    const {findDocumentPage,findDocumentPageByWorkItemId,createWorkItemDocument,getRepositoryAllList,findUnRelationWorkDocumentList} = workRepositoryStore;
+    const projectId = props.match.params.id;
+    const {findDocumentPageByWorkItemId,createWorkItemDocument,
+        findProjectWikiRepositoryList,findUnRelationWorkDocumentList} = workWikiStore;
     const [visible, setVisible] = useState(false);
-    const [selectedRowKeys,setSelectedRowKeys] = useState([]);
     const [selectedRow,setSelectedRow] = useState([]);
     const [doucumentList,setDoucumentList] = useState([])
     const [repositoryallList,setRepositoryaList] = useState([]);
-    
     const showModal = () => {
         setVisible(true)
     };
 
     useEffect(()=> {
         if(visible === true){
-            findDocumentPage({workItemId:workId}).then((data)=> {
-                if(data.code === 0){
-                    setDoucumentList(data.dataList)
+            findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
+                if(res.code === 0){
+                    setRepositoryaList(res.data)
+                    let list = []
+                    res.data.map(item => {
+                        list.push(item.id)
+                    })
+                    findUnRelationWorkDocumentList({workItemId:workId, repositoryIds: list,name: ""}).then((data)=> {
+                        if(data.code === 0){
+                            setDoucumentList(data.data)
+                        }
+                    })
                 }
-                
-            
             })
-            getRepositoryAllList().then(data => {
-                if(data.code === 0){
-                    setRepositoryaList(data.data)
-                }
-                // setRepositoryaList(data)
-            })
-
         }
         return;
     },[visible])
@@ -67,9 +68,9 @@ const  WorkRepositoryAddmodal = (props) => {
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
         const params = {
-            repositoryId: value,
-            workItemId: workId
+            repositoryId: value
         }
+        // setSelectRepository()
         findUnRelationWorkDocumentList(params).then((data)=> {
             if(data.code === 0){
                 setDoucumentList(data.data)
@@ -77,12 +78,10 @@ const  WorkRepositoryAddmodal = (props) => {
         })
     }
     const searchSelectWorkRepository = (value)=> {
-        // getSelectWorkRelationList({title: value})
         const categoryQuery = {
-            name: value,
-            workItemId:workId
+            name: value
         }
-        findDocumentPage(categoryQuery).then((data)=> {
+        findUnRelationWorkDocumentList(categoryQuery).then((data)=> {
             if(data.code === 0){
                 setDoucumentList(data.data)
             }
@@ -91,7 +90,6 @@ const  WorkRepositoryAddmodal = (props) => {
     }
     // 选择文档
     const selectWorkRepository=(selected, selectedRows)=> {
-        setSelectedRowKeys(selected)
         setSelectedRow(selectedRows)
     }
     //提交用户列表
@@ -107,7 +105,6 @@ const  WorkRepositoryAddmodal = (props) => {
                     findDocumentPageByWorkItemId({workItemId: workId}).then((data)=> {
                         setWorkDoucumentList([...data])
                     })
-                    setSelectedRowKeys([])
                     setVisible(false)
                 }
             })
@@ -131,7 +128,7 @@ const  WorkRepositoryAddmodal = (props) => {
                 <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
             }
             <Modal
-                title="选择事项"
+                title="选择文档"
                 visible={visible}
                 onCancel={onCancel}
                 width={800}
@@ -185,4 +182,4 @@ const  WorkRepositoryAddmodal = (props) => {
     );
 };
 
-export default inject('workStore','workRepositoryStore')(observer(WorkRepositoryAddmodal));
+export default withRouter(inject('workStore','workWikiStore')(observer(WorkDocumentAddmodal)));

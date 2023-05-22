@@ -15,10 +15,26 @@ export class WikiRepositoryStore {
     }
 
     @action
+    findProjectWikiRepositoryList = async(params) => {
+        const data = await Service("/projectWikiRepository/findProjectWikiRepositoryList", params)
+        return data;
+    }
+
+    
+    @action
     findUnProjectWikiRepository = async(params) => {
         const value = new FormData();
         value.append("projectId", params.projectId)
         const data = await Service("/projectWikiRepository/findUnProjectWikiRepository", value)
+        return data;
+    }
+
+    @action
+    deleteProjectWikiRepositoryByCondition = async(params) => {
+        const value = new FormData();
+        value.append("projectId", params.projectId)
+        value.append("repositoryId", params.repositoryId)
+        const data = await Service("/projectWikiRepository/deleteProjectWikiRepositoryByCondition", value)
         return data;
     }
 }

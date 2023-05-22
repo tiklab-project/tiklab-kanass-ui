@@ -39,7 +39,7 @@ import {PROJECTSET_STORE, ProjectSetStore} from "./projectSet/projectSet/store/P
 
 import {LINEMAP_STORE, LineMapStore} from "./project/lineMap/store/LineMapStore";
 import {LOG_STORE,LogStore} from "./project/workLog/store/LogStore";
-import {WORKREPOSITORY_STORE,WorkRepositoryStore} from "./work/store/WorkRepositoryStore";
+import {WORKWIKI_STORE,WorkWikiStore} from "./work/store/WorkWikiStore";
 import {PROJECTSURVEY_STORE,ProjectSurveyStore} from "./project/overview/store/ProjectSurveyStore";
 import {WORKCOMMENT_STORE,WorkCommentStore} from "./work/store/WorkCommentStore";
 
@@ -61,6 +61,8 @@ import {STAGE_STORE,StageStore} from "./project/stage/store/StageStore";
 import {URLDATA_STORE, UrlDataStore} from "./setting/systemIntegration/store/UrlDataStore";
 
 import {WIKIREPOSITORY_STORE, WikiRepositoryStore} from "./project/wiki/store/WikiRepositoryStore";
+
+import {TESTREPOSITORY_STORE, TestRepositoryStore} from "./project/test/store/TestRepositoryStore";
 
 function createStores() {
     return {
@@ -94,7 +96,7 @@ function createStores() {
 
         [LINEMAP_STORE]: new LineMapStore(),
         [LOG_STORE]: new LogStore(),
-        [WORKREPOSITORY_STORE]: new WorkRepositoryStore(),
+        [WORKWIKI_STORE]: new WorkWikiStore(),
         [EAM_STORE]: new EamStore(),
         [HOME_STORE]: new HomeStore(),
         [PROJECTSURVEY_STORE]: new ProjectSurveyStore(),
@@ -111,7 +113,8 @@ function createStores() {
         [EPIC_STORE]: new EpicStore(),
         [STAGE_STORE]: new StageStore(),
         [URLDATA_STORE]: new UrlDataStore(),
-        [WIKIREPOSITORY_STORE]: new WikiRepositoryStore()  
+        [WIKIREPOSITORY_STORE]: new WikiRepositoryStore(),
+        [TESTREPOSITORY_STORE]: new TestRepositoryStore()    
         
     };
 }

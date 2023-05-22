@@ -9,37 +9,37 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Button, Input, Row, Table, Col } from 'antd';
 import { observer, inject } from "mobx-react";
-import "./WorkRepository.scss"
-import WorkRepositoryAddmodal from "./WorkRepositoryAdd"
+import "./WorkTestCase.scss"
+import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 
 const { Search } = Input;
 
-const WorkRepository = (props) => {
-    const { workRepositoryStore, workStore } = props;
-    const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = workRepositoryStore;
+const WorkTestCaseList = (props) => {
+    const { workWikiStore, workStore } = props;
+    const { findTestCasePageByWorkItemId, deleteWorkItemTestCase, findSystemUrl } = workWikiStore;
     const { workId } = workStore;
-    const [workDoucumentList, setWorkDoucumentList] = useState([])
+    const [testCaseList, setTestCaseList] = useState([])
     const [selectIds, setSelectIds] = useState()
     useEffect(() => {
-        findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
-            setWorkDoucumentList([...data])
+        findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+            setTestCaseList([...data])
         })
         return;
     }, [workId])
 
     const searchSelectWorkRepository = (value) => {
         // getSelectWorkRelationList({title: value})
-        findDocumentPageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
-            setWorkDoucumentList([...data])
+        findTestCasePageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
+            setTestCaseList([...data])
         })
     }
 
     // 
     const delectRepository = (id) => {
-        deleteWorkItemDocument({ workItemId: workId, documentId: id }).then((data) => {
+        deleteWorkItemTestCase({ workItemId: workId, testCaseId: id }).then((data) => {
             if (data.code === 0) {
-                findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
-                    setWorkDoucumentList([...data])
+                findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+                    setTestCaseList([...data])
                 })
             }
         })
@@ -87,18 +87,18 @@ const WorkRepository = (props) => {
     return (
         <div className="work-repository">
             <div className="repository-top">
-                <div className="repository-top-title">关联文档({workDoucumentList.length})</div>
-                <WorkRepositoryAddmodal
+                <div className="repository-top-title">关联文档({testCaseList.length})</div>
+                <WorkTestCaseAddmodal
                     {...props}
                     name="添加文档"
                     selectIds={selectIds}
-                    setWorkDoucumentList={setWorkDoucumentList}
+                    setTestCaseList={setTestCaseList}
                 />
             </div>
             <Table
                 className="repository-table"
                 columns={columns}
-                dataSource={workDoucumentList}
+                dataSource={testCaseList}
                 rowKey={record => record.id}
                 pagination={false}
             />
@@ -107,5 +107,5 @@ const WorkRepository = (props) => {
 }
 export default inject(
     "workStore",
-    "workRepositoryStore"
-)(observer(WorkRepository));
+    "workWikiStore"
+)(observer(WorkTestCaseList));

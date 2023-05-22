@@ -78,6 +78,7 @@ const ProjectFormDetail = AsyncComponent(() => import('./project/setting/project
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
 const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
+const TestRepository = AsyncComponent(() => import('./project/test/components/TestRepository'))
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
@@ -749,6 +750,10 @@ const Routers = [
                         component: WikiRepository
                     },
                     {
+                        path: "/index/projectNomalDetail/:id/test",
+                        component: TestRepository
+                    },
+                    {
                         path: "/index/projectNomalDetail/:id/linemap",
                         component: Linemap,
                     },
@@ -941,6 +946,10 @@ const Routers = [
                     {
                         path: "/index/projectScrumDetail/:id/wiki",
                         component: WikiRepository
+                    },
+                    {
+                        path: "/index/projectScrumDetail/:id/test",
+                        component: TestRepository
                     },
                     {
                         path: "/index/projectScrumDetail/:id/linemap",
