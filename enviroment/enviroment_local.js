@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.13:8080/';
+const api =  'http://192.168.10.4:8080/';
 const base_url = JSON.stringify(api);
 
 
@@ -34,7 +34,7 @@ const client = JSON.stringify('web');
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
 const homes_url = JSON.stringify("http://192.168.10.19")
-const kanass_url =JSON.stringify("http://192.168.10.13:3004")
+const kanass_url =JSON.stringify("http://192.168.10.4:3004")
 const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 module.exports = {
     base_url,

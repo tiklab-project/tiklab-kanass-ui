@@ -13,6 +13,7 @@ import "./WorkDetail.scss"
 import { observer, inject } from "mobx-react";
 
 const WorkBorderDetail = (props) => {
+    debugger
     const detailRef = useRef()
 
 

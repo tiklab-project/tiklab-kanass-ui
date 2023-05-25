@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";
-export class WorkWikiStore {
+export class WorkTestStore {
     @observable workDoucumentList = [];
     @observable doucumentList = [];
 
@@ -61,38 +61,33 @@ export class WorkWikiStore {
     }
 
     @action
-    findUnRelationWorkDocumentList = async(value) => {
+    findUnRelationWorkTestCaseList = async(value) => {
         // const params={
         //     repositoryId: value.repositoryId,
         //     workItemId: value.workItemId,
         //     repositoryIds: value.repositoryIds,
         // }
         Object.assign(this.unRelationWorkCondition, {...value}) 
-        const data = await Service("/wikidocument/findUnRelationWorkDocumentList", this.unRelationWorkCondition)
+        const data = await Service("/workTestCase/findUnRelationWorkTestCaseList", this.unRelationWorkCondition)
         return data;
     }
 
     @action
-    createWorkItemDocument = async(params) => {
-        const data = await Service("/workItemDocument/createWorkItemDocument", params)
+    createWorkTestCase = async(params) => {
+        const data = await Service("/workTestCase/createWorkTestCase", params)
+        return data;
+    }
+
+
+    @action
+    findProjectTestRepositoryList = async(params) => {
+        const data = await Service("/projectTestRepository/findProjectTestRepositoryList", params)
         return data;
     }
 
     @action
-    getRepositoryAllList = async(params) => {
-        const data = await Service("/wikirepository/findAllRepository", params)
-        return data;
-    }
-
-    @action
-    findProjectWikiRepositoryList = async(params) => {
-        const data = await Service("/projectWikiRepository/findProjectWikiRepositoryList", params)
-        return data;
-    }
-
-    @action
-    deleteWorkItemDocument = async(param) => {
-        const data = await Service("/workItemDocument/deleteWorkItemDocumentRele", param)
+    deleteWorkTestCaseRele = async(param) => {
+        const data = await Service("/workTestCase/deleteWorkTestCaseRele", param)
         return data;
     }
 
@@ -107,4 +102,4 @@ export class WorkWikiStore {
         return data;
     }
 }
-export const WORKWIKI_STORE = "workWikiStore"
+export const WORKTEST_STORE = "workTestStore"

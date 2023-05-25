@@ -45,15 +45,18 @@ const WorkDocumentList = (props) => {
         })
     }
     const goWikiDetail = (data) => {
-        findSystemUrl().then(res=> {
-            const kanassUrl = res.data.kanassUrl
-            window.open(`${kanassUrl}/#/index/repositorydetail/${data.repository.id}/doc/${data.id}`)
+        const formData = new FormData();
+        formData.append("id", "a7318913")
+        
+        findSystemUrl(formData).then(res=> {
+            const kanassUrl = res.data.webUrl
+            window.open(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
         })
     }
     const columns = [
         {
             title: "标题",
-            dataIndex: "name",
+            dataIndex: "documentName",
             key: "name",
             width: 150,
             render: (text, record) => (
@@ -62,13 +65,13 @@ const WorkDocumentList = (props) => {
         },
         {
             title: "知识库",
-            dataIndex: ["repository", "name"],
+            dataIndex: "kanassRepositoryName",
             key: "workStatus",
             width: 150
         },
         {
             title: "作者",
-            dataIndex: ["master", "name"],
+            dataIndex: "userName",
             key: "assigner",
             width: 150
         },

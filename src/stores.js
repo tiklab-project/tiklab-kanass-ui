@@ -64,6 +64,7 @@ import {WIKIREPOSITORY_STORE, WikiRepositoryStore} from "./project/wiki/store/Wi
 
 import {TESTREPOSITORY_STORE, TestRepositoryStore} from "./project/test/store/TestRepositoryStore";
 
+import {WORKTEST_STORE, WorkTestStore} from "./work/store/WorkTestStore";
 function createStores() {
     return {
         [PRO_STORE]:new ProjectStore(),
@@ -114,7 +115,8 @@ function createStores() {
         [STAGE_STORE]: new StageStore(),
         [URLDATA_STORE]: new UrlDataStore(),
         [WIKIREPOSITORY_STORE]: new WikiRepositoryStore(),
-        [TESTREPOSITORY_STORE]: new TestRepositoryStore()    
+        [TESTREPOSITORY_STORE]: new TestRepositoryStore(),
+        [WORKTEST_STORE]: new  WorkTestStore()
         
     };
 }

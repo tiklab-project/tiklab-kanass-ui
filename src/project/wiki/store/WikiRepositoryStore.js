@@ -37,6 +37,12 @@ export class WikiRepositoryStore {
         const data = await Service("/projectWikiRepository/deleteProjectWikiRepositoryByCondition", value)
         return data;
     }
+
+    @action
+    findSystemUrl = async(params) => {
+        const data = await Service("/systemUrl/findSystemUrl", params)
+        return data;
+    }
 }
 
 export const WIKIREPOSITORY_STORE = "wikiRepositoryStore";

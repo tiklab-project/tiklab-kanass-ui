@@ -44,7 +44,7 @@ const WikiRepositoryAdd = (props) => {
     const columns = [
         {
             title: "知识库名称",
-            dataIndex: "name",
+            dataIndex: "kanassRepositoryName",
             key: "name",
             align: "left",
             render: (text, record) => <div className="repository-title">
@@ -67,7 +67,7 @@ const WikiRepositoryAdd = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: "userName",
             key: "master",
             align: "left",
             width: "20%",

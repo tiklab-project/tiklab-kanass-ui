@@ -16,7 +16,7 @@ import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
 const WikiRepository = (props) => {
     const { wikiRepositoryStore } = props;
-    const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList } = wikiRepositoryStore;
+    const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList, findSystemUrl } = wikiRepositoryStore;
 
     const projectId = props.match.params.id;
     const [wikiAddvisible, setWikiAddvisible] = useState()
@@ -41,11 +41,21 @@ const WikiRepository = (props) => {
             }
         })
     }
+
+    const goWikiDetail = (data) => {
+        const formData = new FormData();
+        formData.append("id", "a7318913")
+        
+        findSystemUrl(formData).then(res=> {
+            const kanassUrl = res.data.webUrl
+            window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
+        })
+    }
     // 列表的列
     const columns = [
         {
             title: "知识库名称",
-            dataIndex: "name",
+            dataIndex: "kanassRepositoryName",
             key: "name",
             align: "left",
             render: (text, record) => <div className="repository-title">
@@ -63,12 +73,12 @@ const WikiRepository = (props) => {
                             className="img-icon"
                         />
                 }
-                <span className="repository-name">{text}</span>
+                <span className="repository-name" onClick={() => goWikiDetail(record)} >{text}</span>
             </div>,
         },
         {
             title: "负责人",
-            dataIndex: ["master", "name"],
+            dataIndex: "userName",
             key: "master",
             align: "left",
             width: "20%",
@@ -88,7 +98,7 @@ const WikiRepository = (props) => {
                     <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span>
               </Space>
             ),
-          },
+        }
     ];
 
 

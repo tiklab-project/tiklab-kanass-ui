@@ -47,7 +47,7 @@ const TestRepositoryAdd = (props) => {
     const columns = [
         {
             title: "知识库名称",
-            dataIndex: "name",
+            dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
             render: (text, record) => <div className="repository-title">
@@ -70,17 +70,10 @@ const TestRepositoryAdd = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["user", "name"],
+            dataIndex: "userName",
             key: "master",
             align: "left",
             width: "20%",
-        },
-        {
-            title: "创建时间",
-            dataIndex: "createTime",
-            key: "createTime",
-            align: "left",
-            width: "20%"
         }
     ];
 

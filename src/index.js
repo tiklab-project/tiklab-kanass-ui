@@ -13,7 +13,7 @@ import Routers from './Routers';
 import { Provider } from 'mobx-react';
 import { store } from "./stores"
 import { orgStores } from "tiklab-user-ui/es/store";
-import { getUser, enableAxiosCE } from 'tiklab-core-ui'
+import { getUser, enableAxiosCE } from 'tiklab-core-ui';
 import { formStores } from 'tiklab-form-ui/es/store'
 import { flowStores } from 'tiklab-flow-ui/es/store'
 import { messageModuleStores } from 'tiklab-message-ui/es/store';
@@ -73,7 +73,7 @@ const Index = observer((props) => {
 
 
     // if(visable) return <div>加载。。。</div>
-
+    console.log(allStore)
     return (
         
         <PluginProvider store={pluginData}>

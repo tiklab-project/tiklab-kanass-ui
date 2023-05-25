@@ -15,7 +15,6 @@ import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
-
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workShowType, findTaskWorkType, viewType } = workStore;
     // 富文本内容
@@ -47,7 +46,7 @@ const WorkDetailBottom = (props) => {
             }
         }
         if (workInfo.workTypeCode === "demand") {
-            findTaskWorkType({ code: "task", projectId: projectId }).then(res => {
+            findTaskWorkType({ code: "task", projectId: workInfo.project.id }).then(res => {
                 if (res.code === 0) {
                     setTaskType(res.data)
                 }
@@ -118,7 +117,7 @@ const WorkDetailBottom = (props) => {
 
                     <div className="tabs-more">
                         <div className="tabs-more-button" onClick={() => setShowMoreTab(true)}>
-                            <div className={`tabs-bar ${[6, 7, 8].indexOf(tabValue) !== -1 ? "tabs-bar-select" : ""}`}>{moreTabValue.text}</div>
+                            <div className={`tabs-bar ${[6, 7, 8, 9].indexOf(tabValue) !== -1 ? "tabs-bar-select" : ""}`}>{moreTabValue.text}</div>
                             <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-downdrop"></use>
                             </svg>
@@ -128,7 +127,7 @@ const WorkDetailBottom = (props) => {
                             <div className={`tabs-dropdown-item ${tabValue === 6 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("动态", 6)}>动态</div>
                             <div className={`tabs-dropdown-item ${tabValue === 7 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("评论", 7)}>评论</div>
                             <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("知识库", 8)}>知识库</div>
-                            <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("测试用例", 9)}>测试用例</div>
+                            <div className={`tabs-dropdown-item ${tabValue === 9 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("测试用例", 9)}>测试用例</div>
                         </div>
                     </div>
                 </div>

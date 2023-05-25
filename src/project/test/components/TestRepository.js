@@ -34,18 +34,28 @@ const TestRepository = (props) => {
             }
         })
     }
+
+    const goWikiDetail = (data) => {
+        const formData = new FormData();
+        formData.append("id", "a7318913")
+        
+        findSystemUrl(formData).then(res=> {
+            const kanassUrl = res.data.systemUrl
+            window.open(`${kanassUrl}/#/index/repositorydetail/${data.wikiRepository.id}/doc/${data.id}`)
+        })
+    }
     // 列表的列
     const columns = [
         {
             title: "仓库名称",
-            dataIndex: "name",
+            dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
             render: (text, record) => <div className="repository-title">
                 {
                     record.iconUrl ?
                         <img
-                            src={('/images/' + record.iconUrl)}
+                            src={(record.iconUrl)}
                             alt=""
                             className="img-icon"
                         />
@@ -61,17 +71,10 @@ const TestRepository = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["user", "name"],
+            dataIndex: "userName",
             key: "master",
             align: "left",
             width: "20%",
-        },
-        {
-            title: "创建时间",
-            dataIndex: "createTime",
-            key: "createTime",
-            align: "left",
-            width: "20%"
         },
         {
             title: '操作',

@@ -1,16 +1,38 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Table, message, Button, Row, Col } from 'antd';
+import { Table, Space, Button, Row, Col, message } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./UrlData.scss";
 import { observer, inject } from "mobx-react";
 import UrlAddData from "./UrlAddData"
 const UrlData = props => {
     const { urlDataStore } = props;
-    const { findAllSystemUrl } = urlDataStore;
+    const { findAllSystemUrl, deleteSystemUrl } = urlDataStore;
     const [urlDataList, setUrlDataList] = useState([]);
     const [modalTitle, setModalTitle] = useState()
     const [urlAddvisible, setUrlAddvisible] = useState()
     const [actionType, setActionType] = useState()
+    const [urlId, setUrlId] = useState()
+    const editSystemUrl = (id) => {
+        setActionType("edit")
+        setUrlId(id)
+        setUrlAddvisible(true)
+        setModalTitle("编辑地址")
+    }
+
+    const deleSystemUrl = (id) => {
+        const params = new FormData();
+        params.append("id", id)
+        deleteSystemUrl(params).then(res => {
+            if(res.code === 0){
+                findAllSystemUrl().then(data => {
+                    if(data.code === 0){
+                        setUrlDataList(data.data)
+                    }
+                })
+                message.info("删除成功")
+            }
+        })
+    }
     const columns = [
         {
             title: '系统',
@@ -21,6 +43,32 @@ const UrlData = props => {
             title: '地址',
             dataIndex: 'systemUrl',
             key: 'systemUrl',
+        },
+        {
+            title: '浏览器端地址',
+            dataIndex: 'webUrl',
+            key: 'webUrl',
+            render: (text, record) => (
+                <Space size="small">
+                    <span>{text ? text : "无"}</span>
+                </Space>
+            ),
+        },
+        {
+            title: '操作',
+            key: 'action',
+            render: (text, record) => (
+                <Fragment>
+                    <Space size="middle">
+                        <span className="systemurl-edit" onClick={() => editSystemUrl(record.id)}>编辑</span>
+                        <span className="systemurl-dete" onClick={() => deleSystemUrl(record.id)}>删除</span>
+                    </Space>
+                    {/* <Space size="small">
+                        
+                    </Space> */}
+                </Fragment>
+
+            ),
         }
     ];
 
@@ -53,11 +101,13 @@ const UrlData = props => {
                     </div>
                 </Col>
             </Row>
-            <UrlAddData urlAddvisible = {urlAddvisible} 
-                setUrlAddvisible = {setUrlAddvisible} 
-                modalTitle = {modalTitle} 
-                actionType = {actionType}
-                setUrlDataList = {setUrlDataList}    
+            <UrlAddData
+                urlAddvisible={urlAddvisible}
+                setUrlAddvisible={setUrlAddvisible}
+                modalTitle={modalTitle}
+                actionType={actionType}
+                setUrlDataList={setUrlDataList}
+                urlId={urlId}
             />
         </Fragment>
 

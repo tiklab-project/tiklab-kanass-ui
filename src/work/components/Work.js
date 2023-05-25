@@ -27,7 +27,7 @@ const Work = (props) => {
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-
+    console.log(props)
     useEffect(() => {
         setQuickFilterValue({label: '所有', value: 'all'})
         setTabValue({id: "all", type: "system"})
@@ -40,8 +40,10 @@ const Work = (props) => {
 
             goSystemWorkItem()
         }
-
-        if (props.match.path === "/index/work/workone/:id") {
+        if(props.match.location === "/index/work/worklist"){
+            setWorkShowType("table")
+        }
+        if (props.match.path === "/index/workone/:id") {
             const id = props.match.params.id;
             let initValues = {
                 pageParam: {
@@ -51,6 +53,7 @@ const Work = (props) => {
             }
             initValues = { id: id, ...initValues }
             setSearchCondition(initValues)
+            setWorkId(id)
             getWorkList();
             return
         }

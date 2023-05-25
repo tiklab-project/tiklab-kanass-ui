@@ -102,8 +102,8 @@ export class WorkWikiStore {
      * @returns 
      */
     @action
-    findSystemUrl = async() => {
-        const data = await Service("/systemUrl/findSystemUrl")
+    findSystemUrl = async(params) => {
+        const data = await Service("/systemUrl/findSystemUrl", params)
         return data;
     }
 }

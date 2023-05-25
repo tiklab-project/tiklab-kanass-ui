@@ -15,14 +15,14 @@ import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 const { Search } = Input;
 
 const WorkTestCaseList = (props) => {
-    const { workWikiStore, workStore } = props;
-    const { findTestCasePageByWorkItemId, deleteWorkItemTestCase, findSystemUrl } = workWikiStore;
+    const { workTestStore, workStore } = props;
+    const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = workTestStore;
     const { workId } = workStore;
-    const [testCaseList, setTestCaseList] = useState([])
+    const [testCaseList, setWorkTestCaseList] = useState([])
     const [selectIds, setSelectIds] = useState()
     useEffect(() => {
         findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-            setTestCaseList([...data])
+            setWorkTestCaseList([...data])
         })
         return;
     }, [workId])
@@ -30,16 +30,16 @@ const WorkTestCaseList = (props) => {
     const searchSelectWorkRepository = (value) => {
         // getSelectWorkRelationList({title: value})
         findTestCasePageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
-            setTestCaseList([...data])
+            setWorkTestCaseList([...data])
         })
     }
 
     // 
     const delectRepository = (id) => {
-        deleteWorkItemTestCase({ workItemId: workId, testCaseId: id }).then((data) => {
+        deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
             if (data.code === 0) {
                 findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-                    setTestCaseList([...data])
+                    setWorkTestCaseList([...data])
                 })
             }
         })
@@ -53,7 +53,7 @@ const WorkTestCaseList = (props) => {
     const columns = [
         {
             title: "标题",
-            dataIndex: "name",
+            dataIndex: "testCaseName",
             key: "name",
             width: 150,
             render: (text, record) => (
@@ -61,14 +61,14 @@ const WorkTestCaseList = (props) => {
             ),
         },
         {
-            title: "知识库",
-            dataIndex: ["repository", "name"],
+            title: "目录",
+            dataIndex: "testCategoryName",
             key: "workStatus",
             width: 150
         },
         {
             title: "作者",
-            dataIndex: ["master", "name"],
+            dataIndex: "createUser",
             key: "assigner",
             width: 150
         },
@@ -90,9 +90,9 @@ const WorkTestCaseList = (props) => {
                 <div className="repository-top-title">关联文档({testCaseList.length})</div>
                 <WorkTestCaseAddmodal
                     {...props}
-                    name="添加文档"
+                    name="添加测试用例"
                     selectIds={selectIds}
-                    setTestCaseList={setTestCaseList}
+                    setWorkTestCaseList={setWorkTestCaseList}
                 />
             </div>
             <Table
@@ -107,5 +107,5 @@ const WorkTestCaseList = (props) => {
 }
 export default inject(
     "workStore",
-    "workWikiStore"
+    "workTestStore"
 )(observer(WorkTestCaseList));

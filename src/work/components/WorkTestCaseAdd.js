@@ -1,114 +1,117 @@
-import React, {useEffect,useState} from "react";
-import { Modal, Button,Table,Select,message,Input } from 'antd';
-import {observer, inject} from "mobx-react";
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Table, Select, message, Input } from 'antd';
+import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 
 const { Search } = Input;
 const { Option } = Select;
 
-const WorkDocumentAddmodal = (props) => {
-    const {workWikiStore,workStore,setWorkDoucumentList} = props;
-    const {workId} = workStore;
+const WorkTestCaseAddmodal = (props) => {
+    const { workTestStore, workStore, setWorkTestCaseList } = props;
+    const { workId } = workStore;
     const projectId = props.match.params.id;
-    const {findDocumentPageByWorkItemId,createWorkItemDocument,
-        findProjectWikiRepositoryList,findUnRelationWorkDocumentList} = workWikiStore;
+    const { findTestCasePageByWorkItemId, createWorkTestCase,
+        findProjectTestRepositoryList, findUnRelationWorkTestCaseList } = workTestStore;
     const [visible, setVisible] = useState(false);
-    const [selectedRow,setSelectedRow] = useState([]);
-    const [doucumentList,setDoucumentList] = useState([])
-    const [repositoryallList,setRepositoryaList] = useState([]);
+    const [selectedRow, setSelectedRow] = useState([]);
+    const [testCaseList, setTestCaseList] = useState([])
+    const [repositoryallList, setRepositoryaList] = useState([]);
     const showModal = () => {
         setVisible(true)
     };
 
-    useEffect(()=> {
-        if(visible === true){
-            findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
-                if(res.code === 0){
+    useEffect(() => {
+        if (visible === true) {
+            findProjectTestRepositoryList({ projectId: projectId }).then(res => {
+                if (res.code === 0) {
                     setRepositoryaList(res.data)
                     let list = []
                     res.data.map(item => {
                         list.push(item.id)
                     })
-                    findUnRelationWorkDocumentList({workItemId:workId, repositoryIds: list,name: ""}).then((data)=> {
-                        if(data.code === 0){
-                            setDoucumentList(data.data)
+                    findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "" }).then((data) => {
+                        if (data.code === 0) {
+                            setTestCaseList(data.data)
                         }
                     })
                 }
             })
         }
         return;
-    },[visible])
+    }, [visible])
 
-    const columns=[
+    const columns = [
         {
             title: "标题",
-            dataIndex: "name",
+            dataIndex: "testCaseName",
             key: "title",
             width: 150
         },
         {
-            title: "知识库",
-            dataIndex: ["repository","name"],
+            title: "目录",
+            dataIndex: "testCategoryName",
             key: "workStatus",
             width: 150
         },
         {
             title: "作者",
-            dataIndex: ["master","name"],
+            dataIndex: "createUser",
             key: "assigner",
             width: 150
         }
     ];
-    
+
     const onCancel = () => {
         setVisible(false);
     };
-    
+
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
         const params = {
             repositoryId: value
         }
         // setSelectRepository()
-        findUnRelationWorkDocumentList(params).then((data)=> {
-            if(data.code === 0){
-                setDoucumentList(data.data)
+        findUnRelationWorkTestCaseList(params).then((data) => {
+            if (data.code === 0) {
+                setTestCaseList(data.data)
             }
         })
     }
-    const searchSelectWorkRepository = (value)=> {
+    const searchSelectWorkRepository = (value) => {
         const categoryQuery = {
             name: value
         }
-        findUnRelationWorkDocumentList(categoryQuery).then((data)=> {
-            if(data.code === 0){
-                setDoucumentList(data.data)
+        findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
+            if (data.code === 0) {
+                setTestCaseList(data.data)
             }
-           
+
         })
     }
     // 选择文档
-    const selectWorkRepository=(selected, selectedRows)=> {
+    const selectWorkRepository = (selected, selectedRows) => {
         setSelectedRow(selectedRows)
     }
     //提交用户列表
-    const submitWorkRepositoryList = ()=> {
-        const workItemDocument = [];
-        if(selectedRow.length !== 0){
-            for(let i=0; i<selectedRow.length; i++) {
-                // createWorkItemDocument({id: selectedRowKeys[i],workitemId:workId })
-                workItemDocument.push({documentId: selectedRow[i].id,workItemId: workId, repositoryId: selectedRow[i].repository.id})
+    const submitWorkRepositoryList = () => {
+        const workItemTestCase = [];
+        if (selectedRow.length !== 0) {
+            for (let i = 0; i < selectedRow.length; i++) {
+                workItemTestCase.push({ testCaseId: selectedRow[i].id, workItemId: workId, repositoryId: selectedRow[i].repositoryId })
+
             }
-            createWorkItemDocument(workItemDocument).then((data)=> {
-                if(data.code === 0) {
-                    findDocumentPageByWorkItemId({workItemId: workId}).then((data)=> {
-                        setWorkDoucumentList([...data])
+            createWorkTestCase(workItemTestCase).then((data) => {
+                if (data.code === 0) {
+
+                    findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+                        setWorkTestCaseList([...data])
+                        setVisible(false)
                     })
-                    setVisible(false)
+
                 }
             })
-        }else {
+
+        } else {
             info()
         }
     }
@@ -120,66 +123,66 @@ const WorkDocumentAddmodal = (props) => {
 
     return (
         <>
-        <div className="addmodel">
-            {
-                props.type !== "edit" ? <Button onClick={showModal}>
-                    +{props.name}
-                </Button> : 
-                <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
-            }
-            <Modal
-                title="选择文档"
-                visible={visible}
-                onCancel={onCancel}
-                width={800}
-                onOk={submitWorkRepositoryList}
-                className="work-kanass-addmodel"
-                destroyOnClose={true}
-                closable = {false}
-            >   
-            
-                <div className="work-kanass-search" style={{marginBottom : "20px"}}>
-                    选择知识库：
-                    <Select 
-                        style={{ width: 200 }} 
-                        allowClear 
-                        onChange={(value)=>searchUnselectWorkRepository(value)}
-                    >
-                        {
-                            repositoryallList && repositoryallList.map((item)=> {
-                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                            })
-                        }
-                    </Select>
-                    <Search 
-                        allowClear
-                        placeholder="请输入关联文档名称" 
-                        onSearch={searchSelectWorkRepository} 
-                        enterButton 
-                        style={{ width: 200,marginLeft: "10px" }}
-                    />
-                </div>
-                <Table 
-                    columns={columns} 
-                    dataSource={doucumentList} 
-                    rowKey={record=> record.id}
-                    rowSelection={{
-                        selectedRow,
-                        onChange: selectWorkRepository,
-                        getCheckboxProps: (record) => ({
-                            disabled: record.rele === true
-                        })
-                    }}
-                    okText="确定"
-                    cancelText="取消"
-                    pagination = {false}
-                />
+            <div className="addmodel">
+                {
+                    props.type !== "edit" ? <Button onClick={showModal}>
+                        +{props.name}
+                    </Button> :
+                        <span onClick={showModal} style={{ color: "var(--tiklab-gray-400)" }}>{props.name}</span>
+                }
+                <Modal
+                    title="选择测试用例"
+                    visible={visible}
+                    onCancel={onCancel}
+                    width={800}
+                    onOk={submitWorkRepositoryList}
+                    className="work-kanass-addmodel"
+                    destroyOnClose={true}
+                    closable={false}
+                >
 
-            </Modal>
-        </div>
-        
+                    <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
+                        选择用例库：
+                        <Select
+                            style={{ width: 200 }}
+                            allowClear
+                            onChange={(value) => searchUnselectWorkRepository(value)}
+                        >
+                            {
+                                repositoryallList && repositoryallList.map((item) => {
+                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                        <Search
+                            allowClear
+                            placeholder="请输入用例关键字"
+                            onSearch={searchSelectWorkRepository}
+                            enterButton
+                            style={{ width: 200, marginLeft: "10px" }}
+                        />
+                    </div>
+                    <Table
+                        columns={columns}
+                        dataSource={testCaseList}
+                        rowKey={record => record.id}
+                        rowSelection={{
+                            selectedRow,
+                            onChange: selectWorkRepository,
+                            getCheckboxProps: (record) => ({
+                                disabled: record.rele === true
+                            })
+                        }}
+                        okText="确定"
+                        cancelText="取消"
+                        pagination={false}
+                    />
+
+                </Modal>
+            </div>
+
         </>
     );
 };
 
-export default withRouter(inject('workStore','workWikiStore')(observer(WorkDocumentAddmodal)));
+export default withRouter(inject('workStore', 'workTestStore')(observer(WorkTestCaseAddmodal)));

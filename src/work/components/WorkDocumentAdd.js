@@ -43,19 +43,19 @@ const WorkDocumentAddmodal = (props) => {
     const columns=[
         {
             title: "标题",
-            dataIndex: "name",
+            dataIndex: "documentName",
             key: "title",
             width: 150
         },
         {
             title: "知识库",
-            dataIndex: ["repository","name"],
+            dataIndex: "kanassRepositoryName",
             key: "workStatus",
             width: 150
         },
         {
             title: "作者",
-            dataIndex: ["master","name"],
+            dataIndex: "userName",
             key: "assigner",
             width: 150
         }
@@ -98,7 +98,7 @@ const WorkDocumentAddmodal = (props) => {
         if(selectedRow.length !== 0){
             for(let i=0; i<selectedRow.length; i++) {
                 // createWorkItemDocument({id: selectedRowKeys[i],workitemId:workId })
-                workItemDocument.push({documentId: selectedRow[i].id,workItemId: workId, repositoryId: selectedRow[i].repository.id})
+                workItemDocument.push({documentId: selectedRow[i].id,workItemId: workId, repositoryId: selectedRow[i].kanassRepositoryId})
             }
             createWorkItemDocument(workItemDocument).then((data)=> {
                 if(data.code === 0) {

@@ -20,12 +20,12 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
-    const { workStore, setIsWorkList, showPage } = props;
-    const { workList,setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType,
+    const { workStore, showPage } = props;
+    const { workList,setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, workIndex, viewType, userList, searchWorkById,
-        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray
+        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray, setIsWorkList
     } = workStore;
     const projectId = props.match.params.id;
     const workDeatilForm = useRef()
@@ -40,12 +40,14 @@ const WorkDetail = (props) => {
     const [infoLoading, setInfoLoading] = useState(false)
     const getWorkDetail = (id, index) => {
         setInfoLoading(true)
+        
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
                 findStatusList(res.workStatus.id);
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
+                setDetailCrumbArray([{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
@@ -68,6 +70,16 @@ const WorkDetail = (props) => {
         return
     }, [workId]);
 
+    useEffect(() => {
+        if (props.match.path === "/index/workone/:id") {
+            const id = props.match.params.id;
+            setWorkId(id)
+            setWorkIndex(0)
+            getWorkDetail(id)
+            setWorkShowType("detail")
+        }
+        return
+    }, []);
 
     const deleteWork = () => {
         detWork(workId).then(() => {
@@ -268,7 +280,7 @@ const WorkDetail = (props) => {
                                     </div>
                                 }
                                 {
-                                    console.log(detailCrumbArray)
+                                    console.log(workInfo)
                                 }
                                 {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
