@@ -463,10 +463,14 @@ const setPrdEamRouter= [
         children: [
             {
                 title: 'JIRA',
-                icon: 'systemcenter',
                 id: '/index/setting/loadData',
                 code: 9-1,
             },
+            {
+                title: '地址配置',
+                id: '/index/setting/urlData',
+                code: 9-2,
+            }
         ]
     },
     {
@@ -656,10 +660,14 @@ const setDevRouter= [
         children: [
             {
                 title: 'JIRA',
-                icon: 'systemcenter',
                 id: '/index/setting/loadData',
                 code: 9-1,
             },
+            {
+                title: '地址配置',
+                id: '/index/setting/urlData',
+                code: 9-2,
+            }
         ]
     },
     {
@@ -978,10 +986,14 @@ const setPrdRouter= [
         children: [
             {
                 title: 'JIRA',
-                icon: 'systemcenter',
                 id: '/index/setting/loadData',
                 code: 9-1,
             },
+            {
+                title: '地址配置',
+                id: '/index/setting/urlData',
+                code: 9-2,
+            }
         ]
     },
     {

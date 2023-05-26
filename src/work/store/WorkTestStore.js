@@ -96,10 +96,13 @@ export class WorkTestStore {
      * @param {*} param 
      * @returns 
      */
-    @action
-    findSystemUrl = async() => {
-        const data = await Service("/systemUrl/findSystemUrl")
-        return data;
+    findSystemUrl = async(params) => {
+        const data = await Service("/systemUrl/findSystemUrlList", params)
+        let urlData;
+        if(data.code === 0 && data.data.length > 0){
+            urlData = data.data[0]
+        }
+        return urlData;
     }
 }
 export const WORKTEST_STORE = "workTestStore"

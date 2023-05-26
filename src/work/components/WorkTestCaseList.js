@@ -15,7 +15,7 @@ import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 const { Search } = Input;
 
 const WorkTestCaseList = (props) => {
-    const { workTestStore, workStore } = props;
+    const { workTestStore, workStore, projectId } = props;
     const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = workTestStore;
     const { workId } = workStore;
     const [testCaseList, setWorkTestCaseList] = useState([])
@@ -45,8 +45,8 @@ const WorkTestCaseList = (props) => {
         })
     }
     const goWikiDetail = (data) => {
-        findSystemUrl().then(res=> {
-            const kanassUrl = res.data.kanassUrl
+        findSystemUrl({name: "teston"}).then(res=> {
+            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
             window.open(`${kanassUrl}/#/index/repositorydetail/${data.repository.id}/doc/${data.id}`)
         })
     }
@@ -87,12 +87,13 @@ const WorkTestCaseList = (props) => {
     return (
         <div className="work-repository">
             <div className="repository-top">
-                <div className="repository-top-title">关联文档({testCaseList.length})</div>
+                <div className="repository-top-title">关联用例({testCaseList.length})</div>
                 <WorkTestCaseAddmodal
                     {...props}
                     name="添加测试用例"
                     selectIds={selectIds}
                     setWorkTestCaseList={setWorkTestCaseList}
+                    projectId = {projectId}
                 />
             </div>
             <Table

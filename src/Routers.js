@@ -83,7 +83,7 @@ const PlanSprint = AsyncComponent(() => import('./project/sprint/components/Spri
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
-const WorkDetail = AsyncComponent(() => import('./work/components/WorkDetail'))
+const WorkDetailPage = AsyncComponent(() => import('./work/components/WorkDetailPage'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 
 const Linemap = AsyncComponent(() => import('./project/lineMap/component/LineMap'))
@@ -470,7 +470,7 @@ const Routers = [
             },
             {
                 path: "/index/workone/:id",
-                component: WorkDetail,
+                component: WorkDetailPage,
                 exact: true
             },
             {

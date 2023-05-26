@@ -40,7 +40,7 @@ const TestRepository = (props) => {
         formData.append("id", "a7318913")
         
         findSystemUrl(formData).then(res=> {
-            const kanassUrl = res.data.systemUrl
+            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
             window.open(`${kanassUrl}/#/index/repositorydetail/${data.wikiRepository.id}/doc/${data.id}`)
         })
     }
@@ -111,7 +111,7 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
 
                         <Breadcumb
-                            firstText="知识库"
+                            firstText="用例库"
                         >
                             <div>
                                 <Button type="primary" onClick={() => showTestRepository()}>

@@ -43,11 +43,9 @@ const WikiRepository = (props) => {
     }
 
     const goWikiDetail = (data) => {
-        const formData = new FormData();
-        formData.append("id", "a7318913")
         
-        findSystemUrl(formData).then(res=> {
-            const kanassUrl = res.data.webUrl
+        findSystemUrl({name: "kanass"}).then(res=> {
+            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
             window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
         })
     }

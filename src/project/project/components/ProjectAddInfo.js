@@ -188,11 +188,15 @@ const ProjectAddInfo = (props) => {
                             },
                             {
                                 pattern: /^[A-Za-z]+$/,
-                                message: '只能包含字母!'
+                                message: '只能包含英文!'
+                            },
+                            {
+                                pattern: /^[\S]{2,10}$/,
+                                message: '请输入2-9位英文字符'
                             }
                         ]}
                     >
-                        <Input placeholder="只能包含字母" />
+                        <Input placeholder="只能包含字母" maxLength={9} showCount/>
                         {/* <div>请输入字母</div> */}
                     </Form.Item>
                     <Form.Item

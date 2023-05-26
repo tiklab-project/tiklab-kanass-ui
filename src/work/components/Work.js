@@ -37,12 +37,14 @@ const Work = (props) => {
         }
 
         if (props.match.path === "/index/work") {
-
+            setWorkShowType("table")
             goSystemWorkItem()
         }
-        if(props.match.location === "/index/work/worklist"){
-            setWorkShowType("table")
-        }
+        // debugger
+        // if(props.match.location === "/index/work/worklist"){
+        //     debugger
+            
+        // }
         if (props.match.path === "/index/workone/:id") {
             const id = props.match.params.id;
             let initValues = {

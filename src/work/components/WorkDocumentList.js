@@ -15,14 +15,14 @@ import WorkDocumentAddmodal from "./WorkDocumentAdd"
 const { Search } = Input;
 
 const WorkDocumentList = (props) => {
-    const { workWikiStore, workStore } = props;
+    const { workWikiStore, workStore, projectId } = props;
     const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = workWikiStore;
     const { workId } = workStore;
-    const [workDoucumentList, setWorkDoucumentList] = useState([])
+    const [workDocumentList, setWorkDocumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
     useEffect(() => {
         findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
-            setWorkDoucumentList([...data])
+            setWorkDocumentList([...data])
         })
         return;
     }, [workId])
@@ -30,7 +30,7 @@ const WorkDocumentList = (props) => {
     const searchSelectWorkRepository = (value) => {
         // getSelectWorkRelationList({title: value})
         findDocumentPageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
-            setWorkDoucumentList([...data])
+            setWorkDocumentList([...data])
         })
     }
 
@@ -39,17 +39,15 @@ const WorkDocumentList = (props) => {
         deleteWorkItemDocument({ workItemId: workId, documentId: id }).then((data) => {
             if (data.code === 0) {
                 findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
-                    setWorkDoucumentList([...data])
+                    setWorkDocumentList([...data])
                 })
             }
         })
     }
     const goWikiDetail = (data) => {
-        const formData = new FormData();
-        formData.append("id", "a7318913")
         
-        findSystemUrl(formData).then(res=> {
-            const kanassUrl = res.data.webUrl
+        findSystemUrl({name: "kanass"}).then(res=> {
+            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
             window.open(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
         })
     }
@@ -90,18 +88,19 @@ const WorkDocumentList = (props) => {
     return (
         <div className="work-repository">
             <div className="repository-top">
-                <div className="repository-top-title">关联文档({workDoucumentList.length})</div>
+                <div className="repository-top-title">关联文档({workDocumentList.length})</div>
                 <WorkDocumentAddmodal
                     {...props}
                     name="添加文档"
                     selectIds={selectIds}
-                    setWorkDoucumentList={setWorkDoucumentList}
+                    setWorkDocumentList={setWorkDocumentList}
+                    projectId = {projectId}
                 />
             </div>
             <Table
                 className="repository-table"
                 columns={columns}
-                dataSource={workDoucumentList}
+                dataSource={workDocumentList}
                 rowKey={record => record.id}
                 pagination={false}
             />

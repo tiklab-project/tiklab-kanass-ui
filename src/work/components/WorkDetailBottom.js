@@ -199,13 +199,13 @@ const WorkDetailBottom = (props) => {
                                 {
                                     tabValue === 8 &&
                                     <div className="tabs-tabpanel">
-                                        <WorkRepository {...props} />
+                                        <WorkRepository {...props} projectId = {workInfo.project.id}/>
                                     </div>
                                 }
                                 {
                                     tabValue === 9 &&
                                     <div className="tabs-tabpanel">
-                                        <WorkTestCaseList {...props} />
+                                        <WorkTestCaseList {...props} projectId = {workInfo.project.id}/>
                                     </div>
                                 }
                             </div>
@@ -275,13 +275,13 @@ const WorkDetailBottom = (props) => {
                             {
                                 tabValue === 8 &&
                                 <div className="tabs-tabpanel">
-                                    <WorkRepository {...props} />
+                                    <WorkRepository {...props} projectId = {workInfo.project.id}/>
                                 </div>
                             }
                             {
                                 tabValue === 9 &&
                                 <div className="tabs-tabpanel">
-                                    <WorkTestCaseList {...props} />
+                                    <WorkTestCaseList {...props} projectId = {workInfo.project.id}/>
                                 </div>
                             }
                         </div>

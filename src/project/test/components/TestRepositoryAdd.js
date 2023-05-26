@@ -46,7 +46,7 @@ const TestRepositoryAdd = (props) => {
     // 列表的列
     const columns = [
         {
-            title: "知识库名称",
+            title: "用户仓库名称",
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
@@ -54,7 +54,7 @@ const TestRepositoryAdd = (props) => {
                 {
                     record.iconUrl ?
                         <img
-                            src={('/images/' + record.iconUrl)}
+                            src={(record.iconUrl)}
                             alt=""
                             className="img-icon"
                         />

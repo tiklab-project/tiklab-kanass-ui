@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Button, Table, Select, message, Input } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
@@ -7,9 +7,9 @@ const { Search } = Input;
 const { Option } = Select;
 
 const WorkTestCaseAddmodal = (props) => {
-    const { workTestStore, workStore, setWorkTestCaseList } = props;
+    const { workTestStore, workStore,projectId, setWorkTestCaseList, projectStore } = props;
     const { workId } = workStore;
-    const projectId = props.match.params.id;
+    const {searchpro} =  projectStore;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
         findProjectTestRepositoryList, findUnRelationWorkTestCaseList } = workTestStore;
     const [visible, setVisible] = useState(false);
@@ -19,21 +19,24 @@ const WorkTestCaseAddmodal = (props) => {
     const showModal = () => {
         setVisible(true)
     };
-
+    const path = props.location.pathname.split("/")[2];
     useEffect(() => {
         if (visible === true) {
             findProjectTestRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
-                    let list = []
-                    res.data.map(item => {
-                        list.push(item.id)
-                    })
-                    findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "" }).then((data) => {
-                        if (data.code === 0) {
-                            setTestCaseList(data.data)
-                        }
-                    })
+                    if(res.data.length > 0){
+                        let list = []
+                        res.data.map(item => {
+                            list.push(item.id)
+                        })
+                        findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
+                            if (data.code === 0) {
+                                setTestCaseList(data.data)
+                            }
+                        })
+                    }
+                    
                 }
             })
         }
@@ -68,7 +71,7 @@ const WorkTestCaseAddmodal = (props) => {
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
         const params = {
-            repositoryId: value
+            repositoryIds: [value]
         }
         // setSelectRepository()
         findUnRelationWorkTestCaseList(params).then((data) => {
@@ -120,7 +123,18 @@ const WorkTestCaseAddmodal = (props) => {
         message.info('请选择事项');
     };
 
-
+    const goTestRepository = () => {
+        searchpro(projectId).then(res => {
+            if(res.code === 0){
+                if(res.data.projectType.type === "nomal"){
+                    props.history.push(`/index/projectNomalDetail/${projectId}/test`)
+                }
+                if(res.data.projectType.type === "scrum"){
+                    props.history.push(`/index/projectScrumDetail/${projectId}/test`)
+                }
+            }
+        })
+    }
     return (
         <>
             <div className="addmodel">
@@ -140,43 +154,49 @@ const WorkTestCaseAddmodal = (props) => {
                     destroyOnClose={true}
                     closable={false}
                 >
-
-                    <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
-                        选择用例库：
-                        <Select
-                            style={{ width: 200 }}
-                            allowClear
-                            onChange={(value) => searchUnselectWorkRepository(value)}
-                        >
-                            {
-                                repositoryallList && repositoryallList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                })
-                            }
-                        </Select>
-                        <Search
-                            allowClear
-                            placeholder="请输入用例关键字"
-                            onSearch={searchSelectWorkRepository}
-                            enterButton
-                            style={{ width: 200, marginLeft: "10px" }}
-                        />
-                    </div>
-                    <Table
-                        columns={columns}
-                        dataSource={testCaseList}
-                        rowKey={record => record.id}
-                        rowSelection={{
-                            selectedRow,
-                            onChange: selectWorkRepository,
-                            getCheckboxProps: (record) => ({
-                                disabled: record.rele === true
-                            })
-                        }}
-                        okText="确定"
-                        cancelText="取消"
-                        pagination={false}
-                    />
+                    {
+                        repositoryallList && repositoryallList.length > 0 ?
+                            <Fragment>
+                                <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
+                                    选择用例库：
+                                    <Select
+                                        style={{ width: 200 }}
+                                        allowClear
+                                        onChange={(value) => searchUnselectWorkRepository(value)}
+                                    >
+                                        {
+                                            repositoryallList && repositoryallList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.testRepositoryName}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                    <Search
+                                        allowClear
+                                        placeholder="请输入用例关键字"
+                                        onSearch={searchSelectWorkRepository}
+                                        enterButton
+                                        style={{ width: 200, marginLeft: "10px" }}
+                                    />
+                                </div>
+                                <Table
+                                    columns={columns}
+                                    dataSource={testCaseList}
+                                    rowKey={record => record.id}
+                                    rowSelection={{
+                                        selectedRow,
+                                        onChange: selectWorkRepository,
+                                        getCheckboxProps: (record) => ({
+                                            disabled: record.rele === true
+                                        })
+                                    }}
+                                    okText="确定"
+                                    cancelText="取消"
+                                    pagination={false}
+                                />
+                            </Fragment>
+                            :
+                            <div>暂无关联用例仓库，请去  <Button type="primary" onClick={() => goTestRepository()}>添加</Button></div>
+                    }
 
                 </Modal>
             </div>
@@ -185,4 +205,4 @@ const WorkTestCaseAddmodal = (props) => {
     );
 };
 
-export default withRouter(inject('workStore', 'workTestStore')(observer(WorkTestCaseAddmodal)));
+export default withRouter(inject('workStore', 'workTestStore', 'projectStore')(observer(WorkTestCaseAddmodal)));

@@ -53,6 +53,20 @@ const ProdeNomalAside = (props) => {
             encoded: "Work",
         },
         {
+            title: "测试用例",
+            icon: 'sprint',
+            url: `/index/projectNomalDetail/${projectId}/test`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "知识库",
+            icon: 'sprint',
+            url: `/index/projectNomalDetail/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
             title: `${t('version')}`,
             icon: 'version',
             url: `/index/projectNomalDetail/${projectId}/version`,

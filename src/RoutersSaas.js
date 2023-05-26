@@ -77,10 +77,13 @@ const ProjectFormDetail = AsyncComponent(() => import('./project/setting/project
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
+const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
+const TestRepository = AsyncComponent(() => import('./project/test/components/TestRepository'))
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
+const WorkDetail = AsyncComponent(() => import('./work/components/WorkDetail'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 
 const Linemap = AsyncComponent(() => import('./project/lineMap/component/LineMap'))
@@ -136,8 +139,8 @@ const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/ba
 const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/components/ProjectSetStatistics"))
 
 // 导入外部数据
-const LoadData = AsyncComponent(() => import('./setting/loadData/LoadData'))
-
+const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
+const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
 const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
@@ -160,7 +163,7 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
-const RoutersSaas = [
+const Routers = [
     {
         path: "/login",
         exact: true,
@@ -448,11 +451,11 @@ const RoutersSaas = [
                         component: Work,
                         exact: true
                     },
-                    {
-                        path: "/index/work/workone/:id",
-                        component: Work,
-                        exact: true
-                    },
+                    // {
+                    //     path: "/index/work/workone/:id",
+                    //     component: WorkDetail,
+                    //     exact: true
+                    // },
                     {
                         path: "/index/work/workadd",
                         component: WorkAddPage,
@@ -464,6 +467,11 @@ const RoutersSaas = [
                         exact: true
                     }
                 ]
+            },
+            {
+                path: "/index/workone/:id",
+                component: WorkDetail,
+                exact: true
             },
             {
                 path: "/index/setting",
@@ -712,6 +720,11 @@ const RoutersSaas = [
                         exact: true
                     },
                     {
+                        path: "/index/setting/urlData",
+                        component: UrlData,
+                        exact: true
+                    },
+                    {
                         path: "/index/setting/plugin",
                         component: ProjectPlugin,
                         exact: true
@@ -737,6 +750,14 @@ const RoutersSaas = [
                     {
                         path: "/index/projectNomalDetail/:id/sprint",
                         component: Sprint
+                    },
+                    {
+                        path: "/index/projectNomalDetail/:id/wiki",
+                        component: WikiRepository
+                    },
+                    {
+                        path: "/index/projectNomalDetail/:id/test",
+                        component: TestRepository
                     },
                     {
                         path: "/index/projectNomalDetail/:id/linemap",
@@ -927,6 +948,14 @@ const RoutersSaas = [
                         path: "/index/projectScrumDetail/:id/sprint",
                         component: Sprint
 
+                    },
+                    {
+                        path: "/index/projectScrumDetail/:id/wiki",
+                        component: WikiRepository
+                    },
+                    {
+                        path: "/index/projectScrumDetail/:id/test",
+                        component: TestRepository
                     },
                     {
                         path: "/index/projectScrumDetail/:id/linemap",
@@ -1201,4 +1230,4 @@ const RoutersSaas = [
         exact: true
     },
 ]
-export default RoutersSaas;
+export default Routers;
