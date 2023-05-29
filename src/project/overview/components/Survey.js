@@ -11,7 +11,6 @@ import "../components/Survey.scss"
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import moment from 'moment';
-import MyWorkStatistics from "./MyWorkStatistics";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"
 import { Row, Col, Empty, Progress } from "antd";
@@ -31,8 +30,6 @@ const Survey = (props) => {
     const projectId = props.match.params.id;
     // 事项状态列表
     const [workStatusList, setWorkStatusList] = useState();
-    // 迭代列表
-    const [sprintList, setSprintList] = useState();
     // 项目详情
     const [project, setProject] = useState();
     // 待办列表
@@ -46,10 +43,6 @@ const Survey = (props) => {
     // 项目类型
     const path = props.match.path.split("/")[2];
     useEffect(() => {
-        const data = {
-            masterId: masterId,
-            projectId: projectId
-        }
         // 统计各个状态的事项
         statWorkItemByBusStatus(projectId).then(res => {
             setWorkStatusList(res.data)
@@ -179,17 +172,10 @@ const Survey = (props) => {
     }
 
     /**
-     * 跳转到待办事项列表
-     */
-    const goTodoList = () => {
-        props.history.push(`/index/${path}/${projectId}/workTodo`)
-    }
-
-    /**
     * 跳转到动态列表
     */
     const goDynamicList = () => {
-        props.history.push(`/index/${path}/${projectId}/dynamic`)
+        props.history.push(`/index/projectDetail/${projectId}/dynamic`)
     }
 
     /**
@@ -227,7 +213,7 @@ const Survey = (props) => {
                 goProcess();
                 break;
             case 4:
-                props.history.push({ pathname: `/index/${path}/${projectId}/work/overdue` })
+                props.history.push({ pathname: `/index/projectDetail/${projectId}/work/overdue` })
             default:
                 break;
         }
@@ -237,28 +223,28 @@ const Survey = (props) => {
      * 跳转到全部事项列表
      */
     const goAllWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/all`)
+        props.history.push(`/index/projectDetail/${projectId}/work/all`)
     }
 
     /**
      * 跳转到进行中事项列表
      */
     const goProcess = () => {
-        props.history.push({ pathname: `/index/${path}/${projectId}/work/process` })
+        props.history.push({ pathname: `/index/projectDetail/${projectId}/work/process` })
     }
 
     /**
      * 跳转到待办事项列表
      */
     const goTodoWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/workTodo`)
+        props.history.push(`/index/projectDetail/${projectId}/work/workTodo`)
     }
 
     /**
      * 跳转到已完成事项列表
      */
     const goDoneWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/done`)
+        props.history.push(`/index/projectDetail/${projectId}/work/done`)
     }
 
 
@@ -343,42 +329,19 @@ const Survey = (props) => {
         return element;
     }
 
-    const goProject = (item) => {
-        updateRecent({ id: item.id })
-        console.log(item)
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.modelId}/survey`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.modelId}/survey`)
-        }
-
-        // 存储用于被点击菜单的回显
-        sessionStorage.setItem("menuKey", "project")
-    }
 
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
         setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         setIsWorkList(false)
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.project.id}/work`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.project.id}/work`)
-        }
 
+        props.history.push(`/index/projectDetail/${item.project.id}/work`)
     }
 
     const goVersion = (item) => {
         updateRecent({ id: item.id })
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.project.id}/versionDetail/${item.modelId}`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.project.id}/versionDetail/${item.modelId}`)
-        }
+        props.history.push(`/index/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
 
     }
 

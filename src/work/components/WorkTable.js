@@ -6,24 +6,25 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import WorkDetail from "./WorkDetail";
+import { withRouter } from "react-router";
 const WorkTableContent = (props) => {
-    const path = props.match.path.split("/")[2];
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray, 
+        detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray,
         setWorkIndex, createRecent, isWorkList, setIsWorkList } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
     const project = JSON.parse(localStorage.getItem("project"));
-
+    const sprintId = props.match?.params?.sprint;
+    console.log(props)
     // const [isWorkList, setIsWorkList] = useState(true)
     const goProdetail = (record, index) => {
         const params = {
             name: record.title,
             model: "workItem",
             modelId: record.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
@@ -31,7 +32,18 @@ const WorkTableContent = (props) => {
         setWorkId(record.id)
         setWorkIndex(index + 1)
         setDetailCrumbArray([{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
-        setIsWorkList(false)
+        console.log(props)
+        if(props.route.path === "/index/work"){
+            props.history.push(`/index/workDetail/${record.id}`)
+            
+        }
+        if(props.route.path === "/index/projectDetail/:id/work"){
+            props.history.push(`/index/projectDetail/${record.project.id}/workDetail/${record.id}`)
+        }
+        if(props.route.path === "/index/:id/sprintdetail/:sprint/workItem"){
+            props.history.push(`/index/${record.project.id}/sprintdetail/${sprintId}/workDetail/${record.id}`)
+        }
+        // setIsWorkList(false)
 
     }
 
@@ -236,55 +248,50 @@ const WorkTableContent = (props) => {
 
         <Row style={{ height: "100%", overflow: "auto" }}>
             <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                {
-                    isWorkList ? <>
-                        <div className="work-list-col">
-                            <WorkBreadCrumb />
-                            <WorkTableFilter form={form} />
-                        </div>
-                        <div style={{ overflow: "hidden" }} className="work-table">
-                            <Spin spinning={tableLoading} delay={500} >
-                                <Table
-                                    columns={columns}
-                                    dataSource={workList}
-                                    rowKey={(record) => record.id}
-                                    // onChange={sorter}
-                                    pagination={{
-                                        total: total,
-                                        pageSize: 20,
-                                        current: searchCondition.pageParam.currentPage,
-                                        onChange: changePage,
-                                        position: ["bottomCenter"]
-                                    }}
-                                    expandable={{
-                                        expandIcon: ({ expanded, onExpand, record }) => (
-                                            record.children && record.children.length > 0 ? expanded ?
+                <>
+                    <div className="work-list-col">
+                        <WorkBreadCrumb />
+                        <WorkTableFilter form={form} />
+                    </div>
+                    <div style={{ overflow: "hidden" }} className="work-table">
+                        <Spin spinning={tableLoading} delay={500} >
+                            <Table
+                                columns={columns}
+                                dataSource={workList}
+                                rowKey={(record) => record.id}
+                                // onChange={sorter}
+                                pagination={{
+                                    total: total,
+                                    pageSize: 20,
+                                    current: searchCondition.pageParam.currentPage,
+                                    onChange: changePage,
+                                    position: ["bottomCenter"]
+                                }}
+                                expandable={{
+                                    expandIcon: ({ expanded, onExpand, record }) => (
+                                        record.children && record.children.length > 0 ? expanded ?
+                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                <use xlinkHref="#icon-workDown"></use>
+                                            </svg> :
+                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                <use xlinkHref="#icon-workRight"></use>
+                                            </svg>
+                                            :
+                                            <>
                                                 <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-workDown"></use>
-                                                </svg> :
-                                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-workRight"></use>
+                                                    <use xlinkHref="#icon-point"></use>
                                                 </svg>
-                                                :
-                                                <>
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                        <use xlinkHref="#icon-point"></use>
-                                                    </svg>
-                                                </>
-                                        )
-                                    }}
-                                />
-                            </Spin>
-                        </div>
-                    </>
-                        :
-                        <WorkDetail setIsWorkList={setIsWorkList} {...props} />
-
-                }
+                                            </>
+                                    )
+                                }}
+                            />
+                        </Spin>
+                    </div>
+                </>
 
             </Col>
         </Row>
     );
 }
 
-export default inject("workStore")(observer(WorkTableContent))
+export default withRouter(inject("workStore")(observer(WorkTableContent)));

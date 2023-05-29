@@ -126,7 +126,7 @@ const WorkDetailBottom = (props) => {
                         <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
                             <div className={`tabs-dropdown-item ${tabValue === 6 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("动态", 6)}>动态</div>
                             <div className={`tabs-dropdown-item ${tabValue === 7 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("评论", 7)}>评论</div>
-                            <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("知识库", 8)}>知识库</div>
+                            <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("文档", 8)}>文档</div>
                             <div className={`tabs-dropdown-item ${tabValue === 9 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("测试用例", 9)}>测试用例</div>
                         </div>
                     </div>

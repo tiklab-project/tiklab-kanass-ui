@@ -402,7 +402,7 @@ const LineMapStage = (props) => {
                                         </div>
                                         <div 
                                             className="stage-name-left-name"
-                                            onClick={() => props.history.push(`/index/projectNomalDetail/${projectId}/stageDetail/${item.id}`)}>
+                                            onClick={() => props.history.push(`/index/projectDetail/${projectId}/stageDetail/${item.id}`)}>
                                             {item.stageName}
                                         </div>
                                     </div>

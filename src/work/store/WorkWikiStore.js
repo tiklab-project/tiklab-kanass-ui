@@ -16,8 +16,13 @@ export class WorkWikiStore {
         currentPage: 1  
     };
 
-    @observable unRelationWorkCondition = {};
-
+    @observable unRelationWorkCondition = {
+        pageParam: {
+            currentPage: 1,
+            pageSize: 10
+        }
+    };
+    @observable unRelationTotal = 0;
     @action
     findDocumentPageByWorkItemId = async(value) => {
         const params = new FormData()
@@ -62,13 +67,12 @@ export class WorkWikiStore {
 
     @action
     findUnRelationWorkDocumentList = async(value) => {
-        // const params={
-        //     repositoryId: value.repositoryId,
-        //     workItemId: value.workItemId,
-        //     repositoryIds: value.repositoryIds,
-        // }
+   
         Object.assign(this.unRelationWorkCondition, {...value}) 
         const data = await Service("/wikidocument/findUnRelationWorkDocumentList", this.unRelationWorkCondition)
+        if(data.code === 0) {
+            this.unRelationTotal = data.data.totalRecord;
+        }
         return data;
     }
 

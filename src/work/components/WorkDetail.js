@@ -25,9 +25,10 @@ const WorkDetail = (props) => {
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, workIndex, viewType, userList, searchWorkById,
-        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray, setIsWorkList
+        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray
     } = workStore;
     const projectId = props.match.params.id;
+    const sprintId = props.match?.params?.sprint;
     const workDeatilForm = useRef()
     const inputRef = useRef()
     const [workInfo, setWorkInfo] = useState();
@@ -40,14 +41,15 @@ const WorkDetail = (props) => {
     const [infoLoading, setInfoLoading] = useState(false)
     const getWorkDetail = (id, index) => {
         setInfoLoading(true)
-        
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
                 findStatusList(res.workStatus.id);
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                setDetailCrumbArray([{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
+                    setDetailCrumbArray([{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                }
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
@@ -71,12 +73,14 @@ const WorkDetail = (props) => {
     }, [workId]);
 
     useEffect(() => {
-        if (props.match.path === "/index/workone/:id") {
-            const id = props.match.params.id;
+        console.log(props)
+        if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
+            const id = props.match.params.workId;
             setWorkId(id)
             setWorkIndex(0)
             getWorkDetail(id)
             setWorkShowType("detail")
+            setWorkShowType("table")
         }
         return
     }, []);
@@ -119,7 +123,7 @@ const WorkDetail = (props) => {
         editWork(value).then((res) => {
             if (res.code === 0) {
                 setWorkStatus(name)
-                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
+                if (props.match.path === "/index/projectDetail/:id/work" ||
                     props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
                     workList[workIndex-1].workStatusNode = { id: statusId, name: name}
                     setWorkList([...workList])
@@ -212,8 +216,8 @@ const WorkDetail = (props) => {
 
         editWork(data).then(res => {
             if (updateField === "assigner") {
-                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
-                props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" || 
+                props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
                     const user = userList.filter(item => {
                         return item.user.id === updateData.assigner
                     })
@@ -264,6 +268,20 @@ const WorkDetail = (props) => {
         setDetailCrumbArray([{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
+    const goWorkList = () => {
+        if(props.match.path === "/index/projectDetail/:id/workDetail/:workId"){
+            props.history.goBack()
+        }
+        if (props.match.path === "/index/projectDetail/:id/workone/:workId"){
+            props.history.push(`/index/projectDetail/${projectId}/work`)
+        }
+        if (props.match.path === "/index/workDetail/:workId"){
+            props.history.push(`/index/work/worklist`)
+        }
+        if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId"){
+            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/workItem`)
+        }
+    }
 
     return (
         <Skeleton loading={infoLoading} active>
@@ -273,14 +291,11 @@ const WorkDetail = (props) => {
                         {
                             (workShowType === "table" || detailCrumbArray?.length > 0) && <div className="work-detail-crumb">
                                 {
-                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => setIsWorkList(true)}>事项
+                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList() }>事项
                                         <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
                                             <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>
                                     </div>
-                                }
-                                {
-                                    console.log(workInfo)
                                 }
                                 {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {

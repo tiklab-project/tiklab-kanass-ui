@@ -357,15 +357,7 @@ const EpicLineMap = (props) => {
     }
 
     const goEpicDetail = (item) => {
-        // const params = {
-        //     name: item.epicName,
-        //     model: "epic",
-        //     modelId: item.id,
-        //     projectId: projectId
-        // }
-        // createRecent(params)
-
-        props.history.push(`/index/projectScrumDetail/${projectId}/epic/${item.id}`)
+        props.history.push(`/index/projectDetail/${projectId}/epic/${item.id}`)
 
     }
     //绘制表格

@@ -16,8 +16,13 @@ export class WorkTestStore {
         currentPage: 1  
     };
 
-    @observable unRelationWorkCondition = {};
-
+    @observable unRelationWorkCondition = {
+        pageParam: {
+            currentPage: 1,
+            pageSize: 1
+        }
+    };
+    @observable unRelationTotal = 0;
     @action
     findTestCasePageByWorkItemId = async(value) => {
         const params = new FormData()
@@ -62,13 +67,12 @@ export class WorkTestStore {
 
     @action
     findUnRelationWorkTestCaseList = async(value) => {
-        // const params={
-        //     repositoryId: value.repositoryId,
-        //     workItemId: value.workItemId,
-        //     repositoryIds: value.repositoryIds,
-        // }
         Object.assign(this.unRelationWorkCondition, {...value}) 
         const data = await Service("/workTestCase/findUnRelationWorkTestCaseList", this.unRelationWorkCondition)
+        
+        if(data.code === 0) {
+            this.unRelationTotal = data.data.totalRecord;
+        }
         return data;
     }
 

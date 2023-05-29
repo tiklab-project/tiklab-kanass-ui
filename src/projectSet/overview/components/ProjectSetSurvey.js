@@ -81,19 +81,9 @@ const ProjectSetSurvey = props => {
         localStorage.setItem("project", JSON.stringify(project));
         localStorage.setItem("projectId", project.id);
         localStorage.setItem("projectTypeId", project.projectType.id);
-        const params = {
-            name: project.projectName,
-            model: "project",
-            modelId: project.id,
-            projectId: project.id
-        }
-        // createRecent(params)
-        if (project.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
-        }
-        if (project.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${project.id}/survey`)
-        }
+      
+
+        props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
     };
 
     const goOpLogDetail = (url) => {

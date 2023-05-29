@@ -20,8 +20,6 @@ const WorkType = (props) => {
     const { workAllTypeList, findWorkTypeDmList, deleteWorkTypeCustomList, setWorkTypeList } = projectWorkStore;
     // 项目id
     const projectId = props.match.params.id;
-    // 项目类型
-    const path = props.match.path.split("/")[2];
     /**
      * 获取项目的事项类型列表
      */
@@ -92,7 +90,7 @@ const WorkType = (props) => {
      * @param {流程id} id 
      */
     const goFlow = (id) => {
-        props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${id}`)
+        props.history.push(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail/${id}`)
     }
 
     /**
@@ -100,7 +98,7 @@ const WorkType = (props) => {
      * @param {表单id} id 
      */
     const goForm = (id) => {
-        props.history.push(`/index/${path}/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
+        props.history.push(`/index/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
     }
 
     const columns = [

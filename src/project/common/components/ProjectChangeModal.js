@@ -70,12 +70,7 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                if (data.data.projectType.type === "scrum") {
-                    props.history.push(`/index/projectScrumDetail/${id}/survey`)
-                }
-                if (data.data.projectType.type === "nomal") {
-                    props.history.push(`/index/projectNomalDetail/${id}/survey`)
-                }
+                props.history.push(`/index/projectDetail/${id}/survey`)
                 localStorage.setItem("projectId", id);
                 // 重置事项id
                 setWorkType(null)

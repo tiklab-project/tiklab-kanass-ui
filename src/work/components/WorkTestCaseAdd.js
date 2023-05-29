@@ -11,7 +11,7 @@ const WorkTestCaseAddmodal = (props) => {
     const { workId } = workStore;
     const {searchpro} =  projectStore;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
-        findProjectTestRepositoryList, findUnRelationWorkTestCaseList } = workTestStore;
+        findProjectTestRepositoryList, findUnRelationWorkTestCaseList, unRelationWorkCondition, unRelationTotal } = workTestStore;
     const [visible, setVisible] = useState(false);
     const [selectedRow, setSelectedRow] = useState([]);
     const [testCaseList, setTestCaseList] = useState([])
@@ -32,7 +32,7 @@ const WorkTestCaseAddmodal = (props) => {
                         })
                         findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
-                                setTestCaseList(data.data)
+                                setTestCaseList(data.data.dataList)
                             }
                         })
                     }
@@ -71,22 +71,30 @@ const WorkTestCaseAddmodal = (props) => {
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
         const params = {
-            repositoryIds: [value]
+            repositoryIds: [value],
+            pageParam: {
+                pageSize: 1,
+                currentPage: 1
+            }
         }
         // setSelectRepository()
         findUnRelationWorkTestCaseList(params).then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data)
+                setTestCaseList(data.data.dataList)
             }
         })
     }
     const searchSelectWorkRepository = (value) => {
         const categoryQuery = {
-            name: value
+            name: value,
+            pageParam: {
+                pageSize: 1,
+                currentPage: 1
+            }
         }
         findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data)
+                setTestCaseList(data.data.dataList)
             }
 
         })
@@ -126,13 +134,23 @@ const WorkTestCaseAddmodal = (props) => {
     const goTestRepository = () => {
         searchpro(projectId).then(res => {
             if(res.code === 0){
-                if(res.data.projectType.type === "nomal"){
-                    props.history.push(`/index/projectNomalDetail/${projectId}/test`)
-                }
-                if(res.data.projectType.type === "scrum"){
-                    props.history.push(`/index/projectScrumDetail/${projectId}/test`)
-                }
+                props.history.push(`/index/projectDetail/${projectId}/test`)
             }
+        })
+    }
+
+    const changePage = (pagination) => {
+        const params = {
+            pageParam: {
+                pageSize: 1,
+                currentPage: pagination
+            }
+        }
+        findUnRelationWorkTestCaseList(params).then((data) => {
+            if (data.code === 0) {
+                setDocumentList(data.data.dataList)
+            }
+
         })
     }
     return (
@@ -158,7 +176,7 @@ const WorkTestCaseAddmodal = (props) => {
                         repositoryallList && repositoryallList.length > 0 ?
                             <Fragment>
                                 <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
-                                    选择用例库：
+                                    选择用例仓库：
                                     <Select
                                         style={{ width: 200 }}
                                         allowClear
@@ -191,7 +209,12 @@ const WorkTestCaseAddmodal = (props) => {
                                     }}
                                     okText="确定"
                                     cancelText="取消"
-                                    pagination={false}
+                                    pagination={{
+                                        total: unRelationTotal,
+                                        pageSize: unRelationWorkCondition.pageParam.pageSize,
+                                        current: unRelationWorkCondition.pageParam.currentPage,
+                                        onChange: changePage
+                                    }}
                                 />
                             </Fragment>
                             :

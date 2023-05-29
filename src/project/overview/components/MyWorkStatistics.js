@@ -31,7 +31,7 @@ const MyWorkStatistics = (props) => {
                 goProcess();
                 break;
             case 4:
-                props.history.push({ pathname: `/index/${path}/${projectId}/work/overdue` })
+                props.history.push({ pathname: `/index/projectDetail/${projectId}/work/overdue` })
             default:
                 break;
         }
@@ -41,28 +41,28 @@ const MyWorkStatistics = (props) => {
      * 跳转到全部事项列表
      */
     const goAllWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/all`)
+        props.history.push(`/index/projectDetail/${projectId}/work/all`)
     }
 
     /**
      * 跳转到进行中事项列表
      */
     const goProcess = () => {
-        props.history.push({ pathname: `/index/${path}/${projectId}/work/process` })
+        props.history.push({ pathname: `/index/projectDetail/${projectId}/work/process` })
     }
 
     /**
      * 跳转到待办事项列表
      */
     const goTodoWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/workTodo`)
+        props.history.push(`/index/projectDetail/${projectId}/work/workTodo`)
     }
 
     /**
      * 跳转到已完成事项列表
      */
     const goDoneWorkItemList = () => {
-        props.history.push(`/index/${path}/${projectId}/work/done`)
+        props.history.push(`/index/projectDetail/${projectId}/work/done`)
     }
 
     return <div className="work-statistics">

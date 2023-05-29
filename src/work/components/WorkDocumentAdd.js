@@ -12,12 +12,11 @@ const WorkDocumentAddmodal = (props) => {
     const {searchpro} =  projectStore;
     // const projectId = props.match.params.id;
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
-        findProjectWikiRepositoryList, findUnRelationWorkDocumentList } = workWikiStore;
+        findProjectWikiRepositoryList, findUnRelationWorkDocumentList, unRelationTotal,unRelationWorkCondition } = workWikiStore;
     const [visible, setVisible] = useState(false);
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
-    const path = props.location.pathname.split("/")[2];
     
     const showModal = () => {
         setVisible(true)
@@ -36,7 +35,7 @@ const WorkDocumentAddmodal = (props) => {
 
                         findUnRelationWorkDocumentList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
-                                setDocumentList(data.data)
+                                setDocumentList(data.data.dataList)
                             }
                         })
                     }
@@ -75,22 +74,29 @@ const WorkDocumentAddmodal = (props) => {
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
         const params = {
-            repositoryId: value
+            repositoryId: value,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
         }
-        // setSelectRepository()
         findUnRelationWorkDocumentList(params).then((data) => {
             if (data.code === 0) {
-                setDocumentList(data.data)
+                setDocumentList(data.data.dataList)
             }
         })
     }
     const searchSelectWorkRepository = (value) => {
         const categoryQuery = {
-            name: value
+            name: value,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
         }
         findUnRelationWorkDocumentList(categoryQuery).then((data) => {
             if (data.code === 0) {
-                setDocumentList(data.data)
+                setDocumentList(data.data.dataList)
             }
 
         })
@@ -127,15 +133,25 @@ const WorkDocumentAddmodal = (props) => {
     const goWikiRepository = () => {
         searchpro(projectId).then(res => {
             if(res.code === 0){
-                if(res.data.projectType.type === "nomal"){
-                    props.history.push(`/index/projectNomalDetail/${projectId}/wiki`)
-                }
-                if(res.data.projectType.type === "scrum"){
-                    props.history.push(`/index/projectScrumDetail/${projectId}/wiki`)
-                }
+                props.history.push(`/index/projectDetail/${projectId}/wiki`)
             }
         })
         
+    }
+
+    const changePage = (pagination) => {
+        const params = {
+            pageParam: {
+                pageSize: 10,
+                currentPage: pagination
+            }
+        }
+        findUnRelationWorkDocumentList(params).then((data) => {
+            if (data.code === 0) {
+                setDocumentList(data.data.dataList)
+            }
+
+        })
     }
     return (
         <>
@@ -195,7 +211,13 @@ const WorkDocumentAddmodal = (props) => {
                                     }}
                                     okText="确定"
                                     cancelText="取消"
-                                    pagination={false}
+                                    // pagination={false}
+                                    pagination={{
+                                        total: unRelationTotal,
+                                        pageSize: unRelationWorkCondition.pageParam.pageSize,
+                                        current: unRelationWorkCondition.pageParam.currentPage,
+                                        onChange: changePage
+                                    }}
                                 />
                             </Fragment>
                             :

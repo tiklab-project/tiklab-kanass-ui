@@ -37,6 +37,16 @@ export class TestRepositoryStore {
         const data = await Service("/projectTestRepository/deleteProjectTestRepositoryByCondition", value)
         return data;
     }
+    
+    @action
+    findSystemUrl = async(params) => {
+        const data = await Service("/systemUrl/findSystemUrlList", params)
+        let urlData;
+        if(data.code === 0 && data.data.length > 0){
+            urlData = data.data[0]
+        }
+        return urlData;
+    }
 }
 
 export const TESTREPOSITORY_STORE = "testRepositoryStore";

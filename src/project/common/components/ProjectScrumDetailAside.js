@@ -20,6 +20,7 @@ const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
     const { searchpro, workStore, project } = props;
+    console.log(project)
     const { setWorkType } = workStore;
     //语言包
     const { t, i18n } = useTranslation();
@@ -34,69 +35,128 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/index/projectScrumDetail/${projectId}/survey`,
+            url: `/index/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: `${t('line_photo')}`,
             icon: 'line',
-            url: `/index/projectScrumDetail/${projectId}/linemap`,
+            url: `/index/projectDetail/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectScrumDetail/${projectId}/work`,
+            url: `/index/projectDetail/${projectId}/work`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('sprint')}`,
             icon: 'sprint',
-            url: `/index/projectScrumDetail/${projectId}/sprint`,
+            url: `/index/projectDetail/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
         },
         {
             title: "测试用例",
             icon: 'sprint',
-            url: `/index/projectScrumDetail/${projectId}/test`,
+            url: `/index/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         },
         {
             title: "知识库",
             icon: 'sprint',
-            url: `/index/projectScrumDetail/${projectId}/wiki`,
+            url: `/index/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: `${t('version')}`,
             icon: 'version',
-            url: `/index/projectScrumDetail/${projectId}/version`,
+            url: `/index/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            url: `/index/projectScrumDetail/${projectId}/milestone`,
+            url: `/index/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "工时",
             icon: 'log',
-            url: `/index/projectScrumDetail/${projectId}/log`,
+            url: `/index/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         }
     ];
 
-    const prorouter = scrumProrouter;
+    const normalProrouter = [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey',
+            url: `/index/projectDetail/${projectId}/survey`,
+            key: "survey",
+            encoded: "Survey",
+        },
+        {
+            title: "计划",
+            icon: 'survey',
+            url: `/index/projectDetail/${projectId}/stage`,
+            key: "stage",
+            encoded: "stage",
+        },
+        {
+            title: `${t('work')}`,
+            icon: 'workitem',
+            url: `/index/projectDetail/${projectId}/work`,
+            key: "work",
+            encoded: "Work",
+        },
+        {
+            title: "测试用例",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/test`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "知识库",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
+            title: `${t('version')}`,
+            icon: 'version',
+            url: `/index/projectDetail/${projectId}/version`,
+            key: "version",
+            encoded: "Version",
+        },
+        {
+            title: `${t('milestone')}`,
+            icon: 'milestone',
+            url: `/index/projectDetail/${projectId}/milestone`,
+            key: "milestone",
+            encoded: "Milestone",
+        },
+        {
+            title: "工时",
+            icon: 'log',
+            url: `/index/projectDetail/${projectId}/log`,
+            key: "log",
+            encoded: "log",
+        }
+    ];
+
+    const prorouter = project?.projectType.type === "scrum" ? scrumProrouter : normalProrouter;
     useEffect(() => {
         setWorkType(null)
         return

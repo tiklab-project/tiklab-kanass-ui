@@ -107,8 +107,7 @@ const SprintWorkBreadCrumb = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id"
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id"
                 ) {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
@@ -126,8 +125,7 @@ const SprintWorkBreadCrumb = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id") {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -141,87 +139,6 @@ const SprintWorkBreadCrumb = (props) => {
         })
     }
 
-    //切换平铺或者树状
-    const changTileOrTree = (value) => {
-        setViewType(value)
-
-        switch (value) {
-            case "tile":
-                if (workShowType === "list") {
-                    getPageList();
-                } else if (workShowType === "table") {
-                    getWorkConditionPage();
-                }
-                break;
-            case "tree":
-                if (workShowType === "list") {
-                    getPageTree();
-                } else if (workShowType === "table") {
-                    getWorkConditionPageTree();
-                }
-                break;
-            default:
-                break;
-        }
-        setShowTreeDropDown(false)
-    }
-
-    const viewList = [
-        {
-            value: "list",
-            title: "列表"
-        },
-        {
-            value: "table",
-            title: "表格"
-        },
-        {
-            value: "bodar",
-            title: "看板"
-        }
-    ]
-
-    const treeList = [
-        {
-            value: "tree",
-            title: "树状"
-        },
-        {
-            value: "tile",
-            title: "平铺"
-        }
-    ]
-
-    const upDownSort = (e) => {
-        setIsAsc(e.target.value);
-        // sorter(type)
-        sorter(e.target.value)
-    }
-
-    const [sortType, setSortType] = useState({
-        value: "id",
-        title: "事项ID"
-    })
-
-
-    const sorter = (sortType) => {
-        const sortParams = [];
-        sortParams.push({
-            name: sortType,
-            orderType: isAsc
-        })
-        searchCondition.orderParams = sortParams;
-        if (viewType === "tree") {
-            getWorkConditionPageTree()
-        }
-        if (viewType === "tile") {
-            getWorkConditionPage()
-        }
-        // setShowSortDropDown(false)
-        setSortType(sortType)
-
-    }
-    
     return (
         <div className="work-top">
             <div className="work-top-head">

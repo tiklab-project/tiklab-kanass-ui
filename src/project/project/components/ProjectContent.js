@@ -72,12 +72,8 @@ const ProjectContent = (props) => {
             iconUrl: project.iconUrl
         }
         createRecent(params)
-        if (project.projectType.type === "scrum") {
-            props.history.push({ pathname: `/index/projectScrumDetail/${project.id}/survey` })
-        }
-        if (project.projectType.type === "nomal") {
-            props.history.push({ pathname: `/index/projectNomalDetail/${project.id}/survey` })
-        }
+
+        props.history.push({ pathname: `/index/projectDetail/${project.id}/survey` })
 
     };
 
@@ -90,12 +86,7 @@ const ProjectContent = (props) => {
             projectType: {id: project.projectType.id},
         }
         createRecent(params)
-        if (project.projectType.type === "scrum") {
-            props.history.push({ pathname: `/index/projectScrumDetail/${project.id}/projectSetDetail/basicInfo` })
-        }
-        if (project.projectType.type === "nomal") {
-            props.history.push({ pathname: `/index/projectNomalDetail/${project.id}/projectSetDetail/basicInfo` })
-        }
+        props.history.push({ pathname: `/index/projectDetail/${project.id}/projectSetDetail/basicInfo` })
     }
     const onSearch = value => {
         console.log(value)

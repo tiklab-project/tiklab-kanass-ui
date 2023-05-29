@@ -43,24 +43,6 @@ const WorkChildAddmodal = (props) => {
         }
     }
 
-    //提交事项列表
-    const submitWorkRelationList = () => {
-        if (selectedRowKeys.length !== 0) {
-            for (let i = 0; i < selectedRowKeys.length; i++) {
-                let params = { id: selectedRowKeys[i], workItem: workId }
-                addWorkRelation(params).then(() => {
-                    if (i === selectedRowKeys.length - 1) {
-                        setSelectedRowKeys([])
-                        showAddRelation(false)
-                    }
-                })
-                // message.info('添加成功');
-            }
-        } else {
-            message.info('请选择事项');
-        }
-    }
-
     const creatWorkRelation = (id) => {
         addWorkRelation({ id: id, workItem: workId }).then((res) => {
             if (res.code === 0) {
@@ -70,10 +52,6 @@ const WorkChildAddmodal = (props) => {
             }
         })
     }
-
-    // useImperativeHandle(relationAddRef, () => ({
-    //     submitWorkRelationList: submitWorkRelationList
-    // }))
 
     // 搜索事项
     const searchUnselectWorkRelationByStatus = (key, value) => {

@@ -32,7 +32,7 @@ const TodoList = (props) => {
         getSerchList()
 
         // 根据不同的url 设置不同的面包屑
-        if(props.route?.path === "/index/projectScrumDetail/:id/workTodo" || props.route?.path === "/index/projectNomalDetail/:id/workTodo"){
+        if(props.route?.path === "/index/projectDetail/:id/workTodo"){
             const projectId = props.match.params.id;
             setFirstText("项目概况")
             findTodopage({ userId: userId, projectId:  projectId })

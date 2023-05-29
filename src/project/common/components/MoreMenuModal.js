@@ -17,8 +17,6 @@ const MoreMenuModel = (props) => {
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[4];
-    // 获取项目的类型
-    const type = props.location.pathname.split("/")[2];
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
     // 菜单弹窗ref
@@ -45,7 +43,7 @@ const MoreMenuModel = (props) => {
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            url: `/index/${type}/${projectId}/statistics/workItem`,
+            url: `/index/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         }

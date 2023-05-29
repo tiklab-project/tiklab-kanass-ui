@@ -183,8 +183,7 @@ const WorkFilterForm = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id"
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id"
                 ) {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
@@ -202,8 +201,7 @@ const WorkFilterForm = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id") {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {

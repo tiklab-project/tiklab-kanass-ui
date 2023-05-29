@@ -11,7 +11,7 @@ import { Button, Input, Row, Table, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTestCase.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
-
+import {applyJump} from "tiklab-core-ui";
 const { Search } = Input;
 
 const WorkTestCaseList = (props) => {
@@ -27,13 +27,6 @@ const WorkTestCaseList = (props) => {
         return;
     }, [workId])
 
-    const searchSelectWorkRepository = (value) => {
-        // getSelectWorkRelationList({title: value})
-        findTestCasePageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
-            setWorkTestCaseList([...data])
-        })
-    }
-
     // 
     const delectRepository = (id) => {
         deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
@@ -44,12 +37,7 @@ const WorkTestCaseList = (props) => {
             }
         })
     }
-    const goWikiDetail = (data) => {
-        findSystemUrl({name: "teston"}).then(res=> {
-            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            window.open(`${kanassUrl}/#/index/repositorydetail/${data.repository.id}/doc/${data.id}`)
-        })
-    }
+    
     const columns = [
         {
             title: "标题",
@@ -57,7 +45,7 @@ const WorkTestCaseList = (props) => {
             key: "name",
             width: 150,
             render: (text, record) => (
-                <span onClick={() => goWikiDetail(record)} className="span-botton" >{text}</span>
+                <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
             ),
         },
         {
@@ -83,7 +71,53 @@ const WorkTestCaseList = (props) => {
         }
     ];
 
+    const goCaseDetail = (record)=>{
+        if(record.exist){
+            switch (record.caseType) {
+                case "api-unit":
+                    toCaseDetail("apiUnitId",record)
+                    break;
+                case "api-scene":
+                    toCaseDetail("apiSceneId",record)
+                    break;
+                case "api-perform":
+                    toCaseDetail("apiPerfId",record)
+                    break;
+                case "web-scene":
+                    toCaseDetail("webSceneId",record)
+                    break;
+                case "web-perform":
+                    toCaseDetail("webPerfId",record)
+                    break;
+                case "app-scene":
+                    toCaseDetail("appSceneId",record)
+                    break;
+                case "app-perform":
+                    toCaseDetail("appPerfId",record)
+                    break;
+                case "function":
+                    toCaseDetail("functionId",record)
+                    break;
+    
+            }
+        }else {
+            return;
+        }
+        
+    }
 
+    //跳转路由
+    // const toCaseDetail = (setId,record)=>{
+    //     // sessionStorage.setItem(`${setId}`,record.id);
+    //     props.history.push(`/repository/${record.caseType}/${record.id}`)
+    // }
+    const toCaseDetail = (caseType, data) => {
+        findSystemUrl({name: "teston"}).then(res=> {
+            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
+            // window.open(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
+            applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
+        })
+    }
     return (
         <div className="work-repository">
             <div className="repository-top">

@@ -46,7 +46,7 @@ const TestRepositoryAdd = (props) => {
     // 列表的列
     const columns = [
         {
-            title: "用户仓库名称",
+            title: "用例仓库名称",
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",

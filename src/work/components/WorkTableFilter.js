@@ -89,9 +89,7 @@ const WorkTableFilter = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id"
-                ) {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -108,8 +106,8 @@ const WorkTableFilter = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id") {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") 
+                {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -190,9 +188,6 @@ const WorkTableFilter = (props) => {
                         })
                     }
                 </SelectSimple>
-                {
-                    console.log(searchCondition)
-                }
                 <SelectSimple
                     name="workStatus"
                     onChange={(value) => handleChange("workStatusIds", value)}

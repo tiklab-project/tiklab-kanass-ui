@@ -27,16 +27,6 @@ const Linemap = (props) => {
     const [versionList, setVersionList] = useState([])
 
     useEffect(() => {
-        // findSprintRoadMap(projectId).then((data) => {
-        //     if (data.code === 0) {
-        //         setSprintList(data.data)
-        //     }
-        // })
-        // findVersionRoadMap(projectId).then((data) => {
-        //     if (data.code === 0) {
-        //         setVersionList(data.data)
-        //     }
-        // })
         if (type === "sprint") {
             findSprintRoadMap(projectId).then((data) => {
                 if (data.code === 0) {

@@ -13,10 +13,9 @@ import { withRouter } from "react-router";
 
 const ProjectProjectFlowList = (props) => {
     const projectId = props.match.params.id;
-    const path = props.match.path.split("/")[2];
     const [router, setRouter] = useState();
     useEffect(() => {
-        setRouter(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail`)
+        setRouter(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`)
         return
     },[])
     return (

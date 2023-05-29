@@ -40,13 +40,6 @@ const WorkAddModel=(props)=>{
         setShowAddModel: setShowAddModel
     }))
 
-    // const [title,setTitie] = useState("查看")
-    // useEffect(() => {
-    //     if(workType !== undefined){
-    //         setTitie(workType.title)
-    //     }
-    //     return ;
-    // }, [workType])
     
     return(
         <Modal 

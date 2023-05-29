@@ -23,11 +23,8 @@ const ProjectSetDetailAside = (props) => {
     const { systemRoleStore } = props;
     // 切换宽菜单与窄菜单的参数
     const [isShowText, SetIsShowText] = useState(false)
-    const { t, i18n } = useTranslation();
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/index/prodetail/survey`);
-    // 当前项目集详情
-    const projectSet = JSON.parse(localStorage.getItem("projectSet"))
     // 项目集id
     const projectSetId = props.match.params.projectSetId;
     // 路由

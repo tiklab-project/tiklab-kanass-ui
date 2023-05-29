@@ -156,14 +156,6 @@ const WorkTypeEditModal = (props) => {
                                 }
                             </Select>
                         </Form.Item>
-                        {/* <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">
-                            提交
-                        </Button>
-                        <Button htmlType="button" onClick={onCancel}>
-                            取消
-                        </Button>
-                    </Form.Item> */}
                     </Form>
                 </Modal>
             </div>

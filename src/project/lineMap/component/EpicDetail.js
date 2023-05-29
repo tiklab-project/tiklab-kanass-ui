@@ -25,7 +25,6 @@ const EpicDetail = (props) => {
     // 史诗id
     const epicId = props.match.params.epicId;
     // 项目类型
-    const path = props.match.path.split("/")[2];
     // 是否显示切换史诗弹窗
     const [showMenu, setShowMenu] = useState(false);
     // 弹窗ref
@@ -100,7 +99,7 @@ const EpicDetail = (props) => {
      * @param {史诗id} item 
      */
     const selectKeyFun = (epicId) => {
-        props.history.push(`/index/${path}/${projectId}/epic/${epicId}`)
+        props.history.push(`/index/projectDetail/${projectId}/epic/${epicId}`)
         setShowMenu(false)
     }
 
@@ -153,7 +152,7 @@ const EpicDetail = (props) => {
     const deEpic = () => {
         deleteEpic({id: epicId}).then(res => {
             if(res.code === 0){
-                props.history.push(`/index/projectScrumDetail/${projectId}/linemap`)
+                props.history.push(`/index/ProjectDetail/${projectId}/linemap`)
             }
         })
     }
@@ -166,7 +165,7 @@ const EpicDetail = (props) => {
                         epicInfo && <Fragment>
                             <div className="epic-detail-top">
                                 <div className="epic-breadcrumb">
-                                    <span className="epic-breadcrumb-first" onClick={() => props.history.push(`/index/projectScrumDetail/${projectId}/linemap`)}>需求集</span>
+                                    <span className="epic-breadcrumb-first" onClick={() => props.history.push(`/index/projectDetail/${projectId}/linemap`)}>需求集</span>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>

@@ -14,9 +14,8 @@ import {ProjectForm} from 'tiklab-form-ui';
 const ProjectFormList = (props) => {
     const projectId = props.match.params.id;
     const [router, setRouter] = useState()
-    const path = props.match.path.split("/")[2];
     useEffect(() => {
-        setRouter(`/index/${path}/${projectId}/projectSetDetail/ProjectFormDetail`)
+        setRouter(`/index/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail`)
         return
     },[])
     

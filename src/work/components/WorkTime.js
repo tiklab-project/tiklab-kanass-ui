@@ -89,7 +89,7 @@ const WorkTime=(props) => {
         // if(props.location.pathname === "/index/sprintdetail/sprintwork"){
         //     initValues = {project: projectId,sprint: sprintId}
         // }
-        if(props.location.pathname === "/index/prodetail/work"){
+        if(props.location.pathname === "/index/projectDetail/work"){
             initValues = {project: projectId,sprint: null}
         }
         getWorkGanttListTree(initValues).then((res)=> {

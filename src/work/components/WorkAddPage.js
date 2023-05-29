@@ -12,7 +12,6 @@ const { RangePicker } = DatePicker;
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
     const { workStore, workType, workAddPageRef, getWorkDetail, setShowAddModel } = props;
-    console.log(props)
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList,getWorkTypeList, workShowType, getWorkBoardList,

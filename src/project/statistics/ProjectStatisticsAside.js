@@ -64,8 +64,6 @@ const StatisticsAsicde = (props) => {
     const [expandedTree, setExpandedTree] = useState([])
     // 项目id
     const projectId = props.match.params.id;
-    // 项目类型
-    const path = props.match.path.split("/")[2];
 
      /**
      * 判断树是否展开
@@ -94,7 +92,7 @@ const StatisticsAsicde = (props) => {
      * @param {*} type 
      */
     const selectKey = (id, type) => {
-        let url = `/index/${path}/${projectId}/statistics/${type}`;
+        let url = `/index/projectDetail/${projectId}/statistics/${type}`;
         setSelectRouter(type)
         props.history.push(url);
     }

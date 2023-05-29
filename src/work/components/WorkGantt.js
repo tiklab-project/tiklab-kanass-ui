@@ -18,8 +18,7 @@ const WorkGantt = (props) => {
 
     const changePage = (page) => {
         let initValues = {}
-        if (props.match.path === "/index/projectScrumDetail/:id/sprintdetail/:sprint/workItem/:statetype" ||
-            props.match.path === "/index/projectNomalDetail/:id/sprintdetail/workItem/:statetype"
+        if (props.match.path === "/index/projectDetail/:id/sprintdetail/:sprint/workItem/:statetype"
         ) {
             initValues = { project: projectId, sprint: sprintId }
         }
@@ -27,7 +26,7 @@ const WorkGantt = (props) => {
         if (props.match.path === "/index/work/worklist/:statetype") {
             initValues = { project: null, sprint: null }
         }
-        if (props.match.path === "/index/projectScrumDetail/:id/work/:statetype" || props.match.path === "/index/projectNomalDetail/:id/work/:statetype") {
+        if (props.match.path === "/index/projectDetail/:id/work/:statetype") {
             initValues = { project: projectId, sprint: null }
         }
         initValues = { currentPage: page, ...initValues }

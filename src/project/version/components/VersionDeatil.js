@@ -24,8 +24,6 @@ const VersionDetail = (props) => {
     const [planInfo, setPlanInfo] = useState()
     // 当前版本id
     const actionPlanId = props.match.params.versionId;
-    // 项目类型
-    const path = props.match.path.split("/")[2];
     // 鼠标放置，修改背景
     const [mouseActive, setMouseActive] = useState(false);
     // 切换版本染成
@@ -92,7 +90,7 @@ const VersionDetail = (props) => {
      * @param {*} item 
      */
     const changeVersion = (item) => {
-        props.history.push(`/index/${path}/${projectId}/versionDetail/${item.id}`)
+        props.history.push(`/index/projectDetail/${projectId}/versionDetail/${item.id}`)
         setMouseActive(false)
     }
 
@@ -161,7 +159,7 @@ const VersionDetail = (props) => {
                         planInfo && <Fragment>
                             <div className="version-top">
                                 <div className="version-breadcrumb">
-                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/index/projectScrumDetail/${projectId}/version`)}>版本</span>
+                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/index/projectDetail/${projectId}/version`)}>版本</span>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>

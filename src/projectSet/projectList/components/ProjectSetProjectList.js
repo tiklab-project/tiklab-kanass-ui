@@ -47,26 +47,12 @@ const ProjectSetProjectList = (props) => {
 
     }
 
-    /**
-     * 切换项目集
-     * @param {*string} value 
-     */
-    const changeProjectSet = (value) => {
-        props.history.push(`/index/projectSetDetail/${value}`)
-        setProjectSetId(value)
-    }
-
     const goProdetail = (project) => {
         localStorage.setItem("project", JSON.stringify(project));
         localStorage.setItem("projectId", project.id);
         localStorage.setItem("projectTypeId", project.projectType.id);
 
-        if (project.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
-        }
-        if (project.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${project.id}/survey`)
-        }
+        props.history.push(`/index/projectDetail/${project.id}/survey`)
 
     };
 

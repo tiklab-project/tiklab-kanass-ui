@@ -65,13 +65,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        if (project.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
-        }
-        if (project.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${project.id}/survey`)
-        }
-
+        props.history.push(`/index/projectDetail/${project.id}/survey`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
@@ -110,14 +104,7 @@ const HomeSurvey = (props) => {
 
     const goProject = (item) => {
         updateRecent({ id: item.id })
-        console.log(item)
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.modelId}/survey`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.modelId}/survey`)
-        }
-
+        props.history.push(`/index/projectDetail/${item.modelId}/survey`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     }
@@ -127,23 +114,13 @@ const HomeSurvey = (props) => {
         setWorkId(item.modelId)
         setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         setIsWorkList(false)
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.project.id}/work`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.project.id}/work`)
-        }
+        props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }
 
     const goVersion = (item) => {
         updateRecent({ id: item.id })
-        if (item.projectType.type === "scrum") {
-            props.history.push(`/index/projectScrumDetail/${item.project.id}/versionDetail/${item.modelId}`)
-        }
-        if (item.projectType.type === "nomal") {
-            props.history.push(`/index/projectNomalDetail/${item.project.id}/versionDetail/${item.modelId}`)
-        }
+        props.history.push(`/index/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }
 

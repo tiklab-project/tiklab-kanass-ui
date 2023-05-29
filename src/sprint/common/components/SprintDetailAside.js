@@ -80,7 +80,7 @@ const SprintDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/index/projectScrumDetail/${project.id}/sprint`)
+        props.history.push(`/index/projectDetail/${project.id}/sprint`)
     }
 
     return (

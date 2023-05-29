@@ -17,32 +17,27 @@ const WorkDynamic = (props) => {
     const { workId } = workStore;
     const [list, setList] = useState([])
     useEffect(() => {
-        findlogpage({workItemId: workId}).then(data => {
-            if(data.code === 0){
+        findlogpage({ workItemId: workId }).then(data => {
+            if (data.code === 0) {
                 setList(data.data.dataList)
             }
-            
+
         })
         return;
     }, [workId])
 
     return <>
-        {/* <Row justify="start" style={{ height: "calc(100vh - 180px)", overflow: "auto" }}>
-            <Col lg={{ span: "22" }} xl={{ span: "18" }}> */}
-                {/* <div className="workitem-dynamic-title">事项动态({list.length})</div> */}
-                <div className="work-dynamic"> 
-                    {
-                        list && list.length > 0 ? list.map(item => {
-                            return <div
-                                dangerouslySetInnerHTML={{ __html: item.data }}
-                                className="todo-item"
-                            />
-                        }) :
-                            <Empty />
-                    }
-                </div>
-            {/* </Col>
-        </Row> */}
+        <div className="work-dynamic">
+            {
+                list && list.length > 0 ? list.map(item => {
+                    return <div
+                        dangerouslySetInnerHTML={{ __html: item.data }}
+                        className="todo-item"
+                    />
+                }) :
+                    <Empty />
+            }
+        </div>
 
     </>
 

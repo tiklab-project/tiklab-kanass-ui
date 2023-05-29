@@ -160,7 +160,7 @@ export class StageStore {
     deleteStage = async(value) => {
         const params = new FormData()
         params.append("id", value.id)
-        const data = await Service("/stage/deleteStage", value);
+        const data = await Service("/stage/deleteStage", params);
         if(data.code === 0){
             return data;
         }

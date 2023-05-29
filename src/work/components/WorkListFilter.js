@@ -86,29 +86,6 @@ const WorkListFilter = (props) => {
 
     }
 
-    const quickFilterList = [
-        {
-            value: "all",
-            name: "所有"
-        },
-        {
-            value: "pending",
-            name: "我的待办"
-        },
-        {
-            value: "ending",
-            name: "我的已办"
-        },
-        {
-            value: "creat",
-            name: "我创建的"
-        },
-        {
-            value: "overdue",
-            name: "已逾期"
-        }
-    ]
-
     const getWorkList = () => {
         if (viewType === "tile") {
             getPageList();
@@ -120,9 +97,7 @@ const WorkListFilter = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id"
-                ) {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -139,8 +114,7 @@ const WorkListFilter = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id") {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id" ) {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {

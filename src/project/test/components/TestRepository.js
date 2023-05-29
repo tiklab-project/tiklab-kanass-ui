@@ -14,9 +14,11 @@ import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
 import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
+import {applyJump} from "tiklab-core-ui";
+
 const TestRepository = (props) => {
     const { testRepositoryStore } = props;
-    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList } = testRepositoryStore;
+    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl } = testRepositoryStore;
 
     const projectId = props.match.params.id;
     const [testAddvisible, setTestAddvisible] = useState()
@@ -35,13 +37,11 @@ const TestRepository = (props) => {
         })
     }
 
-    const goWikiDetail = (data) => {
-        const formData = new FormData();
-        formData.append("id", "a7318913")
-        
-        findSystemUrl(formData).then(res=> {
-            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            window.open(`${kanassUrl}/#/index/repositorydetail/${data.wikiRepository.id}/doc/${data.id}`)
+    const goRepository = (data) => {
+        findSystemUrl({name: "teston"}).then(res=> {
+            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
+            // window.open(`${testUrl}/#/repository/detail/${data.id}`)
+            applyJump(`${testUrl}/#/repository/detail/${data.id}`)
         })
     }
     // 列表的列
@@ -51,7 +51,7 @@ const TestRepository = (props) => {
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
-            render: (text, record) => <div className="repository-title">
+            render: (text, record) => <div className="repository-title" onClick={() => goRepository(record)}>
                 {
                     record.iconUrl ?
                         <img

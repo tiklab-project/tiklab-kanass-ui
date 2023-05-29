@@ -22,7 +22,7 @@ const DynamicList = (props) => {
     const [firstText, setFirstText] = useState();
     
     useEffect(() => {
-        if(props.route.path === "/index/projectScrumDetail/:id/dynamic" || props.route.path === "/index/projectNomalDetail/:id/dynamic"){
+        if(props.route.path === "/index/projectDetail/:id/dynamic"){
             setFirstText("项目概况")
             const projectId = props.match.params.id;
             findLogpage({ userId: userId, projectId:  projectId})
@@ -39,8 +39,7 @@ const DynamicList = (props) => {
         if(props.route.path === "/index/projectSetdetail/:id/dynamic"){
             setFirstText("项目集概况")
         }
-        if(props.route.path === "/index/projectScrumDetail/:id/sprintdetail/:sprint/dynamic" || 
-        props.route.path === "/index/projectNomalDetail/:id/sprintdetail/:sprint/dynamic"){
+        if(props.route.path === "/index/projectDetail/:id/sprintdetail/:sprint/dynamic"){
             setFirstText("迭代概况")
         }
         return;

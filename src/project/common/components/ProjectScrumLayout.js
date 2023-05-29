@@ -16,6 +16,7 @@ import { getUser } from "tiklab-core-ui";
 
 const ProjectScrumDetail = (props) => {
     const { projectStore, route, systemRoleStore } = props;
+    
     const { searchpro, findProjectList } = projectStore;
     // 项目id
     const projectId = props.match.params.id;

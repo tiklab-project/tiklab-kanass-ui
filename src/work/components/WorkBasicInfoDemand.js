@@ -255,8 +255,8 @@ const WorkBasicInfo = (props) => {
         editWork(data).then(res => {
             if(res.code === 0){
                 setWorkInfo({...workInfo, ...changedValues})
-                if (props.match.path === "/index/projectScrumDetail/:id/work" || props.match.path === "/index/projectNomalDetail/:id/work" ||
-                props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                if (props.match.path === "/index/projectDetail/:id/work"|| props.match.path === "/index/work" || 
+                props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
                     workList[workIndex-1] = { ...workList[workIndex-1], ...changedValues}
                     setWorkList([...workList])
                 }

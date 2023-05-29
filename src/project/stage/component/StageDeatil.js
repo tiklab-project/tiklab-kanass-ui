@@ -26,8 +26,6 @@ const StageDetail = (props) => {
     const [stageInfo, setStageInfo] = useState()
     // 阶段id
     const stageId = props.match.params.stageId;
-    // 项目类型
-    const path = props.match.path.split("/")[2];
     // 鼠标放置，添加背景色
     const [mouseActive, setMouseActive] = useState(false);
     // 修改的字段key
@@ -97,7 +95,7 @@ const StageDetail = (props) => {
      * @param {*} item 
      */
     const changeStage = (item) => {
-        props.history.push(`/index/${path}/${projectId}/stageDetail/${item.id}`)
+        props.history.push(`/index/projectDetail/${projectId}/stageDetail/${item.id}`)
         setMouseActive(false)
     }
 
@@ -117,7 +115,7 @@ const StageDetail = (props) => {
     const deleStage = () => {
         deleteStage({ id: stageId }).then(res => {
             if (res.code === 0) {
-                props.history.push(`/index/projectNomalDetail/${projectId}/stage`)
+                props.history.push(`/index/projectDetail/${projectId}/stage`)
             }
         })
     }
@@ -182,7 +180,7 @@ const StageDetail = (props) => {
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-home"></use>
                                         </svg>
-                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/index/projectNomalDetail/${projectId}/stage`)}>阶段</span>
+                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/index/projectDetail/${projectId}/stage`)}>阶段</span>
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-right1"></use>
                                         </svg>

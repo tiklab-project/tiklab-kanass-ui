@@ -11,6 +11,7 @@ import { Button, Input, Row, Table, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkDocument.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
+import {applyJump} from "tiklab-core-ui";
 
 const { Search } = Input;
 
@@ -27,13 +28,6 @@ const WorkDocumentList = (props) => {
         return;
     }, [workId])
 
-    const searchSelectWorkRepository = (value) => {
-        // getSelectWorkRelationList({title: value})
-        findDocumentPageByWorkItemId({ workItemId: workId, name: value }).then((data) => {
-            setWorkDocumentList([...data])
-        })
-    }
-
     // 
     const delectRepository = (id) => {
         deleteWorkItemDocument({ workItemId: workId, documentId: id }).then((data) => {
@@ -45,11 +39,16 @@ const WorkDocumentList = (props) => {
         })
     }
     const goWikiDetail = (data) => {
+        if(data.exist){
+            findSystemUrl({name: "kanass"}).then(res=> {
+                const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
+                applyJump(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
+                // window.open(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
+            })
+        }else {
+            return
+        }
         
-        findSystemUrl({name: "kanass"}).then(res=> {
-            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            window.open(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
-        })
     }
     const columns = [
         {
@@ -58,7 +57,7 @@ const WorkDocumentList = (props) => {
             key: "name",
             width: 150,
             render: (text, record) => (
-                <span onClick={() => goWikiDetail(record)} className="span-botton" >{text}</span>
+                <span onClick={() => goWikiDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
             ),
         },
         {

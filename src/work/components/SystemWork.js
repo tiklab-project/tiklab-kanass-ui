@@ -33,8 +33,7 @@ const SystemWork = (props) => {
 
     useEffect(() => {
         // setSearchConditionNull()
-        if (props.match.path === "/index/projectScrumDetail/:id/sprintdetail/:sprint/workItem/:statetype" ||
-            props.match.path === "/index/projectNomalDetail/:id/sprintdetail/workItem/:statetype"
+        if (props.match.path === "/index/projectDetail/:id/sprintdetail/:sprint/workItem/:statetype"
         ) {
             goSprintWorkItem()
         }
@@ -71,7 +70,7 @@ const SystemWork = (props) => {
             return
         }
 
-        if (props.match.path === "/index/projectScrumDetail/:id/work/:statetype" || props.match.path === "/index/projectNomalDetail/:id/work/:statetype") {
+        if (props.match.path === "/index/projectDetail/:id/work/:statetype") {
             goProjectWorkItem()
         }
 
@@ -230,9 +229,7 @@ const SystemWork = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id"
-                ) {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -249,8 +246,7 @@ const SystemWork = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectScrumDetail/:id/workMessage/:id" ||
-                    props.match.path === "/index/projectNomalDetail/:id/workMessage/:id") {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {

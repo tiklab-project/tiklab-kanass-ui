@@ -19,7 +19,6 @@ const { RangePicker } = DatePicker;
 
 const VersionTable = (props) => {
     // 解析 props
-    const path = props.match.path.split("/")[2];
     const { versionStore } = props
     const { versionList, getVersionList, deleVersion, createRecent } = versionStore;
     const project = JSON.parse(localStorage.getItem("project"));
@@ -43,7 +42,7 @@ const VersionTable = (props) => {
         }
         createRecent(params)
         
-        props.history.push(`/index/${path}/${projectId}/versionDetail/${id}`)
+        props.history.push(`/index/projectDetail/${projectId}/versionDetail/${id}`)
     }
 
     const statusName = {

@@ -14,6 +14,8 @@ import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
+import {applyJump} from "tiklab-core-ui";
+
 const WikiRepository = (props) => {
     const { wikiRepositoryStore } = props;
     const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList, findSystemUrl } = wikiRepositoryStore;
@@ -23,13 +25,6 @@ const WikiRepository = (props) => {
     const [projectWikiList, setProjectWikiList] = useState()
 
     const delteRepository = (id) => {
-        // Modal.confirm({
-        //     title: 'Confirm',
-        //     content: 'Bla bla ...',
-        //     okText: '确认',
-        //     cancelText: '取消',
-        //     className: ""
-        //   });
         deleteProjectWikiRepositoryByCondition({repositoryId:id, projectId: projectId }).then(data => {
             if(data.code === 0){
                 message.info('删除成功');
@@ -46,7 +41,8 @@ const WikiRepository = (props) => {
         
         findSystemUrl({name: "kanass"}).then(res=> {
             const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
+            // window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
+            applyJump(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
         })
     }
     // 列表的列

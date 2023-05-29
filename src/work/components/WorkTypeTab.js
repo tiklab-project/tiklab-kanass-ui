@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Form, Input, Select } from 'antd';
 import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import "./WorkTypeTab.scss";
@@ -15,7 +14,6 @@ const WorkTypeTab = (props) => {
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
 
-    // const [tabValue, setTabValue] = useState({id: "all", type: "system"});
     const [moreTabValue, setMoreTabValue] = useState();
     const [showMoreTab, setShowMoreTab] = useState(false);
     const tabsDropDown = useRef();

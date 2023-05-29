@@ -22,7 +22,7 @@ const SetScrumMenu = (props) => {
      * 跳转到项目设置页面
      */
     const goProjectSetting = () => {
-        props.history.push(`/index/projectScrumDetail/${projectId}/projectSetDetail/basicInfo`)
+        props.history.push(`/index/projectDetail/${projectId}/projectSetDetail/basicInfo`)
     }
 
     return (

@@ -4,8 +4,6 @@ import { observer, inject } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
 import Button from "../../common/button/Button";
-import { useRef } from "react";
-const { Search } = Input;
 
 const WorkRelation = (props) => {
     const { workRelation, workStore, projectId } = props;
