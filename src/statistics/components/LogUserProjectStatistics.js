@@ -16,9 +16,8 @@ const { RangePicker } = DatePicker;
 
 
 const UserLogStatistics = (props) => {
-    const { logStore, statisticsStore } = props
-    const { findAllUser, userList, findUserProjectLog } = logStore;
-    const { findProjectList } = statisticsStore;
+    const { statisticsStore } = props;
+    const { findProjectList, findUserProjectLog } = statisticsStore;
     const [form] = Form.useForm();
     // 定义时间格式
     const dateFormat = 'YYYY/MM/DD';
@@ -30,7 +29,7 @@ const UserLogStatistics = (props) => {
     const projectSetId = props.match.params.projectSetId;
     const [projectList, setProjectList] = useState()
     useEffect(() => {
-        findAllUser()
+        // findAllUser()
         const startTime = moment().subtract(1, 'months').format('YYYY-MM-DD');
         const endTime = moment().format('YYYY-MM-DD');
         const values = {

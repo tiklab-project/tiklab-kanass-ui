@@ -3,7 +3,7 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Select, Menu, Dropdown, Form, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
-import { useSelector } from "tiklab-plugin-core-ui/es";
+import { useSelector } from "tiklab-plugin-core-ui";
 import "./WorkBreadCrumb.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";

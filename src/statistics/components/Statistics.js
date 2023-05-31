@@ -8,7 +8,7 @@
  */
 import React, { Fragment } from "react";
 import StatisticsAside from "./StatisticsAside";
-import { Layout, Row, Col } from 'antd';
+import { Layout } from 'antd';
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router";
 import "./Statistics.scss"

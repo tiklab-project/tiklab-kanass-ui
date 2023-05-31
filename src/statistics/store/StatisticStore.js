@@ -265,6 +265,41 @@ export class StatisticsStore {
         return data;
     }
 
+    /**
+     * 查询项目每个成员的工时
+     * @param {*} value 
+     * @returns 
+     */
+    @action
+    findProjectUserLog = async(value) => {
+        this.selectUserCondition = {...this.selectUserCondition,...value}
+        const data = await Service("/workLog/findProjectUserLog", this.selectUserCondition);
+        return data;
+    }
+
+    /**
+     * 查找项目下每个事项的工时
+     * @param {*} value 
+     * @returns 
+     */
+    @action
+    findProjectWorkItemLog = async(value) => {
+        this.selectUserCondition = {...this.selectUserCondition,...value}
+        const data = await Service("/workLog/findProjectWorkItemLog", this.selectUserCondition);
+        return data;
+    }
+
+    /**
+     * 查询成员负责的每个项目的工时
+     * @param {*} value 
+     * @returns 
+     */
+    @action
+	findUserProjectLog = async(value) => {
+        this.selectWorkCondition = {...this.selectWorkCondition,...value};
+        const data = await Service("/workLog/findUserProjectLog", this.selectWorkCondition);
+        return data;
+    }
     
 }
 

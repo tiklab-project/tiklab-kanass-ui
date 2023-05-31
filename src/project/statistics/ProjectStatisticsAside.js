@@ -10,8 +10,10 @@ import React, { useState, useEffect } from 'react';
 import "./ProjectStatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
+import { useSelector } from "tiklab-plugin-core-ui";
 
 const StatisticsAsicde = (props) => {
+    const pluginStore = useSelector(state => state.pluginStore)
     // 统计菜单
     const workReportList = [
         {
@@ -19,11 +21,11 @@ const StatisticsAsicde = (props) => {
             title: "事项字段统计",
             type: "work"
         },
-        {
-            key: "workBulidEnd",
-            title: "事项创建与解决统计",
-            type: 'bulidend',
-        },
+        // {
+        //     key: "workBulidEnd",
+        //     title: "事项创建与解决统计",
+        //     type: 'bulidend',
+        // },
         {
             key: "workNewTrend",
             title: "事项新增趋势",
@@ -44,7 +46,8 @@ const StatisticsAsicde = (props) => {
             title: "事项累计完成趋势",
             type: "endtotaltrend"
         }
-    ]
+    ];
+    const [workStatisticList, setWorkStatisticList] = useState(workReportList)
     // 菜单分类
     const logReportList = [
         {
@@ -58,10 +61,26 @@ const StatisticsAsicde = (props) => {
             type: "logprojectwork"
         },
     ]
+    
+    useEffect(() => {
+       const staticsList = pluginStore.filter(item => item.point === "work-statistics");
+       
+       staticsList.map(item => {
+            workStatisticList.push({
+                key: item.id,
+                title: item.extraProps.title,
+                type: item.extraProps.type
+            })
+       })
+       setWorkStatisticList(workStatisticList)
+       console.log(staticsList)
+    },[])
     // 选中的菜单
     const [selectRouter, setSelectRouter] = useState("workItem")
     // 已展开子级的阶段id集合
     const [expandedTree, setExpandedTree] = useState([])
+    
+    
     // 项目id
     const projectId = props.match.params.id;
 
@@ -118,7 +137,7 @@ const StatisticsAsicde = (props) => {
             {
                 !isExpandedTree("work") && <div className="statistics-menu">
                     {
-                        workReportList && workReportList.map((item, index) => {
+                        workStatisticList && workStatisticList.map((item, index) => {
                             return <div key={index}>
                                 <div
                                     className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}

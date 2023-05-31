@@ -12,16 +12,12 @@ import { observer, inject } from "mobx-react";
 import { Input, Table, Select, Button, Form, Pagination, DatePicker, Empty } from 'antd';
 import moment from "moment";
 import "./LogStatistics.scss";
-import ReportAddOrEdit from "./ReportAddOrEdit"
 const { RangePicker } = DatePicker;
 
 const ProjectWorkItemLogStatistics = (props) => {
-    const { logStore, statisticsStore } = props
-    const { findProjectWorkItemLog } = logStore;
-    const { findProjectList } = statisticsStore;
+    const { statisticsStore } = props
+    const { findProjectList, findProjectWorkItemLog } = statisticsStore;
     const [form] = Form.useForm();
-    const [visible, setVisible] = useState(false);
-    const [fromData, setFromData] = useState()
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint;
     const projectSetId = props.match.params.projectSetId;
@@ -104,7 +100,7 @@ const ProjectWorkItemLogStatistics = (props) => {
 
     const changField = (changedValues, allValues) => {
         let params;
-        if(Object.keys(changedValues)[0] === "dateRanger"){
+        if (Object.keys(changedValues)[0] === "dateRanger") {
             params = {
                 startTime: changedValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: changedValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -112,7 +108,7 @@ const ProjectWorkItemLogStatistics = (props) => {
             }
         }
 
-        if(Object.keys(changedValues)[0] === "projectId"){
+        if (Object.keys(changedValues)[0] === "projectId") {
             params = {
                 startTime: allValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: allValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -129,18 +125,6 @@ const ProjectWorkItemLogStatistics = (props) => {
             }
             setCurrent(1)
         })
-    }
-
-    const addReport = () => {
-        form.validateFields().then((values) => {
-            const params = {
-                ...values,
-                startDate: values.startTime[0].startOf("day").format("YYYY-MM-DD"),
-                endDate: values.startTime[1].endOf("day").format("YYYY-MM-DD")
-            }
-            setFromData(params)
-        })
-        setVisible(true)
     }
 
     return (
@@ -197,8 +181,8 @@ const ProjectWorkItemLogStatistics = (props) => {
                         </div>
                         <div className="logtable-heard-timemap">
                             {
-                                headerDay && headerDay.length > 0 && headerDay.map(item => {
-                                    return <div>
+                                headerDay && headerDay.length > 0 && headerDay.map((item, index) => {
+                                    return <div key = {index}>
                                         <div>
                                             {item.dateTime.substring(0, 10)}
                                         </div>
@@ -212,7 +196,7 @@ const ProjectWorkItemLogStatistics = (props) => {
                     </div>
                     {
                         workItemManhour && workItemManhour.length > 0 && workItemManhour.map(projectItem => {
-                            return <div className="project-logtable-contant">
+                            return <div className="project-logtable-contant" key={projectItem.project.id}>
                                 <div className="logtable-contant-user">
                                     {projectItem.project?.projectName}
                                 </div>
@@ -223,13 +207,13 @@ const ProjectWorkItemLogStatistics = (props) => {
                                     {
                                         projectItem.projectListLogList.length > 0 && projectItem.projectListLogList.map(workItem => {
                                             return (
-                                                <div className="logtable-contant-statistic-item">
-                                                    <div className="logtable-contant-project">{workItem.workItem.title}</div>
+                                                <div className="logtable-contant-statistic-item" key={workItem?.workItem?.id}>
+                                                    <div className="logtable-contant-project">{workItem?.workItem?.title}</div>
                                                     <div className="logtable-contant-takeuptime">
                                                         {
-                                                            workItem.statisticsList && workItem.statisticsList.length > 0 && workItem.statisticsList.map(statisticItem => {
+                                                            workItem.statisticsList && workItem.statisticsList.length > 0 && workItem.statisticsList.map((statisticItem, index) => {
                                                                 return (
-                                                                    <div>{statisticItem.statistics}</div>
+                                                                    <div key = {index}>{statisticItem.statistics}</div>
                                                                 )
                                                             })
                                                         }
@@ -246,15 +230,8 @@ const ProjectWorkItemLogStatistics = (props) => {
                     :
                     <Empty />
             }
-            <ReportAddOrEdit
-                fromData={fromData}
-                visible={visible}
-                setVisible={setVisible}
-                reportType="logprojectwork"
-                type="log"
-                {...props}
-            />
+
         </div>
     )
 }
-export default inject('statisticsStore', 'logStore')(observer(ProjectWorkItemLogStatistics));
+export default inject('statisticsStore')(observer(ProjectWorkItemLogStatistics));

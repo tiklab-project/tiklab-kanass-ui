@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker;
 
 const ProjectStaticsNewTrend = (props) => {
     const { statisticsStore } = props;
-    const { findReport, statisticsNewWorkItemCount, findProjectList } = statisticsStore;
+    const { statisticsNewWorkItemCount, findProjectList } = statisticsStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
     const [fromData, setFromData] = useState()

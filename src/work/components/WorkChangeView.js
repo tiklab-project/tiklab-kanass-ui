@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./WorkChangeView.scss";
 import { Radio, Popconfirm } from 'antd';
 import Button from "../../common/button/Button";
-import { useSelector } from "tiklab-plugin-core-ui/es";
+import { useSelector } from "tiklab-plugin-core-ui";
 import { withRouter } from "react-router";
 import { getVersionInfo } from "tiklab-core-ui"
 const WorkFilterSort = (props) => {
@@ -13,6 +13,7 @@ const WorkFilterSort = (props) => {
     const treeDropDown = useRef();
     const gantte = useRef()
     const pluginStore = useSelector(state => state.pluginStore);
+    console.log(pluginStore)
     const versionInfo = getVersionInfo()
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -135,7 +136,7 @@ const WorkFilterSort = (props) => {
                         })
                     }
                     {
-                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false && versionInfo.release !== 1 ? <div
+                        pluginStore.filter(item => item.point === "work-gantt").length > 0 ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
                             onClick={() => changeWorkView("time")}>
                             <svg className="svg-icon" aria-hidden="true">

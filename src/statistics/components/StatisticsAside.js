@@ -34,10 +34,7 @@ const StatisticsAsicde = (props) => {
             key: "workEndTotalTrend",
             title: "事项累计完成趋势",
             type: "endtotaltrend"
-        }
-    ]
-
-    const logReportList = [
+        },
         {
             key: "logProjectUser",
             title: "日志项目成员统计",
@@ -47,9 +44,9 @@ const StatisticsAsicde = (props) => {
             key: "logProjectWork",
             title: "日志项目事项统计",
             type: "logprojectwork"
-        },
+        }
     ]
-
+    
     const [selectRouter, setSelectRouter] = useState()
     
     const [expandedTree, setExpandedTree] = useState([])
@@ -58,7 +55,6 @@ const StatisticsAsicde = (props) => {
     const { findReportList, deleteReport } = statisticsStore;
     const projectId = props.match.params.id;
     const path = props.match.path.split("/")[2];
-    console.log(props)
     useEffect(() => {
         findReportList({ projectId: projectId}).then(res => {
             if(res.code === 0){
@@ -124,7 +120,7 @@ const StatisticsAsicde = (props) => {
                 </div>
             }
 
-            <div className='statistics-type-title'>
+            {/* <div className='statistics-type-title'>
                 {
                     !isExpandedTree("log") ?
                         <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
@@ -155,7 +151,7 @@ const StatisticsAsicde = (props) => {
                         })
                     }
                 </div>
-            }
+            } */}
 
         </div>
     )

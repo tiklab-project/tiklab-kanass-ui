@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 
 const StatisticsWork = (props) => {
     const { statisticsStore } = props;
-    const { findReport, statisticWorkItem, findProjectList } = statisticsStore;
+    const { statisticWorkItem, findProjectList } = statisticsStore;
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);

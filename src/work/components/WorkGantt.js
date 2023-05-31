@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { useSelector } from "tiklab-plugin-core-ui/es";
-import { RemoteComponent } from "tiklab-plugin-core-ui/es";
+import { useSelector } from "tiklab-plugin-core-ui";
+import { RemoteComponent } from "tiklab-plugin-core-ui";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
 import Gantt from "./GanttTest"

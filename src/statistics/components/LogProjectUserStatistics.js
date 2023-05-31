@@ -17,9 +17,8 @@ import { withRouter } from "react-router";
 const { RangePicker } = DatePicker;
 
 const ProjectLogStatistics = (props) => {
-    const { workStore, logStore, statisticsStore } = props
-    const { findProjectUserLog } = logStore;
-    const { findProjectList } = statisticsStore;
+    const { statisticsStore } = props
+    const { findProjectList,  findProjectUserLog} = statisticsStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
     const [fromData, setFromData] = useState()
@@ -34,7 +33,6 @@ const ProjectLogStatistics = (props) => {
     const reportId = props.match.params.id;
     const startTime = moment().subtract(1, 'months').format('YYYY-MM-DD');
     const endTime = moment().format('YYYY-MM-DD');
-    const [userList, setUserList] = useState()
     const [projectList, setProjectList] = useState()
     useEffect(() => {
         if (projectSetId) {
@@ -154,28 +152,11 @@ const ProjectLogStatistics = (props) => {
                         onFinish={submitSeachInfo}
                         onValuesChange={(changedValues, allValues) => changField(changedValues, allValues)}
                     >
-                        {/* <Form.Item name="projectId">
-                            <Select
-                                placeholder="所有项目"
-                                allowClear
-                                key="project"
-                                style={{ width: 100, marginRight: "20px" }}
-                            >
-                                {
-                                    projectList && projectList.map((item) => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item> */}
                         <Form.Item name="dateRanger" rules={[{ required: true }]}>
                             <RangePicker
                                 format={dateFormat}
                             />
                         </Form.Item>
-                        {/* <Form.Item name="worker" rules={[{ required: false }]}>
-                            <Input placeholder="成员名字"/>
-                        </Form.Item> */}
                         {
                             projectSetId && <Form.Item name="projectId" label="项目">
                                 <Select
@@ -193,14 +174,6 @@ const ProjectLogStatistics = (props) => {
                                 </Select>
                             </Form.Item>
                         }
-                        {/* <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                搜索
-                            </Button>
-                            <Button type="primary" htmlType="submit" onClick={() => addReport()}>
-                                保存
-                            </Button>
-                        </Form.Item> */}
                     </Form>
                     <Pagination simple defaultCurrent={1} pageSize={10} total={workLog && workLog.total} current={current} onChange={(value) => changeDataPage(value)} />
                 </div>
@@ -220,8 +193,8 @@ const ProjectLogStatistics = (props) => {
                         </div>
                         <div className="logtable-heard-timemap">
                             {
-                                headerDay && headerDay.length > 0 && headerDay.map(item => {
-                                    return <div>
+                                headerDay && headerDay.length > 0 && headerDay.map((item, index) => {
+                                    return <div key = {index}>
                                         <div>
                                             {item.dateTime.substring(0, 10)}
                                         </div>
@@ -236,7 +209,7 @@ const ProjectLogStatistics = (props) => {
 
                     {
                         workItemManhour && workItemManhour.length > 0 && workItemManhour.map(projectItem => {
-                            return <div className="project-logtable-contant">
+                            return <div className="project-logtable-contant" key = {projectItem.project?.id}>
                                 <div className="logtable-contant-user">
                                     {projectItem.project?.projectName}
                                 </div>
@@ -247,13 +220,13 @@ const ProjectLogStatistics = (props) => {
                                     {
                                         projectItem.projectListLogList.length > 0 && projectItem.projectListLogList.map(userItem => {
                                             return (
-                                                <div className="logtable-contant-statistic-item">
+                                                <div className="logtable-contant-statistic-item" key = {userItem?.user?.id}>
                                                     <div className="logtable-contant-project">{userItem?.user?.name}</div>
                                                     <div className="logtable-contant-takeuptime">
                                                         {
-                                                            userItem.statisticsList && userItem.statisticsList.length > 0 && userItem.statisticsList.map(statisticItem => {
+                                                            userItem.statisticsList && userItem.statisticsList.length > 0 && userItem.statisticsList.map((statisticItem, index) => {
                                                                 return (
-                                                                    <div>{statisticItem.statistics}</div>
+                                                                    <div key= {index}>{statisticItem.statistics}</div>
                                                                 )
                                                             })
                                                         }
@@ -282,4 +255,4 @@ const ProjectLogStatistics = (props) => {
         </div>
     )
 }
-export default withRouter(inject('workStore', 'logStore', 'statisticsStore')(observer(ProjectLogStatistics)));
+export default withRouter(inject('statisticsStore')(observer(ProjectLogStatistics)));

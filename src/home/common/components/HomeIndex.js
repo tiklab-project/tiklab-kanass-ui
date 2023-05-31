@@ -14,7 +14,7 @@ import "../components/Header.scss";
 import "../components/HomePage.scss";
 
 import { UserVerify } from 'tiklab-eam-ui';
-import { connect } from 'tiklab-plugin-core-ui/es';
+import { connect } from 'tiklab-plugin-core-ui';
 import Search from "../../search/components/Search";
 
 const Layout = (props) => {
@@ -44,7 +44,7 @@ const Layout = (props) => {
             key: 'work'
         },
         {
-            to: '/index/statistics/work/workall',
+            to: '/index/workBulidEnd',
             title: '统计',
             key: 'statistics'
         }

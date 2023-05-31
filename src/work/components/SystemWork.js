@@ -11,7 +11,7 @@ import Worklist from "./WorkList";
 import WorkTable from "./workTable";
 import WorkBodar from "./WorkBodar";
 import { observer, inject } from "mobx-react";
-import { useSelector } from "tiklab-plugin-core-ui/es";
+import { useSelector } from "tiklab-plugin-core-ui";
 import { RemoteComponent } from "tiklab-plugin-ui"
 import WorkGantt from "./WorkGantt.js";
 import WorkBreadCrumb from "./WorkBreadCrumb";

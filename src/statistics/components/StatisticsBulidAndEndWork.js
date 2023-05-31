@@ -8,7 +8,7 @@ import { withRouter } from "react-router";
 
 const StatisticsBulidAndEndWork = (props) => {
     const { statisticsStore } = props;
-    const { findReport, statisticBuildAndEndWorkItem, findProjectList } = statisticsStore;
+    const { statisticBuildAndEndWorkItem, findProjectList } = statisticsStore;
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);

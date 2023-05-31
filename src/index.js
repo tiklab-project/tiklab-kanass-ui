@@ -55,9 +55,6 @@ const Index = observer((props) => {
     
     const userInfo = getUser()
 
-  
-    
-
     const [pluginData, setPluginData] = useState({
         routes: Routers,
         pluginStore: [],
@@ -65,7 +62,7 @@ const Index = observer((props) => {
     });
 
     useEffect(() => {
-        pluginLoader(Routers, resources,i18n).then(res => {
+        pluginLoader(Routers, resources,i18n, fetchMethod).then(res => {
             setPluginData(res)
             setVisable(false)
         })
@@ -73,7 +70,7 @@ const Index = observer((props) => {
 
 
     // if(visable) return <div>加载。。。</div>
-    console.log(allStore)
+    console.log(pluginData)
     return (
         
         <PluginProvider store={pluginData}>
