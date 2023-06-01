@@ -2,54 +2,59 @@ import React, { useState, useEffect } from 'react';
 import "./sprintStatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
+import { useSelector } from "tiklab-plugin-core-ui";
+
 
 const StatisticsAsicde = (props) => {
+    const pluginStore = useSelector(state => state.pluginStore)
     const workReportList = [
         {
             key: "workItem",
             title: "事项字段统计",
             type: "work"
         },
-        {
-            key: "workBulidEnd",
-            title: "事项创建与解决统计",
-            type: 'bulidend',
-        },
-        {
-            key: "workNewTrend",
-            title: "事项新增趋势",
-            type: 'newtrend',
-        },
-        {
-            key: "workEndTrend",
-            title: "事项完成趋势",
-            type: 'endtrend'
-        },
-        {
-            key: "workNewTotalTrend",
-            title: "事项累计新建趋势",
-            type: 'newtotaltrend'
-        },
-        {
-            key: "workEndTotalTrend",
-            title: "事项累计完成趋势",
-            type: "endtotaltrend"
-        }
+        // {
+        //     key: "workBulidEnd",
+        //     title: "事项创建与解决统计",
+        //     type: 'bulidend',
+        // },
+        // {
+        //     key: "workNewTrend",
+        //     title: "事项新增趋势",
+        //     type: 'newtrend',
+        // },
+        // {
+        //     key: "workEndTrend",
+        //     title: "事项完成趋势",
+        //     type: 'endtrend'
+        // },
+        // {
+        //     key: "workNewTotalTrend",
+        //     title: "事项累计新建趋势",
+        //     type: 'newtotaltrend'
+        // },
+        // {
+        //     key: "workEndTotalTrend",
+        //     title: "事项累计完成趋势",
+        //     type: "endtotaltrend"
+        // }
     ]
 
-    const logReportList = [
-        {
-            key: "logProjectUser",
-            title: "日志项目成员统计",
-            type: "logprojectuser"
-        },
-        {
-            key: "logProjectWork",
-            title: "日志项目事项统计",
-            type: "logprojectwork"
-        },
-    ]
+    // const logReportList = [
+    //     {
+    //         key: "logProjectUser",
+    //         title: "日志项目成员统计",
+    //         type: "logprojectuser"
+    //     },
+    //     {
+    //         key: "logProjectWork",
+    //         title: "日志项目事项统计",
+    //         type: "logprojectwork"
+    //     },
+    // ]
+    const [workMenuList, setWorkMenuList] = useState(workReportList)
 
+    const [logMenuList, setLogMenuList] = useState([])
     const [selectRouter, setSelectRouter] = useState("workItem")
     
     const [expandedTree, setExpandedTree] = useState([])
@@ -67,6 +72,31 @@ const StatisticsAsicde = (props) => {
         })
         return
     }, [])
+
+    useEffect(() => {
+        console.log(pluginStore)
+        const workConfigList = pluginStore.filter(item => item.key === "sprint-statistics");
+        workConfigList.map(item => {
+            workMenuList.push({
+                key: item.menu,
+                title: item.extraProps.title,
+                type: item.extraProps.type
+            })
+        })
+        setWorkMenuList([...workMenuList])
+
+        const logConfigList = pluginStore.filter(item => item.key === "sprintlog-statistics");
+        logConfigList.map(item => {
+            logMenuList.push({
+                key: item.menu,
+                title: item.extraProps.title,
+                type: item.extraProps.type
+            })
+        })
+        setLogMenuList([...logMenuList])
+        console.log(logMenuList)
+    }, [])
+
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
@@ -113,7 +143,7 @@ const StatisticsAsicde = (props) => {
             {
                 !isExpandedTree("work") && <div className="statistics-menu">
                     {
-                        workReportList && workReportList.map((item, index) => {
+                        workMenuList && workMenuList.map((item, index) => {
                             return <div key={index}>
                                 <div
                                     className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
@@ -146,7 +176,7 @@ const StatisticsAsicde = (props) => {
             {
                 !isExpandedTree("log") && <div className="statistics-menu">
                     {
-                        logReportList && logReportList.map((item, index) => {
+                        logMenuList && logMenuList.map((item, index) => {
                             return <div key={index}>
                                 <div
                                     className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}

@@ -26,8 +26,9 @@ const ProjectSet = (props) => {
     return (
         <div className="projectSet">
             <Layout className="projectSet-content">
-                {allProjectSetList && allProjectSetList.length > 0 ?
-                    <ProjectSetContent />:<ProjectSetGide />
+                {
+                    allProjectSetList && allProjectSetList.length > 0 ?
+                        <ProjectSetContent />:<ProjectSetGide />
                 }
             </Layout>
         </div>

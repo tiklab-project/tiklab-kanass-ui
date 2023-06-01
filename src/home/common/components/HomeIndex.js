@@ -42,11 +42,6 @@ const Layout = (props) => {
             to: '/index/work/worklist',
             title: '事项',
             key: 'work'
-        },
-        {
-            to: '/index/workBulidEnd',
-            title: '统计',
-            key: 'statistics'
         }
     ]
 

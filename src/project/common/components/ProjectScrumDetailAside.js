@@ -20,7 +20,6 @@ const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
     const { searchpro, workStore, project } = props;
-    console.log(project)
     const { setWorkType } = workStore;
     //语言包
     const { t, i18n } = useTranslation();

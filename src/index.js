@@ -70,7 +70,7 @@ const Index = observer((props) => {
 
 
     // if(visable) return <div>加载。。。</div>
-    console.log(pluginData)
+    console.log("saassd",pluginData)
     return (
         
         <PluginProvider store={pluginData}>

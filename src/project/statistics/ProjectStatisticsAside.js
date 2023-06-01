@@ -20,75 +20,46 @@ const StatisticsAsicde = (props) => {
             key: "workItem",
             title: "事项字段统计",
             type: "work"
-        },
-        // {
-        //     key: "workBulidEnd",
-        //     title: "事项创建与解决统计",
-        //     type: 'bulidend',
-        // },
-        {
-            key: "workNewTrend",
-            title: "事项新增趋势",
-            type: 'newtrend',
-        },
-        {
-            key: "workEndTrend",
-            title: "事项完成趋势",
-            type: 'endtrend'
-        },
-        {
-            key: "workNewTotalTrend",
-            title: "事项累计新建趋势",
-            type: 'newtotaltrend'
-        },
-        {
-            key: "workEndTotalTrend",
-            title: "事项累计完成趋势",
-            type: "endtotaltrend"
         }
     ];
-    const [workStatisticList, setWorkStatisticList] = useState(workReportList)
-    // 菜单分类
-    const logReportList = [
-        {
-            key: "logProjectUser",
-            title: "日志项目成员统计",
-            type: "logprojectuser"
-        },
-        {
-            key: "logProjectWork",
-            title: "日志项目事项统计",
-            type: "logprojectwork"
-        },
-    ]
-    
+    const [workMenuList, setWorkMenuList] = useState(workReportList)
+
+    const [logMenuList, setLogMenuList] = useState([])
     useEffect(() => {
-       const staticsList = pluginStore.filter(item => item.point === "work-statistics");
-       
-       staticsList.map(item => {
-            workStatisticList.push({
+        const workConfigList = pluginStore.filter(item => item.key === "work-statistics");
+        workConfigList.map(item => {
+            workMenuList.push({
                 key: item.id,
                 title: item.extraProps.title,
                 type: item.extraProps.type
             })
-       })
-       setWorkStatisticList(workStatisticList)
-       console.log(staticsList)
-    },[])
+        })
+        setWorkMenuList([...workMenuList])
+
+        const logConfigList = pluginStore.filter(item => item.key === "log-statistics");
+        logConfigList.map(item => {
+            logMenuList.push({
+                key: item.id,
+                title: item.extraProps.title,
+                type: item.extraProps.type
+            })
+        })
+        setLogMenuList([...logMenuList])
+    }, [])
     // 选中的菜单
     const [selectRouter, setSelectRouter] = useState("workItem")
     // 已展开子级的阶段id集合
     const [expandedTree, setExpandedTree] = useState([])
-    
-    
+
+
     // 项目id
     const projectId = props.match.params.id;
 
-     /**
-     * 判断树是否展开
-     * @param {上级的id} key 
-     * @returns 
-     */
+    /**
+    * 判断树是否展开
+    * @param {上级的id} key 
+    * @returns 
+    */
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
@@ -131,13 +102,13 @@ const StatisticsAsicde = (props) => {
                             <use xlinkHref="#icon-workRight"></use>
                         </svg>
                 }
-      
+
                 事项统计
             </div>
             {
                 !isExpandedTree("work") && <div className="statistics-menu">
                     {
-                        workStatisticList && workStatisticList.map((item, index) => {
+                        workMenuList && workMenuList.map((item, index) => {
                             return <div key={index}>
                                 <div
                                     className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
@@ -157,7 +128,7 @@ const StatisticsAsicde = (props) => {
 
             <div className='statistics-type-title'>
                 {
-                    !isExpandedTree("log") ?
+                    !isExpandedTree("log") && logMenuList && logMenuList.length > 0 ?
                         <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
                             <use xlinkHref="#icon-workDown"></use>
                         </svg> :
@@ -170,7 +141,7 @@ const StatisticsAsicde = (props) => {
             {
                 !isExpandedTree("log") && <div className="statistics-menu">
                     {
-                        logReportList && logReportList.map((item, index) => {
+                        logMenuList && logMenuList.length > 0 && logMenuList.map((item, index) => {
                             return <div key={index}>
                                 <div
                                     className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
