@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import "./sprintStatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import { useSelector } from "tiklab-plugin-core-ui";
-
+import { getVersionInfo } from "tiklab-core-ui";
 
 const StatisticsAsicde = (props) => {
-    const pluginStore = useSelector(state => state.pluginStore)
+    const pluginStore = useSelector(state => state.pluginStore);
+    const versionInfo = getVersionInfo();
     const workReportList = [
         {
             key: "workItem",
@@ -52,11 +53,11 @@ const StatisticsAsicde = (props) => {
     //         type: "logprojectwork"
     //     },
     // ]
-    const [workMenuList, setWorkMenuList] = useState(workReportList)
+    const [workMenuList, setWorkMenuList] = useState([])
 
     const [logMenuList, setLogMenuList] = useState([])
     const [selectRouter, setSelectRouter] = useState("workItem")
-    
+
     const [expandedTree, setExpandedTree] = useState([])
     const [reportList, setReportList] = useState([])
     const { statisticsStore } = props;
@@ -65,8 +66,8 @@ const StatisticsAsicde = (props) => {
     const path = props.match.path.split("/")[2];
     console.log(props)
     useEffect(() => {
-        findReportList({ projectId: projectId}).then(res => {
-            if(res.code === 0){
+        findReportList({ projectId: projectId }).then(res => {
+            if (res.code === 0) {
                 setReportList(res.data)
             }
         })
@@ -74,27 +75,32 @@ const StatisticsAsicde = (props) => {
     }, [])
 
     useEffect(() => {
-        console.log(pluginStore)
-        const workConfigList = pluginStore.filter(item => item.key === "sprint-statistics");
-        workConfigList.map(item => {
-            workMenuList.push({
-                key: item.menu,
-                title: item.extraProps.title,
-                type: item.extraProps.type
-            })
-        })
-        setWorkMenuList([...workMenuList])
+        if (versionInfo.expired === false) {
+            const workConfigList = pluginStore.filter(item => item.key === "work-statistics");
+            if (workConfigList.length > 0) {
+                workConfigList.map(item => {
+                    workMenuList.push({
+                        key: item.id,
+                        title: item.extraProps.title,
+                        type: item.extraProps.type
+                    })
+                })
+                setWorkMenuList([...workMenuList])
+            }
 
-        const logConfigList = pluginStore.filter(item => item.key === "sprintlog-statistics");
-        logConfigList.map(item => {
-            logMenuList.push({
-                key: item.menu,
-                title: item.extraProps.title,
-                type: item.extraProps.type
-            })
-        })
-        setLogMenuList([...logMenuList])
-        console.log(logMenuList)
+
+            const logConfigList = pluginStore.filter(item => item.key === "log-statistics");
+            if (logConfigList.length > 0) {
+                logConfigList.map(item => {
+                    logMenuList.push({
+                        key: item.id,
+                        title: item.extraProps.title,
+                        type: item.extraProps.type
+                    })
+                })
+                setLogMenuList([...logMenuList])
+            }
+        }
     }, [])
 
     const isExpandedTree = (key) => {
@@ -108,14 +114,14 @@ const StatisticsAsicde = (props) => {
         }
     }
 
-    const selectKey = (id, type) => {
+    const selectKey = (type) => {
         let url = '';
         console.log(props.match.path, props.route.path)
         console.log(props.route.path === "/index/:id/sprintdetail/:sprint/statistics")
-        if(props.match.path === "/index/:id/sprintdetail/:sprint/statistics"){
-            url =  `/index/${projectId}/sprintdetail/${props.match.params.sprint}/statistics/${type}`;
+        if (props.match.path === "/index/:id/sprintdetail/:sprint/statistics") {
+            url = `/index/${projectId}/sprintdetail/${props.match.params.sprint}/statistics/${type}`;
         }
-        if(props.match.path === "/index/projectScrumDetail/:id/statistics"){
+        if (props.match.path === "/index/projectScrumDetail/:id/statistics") {
             url = `/index/${path}/${projectId}/statistics/${type}`
         }
         setSelectRouter(type)
@@ -137,62 +143,90 @@ const StatisticsAsicde = (props) => {
                             <use xlinkHref="#icon-workRight"></use>
                         </svg>
                 }
-      
+
                 事项统计
             </div>
-            {
-                !isExpandedTree("work") && <div className="statistics-menu">
-                    {
-                        workMenuList && workMenuList.map((item, index) => {
-                            return <div key={index}>
-                                <div
-                                    className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
-                                    onClick={() => selectKey(item.id, item.key)}
-                                    key={item.key}
-                                >
-                                    <span>
-                                        {item.title}
-                                    </span>
-                                </div>
-                            </div>
-                        }
-                        )
-                    }
+            <div key={'workItem'}>
+                <div
+                    className={`statistics-menu-firstmenu ${workReportList[0].key === selectRouter ? "statistics-menu-select" : ""}`}
+                    onClick={() => selectKey(workReportList[0].key)}
+                    key={workReportList[0].key}
+                >
+                    <span>
+                        {workReportList[0].title}
+                    </span>
                 </div>
-            }
-
-            <div className='statistics-type-title'>
-                {
-                    !isExpandedTree("log") ?
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                            <use xlinkHref="#icon-workDown"></use>
-                        </svg> :
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                            <use xlinkHref="#icon-workRight"></use>
-                        </svg>
-                }
-                日志统计
             </div>
             {
-                !isExpandedTree("log") && <div className="statistics-menu">
+                workMenuList && workMenuList.length > 0 ? <Fragment>
                     {
-                        logMenuList && logMenuList.map((item, index) => {
-                            return <div key={index}>
-                                <div
-                                    className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
-                                    onClick={() => selectKey(item.id, item.key)}
-                                    key={item.key}
-                                >
-                                    <span>
-                                        {item.title}
-                                    </span>
-                                </div>
-                            </div>
-
-                        })
+                        !isExpandedTree("work") && <div className="statistics-menu">
+                            {
+                                workMenuList && workMenuList.map((item, index) => {
+                                    return <div key={index}>
+                                        <div
+                                            className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
+                                            onClick={() => selectKey(item.key)}
+                                            key={item.key}
+                                        >
+                                            <span>
+                                                {item.title}
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                )
+                            }
+                        </div>
                     }
+
+                    <div className='statistics-type-title'>
+                        {
+                            !isExpandedTree("log") ?
+                                <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
+                                    <use xlinkHref="#icon-workDown"></use>
+                                </svg> :
+                                <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
+                                    <use xlinkHref="#icon-workRight"></use>
+                                </svg>
+                        }
+                        日志统计
+                    </div>
+                    {
+                        !isExpandedTree("log") && <div className="statistics-menu">
+                            {
+                                logMenuList && logMenuList.map((item, index) => {
+                                    return <div key={index}>
+                                        <div
+                                            className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
+                                            onClick={() => selectKey(item.key)}
+                                            key={item.key}
+                                        >
+                                            <span>
+                                                {item.title}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                })
+                            }
+                        </div>
+                    }
+                </Fragment>
+                :
+                <div key={"moreMenu"}>
+                    <div
+                        className={`statistics-menu-firstmenu ${"moreMenu" === selectRouter ? "statistics-menu-select" : ""}`}
+                        onClick={() => selectKey("moreMenu")}
+                        key={"moreMenu"}
+                    >
+                        <span>
+                            更多统计
+                        </span>
+                    </div>
                 </div>
             }
+
 
         </div>
     )

@@ -47,7 +47,7 @@ const WorkFilterSort = (props) => {
     ]
 
     const goPlugin = () => {
-        props.history.push("/index/setting/plugin")
+        window.open(`${homes_url}/account/subscribe/subscribeList`)
     }
     const changeWorkView = value => {
         setWorkShowType(value)
@@ -136,7 +136,7 @@ const WorkFilterSort = (props) => {
                         })
                     }
                     {
-                        pluginStore.filter(item => item.point === "work-gantt").length > 0 ? <div
+                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
                             onClick={() => changeWorkView("time")}>
                             <svg className="svg-icon" aria-hidden="true">

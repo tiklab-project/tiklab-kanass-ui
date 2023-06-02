@@ -5,7 +5,9 @@
     .projectSet-statistics-content {
         height: 100%;
         overflow: auto;
-
+        .ant-row {
+            height: 100%;
+        }
         .statistics-work-top {
             position: sticky;
             top: 0;

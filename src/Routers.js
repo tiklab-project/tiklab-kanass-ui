@@ -101,23 +101,14 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
-const StatisticsBulidAndEndWork =AsyncComponent(()=> import('./statistics/statistics/statisticsBulidAndEndWork/index'))
-const StaticsNewTrend = AsyncComponent(()=> import('./statistics/components/StaticsNewTrend'))
-const StaticsEndTrend = AsyncComponent(()=> import('./statistics/components/StaticsEndTrend'))
-const StaticsTotalNewTrend = AsyncComponent(()=> import('./statistics/components/StaticsTotalNewTrend'))
-const StaticsTotalEndTrend = AsyncComponent(()=> import('./statistics/components/StaticsTotalEndTrend'))
+const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
-const StatisticsUserProjectLog = AsyncComponent(()=> import('./statistics/components/LogUserProjectStatistics'))
-const StatisticsProjectUserLog = AsyncComponent(()=> import('./statistics/components/LogProjectUserStatistics'))
-const StatisticsProjectWorkLog = AsyncComponent(()=> import('./statistics/components/LogProjectWorkItemStatistics'))
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
 // 迭代
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-const SprintStaticsTotalNewTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalNewTrend"))
-const SprintStaticsTotalEndTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalEndTrend"))
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
 // 搜索页面
@@ -304,7 +295,7 @@ const Routers = [
                         key: "ProjectSetDetailAdide",
                         routes: [
                             {
-                                path: "/index/projectSetdetail/:projectSetId/projectSetset/basicinfo",
+                                path: "/index/projectSetdetail/:projectSetId/projectSetset/basicInfo",
                                 exact: false,
                                 component: ProjectSetBasicInfo,
                                 key: "ProjectSetBasicInfo"
@@ -368,46 +359,11 @@ const Routers = [
                                 component: StatisticsWork,
                                 exact: true
                             },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/workBulidEnd",
-                            //     component: StatisticsBulidAndEndWork,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/workNewTrend",
-                            //     component: StaticsNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/workEndtrend",
-                            //     component: StaticsEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/workNewTotalTrend",
-                            //     component: StaticsTotalNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/workEndTotalTrend",
-                            //     component: StaticsTotalEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logUserProject",
-                            //     component: StatisticsUserProjectLog,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectUser",
-                            //     component: StatisticsProjectUserLog,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectWork",
-                            //     component: StatisticsProjectWorkLog,
-                            //     exact: true
-                            // }
+                            {
+                                path: "/index/projectSetdetail/:projectSetId/statistics/moreMenu",
+                                component: StatisticsMore,
+                                exact: true
+                            }
                         ]
                     },
                 ]
@@ -860,46 +816,11 @@ const Routers = [
                                 component: StatisticsWork,
                                 exact: true
                             },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/workBulidEnd",
-                            //     component: StatisticsBulidAndEndWork,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/workNewTrend",
-                            //     component: StaticsNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/workEndtrend",
-                            //     component: StaticsEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/workNewTotalTrend",
-                            //     component: StaticsTotalNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/workEndTotalTrend",
-                            //     component: StaticsTotalEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/logUserProject",
-                            //     component: StatisticsUserProjectLog,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/logProjectUser",
-                            //     component: StatisticsProjectUserLog,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectDetail/:id/statistics/logProjectWork",
-                            //     component: StatisticsProjectWorkLog,
-                            //     exact: true
-                            // }
+                            {
+                                path: "/index/projectDetail/:id/statistics/moreMenu",
+                                component: StatisticsMore,
+                                exact: true
+                            }
                         ]
                     },
                     {
@@ -962,48 +883,11 @@ const Routers = [
                                 component: StatisticsWork,
                                 exact: true
                             },
-                            
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/workBulidEnd",
-                            //     component: StatisticsBulidAndEndWork,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/workNewTrend",
-                            //     component: StaticsNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/workEndtrend",
-                            //     component: StaticsEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/workNewTotalTrend",
-                            //     component: SprintStaticsTotalNewTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/workEndTotalTrend",
-                            //     component: SprintStaticsTotalEndTrend,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/logUserProject",
-                            //     component: StatisticsUserProjectLog,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/logProjectUser",
-                            //     component: StatisticsProjectUserLog,
-                            //     exact: true
-                            // },
-                           
-                            // {
-                            //     path: "/index/:id/sprintdetail/:sprint/statistics/logProjectWork",
-                            //     component: StatisticsProjectWorkLog,
-                            //     exact: true
-                            // }
+                            {
+                                path: "/index/:id/sprintdetail/:sprint/statistics/moreMenu",
+                                component: StatisticsMore,
+                                exact: true
+                            }
                         ]
                     },
                     {

@@ -66,9 +66,7 @@ const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
 const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
-const ProjectNomalDetail = AsyncComponent(() => import('./project/common/components/ProjectNomalLayout'))
 const ProjectDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
-const ProdeNomalSetAside = AsyncComponent(() => import('./project/setting/common/components/ProjectNomalSet'))
 const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
 const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
@@ -103,23 +101,14 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
-const StatisticsBulidAndEndWork =AsyncComponent(()=> import('./statistics/components/StatisticsBulidAndEndWork'))
-const StaticsNewTrend = AsyncComponent(()=> import('./statistics/components/StaticsNewTrend'))
-const StaticsEndTrend = AsyncComponent(()=> import('./statistics/components/StaticsEndTrend'))
-const StaticsTotalNewTrend = AsyncComponent(()=> import('./statistics/components/StaticsTotalNewTrend'))
-const StaticsTotalEndTrend = AsyncComponent(()=> import('./statistics/components/StaticsTotalEndTrend'))
+const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
-const StatisticsUserProjectLog = AsyncComponent(()=> import('./statistics/components/LogUserProjectStatistics'))
-const StatisticsProjectUserLog = AsyncComponent(()=> import('./statistics/components/LogProjectUserStatistics'))
-const StatisticsProjectWorkLog = AsyncComponent(()=> import('./statistics/components/LogProjectWorkItemStatistics'))
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
 // 迭代
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-const SprintStaticsTotalNewTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalNewTrend"))
-const SprintStaticsTotalEndTrend = AsyncComponent(() => import("./sprint/statistics/components/SprintStaticsTotalEndTrend"))
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
 // 搜索页面
@@ -163,7 +152,7 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
-const Routers = [
+const RoutersSaas = [
     {
         path: "/login",
         exact: true,
@@ -306,7 +295,7 @@ const Routers = [
                         key: "ProjectSetDetailAdide",
                         routes: [
                             {
-                                path: "/index/projectSetdetail/:projectSetId/projectSetset/basicinfo",
+                                path: "/index/projectSetdetail/:projectSetId/projectSetset/basicInfo",
                                 exact: false,
                                 component: ProjectSetBasicInfo,
                                 key: "ProjectSetBasicInfo"
@@ -371,43 +360,8 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/workBulidEnd",
-                                component: StatisticsBulidAndEndWork,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/workNewTrend",
-                                component: StaticsNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/workEndtrend",
-                                component: StaticsEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/workNewTotalTrend",
-                                component: StaticsTotalNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/workEndTotalTrend",
-                                component: StaticsTotalEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/logUserProject",
-                                component: StatisticsUserProjectLog,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/logProjectUser",
-                                component: StatisticsProjectUserLog,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/logProjectWork",
-                                component: StatisticsProjectWorkLog,
+                                path: "/index/projectSetdetail/:projectSetId/statistics/moreMenu",
+                                component: StatisticsMore,
                                 exact: true
                             }
                         ]
@@ -442,11 +396,6 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/index/work/WorkDetail",
-                        component: WorkTableDetail,
-                        exact: true
-                    },
-                    {
                         path: "/index/work/worklist/:statetype/:workitemid",
                         component: Work,
                         exact: true
@@ -461,12 +410,22 @@ const Routers = [
                         component: WorkAddPage,
                         exact: true
                     },
+                    // {
+                    //     path: "/index/work/workDetail/:workId",
+                    //     component: WorkDetailPage,
+                    //     exact: true
+                    // },
                     {
                         path: "/index/work/*",
                         component: () => <Redirect to="/index/work/worklist" />,
                         exact: true
                     }
                 ]
+            },
+            {
+                path: "/index/workDetail/:workId",
+                component: WorkDetailPage,
+                exact: true
             },
             {
                 path: "/index/workone/:id",
@@ -807,8 +766,13 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/index/projectDetail/:id/workone/:id",
-                        component: Work,
+                        path: "/index/projectDetail/:id/workone/:workId",
+                        component: WorkDetailPage,
+                        exact: true
+                    },
+                    {
+                        path: "/index/projectDetail/:id/workDetail/:workId",
+                        component: WorkDetailPage,
                         exact: true
                     },
                     {
@@ -853,43 +817,8 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/projectDetail/:id/statistics/workBulidEnd",
-                                component: StatisticsBulidAndEndWork,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/workNewTrend",
-                                component: StaticsNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/workEndtrend",
-                                component: StaticsEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/workNewTotalTrend",
-                                component: StaticsTotalNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/workEndTotalTrend",
-                                component: StaticsTotalEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/logUserProject",
-                                component: StatisticsUserProjectLog,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/logProjectUser",
-                                component: StatisticsProjectUserLog,
-                                exact: true
-                            },
-                            {
-                                path: "/index/projectDetail/:id/statistics/logProjectWork",
-                                component: StatisticsProjectWorkLog,
+                                path: "/index/projectDetail/:id/statistics/moreMenu",
+                                component: StatisticsMore,
                                 exact: true
                             }
                         ]
@@ -955,44 +884,8 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/workBulidEnd",
-                                component: StatisticsBulidAndEndWork,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/workNewTrend",
-                                component: StaticsNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/workEndtrend",
-                                component: StaticsEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/workNewTotalTrend",
-                                component: SprintStaticsTotalNewTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/workEndTotalTrend",
-                                component: SprintStaticsTotalEndTrend,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/logUserProject",
-                                component: StatisticsUserProjectLog,
-                                exact: true
-                            },
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/logProjectUser",
-                                component: StatisticsProjectUserLog,
-                                exact: true
-                            },
-                           
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/logProjectWork",
-                                component: StatisticsProjectWorkLog,
+                                path: "/index/:id/sprintdetail/:sprint/statistics/moreMenu",
+                                component: StatisticsMore,
                                 exact: true
                             }
                         ]
@@ -1000,6 +893,10 @@ const Routers = [
                     {
                         path: "/index/:id/sprintdetail/:sprint/workItem",
                         component: Work,
+                    },
+                    {
+                        path: "/index/:id/sprintdetail/:sprint/workDetail/:workId",
+                        component: WorkDetailPage,
                     },
                     {
                         path: "/index/:id/sprintdetail/:sprint/workDetail",
@@ -1035,4 +932,4 @@ const Routers = [
         exact: true
     },
 ]
-export default Routers;
+export default RoutersSaas;
