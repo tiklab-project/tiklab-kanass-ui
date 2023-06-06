@@ -6,40 +6,41 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.18:8080/';
+const api =  'http://192.168.10.4:8080/';
 const base_url = JSON.stringify(api);
 
 
-const url = "http://192.168.10.18:8080/";
-const plugin_base_url = JSON.stringify(url);
+const plugin_base_url = JSON.stringify("http://192.168.10.4:8080/");
 
-let pluginAddressUrl = `/pluginConfig/getPluginConfig`;
-// let pluginAddressUrl = `http://127.0.0.1:3000/plugin.json`;
-pluginAddressUrl = JSON.stringify(pluginAddressUrl);
+let plugin_url = `/pluginConfig/getPluginConfig`;
+// let plugin_url = `http://192.168.10.4:3000/plugin.json`;
+plugin_url = JSON.stringify(plugin_url);
 
-const upload_url = JSON.stringify('http://172.10.1.11:8080/')
+const upload_url = JSON.stringify('http://172.10.1.11:8084/')
 
 let fetchMethod = "post"
 fetchMethod = JSON.stringify(fetchMethod);
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
-const userProduction = false;
+const userProduction = true;
 
 
 let env = "local";
 env = JSON.stringify(env)
 const appKey = JSON.stringify('');
 const appSecret = JSON.stringify('');
-const version = JSON.stringify('');
-const client = JSON.stringify('');
+const version = JSON.stringify('ce');
+const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
-const mobile_url = JSON.stringify('http://192.168.10.18:3005/')
-
+const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
+const homes_url = JSON.stringify("http://192.168.10.14")
+const kanass_url =JSON.stringify("http://192.168.10.4:3004")
+const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 module.exports = {
     base_url,
     userProduction,
     plugin_base_url,
-    pluginAddressUrl,
+    plugin_url,
     fetchMethod,
     env,
     appKey,
@@ -48,5 +49,8 @@ module.exports = {
     client,
     upload_url,
     // acc_url,
-    mobile_url
+    mobile_url,
+    homes_url,
+    kanass_url,
+    eas_url
 }

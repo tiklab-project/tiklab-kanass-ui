@@ -1,16 +1,17 @@
 
-import React, { useEffect, useState } from "react";
-import { Table, Tabs, Form, Select, Row, Col } from 'antd';
+import React, { useEffect, useRef, useState } from "react";
+import { Table, Tabs, Form, Select, Button, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import ProjectReportAddOrEdit from "./ReportAddOrEdit"
 import echarts from "../../common/echarts/echarts";
 import { withRouter } from "react-router";
+import { exportPDF } from "./exportPDFDom"
 const { TabPane } = Tabs;
 
 
 const StatisticsWork = (props) => {
     const { statisticsStore } = props;
-    const { statisticWorkItem, findProjectList } = statisticsStore;
+    const { statisticWorkItem, findProjectList,witerFile } = statisticsStore;
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
@@ -18,7 +19,8 @@ const StatisticsWork = (props) => {
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint;
     const projectSetId = props.match.params.projectSetId;
-
+    const titleRef = useRef();
+    const pdfRef = useRef();
     const columns = [
         {
             title: '姓名',
@@ -117,16 +119,6 @@ const StatisticsWork = (props) => {
         setVisible(true)
     }
 
-    const viewReport = () => {
-        form.validateFields().then((values) => {
-            const params = {
-                collectionField: values.collectionField,
-                projectId: projectId
-            }
-            setStatisticsData(params)
-        })
-    }
-
     const setPie = () => {
         const workPieDom = document.getElementById('workPie')
         if (!workPieDom) return
@@ -162,41 +154,8 @@ const StatisticsWork = (props) => {
     }
 
 
-    const clickTab = (key) => {
-        setActiveKey(key)
-        echarts.dispose()
-        if (key === "pie") {
-            let timer = setInterval(() => {
-                if (document.getElementById('workPie')) {
-                    setPie();
-                    clearInterval(timer)
-                }
-            }, 100);
-        }
-        if (key === "bar") {
-            let timer = setInterval(() => {
-                if (document.getElementById('workPie')) {
-                    setPie();
-                    clearInterval(timer)
-                }
-            }, 100);
-        }
-    }
-
-
-    // useEffect(() => {
-    //     if (workPie) {
-    //         setPie()
-    //     }
-    // }, [workPie])
-
     const onGenderChange = (value) => {
 
-    };
-
-    const onFinish = (values) => {
-        console.log(values);
-        setVisible(true)
     };
 
     const onFinishFailed = (values) => {
@@ -235,10 +194,16 @@ const StatisticsWork = (props) => {
         }
         setStatisticsData(params)
     }
+
+    const onExportPDF = () => {
+        exportPDF('事项字段统计', [titleRef.current, pdfRef.current])
+    }
     return (
         <>
-            <div className="statistics-work-top">
-                <div className="statistics-work-title">事项状态统计</div>
+            <div className="statistics-work-top" >
+                <div className="statistics-work-title" ref={titleRef}>事项状态统计</div>
+
+
                 <Form
                     name="form"
                     form={form}
@@ -278,21 +243,20 @@ const StatisticsWork = (props) => {
                             }
                         </Select>
                     </Form.Item>
-                    {/* <div className="statics-submit">
-                        <Button type="primary" htmlType="button" style={{ marginRight: "10px" }} onClick={() => viewReport()}>
-                            查看报表
+                    <div className="statics-submit">
+                        <Button type="primary" htmlType="submit" onClick={() => onExportPDF()}>
+                            导出报表
                         </Button>
-                        <PrivilegeProjectButton code={'ReportAdd'} domainId={projectId}  {...props}>
-                            <Button type="primary" htmlType="submit" onClick={() => addReport()}>
-                                保存报表
-                            </Button>
-                        </PrivilegeProjectButton>
-                    </div> */}
+
+                        <Button type="primary" htmlType="submit" onClick={() => witerFile()}>
+                            下载
+                        </Button>
+                    </div>
                 </Form>
             </div>
 
 
-            <div className="statistics-work-content">
+            <div className="statistics-work-content" ref={pdfRef}>
 
                 <Table
                     columns={columns}
@@ -301,12 +265,6 @@ const StatisticsWork = (props) => {
                     className="statistics-work-table"
                     pagination={false}
                 />
-
-                {/* <Tabs activeKey={activeKey} size="small" onTabClick={clickTab}>
-                        <TabPane tab="柱状图" key="bar">
-                            
-                        </TabPane>
-                    </Tabs> */}
                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
                 <ProjectReportAddOrEdit
                     fromData={fromData}
@@ -317,6 +275,7 @@ const StatisticsWork = (props) => {
                     {...props}
                 />
             </div>
+
         </>
     )
 

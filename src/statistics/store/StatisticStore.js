@@ -6,7 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-02-26 18:12:22
  */
-import {Service} from "../../common/utils/requset";
+import axios from "axios";
+import {Service, ServiceGet} from "../../common/utils/requset";
 import { observable, action } from "mobx";
 
 export class StatisticsStore {
@@ -298,6 +299,45 @@ export class StatisticsStore {
 	findUserProjectLog = async(value) => {
         this.selectWorkCondition = {...this.selectWorkCondition,...value};
         const data = await Service("/workLog/findUserProjectLog", this.selectWorkCondition);
+        return data;
+    }
+
+    @action
+	witerFile = async() => {
+        await axios({
+            method: 'get',
+            url: 'http://192.168.10.4:8080/projectInsightReport/witerFile',
+            responseType: 'blob',
+            headers: {
+                'ticket': 'dc89c58dcbda4802a427a44957650c7c21' // 设置其他自定义请求头
+            },
+            params:{
+                startTime: "2023-05-06",
+                endTime: "2023-06-06",
+                currentPage: 1,
+                projectSetId: "280c30396bd3"
+            }
+          }).then(function(response) {
+            var blob = new Blob([response.data], { type: 'application/octet-stream' });
+            var downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'file-name.pdf';
+            downloadLink.style.display = 'none';
+          
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+          }).catch(function(error) {
+            console.error(error);
+          });
+
+        // const value = {
+        //     startTime: "2023-05-06",
+        //     endTime: "2023-06-06",
+        //     currentPage: 1,
+        //     projectSetId: "280c30396bd3"
+        // };
+        // const data = await ServiceGet("/projectInsightReport/witerFile", value);
         return data;
     }
     

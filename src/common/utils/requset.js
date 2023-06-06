@@ -19,7 +19,13 @@ const Service = (url, data) => {
     })
 }
 
-
+const ServiceGet = (url, data) => {
+    return service.request({
+        url: url,
+        method: "get",
+        data: data
+    })
+}
 const serviceLoc = axios.create({
     // baseURL: '/devapi',
     timeout: 5000
@@ -48,4 +54,4 @@ const ServiceLocal = (url, data) => {
         data: data
     })
 }
-export {service,serviceLoc, Service, ServiceLocal};
+export {service,serviceLoc, Service, ServiceLocal, ServiceGet};
