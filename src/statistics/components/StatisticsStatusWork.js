@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 
 const StatisticsWork = (props) => {
     const { statisticsStore } = props;
-    const { statisticWorkItem, findProjectList,witerFile } = statisticsStore;
+    const { statisticWorkItem, findProjectList } = statisticsStore;
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
@@ -246,10 +246,6 @@ const StatisticsWork = (props) => {
                     <div className="statics-submit">
                         <Button type="primary" htmlType="submit" onClick={() => onExportPDF()}>
                             导出报表
-                        </Button>
-
-                        <Button type="primary" htmlType="submit" onClick={() => witerFile()}>
-                            下载
                         </Button>
                     </div>
                 </Form>

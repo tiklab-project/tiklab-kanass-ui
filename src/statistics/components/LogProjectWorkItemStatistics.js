@@ -16,7 +16,7 @@ const { RangePicker } = DatePicker;
 
 const ProjectWorkItemLogStatistics = (props) => {
     const { statisticsStore } = props
-    const { findProjectList, findProjectWorkItemLog } = statisticsStore;
+    const { findProjectList, findProjectWorkItemLog, uploadProjectWorkLogPdf } = statisticsStore;
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint;
@@ -127,6 +127,19 @@ const ProjectWorkItemLogStatistics = (props) => {
         })
     }
 
+    const upLoadPdf = () => {
+        form.validateFields().then((values) => {
+            const params = {
+                startTime: values.dateRanger[0].format('YYYY-MM-DD'),
+                endTime: values.dateRanger[1].format('YYYY-MM-DD'),
+                projectSetId: projectSetId,
+                projectId: values.projectId,
+                currentPage: 1
+            }
+            uploadProjectWorkLogPdf(params)
+        })
+    }
+
     return (
         <div className="project-log-project">
             <div className="log-project-top">
@@ -161,6 +174,12 @@ const ProjectWorkItemLogStatistics = (props) => {
                                     </Select>
                                 </Form.Item>
                             }
+                            <div className="statics-submit">
+
+                                <Button type="primary" onClick={() => upLoadPdf()}>
+                                    下载
+                                </Button>
+                            </div>
                         </Form>
                     </div>
                     <Pagination simple defaultCurrent={1} pageSize={10} total={workLog && workLog.total} current={current} onChange={(value) => changeDataPage(value)} />
@@ -182,7 +201,7 @@ const ProjectWorkItemLogStatistics = (props) => {
                         <div className="logtable-heard-timemap">
                             {
                                 headerDay && headerDay.length > 0 && headerDay.map((item, index) => {
-                                    return <div key = {index}>
+                                    return <div key={index}>
                                         <div>
                                             {item.dateTime.substring(0, 10)}
                                         </div>
@@ -213,7 +232,7 @@ const ProjectWorkItemLogStatistics = (props) => {
                                                         {
                                                             workItem.statisticsList && workItem.statisticsList.length > 0 && workItem.statisticsList.map((statisticItem, index) => {
                                                                 return (
-                                                                    <div key = {index}>{statisticItem.statistics}</div>
+                                                                    <div key={index}>{statisticItem.statistics}</div>
                                                                 )
                                                             })
                                                         }

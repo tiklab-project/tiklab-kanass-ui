@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react";
 import ProjectReportAddOrEdit from "./ReportAddOrEdit"
 import echarts from "../../common/echarts/echarts";
 import { withRouter } from "react-router";
-
+import { exportPDF } from "./exportPDFDom"
 
 const StatisticsBulidAndEndWork = (props) => {
     const { statisticsStore } = props;
@@ -204,7 +204,9 @@ const StatisticsBulidAndEndWork = (props) => {
             title: "累计"
         }
     ]
-
+    const onExportPDF = () => {
+        exportPDF('事项字段统计', [titleRef.current, pdfRef.current])
+    }
     return (
         <div className="statistics-work">
             <div className="statistics-work-top">
@@ -261,16 +263,11 @@ const StatisticsBulidAndEndWork = (props) => {
                             }
                         </Select>
                     </Form.Item>
-                    {/* <div className="statics-submit">
-                        <Button type="primary" htmlType="button" style={{ marginRight: "10px" }} onClick={() => viewReport()}>
-                            查看报表
+                    <div className="statics-submit">
+                        <Button type="primary" htmlType="submit" onClick={() => onExportPDF()}>
+                            导出报表
                         </Button>
-                        <PrivilegeProjectButton code={'ReportAdd'} domainId={projectId}  {...props}>
-                            <Button type="primary" htmlType="submit" onClick={() => addReport()}>
-                                保存报表
-                            </Button>
-                        </PrivilegeProjectButton>
-                    </div> */}
+                    </div>
                 </Form>
             </div>
 

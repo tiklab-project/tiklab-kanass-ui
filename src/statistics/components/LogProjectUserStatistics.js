@@ -18,7 +18,7 @@ const { RangePicker } = DatePicker;
 
 const ProjectLogStatistics = (props) => {
     const { statisticsStore } = props
-    const { findProjectList,  findProjectUserLog} = statisticsStore;
+    const { findProjectList, findProjectUserLog, uploadProjectUserLogPdf } = statisticsStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
     const [fromData, setFromData] = useState()
@@ -114,7 +114,7 @@ const ProjectLogStatistics = (props) => {
 
     const changField = (changedValues, allValues) => {
         let params;
-        if(Object.keys(changedValues)[0] === "dateRanger"){
+        if (Object.keys(changedValues)[0] === "dateRanger") {
             params = {
                 startTime: changedValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: changedValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -122,7 +122,7 @@ const ProjectLogStatistics = (props) => {
             }
         }
 
-        if(Object.keys(changedValues)[0] === "projectId"){
+        if (Object.keys(changedValues)[0] === "projectId") {
             params = {
                 startTime: allValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: allValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -141,6 +141,19 @@ const ProjectLogStatistics = (props) => {
         })
     }
 
+    const upLoadPdf = () => {
+        form.validateFields().then((values) => {
+            const params = {
+                startTime: values.dateRanger[0].format('YYYY-MM-DD'),
+                endTime: values.dateRanger[1].format('YYYY-MM-DD'),
+                projectSetId: projectSetId,
+                projectId: values.projectId,
+                currentPage: 1
+            }
+            uploadProjectUserLogPdf(params)
+        })
+        //
+    }
     return (
         <div className="project-log-project">
             <div className="log-project-top">
@@ -174,6 +187,12 @@ const ProjectLogStatistics = (props) => {
                                 </Select>
                             </Form.Item>
                         }
+                        <div className="statics-submit">
+
+                            <Button type="primary" onClick={() => upLoadPdf()}>
+                                下载
+                            </Button>
+                        </div>
                     </Form>
                     <Pagination simple defaultCurrent={1} pageSize={10} total={workLog && workLog.total} current={current} onChange={(value) => changeDataPage(value)} />
                 </div>
@@ -194,7 +213,7 @@ const ProjectLogStatistics = (props) => {
                         <div className="logtable-heard-timemap">
                             {
                                 headerDay && headerDay.length > 0 && headerDay.map((item, index) => {
-                                    return <div key = {index}>
+                                    return <div key={index}>
                                         <div>
                                             {item.dateTime.substring(0, 10)}
                                         </div>
@@ -209,7 +228,7 @@ const ProjectLogStatistics = (props) => {
 
                     {
                         workItemManhour && workItemManhour.length > 0 && workItemManhour.map(projectItem => {
-                            return <div className="project-logtable-contant" key = {projectItem.project?.id}>
+                            return <div className="project-logtable-contant" key={projectItem.project?.id}>
                                 <div className="logtable-contant-user">
                                     {projectItem.project?.projectName}
                                 </div>
@@ -220,13 +239,13 @@ const ProjectLogStatistics = (props) => {
                                     {
                                         projectItem.projectListLogList.length > 0 && projectItem.projectListLogList.map(userItem => {
                                             return (
-                                                <div className="logtable-contant-statistic-item" key = {userItem?.user?.id}>
+                                                <div className="logtable-contant-statistic-item" key={userItem?.user?.id}>
                                                     <div className="logtable-contant-project">{userItem?.user?.name}</div>
                                                     <div className="logtable-contant-takeuptime">
                                                         {
                                                             userItem.statisticsList && userItem.statisticsList.length > 0 && userItem.statisticsList.map((statisticItem, index) => {
                                                                 return (
-                                                                    <div key= {index}>{statisticItem.statistics}</div>
+                                                                    <div key={index}>{statisticItem.statistics}</div>
                                                                 )
                                                             })
                                                         }

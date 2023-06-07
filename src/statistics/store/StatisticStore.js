@@ -7,8 +7,9 @@
  * @LastEditTime: 2022-02-26 18:12:22
  */
 import axios from "axios";
-import {Service, ServiceGet} from "../../common/utils/requset";
+import { Service, ServiceGet } from "../../common/utils/requset";
 import { observable, action } from "mobx";
+import { getUser } from "tiklab-core-ui";
 
 export class StatisticsStore {
     // 事项统计
@@ -52,9 +53,9 @@ export class StatisticsStore {
     ]
 
     @action
-    getStaticsUserList = async() => {
+    getStaticsUserList = async () => {
         const data = await Service("/workItemStat/statWorkItemByAssigner", value)
-        if(data.code === 0){
+        if (data.code === 0) {
             if (data.data.length !== 0) {
                 this.UserXaixs = []
                 this.UserYaixs = []
@@ -188,7 +189,8 @@ export class StatisticsStore {
     }
 
     @action
-    statisticWorkItem = async (value) => {;
+    statisticWorkItem = async (value) => {
+        ;
         const data = await Service("/statistic/statisticWorkItem", value)
         return data;
     }
@@ -241,7 +243,7 @@ export class StatisticsStore {
     findDmUserPage = async (value) => {
         const params = {
             domainId: value.projectId,
-            pageParam : { pageSize: 10, currentPage: 1 }
+            pageParam: { pageSize: 10, currentPage: 1 }
         }
         const data = await Service("/dmUser/findDmUserPage", params)
         return data;
@@ -272,8 +274,8 @@ export class StatisticsStore {
      * @returns 
      */
     @action
-    findProjectUserLog = async(value) => {
-        this.selectUserCondition = {...this.selectUserCondition,...value}
+    findProjectUserLog = async (value) => {
+        this.selectUserCondition = { ...this.selectUserCondition, ...value }
         const data = await Service("/workLog/findProjectUserLog", this.selectUserCondition);
         return data;
     }
@@ -284,8 +286,8 @@ export class StatisticsStore {
      * @returns 
      */
     @action
-    findProjectWorkItemLog = async(value) => {
-        this.selectUserCondition = {...this.selectUserCondition,...value}
+    findProjectWorkItemLog = async (value) => {
+        this.selectUserCondition = { ...this.selectUserCondition, ...value }
         const data = await Service("/workLog/findProjectWorkItemLog", this.selectUserCondition);
         return data;
     }
@@ -296,51 +298,90 @@ export class StatisticsStore {
      * @returns 
      */
     @action
-	findUserProjectLog = async(value) => {
-        this.selectWorkCondition = {...this.selectWorkCondition,...value};
+    findUserProjectLog = async (value) => {
+        this.selectWorkCondition = { ...this.selectWorkCondition, ...value };
         const data = await Service("/workLog/findUserProjectLog", this.selectWorkCondition);
         return data;
     }
 
     @action
-	witerFile = async() => {
+    uploadProjectUserLogPdf = async (value) => {
         await axios({
-            method: 'get',
-            url: 'http://192.168.10.4:8080/projectInsightReport/witerFile',
+            method: 'post',
+            url: '/projectInsightReport/uploadProjectUserLogPdf',
             responseType: 'blob',
             headers: {
-                'ticket': 'dc89c58dcbda4802a427a44957650c7c21' // 设置其他自定义请求头
+                'ticket': getUser().ticket // 设置其他自定义请求头
             },
-            params:{
-                startTime: "2023-05-06",
-                endTime: "2023-06-06",
-                currentPage: 1,
-                projectSetId: "280c30396bd3"
-            }
-          }).then(function(response) {
+            data: value,
+            baseURL: base_url
+        }).then(function (response) {
             var blob = new Blob([response.data], { type: 'application/octet-stream' });
             var downloadLink = document.createElement('a');
             downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = 'file-name.pdf';
+            downloadLink.download = '日志项目成员统计.pdf';
             downloadLink.style.display = 'none';
-          
+
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
-          }).catch(function(error) {
+        }).catch(function (error) {
             console.error(error);
-          });
-
-        // const value = {
-        //     startTime: "2023-05-06",
-        //     endTime: "2023-06-06",
-        //     currentPage: 1,
-        //     projectSetId: "280c30396bd3"
-        // };
-        // const data = await ServiceGet("/projectInsightReport/witerFile", value);
-        return data;
+        });
     }
-    
+
+    @action
+    uploadProjectWorkLogPdf = async (value) => {
+        await axios({
+            method: 'post',
+            url: '/projectInsightReport/uploadProjectWorkLogPdf',
+            responseType: 'blob',
+            headers: {
+                'ticket': getUser().ticket // 设置其他自定义请求头
+            },
+            data: value,
+            baseURL: base_url
+        }).then(function (response) {
+            var blob = new Blob([response.data], { type: 'application/octet-stream' });
+            var downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = '日志项目事项统计.pdf';
+            downloadLink.style.display = 'none';
+
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+
+    @action
+    uploadLogUserProjectPdf = async (value) => {
+        await axios({
+            method: 'post',
+            url: '/projectInsightReport/uploadLogUserProjectPdf',
+            responseType: 'blob',
+            headers: {
+                'ticket': getUser().ticket // 设置其他自定义请求头
+            },
+            data: value,
+            baseURL: base_url
+        }).then(function (response) {
+            var blob = new Blob([response.data], { type: 'application/octet-stream' });
+            var downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = '日志成员项目统计.pdf';
+            downloadLink.style.display = 'none';
+
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+
 }
 
 export const STATISTICS_STORE = "statisticsStore"

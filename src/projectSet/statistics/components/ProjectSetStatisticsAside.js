@@ -40,23 +40,23 @@ const StatisticsAsicde = (props) => {
         // }
     ]
 
-    // const logReportList = [
-    //     {
-    //         key: "logUserProject",
-    //         title: "日志成员项目统计",
-    //         type: "logprojectuser"
-    //     },
-    //     {
-    //         key: "logProjectUser",
-    //         title: "日志项目成员统计",
-    //         type: "logprojectuser"
-    //     },
-    //     {
-    //         key: "logProjectWork",
-    //         title: "日志项目事项统计",
-    //         type: "logprojectwork"
-    //     }
-    // ]
+    const logReportList = [
+        // {
+        //     key: "logUserProject",
+        //     title: "日志成员项目统计",
+        //     type: "logprojectuser"
+        // },
+        // {
+        //     key: "logProjectUser",
+        //     title: "日志项目成员统计",
+        //     type: "logprojectuser"
+        // },
+        // {
+        //     key: "logProjectWork",
+        //     title: "日志项目事项统计",
+        //     type: "logprojectwork"
+        // }
+    ]
 
     const [selectRouter, setSelectRouter] = useState("workItem")
 
@@ -65,15 +65,15 @@ const StatisticsAsicde = (props) => {
 
     const [workMenuList, setWorkMenuList] = useState([])
 
-    const [logMenuList, setLogMenuList] = useState([])
+    const [logMenuList, setLogMenuList] = useState(logReportList)
 
     useEffect(() => {
         if (versionInfo.expired === false) {
-            const workConfigList = pluginStore.filter(item => item.key === "work-statistics");
+            const workConfigList = pluginStore.filter(item => item.key === "projectset-statistics");
             if (workConfigList.length > 0) {
                 workConfigList.map(item => {
                     workMenuList.push({
-                        key: item.id,
+                        key: item.menu,
                         title: item.extraProps.title,
                         type: item.extraProps.type
                     })
@@ -82,11 +82,11 @@ const StatisticsAsicde = (props) => {
             }
 
 
-            const logConfigList = pluginStore.filter(item => item.key === "log-statistics");
+            const logConfigList = pluginStore.filter(item => item.key === "projectsetlog-statistics");
             if (logConfigList.length > 0) {
                 logConfigList.map(item => {
                     logMenuList.push({
-                        key: item.id,
+                        key: item.menu,
                         title: item.extraProps.title,
                         type: item.extraProps.type
                     })

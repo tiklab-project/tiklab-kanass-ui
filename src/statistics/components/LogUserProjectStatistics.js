@@ -17,7 +17,7 @@ const { RangePicker } = DatePicker;
 
 const UserLogStatistics = (props) => {
     const { statisticsStore } = props;
-    const { findProjectList, findUserProjectLog } = statisticsStore;
+    const { findProjectList, findUserProjectLog, uploadLogUserProjectPdf } = statisticsStore;
     const [form] = Form.useForm();
     // 定义时间格式
     const dateFormat = 'YYYY/MM/DD';
@@ -86,7 +86,7 @@ const UserLogStatistics = (props) => {
         console.log(allValues)
         console.log(Object.keys(changedValues)[0])
         let params;
-        if(Object.keys(changedValues)[0] === "dateRanger"){
+        if (Object.keys(changedValues)[0] === "dateRanger") {
             params = {
                 startTime: changedValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: changedValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -94,7 +94,7 @@ const UserLogStatistics = (props) => {
             }
         }
 
-        if(Object.keys(changedValues)[0] === "projectId"){
+        if (Object.keys(changedValues)[0] === "projectId") {
             params = {
                 startTime: allValues.dateRanger[0].format('YYYY-MM-DD'),
                 endTime: allValues.dateRanger[1].format('YYYY-MM-DD'),
@@ -122,6 +122,19 @@ const UserLogStatistics = (props) => {
                 setWorkItemManhour(res.data.workItemManhour)
                 setworkLog(res.data)
             }
+        })
+    }
+
+    const upLoadPdf = () => {
+        form.validateFields().then((values) => {
+            const params = {
+                startTime: values.dateRanger[0].format('YYYY-MM-DD'),
+                endTime: values.dateRanger[1].format('YYYY-MM-DD'),
+                projectSetId: projectSetId,
+                projectId: values.projectId,
+                currentPage: 1
+            }
+            uploadLogUserProjectPdf(params)
         })
     }
 
@@ -175,11 +188,12 @@ const UserLogStatistics = (props) => {
                                 </Select>
                             </Form.Item>
                         }
-                        {/* <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                搜索
+                        <div className="statics-submit">
+
+                            <Button type="primary" onClick={() => upLoadPdf()}>
+                                下载
                             </Button>
-                        </Form.Item> */}
+                        </div>
                     </Form>
                     <Pagination simple defaultCurrent={1} pageSize={10} total={workLog && workLog.total} current={current} onChange={(value) => changeDataPage(value)} />
                 </div>
@@ -247,8 +261,8 @@ const UserLogStatistics = (props) => {
                     }
 
                 </div>
-                :
-                <Empty />
+                    :
+                    <Empty />
             }
 
         </div>
