@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Table, Tabs, Form, Select, InputNumber, Row, Col } from 'antd';
+import React, { useEffect, useRef, useState } from "react";
+import { Table, Tabs, Form, Select, InputNumber, Button, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import ProjectReportAddOrEdit from "./ReportAddOrEdit"
 import echarts from "../../common/echarts/echarts";
@@ -18,6 +18,8 @@ const StatisticsBulidAndEndWork = (props) => {
     const projectSetId = props.match.params.projectSetId;
     const [projectList, setProjectList] = useState()
 
+    const pdfRef = useRef();
+    const titleRef = useRef();
     const columns = [
         {
             title: '时间',
@@ -210,7 +212,7 @@ const StatisticsBulidAndEndWork = (props) => {
     return (
         <div className="statistics-work">
             <div className="statistics-work-top">
-                <div className="statistics-work-title">事项创建与解决统计</div>
+                <div className="statistics-work-title" ref = {titleRef}>事项创建与解决统计</div>
                 <Form
                     name="form"
                     form={form}
@@ -264,14 +266,14 @@ const StatisticsBulidAndEndWork = (props) => {
                         </Select>
                     </Form.Item>
                     <div className="statics-submit">
-                        <Button type="primary" htmlType="submit" onClick={() => onExportPDF()}>
+                        <Button type="primary" onClick={() => onExportPDF()}>
                             导出报表
                         </Button>
                     </div>
                 </Form>
             </div>
 
-            <div className="statistics-work-content">
+            <div className="statistics-work-content" >
 
                 <Table
                     columns={columns}
@@ -286,7 +288,7 @@ const StatisticsBulidAndEndWork = (props) => {
                        
                     </TabPane>
                 </Tabs> */}
-                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }}></div>
+                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }} ref = {pdfRef}></div>
                 <ProjectReportAddOrEdit
                     fromData={fromData}
                     visible={visible}

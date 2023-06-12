@@ -31,6 +31,12 @@ export class UrlDataStore {
         const data = await Service("/systemUrl/deleteSystemUrl", value);
         return data;
     }
+
+    @action
+    findJiraInputSchedule = async () => {
+        const data = await Service("/importDate/findJiraInputSchedule");
+        return data;
+    }
 }
 
 export const URLDATA_STORE = "urlDataStore"
