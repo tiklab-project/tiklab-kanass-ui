@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-21 13:11:30
  */
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Upload, message, Button, Row, Col, Progress } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import "./JiraLoadData.scss";
@@ -20,58 +20,76 @@ const LoadData = (props) => {
     const [currentSchedule, setCurrentSchedule] = useState({ currentNum: 0, project: null, total: 0 })
     const [percent, setPercent] = useState(0);
     const [loading, setLoading] = useState(false)
-    let getImportLog;
-    let timer;
+    let [timer, setTimerS] = useState()
+    // let timer;
+    useEffect(()=> {
+        console.log(timer)
+        return () => clearInterval(timer)
+    }
+    , [])
+    const setTimer = () => {
+        timer = setInterval(() => {console.log("定时器")}, 10)
+    }
+    const closeTimer = () => {
+        // clearInterval(getImportLog)
+        console.log(timer)
+        clearInterval(timer)
+        console.log(timer)
+    }
+    const [aa, setAA] = useState(0)
     const getJiraInputSchedule = () => {
+        setAA(aa + 1)
         findJiraInputSchedule().then(res => {
             if (res.code === 0) {
                 currentSchedule.project = res.data.project ? res.data.project : null;
                 currentSchedule.total = res.data.total ? res.data.total : 0;
                 currentSchedule.currentNum = res.data.currentNum ? res.data.currentNum : 0;
                 if (res.data.total && res.data.currentNum) {
-                    const rr = res.data.currentNum / res.data.total;
+                    const rr = res.data.currentNum * 100 / res.data.total;
                     setPercent(rr);
+                    console.log(res.data.currentNum,res.data.total )
                 }
-
+                // setPercent(3 / 10);
                 setCurrentSchedule(currentSchedule)
             }
         })
     }
 
     const timeTask = (params) => {
-        console.log(params)
-        timer = setInterval(() => {
-            getJiraInputSchedule()
-            // clearInterval(timer)
-            switch (params.status) {
-                case "done":
-                    console.log("done",params)
-                    if (params.response.code === 0) {
-                        message.info("数据导入成功")
-                    } else {
-                        message.error("数据失败")
-                    }
-                    clearInterval(timer)  
-                    console.log(timer)
-                    clearInterval(timer)
-                    console.log(timer)
-                    timer = null
-                    setLoading(false)
+        console.log(timer)
+        clearInterval(timer) 
+        console.log(timer)
+        timer = setInterval(() => {console.log("定时器开始")}, 5000)
+        if(params.status === "done"){
+            clearInterval(timer) 
+            console.log(timer)
+        }
+        // timer = setInterval(() => {
+        //     // getJiraInputSchedule()
+        //     console.log("定时器开始")
+        //     switch (params.status) {
+        //         case "done":
+        //             console.log("done",params)
+        //             if (params.response.code === 0) {
+        //                 message.info("数据导入成功")
+        //             } else {
+        //                 message.error("数据失败")
+        //             }
+        //             clearInterval(timer)  
+        //             console.log(timer)
+        //             setLoading(false)
 
-                    break
-                case "error":
-                    clearInterval(timer)  
-                    console.log(timer)
-                    clearInterval(timer)
-                    console.log(timer)
-                    timer = null
-                    setLoading(false)
-                    message.error("数据失败")
-                    break
-                default:
-                    break;
-            }
-        }, 2000)
+        //             break
+        //         case "error":
+        //             clearInterval(timer)  
+        //             console.log(timer)
+        //             setLoading(false)
+        //             message.error("数据失败")
+        //             break
+        //         default:
+        //             break;
+        //     }
+        // }, 5000)
     }
 
     const uploadProps = {
@@ -85,9 +103,31 @@ const LoadData = (props) => {
         },
         maxCount: 1,
         onChange(info) {
-            console.log("sddd")
-            setLoading(true)
-            timeTask(info.file)
+            console.log(info)
+            if(info.event){
+                clearInterval(timer) 
+                // console.log(1, timer)
+                setLoading(true)
+                timer  = setInterval(() => {getJiraInputSchedule()}, 2000)
+                setTimerS(timer)
+                console.log(2, timer)
+            }
+            if(info.file.status === "done"){
+                console.log(timer)
+                clearInterval(timer) 
+                setLoading(false)
+                setTimerS(null)
+                console.log(timer)
+            }
+            // setLoading(true)
+            // // setTimeout(() => {
+            // //     getJiraInputSchedule()
+            // //     console.log("ssss")
+            // // }, 2000)
+            // if(info.file.status === "uploading"){
+            //     timeTask(info.file)
+            // }
+            
 
         },
     };
@@ -111,12 +151,14 @@ const LoadData = (props) => {
                         {
                             loading && <div className="load-precess">
                                 <Progress percent={percent} showInfo={false} />
-                                <div className="load-precess-text"> 当前解析项目： {currentSchedule.project?.projectName} <span>{currentSchedule.currentNum}/ {currentSchedule.total}</span></div>
+                                <div className="load-precess-text"> 当前解析项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
                             </div>
                         }
 
                     </div>
+                    {/* <div onClick={() => setTimer()}>开启</div>
 
+                    <div onClick={() => closeTimer()}>关闭</div> */}
                 </div>
             </Col>
         </Row>
