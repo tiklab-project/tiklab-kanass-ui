@@ -27,18 +27,8 @@ const LoadData = (props) => {
         return () => clearInterval(timer)
     }
     , [])
-    const setTimer = () => {
-        timer = setInterval(() => {console.log("定时器")}, 10)
-    }
-    const closeTimer = () => {
-        // clearInterval(getImportLog)
-        console.log(timer)
-        clearInterval(timer)
-        console.log(timer)
-    }
-    const [aa, setAA] = useState(0)
+
     const getJiraInputSchedule = () => {
-        setAA(aa + 1)
         findJiraInputSchedule().then(res => {
             if (res.code === 0) {
                 currentSchedule.project = res.data.project ? res.data.project : null;
@@ -55,52 +45,21 @@ const LoadData = (props) => {
         })
     }
 
-    const timeTask = (params) => {
-        console.log(timer)
-        clearInterval(timer) 
-        console.log(timer)
-        timer = setInterval(() => {console.log("定时器开始")}, 5000)
-        if(params.status === "done"){
-            clearInterval(timer) 
-            console.log(timer)
-        }
-        // timer = setInterval(() => {
-        //     // getJiraInputSchedule()
-        //     console.log("定时器开始")
-        //     switch (params.status) {
-        //         case "done":
-        //             console.log("done",params)
-        //             if (params.response.code === 0) {
-        //                 message.info("数据导入成功")
-        //             } else {
-        //                 message.error("数据失败")
-        //             }
-        //             clearInterval(timer)  
-        //             console.log(timer)
-        //             setLoading(false)
-
-        //             break
-        //         case "error":
-        //             clearInterval(timer)  
-        //             console.log(timer)
-        //             setLoading(false)
-        //             message.error("数据失败")
-        //             break
-        //         default:
-        //             break;
-        //     }
-        // }, 5000)
-    }
-
     const uploadProps = {
         name: 'uploadFile',
+        accept: ".zip",
         action: `${base_url}/importDate/importJireDate`,
         headers: {
-            authorization: 'authorization-text',
+            authorization: 'authorization-text'
         },
         headers: {
             ticket: ticket
         },
+        progress: {
+            strokeWidth: 0, 
+            showInfo: false
+        },
+        showUploadList: false,
         maxCount: 1,
         onChange(info) {
             console.log(info)
@@ -108,7 +67,7 @@ const LoadData = (props) => {
                 clearInterval(timer) 
                 // console.log(1, timer)
                 setLoading(true)
-                timer  = setInterval(() => {getJiraInputSchedule()}, 2000)
+                timer = setInterval(() => {getJiraInputSchedule()}, 2000)
                 setTimerS(timer)
                 console.log(2, timer)
             }
@@ -117,17 +76,14 @@ const LoadData = (props) => {
                 clearInterval(timer) 
                 setLoading(false)
                 setTimerS(null)
+                if(info.file.response.code === 0){
+                   message.success("导入成功")
+                }else{
+                    message.error("导入失败")
+                }
+                
                 console.log(timer)
             }
-            // setLoading(true)
-            // // setTimeout(() => {
-            // //     getJiraInputSchedule()
-            // //     console.log("ssss")
-            // // }, 2000)
-            // if(info.file.status === "uploading"){
-            //     timeTask(info.file)
-            // }
-            
 
         },
     };
@@ -145,7 +101,7 @@ const LoadData = (props) => {
                         <div className="load-box">
                             上传Jira zip包：
                             <Upload {...uploadProps}>
-                                <Button icon={<UploadOutlined />}>导入外部数据</Button>
+                                <Button icon={<UploadOutlined />}>导入jira数据</Button>
                             </Upload>
                         </div>
                         {

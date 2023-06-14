@@ -54,8 +54,9 @@ const ProjectAddInfo = (props) => {
     const [iconUrl, setIconUrl] = useState("project1.png")
 
     const onFinish = () => {
-        setLoading(true)
+        
         form.validateFields().then((values) => {
+            setLoading(true)
             const time = values["startTime"]
             const data = {
                 projectName: values.projectName,
