@@ -16,7 +16,7 @@ const WorkAddPage = (props) => {
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList,getWorkTypeList, workId, findFormConfig, formList, 
         workList, findFieldList, setWorkId, setDetailCrumbArray, 
-        findWorkItemById, setWorkList,workShowType, viewType, addddd
+        findWorkItemById, setWorkList,workShowType, getWorkBoardList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -145,6 +145,14 @@ const WorkAddPage = (props) => {
                 if (res.code === 0) {
                     if (workShowType === "bodar") {
                         getWorkBoardList()
+                        message.success({
+                            content: '添加成功',
+                            className: 'custom-class',
+                            style: {
+                                marginTop: '20vh',
+                            },
+                        });
+                        setShowAddModel(false)
                     } else {
                         findWorkItemById(res.data).then(data => {
                             if(data.code === 0){

@@ -101,6 +101,10 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
+const LogProjectWork = AsyncComponent(()=> import('./statistics/components/LogProjectWorkItemStatistics'))
+const LogProjectUser = AsyncComponent(()=> import('./statistics/components/LogProjectUserStatistics'))
+const LogUserProject = AsyncComponent(()=> import('./statistics/components/LogUserProjectStatistics'))
+const WorkBulidEnd = AsyncComponent(()=> import('./statistics/components/StatisticsBulidAndEndWork'))
 const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
 
@@ -152,7 +156,7 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
-const RoutersSaas = [
+const Routers = [
     {
         path: "/login",
         exact: true,
@@ -362,6 +366,21 @@ const RoutersSaas = [
                             {
                                 path: "/index/projectSetdetail/:projectSetId/statistics/moreMenu",
                                 component: StatisticsMore,
+                                exact: true
+                            },
+                            {
+                                path: "/index/projectSetdetail/:projectSetId/statistics/logProjectUser",
+                                component: LogProjectUser,
+                                exact: true
+                            },
+                            {
+                                path: "/index/projectSetdetail/:projectSetId/statistics/logProjectWork",
+                                component: LogProjectWork,
+                                exact: true
+                            },
+                            {
+                                path: "/index/projectSetdetail/:projectSetId/statistics/logUserProject",
+                                component: LogUserProject,
                                 exact: true
                             }
                         ]
@@ -820,6 +839,11 @@ const RoutersSaas = [
                                 path: "/index/projectDetail/:id/statistics/moreMenu",
                                 component: StatisticsMore,
                                 exact: true
+                            },
+                            {
+                                path: "/index/projectDetail/:id/statistics/workBulidEnd",
+                                component: WorkBulidEnd,
+                                exact: true
                             }
                         ]
                     },
@@ -932,4 +956,4 @@ const RoutersSaas = [
         exact: true
     },
 ]
-export default RoutersSaas;
+export default Routers;

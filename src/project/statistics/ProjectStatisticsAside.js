@@ -19,12 +19,7 @@ const StatisticsAsicde = (props) => {
     const workReportList = [
         {
             key: "workItem",
-            title: "事项字段统计11",
-            type: "work"
-        },
-        {
-            key: "workBulidEnd",
-            title: "事项创建与解决统计",
+            title: "事项字段统计",
             type: "work"
         }
     ];
@@ -127,17 +122,6 @@ const StatisticsAsicde = (props) => {
                 >
                     <span>
                         {workReportList[0].title}
-                    </span>
-                </div>
-            </div>
-            <div key={'workItem1'}>
-                <div
-                    className={`statistics-menu-firstmenu ${workReportList[1].key === selectRouter ? "statistics-menu-select" : ""}`}
-                    onClick={() => selectKey(workReportList[1].key)}
-                    key={workReportList[1].key}
-                >
-                    <span>
-                        {workReportList[1].title}
                     </span>
                 </div>
             </div>

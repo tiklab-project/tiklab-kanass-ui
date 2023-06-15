@@ -101,7 +101,6 @@ export class WorkStore {
 
     @action
     setWorkList = (value) => {
-        debugger
         this.workList = value;
     }
     
@@ -345,13 +344,6 @@ export class WorkStore {
             
         }
         return data.data;
-
-    }
-
-    @action
-    addddd = () => {
-        
-        this.workList = []
 
     }
 
