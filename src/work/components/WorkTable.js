@@ -11,12 +11,11 @@ const WorkTableContent = (props) => {
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray,
-        setWorkIndex, createRecent, isWorkList, setIsWorkList } = workStore;
+        setWorkIndex, createRecent } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match?.params?.sprint;
-    console.log(props)
     // const [isWorkList, setIsWorkList] = useState(true)
     const goProdetail = (record, index) => {
         const params = {

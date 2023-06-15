@@ -101,7 +101,8 @@ export class WorkStore {
 
     @action
     setWorkList = (value) => {
-        this.workList = value
+        debugger
+        this.workList = value;
     }
     
     @action
@@ -348,6 +349,13 @@ export class WorkStore {
     }
 
     @action
+    addddd = () => {
+        
+        this.workList = []
+
+    }
+
+    @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
         this.tableLoading = true;
@@ -458,6 +466,19 @@ export class WorkStore {
             this.workInfo = data.data;
         }
         return data.data;
+    }
+
+    @action
+    findWorkItemById = async(id) => {
+        const param = new FormData()
+        param.append("id", id)
+        const data = await Service("/workItem/findWorkItem",param);
+        if(data.code === 0){
+            this.workList.unshift(data.data);
+            this.workList = [...this.workList]
+            this.total = this.total + 1
+        }
+        return data;
     }
 
     // 创建事项附件

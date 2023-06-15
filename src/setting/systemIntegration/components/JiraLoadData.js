@@ -53,7 +53,8 @@ const LoadData = (props) => {
             authorization: 'authorization-text'
         },
         headers: {
-            ticket: ticket
+            ticket: ticket,
+            tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null
         },
         progress: {
             strokeWidth: 0, 

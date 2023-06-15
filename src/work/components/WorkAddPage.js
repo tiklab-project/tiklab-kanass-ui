@@ -14,9 +14,9 @@ const WorkAddPage = (props) => {
     const { workStore, workType, workAddPageRef, getWorkDetail, setShowAddModel } = props;
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
-        findPriority, priorityList,getWorkTypeList, workShowType, getWorkBoardList,
-        workId, findFormConfig, formList, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, findFieldList, setWorkId, setDetailCrumbArray
+        findPriority, priorityList,getWorkTypeList, workId, findFormConfig, formList, 
+        workList, findFieldList, setWorkId, setDetailCrumbArray, 
+        findWorkItemById, setWorkList,workShowType, viewType, addddd
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -26,7 +26,7 @@ const WorkAddPage = (props) => {
             type: "paragraph",
             children: [{ text: "" }],
         },
-    ])
+    ]);
     const [selectItem, setSelectItem] = useState()
     useEffect(() => {
         form.setFieldsValue({
@@ -138,6 +138,7 @@ const WorkAddPage = (props) => {
 
                 return 0;
             })
+            console.log(values)
             addWork(values).then((res) => {
                 setWorkId(res.data)
                 setDetailCrumbArray([{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
@@ -146,20 +147,27 @@ const WorkAddPage = (props) => {
                     if (workShowType === "bodar") {
                         getWorkBoardList()
                     } else if (workShowType === "table" && viewType === "tree") {
-                        getWorkConditionPageTree()
+                        addddd()
                     } else if (workShowType === "table" && viewType === "tile") {
                         getWorkConditionPage()
                     } else if (workShowType === "list") {
                         getWorkConditionPageTree()
                     }
-                    setShowAddModel(false)
-                    message.success({
-                        content: '添加成功',
-                        className: 'custom-class',
-                        style: {
-                            marginTop: '20vh',
-                        },
-                    });
+                    
+                    findWorkItemById(res.data).then(data => {
+                        if(data.code === 0){
+                            message.success({
+                                content: '添加成功',
+                                className: 'custom-class',
+                                style: {
+                                    marginTop: '20vh',
+                                },
+                            });
+                            setShowAddModel(false)
+                        }
+                       
+                    })
+                    
 
                 } else {
                     message.error({
@@ -204,6 +212,14 @@ const WorkAddPage = (props) => {
         return currentdate;
     }
 
+    const [newWorkItem, setNewWorkItem] = useState();
+
+    const changeWorkItem = (changedValues) => {
+        console.log(changedValues)
+        setNewWorkItem({...newWorkItem, ...changedValues})
+        console.log(newWorkItem)
+    }
+
     return (
         <Fragment>
             <div className="work-add-page">
@@ -221,6 +237,7 @@ const WorkAddPage = (props) => {
                         wrapperCol={{
                             span: 12,
                         }}
+                        onValuesChange = {(changedValues, allValues) => changeWorkItem(changedValues) }
                     >
                         <Form.Item
                             label="标题"
