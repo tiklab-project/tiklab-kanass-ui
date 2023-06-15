@@ -143,32 +143,22 @@ const WorkAddPage = (props) => {
                 setWorkId(res.data)
                 setDetailCrumbArray([{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
-                    //树状视图
                     if (workShowType === "bodar") {
                         getWorkBoardList()
-                    } else if (workShowType === "table" && viewType === "tree") {
-                        addddd()
-                    } else if (workShowType === "table" && viewType === "tile") {
-                        getWorkConditionPage()
-                    } else if (workShowType === "list") {
-                        getWorkConditionPageTree()
+                    } else {
+                        findWorkItemById(res.data).then(data => {
+                            if(data.code === 0){
+                                message.success({
+                                    content: '添加成功',
+                                    className: 'custom-class',
+                                    style: {
+                                        marginTop: '20vh',
+                                    },
+                                });
+                                setShowAddModel(false)
+                            }
+                        })
                     }
-                    
-                    findWorkItemById(res.data).then(data => {
-                        if(data.code === 0){
-                            message.success({
-                                content: '添加成功',
-                                className: 'custom-class',
-                                style: {
-                                    marginTop: '20vh',
-                                },
-                            });
-                            setShowAddModel(false)
-                        }
-                       
-                    })
-                    
-
                 } else {
                     message.error({
                         content: '添加失败',
