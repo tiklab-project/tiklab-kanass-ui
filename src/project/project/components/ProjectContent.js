@@ -337,7 +337,7 @@ const ProjectContent = (props) => {
                 </div>
             </div>
 
-            <div className="table-box">
+            <div className="project-table-box">
                 <Table
                     columns={columns}
                     dataSource={prolist}

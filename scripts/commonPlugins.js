@@ -21,8 +21,9 @@ import {NODE_ENV} from './constant';
 
 import image from '@rollup/plugin-image';
 
-import sass from 'rollup-plugin-sass';
-import path from 'path';
+import copy from 'rollup-plugin-copy';
+
+import url from 'rollup-plugin-url';
 
 const extensions = ['.js', '.jsx']
 
@@ -37,22 +38,26 @@ const commonPlugins = [
     }),
     commonjs(),
     json(),
-    // sass({
-    //     options: {
-    //       data: '$Text: #666;$Primary: #1badff;',
-    //     },
-    // }),
     postcss(),
     replace({
         exclude: 'node_modules/**',
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         preventAssignment:true,
     }),
-    image({
-        output: `dist/images`,
-        extensions: /\.(png|jpg|jpeg|gif|svg)$/,
-        limit: 8192
-    })
+    url({
+        include: ['**/*.svg', '**/*.png', '**/*.jpg'],
+        limit: 0,
+        fileName: '[name][extname]',
+        destDir: 'es/src/assets/images',
+        publicPath: '/images/'
+    }),
+    // copy({
+    //     targets: [
+    //       { src: 'src/assets/*', dest: 'es/src/assets' },
+    //       // 添加其他图片格式的配置
+    //     ],
+    //     flatten: false, // 设置为true时，只拷贝文件，不复制目录结构
+    // }),
 ];
 
 export default commonPlugins;

@@ -10,7 +10,7 @@ import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
-
+import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {

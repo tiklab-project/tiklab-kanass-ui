@@ -13,6 +13,7 @@ import "./JiraLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
+import { base_url } from "../../../../enviroment/enviroment_local";
 const LoadData = (props) => {
     const { urlDataStore } = props;
     const { findJiraInputSchedule } = urlDataStore;
@@ -44,11 +45,13 @@ const LoadData = (props) => {
             }
         })
     }
-
+    const domain = window.location.host;
+    const upload_url = env === "local" ? JSON.parse(base_url) : `http://${domain}`
     const uploadProps = {
+        
         name: 'uploadFile',
         accept: ".zip",
-        action: `${base_url}/importDate/importJireDate`,
+        action: `${upload_url}/importDate/importJireDate`,
         headers: {
             authorization: 'authorization-text'
         },

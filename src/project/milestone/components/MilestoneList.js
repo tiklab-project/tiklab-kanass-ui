@@ -134,7 +134,7 @@ const MilestoneList = (props) => {
                         <MilestoneTimeline milestonelist = {milestonelist}/>
                         <div className="project-milestone-contant">
 
-                            <div className="table-box">
+                            <div className="insight-table-box">
                                 <Table
                                     columns={columns}
                                     dataSource={milestonelist}

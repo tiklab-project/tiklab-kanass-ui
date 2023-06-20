@@ -7,12 +7,7 @@
  */
  import fs from 'fs';
  import path from 'path';
- import filesize from 'rollup-plugin-filesize';
- import { uglify } from "rollup-plugin-uglify";
- import {terser} from 'rollup-plugin-terser';
- 
  import commonPlugins from "./scripts/commonPlugins";
- 
  
  const pkg = require("./package.json");
  
@@ -48,6 +43,10 @@
      "tiklab-core-ui":"tiklabCoreUi",
      "@ant-design/icons":"icons",
      "tiklab-plugin-ui":"tiklabPluginUi",
+     "tiklab-form-ui":"tiklabFormUi",
+     "tiklab-privilege-ui":"tiklabPrivilegeUi",
+     "tiklab-user-ui":"tiklabUserUi",
+     "tiklab-slate-ui":"tiklabSlateUi",
      'mobx-react':'mobxReact',
      'mobx':'mobx',
      "react-router-dom":"reactRouterDom"
@@ -55,13 +54,7 @@
  
  
  const extensions = ['.js', '.jsx',]
- 
- const umdOutput = {
-     format: 'umd',
-     name: 'tiklab-teamwire-ui',
-     globals,
-     assetFileNames: '[name].[ext]'
- };
+
  const esOutput = {
      globals,
      preserveModules: true,
@@ -80,23 +73,6 @@
  
  export default () => {
      switch (BABEL_ENV) {
-         case 'umd':
-             console.log(BABEL_ENV, 'BABEL_ENV-umd')
-             return [{
-                 input: 'src/ui.js',
-                 output: {...umdOutput, file: `dist/${pkg.name}.development.js`,sourcemap: true,},
-                 external,
-                 // 使用gulpfile 抽离css
-                 // plugins: [styles(stylePluginConfig), ...commonPlugins]
-                 plugins: [ ...commonPlugins, filesize()]
-             }, {
-                 input: 'src/ui.js',
-                 output: {...umdOutput, file: `dist/${pkg.name}.production.min.js`, plugins: [terser(), uglify()]},
-                 external,
-                 // 使用gulpfile 抽离css
-                 // plugins: [styles({...stylePluginConfig, minimize: true}), ...commonPlugins]
-                 plugins: [ ...commonPlugins, filesize(), terser()]
-             }];
          case "esm":
              return {
                  input: [
@@ -107,21 +83,8 @@
                  external,
                  plugins: [ ...commonPlugins]
              };
-         case 'cjs':
-             return {
-                 input: [
-                     'src/ui.js',
-                     ...getFiles('./src', extensions),
-                 ],
-                 preserveModules: true, // rollup-plugin-styles 还是需要使用
-                 output: { ...esOutput, dir: 'lib', format: 'cjs', sourcemap: IS_DEV},
-                 external,
-                 // plugins: [styles(esStylePluginConfig), ...commonPlugins]
- 
-                 plugins: [ ...commonPlugins]
-             };
          default:
              return [];
-     }
+    }
  }
  

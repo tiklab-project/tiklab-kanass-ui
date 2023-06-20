@@ -236,7 +236,7 @@ const ProjectSetTable = (props) => {
                     {/* </div> */}
                 </div>
                 <div>
-                    <div className="table-box">
+                    <div className="projectSet-table-box">
                         <Table
                             columns={columns}
                             dataSource={projectSetList}

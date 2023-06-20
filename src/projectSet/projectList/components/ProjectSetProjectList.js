@@ -303,7 +303,7 @@ const ProjectSetProjectList = (props) => {
                         </div>
                     </div>
 
-                    <div className="table-box">
+                    <div className="projectSet-table-box">
                         <Table
                             columns={columns}
                             dataSource={projectRelevance}

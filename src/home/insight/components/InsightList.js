@@ -209,7 +209,7 @@ const InsightList = (props) => {
                     </div>
                 </div>
                 <InsightAddModal setVisible={setVisible} visible={visible} setInsightList={setInsightList} />
-                <div className="table-box">
+                <div className="insight-table-box">
                     <Table
                         columns={columns}
                         dataSource={insightList}

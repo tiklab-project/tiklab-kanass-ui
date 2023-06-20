@@ -16,7 +16,7 @@ import WorkGantt from "./WorkGantt.js";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import { Form, Row, Col } from "antd";
-import "../components/Work.scss"
+import "../components/Work.scss";
 
 const Work = (props) => {
     const { workStore, workCalendarStore } = props;

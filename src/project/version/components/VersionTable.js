@@ -176,7 +176,7 @@ const VersionTable = (props) => {
                         </div>
 
                         <div className="project-version-contant">
-                            <div className="table-box">
+                            <div className="version-table-box">
                                 <Table
                                     columns={columns}
                                     dataSource={versionList}

@@ -145,7 +145,7 @@ const ModuleList = (props) => {
                             />
 
                         </div>
-                        <div className="table-box">
+                        <div className="module-table-box">
                             <Table
                                 columns={columns}
                                 dataSource={modulelist}

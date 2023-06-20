@@ -128,8 +128,8 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
         new CleanWebpackPlugin(),
+        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
             title:'TeamWire',

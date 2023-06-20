@@ -31,7 +31,7 @@ module.exports = merge(baseWebpackConfig, {
         path.resolve(__dirname, './src/index.js')
     ],
     plugins: [
-        // new BundleAnalyzerPlugin({defaultSizes: 'parsed'}),
+        new BundleAnalyzerPlugin({defaultSizes: 'parsed'}),
         new optimizeCss({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
@@ -49,10 +49,10 @@ module.exports = merge(baseWebpackConfig, {
         nodeEnv: process.env.NODE_ENV,
         splitChunks: {
             chunks: "all",
-            minSize: 30000,
+            minSize: 300,
             minChunks: 1,
             maxAsyncRequests: 5,
-            maxInitialRequests:1,
+            maxInitialRequests: 3,
             automaticNameDelimiter: '--', // 分包打包生成文件的名称的连接符
             name:false,
             cacheGroups: { //  cacheGroups 缓存组，如：将某个特定的库打包
@@ -68,6 +68,13 @@ module.exports = merge(baseWebpackConfig, {
                     name: 'chunk-tiklab-form-ui',
                     chunks: 'all',
                     test: /[\\/]node_modules[\\/]tiklab-form-ui[\\/]/,
+                    priority: 90,
+                    reuseExistingChunk: true
+                },
+                tiklabPrivilegeUI: {
+                    name: 'chunk-tiklab-privilege-ui',
+                    chunks: 'all',
+                    test: /[\\/]node_modules[\\/]tiklab-privilege-ui[\\/]/,
                     priority: 70,
                     reuseExistingChunk: true
                 },
@@ -110,8 +117,8 @@ module.exports = merge(baseWebpackConfig, {
                     name: 'chunk-tiklab-slate-ui',
                     chunks: 'all',
                     test: /[\\/]node_modules[\\/]tiklab-slate-ui[\\/]/,
-                    priority: 0,
-                    reuseExistingChunk: true
+                    priority: 100,
+                    reuseExistingChunk: false
                 },
                 mobx: {
                     name: 'chunk-mobx',
@@ -128,7 +135,13 @@ module.exports = merge(baseWebpackConfig, {
                     priority: 80,
                     reuseExistingChunk: true
                 },
-             
+                moment: {
+                    name: 'chunk-moment',
+                    chunks: 'all',
+                    test: /[\\/]node_modules[\\/]moment[\\/]/,
+                    priority: 80,
+                    reuseExistingChunk: true
+                },
                 reactDom: {
                     name: 'chunk-react-dom',
                     chunks: 'all',
@@ -169,6 +182,13 @@ module.exports = merge(baseWebpackConfig, {
                     chunks: 'all',
                     test: /[\\/]src[\\/]font-icon[\\/]/,
                     priority: 90,
+                    reuseExistingChunk: true
+                },
+                rcomponent: {
+                    name: "chunk-rcomponent",
+                    chunks: "all",
+                    test: /rc-[a-zA-Z]/,
+                    priority: 1,
                     reuseExistingChunk: true
                 },
                 /* 提取共用部分，一下提取的部分会议commons 命名 */
