@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Modal, Form, Select, DatePicker, message, Row, Col, Steps, Breadcrumb } from 'antd';
+import { message, Row, Col } from 'antd';
 import 'moment/locale/zh-cn';
 import { getUser } from 'tiklab-core-ui';
-import { observer, inject } from "mobx-react";
+import { Provider } from "mobx-react";
 import "./ProjectSetAdd.scss";
 
 import ProjectSetAddInfo from "./ProjectSetAddInfo";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import ProjectSetStore from "../store/ProjectSetStore";
 
 
 const ProjectSetAdd = (props) => {
-    const [form] = Form.useForm();
+    const store = {
+        projectSetStore: ProjectSetStore
+    }
     const [visible, setVisible] = React.useState(false);
-    const { projectStore, name, projectSetStore, setAllProjectSetList } = props;
-    const { getUseList, creatIcon, findIconList } = projectStore;
-
-    const { addProjectSetSet, getProjectSetlist, findAllProjectSet } = projectSetStore;
+    const { setAllProjectSetList } = props;
+    const { addProjectSetSet, getProjectSetlist, findAllProjectSet, creatIcon, findIconList } = ProjectSetStore;
 
 
     const [currentStep, setCurrentStep] = useState(1)
@@ -26,18 +27,6 @@ const ProjectSetAdd = (props) => {
             // setIconList(res.data)
         })
     }
-    const showModal = () => {
-        setVisible(true);
-        getUseList()
-        getIconList()
-    };
-
-
-    const onCancel = () => {
-        form.resetFields();
-        setVisible(false);
-    };
-
 
     /**
     *上传图标 
@@ -91,8 +80,8 @@ const ProjectSetAdd = (props) => {
     }
 
 
-    return (
-        <div className="projectSet-add">
+    return (<Provider {...store}>
+         <div className="projectSet-add">
             <Row>
                 <Col
                     className="projectSet-type-col"
@@ -109,7 +98,9 @@ const ProjectSetAdd = (props) => {
                 </Col>
             </Row>
         </div>
+    </Provider>
+       
     );
 };
 
-export default inject('projectStore', "projectSetStore")(observer(ProjectSetAdd));
+export default ProjectSetAdd;

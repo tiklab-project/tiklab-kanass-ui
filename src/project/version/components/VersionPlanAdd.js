@@ -177,4 +177,4 @@ const  VersionPlanAddmodal = (props) => {
     );
 };
 
-export default inject("systemRoleStore",'projectStore','workStore','versionPlanStore')(observer(VersionPlanAddmodal));
+export default inject('versionPlanStore')(observer(VersionPlanAddmodal));

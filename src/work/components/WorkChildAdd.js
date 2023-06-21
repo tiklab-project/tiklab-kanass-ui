@@ -7,10 +7,10 @@ import { SelectSimple, SelectItem } from "../../common/select";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath,workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId } = props;
 
-    const { workTypeList, workId, workShowType, viewType, getWorkConditionPageTree, getWorkConditionPage, findPriority, priorityList } = workStore;
+    const { workId, workShowType, viewType, getWorkConditionPageTree, getWorkConditionPage, findPriority, priorityList } = workStore;
 
     const { addWorkChild, findEpicSelectWorkItemList, findSelectWorkItemList,
-        getWorkChildList, unRelationTotal, selectChildToTal, selectWorkChildList } = workChild;
+        getWorkChildList, selectChildToTal, selectWorkChildList } = workChild;
 
     const childAdd = useRef();
     const [current, setCurrent] = useState(1);
@@ -260,4 +260,4 @@ const WorkChildAddmodal = (props) => {
     );
 };
 
-export default inject('projectStore', 'workStore', 'workRelation')(observer(WorkChildAddmodal));
+export default inject('workStore', 'workChild')(observer(WorkChildAddmodal));

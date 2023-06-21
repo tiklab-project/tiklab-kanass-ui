@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col, message } from "antd";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
@@ -153,4 +153,4 @@ const WikiRepository = (props) => {
     );
 };
 
-export default withRouter(inject("wikiRepositoryStore")(observer(WikiRepository)));
+export default withRouter(observer(WikiRepository));

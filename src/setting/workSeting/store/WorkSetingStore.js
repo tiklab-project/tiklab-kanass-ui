@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset";
-export class OrgaStore {
+export class WorkSetingStore {
     @observable workStatuslist = [];
     @observable workAllTypeList = [];
 
@@ -228,7 +228,7 @@ export class OrgaStore {
     findWorkPriorityListById = async (id) => {
         const params = new FormData()
         params.append("id", id)
-        const data = await Service("/workPriority/findWorkPriority", value)
+        const data = await Service("/workPriority/findWorkPriority", params)
         return data.data;
 
     }
@@ -293,4 +293,4 @@ export class OrgaStore {
         return data;
     }
 }
-export const ORGA_STORE = "orgaStore"
+export default new WorkSetingStore();

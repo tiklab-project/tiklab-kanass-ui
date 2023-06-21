@@ -107,4 +107,4 @@ export class ProjectSetProjectStore {
         return data;
     }
 }
-export const PROJECTSETPROJECT_STORE = "ProjectSetProjectStore"
+export default new ProjectSetProjectStore();

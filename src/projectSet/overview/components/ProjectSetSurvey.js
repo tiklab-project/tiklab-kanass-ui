@@ -7,25 +7,16 @@
  * @LastEditTime: 2021-12-08 09:24:33
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { observer, inject } from "mobx-react";
-import { Form, Empty, Row, Col } from "antd";
+import { observer} from "mobx-react";
+import { Empty, Row, Col } from "antd";
 import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
 import { getUser } from 'tiklab-core-ui';
+import BasicInfoStore from "../store/BasicInfoStore";
 const ProjectSetSurvey = props => {
-    const layout = {
-        labelCol: {
-            span: 6,
-        },
-        wrapperCol: {
-            span: 16,
-        },
-    };
-    const [form] = Form.useForm();
-    const { basicInfoStore, projectSetStore, workStore } = props;
-    const { statProjectSetWorkItemProcess, findDynamicPage, findPrecessProjectList, opLogList, findlogpage,
-        findtodopage, todoTaskList } = basicInfoStore;
-    const { findProjectList } = projectSetStore;
+
+    const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
+        findtodopage, todoTaskList,findProjectList } = BasicInfoStore;
     const [workItemList, setWorkItemList] = useState();
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
@@ -46,15 +37,6 @@ const ProjectSetSurvey = props => {
                         setWorkItemList(res.data.slice(0, 6))
                     }
                 })
-                const dynamicValue = {
-                    projectIds: ids,
-                    pageSize: 5
-                }
-                // findDynamicPage(dynamicValue).then(res => {
-                //     if (res.code === 0) {
-                //         setDynamicList(res.data.dataList)
-                //     }
-                // })
             }
         })
         findPrecessProjectList({ projectSetId: projectSetId, projectState: "2" }).then(res => {
@@ -238,4 +220,4 @@ const ProjectSetSurvey = props => {
     )
 }
 
-export default inject('basicInfoStore', 'projectSetStore', 'workStore')(observer(ProjectSetSurvey));
+export default observer(ProjectSetSurvey);

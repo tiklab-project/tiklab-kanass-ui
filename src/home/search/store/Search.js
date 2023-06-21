@@ -89,6 +89,29 @@ export class SearchStore{
         }
         return data;
     }
+
+    @action
+	statTodoWorkItem = async(value) => {
+        const params={
+            bgroup : "teamwire",
+            status: 1,
+            pageParam: {
+                pageSize: value.pageSize,
+                currentPage: 1
+            },
+        }
+        const data = await Service("/todo/findtodopage", params)
+        return data;
+    }
+
+    @action
+	statProjectWorkItem = async(value) => {
+        const params = new FormData();
+        params.append("recentMasterId",value)
+        const data = await Service("/workItemStat/statProjectWorkItem", params)
+        return data;
+    }
+
 }
 
-export const SEARCH_STORE = "searchStore"
+export default new SearchStore();

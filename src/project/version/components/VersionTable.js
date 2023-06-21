@@ -200,4 +200,4 @@ const VersionTable = (props) => {
 
     );
 };
-export default withRouter(inject("versionStore")(observer(VersionTable)));
+export default withRouter(observer(VersionTable));

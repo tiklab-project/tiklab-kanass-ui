@@ -11,19 +11,23 @@ import { Layout, Row, Col } from 'antd';
 import ProjectSetContent from "./ProjectSetTable"
 import ProjectSetGide from "./ProjectSetGide"
 import "../components/ProjectSet.scss";
-import { observer, inject } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import { withRouter } from 'react-router';
+import ProjectSetStore from "../store/ProjectSetStore";
 
 const ProjectSet = (props) => {
-    const { projectSetStore,route } = props;
-    const { getProjectSetlist, findAllProjectSet, allProjectSetList } = projectSetStore;
+    const store = {
+        projectSetStore: ProjectSetStore
+    }
+    console.log(ProjectSetStore)
+    const { findAllProjectSet, allProjectSetList } = ProjectSetStore;
     //初始化获取项目列表
     useEffect(() => {
         findAllProjectSet()
         return;
     }, [])
 
-    return (
+    return (<Provider {...store}>
         <div className="projectSet">
             <Layout className="projectSet-content">
                 {
@@ -32,7 +36,9 @@ const ProjectSet = (props) => {
                 }
             </Layout>
         </div>
+    </Provider>
+        
 
     )
 }
-export default withRouter(inject('projectSetStore')(observer(ProjectSet)));
+export default withRouter(observer(ProjectSet));

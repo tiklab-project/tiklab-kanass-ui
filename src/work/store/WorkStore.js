@@ -772,4 +772,4 @@ export class WorkStore {
     
 
 }
-export const AFFAIR_STORE = "workStore"
+export default new WorkStore();

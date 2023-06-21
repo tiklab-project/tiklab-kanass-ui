@@ -9,12 +9,13 @@
 import React, { useState } from "react";
 import { Modal, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { inject, observer } from 'mobx-react';
 import "./ProjectSetRelevance.scss";
 import Button from "../../../common/button/Button";
+import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
+import { observer } from 'mobx-react';
 const ProjectSetRelevance = (props) => {
-    const { projectSetStore, projectSetId } = props;
-    const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList } = projectSetStore;
+    const { projectSetId } = props;
+    const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList } = ProjectSetProjectStore;
     const [visible, setVisible] = useState(false)
     const [checkedList, setCheckedList] = useState([]);
 
@@ -183,4 +184,4 @@ const ProjectSetRelevance = (props) => {
         </Modal>
     </div>
 }
-export default inject('projectSetStore')(observer(ProjectSetRelevance));
+export default observer(ProjectSetRelevance);

@@ -43,4 +43,4 @@ export class WorkCalendarStore {
     }
 }
 
-export const WORKCALENDA_STORE = "workCalendarStore"
+export default new WorkCalendarStore();

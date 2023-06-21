@@ -12,11 +12,11 @@ import { UploadOutlined } from '@ant-design/icons';
 import "./JiraLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { getUser } from 'tiklab-core-ui';
-import { observer, inject } from "mobx-react";
+import { observer } from "mobx-react";
 import { base_url } from "../../../../enviroment/enviroment_local";
+import UrlDataStore from "../store/UrlDataStore"
 const LoadData = (props) => {
-    const { urlDataStore } = props;
-    const { findJiraInputSchedule } = urlDataStore;
+    const { findJiraInputSchedule } = UrlDataStore;
     const ticket = getUser().ticket;
     const [currentSchedule, setCurrentSchedule] = useState({ currentNum: 0, project: null, total: 0 })
     const [percent, setPercent] = useState(0);
@@ -125,4 +125,4 @@ const LoadData = (props) => {
     )
 }
 
-export default inject("urlDataStore")(observer(LoadData));
+export default observer(LoadData);

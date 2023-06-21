@@ -518,7 +518,4 @@ const EpicLineMap = (props) => {
     )
 }
 
-export default withRouter(inject(
-    "workStore",
-    "lineMapStore"
-)(observer(EpicLineMap))); 
+export default withRouter(inject("lineMapStore")(observer(EpicLineMap))); 

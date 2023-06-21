@@ -15,7 +15,8 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import LineMapStage from "./StagelineMap";
 import StageAddModal from "./StageAddModal";
-import StageStore from "../store/StageStore"
+import StageStore from "../store/StageStore";
+import { observer } from "mobx-react";
 const Stage = (props) => {
     const store = {
         stageStore: StageStore
@@ -110,4 +111,4 @@ const Stage = (props) => {
 
     )
 }
-export default Stage;
+export default observer(Stage);

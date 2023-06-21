@@ -6,18 +6,20 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-10-09 15:25:16
  */
-import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Button, Input, Row, Table, Col } from 'antd';
-import { observer, inject } from "mobx-react";
+import React, { useEffect, useState } from "react";
+import { Table } from 'antd';
+import { observer, inject, Provider } from "mobx-react";
 import "./WorkDocument.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
 import {applyJump} from "tiklab-core-ui";
-
-const { Search } = Input;
+import WorkWikiStore from "../store/WorkWikiStore";
 
 const WorkDocumentList = (props) => {
-    const { workWikiStore, workStore, projectId } = props;
-    const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = workWikiStore;
+    const store = {
+        workWikiStore: WorkWikiStore
+    }
+    const { workStore, projectId } = props;
+    const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = WorkWikiStore;
     const { workId } = workStore;
     const [workDocumentList, setWorkDocumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
@@ -84,7 +86,7 @@ const WorkDocumentList = (props) => {
     ];
 
 
-    return (
+    return (<Provider {...store}>
         <div className="work-repository">
             <div className="repository-top">
                 <div className="repository-top-title">关联文档({workDocumentList.length})</div>
@@ -104,9 +106,8 @@ const WorkDocumentList = (props) => {
                 pagination={false}
             />
         </div>
+    </Provider>
+        
     )
 }
-export default inject(
-    "workStore",
-    "workWikiStore"
-)(observer(WorkDocumentList));
+export default inject("workStore")(observer(WorkDocumentList));

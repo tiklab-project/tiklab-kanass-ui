@@ -28,4 +28,4 @@ export class WorkDynamicStore {
     }
 }
 
-export const WORKDYNAMIC_STORE = "workDynamicStore"
+export default new WorkDynamicStore();

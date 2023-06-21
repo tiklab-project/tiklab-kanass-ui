@@ -18,12 +18,11 @@ const SetAside = (props) => {
     //true 内嵌 false 统一
     const authType = JSON.parse(localStorage.getItem("authConfig")).authType;
     const [router, setRouterMenu] = useState(setDevEamRouter)
-    const select = (key, index) => {
-
+    const select = (key) => {
         props.history.push(key)
         setSelectKey(key)
-
     }
+
 
     useEffect(() => {
         if (env === "local" && authType === true) {
@@ -41,6 +40,7 @@ const SetAside = (props) => {
 
         return
     }, [])
+
 
     const renderMenu = (data, deep, index) => {
         return (
@@ -67,6 +67,7 @@ const SetAside = (props) => {
 
         )
     }
+    
     // 树的展开与闭合
     const [expandedTree, setExpandedTree] = useState(["/index/organ/organ"])
 

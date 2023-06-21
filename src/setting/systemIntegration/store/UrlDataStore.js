@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { action } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class UrlDataStore {
 
@@ -39,4 +39,4 @@ export class UrlDataStore {
     }
 }
 
-export const URLDATA_STORE = "urlDataStore"
+export default new UrlDataStore();

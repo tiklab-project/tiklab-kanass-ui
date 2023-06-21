@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, Fragment } from "react";
-import { Form, InputNumber, Input, Select, DatePicker, message, Upload, Col } from "antd";
+import React, { useState, useEffect, useImperativeHandle, Fragment } from "react";
+import { Form, Input, Select, DatePicker, message } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import moment from 'moment';
@@ -11,12 +11,12 @@ const { RangePicker } = DatePicker;
 
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
-    const { workStore, workType, workAddPageRef, getWorkDetail, setShowAddModel } = props;
+    const { workStore, workType, workAddPageRef, setShowAddModel } = props;
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList,getWorkTypeList, workId, findFormConfig, formList, 
-        workList, findFieldList, setWorkId, setDetailCrumbArray, 
-        findWorkItemById, setWorkList,workShowType, getWorkBoardList
+        findFieldList, setWorkId, setDetailCrumbArray, 
+        findWorkItemById, workShowType, getWorkBoardList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;

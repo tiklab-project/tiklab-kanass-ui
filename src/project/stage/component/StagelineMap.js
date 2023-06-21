@@ -528,6 +528,4 @@ const LineMapStage = (props) => {
     )
 }
 
-export default withRouter(inject(
-    "workStore"
-)(observer(LineMapStage))); 
+export default withRouter(observer(LineMapStage)); 

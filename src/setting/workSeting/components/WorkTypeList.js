@@ -1,18 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Space, message, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Space, message, Row, Col } from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-const { Search } = Input;
-
+import WorkSetingStore from "../store/WorkSetingStore"
 
 const WorkTypeList = (props) => {
-    // 初始化
-    const { orgaStore } = props;
+    const store = {
+        workSetingStore: WorkSetingStore
+    }
     const { workAllTypeList, getAllWorkTypeList, addCustomWorkTypeList, findWorkTypeListById,
         editWorkTypeList, deleteWorkTypeCustomList, setWorkTypeList, fromList,
         getFormList, flowList, getFlowList, creatIcon, findIconList
-    } = orgaStore;
+    } = WorkSetingStore;
 
     useEffect(() => {
         getAllWorkTypeList()
@@ -187,7 +187,7 @@ const WorkTypeList = (props) => {
         },
     ];
 
-    return (
+    return (<Provider {...store}>
         <Row>
             <Col lg={{  span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
                 <div className="work-type">
@@ -235,6 +235,8 @@ const WorkTypeList = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     );
 };
-export default inject("orgaStore")(observer(WorkTypeList));
+export default observer(WorkTypeList);

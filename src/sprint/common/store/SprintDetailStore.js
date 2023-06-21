@@ -24,4 +24,4 @@ export class SprintDetailStore {
     }
     
 }
-export const SPRINTDETAIL_STORE = "sprintDetailStore"
+export default new SprintDetailStore()

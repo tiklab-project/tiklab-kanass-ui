@@ -7,8 +7,8 @@
  * @LastEditTime: 2022-01-18 09:46:31
  */
 import React, { useEffect } from "react";
-import { observer, inject } from "mobx-react";
-import { Table, Tabs, Row, Col, Space } from 'antd';
+import { observer, Provider } from "mobx-react";
+import { Table,Row, Col, Space } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./LogContent.scss"
 import { getUser } from "tiklab-core-ui";
@@ -18,10 +18,12 @@ import Button from "../../../common/button/Button";
 import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
 import moment from "moment";
-
+import LogStore from "../store/LogStore";
 const LogContent = (props) => {
-    const { logStore } = props;
-    const { findWorkLogPage, logList, selectLogCondition } = logStore;
+    const store = {
+        logStore: LogStore
+    }
+    const { findWorkLogPage, logList, selectLogCondition } = LogStore;
     const [dateValue, setDateValue] = useState()
 
     // 显示日志添加弹窗显示
@@ -153,7 +155,7 @@ const LogContent = (props) => {
         }
     }
 
-    return (
+    return (<Provider {...store}>
         <Row style={{ height: "100%" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div style={{ padding: "20px" }}>
@@ -195,10 +197,12 @@ const LogContent = (props) => {
                         pagination={selectLogCondition.pageParam}
                     />
 
-                    <LogDetail logId = {logId} listIndex = {listIndex} logStore = {logStore} logDetailVisable = {logDetailVisable} setLogDetailVisable = {setLogDetailVisable}/>
+                    <LogDetail logId = {logId} listIndex = {listIndex} logDetailVisable = {logDetailVisable} setLogDetailVisable = {setLogDetailVisable}/>
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     )
 }
-export default inject('logStore')(observer(LogContent));
+export default observer(LogContent);

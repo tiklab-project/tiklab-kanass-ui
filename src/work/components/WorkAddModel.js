@@ -15,7 +15,7 @@ import { observer, inject } from "mobx-react";
 
 const WorkAddModel=(props)=>{
 
-    const {workAddModel, workType, getWorkDetail,setChildWorkList,workTypeId, flowId} = props
+    const {workAddModel, workType, getWorkDetail,setChildWorkList,workTypeId} = props
     const workAddPageRef = useRef()
     const [showAddModel,setShowAddModel] = useState(false)
     

@@ -225,4 +225,4 @@ const WorkType = (props) => {
         
     );
 };
-export default WorkType;
+export default observer(WorkType);

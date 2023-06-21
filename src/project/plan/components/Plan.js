@@ -7,9 +7,9 @@
  * @LastEditTime: 2022-04-09 15:27:15
  */
 import React from "react";
-import { Input, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 import PlanAddmodal from "./PlanAddModal";
-import { observer, inject } from "mobx-react";
+import { observer } from "mobx-react";
 import PlanTable from "./PlanTable";
 import PlanAside from "./PlanAside";
 import "../components/Plan.scss"
@@ -65,4 +65,4 @@ const Plan = (props) => {
 
     )
 }
-export default Plan;
+export default observer(Plan);

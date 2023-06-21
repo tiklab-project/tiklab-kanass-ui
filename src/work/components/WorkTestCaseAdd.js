@@ -9,7 +9,7 @@ const { Option } = Select;
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore,projectId, setWorkTestCaseList, projectStore } = props;
     const { workId } = workStore;
-    const {searchpro} =  projectStore;
+    // const {searchpro} =  projectStore;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
         findProjectTestRepositoryList, findUnRelationWorkTestCaseList, unRelationWorkCondition, unRelationTotal } = workTestStore;
     const [visible, setVisible] = useState(false);
@@ -132,11 +132,12 @@ const WorkTestCaseAddmodal = (props) => {
     };
 
     const goTestRepository = () => {
-        searchpro(projectId).then(res => {
-            if(res.code === 0){
-                props.history.push(`/index/projectDetail/${projectId}/test`)
-            }
-        })
+        // searchpro(projectId).then(res => {
+        //     if(res.code === 0){
+        //         props.history.push(`/index/projectDetail/${projectId}/test`)
+        //     }
+        // })
+        props.history.push(`/index/projectDetail/${projectId}/test`)
     }
 
     const changePage = (pagination) => {
@@ -228,4 +229,4 @@ const WorkTestCaseAddmodal = (props) => {
     );
 };
 
-export default withRouter(inject('workStore', 'workTestStore', 'projectStore')(observer(WorkTestCaseAddmodal)));
+export default withRouter(inject('workStore', 'workTestStore')(observer(WorkTestCaseAddmodal)));

@@ -4,12 +4,11 @@ import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 
 const { Search } = Input;
-const { Option } = Select;
 
 const WorkDocumentAddmodal = (props) => {
     const { workWikiStore, workStore, setWorkDocumentList, projectId, projectStore } = props;
     const { workId } = workStore;
-    const {searchpro} =  projectStore;
+    // const {searchpro} =  projectStore;
     // const projectId = props.match.params.id;
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
         findProjectWikiRepositoryList, findUnRelationWorkDocumentList, unRelationTotal,unRelationWorkCondition } = workWikiStore;
@@ -131,12 +130,12 @@ const WorkDocumentAddmodal = (props) => {
     };
 
     const goWikiRepository = () => {
-        searchpro(projectId).then(res => {
-            if(res.code === 0){
-                props.history.push(`/index/projectDetail/${projectId}/wiki`)
-            }
-        })
-        
+        // searchpro(projectId).then(res => {
+        //     if(res.code === 0){
+        //         props.history.push(`/index/projectDetail/${projectId}/wiki`)
+        //     }
+        // })
+        props.history.push(`/index/projectDetail/${projectId}/wiki`)
     }
 
     const changePage = (pagination) => {
@@ -232,4 +231,4 @@ const WorkDocumentAddmodal = (props) => {
     );
 };
 
-export default withRouter(inject('workStore', 'workWikiStore', 'projectStore')(observer(WorkDocumentAddmodal)));
+export default withRouter(inject('workStore', 'workWikiStore')(observer(WorkDocumentAddmodal)));

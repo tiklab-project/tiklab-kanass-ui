@@ -115,4 +115,4 @@ export class WorkLogStore {
 
 }
 
-export const WORKLOG_STORE = "workLogStore"
+export default new WorkLogStore();

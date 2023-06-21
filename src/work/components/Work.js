@@ -10,19 +10,26 @@ import React, { Fragment, useEffect } from "react";
 import Worklist from "./WorkList";
 import WorkTableContent from "./WorkTable";
 import WorkBodar from "./WorkBodar";
-import { observer, inject } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import { useSelector, RemoteComponent } from "tiklab-plugin-core-ui";
 import WorkGantt from "./WorkGantt.js";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import { Form, Row, Col } from "antd";
 import "../components/Work.scss";
+import WorkStore from "../store/WorkStore";
+import WorkCalendarStore from '../store/WorkCalendarStore';
 
 const Work = (props) => {
-    const { workStore, workCalendarStore } = props;
+    const store = {
+        workStore: WorkStore,
+        workCalendarStore: WorkCalendarStore
+    };
+
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
         getWorkConditionPage, viewType, setWorkIndex, setWorkId, setDetailCrumbArray, setWorkShowType, 
-        setQuickFilterValue, setTabValue, setIsWorkList } = workStore;
+        setQuickFilterValue, setTabValue, setIsWorkList } = WorkStore;
+    
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
@@ -189,7 +196,7 @@ const Work = (props) => {
         })
     }
 
-    return (
+    return (<Provider {...store}>
         <Fragment>
             {
                 workShowType === "list" &&  <Worklist {...props} form={form}></Worklist>
@@ -239,14 +246,16 @@ const Work = (props) => {
                             <RemoteComponent
                                 point="work-calendar"
                                 pluginStore={pluginStore}
-                                extraProps={{ workCalendarStore: workCalendarStore }}
+                                extraProps={{ workCalendarStore: WorkCalendarStore }}
                             />
                         </Col>
                     </Row>
                 </Fragment>
             }
         </Fragment>
+    </Provider>
+        
 
     )
 }
-export default inject("workStore", "workCalendarStore")(observer(Work));
+export default observer(Work);

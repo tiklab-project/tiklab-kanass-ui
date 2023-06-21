@@ -254,5 +254,22 @@ export class ProjectSetStore {
 
     }
 
+     /**
+    * 上传icon
+    */
+     @action
+     creatIcon = async (value) => {
+         const data = await Service("/icon/createIcon", value)
+         return data;
+ 
+     }
+ 
+     //获取项目icon
+     @action
+     findIconList = async (params) => {
+         const data = await Service("/icon/findIconList", params)
+         return data;
+     }
+ 
 }
-export const PROJECTSET_STORE = "projectSetStore"
+export default new ProjectSetStore();

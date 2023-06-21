@@ -40,7 +40,7 @@ const BasicInfo = props => {
     };
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
-    const { projectStore, systemRoleStore } = props;
+    const { projectStore } = props;
     const { deleproList, updateProject, searchpro, projectTypelist, getProjectTypeList, getUseList, uselist } = projectStore;
     const [disable, setDisabled] = useState(true);
     const [iconUrl, setIconUrl] = useState();
@@ -354,4 +354,4 @@ const BasicInfo = props => {
     )
 }
 
-export default inject("projectStore", "systemRoleStore")(observer(BasicInfo));
+export default inject("projectStore")(observer(BasicInfo));

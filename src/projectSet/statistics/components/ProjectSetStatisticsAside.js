@@ -96,15 +96,6 @@ const StatisticsAsicde = (props) => {
         }
     }, [])
 
-    console.log(props)
-    // useEffect(() => {
-    //     findReportList({ projectId: projectId}).then(res => {
-    //         if(res.code === 0){
-    //             setReportList(res.data)
-    //         }
-    //     })
-    //     return
-    // }, [])
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
@@ -232,4 +223,4 @@ const StatisticsAsicde = (props) => {
     )
 }
 
-export default withRouter(inject('statisticsStore')(observer(StatisticsAsicde)));
+export default withRouter(observer(StatisticsAsicde));

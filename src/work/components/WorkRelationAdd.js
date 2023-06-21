@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react";
 import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-const WorkChildAddmodal = (props) => {
+const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
 
     const { workTypeList, workId } = workStore;
@@ -197,4 +197,4 @@ const WorkChildAddmodal = (props) => {
     );
 };
 
-export default inject('projectStore', 'workStore', 'workRelation')(observer(WorkChildAddmodal));
+export default inject('workStore', 'workRelation')(observer(WorkRelationAddModal));

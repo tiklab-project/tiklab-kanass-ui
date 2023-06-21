@@ -17,8 +17,12 @@ import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import InputSearch from '../../../common/input/InputSearch'
-import SprintStore from "../store/SprintStore"
+import SprintStore from "../store/SprintStore";
+import { Provider, observer } from "mobx-react";
 const Sprint = (props) => {
+    const store = {
+        sprintStore: SprintStore
+    }
     const projectId = props.match.params.id;
     const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList, 
         sprintlist, delesprintList,createSprintFocus, findSprintFocusList, 
@@ -222,7 +226,7 @@ const Sprint = (props) => {
             
         })
     }
-    return (
+    return (<Provider {...store}>
         <div className="project-sprint">
             <Row>
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -342,7 +346,9 @@ const Sprint = (props) => {
                 {...props}
             />
         </div>
+    </Provider>
+        
     )
 
 }
-export default withRouter(Sprint);
+export default withRouter(observer(Sprint));

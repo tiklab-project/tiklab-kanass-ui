@@ -7,9 +7,8 @@ import { useState } from "react";
 const { Search } = Input;
 
 const EpicPlanAddmodal = (props) => {
-    const {workStore,epicId, epicStore, setEpicWorkIds, epicWorkIds, setEpicChild } = props;
-    const { findWorkItemPageTreeByQuery, createEpicWorkItem, findEpicChildWorkItemAndEpic } = epicStore;
-    const {workTypeList} = workStore;
+    const {epicId, epicStore, setEpicWorkIds, epicWorkIds, setEpicChild } = props;
+    const { findWorkItemPageTreeByQuery, createEpicWorkItem, findEpicChildWorkItemAndEpic, workTypeList} = epicStore;
     const [visible, setVisible] = React.useState(false);
     const [selectedRowKeys,setSelectedRowKeys] = React.useState([]);
     const projectId = props.match.params.id;
@@ -164,4 +163,4 @@ const EpicPlanAddmodal = (props) => {
     );
 };
 
-export default inject("systemRoleStore",'workStore','epicStore')(observer(EpicPlanAddmodal));
+export default inject('epicStore')(observer(EpicPlanAddmodal));

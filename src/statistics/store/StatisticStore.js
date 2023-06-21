@@ -384,5 +384,5 @@ export class StatisticsStore {
 
 }
 
-export const STATISTICS_STORE = "statisticsStore"
+export default new StatisticsStore();
 

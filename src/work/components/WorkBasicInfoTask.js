@@ -28,11 +28,10 @@ const WorkBasicInfo = (props) => {
     };
     const [messageApi, contextHolder] = message.useMessage();
 
-    const { workStore, workLogStore, workInfo, setWorkInfo } = props;
+    const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workIndex, workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
         formList, moduleList, sprintList, priorityList, editWork, userList, findFieldList
     } = workStore;
-    const { setPlanTime } = workLogStore
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
     // 获取详情内容
@@ -62,7 +61,6 @@ const WorkBasicInfo = (props) => {
             } else {
                 setParentWorkItem("")
             }
-            setPlanTime(workInfo.planTakeupTime)
 
             extDataForm.resetFields();
             if (workInfo.extData) {
@@ -704,4 +702,4 @@ const WorkBasicInfo = (props) => {
         </div>
     )
 };
-export default inject("workStore", "workLogStore")(observer(WorkBasicInfo));
+export default inject("workStore")(observer(WorkBasicInfo));

@@ -9,7 +9,6 @@
 import React, { useState, useEffect,Fragment } from 'react';
 import "./ProjectStatisticsAside.scss"
 import { withRouter } from "react-router-dom";
-import { observer, inject } from "mobx-react";
 import { useSelector } from "tiklab-plugin-core-ui";
 import { getVersionInfo } from "tiklab-core-ui";
 const StatisticsAsicde = (props) => {
@@ -200,4 +199,4 @@ const StatisticsAsicde = (props) => {
     )
 }
 
-export default withRouter(inject('statisticsStore')(observer(StatisticsAsicde)));
+export default withRouter(StatisticsAsicde);

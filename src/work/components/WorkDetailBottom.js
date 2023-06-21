@@ -292,4 +292,4 @@ const WorkDetailBottom = (props) => {
 
     )
 };
-export default inject("workStore", "workLogStore")(observer(WorkDetailBottom));
+export default inject("workStore")(observer(WorkDetailBottom));

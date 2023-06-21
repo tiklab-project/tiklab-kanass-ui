@@ -297,4 +297,4 @@ const StagePlan = (props) => {
         </div>
     )
 }
-export default withRouter(inject("systemRoleStore", "versionStore", "stageStore")(observer(StagePlan)));
+export default withRouter(inject("stageStore")(observer(StagePlan)));

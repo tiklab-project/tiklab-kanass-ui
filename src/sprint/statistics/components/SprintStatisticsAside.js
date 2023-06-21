@@ -59,19 +59,10 @@ const StatisticsAsicde = (props) => {
     const [selectRouter, setSelectRouter] = useState("workItem")
 
     const [expandedTree, setExpandedTree] = useState([])
-    const [reportList, setReportList] = useState([])
-    const { statisticsStore } = props;
-    const { findReportList, deleteReport } = statisticsStore;
     const projectId = props.match.params.id;
     const path = props.match.path.split("/")[2];
     console.log(props)
     useEffect(() => {
-        findReportList({ projectId: projectId }).then(res => {
-            if (res.code === 0) {
-                setReportList(res.data)
-            }
-        })
-        return
     }, [])
 
     useEffect(() => {
@@ -232,4 +223,4 @@ const StatisticsAsicde = (props) => {
     )
 }
 
-export default withRouter(inject('statisticsStore')(observer(StatisticsAsicde)));
+export default withRouter(StatisticsAsicde);

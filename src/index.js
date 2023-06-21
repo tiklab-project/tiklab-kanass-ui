@@ -11,12 +11,9 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
-import { store } from "./stores"
+// import { store } from "./stores"
 import { orgStores } from "tiklab-user-ui/es/store";
 import { getUser, enableAxiosCE } from 'tiklab-core-ui';
-import { formStores } from 'tiklab-form-ui/es/store'
-import { flowStores } from 'tiklab-flow-ui/es/store'
-import { messageModuleStores } from 'tiklab-message-ui/es/store';
 import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -45,11 +42,11 @@ const Index = observer((props) => {
     
     const allStore = {
         ...privilegeStores,
-        ...orgStores,
-        ...formStores,
-        ...flowStores,
-        ...messageModuleStores,
-        ...store
+        // ...orgStores,
+        // ...formStores,
+        // ...flowStores,
+        // ...messageModuleStores,
+        // ...store
     }
     
     const userInfo = getUser()

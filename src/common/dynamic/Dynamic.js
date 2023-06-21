@@ -4,39 +4,14 @@ import "./dynamic.scss"
 import { inject, observer } from "mobx-react";
 
 const WorkItemDynamic = (props) => {
-    const { dynamicData,workStore } = props;
-    const {setWorkId,setWorkIndex} = workStore;
-    const dynamicContent = JSON.parse(dynamicData.data);
-    const keyValue = {
-        title: "标题",
-        description: "描述",
-        parent_id: "上级事项",
-        workType: "事项类型",
-        workPriority: "优先级",
-        workStatus: "状态",
-        module: "所属模块",
-        sprint: "所属迭代",
-        version: "版本",
-        preDependWorkItem: "依赖事项",
-        builder: "负责人",
-        reporter: "报告人",
-        planBeginTime: "开始日期",
-        planEndTime: "结束日期",
-        percent: "事项进度",
-        planTakeupTime: "计划用时"
-    }
-
-    const dynamicType = {
-        add: "创建",
-        update: "更新",
-        delete: "删除",
-    }
+    const { dynamicData } = props;
+   
     const goToWorkItem = (id, project,type) => {
         if(type === "workItem"){
             localStorage.setItem("projectId", project.id)
             localStorage.setItem("projectTypeId", project.projectType.id)
-            setWorkId(id)
-            setWorkIndex(1)
+            // setWorkId(id)
+            // setWorkIndex(1)
             props.history.push(`/index/prodetail/workone/${id}`)
         }
     }
@@ -308,4 +283,4 @@ const WorkItemDynamic = (props) => {
     )
 }
 
-export default inject("workStore")(observer(WorkItemDynamic));
+export default WorkItemDynamic;

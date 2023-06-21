@@ -1,21 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Breadcrumb, Input, Table, Space, Button, message, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Space, message, Row, Col } from "antd";
 import ProjectTypeAddmodal from "./ProjectTypeAddModal";
-import { observer, inject } from "mobx-react";
+import { observer } from "mobx-react";
 import "./ProjectType.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-const { Search } = Input;
+import ProjectTypeStore from "../store/ProjectTypeStore";
 
 
-const ProjectType = (props) => {
-    // 初始化
-    const imgUrl = "../../../assets/images"
-    const { projectTypeStore } = props;
+const ProjectType = () => {
     const { projectTypelist, getProjectTypeList,
         addProjectTypeList, findProjectTypeListById,
         editProjectTypeList, deleteProjectTypeList,
-        projectTypePage
-    } = projectTypeStore;
+    } = ProjectTypeStore;
 
     useEffect(() => {
         getProjectTypeList()
@@ -151,4 +147,4 @@ const ProjectType = (props) => {
         </Row>
     );
 };
-export default inject("projectTypeStore")(observer(ProjectType));
+export default observer(ProjectType);

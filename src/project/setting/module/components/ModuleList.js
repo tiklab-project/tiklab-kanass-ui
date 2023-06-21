@@ -7,12 +7,13 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Button, Row, Col } from "antd";
+import { Input, Table, Space, Row, Col } from "antd";
 import ModuleAddmodal from "./ModuleAddModal";
 import "../components/module.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import { SearchOutlined } from '@ant-design/icons';
-import ModuleStore from "../store/ModuleStore"
+import ModuleStore from "../store/ModuleStore";
+import { observer } from "mobx-react";
 const ModuleList = (props) => {
     // 解析 moduleStore
     const { modulelist, searchmodule, findModulePage, addModule, deleModule,
@@ -159,4 +160,4 @@ const ModuleList = (props) => {
         </Row>
     );
 };
-export default ModuleList;
+export default observer(ModuleList);

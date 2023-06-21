@@ -10,14 +10,14 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Input, Button, Empty, Pagination, Row, Col } from "antd";
 import "./WorkComment.scss";
 import { getUser } from 'tiklab-core-ui';
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import moment from 'moment';
-//import "../../../assets/font-icon/iconfont"
+import WorkCommentStore from "../store/WorkCommentStore";
 const { TextArea } = Input;
 
 const WorkComment = (props) => {
-    const { workCommentStore, workId } = props;
-    const { createWorkComment, findWorkCommentPage, updateWorkComment, deleteWorkComment } = workCommentStore;
+    const { workId } = props;
+    const { createWorkComment, findWorkCommentPage, updateWorkComment, deleteWorkComment } = WorkCommentStore;
     const [isInput, setIsInPut] = useState(false);
     const [commentContent, setCommentContent] = useState("")
     const useId = getUser().userId;
@@ -199,4 +199,4 @@ const WorkComment = (props) => {
     )
 }
 
-export default inject("workCommentStore")(observer(WorkComment));
+export default observer(WorkComment);

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "../components/sprintPlan.scss";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
-
+import WorkStore from "../../../work/store/WorkStore";
+import SprintPlanStore from "../stores/SprintPlanStore"
 const SprintPlan = (props) => {
-
+    const store = {
+        sprintPlanStore: SprintPlanStore,
+        workStore: WorkStore
+    }
     const [dragEvent, setDragEvent] = useState()
-    const { sprintPlanStore, workStore } = props
     const projectId =JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = localStorage.getItem("sprintId")
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = workStore;
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
-        getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition } = sprintPlanStore;
+        getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition } = SprintPlanStore;
     const [startId, setStartId] = useState()
     const [startSprintId, setStartSprintId] = useState();
     const [boxLength, setBoxLength] = useState(90)
@@ -120,7 +123,7 @@ const SprintPlan = (props) => {
         setWorkShowType("border")
     }
 
-    return (
+    return (<Provider {...store}>
         <div className="sprint-plan">
             <div className="sprint-plan-content">
                 <div className="sprint-plan-box"
@@ -352,7 +355,9 @@ const SprintPlan = (props) => {
                 {...props}
             />
         </div>
+    </Provider>
+        
 
     )
 }
-export default inject('sprintPlanStore', "workStore")(observer(SprintPlan));
+export default observer(SprintPlan);

@@ -350,4 +350,4 @@ const ProjectContent = (props) => {
         </Fragment>
     )
 }
-export default inject('workStore', 'projectStore')(withRouter(observer(ProjectContent)));
+export default inject('projectStore')(withRouter(observer(ProjectContent)));

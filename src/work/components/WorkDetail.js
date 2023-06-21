@@ -500,4 +500,4 @@ const WorkDetail = (props) => {
 
     )
 };
-export default inject("systemRoleStore", "workStore", "workChild")(observer(WorkDetail));
+export default inject("workStore")(observer(WorkDetail));

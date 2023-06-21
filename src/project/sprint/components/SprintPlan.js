@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from "react";
 import { ContainerTwoTone } from '@ant-design/icons';
 import "../components/SprintPlan.scss";
-import { observer, inject } from "mobx-react";
+import { observer } from "mobx-react";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import { Row, Col } from 'antd';
 import ProjectSprintPlanStore from "../store/SprintPlanStore"
@@ -198,4 +198,4 @@ const SprintPlan = (props) => {
         </Row>
     )
 }
-export default SprintPlan;
+export default observer(SprintPlan);

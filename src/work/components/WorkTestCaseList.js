@@ -8,15 +8,17 @@
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Button, Input, Row, Table, Col } from 'antd';
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import "./WorkTestCase.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 import {applyJump} from "tiklab-core-ui";
-const { Search } = Input;
-
+import WorkTestStore from "../store/WorkTestStore";
 const WorkTestCaseList = (props) => {
-    const { workTestStore, workStore, projectId } = props;
-    const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = workTestStore;
+    const store = {
+        workTestStore: WorkTestStore
+    }
+    const { workStore, projectId } = props;
+    const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = WorkTestStore;
     const { workId } = workStore;
     const [testCaseList, setWorkTestCaseList] = useState([])
     const [selectIds, setSelectIds] = useState()
@@ -118,7 +120,7 @@ const WorkTestCaseList = (props) => {
             applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
         })
     }
-    return (
+    return (<Provider {...store}>
         <div className="work-repository">
             <div className="repository-top">
                 <div className="repository-top-title">关联用例({testCaseList.length})</div>
@@ -138,9 +140,10 @@ const WorkTestCaseList = (props) => {
                 pagination={false}
             />
         </div>
+    </Provider>
+        
     )
 }
 export default inject(
     "workStore",
-    "workTestStore"
 )(observer(WorkTestCaseList));

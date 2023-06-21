@@ -17,8 +17,8 @@ import { withRouter } from "react-router";
 
 const WorkTypeAddModal = (props) => {
     const [form] = Form.useForm();
-    const { workAllTypeList, projectWorkStore,findWorkTypeDmList } = props;
-    const { findSelectWorkTypeDmList, workSelectTypeList, createWorkTypeDm } = projectWorkStore;
+    const { workAllTypeList, projectWorkTypeStore,findWorkTypeDmList } = props;
+    const { findSelectWorkTypeDmList, workSelectTypeList, createWorkTypeDm } = projectWorkTypeStore;
     // 弹窗的显示参数
     const [visible, setVisible] = useState(false);
     // 项目的id
@@ -164,4 +164,4 @@ const WorkTypeAddModal = (props) => {
     );
 };
 
-export default withRouter(inject("projectWorkStore")(observer(WorkTypeAddModal)));
+export default withRouter(inject("projectWorkTypeStore")(observer(WorkTypeAddModal)));

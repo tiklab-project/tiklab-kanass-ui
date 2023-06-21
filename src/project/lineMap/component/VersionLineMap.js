@@ -440,7 +440,4 @@ const VersionLineMap = (props) => {
     )
 }
 
-export default inject(
-    "workStore",
-    "lineMapStore"
-)(observer(VersionLineMap));
+export default inject("lineMapStore")(observer(VersionLineMap));

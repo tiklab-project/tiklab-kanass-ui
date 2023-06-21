@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset";
-export class SprintSurveyStore {
+class SprintSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
 
@@ -90,4 +90,4 @@ export class SprintSurveyStore {
     }
       
 }
-export const SPRINTSURVEY_STORE = "sprintSurveyStore";
+export default new SprintSurveyStore();

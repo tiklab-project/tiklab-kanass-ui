@@ -8,8 +8,9 @@
  */
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset"
-export class EpicStore {
+class EpicStore {
     @observable uselist = [];
+    @observable workTypeList = []
     @observable searchCondition = {
         orderParams: [{
             title: "标题",
@@ -160,6 +161,15 @@ export class EpicStore {
         if(data.code === 0){
             return data;
         }
+    }
+
+    @action
+    getWorkTypeList = async(value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+        if(data.code === 0){
+            this.workTypeList = data.data;
+        }
+        return data.data;
     }
 }
 export default new EpicStore();

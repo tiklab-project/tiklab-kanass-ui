@@ -10,10 +10,8 @@ import React,{Fragment} from 'react';
 import { Layout,Col,Row  } from 'antd';
 import  OrgaAside from "./OrgaAside";
 import "../components/Orga.scss"
-import { renderRoutes } from "react-router-config";
 const { Sider,Content } = Layout;
 const Organ = (props) => {
-    const route = props.route
     return(
         <Fragment>      
             <Layout className="orga">

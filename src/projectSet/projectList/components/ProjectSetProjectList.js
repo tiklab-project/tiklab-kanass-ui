@@ -10,21 +10,19 @@ import React, { useEffect, useState } from 'react';
 import { Table, Space, Select, Row, Col } from 'antd';
 import "../components/ProjectSetProjectList.scss";
 import ProjectSetRelevance from "./ProjectSetRelevance";
-import { inject, observer } from 'mobx-react';
+import { Provider, observer } from 'mobx-react';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import { withRouter } from 'react-router';
-
+import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 const ProjectSetProjectList = (props) => {
-    const { projectSetStore } = props;
-    const { findProjectList, updateProject, projectRelevance, findAllProjectSet } = projectSetStore;
+    const store = {
+        projectSetProjectStore: ProjectSetProjectStore
+    }
+    const { findProjectList, updateProject, projectRelevance } = ProjectSetProjectStore;
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
-    const [projectSetAllList, setProjectSetAllList] = useState();
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     useEffect(() => {
-        findAllProjectSet().then(res => {
-            setProjectSetAllList(res.data)
-        })
         findProjectList({ projectSetId: projectSetId })
         return;
     }, [projectSetId])
@@ -258,64 +256,57 @@ const ProjectSetProjectList = (props) => {
         }
     ]
 
-    const workTable = (data) => {
-        return <Table
-            columns={workColumns}
-            dataSource={data}
-            rowKey={record => record.id}
-            showHeader={false}
-            pagination={false}
-        />
-    }
-
     const onSearch = (value) => {
         findProjectList({ projectName: value })
     }
-    return <Row>
-        <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-            <div className="projectSetDetail">
-                <Breadcumb
-                    firstText={projectSet.name}
-                    secondText="项目"
-                    firstUrl="/index/projectSet/projectSetList"
-                >
-                    {/* <PrivilegeButton code={'RelationProject'} domainId={projectSetId}  {...props}> */}
-                    <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
-                    {/* </PrivilegeButton> */}
+    return <Provider {...store}>
+        <Row>
+            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                <div className="projectSetDetail">
+                    <Breadcumb
+                        firstText={projectSet.name}
+                        secondText="项目"
+                        firstUrl="/index/projectSet/projectSetList"
+                    >
+                        {/* <PrivilegeButton code={'RelationProject'} domainId={projectSetId}  {...props}> */}
+                        <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
+                        {/* </PrivilegeButton> */}
 
-                </Breadcumb>
-                <div>
-                    <div className="search-add">
-                        <div>
-                            {/* <Select defaultValue="项目集列表" style={{ width: 120 }} onChange={(value) => changeProjectSet(value)}>
+                    </Breadcumb>
+                    <div>
+                        <div className="search-add">
+                            <div>
+                                {/* <Select defaultValue="项目集列表" style={{ width: 120 }} onChange={(value) => changeProjectSet(value)}>
                                 {
                                     projectSetAllList && projectSetAllList.map((item) => {
                                         return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                     })
                                 }
                             </Select> */}
-                            <InputSearch
-                                placeholder="项目名称"
-                                allowClear
-                                style={{ width: 300 }}
-                                onChange={onSearch}
+                                <InputSearch
+                                    placeholder="项目名称"
+                                    allowClear
+                                    style={{ width: 300 }}
+                                    onChange={onSearch}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="projectSet-table-box">
+                            <Table
+                                columns={columns}
+                                dataSource={projectRelevance}
+                                rowKey={record => record.id}
+                                pagination={false}
                             />
                         </div>
                     </div>
 
-                    <div className="projectSet-table-box">
-                        <Table
-                            columns={columns}
-                            dataSource={projectRelevance}
-                            rowKey={record => record.id}
-                            pagination={false}
-                        />
-                    </div>
                 </div>
+            </Col>
+        </Row>
+    </Provider>
 
-            </div>
-        </Col>
-    </Row>
 }
 
-export default withRouter(inject("projectSetStore")(observer(ProjectSetProjectList)));
+export default withRouter(observer(ProjectSetProjectList));

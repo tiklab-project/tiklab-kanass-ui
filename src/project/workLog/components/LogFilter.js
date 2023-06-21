@@ -63,4 +63,4 @@ const LogFilter = (props) => {
 
     )
 }
-export default withRouter(inject('workStore', 'logStore')(observer(LogFilter)));
+export default withRouter(inject('logStore')(observer(LogFilter)));

@@ -1,12 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Row, Col } from 'antd';
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
 import Button from "../../common/button/Button";
+import WorkChildStore from "../store/WorkChildStore";
 
 const WorkChild = (props) => {
-    const { treePath, workStore,workChild,workType, projectId,type } = props;
+    const store = {
+        workChild: WorkChildStore
+    }
+    const { treePath, workStore,workType, projectId,type } = props;
 
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
@@ -14,10 +18,10 @@ const WorkChild = (props) => {
     const [workItemTitle, setWorkItemTitle] = useState()
 
     const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,setWorkId, setWorkIndex, addWork,getWorkConditionPage, createRecent,
+        workId,setWorkId, addWork,getWorkConditionPage, createRecent,
         detailCrumbArray, setDetailCrumbArray } = workStore;
 
-    const { getWorkChildList,deleWorkChild, childWorkItemTotal } = workChild;
+    const { getWorkChildList,deleWorkChild } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     
     const project = JSON.parse(localStorage.getItem("project"));
@@ -175,7 +179,7 @@ const WorkChild = (props) => {
         })
     }
 
-    return (
+    return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
                 <div className="child-top-title">{type}({childWorkList.length})</div>
@@ -227,10 +231,8 @@ const WorkChild = (props) => {
                 />
             </div>
         </div>
+    </Provider>
+        
     )
 }
-export default inject(
-    "workStore",
-    "workChild",
-    "workRelation"
-)(observer(WorkChild));
+export default inject("workStore")(observer(WorkChild));

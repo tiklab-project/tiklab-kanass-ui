@@ -19,8 +19,7 @@ import MoreMenuModel from "./MoreMenuModal";
 const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
-    const { searchpro, workStore, project } = props;
-    const { setWorkType } = workStore;
+    const { searchpro, project } = props;
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
@@ -157,7 +156,7 @@ const ProdeScrumAside = (props) => {
 
     const prorouter = project?.projectType.type === "scrum" ? scrumProrouter : normalProrouter;
     useEffect(() => {
-        setWorkType(null)
+        // setWorkType(null)
         return
     }, [projectId, props.location.pathname])
 
@@ -186,7 +185,6 @@ const ProdeScrumAside = (props) => {
                         isShowText = {isShowText} 
                         searchpro = {searchpro}
                         project = {project}
-                        setWorkType= {setWorkType}
                     />
                     <ul className="project-menu">
                         {
@@ -238,4 +236,4 @@ const ProdeScrumAside = (props) => {
     )
 
 }
-export default withRouter(inject( "workStore", "systemRoleStore")(observer(ProdeScrumAside)));;
+export default withRouter(ProdeScrumAside);

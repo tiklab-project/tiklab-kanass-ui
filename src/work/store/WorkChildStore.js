@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
-export class WorkChild {
+class WorkChildStore {
     @observable workChildList = [];
     @observable selectWorkChildList = [];
     @observable searchWorkChildName = [];
@@ -116,4 +116,4 @@ export class WorkChild {
 		
     }
 }
-export const WORKCHILD_STORE = "workChild"
+export default new WorkChildStore();

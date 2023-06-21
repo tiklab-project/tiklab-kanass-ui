@@ -12,6 +12,8 @@ export class StageStore {
     // 成员列表
     @observable 
     uselist = [];
+
+    @observable workTypeList = [];
     // 搜索参数
     @observable 
     searchCondition = {
@@ -164,6 +166,15 @@ export class StageStore {
         if(data.code === 0){
             return data;
         }
+    }
+
+    @action
+    getWorkTypeList = async(value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+        if(data.code === 0){
+            this.workTypeList = data.data;
+        }
+        return data.data;
     }
 
 }

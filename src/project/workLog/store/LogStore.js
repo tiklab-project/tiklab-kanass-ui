@@ -140,4 +140,4 @@ export class LogStore {
     
 }
 
-export const LOG_STORE = "logStore"
+export default new LogStore();

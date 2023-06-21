@@ -109,4 +109,4 @@ export class WorkTestStore {
         return urlData;
     }
 }
-export const WORKTEST_STORE = "workTestStore"
+export default new WorkTestStore();

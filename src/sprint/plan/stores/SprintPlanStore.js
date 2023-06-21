@@ -106,4 +106,4 @@ export class SprintPlanStore {
     }
 }
 
-export const SPRINTPLAN_STORE = "sprintPlanStore"
+export default new SprintPlanStore();

@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col } from "antd";
 import MilestoneAddEditModal from "./MilestoneAddEditModal";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "../components/milestone.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -157,4 +157,4 @@ const MilestoneList = (props) => {
 
     );
 };
-export default withRouter(MilestoneList);
+export default withRouter(observer(MilestoneList));

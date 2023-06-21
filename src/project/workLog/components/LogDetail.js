@@ -8,9 +8,10 @@
  */
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "antd";
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import "./LogDetail.scss";
 import { getUser } from "tiklab-core-ui";
+import { inject, observer } from "mobx-react";
 const { TextArea } = Input;
 const LogDetail = (props) => {
     const { logDetailVisable, setLogDetailVisable, logId, listIndex, logStore } = props;
@@ -190,4 +191,4 @@ const LogDetail = (props) => {
     );
 };
 
-export default LogDetail;
+export default inject("logStore")(observer(LogDetail)) ;

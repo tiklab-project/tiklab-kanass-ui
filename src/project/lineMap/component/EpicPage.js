@@ -13,7 +13,7 @@ import InputSearch from "../../../common/input/InputSearch";
 import EpicAddModal from "./EpicAddModal"
 import "./Epic.scss"
 import { withRouter } from "react-router";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import EpicStore from '../store/EpicStore';
 const EpicPage = (props) => {
     const store = {
@@ -96,4 +96,4 @@ const EpicPage = (props) => {
 
 }
 
-export default withRouter(EpicPage);
+export default withRouter(observer(EpicPage));

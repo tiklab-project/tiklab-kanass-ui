@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
 
-export class WorkRelation {
+class WorkRelationStore {
     @observable workRelationList = [];
     @observable selectWorkRelationList = [];
     @observable searchWorkRelationName = [];
@@ -89,4 +89,4 @@ export class WorkRelation {
     }
 
 }
-export const WORKRELATION_STORE = "workRelation"
+export default new WorkRelationStore();

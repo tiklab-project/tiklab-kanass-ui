@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { Table, Space, Row, Col, message } from "antd";
-import { Provider } from "mobx-react";
+import { Provider, observer } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
@@ -145,4 +145,4 @@ const TestRepository = (props) => {
     );
 };
 
-export default withRouter(TestRepository);
+export default withRouter(observer(TestRepository));

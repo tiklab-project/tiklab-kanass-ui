@@ -10,18 +10,21 @@
 import React, { useEffect, useState } from "react";
 import { Table, Space } from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
-
-
+import VersionPlanStore from "../store/VersionPlanStores"
+import WorkStore from "../../../work/store/WorkStore";
 const VersionPlan = (props) => {
-    const { versionPlanStore, workStore, actionPlanId } = props
+    const store = {
+        versionPlanStore: VersionPlanStore
+    }
+    const { actionPlanId } = props
     const { findVersionWorkItemList, versionPlanList, selectVersionPlanList,
-        addVersionPlan, deleVersionPlan, searchAllVersionPlan, workItemTotal,searchSelectWorkItemCondition } = versionPlanStore;
-    const { setWorkId, setWorkIndex, setWorkShowType } = workStore;
+        addVersionPlan, deleVersionPlan, searchAllVersionPlan, workItemTotal,searchSelectWorkItemCondition } = VersionPlanStore;
+    const { setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
     // 显示事项详情抽屉
@@ -143,7 +146,7 @@ const VersionPlan = (props) => {
         findVersionWorkItemList(params)
     }
 
-    return (
+    return (<Provider {...store}>
         <div className="version-workitem">
             <div className="workitem-title">
                 关联事项
@@ -185,6 +188,8 @@ const VersionPlan = (props) => {
                 {...props}
             />
         </div>
+    </Provider>
+        
     )
 }
-export default withRouter(inject("systemRoleStore", "versionPlanStore", "workStore")(observer(VersionPlan)));
+export default withRouter(observer(VersionPlan));

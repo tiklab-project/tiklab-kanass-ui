@@ -444,7 +444,4 @@ const SprintLineMap = (props) => {
     )
 }
 
-export default inject(
-    "workStore",
-    "lineMapStore"
-)(observer(SprintLineMap));
+export default inject("lineMapStore")(observer(SprintLineMap));

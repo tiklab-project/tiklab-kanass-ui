@@ -26,9 +26,9 @@ const WorkTypeEditModal = (props) => {
     const [form] = Form.useForm();
     // 显示编辑弹窗
     const [visible, setVisible] = useState(false);
-    const { projectWorkStore } = props;
+    const { projectWorkTypeStore } = props;
     const { editWorkType, getFormList, getFlowList, formList,
-        flowList, findWorkTypeDmtById, findWorkTypeDmList } = projectWorkStore;
+        flowList, findWorkTypeDmtById, findWorkTypeDmList } = projectWorkTypeStore;
     // 项目id
     const projectId = props.match.params.id;
 
@@ -164,4 +164,4 @@ const WorkTypeEditModal = (props) => {
     );
 };
 
-export default withRouter(inject("projectWorkStore")(observer(WorkTypeEditModal)));
+export default withRouter(inject("projectWorkTypeStore")(observer(WorkTypeEditModal)));

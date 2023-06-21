@@ -42,8 +42,7 @@ const WorkPriorityAddModal = (props) => {
     const [form] = Form.useForm();
     const [visible, setVisible] = React.useState(false);
     const {addWorkList,findWorkPriorityListById,
-            editWorkPriorityList,group,fromList,
-            getFormList,getFlowList,flowList} = props;
+            editWorkPriorityList,group,fromList,flowList} = props;
 
     const showModal = () => {
         setVisible(true);

@@ -7,13 +7,14 @@
  * @LastEditTime: 2022-03-03 18:23:31
  */
 import React, { useEffect, useState } from "react";
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import "./WorkDynamic.scss"
-import { Empty, Row, Col } from 'antd';
-import "./WorkDynamic.scss"
+import { Empty } from 'antd';
+import "./WorkDynamic.scss";
+import WorkDynamicStore from '../store/WorkDynamicStore'
 const WorkDynamic = (props) => {
-    const { workDynamicStore, workStore } = props;
-    const { findlogpage } = workDynamicStore;
+    const { workStore } = props;
+    const { findlogpage } = WorkDynamicStore;
     const { workId } = workStore;
     const [list, setList] = useState([])
     useEffect(() => {
@@ -43,6 +44,4 @@ const WorkDynamic = (props) => {
 
 
 }
-export default inject(
-    "workDynamicStore"
-)(observer(WorkDynamic));
+export default observer(WorkDynamic);

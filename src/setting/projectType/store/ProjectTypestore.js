@@ -81,4 +81,4 @@ export class ProjectTypeStore {
     }
 
 }
-export const PROJECTYPE_STORE = "projectTypeStore"
+export default new ProjectTypeStore();

@@ -1,15 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Row, Col } from 'antd';
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
 import Button from "../../common/button/Button";
-
+import WorkRelationStore from "../store/WorkRelationStore";
 const WorkRelation = (props) => {
-    const { workRelation, workStore, projectId } = props;
+    const store = {
+        workRelation: WorkRelationStore
+    }
+    const { workStore } = props;
     const { workId, setWorkId, createRecent, detailCrumbArray, setDetailCrumbArray  } = workStore;
     const { selectWorkRelationList, getSelectWorkRelationList,
-        addWorkRelation, searchAllWorkRelation, deleWorkRelation } = workRelation;
+        addWorkRelation, searchAllWorkRelation, deleWorkRelation } = WorkRelationStore;
     const [selectIds, setSelectIds] = useState();
     const [addRelation, showAddRelation] = useState(false);
     const project = JSON.parse(localStorage.getItem("project"));
@@ -108,7 +111,7 @@ const WorkRelation = (props) => {
         }
     ];
 
-    return (
+    return (<Provider {...store}>
         <div className="work-relation">
             <div className="relation-top">
                 <div className="relation-top-title">关联事项({selectWorkRelationList.length})</div>
@@ -140,9 +143,8 @@ const WorkRelation = (props) => {
                 />
             </div>
         </div>
+    </Provider>
+        
     )
 }
-export default inject(
-    "workStore",
-    "workRelation"
-)(observer(WorkRelation));
+export default inject("workStore")(observer(WorkRelation));

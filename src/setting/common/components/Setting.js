@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-23 17:51:33
  */
 import React, { Fragment, useState, useEffect } from 'react';
-import { Layout, Col, Row } from 'antd';
+import { Layout } from 'antd';
 import SetAside from "./SetAside";
 import "../components/Orga.scss"
 import { renderRoutes } from "react-router-config";
@@ -16,7 +16,7 @@ import {setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter}  from "./S
 const { Sider, Content } = Layout;
 const Setting = (props) => {
     const route = props.route;
-    const [router,setRouterMenu] = useState(setDevEamRouter)
+    const [router,setRouterMenu] = useState(setDevEamRouter);
     const authType = JSON.parse(localStorage.getItem("authConfig")).authType;
     useEffect(() => {
         if(env === "local" && authType === true){
@@ -31,7 +31,6 @@ const Setting = (props) => {
         if(env !== "local" && authType === false){
             setRouterMenu(setPrdRouter)
         }
-
         return 
     },[])
     return (

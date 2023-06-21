@@ -17,6 +17,17 @@ export class BasicInfoStore {
         }
     }
 
+    @observable projectPageParams = {
+        orderParams: [{
+            name: "projectName",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
+    }
+
     @action
     statProjectSetWorkItemProcess = async (values) => {
         const params = new FormData();
@@ -84,6 +95,14 @@ export class BasicInfoStore {
         }
         return data;
     }
+
+    @action
+    findProjectList = async(values) => {
+        Object.assign(this.projectPageParams, { ...values })
+        const data = await Service("/projectSet/findProjectList", this.projectPageParams);
+        return data;
+    }
+
 }
 
-export const BASICINFO_STORE = "basicInfoStore"
+export default new BasicInfoStore();

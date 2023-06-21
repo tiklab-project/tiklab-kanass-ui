@@ -12,15 +12,16 @@ import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
 import { Empty, Tabs } from 'antd';
 import { withRouter } from 'react-router';
+import WorkStore from '../../../work/store/WorkStore';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
-    const { homeStore, workStore } = props
+    const { homeStore } = props
     const { statProjectWorkItem, createRecent,
         findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
-    const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = workStore;
+    const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -354,4 +355,4 @@ const HomeSurvey = (props) => {
 }
 
 
-export default withRouter(inject("homeStore", "workStore")(observer(HomeSurvey)));
+export default withRouter(inject("homeStore")(observer(HomeSurvey)));

@@ -5,14 +5,15 @@ import moment from 'moment';
 import { getUser } from 'tiklab-core-ui';
 import "./WorkLog.scss";
 import dayjs from "dayjs";
+import WorkLogStore from "../store/WorkLogStore"
 const { TextArea } = Input;
 
 const WorkLog = (props) => {
     const [visible, setVisible] = useState(false);
     const [confirmLoading] = useState(false);
-    const { workLogStore, workStore, planTakeupTime, surplusTime } = props;
+    const { workStore, planTakeupTime, surplusTime } = props;
     const { getWorkLogList, workLogList, addWorkLog, deleteWorKLog, editWorKLog, searchWorKLog,
-        versionTime } = workLogStore;
+        versionTime } = WorkLogStore;
     const { workId, workAllList, getWorkAllList } = workStore;
     const [date, setDate] = useState(dayjs().format(dateFormat))
     const [modalTitle, setModalTitle] = useState("添加工时")
@@ -269,7 +270,4 @@ const WorkLog = (props) => {
     );
 }
 
-export default inject(
-    "workLogStore",
-    "workStore"
-)(observer(WorkLog));
+export default inject("workStore")(observer(WorkLog));

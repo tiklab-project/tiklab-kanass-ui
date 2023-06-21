@@ -1,21 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Space, message, Row, Col } from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
-import { observer, inject } from "mobx-react";
-import { getUser } from 'tiklab-core-ui';
+import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-
-const { Search } = Input;
-
+import WorkSetingStore from "../store/WorkSetingStore"
 
 const WorkTypeSystem = (props) => {
-    // 初始化
-    const { orgaStore } = props;
+    const store = {
+        workSetingStore: WorkSetingStore
+    }
     const { workSystemTypeList, getSystemWorkTypeList,
         addSystemWorkTypeList, findWorkTypeListById,
         editWorkTypeList, deleteWorkTypeSystemList, setWorkTypeList, fromList,
         getFormList, flowList, getFlowList, creatIcon, findIconList
-    } = orgaStore;
+    } = WorkSetingStore;
     useEffect(() => {
         getSystemWorkTypeList({grouper: "system"})
         getFormList()
@@ -195,7 +193,7 @@ const WorkTypeSystem = (props) => {
         },
     ];
 
-    return (
+    return (<Provider {...store}>
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="work-type">
@@ -242,6 +240,8 @@ const WorkTypeSystem = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     );
 };
-export default inject("orgaStore")(observer(WorkTypeSystem));
+export default observer(WorkTypeSystem);

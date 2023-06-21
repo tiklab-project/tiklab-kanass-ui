@@ -14,17 +14,13 @@ import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
-
+import SprintSurveyStore from "../store/SprintSurveyStore"
 const SprintSurvey = (props) => {
-    const { sprintSurveyStore } = props;
-    const { StatSprintProcessWorkItem, StatSprintWorkItemByBusStatus,
-        FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList } = sprintSurveyStore;
+    const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
+        findtodopage, todoTaskList } = SprintSurveyStore;
 
-    const [workStatusList, setWorkStatusList] = useState();
 
     const sprintId = props.match.params.sprint;
-    const [workItemList, setWorkItemList] = useState();
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
     const masterName = getUser().name;
@@ -62,12 +58,6 @@ const SprintSurvey = (props) => {
                     burnDownChart(timerXaixs, workCountYaixs, Yaxis)
                 }
             })
-        })
-        StatSprintWorkItemByBusStatus({ sprintId: sprintId }).then(res => {
-            setWorkStatusList(res.data)
-        })
-        StatSprintProcessWorkItem(data).then((res) => {
-            setWorkItemList(res.data)
         })
         // 燃尽图
        
@@ -338,4 +328,4 @@ const SprintSurvey = (props) => {
     )
 }
 
-export default inject('sprintSurveyStore')(observer(SprintSurvey));
+export default observer(SprintSurvey);

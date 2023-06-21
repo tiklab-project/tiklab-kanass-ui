@@ -12,14 +12,15 @@ import { Pagination } from 'antd';
 import "./Search.scss";
 import { Row, Col,Tabs } from 'antd';
 import project from "../../../assets/images/project.png";
-import { observer, inject } from "mobx-react";
+import { observer } from "mobx-react";
+import SearchStore from "../store/Search";
+import WorkStore from "../../../work/store/WorkStore"
 const { TabPane } = Tabs;
 
 const SearchResult = (props) => {
-    const {searchStore,workStore} = props
-    const {getSearchSore,sortList,searchForPage,keyword,searchCondition,setKeyWord,searchList,getSearch} = searchStore;
+    const {getSearchSore,sortList,searchForPage,keyword,searchCondition,setKeyWord,searchList,getSearch} = SearchStore;
     // 设置事项id
-    const {setWorkId} = workStore;
+    const {setWorkId} = WorkStore;
     // 最后一个翻页所需的当前页最后的条数
     const [lastRecord,setLastRecord] = useState()
     // 搜索结果条数
@@ -221,4 +222,4 @@ const SearchResult = (props) => {
         
     )
 }
-export default inject("searchStore","workStore")(observer(SearchResult));
+export default observer(SearchResult);

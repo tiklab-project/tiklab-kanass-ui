@@ -1,18 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Space, message, Row, Col,Table } from "antd";
 import WorkPriorityAddmodal from "./WorkPriorityAddModal";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import "./WorkPriority.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-
+import WorkSetingStore from "../store/WorkSetingStore";
 const WorkPriority = (props) => {
-    // 初始化
-    const { orgaStore } = props;
+    const store  = {
+        workSetingStore: WorkSetingStore
+    }
     const { workPrioritylist, getWorkPriorityList,
         addWorkPriorityList, findWorkPriorityListById,
         editWorkPriorityList, deleteWorkPriorityList,
         setWorkPriorityList
-    } = orgaStore;
+    } = WorkSetingStore;
 
     useEffect(() => {
         getWorkPriorityList()
@@ -114,8 +115,8 @@ const WorkPriority = (props) => {
                         typeName="优先级"
                         type="edit"
                         id={record.id}
-                        editWorkList={editWorkPriorityList}
-                        findWorkListById={findWorkPriorityListById}
+                        editWorkPriorityList={editWorkPriorityList}
+                        findWorkPriorityListById={findWorkPriorityListById}
 
                     >
                         编辑
@@ -143,7 +144,7 @@ const WorkPriority = (props) => {
         },
     ];
 
-    return (
+    return (<Provider {...store}>
         <Row>
             <Col lg={{  span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
                 <div className="work-priority" >
@@ -171,6 +172,8 @@ const WorkPriority = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     );
 };
-export default inject("orgaStore")(observer(WorkPriority));
+export default observer(WorkPriority);

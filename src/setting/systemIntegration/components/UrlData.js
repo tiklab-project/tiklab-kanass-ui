@@ -2,11 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Table, Space, Button, Row, Col, message } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./UrlData.scss";
-import { observer, inject } from "mobx-react";
-import UrlAddData from "./UrlAddData"
-const UrlData = props => {
-    const { urlDataStore } = props;
-    const { findAllSystemUrl, deleteSystemUrl } = urlDataStore;
+import { observer, Provider } from "mobx-react";
+import UrlAddData from "./UrlAddData";
+import UrlDataStore from "../store/UrlDataStore"
+const UrlData = (props) => {
+    const store = {
+        urlDataStore: UrlDataStore
+    }
+    const { findAllSystemUrl, deleteSystemUrl } = UrlDataStore;
     const [urlDataList, setUrlDataList] = useState([]);
     const [modalTitle, setModalTitle] = useState()
     const [urlAddvisible, setUrlAddvisible] = useState()
@@ -23,9 +26,9 @@ const UrlData = props => {
         const params = new FormData();
         params.append("id", id)
         deleteSystemUrl(params).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 findAllSystemUrl().then(data => {
-                    if(data.code === 0){
+                    if (data.code === 0) {
                         setUrlDataList(data.data)
                     }
                 })
@@ -83,7 +86,7 @@ const UrlData = props => {
         setUrlAddvisible(true)
         setActionType("add")
     }
-    return (
+    return (<Provider {...store}>
         <Fragment>
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -110,8 +113,10 @@ const UrlData = props => {
                 urlId={urlId}
             />
         </Fragment>
+    </Provider>
+
 
     )
 }
 
-export default inject("urlDataStore")(observer(UrlData));
+export default observer(UrlData);

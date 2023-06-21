@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 19:09:13
  */
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { DatePicker, Select, Row, Col } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
@@ -16,10 +16,14 @@ import "./versionDetail.scss";
 import VersionPlan from "./VersionPlan"
 import { withRouter } from "react-router";
 import Button from "../../../common/button/Button";
-
+import VersionStores from "../store/VersionStores";
+import WorkStore from "../../../work/store/WorkStore";
 const VersionDetail = (props) => {
-    const { versionStore } = props;
-    const { findVersion, versionList, getVersionList, deleVersion, editVersion } = versionStore;
+    const store = {
+        versionStores: VersionStores,
+        workStore: WorkStore
+    }
+    const { findVersion, versionList, getVersionList, deleVersion, editVersion } = VersionStores;
     // 版本信息
     const [planInfo, setPlanInfo] = useState()
     // 当前版本id
@@ -151,7 +155,7 @@ const VersionDetail = (props) => {
     const deleVersionById = () => {
         deleVersion(actionPlanId)
     }
-    return (
+    return (<Provider {...store}>
         <Row >
             <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-detail">
@@ -254,7 +258,9 @@ const VersionDetail = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     )
 
 }
-export default withRouter(inject("versionStore")(observer(VersionDetail)));
+export default withRouter(observer(VersionDetail));

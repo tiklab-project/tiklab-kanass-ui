@@ -115,4 +115,4 @@ export class WorkWikiStore {
         return urlData;
     }
 }
-export const WORKWIKI_STORE = "workWikiStore"
+export default new WorkWikiStore();

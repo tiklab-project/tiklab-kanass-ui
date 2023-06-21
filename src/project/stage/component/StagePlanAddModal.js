@@ -14,10 +14,8 @@ import Button from "../../../common/button/Button";
 const { Search } = Input;
 
 const StagePlanAddModal = (props) => {
-    const {workStore,stageId, stageStore, stageWorkIds, setStageWorkIds, setStageChild } = props;
-    const { findWorkItemPageTreeByQuery, createStageWorkItem, findWorkItemListByStage } = stageStore;
-    // 事项类型列表
-    const {workTypeList} = workStore;
+    const {stageId, stageStore, stageWorkIds, setStageChild } = props;
+    const { findWorkItemPageTreeByQuery, createStageWorkItem, findWorkItemListByStage, workTypeList } = stageStore;
     // 是否打开弹窗
     const [visible, setVisible] = useState(false);
     // 选择的事项id集合
@@ -191,4 +189,4 @@ const StagePlanAddModal = (props) => {
     );
 };
 
-export default inject("systemRoleStore",'workStore','versionPlanStore', 'stageStore')(observer(StagePlanAddModal));
+export default inject('stageStore')(observer(StagePlanAddModal));

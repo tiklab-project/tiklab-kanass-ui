@@ -1,21 +1,16 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Tabs, Form, Select, Button, Col } from 'antd';
+import { Table, Form, Select, Button } from 'antd';
 import { observer, inject } from "mobx-react";
-import ProjectReportAddOrEdit from "./ReportAddOrEdit"
 import echarts from "../../common/echarts/echarts";
 import { withRouter } from "react-router";
-import { exportPDF } from "./exportPDFDom"
-const { TabPane } = Tabs;
-
+import { exportPDF } from "./exportPDFDom";
+import StatisticsStore from "../store/StatisticStore";
 
 const StatisticsWork = (props) => {
-    const { statisticsStore } = props;
-    const { statisticWorkItem, findProjectList } = statisticsStore;
+    const { statisticWorkItem, findProjectList } = StatisticsStore;
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
-    const [visible, setVisible] = useState(false);
-    const [fromData, setFromData] = useState();
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint;
     const projectSetId = props.match.params.projectSetId;
@@ -109,14 +104,6 @@ const StatisticsWork = (props) => {
                 data: yaixs
             }]
         });
-    }
-
-    const addReport = (values) => {
-
-        form.validateFields().then((values) => {
-            setFromData(values)
-        })
-        setVisible(true)
     }
 
     const setPie = () => {
@@ -262,18 +249,11 @@ const StatisticsWork = (props) => {
                     pagination={false}
                 />
                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
-                <ProjectReportAddOrEdit
-                    fromData={fromData}
-                    visible={visible}
-                    setVisible={setVisible}
-                    reportType="work"
-                    type="work"
-                    {...props}
-                />
+               
             </div>
 
         </>
     )
 
 }
-export default withRouter(inject('statisticsStore')(observer(StatisticsWork)));
+export default withRouter(observer(StatisticsWork));

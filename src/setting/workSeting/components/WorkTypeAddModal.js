@@ -22,9 +22,9 @@ const WorkTypeAddModal = (props) => {
 
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
-    const {  bottonType,addWorkTypeList, creatIcon, findIconList, orgaStore } = props;
+    const {  bottonType,addWorkTypeList, creatIcon, findIconList, workSetingStore } = props;
     const { getFormList, getFlowList, flowList, fromList, findWorkTypeListById,
-        editWorkTypeList} = orgaStore;
+        editWorkTypeList} = workSetingStore;
     
     const [grouper, setGruoper] = useState()
     const iconList = [
@@ -289,4 +289,4 @@ const WorkTypeAddModal = (props) => {
     );
 };
 
-export default withRouter(inject("orgaStore")(observer(WorkTypeAddModal)));
+export default withRouter(inject("workSetingStore")(observer(WorkTypeAddModal)));

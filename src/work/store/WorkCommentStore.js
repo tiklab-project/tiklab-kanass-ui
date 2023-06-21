@@ -54,4 +54,4 @@ export class WorkCommentStore {
     }
 }
 
-export const WORKCOMMENT_STORE = "workCommentStore";
+export default new WorkCommentStore();

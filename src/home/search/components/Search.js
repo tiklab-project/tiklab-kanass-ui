@@ -14,13 +14,9 @@ import project from "../../../assets/images/project.png"
 
 import { observer, inject } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
-
+import SearchStore from "../store/Search";
 const Search = (props) => {
-    const { searchStore, workStore, homeStore } = props;
-    const { getSearch, searchList, getSearchSore, setKeyWord } = searchStore;
-    const { setWorkId } = workStore;
-    const { statProjectWorkItem, statTodoWorkItem } = homeStore;
-
+    const { getSearch, searchList, getSearchSore, setKeyWord, statProjectWorkItem, statTodoWorkItem  } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState();
     // 待办事项列表
@@ -81,7 +77,7 @@ const Search = (props) => {
      * @param {项目id} pid 
      */
     const toWorkItem = async (id, projectId) => {
-        setWorkId(id)
+        // setWorkId(id)
         localStorage.setItem("projectId", projectId)
         await props.history.push("/index/prodetail/work")
         setShow("hidden")
@@ -220,4 +216,4 @@ const Search = (props) => {
         </Fragment>
     )
 }
-export default inject("searchStore", "workStore", "homeStore")(observer(Search));
+export default inject( "homeStore")(observer(Search));

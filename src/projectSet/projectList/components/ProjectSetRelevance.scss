@@ -1,5 +1,8 @@
 .projectSet-relevance {
-    
+    .ant-modal-body {
+        height: calc(100vh - 200px);
+        overflow: auto;
+    }
     .projectSet-box {
         display: flex;
         flex-direction: row;

@@ -12,14 +12,14 @@ import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
 import { withRouter } from "react-router";
+import ProjectSetStore from "../store/ProjectSetStore";
 const ProjectSetGide = (props) => {
-    const { projectSetStore } = props;
-    const { getUseList } = projectSetStore;
+    const { getUseList } = ProjectSetStore;
     const [name, setName] = useState("添加项目集")
 
-    useEffect(() => {
-        getUseList()
-    })
+    // useEffect(() => {
+    //     getUseList()
+    // })
     return (
         <div className="projectSet-gide">
             <div>
@@ -36,4 +36,4 @@ const ProjectSetGide = (props) => {
         </div>
     )
 }
-export default withRouter(inject('projectSetStore')(observer(ProjectSetGide)));
+export default withRouter(observer(ProjectSetGide));

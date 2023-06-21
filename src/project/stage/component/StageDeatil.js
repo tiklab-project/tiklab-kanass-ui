@@ -7,8 +7,8 @@
  * @LastEditTime: 2022-04-09 19:09:13
  */
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { observer, inject } from "mobx-react";
-import { DatePicker, Select, Row, Col } from 'antd';
+import { observer, Provider } from "mobx-react";
+import { DatePicker, Row, Col } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
@@ -16,10 +16,12 @@ import "./stageDetail.scss";
 import StagePlan from "./StagePlan"
 import { withRouter } from "react-router";
 import Button from "../../../common/button/Button";
-
+import StageStore from "../store/StageStore";
 const StageDetail = (props) => {
-    const { stageStore } = props;
-    const { findStage, findStageList, updateStage, deleteStage } = stageStore;
+    const store = {
+        stageStore: StageStore
+    }
+    const { findStage, findStageList, updateStage, deleteStage } = StageStore;
     // 日期格式
     const dateFormat = 'YYYY-MM-DD';
     // 阶段信息
@@ -168,7 +170,7 @@ const StageDetail = (props) => {
         setEditName(false)
     }
 
-    return (
+    return (<Provider {...store}>
         <Row >
             <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="stage-detail">
@@ -271,7 +273,9 @@ const StageDetail = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     )
 
 }
-export default withRouter(inject("stageStore")(observer(StageDetail)));
+export default withRouter(observer(StageDetail));

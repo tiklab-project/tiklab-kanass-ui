@@ -9,13 +9,11 @@ import "./WorkBreadCrumb.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";
 import Button from "../../common/button/button";
-
+import WorkStore from "../store/WorkStore";
 const SprintWorkBreadCrumb = (props) => {
-    const { workStore } = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { workTypeList, workId, workBreadCrumbText,
-        workShowType, viewType, setViewType, setWorkShowType,
-        getWorkConditionPageTree, getWorkConditionPage, setWorkIndex, setWorkId, getWorkBoardList } = workStore;
+    const { workTypeList, workId, workShowType, viewType, setViewType, setWorkShowType,
+        getWorkConditionPageTree, getWorkConditionPage, setWorkIndex, setWorkId, getWorkBoardList } = WorkStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
     const pluginStore = useSelector(state => state.pluginStore);
@@ -178,4 +176,4 @@ const SprintWorkBreadCrumb = (props) => {
         </div>
     )
 }
-export default withRouter(inject("workStore")(observer(SprintWorkBreadCrumb)));
+export default withRouter(observer(SprintWorkBreadCrumb));

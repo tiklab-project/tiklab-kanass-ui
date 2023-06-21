@@ -290,4 +290,4 @@ const ProjectSetBasicInfo = props => {
     )
 }
 
-export default inject("projectStore", "projectSetStore")(observer(ProjectSetBasicInfo));
+export default inject("projectSetStore")(observer(ProjectSetBasicInfo));

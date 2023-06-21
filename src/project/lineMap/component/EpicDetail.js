@@ -7,19 +7,21 @@
  * @LastEditTime: 2022-04-09 19:09:13
  */
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { DatePicker, Select, Row, Col } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import "./EpicDetail.scss";
-import EpicPlan from "./EpicPlan"
 import { withRouter } from "react-router";
 import Button from "../../../common/button/Button";
-
+import EpicStore from "../store/EpicStore";
+import EpicPlan from "./EpicPlan"
 const EpicDetail = (props) => {
-    const { epicStore } = props;
-    const { findEpic, findEpicList, updateEpic, deleteEpic } = epicStore;
+    const store = {
+        epicStore: EpicStore
+    }
+    const { findEpic, findEpicList, updateEpic, deleteEpic } = EpicStore;
     // 史诗信息
     const [epicInfo, setEpicInfo] = useState()
     // 史诗id
@@ -157,7 +159,7 @@ const EpicDetail = (props) => {
         })
     }
 
-    return (
+    return (<Provider {...store}>
         <Row >
             <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="epic-detail">
@@ -259,7 +261,9 @@ const EpicDetail = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     )
 
 }
-export default withRouter(inject("epicStore")(observer(EpicDetail)));
+export default withRouter(observer(EpicDetail));

@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 const ProjectChangeModal = (props) => {
-    const { isShowText, searchpro, setWorkType, project, projectStore } = props;
+    const { isShowText, searchpro, project, projectStore } = props;
     const { findMyAllProjectList, allProlist } = projectStore;
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
@@ -72,8 +72,8 @@ const ProjectChangeModal = (props) => {
                 localStorage.setItem("project", JSON.stringify(data.data));
                 props.history.push(`/index/projectDetail/${id}/survey`)
                 localStorage.setItem("projectId", id);
-                // 重置事项id
-                setWorkType(null)
+                // // 重置事项id
+                // setWorkType(null)
                 // 关闭切换弹窗
                 setShowMenu(false)
                 location.reload();

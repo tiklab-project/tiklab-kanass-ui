@@ -28,11 +28,10 @@ const WorkBasicInfo = (props) => {
     };
     const [messageApi, contextHolder] = message.useMessage();
 
-    const { workStore, workLogStore, workInfo, setWorkInfo } = props;
+    const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workIndex, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
         formList, moduleList, sprintList, priorityList, editWork, userList
     } = workStore;
-    const { setPlanTime } = workLogStore
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
     // 富文本内容
     const [priorityDes, setPriorityDes] = useState("")
@@ -63,7 +62,6 @@ const WorkBasicInfo = (props) => {
             } else {
                 setParentWorkItem("")
             }
-            setPlanTime(workInfo.planTakeupTime)
 
             extDataForm.resetFields();
             if (workInfo.extData) {
@@ -672,4 +670,4 @@ const WorkBasicInfo = (props) => {
         </div>
     )
 };
-export default inject("workStore", "workLogStore")(observer(WorkBasicInfo));
+export default inject("workStore")(observer(WorkBasicInfo));

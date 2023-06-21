@@ -14,8 +14,7 @@ import {observer, inject} from "mobx-react";
 import ProjectSetSetDetailAdide from "./ProjectSetSettingDetailAside"
 
 const ProjectSetting = (props)=>{
-    const {projectStore,systemRoleStore,route} = props;
-    const {searchpro, findProjectList, prolist} = projectStore;
+    const {route} = props;
 
     // 当前项目名字
     const [projectname,setProjectname] = useState();
@@ -31,9 +30,6 @@ const ProjectSetting = (props)=>{
             search = search.split("=")
             localStorage.setItem("projectId", search[1]);
         }
-        searchpro(props.match.params.id).then((res)=> {
-            setProjectname(res.projectName)
-        })
         // 初始化权限
        
         return 
@@ -42,10 +38,7 @@ const ProjectSetting = (props)=>{
 
     return (
         <Layout className="projectSet-set">
-            <ProjectSetSetDetailAdide 
-                projectName={projectname}
-                prolist={prolist} 
-                searchpro = {searchpro} 
+            <ProjectSetSetDetailAdide  
                 {...props}
             />
             <Layout>
@@ -56,4 +49,4 @@ const ProjectSetting = (props)=>{
     )
     
 }
-export default inject('projectStore')(observer(ProjectSetting));
+export default observer(ProjectSetting);

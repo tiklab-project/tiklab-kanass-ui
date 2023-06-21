@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-02-15 16:52:29
  */
 import React, { useEffect, useState } from "react";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import SprintLineMap from "./SprintLineMap";
 import VersionLineMap from "./VersionLineMap";
 import EpicPage from "./EpicPage";
@@ -95,4 +95,4 @@ const Linemap = (props) => {
 
     )
 }
-export default Linemap;
+export default observer(Linemap);
