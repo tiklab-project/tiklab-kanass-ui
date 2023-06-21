@@ -12,12 +12,12 @@ import "../components/SprintPlan.scss";
 import { observer, inject } from "mobx-react";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import { Row, Col } from 'antd';
+import ProjectSprintPlanStore from "../store/SprintPlanStore"
 const SprintPlan = (props) => {
     const [dragEvent, setDragEvent] = useState();
-    const { projectSprintPlanStore } = props;
     const projectId = props.match.params.id;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
-        getSprintList, sprintList, setSprint, delSprint } = projectSprintPlanStore;
+        getSprintList, sprintList, setSprint, delSprint } = ProjectSprintPlanStore;
     // 被移动事项的id
     const [startId, setStartId] = useState()
     // 被移动事项的初始迭代id
@@ -198,4 +198,4 @@ const SprintPlan = (props) => {
         </Row>
     )
 }
-export default inject('projectSprintPlanStore')(observer(SprintPlan));
+export default SprintPlan;

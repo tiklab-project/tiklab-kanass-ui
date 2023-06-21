@@ -10,7 +10,6 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Input, Row, Col } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
-import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "../components/sprint.scss";
 import { getUser } from "tiklab-core-ui";
@@ -18,14 +17,13 @@ import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import InputSearch from '../../../common/input/InputSearch'
-
+import SprintStore from "../store/SprintStore"
 const Sprint = (props) => {
-    const projectId = props.match.params.id
-    const { sprintStore } = props;
+    const projectId = props.match.params.id;
     const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList, 
         sprintlist, delesprintList,createSprintFocus, findSprintFocusList, 
         deleteSprintFocus, findFocusSprintList,setFilterType, createRecent
-    } = sprintStore;
+    } = SprintStore;
 
     const project = JSON.parse(localStorage.getItem("project"));
     // 登录者id
@@ -347,4 +345,4 @@ const Sprint = (props) => {
     )
 
 }
-export default withRouter(inject("systemRoleStore", "sprintStore")(observer(Sprint)));
+export default withRouter(Sprint);

@@ -138,4 +138,4 @@ export class ModuleStore {
     }
 }
 
-export const MODULE_STORE = "moduleStore"
+export default new ModuleStore();

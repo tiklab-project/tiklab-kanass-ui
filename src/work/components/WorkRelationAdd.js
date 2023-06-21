@@ -5,11 +5,10 @@ import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 const WorkChildAddmodal = (props) => {
-    const { projectStore, workStore, workRelation, selectIds, showAddRelation, selectChild, relationAddRef, projectId } = props;
+    const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
 
     const { workTypeList, workId } = workStore;
     const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const relationAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")

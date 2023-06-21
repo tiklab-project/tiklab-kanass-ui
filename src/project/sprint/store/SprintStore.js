@@ -247,4 +247,4 @@ export class SprintStore {
     }
 }
 
-export const SPRINT_STORE = "sprintStore"
+export default new SprintStore();

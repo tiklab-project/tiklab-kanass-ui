@@ -8,22 +8,24 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { inject, observer } from "mobx-react";
+import { Provider, inject, observer } from "mobx-react";
 import "./ViewInsight.scss";
 import ReportItem from "./ReportItem"
 import { withRouter } from "react-router";
 import { Empty } from "antd";
 import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../../node_modules/react-resizable/css/styles.css"
-import GridLayout, { Responsive, WidthProvider } from "react-grid-layout";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
-
+import InsightStore from "../store/InsightStore"
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const ViewInsight = (props) => {
-    const { insightStore } = props;
-    const { findInsight } = insightStore;
+    const store = {
+        insightStore: InsightStore
+    }
+    const { findInsight } = InsightStore;
     // 仪表盘详情
     const [insightDetail, setInsightDetail] = useState()
     // 仪表盘报告列表
@@ -57,7 +59,8 @@ const ViewInsight = (props) => {
     }
 
     return (
-        <div className="view-insight">
+        <Provider {...store}>
+            <div className="view-insight">
             <Breadcumb firstText="仪表盘列表" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
                 <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
             </Breadcumb>
@@ -104,7 +107,9 @@ const ViewInsight = (props) => {
 
             </div>
         </div>
+        </Provider>
+        
     )
 }
 
-export default withRouter(inject("insightStore")(observer(ViewInsight)));
+export default withRouter(ViewInsight);

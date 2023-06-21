@@ -167,4 +167,4 @@ export class StageStore {
     }
 
 }
-export const STAGE_STORE = "stageStore"
+export default new StageStore();

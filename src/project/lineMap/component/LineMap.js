@@ -7,17 +7,19 @@
  * @LastEditTime: 2022-02-15 16:52:29
  */
 import React, { useEffect, useState } from "react";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import SprintLineMap from "./SprintLineMap";
 import VersionLineMap from "./VersionLineMap";
 import EpicPage from "./EpicPage";
 import "../component/LineMap.scss";
 import { Row, Col, Tabs } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import LineMapStore from "../store/LineMapStore";
 const Linemap = (props) => {
-    // 解析props
-    const { lineMapStore } = props;
-    const { findSprintRoadMap, findVersionRoadMap, findEpicRoadMap } = lineMapStore;
+    const store = {
+        lineMapStore: LineMapStore
+    }
+    const { findSprintRoadMap, findVersionRoadMap } = LineMapStore;
     // 获取当前项目id
     const projectId = props.match.params.id;
     // 当前显示路线图类型，迭代或版本
@@ -41,7 +43,7 @@ const Linemap = (props) => {
                 }
             })
         }
-    
+
         return;
     }, [type])
 
@@ -54,42 +56,43 @@ const Linemap = (props) => {
     };
 
     return (
-        <Row style={{ height: "100%" }}>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                <div className="project-linemap">
-                    <Breadcumb
-                        firstText="项目管理"
-                    ></Breadcumb>
-                    <Tabs defaultActiveKey="sprint" onChange = {onChange} activeKey = {type}>
-                        <Tabs.TabPane tab="迭代" key="sprint">
-                            
-                        </Tabs.TabPane>
-                        <Tabs.TabPane tab="版本" key="version">
-                            {/* <VersionLineMap data={versionList} type={type} /> */}
-                        </Tabs.TabPane>
-                        <Tabs.TabPane tab="需求集" key="epic">
-                            
-                        </Tabs.TabPane>
-                    </Tabs>
+        <Provider {...store}>
+            <Row style={{ height: "100%" }}>
+                <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                    <div className="project-linemap">
+                        <Breadcumb
+                            firstText="项目管理"
+                        ></Breadcumb>
+                        <Tabs defaultActiveKey="sprint" onChange={onChange} activeKey={type}>
+                            <Tabs.TabPane tab="迭代" key="sprint">
 
-                    {
-                        type === "sprint" && 
-                        <SprintLineMap data={sprintList} type={type} />
-                    }
-                    {
-                        type === "version" && 
-                        <VersionLineMap data={versionList} type={type} />
-                    }
-                    {
-                        type === "epic" &&
-                        <EpicPage />
-                    }
-                </div>
-            </Col>
-        </Row>
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="版本" key="version">
+                                {/* <VersionLineMap data={versionList} type={type} /> */}
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="需求集" key="epic">
+
+                            </Tabs.TabPane>
+                        </Tabs>
+
+                        {
+                            type === "sprint" &&
+                            <SprintLineMap data={sprintList} type={type} />
+                        }
+                        {
+                            type === "version" &&
+                            <VersionLineMap data={versionList} type={type} />
+                        }
+                        {
+                            type === "epic" &&
+                            <EpicPage />
+                        }
+                    </div>
+                </Col>
+            </Row>
+        </Provider>
+
 
     )
 }
-export default inject(
-    "lineMapStore"
-)(observer(Linemap));
+export default Linemap;

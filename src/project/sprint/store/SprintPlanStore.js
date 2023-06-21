@@ -140,4 +140,4 @@ export class ProjectSprintPlanStore {
     }
 }
 
-export const PLANSPRINT_STORE = "projectSprintPlanStore"
+export default new ProjectSprintPlanStore();

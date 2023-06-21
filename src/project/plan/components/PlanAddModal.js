@@ -16,10 +16,9 @@ const  PlanAddModal = (props) => {
     const [form] = Form.useForm();
     // 弹窗的显示与不显示
     const [visible, setVisible] = React.useState(false);
-    const {planStore,projectStore} = props;
+    const {planStore} = props;
     // 项目id
     const projectId = props.match.params.id;
-    // const {projectName} = projectStore;
     const {editPlan,addPlan,searchPlanById,getUseList,uselist} = planStore;
     // 计划详情
     const [planInfo,setPlanInfo]= useState();
@@ -248,4 +247,4 @@ const  PlanAddModal = (props) => {
     );
 };
 
-export default inject("projectStore","planStore")(observer(PlanAddModal));
+export default inject("planStore")(observer(PlanAddModal));

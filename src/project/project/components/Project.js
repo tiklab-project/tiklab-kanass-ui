@@ -11,29 +11,33 @@ import { Layout, Row, Col } from 'antd';
 import Procontent from "./ProjectContent";
 import ProjectGide from "./ProjectGide"
 import "../components/project.scss";
-import { observer, inject } from "mobx-react";
-import { getUser } from 'tiklab-core-ui';
+import { observer, inject, Provider } from "mobx-react";
+import ProjectStore from "../store/ProjectStore"
 const Project = (props) => {
-    const { projectStore } = props;
-    const userId = getUser().userId;
-    const { findMyAllProjectList, allProlist } = projectStore;
+    const store = {
+        projectStore: ProjectStore
+    }
+    const { findMyAllProjectList, allProlist } = ProjectStore;
     useEffect(() => {
         findMyAllProjectList();
     }, [])
     return (
-        <div className="project">
-            <Layout className="project-content">
-                <Row>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                        {
-                            allProlist && allProlist.length > 0 ?
-                            <Procontent /> : <ProjectGide /> 
-                        }
-                    </Col>
-                </Row>
-            </Layout>
-        </div>
+        <Provider {...store}>
+            <div className="project">
+                <Layout className="project-content">
+                    <Row>
+                        <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                            {
+                                allProlist && allProlist.length > 0 ?
+                                    <Procontent /> : <ProjectGide />
+                            }
+                        </Col>
+                    </Row>
+                </Layout>
+            </div>
+        </Provider>
+
 
     )
 }
-export default inject('projectStore')(observer(Project));
+export default Project;

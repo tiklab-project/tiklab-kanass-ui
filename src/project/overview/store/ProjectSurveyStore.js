@@ -196,4 +196,4 @@ export class ProjectSurveyStore {
         return data;
     }
 }
-export const PROJECTSURVEY_STORE = "projectSurveyStore"
+export default new ProjectSurveyStore();

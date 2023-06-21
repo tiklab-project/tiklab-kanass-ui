@@ -162,4 +162,4 @@ export class EpicStore {
         }
     }
 }
-export const EPIC_STORE = "epicStore"
+export default new EpicStore();

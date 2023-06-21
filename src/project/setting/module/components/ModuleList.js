@@ -9,18 +9,15 @@
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Button, Row, Col } from "antd";
 import ModuleAddmodal from "./ModuleAddModal";
-import { observer, inject } from "mobx-react";
 import "../components/module.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import { SearchOutlined } from '@ant-design/icons';
+import ModuleStore from "../store/ModuleStore"
 const ModuleList = (props) => {
-    // 解析 props
-    const { moduleStore } = props;
-
     // 解析 moduleStore
     const { modulelist, searchmodule, findModulePage, addModule, deleModule,
         searchModuleById, editModuleById, modulePageParam, setPageParam
-    } = moduleStore;
+    } = ModuleStore;
 
     // 项目id
     const projectId = props.match.params.id;
@@ -162,4 +159,4 @@ const ModuleList = (props) => {
         </Row>
     );
 };
-export default inject("moduleStore")(observer(ModuleList));
+export default ModuleList;

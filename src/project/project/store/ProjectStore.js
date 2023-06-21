@@ -226,4 +226,4 @@ export class ProjectStore {
     }
 }
 
-export const PRO_STORE = "projectStore";
+export default new ProjectStore();

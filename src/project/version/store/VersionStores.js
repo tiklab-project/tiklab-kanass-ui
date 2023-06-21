@@ -160,4 +160,4 @@ export class VersionStore {
         return data;
     }
 }
-export const EDITION_STORE = "versionStore"
+export default new VersionStore();

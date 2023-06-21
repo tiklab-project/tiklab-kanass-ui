@@ -11,7 +11,7 @@ import { observable, action, extendObservable } from "mobx";
 
 import { getUser } from 'tiklab-core-ui';
 
-export class HomeStore {
+class HomeStore {
     // 项目列表
     @observable 
     ProjectList = [];
@@ -368,8 +368,24 @@ export class HomeStore {
         return data;
     }
     
+    @action
+    findInsightList = async() => {
+        const params = {
+            orderParams: [{
+                name: "insightName",
+                orderType: "asc"
+            }],
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/insight/findInsightList", params)
+        return data;
+    }
     
 
 }
 
-export const HOME_STORE = "homeStore"
+
+export default new HomeStore();

@@ -89,4 +89,4 @@ export class PlanWorkItemStore {
         }
     }
 }
-export const PLANWORKITEM_STORE = "planWorkItemStore"
+export default new PlanWorkItemStore();

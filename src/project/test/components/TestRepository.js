@@ -7,18 +7,20 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Row, Col, message } from "antd";
-import { observer, inject } from "mobx-react";
+import { Table, Space, Row, Col, message } from "antd";
+import { Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
 import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
 import {applyJump} from "tiklab-core-ui";
-
+import TestRepositoryStore from "../store/TestRepositoryStore";
 const TestRepository = (props) => {
-    const { testRepositoryStore } = props;
-    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl } = testRepositoryStore;
+    const store = {
+        testRepositoryStore: TestRepositoryStore
+    }
+    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl } = TestRepositoryStore;
 
     const projectId = props.match.params.id;
     const [testAddvisible, setTestAddvisible] = useState()
@@ -104,8 +106,8 @@ const TestRepository = (props) => {
         setTestAddvisible(true)
     }
 
-    return (
-        <div className="test-repository">
+    return (<Provider {...store}>
+          <div className="test-repository">
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                     <div className="test-repository-list">
@@ -137,8 +139,10 @@ const TestRepository = (props) => {
                 </Col>
             </Row>
         </div>
+    </Provider>
+      
 
     );
 };
 
-export default withRouter(inject("testRepositoryStore")(observer(TestRepository)));
+export default withRouter(TestRepository);

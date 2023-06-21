@@ -135,4 +135,4 @@ export class PlanStore {
         return data;
     }
 }
-export const PLAN_STORE = "planStore"
+export default new PlanStore();

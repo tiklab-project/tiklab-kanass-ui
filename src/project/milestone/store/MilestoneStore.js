@@ -151,4 +151,4 @@ export class MilestoneStore {
     }
 }
 
-export const MILESTONE_STORE = "milestoneStore"
+export default new MilestoneStore();

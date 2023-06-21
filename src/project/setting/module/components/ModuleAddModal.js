@@ -142,4 +142,4 @@ const ModuleAddModal = (props) => {
     );
 };
 
-export default withRouter(inject("systemRoleStore")(observer(ModuleAddModal)));
+export default withRouter(ModuleAddModal);

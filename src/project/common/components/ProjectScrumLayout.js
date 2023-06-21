@@ -11,13 +11,16 @@ import { Layout, Row, Col } from 'antd';
 import ProdeScrumAside from "./ProjectScrumDetailAside";
 import "../components/ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
-
+import ProjectStore from "../../project/store/ProjectStore"
 const ProjectScrumDetail = (props) => {
-    const { projectStore, route, systemRoleStore } = props;
-    
-    const { searchpro, findProjectList } = projectStore;
+    const store = {
+        projectStore: ProjectStore
+    }
+    const { route, systemRoleStore } = props;
+
+    const { searchpro, findProjectList } = ProjectStore;
     // 项目id
     const projectId = props.match.params.id;
     // 项目详情
@@ -28,14 +31,14 @@ const ProjectScrumDetail = (props) => {
          * 从信息页面跳入项目详情页面时，获取项目id
          */
         searchpro(projectId).then(res => {
-            if(res.code === 0) {
+            if (res.code === 0) {
                 localStorage.setItem("project", JSON.stringify(res.data));
                 setProject(res.data)
                 const isPublish = res.data?.projectLimits === "0" ? true : false
                 systemRoleStore.getInitProjectPermissions(getUser().userId, props.match.params.id, isPublish)
             }
         })
-        
+
         //获取项目列表
         findProjectList()
         return
@@ -43,22 +46,25 @@ const ProjectScrumDetail = (props) => {
 
 
     return (
-        <Layout className="project-prodetail">
-            <ProdeScrumAside
-                projectName={"项目1"}
-                project= {project}
-                searchpro={searchpro}
-                {...props}
-            />
-            <Layout className="prodetail-content">
-                <Row justify="start" className="prodetail-row">
-                    <Col xs={{ span: 24}} lg={{ span: 24}}>
-                        {renderRoutes(route.routes)}
-                    </Col>
-                </Row>
+        <Provider {...store}>
+            <Layout className="project-prodetail">
+                <ProdeScrumAside
+                    projectName={"项目1"}
+                    project={project}
+                    searchpro={searchpro}
+                    {...props}
+                />
+                <Layout className="prodetail-content">
+                    <Row justify="start" className="prodetail-row">
+                        <Col xs={{ span: 24 }} lg={{ span: 24 }}>
+                            {renderRoutes(route.routes)}
+                        </Col>
+                    </Row>
+                </Layout>
             </Layout>
-        </Layout>
+        </Provider>
+
     )
 
 }
-export default inject("systemRoleStore", 'projectStore')(observer(ProjectScrumDetail));
+export default inject("systemRoleStore")(observer(ProjectScrumDetail));

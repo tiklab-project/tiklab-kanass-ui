@@ -7,18 +7,20 @@
  * @LastEditTime: 2022-02-15 16:52:29
  */
 import React, { useEffect, useState } from "react";
-import { observer, inject } from "mobx-react";
+import { Provider } from "mobx-react";
 import "../component/Stage.scss"
 import InputSearch from "../../../common/input/InputSearch";
-import { Select, Empty, Row, Col, Tabs } from 'antd';
+import { Row, Col } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import LineMapStage from "./StagelineMap";
 import StageAddModal from "./StageAddModal";
-
+import StageStore from "../store/StageStore"
 const Stage = (props) => {
-    const { stageStore } = props;
-    const { findStageList, updateStage } = stageStore;
+    const store = {
+        stageStore: StageStore
+    }
+    const { findStageList, updateStage } = StageStore;
     // 阶段的列表
     const [stageList, setStageList] = useState([])
     // 添加子级的上级id
@@ -64,7 +66,7 @@ const Stage = (props) => {
         setAddChild("father")
         setParentId(null)
     }
-    return (
+    return (<Provider {...store}>
         <Row style={{ height: "100%" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="stage">
@@ -104,9 +106,8 @@ const Stage = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
 
     )
 }
-export default inject(
-    "stageStore"
-)(observer(Stage));
+export default Stage;

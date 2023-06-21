@@ -13,10 +13,13 @@ import InputSearch from "../../../common/input/InputSearch";
 import EpicAddModal from "./EpicAddModal"
 import "./Epic.scss"
 import { withRouter } from "react-router";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
+import EpicStore from '../store/EpicStore';
 const EpicPage = (props) => {
-    const { epicStore } = props;
-    const { findEpicList } = epicStore;
+    const store = {
+        epicStore: EpicStore
+    }
+    const { findEpicList } = EpicStore;
     // 史诗列表
     const [epicList, setEpicList] = useState([])
     // 若添加下级史诗，父级的id
@@ -59,32 +62,38 @@ const EpicPage = (props) => {
         setAddChild("father")
         setParentId(null)
     }
-    
-    return <div className="epic">
-        <div className="epic-action">
-            <InputSearch
-                placeholder="需求集名字"
-                allowClear
-                style={{ width: 300 }}
-                onChange={onSearch}
-            />
-            <Button type = "primary" onClick={() => addEpic()}>
-                添加需求集
-            </Button>
-        </div>
-        <div>
-            <EpicLineMap data={epicList} setShowEpicAddModal={setShowEpicAddModal} setParentId={setParentId}
-            setAddChild={setAddChild} />
-        </div>
-        <EpicAddModal
-            showEpicAddModal={showEpicAddModal}
-            setShowEpicAddModal={setShowEpicAddModal}
-            setEpicList={setEpicList}
-            parent={parent}
-            addChild={addChild}
-        />
 
-    </div>
+    return (
+        <Provider {...store}>
+            <div className="epic">
+                <div className="epic-action">
+                    <InputSearch
+                        placeholder="需求集名字"
+                        allowClear
+                        style={{ width: 300 }}
+                        onChange={onSearch}
+                    />
+                    <Button type="primary" onClick={() => addEpic()}>
+                        添加需求集
+                    </Button>
+                </div>
+                <div>
+                    <EpicLineMap data={epicList} setShowEpicAddModal={setShowEpicAddModal} setParentId={setParentId}
+                        setAddChild={setAddChild} />
+                </div>
+                <EpicAddModal
+                    showEpicAddModal={showEpicAddModal}
+                    setShowEpicAddModal={setShowEpicAddModal}
+                    setEpicList={setEpicList}
+                    parent={parent}
+                    addChild={addChild}
+                />
+
+            </div>
+        </Provider>
+
+    )
+
 }
 
-export default withRouter(inject("epicStore")(observer(EpicPage)));
+export default withRouter(EpicPage);

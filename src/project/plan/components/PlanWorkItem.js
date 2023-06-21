@@ -12,12 +12,11 @@ import PlanWorkItemAddmodal from "./PlanWorkItemAdd";
 import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./Plan.scss"
-
+import PlanWorkItemStore from "../store/PlanWorkItemStores";
 const { Search } = Input;
 const PlanWorkItem = (props) => {
-    const { planWorkItemStore } = props
     const { getWorkItemList, planWorkItemList,
-        addPlanWorkItem, delePlanWorkItem } = planWorkItemStore;
+        addPlanWorkItem, delePlanWorkItem } = PlanWorkItemStore;
     const planId = props.match.params.id;
     const projectId = props.match.params.id;
 
@@ -113,4 +112,4 @@ const PlanWorkItem = (props) => {
 
     )
 }
-export default inject("systemRoleStore","planWorkItemStore", "planStore")(observer(PlanWorkItem));
+export default PlanWorkItem;

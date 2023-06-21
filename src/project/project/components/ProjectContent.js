@@ -11,7 +11,7 @@ import Button from "../../../common/button/Button"
 const { Option } = Select;
 
 const ProjectContent = (props) => {
-    const { workStore, projectStore, systemRoleStore } = props;
+    const { projectStore } = props;
     const { findProjectList, prolist, statProjectWorkItem, createRecent, findRecentProjectPage,
         findJoinProjectList, createProjectFocus, findProjectFocusList, 
         deleteProjectFocusByQuery, findFocusProjectList, activeTabs, setActiveTabs

@@ -16,9 +16,12 @@ import "../components/HomePage.scss";
 import { UserVerify } from 'tiklab-eam-ui';
 import { connect } from 'tiklab-plugin-core-ui';
 import Search from "../../search/components/Search";
-
+import { Provider } from 'mobx-react';
+import HomeStore from "../store/HomeStore"
 const Layout = (props) => {
-    // 路由
+    const store = {
+        homeStore: HomeStore
+    }
     const route = props.route.routes;
 
     // 系统顶部菜单
@@ -49,26 +52,29 @@ const Layout = (props) => {
     const projectLogout = () => {
         props.history.push({
             pathname: '/logout',
-            state:{
+            state: {
                 preRoute: props.location.pathname
             }
         })
     }
 
     return (
-        <div className="frame">
-            <LocalHeader
-                {...props}
-                logo={logo}
-                projectLogout={projectLogout}
-                search={<Search {...props}/>}
-                routers={routers}
-            >
-            </LocalHeader>
-            <div className="frame-content">
-                {renderRoutes(route)}
+        <Provider {...store}>
+            <div className="frame">
+                 <LocalHeader
+                    {...props}
+                    logo={logo}
+                    projectLogout={projectLogout}
+                    search={<Search {...props} />}
+                    routers={routers}
+                >
+                </LocalHeader>
+                <div className="frame-content">
+                    {renderRoutes(route)}
+                </div>
             </div>
-        </div>
+        </Provider>
+
     )
 }
 

@@ -14,13 +14,13 @@ import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"
 import { Row, Col, Empty, Progress } from "antd";
-
+import ProjectSurveyStore from "../store/ProjectSurveyStore";
 const Survey = (props) => {
     // 基于准备好的dom，初始化echarts实例
-    const { projectSurveyStore, workStore } = props;
+    const { workStore } = props;
     const { statWorkItemByBusStatus, statProjectManageSprint, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
-        findRecentPage, recentList,updateRecent } = projectSurveyStore;
+        findRecentPage, recentList,updateRecent } = ProjectSurveyStore;
     const { setWorkId, setDetailCrumbArray, setWorkIndex,setIsWorkList } = workStore;
     //当前用户id
     const masterId = getUser().userId;
@@ -582,4 +582,4 @@ const Survey = (props) => {
     )
 }
 
-export default inject('projectSurveyStore', 'homeStore', 'workStore')(observer(Survey));
+export default inject('workStore')(observer(Survey));

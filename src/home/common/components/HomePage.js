@@ -13,9 +13,8 @@ import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 const Home = (props) => {
-    const { route, insightStore, homeStore } = props;
-    const { findInsightList } = insightStore;
-    const { activeKey, setActiveKey } = homeStore;
+    const { route, homeStore } = props;
+    const { activeKey, setActiveKey, findInsightList } = homeStore;
     // 仪表盘地址
     const [insightUrl, setInsightUrl] = useState('/index/home/insight/list')
     // 当前url
@@ -77,4 +76,4 @@ const Home = (props) => {
 }
 
 
-export default withRouter(inject("insightStore", "homeStore")(observer(Home)));
+export default withRouter(inject("homeStore")(observer(Home)));

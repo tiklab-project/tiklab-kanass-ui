@@ -48,4 +48,4 @@ export class WikiRepositoryStore {
     }
 }
 
-export const WIKIREPOSITORY_STORE = "wikiRepositoryStore";
+export default new WikiRepositoryStore();

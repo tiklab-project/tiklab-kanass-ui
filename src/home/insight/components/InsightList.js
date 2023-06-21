@@ -10,7 +10,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Space, Modal, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
@@ -18,12 +18,14 @@ import Button from "../../../common/button/Button";
 import "../components/insightList.scss";
 import InsightAddModal from "./insightAddModal";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-
+import InsightStore from "../store/InsightStore"
 const { confirm } = Modal;
 
 const InsightList = (props) => {
-    const { insightStore } = props;
-    const { findInsightList, deleteInsight } = insightStore;
+    const store = {
+        insightStore: InsightStore
+    }
+    const { findInsightList, deleteInsight } = InsightStore;
     const [visible, setVisible] = useState(false);
     const [insightList, setInsightList] = useState();
     const [activeTabs, setActiveTabs] = useState("1")
@@ -129,21 +131,9 @@ const InsightList = (props) => {
                     <svg className="svg-icon" aria-hidden="true" onClick={() => goEditInsight(record.id)} style={{ cursor: "pointer", marginRight: "16px" }}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    {/* <Popconfirm
-                        title="Are you sure to delete this task?"
-                        onConfirm={confirm}
-                        onCancel={cancel}
-                        okText="Yes"
-                        cancelText="No"
-                    > */}
                         <svg className="svg-icon" aria-hidden="true" onClick={() => delInsight(record.id)} style={{ cursor: "pointer", marginRight: "16px" }}>
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
-                    {/* </Popconfirm> */}
-
-                    {/* <span className="action-botton" onClick={() => props.history.push(`/index/insight/viewInsight/${record.id}`)}>查看</span>
-                    <span className="action-botton" onClick={() => goEditInsight(record.id)}>编辑</span>
-                    <span className="action-delete" onClick={() => delInsight(record.id)}>删除</span> */}
                 </Space>
             )
         }
@@ -151,7 +141,8 @@ const InsightList = (props) => {
 
 
     return (
-        <div>
+        <Provider {...store}>
+            <div>
             {/* <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}> */}
             <div className="insight-list">
                 <Breadcumb firstText="仪表盘">
@@ -219,8 +210,9 @@ const InsightList = (props) => {
                     />
                 </div>
             </div>
-            {/* </Col> */}
         </div>
+        </Provider>
+        
     )
 }
-export default withRouter(inject("insightStore")(observer(InsightList)));
+export default withRouter(InsightList);

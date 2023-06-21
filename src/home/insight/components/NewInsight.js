@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { inject, observer } from "mobx-react";
+import { Provider, inject, observer } from "mobx-react";
 import { message, Col, Row, Empty } from "antd"
 import "./NewInsight.scss";
 import ReportItem from "./ReportItem"
@@ -19,11 +19,13 @@ import "../../../../node_modules/react-resizable/css/styles.css"
 import GridLayout, { Responsive, WidthProvider } from "react-grid-layout";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button"
-
+import InsightStore from "../store/InsightStore"
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const NewInsight = (props) => {
-    const { insightStore } = props;
-    const { reportList, updateInsight, findInsight, setReportList } = insightStore;
+    const store = {
+        insightStore: InsightStore
+    }
+    const { reportList, updateInsight, findInsight, setReportList } = InsightStore;
     // 仪表盘详情
     const [insightDetail, setInsightDetail] = useState();
     // 是否显示可添加的报告列表弹窗
@@ -40,7 +42,7 @@ const NewInsight = (props) => {
      * 获取仪表盘的详情
      */
     const getInsightById = () => {
-         const params = new FormData();
+        const params = new FormData();
         params.append("id", props.match.params.id)
         findInsight(params).then(res => {
             if (res.code === 0) {
@@ -102,74 +104,77 @@ const NewInsight = (props) => {
     }
 
     return (
-        <div>
-            <div className="new-insight">
-                <div className="new-insight-left">
+        <Provider {...store}>
+            <div>
+                <div className="new-insight">
+                    <div className="new-insight-left">
 
-                    <Breadcumb firstText="仪表盘列表" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
-                        <div className="insight-head-action">
-                            <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
-                            <Button onClick={() => saveInsight()} type="primary">保存</Button>
-                            <Button onClick={() => props.history.goBack()}>取消</Button>
-                        </div>
+                        <Breadcumb firstText="仪表盘列表" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                            <div className="insight-head-action">
+                                <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
+                                <Button onClick={() => saveInsight()} type="primary">保存</Button>
+                                <Button onClick={() => props.history.goBack()}>取消</Button>
+                            </div>
 
-                    </Breadcumb>
+                        </Breadcumb>
 
-                    <div className="new-insight-content">
-                        {
-                            reportList && reportList.lg.length > 0 ? <ResponsiveGridLayout
-                                className="layout"
-                                layouts={reportList}
-                                rowHeight={30}
-                                measureBeforeMount={true}
-                                breakpoints={{ lg: 1200 }}
-                                onLayoutChange={addLayout}
-                            >
-                                {
-                                    reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
-                                        return (<div key={item.i} data-grid={item}>
-
-                                            <ReportItem isView={false} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
-
-                                        </div>)
-                                    })
-                                }
-
-                            </ResponsiveGridLayout>
-                                :
-                                <Empty
-                                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            暂无报表，请添加
-                                        </span>
-                                    }
+                        <div className="new-insight-content">
+                            {
+                                reportList && reportList.lg.length > 0 ? <ResponsiveGridLayout
+                                    className="layout"
+                                    layouts={reportList}
+                                    rowHeight={30}
+                                    measureBeforeMount={true}
+                                    breakpoints={{ lg: 1200 }}
+                                    onLayoutChange={addLayout}
                                 >
-                                    <div className="empty-action-save" onClick={() => setShowReportList(true)}>
-                                        <div>
-                                            添加
+                                    {
+                                        reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
+                                            return (<div key={item.i} data-grid={item}>
+
+                                                <ReportItem isView={false} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
+
+                                            </div>)
+                                        })
+                                    }
+
+                                </ResponsiveGridLayout>
+                                    :
+                                    <Empty
+                                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <span>
+                                                暂无报表，请添加
+                                            </span>
+                                        }
+                                    >
+                                        <div className="empty-action-save" onClick={() => setShowReportList(true)}>
+                                            <div>
+                                                添加
+                                            </div>
                                         </div>
-                                    </div>
-                                </Empty>
-                        }
+                                    </Empty>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <ReportList
-                showReportList={showReportList}
-                reportIndex={reportIndex}
-                setReportIndex={setReportIndex}
-                setShowReportList={setShowReportList}
-            />
+                <ReportList
+                    showReportList={showReportList}
+                    reportIndex={reportIndex}
+                    setReportIndex={setReportIndex}
+                    setShowReportList={setShowReportList}
+                />
 
-        </div>
+            </div>
+        </Provider>
+
 
 
 
     )
 }
 
-export default withRouter(inject("insightStore")(observer(NewInsight)));
+export default withRouter(NewInsight);

@@ -7,20 +7,22 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Row, Col, DatePicker } from "antd";
+import { Table, Space, Row, Col, DatePicker } from "antd";
 import VersionAddmodal from "./VersionAdd";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import InputSearch from "../../../common/input/InputSearch"
+import InputSearch from "../../../common/input/InputSearch";
+import VersionStore from "../store/VersionStores"
 const { RangePicker } = DatePicker;
 
 const VersionTable = (props) => {
-    // 解析 props
-    const { versionStore } = props
-    const { versionList, getVersionList, deleVersion, createRecent } = versionStore;
+    const store = {
+        versionStore: VersionStore
+    }
+    const { versionList, getVersionList, deleVersion, createRecent } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
@@ -145,7 +147,7 @@ const VersionTable = (props) => {
         // setPageParam({ current: 1, pageSize: 10 })
     };
 
-    return (
+    return (<Provider {...store}>
         <div className="project-version">
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -193,6 +195,8 @@ const VersionTable = (props) => {
                 </Col>
             </Row>
         </div>
+    </Provider>
+        
 
     );
 };

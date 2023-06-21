@@ -9,19 +9,21 @@
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col } from "antd";
 import MilestoneAddEditModal from "./MilestoneAddEditModal";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "../components/milestone.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import MilestoneTimeline from "./MilestoneTimeline"
 import { withRouter } from "react-router";
-
+import MilestoneStore from "../store/MilestoneStore"
 const MilestoneList = (props) => {
     // 解析 props
-    const { milestoneStore } = props;
+    const store = {
+        milestoneStore: MilestoneStore
+    }
     // 解析 milestoneStore
-    const { milestonelist, findMilestonePage, deleMilestone, milestonePageParam, setPageParam
-    } = milestoneStore;
+    const { milestonelist, findMilestonePage, deleMilestone, setPageParam
+    } = MilestoneStore;
 
     // 项目id
     const projectId = props.match.params.id;
@@ -116,7 +118,7 @@ const MilestoneList = (props) => {
         setPageParam(pagination)
     }
 
-    return (
+    return ( <Provider {...store}>
         <div className="project-milestone">
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -150,7 +152,9 @@ const MilestoneList = (props) => {
                 </Col>
             </Row>
         </div>
+    </Provider>
+        
 
     );
 };
-export default withRouter(inject("systemRoleStore", "milestoneStore")(observer(MilestoneList)));
+export default withRouter(MilestoneList);

@@ -15,9 +15,9 @@ import PlanAside from "./PlanAside";
 import "../components/Plan.scss"
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
+import PlanStore from "../store/PlanStores"
 const Plan = (props) => {
-    const { planStore } = props
-    const { getPlanList, planList, addPlan } = planStore
+    const { getPlanList, planList, addPlan } = PlanStore;
     // 项目id
     const projectId = props.match.params.id;
 
@@ -65,4 +65,4 @@ const Plan = (props) => {
 
     )
 }
-export default inject("planStore")(observer(Plan));
+export default Plan;

@@ -1,5 +1,6 @@
 import { observable, action } from "mobx";
-import {Service} from "../../../common/utils/requset"
+import {Service} from "../../../common/utils/requset";
+
 export class InsightStore {
     // 项目集id
     @observable 
@@ -271,4 +272,4 @@ export class InsightStore {
     }
 }
 
-export const INSIGHT_STORE = "insightStore"
+export default new InsightStore();

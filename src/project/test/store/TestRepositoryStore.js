@@ -49,4 +49,4 @@ export class TestRepositoryStore {
     }
 }
 
-export const TESTREPOSITORY_STORE = "testRepositoryStore";
+export default new TestRepositoryStore();

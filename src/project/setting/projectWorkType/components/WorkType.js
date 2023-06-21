@@ -11,13 +11,15 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Space, message, Row, Col } from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
 import WorkTypeEditmodal from "./WorkTypeEditModal"
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
-
+import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
 
 const WorkType = (props) => {
-    const { projectWorkStore } = props;
-    const { workAllTypeList, findWorkTypeDmList, deleteWorkTypeCustomList, setWorkTypeList } = projectWorkStore;
+    const store = {
+        projectWorkTypeStore: ProjectWorkTypeStore
+    }
+    const { workAllTypeList, findWorkTypeDmList, deleteWorkTypeCustomList, setWorkTypeList } = ProjectWorkTypeStore;
     // 项目id
     const projectId = props.match.params.id;
     /**
@@ -191,7 +193,7 @@ const WorkType = (props) => {
         },
     ];
 
-    return (
+    return (<Provider {...store}>
         <Row>
             <Col lg={{ span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
                 <div className="project-work-type">
@@ -219,6 +221,8 @@ const WorkType = (props) => {
                 </div>
             </Col>
         </Row>
+    </Provider>
+        
     );
 };
-export default inject("projectWorkStore")(observer(WorkType));
+export default WorkType;

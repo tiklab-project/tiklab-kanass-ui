@@ -32,17 +32,17 @@ const ReportList = (props) => {
     const addReport = (item) => {
         const isRight = reportIndex % 2 === 0 ? true : false;
         const x = isRight ? 12 : 0;
-        const y = Math.floor((reportIndex - 1 ) / 2) * 12;
-        const reportList =  {
+        const y = Math.floor((reportIndex - 1) / 2) * 12;
+        const reportList = {
             x: x, y: y, w: 6, h: 12,
             minH: item.minH,
             minW: item.minW,
-            i: reportIndex.toString(), static: false, 
+            i: reportIndex.toString(), static: false,
             data: {
                 type: item.type,
                 isEdit: false,
                 data: {
-    
+
                 }
             }
         };
@@ -146,7 +146,7 @@ const ReportList = (props) => {
             onCancel={() => setShowReportList(false)}
             width={1200}
             footer={null}
-            closable = {false}
+            closable={false}
             style={{
                 top: "50px",
 

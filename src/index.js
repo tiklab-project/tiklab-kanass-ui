@@ -43,7 +43,6 @@ const Index = observer((props) => {
         return;
     }, [])
     
-    // useLoadLanguage(resources,fetchMethod, pluginAddressUrl, "zh")
     const allStore = {
         ...privilegeStores,
         ...orgStores,

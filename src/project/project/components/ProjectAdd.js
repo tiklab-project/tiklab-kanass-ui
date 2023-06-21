@@ -9,7 +9,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
-    const { projectStore, name, type, id } = props;
+    const { projectStore } = props;
     const { projectTypelist, getProjectTypeList, getUseList, findIconList, addProlist } = projectStore;
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()

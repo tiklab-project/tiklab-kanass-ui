@@ -84,4 +84,4 @@ export class LineMapStore {
     }
 }
 
-export const LINEMAP_STORE = "lineMapStore"
+export default new LineMapStore();

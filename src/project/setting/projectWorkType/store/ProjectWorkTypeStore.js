@@ -8,7 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { Service } from "../../../../common/utils/requset"
-export class ProjectWorkStore {
+export class ProjectWorkTypeStore {
     // 所有事项类型列表
     @observable 
     workAllTypeList = [];
@@ -222,4 +222,4 @@ export class ProjectWorkStore {
         return data;
     }
 }
-export const PROJECTWORK_STORE = "projectWorkStore"
+export default new ProjectWorkTypeStore();
