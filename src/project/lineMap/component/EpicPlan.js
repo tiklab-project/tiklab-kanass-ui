@@ -287,4 +287,4 @@ const EpicPlan = (props) => {
         </div>
     )
 }
-export default withRouter(inject("systemRoleStore", "versionPlanStore", "versionStore", "epicStore")(observer(EpicPlan)));
+export default withRouter(inject("systemRoleStore", "versionStore", "epicStore")(observer(EpicPlan)));

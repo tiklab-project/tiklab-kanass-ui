@@ -164,4 +164,4 @@ const EpicPlanAddmodal = (props) => {
     );
 };
 
-export default inject("systemRoleStore",'workStore','versionPlanStore', 'epicStore')(observer(EpicPlanAddmodal));
+export default inject("systemRoleStore",'workStore','epicStore')(observer(EpicPlanAddmodal));

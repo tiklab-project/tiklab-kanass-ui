@@ -148,4 +148,4 @@ export class VersionPlanStore {
     }
 
 }
-export const EDITIONPLAN_STORE = "versionPlanStore"
+export default new VersionPlanStore();

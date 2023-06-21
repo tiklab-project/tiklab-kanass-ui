@@ -8,17 +8,19 @@
  */
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col, message } from "antd";
-import { observer, inject } from "mobx-react";
+import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
 import {applyJump} from "tiklab-core-ui";
-
+import WikiRepositoryStore from "../store/WikiRepositoryStore";
 const WikiRepository = (props) => {
-    const { wikiRepositoryStore } = props;
-    const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList, findSystemUrl } = wikiRepositoryStore;
+    const store = {
+        wikiRepositoryStore: WikiRepositoryStore
+    }
+    const { deleteProjectWikiRepositoryByCondition, findProjectWikiRepositoryList, findSystemUrl } = WikiRepositoryStore;
 
     const projectId = props.match.params.id;
     const [wikiAddvisible, setWikiAddvisible] = useState()
@@ -112,7 +114,7 @@ const WikiRepository = (props) => {
         setWikiAddvisible(true)
     }
 
-    return (
+    return (<Provider {...store}>
         <div className="wiki-repository">
             <Row >
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -145,6 +147,8 @@ const WikiRepository = (props) => {
                 </Col>
             </Row>
         </div>
+    </Provider>
+        
 
     );
 };

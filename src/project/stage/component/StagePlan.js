@@ -15,7 +15,7 @@ import InputSearch from "../../../common/input/InputSearch"
 import "./StagePlan.scss"
 
 const StagePlan = (props) => {
-    const { versionPlanStore, stageStore, stageId } = props;
+    const { stageStore, stageId } = props;
     const { findWorkItemListByStage, deleteStageWorkItem } = stageStore;
     // 阶段的子级阶段
     const [stageChild, setStageChild] = useState()
@@ -297,4 +297,4 @@ const StagePlan = (props) => {
         </div>
     )
 }
-export default withRouter(inject("systemRoleStore", "versionPlanStore", "versionStore", "stageStore")(observer(StagePlan)));
+export default withRouter(inject("systemRoleStore", "versionStore", "stageStore")(observer(StagePlan)));
