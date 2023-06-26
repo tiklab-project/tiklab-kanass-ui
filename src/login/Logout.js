@@ -14,4 +14,4 @@ const ProjectLogout = (props) => {
         <Logout {...props}/>
     )
 }
-export default inject("eamStore")(observer(ProjectLogout));
+export default ProjectLogout;

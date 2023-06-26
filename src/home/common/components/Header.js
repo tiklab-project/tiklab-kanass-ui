@@ -8,7 +8,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { Col, Row, Dropdown, Menu,  Space } from "antd";
+import { Col, Row, Dropdown, Space } from "antd";
 import { withRouter } from 'react-router';
 
 import { getUser } from 'tiklab-core-ui';

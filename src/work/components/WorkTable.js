@@ -14,7 +14,7 @@ const WorkTableContent = (props) => {
         setWorkIndex, createRecent } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
-    const project = JSON.parse(localStorage.getItem("project"));
+    // const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match?.params?.sprint;
     // const [isWorkList, setIsWorkList] = useState(true)
     const goProdetail = (record, index) => {
@@ -22,8 +22,8 @@ const WorkTableContent = (props) => {
             name: record.title,
             model: "workItem",
             modelId: record.id,
-            project: { id: project.id },
-            projectType: { id: project.projectType.id },
+            project: { id: record.project.id },
+            projectType: { id: record.project.projectType.id },
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)

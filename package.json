@@ -12,12 +12,12 @@
         "start": "cross-env NODE_ENV=local API_ENV=local webpack-dev-server --progress --config ./webpack.dev.js ",
         "prod": "cross-env NODE_ENV=production API_ENV=prod webpack --config ./webpack.prod.js",
         "dev": "cross-env NODE_ENV=dev API_ENV=dev webpack-dev-server --progress  --config ./webpack.dev.js --open",
-        "build": "rimraf es/* && ./node_modules/.bin/babel src --copy-files  --extensions .js --out-dir es/module && ncp ./src/ui.js es/dist.js && ncp README.md es/README.md && ncp package.publish.json es/package.json",
+        "build:babel": "rimraf es/* && ./node_modules/.bin/babel src --copy-files  --extensions .js --out-dir es/module && ncp ./src/ui.js es/dist.js && ncp README.md es/README.md && ncp package.publish.json es/package.json",
         "build:dev": "npm run build:dev:esm && npm run build:dev:cjs && npm run build:umd && npm run build:css",
         "build:prod": "npm run build:esm",
         "build:css": "cd scripts && gulp compile",
         "build:dev:esm": "rimraf es && cross-env NODE_ENV=development BABEL_ENV=esm rollup -c",
-        "build:esm": "rimraf es && cross-env NODE_ENV=production BABEL_ENV=esm rollup -c",
+        "build": "rimraf es && cross-env NODE_ENV=production BABEL_ENV=esm rollup -c",
         "build:dev:cjs": "rimraf cjs && cross-env NODE_ENV=development BABEL_ENV=cjs rollup -c",
         "build:cjs": "rimraf lib && cross-env NODE_ENV=production BABEL_ENV=cjs rollup -c",
         "build:umd": "rimraf dist && cross-env BABEL_ENV=umd rollup -c"
@@ -26,7 +26,7 @@
     "author": "",
     "license": "ISC",
     "publishConfig": {
-        "registry": "http://172.12.1.11:8081/repository/npm-hosted"
+        "registry": "http://172.13.1.11:8081/repository/npm-hosted"
     },
     "peerDependencies": {
         "@ant-design/icons": "^4.3.0",

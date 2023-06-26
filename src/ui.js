@@ -3,7 +3,9 @@ import HomeStore from "./home/common/store/HomeStore"
 import AsyncComponent from './common/lazy/AsyncComponent'
 const Search = AsyncComponent(() => import('./home/Search/components/Search'))
 
+const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
+const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 
 const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
@@ -153,6 +155,8 @@ const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
 export {
+    Login,
+    ProjectLogOut,
     HomeStore,
     Search,
     VailProductUserPage,

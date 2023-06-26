@@ -428,4 +428,4 @@ const WorkAddPage = (props) => {
         </Fragment >
     )
 }
-export default inject("workStore", "workChild")(observer(WorkAddPage));
+export default inject("workStore")(observer(WorkAddPage));

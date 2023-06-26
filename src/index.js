@@ -13,7 +13,7 @@ import Routers from './Routers';
 import { Provider } from 'mobx-react';
 // import { store } from "./stores"
 import { orgStores } from "tiklab-user-ui/es/store";
-import { getUser, enableAxiosCE } from 'tiklab-core-ui';
+import { enableAxiosCE } from 'tiklab-core-ui';
 import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -42,14 +42,13 @@ const Index = observer((props) => {
     
     const allStore = {
         ...privilegeStores,
-        // ...orgStores,
+        ...orgStores,
         // ...formStores,
         // ...flowStores,
         // ...messageModuleStores,
         // ...store
     }
     
-    const userInfo = getUser()
 
     const [pluginData, setPluginData] = useState({
         routes: Routers,

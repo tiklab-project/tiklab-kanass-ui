@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 16:14:15
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import logo from "../../../assets/images/logo_tw5.png";
 import { renderRoutes } from "react-router-config";
 import LocalHeader from "./Header";

@@ -9,7 +9,7 @@
 import React, { useState, useRef } from 'react';
 import { Drawer, Tabs, Badge, Avatar, } from 'antd';
 import { observer, inject } from "mobx-react";
-import { MessageOutlined, DownOutlined } from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 import "./MessageList.scss"
 import { withRouter } from 'react-router';
 import { useEffect } from 'react';

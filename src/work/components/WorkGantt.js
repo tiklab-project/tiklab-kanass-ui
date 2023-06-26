@@ -6,7 +6,6 @@ import { useSelector } from "tiklab-plugin-core-ui";
 import { RemoteComponent } from "tiklab-plugin-core-ui";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
-import Gantt from "./GanttTest"
 const WorkGantt = (props) => {
     const { workStore, form } = props;
     const { workList, getWorkConditionPageTree, editWork } = workStore;
