@@ -12,23 +12,16 @@ import SetAside from "./SetAside";
 import "../components/Orga.scss"
 import { renderRoutes } from "react-router-config";
 import {SystemNav} from "tiklab-privilege-ui";
-import {setDevEamRouter, setDevRouter, setPrdEamRouter, setPrdRouter}  from "./SetRouter"
+import {setDevRouter, setPrdRouter}  from "./SetRouter"
 const { Sider, Content } = Layout;
 const Setting = (props) => {
     const route = props.route;
-    const [router,setRouterMenu] = useState(setDevEamRouter);
-    const authType = JSON.parse(localStorage.getItem("authConfig")).authType;
+    const [router,setRouterMenu] = useState(setDevRouter);
     useEffect(() => {
-        if(env === "local" && authType === true){
-            setRouterMenu(setDevEamRouter)
-        }
-        if(env === "local" && authType === false){
+        if (env === "local") {
             setRouterMenu(setDevRouter)
         }
-        if(env !== "local" && authType === true){
-            setRouterMenu(setPrdEamRouter)
-        }
-        if(env !== "local" && authType === false){
+        if (env !== "local") {
             setRouterMenu(setPrdRouter)
         }
         return 

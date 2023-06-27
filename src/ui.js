@@ -35,7 +35,6 @@ const ProjectMessageManagement = AsyncComponent(() => import('./setting/message/
 const ProjectMessageNotice = AsyncComponent(() => import('./setting/message/ProjectMessageNotice'))
 const ProjectMessageNoticeSystem = AsyncComponent(() => import('./setting/message/ProjectMessageNoticeSystem'))
 
-const Setting = AsyncComponent(() => import('./setting/common/components/Setting'))
 const WorkTypeList = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeList'))
 const WorkTypeSystem = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeSystem'))
 const workPriority = AsyncComponent(() => import('./setting/workSeting/components/WorkPriority'))
@@ -145,9 +144,6 @@ const LogList = AsyncComponent(() => import('./setting/log/Log.js'))
 const LogTemplateList = AsyncComponent(() => import('./setting/log/MyLogTemplateList'))
 const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLogTypeList'))
 
-const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'))
-const ProductAuth = AsyncComponent(() => import('./setting/version/Product'))
-
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
 //阶段
@@ -181,7 +177,6 @@ export {
     ProjectMessageManagement,
     ProjectMessageNotice,
     ProjectMessageNoticeSystem,
-    Setting,
     WorkTypeList,
     WorkTypeSystem,
     workPriority,
@@ -265,8 +260,6 @@ export {
     LogList,
     LogTemplateList,
     ProjectLogTypeList,
-    LicenceVersion,
-    ProductAuth,
     EpicDetail,
     Stage,
     StageDetail

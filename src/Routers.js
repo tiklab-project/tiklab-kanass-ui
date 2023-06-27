@@ -120,7 +120,6 @@ const SearchResult = AsyncComponent(() => import('./home/search/components/Searc
 
 // 项目集
 const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
-const ProjectSetList = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSetTable'))
 const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
 const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
 const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
@@ -148,14 +147,14 @@ const LogList = AsyncComponent(() => import('./setting/log/Log.js'))
 const LogTemplateList = AsyncComponent(() => import('./setting/log/MyLogTemplateList'))
 const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLogTypeList'))
 
-const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'))
-const ProductAuth = AsyncComponent(() => import('./setting/version/Product'))
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
+
+const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const Routers = [
     {
         path: "/login",
@@ -683,16 +682,6 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/index/setting/version",
-                        component: LicenceVersion,
-                        exact: true
-                    },
-                    {
-                        path: "/index/setting/product",
-                        component: ProductAuth,
-                        exact: true
-                    },
-                    {
                         path: "/index/setting/loadData",
                         component: LoadData,
                         exact: true
@@ -705,6 +694,11 @@ const Routers = [
                     {
                         path: "/index/setting/plugin",
                         component: ProjectPlugin,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/version",
+                        component: LicenceVersion,
                         exact: true
                     }
                 ]
