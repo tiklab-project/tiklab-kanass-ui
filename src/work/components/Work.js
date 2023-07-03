@@ -34,7 +34,6 @@ const Work = (props) => {
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    console.log(props)
     useEffect(() => {
         setQuickFilterValue({label: '所有', value: 'all'})
         setTabValue({id: "all", type: "system"})
@@ -85,8 +84,6 @@ const Work = (props) => {
 
         return () => {
             setIsWorkList(true)
-            // setWorkId("")
-            // setWorkIndex("")
         };
     }, [])
 

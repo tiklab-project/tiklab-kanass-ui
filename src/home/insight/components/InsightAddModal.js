@@ -22,7 +22,7 @@ const layout = {
 };
 
 const InsightAddModal = (props) => {
-    const { visible, setVisible, insightStore, setInsightList } = props;
+    const { visible, setVisible, insightStore } = props;
     const { createInsight, findInsightList } = insightStore;
     // 添加表单
     const [form] = Form.useForm();
@@ -35,11 +35,7 @@ const InsightAddModal = (props) => {
             createInsight(values).then(res => {
                 if(res.code === 0){
                     setVisible(false)
-                    findInsightList().then(res => {
-                        if(res.code === 0) {
-                            setInsightList(res.data)
-                        }
-                    })
+                    findInsightList()
                 }
             })
         })

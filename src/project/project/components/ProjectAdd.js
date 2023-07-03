@@ -5,12 +5,12 @@ import { observer, inject } from "mobx-react";
 import "./ProjectAdd.scss";
 import ProjectAddInfo from "./ProjectAddInfo";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-
+import ProjectStore from "../store/ProjectStore";
 
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
     const { projectStore } = props;
-    const { projectTypelist, getProjectTypeList, getUseList, findIconList, addProlist } = projectStore;
+    const { projectTypelist, getProjectTypeList, getUseList, findIconList, addProlist } = ProjectStore;
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()
     const [loading, setLoading] = useState(false)
@@ -138,4 +138,4 @@ const ProjectAdd = (props) => {
     );
 };
 
-export default inject('projectStore')(observer(ProjectAdd));
+export default observer(ProjectAdd);

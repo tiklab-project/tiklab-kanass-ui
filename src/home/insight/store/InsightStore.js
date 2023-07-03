@@ -14,6 +14,13 @@ export class InsightStore {
     @observable 
     reportList = { lg: []}
 
+    @observable 
+    focusInsightList = []
+
+    @observable
+    insightList = []
+    
+    
     /**
      * 设置仪表盘详情的报表列表
      * @param {仪表盘详情的报表列表} value 
@@ -235,6 +242,9 @@ export class InsightStore {
             }
         }
         const data = await Service("/insight/findInsightList", params)
+        if(data.code === 0){
+            this.insightList = data.data;
+        }
         return data;
     }
 
@@ -270,6 +280,62 @@ export class InsightStore {
         const data = await Service("/insight/deleteInsight", params)
         return data;
     }
+    @action
+    createRecent = async(params) => {
+        const data = await Service("/recent/createRecent", params)
+        return data;
+    }
+
+    @action
+    findRecentInsightList = async(value) => {
+        const params = {
+            insightName : value?.insightName,
+            orderParams: [{
+                name: "insightName",
+                orderType: "asc"
+            }]
+        }
+        const data = await Service("/insight/findRecentInsightList", params)
+        if(data.code === 0){
+            this.insightList = data.data;
+        }
+        return data
+    }
+
+    @action
+    findInsightFocusList = async(value) => {
+        const data = await Service("/insightFocus/findInsightFocusList", value)
+        if(data.code === 0){
+            let list = []
+            data.data.map(item => {
+                list.push(item.insightId)
+            })
+            this.focusInsightList = list
+        }
+        return data
+    }
+
+    @action
+    createInsightFocus = async(value) => {
+        const data = await Service("/insightFocus/createInsightFocus", value);
+        return data;
+    }
+
+    @action
+    deleteInsightFocusByQuery = async(value) => {
+        const data = await Service("/insightFocus/deleteInsightFocusByQuery", value);
+        return data;
+    }
+
+    @action
+    findFocusInsightList = async(value) => {
+        const data = await Service("/insight/findFocusInsightList", value);
+        if(data.code === 0){
+            this.insightList = data.data;
+        }
+        return data;
+    }
+    
 }
 
 export default new InsightStore();

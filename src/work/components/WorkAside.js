@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { observer, inject } from "mobx-react";
-import { getUser } from 'tiklab-core-ui';
 import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
@@ -11,19 +10,13 @@ const WorkAside = (props) => {
     const workAsideList = useRef()
     const { form, workStore } = props;
     const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
-        workId, viewType, setWorkIndex, workList, total, currentPage, createRecent, totalPage,
+        workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
         setWorkList, setDetailCrumbArray } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
-    const projectId = props.match.params.id ? props.match.params.id : null;
-    const [isReachBottom, setIsReachBottom] = useState(total > 1 ? true : false);
-    const [scrollHeight, setScrollHeight] = useState();
-    const [offsetHeight, setOffsetHeight] = useState();
     const [currentPageAside, setCurrentPage] = useState(1)
     const project = JSON.parse(localStorage.getItem("project"));
 
     useEffect(() => {
-        setScrollHeight(workAsideList.current.scrollHeight)
-        setOffsetHeight(workAsideList.current.offsetHeight)
         return () => {
             setWorkList([])
             setCurrentPage(1)
@@ -122,10 +115,6 @@ const WorkAside = (props) => {
             getWorkConditionPageTree(values).then((res) => {
                 setWorkId(res.dataList[0]?.id)
                 setWorkIndex(1)
-                setIsReachBottom(false)
-                if (currentPageAside >= totalPage) {
-                    setIsReachBottom(false)
-                }
 
             })
         }
@@ -133,10 +122,6 @@ const WorkAside = (props) => {
             getWorkConditionPage(values).then((res) => {
                 setWorkId(res.dataList[0]?.id)
                 setWorkIndex(1)
-                setIsReachBottom(false)
-                if (currentPageAside >= totalPage) {
-                    setIsReachBottom(false)
-                }
             })
         }
         setCurrentPage(currentPageAside + 1)

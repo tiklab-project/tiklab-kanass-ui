@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 09:18:04
  */
-import React,{useRef,useEffect} from "react";
+import React,{useRef} from "react";
 
 const CowScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore} = props;
