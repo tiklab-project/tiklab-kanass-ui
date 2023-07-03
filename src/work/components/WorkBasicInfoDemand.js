@@ -89,6 +89,7 @@ const WorkBasicInfo = (props) => {
                 setSelectItemList(res.data[0].selectItemList)
             }
         })
+        findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
             initForm(workInfo)
@@ -104,21 +105,35 @@ const WorkBasicInfo = (props) => {
     const filesParams = {
         name: 'uploadFile',
         multiple: true,
-        action: `${upload_url}/dfs/upload`,
+        action: `${base_url}/dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,
             tenant: tenant
         },
+        data: (file) => {
+            const params = {
+                group: "g1",
+                bucket: "teamwire"
+            }
+            return params;
+        },
         onChange(info) {
             const { status } = info.file;
-            if (status !== 'uploading') {
-                const filename = info.file.response.data.fileName
-                createWorkAttach(workId, filename).then(() => {
+            if (status === 'done') {
+                const filename = info.file.response.data;
+                console.log(info)
+                const params = {
+                    workItem: {
+                        id: workId
+                    },
+                    attachmentName: info.file.name,
+                    attachmentUrl: filename,
+                    type: info.file.type
+                }
+                createWorkAttach(params).then(() => {
                     findWorkAttachList(workId)
                 })
-            }
-            if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
@@ -130,10 +145,10 @@ const WorkBasicInfo = (props) => {
     const attachColums = [
         {
             title: '文件',
-            dataIndex: ['attachment', 'fileMeta', 'originFileName'],
+            dataIndex: 'attachmentName',
             key: 'name',
             render: (text, record) =>
-                <a href={`${upload_url}/file/${record.attachment.fileName}?tenant=${tenant}`}
+                <a href={`${base_url}image/${record.attachmentUrl}`}
                     target="_blank"
                 >
                     {text}
@@ -141,7 +156,7 @@ const WorkBasicInfo = (props) => {
         },
         {
             title: '文件类型',
-            dataIndex: ['attachment', 'fileMeta', 'fileType'],
+            dataIndex: "type",
             key: 'type',
         },
         {
@@ -151,6 +166,7 @@ const WorkBasicInfo = (props) => {
             render: text => <span style={{ color: "red" }}>删除</span>,
         }
     ]
+
 
     // 选择计划日期
     // 设置日期选择器格式
@@ -685,7 +701,7 @@ const WorkBasicInfo = (props) => {
 
                 <Fragment>
                     <div className="work-detail-upload">
-                        <Dragger className="work-detail-upload">
+                        <Dragger className="work-detail-upload" {...filesParams}>
                             <p className="ant-upload-drag-icon">
                                 <svg className="list-img" aria-hidden="true">
                                     <use xlinkHref="#icon-uploadImg"></use>

@@ -475,15 +475,7 @@ export class WorkStore {
 
     // 创建事项附件
     @action
-    createWorkAttach = async(workId, fileName) => {
-        const params = {
-            workItem: {
-                id: workId
-            },
-            attachment: {
-                fileName: fileName
-            }
-        }
+    createWorkAttach = async(params) => {
         const data = await Service("/workAttach/createWorkAttach",params);
         return data;
     }
