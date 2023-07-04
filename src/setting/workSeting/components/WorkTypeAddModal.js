@@ -14,9 +14,6 @@ const layout = {
         span: 16,
     },
 };
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 8 },
-};
 
 const WorkTypeAddModal = (props) => {
 
@@ -27,32 +24,33 @@ const WorkTypeAddModal = (props) => {
         editWorkTypeList} = workSetingStore;
     
     const [grouper, setGruoper] = useState()
-    const iconList = [
-        {
-            iconUrl: "workType1.png",
-            key: "workType1"
-        },
-        {
-            iconUrl: "workType2.png",
-            key: "workType2"
-        },
-        {
-            iconUrl: "workType3.png",
-            key: "workType3"
-        },
-        {
-            iconUrl: "workType4.png",
-            key: "workType4"
-        },
-        {
-            iconUrl: "workType5.png",
-            key: "workType5"
-        }
-    ]
+    const [iconList, setIconList] = useState()
+    // const iconList = [
+    //     {
+    //         iconUrl: "workType1.png",
+    //         key: "workType1"
+    //     },
+    //     {
+    //         iconUrl: "workType2.png",
+    //         key: "workType2"
+    //     },
+    //     {
+    //         iconUrl: "workType3.png",
+    //         key: "workType3"
+    //     },
+    //     {
+    //         iconUrl: "workType4.png",
+    //         key: "workType4"
+    //     },
+    //     {
+    //         iconUrl: "workType5.png",
+    //         key: "workType5"
+    //     }
+    // ]
     const [iconUrl, setIconUrl] = useState("")
     const getIconList = () => {
         findIconList({ iconType: "workType" }).then((res) => {
-            // setIconList(res.data)
+            setIconList(res.data)
         })
     }
     const showModal = () => {
@@ -119,7 +117,7 @@ const WorkTypeAddModal = (props) => {
     const tenant = getUser().tenant;
     const upLoadIcon = {
         name: 'uploadFile',
-        action: `${upload_url}/dfs/upload`,
+        action: `${base_url}dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,
@@ -130,9 +128,10 @@ const WorkTypeAddModal = (props) => {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
+                const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
-                    iconUrl: info.file.response.data.fileName,
+                    iconUrl: "image/" + res.group +"/" + res.bucket + "/" + res.objectId,
                     iconType: "workType"
                 }
                 creatIcon(params).then((res) => {
@@ -144,7 +143,7 @@ const WorkTypeAddModal = (props) => {
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
-        },
+        }
     };
 
     return (
@@ -260,7 +259,7 @@ const WorkTypeAddModal = (props) => {
                                 {
                                     iconList && iconList.map((item) => {
                                         return <div className={`work-type-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                            <img src={('images/' + item.iconUrl)} alt="" className="img-icon"/>
+                                            <img src={(base_url + item.iconUrl)} alt="" className="img-icon"/>
                                         </div>
                                     })
                                 }
@@ -272,15 +271,6 @@ const WorkTypeAddModal = (props) => {
                                 </Upload>
                             </div>
                         </Form.Item>
-
-                        {/* <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">
-                            提交
-                        </Button>
-                        <Button htmlType="button" onClick={onCancel}>
-                            取消
-                        </Button>
-                    </Form.Item> */}
                     </Form>
                 </Modal>
             </div>

@@ -106,7 +106,7 @@ const ProjectChangeModal = (props) => {
                         {
                             project?.iconUrl ?
                                 <img
-                                    src={('/images/' + project?.iconUrl)}
+                                    src={(base_url + project?.iconUrl)}
                                     className="list-img"
                                     alt=""
                                 />
@@ -137,7 +137,7 @@ const ProjectChangeModal = (props) => {
                             {
                                 project?.iconUrl ?
                                     <img
-                                        src={('images/' + project?.iconUrl)}
+                                        src={(base_url + project?.iconUrl)}
                                         title={project?.projectName} alt=""
                                         className="list-img"
                                         style={{ marginRight: "0px" }}

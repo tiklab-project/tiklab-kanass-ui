@@ -94,12 +94,6 @@ const ProjectSetSurvey = props => {
                                         {projectSet.master?.name} 创建于 {projectSet.startTime}
                                     </div>
                                 </div>
-
-                                {/* <div className="projectSet-info-action">
-                            <div>
-                                收藏
-                            </div>
-                        </div> */}
                             </div>
                             <div className="projectSet-infobottom">
                                 <div className="projectSet-info-item">

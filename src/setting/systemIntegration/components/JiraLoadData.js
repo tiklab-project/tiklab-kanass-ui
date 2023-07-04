@@ -51,7 +51,7 @@ const LoadData = (props) => {
         
         name: 'uploadFile',
         accept: ".zip",
-        action: `${upload_url}/importDate/importJireDate`,
+        action: `${base_url}/importDate/importJireDate`,
         headers: {
             authorization: 'authorization-text'
         },

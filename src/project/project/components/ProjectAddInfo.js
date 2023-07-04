@@ -1,11 +1,15 @@
-import React, { Fragment } from "react";
-import { Modal, Form, Input, Select, DatePicker, Row, Col, message } from 'antd';
+import React, { Fragment,useEffect } from "react";
+import {  Form, Input, DatePicker, message, Upload } from 'antd';
 import locale from 'antd/es/date-picker/locale/zh_CN';
+import UploadIcon1 from "../../../assets/images/uploadIcon.png";
 import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
 import { useState } from "react";
 import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router-dom";
+import { observer, inject } from "mobx-react";
+import ProjectStore from "../store/ProjectStore";
+
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -15,31 +19,10 @@ const layout = {
     }
 };
 
-const iconList = [
-    {
-        iconUrl: "project1.png",
-        key: "project1"
-    },
-    {
-        iconUrl: "project2.png",
-        key: "project2"
-    },
-    {
-        iconUrl: "project3.png",
-        key: "project3"
-    },
-    {
-        iconUrl: "project4.png",
-        key: "project4"
-    },
-    {
-        iconUrl: "project5.png",
-        key: "project5"
-    }
-]
 
 const ProjectAddInfo = (props) => {
-    const { addProlist, workType, setVisible, setCurrentStep, setLoading } = props;
+    const { addProlist, workType, setCurrentStep, setLoading } = props;
+    const {findIconList, creatIcon} = ProjectStore;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -53,8 +36,50 @@ const ProjectAddInfo = (props) => {
     const [limtValue, setLimitValue] = useState("0");
     const [iconUrl, setIconUrl] = useState("project1.png")
 
+    const [iconList, setIconList] = useState();
+    useEffect(() => {
+        getIconList()
+    },[])
+
+    const getIconList = () => {
+        findIconList({ iconType: "project" }).then((res) => {
+            setIconList(res.data)
+        })
+    }
+
+    const ticket = getUser().ticket;
+    const tenant = getUser().tenant;
+    const upLoadIcon = {
+        name: 'uploadFile',
+        action: `${base_url}/dfs/upload`,
+        showUploadList: false,
+        headers: {
+            ticket: ticket,
+            tenant: tenant
+        },
+        onChange(info) {
+            if (info.file.status === 'done') {
+                console.log(info.file, info.fileList);
+                const res = info.file.response.data;
+                const params = {
+                    iconName: info.file.name,
+                    iconUrl: "image/" + res.group +"/" + res.bucket + "/" + res.objectId,
+                    iconType: "project"
+                }
+                creatIcon(params).then((res) => {
+                    if (res.code === 0) {
+                        getIconList()
+                    }
+                })
+                message.success(`${info.file.name} file uploaded successfully`);
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        }
+    };
+
     const onFinish = () => {
-        
+
         form.validateFields().then((values) => {
             setLoading(true)
             const time = values["startTime"]
@@ -81,10 +106,10 @@ const ProjectAddInfo = (props) => {
                     message.success('添加成功');
                     props.history.goBack()
                     setCurrentStep("0")
-                }else {
+                } else {
                     message.error("添加失败")
                 }
-                
+
             })
         })
     }
@@ -154,7 +179,6 @@ const ProjectAddInfo = (props) => {
 
             </div>
             <div className="project-addinfo">
-                {/* <div className="project-type-head">填写信息</div> */}
                 <Form
                     {...layout}
                     name="basic"
@@ -197,7 +221,7 @@ const ProjectAddInfo = (props) => {
                             }
                         ]}
                     >
-                        <Input placeholder="只能包含字母" maxLength={9} showCount/>
+                        <Input placeholder="只能包含字母" maxLength={9} showCount />
                         {/* <div>请输入字母</div> */}
                     </Form.Item>
                     <Form.Item
@@ -234,11 +258,16 @@ const ProjectAddInfo = (props) => {
                             {
                                 iconList && iconList.map((item) => {
                                     return <div key={item.key} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
-                       
-                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon" />
+
+                                        <img src={(base_url + item.iconUrl)} alt="" className="img-icon" />
                                     </div>
                                 })
                             }
+                            <Upload {...upLoadIcon}>
+                                <div className="project-icon">
+                                    <img src={UploadIcon1} alt="" className="list-img"/>
+                                </div>
+                            </Upload>
                         </div>
                     </Form.Item>
                     <div className="project-add-submit">
@@ -261,4 +290,4 @@ const ProjectAddInfo = (props) => {
     )
 }
 
-export default withRouter(ProjectAddInfo);
+export default withRouter(observer(ProjectAddInfo));

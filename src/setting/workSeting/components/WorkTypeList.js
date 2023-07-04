@@ -91,7 +91,7 @@ const WorkTypeList = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={('/images/' + record.iconUrl)}
+                                    src={(base_url + record.iconUrl)}
                                     alt=""
                                     className="img-icon"
                                 />
@@ -152,7 +152,6 @@ const WorkTypeList = (props) => {
                                 getFlowList={getFlowList}
                                 creatIcon={creatIcon}
                                 findIconList={findIconList}
-                            // grouper="custom"
                             >
                                 编辑
                             </WorkTypeAddmodal>
@@ -191,10 +190,6 @@ const WorkTypeList = (props) => {
         <Row>
             <Col lg={{  span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
                 <div className="work-type">
-                    {/* <Breadcumb
-                        firstText="事项类型管理"
-                        secondText="事项类型列表"
-                    /> */}
                     <Breadcumb
                         firstText="事项类型"
                     >
@@ -210,20 +205,10 @@ const WorkTypeList = (props) => {
                                 creatIcon={creatIcon}
                                 findIconList={findIconList}
                                 bottonType="primary"
-                            // grouper="custom"
                             ></WorkTypeAddmodal>
                         </div>
                     </Breadcumb>
                     <div style={{ padding: "20px 0" }}>
-                        {/* <div className="work-type-search-add">
-                            <Search
-                                placeholder="模板名称"
-                                allowClear
-                                onSearch={onSearch}
-                                style={{ width: 200 }}
-                            />
-
-                        </div> */}
                         <Table
                             columns={columns}
                             rowKey={(record) => record.id}

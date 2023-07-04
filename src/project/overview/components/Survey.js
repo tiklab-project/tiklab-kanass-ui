@@ -356,7 +356,7 @@ const Survey = (props) => {
                                 {
                                     project?.iconUrl ?
                                         <img
-                                            src={('/images/' + project.iconUrl)}
+                                            src={(base_url + project.iconUrl)}
                                             alt=""
                                             className="list-img"
                                         />

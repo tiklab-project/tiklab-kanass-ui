@@ -7,6 +7,7 @@ import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import WorkDetail from "./WorkDetail";
 import { withRouter } from "react-router";
+import { base_url } from "../../../enviroment/enviroment_local";
 const WorkTableContent = (props) => {
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
@@ -32,14 +33,14 @@ const WorkTableContent = (props) => {
         setWorkIndex(index + 1)
         setDetailCrumbArray([{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         console.log(props)
-        if(props.route.path === "/index/work"){
+        if (props.route.path === "/index/work") {
             props.history.push(`/index/workDetail/${record.id}`)
-            
+
         }
-        if(props.route.path === "/index/projectDetail/:id/work"){
+        if (props.route.path === "/index/projectDetail/:id/work") {
             props.history.push(`/index/projectDetail/${record.project.id}/workDetail/${record.id}`)
         }
-        if(props.route.path === "/index/:id/sprintdetail/:sprint/workItem"){
+        if (props.route.path === "/index/:id/sprintdetail/:sprint/workItem") {
             props.history.push(`/index/${record.project.id}/sprintdetail/${sprintId}/workDetail/${record.id}`)
         }
         // setIsWorkList(false)
@@ -57,7 +58,7 @@ const WorkTableContent = (props) => {
                     {
                         record.workTypeSys.iconUrl ?
                             <img
-                                src={'/images/' + record.workTypeSys.iconUrl}
+                                src={(JSON.parse(base_url) + record.workTypeSys.iconUrl)}
                                 alt=""
                                 className="list-img"
 
@@ -86,14 +87,14 @@ const WorkTableContent = (props) => {
             </div>
         },
         {
-            title: '项目',
+            title: '项目q',
             dataIndex: ['project', 'projectName'],
             key: 'project',
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
                     {
                         record.project.iconUrl ? <img
-                            src={'/images/' + record.project?.iconUrl}
+                            src={(JSON.parse(base_url) + record.project.iconUrl)}
                             alt=""
                             className="img-icon"
                         />

@@ -7,7 +7,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { useState } from "react";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import InputSearch from "../../../common/input/InputSearch";
-import Button from "../../../common/button/Button"
+import Button from "../../../common/button/Button";
 const { Option } = Select;
 
 const ProjectContent = (props) => {
@@ -180,7 +180,7 @@ const ProjectContent = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={('/images/' + record.iconUrl)}
+                                    src={(base_url + record.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -292,7 +292,7 @@ const ProjectContent = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    src={('/images/' + item.project.iconUrl)}
+                                                    src={(base_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />

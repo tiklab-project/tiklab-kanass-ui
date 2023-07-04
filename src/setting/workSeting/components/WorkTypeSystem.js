@@ -89,7 +89,7 @@ const WorkTypeSystem = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={('/images/' + record.iconUrl)}
+                                    src={(base_url + record.iconUrl)}
                                     alt=""
                                     className="img-icon"
                                 />

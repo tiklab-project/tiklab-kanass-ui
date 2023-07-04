@@ -4,6 +4,7 @@ import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
+import { base_url } from '../../../enviroment/enviroment_local';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -183,7 +184,7 @@ const WorkAside = (props) => {
                                     {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
-                                                src={('images/' + childItem.workTypeSys?.iconUrl)}
+                                                src={(JSON.parse(base_url) + childItem.workTypeSys?.iconUrl)}
                                                 alt=""
                                                 className="img-icon"
                                             />
@@ -239,7 +240,7 @@ const WorkAside = (props) => {
                     </div>
                     {
                         item.workTypeSys?.iconUrl ? <img
-                            src={('images/' + item.workTypeSys?.iconUrl)}
+                            src={(JSON.parse(base_url) + item.workTypeSys?.iconUrl)}
                             alt=""
                             className="img-icon"
                         />

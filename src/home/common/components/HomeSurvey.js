@@ -140,7 +140,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={('/images/' + item.iconUrl)}
+                                    src={(base_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -254,7 +254,7 @@ const HomeSurvey = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    src={('/images/' + item.project.iconUrl)}
+                                                    src={(base_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />

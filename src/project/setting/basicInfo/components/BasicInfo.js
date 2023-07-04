@@ -41,7 +41,8 @@ const BasicInfo = props => {
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
     const { projectStore } = props;
-    const { deleproList, updateProject, searchpro, projectTypelist, getProjectTypeList, getUseList, uselist } = projectStore;
+    const { deleproList, updateProject, searchpro, projectTypelist, 
+        getProjectTypeList, getUseList, uselist } = projectStore;
     const [disable, setDisabled] = useState(true);
     const [iconUrl, setIconUrl] = useState();
     const [visible, setVisible] = useState(false);
@@ -100,6 +101,7 @@ const BasicInfo = props => {
     const onFinish = () => {
         form.validateFields().then((values) => {
             const time = values["startTime"]
+            debugger
             const data = {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),
@@ -209,7 +211,7 @@ const BasicInfo = props => {
                                             {
                                                 iconUrl ?
                                                     <img
-                                                        src={('/images/' + iconUrl)}
+                                                        src={(base_url + iconUrl)}
                                                         alt="" width={60} height={60}
                                                     />
                                                     :
@@ -322,10 +324,6 @@ const BasicInfo = props => {
                         <Panel header={projectDelete()} key="2">
                             <div className="project-set-delete">
                                 <div className="project-set-icon-block">
-                                    {/* <div>
-
-                                        <span></span>
-                                    </div> */}
                                     此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                                 </div>
                                 <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>

@@ -112,9 +112,9 @@ const WorkType = (props) => {
                 <div className="work-type-name" >
                     <div className="work-type-icon">
                         {
-                            record.iconUrl ?
+                            record.workType.iconUrl ?
                                 <img
-                                    src={('/images/' + record.iconUrl)}
+                                    src={(base_url + record.workType.iconUrl)}
                                     alt=""
                                     className="img-icon"
                                 />

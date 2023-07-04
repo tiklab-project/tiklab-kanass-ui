@@ -102,13 +102,6 @@ const WorkBasicInfo = (props) => {
         multiple: true,
         action: `${base_url}/dfs/upload`,
         showUploadList: false,
-        data: (file) => {
-            const params = {
-                group: "g1",
-                bucket: "teamwire"
-            }
-            return params;
-        },
         headers: {
             ticket: ticket,
             tenant: tenant
@@ -116,14 +109,14 @@ const WorkBasicInfo = (props) => {
         onChange(info) {
             const { status } = info.file;
             if (status === 'done') {
-                const filename = info.file.response.data;
+                const res = info.file.response;
                 console.log(info)
                 const params = {
                     workItem: {
                         id: workId
                     },
                     attachmentName: info.file.name,
-                    attachmentUrl: filename,
+                    attachmentUrl: res.data.objectId,
                     type: info.file.type
                 }
                 createWorkAttach(params).then(() => {

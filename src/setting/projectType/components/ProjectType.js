@@ -43,12 +43,6 @@ const ProjectType = () => {
     const [loading, setLoading] = useState(false)
 
     const columns = [
-        // {
-        //     title: "类型icon",
-        //     colSpan: 1,
-        //     dataIndex: "iconUrl",
-        //     key: "iconUrl"
-        // },
         {
             title: "类型名称",
             colSpan: 1,

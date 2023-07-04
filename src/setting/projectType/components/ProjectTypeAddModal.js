@@ -12,9 +12,7 @@ const layout = {
         span: 16,
     },
 };
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 8 },
-};
+
 
 const ProjectTypeAddModal = (props) => {
 

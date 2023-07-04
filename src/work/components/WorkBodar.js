@@ -151,9 +151,9 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
                                                         <div className="work-item-title-left" >
                                                             {
-                                                                workItem.workType.iconUrl ?
+                                                                workItem.workTypeSys.iconUrl ?
                                                                     <img
-                                                                        src={'/images/' + workItem.workType.iconUrl}
+                                                                        src={(base_url + workItem.workTypeSys.iconUrl)}
                                                                         alt=""
                                                                         className="svg-icon"
 
@@ -215,9 +215,9 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
                                                         <div className="work-item-title-left" >
                                                             {
-                                                                workItem.workType.iconUrl ?
+                                                                workItem.workTypeSys.iconUrl ?
                                                                     <img
-                                                                        src={'/images/' + workItem.workType.iconUrl}
+                                                                        src={(JSON.parse(base_url) + workItem.workTypeSys.iconUrl)}
                                                                         alt=""
                                                                         className="svg-icon"
 
