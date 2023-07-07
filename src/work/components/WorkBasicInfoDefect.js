@@ -122,7 +122,7 @@ const WorkBasicInfo = (props) => {
                         id: workId
                     },
                     attachmentName: info.file.name,
-                    attachmentUrl: res.data.objectId,
+                    attachmentUrl: res.data,
                     type: info.file.type
                 }
                 createWorkAttach(params).then(() => {
@@ -143,17 +143,41 @@ const WorkBasicInfo = (props) => {
             key: 'name',
             render: (text, record) => {
                 return (
-                    record.type.indexOf("image") === -1 ? <a href={`${base_url}file/${record.attachmentUrl}`}
-                        target="_blank"
-                    >
-                        {text}
-                    </a>
-                        :
-                        <a href={`${base_url}image/${record.attachmentUrl}`}
-                            target="_blank"
-                        >
-                            {text}ds
-                        </a>
+                    record.type.indexOf("image") === -1 ? <Fragment>
+                        {
+                            version === "cloud" ? <a href={`${base_url}file/${record.attachmentUrl}?tenant=${tenant}`}
+                                target="_blank"
+                            >
+                                {text}
+                            </a>
+                                :
+                                <a href={`${base_url}file/${record.attachmentUrl}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                        }
+
+                    </Fragment>
+                    :
+                    <Fragment>
+                        {
+                            version === "cloud" ?
+                                <a href={`${base_url}image/${record.attachmentUrl}?tenant=${tenant}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                                :
+                                <a href={`${base_url}image/${record.attachmentUrl}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                        }
+
+                    </Fragment>
+
                 )
             }
         },

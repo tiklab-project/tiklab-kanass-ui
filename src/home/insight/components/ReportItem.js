@@ -11,7 +11,7 @@ import React, {Fragment} from "react";
 import { inject, observer } from "mobx-react";
 import ProjectOperateTable from "./ProjectOperateTable";
 import NewWorkItemTrend from "./NewWorkItemTrend";
-import EndWorkItemTrend from "./endWorkItemTrend";
+import EndWorkItemTrend from "./EndWorkItemTrend";
 import ProjectSetMember from "./ProjectSetMember";
 import ProjectSetWorkItem from "./ProjectSetWorkItem";
 import WorkItemStatusSituation from "./WorkItemStatusSituation";

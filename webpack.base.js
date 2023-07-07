@@ -11,7 +11,9 @@ const DIST_PATH = path.resolve(__dirname, 'prod');
 
 const envData_dev = require(`./enviroment/enviroment_${process.env.API_ENV}`);
 const sassModuleRegex = /\.module\.(scss|sass)$/;
-
+const HappyPack = require('happypack');
+// const os = require('os');
+// var happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 module.exports = {
     output: {
         filename: 'js/[name].[hash:8].js',
@@ -22,21 +24,26 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
-            'react-dom': '@hot-loader/react-dom',  
+            'react-dom': '@hot-loader/react-dom',
             react: path.resolve('./node_modules/react'),
             '@common': path.resolve("./src/common")
         },
     },
     target: "web",
-    module:{
+    externals: {
+        jquery: 'jQuery',
+        react: "react"
+    },
+    module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                use: [{
-                    // loader: "happypack/loader?id=portal"
-                    loader: 'babel-loader'
-                }],
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                use: [
+                    'thread-loader',
+                    'babel-loader'
+                ]
+                
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)/,
@@ -44,7 +51,7 @@ module.exports = {
                 exclude: [path.resolve(__dirname, "./src/assets/svg"), /\.(png|jpg|jpeg|gif).js/],
                 use: {
                     loader: 'url-loader',
-                    options: {  
+                    options: {
                         // publicPath: 'images',
                         outputPath: 'images/',
                         name: '[name].[ext]', // 图片输出的路径
@@ -66,15 +73,17 @@ module.exports = {
                     }
                 ]
             },
+            
             {
                 test: /\.svg$/,
                 exclude: [/node_modules/],
-                include: [path.resolve(__dirname,'./src/assets/svg')],
+                include: [path.resolve(__dirname, './src/assets/svg')],
                 use: [
-                    { loader: 'svg-sprite-loader', options: {symbolId: 'icon-[name]'} },
+                    { loader: 'svg-sprite-loader', options: { symbolId: 'icon-[name]' } },
                     { loader: 'svgo-loader', options: {} },
                 ]
             },
+            
             {
                 test: /\.(sc|sa|c)ss$/,
                 exclude: sassModuleRegex,
@@ -84,10 +93,10 @@ module.exports = {
                     },
                     {
                         loader: "css-loader",
-                        options: {
-                            sourceMap: true
-                        },
-                        
+                        // options: {
+                        //     sourceMap: true
+                        // },
+
                     },
                     {
                         loader: "postcss-loader"
@@ -100,7 +109,8 @@ module.exports = {
                         options: {
                             resources: './src/index.scss'
                         }
-                    }
+                    },
+                   
                 ],
             },
             {
@@ -114,7 +124,7 @@ module.exports = {
                             modules: {
                                 localIdentName: '[local]--[hash:base64:5]',
                             },
-                            sourceMap: true
+                            // sourceMap: true
                         },
                     },
                     {
@@ -124,15 +134,25 @@ module.exports = {
                         loader: 'sass-loader'
                     }
                 ],
+                sideEffects: true
             }
         ]
     },
     plugins: [
         new CleanWebpackPlugin(),
+        // new HappyPack({
+        //     id: 'js',
+        //     loaders: [{
+        //         loader: 'babel-loader',
+        //         options: {
+        //             babelrc: true, cacheDirectory: true
+        //         }
+        //     }]    
+        // }),
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
-            title:'TeamWire',
+            title: 'TeamWire',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
             filename: 'index.html',
@@ -150,6 +170,6 @@ module.exports = {
             ignoreOrder: true
         }),
         new CssMinimizerPlugin(),
-        
+
     ]
 };

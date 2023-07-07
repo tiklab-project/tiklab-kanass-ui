@@ -8,11 +8,12 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
+import { getUser } from "tiklab-core-ui";
 const ProjectChangeModal = (props) => {
     const { isShowText, searchpro, project, projectStore } = props;
     const { findMyAllProjectList, allProlist } = projectStore;
@@ -24,6 +25,7 @@ const ProjectChangeModal = (props) => {
     const modelRef = useRef()
     // 点击按钮的ref
     const setButton = useRef()
+    const tenant = getUser().tenant;
     const { t } = useTranslation();
 
     /**
@@ -106,7 +108,11 @@ const ProjectChangeModal = (props) => {
                         {
                             project?.iconUrl ?
                                 <img
-                                    src={(base_url + project?.iconUrl)}
+                                    src={version === "cloud" ?
+                                        (JSON.parse(base_url) + project?.iconUrl + "?tenant=" + tenant)
+                                        :
+                                        (JSON.parse(base_url) + project?.iconUrl)
+                                    }
                                     className="list-img"
                                     alt=""
                                 />
@@ -135,13 +141,25 @@ const ProjectChangeModal = (props) => {
                         :
                         <div className='project-title-icon' onClick={showMoreMenu} >
                             {
-                                project?.iconUrl ?
-                                    <img
-                                        src={(base_url + project?.iconUrl)}
-                                        title={project?.projectName} alt=""
-                                        className="list-img"
-                                        style={{ marginRight: "0px" }}
-                                    />
+                                project?.iconUrl ? <Fragment>
+                                    {
+                                        version === "cloud" ? <img
+                                            src={(base_url + project?.iconUrl + "?tenant=" + tenant)}
+                                            title={project?.projectName} alt=""
+                                            className="list-img"
+                                            style={{ marginRight: "0px" }}
+                                        />
+                                        :
+                                        <img
+                                            src={(base_url + project?.iconUrl)}
+                                            title={project?.projectName} alt=""
+                                            className="list-img"
+                                            style={{ marginRight: "0px" }}
+                                        />
+                                    }
+
+                                </Fragment>
+
                                     :
                                     <img
                                         src={('images/project1.png')}

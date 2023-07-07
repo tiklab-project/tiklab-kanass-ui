@@ -131,7 +131,7 @@ const WorkTypeAddModal = (props) => {
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
-                    iconUrl: "image/" + res.group +"/" + res.bucket + "/" + res.objectId,
+                    iconUrl: "image/" + res,
                     iconType: "workType"
                 }
                 creatIcon(params).then((res) => {
@@ -259,7 +259,11 @@ const WorkTypeAddModal = (props) => {
                                 {
                                     iconList && iconList.map((item) => {
                                         return <div className={`work-type-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                            <img src={(base_url + item.iconUrl)} alt="" className="img-icon"/>
+                                            {
+                                                version === "cloud" ? <img src={(base_url + item.iconUrl+ "?tenant=" + tenant)} alt="" className="img-icon"/>
+                                                :
+                                                <img src={(base_url + item.iconUrl)} alt="" className="img-icon"/>
+                                            }
                                         </div>
                                     })
                                 }

@@ -3,11 +3,12 @@ import { observer, inject } from "mobx-react";
 import WorkBorderDetail from "./WorkBorderDetail";
 import "./WorkBodar.scss";
 import UserIcon from '../../common/UserIcon/UserIcon';
+import { getUser } from 'tiklab-core-ui';
 
 const WorkBodar = (props) => {
     const { workStore, form } = props;
     const { workBoardList, changeWorkStatus, setIndexParams,
-        changeBorderList, reductionWorkBoardList, boardGroup, 
+        changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLenght, findToNodeList,
         setWorkId, setWorkIndex, setDetailCrumbArray, createRecent } = workStore;
     const [moveWorkId, setMoveWorkId] = useState("")
@@ -19,6 +20,7 @@ const WorkBodar = (props) => {
     const modelRef = useRef()
     const [flowId, setFlowId] = useState()
     const project = JSON.parse(localStorage.getItem("project"));
+    const tenant = getUser().tenant;
     // 拖放效果
     const moveWorkItem = () => {
         // const dragEvent = event.target
@@ -65,7 +67,7 @@ const WorkBodar = (props) => {
         event.preventDefault();
     }
 
-    const changeStatus = (targetStatusId, index,item) => {
+    const changeStatus = (targetStatusId, index, item) => {
         event.preventDefault();
         const value = {
             workStatus: targetStatusId,
@@ -100,8 +102,8 @@ const WorkBodar = (props) => {
             name: workItem.title,
             model: "workItem",
             modelId: workItem.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
             iconUrl: workItem.workTypeSys.iconUrl
         }
         createRecent(params)
@@ -121,7 +123,7 @@ const WorkBodar = (props) => {
                 {
                     boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {
                         return <div className={`work-bodar-box`}
-                            onDrop={() => changeStatus(item.state.id, index,item)}
+                            onDrop={() => changeStatus(item.state.id, index, item)}
                             onDragOver={dragover}
                             id={`targetBox${index}`}
                             key={item.state.id}
@@ -174,7 +176,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <UserIcon userInfo={workItem.user} name = {workItem.user?.name}/>
+                                                        <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
                                                     </div>
 
                                                 </div>
@@ -217,7 +219,11 @@ const WorkBodar = (props) => {
                                                             {
                                                                 workItem.workTypeSys.iconUrl ?
                                                                     <img
-                                                                        src={(JSON.parse(base_url) + workItem.workTypeSys.iconUrl)}
+                                                                        src={version === "cloud" ?
+                                                                            (JSON.parse(base_url) + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                                            :
+                                                                            (JSON.parse(base_url) + workItem.workTypeSys?.iconUrl)
+                                                                        }
                                                                         alt=""
                                                                         className="svg-icon"
 
@@ -238,7 +244,7 @@ const WorkBodar = (props) => {
                                                     <div className="work-item-id"
                                                         onClick={() => showModal(workItem, workIndex, index)}
                                                     >
-                                                        <UserIcon userInfo={workItem.user} name = {workItem.user?.name}/>
+                                                        <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
                                                     </div>
                                                 </div>
                                             })
@@ -255,7 +261,7 @@ const WorkBodar = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}
-                showPage = {true}
+                showPage={true}
                 {...props}
             />
         </div>

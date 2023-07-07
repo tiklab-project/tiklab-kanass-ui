@@ -95,7 +95,7 @@ const WorkBasicInfo = (props) => {
 
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
-    
+
     // 上传附件的信息
     const filesParams = {
         name: 'uploadFile',
@@ -116,7 +116,7 @@ const WorkBasicInfo = (props) => {
                         id: workId
                     },
                     attachmentName: info.file.name,
-                    attachmentUrl: res.data.objectId,
+                    attachmentUrl: res.data,
                     type: info.file.type
                 }
                 createWorkAttach(params).then(() => {
@@ -135,12 +135,45 @@ const WorkBasicInfo = (props) => {
             title: '文件',
             dataIndex: 'attachmentName',
             key: 'name',
-            render: (text, record) =>
-                <a href={`${base_url}image/${record.attachmentUrl}`}
-                    target="_blank"
-                >
-                    {text}
-                </a>
+            render: (text, record) => {
+                return (
+                    record.type.indexOf("image") === -1 ? <Fragment>
+                        {
+                            version === "cloud" ? <a href={`${base_url}file/${record.attachmentUrl}?tenant=${tenant}`}
+                                target="_blank"
+                            >
+                                {text}
+                            </a>
+                                :
+                                <a href={`${base_url}file/${record.attachmentUrl}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                        }
+
+                    </Fragment>
+                        :
+                        <Fragment>
+                            {
+                                version === "cloud" ?
+                                    <a href={`${base_url}image/${record.attachmentUrl}?tenant=${tenant}`}
+                                        target="_blank"
+                                    >
+                                        {text}
+                                    </a>
+                                    :
+                                    <a href={`${base_url}image/${record.attachmentUrl}`}
+                                        target="_blank"
+                                    >
+                                        {text}
+                                    </a>
+                            }
+
+                        </Fragment>
+
+                )
+            }
         },
         {
             title: '文件类型',
@@ -199,33 +232,33 @@ const WorkBasicInfo = (props) => {
             const priority = priorityList.filter(item => {
                 return item.id === changedValues.workPriority
             })
-            changedValues.workPriority =  priority[0];
+            changedValues.workPriority = priority[0];
         }
 
-        if (changeKey  === "module") {
+        if (changeKey === "module") {
             changedValues.module = {
                 id: changedValues.module
             }
         }
 
-        if (changeKey  === "sprint") {
+        if (changeKey === "sprint") {
             changedValues.sprint = {
                 id: changedValues.sprint
             }
         }
 
-        if (changeKey  === "assigner") {
+        if (changeKey === "assigner") {
             changedValues.assigner = {
                 id: changedValues.assigner
             }
         }
 
-        if (changeKey  === "reporter") {
+        if (changeKey === "reporter") {
             changedValues.reporter = {
                 id: changedValues.reporter
             }
         }
-        if (changeKey  === "builder") {
+        if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
             }
@@ -245,18 +278,18 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.preDependWorkItem
             }
         }
-       
+
         let data = {
             ...changedValues,
             id: workId,
             updateField: changeKey
         }
         editWork(data).then(res => {
-            if(res.code === 0){
-                setWorkInfo({...workInfo, ...changedValues})
+            if (res.code === 0) {
+                setWorkInfo({ ...workInfo, ...changedValues })
                 if (props.match.path === "/index/projectDetail/:id/work" ||
-                props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
-                    workList[workIndex-1] = { ...workList[workIndex-1], ...changedValues}
+                    props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                    workList[workIndex - 1] = { ...workList[workIndex - 1], ...changedValues }
                     setWorkList([...workList])
                 }
             }
@@ -697,7 +730,7 @@ const WorkBasicInfo = (props) => {
                     {
                         attachList && attachList.length > 0 && (
                             <Fragment>
-                                <Table 
+                                <Table
                                     columns={attachColums}
                                     dataSource={attachList}
                                     pagination={false}

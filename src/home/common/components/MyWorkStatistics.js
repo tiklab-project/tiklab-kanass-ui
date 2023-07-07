@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./MyWorkStatistics.scss";
 
 const MyWorkStatistics = (props) => {

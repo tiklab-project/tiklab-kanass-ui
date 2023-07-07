@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 14:38:38
  */
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
@@ -21,6 +21,7 @@ const HomeSurvey = (props) => {
         findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
+    const tenant = getUser().tenant;
     const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
@@ -84,10 +85,6 @@ const HomeSurvey = (props) => {
      * @param {跳转地址} url 
      */
     const goTodoDetail = (url) => {
-        // setWorkId(item.modelId)
-        // setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        // setIsWorkList(false)
-        // updateRecent({ id: item.id })
         const workItemId = url.split("/")[6];
         searchWorkById(workItemId).then((res) => {
             console.log(res)
@@ -140,7 +137,8 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={(base_url + item.iconUrl)}
+                                    // src={(base_url + item.iconUrl)}
+                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -168,7 +166,8 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={('/images/' + item.iconUrl)}
+                                    // src={(base_url + item.iconUrl)}
+                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -254,7 +253,8 @@ const HomeSurvey = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    src={(base_url + item.project.iconUrl)}
+                                                    // src={(base_url + item.project.iconUrl)}
+                                                    src={version === "cloud" ? (base_url + item.project.iconUrl + "?tenant=" + tenant) : (base_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />
@@ -315,8 +315,8 @@ const HomeSurvey = (props) => {
                                         onClick={() => goTodoDetail(item.link)}
                                     />
                                 })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </TabPane>
                         <TabPane tab="已完成" key="end">

@@ -4,6 +4,7 @@ import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
+import { getUser } from "tiklab-core-ui";
 
 const WorkTypeSystem = (props) => {
     const store = {
@@ -14,8 +15,10 @@ const WorkTypeSystem = (props) => {
         editWorkTypeList, deleteWorkTypeSystemList, setWorkTypeList, fromList,
         getFormList, flowList, getFlowList, creatIcon, findIconList
     } = WorkSetingStore;
+
+    const tenant = getUser().tenant;
     useEffect(() => {
-        getSystemWorkTypeList({grouper: "system"})
+        getSystemWorkTypeList({ grouper: "system" })
         getFormList()
         return;
     }, []);
@@ -32,7 +35,7 @@ const WorkTypeSystem = (props) => {
     }
 
 
-  
+
 
     //上移
     const upWorkType = (id) => {
@@ -87,12 +90,22 @@ const WorkTypeSystem = (props) => {
                 <div className="work-type-name" >
                     <div className="work-type-icon">
                         {
-                            record.iconUrl ?
-                                <img
-                                    src={(base_url + record.iconUrl)}
-                                    alt=""
-                                    className="img-icon"
-                                />
+                            record.iconUrl ? <Fragment>
+                                {
+                                    version === "cloud" ? <img
+                                        src={(base_url + record.iconUrl + "?tenant=" + tenant)}
+                                        alt=""
+                                        className="img-icon"
+                                    />
+                                        :
+                                        <img
+                                            src={(base_url + record.iconUrl)}
+                                            alt=""
+                                            className="img-icon"
+                                        />
+                                }
+                            </Fragment>
+
                                 :
                                 <img
                                     src={('images/workType1.png')}
@@ -152,24 +165,24 @@ const WorkTypeSystem = (props) => {
                     >
                         删除
                     </Button> */}
-                    <svg 
-                        className="svg-icon" aria-hidden="true" 
+                    <svg
+                        className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer", marginRight: "16px" }}
                         onClick={() => deleWorkType(record.id)}
                     >
                         <use xlinkHref="#icon-delete"></use>
                     </svg>
 
-                    <svg 
-                        className="svg-icon" aria-hidden="true" 
+                    <svg
+                        className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer", marginRight: "16px" }}
                         onClick={() => upWorkType(record.id)}
                     >
                         <use xlinkHref="#icon-totop"></use>
                     </svg>
 
-                    <svg 
-                        className="svg-icon" aria-hidden="true" 
+                    <svg
+                        className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer", marginRight: "16px" }}
                         onClick={() => downWorkType(record.id)}
                     >
@@ -213,10 +226,10 @@ const WorkTypeSystem = (props) => {
                                 creatIcon={creatIcon}
                                 findIconList={findIconList}
                                 className="111"
-                                bottonType = "dashed"
+                                bottonType="dashed"
                                 style={{ marginRight: "10px" }}
                             ></WorkTypeAddmodal>
-                            
+
                         </div>
                     </Breadcumb>
                     <div style={{ padding: "20px 0" }}>
@@ -241,7 +254,7 @@ const WorkTypeSystem = (props) => {
             </Col>
         </Row>
     </Provider>
-        
+
     );
 };
 export default observer(WorkTypeSystem);

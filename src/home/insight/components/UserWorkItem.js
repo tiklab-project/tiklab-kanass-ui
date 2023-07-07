@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { Form, Select, Button, DatePicker } from 'antd';
+import { Form, Select, Button } from 'antd';
 import "./userWorkItem.scss";
 import * as echarts from 'echarts';
 

@@ -38,7 +38,7 @@ const Survey = (props) => {
     // 进度
     const [percent, setPercent] = useState()
     // 项目类型
-    const path = props.match.path.split("/")[2];
+    const tenant = getUser().tenant;
     useEffect(() => {
         // 统计各个状态的事项
         statWorkItemByBusStatus(projectId).then(res => {
@@ -254,7 +254,7 @@ const Survey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={('/images/' + item.iconUrl)}
+                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -356,7 +356,7 @@ const Survey = (props) => {
                                 {
                                     project?.iconUrl ?
                                         <img
-                                            src={(base_url + project.iconUrl)}
+                                            src={version === "cloud" ? (base_url + project.iconUrl + "?tenant=" + tenant) : (base_url + project.iconUrl)}
                                             alt=""
                                             className="list-img"
                                         />

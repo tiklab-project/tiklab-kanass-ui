@@ -11,10 +11,10 @@ import WorkDetail from "./WorkDetail";
 import WorkAside from "./WorkAside";
 import { observer, inject } from "mobx-react";
 import "./WorkList.scss";
-import { Form, Row, Col } from "antd";
+import { Row, Col } from "antd";
 const Worklist = (props) => {
 
-    const { workStore, route, form } = props;
+    const { workStore, form } = props;
 
     const { workList, total, searchCondition } = workStore;
 

@@ -8,15 +8,15 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Provider, inject, observer } from "mobx-react";
-import { message, Col, Row, Empty } from "antd"
+import { Provider } from "mobx-react";
+import { message, Empty } from "antd"
 import "./NewInsight.scss";
 import ReportItem from "./ReportItem"
 import ReportList from "./ReportList"
 import { withRouter } from "react-router";
 import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../../node_modules/react-resizable/css/styles.css"
-import GridLayout, { Responsive, WidthProvider } from "react-grid-layout";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button"
 import InsightStore from "../store/InsightStore"

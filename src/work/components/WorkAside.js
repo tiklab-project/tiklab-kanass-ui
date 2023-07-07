@@ -5,6 +5,7 @@ import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
 import { base_url } from '../../../enviroment/enviroment_local';
+import { getUser } from 'tiklab-core-ui';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -16,6 +17,7 @@ const WorkAside = (props) => {
     const [expandedTree, setExpandedTree] = useState([]);
     const [currentPageAside, setCurrentPage] = useState(1)
     const project = JSON.parse(localStorage.getItem("project"));
+    const tenant = getUser().tenant;
 
     useEffect(() => {
         return () => {
@@ -32,8 +34,8 @@ const WorkAside = (props) => {
             name: workItem.title,
             model: "workItem",
             modelId: workItem.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
             iconUrl: workItem.workTypeSys.iconUrl
         }
         createRecent(params)
@@ -184,7 +186,11 @@ const WorkAside = (props) => {
                                     {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
-                                                src={(JSON.parse(base_url) + childItem.workTypeSys?.iconUrl)}
+                                                src={version === "cloud" ?
+                                                    (JSON.parse(base_url) + childItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                    :
+                                                    (JSON.parse(base_url) + childItem.workTypeSys?.iconUrl)
+                                                }
                                                 alt=""
                                                 className="img-icon"
                                             />
@@ -240,7 +246,11 @@ const WorkAside = (props) => {
                     </div>
                     {
                         item.workTypeSys?.iconUrl ? <img
-                            src={(JSON.parse(base_url) + item.workTypeSys?.iconUrl)}
+                            src={version === "cloud" ?
+                                (JSON.parse(base_url) + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                :
+                                (JSON.parse(base_url) + item.workTypeSys?.iconUrl)
+                            }
                             alt=""
                             className="img-icon"
                         />

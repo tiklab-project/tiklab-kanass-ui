@@ -14,6 +14,7 @@ import WorkTypeEditmodal from "./WorkTypeEditModal"
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
+import { getUser } from "tiklab-core-ui";
 
 const WorkType = (props) => {
     const store = {
@@ -22,26 +23,27 @@ const WorkType = (props) => {
     const { workAllTypeList, findWorkTypeDmList, deleteWorkTypeCustomList, setWorkTypeList } = ProjectWorkTypeStore;
     // 项目id
     const projectId = props.match.params.id;
+    const tenant = getUser().tenant;
     /**
      * 获取项目的事项类型列表
      */
     useEffect(() => {
-        findWorkTypeDmList({projectId: projectId})
+        findWorkTypeDmList({ projectId: projectId })
         return;
     }, []);
-    
+
     /**
      * 删除事项类型
      * @param {事项类型id} id 
      */
     const deleWorkType = (id) => {
-        deleteWorkTypeCustomList({id: id}).then(res => {
+        deleteWorkTypeCustomList({ id: id }).then(res => {
             if (res.code === 3001) {
                 message.error(res.msg);
             }
             if (res.code === 0) {
                 message.success(res.data);
-                findWorkTypeDmList({projectId: projectId})
+                findWorkTypeDmList({ projectId: projectId })
             }
         })
     }
@@ -106,7 +108,7 @@ const WorkType = (props) => {
     const columns = [
         {
             title: "类型名称",
-            dataIndex: ["workType","name"],
+            dataIndex: ["workType", "name"],
             key: "name",
             render: (text, record) => (
                 <div className="work-type-name" >
@@ -114,7 +116,11 @@ const WorkType = (props) => {
                         {
                             record.workType.iconUrl ?
                                 <img
-                                    src={(base_url + record.workType.iconUrl)}
+                                    src={version === "cloud" ?
+                                        (base_url + record.workType.iconUrl + "?tenant=" + tenant)
+                                        :
+                                        (base_url + record.workType.iconUrl)
+                                    }
                                     alt=""
                                     className="img-icon"
                                 />
@@ -132,7 +138,7 @@ const WorkType = (props) => {
         },
         {
             title: "描述",
-            dataIndex: ["workType","desc"],
+            dataIndex: ["workType", "desc"],
             key: "desc",
         },
         {
@@ -202,10 +208,10 @@ const WorkType = (props) => {
                     >
                         <div className="add-botton">
                             <WorkTypeAddmodal
-                                findWorkTypeDmList = {findWorkTypeDmList}
+                                findWorkTypeDmList={findWorkTypeDmList}
                                 name="添加事件类型"
                                 type="add"
-                                workAllTypeList = {workAllTypeList}
+                                workAllTypeList={workAllTypeList}
                             ></WorkTypeAddmodal>
                         </div>
                     </Breadcumb>
@@ -215,14 +221,14 @@ const WorkType = (props) => {
                             rowKey={(record) => record.id}
                             dataSource={workAllTypeList}
                             pagination={false}
-                            
+
                         />
                     </div>
                 </div>
             </Col>
         </Row>
     </Provider>
-        
+
     );
 };
 export default observer(WorkType);

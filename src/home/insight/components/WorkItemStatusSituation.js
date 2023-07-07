@@ -7,10 +7,10 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./WorkItemStatusSituation.scss";
-import { Form, Select, Button, DatePicker } from 'antd';
+import { Form, Select, Button } from 'antd';
 const WorkItemStatusSituation = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = insightStore;

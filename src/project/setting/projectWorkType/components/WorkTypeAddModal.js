@@ -13,6 +13,7 @@ import "./WorkType.scss"
 import Button from "../../../../common/button/Button";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
+import { getUser } from "tiklab-core-ui";
 
 
 const WorkTypeAddModal = (props) => {
@@ -25,7 +26,7 @@ const WorkTypeAddModal = (props) => {
     const projectId = props.match.params.id;
     // 选择的事项类型
     const [selectWorkType, setSelelctWorkType] = useState()
-
+    const tenant = getUser().tenant;
     /**
      * 显示添加弹窗，获取未被添加的事项列表
      */
@@ -85,7 +86,11 @@ const WorkTypeAddModal = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={(base_url + record.iconUrl)}
+                                    src={version === "cloud" ?
+                                        (base_url + record.iconUrl + "?tenant=" + tenant)
+                                        :
+                                        (base_url + record.iconUrl)
+                            }
                                     alt=""
                                     className="img-icon"
                                 />

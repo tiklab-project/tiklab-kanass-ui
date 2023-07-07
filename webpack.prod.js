@@ -14,10 +14,10 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-07-14 15:12:13
  */
-const webpack = require('webpack')
 const { merge } = require('webpack-merge');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const optimizeCss = require('optimize-css-assets-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
@@ -27,11 +27,15 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = merge(baseWebpackConfig, {
     mode: 'production',
+    cache: {
+        type: 'filesystem', // 使用文件缓存
+    },
     entry: [
-        path.resolve(__dirname, './src/index.js')
+        path.resolve(__dirname, './src/index.js'),
+        
     ],
     plugins: [
-        new BundleAnalyzerPlugin({defaultSizes: 'parsed'}),
+        new BundleAnalyzerPlugin({analyzerPort: 8880,}),
         new optimizeCss({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
@@ -49,14 +53,13 @@ module.exports = merge(baseWebpackConfig, {
         nodeEnv: process.env.NODE_ENV,
         splitChunks: {
             chunks: "all",
-            minSize: 300,
+            minSize: 100,
             minChunks: 1,
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
             automaticNameDelimiter: '--', // 分包打包生成文件的名称的连接符
             name:false,
             cacheGroups: { //  cacheGroups 缓存组，如：将某个特定的库打包
-        
                 antIcon: {
                     name: 'chunk-antIcon',
                     chunks: 'all',
@@ -76,6 +79,7 @@ module.exports = merge(baseWebpackConfig, {
                     chunks: 'all',
                     test: /[\\/]node_modules[\\/]tiklab-privilege-ui[\\/]/,
                     priority: 70,
+                    minChunks: 1,
                     reuseExistingChunk: true
                 },
                 tiklabPluginUI: {
@@ -153,7 +157,7 @@ module.exports = merge(baseWebpackConfig, {
                     name: 'chunk-antv',
                     chunks: 'all',
                     test: /[\\/]node_modules[\\/]@antv[\\/]/,
-                    priority: -10,
+                    priority: 90,
                     reuseExistingChunk: true
                 },
                 provinceCityChina: {
@@ -191,6 +195,13 @@ module.exports = merge(baseWebpackConfig, {
                     priority: 1,
                     reuseExistingChunk: true
                 },
+                vendors:{//node_modules里的代码
+                    test:/[\\/]node_modules[\\/]/,
+                    chunks: "initial",
+                    name:'vendors', //chunks name
+                    priority:10, //优先级
+                    enforce:true 
+                },
                 /* 提取共用部分，一下提取的部分会议commons 命名 */
                 commons: {
                     name: 'commons',
@@ -206,6 +217,7 @@ module.exports = merge(baseWebpackConfig, {
                 }
             }
         },
+        usedExports: true,
         minimizer: [
             new TerserPlugin({  // 压缩js
                 cache: true,

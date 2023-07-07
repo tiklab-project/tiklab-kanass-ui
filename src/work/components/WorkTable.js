@@ -8,6 +8,7 @@ import WorkTableFilter from "./WorkTableFilter";
 import WorkDetail from "./WorkDetail";
 import { withRouter } from "react-router";
 import { base_url } from "../../../enviroment/enviroment_local";
+import { getUser } from "tiklab-core-ui";
 const WorkTableContent = (props) => {
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
@@ -15,6 +16,7 @@ const WorkTableContent = (props) => {
         setWorkIndex, createRecent } = workStore;
     const workType = props.match.params.type ? props.match.params.type : null;
     const [workTypeText, setWorkTypeText] = useState("");
+    const tenant = getUser().tenant;
     // const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match?.params?.sprint;
     // const [isWorkList, setIsWorkList] = useState(true)
@@ -58,7 +60,11 @@ const WorkTableContent = (props) => {
                     {
                         record.workTypeSys.iconUrl ?
                             <img
-                                src={(JSON.parse(base_url) + record.workTypeSys.iconUrl)}
+                            src={ version === "cloud" ? 
+                            (JSON.parse(base_url) + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                            :
+                            (JSON.parse(base_url) + record.workTypeSys?.iconUrl)
+                        }
                                 alt=""
                                 className="list-img"
 

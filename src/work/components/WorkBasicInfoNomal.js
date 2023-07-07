@@ -114,7 +114,7 @@ const WorkBasicInfo = (props) => {
                         id: workId
                     },
                     attachmentName: info.file.name,
-                    attachmentUrl: res.data.objectId,
+                    attachmentUrl: res.data,
                     type: info.file.type
                 }
                 createWorkAttach(params).then(() => {
@@ -133,12 +133,45 @@ const WorkBasicInfo = (props) => {
             title: '文件',
             dataIndex: 'attachmentName',
             key: 'name',
-            render: (text, record) =>
-                <a href={`${base_url}image/${record.attachmentUrl}`}
-                    target="_blank"
-                >
-                    {text}
-                </a>
+            render: (text, record) =>{
+                return (
+                    record.type.indexOf("image") === -1 ? <Fragment>
+                        {
+                            version === "cloud" ? <a href={`${base_url}file/${record.attachmentUrl}?tenant=${tenant}`}
+                                target="_blank"
+                            >
+                                {text}
+                            </a>
+                                :
+                                <a href={`${base_url}file/${record.attachmentUrl}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                        }
+
+                    </Fragment>
+                    :
+                    <Fragment>
+                        {
+                            version === "cloud" ?
+                                <a href={`${base_url}image/${record.attachmentUrl}?tenant=${tenant}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                                :
+                                <a href={`${base_url}image/${record.attachmentUrl}`}
+                                    target="_blank"
+                                >
+                                    {text}
+                                </a>
+                        }
+
+                    </Fragment>
+
+                )
+            }
         },
         {
             title: '文件类型',

@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-12-08 09:24:33
  */
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message } from "antd";
 import 'moment/locale/zh-cn';
@@ -17,6 +17,7 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectIconChange from "./ProjectIconChange"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
+import { getUser } from "tiklab-core-ui";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -41,12 +42,13 @@ const BasicInfo = props => {
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
     const { projectStore } = props;
-    const { deleproList, updateProject, searchpro, projectTypelist, 
+    const { deleproList, updateProject, searchpro, projectTypelist,
         getProjectTypeList, getUseList, uselist } = projectStore;
     const [disable, setDisabled] = useState(true);
     const [iconUrl, setIconUrl] = useState();
     const [visible, setVisible] = useState(false);
-    const [projectInfo, setProjectInfo] = useState()
+    const [projectInfo, setProjectInfo] = useState();
+    const tenant = getUser().tenant;
     // 周期
     const rangeConfig = {
         rules: [
@@ -209,11 +211,15 @@ const BasicInfo = props => {
                                     <div className="project-form-icon-content">
                                         <div>
                                             {
-                                                iconUrl ?
-                                                    <img
-                                                        src={(base_url + iconUrl)}
-                                                        alt="" width={60} height={60}
-                                                    />
+                                                iconUrl ? <Fragment>
+                                                    {
+                                                        version === "cloud" ? <img src={(base_url + iconUrl + "?tenant=" + tenant)} alt="" width={60} height={60} />
+                                                            :
+                                                            <img src={(base_url + iconUrl)} alt="" width={60} height={60} />
+
+                                                    }
+                                                </Fragment>
+
                                                     :
                                                     <img
                                                         src={('images/project1.png')}

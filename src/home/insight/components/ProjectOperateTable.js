@@ -14,7 +14,7 @@ const { Option } = Select;
 
 const ProjectOperateTable = (props) => {
     const { insightStore, index, condition, editInsight,isView } = props;
-    const { statisticsProjectOperateList, findAllProjectSet, projectSetId, setProjectSetId, reportList } = insightStore;
+    const { statisticsProjectOperateList, findAllProjectSet, setProjectSetId, reportList } = insightStore;
     // 项目进展列表
     const [projectOperateList, setProjectOPerteList] = useState([])
     // 项目集列表

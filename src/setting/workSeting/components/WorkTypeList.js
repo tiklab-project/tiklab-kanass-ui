@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Table, Space, message, Row, Col } from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
+import { getUser } from "tiklab-core-ui";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -14,6 +15,7 @@ const WorkTypeList = (props) => {
         getFormList, flowList, getFlowList, creatIcon, findIconList
     } = WorkSetingStore;
 
+    const tenant = getUser().tenant;
     useEffect(() => {
         getAllWorkTypeList()
         getFormList()
@@ -89,12 +91,23 @@ const WorkTypeList = (props) => {
                 <div className="work-type-name" >
                     <div className="work-type-icon">
                         {
-                            record.iconUrl ?
-                                <img
-                                    src={(base_url + record.iconUrl)}
-                                    alt=""
-                                    className="img-icon"
-                                />
+                            record.iconUrl ? <Fragment>
+                                {
+                                    version ==="cloud"? <img
+                                        src={(base_url + record.iconUrl + "?tenant=" + tenant)}
+                                        alt=""
+                                        className="img-icon"
+                                    />
+                                    :
+                                    <img
+                                        src={(base_url + record.iconUrl)}
+                                        alt=""
+                                        className="img-icon"
+                                    />
+                                }
+
+                            </Fragment>
+
                                 :
                                 <img
                                     src={('images/workType1.png')}
@@ -188,7 +201,7 @@ const WorkTypeList = (props) => {
 
     return (<Provider {...store}>
         <Row>
-            <Col lg={{  span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
+            <Col lg={{ span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
                 <div className="work-type">
                     <Breadcumb
                         firstText="事项类型"
@@ -221,7 +234,7 @@ const WorkTypeList = (props) => {
             </Col>
         </Row>
     </Provider>
-        
+
     );
 };
 export default observer(WorkTypeList);

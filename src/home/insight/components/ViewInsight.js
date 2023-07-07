@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Provider, inject, observer } from "mobx-react";
+import { Provider } from "mobx-react";
 import "./ViewInsight.scss";
 import ReportItem from "./ReportItem"
 import { withRouter } from "react-router";

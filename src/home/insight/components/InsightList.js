@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Modal, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { observer, Provider } from "mobx-react";
@@ -16,7 +16,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 
 import "../components/insightList.scss";
-import InsightAddModal from "./insightAddModal";
+import InsightAddModal from "./InsightAddModal";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import InsightStore from "../store/InsightStore";
 import { getUser } from "tiklab-core-ui";

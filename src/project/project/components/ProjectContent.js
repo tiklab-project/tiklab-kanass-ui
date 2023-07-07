@@ -20,6 +20,7 @@ const ProjectContent = (props) => {
     const userId = getUser().userId;
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
+    const tenant = getUser().tenant;
 
     useEffect(() => {
         findJoinProjectList({})
@@ -180,7 +181,8 @@ const ProjectContent = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={(base_url + record.iconUrl)}
+                                    // src={(base_url + record.iconUrl)}
+                                    src={version === "cloud" ? (base_url + record.iconUrl + "?tenant=" + tenant) : (base_url + record.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -292,7 +294,8 @@ const ProjectContent = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    src={(base_url + item.project.iconUrl)}
+                                                    // src={(base_url + item.project.iconUrl)}
+                                                    src={version === "cloud" ? (base_url + item.project.iconUrl + "?tenant=" + tenant) : (base_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />

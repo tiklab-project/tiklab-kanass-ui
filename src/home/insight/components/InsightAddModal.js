@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Input, Modal, Form } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";

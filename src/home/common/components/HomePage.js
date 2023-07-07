@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 14:38:38
  */
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import "./HomePage.scss";
 import { Row, Col } from 'antd';

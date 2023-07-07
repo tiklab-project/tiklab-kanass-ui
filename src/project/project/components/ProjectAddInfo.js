@@ -51,7 +51,7 @@ const ProjectAddInfo = (props) => {
     const tenant = getUser().tenant;
     const upLoadIcon = {
         name: 'uploadFile',
-        action: `${base_url}/dfs/upload`,
+        action: `${base_url}dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,
@@ -63,7 +63,7 @@ const ProjectAddInfo = (props) => {
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
-                    iconUrl: "image/" + res.group +"/" + res.bucket + "/" + res.objectId,
+                    iconUrl: "image/" + res,
                     iconType: "project"
                 }
                 creatIcon(params).then((res) => {
@@ -259,7 +259,11 @@ const ProjectAddInfo = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div key={item.key} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
 
-                                        <img src={(base_url + item.iconUrl)} alt="" className="img-icon" />
+                                        <img 
+                                            // src={(base_url + item.iconUrl)} 
+                                            src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                            alt="" className="img-icon" 
+                                        />
                                     </div>
                                 })
                             }
