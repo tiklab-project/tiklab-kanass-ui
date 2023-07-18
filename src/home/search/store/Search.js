@@ -3,6 +3,12 @@ import { Service } from "../../../common/utils/requset"
 //删除事项
 export class SearchStore{
     // 搜索结果列表
+    @observable
+    projectList = []
+
+    @observable
+    workItemList = []
+    
     @observable 
     searchList = []
 
@@ -14,11 +20,23 @@ export class SearchStore{
     keyword = ""
 
     // 搜索分页参数
-    @observable 
-    searchCondition = {
-        pageSize: 10,
-        currentPage: 1
-    }
+    // @observable 
+    // searchCondition = {
+    //     pageSize: 10,
+    //     currentPage: 1
+    // }
+
+    @observable searchCondition = {
+        orderParams: [{
+            title: "标题",
+            name: "title",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }
+    };
 
     // 设置搜索关键字
     @action
@@ -109,6 +127,32 @@ export class SearchStore{
         const params = new FormData();
         params.append("recentMasterId",value)
         const data = await Service("/workItemStat/statProjectWorkItem", params)
+        return data;
+    }
+
+    @action
+	findRecentList = async(value) => {
+        const data = await Service("/recent/findRecentList", value)
+        return data;
+    }
+
+    @action
+    updateRecent = async (value) => {
+        const data = await Service("/recent/updateRecent", value)
+        return data;
+    }
+
+    @action
+    findWorkItemByKeyWorks = async (value) => {
+        Object.assign(this.searchCondition,  { ...value })
+        const data = await Service("/workItem/findWorkItemByKeyWorks", this.searchCondition)
+        return data;
+    }
+
+    @action
+    findProjectList = async (value) => {
+        
+        const data = await Service("/project/findProjectList", value)
         return data;
     }
 

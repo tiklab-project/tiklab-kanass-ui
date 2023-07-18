@@ -79,10 +79,10 @@ const Layout = (props) => {
 }
 
 
-const HomeIndex = UserVerify(Layout, '/noAuth')
+const HomeLayout = UserVerify(Layout, '/noAuth')
 function mapStateToProps(state) {
     return {
         pluginStore: state.pluginStore
     }
 }
-export default connect(mapStateToProps)(HomeIndex);
+export default connect(mapStateToProps)(HomeLayout);

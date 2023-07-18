@@ -37,12 +37,6 @@ const homes_url = JSON.stringify("http://192.168.10.14")
 const kanass_url =JSON.stringify("http://192.168.10.8:3004")
 const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 
-
-const dfsGroup = "g1";
-const dfs_group = JSON.stringify(dfsGroup);
-
-const dfsBucket = "teamwire";
-const dfs_bucket = JSON.stringify(dfsBucket);
 module.exports = {
     base_url,
     userProduction,
@@ -59,7 +53,5 @@ module.exports = {
     mobile_url,
     homes_url,
     kanass_url,
-    eas_url,
-    dfs_group,
-    dfs_bucket
+    eas_url
 }

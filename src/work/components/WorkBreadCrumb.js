@@ -8,6 +8,7 @@ import "./WorkBreadCrumb.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";
 import Button from "../../common/button/Button";
+import { getUser } from "tiklab-core-ui";
 
 
 const WorkBreadCrumb = (props) => {
@@ -15,7 +16,7 @@ const WorkBreadCrumb = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage,
-        setWorkIndex, setWorkId, getWorkBoardList,exportWorkItemXml } = workStore;
+        setWorkIndex, setWorkId, getWorkBoardList, exportWorkItemXml } = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
     const pluginStore = useSelector(state => state.pluginStore);
@@ -23,11 +24,8 @@ const WorkBreadCrumb = (props) => {
 
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const viewDropDown = useRef();
+    const tenant = getUser().tenant;
 
-
-    const [showTreeDropDown, setShowTreeDropDown] = useState(false);
-
-    const treeDropDown = useRef();
 
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
@@ -45,24 +43,8 @@ const WorkBreadCrumb = (props) => {
         }
     }
 
-    useEffect(() => {
-        window.addEventListener("mousedown", closeTreeModal, false);
-        return () => {
-            window.removeEventListener("mousedown", closeTreeModal, false);
-        }
-    }, [showViewDropDown])
-
-    const closeTreeModal = (e) => {
-        if (!treeDropDown.current) {
-            return;
-        }
-        if (!treeDropDown.current.contains(e.target) && treeDropDown.current !== e.target) {
-            setShowTreeDropDown(false)
-        }
-    }
-
     const exportFile = () => {
-        exportWorkItemXml().then(response=> {
+        exportWorkItemXml().then(response => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
@@ -71,31 +53,7 @@ const WorkBreadCrumb = (props) => {
             link.click();
         })
     }
-    // const exportFile =() => {
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open('POST', '/exportfile/exportWorkItemXml', true);
-    //     xhr.responseType = 'blob';
-    
-    //     xhr.onload = function() {
-    //         if (this.status === 200) {
-    //             debugger
-    //             var filename = 'my_excel_file.xlsx';
-    //             var blob = new Blob([this.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    //             var downloadUrl = window.URL.createObjectURL(blob);
-    //             var a = document.createElement('a');
-    //             a.href = downloadUrl;
-    //             a.download = filename;
-    //             document.body.appendChild(a);
-    //             a.click();
-    //             setTimeout(function() {
-    //                 document.body.removeChild(a);
-    //                 window.URL.revokeObjectURL(downloadUrl);  
-    //             }, 0); 
-    //         }
-    //     };
-    
-    //     xhr.send();
-    // }
+
     const menuPlugin = (
         <Menu>
             <Menu.Item>
@@ -111,7 +69,7 @@ const WorkBreadCrumb = (props) => {
                 }
             </Menu.Item>
             <Menu.Item>
-                <div onClick={() => exportFile()}>导出</div> 
+                <div onClick={() => exportFile()}>导出</div>
             </Menu.Item>
         </Menu>
     );
@@ -130,7 +88,11 @@ const WorkBreadCrumb = (props) => {
                 workTypeList && workTypeList.map((item) => {
                     return <Menu.Item key={item.id} type={item} icon={
                         item.workType.iconUrl ? <img
-                            src={('images/' + item.workType.iconUrl)}
+                            src={version === "cloud" ?
+                                (base_url + item.workType?.iconUrl + "?tenant=" + tenant)
+                                :
+                                (base_url + item.workType?.iconUrl)
+                            }
                             alt=""
                             className="img-icon"
                         />
@@ -152,7 +114,6 @@ const WorkBreadCrumb = (props) => {
         setState(value.item.props.type)
         workAddModel.current.setShowAddModel(true)
     }
-
 
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
@@ -188,7 +149,7 @@ const WorkBreadCrumb = (props) => {
         })
     }
 
-   
+
     return (
         <Fragment>
             <div className="work-breadcrumb">

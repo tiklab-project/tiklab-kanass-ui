@@ -103,7 +103,6 @@ const BasicInfo = props => {
     const onFinish = () => {
         form.validateFields().then((values) => {
             const time = values["startTime"]
-            debugger
             const data = {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),

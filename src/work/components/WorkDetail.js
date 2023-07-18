@@ -74,7 +74,6 @@ const WorkDetail = (props) => {
     }, [workId]);
 
     useEffect(() => {
-        console.log(props)
         if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
@@ -335,7 +334,6 @@ const WorkDetail = (props) => {
                         }
 
                         <div className="work-detail-top">
-
                             <div className="work-detail-top-name">
                                 <div className="work-item-title-top">
                                     <div

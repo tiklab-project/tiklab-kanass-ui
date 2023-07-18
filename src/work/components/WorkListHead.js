@@ -1,4 +1,4 @@
-import { Input, Select, Dropdown, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router";
 import "./WorkListFilter.scss";
@@ -8,12 +8,13 @@ import WorkFilterSort from "./WorkChangeView";
 import "./WorkListHead.scss"
 import WorkFilterForm from "./WorkTypeTab";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { getUser } from "tiklab-core-ui";
 
 const WorkListHead = (props) => {
-    const { workStore, form } = props;
+    const { workStore } = props;
     const { getWorkConditionPageTree, getWorkConditionPage, setWorkShowType, setViewType,
-        workShowType, viewType, workTypeList, workId, setWorkIndex, setWorkId,
-        searchCondition, getWorkBoardList, getWorkTypeList, setWorkBreadCrumbText, getWorkStatus,
+        workShowType, viewType, workTypeList, setWorkIndex, setWorkId,
+        getWorkBoardList, setWorkBreadCrumbText, getWorkStatus,
         getSelectUserList } = workStore;
     const workAddModel = useRef()
     const [stateType, setState] = useState();
@@ -23,17 +24,15 @@ const WorkListHead = (props) => {
     const viewDropDown = useRef();
 
     const layout = "inline";
-    const [userList, setUserList] = useState();
+    const tenant = getUser().tenant;
 
     useEffect(() => {
-        // getWorkTypeList({projectId: projectId});
         getWorkStatus()
         getSelectUserList(projectId).then(res => {
             let list = []
             res.dataList.map(item => {
                 list.push(item.user)
             })
-            setUserList(list)
         });
     }, [])
 
@@ -55,9 +54,7 @@ const WorkListHead = (props) => {
     }
 
     useEffect(() => {
-        // setWorkTabs(filterType)
         setWorkBreadCrumbText("全部事项")
-        // setSearchConditionNull()
         return
     }, [])
 
@@ -77,12 +74,10 @@ const WorkListHead = (props) => {
         }
     }
 
-
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id")
-                {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -102,7 +97,11 @@ const WorkListHead = (props) => {
                 workTypeList && workTypeList.map((item) => {
                     return <Menu.Item key={item.id} type={item} icon={
                         item.workType.iconUrl ? <img
-                            src={('images/' + item.workType.iconUrl)}
+                            src={version === "cloud" ?
+                                (base_url + item.workType?.iconUrl + "?tenant=" + tenant)
+                                :
+                                (base_url + item.workType?.iconUrl)
+                            }
                             alt=""
                             className="img-icon"
                         />
@@ -124,41 +123,6 @@ const WorkListHead = (props) => {
         setState(value.item.props.type)
         workAddModel.current.setShowAddModel(true)
     }
-
-    const selectChange = (field, value) => {
-        search({ [field]: value })
-    }
-
-    const search = values => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(values)
-        }
-    };
-
 
     return (
         <div className="worklist-head">
@@ -182,7 +146,6 @@ const WorkListHead = (props) => {
                         </svg>
                     </div>
 
-
                     <WorkFilterSort
                         getPageList={getPageList}
                         getPageTree={getPageTree}
@@ -199,8 +162,6 @@ const WorkListHead = (props) => {
             <div style={{ padding: "0 10px" }}>
                 <WorkFilterForm labelHidden={true} layout={layout} />
             </div>
-
-
             <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
         </div>
     )

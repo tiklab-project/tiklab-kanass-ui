@@ -1,7 +1,7 @@
 .search {
     .search-box {
         height: 30px;
-        width: 200px;
+        
         background: #fff;
         display: flex;
         border-radius: 7px;
@@ -18,10 +18,11 @@
             color: #000;
         }
     }
-
-    .search-box:focus-within {
+    .search-short-box {
+        width: 200px;
+    }
+    .search-long-box {
         width: 500px;
-        border: 2px var(--tiklab-gray-400) solid;
     }
 }
 
@@ -42,7 +43,6 @@
     color: #000;
 
     .sort-box {
-
         .sort-title {
             color: #202d407a;
             font-size: 12px;
@@ -56,9 +56,9 @@
                 padding: 0 10px;
                 display: flex;
                 align-items: center;
-                height: 40px;
-                background-color: #f5f7fa;
-                margin-bottom: 10px;
+                height: 35px;
+                
+                cursor: pointer;
 
                 img {
                     width: 20px;
@@ -70,7 +70,15 @@
                     text-align: left;
                     margin-left: 20px;
                     overflow: hidden;
+                    flex: 1;
                 }
+            }
+            .item-desc {
+                color: #999;
+                font-size: 12px;
+            }
+            .item-one:hover {
+                background-color: #f5f7fa;
             }
 
         }
@@ -124,7 +132,9 @@
                     display: flex;
                     align-items: center;
                     padding-bottom: 20px;
+                    cursor: pointer;
                     .project-item-img {
+
                         img{
                             width: 20px;
                             height: 20px;
@@ -145,93 +155,93 @@
     }
 }
 
-.search-resule {
-    .search-box {
-        height: 50px;
-        width: 100%;
-        background: #fff;
-        display: flex;
-        border-radius: 7px;
-        border: 2px solid #dddd;
-        align-items: center;
-        justify-content: space-between;
-        margin: 20px 0;
+// .search-resule {
+//     .search-box {
+//         height: 50px;
+//         width: 100%;
+//         background: #fff;
+//         display: flex;
+//         border-radius: 7px;
+//         border: 2px solid #dddd;
+//         align-items: center;
+//         justify-content: space-between;
+//         margin: 20px 0;
 
-        .search-input {
-            border: none;
-            height: 100%;
-            width: 90%;
-            outline: none;
-            margin-left: 10px;
-        }
+//         .search-input {
+//             border: none;
+//             height: 100%;
+//             width: 90%;
+//             outline: none;
+//             margin-left: 10px;
+//         }
 
-        .search-botton {
-            width: 100px;
-            height: 100%;
-            line-height: 44px;
-            text-align: center;
-            background-color: powderblue;
-            color: #999;
-            font-weight: var(--tiklab-font-weight-bold);
-            font-size: 18px;
-            cursor: pointer;
-        }
-    }
+//         .search-botton {
+//             width: 100px;
+//             height: 100%;
+//             line-height: 44px;
+//             text-align: center;
+//             background-color: powderblue;
+//             color: #999;
+//             font-weight: var(--tiklab-font-weight-bold);
+//             font-size: 18px;
+//             cursor: pointer;
+//         }
+//     }
 
-    .search-contant-list {
-        margin-bottom: 20px;
-    }
+//     .search-contant-list {
+//         margin-bottom: 20px;
+//     }
 
-    .project-box {
-        .project-contant {
-            line-height: 30px;
-            border-bottom: 1px solid #f0f0f0;
-            padding: 10px 0;
+//     .project-box {
+//         .project-contant {
+//             line-height: 30px;
+//             border-bottom: 1px solid #f0f0f0;
+//             padding: 10px 0;
 
-            .project-title {
-                color: var(--tiklab-blue);
-                font-size: 18px;
-                font-weight: var(--tiklab-font-weight-bold);
-                height: 40px;
-                line-height: 40px;
-            }
+//             .project-title {
+//                 color: var(--tiklab-blue);
+//                 font-size: 18px;
+//                 font-weight: var(--tiklab-font-weight-bold);
+//                 height: 40px;
+//                 line-height: 40px;
+//             }
 
-            .project-item-name {
-                font-weight: var(--tiklab-font-weight-bold);
-            }
-        }
+//             .project-item-name {
+//                 font-weight: var(--tiklab-font-weight-bold);
+//             }
+//         }
 
-        .project-card-item {
-            box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
-            width: 30%;
-            margin: 10px;
-            border-radius: 4px;
-            padding: 10px;
-            line-height: 30px;
+//         .project-card-item {
+//             box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+//             width: 30%;
+//             margin: 10px;
+//             border-radius: 4px;
+//             padding: 10px;
+//             line-height: 30px;
 
-            .project-card-contant {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
+//             .project-card-contant {
+//                 display: flex;
+//                 justify-content: flex-start;
+//                 align-items: center;
 
-                img {
-                    width: 36px;
-                }
+//                 img {
+//                     width: 36px;
+//                 }
 
-                .project-card-title {
-                    color: #202d40;
-                    font-weight: var(--tiklab-font-weight-bold);
-                }
+//                 .project-card-title {
+//                     color: #202d40;
+//                     font-weight: var(--tiklab-font-weight-bold);
+//                 }
 
-                .project-card-item-name {
-                    color: #d5d5d5
-                }
-            }
+//                 .project-card-item-name {
+//                     color: #d5d5d5
+//                 }
+//             }
 
-            .project-card-bottom {
-                border-top: 1px solid #f0f0f0;
-                font-size: 12px;
-            }
-        }
-    }
-}
+//             .project-card-bottom {
+//                 border-top: 1px solid #f0f0f0;
+//                 font-size: 12px;
+//             }
+//         }
+//     }
+// }

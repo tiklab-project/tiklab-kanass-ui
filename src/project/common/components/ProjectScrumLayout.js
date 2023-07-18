@@ -42,7 +42,7 @@ const ProjectScrumDetail = (props) => {
         //获取项目列表
         findProjectList()
         return
-    }, [])
+    }, [projectId])
 
 
     return (

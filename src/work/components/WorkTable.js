@@ -5,7 +5,6 @@ import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
-import WorkDetail from "./WorkDetail";
 import { withRouter } from "react-router";
 import { base_url } from "../../../enviroment/enviroment_local";
 import { getUser } from "tiklab-core-ui";
@@ -14,12 +13,8 @@ const WorkTableContent = (props) => {
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray,
         setWorkIndex, createRecent } = workStore;
-    const workType = props.match.params.type ? props.match.params.type : null;
-    const [workTypeText, setWorkTypeText] = useState("");
     const tenant = getUser().tenant;
-    // const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match?.params?.sprint;
-    // const [isWorkList, setIsWorkList] = useState(true)
     const goProdetail = (record, index) => {
         const params = {
             name: record.title,
@@ -163,34 +158,10 @@ const WorkTableContent = (props) => {
                     <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-more"></use>
                     </svg>
-                    {/* <span className = "span-botton" onClick={()=>deleteWork(record.id)}>删除</span>
-                    <span className = "span-botton" onClick={()=>eidtWork(record.id,record.title)}>编辑</span>
-                    <span className = "span-botton">更多</span> */}
                 </Space>
             ),
         }
     ];
-
-
-    useEffect(() => {
-        switch (workType) {
-            case "task":
-                setWorkTypeText("任务");
-                break;
-            case "demand":
-                setWorkTypeText("需求");
-                break;
-            case "defect":
-                setWorkTypeText("缺陷");
-                break;
-            case "epic":
-                setWorkTypeText("史诗");
-                break;
-            default:
-                setWorkTypeText("事项");
-                break;
-        }
-    }, [workType])
 
 
     // 改变页数

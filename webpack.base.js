@@ -11,9 +11,6 @@ const DIST_PATH = path.resolve(__dirname, 'prod');
 
 const envData_dev = require(`./enviroment/enviroment_${process.env.API_ENV}`);
 const sassModuleRegex = /\.module\.(scss|sass)$/;
-const HappyPack = require('happypack');
-// const os = require('os');
-// var happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 module.exports = {
     output: {
         filename: 'js/[name].[hash:8].js',
@@ -30,10 +27,6 @@ module.exports = {
         },
     },
     target: "web",
-    externals: {
-        jquery: 'jQuery',
-        react: "react"
-    },
     module: {
         rules: [
             {
