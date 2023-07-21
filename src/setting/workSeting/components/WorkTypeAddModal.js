@@ -25,28 +25,7 @@ const WorkTypeAddModal = (props) => {
     
     const [grouper, setGruoper] = useState()
     const [iconList, setIconList] = useState()
-    // const iconList = [
-    //     {
-    //         iconUrl: "workType1.png",
-    //         key: "workType1"
-    //     },
-    //     {
-    //         iconUrl: "workType2.png",
-    //         key: "workType2"
-    //     },
-    //     {
-    //         iconUrl: "workType3.png",
-    //         key: "workType3"
-    //     },
-    //     {
-    //         iconUrl: "workType4.png",
-    //         key: "workType4"
-    //     },
-    //     {
-    //         iconUrl: "workType5.png",
-    //         key: "workType5"
-    //     }
-    // ]
+
     const [iconUrl, setIconUrl] = useState("")
     const getIconList = () => {
         findIconList({ iconType: "workType" }).then((res) => {
@@ -58,7 +37,7 @@ const WorkTypeAddModal = (props) => {
         getIconList()
         getFormList().then((res) => {
             console.log(res)
-            if (res) {
+            if (res && res.length > 0) {
                 form.setFieldsValue({
                     form: res[0].id
                 })
@@ -117,7 +96,7 @@ const WorkTypeAddModal = (props) => {
     const tenant = getUser().tenant;
     const upLoadIcon = {
         name: 'uploadFile',
-        action: `${base_url}dfs/upload`,
+        action: `${base_url}/dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,
@@ -131,7 +110,7 @@ const WorkTypeAddModal = (props) => {
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
-                    iconUrl: "image/" + res,
+                    iconUrl: "/image/" + res,
                     iconType: "workType"
                 }
                 creatIcon(params).then((res) => {

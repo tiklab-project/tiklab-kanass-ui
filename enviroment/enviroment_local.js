@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.8:8080/';
+const api =  'http://192.168.10.8:8080';
 const base_url = JSON.stringify(api);
 
 
@@ -16,7 +16,7 @@ const plugin_base_url = JSON.stringify("/");
 let plugin_url = `http://192.168.10.8:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
-const upload_url = JSON.stringify('http://172.10.1.11:8084/')
+const upload_url = JSON.stringify('http://172.10.1.11:8084')
 
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);

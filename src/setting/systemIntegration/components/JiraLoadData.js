@@ -46,15 +46,9 @@ const LoadData = (props) => {
         })
     }
     const domain = window.location.host;
-    const upload_url = env === "local" ? JSON.parse(base_url) : `http://${domain}`
     const uploadProps = {
-        
         name: 'uploadFile',
-        accept: ".zip",
-        action: `${base_url}/importDate/importJireDate`,
-        headers: {
-            authorization: 'authorization-text'
-        },
+        action: `${JSON.parse(base_url)}/importDate/importJireDate`,
         headers: {
             ticket: ticket,
             tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null
@@ -71,7 +65,7 @@ const LoadData = (props) => {
                 clearInterval(timer) 
                 // console.log(1, timer)
                 setLoading(true)
-                timer = setInterval(() => {getJiraInputSchedule()}, 2000)
+                timer = setInterval(() => getJiraInputSchedule(), 2000)
                 setTimerS(timer)
                 console.log(2, timer)
             }

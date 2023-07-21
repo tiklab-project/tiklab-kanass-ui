@@ -144,13 +144,13 @@ const WorkBasicInfo = (props) => {
                 return (
                     record.type.indexOf("image") === -1 ? <Fragment>
                         {
-                            version === "cloud" ? <a href={`${base_url}file/${record.attachmentUrl}?tenant=${tenant}`}
+                            version === "cloud" ? <a href={`${base_url}/file/${record.attachmentUrl}?tenant=${tenant}`}
                                 target="_blank"
                             >
                                 {text}
                             </a>
                                 :
-                                <a href={`${base_url}file/${record.attachmentUrl}`}
+                                <a href={`${base_url}/file/${record.attachmentUrl}`}
                                     target="_blank"
                                 >
                                     {text}
@@ -162,7 +162,7 @@ const WorkBasicInfo = (props) => {
                     <Fragment>
                         {
                             version === "cloud" ?
-                                <a href={`${base_url}image/${record.attachmentUrl}?tenant=${tenant}`}
+                                <a href={`${base_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
                                     target="_blank"
                                 >
                                     {text}
@@ -698,6 +698,8 @@ const WorkBasicInfo = (props) => {
                                 value={slateValue}
                                 onChange={setSlateValue}
                                 minHeight={300}
+                                ticket = {ticket}
+                                tenant = {tenant}
                                 {...props}
                             />
 

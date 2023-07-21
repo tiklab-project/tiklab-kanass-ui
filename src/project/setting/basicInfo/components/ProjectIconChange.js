@@ -80,7 +80,7 @@ const ProjectIconChange = (props) => {
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
-                    iconUrl: "image/" + res,
+                    iconUrl: "/image/" + res,
                     iconType: "project"
                 }
                 creatIcon(params).then((res) => {
@@ -118,7 +118,7 @@ const ProjectIconChange = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div 
                                         className={`project-icon ${item.iconUrl === projectIconUrl ? "icon-select" : null}`} 
-                                        key={item.key} onClick={() => { setProjectIconUrl(item.iconUrl) }}
+                                        key={item.id} onClick={() => { setProjectIconUrl(item.iconUrl) }}
                                     >
                                         {
                                             version === "cloud" ?<img src={(base_url + item.iconUrl+"?tenant=" + tenant)} alt="" className="list-img"/> 
