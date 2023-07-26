@@ -11,7 +11,7 @@ import { Layout, Row, Col } from 'antd';
 import Procontent from "./ProjectContent";
 import ProjectGide from "./ProjectGide"
 import "../components/project.scss";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import ProjectStore from "../store/ProjectStore"
 const Project = (props) => {
     const store = {

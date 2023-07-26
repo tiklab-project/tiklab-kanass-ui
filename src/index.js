@@ -11,7 +11,6 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
-// import { store } from "./stores"
 import { orgStores } from "tiklab-user-ui/es/store";
 import { enableAxiosCE } from 'tiklab-core-ui';
 import { useTranslation } from 'react-i18next';
@@ -42,11 +41,7 @@ const Index = observer((props) => {
     
     const allStore = {
         ...privilegeStores,
-        ...orgStores,
-        // ...formStores,
-        // ...flowStores,
-        // ...messageModuleStores,
-        // ...store
+        ...orgStores
     }
     
 

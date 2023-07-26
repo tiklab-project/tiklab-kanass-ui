@@ -74,9 +74,8 @@ const WorkBasicInfo = (props) => {
             }
 
             let descReplace;
-
             if (workInfo.desc) {
-                setSlateValue(JSON.parse(workInfo.desc))
+                setSlateValue(workInfo.desc)
             }
 
             setPriorityDes(descReplace)
@@ -343,18 +342,13 @@ const WorkBasicInfo = (props) => {
 
     // 转换描述编辑模式setEditorType
     const [editorType, setEditorType] = useState(false);
-    const [slateValue, setSlateValue] = useState([
-        {
-            type: "paragraph",
-            children: [{ text: "点击输入" }],
-        },
-    ])
+    const [slateValue, setSlateValue] = useState()
 
     const editorDesc = () => {
 
         let data = {
             id: workId,
-            desc: JSON.stringify(slateValue),
+            desc: slateValue,
             updateField: "desc"
         }
         editWork(data).then(res => {
@@ -366,7 +360,7 @@ const WorkBasicInfo = (props) => {
 
     const cancel = () => {
         setEditorType(false);
-        setSlateValue(JSON.parse(workInfo.desc))
+        setSlateValue(workInfo.desc)
     }
 
     const [showMoreTab, setShowMoreTab] = useState(false);
@@ -719,6 +713,7 @@ const WorkBasicInfo = (props) => {
                                 ticket = {ticket}
                                 tenant = {tenant}
                                 base_url = {base_url}
+                                maxHeight = {500}
                                 {...props}
                             />
 
@@ -730,11 +725,16 @@ const WorkBasicInfo = (props) => {
                         </Fragment>
                             :
                             <div onClick={() => { setEditorType(true) }} className="desc-preview">
-                                <PreviewEditor
-                                    value={slateValue}
-                                    onChange={setSlateValue}
-                                    {...props}
-                                />
+                                {
+                                    slateValue && <PreviewEditor
+                                        value={slateValue}
+                                        onChange={setSlateValue}
+                                        base_url = {base_url}
+                                        
+                                        {...props}
+                                    />
+                                }
+                                
                             </div>
                     }
                 </Fragment>

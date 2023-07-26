@@ -88,7 +88,7 @@ const WorkTableContent = (props) => {
             </div>
         },
         {
-            title: '项目q',
+            title: '项目',
             dataIndex: ['project', 'projectName'],
             key: 'project',
             render: (text, record) => <div className="work-info">

@@ -323,8 +323,6 @@ const Search = (props) => {
                                     }
                                 </div>
                             </Fragment>
-
-
                     }
 
                 </div>
