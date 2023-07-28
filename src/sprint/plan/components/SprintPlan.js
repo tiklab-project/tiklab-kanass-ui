@@ -206,7 +206,7 @@ const SprintPlan = (props) => {
                                                 {
                                                     item.workTypeSys.iconUrl ?
                                                         <img
-                                                            src={version === "cloud" ? (base_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (base_url + item.workTypeSys.iconUrl)}
+                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
 
@@ -315,7 +315,7 @@ const SprintPlan = (props) => {
                                                     {
                                                         item.workTypeSys.iconUrl ?
                                                             <img
-                                                                src={version === "cloud" ? (base_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (base_url + item.workTypeSys.iconUrl)}                                       
+                                                                src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}                                       
                                                                 alt=""
                                                                 className="svg-icon"
 

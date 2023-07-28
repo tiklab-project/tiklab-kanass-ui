@@ -15,7 +15,6 @@ import "./WorkBasicInfo.scss";
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
-
     const [extDataForm] = Form.useForm();
     const layoutExForm = {
         labelCol: { span: 4 },
@@ -144,13 +143,13 @@ const WorkBasicInfo = (props) => {
                 return (
                     record.type.indexOf("image") === -1 ? <Fragment>
                         {
-                            version === "cloud" ? <a href={`${base_url}/file/${record.attachmentUrl}?tenant=${tenant}`}
+                            version === "cloud" ? <a href={`/file/${record.attachmentUrl}?tenant=${tenant}`}
                                 target="_blank"
                             >
                                 {text}
                             </a>
                                 :
-                                <a href={`${base_url}/file/${record.attachmentUrl}`}
+                                <a href={`${upload_url}/file/${record.attachmentUrl}`}
                                     target="_blank"
                                 >
                                     {text}
@@ -162,13 +161,13 @@ const WorkBasicInfo = (props) => {
                     <Fragment>
                         {
                             version === "cloud" ?
-                                <a href={`${base_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
+                                <a href={`${upload_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
                                     target="_blank"
                                 >
                                     {text}
                                 </a>
                                 :
-                                <a href={`${base_url}image/${record.attachmentUrl}`}
+                                <a href={`${upload_url}image/${record.attachmentUrl}`}
                                     target="_blank"
                                 >
                                     {text}
@@ -730,7 +729,8 @@ const WorkBasicInfo = (props) => {
                                         value={slateValue}
                                         onChange={setSlateValue}
                                         base_url = {base_url}
-                                        
+                                        ticket = {ticket}
+                                        tenant = {tenant}
                                         {...props}
                                     />
                                 }

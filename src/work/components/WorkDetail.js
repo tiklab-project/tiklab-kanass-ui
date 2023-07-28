@@ -17,7 +17,6 @@ import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
-import { base_url } from "../../../enviroment/enviroment_local";
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
@@ -303,7 +302,7 @@ const WorkDetail = (props) => {
                                         if (!isTableDetail && index === 0) {
                                             html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                                 <img
-                                                    src={(JSON.parse(base_url)  + item.iconUrl)}
+                                                    src={(upload_url  + item.iconUrl)}
                                                     alt=""
                                                     className="img-icon"
                                                 />
@@ -317,7 +316,7 @@ const WorkDetail = (props) => {
                                                     <use xlinkHref="#icon-rightBlue"></use>
                                                 </svg>
                                                 <img
-                                                    src={(base_url + item.iconUrl)}
+                                                    src={(upload_url + item.iconUrl)}
                                                     alt=""
                                                     className="img-icon"
                                                 />

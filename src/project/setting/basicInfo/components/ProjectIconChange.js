@@ -121,9 +121,9 @@ const ProjectIconChange = (props) => {
                                         key={item.id} onClick={() => { setProjectIconUrl(item.iconUrl) }}
                                     >
                                         {
-                                            version === "cloud" ?<img src={(base_url + item.iconUrl+"?tenant=" + tenant)} alt="" className="list-img"/> 
+                                            version === "cloud" ?<img src={(upload_url + item.iconUrl+"?tenant=" + tenant)} alt="" className="list-img"/> 
                                             :
-                                            <img src={(base_url + item.iconUrl)} alt="" className="list-img"/>
+                                            <img src={(upload_url + item.iconUrl)} alt="" className="list-img"/>
 
                                         }
                                         

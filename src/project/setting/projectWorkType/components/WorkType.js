@@ -117,9 +117,9 @@ const WorkType = (props) => {
                             record.workType.iconUrl ?
                                 <img
                                     src={version === "cloud" ?
-                                        (base_url + record.workType.iconUrl + "?tenant=" + tenant)
+                                        (upload_url + record.workType.iconUrl + "?tenant=" + tenant)
                                         :
-                                        (base_url + record.workType.iconUrl)
+                                        (upload_url + record.workType.iconUrl)
                                     }
                                     alt=""
                                     className="img-icon"

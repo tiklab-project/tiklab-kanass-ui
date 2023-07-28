@@ -260,8 +260,7 @@ const ProjectAddInfo = (props) => {
                                     return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
 
                                         <img 
-                                            // src={(base_url + item.iconUrl)} 
-                                            src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                            src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                             alt="" className="img-icon" 
                                         />
                                     </div>

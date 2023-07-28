@@ -181,8 +181,7 @@ const ProjectContent = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    // src={(base_url + record.iconUrl)}
-                                    src={version === "cloud" ? (base_url + record.iconUrl + "?tenant=" + tenant) : (base_url + record.iconUrl)}
+                                    src={version === "cloud" ? (upload_url + record.iconUrl + "?tenant=" + tenant) : (upload_url + record.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -294,8 +293,7 @@ const ProjectContent = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    // src={(base_url + item.project.iconUrl)}
-                                                    src={version === "cloud" ? (base_url + item.project.iconUrl + "?tenant=" + tenant) : (base_url + item.project.iconUrl)}
+                                                    src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />

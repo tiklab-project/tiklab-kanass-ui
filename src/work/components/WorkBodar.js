@@ -155,7 +155,7 @@ const WorkBodar = (props) => {
                                                             {
                                                                 workItem.workTypeSys.iconUrl ?
                                                                     <img
-                                                                        src={(base_url + workItem.workTypeSys.iconUrl)}
+                                                                        src={(upload_url + workItem.workTypeSys.iconUrl)}
                                                                         alt=""
                                                                         className="svg-icon"
 
@@ -220,9 +220,9 @@ const WorkBodar = (props) => {
                                                                 workItem.workTypeSys.iconUrl ?
                                                                     <img
                                                                         src={version === "cloud" ?
-                                                                            (JSON.parse(base_url) + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                                            (upload_url + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
                                                                             :
-                                                                            (JSON.parse(base_url) + workItem.workTypeSys?.iconUrl)
+                                                                            (upload_url + workItem.workTypeSys?.iconUrl)
                                                                         }
                                                                         alt=""
                                                                         className="svg-icon"

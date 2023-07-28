@@ -15,7 +15,7 @@ const plugin_base_url = JSON.stringify(url);
 let plugin_url = `/pluginConfig/getPluginConfig`;
 plugin_url = JSON.stringify(plugin_url);
 
-const upload_url = JSON.stringify('http://172.11.1.17:8080')
+const upload_url = JSON.stringify('')
 
 
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false

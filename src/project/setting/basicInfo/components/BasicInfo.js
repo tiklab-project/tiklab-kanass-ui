@@ -212,9 +212,9 @@ const BasicInfo = props => {
                                             {
                                                 iconUrl ? <Fragment>
                                                     {
-                                                        version === "cloud" ? <img src={(base_url + iconUrl + "?tenant=" + tenant)} alt="" width={60} height={60} />
+                                                        version === "cloud" ? <img src={(upload_url + iconUrl + "?tenant=" + tenant)} alt="" width={60} height={60} />
                                                             :
-                                                            <img src={(base_url + iconUrl)} alt="" width={60} height={60} />
+                                                            <img src={(upload_url + iconUrl)} alt="" width={60} height={60} />
 
                                                     }
                                                 </Fragment>

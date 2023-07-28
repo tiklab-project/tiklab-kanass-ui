@@ -109,9 +109,9 @@ const ProjectChangeModal = (props) => {
                             project?.iconUrl ?
                                 <img
                                     src={version === "cloud" ?
-                                        (JSON.parse(base_url) + project?.iconUrl + "?tenant=" + tenant)
+                                        (upload_url + project?.iconUrl + "?tenant=" + tenant)
                                         :
-                                        (JSON.parse(base_url) + project?.iconUrl)
+                                        (upload_url + project?.iconUrl)
                                     }
                                     className="list-img"
                                     alt=""
@@ -144,14 +144,14 @@ const ProjectChangeModal = (props) => {
                                 project?.iconUrl ? <Fragment>
                                     {
                                         version === "cloud" ? <img
-                                            src={(base_url + project?.iconUrl + "?tenant=" + tenant)}
+                                            src={(upload_url + project?.iconUrl + "?tenant=" + tenant)}
                                             title={project?.projectName} alt=""
                                             className="list-img"
                                             style={{ marginRight: "0px" }}
                                         />
                                         :
                                         <img
-                                            src={(base_url + project?.iconUrl)}
+                                            src={(upload_url + project?.iconUrl)}
                                             title={project?.projectName} alt=""
                                             className="list-img"
                                             style={{ marginRight: "0px" }}

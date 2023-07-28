@@ -13,7 +13,6 @@ import "./JiraLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { getUser } from 'tiklab-core-ui';
 import { observer } from "mobx-react";
-import { base_url } from "../../../../enviroment/enviroment_local";
 import UrlDataStore from "../store/UrlDataStore"
 const LoadData = (props) => {
     const { findJiraInputSchedule } = UrlDataStore;

@@ -4,7 +4,6 @@ import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
-import { base_url } from '../../../enviroment/enviroment_local';
 import { getUser } from 'tiklab-core-ui';
 const WorkAside = (props) => {
     // 选择事务
@@ -187,9 +186,9 @@ const WorkAside = (props) => {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
                                                 src={version === "cloud" ?
-                                                    (JSON.parse(base_url) + childItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                    (upload_url + childItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
                                                     :
-                                                    (JSON.parse(base_url) + childItem.workTypeSys?.iconUrl)
+                                                    (upload_url + childItem.workTypeSys?.iconUrl)
                                                 }
                                                 alt=""
                                                 className="img-icon"
@@ -247,9 +246,9 @@ const WorkAside = (props) => {
                     {
                         item.workTypeSys?.iconUrl ? <img
                             src={version === "cloud" ?
-                                (JSON.parse(base_url) + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
                                 :
-                                (JSON.parse(base_url) + item.workTypeSys?.iconUrl)
+                                (upload_url + item.workTypeSys?.iconUrl)
                             }
                             alt=""
                             className="img-icon"

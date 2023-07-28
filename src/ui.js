@@ -1,13 +1,13 @@
 
 import HomeStore from "./home/common/store/HomeStore"
 import AsyncComponent from './common/lazy/AsyncComponent'
-const Search = AsyncComponent(() => import('./home/Search/components/Search'))
 
+const Search = AsyncComponent(() => import("./home/search/components/Search"))
 const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
-
+//组织中心
 const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
 const ProjectPreliminaryListSystem = AsyncComponent(() => import('./setting/form/ProjectPreliminaryListSystem'))
@@ -35,6 +35,7 @@ const ProjectMessageManagement = AsyncComponent(() => import('./setting/message/
 const ProjectMessageNotice = AsyncComponent(() => import('./setting/message/ProjectMessageNotice'))
 const ProjectMessageNoticeSystem = AsyncComponent(() => import('./setting/message/ProjectMessageNoticeSystem'))
 
+const Setting = AsyncComponent(() => import('./setting/common/components/Setting'))
 const WorkTypeList = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeList'))
 const WorkTypeSystem = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeSystem'))
 const workPriority = AsyncComponent(() => import('./setting/workSeting/components/WorkPriority'))
@@ -56,7 +57,7 @@ const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirec
 const ProjectUserGroup = AsyncComponent(()=> import("./setting/user/ProjectUserGroup"))
 const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/ProjectSystemUserGroup"))
 
-const Index = AsyncComponent(() => import('./home/common/components/HomeIndex'))
+const Index = AsyncComponent(() => import('./home/common/components/HomeLayout'))
 // const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
@@ -116,7 +117,6 @@ const SearchResult = AsyncComponent(() => import('./home/search/components/Searc
 
 // 项目集
 const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
-const ProjectSetList = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSetTable'))
 const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
 const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
 const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
@@ -143,6 +143,7 @@ const TodoTypeListContent = AsyncComponent(() => import('./setting/todo/TodoType
 const LogList = AsyncComponent(() => import('./setting/log/Log.js'))
 const LogTemplateList = AsyncComponent(() => import('./setting/log/MyLogTemplateList'))
 const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLogTypeList'))
+
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
@@ -238,7 +239,6 @@ export {
     SprintStatistics,
     SearchResult,
     ProjectSet,
-    ProjectSetList,
     ProjectSetAdd,
     ProjectSetDetail,
     ProjectSetProjectList,

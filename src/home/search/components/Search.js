@@ -221,7 +221,7 @@ const Search = (props) => {
                                                     return <div className="item-box" key={item.id}>
                                                         <div className="item-one" onClick={() => toSearchProject(item)}>
                                                             <img
-                                                                src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                                                src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                 alt=""
                                                             />
                                                             <span>{item.projectName}</span>
@@ -245,7 +245,7 @@ const Search = (props) => {
                                                     return <div className="item-box" key={item.id}>
                                                         <div className="item-one" onClick={() => toSearchWorkItem(item)}>
                                                         <img
-                                                                src={version === "cloud" ? (base_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (base_url + item.workTypeSys?.iconUrl)}
+                                                                src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                                 alt=""
                                                             />
                                                             <span>{item.title}</span>
@@ -277,7 +277,7 @@ const Search = (props) => {
                                                         return <div className="item-box" key={item.id}>
                                                             <div className="item-one" onClick={() => toProject(item)}>
                                                                 <img
-                                                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                     alt=""
                                                                 />
                                                                 <span>{item.name}</span>
@@ -305,7 +305,7 @@ const Search = (props) => {
                                                     return <div className="item-box" key={item.id}>
                                                         <div className="item-one" onClick={() => toWorkItem(item)}>
                                                         <img
-                                                                src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                                                src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                 alt=""
                                                             />
                                                             <span>{item.name}</span>

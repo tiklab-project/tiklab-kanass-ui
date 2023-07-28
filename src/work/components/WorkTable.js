@@ -6,7 +6,6 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
-import { base_url } from "../../../enviroment/enviroment_local";
 import { getUser } from "tiklab-core-ui";
 const WorkTableContent = (props) => {
     const { workStore, form } = props
@@ -56,9 +55,9 @@ const WorkTableContent = (props) => {
                         record.workTypeSys.iconUrl ?
                             <img
                             src={ version === "cloud" ? 
-                            (JSON.parse(base_url) + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                            (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
                             :
-                            (JSON.parse(base_url) + record.workTypeSys?.iconUrl)
+                            (upload_url + record.workTypeSys?.iconUrl)
                         }
                                 alt=""
                                 className="list-img"
@@ -95,7 +94,7 @@ const WorkTableContent = (props) => {
                 <div className="work-info-img">
                     {
                         record.project.iconUrl ? <img
-                            src={(JSON.parse(base_url) + record.project.iconUrl)}
+                            src={(upload_url + record.project.iconUrl)}
                             alt=""
                             className="img-icon"
                         />

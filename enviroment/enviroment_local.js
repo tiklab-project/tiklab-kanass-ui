@@ -16,7 +16,7 @@ const plugin_base_url = JSON.stringify("/");
 let plugin_url = `http://192.168.10.8:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
-const upload_url = JSON.stringify('http://172.10.1.11:8084')
+const upload_url = JSON.stringify('http://192.168.10.8:8080')
 
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);

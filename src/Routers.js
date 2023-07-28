@@ -101,10 +101,6 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
-// const LogProjectWork = AsyncComponent(()=> import('./statistics/components/LogProjectWorkItemStatistics'))
-// const LogProjectUser = AsyncComponent(()=> import('./statistics/components/LogProjectUserStatistics'))
-// const LogUserProject = AsyncComponent(()=> import('./statistics/components/LogUserProjectStatistics'))
-// const WorkBulidEnd = AsyncComponent(()=> import('./statistics/components/StatisticsBulidAndEndWork'))
 const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
 

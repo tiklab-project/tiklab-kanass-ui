@@ -87,9 +87,9 @@ const WorkTypeAddModal = (props) => {
                             record.iconUrl ?
                                 <img
                                     src={version === "cloud" ?
-                                        (base_url + record.iconUrl + "?tenant=" + tenant)
+                                        (upload_url + record.iconUrl + "?tenant=" + tenant)
                                         :
-                                        (base_url + record.iconUrl)
+                                        (upload_url + record.iconUrl)
                             }
                                     alt=""
                                     className="img-icon"

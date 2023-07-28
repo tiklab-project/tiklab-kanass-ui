@@ -137,8 +137,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    // src={(base_url + item.iconUrl)}
-                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -166,8 +165,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    // src={(base_url + item.iconUrl)}
-                                    src={version === "cloud" ? (base_url + item.iconUrl + "?tenant=" + tenant) : (base_url + item.iconUrl)}
+                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -253,8 +251,7 @@ const HomeSurvey = (props) => {
                                         {
                                             item.project.iconUrl ?
                                                 <img
-                                                    // src={(base_url + item.project.iconUrl)}
-                                                    src={version === "cloud" ? (base_url + item.project.iconUrl + "?tenant=" + tenant) : (base_url + item.project.iconUrl)}
+                                                    src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
                                                     alt=""
                                                     className="list-img"
                                                 />

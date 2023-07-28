@@ -89,9 +89,9 @@ const WorkBreadCrumb = (props) => {
                     return <Menu.Item key={item.id} type={item} icon={
                         item.workType.iconUrl ? <img
                             src={version === "cloud" ?
-                                (base_url + item.workType?.iconUrl + "?tenant=" + tenant)
+                                (upload_url + item.workType?.iconUrl + "?tenant=" + tenant)
                                 :
-                                (base_url + item.workType?.iconUrl)
+                                (upload_url + item.workType?.iconUrl)
                             }
                             alt=""
                             className="img-icon"
