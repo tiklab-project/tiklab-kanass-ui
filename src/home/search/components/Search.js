@@ -28,7 +28,7 @@ const Search = (props) => {
     // 查找结果的弹窗是否显示
     const [show, setShow] = useState(false)
     // 登录者id
-    const userId = getUser().userId;
+    // const userId = getUser().userId;
     const tenant = getUser().tenant;
     // 搜索下拉框ref
     const dropDown = useRef();

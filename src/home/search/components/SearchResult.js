@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React,{Fragment, useEffect, useRef, useState} from "react";
+import React,{ useEffect, useRef, useState} from "react";
 import { Pagination } from 'antd';
 import "./Search.scss";
 import { Row, Col,Tabs } from 'antd';
