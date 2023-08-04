@@ -9,24 +9,22 @@
 
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { SearchOutlined } from '@ant-design/icons';
-import "../components/Search.scss"
-import project from "../../../assets/images/project.png"
+import "../components/Search.scss";
 import { Empty } from "antd";
 import { observer, inject } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";
-import { useDebounce, useThrottle } from "../../../common/utils/debounce"
+import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
 const Search = (props) => {
-    const { getSearch, searchList, getSearchSore, setKeyWord, findRecentList, 
+    const { getSearchSore, setKeyWord, findRecentList, 
         updateRecent, findWorkItemByKeyWorks, findProjectList } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
-    const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = WorkStore;
+    const { setWorkId, setDetailCrumbArray, setIsWorkList } = WorkStore;
     const [workItemList, setWorkItemList] = useState([]);
     const [isSeach, setIsSeach] = useState(false);
-    // 待办事项列表
-    const [workItemProcessList, setWorkItemProcessList] = useState();
+
     // 查找结果的弹窗是否显示
     const [show, setShow] = useState(false)
     // 登录者id

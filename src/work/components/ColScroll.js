@@ -45,7 +45,7 @@ const CowScroll =(props)=> {
             const iEvent = e || event;
             const startY = iEvent.clientY;//当你第一次单击的时候，存储x轴的坐标。
 
-            //判断鼠标是否点在右边还是左边，看图1理解
+            //判断鼠标是否点在右边还是左边
             document.onmousemove = (ev) => {
                 if (ev.clientY < startY) { //左边
                     scrollSlider.style.top = sliderTop + (ev.clientY - startY) + "px";
