@@ -21,7 +21,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage } = props;
-    const { workList,setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType, setWorkShowType,
+    const { workList, setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, workIndex, viewType, userList, searchWorkById,
@@ -34,6 +34,7 @@ const WorkDetail = (props) => {
     const [workInfo, setWorkInfo] = useState();
     const [workStatus, setWorkStatus] = useState("nostatus")
     const userId = getUser().userId;
+    const tenant = getUser().tenant;
     const [percentValue, setPercentValue] = useState(0)
     const [isFocus, setIsFocus] = useState()
     const path = props.match.path.split("/")[2];
@@ -124,7 +125,7 @@ const WorkDetail = (props) => {
                 setWorkStatus(name)
                 if (props.match.path === "/index/projectDetail/:id/work" ||
                     props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
-                    workList[workIndex-1].workStatusNode = { id: statusId, name: name}
+                    workList[workIndex - 1].workStatusNode = { id: statusId, name: name }
                     setWorkList([...workList])
                 }
 
@@ -171,13 +172,13 @@ const WorkDetail = (props) => {
                     if (document.getElementById(workId)) {
                         document.getElementById(workId).innerHTML = name;
                     }
-                    if(workShowType === "list"){
+                    if (workShowType === "list") {
                         workInfo.title = name;
-                    }else {
-                        workList[workIndex-1].title = name;
+                    } else {
+                        workList[workIndex - 1].title = name;
                         setWorkList([...workList])
                     }
-                    
+
 
                 }
             })
@@ -215,12 +216,12 @@ const WorkDetail = (props) => {
 
         editWork(data).then(res => {
             if (updateField === "assigner") {
-                if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" || 
-                props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+                if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" ||
+                    props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
                     const user = userList.filter(item => {
                         return item.user.id === updateData.assigner
                     })
-                    workList[workIndex-1].assigner = user[0].user;
+                    workList[workIndex - 1].assigner = user[0].user;
                     setWorkList([...workList])
                 }
             }
@@ -268,16 +269,16 @@ const WorkDetail = (props) => {
     }
 
     const goWorkList = () => {
-        if(props.match.path === "/index/projectDetail/:id/workDetail/:workId"){
+        if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
             props.history.goBack()
         }
-        if (props.match.path === "/index/projectDetail/:id/workone/:workId"){
+        if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
             props.history.push(`/index/projectDetail/${projectId}/work`)
         }
-        if (props.match.path === "/index/workDetail/:workId"){
+        if (props.match.path === "/index/workDetail/:workId") {
             props.history.push(`/index/work/worklist`)
         }
-        if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId"){
+        if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId") {
             props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/workItem`)
         }
     }
@@ -290,7 +291,7 @@ const WorkDetail = (props) => {
                         {
                             (workShowType === "table" || detailCrumbArray?.length > 0) && <div className="work-detail-crumb">
                                 {
-                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList() }>事项
+                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList()}>事项
                                         <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
                                             <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>
@@ -302,7 +303,11 @@ const WorkDetail = (props) => {
                                         if (!isTableDetail && index === 0) {
                                             html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                                 <img
-                                                    src={(upload_url  + item.iconUrl)}
+                                                    src= {version === "cloud" ?
+                                                        (upload_url + item.iconUrl + "?tenant=" + tenant)
+                                                        :
+                                                        (upload_url + item.iconUrl)
+                                                    }
                                                     alt=""
                                                     className="img-icon"
                                                 />
@@ -485,7 +490,7 @@ const WorkDetail = (props) => {
                         </div>
                     </>
                     <div className="work-detail-tab">
-                        {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo = {setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
+                        {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo={setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
                     </div>
                 </div>
                     :

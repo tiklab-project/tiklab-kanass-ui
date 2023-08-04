@@ -94,7 +94,10 @@ const WorkTableContent = (props) => {
                 <div className="work-info-img">
                     {
                         record.project.iconUrl ? <img
-                            src={(upload_url + record.project.iconUrl)}
+                            src={ version === "cloud" ? 
+                            (upload_url + record.project?.iconUrl + "?tenant=" + tenant)
+                            :
+                            (upload_url + record.project?.iconUrl)}
                             alt=""
                             className="img-icon"
                         />

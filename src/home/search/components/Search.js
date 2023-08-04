@@ -68,6 +68,8 @@ const Search = (props) => {
             if (res.code === 0) {
                 if(res.data && res.data.length > 0){
                     setProjectList(res.data)
+                }else{
+                    setProjectList([])
                 }
             }
         })
@@ -217,6 +219,9 @@ const Search = (props) => {
                                         projectList.length > 0 && <div className="sort-box">
                                             <div className="sort-title">项目</div>
                                             {
+                                                console.log(projectList)
+                                            }
+                                            {
                                                 projectList.map((item) => {
                                                     return <div className="item-box" key={item.id}>
                                                         <div className="item-one" onClick={() => toSearchProject(item)}>
@@ -226,7 +231,7 @@ const Search = (props) => {
                                                             />
                                                             <span>{item.projectName}</span>
                                                             <div className="item-desc">
-                                                                {item.projectType.name}
+                                                                {item.projectType?.name}
                                                             </div>
                                                         </div>
 
@@ -250,7 +255,7 @@ const Search = (props) => {
                                                             />
                                                             <span>{item.title}</span>
                                                             <div className="item-desc">
-                                                                {item.project.projectName}
+                                                                {item.project?.projectName}
                                                             </div>
                                                         </div>
 

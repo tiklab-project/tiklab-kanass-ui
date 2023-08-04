@@ -111,7 +111,8 @@ const BasicInfo = props => {
                 projectType: {
                     id: values.projectType
                 },
-                id: projectId
+                id: projectId,
+                iconUrl: iconUrl
             }
 
             // if (props.type === "add") {

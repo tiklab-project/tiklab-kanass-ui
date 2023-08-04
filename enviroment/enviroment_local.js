@@ -35,7 +35,7 @@ const client = JSON.stringify('web');
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
 const homes_url = JSON.stringify("http://192.168.10.14")
 const kanass_url =JSON.stringify("http://192.168.10.8:3004")
-const eas_url = JSON.stringify("http://eas.test.tiklab.net")
+// const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 
 module.exports = {
     base_url,
@@ -52,6 +52,6 @@ module.exports = {
     // acc_url,
     mobile_url,
     homes_url,
-    kanass_url,
-    eas_url
+    kanass_url
+    
 }
