@@ -149,17 +149,16 @@ const ProjectChangeModal = (props) => {
                                             className="list-img"
                                             style={{ marginRight: "0px" }}
                                         />
-                                        :
-                                        <img
-                                            src={(upload_url + project?.iconUrl)}
-                                            title={project?.projectName} alt=""
-                                            className="list-img"
-                                            style={{ marginRight: "0px" }}
-                                        />
+                                            :
+                                            <img
+                                                src={(upload_url + project?.iconUrl)}
+                                                title={project?.projectName} alt=""
+                                                className="list-img"
+                                                style={{ marginRight: "0px" }}
+                                            />
                                     }
 
                                 </Fragment>
-
                                     :
                                     <img
                                         src={('images/project1.png')}
@@ -196,7 +195,11 @@ const ProjectChangeModal = (props) => {
                                 {
                                     item.iconUrl ?
                                         <img
-                                            src={('/images/' + item.iconUrl)}
+                                            src={version === "cloud" ?
+                                                (upload_url + item.iconUrl + "?tenant=" + tenant)
+                                                :
+                                                (upload_url + item.iconUrl)
+                                            }
                                             className="img-icon"
                                             title={item.projectName}
                                             alt=""

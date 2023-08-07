@@ -14,7 +14,7 @@ import { withRouter } from 'react-router';
 import { getUser } from 'tiklab-core-ui';
 import MessageList from "./MessageList"
 import { observer, inject } from "mobx-react";
-import { AppLink } from 'tiklab-integration-ui';
+import { AppLink } from 'tiklab-licence-ui';
 import UserIcon from '../../../common/UserIcon/UserIcon';
 
 const Header = props => {

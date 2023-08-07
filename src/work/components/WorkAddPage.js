@@ -6,7 +6,7 @@ import moment from 'moment';
 import { getUser } from "tiklab-core-ui";
 import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
-
+import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
 const { RangePicker } = DatePicker;
 
 const WorkAddPage = (props) => {
@@ -14,34 +14,32 @@ const WorkAddPage = (props) => {
     const { workStore, workType, workAddPageRef, setShowAddModel } = props;
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
-        findPriority, priorityList,getWorkTypeList, workId, findFormConfig, formList, 
-        findFieldList, setWorkId, setDetailCrumbArray, 
+        findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
+        findFieldList, setWorkId, setDetailCrumbArray,
         findWorkItemById, workShowType, getWorkBoardList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const [slateValue, setSlateValue] = useState([
-        {
-            type: "paragraph",
-            children: [{ text: "" }],
-        },
-    ]);
+    const project = JSON.parse(localStorage.getItem("project"));
+    const ticket = getUser().ticket;
+    const tenant = getUser().tenant;
+    const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
     const [selectItem, setSelectItem] = useState()
     useEffect(() => {
         form.setFieldsValue({
             parentWorkItem: workId,
             project: projectId,
             sprint: sprintId,
-            assigner: getUser().userId,
-            reporter: getUser().userId,
+            assigner: project?.master.id,
+            // reporter: getUser().userId,
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
         getForm(workType.form.id)
 
-        switch(workType.workType.code) {
+        switch (workType.workType.code) {
             case "demand":
-                findFieldList({code: "demandType"}).then(res => {
+                findFieldList({ code: "demandType" }).then(res => {
                     if (res.code === 0) {
                         setSelectItem(res.data[0])
                         form.setFieldsValue({
@@ -51,7 +49,7 @@ const WorkAddPage = (props) => {
                 })
                 break;
             case "task":
-                findFieldList({code: "taskType"}).then(res => {
+                findFieldList({ code: "taskType" }).then(res => {
                     if (res.code === 0) {
                         setSelectItem(res.data[0])
                         form.setFieldsValue({
@@ -61,7 +59,7 @@ const WorkAddPage = (props) => {
                 })
                 break;
             case "defect":
-                findFieldList({code: "bugType"}).then(res => {
+                findFieldList({ code: "bugType" }).then(res => {
                     if (res.code === 0) {
                         setSelectItem(res.data[0])
                         form.setFieldsValue({
@@ -74,15 +72,16 @@ const WorkAddPage = (props) => {
                 break;
         }
         if (projectId) {
+
             getModuleList(projectId).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     form.setFieldsValue({
                         module: moduleList[0]?.id
                     })
                 }
             })
             getsprintlist(projectId).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     form.setFieldsValue({
                         sprint: sprintId ? sprintId : sprintList[0]?.id
                     })
@@ -94,7 +93,7 @@ const WorkAddPage = (props) => {
             findProjectList();
         }
         findPriority().then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 form.setFieldsValue({
                     workPriority: priorityList[0]?.id
                 })
@@ -124,7 +123,7 @@ const WorkAddPage = (props) => {
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
             values.planEndTime = values.planTime[1].format('YYYY-MM-DD HH:mm:ss')
             values.workType = workType.id;
-            values.desc = JSON.stringify(slateValue);
+            values.desc = slateValue;
             values.extData = {}
 
             let keys = Object.keys(values)
@@ -138,7 +137,6 @@ const WorkAddPage = (props) => {
 
                 return 0;
             })
-            console.log(values)
             addWork(values).then((res) => {
                 setWorkId(res.data)
                 setDetailCrumbArray([{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
@@ -155,7 +153,7 @@ const WorkAddPage = (props) => {
                         setShowAddModel(false)
                     } else {
                         findWorkItemById(res.data).then(data => {
-                            if(data.code === 0){
+                            if (data.code === 0) {
                                 message.success({
                                     content: '添加成功',
                                     className: 'custom-class',
@@ -214,7 +212,7 @@ const WorkAddPage = (props) => {
 
     const changeWorkItem = (changedValues) => {
         console.log(changedValues)
-        setNewWorkItem({...newWorkItem, ...changedValues})
+        setNewWorkItem({ ...newWorkItem, ...changedValues })
         console.log(newWorkItem)
     }
 
@@ -235,7 +233,7 @@ const WorkAddPage = (props) => {
                         wrapperCol={{
                             span: 12,
                         }}
-                        onValuesChange = {(changedValues, allValues) => changeWorkItem(changedValues) }
+                        onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
                     >
                         <Form.Item
                             label="标题"
@@ -276,7 +274,7 @@ const WorkAddPage = (props) => {
                         <Form.Item
                             label="负责人"
                             name="assigner"
-                            
+
                             rules={[{ required: true, message: '请输入负责人!' }]}
                         >
                             <Select
@@ -293,30 +291,30 @@ const WorkAddPage = (props) => {
                             </Select>
                         </Form.Item>
                         {
-                            selectItem &&  <Form.Item label={selectItem?.name} name="eachType">
-                            <Select
-                                placeholder="无"
-                                className="work-select"
-                                key="selectEachType"
-                                allowClear
-                            >
-                                {
-                                    selectItem && selectItem?.selectItemList.map((item) => {
-                                        return <Select.Option value={item.id} key={item.id}>
-                                            <img
-                                                src={('images/project1.png')}
-                                                alt=""
-                                                className="img-icon"
-                                            />
-                                            {item.name}
-                                        </Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
+                            selectItem && <Form.Item label={selectItem?.name} name="eachType">
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectEachType"
+                                    allowClear
+                                >
+                                    {
+                                        selectItem && selectItem?.selectItemList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>
+                                                <img
+                                                    src={('images/project1.png')}
+                                                    alt=""
+                                                    className="img-icon"
+                                                />
+                                                {item.name}
+                                            </Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
                         }
-                       
-                        <Form.Item
+
+                        {/* <Form.Item
                             label="报告人"
                             name="reporter"
                             rules={[{ required: false, message: '请输入报告人!' }]}
@@ -328,11 +326,11 @@ const WorkAddPage = (props) => {
                             >
                                 {
                                     userList && userList.map((item) => {
-                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user.name}</Select.Option>
+                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                     })
                                 }
                             </Select>
-                        </Form.Item>
+                        </Form.Item> */}
 
 
                         <Form.Item
@@ -408,16 +406,42 @@ const WorkAddPage = (props) => {
                             wrapperCol={{
                                 span: 16,
                             }}
-                            >
+                        >
                             <RangePicker />
                         </Form.Item>
-                        
+
                         <Form.Item
                             name="planTakeupTime"
                             label="计划用时"
                         >
                             <Input suffix="小时" type="number" className="" />
                         </Form.Item>
+                        <Form.Item 
+                            // name="desc"
+                            label="计划用时"
+                            labelCol={{
+                                span: 3,
+                            }}
+                            wrapperCol={{
+                                span: 18,
+                            }}
+                        >
+                            <div style={{ width:"fit-content",border:" #f0f0f0 solid 1px"}}>
+                              <DocumentEditor
+                                focusEditor={true}
+                                value={slateValue}
+                                onChange={setSlateValue}
+                                minHeight={300}
+                                ticket={ticket}
+                                tenant={tenant}
+                                base_url={base_url}
+                                maxHeight={500}
+                                {...props}
+                            />  
+                            </div>
+                            
+                        </Form.Item>
+                            
                     </Form>
                     <div className="work-add-button">
                         <Button type="primary" onClick={() => onFinish()}>创建</Button>

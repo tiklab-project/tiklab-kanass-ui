@@ -157,8 +157,8 @@ const WorkTableFilter = (props) => {
             <div className="work-table-filter">
                 <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
                 {
-                    props.match.path == "/index/work/worklist/:statetype" &&
-                    <SelectSimple name="workTypeIds"
+                    props.match.path == "/index/work" &&
+                    <SelectSimple name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
                         title={"项目"} ismult={true}
                     >
@@ -175,12 +175,18 @@ const WorkTableFilter = (props) => {
                     </SelectSimple>
                 }
 
-                <SelectSimple name="assignerIds" onChange={(value) => selectChange("assignerIds", value)} title={"负责人"} ismult={true}>
+                <SelectSimple 
+                    name="assignerIds" 
+                    onChange={(value) => selectChange("assignerIds", value)} 
+                    title={"负责人"} 
+                    ismult={true} 
+                    selectValue={searchCondition?.assignerIds}
+                >
                     {
                         userList.map(item => {
                             return <SelectItem
                                 value={item.user.id}
-                                label={item.user.name}
+                                label={item.user?.nickname ? item.user?.nickname : item.user?.name}
                                 key={item.user.id}
                                 imgUrl={item.user?.iconUrl}
 
@@ -214,8 +220,9 @@ const WorkTableFilter = (props) => {
                         <Input bordered={false} allowClear
                             className="workList-search-input"
                             key={"search"}
-                            onChange={(value) => handleChange("title", value.target.value)}
-                            placeholder="事项标题"
+                            onChange={(value) => handleChange("keyWord", value.target.value)}
+                            placeholder="事项标题、ID"
+                            value={searchCondition?.keyWord}
                         />
                     </div>
                 </div>

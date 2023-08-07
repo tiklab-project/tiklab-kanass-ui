@@ -45,8 +45,8 @@ class WorkRelationStore {
             workItemId: this.searchSelectCondition.workItemId,
             title: this.searchSelectCondition.title,
             sortParams: [{
-                name: "title",
-                orderType:"asc"
+                name: "order_num",
+                orderType:"desc"
             }],
             pageParam: {
                 pageSize: 10,

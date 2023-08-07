@@ -34,9 +34,8 @@ export class WorkStore {
     @observable editorContent = [];
     @observable searchCondition = {
         orderParams: [{
-            title: "标题",
-            name: "title",
-            orderType: "asc"
+            name: "order_num",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 20,
@@ -305,8 +304,8 @@ export class WorkStore {
         function setValue() {
             that.searchCondition = {
                 orderParams: [{
-                    name: "title",
-                    orderType: "asc"
+                    name: "order_num",
+                    orderType: "desc"
                 }],
                 pageParam: {
                     pageSize: 20,
@@ -326,7 +325,6 @@ export class WorkStore {
     getWorkConditionPageTree = async(value) => {
         
         this.tableLoading = true;
-
         this.setSearchCondition(value)
         let data = [];
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
@@ -384,8 +382,8 @@ export class WorkStore {
             title: this.searchCondition.title,
             parentId: this.searchCondition.parentId,
             orderParams: [{
-                name: "title",
-                orderType: "asc"
+                name: "order_num",
+                orderType: "desc"
             }],
             pageParam: {
                 pageSize: 20,
@@ -683,8 +681,8 @@ export class WorkStore {
             projectId: value.projectId,
             sprintId: value.sprintId,
             orderParams: [{
-                name: "title",
-                orderType: "asc"
+                name: "order_num",
+                orderType: "desc"
             }],
             pageParam: {
                 pageSize: 20,

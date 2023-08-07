@@ -87,6 +87,15 @@ const WorkTableContent = (props) => {
             </div>
         },
         {
+            title: '创建人',
+            dataIndex: ['builder', 'nickname'],
+            key: 'builderId',
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div className="work-info-text">{text}</div>
+            </div>
+        },
+        {
             title: '项目',
             dataIndex: ['project', 'projectName'],
             key: 'project',
@@ -142,6 +151,14 @@ const WorkTableContent = (props) => {
             dataIndex: ['workStatusNode', 'name'],
             key: 'workStatus',
             render: (text, record) => <span className="work-status">
+                {text}
+            </span>
+        },
+        {
+            title: '创建时间',
+            dataIndex: "buildTime",
+            key: 'workStatus',
+            render: (text, record) => <span >
                 {text}
             </span>
         },

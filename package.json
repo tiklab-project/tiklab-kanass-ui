@@ -8,7 +8,6 @@
         "es"
     ],
     "scripts": {
-        "publish": "npm publish",
         "start": "cross-env NODE_ENV=local API_ENV=local webpack-dev-server --progress --config ./webpack.dev.js ",
         "prod": "cross-env NODE_ENV=production API_ENV=prod webpack --config ./webpack.prod.js",
         "dev": "cross-env NODE_ENV=dev API_ENV=dev webpack-dev-server --progress  --config ./webpack.dev.js --open",
@@ -26,7 +25,7 @@
     "author": "",
     "license": "ISC",
     "publishConfig": {
-        "registry": "http://172.13.1.11:8081/repository/npm-hosted"
+        "registry": "http://172.13.1.24:8080/repository/npm-hosted/"
     },
     "peerDependencies": {
         "@ant-design/icons": "^4.3.0",
@@ -55,7 +54,6 @@
         "tiklab-eam-ui": ">=^1.0.1",
         "tiklab-flow-ui": ">=^1.0.1",
         "tiklab-form-ui": ">=^1.0.1",
-        "tiklab-integration-ui": ">=^1.0.1",
         "tiklab-licence-ui": ">=^1.0.1",
         "tiklab-message-ui": ">=^1.0.1",
         "tiklab-plugin-core-ui": ">=^1.0.1",
@@ -112,7 +110,7 @@
         "gulp-sass": "^5.1.0",
         "gulp-sourcemaps": "^3.0.0",
         "happypack": "^5.0.1",
-        "html-webpack-plugin": "^4.5.0",
+        "html-webpack-plugin": "^4.5.2",
         "json-server": "^0.16.3",
         "less": "^4.1.3",
         "less-loader": "^7.2.1",
@@ -174,6 +172,7 @@
         "@antv/x6-react-components": "^1.1.1",
         "@babel/plugin-syntax-jsx": "^7.18.6",
         "@province-city-china/level": "^7.1.3",
+        "@rollup/plugin-url": "^8.0.1",
         "antd": "4.15.2",
         "axios": "^0.21.0",
         "echarts": "^5.0.1",
@@ -195,12 +194,10 @@
         "react-router-config": "^5.1.1",
         "react-router-dom": "^5.2.0",
         "rollup-plugin-copy": "^3.4.0",
-        "rollup-plugin-url": "^3.0.1",
         "tiklab-core-ui": "^1.0.1",
         "tiklab-eam-ui": "^1.0.1",
         "tiklab-flow-ui": "^1.0.1",
         "tiklab-form-ui": "^1.0.1",
-        "tiklab-integration-ui": "^1.0.1",
         "tiklab-licence-ui": "^1.0.1",
         "tiklab-message-ui": "^1.0.1",
         "tiklab-plugin-core-ui": "^1.0.1",

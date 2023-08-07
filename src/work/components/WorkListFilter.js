@@ -134,7 +134,7 @@ const WorkListFilter = (props) => {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
                     <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
                     {
-                        props.match.path == "/index/work/worklist/:statetype" ?
+                        props.match.path == "/index/work/worklist" ?
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("projectIds", value)}
                                 title={"项目"} ismult={true}
@@ -151,12 +151,18 @@ const WorkListFilter = (props) => {
                                 }
                             </SelectSimple>
                             :
-                            <SelectSimple name="assignerIds" onChange={(value) => handleChange("assignerIds", value)} title={"负责人"} ismult={true}>
+                            <SelectSimple 
+                                name="assignerIds" 
+                                onChange={(value) => handleChange("assignerIds", value)} 
+                                title={"负责人"} 
+                                ismult={true}
+                                selectValue={searchCondition?.assignerIds}
+                            >
                                 {
                                     userList.map(item => {
                                         return <SelectItem
                                             value={item.user.id}
-                                            label={item.user.name}
+                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
                                             key={item.user.id}
                                             imgUrl={item.user?.iconUrl}
 
@@ -186,7 +192,8 @@ const WorkListFilter = (props) => {
                             placeholder="事项标题"
                             className="workList-search-input"
                             key={"search"}
-                            onChange={(value) => handleChange("title", value.target.value)}
+                            value={searchCondition.keyWord}
+                            onChange={(value) => handleChange("keyWord", value.target.value)}
                         />
                     </div>
                     <div className="search-cancel" onClick={() => setShowSearch(false)}>取消</div>

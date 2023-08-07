@@ -23,7 +23,7 @@ import image from '@rollup/plugin-image';
 
 import copy from 'rollup-plugin-copy';
 
-import url from 'rollup-plugin-url';
+import url from '@rollup/plugin-url';
 
 const extensions = ['.js', '.jsx']
 

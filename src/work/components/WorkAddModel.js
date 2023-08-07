@@ -47,7 +47,7 @@ const WorkAddModel=(props)=>{
             visible={showAddModel}
             // visible = {true}
             className="work-addmodel"
-            width = {600}
+            width = {1200}
             destroyOnClose={true}
             onOk={handleOk} 
             onCancel={handleCancel}

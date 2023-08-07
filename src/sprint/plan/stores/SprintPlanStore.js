@@ -6,8 +6,8 @@ export class SprintPlanStore {
     @observable sprintList = [];
     @observable searchCondition = {
         sortParams: [{
-            name: "title",
-            orderType:"asc"
+            name: "order_num",
+            orderType:"desc"
         }],
         pageParam: {
             pageSize: 10,

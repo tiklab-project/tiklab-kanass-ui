@@ -6,15 +6,15 @@ const WorkSort = (props) => {
     const [showSortDropDown, setShowSortDropDown] = useState(false);
     const sortDropDown = useRef();
 
-    const [isAsc, setIsAsc] = useState("asc");
+    const [isAsc, setIsAsc] = useState("desc");
     const [sortType, setSortType] = useState({
-        value: "id",
+        value: "order_num",
         title: "事项ID"
     })
 
     const attribute = [
         {
-            value: "id",
+            value: "order_num",
             title: "事项ID"
         },
         {
@@ -27,7 +27,15 @@ const WorkSort = (props) => {
         },
         {
             value: "assigner_id",
-            title: "经办人"
+            title: "负责人"
+        },
+        {
+            value: "builder_id",
+            title: "创建人"
+        },
+        {
+            value: "build_time",
+            title: "创建时间"
         },
         {
             value: "work_status_node_id",

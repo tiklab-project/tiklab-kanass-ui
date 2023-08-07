@@ -76,8 +76,8 @@ const WorkAside = (props) => {
                             oBox.style.width = dw + (iEvent.clientX - dx) + 'px';
                             //此时的iEvent.clientX的为你拖动时一直改变的鼠标的X坐标，例如你拖动的距离为下图的绿色部分，第二个黑点就表示你此时的iEvent.clientX
                             //所以，此时的盒子宽度就等于绿色部分的距离加上原本盒子的距离，看图2
-                            if (oBox.offsetWidth <= 250) {//当盒子缩小到一定范围内的时候，让他保持一个固定值，不再继续改变
-                                oBox.style.width = '250px';
+                            if (oBox.offsetWidth <= 300) {//当盒子缩小到一定范围内的时候，让他保持一个固定值，不再继续改变
+                                oBox.style.width = '300px';
                             }
                             if (oBox.offsetWidth >= 500) {
                                 oBox.style.width = '500px';
@@ -87,8 +87,8 @@ const WorkAside = (props) => {
                         if (b == 'left') {
                             oBox.style.width = dw - (iEvent.clientX - dx) + 'px';//iEvent.clientX-dx表示第二次鼠标的X坐标减去第一次鼠标的X坐标，得到绿色移动的距离（为负数），再加上原本的div宽度，就得到新的宽度。 图3
                             oBox.style.left = disright - oBox.offsetWidth + 'px';//disright表示盒子右边框距离左边的距离，disright-当前的盒子宽度，就是当前盒子距离左边的距离
-                            if (oBox.offsetWidth <= 250) {
-                                oBox.style.width = '250px';
+                            if (oBox.offsetWidth <= 300) {
+                                oBox.style.width = '300px';
                                 oBox.style.left = disright - oBox.offsetWidth + 'px';//防止抖动
                             }
                         }

@@ -59,11 +59,11 @@
 
 
 .work-detail {
-    height: 100%;
+    // height: 100%;
     flex: 1;
     position: relative;
     flex-direction: column;
-    overflow: hidden;
+    // overflow: hidden;
     display: flex;
 
     .ant-form-item {
@@ -286,7 +286,7 @@
 
     .work-detail-tab {
         flex: 1;
-        overflow: auto;
+        // overflow: auto;
     }
 }
 

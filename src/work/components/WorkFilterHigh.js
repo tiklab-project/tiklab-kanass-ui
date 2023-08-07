@@ -20,13 +20,15 @@ const WorkFilterHigh = (props) => {
     const { getWorkConditionPage, getWorkConditionPageTree, workShowType,
         getWorkBoardList, getWorkGanttListTree, setWorkId, setWorkIndex,
         viewType, priorityList, findPriority, getsprintlist, sprintList,
-        getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList } = workStore;
+        getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
+        getSelectUserList, userList, setSearchConditionNull } = workStore;
 
     useEffect(() => {
         findPriority()
         getsprintlist(projectId)
         getModuleList(projectId)
         getWorkStatus()
+        getSelectUserList(projectId);
     }, [])
 
     useEffect(() => {
@@ -37,58 +39,75 @@ const WorkFilterHigh = (props) => {
     const changeField = (changedValues, allValues) => {
         const field = Object.keys(changedValues)[0];
         let value;
-        if (field === "createdDate") {
-            value = {
-                buildTimeStart: changedValues.createdDate ? changedValues.createdDate[0].format('YYYY-MM-DD') : null,
-                buildTimeEnd: changedValues.createdDate ? changedValues.createdDate[1].format('YYYY-MM-DD') : null
-            }
-        }
-        if (field === "planStartDate") {
-            value = {
-                planStartDateStart: changedValues.planStartDate ? changedValues.planStartDate[0].format('YYYY-MM-DD') : null,
-                planStartDateEnd: changedValues.planStartDate ? changedValues.planStartDate[1].format('YYYY-MM-DD') : null
-            }
-        }
-        if (field === "planEndDate") {
-            value = {
-                planEndDateStart: changedValues.planEndDate ? changedValues.planEndDate[0].format('YYYY-MM-DD') : null,
-                planEndDateEnd: changedValues.planEndDate ? changedValues.planEndDate[1].format('YYYY-MM-DD') : null
-            }
-        }
-        if (field === "workPriorityIds") {
-            value = {
-                workPriorityIds: changedValues.workPriorityIds,
-            }
+        switch (field) {
+            case "createdDate":
+                value = {
+                    buildTimeStart: changedValues.createdDate ? changedValues.createdDate[0].format('YYYY-MM-DD') : null,
+                    buildTimeEnd: changedValues.createdDate ? changedValues.createdDate[1].format('YYYY-MM-DD') : null
+                }
+                break;
+            case "planStartDate":
+                value = {
+                    planStartDateStart: changedValues.planStartDate ? changedValues.planStartDate[0].format('YYYY-MM-DD') : null,
+                    planStartDateEnd: changedValues.planStartDate ? changedValues.planStartDate[1].format('YYYY-MM-DD') : null
+                }
+                break;
+            case "planEndDate":
+                value = {
+                    planEndDateStart: changedValues.planEndDate ? changedValues.planEndDate[0].format('YYYY-MM-DD') : null,
+                    planEndDateEnd: changedValues.planEndDate ? changedValues.planEndDate[1].format('YYYY-MM-DD') : null
+                }
+                break;
+            case "workPriorityIds":
+                value = {
+                    workPriorityIds: changedValues.workPriorityIds,
+                }
+                break;
+            case "sprintIds":
+                value = {
+                    sprintIds: changedValues.sprintIds,
+                }
+                break;
+            case "moduleIds":
+                value = {
+                    moduleIds: changedValues.moduleIds,
+                }
+                break;
+            case "builderIds":
+                value = {
+                    builderIds: changedValues.builderIds,
+                }
+                break;
+            case "workStatusIds":
+                value = {
+                    workStatusIds: changedValues.workStatusIds,
+                }
+                break;
+            default: 
+                break;
         }
 
-        if (field === "sprintIds") {
-            value = {
-                sprintIds: changedValues.sprintIds,
-            }
-        }
-
-        if (field === "moduleIds") {
-            value = {
-                moduleIds: changedValues.moduleIds,
-            }
-        }
         findWorkItem(value)
 
     };
 
     const resetFilter = () => {
         form.resetFields()
-        const value = {
-            buildTimeStart: null,
-            buildTimeEnd: null,
-            planStartDateStart: null,
-            planStartDateEnd: null,
-            planEndDateStart: null,
-            planEndDateEnd: null,
-            planEndDate: null,
-            workPriorityIds: null,
-            sprintIds: null,
-            moduleIds: null
+        // setSearchConditionNull()
+        let value = {
+            projectIds: projectId ? [projectId] : [],
+            builderIds: [],
+            workStatusIds: [],
+            createdDate: [],
+            planStartDate: [],
+            planEndDate: [],
+            workPriorityIds: [],
+            sprintIds: [],
+            moduleIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
         }
         findWorkItem(value)
     }
@@ -126,6 +145,7 @@ const WorkFilterHigh = (props) => {
     const initForm = () => {
         form.setFieldsValue({
             workStatusIds: searchCondition.workStatusIds,
+            builderIds: searchCondition.builderIds,
             createdDate: searchCondition.buildTimeEnd ? [moment(searchCondition.buildTimeStart, dateFormat), moment(searchCondition.buildTimeEnd, dateFormat)] : null,
             planStartDate: searchCondition.planStartDateStart ? [moment(searchCondition.planStartDateStart, dateFormat), moment(searchCondition.planStartDateEnd, dateFormat)] : null,
             planEndDate: searchCondition.planEndDateStart ? [moment(searchCondition.planEndDateStart, dateFormat), moment(searchCondition.planEndDateEnd, dateFormat)] : null,
@@ -144,34 +164,49 @@ const WorkFilterHigh = (props) => {
                 // layout={l?ayout}
                 className="workitem-filter-height"
                 labelAlign="left"
-                initialValues={{
-                    workPriorityIds: ['56035266d43ed3e87d1919fcde3848ea']
+                // initialValues={{
+                //     workPriorityIds: ['56035266d43ed3e87d1919fcde3848ea']
 
-                }}
+                // }}
                 onValuesChange={(changedValues, allValues) => changeField(changedValues, allValues)}
                 {...formItemLayout}
 
-            >   
-            {
-                workShowType !== "list" &&  <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
+            >
+                {
+                    workShowType === "list" && <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
+                        <Select
+                            mode="multiple"
+                            placeholder="状态"
+                            className="work-select"
+                            key="workStatusIds"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                        >
+                            {
+                                workStatusList && workStatusList.map((item) => {
+                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                }
+
+                <Form.Item name="builderIds" label={labelHidden ? null : "创建人"} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"
-                        placeholder="状态"
+                        placeholder="创建人"
                         className="work-select"
-                        key="assigner"
+                        key="builderIds"
                         maxTagCount={1}
                         getPopupContainer={() => heightFilter.current}
                     >
                         {
-                            workStatusList && workStatusList.map((item) => {
-                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                            userList && userList.map((item) => {
+                                return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                             })
                         }
                     </Select>
                 </Form.Item>
-            }
-               
-
                 <Form.Item name="createdDate" label={labelHidden ? null : "创建日期"} rules={[{ required: false }]} >
                     <RangePicker getPopupContainer={() => heightFilter.current} />
                 </Form.Item>

@@ -7,7 +7,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
+import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "tiklab-slate-ui";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
@@ -157,24 +157,24 @@ const WorkBasicInfo = (props) => {
                         }
 
                     </Fragment>
-                    :
-                    <Fragment>
-                        {
-                            version === "cloud" ?
-                                <a href={`${upload_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
-                                    target="_blank"
-                                >
-                                    {text}
-                                </a>
-                                :
-                                <a href={`${upload_url}/image/${record.attachmentUrl}`}
-                                    target="_blank"
-                                >
-                                    {text}
-                                </a>
-                        }
+                        :
+                        <Fragment>
+                            {
+                                version === "cloud" ?
+                                    <a href={`${upload_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
+                                        target="_blank"
+                                    >
+                                        {text}
+                                    </a>
+                                    :
+                                    <a href={`${upload_url}/image/${record.attachmentUrl}`}
+                                        target="_blank"
+                                    >
+                                        {text}
+                                    </a>
+                            }
 
-                    </Fragment>
+                        </Fragment>
 
                 )
             }
@@ -704,17 +704,25 @@ const WorkBasicInfo = (props) => {
                 <Fragment>
                     {
                         editorType ? <Fragment>
-                            <DocumentEditor
-                                focusEditor={true}
-                                value={slateValue}
-                                onChange={setSlateValue}
-                                minHeight={300}
-                                ticket = {ticket}
-                                tenant = {tenant}
-                                base_url = {base_url}
-                                maxHeight = {500}
-                                {...props}
-                            />
+                            <div style={{ border: " #f0f0f0 solid 1px" }}>
+                                <EditorBig
+                                    ticket={ticket}
+                                    tenant={tenant}
+                                    base_url={base_url}
+                                    value={slateValue}
+                                    minHeight={300}
+                                    onChange={setSlateValue}
+                                    {...props}
+                                >
+                                    <div style={{ padding: "10px" }}>
+                                        <EditorBigContent
+                                            value={slateValue}
+                                        />
+                                    </div>
+
+
+                                </EditorBig>
+                            </div>
 
                             <div className="desc-botton">
 
@@ -728,13 +736,13 @@ const WorkBasicInfo = (props) => {
                                     slateValue && <PreviewEditor
                                         value={slateValue}
                                         onChange={setSlateValue}
-                                        base_url = {base_url}
-                                        ticket = {ticket}
-                                        tenant = {tenant}
+                                        base_url={base_url}
+                                        ticket={ticket}
+                                        tenant={tenant}
                                         {...props}
                                     />
                                 }
-                                
+
                             </div>
                     }
                 </Fragment>
