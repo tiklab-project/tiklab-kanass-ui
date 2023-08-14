@@ -648,6 +648,13 @@ export class WorkStore {
         return data;
     }
 
+    findTransitionList = async(value) => {
+
+        const data = await Service("/transition/findTransitionList", value);
+        return data;
+    }
+
+
     @action
     findWorkTypeIds = async(value) => {
         const params = new FormData()

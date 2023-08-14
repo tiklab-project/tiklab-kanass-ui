@@ -7,13 +7,16 @@ import WorkBreadCrumb from "./WorkBreadCrumb";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
+
 const WorkTableContent = (props) => {
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, workShowType, getWorkConditionPage, viewType, setWorkId, setDetailCrumbArray,
-        setWorkIndex, createRecent } = workStore;
+        detWork, getWorkConditionPage, viewType, setWorkId,
+        createRecent } = workStore;
     const tenant = getUser().tenant;
     const sprintId = props.match?.params?.sprint;
+
     const goProdetail = (record, index) => {
         const params = {
             name: record.title,
@@ -26,8 +29,10 @@ const WorkTableContent = (props) => {
         createRecent(params)
 
         setWorkId(record.id)
-        setWorkIndex(index + 1)
-        setDetailCrumbArray([{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        // setWorkIndex(index + 1)
+        setSessionStorage("workIndex", index + 1)
+        setSessionStorage("searchCondition", searchCondition)
+        setSessionStorage("detailCrumbArray",[{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         console.log(props)
         if (props.route.path === "/index/work") {
             props.history.push(`/index/workDetail/${record.id}`)
@@ -211,34 +216,7 @@ const WorkTableContent = (props) => {
         })
     }
 
-    const sorter = (pagination, filters, sorter, extra) => {
-        console.log(filters, sorter)
-        const sortParams = []
-        const sorterArr = Array.isArray(sorter) ? sorter : [sorter];
-        sorterArr.map(item => {
-            if (item.order === "ascend") {
-                sortParams.push({
-                    name: item.columnKey,
-                    orderType: "asc"
-                })
-            }
-            if (item.order === "descend") {
-                sortParams.push({
-                    name: item.columnKey,
-                    orderType: "desc"
-                })
-            }
-            return sortParams;
-        })
-        searchCondition.orderParams = sortParams;
-        if (workShowType === "tableTree") {
-            getWorkConditionPageTree()
-        }
-        if (workShowType === "tableTile") {
-            getWorkConditionPage()
-        }
 
-    }
 
     return (
 

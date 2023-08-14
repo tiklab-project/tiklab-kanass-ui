@@ -5,6 +5,8 @@ import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
 import Button from "../../common/button/Button";
 import WorkChildStore from "../store/WorkChildStore";
+import { getUser } from "tiklab-core-ui";
+import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkChild = (props) => {
     const store = {
@@ -18,14 +20,13 @@ const WorkChild = (props) => {
     const [workItemTitle, setWorkItemTitle] = useState()
 
     const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,setWorkId, addWork,getWorkConditionPage, createRecent,
-        detailCrumbArray, setDetailCrumbArray } = workStore;
+        workId,setWorkId, addWork,getWorkConditionPage, createRecent } = workStore;
 
     const { getWorkChildList,deleWorkChild } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     
     const project = JSON.parse(localStorage.getItem("project"));
-
+    const tenant = getUser().tenant;
     useEffect(() => {
         findWorkChildList()
         return;
@@ -83,9 +84,9 @@ const WorkChild = (props) => {
 
     const goWorkItem = (record) => {
         setWorkId(record.id)
-        const newDetailCrumbArray = detailCrumbArray
+        const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
         newDetailCrumbArray.push({id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl })
-        setDetailCrumbArray(newDetailCrumbArray)
+        setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: record.title,
             model: "workItem",
@@ -95,9 +96,7 @@ const WorkChild = (props) => {
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
-        if (props.route.path === "/index/prodetail/workMessage/:id") {
-            props.history.push("/index/prodetail/work")
-        }
+        props.history.push(`/index/projectDetail/${project.id}/workDetail/${record.id}`)
     }
 
     const columns = [
@@ -110,7 +109,7 @@ const WorkChild = (props) => {
                     {
                         record.workTypeSys?.iconUrl ?
                             <img
-                                src={'/images/' + record.workTypeSys.iconUrl}
+                                src={version === "cloud" ? (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + record.workTypeSys?.iconUrl)}
                                 alt=""
                                 className="svg-icon"
 

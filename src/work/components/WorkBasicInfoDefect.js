@@ -12,6 +12,8 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
+import { getSessionStorage } from "../../common/utils/setSessionStorage";
+
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
@@ -28,13 +30,14 @@ const WorkBasicInfo = (props) => {
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
-    const { workId, workIndex, workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
+    const { workId,  workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
         formList, moduleList, sprintList, priorityList, editWork, userList,
         findFieldList
     } = workStore;
+    const workIndex = getSessionStorage("workIndex");
+
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
-    // 富文本内容
-    const [priorityDes, setPriorityDes] = useState("")
+
 
     // 获取详情内容
     const [parentWorkItem, setParentWorkItem] = useState("")
@@ -77,7 +80,6 @@ const WorkBasicInfo = (props) => {
                 setSlateValue(workInfo.desc)
             }
 
-            setPriorityDes(descReplace)
         }
     }
 

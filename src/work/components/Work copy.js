@@ -19,8 +19,7 @@ import { Form, Row, Col } from "antd";
 import "../components/Work.scss";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
-import { setSessionStorage } from "../../common/utils/setSessionStorage";
-
+import {setSessionStorage} from "../../common/utils/setSessionStorage";
 const Work = (props) => {
     const store = {
         workStore: WorkStore,
@@ -28,70 +27,98 @@ const Work = (props) => {
     };
 
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType,
-        setQuickFilterValue, setTabValue, setIsWorkList } = WorkStore;
-
+        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType, 
+        setQuickFilterValue, setTabValue, setIsWorkList, searchCondition } = WorkStore;
+    
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
-        setQuickFilterValue({ label: '所有', value: 'all' })
-        setTabValue({ id: "all", type: "system" })
-        setWorkShowType("table")
-        switch (props.match.path) {
-            case "/index/:id/sprintdetail/:sprint/workItem":
-                goWorkItem("sprint")
-                break;
-            case "/index/work":
-                goWorkItem("system")
-                break;
-            case "/index/projectDetail/:id/work":
-                goWorkItem("project")
-                break;
-            case "/index/workone/:id":
-                goWorkItem("systemOne")
-                break;
-            case "/index/projectDetail/:id/workone/:id":
-                goWorkItem("projectOne")
-                break;
-            default:
-                break;
+        setQuickFilterValue({label: '所有', value: 'all'})
+        setTabValue({id: "all", type: "system"})
+        if (props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+            goSprintWorkItem()
+            setWorkShowType("table")
         }
+
+        if (props.match.path === "/index/work") {
+            setWorkShowType("table")
+            goSystemWorkItem()
+        }
+        if (props.match.path === "/index/workone/:id") {
+            const id = props.match.params.id;
+            let initValues = {
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
+            }
+            initValues = { id: id, ...initValues }
+            setSearchCondition(initValues)
+            setWorkId(id)
+            getWorkList();
+            return
+        }
+
+        if (props.match.path === "/index/projectDetail/:id/workone/:id") {
+            const id = props.match.params.id;
+
+            let initValues = {
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
+            }
+            initValues = { id: id, ...initValues }
+            setSearchCondition(initValues)
+            getWorkList();
+            return
+        }
+
+        if (props.match.path === "/index/projectDetail/:id/work") {
+            setWorkShowType("table")
+            goProjectWorkItem()
+        }
+
+
         return () => {
             setIsWorkList(true)
         };
     }, [])
 
-    const goWorkItem = (type) => {
-        const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
-        const id = props.match.params.id;
+    // 进入系统下事项
+    const goSystemWorkItem = () => {
         let initValues = {
-            ...searchData,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
             }
         }
-        switch (type) {
-            case "sprint":
-                initValues = { ...initValues, projectIds: [projectId], sprintIds: [sprintId] };
-                break;
-            case "project":
-                initValues = { ...initValues, projectIds: [projectId] };
-                break;
-            case "projectOne":
-                
-                initValues = { ...initValues, projectIds: [projectId], id: id };
-                break;
-            case "systemOne":
-                initValues = { ...initValues, id: id };
-                break;
-            default: 
-                break;
-        }
-
         setSearchConditionNull().then(res => {
+            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
+            initValues = { ...initValues, ...searchData };
+            setSearchCondition(initValues)
+            sessionStorage.removeItem("searchCondition")
+            initFrom(initValues)
+            getWorkList();
+        })
+        
+
+    }
+
+    const goSprintWorkItem = () => {
+        let initValues = {
+            projectIds: [projectId],
+            sprintIds: [sprintId],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        setSearchConditionNull().then(() => {
+            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
+            initValues = { projectIds: [projectId], ...initValues, ...searchData };
             setSearchCondition(initValues)
             sessionStorage.removeItem("searchCondition")
             initFrom(initValues)
@@ -99,6 +126,24 @@ const Work = (props) => {
         })
     }
 
+    // 由项目首页筛选进入事项页面
+    const goProjectWorkItem = () => {
+        console.log(sessionStorage.getItem("searchCondition"))
+        let initValues = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        setSearchConditionNull().then(() => {
+            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
+            initValues = { projectIds: [projectId], ...initValues, ...searchData };
+            setSearchCondition(initValues)
+            sessionStorage.removeItem("searchCondition")
+            initFrom(initValues)
+            getWorkList()
+        })
+    }
 
     const initFrom = (fromValue) => {
         form.setFieldsValue({
@@ -162,7 +207,7 @@ const Work = (props) => {
     return (<Provider {...store}>
         <Fragment>
             {
-                workShowType === "list" && <Worklist {...props} form={form}></Worklist>
+                workShowType === "list" &&  <Worklist {...props} form={form}></Worklist>
             }
             {
                 workShowType === "table" && <WorkTableContent {...props} form={form}></WorkTableContent>
@@ -217,7 +262,7 @@ const Work = (props) => {
             }
         </Fragment>
     </Provider>
-
+        
 
     )
 }

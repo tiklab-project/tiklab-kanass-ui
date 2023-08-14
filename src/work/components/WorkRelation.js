@@ -5,12 +5,13 @@ import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
 import Button from "../../common/button/Button";
 import WorkRelationStore from "../store/WorkRelationStore";
+import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
 const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
     }
     const { workStore } = props;
-    const { workId, setWorkId, createRecent, detailCrumbArray, setDetailCrumbArray  } = workStore;
+    const { workId, setWorkId, createRecent  } = workStore;
     const { selectWorkRelationList, getSelectWorkRelationList,
         addWorkRelation, searchAllWorkRelation, deleWorkRelation } = WorkRelationStore;
     const [selectIds, setSelectIds] = useState();
@@ -41,9 +42,9 @@ const WorkRelation = (props) => {
 
     const goWorkItem = (workItem) => {
         setWorkId(workItem.id)
-        const newDetailCrumbArray = detailCrumbArray
+        const newDetailCrumbArray = getSessionStorage("detailCrumbArray");
         newDetailCrumbArray.push({id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl})
-        setDetailCrumbArray(newDetailCrumbArray)
+        setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: workItem.title,
             model: "workItem",

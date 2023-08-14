@@ -7,6 +7,8 @@ import { getUser } from "tiklab-core-ui";
 import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
+
 const { RangePicker } = DatePicker;
 
 const WorkAddPage = (props) => {
@@ -15,8 +17,7 @@ const WorkAddPage = (props) => {
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
-        findFieldList, setWorkId, setDetailCrumbArray,
-        findWorkItemById, workShowType, getWorkBoardList
+        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -139,7 +140,7 @@ const WorkAddPage = (props) => {
             })
             addWork(values).then((res) => {
                 setWorkId(res.data)
-                setDetailCrumbArray([{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
+                setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
                     if (workShowType === "bodar") {
                         getWorkBoardList()

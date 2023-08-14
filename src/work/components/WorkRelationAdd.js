@@ -4,9 +4,10 @@ import { observer, inject } from "mobx-react";
 import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
+import { getUser } from "tiklab-core-ui";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
-
+    const tenant = getUser().tenant;
     const { workTypeList, workId } = workStore;
     const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
     const relationAdd = useRef();
@@ -126,9 +127,9 @@ const WorkRelationAddModal = (props) => {
                                         return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>
                                             <div className="work-item-icon">
                                                 {
-                                                    item.workType?.iconUrl ?
+                                                    item.workTypeSys?.iconUrl ?
                                                         <img
-                                                            src={'/images/' + item.workType?.iconUrl}
+                                                            src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
 

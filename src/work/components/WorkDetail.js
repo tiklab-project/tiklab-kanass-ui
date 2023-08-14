@@ -7,28 +7,32 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Col, Select, InputNumber, Pagination } from "antd";
-// import "../../common/components/projectDetail.scss";
+import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
+import { SwapRightOutlined } from '@ant-design/icons';
 import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
+import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage } = props;
-    const { workList, setWorkList, setWorkId, defaultCurrent, statesList, detWork, workShowType, setWorkShowType,
+    const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
-        getsprintlist, getSelectUserList, findPriority, workIndex, viewType, userList, searchWorkById,
-        setAlertText, setIsShowAlert, detailCrumbArray, setDetailCrumbArray
+        getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
+        setAlertText, setIsShowAlert, findTransitionList
     } = workStore;
+    const detailCrumbArray = getSessionStorage("detailCrumbArray");
+    const workIndex = getSessionStorage("workIndex");
     const projectId = props.match.params.id;
     const sprintId = props.match?.params?.sprint;
+    const routerWorkId = props.match.params.workId;
     const workDeatilForm = useRef()
     const inputRef = useRef()
     const [workInfo, setWorkInfo] = useState();
@@ -40,17 +44,23 @@ const WorkDetail = (props) => {
     const path = props.match.path.split("/")[2];
     const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
-    const getWorkDetail = (id, index) => {
+    const [transformList, setTransformList] = useState([])
+    const getWorkDetail = (id) => {
         setInfoLoading(true)
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
-                findStatusList(res.workStatus.id);
+                // findStatusList(res.workStatus.id);
+                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-                    setDetailCrumbArray([{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
-                }
+                // if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
+                //     let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
+                //     setSessionStorage(crumbArray);
+                // }
+
+                let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
+                setSessionStorage("detailCrumbArray",crumbArray);
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
@@ -64,7 +74,7 @@ const WorkDetail = (props) => {
             getsprintlist(projectId)
             getSelectUserList(projectId);
             findPriority()
-            getWorkDetail(workId, workIndex)
+            getWorkDetail(workId)
 
         }
         if (workId === 0) {
@@ -79,8 +89,10 @@ const WorkDetail = (props) => {
             setWorkId(id)
             setWorkIndex(0)
             getWorkDetail(id)
-            setWorkShowType("detail")
             setWorkShowType("table")
+        }
+        if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
+            setWorkId(routerWorkId)
         }
         return
     }, []);
@@ -96,28 +108,29 @@ const WorkDetail = (props) => {
             } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
                 getWorkConditionPageTree().then((res) => {
                     if (total === defaultCurrent) {
-                        getWorkDetail(res.dataList[0].id, defaultCurrent);
+                        getWorkDetail(res.dataList[0].id);
                     } else {
-                        getWorkDetail(res.dataList[defaultCurrent - 1].id, defaultCurrent);
+                        getWorkDetail(res.dataList[defaultCurrent - 1].id);
                     }
                 })
             } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
                 getWorkConditionPage().then((res) => {
                     if (total === defaultCurrent) {
-                        getWorkDetail(res.dataList[0].id, defaultCurrent);
+                        getWorkDetail(res.dataList[0].id);
                     } else {
-                        getWorkDetail(res.dataList[defaultCurrent - 1].id, defaultCurrent);
+                        getWorkDetail(res.dataList[defaultCurrent - 1].id);
                     }
                 })
             }
         })
     }
 
-    const changeStatus = (statusId, name) => {
+    const changeStatus = (transition) => {
         const value = {
             updateField: "workStatusNode",
-            workStatusNode: statusId,
-            flowId: workInfo.workType.flow.id,
+            workStatusNode: transition?.toNode?.id,
+            transitionId: transition.id,
+            flowId: transition.flow.id,
             id: workId
         }
         editWork(value).then((res) => {
@@ -131,20 +144,23 @@ const WorkDetail = (props) => {
 
                 searchWorkById(workId).then((res) => {
                     if (res) {
-                        findStatusList(res.workStatus.id)
+                        percentForm.setFieldsValue({ assigner: res.assigner?.id })
+                        getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+                        setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                     }
                 })
             }
         })
     }
 
-    const findStatusList = (stateId) => {
-        let params = {
-            nodeId: stateId
-        }
-        findToNodeList(params)
-    }
 
+    const getTransitionList = (nodeId, flowId) => {
+        findTransitionList({ fromNodeId: nodeId, flowId: flowId }).then(res => {
+            if (res.code === 0) {
+                setTransformList(res.data)
+            }
+        })
+    }
     const [validateStatus, setValidateStatus] = useState("validating")
     const [showValidateStatus, setShowValidateStatus] = useState(false)
 
@@ -242,12 +258,11 @@ const WorkDetail = (props) => {
         setIsFocus(true)
     }
 
-
     const menu = (
         <div className="work-flow-transition">
             {
-                statesList && statesList.map(item => {
-                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item.id, item.name)}>{item.name}</div>
+                transformList.length > 0 && transformList.map(item => {
+                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined /> <span className="work-flow-text">{item.toNode.name}</span> </div>
                 })
             }
             <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workType?.flow.id}`)}>查看工作流</div>
@@ -258,14 +273,14 @@ const WorkDetail = (props) => {
     const goCrumWork = (index, id) => {
         setWorkId(id)
         const array = detailCrumbArray.slice(0, index + 1)
-        setDetailCrumbArray(array)
+        setSessionStorage("detailCrumbArray", array)
     }
 
     const changPage = (page) => {
         const workDetail = workList[page - 1]
         setWorkId(workDetail.id)
         setWorkIndex(page)
-        setDetailCrumbArray([{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
     const goWorkList = () => {
@@ -303,7 +318,7 @@ const WorkDetail = (props) => {
                                         if (!isTableDetail && index === 0) {
                                             html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                                 <img
-                                                    src= {version === "cloud" ?
+                                                    src={version === "cloud" ?
                                                         (upload_url + item.iconUrl + "?tenant=" + tenant)
                                                         :
                                                         (upload_url + item.iconUrl)
@@ -367,23 +382,14 @@ const WorkDetail = (props) => {
                                                 删除
                                             </Button>
                                         </PrivilegeProjectButton>
-                                        {
-                                            workInfo?.builder?.id === userId || (workInfo?.reporter && workInfo?.reporter?.id === userId) ? <Dropdown overlay={menu} trigger={"click"} className="sf">
-                                                <Button className="botton-background">
-                                                    {workStatus}
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-downdrop"></use>
-                                                    </svg>
-                                                </Button>
-                                            </Dropdown> : <Dropdown overlay={menu} trigger={"click"} className="sf">
-                                                <Button className="botton-background">
-                                                    {workStatus}
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-downdrop"></use>
-                                                    </svg>
-                                                </Button>
-                                            </Dropdown>
-                                        }
+                                        <Dropdown overlay={menu} trigger={"click"} className="sf">
+                                            <Button className="botton-background">
+                                                {workStatus}
+                                                <svg className="svg-icon" aria-hidden="true">
+                                                    <use xlinkHref="#icon-downdrop"></use>
+                                                </svg>
+                                            </Button>
+                                        </Dropdown>
                                         <div className="more">
                                             <svg className="svg-icon" aria-hidden="true">
                                                 <use xlinkHref="#icon-more"></use>

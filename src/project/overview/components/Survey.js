@@ -20,7 +20,7 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
         findRecentPage, recentList,updateRecent } = ProjectSurveyStore;
-    const { setWorkId, setDetailCrumbArray,setIsWorkList } = Workstore;
+    const { setWorkId,setIsWorkList } = Workstore;
     //当前用户名字
     const masterName = getUser().name;
     // 项目id
@@ -330,7 +330,7 @@ const Survey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         setIsWorkList(false)
 
         props.history.push(`/index/projectDetail/${item.project.id}/work`)

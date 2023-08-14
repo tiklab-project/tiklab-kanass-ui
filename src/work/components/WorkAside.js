@@ -5,6 +5,8 @@ import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
 import { getUser } from 'tiklab-core-ui';
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
+
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -12,23 +14,23 @@ const WorkAside = (props) => {
     const { form, workStore } = props;
     const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
         workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
-        setWorkList, setDetailCrumbArray } = workStore;
+        searchCondition } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
     const [currentPageAside, setCurrentPage] = useState(1)
     const project = JSON.parse(localStorage.getItem("project"));
     const tenant = getUser().tenant;
 
     useEffect(() => {
-        return () => {
-            setWorkList([])
-            setCurrentPage(1)
-        }
+        // return () => {
+        //     setWorkList([])
+        //     setCurrentPage(1)
+        // }
     }, [])
     // 点击选择事项列表
     const changeWorkChilden = (workItem, index) => {
         setWorkId(workItem.id)
         setWorkIndex(index + 1)
-        setDetailCrumbArray([{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
         const params = {
             name: workItem.title,
             model: "workItem",
@@ -110,7 +112,7 @@ const WorkAside = (props) => {
         const values = {
             pageParam: {
                 pageSize: 20,
-                currentPage: currentPageAside + 1,
+                currentPage: searchCondition?.pageParam?.currentPage + 1,
             }
         }
         if (viewType === "tree") {
@@ -126,7 +128,7 @@ const WorkAside = (props) => {
                 setWorkIndex(1)
             })
         }
-        setCurrentPage(currentPageAside + 1)
+        setCurrentPage(searchCondition?.pageParam?.currentPage + 1)
 
     }
 

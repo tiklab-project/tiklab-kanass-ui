@@ -13,6 +13,7 @@ import "./HomePage.scss";
 import { Empty, Tabs } from 'antd';
 import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
+import {setSessionStorage} from "../../../common/utils/setSessionStorage"
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -22,7 +23,7 @@ const HomeSurvey = (props) => {
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
     const tenant = getUser().tenant;
-    const { setWorkId, setDetailCrumbArray, searchWorkById, setIsWorkList } = WorkStore;
+    const { setWorkId,  searchWorkById, setIsWorkList } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -89,7 +90,7 @@ const HomeSurvey = (props) => {
         searchWorkById(workItemId).then((res) => {
             console.log(res)
             if (res) {
-                setDetailCrumbArray([{ id: workItemId, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                setSessionStorage("detailCrumbArray",[{ id: workItemId, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                 setWorkId(workItemId)
                 setIsWorkList(false)
                 
@@ -110,7 +111,7 @@ const HomeSurvey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setDetailCrumbArray([{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        setSessionStorage("detailCrumbArray",[{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         setIsWorkList(false)
         props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")

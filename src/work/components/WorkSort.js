@@ -19,7 +19,7 @@ const WorkSort = (props) => {
         },
         {
             value: "title",
-            title: "标题"
+            title: "标题ww"
         },
         {
             value: "work_type_sys_id",
@@ -60,7 +60,7 @@ const WorkSort = (props) => {
     }
 
     const upDownSort = (item) => {
-        setSortType(item)
+        
         if(item.value === sortType.value){
             if(isAsc === "desc"){
                 sorter(item.value, "asc")
@@ -73,6 +73,7 @@ const WorkSort = (props) => {
         }else {
             sorter(item.value, isAsc)
         }
+        setSortType(item)
     }
     return <div className="work-view">
         {

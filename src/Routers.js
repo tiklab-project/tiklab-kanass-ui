@@ -17,13 +17,13 @@ const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/Proje
 const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
 
 // const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
-const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowList'))
-const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowListSystem'))
+const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
+const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
 
-const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/ProjectFlowStatusList'))
-const FlowDetailView = AsyncComponent(() => import('./setting/flow/FlowDetailView'))    
-const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/FlowDetailDesign'))
-const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/ProjectNodeStatusList'))
+const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))    
+const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
+const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
 // 状态组件
 
 // 消息
@@ -69,7 +69,9 @@ const ProjectAdd = AsyncComponent(() => import('./project/project/components/Pro
 const ProjectDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
 const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
-const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
+const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/components/ProjectFlow'))
+const ProjectFlowDetailDesign = AsyncComponent(() => import("./project/setting/projectFlow/components/ProjectFlowDetailDesign"))
+
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
@@ -872,7 +874,7 @@ const Routers = [
                             },
                             {
                                 path: "/index/projectDetail/:id/projectSetDetail/projectFlowDetail/:flowId",
-                                component: FlowDetailDesign,
+                                component: ProjectFlowDetailDesign,
                                 exact: true
                             }
                         ]

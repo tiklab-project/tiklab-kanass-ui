@@ -59,7 +59,7 @@
 
 
 .work-detail {
-    // height: 100%;
+    height: 100%;
     flex: 1;
     position: relative;
     flex-direction: column;
@@ -291,13 +291,20 @@
 }
 
 .work-flow-transition {
-    width: 120px;
+    // width: 120px;
     background-color: #fff;
     box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
 
     .work-flow-item {
         padding: 10px 15px;
         cursor: pointer;
+        .work-flow-text {
+            padding: 3px;
+            font-size: 12px;
+            border-radius: 2px;
+            background: #f0f0f0;
+            font-weight: 600;
+        }
     }
 
     .work-flow-item:hover {

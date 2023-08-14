@@ -108,15 +108,10 @@ const WorkTestCaseList = (props) => {
         
     }
 
-    //跳转路由
-    // const toCaseDetail = (setId,record)=>{
-    //     // sessionStorage.setItem(`${setId}`,record.id);
-    //     props.history.push(`/repository/${record.caseType}/${record.id}`)
-    // }
+
     const toCaseDetail = (caseType, data) => {
         findSystemUrl({name: "teston"}).then(res=> {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            // window.open(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
             applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
         })
     }

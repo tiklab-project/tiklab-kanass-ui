@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Modal, Table, Select, message, Input, Empty } from 'antd';
+import { Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
+import { getUser } from "tiklab-core-ui";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath,workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId } = props;
 
@@ -11,7 +12,7 @@ const WorkChildAddmodal = (props) => {
 
     const { addWorkChild, findEpicSelectWorkItemList, findSelectWorkItemList,
         getWorkChildList, selectChildToTal, selectWorkChildList } = workChild;
-
+    const tenant = getUser().tenant;
     const childAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
@@ -190,7 +191,7 @@ const WorkChildAddmodal = (props) => {
                                             {
                                                 item.workTypeSys?.iconUrl ?
                                                     <img
-                                                        src={'/images/' + item.workTypeSys?.iconUrl}
+                                                        src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                         alt=""
                                                         className="svg-icon"
 

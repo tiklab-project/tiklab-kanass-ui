@@ -9,6 +9,7 @@ import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import WorkTypeTab from "./WorkTypeTab";
 import WorkQuickFilter from "./WorkQuickFilter";
+import { getUser } from "tiklab-core-ui";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -18,10 +19,10 @@ const WorkTableFilter = (props) => {
     // 解析store数据
     const { projectList, searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId, 
-        setWorkIndex, viewType,findProjectList, getSelectUserList, 
-        getWorkTypeList, getWorkStatus, userList, findDmFlowList} = workStore;
-    
+        workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
+        setWorkIndex, viewType, findProjectList, getSelectUserList,
+        getWorkTypeList, getWorkStatus, userList, findDmFlowList } = workStore;
+    const tenant = getUser().tenant;
     const [flowIds, setFlowIds] = useState();
 
     useEffect(() => {
@@ -29,8 +30,8 @@ const WorkTableFilter = (props) => {
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
         getWorkStatus()
-        findDmFlowList({domainId: projectId}).then(res => {
-            if(res.code === 0){
+        findDmFlowList({ domainId: projectId }).then(res => {
+            if (res.code === 0) {
                 const list = [];
                 res.data.map(item => {
                     list.push(item.flow.id)
@@ -38,7 +39,7 @@ const WorkTableFilter = (props) => {
                 setFlowIds(list)
             }
         })
-       return
+        return
     }, [])
 
 
@@ -75,7 +76,13 @@ const WorkTableFilter = (props) => {
     };
 
     const handleChange = (field, value) => {
-        search({ [field]: value })
+        search({
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        })
     }
 
     const getWorkList = () => {
@@ -106,8 +113,7 @@ const WorkTableFilter = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") 
-                {
+                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
                     setWorkIndex(1)
                     setWorkId(props.match.params.id)
                 } else {
@@ -121,20 +127,17 @@ const WorkTableFilter = (props) => {
         })
     }
 
-    const initFrom = (fromValue) => {
-        form.setFieldsValue({
-            projectIds: fromValue.projectIds ? fromValue.projectIds : [],
-            workTypeId: fromValue.workTypeId ? fromValue.workTypeId : [],
-            workStatusIds: fromValue.workStatusIds ? fromValue.workStatusIds : [],
-            title: fromValue.title ? fromValue.title : "",
-            assignerIds: fromValue.assignerIds ? fromValue.assignerIds : []
+
+    const selectChange = (field, value) => {
+        search({
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
         })
     }
 
-    const selectChange = (field, value) => {
-        search({ [field]: value })
-    }
-    
 
     const sorter = (sortType, isAsc) => {
         const sortParams = [];
@@ -143,6 +146,10 @@ const WorkTableFilter = (props) => {
             orderType: isAsc
         })
         searchCondition.orderParams = sortParams;
+        searchCondition.pageParam = {
+            pageSize: 20,
+            currentPage: 1
+        }
         if (viewType === "tree") {
             getWorkConditionPageTree()
         }
@@ -155,7 +162,7 @@ const WorkTableFilter = (props) => {
         <div className="work-table-second">
             <WorkTypeTab />
             <div className="work-table-filter">
-                <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
+                <WorkQuickFilter getWorkList={getWorkList} flowIds={flowIds} />
                 {
                     props.match.path == "/index/work" &&
                     <SelectSimple name="projectIds"
@@ -168,18 +175,23 @@ const WorkTableFilter = (props) => {
                                     value={item.id}
                                     label={item.projectName}
                                     key={item.id}
-                                    imgUrl={item.iconUrl}
+                                    // imgUrl={item.iconUrl}
+                                    imgUrl={version === "cloud" ?
+                                        (upload_url + item.iconUrl + "?tenant=" + tenant)
+                                        :
+                                        (upload_url + item.iconUrl)
+                                    }
                                 />
                             })
                         }
                     </SelectSimple>
                 }
 
-                <SelectSimple 
-                    name="assignerIds" 
-                    onChange={(value) => selectChange("assignerIds", value)} 
-                    title={"负责人"} 
-                    ismult={true} 
+                <SelectSimple
+                    name="assignerIds"
+                    onChange={(value) => selectChange("assignerIds", value)}
+                    title={"负责人"}
+                    ismult={true}
                     selectValue={searchCondition?.assignerIds}
                 >
                     {
@@ -227,7 +239,7 @@ const WorkTableFilter = (props) => {
                     </div>
                 </div>
                 <WorkFilterModal form={form} layout={"horizontal"} {...props} />
-                <WorkSort sorter={sorter}/>
+                <WorkSort sorter={sorter} />
             </div>
         </div>
 

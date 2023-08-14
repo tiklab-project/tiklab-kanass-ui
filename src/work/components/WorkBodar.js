@@ -4,13 +4,14 @@ import WorkBorderDetail from "./WorkBorderDetail";
 import "./WorkBodar.scss";
 import UserIcon from '../../common/UserIcon/UserIcon';
 import { getUser } from 'tiklab-core-ui';
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkBodar = (props) => {
     const { workStore, form } = props;
     const { workBoardList, changeWorkStatus, setIndexParams,
         changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLenght, findToNodeList,
-        setWorkId, setWorkIndex, setDetailCrumbArray, createRecent } = workStore;
+        setWorkId, setWorkIndex, createRecent } = workStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -112,7 +113,7 @@ const WorkBodar = (props) => {
         setWorkIndex(index)
         setWorkId(workItem.id)
         setIsModalVisible(true)
-        setDetailCrumbArray([{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
         // modelRef.current.showDetail(id, index, title)
     }
 

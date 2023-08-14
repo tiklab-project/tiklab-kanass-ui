@@ -11,7 +11,6 @@ import WorkQuickFilter from "./WorkQuickFilter"
 const WorkListFilter = (props) => {
     const { workStore, form, showWorkListFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { getWorkConditionPageTree, getWorkConditionPage,
         workShowType, viewType, setWorkIndex, setWorkId,
         searchCondition, getWorkBoardList, getWorkStatus,
@@ -37,7 +36,13 @@ const WorkListFilter = (props) => {
     }, [])
 
     const handleChange = (field, value) => {
-        search({ [field]: value })
+        search({ 
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        })
     }
 
     const search = values => {
@@ -77,6 +82,10 @@ const WorkListFilter = (props) => {
             orderType: isAsc
         })
         searchCondition.orderParams = sortParams;
+        searchCondition.pageParam = {
+            pageSize: 20,
+            currentPage: 1
+        }
         if (viewType === "tree") {
             getWorkConditionPageTree()
         }

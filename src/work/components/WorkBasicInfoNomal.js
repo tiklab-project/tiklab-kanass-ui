@@ -12,6 +12,8 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
+import { getSessionStorage } from "../../common/utils/setSessionStorage";
+
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
@@ -29,9 +31,11 @@ const WorkBasicInfo = (props) => {
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
-    const { workId, workIndex, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
+    const { workId, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
         formList, moduleList, sprintList, priorityList, editWork, userList
     } = workStore;
+    const workIndex = getSessionStorage("workIndex");
+
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
     // 富文本内容
     const [priorityDes, setPriorityDes] = useState("")

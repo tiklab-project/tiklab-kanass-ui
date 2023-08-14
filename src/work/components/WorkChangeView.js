@@ -5,15 +5,15 @@ import Button from "../../common/button/Button";
 import { useSelector } from "tiklab-plugin-core-ui";
 import { withRouter } from "react-router";
 import { getVersionInfo } from "tiklab-core-ui"
+import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 const WorkFilterSort = (props) => {
     const { getPageList, getPageTree, getWorkConditionPage,
         getWorkConditionPageTree, getWorkBoardList, viewType,
-        workShowType, setWorkShowType, setViewType, buttonType } = props;
+        workShowType, setWorkShowType, setViewType, buttonType, searchCondition } = props;
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const gantte = useRef()
     const pluginStore = useSelector(state => state.pluginStore);
-    console.log(pluginStore)
     const versionInfo = getVersionInfo()
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -51,19 +51,26 @@ const WorkFilterSort = (props) => {
     }
     const changeWorkView = value => {
         setWorkShowType(value)
+        const data = {
+            ...searchCondition,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
         switch (value) {
             case "list":
                 if (viewType === "tile") {
-                    getPageList();
+                    getPageList(data);
                 } else if (viewType === "tree") {
-                    getPageTree();
+                    getPageTree(data);
                 }
                 break;
             case "table":
                 if (viewType === "tile") {
-                    getWorkConditionPage();
+                    getWorkConditionPage(data);
                 } else if (viewType === "tree") {
-                    getWorkConditionPageTree();
+                    getWorkConditionPageTree(data);
                 }
                 break;
             case "bodar":
@@ -72,6 +79,7 @@ const WorkFilterSort = (props) => {
             default:
                 break;
         }
+        removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
     };
 
@@ -144,27 +152,27 @@ const WorkFilterSort = (props) => {
                             </svg>
                             甘特图
                         </div>
-                        :
-                        <Popconfirm 
-                            ref={gantte} 
-                            title="付费插件，是否购买？" 
-                            placement="left" 
-                            onConfirm={(e) => goPlugin(e)} 
-                            getPopupContainer = {() => treeDropDown.current}
-                        >
-                            <div className={`dropdown-buy-item ${"time" === workShowType ? "view-type-select" : ""}`}>
-                                <div className="dropdown-item">
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-time`}></use>
-                                    </svg>
-                                    甘特图
+                            :
+                            <Popconfirm
+                                ref={gantte}
+                                title="付费插件，是否购买？"
+                                placement="left"
+                                onConfirm={(e) => goPlugin(e)}
+                                getPopupContainer={() => treeDropDown.current}
+                            >
+                                <div className={`dropdown-buy-item ${"time" === workShowType ? "view-type-select" : ""}`}>
+                                    <div className="dropdown-item">
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-time`}></use>
+                                        </svg>
+                                        甘特图
 
+                                    </div>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-ques`}></use>
+                                    </svg>
                                 </div>
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref={`#icon-ques`}></use>
-                                </svg>
-                            </div>
-                        </Popconfirm>
+                            </Popconfirm>
                     }
 
                 </div>

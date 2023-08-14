@@ -10,12 +10,18 @@
 import React, { useState, useEffect }  from "react";
 import { ProjectFlow } from 'tiklab-flow-ui';
 import { withRouter } from "react-router";
+import ProjectFlowStore from "../store/ProjectFlowStore"
+import { observer } from "mobx-react";
 
 const ProjectProjectFlowList = (props) => {
+    const {getUserList, userList} = ProjectFlowStore;
     const projectId = props.match.params.id;
     const [router, setRouter] = useState();
+    
     useEffect(() => {
-        setRouter(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`)
+        setRouter(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`);
+
+        getUserList({projectId: "projectId"})
         return
     },[])
     return (
@@ -23,4 +29,4 @@ const ProjectProjectFlowList = (props) => {
 
     )
 }
-export default withRouter(ProjectProjectFlowList);
+export default withRouter(observer(ProjectProjectFlowList));

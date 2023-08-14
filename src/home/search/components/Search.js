@@ -16,12 +16,13 @@ import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";
 import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
+import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 const Search = (props) => {
     const { getSearchSore, setKeyWord, findRecentList, 
         updateRecent, findWorkItemByKeyWorks, findProjectList } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
-    const { setWorkId, setDetailCrumbArray, setIsWorkList } = WorkStore;
+    const { setWorkId, setIsWorkList } = WorkStore;
     const [workItemList, setWorkItemList] = useState([]);
     const [isSeach, setIsSeach] = useState(false);
 
@@ -141,7 +142,7 @@ const Search = (props) => {
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
-        setDetailCrumbArray([{ id: data.modelId, title: data.name, iconUrl: data.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         setIsWorkList(false)
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.modelId}`)
         sessionStorage.setItem("menuKey", "project")
@@ -152,7 +153,7 @@ const Search = (props) => {
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
-        setDetailCrumbArray([{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }]);
         setIsWorkList(false)
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.id}`)
         sessionStorage.setItem("menuKey", "project")

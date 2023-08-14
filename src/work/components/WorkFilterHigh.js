@@ -86,6 +86,13 @@ const WorkFilterHigh = (props) => {
             default: 
                 break;
         }
+        value = {
+            ...value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        }
 
         findWorkItem(value)
 

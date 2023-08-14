@@ -15,7 +15,7 @@ const WorkBreadCrumb = (props) => {
     const { workStore } = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
-        getWorkConditionPageTree, getWorkConditionPage,
+        getWorkConditionPageTree, getWorkConditionPage,searchCondition,
         setWorkIndex, setWorkId, getWorkBoardList, exportWorkItemXml } = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -172,6 +172,7 @@ const WorkBreadCrumb = (props) => {
                     <WorkFilterSort
                         getPageList={getPageList}
                         getPageTree={getPageTree}
+                        searchCondition = {searchCondition}
                         getWorkConditionPage={getWorkConditionPage}
                         getWorkConditionPageTree={getWorkConditionPageTree}
                         getWorkBoardList={getWorkBoardList}
