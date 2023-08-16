@@ -24,12 +24,12 @@ const WorkDetail = (props) => {
     const { workStore, showPage } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
-        setWorkIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
+        setWorkIndex,workIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
         setAlertText, setIsShowAlert, findTransitionList
     } = workStore;
     const detailCrumbArray = getSessionStorage("detailCrumbArray");
-    const workIndex = getSessionStorage("workIndex");
+    // const workIndex = setWorkIndex(getSessionStorage("workIndex"));
     const projectId = props.match.params.id;
     const sprintId = props.match?.params?.sprint;
     const routerWorkId = props.match.params.workId;
@@ -54,13 +54,11 @@ const WorkDetail = (props) => {
                 // findStatusList(res.workStatus.id);
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                // if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-                //     let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
-                //     setSessionStorage(crumbArray);
-                // }
+                if (props.match.path === "/index/projectDetail/:id/work") {
+                    let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
+                    setSessionStorage("detailCrumbArray",crumbArray);
+                }
 
-                let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
-                setSessionStorage("detailCrumbArray",crumbArray);
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
@@ -93,6 +91,7 @@ const WorkDetail = (props) => {
         }
         if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
             setWorkId(routerWorkId)
+            setWorkIndex(getSessionStorage("workIndex"))
         }
         return
     }, []);

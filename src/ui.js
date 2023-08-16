@@ -2,7 +2,6 @@
 import HomeStore from "./home/common/store/HomeStore"
 import AsyncComponent from './common/lazy/AsyncComponent'
 
-const Search = AsyncComponent(() => import("./home/search/components/Search"))
 const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
@@ -18,13 +17,13 @@ const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/Proje
 const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
 
 // const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
-const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowList'))
-const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowListSystem'))
+const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
+const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
 
-const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/ProjectFlowStatusList'))
-const FlowDetailView = AsyncComponent(() => import('./setting/flow/FlowDetailView'))    
-const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/FlowDetailDesign'))
-const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/ProjectNodeStatusList'))
+const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))    
+const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
+const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
 // 状态组件
 
 // 消息
@@ -42,7 +41,7 @@ const workPriority = AsyncComponent(() => import('./setting/workSeting/component
 const WorkTypeFlow = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeFlow'))
 const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeForm'))
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
-const ProjectPlugin = AsyncComponent(() => import('./setting/plugin/ProjectPlugin.js'))
+const ProjectPlugin = AsyncComponent(() => import('./setting/plugins/ProjectPlugin'))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -70,7 +69,9 @@ const ProjectAdd = AsyncComponent(() => import('./project/project/components/Pro
 const ProjectDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
 const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
-const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
+const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/components/ProjectFlow'))
+const ProjectFlowDetailDesign = AsyncComponent(() => import("./project/setting/projectFlow/components/ProjectFlowDetailDesign"))
+
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
@@ -151,11 +152,11 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
+
 export {
     Login,
     ProjectLogOut,
     HomeStore,
-    Search,
     VailProductUserPage,
     ProjectNotFound,
     ProjectProjectDirectorySys,
@@ -207,6 +208,7 @@ export {
     ProjectScrumSetDetail,
     ProjectWorkType,
     ProjectFlowList,
+    ProjectFlowDetailDesign,
     ProjectFormList,
     ProjectFormDetail,
     Survey,

@@ -96,7 +96,11 @@ const WorkChild = (props) => {
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
-        props.history.push(`/index/projectDetail/${project.id}/workDetail/${record.id}`)
+        console.log(props)
+        if(props.match.path === "/index/projectDetail/:id/workDetail/:workId"){
+            props.history.push(`/index/projectDetail/${project.id}/workDetail/${record.id}`)
+        }
+        
     }
 
     const columns = [
@@ -161,7 +165,8 @@ const WorkChild = (props) => {
             title: workItemTitle, 
             parentWorkItem: workId, 
             project:projectId, 
-            workType: workType.id
+            workType: workType.id,
+            builder: getUser().userId
         };
         addWork(params).then(res => {
             if(res.code === 0){

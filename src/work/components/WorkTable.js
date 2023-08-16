@@ -173,9 +173,9 @@ const WorkTableContent = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
+                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-edit"></use>
-                    </svg>
+                    </svg> */}
                     <svg className="svg-icon" aria-hidden="true" onClick={() => deleteWork(record.id)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-delete"></use>
                     </svg>
