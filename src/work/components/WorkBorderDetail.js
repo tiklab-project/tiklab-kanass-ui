@@ -16,17 +16,31 @@ const WorkBorderDetail = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef } = props;
 
-    const showModal = (id, index, title) => {
+    const showModal = () => {
         setIsModalVisible(true);
         
     }
-       
 
     useImperativeHandle(modelRef, () => ({
         showDetail: showModal
     }))
 
+    useEffect(() => {
+        window.addEventListener("mousedown", closeModal, false);
+        return () => {
+            window.removeEventListener("mousedown", closeModal, false);
+        }
+    }, [isModalVisible])
 
+
+    const closeModal = (e) => {
+        if (!detailRef.current) {
+            return;
+        }
+        if (!detailRef.current.contains(e.target) && detailRef.current !== e.target) {
+            setIsModalVisible(false)
+        }
+    }
     const handleOk = () => {
         setIsModalVisible(false);
     };
@@ -45,8 +59,12 @@ const WorkBorderDetail = (props) => {
             width={1000}
             closable={false}
             destroyOnClose={true}
+            mask = {false}
         >
-            <WorkDetail detailRef={detailRef} {...props} showPage = {showPage}/>
+            <div ref={detailRef}>
+               <WorkDetail {...props} showPage = {showPage} setIsModalVisible = {setIsModalVisible}/> 
+            </div>
+            
         </Drawer>
     );
 };

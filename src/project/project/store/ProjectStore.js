@@ -83,7 +83,7 @@ export class ProjectStore {
     }
 
     @action
-    addProlist = async(values) => {
+    createProject = async(values) => {
         let param = {
             projectName: values.projectName,
             projectType:values.projectType,

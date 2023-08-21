@@ -21,7 +21,7 @@ const layout = {
 
 
 const ProjectAddInfo = (props) => {
-    const { addProlist, workType, setCurrentStep, setLoading } = props;
+    const { createProject, workType, setCurrentStep, setLoading } = props;
     const {findIconList, creatIcon} = ProjectStore;
     const [form] = Form.useForm();
     const rangeConfig = {
@@ -100,12 +100,14 @@ const ProjectAddInfo = (props) => {
                 projectLimits: values.projectLimits,
                 iconUrl: iconUrl
             }
-            addProlist(data).then(res => {
+            createProject(data).then(res => {
                 setLoading(false)
                 if (res.code === 0) {
                     message.success('添加成功');
                     props.history.goBack()
                     setCurrentStep("0")
+                } else if(res.code === 40000){
+                    message.error(res.msg)
                 } else {
                     message.error("添加失败")
                 }
@@ -217,11 +219,11 @@ const ProjectAddInfo = (props) => {
                             },
                             {
                                 pattern: /^[\S]{2,10}$/,
-                                message: '请输入2-9位英文字符'
+                                message: '请输入2-8位英文字符'
                             }
                         ]}
                     >
-                        <Input placeholder="只能包含字母" maxLength={9} showCount />
+                        <Input placeholder="只能包含字母，添加成功后不可修改" maxLength={9} showCount />
                         {/* <div>请输入字母</div> */}
                     </Form.Item>
                     <Form.Item

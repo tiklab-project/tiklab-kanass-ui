@@ -14,7 +14,7 @@ const WorkAside = (props) => {
     const { form, workStore } = props;
     const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
         workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
-        searchCondition } = workStore;
+        searchCondition, total } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
     const [currentPageAside, setCurrentPage] = useState(1)
     const project = JSON.parse(localStorage.getItem("project"));
@@ -323,12 +323,14 @@ const WorkAside = (props) => {
                     </div>
                 </Spin>
 
-                <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+                <div className="work-aside-bottom" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+                    
+                    <div>{workList.length}个, 共{total}个</div>
                     {
-                        currentPage < totalPage && isHover === true ?
-                            <div className="work-aside-bottom" onClick={() => changePage()}>点击加载</div>
-                            :
-                            <div className="work-aside-bottom">{currentPage}/{totalPage}</div>
+                        currentPage < totalPage ? <div className="work-aside-button" onClick={() => changePage()}>点击加载</div>
+                        :
+                        <div style={{paddingLeft: "10px"}}>已加载全部</div>
+                            
                     }
                 </div>
 

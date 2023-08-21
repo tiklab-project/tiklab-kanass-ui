@@ -29,7 +29,8 @@ const Work = (props) => {
 
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
         getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType,
-        setQuickFilterValue, setTabValue, setIsWorkList } = WorkStore;
+        setQuickFilterValue, setTabValue, setIsWorkList, findWorkItemNumByWorkType, 
+        findWorkItemNumByWorkList, initValues } = WorkStore;
 
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
@@ -62,6 +63,16 @@ const Work = (props) => {
             setIsWorkList(true)
         };
     }, [])
+
+    // useEffect(()=> {
+    //     debugger
+    //     if(viewType === "tile" || workShowType === "bodar"){
+    //         findWorkItemNumByWorkList()
+    //     }
+    //     if (viewType === "tree" && workShowType !== "bodar") {
+    //         findWorkItemNumByWorkType()
+    //     }
+    // }, [])
 
     const goWorkItem = (type) => {
         const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
@@ -96,6 +107,7 @@ const Work = (props) => {
             sessionStorage.removeItem("searchCondition")
             initFrom(initValues)
             getWorkList();
+            findWorkItemNumByWorkType();
         })
     }
 

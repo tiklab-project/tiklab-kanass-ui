@@ -6,14 +6,14 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.8:8080';
+const api =  'http://192.168.10.5:8080';
 const base_url = JSON.stringify(api);
 
 
-const plugin_base_url = JSON.stringify("http://192.168.10.8:8080/");
+const plugin_base_url = JSON.stringify("http://192.168.10.5:8080/");
 
 let plugin_url = `/pluginConfig/getPluginConfig`;
-// let plugin_url = `http://192.168.10.8:3000/plugin.json`;
+// let plugin_url = `http://192.168.10.5:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
 const upload_url = JSON.stringify('http://172.10.1.11:8084/')
@@ -34,7 +34,7 @@ const client = JSON.stringify('web');
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
 const homes_url = JSON.stringify("http://192.168.10.14")
-const kanass_url =JSON.stringify("http://192.168.10.8:3004")
+const kanass_url =JSON.stringify("http://192.168.10.5:3004")
 const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 module.exports = {
     base_url,

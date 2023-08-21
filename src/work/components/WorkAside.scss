@@ -1,5 +1,5 @@
 .work-aside {
-    width: 335px;
+    width: 350px;
     background: var(--tiklab-gray-600);
 
     ul {
@@ -46,6 +46,12 @@
         .work-aside-fixed {
             border-radius: 4px;
             overflow: auto;
+            // height: calc(100% - 170px);
+        }
+        .work-aside-fixed-big {
+            height: calc(100% - 119px);
+        }
+        .work-aside-fixed-small {
             height: calc(100% - 170px);
         }
     }
@@ -82,7 +88,7 @@
             .work-aside-item-name {
                 flex: 1;
                 overflow: hidden;
-
+                padding-right: 10px;
                 .work-aside-item-first {
                     display: inline-flex;
                     justify-content: space-between;
@@ -95,6 +101,12 @@
                         padding: 2px 5px;
                         color: #fff;
                     }
+                }
+                .work-aside-item-second {
+                    height: 22px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
             }
 
@@ -131,10 +143,20 @@
 }
 
 .work-aside-bottom {
-    height: 30px;
-    line-height: 30px;
     text-align: center;
     font-size: 12px;
     cursor: pointer;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+    font-weight: 600;
+    .work-aside-button {
+        padding-left: 5px;
+        color: var(--tiklab-blue);
+    }
+    .work-aside-button:hover{
+        text-decoration: underline;
+    }
 }

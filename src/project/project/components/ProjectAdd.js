@@ -10,7 +10,7 @@ import ProjectStore from "../store/ProjectStore";
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
     const { projectStore } = props;
-    const { projectTypelist, getProjectTypeList, getUseList, findIconList, addProlist } = ProjectStore;
+    const { projectTypelist, getProjectTypeList, getUseList, findIconList, createProject } = ProjectStore;
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()
     const [loading, setLoading] = useState(false)
@@ -94,7 +94,7 @@ const ProjectAdd = (props) => {
     const step2 = (
         <div>
 
-            <ProjectAddInfo addProlist={addProlist} workType={workType} setVisible={setVisible} setCurrentStep={setCurrentStep} setLoading = {setLoading}/>
+            <ProjectAddInfo createProject={createProject} workType={workType} setVisible={setVisible} setCurrentStep={setCurrentStep} setLoading = {setLoading}/>
         </div>
 
     )

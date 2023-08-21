@@ -1,6 +1,6 @@
 .worktype-tabs {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     height: 42px;
     line-height: 42px;
     justify-content: space-between;
@@ -11,7 +11,7 @@
     
     .tabs-bar  {
         cursor: pointer;
-        padding: 0 10px;
+        padding: 0 5px;
     }
     .tabs-more {
         position: relative;

@@ -8,19 +8,16 @@ import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import WorkBorderDetail from "./WorkBorderDetail";
+
 const WorkTableContent = (props) => {
     const { workStore, form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId,
-        createRecent, setWorkIndex } = workStore;
+        createRecent } = workStore;
     const tenant = getUser().tenant;
     const sprintId = props.match?.params?.sprint;
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const modelRef = useRef();
 
     const goProdetail = (record, index) => {
-        console.log(record, index)
         const params = {
             name: record.title,
             model: "workItem",
@@ -32,11 +29,20 @@ const WorkTableContent = (props) => {
         createRecent(params)
 
         setWorkId(record.id)
-        // setSessionStorage("workIndex", index + 1)
-        setWorkIndex(index + 1)
+        setSessionStorage("workIndex", index + 1)
         setSessionStorage("searchCondition", searchCondition)
         setSessionStorage("detailCrumbArray",[{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
-        setIsModalVisible(true)
+        if (props.route.path === "/index/work") {
+            props.history.push(`/index/workDetail/${record.id}`)
+
+        }
+        if (props.route.path === "/index/projectDetail/:id/work") {
+            props.history.push(`/index/projectDetail/${record.project.id}/workDetail/${record.id}`)
+        }
+        if (props.route.path === "/index/:id/sprintdetail/:sprint/workItem") {
+            props.history.push(`/index/${record.project.id}/sprintdetail/${sprintId}/workDetail/${record.id}`)
+        }
+        // setIsWorkList(false)
 
     }
 
@@ -254,13 +260,7 @@ const WorkTableContent = (props) => {
                         </Spin>
                     </div>
                 </>
-                <WorkBorderDetail
-                    isModalVisible={isModalVisible}
-                    setIsModalVisible={setIsModalVisible}
-                    modelRef={modelRef}
-                    showPage={true}
-                    {...props}
-                />
+
             </Col>
         </Row>
     );

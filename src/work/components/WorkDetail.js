@@ -21,10 +21,10 @@ import { setSessionStorage, getSessionStorage } from "../../common/utils/setSess
 
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
-    const { workStore, showPage } = props;
+    const { workStore, showPage, setIsModalVisible } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
-        setWorkIndex,workIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
+        setWorkIndex, workIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
         setAlertText, setIsShowAlert, findTransitionList
     } = workStore;
@@ -56,7 +56,7 @@ const WorkDetail = (props) => {
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 if (props.match.path === "/index/projectDetail/:id/work") {
                     let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
-                    setSessionStorage("detailCrumbArray",crumbArray);
+                    setSessionStorage("detailCrumbArray", crumbArray);
                 }
 
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
@@ -95,6 +95,7 @@ const WorkDetail = (props) => {
         }
         return
     }, []);
+
 
     const deleteWork = () => {
         detWork(workId).then(() => {
@@ -178,7 +179,7 @@ const WorkDetail = (props) => {
             updateField: "title",
         }
         if (workInfo.parentWorkItem) {
-            params["parentWorkItem"] = workInfo.parentWorkItem.id
+            params["parentWorkItem"] = { id: workInfo.parentWorkItem.id }
         }
 
         if (name !== workInfo.title) {
@@ -283,18 +284,19 @@ const WorkDetail = (props) => {
     }
 
     const goWorkList = () => {
-        if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
-            props.history.goBack()
-        }
-        if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-            props.history.push(`/index/projectDetail/${projectId}/work`)
-        }
-        if (props.match.path === "/index/workDetail/:workId") {
-            props.history.push(`/index/work/worklist`)
-        }
-        if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId") {
-            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/workItem`)
-        }
+        setIsModalVisible(false)
+        // if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
+        //     props.history.goBack()
+        // }
+        // if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
+        //     props.history.push(`/index/projectDetail/${projectId}/work`)
+        // }
+        // if (props.match.path === "/index/workDetail/:workId") {
+        //     props.history.push(`/index/work/worklist`)
+        // }
+        // if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId") {
+        //     props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/workItem`)
+        // }
     }
 
     return (
@@ -303,52 +305,54 @@ const WorkDetail = (props) => {
                 workInfo ? <div className="work-detail">
                     <>
                         {
-                            (workShowType === "table" || detailCrumbArray?.length > 0) && <div className="work-detail-crumb">
-                                {
-                                    workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList()}>事项
-                                        <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
-                                            <use xlinkHref="#icon-rightBlue"></use>
-                                        </svg>
-                                    </div>
-                                }
-                                {
-                                    detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
-                                        let html;
-                                        if (!isTableDetail && index === 0) {
-                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                <img
-                                                    src={version === "cloud" ?
-                                                        (upload_url + item.iconUrl + "?tenant=" + tenant)
-                                                        :
-                                                        (upload_url + item.iconUrl)
-                                                    }
-                                                    alt=""
-                                                    className="img-icon"
-                                                />
-                                                <span>
-                                                    {item.id}
-                                                </span>
-                                            </div>
-                                        } else {
-                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                <svg className="img-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-rightBlue"></use>
-                                                </svg>
-                                                <img
-                                                    src={(upload_url + item.iconUrl)}
-                                                    alt=""
-                                                    className="img-icon"
-                                                />
-                                                <span>
-                                                    {item.id}
-                                                </span>
-                                            </div>
-                                        }
-                                        return html
+                            (workShowType === "table" || detailCrumbArray?.length > 0) &&
+                            <div className="work-detail-crumb-col">
+                                <div className="work-detail-crumb">
+                                    {
+                                        workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList()}>
+                                            <span className="work-detail-crumb-text">事项</span>
+                                            <span style={{ padding: "0 10px" }}>/</span>
+                                        </div>
+                                    }
+                                    {
+                                        detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
+                                            let html;
+                                            if (!isTableDetail && index === 0) {
+                                                html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
+                                                    <img
+                                                        src={version === "cloud" ?
+                                                            (upload_url + item.iconUrl + "?tenant=" + tenant)
+                                                            :
+                                                            (upload_url + item.iconUrl)
+                                                        }
+                                                        alt=""
+                                                        className="img-icon"
+                                                    />
+                                                    <span className="work-detail-crumb-text">{item.id}</span>
+                                                </div>
+                                            } else {
+                                                html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
+                                                    <span style={{ padding: "0 10px" }}>/</span>
+                                                    <img
+                                                        src={(upload_url + item.iconUrl)}
+                                                        alt=""
+                                                        className="img-icon"
+                                                    />
+                                                    <span className="work-detail-crumb-text">{item.id}</span>
+                                                </div>
+                                            }
+                                            return html
 
-                                    })
-                                }
+                                        })
+                                    }
+                                </div>
+                                <div className="work-detail-close" onClick={()=> setIsModalVisible(false)}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-close"></use>
+                                    </svg>
+                                </div>
                             </div>
+
                         }
 
                         <div className="work-detail-top">

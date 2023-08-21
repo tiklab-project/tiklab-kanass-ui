@@ -52,7 +52,7 @@ export class WorkStore {
         workIndex: ""
     }
 
-    // 附件列表
+    // 附件
     @observable attachList = []
 
     // 事项的视图类型
@@ -74,6 +74,7 @@ export class WorkStore {
     @observable tabValue = {id: "all", type: "system"};
     @observable detailCrumbArray = [];
     @observable isWorkList = true;
+    @observable eveWorkTypeNum = {};
     
     @action
     setIsWorkList = (value) => {
@@ -257,6 +258,7 @@ export class WorkStore {
     // 获取看板视图事项列表
     getWorkBoardList = async (value) => {
         this.setSearchCondition(value)
+        this.getWorkItemNum();
         const data = await Service("/workItem/findWorkBoardList",this.searchCondition);
         if (data.code === 0) {
             this.workBoardList = data.data;
@@ -323,10 +325,11 @@ export class WorkStore {
      */
     @action
     getWorkConditionPageTree = async(value) => {
-        
         this.tableLoading = true;
         this.setSearchCondition(value)
         let data = [];
+        // 获取每个事项类型的个数
+        this.getWorkItemNum();
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
@@ -347,9 +350,44 @@ export class WorkStore {
     }
 
     @action
+    findWorkItemNumByWorkType = async(value) => {
+        this.setSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemNumByWorkType",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+            console.log(data)
+        }
+        return data.data;
+    }
+
+    @action
+    findWorkItemNumByWorkList = async(value) => {
+        this.setSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+            console.log(data)
+        }
+        return data.data;
+    }
+
+    @action
+    getWorkItemNum = () => {
+        if(this.viewType === "tile" || this.workShowType === "bodar"){
+            this.findWorkItemNumByWorkList()
+        }
+        if (this.viewType === "tree" && this.workShowType !== "bodar") {
+            this.findWorkItemNumByWorkType()
+        }
+    }
+
+    @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
+        
         this.tableLoading = true;
+        this.getWorkItemNum();
+
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
@@ -370,32 +408,6 @@ export class WorkStore {
         return data.data;
     }
 
-    //按照条件查找事项  子事项
-    @action
-    getWorkListTree = async(value) => {
-        this.setSearchCondition(value)
-        const params = {
-            projectId: this.searchCondition.project,
-            workTypeId: this.searchCondition.workType,
-            sprintId: this.searchCondition.sprint,
-            workStatusId: this.searchCondition.workStatus,
-            title: this.searchCondition.title,
-            parentId: this.searchCondition.parentId,
-            orderParams: [{
-                name: "order_num",
-                orderType: "desc"
-            }],
-            pageParam: {
-                pageSize: 20,
-                currentPage: this.searchCondition.currentPage
-            }
-        }
-        const data = await Service("/workItem/findWorkItemListTree",params);
-        if (data.code === 0) {
-            this.workListTime = data.data;
-        }
-        return data;
-    }
 
     //添加事项列表
     @action

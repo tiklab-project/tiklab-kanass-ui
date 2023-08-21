@@ -21,7 +21,7 @@ const WorkTableFilter = (props) => {
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
         setWorkIndex, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList, findDmFlowList } = workStore;
+        getWorkTypeList, getWorkStatus, userList, findDmFlowList, findWorkItemNumByWorkType } = workStore;
     const tenant = getUser().tenant;
     const [flowIds, setFlowIds] = useState();
 
@@ -162,7 +162,11 @@ const WorkTableFilter = (props) => {
         <div className="work-table-second">
             <WorkTypeTab />
             <div className="work-table-filter">
-                <WorkQuickFilter getWorkList={getWorkList} flowIds={flowIds} />
+                <WorkQuickFilter 
+                    getWorkList={getWorkList} 
+                    flowIds={flowIds} 
+                    findWorkItemNumByWorkType = {findWorkItemNumByWorkType}
+                />
                 {
                     props.match.path == "/index/work" &&
                     <SelectSimple name="projectIds"

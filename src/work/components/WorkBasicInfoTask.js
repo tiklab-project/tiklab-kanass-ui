@@ -38,6 +38,7 @@ const WorkBasicInfo = (props) => {
     const workIndex = getSessionStorage("workIndex");
     // 获取详情内容
     const [parentWorkItem, setParentWorkItem] = useState("")
+    const formRef = useRef();
 
     const initForm = (workInfo) => {
         if (workInfo) {
@@ -409,6 +410,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                     allowClear
                                 >
                                     {
@@ -442,6 +444,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                     allowClear
                                 >
                                     {
@@ -487,6 +490,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("sprint")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                     allowClear
                                 >
                                     {
@@ -510,6 +514,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("module")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                     allowClear
                                 >
                                     {
@@ -560,6 +565,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("planBeginTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                 // suffixIcon={false}
                                 />
                             </Form.Item>
@@ -581,6 +587,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("planEndTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                 />
                             </Form.Item>
 
@@ -627,6 +634,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("reporter")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                     allowClear
                                 >
                                     {
@@ -726,7 +734,7 @@ const WorkBasicInfo = (props) => {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="other-title attach-title">
-                    附件列表:
+                    附件:
                 </div>
             </div>
             <div className="work-detail-box attach-box">

@@ -1,17 +1,12 @@
-.work-addmodel {
-    .ant-modal-content {
-    padding: 10px 0;
-}
-}
-
 .work-add-page {
     gap: 20px;
     max-height: 640px;
     min-height: 500px;
-    .work-add-page-left {
-        padding: 0 15px;
+    .work-add-page-content {
+        // padding: 0 15px;
         display: flex;
         flex-direction: column;
+        height: 640px;
         .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
             display: inline-block;
             margin-right: 4px;
@@ -32,9 +27,12 @@
         .work-add-page-title {
             font-size: var(--tiklab-font-16);
             font-weight: var(--tiklab-font-weight-bold);
-            padding: 15px 0;
+            padding: 10px 15px;
         }
-        .work-add-left-form {
+        .work-add-page-form {
+            overflow: auto;
+        }
+        .work-add-form {
             flex: 1;
             overflow: auto;
             display: flex;
@@ -62,7 +60,7 @@
         .work-add-button {
             display: flex;
             gap: 10px;
-            padding: 15px 0;
+            padding: 10px 15px;
             justify-content: flex-end;
         }
         .desc-botton {

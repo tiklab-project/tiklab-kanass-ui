@@ -18,6 +18,7 @@ const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
+    const formRef = useRef();
     const layoutExForm = {
         labelCol: { span: 4 },
         wrapperCol: { span: 16 },
@@ -343,7 +344,8 @@ const WorkBasicInfo = (props) => {
 
     // 转换描述编辑模式setEditorType
     const [editorType, setEditorType] = useState(false);
-    const [slateValue, setSlateValue] = useState()
+    const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+
 
     const editorDesc = () => {
 
@@ -391,7 +393,7 @@ const WorkBasicInfo = (props) => {
             </div>
             <div className="work-detail-box">
                 <div className="detail-top">
-                    <div className="left">
+                    <div className="left" ref={formRef}>
                         <Form
                             {...layout}
                             initialValues={{ remember: true }}
@@ -399,6 +401,7 @@ const WorkBasicInfo = (props) => {
                             onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
                             labelAlign="left"
                             colon={false}
+                            
                         >
                             <Form.Item label="缺陷类型" name="eachType"
                                 hasFeedback={showValidateStatus === "eachType" ? true : false}
@@ -415,6 +418,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
+                                    getPopupContainer = {() =>formRef.current}
                                 >
                                     {
                                         selectItemList && selectItemList.map((item) => {
@@ -448,6 +452,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
+                                    getPopupContainer = {() =>formRef.current}
                                 >
                                     {
                                         priorityList && priorityList.map((item) => {
@@ -515,6 +520,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("sprint")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
+                                    getPopupContainer = {() =>formRef.current}
                                 >
                                     {
                                         sprintList && sprintList.map((item) => {
@@ -538,6 +544,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("module")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
+                                    getPopupContainer = {() =>formRef.current}
                                 >
                                     {
                                         moduleList && moduleList.map((item) => {
@@ -546,19 +553,25 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            {
-                                parentWorkItem !== "" &&
-                                <Form.Item name="parentWorkItem" label="上级事项"
-                                    hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
-                                    validateStatus={validateStatus}
-
-                                >
-                                    <Input
-                                        bordered={false}
-                                    // disabled={true}
-                                    />
-                                </Form.Item>
-                            }
+                         
+                            <Form.Item name="parentWorkItem" label="上级事项"
+                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
+                                validateStatus={validateStatus}
+                                className="work-select"
+                                key="selectParentWorkItem"
+                                bordered={fieldName === "parentWorkItem" ? true : false}
+                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
+                                onFocus={() => changeStyle("parentWorkItem")}
+                                onBlur={() => setFieldName("")}
+                                onMouseEnter={() => setHoverFieldName("parentWorkItem")}
+                                onMouseLeave={() => setHoverFieldName("")}
+                                allowClear
+                            >
+                                <Input
+                                    bordered={false}
+                                // disabled={true}
+                                />
+                            </Form.Item>
                         </Form>
                     </div>
                     <div className="right">
@@ -587,6 +600,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("planBeginTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                 // suffixIcon={false}
                                 />
                             </Form.Item>
@@ -608,6 +622,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("planEndTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                 />
                             </Form.Item>
 
@@ -654,6 +669,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("reporter")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer = {() =>formRef.current}
                                 >
                                     {
                                         userList && userList.map((item) => {
@@ -751,7 +767,7 @@ const WorkBasicInfo = (props) => {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="other-title attach-title">
-                    附件列表:
+                    附件:
                 </div>
             </div>
             <div className="work-detail-box work-attach-box">

@@ -8,7 +8,8 @@ const WorkQuickFilter = (props) => {
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, setWorkId, setWorkIndex, 
-        statWorkItemOverdue, findStateNodeList, setQuickFilterValue, quickFilterValue } = workStore;
+        statWorkItemOverdue, findStateNodeList, setQuickFilterValue, 
+        quickFilterValue, findWorkItemNumByWorkType, findWorkItemNumByWorkList } = workStore;
 
     const quickFilterList = [
         {
@@ -71,14 +72,18 @@ const WorkQuickFilter = (props) => {
                 break;
             default:
                 break;
-
         }
+       
+        
+        
+        
     }
 
     const getAllWorkItem = () => {
         const initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            overdue: false,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -86,15 +91,14 @@ const WorkQuickFilter = (props) => {
             workStatusIds: []
         }
         setSearchCondition(initValues)
-        // initFrom(initValues)
         getWorkList();
-
     }
 
     const getPendingWorkItem = () => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            overdue: false,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -102,8 +106,7 @@ const WorkQuickFilter = (props) => {
         }
         getStateNodeList({ inNodeStatus: ['TODO', 'PROGRESS'], inFlowIds: flowIds }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
-            console.log(initValues)
-            setSearchCondition(initValues)
+            setSearchCondition(initValues);
             getWorkList();
         })
     }
@@ -112,6 +115,7 @@ const WorkQuickFilter = (props) => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            overdue: false,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -119,7 +123,7 @@ const WorkQuickFilter = (props) => {
         }
         getStateNodeList({ nodeStatus: 'DONE', inFlowIds: flowIds }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
-            setSearchCondition(initValues)
+            setSearchCondition(initValues);
             getWorkList();
         })
     }
@@ -128,33 +132,27 @@ const WorkQuickFilter = (props) => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            overdue: false,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
             }
         }
-        setSearchCondition(initValues)
-        // initFrom(initValues)
+        setSearchCondition(initValues);
         getWorkList();
     }
 
     const getOverdueWorkItem = () => {
         let initValues = {
             sprintId: sprintId,
+            overdue: true,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
             }
         }
         setSearchCondition(initValues)
-        // initFrom(initValues)
-        statWorkItemOverdue({ projectId: projectId, sprintId: sprintId }).then(res => {
-            if (res.dataList.length > 0) {
-                setWorkId(res.dataList[0].id)
-                setWorkIndex(1)
-            }
-
-        })
+        getWorkList();
     }
 
 
