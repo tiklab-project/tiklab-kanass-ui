@@ -386,7 +386,7 @@ const WorkBasicInfo = (props) => {
             </div>
             <div className="work-detail-box">
                 <div className="detail-top">
-                    <div className="left">
+                    <div className="left"  ref = {formRef}>
                         <Form
                             {...layout}
                             initialValues={{ remember: true }}
@@ -539,7 +539,7 @@ const WorkBasicInfo = (props) => {
                             }
                         </Form>
                     </div>
-                    <div className="right">
+                    <div className="right"  ref = {formRef}>
                         <Form
                             {...layout}
                             initialValues={{ remember: true }}

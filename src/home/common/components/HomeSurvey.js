@@ -68,7 +68,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        props.history.push(`/index/projectDetail/${project.id}/survey`)
+        props.history.push(`/index/projectDetail/${project.id}/work`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
@@ -103,7 +103,7 @@ const HomeSurvey = (props) => {
 
     const goProject = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/projectDetail/${item.modelId}/survey`)
+        props.history.push(`/index/projectDetail/${item.modelId}/work`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     }

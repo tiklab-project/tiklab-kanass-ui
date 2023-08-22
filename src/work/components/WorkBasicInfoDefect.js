@@ -574,7 +574,7 @@ const WorkBasicInfo = (props) => {
                             </Form.Item>
                         </Form>
                     </div>
-                    <div className="right">
+                    <div className="right" ref={formRef}>
                         <Form
                             {...layout}
                             initialValues={{ remember: true }}

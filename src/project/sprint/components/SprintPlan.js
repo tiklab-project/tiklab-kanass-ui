@@ -130,7 +130,7 @@ const SprintPlan = (props) => {
                             onDragOver={dragover}
                         >
                             <div className="plan-left-top">
-                                代办事项 <div style={{fontSize: "12px", marginLeft: "10px"}}>{noPlanWorkList?.length}</div>
+                                待办事项 <div style={{fontSize: "12px", marginLeft: "10px"}}>{noPlanWorkList?.length}</div>
                             </div>
                             <div className="plan-left-content">
                                 <div className="box" onDrop={() => delPlan()}>

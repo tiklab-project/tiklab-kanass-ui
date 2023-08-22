@@ -132,7 +132,7 @@ const SprintPlan = (props) => {
                     style = {{height: boxLength}}
                 >
                     <div className="sprint-plan-box-top">
-                        <div className="sprint-plan-title">代办规划事项</div>
+                        <div className="sprint-plan-title">待办规划事项</div>
                         <div className="sprint-plan-filter">
                             <InputSearch onChange={(value) => handleChange("title", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"

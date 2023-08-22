@@ -45,6 +45,7 @@ const WorkDetail = (props) => {
     const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
     const [transformList, setTransformList] = useState([])
+    const workDetailTop = useRef();
     const getWorkDetail = (id) => {
         setInfoLoading(true)
         searchWorkById(id).then((res) => {
@@ -136,19 +137,17 @@ const WorkDetail = (props) => {
         editWork(value).then((res) => {
             if (res.code === 0) {
                 setWorkStatus(name)
-                if (props.match.path === "/index/projectDetail/:id/work" ||
-                    props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
-                    workList[workIndex - 1].workStatusNode = { id: statusId, name: name }
-                    setWorkList([...workList])
-                }
 
                 searchWorkById(workId).then((res) => {
                     if (res) {
                         percentForm.setFieldsValue({ assigner: res.assigner?.id })
                         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
+                        workList[workIndex - 1] = res;
+                        setWorkList([...workList])
                     }
                 })
+
             }
         })
     }
@@ -355,7 +354,7 @@ const WorkDetail = (props) => {
 
                         }
 
-                        <div className="work-detail-top">
+                        <div className="work-detail-top" ref = {workDetailTop}>
                             <div className="work-detail-top-name">
                                 <div className="work-item-title-top">
                                     <div
@@ -385,7 +384,7 @@ const WorkDetail = (props) => {
                                                 删除
                                             </Button>
                                         </PrivilegeProjectButton>
-                                        <Dropdown overlay={menu} trigger={"click"} className="sf">
+                                        <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer = {() => workDetailTop.current}>
                                             <Button className="botton-background">
                                                 {workStatus}
                                                 <svg className="svg-icon" aria-hidden="true">
@@ -446,6 +445,7 @@ const WorkDetail = (props) => {
                                                         onBlur={() => changeStyle("")}
                                                         // value={assignerId}
                                                         onChange={(value) => updateSingle(workInfo.id, { assigner: value }, "assigner")}
+                                                        getPopupContainer = {() => workDetailTop.current}
                                                         style={{
                                                             width: 150,
                                                         }}

@@ -212,9 +212,7 @@ const WorkAddPage = (props) => {
     const [newWorkItem, setNewWorkItem] = useState();
 
     const changeWorkItem = (changedValues) => {
-        console.log(changedValues)
         setNewWorkItem({ ...newWorkItem, ...changedValues })
-        console.log(newWorkItem)
     }
 
     return (

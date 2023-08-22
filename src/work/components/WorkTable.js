@@ -76,6 +76,7 @@ const WorkTableContent = (props) => {
         },
         {
             title: '负责人',
+            width: "120",
             dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',
             render: (text, record) => <div className="work-info">
@@ -85,6 +86,7 @@ const WorkTableContent = (props) => {
         },
         {
             title: '创建人',
+            width: "120",
             dataIndex: ['builder', 'nickname'],
             key: 'builderId',
             render: (text, record) => <div className="work-info">
@@ -94,6 +96,7 @@ const WorkTableContent = (props) => {
         },
         {
             title: '项目',
+            width: "150",
             dataIndex: ['project', 'projectName'],
             key: 'project',
             render: (text, record) => <div className="work-info">
@@ -121,6 +124,7 @@ const WorkTableContent = (props) => {
         },
         {
             title: '优先级',
+            width: "100",
             dataIndex: ['workPriority', 'name'],
             key: 'workPriority',
             render: (text, record) => <div className="work-info">
@@ -146,22 +150,23 @@ const WorkTableContent = (props) => {
         {
             title: '状态',
             dataIndex: ['workStatusNode', 'name'],
+            width: "100",
             key: 'workStatus',
-            render: (text, record) => <span className="work-status">
+            render: (text, record) => <div className={`work-status ${record.workStatusCode}`}>
                 {text}
-            </span>
+            </div>
         },
         {
             title: '创建时间',
             dataIndex: "buildTime",
             key: 'workStatus',
-            render: (text, record) => <span >
+            render: (text, record) => <div className="work-info-text">
                 {text}
-            </span>
+            </div>
         },
         {
             title: '操作',
-            width: "150",
+            width: "100",
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">

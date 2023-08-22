@@ -24,7 +24,7 @@ const WorkChild = (props) => {
 
     const { getWorkChildList,deleWorkChild } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
-    
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
     const tenant = getUser().tenant;
     useEffect(() => {
@@ -161,13 +161,16 @@ const WorkChild = (props) => {
 
 
     const createChildWorkItem = () => {
+        debugger
         const params = {
             title: workItemTitle, 
-            parentWorkItem: workId, 
-            project:projectId, 
+            parentWorkItem: workId,
+            project: projectId,
+            builder: getUser().userId,
+            sprint: sprintId,
             workType: workType.id,
-            builder: getUser().userId
-        };
+            assigner: project?.master.id,
+        }
         addWork(params).then(res => {
             if(res.code === 0){
                 showAddChild(false)

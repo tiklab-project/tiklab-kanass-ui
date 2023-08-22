@@ -49,17 +49,29 @@
         .select-dropdown-bottom {
             height: 40px;
             line-height: 40px;
-            padding: 0 20px;
+            padding: 0 15px;
             display: flex;
             align-items: center;
+            justify-content: end;
             border-top: 1px solid #f0f0f0;
-            .clear-botton {
+            .dropdown-botton {
                 line-height: 15px;
-                background: #e3e8f0;
+                
                 padding: 5px 10px;
                 font-size: 12px;
                 box-sizing: content-box;
                 border-radius: 4px;
+                
+            }
+            .clear {
+                background: #e3e8f0;
+                cursor: pointer;
+            }
+
+            .submit {
+                background: var(--tiklab-blue);
+                color: #fff;
+                margin-left: 20px;
                 cursor: pointer;
             }
         }

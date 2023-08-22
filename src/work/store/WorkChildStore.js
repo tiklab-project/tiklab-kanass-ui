@@ -90,6 +90,15 @@ class WorkChildStore {
             parentWorkItem: {
                 id: value.parentWorkId || "nullstring"
             },
+            sprint: {
+                id: value.sprintId
+            },
+            builder: {
+                id: value.builder
+            },
+            assigner: {
+                id: value.assigner
+            },
             project: {
                 id: value.projectId
             }

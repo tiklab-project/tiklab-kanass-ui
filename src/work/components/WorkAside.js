@@ -266,11 +266,10 @@ const WorkAside = (props) => {
                     <div className="work-aside-item-name">
                         <div className="work-aside-item-first">
                             <span>{item.id}</span>
-                            {/* <span className="work-aside-item-status">{item.workStatusNode.name}</span> */}
                         </div>
                         <div className="work-aside-item-second" id={item.id}>{item.title}</div>
                     </div>
-                    <div className="work-aside-status">
+                    <div className={`work-aside-status ${item.workStatusCode}`}>
                         {item.workStatusNode.name}
                     </div>
 

@@ -49,7 +49,7 @@
             // height: calc(100% - 170px);
         }
         .work-aside-fixed-big {
-            height: calc(100% - 119px);
+            height: calc(100% - 120px);
         }
         .work-aside-fixed-small {
             height: calc(100% - 170px);
@@ -83,7 +83,8 @@
             display: flex;
             align-items: center;
             padding: 10px;
-
+            margin: 0 10px;
+            border-radius: 5px;
 
             .work-aside-item-name {
                 flex: 1;
@@ -111,11 +112,20 @@
             }
 
             .work-aside-status {
-                border-radius: 3px;
-                background: #eaedf1cf;
-                font-size: 12px;
-                padding: 2px 5px;
-                color: #fff;
+                padding: 2px 3px;
+                background: #e2e1e4;
+                border-radius: 4px;
+                font-size: 10px;
+                width: fit-content;
+                color: #2b333e;
+            }
+            .PROGRESS{
+                background: #b0d5dfa1;
+                color: #132c33;
+            }
+            .DONE {
+                background: #dfecd5e3;
+                color: #5e5314;
             }
         }
 
@@ -146,12 +156,12 @@
     text-align: center;
     font-size: 12px;
     cursor: pointer;
-    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 5px 0;
     font-weight: 600;
+    border-top: 1px solid var(--tiklab-gray-200);
     .work-aside-button {
         padding-left: 5px;
         color: var(--tiklab-blue);

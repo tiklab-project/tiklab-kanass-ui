@@ -714,7 +714,6 @@ export class WorkStore {
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
-            totalPage
         }
         return data.data;
     }

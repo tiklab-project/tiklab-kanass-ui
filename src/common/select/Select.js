@@ -95,8 +95,9 @@ const SelectSimple = (props) => {
                     })
                 }
                 {
-                    ismult && <div onClick={() => clear()} className="select-dropdown-bottom">
-                        <div className="clear-botton">清空</div>
+                    ismult && <div className="select-dropdown-bottom">
+                        <div className="dropdown-botton clear" onClick={() => clear()}>清空</div>
+                        <div className="dropdown-botton submit" onClick={() => setShowDropDown(false)}>确定</div>
                     </div>
                 }
 

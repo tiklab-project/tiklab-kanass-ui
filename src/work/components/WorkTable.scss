@@ -13,9 +13,13 @@
             margin-right: 5px;
         }
     }
+    .work-info-text {
+        font-size: 13px;
+    }
     .work-info {
         display: flex;
         align-items: center;
+       
         .tiklab-profile {
             .ant-avatar{
                 width: 16px !important;
@@ -25,11 +29,19 @@
     }
     .work-status {
         padding: 2px 3px;
-        background: #ddd;
+        background: #e2e1e4;
         border-radius: 4px;
         font-size: 10px;
         width: fit-content;
-        color: #fff;
+        color: #2b333e;
+    }
+    .PROGRESS{
+        background: #b0d5dfa1;
+        color: #132c33;
+    }
+    .DONE {
+        background: #dfecd5e3;
+        color: #5e5314;
     }
     .work-name {
         display: flex;
@@ -43,6 +55,10 @@
             cursor: pointer;
             color: var(--tiklab-blue);
             line-height: 25px;
+            height: 22px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
         .work-text:hover {
             text-decoration: underline;

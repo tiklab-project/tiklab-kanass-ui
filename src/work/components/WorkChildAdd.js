@@ -13,6 +13,9 @@ const WorkChildAddmodal = (props) => {
     const { addWorkChild, findEpicSelectWorkItemList, findSelectWorkItemList,
         getWorkChildList, selectChildToTal, selectWorkChildList } = workChild;
     const tenant = getUser().tenant;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const project = JSON.parse(localStorage.getItem("project"));
+    
     const childAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
@@ -79,7 +82,10 @@ const WorkChildAddmodal = (props) => {
         let params = {
             id: id,
             parentWorkId: workId,
-            projectId: projectId
+            projectId: projectId,
+            builder: getUser().userId,
+            sprintId: sprintId,
+            assigner: project?.master.id,
         }
         createChildWorkItem(params)
     }

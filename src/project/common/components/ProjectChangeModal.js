@@ -72,7 +72,7 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                props.history.push(`/index/projectDetail/${id}/survey`)
+                props.history.push(`/index/projectDetail/${id}/work`)
                 localStorage.setItem("projectId", id);
                 // // 重置事项id
                 // setWorkType(null)

@@ -19,12 +19,19 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            gap: 10px;
             .worklist-button-icon {
                 cursor: pointer;
                 .ant-dropdown-trigger {
                     width: 20px;
                     height: 20px;
                 }
+            }
+            .worklist-button-icon:hover {
+                background: rgba(9, 30, 66, 0.08);
+                text-decoration: inherit;
+                transition-duration: 0s, 0.15s;
+                border-radius: 3px;
             }
         }
         
