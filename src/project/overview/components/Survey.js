@@ -20,7 +20,7 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
         findRecentPage, recentList,updateRecent } = ProjectSurveyStore;
-    const { setWorkId,setIsWorkList } = Workstore;
+    const { setWorkId } = Workstore;
     //当前用户名字
     const masterName = getUser().name;
     // 项目id
@@ -210,7 +210,7 @@ const Survey = (props) => {
                 goProcess();
                 break;
             case 4:
-                props.history.push({ pathname: `/index/projectDetail/${projectId}/work/overdue` })
+                props.history.push({ pathname: `/index/projectDetail/${projectId}/workList/overdue` })
             default:
                 break;
         }
@@ -220,28 +220,28 @@ const Survey = (props) => {
      * 跳转到全部事项列表
      */
     const goAllWorkItemList = () => {
-        props.history.push(`/index/projectDetail/${projectId}/work/all`)
+        props.history.push(`/index/projectDetail/${projectId}/workList/all`)
     }
 
     /**
      * 跳转到进行中事项列表
      */
     const goProcess = () => {
-        props.history.push({ pathname: `/index/projectDetail/${projectId}/work/process` })
+        props.history.push({ pathname: `/index/projectDetail/${projectId}/workList/process` })
     }
 
     /**
      * 跳转到待办事项列表
      */
     const goTodoWorkItemList = () => {
-        props.history.push(`/index/projectDetail/${projectId}/work/workTodo`)
+        props.history.push(`/index/projectDetail/${projectId}/workList/workTodo`)
     }
 
     /**
      * 跳转到已完成事项列表
      */
     const goDoneWorkItemList = () => {
-        props.history.push(`/index/projectDetail/${projectId}/work/done`)
+        props.history.push(`/index/projectDetail/${projectId}/workList/done`)
     }
 
 
@@ -331,9 +331,8 @@ const Survey = (props) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
         setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        setIsWorkList(false)
 
-        props.history.push(`/index/projectDetail/${item.project.id}/work`)
+        props.history.push(`/index/projectDetail/${item.project.id}/workTable`)
     }
 
     const goVersion = (item) => {

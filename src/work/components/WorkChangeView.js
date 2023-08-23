@@ -14,7 +14,11 @@ const WorkFilterSort = (props) => {
     const treeDropDown = useRef();
     const gantte = useRef()
     const pluginStore = useSelector(state => state.pluginStore);
-    const versionInfo = getVersionInfo()
+    const versionInfo = getVersionInfo();
+    const projectId = props.match.params.id;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const path = props.match.path;
+    console.log(props)
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
         return () => {
@@ -34,14 +38,17 @@ const WorkFilterSort = (props) => {
     const viewList = [
         {
             value: "table",
+            path: "Table",
             title: "列表"
         },
         {
             value: "list",
+            path: "List",
             title: "详情"
         },
         {
             value: "bodar",
+            path: "Bodar",
             title: "看板"
         }
     ]
@@ -49,36 +56,39 @@ const WorkFilterSort = (props) => {
     const goPlugin = () => {
         window.open(`${homes_url}/account/subscribe/subscribeList`)
     }
-    const changeWorkView = value => {
+    const changeWorkView = (value, route) => {
         setWorkShowType(value)
-        const data = {
-            ...searchCondition,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
+       
+    
+        if(path.indexOf("projectDetail") > -1){
+            props.history.push(`/index/projectDetail/${projectId}/work${route}`)
         }
-        switch (value) {
-            case "list":
-                if (viewType === "tile") {
-                    getPageList(data);
-                } else if (viewType === "tree") {
-                    getPageTree(data);
-                }
-                break;
-            case "table":
-                if (viewType === "tile") {
-                    getWorkConditionPage(data);
-                } else if (viewType === "tree") {
-                    getWorkConditionPageTree(data);
-                }
-                break;
-            case "bodar":
-                getWorkBoardList();
-                break;
-            default:
-                break;
+        if(path.indexOf("work") === 7){
+            props.history.push(`/index/work${route}`)
         }
+
+        if(path.indexOf("sprintdetail") > 1){
+            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work${route}`)
+        }
+        // switch (value) {
+        //     case "list":
+               
+        //         break;
+        //     case "table":
+        //         props.history.push(`/index/projectDetail/${projectId}/workTable`)
+        //         // if (viewType === "tile") {
+        //         //     getWorkConditionPage(data);
+        //         // } else if (viewType === "tree") {
+        //         //     getWorkConditionPageTree(data);
+        //         // }
+        //         break;
+        //     case "bodar":
+        //         props.history.push(`/index/projectDetail/${projectId}/workBodar`)
+        //         // getWorkBoardList();
+        //         break;
+        //     default:
+        //         break;
+        // }
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
     };
@@ -114,12 +124,12 @@ const WorkFilterSort = (props) => {
         {
             buttonType === "button" ?
                 <Button onClick={() => setShowViewDropDown(true)}>
-                    <svg className="svg-icon" aria-hidden="true">
+                    <svg className="big-icon" aria-hidden="true">
                         <use xlinkHref={`#icon-${workShowType}`}></use>
                     </svg>
                 </Button>
                 :
-                <svg className="workitem-svg-icon" aria-hidden="true" onClick={() => setShowViewDropDown(true)}>
+                <svg className={`workitem-svg-icon ${showViewDropDown ? 'workitem-svg-active' : ''}`} aria-hidden="true" onClick={() => setShowViewDropDown(true)}>
                     <use xlinkHref={`#icon-${workShowType}`}></use>
                 </svg>
 
@@ -134,7 +144,7 @@ const WorkFilterSort = (props) => {
                             return <div
                                 key={item.value}
                                 className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(item.value)}>
+                                onClick={() => changeWorkView(item.value, item.path)}>
                                 <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.value}`}></use>
                                 </svg>
@@ -146,7 +156,7 @@ const WorkFilterSort = (props) => {
                     {
                         pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
-                            onClick={() => changeWorkView("time")}>
+                            onClick={() => changeWorkView("time", "Time")}>
                             <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-time`}></use>
                             </svg>

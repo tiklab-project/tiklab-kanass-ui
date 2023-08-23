@@ -50,7 +50,7 @@ const ProjectSetProjectList = (props) => {
         localStorage.setItem("projectId", project.id);
         localStorage.setItem("projectTypeId", project.projectType.id);
 
-        props.history.push(`/index/projectDetail/${project.id}/work`)
+        props.history.push(`/index/projectDetail/${project.id}/workTable`)
 
     };
 

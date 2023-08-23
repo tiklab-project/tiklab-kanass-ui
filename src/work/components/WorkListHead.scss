@@ -5,51 +5,66 @@
         font-size: 16px;
         font-weight: 600;
     }
+
     .worklist-head-first {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 10px;
-        
+
         .worklist-head-name {
             font-size: 16px;
             font-weight: var(--tiklab-font-weight-bold);
         }
-        .worklist-head-left {
+
+        .worklist-head-right {
             display: flex;
             justify-content: space-around;
             align-items: center;
             gap: 10px;
+
             .worklist-button-icon {
                 cursor: pointer;
+
                 .ant-dropdown-trigger {
                     width: 20px;
                     height: 20px;
                 }
             }
+
             .worklist-button-icon:hover {
                 background: rgba(9, 30, 66, 0.08);
                 text-decoration: inherit;
                 transition-duration: 0s, 0.15s;
                 border-radius: 3px;
             }
+
+            .right-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
         }
-        
+
     }
+
     .worklist-head-second {
         padding: 0 10px 10px;
         border-bottom: 1px solid var(--tiklab-gray);
     }
+
     .worklist-head-tabs {
         display: flex;
         align-items: center;
         border-bottom: 1px solid #f0f0f0;
         justify-content: space-between;
         padding: 0 10px;
+
         .worklist-head-tabs-tab {
             text-align: center;
             height: 52px;
             line-height: 52px;
+
             .tab-dropdown {
                 background-color: #fff;
                 width: 100%;
@@ -57,19 +72,22 @@
                 z-index: 4;
                 position: relative;
                 border-radius: 4px;
-                color: rgba(0,0,0,.85);
+                color: rgba(0, 0, 0, .85);
                 box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
             }
         }
+
         .worklist-head-tabs-tab:hover {
             cursor: pointer;
             border-bottom: 2px solid #e9e9e9;
         }
+
         .worklist-head-tabs-active {
             color: var(--tiklab-blue);
             border-bottom: 2px solid var(--tiklab-blue);
         }
     }
+
     .work-filter-form {
         display: flex;
         justify-content: space-between;

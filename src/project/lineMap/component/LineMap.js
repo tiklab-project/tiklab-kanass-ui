@@ -61,7 +61,7 @@ const Linemap = (props) => {
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-linemap">
                         <Breadcumb
-                            firstText="项目管理"
+                            firstText="路线图"
                         ></Breadcumb>
                         <Tabs defaultActiveKey="sprint" onChange={onChange} activeKey={type}>
                             <Tabs.TabPane tab="迭代" key="sprint">

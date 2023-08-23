@@ -1,23 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Table, Space, Row, Col, Spin } from 'antd';
-import { observer, inject } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
-import WorkBreadCrumb from "./WorkBreadCrumb";
+import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import WorkBorderDetail from "./WorkBorderDetail";
-const WorkTableContent = (props) => {
-    const { workStore, form } = props
+import WorkCalendarStore from '../store/WorkCalendarStore';
+import WorkStore from "../store/WorkStore";
+import { finWorkList } from "./WorkGetList";
+
+const WorkTable = (props) => {
+    // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, getWorkConditionPage, viewType, setWorkId,
-        createRecent, setWorkIndex } = workStore;
+        detWork, getWorkConditionPage, viewType, setWorkId,setWorkShowType,
+        createRecent, setWorkIndex } = WorkStore;
     const tenant = getUser().tenant;
-    const sprintId = props.match?.params?.sprint;
+    const projectId = props.match.params.id;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
+
+    const path = props.match.path;
+    const store = {
+        workStore: WorkStore,
+        workCalendarStore: WorkCalendarStore
+    };
+
+    useEffect(() => {
+        setWorkShowType("table")
+        finWorkList(path, WorkStore, projectId, sprintId)
+    }, [])
 
     const goProdetail = (record, index) => {
         console.log(record, index)
@@ -35,8 +51,16 @@ const WorkTableContent = (props) => {
         // setSessionStorage("workIndex", index + 1)
         setWorkIndex(index + 1)
         setSessionStorage("searchCondition", searchCondition)
-        setSessionStorage("detailCrumbArray",[{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
+        if(path === `/index/projectDetail/:id/workTable`){
+            console.log(props.history)
+            props.history.replace(`/index/projectDetail/${projectId}/workTable/${record.id}`)
+        }
+        if(path === `/index/workTable`){
+            console.log(props.history)
+            props.history.replace(`/index/workTable/${record.id}`)
+        }
 
     }
 
@@ -51,11 +75,11 @@ const WorkTableContent = (props) => {
                     {
                         record.workTypeSys.iconUrl ?
                             <img
-                            src={ version === "cloud" ? 
-                            (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                            :
-                            (upload_url + record.workTypeSys?.iconUrl)
-                        }
+                                src={version === "cloud" ?
+                                    (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                    :
+                                    (upload_url + record.workTypeSys?.iconUrl)
+                                }
                                 alt=""
                                 className="list-img"
 
@@ -103,10 +127,10 @@ const WorkTableContent = (props) => {
                 <div className="work-info-img">
                     {
                         record.project.iconUrl ? <img
-                            src={ version === "cloud" ? 
-                            (upload_url + record.project?.iconUrl + "?tenant=" + tenant)
-                            :
-                            (upload_url + record.project?.iconUrl)}
+                            src={version === "cloud" ?
+                                (upload_url + record.project?.iconUrl + "?tenant=" + tenant)
+                                :
+                                (upload_url + record.project?.iconUrl)}
                             alt=""
                             className="img-icon"
                         />
@@ -160,13 +184,14 @@ const WorkTableContent = (props) => {
             title: '创建时间',
             dataIndex: "buildTime",
             key: 'workStatus',
+            width: "140",
             render: (text, record) => <div className="work-info-text">
                 {text}
             </div>
         },
         {
             title: '操作',
-            width: "100",
+            width: "60",
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
@@ -216,59 +241,61 @@ const WorkTableContent = (props) => {
 
 
     return (
-
-        <Row style={{ height: "100%", overflow: "auto" }}>
-            <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                <>
-                    <div className="work-list-col">
-                        <WorkBreadCrumb />
-                        <WorkTableFilter form={form} />
-                    </div>
-                    <div style={{ overflow: "hidden" }} className="work-table">
-                        <Spin spinning={tableLoading} delay={500} >
-                            <Table
-                                columns={columns}
-                                dataSource={workList}
-                                rowKey={(record) => record.id}
-                                // onChange={sorter}
-                                pagination={{
-                                    total: total,
-                                    pageSize: 20,
-                                    current: searchCondition.pageParam.currentPage,
-                                    onChange: changePage,
-                                    position: ["bottomCenter"]
-                                }}
-                                expandable={{
-                                    expandIcon: ({ expanded, onExpand, record }) => (
-                                        record.children && record.children.length > 0 ? expanded ?
-                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                <use xlinkHref="#icon-workDown"></use>
-                                            </svg> :
-                                            <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                <use xlinkHref="#icon-workRight"></use>
-                                            </svg>
-                                            :
-                                            <>
+        <Provider {...store}>
+            <Row style={{ height: "100%", overflow: "auto" }}>
+                <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+                    <>
+                        <div className="work-list-col">
+                            <WorkTableHead />
+                            <WorkTableFilter />
+                        </div>
+                        <div style={{ overflow: "hidden" }} className="work-table">
+                            <Spin spinning={tableLoading} delay={500} >
+                                <Table
+                                    columns={columns}
+                                    dataSource={workList}
+                                    rowKey={(record) => record.id}
+                                    // onChange={sorter}
+                                    pagination={{
+                                        total: total,
+                                        pageSize: 20,
+                                        current: searchCondition.pageParam.currentPage,
+                                        onChange: changePage,
+                                        position: ["bottomCenter"]
+                                    }}
+                                    expandable={{
+                                        expandIcon: ({ expanded, onExpand, record }) => (
+                                            record.children && record.children.length > 0 ? expanded ?
                                                 <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-point"></use>
+                                                    <use xlinkHref="#icon-workDown"></use>
+                                                </svg> :
+                                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                    <use xlinkHref="#icon-workRight"></use>
                                                 </svg>
-                                            </>
-                                    )
-                                }}
-                            />
-                        </Spin>
-                    </div>
-                </>
-                <WorkBorderDetail
-                    isModalVisible={isModalVisible}
-                    setIsModalVisible={setIsModalVisible}
-                    modelRef={modelRef}
-                    showPage={true}
-                    {...props}
-                />
-            </Col>
-        </Row>
+                                                :
+                                                <>
+                                                    <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                        <use xlinkHref="#icon-point"></use>
+                                                    </svg>
+                                                </>
+                                        )
+                                    }}
+                                />
+                            </Spin>
+                        </div>
+                    </>
+                    <WorkBorderDetail
+                        isModalVisible={isModalVisible}
+                        setIsModalVisible={setIsModalVisible}
+                        modelRef={modelRef}
+                        showPage={true}
+                        {...props}
+                    />
+                </Col>
+            </Row>
+        </Provider>
+
     );
 }
 
-export default withRouter(inject("workStore")(observer(WorkTableContent)));
+export default withRouter(observer(WorkTable));

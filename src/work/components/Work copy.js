@@ -13,7 +13,7 @@ import WorkBodar from "./WorkBodar";
 import { observer, Provider } from "mobx-react";
 import { useSelector, RemoteComponent } from "tiklab-plugin-core-ui";
 import WorkGantt from "./WorkGantt.js";
-import WorkBreadCrumb from "./WorkBreadCrumb";
+import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { Form, Row, Col } from "antd";
 import "../components/Work.scss";
@@ -28,7 +28,7 @@ const Work = (props) => {
 
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
         getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType, 
-        setQuickFilterValue, setTabValue, setIsWorkList, searchCondition } = WorkStore;
+        setQuickFilterValue, setTabValue} = WorkStore;
     
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
@@ -82,9 +82,6 @@ const Work = (props) => {
         }
 
 
-        return () => {
-            setIsWorkList(true)
-        };
     }, [])
 
     // 进入系统下事项
@@ -218,7 +215,7 @@ const Work = (props) => {
                     <Row>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                             <div className="work-list-col" style={{ background: "#fff" }}>
-                                <WorkBreadCrumb />
+                                <WorkTableHead />
                                 <WorkTableFilter form={form} />
                             </div>
                         </Col>
@@ -235,7 +232,7 @@ const Work = (props) => {
                     <Row style={{ height: "100%" }}>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                             <div className="work-list-col" style={{ background: "#fff" }}>
-                                <WorkBreadCrumb />
+                                <WorkTableHead />
                                 <WorkTableFilter form={form} />
                             </div>
                             <WorkGantt form={form} />
@@ -249,7 +246,7 @@ const Work = (props) => {
                 <Fragment>
                     <Row style={{ height: "100%" }}>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                            <WorkBreadCrumb />
+                            <WorkTableHead />
                             <WorkTableFilter form={form} />
                             <RemoteComponent
                                 point="work-calendar"

@@ -1,14 +1,13 @@
-import { Dropdown, Menu } from "antd";
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router";
+import { Menu } from "antd";
 import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
-import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";
 import "./WorkListHead.scss"
 import WorkFilterForm from "./WorkTypeTab";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import { getUser } from "tiklab-core-ui";
+import WorkCreatDropdown from "./workCreatDropdown";
 
 const WorkListHead = (props) => {
     const { workStore } = props;
@@ -16,15 +15,11 @@ const WorkListHead = (props) => {
         workShowType, viewType, workTypeList, setWorkIndex, setWorkId,
         getWorkBoardList, setWorkBreadCrumbText, getWorkStatus,
         getSelectUserList } = workStore;
-    const workAddModel = useRef()
-    const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null
 
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const viewDropDown = useRef();
-
     const layout = "inline";
-    const tenant = getUser().tenant;
 
     useEffect(() => {
         getWorkStatus()
@@ -91,57 +86,20 @@ const WorkListHead = (props) => {
         })
     }
 
-    const menu = (id) => {
-        return <Menu onClick={(value) => selectAddType(value, id)}>
-            {
-                workTypeList && workTypeList.map((item) => {
-                    return <Menu.Item key={item.id} type={item} icon={
-                        item.workType.iconUrl ? <img
-                            src={version === "cloud" ?
-                                (upload_url + item.workType?.iconUrl + "?tenant=" + tenant)
-                                :
-                                (upload_url + item.workType?.iconUrl)
-                            }
-                            alt=""
-                            className="img-icon"
-                        />
-                            :
-                            <img
-                                src={('images/workType1.png')}
-                                alt=""
-                                className="img-icon"
-                            />
-                    }>
-                        {item.workType.name}
-                    </Menu.Item>
-                })
-            }
-        </Menu>
-    };
 
-    const selectAddType = (value) => {
-        setState(value.item.props.type)
-        workAddModel.current.setShowAddModel(true)
-    }
 
     return (
-        <div className="worklist-head">
+        <div className="worklist-head" >
             <div className="worklist-head-first">
                 <div className="worklist-head-name">
                     事项
                 </div>
-                <div className="worklist-head-left">
+                <div className="worklist-head-right">
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
-                        <div className="worklist-button-icon">
-                            <Dropdown trigger="click" overlay={menu} className="right-item">
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-add2"></use>
-                                </svg>
-                            </Dropdown>
-                        </div>
+                        <WorkCreatDropdown workTypeList = {workTypeList} buttonType = "svg" {...props} />
                     </PrivilegeProjectButton>
                     <div style={{ positon: "relative" }} className="worklist-button-icon">
-                        <svg className="svg-icon" aria-hidden="true">
+                        <svg className="big-icon" aria-hidden="true">
                             <use xlinkHref="#icon-more"></use>
                         </svg>
                     </div>
@@ -162,7 +120,6 @@ const WorkListHead = (props) => {
             <div style={{ padding: "0 10px" }}>
                 <WorkFilterForm labelHidden={true} layout={layout} />
             </div>
-            <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
         </div>
     )
 }

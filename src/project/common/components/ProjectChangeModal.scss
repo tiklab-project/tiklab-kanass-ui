@@ -48,12 +48,6 @@
         border-bottom: 1px solid #f0f2f5;
     }
 
-    .change-project-botton {
-        height: 40px;
-        line-height: 40px;
-        width: 100%;
-        text-align: center;
-    }
     .change-project-box {
         position: absolute;
         top: 0;
@@ -70,21 +64,37 @@
             padding: 0 20px;
             border-bottom: 1px solid #F0F0F0;
         }
-    }
-    .change-project-name {
-        height: 40px;
-        line-height: 40px;
-        padding-left: 20px;
-    }
 
-    .change-project-selectName {
-        background-color: var(--tiklab-gray-400);
+        .change-project-name {
+            height: 40px;
+            line-height: 40px;
+            padding-left: 20px;
+        }
+    
+        .change-project-selectName {
+            background-color: var(--tiklab-gray-400);
+        }
+       
+        .menu-show {
+            display: block;
+        }
+        .menu-hidden {
+            display: none;
+        }
+
+        .change-project-more {
+            padding: 0 20px;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+            border-top: 1px solid #F0F0F0;
+            color: var(--tiklab-blue);
+            font-size: 13px;
+        }
+        .change-project-more:hover {
+            text-decoration: underline;
+        }
+ 
     }
-   
-    .menu-show {
-        display: block;
-    }
-    .menu-hidden {
-        display: none;
-    }
+    
 }

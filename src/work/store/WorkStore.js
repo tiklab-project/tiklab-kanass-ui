@@ -56,7 +56,7 @@ export class WorkStore {
     @observable attachList = []
 
     // 事项的视图类型
-    @observable workShowType = "table"
+    @observable workShowType = "list"
 
     // 事项的视图类型
     @observable viewType = "tree"
@@ -76,10 +76,7 @@ export class WorkStore {
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
     
-    @action
-    setIsWorkList = (value) => {
-        this.isWorkList = value
-    }
+
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;

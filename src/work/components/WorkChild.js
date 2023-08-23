@@ -161,7 +161,6 @@ const WorkChild = (props) => {
 
 
     const createChildWorkItem = () => {
-        debugger
         const params = {
             title: workItemTitle, 
             parentWorkItem: workId,

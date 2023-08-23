@@ -22,7 +22,7 @@ const Search = (props) => {
         updateRecent, findWorkItemByKeyWorks, findProjectList } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
-    const { setWorkId, setIsWorkList } = WorkStore;
+    const { setWorkId } = WorkStore;
     const [workItemList, setWorkItemList] = useState([]);
     const [isSeach, setIsSeach] = useState(false);
 
@@ -118,7 +118,7 @@ const Search = (props) => {
     const toProject = async (data) => {
         // 创建最近访问的信息
         updateRecent({ id: data.modelId })
-        props.history.push(`/index/projectDetail/${data.modelId}/work`)
+        props.history.push(`/index/projectDetail/${data.modelId}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -128,7 +128,7 @@ const Search = (props) => {
 
     const toSearchProject = async (data) => {
         // 创建最近访问的信息
-        props.history.push(`/index/projectDetail/${data.id}/work`)
+        props.history.push(`/index/projectDetail/${data.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -143,7 +143,6 @@ const Search = (props) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
         setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        setIsWorkList(false)
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.modelId}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -154,7 +153,6 @@ const Search = (props) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
         setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }]);
-        setIsWorkList(false)
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.id}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)

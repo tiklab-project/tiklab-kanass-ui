@@ -115,8 +115,7 @@ const ModuleList = (props) => {
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-module">
                     <Breadcumb
-                        firstText="项目管理"
-                        secondText="模块列表"
+                        firstText="模块"
                     >
                         <ModuleAddmodal
                             name="添加模块"

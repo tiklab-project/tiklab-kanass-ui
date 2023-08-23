@@ -6,41 +6,64 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-12-18 17:32:06
  */
-import React, { useState } from "react";
-import WorkDetail from "./WorkDetail";
+import React, { useEffect, useState } from "react";
 import WorkAside from "./WorkAside";
-import { observer, inject } from "mobx-react";
+import { withRouter } from "react-router";
+import { renderRoutes } from "react-router-config";
+import { Provider, observer } from "mobx-react";
 import "./WorkList.scss";
 import { Row, Col } from "antd";
-const Worklist = (props) => {
+import WorkStore from "../store/WorkStore";
+import WorkCalendarStore from '../store/WorkCalendarStore';
+import { finWorkList } from "./WorkGetList";
 
-    const { workStore, form } = props;
+const WorkList = (props) => {
+    const {route} = props;
+    const projectId = props.match.params.id;
+    const {workId, setWorkShowType} = WorkStore;
+    const path = props.match.path;
+    const store = {
+        workStore: WorkStore,
+        workCalendarStore: WorkCalendarStore
+    };
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    useEffect(() => {
+        setWorkShowType("list")
+        debugger
+        finWorkList(path, WorkStore, projectId, sprintId)
+    }, [])
 
-    const { workList, total, searchCondition } = workStore;
-
-    const [filterModal, setFiltetModal] = useState(false);
+    useEffect(() => {
+        if(workId && workId.length > 0){
+            if(path === `/index/projectDetail/:id/workList`){
+                props.history.push(`/index/projectDetail/${projectId}/workList/${workId}`)
+            }
+            if(path === `/index/workList`){
+                props.history.push(`/index/workList/${workId}`)
+            }
+            
+        }
+    }, [workId]);
 
     return (
-        <div className="work-list">
-            <WorkAside
-                {...props}
-                workList={workList}
-                total={total}
-                filterModal={filterModal}
-                setFiltetModal={setFiltetModal}
-                current={searchCondition.pageParam.currentPage}
-                form={form}
-            ></WorkAside>
-            <Row style={{flex: 1}}>
-                <Col lg={{ span: 24 }}  xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                    <div className="work-list-detail">
-                        <WorkDetail {...props}></WorkDetail>
-                    </div>
-                </Col>
-            </Row>
+        <Provider {...store}>
+            <div className="work-list">
+                <WorkAside
+                    {...props}
+                />
+                <Row style={{ flex: 1 }}>
+                    <Col lg={{ span: 24 }} xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+                        <div className="work-list-detail">
+                            {/* <WorkDetail {...props}></WorkDetail> */}
+                            {renderRoutes(route.routes)}
+                        </div>
+                    </Col>
+                </Row>
 
-        </div>
+            </div>
+        </Provider>
+
     )
 };
 
-export default inject("workStore")(observer(Worklist));
+export default withRouter(observer(WorkList));

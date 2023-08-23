@@ -17,6 +17,7 @@ import { getUser } from "tiklab-core-ui";
 const ProjectChangeModal = (props) => {
     const { isShowText, searchpro, project, projectStore } = props;
     const { findMyAllProjectList, allProlist } = projectStore;
+    const [changeProjectList, setChangeProjectList] = useState([]);
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
     // 选择要切换的项目
@@ -33,7 +34,16 @@ const ProjectChangeModal = (props) => {
      */
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
-        findMyAllProjectList()
+        findMyAllProjectList().then(res => {
+            if (res.code === 0) {
+                if (res.data.length > 5) {
+                    setChangeProjectList(res.data.slice(0, 6))
+                } else {
+                    setChangeProjectList(res.data)
+                }
+
+            }
+        })
         // 设置弹窗的位置在按钮旁边
         modelRef.current.style.left = setButton.current.clientWidth
     }
@@ -72,7 +82,7 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                props.history.push(`/index/projectDetail/${id}/work`)
+                props.history.push(`/index/projectDetail/${id}/workTable`)
                 localStorage.setItem("projectId", id);
                 // // 重置事项id
                 // setWorkType(null)
@@ -184,7 +194,7 @@ const ProjectChangeModal = (props) => {
             >
                 <div className="change-project-head">切换项目</div>
                 {
-                    allProlist && allProlist.map((item) => {
+                    changeProjectList && changeProjectList.map((item) => {
                         if (item.id !== project?.id) {
                             return <div className={`change-project-name ${item.id === selectProject ? "change-project-selectName" : ""}`}
                                 onClick={() => selectProjectId(item.id, item.projectType.id)}
@@ -218,6 +228,10 @@ const ProjectChangeModal = (props) => {
 
                     })
                 }
+                {
+                    allProlist.length > 0 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
+                }
+
             </div>
         </div>
     )

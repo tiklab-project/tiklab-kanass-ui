@@ -8,7 +8,6 @@ import WorkFilterHigh from "./WorkFilterHigh";
 import "./WorkFilterModal.scss";
 const WorkFilterModal = (props) => {
     const filterDropDownRef = useRef();
-    const { form } = props;
     const layout = "horizontal"
   
 
@@ -36,7 +35,6 @@ const WorkFilterModal = (props) => {
                 <svg className="botton-icon" aria-hidden="true" >
                     <use xlinkHref="#icon-filter"></use>
                 </svg>
-                {/* 筛选 */}
             </div>
 
 
@@ -52,7 +50,6 @@ const WorkFilterModal = (props) => {
                 </div>
                 <WorkFilterHigh 
                     labelHidden={false} 
-                    form={form} 
                     layout={layout} 
                     filterModal = {filterModal}
                     setFiltetModal = {setFiltetModal}

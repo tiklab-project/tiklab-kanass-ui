@@ -13,7 +13,7 @@ import WorkBodar from "./WorkBodar";
 import { observer, Provider } from "mobx-react";
 import { useSelector, RemoteComponent } from "tiklab-plugin-core-ui";
 import WorkGantt from "./WorkGantt.js";
-import WorkBreadCrumb from "./WorkBreadCrumb";
+import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { Form, Row, Col } from "antd";
 import "../components/Work.scss";
@@ -29,8 +29,7 @@ const Work = (props) => {
 
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
         getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType,
-        setQuickFilterValue, setTabValue, setIsWorkList, findWorkItemNumByWorkType, 
-        findWorkItemNumByWorkList, initValues } = WorkStore;
+        setQuickFilterValue, setTabValue, findWorkItemNumByWorkType } = WorkStore;
 
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
@@ -39,7 +38,7 @@ const Work = (props) => {
     useEffect(() => {
         setQuickFilterValue({ label: '所有', value: 'all' })
         setTabValue({ id: "all", type: "system" })
-        setWorkShowType("table")
+        // setWorkShowType("table")
         switch (props.match.path) {
             case "/index/:id/sprintdetail/:sprint/workItem":
                 goWorkItem("sprint")
@@ -59,20 +58,8 @@ const Work = (props) => {
             default:
                 break;
         }
-        return () => {
-            setIsWorkList(true)
-        };
+        return;
     }, [])
-
-    // useEffect(()=> {
-    //     debugger
-    //     if(viewType === "tile" || workShowType === "bodar"){
-    //         findWorkItemNumByWorkList()
-    //     }
-    //     if (viewType === "tree" && workShowType !== "bodar") {
-    //         findWorkItemNumByWorkType()
-    //     }
-    // }, [])
 
     const goWorkItem = (type) => {
         const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
@@ -92,13 +79,12 @@ const Work = (props) => {
                 initValues = { ...initValues, projectIds: [projectId] };
                 break;
             case "projectOne":
-                
                 initValues = { ...initValues, projectIds: [projectId], id: id };
                 break;
             case "systemOne":
                 initValues = { ...initValues, id: id };
                 break;
-            default: 
+            default:
                 break;
         }
 
@@ -133,16 +119,10 @@ const Work = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id"
-                ) {
+                if (workShowType === "list") {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    if (workShowType === "list") {
-                        setWorkIndex(1)
-                        setWorkId(res.dataList[0].id)
-                        setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
-                    }
+                    setWorkId(res.dataList[0].id)
+                    setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
                 }
             } else {
                 setWorkIndex(0)
@@ -154,15 +134,11 @@ const Work = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
+                if (workShowType === "list") {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    if (workShowType === "list") {
-                        setWorkIndex(1)
-                        setWorkId(res.dataList[0].id)
-                        setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
-                    }
+                    setWorkId(res.dataList[0].id)
+                    props.history.push(`/index/projectDetail/${projectId}/workList/${res.dataList[0].id}`)
+                    setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
                 }
             } else {
                 setWorkIndex(0)
@@ -185,7 +161,7 @@ const Work = (props) => {
                     <Row>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                             <div className="work-list-col" style={{ background: "#fff" }}>
-                                <WorkBreadCrumb />
+                                <WorkTableHead />
                                 <WorkTableFilter form={form} />
                             </div>
                         </Col>
@@ -202,7 +178,7 @@ const Work = (props) => {
                     <Row style={{ height: "100%" }}>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                             <div className="work-list-col" style={{ background: "#fff" }}>
-                                <WorkBreadCrumb />
+                                <WorkTableHead />
                                 <WorkTableFilter form={form} />
                             </div>
                             <WorkGantt form={form} />
@@ -216,7 +192,7 @@ const Work = (props) => {
                 <Fragment>
                     <Row style={{ height: "100%" }}>
                         <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                            <WorkBreadCrumb />
+                            <WorkTableHead />
                             <WorkTableFilter form={form} />
                             <RemoteComponent
                                 point="work-calendar"

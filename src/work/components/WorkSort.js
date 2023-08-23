@@ -19,7 +19,7 @@ const WorkSort = (props) => {
         },
         {
             value: "title",
-            title: "标题ww"
+            title: "标题"
         },
         {
             value: "work_type_sys_id",

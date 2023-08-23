@@ -10,7 +10,7 @@
         height: 20px;
         width: 20px;
     }
-    .workitem-svg-icon:hover{
+    .workitem-svg-icon:hover, .workitem-svg-active{
         background: rgba(9, 30, 66, 0.08);
         text-decoration: inherit;
         transition-duration: 0s, 0.15s;

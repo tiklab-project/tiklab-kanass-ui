@@ -1,24 +1,17 @@
 .work-aside {
     width: 350px;
-    background: var(--tiklab-gray-600);
-
+    border-right: 1px solid var(--tiklab-gray-200);
     ul {
         padding: 0
     }
 
     .work-aside-option {
-        width: inherit;
         border-radius: 4px;
-        position: relative;
-        background: var(--tiklab-gray-600);
-
-        .work-aside-search {
-            position: absolute;
-            top: 0;
-            width: calc(100% - 2px);
-            z-index: 1;
-        }
-
+        // position: relative;
+        height: calc(100vh - 136px);
+        overflow: auto;
+        // overflow-y: auto;
+        width: 100%;
         .work-aside-top {
             padding: 10px;
             display: flex;
@@ -45,26 +38,24 @@
 
         .work-aside-fixed {
             border-radius: 4px;
-            overflow: auto;
-            // height: calc(100% - 170px);
-        }
-        .work-aside-fixed-big {
-            height: calc(100% - 120px);
-        }
-        .work-aside-fixed-small {
-            height: calc(100% - 170px);
         }
     }
 
-    .work-aside-contant::-webkit-scrollbar {
-        width: 0 !important;
-        height: 0 !important;
+    .work-aside-option::-webkit-scrollbar {
+        width: 5px;
     }
-
-    .work-aside-contant {
-        -ms-overflow-style: none;
-        overflow: -moz-scrollbars-none;
+    .work-aside-option::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--tiklab-gray-500);
     }
+    .work-aside-option::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: var(--tiklab-gray-600);
+    }
+    // .work-aside-option {
+    //     -ms-overflow-style: none;
+    //     overflow: -moz-scrollbars-none;
+    // }
 
     .work-aside-contant {
         width: 100%;
@@ -161,7 +152,7 @@
     justify-content: center;
     padding: 5px 0;
     font-weight: 600;
-    border-top: 1px solid var(--tiklab-gray-200);
+    // border-top: 1px solid var(--tiklab-gray-200);
     .work-aside-button {
         padding-left: 5px;
         color: var(--tiklab-blue);

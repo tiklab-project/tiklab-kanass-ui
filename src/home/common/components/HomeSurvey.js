@@ -23,7 +23,7 @@ const HomeSurvey = (props) => {
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
     const tenant = getUser().tenant;
-    const { setWorkId,  searchWorkById, setIsWorkList } = WorkStore;
+    const { setWorkId,  searchWorkById } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -90,9 +90,7 @@ const HomeSurvey = (props) => {
         searchWorkById(workItemId).then((res) => {
             console.log(res)
             if (res) {
-                setSessionStorage("detailCrumbArray",[{ id: workItemId, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                 setWorkId(workItemId)
-                setIsWorkList(false)
                 
                 window.location.href = url
                 sessionStorage.setItem("menuKey", "work")
@@ -112,7 +110,6 @@ const HomeSurvey = (props) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
         setSessionStorage("detailCrumbArray",[{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        setIsWorkList(false)
         props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }

@@ -52,10 +52,9 @@ const WorkDetail = (props) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
-                // findStatusList(res.workStatus.id);
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                if (props.match.path === "/index/projectDetail/:id/work") {
+                if (props.match.path === "/index/projectDetail/:id/workList") {
                     let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
                     setSessionStorage("detailCrumbArray", crumbArray);
                 }
@@ -82,20 +81,20 @@ const WorkDetail = (props) => {
         return
     }, [workId]);
 
-    useEffect(() => {
-        if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-            const id = props.match.params.workId;
-            setWorkId(id)
-            setWorkIndex(0)
-            getWorkDetail(id)
-            setWorkShowType("table")
-        }
-        if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
-            setWorkId(routerWorkId)
-            setWorkIndex(getSessionStorage("workIndex"))
-        }
-        return
-    }, []);
+    // useEffect(() => {
+    //     if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
+    //         const id = props.match.params.workId;
+    //         setWorkId(id)
+    //         setWorkIndex(0)
+    //         getWorkDetail(id)
+    //         setWorkShowType("table")
+    //     }
+    //     if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
+    //         setWorkId(routerWorkId)
+    //         setWorkIndex(getSessionStorage("workIndex"))
+    //     }
+    //     return
+    // }, []);
 
 
     const deleteWork = () => {
@@ -304,15 +303,10 @@ const WorkDetail = (props) => {
                 workInfo ? <div className="work-detail">
                     <>
                         {
-                            (workShowType === "table" || detailCrumbArray?.length > 0) &&
+                            detailCrumbArray?.length > 0 &&
                             <div className="work-detail-crumb-col">
                                 <div className="work-detail-crumb">
-                                    {
-                                        workShowType === "table" && <div className="work-detail-crumb-item" onClick={() => goWorkList()}>
-                                            <span className="work-detail-crumb-text">事项</span>
-                                            <span style={{ padding: "0 10px" }}>/</span>
-                                        </div>
-                                    }
+                                  
                                     {
                                         detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
                                             let html;
@@ -345,11 +339,14 @@ const WorkDetail = (props) => {
                                         })
                                     }
                                 </div>
-                                <div className="work-detail-close" onClick={()=> setIsModalVisible(false)}>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-close"></use>
-                                    </svg>
-                                </div>
+                                {
+                                    workShowType !== "list" && <div className="work-detail-close" onClick={()=> setIsModalVisible(false)}>
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-close"></use>
+                                        </svg>
+                                    </div>
+                                }
+                                
                             </div>
 
                         }

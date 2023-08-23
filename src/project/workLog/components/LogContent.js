@@ -161,7 +161,7 @@ const LogContent = (props) => {
                 <div style={{ padding: "20px" }}>
                     <Breadcumb
                         {...props}
-                        firstText="工时查询"
+                        firstText="工时"
                     >
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
                             添加日志

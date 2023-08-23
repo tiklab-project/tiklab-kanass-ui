@@ -13,7 +13,6 @@ import { getUser } from "tiklab-core-ui";
 
 const WorkTableFilter = (props) => {
     // 查找表单
-    const [form] = Form.useForm();
     const { workStore } = props;
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     // 解析store数据
@@ -21,7 +20,7 @@ const WorkTableFilter = (props) => {
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
         setWorkIndex, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList, findDmFlowList, findWorkItemNumByWorkType } = workStore;
+        getWorkTypeList, getWorkStatus, userList, findDmFlowList } = workStore;
     const tenant = getUser().tenant;
     const [flowIds, setFlowIds] = useState();
 
@@ -164,11 +163,10 @@ const WorkTableFilter = (props) => {
             <div className="work-table-filter">
                 <WorkQuickFilter 
                     getWorkList={getWorkList} 
-                    flowIds={flowIds} 
-                    findWorkItemNumByWorkType = {findWorkItemNumByWorkType}
+                    flowIds={flowIds}
                 />
                 {
-                    props.match.path == "/index/work" &&
+                    props.match.path == "/index/workTable" &&
                     <SelectSimple name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
                         title={"项目"} ismult={true}
@@ -242,7 +240,7 @@ const WorkTableFilter = (props) => {
                         />
                     </div>
                 </div>
-                <WorkFilterModal form={form} layout={"horizontal"} {...props} />
+                <WorkFilterModal layout={"horizontal"} {...props} />
                 <WorkSort sorter={sorter} />
             </div>
         </div>

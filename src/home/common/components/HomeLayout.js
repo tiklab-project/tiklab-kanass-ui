@@ -42,7 +42,7 @@ const Layout = (props) => {
             key: 'projectSet'
         },
         {
-            to: '/index/work/worklist',
+            to: '/index/workTable',
             title: '事项',
             key: 'work'
         }

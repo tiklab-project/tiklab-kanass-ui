@@ -1,12 +1,12 @@
 .work-add-page {
     gap: 20px;
-    max-height: 640px;
+    max-height: 500px;
     min-height: 500px;
     .work-add-page-content {
         // padding: 0 15px;
         display: flex;
         flex-direction: column;
-        height: 640px;
+        height: 500px;
         .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
             display: inline-block;
             margin-right: 4px;

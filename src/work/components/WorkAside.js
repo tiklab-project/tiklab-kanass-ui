@@ -11,38 +11,20 @@ const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
     const workAsideList = useRef()
-    const { form, workStore } = props;
+    const { workStore } = props;
     const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
         workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
         searchCondition, total } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
-    const [currentPageAside, setCurrentPage] = useState(1)
     const project = JSON.parse(localStorage.getItem("project"));
     const tenant = getUser().tenant;
 
-    useEffect(() => {
-        // return () => {
-        //     setWorkList([])
-        //     setCurrentPage(1)
-        // }
-    }, [])
     // 点击选择事项列表
     const changeWorkChilden = (workItem, index) => {
         setWorkId(workItem.id)
         setWorkIndex(index + 1)
-        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        const params = {
-            name: workItem.title,
-            model: "workItem",
-            modelId: workItem.id,
-            project: { id: project.id },
-            projectType: { id: project.projectType.id },
-            iconUrl: workItem.workTypeSys.iconUrl
-        }
-        createRecent(params)
-        if (props.route.path === "/index/prodetail/workMessage/:id") {
-            props.history.push("/index/prodetail/work")
-        }
+        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+
     }
 
     // 拉动菜单栏的宽度
@@ -128,7 +110,6 @@ const WorkAside = (props) => {
                 setWorkIndex(1)
             })
         }
-        setCurrentPage(searchCondition?.pageParam?.currentPage + 1)
 
     }
 
@@ -205,9 +186,11 @@ const WorkAside = (props) => {
                                     <div className="work-aside-item-name">
                                         <div className="work-aside-item-first">
                                             <span>{childItem.id}</span>
-                                            <span className="work-aside-item-status">{childItem.workStatusNode.name}</span>
                                         </div>
-                                        <div className="name" id={childItem.id}>{childItem.title}</div>
+                                        <div className="work-aside-item-second" id={childItem.id}>{childItem.title}</div>
+                                    </div>
+                                    <div className={`work-aside-status ${childItem.workStatusCode}`}>
+                                        {childItem.workStatusNode.name}
                                     </div>
                                 </div>
                                 {
@@ -242,7 +225,10 @@ const WorkAside = (props) => {
                                     <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                         <use xlinkHref="#icon-workRight"></use>
                                     </svg>
-                                ) : <div className="svg-icon"></div>
+                                ) :
+                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                    <use xlinkHref="#icon-point"></use>
+                                </svg>
                         }
                     </div>
                     {
@@ -300,16 +286,16 @@ const WorkAside = (props) => {
         }
         setWorkAside(scrollTop)
     }
-    const [isHover, setIsHover] = useState()
+
     return (
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
-            <WorkListHead form={form} />
-            <div className="work-aside-search">
-                <WorkListFilter showWorkListFilter={showWorkListFilter} />
-            </div>
+            <WorkListHead />
             <div className="work-aside-option">
+                <div className="work-aside-search">
+                    <WorkListFilter showWorkListFilter={showWorkListFilter} />
+                </div>
                 <Spin spinning={tableLoading} delay={500}>
-                    <div className={`work-aside-fixed ${showWorkListFilter ? "work-aside-fixed-small" : "work-aside-fixed-big"}`} ref={workAsideList} onScroll={onScroll}>
+                    <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >
                             <div className="work-aside-ul">
                                 {
@@ -322,18 +308,19 @@ const WorkAside = (props) => {
                     </div>
                 </Spin>
 
-                <div className="work-aside-bottom" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-                    
+                <div className="work-aside-bottom" >
                     <div>{workList.length}个, 共{total}个</div>
                     {
                         currentPage < totalPage ? <div className="work-aside-button" onClick={() => changePage()}>点击加载</div>
-                        :
-                        <div style={{paddingLeft: "10px"}}>已加载全部</div>
-                            
+                            :
+                            <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+
                     }
                 </div>
 
+                {/* </div> */}
             </div>
+
         </div>
     )
 }

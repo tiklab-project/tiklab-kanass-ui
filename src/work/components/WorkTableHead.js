@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import { Select, Menu, Dropdown, Form, Popconfirm, message } from 'antd';
+import { Menu, Dropdown, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 import { useSelector } from "tiklab-plugin-core-ui";
-import "./WorkBreadCrumb.scss";
+import "./WorkTableHead.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkFilterSort from "./WorkChangeView";
 import Button from "../../common/button/Button";
-import { getUser } from "tiklab-core-ui";
+import WorkCreatDropdown from "./workCreatDropdown";
 
 
-const WorkBreadCrumb = (props) => {
+const WorkTableHead = (props) => {
     const { workStore } = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
-        getWorkConditionPageTree, getWorkConditionPage,searchCondition,
+        getWorkConditionPageTree, getWorkConditionPage, searchCondition,
         setWorkIndex, setWorkId, getWorkBoardList, exportWorkItemXml } = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -24,7 +24,6 @@ const WorkBreadCrumb = (props) => {
 
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const viewDropDown = useRef();
-    const tenant = getUser().tenant;
 
 
     useEffect(() => {
@@ -82,49 +81,13 @@ const WorkBreadCrumb = (props) => {
         setIsModalVisible(true);
     };
 
-    const menu = (id) => {
-        return <Menu onClick={(value) => selectAddType(value, id)}>
-            {
-                workTypeList && workTypeList.map((item) => {
-                    return <Menu.Item key={item.id} type={item} icon={
-                        item.workType.iconUrl ? <img
-                            src={version === "cloud" ?
-                                (upload_url + item.workType?.iconUrl + "?tenant=" + tenant)
-                                :
-                                (upload_url + item.workType?.iconUrl)
-                            }
-                            alt=""
-                            className="img-icon"
-                        />
-                            :
-                            <img
-                                src={('images/workType1.png')}
-                                alt=""
-                                className="img-icon"
-                            />
-                    }>
-                        {item.workType.name}
-                    </Menu.Item>
-                })
-            }
-        </Menu>
-    };
-
-    const selectAddType = (value) => {
-        setState(value.item.props.type)
-        workAddModel.current.setShowAddModel(true)
-    }
 
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
+                setWorkIndex(1)
+                setWorkId(res.dataList[0].id)
+                props.history.push(`/index/projectDetail/${projectId}/workList/${res.dataList[0].id}`)
             } else {
                 setWorkIndex(0)
                 setWorkId(0)
@@ -156,11 +119,7 @@ const WorkBreadCrumb = (props) => {
                 <div className="work-title">事项</div>
                 <div className="work-top-right">
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
-                        <Dropdown trigger="click" overlay={menu} className="right-item add-work">
-                            <Button type="primary">
-                                添加事项
-                            </Button>
-                        </Dropdown>
+                        <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
                     </PrivilegeProjectButton>
                     <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
                         <Button>
@@ -172,7 +131,7 @@ const WorkBreadCrumb = (props) => {
                     <WorkFilterSort
                         getPageList={getPageList}
                         getPageTree={getPageTree}
-                        searchCondition = {searchCondition}
+                        searchCondition={searchCondition}
                         getWorkConditionPage={getWorkConditionPage}
                         getWorkConditionPageTree={getWorkConditionPageTree}
                         getWorkBoardList={getWorkBoardList}
@@ -189,4 +148,4 @@ const WorkBreadCrumb = (props) => {
         </Fragment>
     )
 }
-export default withRouter(inject("workStore")(observer(WorkBreadCrumb)));
+export default withRouter(inject("workStore")(observer(WorkTableHead)));

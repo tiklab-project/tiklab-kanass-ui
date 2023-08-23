@@ -15,7 +15,8 @@ import { observer, inject } from "mobx-react";
 const WorkBorderDetail = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef } = props;
-
+    const path = props.match.path;
+    const projectId = props.match.params.id;
     const showModal = () => {
         setIsModalVisible(true);
         
@@ -38,21 +39,39 @@ const WorkBorderDetail = (props) => {
             return;
         }
         if (!detailRef.current.contains(e.target) && detailRef.current !== e.target) {
+            if(path === `/index/projectDetail/:id/workTable`){
+                console.log(props.history)
+                props.history.replace(`/index/projectDetail/${projectId}/workTable`)
+            }
+            if(path === `/index/projectDetail/:id/workBodar`){
+                console.log(props.history)
+                props.history.replace(`/index/projectDetail/${projectId}/workBodar`)
+            }
+
+            if(path === `/index/workTable`){
+                console.log(props.history)
+                props.history.replace(`/index/workTable`)
+            }
+            if(path === `/index/workBodar`){
+                console.log(props.history)
+                props.history.replace(`/index/workBodar`)
+            }
             setIsModalVisible(false)
         }
     }
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
 
-    const handleCancel = () => {
+    const closeDrawer = () => {
+        if(path === `/index/projectDetail/:id/workTable`){
+            console.log(props.history)
+            props.history.replace(`/index/projectDetail/${projectId}/workTable`)
+        }
         setIsModalVisible(false);
     };
 
     return (
         <Drawer
             placement="right"
-            onClose={handleCancel}
+            onClose={closeDrawer}
             // title={"事项详情"}
             visible={isModalVisible}
             className="work-table-detail"

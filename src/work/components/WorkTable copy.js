@@ -3,7 +3,7 @@ import { Table, Space, Row, Col, Spin } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
-import WorkBreadCrumb from "./WorkBreadCrumb";
+import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
@@ -42,7 +42,6 @@ const WorkTableContent = (props) => {
         if (props.route.path === "/index/:id/sprintdetail/:sprint/workItem") {
             props.history.push(`/index/${record.project.id}/sprintdetail/${sprintId}/workDetail/${record.id}`)
         }
-        // setIsWorkList(false)
 
     }
 
@@ -222,7 +221,7 @@ const WorkTableContent = (props) => {
             <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                 <>
                     <div className="work-list-col">
-                        <WorkBreadCrumb />
+                        <WorkTableHead />
                         <WorkTableFilter form={form} />
                     </div>
                     <div style={{ overflow: "hidden" }} className="work-table">

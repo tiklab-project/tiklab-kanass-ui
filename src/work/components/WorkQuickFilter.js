@@ -7,9 +7,8 @@ const WorkQuickFilter = (props) => {
     const { workStore, getWorkList, flowIds } = props;
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { setSearchCondition, setWorkId, setWorkIndex, 
-        statWorkItemOverdue, findStateNodeList, setQuickFilterValue, 
-        quickFilterValue, findWorkItemNumByWorkType, findWorkItemNumByWorkList } = workStore;
+    const { setSearchCondition, findStateNodeList, setQuickFilterValue, 
+        quickFilterValue,} = workStore;
 
     const quickFilterList = [
         {

@@ -113,7 +113,7 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
 
                         <Breadcumb
-                            firstText="用例库"
+                            firstText="测试用例"
                         >
                             <div>
                                 <Button type="primary" onClick={() => showTestRepository()}>
