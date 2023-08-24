@@ -5,12 +5,16 @@ import moment from 'moment';
 import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
+import WorkQuickFilter from "./WorkQuickFilter"
+import {finWorkList} from "./WorkGetList"
 const { RangePicker } = DatePicker;
 const WorkFilterHigh = (props) => {
     // 查找表单
     const [form] = Form.useForm();
     const { workStore, labelHidden, setFiltetModal } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
+    const path = props.match.path;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const heightFilter = useRef()
     const formItemLayout = {
         labelCol: { span: 6 },
@@ -21,7 +25,7 @@ const WorkFilterHigh = (props) => {
         getWorkBoardList, getWorkGanttListTree, setWorkId, setWorkIndex,
         viewType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue } = workStore;
 
     useEffect(() => {
         findPriority()
@@ -35,6 +39,28 @@ const WorkFilterHigh = (props) => {
         initForm()
     }, [searchCondition])
 
+    const quickFilterList = [
+        {
+            value: "all",
+            name: "所有"
+        },
+        {
+            value: "pending",
+            name: "我的待办"
+        },
+        {
+            value: "ending",
+            name: "我的已办"
+        },
+        {
+            value: "creat",
+            name: "我创建的"
+        },
+        {
+            value: "overdue",
+            name: "已逾期"
+        }
+    ]
     //查找事务
     const changeField = (changedValues, allValues) => {
         const field = Object.keys(changedValues)[0];
@@ -78,12 +104,17 @@ const WorkFilterHigh = (props) => {
                     builderIds: changedValues.builderIds,
                 }
                 break;
+            case "assignerIds":
+                value = {
+                    assignerIds: changedValues.assignerIds,
+                }
+                break;
             case "workStatusIds":
                 value = {
                     workStatusIds: changedValues.workStatusIds,
                 }
                 break;
-            default: 
+            default:
                 break;
         }
         value = {
@@ -100,23 +131,9 @@ const WorkFilterHigh = (props) => {
 
     const resetFilter = () => {
         form.resetFields()
-        // setSearchConditionNull()
-        let value = {
-            projectIds: projectId ? [projectId] : [],
-            builderIds: [],
-            workStatusIds: [],
-            createdDate: [],
-            planStartDate: [],
-            planEndDate: [],
-            workPriorityIds: [],
-            sprintIds: [],
-            moduleIds: [],
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1
-            }
-        }
-        findWorkItem(value)
+        setSearchConditionNull()
+        setQuickFilterValue({label: '所有', value: 'all'})
+        finWorkList(path, workStore, projectId, sprintId)
     }
 
     const findWorkItem = (value) => {
@@ -180,22 +197,45 @@ const WorkFilterHigh = (props) => {
 
             >
                 {
-                    workShowType === "list" && <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
-                        <Select
-                            mode="multiple"
-                            placeholder="状态"
-                            className="work-select"
-                            key="workStatusIds"
-                            maxTagCount={1}
-                            getPopupContainer={() => heightFilter.current}
-                        >
-                            {
-                                workStatusList && workStatusList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
+                    workShowType === "list" && <>
+                        <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
+                            <WorkQuickFilter heightFilter = {heightFilter}/>
+                        </Form.Item>
+
+                        <Form.Item name="assignerIds" label={labelHidden ? null : "负责人"} rules={[{ required: false }]} >
+                            <Select
+                                mode="multiple"
+                                placeholder="负责人"
+                                className="work-select"
+                                key="assignerIds"
+                                maxTagCount={1}
+                                getPopupContainer={() => heightFilter.current}
+                            >
+                                {
+                                    userList && userList.map((item) => {
+                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
+                            <Select
+                                mode="multiple"
+                                placeholder="状态"
+                                className="work-select"
+                                key="workStatusIds"
+                                maxTagCount={1}
+                                getPopupContainer={() => heightFilter.current}
+                            >
+                                {
+                                    workStatusList && workStatusList.map((item) => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                    </>
+
                 }
 
                 <Form.Item name="builderIds" label={labelHidden ? null : "创建人"} rules={[{ required: false }]} >
@@ -275,12 +315,13 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                <div className="workitem-filter-height-botton">
-                    <Button onClick={() => resetFilter()}>重置</Button>
-                    <Button onClick={() => setFiltetModal(false)}>取消</Button>
-                    <Button type="primary" onClick={() => setFiltetModal(false)}>确定</Button>
-                </div>
+                
             </Form>
+            <div className="workitem-filter-height-botton">
+                <Button onClick={() => resetFilter()}>重置</Button>
+                <Button onClick={() => setFiltetModal(false)}>取消</Button>
+                <Button type="primary" onClick={() => setFiltetModal(false)}>确定</Button>
+            </div>
         </div>
 
     )

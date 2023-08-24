@@ -14,29 +14,22 @@ const WorkListFilter = (props) => {
     const { getWorkConditionPageTree, getWorkConditionPage,
         workShowType, viewType, setWorkIndex, setWorkId,
         searchCondition, getWorkBoardList, getWorkStatus,
-         findProjectList, getSelectUserList,
-        userList, projectList, findDmFlowList } = workStore;
+        findProjectList, getSelectUserList} = workStore;
 
     const [showSearch, setShowSearch] = useState(false);
-    const [flowIds, setFlowIds] = useState();
-
+    
+    const workListSearch = useRef();
+    
     useEffect(() => {
         getWorkStatus();
         findProjectList();
         getSelectUserList(projectId)
-        findDmFlowList({domainId: projectId}).then(res => {
-            if(res.code === 0){
-                const list = [];
-                res.data.map(item => {
-                    list.push(item.flow.id)
-                })
-                setFlowIds(list)
-            }
-        })
+       
     }, [])
 
+  
     const handleChange = (field, value) => {
-        search({ 
+        search({
             [field]: value,
             pageParam: {
                 pageSize: 20,
@@ -95,118 +88,48 @@ const WorkListFilter = (props) => {
 
     }
 
-    const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
-    }
-
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id" ) {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
+    
+    
 
     return (
         <div>
             {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
-                    <WorkQuickFilter getWorkList = {getWorkList} flowIds = {flowIds}/>
-                    {
-                        props.match.path == "/index/work/worklist" ?
-                            <SelectSimple name="workTypeIds"
-                                onChange={(value) => handleChange("projectIds", value)}
-                                title={"项目"} ismult={true}
-                            >
-                                {
-                                    projectList.map(item => {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.projectName}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    })
-                                }
-                            </SelectSimple>
-                            :
-                            <SelectSimple 
-                                name="assignerIds" 
-                                onChange={(value) => handleChange("assignerIds", value)} 
-                                title={"负责人"} 
-                                ismult={true}
-                                selectValue={searchCondition?.assignerIds}
-                            >
-                                {
-                                    userList.map(item => {
-                                        return <SelectItem
-                                            value={item.user.id}
-                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.user.id}
-                                            imgUrl={item.user?.iconUrl}
+                    {/* <WorkQuickFilter getWorkList={getWorkList} flowIds={flowIds} /> */}
 
-                                        />
-                                    })
-                                }
-                            </SelectSimple>
-                    }
-
-                    <div className="worklist-search-botton" onClick={() => setShowSearch(true)}>
-                        <svg className="search-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-search"></use>
-                        </svg>
-                        标题搜索
+                    <div className="worklist-search-large" ref= {workListSearch}>
+                        <div className="search-input">
+                            <svg className="search-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-search"></use>
+                            </svg>
+                            <Input bordered={false} allowClear
+                                placeholder="事项标题"
+                                className="workList-search-input"
+                                key={"search"}
+                                value={searchCondition.keyWord}
+                                onChange={(value) => handleChange("keyWord", value.target.value)}
+                            />
+                        </div>
                     </div>
-
-                    <WorkFilterModal form={form} layout={"horizontal"} {...props} />
+                    <WorkFilterModal form={form} viewType={"list"} {...props} workListSearch = {workListSearch}/>
                     <WorkSort sorter={sorter} buttonType={"icon"} />
                 </div>
-                :
-                <div className="worklist-search-large">
-                    <div className="search-input">
-                        <svg className="search-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-search"></use>
-                        </svg>
-                        <Input bordered={false} allowClear
-                            placeholder="事项标题"
-                            className="workList-search-input"
-                            key={"search"}
-                            value={searchCondition.keyWord}
-                            onChange={(value) => handleChange("keyWord", value.target.value)}
-                        />
+                    :
+                    <div className="worklist-search-large">
+                        <div className="search-input">
+                            <svg className="search-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-search"></use>
+                            </svg>
+                            <Input bordered={false} allowClear
+                                placeholder="事项标题"
+                                className="workList-search-input"
+                                key={"search"}
+                                value={searchCondition.keyWord}
+                                onChange={(value) => handleChange("keyWord", value.target.value)}
+                            />
+                        </div>
+                        <div className="search-cancel" onClick={() => setShowSearch(false)}>取消</div>
                     </div>
-                    <div className="search-cancel" onClick={() => setShowSearch(false)}>取消</div>
-                </div>
             }
 
 

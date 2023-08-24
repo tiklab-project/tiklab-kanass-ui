@@ -1,12 +1,31 @@
+@media (max-width: 768px) {
+    .work-add-page {
+      height: calc(100vh - 20px);
+    }
+  }
+  
+  /* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
+  @media (min-width: 769px) and (max-width: 1280px) {
+    .work-add-page {
+        height: calc(100vh - 60px);
+    }
+  }
+  
+  /* 在分辨率大于 1024px 时应用的样式 */
+  @media (min-width: 1280px) {
+    .work-add-page {
+      height: 80vh;
+    }
+  }
+
 .work-add-page {
     gap: 20px;
-    max-height: 500px;
-    min-height: 500px;
+    
     .work-add-page-content {
         // padding: 0 15px;
         display: flex;
         flex-direction: column;
-        height: 500px;
+        height: 100%;
         .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
             display: inline-block;
             margin-right: 4px;

@@ -142,7 +142,7 @@ const Search = (props) => {
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        // setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.modelId}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -152,7 +152,7 @@ const Search = (props) => {
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
-        setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }]);
+        // setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }]);
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.id}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)

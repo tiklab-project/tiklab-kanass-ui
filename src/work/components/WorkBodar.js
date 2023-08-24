@@ -128,7 +128,7 @@ const WorkBodar = (props) => {
         setWorkIndex(index)
         setWorkId(workItem.id)
         setIsModalVisible(true)
-        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
         if (path === `/index/projectDetail/:id/workBodar`) {
             console.log(props.history)
             props.history.replace(`/index/projectDetail/${projectId}/workBodar/${workItem.id}`)

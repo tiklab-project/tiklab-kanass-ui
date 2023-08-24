@@ -7,6 +7,7 @@ import "./WorkAsideFilter.scss";
 import WorkFilterHigh from "./WorkFilterHigh";
 import "./WorkFilterModal.scss";
 const WorkFilterModal = (props) => {
+    const {style, workListSearch, viewType} = props;
     const filterDropDownRef = useRef();
     const layout = "horizontal"
   
@@ -29,9 +30,34 @@ const WorkFilterModal = (props) => {
         }
     }
 
+    // useEffect(() => {
+    //     if(workListSearch?.current){
+    //         console.log(workListSearch)
+    //         setHeightFilter(workListSearch.current.clientWidth + 50);
+    //     }
+    // }, [workListSearch?.current])
+
+    const [listStyle, setListStyle] = useState()
+
+    const showModal = () => {
+        if(viewType === "list"){
+            // setHeightFilter(workListSearch.current.clientWidth + 50);
+            setListStyle({
+                left: workListSearch.current.clientWidth + 49,
+                top: "50px"
+            })
+        }else {
+            setListStyle({
+                right: 0,
+                top: "30px"
+            })
+        }
+        setFiltetModal(true)
+    }
+    
     return (
         <div className="worklist-filter-modal">
-            <div className="worklist-filter-item" onClick={() => setFiltetModal(true)}>
+            <div className={`worklist-filter-item  ${filterModal ? 'worklist-filter-active' : ''}`} onClick={() => showModal()}>
                 <svg className="botton-icon" aria-hidden="true" >
                     <use xlinkHref="#icon-filter"></use>
                 </svg>
@@ -43,6 +69,7 @@ const WorkFilterModal = (props) => {
                 ref={filterDropDownRef}
                 className={`filter-modal ${filterModal ? "filter-modal-show" : "filtet-modal-hidden"}`}
                 footer={null}
+                style={listStyle}
             >
                 <div className="filter-modal-title">
                     <div>筛选条件</div>

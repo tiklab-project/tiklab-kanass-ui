@@ -15,18 +15,18 @@
         position: absolute;
         // top: 0;
         z-index: 100;
-        width: 200px;
+        // width: 200px;
         border-radius: 4px;
         background: #fff;
         box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
-        .work-type-box-title {
-            height: 40px;
-            line-height: 40px;
-            font-weight: 500;
-            font-size: 14px;
-            padding: 0 20px;
-            border-bottom: 1px solid #F0F0F0;
-        }
+        // .work-type-box-title {
+        //     height: 40px;
+        //     line-height: 40px;
+        //     font-weight: 500;
+        //     font-size: 14px;
+        //     padding: 0 20px;
+        //     border-bottom: 1px solid #F0F0F0;
+        // }
     }
     .work-type-item {
         display: flex;
@@ -34,7 +34,8 @@
         align-items: center;
         height: 40px;
         line-height: 40px;
-        padding: 0 20px;
+        padding: 0 15px;
+        cursor: pointer;
     }
     .work-type-item:hover {
         background-color: var(--tiklab-gray-400);

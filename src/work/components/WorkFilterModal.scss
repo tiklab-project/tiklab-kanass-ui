@@ -1,5 +1,6 @@
 .worklist-filter-modal {
     cursor: pointer;
+
     // position: relative;
     .filtet-modal-hidden {
         display: none;
@@ -9,13 +10,26 @@
         display: block;
     }
 
+    .worklist-filter-active {
+        background-color: var(--tiklab-gray-400)
+    }
+
     .worklist-filter-item {
         display: flex;
         align-items: center;
+        border-radius: 4px;
+        position: relative;
+        height: 30px;
+        cursor: pointer;
+        padding: 0 3px;
+    }
+
+    .worklist-filter-item:hover {
+        background-color: var(--tiklab-gray-400);
     }
 
     .filter-modal {
-        width: 400px;
+        width: 420px;
         background-color: #fff;
         position: absolute;
         z-index: 3;
@@ -35,12 +49,21 @@
         align-items: center;
         border-bottom: 1px solid #f7f7f7;
     }
+
     .workitem-filter-height-botton {
         display: flex;
         gap: 10px;
         justify-content: flex-end;
+        padding: 10px 15px 10px;
     }
+
     .height-filter {
-        padding: 20px 15px;
+        padding-top: 10px;
+
+        .workitem-filter-height {
+            padding: 0 15px;
+            height: 400px;
+            overflow: auto;
+        }
     }
 }

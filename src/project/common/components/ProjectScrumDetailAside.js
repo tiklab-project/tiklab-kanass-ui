@@ -47,7 +47,7 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/workList`,
+            url: `/index/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
@@ -113,7 +113,7 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/workList`,
+            url: `/index/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },

@@ -2,29 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
-import { Select } from 'antd';
 
 const WorkQuickFilter = (props) => {
-    const { workStore, heightFilter } = props;
+    const { workStore, getWorkList, flowIds } = props;
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { setSearchCondition, findStateNodeList,quickFilterValue, setQuickFilterValue,
-        findDmFlowList, viewType, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, setWorkIndex, setWorkId } = workStore;
-    const [flowIds, setFlowIds] = useState();
-    useEffect(() => {
-        findDmFlowList({ domainId: projectId }).then(res => {
-            if (res.code === 0) {
-                const list = [];
-                res.data.map(item => {
-                    list.push(item.flow.id)
-                })
-                setFlowIds(list)
-            }
-        })
+    const { setSearchCondition, findStateNodeList, setQuickFilterValue, 
+        quickFilterValue, viewType} = workStore;
 
-        return;
-    }, [])
     const quickFilterList = [
         {
             value: "all",
@@ -59,21 +44,16 @@ const WorkQuickFilter = (props) => {
                 }
             }
         })
-        const newStateNodeList = stateNodeList.filter((item, index) => {
+        const newStateNodeList = stateNodeList.filter((item,index) =>{
             return stateNodeList.indexOf(item) === index;  // 因为indexOf 只能查找到第一个  
-        });
-
+         });
+       
         return newStateNodeList;
     }
 
-    const selectMenu = (value) => {
-        let data = value;
-        if( workShowType !== "list"){
-            setQuickFilterValue(value)
-            data = value.value;
-        }
-        
-        switch (data) {
+    const selectMenu = (values) => {
+        setQuickFilterValue(values)
+        switch (values.value) {
             case "all":
                 getAllWorkItem();
                 break;
@@ -92,7 +72,7 @@ const WorkQuickFilter = (props) => {
             default:
                 break;
         }
-
+        
     }
 
     const getAllWorkItem = () => {
@@ -171,82 +151,25 @@ const WorkQuickFilter = (props) => {
         getWorkList();
     }
 
-    const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
-    }
 
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
+    return (<SelectSimple name="quickFilter"
+    onChange={(value) => selectMenu(value)}
+    title={"所有"} 
+    ismult={false}
+    selectValue = {quickFilterValue}
+>
+    {
+        quickFilterList.map(item => {
+            return <SelectItem
+                value={item.value}
+                label={item.name}
+                key={item.value}
+
+            />
         })
     }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    return (<>
-        {
-            workShowType === "list" ? <Select
-                // mode="multiple"
-                placeholder="快速筛选"
-                className="work-select"
-                key="quickFilter"
-                maxTagCount={1}
-                getPopupContainer={() => heightFilter.current}
-                onChange={(value) => selectMenu(value)}
-            >
-                {
-                    quickFilterList && quickFilterList.map((item) => {
-                        return <Select.Option value={item.value} key={item.label}>{item.name}</Select.Option>
-                    })
-                }
-            </Select>
-            :
-            <SelectSimple name="quickFilter"
-                onChange={(value) => selectMenu(value)}
-                title={"所有"}
-                ismult={false}
-                selectValue={quickFilterValue}
-            >
-                {
-                    quickFilterList.map(item => {
-                        return <SelectItem
-                            value={item.value}
-                            label={item.name}
-                            key={item.value}
-
-                        />
-                    })
-                }
-            </SelectSimple>
-
-        }
-
-    </>
-
+</SelectSimple>
+        
     )
 }
 export default withRouter(inject("workStore")(observer(WorkQuickFilter)));

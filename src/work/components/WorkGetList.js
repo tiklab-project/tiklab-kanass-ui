@@ -12,9 +12,10 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
                 goWorkItem("system", workStore, projectId)
                 break;
             case "/index/projectDetail/:id/workList":
+            case "/index/projectDetail/:id/workList/:workId":
             case "/index/projectDetail/:id/workTable":
             case "/index/projectDetail/:id/workBodar":
-                goWorkItem("project", workStore, projectId)
+                goWorkItem("project", workStore, projectId, router)
                 break;
             case "/index/workone/:id":
                 goWorkItem("systemOne", workStore, projectId)
@@ -31,7 +32,7 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 
 }
 
-const goWorkItem = (type, workStore, projectId) => {
+const goWorkItem = (type, workStore, projectId, router) => {
     const { setSearchConditionNull, setSearchCondition, sprintId } = workStore;
 
     const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
@@ -58,20 +59,20 @@ const goWorkItem = (type, workStore, projectId) => {
         setSearchCondition(initValues)
         sessionStorage.removeItem("searchCondition")
         // initFrom(initValues)
-        getWorkList(workStore, projectId);
+        getWorkList(workStore,router);
     })
 }
 
-const getWorkList = (workStore, projectId) => {
+const getWorkList = (workStore, router) => {
     const { viewType } = workStore;
     if (viewType === "tile") {
-        getPageList(workStore, projectId);
+        getPageList(workStore, router);
     } else if (viewType === "tree") {
-        getPageTree(workStore, projectId);
+        getPageTree(workStore, router);
     }
 }
 
-const getPageTree = (workStore, projectId) => {
+const getPageTree = (workStore, router) => {
     const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType } = workStore;
 
     getWorkConditionPageTree().then((res) => {
@@ -79,7 +80,6 @@ const getPageTree = (workStore, projectId) => {
             if (workShowType === "list") {
                 setWorkIndex(1)
                 setWorkId(res.dataList[0].id)
-                // setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
             }
         } else {
             setWorkIndex(0)
@@ -93,9 +93,8 @@ const getPageList = (workStore, projectId) => {
     getWorkConditionPage().then((res) => {
         if (res.dataList.length > 0) {
             if (workShowType === "list") {
-                setWorkIndex(1)
-
-                setWorkId(res.dataList[0].id)
+                // setWorkIndex(1)
+                // setWorkId(res.dataList[0].id)
                 // setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
             }
         } else {

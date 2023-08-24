@@ -55,7 +55,7 @@ const WorkCreatDropdown = (props) => {
                 className={`work-type-box ${showModal ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
             >
-                <div className="work-type-box-title">选择事项类型</div>
+                {/* <div className="work-type-box-title">选择事项类型</div> */}
                 {
                     workTypeList && workTypeList.map((item) => {
                         return <div className={`work-type-item`}
@@ -72,12 +72,12 @@ const WorkCreatDropdown = (props) => {
                                     alt=""
                                     className="img-icon"
                                 />
-                                {item.workType.name}
+                                添加{item.workType.name}
                             </div>
 
-                            <svg className="right-icon" aria-hidden="true">
+                            {/* <svg className="right-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-pageRight`}></use>
-                            </svg>
+                            </svg> */}
                         </div>
 
                     })

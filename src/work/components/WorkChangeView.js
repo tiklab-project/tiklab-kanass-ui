@@ -18,7 +18,6 @@ const WorkFilterSort = (props) => {
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const path = props.match.path;
-    console.log(props)
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
         return () => {

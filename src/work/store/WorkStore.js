@@ -56,7 +56,7 @@ export class WorkStore {
     @observable attachList = []
 
     // 事项的视图类型
-    @observable workShowType = "list"
+    @observable workShowType = "table"
 
     // 事项的视图类型
     @observable viewType = "tree"
@@ -352,7 +352,6 @@ export class WorkStore {
         const data = await Service("/workItem/findWorkItemNumByWorkType",this.searchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
-            console.log(data)
         }
         return data.data;
     }
@@ -363,7 +362,6 @@ export class WorkStore {
         const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
-            console.log(data)
         }
         return data.data;
     }

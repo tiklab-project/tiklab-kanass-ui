@@ -330,9 +330,9 @@ const Survey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        // setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
 
-        props.history.push(`/index/projectDetail/${item.project.id}/workTable`)
+        props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
     }
 
     const goVersion = (item) => {

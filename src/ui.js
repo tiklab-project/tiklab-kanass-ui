@@ -3,7 +3,7 @@ import HomeStore from "./home/common/store/HomeStore"
 import AsyncComponent from './common/lazy/AsyncComponent'
 
 const Login = AsyncComponent(() => import('./login/Login'))
-const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
+const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
@@ -21,7 +21,7 @@ const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/compon
 const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
 
 const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
-const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))    
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))
 const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
 const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
 // 状态组件
@@ -52,8 +52,8 @@ const ProjectRole = AsyncComponent(() => import('./setting/privilege/ProjectRole
 //组织用户
 const OrgaContent = AsyncComponent(() => import('./setting/orga/Orga'))
 const OrgaUser = AsyncComponent(() => import('./setting/orga/User'))
-const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirectory"))
-const ProjectUserGroup = AsyncComponent(()=> import("./setting/user/ProjectUserGroup"))
+const ProjectDirectory = AsyncComponent(() => import("./setting/user/ProjectDirectory"))
+const ProjectUserGroup = AsyncComponent(() => import("./setting/user/ProjectUserGroup"))
 const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/ProjectSystemUserGroup"))
 
 const Index = AsyncComponent(() => import('./home/common/components/HomeLayout'))
@@ -82,6 +82,9 @@ const TestRepository = AsyncComponent(() => import('./project/test/components/Te
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
+const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
+const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
+const WorkBodar = AsyncComponent(() => import('./work/components/WorkBodar'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
 const WorkDetailPage = AsyncComponent(() => import('./work/components/WorkDetailPage'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
@@ -102,14 +105,14 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 // 项目权限
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
-const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
+const StatisticsWork = AsyncComponent(() => import('./statistics/components/StatisticsStatusWork'))
 const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
 // 迭代
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
-const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
+const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
 //迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
@@ -218,6 +221,9 @@ export {
     PlanSprint,
     ProjectLog,
     Work,
+    WorkList,
+    WorkTable,
+    WorkBodar,
     WorkTableDetail,
     WorkDetailPage,
     Milestone,

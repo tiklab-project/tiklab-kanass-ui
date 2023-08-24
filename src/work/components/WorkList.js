@@ -15,10 +15,11 @@ import "./WorkList.scss";
 import { Row, Col } from "antd";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
+import WorkDetail from "./WorkDetail";
 import { finWorkList } from "./WorkGetList";
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkList = (props) => {
-    const {route} = props;
     const projectId = props.match.params.id;
     const {workId, setWorkShowType} = WorkStore;
     const path = props.match.path;
@@ -29,19 +30,18 @@ const WorkList = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
         setWorkShowType("list")
-        debugger
         finWorkList(path, WorkStore, projectId, sprintId)
-    }, [])
+    }, [projectId])
 
     useEffect(() => {
         if(workId && workId.length > 0){
             if(path === `/index/projectDetail/:id/workList`){
+                console.log(`/index/projectDetail/${projectId}/workList/${workId}`)
                 props.history.push(`/index/projectDetail/${projectId}/workList/${workId}`)
             }
             if(path === `/index/workList`){
                 props.history.push(`/index/workList/${workId}`)
             }
-            
         }
     }, [workId]);
 
@@ -52,10 +52,10 @@ const WorkList = (props) => {
                     {...props}
                 />
                 <Row style={{ flex: 1 }}>
-                    <Col lg={{ span: 24 }} xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+                    <Col xs={{ span: "24" }} sm={{ span: "24" }} md={{ span: "24" }} xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                         <div className="work-list-detail">
-                            {/* <WorkDetail {...props}></WorkDetail> */}
-                            {renderRoutes(route.routes)}
+                            <WorkDetail {...props}></WorkDetail>
+                            {/* {renderRoutes(route.routes)} */}
                         </div>
                     </Col>
                 </Row>

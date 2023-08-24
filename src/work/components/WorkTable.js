@@ -51,7 +51,7 @@ const WorkTable = (props) => {
         // setSessionStorage("workIndex", index + 1)
         setWorkIndex(index + 1)
         setSessionStorage("searchCondition", searchCondition)
-        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        // setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
         if(path === `/index/projectDetail/:id/workTable`){
             console.log(props.history)
@@ -100,7 +100,6 @@ const WorkTable = (props) => {
         },
         {
             title: '负责人',
-            width: "120",
             dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',
             render: (text, record) => <div className="work-info">
@@ -110,7 +109,6 @@ const WorkTable = (props) => {
         },
         {
             title: '创建人',
-            width: "120",
             dataIndex: ['builder', 'nickname'],
             key: 'builderId',
             render: (text, record) => <div className="work-info">
@@ -120,7 +118,6 @@ const WorkTable = (props) => {
         },
         {
             title: '项目',
-            width: "150",
             dataIndex: ['project', 'projectName'],
             key: 'project',
             render: (text, record) => <div className="work-info">
@@ -148,7 +145,6 @@ const WorkTable = (props) => {
         },
         {
             title: '优先级',
-            width: "100",
             dataIndex: ['workPriority', 'name'],
             key: 'workPriority',
             render: (text, record) => <div className="work-info">
@@ -174,7 +170,6 @@ const WorkTable = (props) => {
         {
             title: '状态',
             dataIndex: ['workStatusNode', 'name'],
-            width: "100",
             key: 'workStatus',
             render: (text, record) => <div className={`work-status ${record.workStatusCode}`}>
                 {text}
@@ -184,7 +179,6 @@ const WorkTable = (props) => {
             title: '创建时间',
             dataIndex: "buildTime",
             key: 'workStatus',
-            width: "140",
             render: (text, record) => <div className="work-info-text">
                 {text}
             </div>
@@ -249,7 +243,7 @@ const WorkTable = (props) => {
                             <WorkTableHead />
                             <WorkTableFilter />
                         </div>
-                        <div style={{ overflow: "hidden" }} className="work-table">
+                        <div className="work-table">
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
                                     columns={columns}

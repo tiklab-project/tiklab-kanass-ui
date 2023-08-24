@@ -810,17 +810,17 @@ const Routers = [
                         component: WorkBodar,
                         exact: true
                     },
-
+                    {
+                        path: "/index/projectDetail/:id/workList/:workId",
+                        component: WorkList,
+                        exact: true
+                    },
                     {
                         path: "/index/projectDetail/:id/workList",
                         component: WorkList,
-                        routes: [
-                            {
-                                path: "/index/projectDetail/:id/workList/:workId",
-                                component: WorkDetailPage
-                            }
-                        ]
+                        // exact: true
                     },
+                    
                     {
                         path: "/index/projectDetail/:id/WorkDetail",
                         component: WorkTableDetail,

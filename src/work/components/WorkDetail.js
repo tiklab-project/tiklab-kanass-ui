@@ -22,22 +22,19 @@ import { setSessionStorage, getSessionStorage } from "../../common/utils/setSess
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
-    const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType, setWorkShowType,
+    const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
-        setWorkIndex, workIndex, getWorkBoardList, findToNodeList, getWorkTypeList, getModuleList,
+        setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
         setAlertText, setIsShowAlert, findTransitionList
     } = workStore;
     const detailCrumbArray = getSessionStorage("detailCrumbArray");
-    // const workIndex = setWorkIndex(getSessionStorage("workIndex"));
     const projectId = props.match.params.id;
-    const sprintId = props.match?.params?.sprint;
-    const routerWorkId = props.match.params.workId;
+
     const workDeatilForm = useRef()
     const inputRef = useRef()
     const [workInfo, setWorkInfo] = useState();
     const [workStatus, setWorkStatus] = useState("nostatus")
-    const userId = getUser().userId;
     const tenant = getUser().tenant;
     const [percentValue, setPercentValue] = useState(0)
     const [isFocus, setIsFocus] = useState()
@@ -54,10 +51,11 @@ const WorkDetail = (props) => {
                 setWorkInfo(res)
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                if (props.match.path === "/index/projectDetail/:id/workList") {
-                    let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
+                // if (props.match.path === "/index/projectDetail/:id/workList") {
+                    
+                // }
+                let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
                     setSessionStorage("detailCrumbArray", crumbArray);
-                }
 
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
@@ -306,7 +304,13 @@ const WorkDetail = (props) => {
                             detailCrumbArray?.length > 0 &&
                             <div className="work-detail-crumb-col">
                                 <div className="work-detail-crumb">
-                                  
+                                    {
+                                        props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/workTable`)}>事项
+                                            <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
+                                                <use xlinkHref="#icon-rightBlue"></use>
+                                            </svg>
+                                        </div>
+                                    }
                                     {
                                         detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
                                             let html;
