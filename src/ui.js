@@ -6,6 +6,7 @@ const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
+const Search = AsyncComponent(() => import("./home/search/components/Search"))
 //组织中心
 const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
@@ -159,6 +160,7 @@ const StageDetail = AsyncComponent(() => import("./project/stage/component/Stage
 export {
     Login,
     ProjectLogOut,
+    Search,
     HomeStore,
     VailProductUserPage,
     ProjectNotFound,

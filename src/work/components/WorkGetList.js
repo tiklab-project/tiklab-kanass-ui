@@ -34,11 +34,9 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 
 const goWorkItem = (type, workStore, projectId, router) => {
     const { setSearchConditionNull, setSearchCondition, sprintId } = workStore;
-
-    const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
+    // const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
     // const id = props.match.params.id;
     let initValues = {
-        ...searchData,
         pageParam: {
             pageSize: 20,
             currentPage: 1
@@ -51,13 +49,16 @@ const goWorkItem = (type, workStore, projectId, router) => {
         case "project":
             initValues = { ...initValues, projectIds: [projectId] };
             break;
+        case "system":
+            initValues = { ...initValues, projectIds: []};
+            break;
         default:
             break;
     }
 
     setSearchConditionNull().then(res => {
         setSearchCondition(initValues)
-        sessionStorage.removeItem("searchCondition")
+        // sessionStorage.removeItem("searchCondition")
         // initFrom(initValues)
         getWorkList(workStore,router);
     })

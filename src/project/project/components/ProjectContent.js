@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Input, Table, Space, Select } from 'antd';
+import { Spin, Table, Space, Select } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
@@ -20,12 +20,15 @@ const ProjectContent = (props) => {
     const userId = getUser().userId;
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
+    const [recentLoading, setRecentLoading] = useState(false);
     const tenant = getUser().tenant;
 
     useEffect(() => {
         findJoinProjectList({})
-        statProjectWorkItem().then(res => {
+        setRecentLoading(true)
+        statProjectWorkItem(3).then(res => {
             setRecentProjectList(res.data)
+            setRecentLoading(false)
         })
         findProjectFocus(userId)
         return;
@@ -284,6 +287,7 @@ const ProjectContent = (props) => {
                         最近项目
                     </div>
                 </div>
+                <Spin spinning={recentLoading} delay={300} >
                 <div className="home-project">
                     {
                         recentProjectList && recentProjectList.map((item, index) => {
@@ -318,6 +322,7 @@ const ProjectContent = (props) => {
                         })
                     }
                 </div>
+                </Spin>
             </div>
             <div className="project-tabs-search">
                 <div className="project-filter">

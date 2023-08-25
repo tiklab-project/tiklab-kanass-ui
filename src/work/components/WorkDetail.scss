@@ -1,53 +1,35 @@
-.work-change-alert {
-    height: 40px;
-    background-color: transparent;
-    line-height: 40px;
-    width: calc(100% - 40px);
-    position: absolute;
-    animation: mymove 200ms;
-    top: 12px;
-    z-index: 4;
+// @media (max-width: 768px) {
+//     .work-table-detail {
+//         width: calc(100vw - 450px) !important;
+//     }
+// }
 
-    .work-change-alert-content {
-        width: 300px;
-        margin: 0 auto;
-        border: #b7eb8f 1px solid;
-        text-align: center;
-        background: #f6ffed;
+/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
+@media (max-width: 1600px) {
+    .work-table-detail {
+        width: calc(100vw - 460px) !important;
     }
 }
 
-@keyframes mymove {
-    from {
-        top: 0px;
-    }
-
-    to {
-        top: 12px;
+/* 在分辨率大于 1024px 时应用的样式 */
+@media (min-width: 1600px) {
+    .work-table-detail {
+        width: calc(80vw - 460px) !important;
     }
 }
 
 .work-table-detail {
     top: var(--tiklab-head-height) !important;
     height: calc(100vh - 48px) !important;
-
+    // width: 1000;
     .ant-drawer-body {
         padding: 0;
     }
-
-    // .ant-modal-content {
-    //     height: 90vh;
-    //     overflow: hidden;
-    // }
 
     .work-detail::-webkit-scrollbar {
         width: 0 !important;
         height: 0 !important;
     }
-
-    // .ant-modal-body {
-    //     height: calc(100% - 110px);
-    // }
 
     .work-detail {
         height: 100%;

@@ -6,7 +6,7 @@ import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import WorkQuickFilter from "./WorkQuickFilter"
-import {finWorkList} from "./WorkGetList"
+import { finWorkList } from "./WorkGetList"
 const { RangePicker } = DatePicker;
 const WorkFilterHigh = (props) => {
     // 查找表单
@@ -72,6 +72,12 @@ const WorkFilterHigh = (props) => {
                     buildTimeEnd: changedValues.createdDate ? changedValues.createdDate[1].format('YYYY-MM-DD') : null
                 }
                 break;
+            case "updateDate":
+                value = {
+                    updateTimeStart: changedValues.updateDate ? changedValues.updateDate[0].format('YYYY-MM-DD') : null,
+                    updateTimeEnd: changedValues.updateDate ? changedValues.updateDate[1].format('YYYY-MM-DD') : null
+                }
+                break;
             case "planStartDate":
                 value = {
                     planStartDateStart: changedValues.planStartDate ? changedValues.planStartDate[0].format('YYYY-MM-DD') : null,
@@ -132,7 +138,7 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
-        setQuickFilterValue({label: '所有', value: 'all'})
+        setQuickFilterValue({ label: '所有', value: 'all' })
         finWorkList(path, workStore, projectId, sprintId)
     }
 
@@ -199,7 +205,7 @@ const WorkFilterHigh = (props) => {
                 {
                     workShowType === "list" && <>
                         <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
-                            <WorkQuickFilter heightFilter = {heightFilter}/>
+                            <WorkQuickFilter heightFilter={heightFilter} />
                         </Form.Item>
 
                         <Form.Item name="assignerIds" label={labelHidden ? null : "负责人"} rules={[{ required: false }]} >
@@ -257,7 +263,9 @@ const WorkFilterHigh = (props) => {
                 <Form.Item name="createdDate" label={labelHidden ? null : "创建日期"} rules={[{ required: false }]} >
                     <RangePicker getPopupContainer={() => heightFilter.current} />
                 </Form.Item>
-
+                <Form.Item name="updateDate" label={labelHidden ? null : "更新日期"} rules={[{ required: false }]} >
+                    <RangePicker getPopupContainer={() => heightFilter.current} />
+                </Form.Item>
                 <Form.Item name="planStartDate" label={labelHidden ? null : "计划开始日期"} rules={[{ required: false }]} >
                     <RangePicker getPopupContainer={() => heightFilter.current} />
                 </Form.Item>
@@ -315,7 +323,7 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                
+
             </Form>
             <div className="workitem-filter-height-botton">
                 <Button onClick={() => resetFilter()}>重置</Button>

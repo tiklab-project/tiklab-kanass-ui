@@ -220,7 +220,7 @@ export class ProjectStore {
     @action
 	statProjectWorkItem = async(value) => {
         const params = new FormData();
-        params.append("recentMasterId",value)
+        params.append("num",value)
         const data = await Service("/workItemStat/statProjectWorkItem", params)
         return data;
     }

@@ -58,20 +58,7 @@ const ProdeScrumAside = (props) => {
             key: "sprint",
             encoded: "Sprint",
         },
-        {
-            title: "测试用例",
-            icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/test`,
-            key: "test",
-            encoded: "test",
-        },
-        {
-            title: "知识库",
-            icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/wiki`,
-            key: "wiki",
-            encoded: "wiki",
-        },
+        
         {
             title: `${t('version')}`,
             icon: 'version',
@@ -92,7 +79,22 @@ const ProdeScrumAside = (props) => {
             url: `/index/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
+        },
+        {
+            title: "知识库",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
+            title: "测试用例",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/test`,
+            key: "test",
+            encoded: "test",
         }
+        
     ];
 
     const normalProrouter = [
@@ -117,20 +119,8 @@ const ProdeScrumAside = (props) => {
             key: "work",
             encoded: "Work",
         },
-        {
-            title: "测试用例",
-            icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/test`,
-            key: "test",
-            encoded: "test",
-        },
-        {
-            title: "知识库",
-            icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/wiki`,
-            key: "wiki",
-            encoded: "wiki",
-        },
+        
+        
         {
             title: `${t('version')}`,
             icon: 'version',
@@ -151,6 +141,20 @@ const ProdeScrumAside = (props) => {
             url: `/index/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
+        },
+        {
+            title: "知识库",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
+            title: "测试用例",
+            icon: 'sprint',
+            url: `/index/projectDetail/${projectId}/test`,
+            key: "test",
+            encoded: "test",
         }
     ];
 

@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
+import { getUser } from "tiklab-core-ui";
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType } = props;
     const modelRef = useRef()
     const [stateType, setState] = useState();
     const workAddModel = useRef()
     const [showModal, setShowModal] = useState(false);
+    const tenant = getUser().tenant;
     /**
     * 监听切换弹窗的显示与不显示
     */

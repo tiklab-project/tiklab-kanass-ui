@@ -150,6 +150,7 @@ const WorkAddPage = (props) => {
                             style: {
                                 marginTop: '20vh',
                             },
+                            duration: 1
                         });
                         setShowAddModel(false)
                     } else {
@@ -161,6 +162,7 @@ const WorkAddPage = (props) => {
                                     style: {
                                         marginTop: '20vh',
                                     },
+                                    duration: 1
                                 });
                                 setShowAddModel(false)
                             }

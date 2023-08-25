@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber } from "antd";
+import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
@@ -52,10 +52,10 @@ const WorkDetail = (props) => {
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 // if (props.match.path === "/index/projectDetail/:id/workList") {
-                    
+
                 // }
                 let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
-                    setSessionStorage("detailCrumbArray", crumbArray);
+                setSessionStorage("detailCrumbArray", crumbArray);
 
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
@@ -344,18 +344,18 @@ const WorkDetail = (props) => {
                                     }
                                 </div>
                                 {
-                                    workShowType !== "list" && <div className="work-detail-close" onClick={()=> setIsModalVisible(false)}>
+                                    workShowType !== "list" && <div className="work-detail-close" onClick={() => setIsModalVisible(false)}>
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-close"></use>
                                         </svg>
                                     </div>
                                 }
-                                
+
                             </div>
 
                         }
 
-                        <div className="work-detail-top" ref = {workDetailTop}>
+                        <div className="work-detail-top" ref={workDetailTop}>
                             <div className="work-detail-top-name">
                                 <div className="work-item-title-top">
                                     <div
@@ -378,14 +378,24 @@ const WorkDetail = (props) => {
                                     <div className="work-detail-tab-botton">
 
                                         <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
-                                            <Button style={{ marginRight: "10px" }} onClick={deleteWork}>
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-delete"></use>
-                                                </svg>
-                                                删除
-                                            </Button>
+                                            <Popconfirm
+                                                title="确定删除事项?"
+                                                onConfirm={() => deleteWork()}
+                                                // onCancel={cancel}
+                                                okText="是"
+                                                cancelText="否"
+                                            >
+                                                <Button style={{ marginRight: "10px" }} >
+                                                    <svg className="svg-icon" aria-hidden="true">
+                                                        <use xlinkHref="#icon-delete"></use>
+                                                    </svg>
+                                                    删除
+                                                </Button>
+                                            </Popconfirm>
+
+
                                         </PrivilegeProjectButton>
-                                        <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer = {() => workDetailTop.current}>
+                                        <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer={() => workDetailTop.current}>
                                             <Button className="botton-background">
                                                 {workStatus}
                                                 <svg className="svg-icon" aria-hidden="true">
@@ -446,7 +456,7 @@ const WorkDetail = (props) => {
                                                         onBlur={() => changeStyle("")}
                                                         // value={assignerId}
                                                         onChange={(value) => updateSingle(workInfo.id, { assigner: value }, "assigner")}
-                                                        getPopupContainer = {() => workDetailTop.current}
+                                                        getPopupContainer={() => workDetailTop.current}
                                                         style={{
                                                             width: 150,
                                                         }}

@@ -17,9 +17,11 @@ const WorkBorderDetail = (props) => {
     const { isModalVisible, setIsModalVisible, showPage, modelRef } = props;
     const path = props.match.path;
     const projectId = props.match.params.id;
+    const bodyWidth = document.querySelector('body').offsetWidth;
+    const [drawerWidth, setDrawerWidth] = useState()
     const showModal = () => {
         setIsModalVisible(true);
-        
+
     }
 
     useImperativeHandle(modelRef, () => ({
@@ -27,10 +29,26 @@ const WorkBorderDetail = (props) => {
     }))
 
     useEffect(() => {
+        const width = document.querySelector('body').offsetWidth;
+        console.log(width)
+        console.log(isModalVisible)
+        if (isModalVisible) {
+            if (width > 1400) {
+                setDrawerWidth("60vw")
+            }
+            if (width <= 768 && width > 1280) {
+                setDrawerWidth("70vw")
+            }
+            if (width < 768) {
+                setDrawerWidth("80vw")
+            }
+        }
+
         window.addEventListener("mousedown", closeModal, false);
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
+
     }, [isModalVisible])
 
 
@@ -39,20 +57,20 @@ const WorkBorderDetail = (props) => {
             return;
         }
         if (!detailRef.current.contains(e.target) && detailRef.current !== e.target) {
-            if(path === `/index/projectDetail/:id/workTable`){
+            if (path === `/index/projectDetail/:id/workTable`) {
                 console.log(props.history)
                 props.history.replace(`/index/projectDetail/${projectId}/workTable`)
             }
-            if(path === `/index/projectDetail/:id/workBodar`){
+            if (path === `/index/projectDetail/:id/workBodar`) {
                 console.log(props.history)
                 props.history.replace(`/index/projectDetail/${projectId}/workBodar`)
             }
 
-            if(path === `/index/workTable`){
+            if (path === `/index/workTable`) {
                 console.log(props.history)
                 props.history.replace(`/index/workTable`)
             }
-            if(path === `/index/workBodar`){
+            if (path === `/index/workBodar`) {
                 console.log(props.history)
                 props.history.replace(`/index/workBodar`)
             }
@@ -61,30 +79,33 @@ const WorkBorderDetail = (props) => {
     }
 
     const closeDrawer = () => {
-        if(path === `/index/projectDetail/:id/workTable`){
+        if (path === `/index/projectDetail/:id/workTable`) {
             console.log(props.history)
             props.history.replace(`/index/projectDetail/${projectId}/workTable`)
         }
         setIsModalVisible(false);
     };
-
-    return (
+    return (<>
         <Drawer
             placement="right"
             onClose={closeDrawer}
             // title={"事项详情"}
             visible={isModalVisible}
-            className="work-table-detail"
-            width={1000}
+            className={`${isModalVisible ?  "work-table-detail" : ''} `}
+            // width={drawerWidth}
             closable={false}
             destroyOnClose={true}
-            mask = {false}
+            mask={false}
+        // getContainer={false}
         >
             <div ref={detailRef}>
-               <WorkDetail {...props} showPage = {showPage} setIsModalVisible = {setIsModalVisible}/> 
+                <WorkDetail {...props} showPage={showPage} setIsModalVisible={setIsModalVisible} />
             </div>
-            
+
         </Drawer>
+    </>
+
+
     );
 };
 

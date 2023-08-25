@@ -125,7 +125,7 @@ const Work = (props) => {
 
     // 由项目首页筛选进入事项页面
     const goProjectWorkItem = () => {
-        console.log(sessionStorage.getItem("searchCondition"))
+        // console.log(sessionStorage.getItem("searchCondition"))
         let initValues = {
             pageParam: {
                 pageSize: 20,

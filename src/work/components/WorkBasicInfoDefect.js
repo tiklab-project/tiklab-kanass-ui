@@ -13,7 +13,7 @@ import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
-
+const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
@@ -25,13 +25,13 @@ const WorkBasicInfo = (props) => {
     };
 
     const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 12 },
+        labelCol: { span: 5 },
+        wrapperCol: { span: 14 },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
-    const { workId,  workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
+    const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
         formList, moduleList, sprintList, priorityList, editWork, userList,
         findFieldList
     } = workStore;
@@ -48,13 +48,12 @@ const WorkBasicInfo = (props) => {
         if (workInfo) {
             detailForm.setFieldsValue({
                 assigner: workInfo.assigner?.id,
-                reporter: workInfo.reporter?.id,
+                builder: workInfo.builder?.id,
                 module: workInfo.module?.id,
                 workPriority: workInfo.workPriority?.id,
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
-                planBeginTime: moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat),
-                planEndTime: moment(workInfo.planEndTime || getNowFormatDate(), dateFormat),
+                planTime: [moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat),moment(workInfo.planEndTime || getNowFormatDate(), dateFormat)],
                 planTakeupTime: workInfo.planTakeupTime || null,
                 predependworkitem: workInfo.preDependWorkItem?.id,
                 sprint: workInfo.sprint?.id,
@@ -225,16 +224,15 @@ const WorkBasicInfo = (props) => {
      * 字段更新
      */
     const updateSingle = (changedValues) => {
-        const changeKey = Object.keys(changedValues)[0];
+        let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
             console.log(changedValues)
         }
-        if (changedValues.planEndTime) {
-            changedValues.planEndTime = changedValues.planEndTime.format('YYYY-MM-DD HH:mm:ss')
-        }
-        if (changedValues.planBeginTime) {
-            changedValues.planBeginTime = changedValues.planBeginTime.format('YYYY-MM-DD HH:mm:ss')
+        if (changedValues.planTime) {
+            changedValues.planBeginTime = changedValues.planTime[0].format('YYYY-MM-DD HH:mm:ss')
+            changedValues.planEndTime = changedValues.planTime[1].format('YYYY-MM-DD HH:mm:ss')
+            changeKey = "planBeginTime"
         }
 
         if (changeKey === "workPriority") {
@@ -262,9 +260,9 @@ const WorkBasicInfo = (props) => {
             }
         }
 
-        if (changeKey === "reporter") {
-            changedValues.reporter = {
-                id: changedValues.reporter
+        if (changeKey === "builder") {
+            changedValues.builder = {
+                id: changedValues.builder
             }
         }
         if (changeKey === "builder") {
@@ -401,7 +399,7 @@ const WorkBasicInfo = (props) => {
                             onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
                             labelAlign="left"
                             colon={false}
-                            
+
                         >
                             <Form.Item label="缺陷类型" name="eachType"
                                 hasFeedback={showValidateStatus === "eachType" ? true : false}
@@ -418,7 +416,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
-                                    getPopupContainer = {() =>formRef.current}
+                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
                                         selectItemList && selectItemList.map((item) => {
@@ -452,7 +450,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
-                                    getPopupContainer = {() =>formRef.current}
+                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
                                         priorityList && priorityList.map((item) => {
@@ -520,7 +518,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("sprint")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
-                                    getPopupContainer = {() =>formRef.current}
+                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
                                         sprintList && sprintList.map((item) => {
@@ -544,7 +542,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("module")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
-                                    getPopupContainer = {() =>formRef.current}
+                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
                                         moduleList && moduleList.map((item) => {
@@ -553,25 +551,8 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                         
-                            <Form.Item name="parentWorkItem" label="上级事项"
-                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
-                                validateStatus={validateStatus}
-                                className="work-select"
-                                key="selectParentWorkItem"
-                                bordered={fieldName === "parentWorkItem" ? true : false}
-                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
-                                onFocus={() => changeStyle("parentWorkItem")}
-                                onBlur={() => setFieldName("")}
-                                onMouseEnter={() => setHoverFieldName("parentWorkItem")}
-                                onMouseLeave={() => setHoverFieldName("")}
-                                allowClear
-                            >
-                                <Input
-                                    bordered={false}
-                                // disabled={true}
-                                />
-                            </Form.Item>
+
+                            
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
@@ -584,11 +565,11 @@ const WorkBasicInfo = (props) => {
                             colon={false}
                         >
                             <Form.Item
-                                name="planBeginTime" label="计划开始日期" wrapperCol={{ span: 10 }}
-                                hasFeedback={showValidateStatus === "planBeginTime" ? true : false}
+                                name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
+                                hasFeedback={showValidateStatus === "planTime" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <DatePicker
+                                {/* <DatePicker
                                     locale={locale}
                                     format={dateFormat}
                                     showTime
@@ -602,29 +583,23 @@ const WorkBasicInfo = (props) => {
                                     onMouseLeave={() => setHoverFieldName("")}
                                     getPopupContainer = {() =>formRef.current}
                                 // suffixIcon={false}
+                                /> */}
+                                <RangePicker
+                                    locale={locale}
+                                    format={dateFormat}
+                                    allowClear={false}
+                                    className="work-select"
+                                    bordered={fieldName === "planTime" ? true : false}
+                                    suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("planTime")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("planTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer={() => formRef.current}
+                                    showTime
                                 />
                             </Form.Item>
 
-                            <Form.Item
-                                name="planEndTime" label="计划结束日期" wrapperCol={{ span: 10 }}
-                                hasFeedback={showValidateStatus === "planEndTime" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <DatePicker
-                                    locale={locale}
-                                    format={dateFormat}
-                                    showTime
-                                    allowClear={false}
-                                    className="work-select"
-                                    bordered={fieldName === "planEndTime" ? true : false}
-                                    suffixIcon={fieldName === "planEndTime" || hoverFieldName == "planEndTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planEndTime")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planEndTime")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer = {() =>formRef.current}
-                                />
-                            </Form.Item>
 
                             <Form.Item name="planTakeupTime" label="计划用时"
                                 hasFeedback={showValidateStatus === "planTakeupTime" ? true : false}
@@ -640,43 +615,29 @@ const WorkBasicInfo = (props) => {
                                     onMouseLeave={() => setHoverFieldName("")}
                                     onChange={(value) => updataPlanTime(value)}
                                     value={planTakeupTimeValue}
-                                // bordered={false}
-                                // disabled={true}
                                 />
                                 小时
                             </Form.Item>
-                            {/* <Form.Item
-                                name="predependworkitem" label="前置事项"
-                                hasFeedback={showValidateStatus === "predependworkitem" ? true : false}
+                            <Form.Item name="parentWorkItem" label="上级事项"
+                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
+                                validateStatus={validateStatus}
+                                className="work-select"
+                                key="selectParentWorkItem"
+                                bordered={fieldName === "parentWorkItem" ? true : false}
+                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
+                                onFocus={() => changeStyle("parentWorkItem")}
+                                onBlur={() => setFieldName("")}
+                                onMouseEnter={() => setHoverFieldName("parentWorkItem")}
+                                onMouseLeave={() => setHoverFieldName("")}
+                                allowClear
+                            >
+                               <div style={{padding: "0 11px"}}>{workInfo.parentWorkItem?.title ? workInfo.parentWorkItem?.title : "无"}</div>
+                            </Form.Item>
+                            <Form.Item label="创建人" name="builder"
+                                hasFeedback={showValidateStatus === "builder" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Input
-                                    bordered={false}
-                                    disabled={true}
-                                />
-                            </Form.Item> */}
-                            <Form.Item label="报告人" name="reporter"
-                                hasFeedback={showValidateStatus === "reporter" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    bordered={fieldName === "reporter" ? true : false}
-                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("reporter")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer = {() =>formRef.current}
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
-                                        })
-                                    }
-                                </Select>
+                                <div style={{padding: "0 11px"}}>{workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}</div>
                             </Form.Item>
                         </Form>
                     </div>

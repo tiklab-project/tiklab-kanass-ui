@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Space, Row, Col, Spin } from 'antd';
+import { Table, Space, Row, Col, Spin, Popconfirm } from 'antd';
 import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
@@ -16,7 +16,7 @@ import { finWorkList } from "./WorkGetList";
 const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, getWorkConditionPage, viewType, setWorkId,setWorkShowType,
+        detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
         createRecent, setWorkIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
@@ -50,14 +50,14 @@ const WorkTable = (props) => {
         setWorkId(record.id)
         // setSessionStorage("workIndex", index + 1)
         setWorkIndex(index + 1)
-        setSessionStorage("searchCondition", searchCondition)
+        // setSessionStorage("searchCondition", searchCondition)
         // setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
-        if(path === `/index/projectDetail/:id/workTable`){
+        if (path === `/index/projectDetail/:id/workTable`) {
             console.log(props.history)
             props.history.replace(`/index/projectDetail/${projectId}/workTable/${record.id}`)
         }
-        if(path === `/index/workTable`){
+        if (path === `/index/workTable`) {
             console.log(props.history)
             props.history.replace(`/index/workTable/${record.id}`)
         }
@@ -180,7 +180,7 @@ const WorkTable = (props) => {
             dataIndex: "buildTime",
             key: 'workStatus',
             render: (text, record) => <div className="work-info-text">
-                {text}
+                {text.slice(0, 10)}
             </div>
         },
         {
@@ -192,12 +192,21 @@ const WorkTable = (props) => {
                     {/* <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg> */}
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleteWork(record.id)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-delete"></use>
-                    </svg>
-                    <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                    <Popconfirm
+                        title="确定删除事项?"
+                        onConfirm={() =>deleteWork(record.id) }
+                        // onCancel={cancel}
+                        okText="是"
+                        cancelText="否"
+                    >
+                        <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                            <use xlinkHref="#icon-delete"></use>
+                        </svg>
+                    </Popconfirm>
+
+                    {/* <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-more"></use>
-                    </svg>
+                    </svg> */}
                 </Space>
             ),
         }

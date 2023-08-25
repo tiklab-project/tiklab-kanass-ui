@@ -175,7 +175,7 @@ const WorkLog = (props) => {
     return (
         <Fragment>
 
-            <div className="work-log" ref = {workLog}>
+            <div className="work-log" ref={workLog}>
                 <Modal
                     title={modalTitle}
                     visible={visible}
@@ -184,7 +184,7 @@ const WorkLog = (props) => {
                     onCancel={handleCancel}
                     destroyOnClose={true}
                     closable={false}
-                    getContainer = {false}
+                    getContainer={false}
                 >
                     <Form
                         {...layout}
@@ -237,8 +237,14 @@ const WorkLog = (props) => {
                                 },
                             ]}
                         >
-                            <InputNumber style={{ width: '30%', marginRight: "10px" }} />
-                        </Form.Item>小时
+                            <InputNumber
+                                defaultValue={1}
+                                style={{ width: '30%', marginRight: "10px" }}
+                                formatter={value => `${value}小时`}
+                                parser={value => value.replace('小时', '')}
+                                min={0}
+                            />
+                        </Form.Item>
                         <Form.Item
                             label="工作内容"
                             name="workContent"

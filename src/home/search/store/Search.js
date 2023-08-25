@@ -125,8 +125,8 @@ export class SearchStore{
     @action
 	statProjectWorkItem = async(value) => {
         const params = new FormData();
-        params.append("recentMasterId",value)
-        const data = await Service("/workItemStat/statProjectWorkItem", params)
+        params.append("num",value)
+        const data = await Service("/workItemStat/statProjectWorkItem", num)
         return data;
     }
 

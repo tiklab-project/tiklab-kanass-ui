@@ -73,9 +73,9 @@ class HomeStore {
      */
     @action
 	statProjectWorkItem = async(value) => {
-        const params = new FormData();
-        params.append("recentMasterId",value)
-        const data = await Service("/workItemStat/statProjectWorkItem", params)
+        const param = new FormData();
+        param.append("num",value)
+        const data = await Service("/workItemStat/statProjectWorkItem", param)
         return data;
     }
 

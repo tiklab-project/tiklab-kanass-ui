@@ -10,10 +10,10 @@ import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
-import { Empty, Tabs } from 'antd';
+import { Empty, Tabs, Spin } from 'antd';
 import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
-import {setSessionStorage} from "../../../common/utils/setSessionStorage"
+import { setSessionStorage } from "../../../common/utils/setSessionStorage"
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -23,12 +23,12 @@ const HomeSurvey = (props) => {
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
     const tenant = getUser().tenant;
-    const { setWorkId,  searchWorkById } = WorkStore;
+    const { setWorkId, searchWorkById } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
     const [recentProjectList, setRecentProjectList] = useState();
-
+    const [recentLoading, setRecentLoading] = useState(false);
 
     useEffect(() => {
         getRecentProject()
@@ -45,9 +45,11 @@ const HomeSurvey = (props) => {
      * 获取最近查看的项目列表
      */
     const getRecentProject = () => {
-        statProjectWorkItem(userId).then((res) => {
+        setRecentLoading(true)
+        statProjectWorkItem(3).then((res) => {
             if (res.code === 0 && res.data.length > 0) {
-                setRecentProjectList(res.data.slice(0, 3))
+                setRecentProjectList(res.data)
+                setRecentLoading(false)
             }
         });
     }
@@ -91,12 +93,12 @@ const HomeSurvey = (props) => {
             console.log(res)
             if (res) {
                 setWorkId(workItemId)
-                
+
                 window.location.href = url
                 sessionStorage.setItem("menuKey", "work")
             }
         })
-        
+
     }
 
     const goProject = (item) => {
@@ -109,7 +111,7 @@ const HomeSurvey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setSessionStorage("detailCrumbArray",[{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }
@@ -130,7 +132,7 @@ const HomeSurvey = (props) => {
         switch (item.model) {
             case "project":
                 element = <div className="project-item" key={item.id}>
-                    
+
                     <div className="project-item-icon">
                         {
                             item.iconUrl ?
@@ -240,42 +242,48 @@ const HomeSurvey = (props) => {
                 <div className="title">
                     <div className="name">最近项目</div>
                 </div>
-                <div className="home-project">
-                    {
-                        recentProjectList && recentProjectList.map((item, index) => {
-                            if (index < 4) {
-                                return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
-                                    <div className="item-title">
-                                        {
-                                            item.project.iconUrl ?
-                                                <img
-                                                    src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
-                                                    alt=""
-                                                    className="list-img"
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/project1.png')}
-                                                    alt=""
-                                                    className="list-img"
-                                                />
 
-                                        }
-                                        <span>{item.project.projectName}</span>
+                <Spin spinning={recentLoading} delay={500} >
+                    
+                    <div className="home-project">
+                        {
+                            recentProjectList && recentProjectList.map((item, index) => {
+                                if (index < 4) {
+                                    return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
+                                        <div className="item-title">
+                                            {
+                                                item.project.iconUrl ?
+                                                    <img
+                                                        src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
+                                                        alt=""
+                                                        className="list-img"
+                                                    />
+                                                    :
+                                                    <img
+                                                        src={('/images/project1.png')}
+                                                        alt=""
+                                                        className="list-img"
+                                                    />
+
+                                            }
+                                            <span>{item.project.projectName}</span>
+                                        </div>
+                                        <div className="item-work">
+                                            <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
+                                            <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
+                                        </div>
+
                                     </div>
-                                    <div className="item-work">
-                                        <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
-                                        <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
-                                    </div>
+                                }
 
-                                </div>
-                            }
+                            })
+                        }
+                    </div>
+                </Spin>
 
-                        })
-                    }
-                </div>
+
             </div>
-           
+
             <div className="recent-click">
                 <div className="recent-click-title">
                     <span className="name">我最近查看</span>
@@ -310,8 +318,8 @@ const HomeSurvey = (props) => {
                                         onClick={() => goTodoDetail(item.link)}
                                     />
                                 })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </TabPane>
                         <TabPane tab="已完成" key="end">
