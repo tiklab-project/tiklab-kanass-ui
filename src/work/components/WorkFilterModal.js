@@ -44,12 +44,12 @@ const WorkFilterModal = (props) => {
             // setHeightFilter(workListSearch.current.clientWidth + 50);
             setListStyle({
                 left: workListSearch.current.clientWidth + 49,
-                top: "50px"
+                top: "0px"
             })
         }else {
             setListStyle({
-                right: 0,
-                top: "30px"
+                right: "86px",
+                top: 0
             })
         }
         setFiltetModal(true)
@@ -72,7 +72,7 @@ const WorkFilterModal = (props) => {
                 style={listStyle}
             >
                 <div className="filter-modal-title">
-                    <div>筛选条件</div>
+                    <div>筛选</div>
                     <div onClick={() => setFiltetModal(false)}><CloseOutlined /></div>
                 </div>
                 <WorkFilterHigh 

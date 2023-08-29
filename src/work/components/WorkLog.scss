@@ -2,20 +2,65 @@
     .worklog-top {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        
+
         .worklog-top-title {
             font-size: 16px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: 600;
         }
-
     }
+
+    
+
+    .work-log-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        justify-content: space-between;
+        .edit-box {
+            padding-bottom: 10px;
+            border-top: 1px soild #f0f0f0;
+            border-bottom: 1px soild #f0f0f0;
+        }
+        .work-log-item-first {
+            display: flex;
+            align-items: center;
+            line-height: 30px;
+            justify-content: space-between;
+            .work-log-item-user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        .work-log-item-second {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 26px;
+            .log-content {
+                line-height: 30px;
+            }
+        }
+    }
+
     .ant-table table {
         border-bottom: 0;
     }
+
+    .worklog-table-title {
+        font-size: 13px;
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+
     .worklog-table {
         background: #fff;
         padding: 15px 0;
         border-radius: 4px;
+    }
+    .edit-box {
+        background: #fafafa;
+        padding: 0 10px 10px;
+        border-radius: 5px;
     }
 }

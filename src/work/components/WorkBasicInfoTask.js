@@ -148,7 +148,7 @@ const WorkBasicInfo = (props) => {
                                 {text}
                             </a>
                                 :
-                                <a href={`${upload_url}/file/${record.attachmentUrl}`}
+                                <a href={`${upload_url}file/${record.attachmentUrl}`}
                                     target="_blank"
                                 >
                                     {text}
@@ -160,13 +160,13 @@ const WorkBasicInfo = (props) => {
                         <Fragment>
                             {
                                 version === "cloud" ?
-                                    <a href={`${upload_url}/image/${record.attachmentUrl}?tenant=${tenant}`}
+                                    <a href={`${upload_url}image/${record.attachmentUrl}?tenant=${tenant}`}
                                         target="_blank"
                                     >
                                         {text}
                                     </a>
                                     :
-                                    <a href={`${upload_url}/image/${record.attachmentUrl}`}
+                                    <a href={`${upload_url}image/${record.attachmentUrl}`}
                                         target="_blank"
                                     >
                                         {text}

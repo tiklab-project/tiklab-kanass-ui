@@ -30,7 +30,6 @@ const WorkBorderDetail = (props) => {
 
     useEffect(() => {
         const width = document.querySelector('body').offsetWidth;
-        console.log(width)
         console.log(isModalVisible)
         if (isModalVisible) {
             if (width > 1400) {

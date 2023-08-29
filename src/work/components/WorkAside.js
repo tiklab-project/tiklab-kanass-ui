@@ -23,7 +23,7 @@ const WorkAside = (props) => {
     const changeWorkChilden = (workItem, index) => {
         setWorkId(workItem.id)
         setWorkIndex(index + 1)
-        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
 
     }
 

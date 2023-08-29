@@ -8,22 +8,24 @@ import { getUser } from "tiklab-core-ui";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
     const tenant = getUser().tenant;
-    const { workTypeList, workId } = workStore;
+    const { workTypeList, workId, workStatusList, getWorkStatus } = workStore;
     const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
     const relationAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
-    const [pageSize, setPageSize] = useState(5)
+    const [pageSize, setPageSize] = useState(20)
     useEffect(() => {
         getWorkRelationList({
             projectId: projectId,
             idNotIn: selectIds,
             workTypeIds: null,
+            workStatus: null,
             pageParam: {
                 pageSize: pageSize,
                 currentPage: 1
             }
         })
+        getWorkStatus()
         return;
     }, [])
 
@@ -64,7 +66,23 @@ const WorkRelationAddModal = (props) => {
                     pageSize: 20,
                     currentPage: 1
                 }
-            })
+            }
+        )
+    }
+    
+    const searchUnselectWorkRelationByTitle = (value) => {
+        setCurrent(1)
+        setPageSize(20)
+        getWorkRelationList(
+            {
+                likeId: value,
+                title: value,
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1
+                }
+            }
+        )
     }
     const loadNextPage = () => {
         setCurrent(current + 1)
@@ -82,110 +100,168 @@ const WorkRelationAddModal = (props) => {
         })
     }
 
-    // // 搜索事项
-    // const searchUnselectWorkRelation = (value) => {
-    //     getWorkRelationList({ title: value })
-    // }
 
     return (
         <>
             <div className="relation-add" ref={relationAdd}>
-                <div className="relation-add-input">
-                    <div>搜索添加关联事项</div>
+                <div className="relation-add-search">
+                    <InputSearch style = {{minWidth: "250px",flex: 1}} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"根据事项名称，或者id搜索"} />
+                    <SelectSimple name="workTypeIds"
+                        onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
+                        title={"事项类型"} ismult={true}
+                    >
+                        {
+                            workTypeList.map(item => {
+                                return <SelectItem
+                                    value={item.workType.id}
+                                    label={item.workType.name}
+                                    key={item.workType.id}
+                                    imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                />
+                            })
+                        }
+                    </SelectSimple>
+                    {
+                        workStatusList && workStatusList.length > 0 && <SelectSimple
+                            name="workStatus"
+                            onChange={(value) => searchUnselectWorkRelationByStatus("workStatusIds", value)}
+                            title={"状态"}
+                            ismult={true}
+                        >
+                            <div className="select-group-title">未开始</div>
+                            {
+                                workStatusList.map(item => {
+                                    if (item.id === "todo") {
+                                        return <SelectItem
+                                            value={item.id}
+                                            label={item.name}
+                                            key={item.id}
+                                            imgUrl={item.iconUrl}
+                                        />
+                                    } else {
+                                        return <div></div>
+                                    }
+
+                                })
+                            }
+                            <div className="select-group-title">进行中</div>
+                            {
+                                workStatusList.map(item => {
+                                    if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
+                                        return <SelectItem
+                                            value={item.id}
+                                            label={item.name}
+                                            key={item.id}
+                                            imgUrl={item.iconUrl}
+                                        />
+                                    } else {
+                                        return <div></div>
+                                    }
+
+                                })
+                            }
+
+
+                            <div className="select-group-title">已完成</div>
+                            {
+                                workStatusList.map(item => {
+                                    if (item.id === "done") {
+                                        return <SelectItem
+                                            value={item.id}
+                                            label={item.name}
+                                            key={item.id}
+                                            imgUrl={item.iconUrl}
+                                        />
+                                    } else {
+                                        return <div></div>
+                                    }
+
+                                })
+                            }
+                        </SelectSimple>
+                    }
                     <div className="relation-add-submit">
                         <span onClick={() => showAddRelation(false)}>
                             取消
                         </span>
                     </div>
+
                 </div>
+                {/* <div className="relation-add-input">
+                    <div>搜索添加关联事项</div>
+                    
+                </div> */}
                 <div className="relation-add-model" >
-                    <div className="relation-add-search">
-                        <SelectSimple name="workTypeIds"
-                            onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
-                            title={"事项类型"} ismult={true}
-                        >
-                            {
-                                workTypeList.map(item => {
-                                    return <SelectItem
-                                        value={item.workType.id}
-                                        label={item.workType.name}
-                                        key={item.workType.id}
-                                        imgUrl={item.workType.iconUrl}
-                                    />
-                                })
-                            }
-                        </SelectSimple>
-                        <InputSearch onChange={(value) => searchUnselectWorkRelationByStatus("title", value)} placeholder={"项目名称"} />
-                    </div>
+
                     <div className="relation-add-table">
                         <div className="relation-add-table-title">选择事项</div>
                         {
-                            workRelationList && workRelationList.length > 0 ? 
-                            <div className="relation-add-list">
-                                {
-                                    workRelationList && workRelationList.map(item => {
-                                        return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>
-                                            <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
-                                                            alt=""
-                                                            className="svg-icon"
-
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="svg-icon"
-                                                        />
-                                                }
-                                                <div>
-                                                    <div className="work-item-id">{item.id}</div>
-                                                    <div className="work-item-title">{item.title} </div>
-                                                </div>
-                                            </div>
-                                            <div className="work-item-right">
-                                                {
-                                                    item.workPriority?.iconUrl ?
-                                                        <img
-                                                            src={'/images/' + item.workPriority?.iconUrl}
-                                                            alt=""
-                                                            className="svg-icon"
-
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/proivilege1.png'}
-                                                            alt=""
-                                                            className="svg-icon"
-                                                        />
-                                                }
+                            workRelationList && workRelationList.length > 0 ?
+                                <div className="relation-add-list">
+                                    {
+                                        workRelationList && workRelationList.map(item => {
+                                            return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>
                                                 <div className="work-item-icon">
-                                                    {item.workStatus?.name}
+                                                    {
+                                                        item.workTypeSys?.iconUrl ?
+                                                            <img
+                                                                src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
+                                                                alt=""
+                                                                className="svg-icon"
+
+                                                            />
+                                                            :
+                                                            <img
+                                                                src={'/images/workType2.png'}
+                                                                alt=""
+                                                                className="svg-icon"
+                                                            />
+                                                    }
+                                                    <div>
+                                                        <div className="work-item-id">{item.id}</div>
+                                                        <div className="work-item-title">{item.title} </div>
+                                                    </div>
+                                                </div>
+                                                <div className="work-item-right">
+                                                    {
+                                                        item.workPriority?.iconUrl ?
+                                                            <img
+                                                                src={'/images/' + item.workPriority?.iconUrl}
+                                                                alt=""
+                                                                className="svg-icon"
+
+                                                            />
+                                                            :
+                                                            <img
+                                                                src={'/images/proivilege1.png'}
+                                                                alt=""
+                                                                className="svg-icon"
+                                                            />
+                                                    }
+                                                    <div className="work-item-icon">
+                                                        {item.workStatus?.name}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    })
-                                }
-                                {
-                                    unRelationTotal !== 1 &&
-                                    <>
-                                        {
-                                            unRelationTotal > current ?
-                                                <div className="relation-add-table-page" onClick={() => loadNextPage()}>{pageText}</div>
-                                                :
-                                                <div className="relation-add-table-page">到底啦~</div>
-                                        }
-                                    </>
+                                        })
+                                    }
+                                    {
+                                        unRelationTotal !== 1 &&
+                                        <>
+                                            {
+                                                unRelationTotal > current ?
+                                                    <div className="relation-add-table-page" onClick={() => loadNextPage()}>{pageText}</div>
+                                                    :
+                                                    <div className="relation-add-table-page">到底啦~</div>
+                                            }
+                                        </>
 
-                                }
-                            </div>
-                            :
-                            <div className="relation-add-table">
-                                <Empty image = "/images/nodata.png" description = "暂时没有待办~" />
-                            </div>
+                                    }
+                                </div>
+                                :
+                                <div className="relation-add-table">
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                </div>
                         }
                     </div>
 

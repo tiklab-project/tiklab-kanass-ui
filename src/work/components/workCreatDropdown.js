@@ -40,7 +40,7 @@ const WorkCreatDropdown = (props) => {
         setShowModal(false)
     }
     return (
-        <div className="work-creat" WorkCreat>
+        <div className="work-creat">
             {
                 buttonType === "svg" ? <div onClick={() => setShowModal(true)} className={`work-button-icon ${showModal ? 'work-button-active' : ''}`}>
                     <svg className="big-icon" aria-hidden="true">

@@ -51,7 +51,7 @@ const WorkTable = (props) => {
         // setSessionStorage("workIndex", index + 1)
         setWorkIndex(index + 1)
         // setSessionStorage("searchCondition", searchCondition)
-        // setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
         if (path === `/index/projectDetail/:id/workTable`) {
             console.log(props.history)

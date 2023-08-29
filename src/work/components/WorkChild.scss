@@ -4,6 +4,7 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
+        line-height: 32px;
     }
     .work-title {
         color: var(--tiklab-blue);
@@ -57,7 +58,7 @@
         background: #fff;
         border-radius: 4px;
         position: relative;
-        height: calc(100% - 90px);
+        height: calc(100% - 100px);
         .ant-table {
             overflow: auto;
             max-height: calc(100% - 100px);

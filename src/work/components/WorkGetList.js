@@ -1,3 +1,4 @@
+import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 const finWorkList = (router, workStore, projectId, sprintId) => {
     const setValue = () => {
         switch (router) {
@@ -34,8 +35,6 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 
 const goWorkItem = (type, workStore, projectId, router) => {
     const { setSearchConditionNull, setSearchCondition, sprintId } = workStore;
-    // const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
-    // const id = props.match.params.id;
     let initValues = {
         pageParam: {
             pageSize: 20,
@@ -65,11 +64,13 @@ const goWorkItem = (type, workStore, projectId, router) => {
 }
 
 const getWorkList = (workStore, router) => {
-    const { viewType } = workStore;
-    if (viewType === "tile") {
+    const { viewType, workShowType, getWorkBoardList } = workStore;
+    if (viewType === "tile" && workShowType !== "bodar") {
         getPageList(workStore, router);
-    } else if (viewType === "tree") {
+    } else if (viewType === "tree"  && workShowType !== "bodar") {
         getPageTree(workStore, router);
+    } else if (workShowType === "bodar"){
+        getWorkBoardList()
     }
 }
 
@@ -80,7 +81,9 @@ const getPageTree = (workStore, router) => {
         if (res.dataList.length > 0) {
             if (workShowType === "list") {
                 setWorkIndex(1)
+                const workItem = res.dataList[0];
                 setWorkId(res.dataList[0].id)
+                setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
             }
         } else {
             setWorkIndex(0)

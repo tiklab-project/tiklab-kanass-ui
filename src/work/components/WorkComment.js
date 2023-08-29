@@ -112,90 +112,86 @@ const WorkComment = (props) => {
         getCommentList({ current: page })
     }
     return (<>
-         {/* <Row justify="start" style={{ height: "calc(100vh - 180px)", overflow: "auto" }}>
-           <Col lg={{ span: "22" }} xl={{ span: "18" }}> */}
-                <div className="work-comment">
-                    <div className="work-comment-box">
-                        <svg className="header-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-icontouxiang1"></use>
-                        </svg>
-                        <div className={`comment-botton ${isInput ? "comment-botton-hidden" : null}`} onClick={() => changeInput()}>请输入评论...</div>
-                        <div className={`comment-input ${isInput ? "comment-input-show" : null}`}>
-                            <TextArea
-                                rows={4}
-                                className="comment-text"
-                                defaultValue={commentContent}
-                                onChange={(e) => setCommentContent(e.target.value)}
-                                ref={commentInput}
-                            />
-                            <div className="comment-submit">
-                                <Button type="primary" className="submit" onClick={() => submitComment()}>发布</Button>
-                                <Button className="cancel" onClick={() => setIsInPut(false)}>取消</Button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="work-comment-list-box">
-                        {
-                            totalRecord && totalRecord > 0 ?
-                                <Fragment>
-                                    <div className="title">评论({totalRecord})</div>
-                                    <div className="work-comment-list">
-                                        {
-                                            commentList && commentList.length > 0 && commentList.map(item => {
-                                                return <div className="comment-item" key={item.id}>
-                                                    <div className="comment-user">
-                                                        <svg className="svg-icon" aria-hidden="true">
-                                                            <use xlinkHref="#icon-icontouxiang1"></use>
-                                                        </svg>
-                                                        <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
-                                                        <span className="user-date">{item.createTime}</span>
-                                                    </div>
-                                                    {
-                                                        editCommentId === item.id ? <div className="comment-input">
-                                                            <TextArea
-                                                                rows={4}
-                                                                className="comment-text"
-                                                                defaultValue={item.details}
-                                                                onChange={(e) => setEditCommentContent(e.target.value)}
-                                                                ref={editInput}
-                                                            />
-                                                            <div className="comment-submit">
-                                                                <Button type="primary" className="submit" onClick={() => submitEditComment(item.id)}>发布</Button>
-                                                                <Button className="cancel" onClick={() => setEditCommentId()}>取消</Button>
-                                                            </div>
-                                                        </div>
-                                                            : <Fragment>
-                                                                <div className="comment-content">
-                                                                    {item.details}
-                                                                </div>
-                                                                <div className="comment-operate">
-                                                                    <span onClick={() => setEditCommentId(item.id)}>编辑</span>
-                                                                    <span onClick={() => deleteComment(item.id)}>删除</span>
-                                                                    <span>赞</span>
-                                                                </div>
-                                                            </Fragment>
-
-                                                    }
-                                                </div>
-                                            })
-                                        }
-                                    </div>
-                                    <div style={{ textAlign: "right", width: "100%", marginTop: "10px" }}>
-                                        <Pagination
-                                            defaultCurrent={1}
-                                            pageSize={6}
-                                            total={totalRecord}
-                                            onChange={(page, pageSize) => changePage(page, pageSize)}
-                                        />
-                                    </div>
-                                </Fragment> : <Empty />
-                        }
+        <div className="work-comment">
+            <div className="work-comment-box">
+                <svg className="menu-icon" aria-hidden="true">
+                    <use xlinkHref="#icon-icontouxiang1"></use>
+                </svg>
+                <div className={`comment-botton ${isInput ? "comment-botton-hidden" : null}`} onClick={() => changeInput()}>请输入评论...</div>
+                <div className={`comment-input ${isInput ? "comment-input-show" : null}`}>
+                    <TextArea
+                        rows={4}
+                        className="comment-text"
+                        defaultValue={commentContent}
+                        onChange={(e) => setCommentContent(e.target.value)}
+                        ref={commentInput}
+                    />
+                    <div className="comment-submit">
+                        <Button type="primary" className="submit" onClick={() => submitComment()}>发布</Button>
+                        <Button className="cancel" onClick={() => setIsInPut(false)}>取消</Button>
                     </div>
                 </div>
-        {/* //     </Col>
-        // </Row> */}
-        </>
+
+            </div>
+            <div className="work-comment-list-box">
+                {
+                    totalRecord && totalRecord > 0 ?
+                        <Fragment>
+                            <div className="title">评论({totalRecord})</div>
+                            <div className="work-comment-list">
+                                {
+                                    commentList && commentList.length > 0 && commentList.map(item => {
+                                        return <div className="comment-item" key={item.id}>
+                                            <div className="comment-user">
+                                                <svg className="menu-icon" aria-hidden="true">
+                                                    <use xlinkHref="#icon-icontouxiang1"></use>
+                                                </svg>
+                                                <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
+                                                <span className="user-date">{item.createTime}</span>
+                                            </div>
+                                            {
+                                                editCommentId === item.id ? <div className="comment-input">
+                                                    <TextArea
+                                                        rows={4}
+                                                        className="comment-text"
+                                                        defaultValue={item.details}
+                                                        onChange={(e) => setEditCommentContent(e.target.value)}
+                                                        ref={editInput}
+                                                    />
+                                                    <div className="comment-submit">
+                                                        <Button type="primary" className="submit" onClick={() => submitEditComment(item.id)}>发布</Button>
+                                                        <Button className="cancel" onClick={() => setEditCommentId()}>取消</Button>
+                                                    </div>
+                                                </div>
+                                                    : <Fragment>
+                                                        <div className="comment-content">
+                                                            {item.details}
+                                                        </div>
+                                                        <div className="comment-operate">
+                                                            <span onClick={() => setEditCommentId(item.id)}>编辑</span>
+                                                            <span onClick={() => deleteComment(item.id)}>删除</span>
+                                                            <span>赞</span>
+                                                        </div>
+                                                    </Fragment>
+
+                                            }
+                                        </div>
+                                    })
+                                }
+                            </div>
+                            <div style={{ textAlign: "right", width: "100%", marginTop: "10px" }}>
+                                <Pagination
+                                    defaultCurrent={1}
+                                    pageSize={6}
+                                    total={totalRecord}
+                                    onChange={(page, pageSize) => changePage(page, pageSize)}
+                                />
+                            </div>
+                        </Fragment> : <Empty />
+                }
+            </div>
+        </div>
+    </>
     )
 }
 

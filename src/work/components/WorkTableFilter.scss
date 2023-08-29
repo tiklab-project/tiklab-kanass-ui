@@ -12,7 +12,12 @@
         align-items: center;
         gap: 20px;
        
-
+        .select-group-title {
+            font-weight: 600;
+            color: var(--tiklab-gray-500);
+            font-size: 12px;
+            padding: 10 10px 5px;
+        }
         .worklist-icon {
             width: 15px;
             height: 15px;
@@ -57,13 +62,7 @@
                 height: 15px;
             }
         }
-        .filter-modal {
-            right: 0;
-            top: 30px;
-        }
-        .worklist-filter-modal {
-            position: relative;
-        }
+        
     }
     .work-view {
         cursor: pointer;

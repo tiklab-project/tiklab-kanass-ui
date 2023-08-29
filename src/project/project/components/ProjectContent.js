@@ -287,7 +287,7 @@ const ProjectContent = (props) => {
                         最近项目
                     </div>
                 </div>
-                <Spin spinning={recentLoading} delay={300} >
+                <Spin spinning={recentLoading} delay={500} >
                 <div className="home-project">
                     {
                         recentProjectList && recentProjectList.map((item, index) => {

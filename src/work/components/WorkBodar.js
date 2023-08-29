@@ -11,12 +11,12 @@ import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { Form, Row, Col } from "antd";
-
+import { finWorkList } from "./WorkGetList"
 const WorkBodar = (props) => {
     const { workBoardList, changeWorkStatus, setIndexParams,
         changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLenght, findToNodeList,
-        setWorkId, setWorkIndex, createRecent, getWorkBoardList } = WorkStore;
+        setWorkId, setWorkIndex, createRecent, setWorkShowType } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -28,14 +28,15 @@ const WorkBodar = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
     const tenant = getUser().tenant;
     const path = props.match.path;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
     const projectId = props.match.params.id;
-
-    useEffect(()=> {
-        getWorkBoardList()
+    useEffect(() => {
+        setWorkShowType("bodar")
+        finWorkList(path, WorkStore, projectId, sprintId)
         return;
     }, [])
     // 拖放效果
@@ -128,12 +129,12 @@ const WorkBodar = (props) => {
         setWorkIndex(index)
         setWorkId(workItem.id)
         setIsModalVisible(true)
-        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
         if (path === `/index/projectDetail/:id/workBodar`) {
             console.log(props.history)
             props.history.replace(`/index/projectDetail/${projectId}/workBodar/${workItem.id}`)
         }
-        if(path === `/index/workBodar`){
+        if (path === `/index/workBodar`) {
             console.log(props.history)
             props.history.replace(`/index/workBodar/${workItem.id}`)
         }
@@ -153,152 +154,155 @@ const WorkBodar = (props) => {
                     </Col>
                 </Row>
                 <div className="work-bodar">
-                    <div className="work-bodar-list">
-                        {
-                            boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {
-                                return <div className={`work-bodar-box`}
-                                    onDrop={() => changeStatus(item.state.id, index, item)}
-                                    onDragOver={dragover}
-                                    id={`targetBox${index}`}
-                                    key={item.state.id}
-                                    style={{ height: `${workBoardListLenght * 90 + 130}px` }}
-                                >
-                                    <div className="work-bodar-title">
-                                        <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
-                                    </div>
+                    <div className="work-bodar-flex">
+                        <div className="work-bodar-list">
+                            {
+                                boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {
+                                    return <div className={`work-bodar-box`}
+                                        onDrop={() => changeStatus(item.state.id, index, item)}
+                                        onDragOver={dragover}
+                                        id={`targetBox${index}`}
+                                        key={item.state.id}
+                                        style={{ height: `${workBoardListLenght * 90 + 130}px` }}
+                                    >
+                                        <div className="work-bodar-title">
+                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
+                                        </div>
 
-                                    {
-                                        isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
-                                            <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`}>
-                                                {/* dddd */}
-                                            </div>
-                                            :
-                                            <div >
-
-                                                {
-                                                    item.workItemList.length > 0 && item.workItemList.map((workItem, workIndex) => {
-                                                        return <div
-                                                            className={`work-bodar-item ${moveWorkId === workItem.id ? "work-bodar-item-move" : ""}`}
-                                                            key={workItem.id}
-                                                            onDrag={() => moveWorkItem()}
-                                                            draggable={"true"}
-                                                            onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
-                                                        >
-                                                            <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
-                                                                <div className="work-item-title-left" >
-                                                                    {
-                                                                        workItem.workTypeSys.iconUrl ?
-                                                                            <img
-                                                                                src={(upload_url + workItem.workTypeSys.iconUrl)}
-                                                                                alt=""
-                                                                                className="svg-icon"
-
-                                                                            />
-                                                                            :
-                                                                            <img
-                                                                                src={'/images/workType2.png'}
-                                                                                alt=""
-                                                                                className="svg-icon"
-                                                                            />
-                                                                    }
-                                                                    {workItem.title}
-                                                                </div>
-                                                                <div>
-                                                                    <span >{workItem.id}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="work-item-id"
-                                                                onClick={() => showModal(workItem, workIndex, index)}
-                                                            >
-                                                                <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
-                                                            </div>
-
-                                                        </div>
-                                                    })
-                                                }
-                                            </div>
-                                    }
-                                </div>
-                            })
-                        }
-                    </div>
-                    {
-                        boardGroup !== "nogroup" && workUserGroupBoardList && workUserGroupBoardList.map((item, index) => {
-                            return <div style={{ overflow: "auto", height: "85vh" }}>
-                                <div className="work-bodar-name">{item.user.name}</div>
-                                <div className="work-bodar">
-                                    {
-                                        item.workBoardList && item.workBoardList.map(workList => {
-                                            return <div className="work-bodar-box"
-                                                onDrop={() => changeStatus(workList.state.id, index, workList)}
-                                                onDragOver={dragover}
-                                                id={`targetBox${index}`}
-                                                key={workList.state.id}
-                                            // style={{ height: `${item.length * 83 + 60}px` }}
-                                            >
-                                                <div className="work-bodar-title">
-                                                    <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
+                                        {
+                                            isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
+                                                <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`}>
+                                                    {/* dddd */}
                                                 </div>
-                                                {
-                                                    workList.workItemList.length > 0 && workList.workItemList.map((workItem, workIndex) => {
-                                                        return <div
-                                                            className="work-bodar-item"
-                                                            key={workItem.id}
-                                                            onDrag={() => moveWorkItem()}
-                                                            draggable="true"
-                                                            onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
-                                                        >
-                                                            <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
-                                                                <div className="work-item-title-left" >
-                                                                    {
-                                                                        workItem.workTypeSys.iconUrl ?
-                                                                            <img
-                                                                                src={version === "cloud" ?
-                                                                                    (upload_url + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                                                    :
-                                                                                    (upload_url + workItem.workTypeSys?.iconUrl)
-                                                                                }
-                                                                                alt=""
-                                                                                className="svg-icon"
+                                                :
+                                                <div >
 
-                                                                            />
-                                                                            :
-                                                                            <img
-                                                                                src={'/images/workType2.png'}
-                                                                                alt=""
-                                                                                className="svg-icon"
-                                                                            />
-                                                                    }
-                                                                    {workItem.title}
-                                                                </div>
-                                                                <div>
-                                                                    <span >{workItem.id}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="work-item-id"
-                                                                onClick={() => showModal(workItem, workIndex, index)}
+                                                    {
+                                                        item.workItemList.length > 0 && item.workItemList.map((workItem, workIndex) => {
+                                                            return <div
+                                                                className={`work-bodar-item ${moveWorkId === workItem.id ? "work-bodar-item-move" : ""}`}
+                                                                key={workItem.id}
+                                                                onDrag={() => moveWorkItem()}
+                                                                draggable={"true"}
+                                                                onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                             >
-                                                                <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
+                                                                <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
+                                                                    <div className="work-item-title-left" >
+                                                                        {
+                                                                            workItem.workTypeSys.iconUrl ?
+                                                                                <img
+                                                                                    src={(upload_url + workItem.workTypeSys.iconUrl)}
+                                                                                    alt=""
+                                                                                    className="svg-icon"
+
+                                                                                />
+                                                                                :
+                                                                                <img
+                                                                                    src={'/images/workType2.png'}
+                                                                                    alt=""
+                                                                                    className="svg-icon"
+                                                                                />
+                                                                        }
+                                                                        {workItem.title}
+                                                                    </div>
+                                                                    <div>
+                                                                        <span >{workItem.id}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="work-item-id"
+                                                                    onClick={() => showModal(workItem, workIndex, index)}
+                                                                >
+                                                                    <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                    })
-                                                }
-                                            </div>
-                                        })
-                                    }
+                                                        })
+                                                    }
+                                                </div>
+                                        }
+                                    </div>
+                                })
+                            }
+                        </div>
+                        {
+                            boardGroup !== "nogroup" && workUserGroupBoardList && workUserGroupBoardList.map((item, index) => {
+                                return <div style={{ overflow: "auto", height: "85vh" }}>
+                                    <div className="work-bodar-name">{item.user.name}</div>
+                                    <div className="work-bodar">
+                                        {
+                                            item.workBoardList && item.workBoardList.map(workList => {
+                                                return <div className="work-bodar-box"
+                                                    onDrop={() => changeStatus(workList.state.id, index, workList)}
+                                                    onDragOver={dragover}
+                                                    id={`targetBox${index}`}
+                                                    key={workList.state.id}
+                                                // style={{ height: `${item.length * 83 + 60}px` }}
+                                                >
+                                                    <div className="work-bodar-title">
+                                                        <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
+                                                    </div>
+                                                    {
+                                                        workList.workItemList.length > 0 && workList.workItemList.map((workItem, workIndex) => {
+                                                            return <div
+                                                                className="work-bodar-item"
+                                                                key={workItem.id}
+                                                                onDrag={() => moveWorkItem()}
+                                                                draggable="true"
+                                                                onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
+                                                            >
+                                                                <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
+                                                                    <div className="work-item-title-left" >
+                                                                        {
+                                                                            workItem.workTypeSys.iconUrl ?
+                                                                                <img
+                                                                                    src={version === "cloud" ?
+                                                                                        (upload_url + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                                                        :
+                                                                                        (upload_url + workItem.workTypeSys?.iconUrl)
+                                                                                    }
+                                                                                    alt=""
+                                                                                    className="svg-icon"
+
+                                                                                />
+                                                                                :
+                                                                                <img
+                                                                                    src={'/images/workType2.png'}
+                                                                                    alt=""
+                                                                                    className="svg-icon"
+                                                                                />
+                                                                        }
+                                                                        {workItem.title}
+                                                                    </div>
+                                                                    <div>
+                                                                        <span >{workItem.id}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="work-item-id"
+                                                                    onClick={() => showModal(workItem, workIndex, index)}
+                                                                >
+                                                                    <UserIcon userInfo={workItem.user} name={workItem.user?.name} />
+                                                                </div>
+                                                            </div>
+                                                        })
+                                                    }
+                                                </div>
+                                            })
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            )
                         }
-                        )
-                    }
-                    <WorkBorderDetail
-                        isModalVisible={isModalVisible}
-                        setIsModalVisible={setIsModalVisible}
-                        modelRef={modelRef}
-                        showPage={true}
-                        {...props}
-                    />
+                        <WorkBorderDetail
+                            isModalVisible={isModalVisible}
+                            setIsModalVisible={setIsModalVisible}
+                            modelRef={modelRef}
+                            showPage={true}
+                            {...props}
+                        />
+                    </div>
                 </div>
+
             </Fragment>
 
         </Provider>

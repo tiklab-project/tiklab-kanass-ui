@@ -1,13 +1,22 @@
 .work-bodar {
-    height: calc(100% - 100px);
+    height: calc(100% - 120px);
     background: #f7f7f7;
     overflow: auto;
+    .work-bodar-flex {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
 }
 .work-bodar-list {
     display: flex;
     justify-content: center;
     gap: 20px;
     padding: 0 20px;
+    height: 100%;
+    margin: auto;
+    justify-content: center;
     .work-bodar-box-border {
         border-radius: 4px;
         min-height: 100%;

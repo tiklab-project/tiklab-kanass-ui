@@ -1,4 +1,4 @@
-.change-project {
+.more-menu {
     position: relative;
 
     .project-title {
@@ -48,21 +48,21 @@
         border-bottom: 1px solid #f0f2f5;
     }
 
-    .change-project-botton {
+    .more-menu-botton {
         height: 40px;
         line-height: 40px;
         width: 100%;
         text-align: center;
     }
-    .change-project-box {
+    .more-menu-box {
         position: absolute;
-        top: 0;
+        bottom: 0;
         z-index: 100;
         width: 200px;
         border-radius: 4px;
         background: #fff;
         box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
-        .change-project-head {
+        .more-menu-head {
             height: 40px;
             line-height: 40px;
             font-weight: 500;
@@ -71,13 +71,13 @@
             border-bottom: 1px solid #F0F0F0;
         }
     }
-    .change-project-name {
+    .more-menu-name {
         height: 40px;
         line-height: 40px;
         padding-left: 20px;
     }
 
-    .change-project-selectName {
+    .more-menu-selectName {
         background-color: var(--tiklab-gray-400);
     }
    

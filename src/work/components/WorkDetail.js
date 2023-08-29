@@ -18,7 +18,7 @@ import { SwapRightOutlined } from '@ant-design/icons';
 import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-
+import { FlowChartLink } from "tiklab-flow-ui";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
@@ -51,11 +51,6 @@ const WorkDetail = (props) => {
                 setWorkInfo(res)
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                // if (props.match.path === "/index/projectDetail/:id/workList") {
-
-                // }
-                let crumbArray = [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }];
-                setSessionStorage("detailCrumbArray", crumbArray);
 
                 percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
@@ -78,21 +73,6 @@ const WorkDetail = (props) => {
         }
         return
     }, [workId]);
-
-    // useEffect(() => {
-    //     if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-    //         const id = props.match.params.workId;
-    //         setWorkId(id)
-    //         setWorkIndex(0)
-    //         getWorkDetail(id)
-    //         setWorkShowType("table")
-    //     }
-    //     if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
-    //         setWorkId(routerWorkId)
-    //         setWorkIndex(getSessionStorage("workIndex"))
-    //     }
-    //     return
-    // }, []);
 
 
     const deleteWork = () => {
@@ -254,6 +234,12 @@ const WorkDetail = (props) => {
         setIsFocus(true)
     }
 
+    const viewFlow = () => {
+        setShowFlow(true)
+        const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
+        newDetailCrumbArray.push({ id: "流程", iconUrl: "/images/flow.png", type: "flow" })
+        setSessionStorage("detailCrumbArray", newDetailCrumbArray)
+    }
     const menu = (
         <div className="work-flow-transition">
             {
@@ -261,13 +247,19 @@ const WorkDetail = (props) => {
                     return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined /> <span className="work-flow-text">{item.toNode.name}</span> </div>
                 })
             }
-            <div className="work-flow-view" onClick={() => props.history.push(`/index/${path}/${projectId}/projectSetDetail/projectFlowDetail/${workInfo?.workType?.flow.id}`)}>查看工作流</div>
+            <div className="work-flow-view" onClick={() => viewFlow()}>查看工作流</div>
 
         </div>
 
     );
     const goCrumWork = (index, id) => {
-        setWorkId(id)
+        const lastCrum = detailCrumbArray[detailCrumbArray.length-1];
+        if(lastCrum.type === "flow"){
+            setShowFlow(false)
+        }else {
+            setWorkId(id)
+        }
+        
         const array = detailCrumbArray.slice(0, index + 1)
         setSessionStorage("detailCrumbArray", array)
     }
@@ -279,239 +271,250 @@ const WorkDetail = (props) => {
         setSessionStorage("detailCrumbArray", [{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
-    const goWorkList = () => {
-        setIsModalVisible(false)
-        // if (props.match.path === "/index/projectDetail/:id/workDetail/:workId") {
-        //     props.history.goBack()
-        // }
-        // if (props.match.path === "/index/projectDetail/:id/workone/:workId") {
-        //     props.history.push(`/index/projectDetail/${projectId}/work`)
-        // }
-        // if (props.match.path === "/index/workDetail/:workId") {
-        //     props.history.push(`/index/work/worklist`)
-        // }
-        // if (props.match.path === "/index/:id/sprintdetail/:sprint/workDetail/:workId") {
-        //     props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/workItem`)
-        // }
-    }
-
+    const [showFlow, setShowFlow] = useState(false)
     return (
         <Skeleton loading={infoLoading} active>
             {
                 workInfo ? <div className="work-detail">
-                    <>
-                        {
-                            detailCrumbArray?.length > 0 &&
-                            <div className="work-detail-crumb-col">
-                                <div className="work-detail-crumb">
-                                    {
-                                        props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/workTable`)}>事项
-                                            <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
-                                                <use xlinkHref="#icon-rightBlue"></use>
-                                            </svg>
-                                        </div>
-                                    }
-                                    {
-                                        detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
-                                            let html;
-                                            if (!isTableDetail && index === 0) {
-                                                html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                    <img
-                                                        src={version === "cloud" ?
-                                                            (upload_url + item.iconUrl + "?tenant=" + tenant)
-                                                            :
-                                                            (upload_url + item.iconUrl)
-                                                        }
-                                                        alt=""
-                                                        className="img-icon"
-                                                    />
-                                                    <span className="work-detail-crumb-text">{item.id}</span>
-                                                </div>
-                                            } else {
-                                                html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                    <span style={{ padding: "0 10px" }}>/</span>
-                                                    <img
-                                                        src={(upload_url + item.iconUrl)}
-                                                        alt=""
-                                                        className="img-icon"
-                                                    />
-                                                    <span className="work-detail-crumb-text">{item.id}</span>
-                                                </div>
-                                            }
-                                            return html
-
-                                        })
-                                    }
-                                </div>
+                    {
+                        detailCrumbArray?.length > 0 &&
+                        <div className="work-detail-crumb-col">
+                            <div className="work-detail-crumb">
                                 {
-                                    workShowType !== "list" && <div className="work-detail-close" onClick={() => setIsModalVisible(false)}>
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-close"></use>
+                                    props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/workTable`)}>事项
+                                        <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
+                                            <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>
                                     </div>
                                 }
-
-                            </div>
-
-                        }
-
-                        <div className="work-detail-top" ref={workDetailTop}>
-                            <div className="work-detail-top-name">
-                                <div className="work-item-title-top">
-                                    <div
-                                        className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
-                                        onClick={() => focusTitleInput()}
-
-                                    >
-                                        <div
-                                            contentEditable={true}
-                                            suppressContentEditableWarning
-                                            onBlur={() => updateByBlur(event, "blur")}
-                                            onKeyDown={() => updateNameByKey(event, workInfo.id)}
-                                            ref={inputRef}
-                                            className="work-item-title-left"
-                                        >
-                                            {workInfo?.title}
-                                        </div>
-                                    </div>
-
-                                    <div className="work-detail-tab-botton">
-
-                                        <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
-                                            <Popconfirm
-                                                title="确定删除事项?"
-                                                onConfirm={() => deleteWork()}
-                                                // onCancel={cancel}
-                                                okText="是"
-                                                cancelText="否"
-                                            >
-                                                <Button style={{ marginRight: "10px" }} >
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-delete"></use>
-                                                    </svg>
-                                                    删除
-                                                </Button>
-                                            </Popconfirm>
-
-
-                                        </PrivilegeProjectButton>
-                                        <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer={() => workDetailTop.current}>
-                                            <Button className="botton-background">
-                                                {workStatus}
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-downdrop"></use>
-                                                </svg>
-                                            </Button>
-                                        </Dropdown>
-                                        <div className="more">
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-more"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="work-item-title-bottom">
-                                    <div className="work-item-info">
-                                        <div className="work-item-info-item">
-                                            <span className="work-item-info-title">类型: </span>
-                                            <span>{workInfo?.workTypeSys?.name}</span>
-                                        </div>
-                                        <div className="work-item-info-item">
-                                            <span className="work-item-info-title">ID: </span>
-                                            <span>{workInfo?.id}</span>
-                                        </div>
-                                        <div className="work-item-info-item">
-                                            <div className="work-item-info-title">进度: </div>
-                                            <Form form={percentForm}>
-                                                <Form.Item name="percent"
-                                                    hasFeedback={showValidateStatus === "percent" ? true : false}
-                                                    validateStatus={validateStatus}
-                                                >
-                                                    <InputNumber min={1} max={100}
-                                                        // value={workInfo?.percent ? workInfo?.percent : 0}
-                                                        value={percentValue}
-                                                        defaultValue={percentValue}
-                                                        onBlur={(value) => updateSingle(workInfo.id, { percent: value.target.value }, "percent")}
-                                                        style={{
-                                                            width: "50px",
-                                                        }}
-                                                    />
-                                                </Form.Item>
-                                            </Form>
-
-                                        </div>
-
-                                        <div className="work-item-info-item">
-                                            <div className="work-item-info-title">负责人: </div>
-                                            <Form form={percentForm}>
-                                                <Form.Item name="assigner"
-                                                >
-                                                    <Select
-                                                        placeholder="无"
-                                                        className="work-select"
-                                                        key="selectWorkUser"
-                                                        bordered={fieldName === "assigner" ? true : false}
-                                                        showArrow={fieldName === "assigner" ? true : false}
-                                                        onFocus={() => changeStyle("assigner")}
-                                                        onBlur={() => changeStyle("")}
-                                                        // value={assignerId}
-                                                        onChange={(value) => updateSingle(workInfo.id, { assigner: value }, "assigner")}
-                                                        getPopupContainer={() => workDetailTop.current}
-                                                        style={{
-                                                            width: 150,
-                                                        }}
-                                                    >
-                                                        {
-                                                            userList && userList.map((item) => {
-                                                                return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
-                                                            })
-                                                        }
-                                                    </Select>
-
-                                                </Form.Item>
-                                            </Form>
-
-                                        </div>
-                                    </div>
-                                    <>
-                                        {
-                                            showPage && <>
+                                {
+                                    detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
+                                        let html;
+                                        if (!isTableDetail && index === 0) {
+                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                                 {
-                                                    detailCrumbArray?.length < 2 && <div className="page-simple">
-                                                        {
-                                                            workIndex === 1 ? <svg className="svg-icon" aria-hidden="true">
-                                                                <use xlinkHref="#icon-pageLeftDisable"></use>
-                                                            </svg>
+                                                    item.type === "flow" ? <img
+                                                        src={item.iconUrl}
+                                                        alt=""
+                                                        className="img-icon"
+                                                    />
+                                                        :
+                                                        <img
+                                                            src={version === "cloud" ?
+                                                                (upload_url + item.iconUrl + "?tenant=" + tenant)
                                                                 :
-                                                                <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex - 1)}>
-                                                                    <use xlinkHref="#icon-pageLeft"></use>
-                                                                </svg>
-                                                        }
-
-                                                        <span>{workIndex} / {total}</span>
-                                                        {
-                                                            workIndex === total ? <svg className="svg-icon" aria-hidden="true">
-                                                                <use xlinkHref="#icon-pageRightDisable"></use>
-                                                            </svg>
-                                                                :
-                                                                <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex + 1)}>
-                                                                    <use xlinkHref="#icon-pageRight"></use>
-                                                                </svg>
-                                                        }
-                                                    </div>
+                                                                (upload_url + item.iconUrl)
+                                                            }
+                                                            alt=""
+                                                            className="img-icon"
+                                                        />
                                                 }
-                                            </>
+
+                                                <span className="work-detail-crumb-text">{item.id}</span>
+                                            </div>
+                                        } else {
+                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
+                                                <span style={{ padding: "0 10px" }}>/</span>
+                                                {
+                                                    item.type === "flow" ? <img
+                                                        src={item.iconUrl}
+                                                        alt=""
+                                                        className="img-icon"
+                                                    />
+                                                        :
+                                                        <img
+                                                            src={version === "cloud" ?
+                                                                (upload_url + item.iconUrl + "?tenant=" + tenant)
+                                                                :
+                                                                (upload_url + item.iconUrl)
+                                                            }
+                                                            alt=""
+                                                            className="img-icon"
+                                                        />
+                                                }
+                                                <span className="work-detail-crumb-text">{item.id}</span>
+                                            </div>
                                         }
-                                    </>
+                                        return html
+
+                                    })
+                                }
+                            </div>
+                            {
+                                workShowType !== "list" && <div className="work-detail-close" onClick={() => setIsModalVisible(false)}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-close"></use>
+                                    </svg>
+                                </div>
+                            }
+
+                        </div>
+
+                    }
+                    {
+                        !showFlow ? <>
+                            <div className="work-detail-top" ref={workDetailTop}>
+                                <div className="work-detail-top-name">
+                                    <div className="work-item-title-top">
+                                        <div
+                                            className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
+                                            onClick={() => focusTitleInput()}
+
+                                        >
+                                            <div
+                                                contentEditable={true}
+                                                suppressContentEditableWarning
+                                                onBlur={() => updateByBlur(event, "blur")}
+                                                onKeyDown={() => updateNameByKey(event, workInfo.id)}
+                                                ref={inputRef}
+                                                className="work-item-title-left"
+                                            >
+                                                {workInfo?.title}
+                                            </div>
+                                        </div>
+
+                                        <div className="work-detail-tab-botton">
+
+                                            <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
+                                                <Popconfirm
+                                                    title="确定删除事项?"
+                                                    onConfirm={() => deleteWork()}
+                                                    // onCancel={cancel}
+                                                    okText="是"
+                                                    cancelText="否"
+                                                >
+                                                    <Button style={{ marginRight: "10px" }} >
+                                                        <svg className="svg-icon" aria-hidden="true">
+                                                            <use xlinkHref="#icon-delete"></use>
+                                                        </svg>
+                                                        删除
+                                                    </Button>
+                                                </Popconfirm>
 
 
+                                            </PrivilegeProjectButton>
+                                            <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer={() => workDetailTop.current}>
+                                                <Button className="botton-background">
+                                                    {workStatus}
+                                                    <svg className="svg-icon" aria-hidden="true">
+                                                        <use xlinkHref="#icon-downdrop"></use>
+                                                    </svg>
+                                                </Button>
+                                            </Dropdown>
+                                            <div className="more">
+                                                <svg className="svg-icon" aria-hidden="true">
+                                                    <use xlinkHref="#icon-more"></use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="work-item-title-bottom">
+                                        <div className="work-item-info">
+                                            <div className="work-item-info-item">
+                                                <span className="work-item-info-title">类型: </span>
+                                                <span>{workInfo?.workTypeSys?.name}</span>
+                                            </div>
+                                            <div className="work-item-info-item">
+                                                <span className="work-item-info-title">ID: </span>
+                                                <span>{workInfo?.id}</span>
+                                            </div>
+                                            <div className="work-item-info-item">
+                                                <div className="work-item-info-title">进度: </div>
+                                                <Form form={percentForm}>
+                                                    <Form.Item name="percent"
+                                                        hasFeedback={showValidateStatus === "percent" ? true : false}
+                                                        validateStatus={validateStatus}
+                                                    >
+                                                        <InputNumber min={1} max={100}
+                                                            // value={workInfo?.percent ? workInfo?.percent : 0}
+                                                            value={percentValue}
+                                                            defaultValue={percentValue}
+                                                            onBlur={(value) => updateSingle(workInfo.id, { percent: value.target.value }, "percent")}
+                                                            style={{
+                                                                width: "50px",
+                                                            }}
+                                                        />
+                                                    </Form.Item>
+                                                </Form>
+
+                                            </div>
+
+                                            <div className="work-item-info-item">
+                                                <div className="work-item-info-title">负责人: </div>
+                                                <Form form={percentForm}>
+                                                    <Form.Item name="assigner"
+                                                    >
+                                                        <Select
+                                                            placeholder="无"
+                                                            className="work-select"
+                                                            key="selectWorkUser"
+                                                            bordered={fieldName === "assigner" ? true : false}
+                                                            showArrow={fieldName === "assigner" ? true : false}
+                                                            onFocus={() => changeStyle("assigner")}
+                                                            onBlur={() => changeStyle("")}
+                                                            // value={assignerId}
+                                                            onChange={(value) => updateSingle(workInfo.id, { assigner: value }, "assigner")}
+                                                            getPopupContainer={() => workDetailTop.current}
+                                                            style={{
+                                                                width: 150,
+                                                            }}
+                                                        >
+                                                            {
+                                                                userList && userList.map((item) => {
+                                                                    return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
+                                                                })
+                                                            }
+                                                        </Select>
+
+                                                    </Form.Item>
+                                                </Form>
+
+                                            </div>
+                                        </div>
+                                        <>
+                                            {
+                                                showPage && <>
+                                                    {
+                                                        detailCrumbArray?.length < 2 && <div className="page-simple">
+                                                            {
+                                                                workIndex === 1 ? <svg className="svg-icon" aria-hidden="true">
+                                                                    <use xlinkHref="#icon-pageLeftDisable"></use>
+                                                                </svg>
+                                                                    :
+                                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex - 1)}>
+                                                                        <use xlinkHref="#icon-pageLeft"></use>
+                                                                    </svg>
+                                                            }
+
+                                                            <span>{workIndex} / {total}</span>
+                                                            {
+                                                                workIndex === total ? <svg className="svg-icon" aria-hidden="true">
+                                                                    <use xlinkHref="#icon-pageRightDisable"></use>
+                                                                </svg>
+                                                                    :
+                                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => changPage(workIndex + 1)}>
+                                                                        <use xlinkHref="#icon-pageRight"></use>
+                                                                    </svg>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </>
+                                            }
+                                        </>
+
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </>
-                    <div className="work-detail-tab">
-                        {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo={setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
-                    </div>
+                            <div className="work-detail-tab">
+                                {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo={setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
+                            </div>
+                        </>
+                            :
+                            <FlowChartLink flowId={workInfo.workType.flow.id} />
+                    }
+
+
                 </div>
                     :
                     <div style={{ marginTop: "200px" }}>

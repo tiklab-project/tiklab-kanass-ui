@@ -134,7 +134,7 @@ export class ProjectSurveyStore {
     findtodopage = async (value) => {
         const params = {
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: value.currentPage
             },
             bgroup: "teamwire",
@@ -156,7 +156,7 @@ export class ProjectSurveyStore {
     findlogpage = async (value) => {
         const params = {
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: value.currentPage
             },
             bgroup: "teamwire",
@@ -177,7 +177,7 @@ export class ProjectSurveyStore {
                 orderType:"asc"
             }],
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1
             },
             projectId: JSON.parse(localStorage.getItem("project")).id

@@ -188,7 +188,7 @@ const ProjectChangeModal = (props) => {
             </div>
 
             <div
-                className={`change-project-box ${showMenu ? "menu-show" : "menu-hidden"}`}
+                className={`change-project-box ${showMenu ? "modal-show" : "modal-hidden"}`}
                 ref={modelRef}
                 style={{}}
             >

@@ -21,9 +21,9 @@ export class WorkLogStore {
         }
         let params = {
             workItemId: value.workItemId,
-            sortParams: [{
-                name: "title",
-                orderType: "asc"
+            orderParams: [{
+                name: "work_date",
+                orderType: "desc"
             }],
             pageParam: {
                 pageSize: 10,

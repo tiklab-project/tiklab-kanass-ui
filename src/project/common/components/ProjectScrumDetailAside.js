@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-16 10:58:01
  */
 
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
@@ -20,6 +20,7 @@ const { Sider } = Layout;
 
 const ProdeScrumAside = (props) => {
     const { searchpro, project } = props;
+    const projectMenu = useRef();
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
@@ -93,6 +94,13 @@ const ProdeScrumAside = (props) => {
             url: `/index/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statisticslog',
+            url: `/index/projectDetail/${projectId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "Statistic",
         }
         
     ];
@@ -155,15 +163,60 @@ const ProdeScrumAside = (props) => {
             url: `/index/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statisticslog',
+            url: `/index/projectDetail/${projectId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "Statistic",
         }
     ];
 
-    const prorouter = project?.projectType.type === "scrum" ? scrumProrouter : normalProrouter;
-    useEffect(() => {
-        // setWorkType(null)
-        return
-    }, [projectId, props.location.pathname])
+    const [projectRouter, setProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter : normalProrouter); 
 
+    const [moreMenu, setMoreMenu] = useState()
+
+    const [morePath, setMorePath] = useState()
+    const resizeUpdate = (e) => {
+        // console.log(e.innerHeight)
+        // let h = e.target.innerHeight;
+        // setHeight(h);
+        // 通过事件对象获取浏览器窗口的高度
+        const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
+        // console.log(documentHeight)
+        // setHeight(documentHeight);
+        const menuHeight = documentHeight - 200;
+        const menuNum = Math.floor(menuHeight / 60);
+        console.log(menuHeight, menuNum)
+        let num  = 0;
+        if(project?.projectType.type === "scrum"){
+            num= menuNum > 7 ? 7 : menuNum;
+        }else {
+            num = menuNum > 7 ? 7 : menuNum;
+        }
+        setProjectRouter(projectRouter.slice(0, num))
+        const hiddenMenu = projectRouter.slice(num, projectRouter.length)
+        setMoreMenu(hiddenMenu)
+        let data = [];
+        hiddenMenu.map(item =>{
+            
+            data.push(item.key)
+            
+        })
+        setMorePath([...data])
+    };
+
+    useEffect(() => {
+        // let h = window.innerHeight;
+        // setHeight(h)
+        resizeUpdate(document.getElementById("root"))
+        window.addEventListener("resize", resizeUpdate);
+        return () => {
+            // 组件销毁时移除监听事件
+            window.removeEventListener('resize', resizeUpdate);
+        }
+    }, [])
     /**
      * 点击左侧菜单
      * @param {*} key 
@@ -190,9 +243,9 @@ const ProdeScrumAside = (props) => {
                         searchpro = {searchpro}
                         project = {project}
                     />
-                    <ul className="project-menu">
+                    <div className="project-menu" ref = {projectMenu}>
                         {
-                            prorouter && prorouter.map((item,index) =>  {return isShowText ? 
+                            projectRouter && projectRouter.map((item,index) =>  {return isShowText ? 
                                 <div className={`project-menu-submenu ${path.indexOf(item.key) !== -1 ? "project-menu-select" : ""}`}
                                     key={item.encoded}
                                     onClick={() => selectMenu(item.url)}
@@ -219,8 +272,8 @@ const ProdeScrumAside = (props) => {
                                     
                             })
                         }
-                        <MoreMenuModel isShowText = {isShowText}/>
-                    </ul>
+                        {moreMenu && <MoreMenuModel isShowText = {isShowText} moreMenu = {moreMenu} morePath = {morePath}/>}
+                    </div>
                     <SetScrumMenu isShowText = {isShowText}/>
                     <div className="project-expend" onClick={toggleCollapsed} >
                         {

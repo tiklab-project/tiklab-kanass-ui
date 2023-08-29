@@ -96,5 +96,10 @@
         }
  
     }
-    
+    .modal-show {
+        display: block;
+    }
+    .modal-hidden {
+        display: none;
+    }
 }

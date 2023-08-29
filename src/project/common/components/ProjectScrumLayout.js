@@ -47,21 +47,25 @@ const ProjectScrumDetail = (props) => {
 
     return (
         <Provider {...store}>
-            <Layout className="project-prodetail">
-                <ProdeScrumAside
-                    projectName={"项目1"}
-                    project={project}
-                    searchpro={searchpro}
-                    {...props}
-                />
-                <Layout className="prodetail-content">
-                    <Row justify="start" className="prodetail-row">
-                        <Col xs={{ span: 24 }} lg={{ span: 24 }}>
-                            {renderRoutes(route.routes)}
-                        </Col>
-                    </Row>
+            {
+                project && <Layout className="project-prodetail">
+
+                    <ProdeScrumAside
+                        projectName={"项目1"}
+                        project={project}
+                        searchpro={searchpro}
+                        {...props}
+                    />
+                    <Layout className="prodetail-content">
+                        <Row justify="start" className="prodetail-row">
+                            <Col xs={{ span: 24 }} lg={{ span: 24 }}>
+                                {renderRoutes(route.routes)}
+                            </Col>
+                        </Row>
+                    </Layout>
                 </Layout>
-            </Layout>
+            }
+
         </Provider>
 
     )

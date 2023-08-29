@@ -3,12 +3,12 @@ import { Input } from "antd";
 import "./inputSearch.scss";
 
 const InputSearch = (props) => {
-    const {onChange, placeholder} = props;
+    const {onChange, placeholder,style} = props;
     const handleChange = (value) => {
         onChange(value.target.value)
     }
     return (
-        <div className="search-input">
+        <div className="search-input" style={style}>
             <svg className="svg-icon" aria-hidden="true">
                 <use xlinkHref="#icon-search"></use>
             </svg>

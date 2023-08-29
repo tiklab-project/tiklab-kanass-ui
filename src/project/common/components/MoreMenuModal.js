@@ -12,11 +12,12 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 
 const MoreMenuModel = (props) => {
-    const { isShowText } = props;
+    const { isShowText, moreMenu, morePath } = props;
     const projectId = props.match.params.id;
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[4];
+    console.log(path, morePath)
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
     // 菜单弹窗ref
@@ -39,15 +40,15 @@ const MoreMenuModel = (props) => {
     /**
      * 更多菜单数组
      */
-    const moreMenu = [
-        {
-            title: `${t('statistic')}`,
-            icon: 'statisticslog',
-            url: `/index/projectDetail/${projectId}/statistics/workItem`,
-            key: "statistics",
-            encoded: "Statistic",
-        }
-    ]
+    // const moreMenu = [
+    //     {
+    //         title: `${t('statistic')}`,
+    //         icon: 'statisticslog',
+    //         url: `/index/projectDetail/${projectId}/statistics/workItem`,
+    //         key: "statistics",
+    //         encoded: "Statistic",
+    //     }
+    // ]
 
     /**
      * 监听菜单的弹窗的显示与不显示
@@ -83,9 +84,9 @@ const MoreMenuModel = (props) => {
     }
 
     return (
-        <div className="change-project">
+        <div className="more-menu">
             {
-                isShowText ? <div className={`project-menu-submenu ${paths.indexOf(path) !== -1 ? "project-menu-select" : ""}`}
+                isShowText ? <div className={`project-menu-submenu ${morePath.indexOf(path) !== -1 ? "project-menu-select" : ""}`}
                     onClick={() => showMoreMenu()}
                     ref={setButton}
                 >
@@ -97,20 +98,20 @@ const MoreMenuModel = (props) => {
                     </span>
                 </div>
                     :
-                    <div ref={setButton} className={`project-menu-submenu-icon ${paths.indexOf(path) !== -1 ? "project-menu-select" : ""}`} onClick={() => showMoreMenu()}>
+                    <div ref={setButton} className={`project-menu-submenu-icon ${morePath.indexOf(path) !== -1 ? "project-menu-select" : ""}`} onClick={() => showMoreMenu()}>
                         <svg aria-hidden="true" style={{width: "28px", height: "28px"}}>
                             <use xlinkHref={`#icon-more`}></use>
                         </svg>
                     </div>
             }
             <div
-                className={`change-project-box ${showMenu ? "menu-show" : "menu-hidden"}`}
+                className={`more-menu-box ${showMenu ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
                 style={{}}
             >
                 {
                     moreMenu && moreMenu.map((item,index) => {
-                        return <div className={`project-menu-submenu`}
+                        return <div className={`project-menu-submenu ${path === item.key ? "project-menu-select" : ""}`}
                             key={index}
                             onClick={() => selectMenu(item.url)}
                         >

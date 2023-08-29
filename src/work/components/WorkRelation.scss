@@ -21,11 +21,14 @@
 
     .relation-content {
         background: #fff;
-        padding: 15px;
         border-radius: 4px;
+        position: relative;
+        height: calc(100% - 100px);
         .ant-table {
             overflow: auto;
             max-height: calc(100% - 100px);
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
         }
     }
 }

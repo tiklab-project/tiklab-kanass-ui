@@ -30,6 +30,7 @@
 
     .filter-modal {
         width: 420px;
+        height: calc(100vh - 48px);
         background-color: #fff;
         position: absolute;
         z-index: 3;
@@ -62,7 +63,7 @@
 
         .workitem-filter-height {
             padding: 0 15px;
-            height: 400px;
+            height: calc(100% - 115px);
             overflow: auto;
         }
     }

@@ -161,8 +161,8 @@ const WorkTableFilter = (props) => {
         <div className="work-table-second">
             <WorkTypeTab />
             <div className="work-table-filter">
-                <WorkQuickFilter 
-                    getWorkList={getWorkList} 
+                <WorkQuickFilter
+                    getWorkList={getWorkList}
                     flowIds={flowIds}
                 />
                 {
@@ -208,24 +208,67 @@ const WorkTableFilter = (props) => {
                         })
                     }
                 </SelectSimple>
-                <SelectSimple
-                    name="workStatus"
-                    onChange={(value) => handleChange("workStatusIds", value)}
-                    title={"状态"}
-                    ismult={true}
-                    selectValue={searchCondition?.workStatusIds}
-                >
-                    {
-                        workStatusList.map(item => {
-                            return <SelectItem
-                                value={item.id}
-                                label={item.name}
-                                key={item.id}
-                                imgUrl={item.iconUrl}
-                            />
-                        })
-                    }
-                </SelectSimple>
+                {
+                    workStatusList && workStatusList.length > 0 && <SelectSimple
+                        name="workStatus"
+                        onChange={(value) => handleChange("workStatusIds", value)}
+                        title={"状态"}
+                        ismult={true}
+                        selectValue={searchCondition?.workStatusIds}
+                    >
+                        <div className="select-group-title">未开始</div>
+                        {
+                            workStatusList.map(item => {
+                                if (item.id === "todo") {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.name}
+                                        key={item.id}
+                                        imgUrl={item.iconUrl}
+                                    />
+                                } else {
+                                    return <div></div>
+                                }
+
+                            })
+                        }
+                        <div className="select-group-title">进行中</div>
+                        {
+                            workStatusList.map(item => {
+                                if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.name}
+                                        key={item.id}
+                                        imgUrl={item.iconUrl}
+                                    />
+                                } else {
+                                    return <div></div>
+                                }
+
+                            })
+                        }
+
+
+                        <div className="select-group-title">已完成</div>
+                        {
+                            workStatusList.map(item => {
+                                if (item.id === "done") {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.name}
+                                        key={item.id}
+                                        imgUrl={item.iconUrl}
+                                    />
+                                } else {
+                                    return <div></div>
+                                }
+
+                            })
+                        }
+                    </SelectSimple>
+                }
+
                 <div className="worklist-table-search">
                     <div className="search-input">
                         <svg className="svg-icon" aria-hidden="true">

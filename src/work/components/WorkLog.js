@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Modal, Button, Table, Space, InputNumber, Form, Input, Select, Row, Col } from 'antd';
+import { Modal, Table, Space, InputNumber, Form, Input, Select, Row, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import { getUser } from 'tiklab-core-ui';
 import "./WorkLog.scss";
 import dayjs from "dayjs";
-import WorkLogStore from "../store/WorkLogStore"
+import WorkLogStore from "../store/WorkLogStore";
+import Button from "../../common/button/Button";
+import UserIcon from "../../common/UserIcon/UserIcon";
+import WorkLogEdit from "./WorkLogEdit"
 const { TextArea } = Input;
 
 const WorkLog = (props) => {
@@ -23,45 +26,8 @@ const WorkLog = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 表格样式
     const [AddLog] = Form.useForm();
-    const layout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 24 },
-    };
+    const [editLogId, setEditLogId] = useState()
 
-    const columns = [
-        {
-            title: '工时内容',
-            dataIndex: ['workItem', 'title'],
-            key: 'workitem'
-        },
-        {
-            title: '记录人',
-            dataIndex: ['user', 'name'],
-            key: 'user',
-        },
-        {
-            title: '记录日期',
-            dataIndex: 'workDate',
-            key: 'workDate',
-        },
-        {
-            title: '用时',
-            dataIndex: 'takeupTime',
-            key: 'takeuptime',
-        },
-        {
-            title: '操作',
-            dataIndex: 'action',
-            key: 'action',
-            width: "15%",
-            render: (text, record) => (
-                <Space size="middle">
-                    <span onClick={() => changeLog(record.id)} className="span-botton" >编辑</span>
-                    <span onClick={() => delectLog(record.id)} className="span-botton" >删除</span>
-                </Space>
-            ),
-        }
-    ];
 
     useEffect(() => {
         getGemianTime()
@@ -95,37 +61,39 @@ const WorkLog = (props) => {
     }
 
     const showModal = () => {
-        setModalType("add")
-        setModalTitle("添加工时")
+        // setModalType("add")
+        // setModalTitle("添加工时")
         setVisible(true);
-        getWorkAllList()
-        getUserInfo()
-        AddLog.setFieldsValue(
-            {
-                workItem: workId,
-                workDate: moment(date, dateFormat),
-                versionTime: versionTime,
-                surplusTime: remainTime
-            }
-        )
+        setEditLogId()
+        // getWorkAllList()
+        // getUserInfo()
+        // AddLog.setFieldsValue(
+        //     {
+        //         workItem: workId,
+        //         workDate: moment(date, dateFormat),
+        //         versionTime: versionTime,
+        //         surplusTime: remainTime
+        //     }
+        // )
     };
 
     // 弹窗添加编辑工时
-    const handleOk = () => {
+    const creatLog = () => {
         AddLog.validateFields().then(value => {
-            value.workDate = date
+            // value.workDate = date
             value.projectId = projectId
             value.workItem = workId
             if (modalType === "add") {
                 addWorkLog(value)
                 AddLog.resetFields()
-            } else {
-                value.id = logId;
-                editWorKLog(value).then(() => {
-                    getGemianTime()
-                })
-                AddLog.resetFields()
             }
+            // else {
+            //     value.id = logId;
+            //     editWorKLog(value).then(() => {
+            //         getGemianTime()
+            //     })
+            //     AddLog.resetFields()
+            // }
             setVisible(false);
         });
 
@@ -172,107 +140,84 @@ const WorkLog = (props) => {
         getGemianTime(pagination)
     }
     const workLog = useRef();
+    const showEdit = (id) => {
+        setEditLogId(id)
+        setVisible(true)
+    }
     return (
         <Fragment>
 
             <div className="work-log" ref={workLog}>
-                <Modal
-                    title={modalTitle}
-                    visible={visible}
-                    onOk={handleOk}
-                    confirmLoading={confirmLoading}
-                    onCancel={handleCancel}
-                    destroyOnClose={true}
-                    closable={false}
-                    getContainer={false}
-                >
-                    <Form
-                        {...layout}
-                        name="basic"
-                        form={AddLog}
-                        preserve={false}
-                        layout="vertical"
-
-                    >
-                        <Form.Item
-                            label="事项"
-                            name="workItem"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "请选择事项",
-                                },
-                            ]}
-                        >
-                            <Select
-                                allowClear
-                                disabled={true}
-                            >
-                                {
-                                    workAllList && workAllList.map((item) => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="剩余用时"
-                            name="surplusTime"
-                        >
-                            <div style={{ display: "flex" }}>
-                                <div style={{ width: "40px" }}>{surplusTime ? surplusTime : 0}</div>
-                                <div style={{ width: "20px" }}>/</div>
-                                <div style={{ width: "40px" }}>{planTakeupTime ? planTakeupTime : 0}</div> 小时
-                            </div>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="用时"
-                            name="takeupTime"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请输入用时',
-                                },
-                            ]}
-                        >
-                            <InputNumber
-                                defaultValue={1}
-                                style={{ width: '30%', marginRight: "10px" }}
-                                formatter={value => `${value}小时`}
-                                parser={value => value.replace('小时', '')}
-                                min={0}
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="工作内容"
-                            name="workContent"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请输入工作内容',
-                                },
-                            ]}
-                        >
-                            <TextArea rows={4} />
-                        </Form.Item>
-                    </Form>
-                </Modal>
                 <div className="worklog-top" style={{ width: "100%", textAlign: "right" }}>
                     <div className="worklog-top-title">工时({workLogList.length})</div>
-                    <Button onClick={showModal}>
+                    <Button onClick={showModal} type={"primary"}>
                         添加工时
                     </Button>
                 </div>
-                <Table
-                    columns={columns}
-                    dataSource={workLogList}
-                    rowKey={(record) => record.id}
-                    onChange={onChange}
-                    pagination={false}
-                    className="worklog-table"
-                />
+                {
+                    visible && !editLogId &&
+                    <div style={{ marginBottom: "30px" }}>
+                        <WorkLogEdit setVisible={setVisible} visible={visible} type="creat" layout = {"vertical"}/>
+                    </div>
+
+                }
+
+
+                {/* <div className="worklog-table-title">工时列表</div> */}
+                <div className="work-log-list">
+                    {
+                        workLogList.map(item => {
+                            return <>
+                                <div className="work-log-item">
+                                    <div style={{ flex: 1 }}>
+                                        <div className="work-log-item-first">
+                                            <div className="work-log-item-user">
+                                                <UserIcon>{item.user.nickname}</UserIcon>
+                                                <span className="log-item-text">{item.user.nickname}</span>
+                                            </div>
+                                            <div className="log-item-date">{item.workDate}</div>
+
+                                        </div>
+                                        {
+                                            editLogId === item.id && visible ?
+                                                <>
+                                                   <div style={{marginLeft: "26px"}}>
+                                                        <WorkLogEdit setVisible={setVisible} visible={visible} type="edit" layout = {"horizontal"} logId = {item.id}/>
+                                                   </div>
+
+                                                </>
+                                                :
+                                                <div className="work-log-item-second">
+                                                    <div>
+                                                        <div className="log-content">用时： {item.takeupTime} 小时</div>
+                                                        <div className="log-content">{item.workContent}</div>
+                                                    </div>
+
+                                                    <div className="log-action">
+                                                        <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} onClick={() => showEdit(item.id)}>
+                                                            <use xlinkHref="#icon-edit"></use>
+                                                        </svg>
+                                                        <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                                                            <use xlinkHref="#icon-delete"></use>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+
+                                        }
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+                            </>
+
+                        })
+                    }
+                </div>
             </div>
         </Fragment>
     );

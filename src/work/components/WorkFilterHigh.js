@@ -18,7 +18,7 @@ const WorkFilterHigh = (props) => {
     const heightFilter = useRef()
     const formItemLayout = {
         labelCol: { span: 6 },
-        wrapperCol: { span: 18 }
+        wrapperCol: { span: 24 }
     };
     // 解析store数据
     const { getWorkConditionPage, getWorkConditionPageTree, workShowType,
@@ -192,6 +192,7 @@ const WorkFilterHigh = (props) => {
                 name="control-hooks"
                 // onFinish={search}
                 // layout={l?ayout}
+                layout="vertical"
                 className="workitem-filter-height"
                 labelAlign="left"
                 // initialValues={{
