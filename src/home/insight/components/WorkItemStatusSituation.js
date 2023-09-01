@@ -62,6 +62,7 @@ const WorkItemStatusSituation = (props) => {
                 setWorkItemStatusCount(res.data)
             })
         }
+        return;
 
     }, [isEditor])
 

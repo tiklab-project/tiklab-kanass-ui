@@ -27,23 +27,23 @@
         flex-direction: column;
         height: 100%;
 
-        .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
-            display: inline-block;
-            margin-right: 4px;
-            color: #ff4d4f;
-            font-size: 14px;
-            font-family: SimSun, sans-serif;
-            line-height: 1;
-            content: "*";
-        }
+        // .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+        //     display: inline-block;
+        //     margin-right: 4px;
+        //     color: #ff4d4f;
+        //     font-size: 14px;
+        //     font-family: SimSun, sans-serif;
+        //     line-height: 1;
+        //     content: "*";
+        // }
 
-        .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
-            content: ":";
-            position: relative;
-            top: -0.5px;
-            margin: 0 8px 0 2px;
-            color: #2B2B2B;
-        }
+        // .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+        //     content: ":";
+        //     position: relative;
+        //     top: -0.5px;
+        //     margin: 0 8px 0 2px;
+        //     color: #2B2B2B;
+        // }
 
         .work-add-page-title {
             font-size: var(--tiklab-font-16);
@@ -53,6 +53,7 @@
 
         .work-add-page-form {
             overflow: auto;
+            padding: 0 15px;
         }
 
         .work-add-form {
@@ -67,7 +68,7 @@
             }
 
             .ant-form-item {
-                flex-direction: row;
+                // flex-direction: row;
 
                 .ant-form-item-control {
                     height: calc(100% - 30px);

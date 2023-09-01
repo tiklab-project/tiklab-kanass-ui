@@ -32,7 +32,8 @@ const WorkTable = (props) => {
 
     useEffect(() => {
         setWorkShowType("table")
-        finWorkList(path, WorkStore, projectId, sprintId)
+        finWorkList(path, WorkStore, projectId, sprintId);
+        return;
     }, [])
 
     const goProdetail = (record, index) => {

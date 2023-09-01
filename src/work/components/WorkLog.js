@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Modal, Table, Space, InputNumber, Form, Input, Select, Row, Col } from 'antd';
+import { Modal, Table, Space, Popconfirm, Form, Input, Select, Row, Col } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import { getUser } from 'tiklab-core-ui';
@@ -27,7 +27,7 @@ const WorkLog = (props) => {
     // 表格样式
     const [AddLog] = Form.useForm();
     const [editLogId, setEditLogId] = useState()
-
+    const logAction = useRef()
 
     useEffect(() => {
         getGemianTime()
@@ -157,7 +157,7 @@ const WorkLog = (props) => {
                 {
                     visible && !editLogId &&
                     <div style={{ marginBottom: "30px" }}>
-                        <WorkLogEdit setVisible={setVisible} visible={visible} type="creat" layout = {"vertical"}/>
+                        <WorkLogEdit setVisible={setVisible} visible={visible} type="creat" layout={"vertical"} />
                     </div>
 
                 }
@@ -181,9 +181,9 @@ const WorkLog = (props) => {
                                         {
                                             editLogId === item.id && visible ?
                                                 <>
-                                                   <div style={{marginLeft: "26px"}}>
-                                                        <WorkLogEdit setVisible={setVisible} visible={visible} type="edit" layout = {"horizontal"} logId = {item.id}/>
-                                                   </div>
+                                                    <div style={{ marginLeft: "26px" }}>
+                                                        <WorkLogEdit setVisible={setVisible} visible={visible} type="edit" layout={"horizontal"} logId={item.id} />
+                                                    </div>
 
                                                 </>
                                                 :
@@ -193,13 +193,26 @@ const WorkLog = (props) => {
                                                         <div className="log-content">{item.workContent}</div>
                                                     </div>
 
-                                                    <div className="log-action">
+                                                    <div className="log-action" ref = {logAction}>
                                                         <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} onClick={() => showEdit(item.id)}>
                                                             <use xlinkHref="#icon-edit"></use>
                                                         </svg>
-                                                        <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                                                            <use xlinkHref="#icon-delete"></use>
-                                                        </svg>
+                                                        <Popconfirm
+                                                            title="确定删除当前工时?"
+                                                            onConfirm={() => {deleteWorKLog(item.id)}}
+                                                            getPopupContainer = {() => logAction.current}
+                                                            okText="是"
+                                                            cancelText="否"
+                                                            placement="topRight"
+                                                        >
+                                                            <span>
+                                                               <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer" }} >
+                                                                <use xlinkHref="#icon-delete"></use>
+                                                            </svg> 
+                                                            </span>
+                                                            
+                                                        </Popconfirm>
+
                                                     </div>
                                                 </div>
 

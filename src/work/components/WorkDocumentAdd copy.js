@@ -1,28 +1,28 @@
-import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Table } from 'antd';
+import React, { Fragment, useEffect, useState } from "react";
+import { Modal, Button, Table, Select, message, Input } from 'antd';
 import { observer, inject } from "mobx-react";
-import "./WorkDocumentAdd.scss";
-import InputSearch from "../../common/input/InputSearch"
-import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "tiklab-core-ui";
+import { withRouter } from "react-router";
+
+const { Search } = Input;
+
 const WorkDocumentAddmodal = (props) => {
-    const { workWikiStore, workStore, setWorkDocumentList, projectId, showSelectDocument, selectDocument } = props;
+    const { workWikiStore, workStore, setWorkDocumentList, projectId, projectStore } = props;
     const { workId } = workStore;
     // const {searchpro} =  projectStore;
     // const projectId = props.match.params.id;
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
-        findProjectWikiRepositoryList, findUnRelationWorkDocumentList,
-        unRelationTotal, unRelationWorkCondition } = workWikiStore;
-
-    const {userList,getSelectUserList } = workStore;
+        findProjectWikiRepositoryList, findUnRelationWorkDocumentList, unRelationTotal,unRelationWorkCondition } = workWikiStore;
+    const [visible, setVisible] = useState(false);
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
-
+    
+    const showModal = () => {
+        setVisible(true)
+    };
 
     useEffect(() => {
-        if (selectDocument === true) {
-            getSelectUserList(projectId)
+        if (visible === true) {
             findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
@@ -43,7 +43,7 @@ const WorkDocumentAddmodal = (props) => {
             })
         }
         return;
-    }, [selectDocument])
+    }, [visible])
 
     const columns = [
         {
@@ -66,7 +66,9 @@ const WorkDocumentAddmodal = (props) => {
         }
     ];
 
-
+    const onCancel = () => {
+        setVisible(false);
+    };
 
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
@@ -115,7 +117,7 @@ const WorkDocumentAddmodal = (props) => {
                     findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
                         setWorkDocumentList([...data])
                     })
-                    showSelectDocument(false)
+                    setVisible(false)
                 }
             })
         } else {
@@ -150,85 +152,83 @@ const WorkDocumentAddmodal = (props) => {
 
         })
     }
-    const documentAdd = useRef()
     return (
         <>
-            <div className="document-add" ref={documentAdd}>
+            <div className="addmodel">
+                {
+                    props.type !== "edit" ? <Button onClick={showModal}>
+                        +{props.name}
+                    </Button> :
+                        <span onClick={showModal} style={{ color: "var(--tiklab-gray-400)" }}>{props.name}</span>
+                }
+                <Modal
+                    title="选择文档"
+                    visible={visible}
+                    onCancel={onCancel}
+                    width={800}
+                    onOk={submitWorkRepositoryList}
+                    className="work-kanass-addmodel"
+                    destroyOnClose={true}
+                    closable={false}
+                >
 
-                <div className="document-add-search">
-                    <InputSearch style={{ minWidth: "250px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"文档名称"} />
-                    <SelectSimple name="repository"
-                        onChange={(value) => searchUnselectWorkRepository(value)}
-                        title={"知识库"}
-                    >
-                        {
-                            repositoryallList.map(item => {
-                                return <SelectItem
-                                    value={item.id}
-                                    label={item.kanassRepositoryName}
-                                    key={item.id}
-                                    imgUrl={`${base_url}/images/${item.iconUrl}`}
-                                />
-                            })
-                        }
-                    </SelectSimple>
+
                     {
-                        userList && userList.length > 0 && <SelectSimple name="user"
-                            onChange={(value) => searchUnselectWorkRepository(value)}
-                            title={"文档作者"}
-                        >
-                            {
-                                userList.map(item => {
-                                    return <SelectItem
-                                        value={item.user.id}
-                                        label={item.user.nickname}
-                                        key={item.user.id}
+                        repositoryallList && repositoryallList.length > 0 ?
+                            <Fragment>
+                                <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
+                                    选择知识库：
+                                    <Select
+                                        style={{ width: 200 }}
+                                        allowClear
+                                        onChange={(value) => searchUnselectWorkRepository(value)}
+                                    >
+                                        {
+                                            repositoryallList && repositoryallList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.kanassRepositoryName}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                    <Search
+                                        allowClear
+                                        placeholder="请输入关联文档名称"
+                                        onSearch={searchSelectWorkRepository}
+                                        enterButton
+                                        style={{ width: 200, marginLeft: "10px" }}
                                     />
-                                })
-                            }
-                        </SelectSimple>
+                                </div>
+                                <Table
+                                    columns={columns}
+                                    dataSource={documentList}
+                                    rowKey={record => record.id}
+                                    rowSelection={{
+                                        selectedRow,
+                                        onChange: selectWorkRepository,
+                                        getCheckboxProps: (record) => ({
+                                            disabled: record.rele === true
+                                        })
+                                    }}
+                                    okText="确定"
+                                    cancelText="取消"
+                                    // pagination={false}
+                                    pagination={{
+                                        total: unRelationTotal,
+                                        pageSize: unRelationWorkCondition.pageParam.pageSize,
+                                        current: unRelationWorkCondition.pageParam.currentPage,
+                                        onChange: changePage
+                                    }}
+                                />
+                            </Fragment>
+                            :
+                            <div>暂无关联知识库，请去  <Button type="primary" onClick={() => goWikiRepository()}>添加</Button></div>
                     }
 
 
-                    <div className="document-add-submit" style={{width: "66px"}}>
-                        <span onClick={() => submitWorkRepositoryList()}>
-                            确定
-                        </span>
-                        <span style={{ marginLeft: "10px" }} onClick={() => showSelectDocument(false)}>
-                            取消
-                        </span>
-                    </div>
-                </div>
-                <div className="document-add-model">
-                    <Table
-                        columns={columns}
-                        dataSource={documentList}
-                        rowKey={record => record.id}
-                        rowSelection={{
-                            selectedRow,
-                            onChange: selectWorkRepository,
-                            getCheckboxProps: (record) => ({
-                                disabled: record.rele === true
-                            })
-                        }}
-                        okText="确定"
-                        cancelText="取消"
-                        pagination={false}
-                    // pagination={{
-                    //     total: unRelationTotal,
-                    //     pageSize: unRelationWorkCondition.pageParam.pageSize,
-                    //     current: unRelationWorkCondition.pageParam.currentPage,
-                    //     onChange: changePage
-                    // }}
-                    />
-                </div>
-
-
+                </Modal>
             </div>
-
 
         </>
     );
 };
 
-export default inject('workStore', 'workWikiStore')(observer(WorkDocumentAddmodal));
+export default withRouter(inject('workStore', 'workWikiStore')(observer(WorkDocumentAddmodal)));

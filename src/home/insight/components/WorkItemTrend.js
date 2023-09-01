@@ -32,6 +32,7 @@ const WorkItemTrend = (props) => {
         findAllProject().then(res => {
             setProjectList(res.data)
         })
+        return;
     }, [])
 
     /**
@@ -58,6 +59,7 @@ const WorkItemTrend = (props) => {
 
             form.setFieldsValue(formData)
         }
+        return;
         
     },[isEditor])
 

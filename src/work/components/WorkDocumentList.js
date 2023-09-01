@@ -9,20 +9,21 @@
 import React, { useEffect, useState } from "react";
 import { Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
-import "./WorkDocument.scss"
+import "./WorkDocumentList.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
-import {applyJump} from "tiklab-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
-
+import Button from "../../common/button/Button"
 const WorkDocumentList = (props) => {
     const store = {
         workWikiStore: WorkWikiStore
     }
     const { workStore, projectId } = props;
     const { findDocumentPageByWorkItemId, deleteWorkItemDocument, findSystemUrl } = WorkWikiStore;
-    const { workId } = workStore;
+    const { workId, getSelectUserList } = workStore;
     const [workDocumentList, setWorkDocumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
+    const [selectDocument, showSelectDocument] = useState(false);
     useEffect(() => {
         findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
             setWorkDocumentList([...data])
@@ -41,16 +42,15 @@ const WorkDocumentList = (props) => {
         })
     }
     const goWikiDetail = (data) => {
-        if(data.exist){
-            findSystemUrl({name: "kanass"}).then(res=> {
+        if (data.exist) {
+            findSystemUrl({ name: "kanass" }).then(res => {
                 const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
-                applyJump(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
-                // window.open(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`)
+                applyJump(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
             })
-        }else {
+        } else {
             return
         }
-        
+
     }
     const columns = [
         {
@@ -90,24 +90,40 @@ const WorkDocumentList = (props) => {
         <div className="work-repository">
             <div className="repository-top">
                 <div className="repository-top-title">关联文档({workDocumentList.length})</div>
-                <WorkDocumentAddmodal
-                    {...props}
-                    name="添加文档"
-                    selectIds={selectIds}
-                    setWorkDocumentList={setWorkDocumentList}
-                    projectId = {projectId}
+                <div className="child-top-botton">
+                    <Button onClick={() => { showSelectDocument(true) }}>
+                        添加文档
+                    </Button>
+                </div>
+
+
+            </div>
+            <div className="document-content">
+
+                {
+                    selectDocument && <WorkDocumentAddmodal
+                        {...props}
+                        name="添加文档"
+                        selectIds={selectIds}
+                        setWorkDocumentList={setWorkDocumentList}
+                        projectId={projectId}
+                        showSelectDocument={showSelectDocument}
+                        selectDocument={selectDocument}
+                        getSelectUserList = {getSelectUserList}
+                    />
+                }
+                <Table
+                    className="repository-table"
+                    columns={columns}
+                    dataSource={workDocumentList}
+                    rowKey={record => record.id}
+                    pagination={false}
                 />
             </div>
-            <Table
-                className="repository-table"
-                columns={columns}
-                dataSource={workDocumentList}
-                rowKey={record => record.id}
-                pagination={false}
-            />
+
         </div>
     </Provider>
-        
+
     )
 }
 export default inject("workStore")(observer(WorkDocumentList));

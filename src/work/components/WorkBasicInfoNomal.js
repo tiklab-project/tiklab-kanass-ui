@@ -8,7 +8,6 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "tiklab-slate-ui";
-import UserIcon from "../../common/UserIcon/UserIcon";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
@@ -17,47 +16,57 @@ const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
     const [detailForm] = Form.useForm();
-
     const [extDataForm] = Form.useForm();
+    const formRef = useRef();
     const layoutExForm = {
         labelCol: { span: 4 },
         wrapperCol: { span: 16 },
     };
 
     const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 12 },
+        labelCol: { span: 5 },
+        wrapperCol: { span: 14 },
+    };
+
+    const layoutRight = {
+        labelCol: { span: 3 },
+        wrapperCol: { span: 21 },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
-    const { workId, findWorkAttachList, createWorkAttach, attachList, findFormConfig,
-        formList, moduleList, sprintList, priorityList, editWork, userList
+    const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
+        attachList, findFormConfig, formList, moduleList, sprintList, priorityList, editWork,
+        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList
     } = workStore;
     const workIndex = getSessionStorage("workIndex");
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
-    const formRef = useRef();
-
-    // 获取详情内容
     const [parentWorkItem, setParentWorkItem] = useState("")
+
+    const [selectItemList, setSelectItemList] = useState()
+
+    const projectId = props.match.params.id;
+
+    const [parentList, setParentList] = useState();
+    const [preWorkList, setPreWorkList] = useState();
 
     const initForm = (workInfo) => {
         if (workInfo) {
             detailForm.setFieldsValue({
                 assigner: workInfo.assigner?.id,
-                reporter: workInfo.reporter?.id,
+                builder: workInfo.builder?.id,
                 module: workInfo.module?.id,
                 workPriority: workInfo.workPriority?.id,
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
-                planBeginTime: moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat),
-                planEndTime: moment(workInfo.planEndTime || getNowFormatDate(), dateFormat),
+                planTime: [moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat), moment(workInfo.planEndTime || getNowFormatDate(), dateFormat)],
                 planTakeupTime: workInfo.planTakeupTime || null,
-                predependworkitem: workInfo.preDependWorkItem?.id,
+                preDependWorkItem: workInfo.preDependWorkItem?.id,
                 sprint: workInfo.sprint?.id,
                 parentWorkItem: workInfo.parentWorkItem?.id,
+                eachType: workInfo.eachType
             })
             setPlanTakeupTimeValue(workInfo.planTakeupTime)
             // 父事项
@@ -75,21 +84,43 @@ const WorkBasicInfo = (props) => {
             }
 
             let descReplace;
-
             if (workInfo.desc) {
                 setSlateValue(workInfo.desc)
             }
+
         }
     }
 
     useEffect(() => {
-        findFormConfig({ id: workInfo.workType.form?.id })
+        findFormConfig({ id: workInfo.workType.form.id })
+        findFieldList({ code: "taskType" }).then(res => {
+            if (res.code === 0) {
+                setSelectItemList(res.data[0].selectItemList)
+            }
+        })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
             initForm(workInfo)
         }
         setEditorType(false)
+
+        const params = {
+            id: workId,
+            projectId: workInfo.project.id,
+            workTypeId: workInfo.workType.id
+        }
+        findCanBeRelationParentWorkItemList(params).then(res => {
+            if (res.code === 0) {
+                setParentList(res.data.dataList);
+            }
+        })
+
+        findCanBeRelationPerWorkItemList(params).then(res => {
+            if (res.code === 0) {
+                setPreWorkList(res.data.dataList);
+            }
+        })
         return
     }, [workInfo])
 
@@ -139,7 +170,7 @@ const WorkBasicInfo = (props) => {
                 return (
                     record.type.indexOf("image") === -1 ? <Fragment>
                         {
-                            version === "cloud" ? <a href={`${upload_url}/file/${record.attachmentUrl}?tenant=${tenant}`}
+                            version === "cloud" ? <a href={`/file/${record.attachmentUrl}?tenant=${tenant}`}
                                 target="_blank"
                             >
                                 {text}
@@ -338,6 +369,7 @@ const WorkBasicInfo = (props) => {
     const [editorType, setEditorType] = useState(false);
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 
+
     const editorDesc = () => {
 
         let data = {
@@ -376,6 +408,21 @@ const WorkBasicInfo = (props) => {
         }
     }
 
+    // 根据id 或者事项标题查找可被关联的上级事项
+    const searchParentByWord = (value) => {
+        const params = {
+            id: workId,
+            projectId: projectId,
+            workTypeId: workInfo.workType.id,
+            title: value,
+            likeId: value
+        }
+        findCanBeRelationParentWorkItemList(params).then(res => {
+            if (res.code === 0) {
+                setParentList(res.data.dataList);
+            }
+        })
+    }
     return (
         <div className="work-info">
             {contextHolder}
@@ -394,7 +441,7 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
-                            <Form.Item label="缺陷类型" name="eachType"
+                            <Form.Item label="任务类型" name="eachType"
                                 hasFeedback={showValidateStatus === "eachType" ? true : false}
                                 validateStatus={validateStatus}
                             >
@@ -545,12 +592,17 @@ const WorkBasicInfo = (props) => {
                                 </Select>
                             </Form.Item>
 
-
+                            <Form.Item label="创建人" name="builder"
+                                hasFeedback={showValidateStatus === "builder" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}</div>
+                            </Form.Item>
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
                         <Form
-                            {...layout}
+                            {...layoutRight}
                             initialValues={{ remember: true }}
                             form={detailForm}
                             onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
@@ -562,21 +614,6 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "planTime" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                {/* <DatePicker
-                                    locale={locale}
-                                    format={dateFormat}
-                                    showTime
-                                    allowClear={false}
-                                    className="work-select"
-                                    bordered={fieldName === "planBeginTime" ? true : false}
-                                    suffixIcon={fieldName === "planBeginTime" || hoverFieldName == "planBeginTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planBeginTime")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planBeginTime")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer = {() =>formRef.current}
-                                // suffixIcon={false}
-                                /> */}
                                 <RangePicker
                                     locale={locale}
                                     format={dateFormat}
@@ -614,24 +651,105 @@ const WorkBasicInfo = (props) => {
                             <Form.Item name="parentWorkItem" label="上级事项"
                                 hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                                 validateStatus={validateStatus}
-                                className="work-select"
-                                key="selectParentWorkItem"
-                                bordered={fieldName === "parentWorkItem" ? true : false}
-                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
-                                onFocus={() => changeStyle("parentWorkItem")}
-                                onBlur={() => setFieldName("")}
-                                onMouseEnter={() => setHoverFieldName("parentWorkItem")}
-                                onMouseLeave={() => setHoverFieldName("")}
-                                allowClear
                             >
-                                <div style={{ padding: "0 11px" }}>{workInfo.parentWorkItem?.title ? workInfo.parentWorkItem?.title : "无"}</div>
+                                <Select
+                                    showSearch
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="parentWorkItem"
+                                    bordered={fieldName === "parentWorkItem" ? true : false}
+                                    suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("parentWorkItem")}
+                                    onBlur={() => setFieldName("")}
+                                    onSearch={(value) => searchParentByWord(value)}
+                                    onMouseEnter={() => setHoverFieldName("parentWorkItem")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                    getPopupContainer={() => formRef.current}
+                                >
+                                    {
+                                        parentList && parentList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>
+                                                <Space>
+                                                    {
+                                                        item.workTypeSys.iconUrl ?
+                                                            <img
+                                                                src={version === "cloud" ?
+                                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                                    :
+                                                                    (upload_url + item.workTypeSys?.iconUrl)
+                                                                }
+                                                                alt=""
+                                                                className="img-icon"
+
+                                                            />
+                                                            :
+                                                            <img
+                                                                src={'/images/workType2.png'}
+                                                                alt=""
+                                                                className="img-icon"
+                                                            />
+
+                                                    }
+                                                    {item.title}
+                                                </Space>
+                                            </Select.Option>
+                                        })
+                                    }
+                                </Select>
                             </Form.Item>
-                            <Form.Item label="创建人" name="builder"
-                                hasFeedback={showValidateStatus === "builder" ? true : false}
+
+                            <Form.Item name="preDependWorkItem" label="前置事项"
+                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <div style={{ padding: "0 11px" }}>{workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}</div>
+                                <Select
+                                    showSearch
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="preDependWorkItem"
+                                    bordered={fieldName === "preDependWorkItem" ? true : false}
+                                    suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("preDependWorkItem")}
+                                    onBlur={() => setFieldName("")}
+                                    onSearch={(value) => searchParentByWord(value)}
+                                    onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                    getPopupContainer={() => formRef.current}
+                                >
+                                    {
+                                        preWorkList && preWorkList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>
+                                                <Space>
+                                                    {
+                                                        item.workTypeSys.iconUrl ?
+                                                            <img
+                                                                src={version === "cloud" ?
+                                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                                    :
+                                                                    (upload_url + item.workTypeSys?.iconUrl)
+                                                                }
+                                                                alt=""
+                                                                className="img-icon"
+
+                                                            />
+                                                            :
+                                                            <img
+                                                                src={'/images/workType2.png'}
+                                                                alt=""
+                                                                className="img-icon"
+                                                            />
+
+                                                    }
+                                                    {item.title}
+                                                </Space>
+                                            </Select.Option>
+                                        })
+                                    }
+                                </Select>
                             </Form.Item>
+                            
                         </Form>
                     </div>
                 </div>
@@ -653,8 +771,6 @@ const WorkBasicInfo = (props) => {
                                 key={item.id}
                                 className="exdata-item"
                             >
-                                {/* <DatePicker/> */}
-                                {/* <Forms formType={item.fieldType.code} selectItemList={item.selectItemList} type="view" /> */}
                                 <SwitchPreliminaryType
                                     code={item.fieldType.code}
                                     bordered={fieldName === `System${item.code}` ? true : false}
@@ -716,6 +832,7 @@ const WorkBasicInfo = (props) => {
                                         {...props}
                                     />
                                 }
+
                             </div>
                     }
                 </Fragment>

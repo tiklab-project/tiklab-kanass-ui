@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm } from "antd";
+import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm, message } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
@@ -30,7 +30,7 @@ const WorkDetail = (props) => {
     } = workStore;
     const detailCrumbArray = getSessionStorage("detailCrumbArray");
     const projectId = props.match.params.id;
-
+    const userId = getUser().userId;
     const workDeatilForm = useRef()
     const inputRef = useRef()
     const [workInfo, setWorkInfo] = useState();
@@ -104,6 +104,10 @@ const WorkDetail = (props) => {
     }
 
     const changeStatus = (transition) => {
+        if(userId !== workInfo.assigner?.id){
+            message.error("没有权限")
+            return
+        }
         const value = {
             updateField: "workStatusNode",
             workStatusNode: transition?.toNode?.id,
@@ -114,17 +118,20 @@ const WorkDetail = (props) => {
         editWork(value).then((res) => {
             if (res.code === 0) {
                 setWorkStatus(name)
-
                 searchWorkById(workId).then((res) => {
                     if (res) {
                         percentForm.setFieldsValue({ assigner: res.assigner?.id })
+                        workInfo.assigner = res.assigner;
                         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                        workList[workIndex - 1] = res;
-                        setWorkList([...workList])
+                        workList[workIndex - 1].workStatusNode = res.workStatusNode;
+                        workList[workIndex - 1].workStatusCode = res.workStatusCode;
+                        // setWorkList([...workList])
                     }
                 })
-
+            }
+            if(res.code === 40000){
+                message.error(res.msg)
             }
         })
     }
@@ -207,18 +214,16 @@ const WorkDetail = (props) => {
         setAlertText("保存中...")
 
         editWork(data).then(res => {
-            if (updateField === "assigner") {
-                if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" ||
-                    props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
+            if (res.code === 0) {
+                if (updateField === "assigner") {
                     const user = userList.filter(item => {
                         return item.user.id === updateData.assigner
                     })
                     workList[workIndex - 1].assigner = user[0].user;
+                    workInfo.assigner = user[0].user;
                     setWorkList([...workList])
                 }
-            }
 
-            if (res.code === 0) {
                 setValidateStatus("success")
                 setAlertText("保存成功！")
 
@@ -374,7 +379,6 @@ const WorkDetail = (props) => {
                                         </div>
 
                                         <div className="work-detail-tab-botton">
-
                                             <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
                                                 <Popconfirm
                                                     title="确定删除事项?"
@@ -390,8 +394,6 @@ const WorkDetail = (props) => {
                                                         删除
                                                     </Button>
                                                 </Popconfirm>
-
-
                                             </PrivilegeProjectButton>
                                             <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer={() => workDetailTop.current}>
                                                 <Button className="botton-background">

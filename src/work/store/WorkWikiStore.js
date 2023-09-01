@@ -89,6 +89,12 @@ export class WorkWikiStore {
     }
 
     @action
+    findWikiUserList = async() => {
+        const data = await Service("/wikirepository/findWikiUserList")
+        return data;
+    }
+
+    @action
     findProjectWikiRepositoryList = async(params) => {
         const data = await Service("/projectWikiRepository/findProjectWikiRepositoryList", params)
         return data;

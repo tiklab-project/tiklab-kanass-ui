@@ -2,6 +2,7 @@ import { observable, action, extendObservable } from "mobx";
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
 import { getUser } from "tiklab-core-ui";
+import { async } from "@antv/x6/lib/registry/marker/async";
 export class WorkStore {
     @observable workBoardList = [];
     @observable workUserGroupBoardList = [];
@@ -67,7 +68,7 @@ export class WorkStore {
 
     // 状态列表
     @observable statesList = []
-    @observable workBoardListLenght = 0;
+    @observable workBoardListLength = 0;
 
     //事项状态
     @observable workType = ""
@@ -230,7 +231,7 @@ export class WorkStore {
             const newList = [];
             const newIds = [];
             list.map(item => {
-                if(newIds.indexOf(item.user.id)> -1){
+                if(newIds.indexOf(item.user?.id)> -1){
                     return null
                 }else {
                     newIds.push(item.user.id)
@@ -266,7 +267,7 @@ export class WorkStore {
                     length = this.workBoardList[j].workItemList.length;
                 }
             }
-            this.workBoardListLenght = length;
+            this.workBoardListLength = length;
         }
         return data;
     }
@@ -357,9 +358,9 @@ export class WorkStore {
     }
 
     @action
-    findWorkItemNumByWorkList = async(value) => {
+    findWorkItemNumByWorkStatus = async(value) => {
         this.setSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
+        const data = await Service("/workItem/findWorkItemNumByWorkStatus",this.searchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
         }
@@ -369,7 +370,7 @@ export class WorkStore {
     @action
     getWorkItemNum = () => {
         if(this.viewType === "tile" || this.workShowType === "bodar"){
-            this.findWorkItemNumByWorkList()
+            this.findWorkItemNumByWorkStatus()
         }
         if (this.viewType === "tree" && this.workShowType !== "bodar") {
             this.findWorkItemNumByWorkType()
@@ -525,16 +526,14 @@ export class WorkStore {
         }
 
         const data = await Service("/workItem/updateWorkItem",value);
-        if(data.code === 0){
-            return data;
-        }
+        return data;
     }
 
     // 修改事项状态
     @action
     changeWorkStatus = async(value) => {
         let params = {
-            updateField : "workStatus",
+            updateField : "workStatusNode",
             id: value.id,
             flowId: value.flowId,
             workStatusNode: {
@@ -644,7 +643,8 @@ export class WorkStore {
     findToNodeList = async(value) => {
         const params = new FormData()
         params.append("nodeId", value.nodeId);
-        const data = await Service("/stateNode/findToNodeList", params);
+        params.append("flowId", value.flowId);
+        const data = await Service("/stateNode/findTransitionList", params);
         if(data.code === 0){
             if (data.data && data.data.length > 0) {
                 this.statesList = data.data
@@ -773,7 +773,18 @@ export class WorkStore {
         return data;
 
     }
+
+    @action
+    findCanBeRelationParentWorkItemList = async (value) => {
+        const data = await Service("/workItem/findCanBeRelationParentWorkItemList", value)
+        return data;
+    }
     
+    @action
+    findCanBeRelationPerWorkItemList = async (value) => {
+        const data = await Service("/workItem/findCanBeRelationPerWorkItemList", value)
+        return data;
+    }
 
 }
 export default new WorkStore();

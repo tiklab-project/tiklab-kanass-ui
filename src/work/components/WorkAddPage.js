@@ -227,7 +227,7 @@ const WorkAddPage = (props) => {
                             initialValues={{ remember: true }}
                             form={form}
                             className="work-add-form"
-                            layout="horizontal"
+                            layout="vertical"
                             labelAlign="right"
                             labelCol={{
                                 span: 2,
@@ -273,7 +273,7 @@ const WorkAddPage = (props) => {
                             <Form.Item
                                 label="负责人"
                                 name="assigner"
-
+                                hidden = {true}
                                 rules={[{ required: true, message: '请输入负责人!' }]}
                             >
                                 <Select
@@ -357,6 +357,7 @@ const WorkAddPage = (props) => {
                                 label="所属迭代"
                                 name="sprint"
                                 rules={[{ required: false, message: '请输入所属迭代!' }]}
+                                hidden = {true}
                                 wrapperCol={{
                                     span: 16,
                                 }}
@@ -376,6 +377,7 @@ const WorkAddPage = (props) => {
                             </Form.Item>
                             <Form.Item
                                 label="所属模块"
+                                hidden = {true}
                                 name="module"
                                 rules={[{ required: false, message: '请输入所属模块!' }]}
                             >

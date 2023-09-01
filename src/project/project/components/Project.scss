@@ -31,6 +31,7 @@
                 display: inline-flex;
                 align-items: center;
                 font-size: 16px;
+                font-weight: 600;
                 .project-icon {
                     width: 30px;
                     height: 30px;
@@ -173,7 +174,7 @@
             .ant-col {
                 height: 100%;
                 background-color: #fff;
-                padding: 20px 20px;
+                // padding: 20px 20px;
             }
         }
         .project-table-box {

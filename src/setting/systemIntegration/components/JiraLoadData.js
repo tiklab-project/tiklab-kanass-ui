@@ -47,7 +47,7 @@ const LoadData = (props) => {
     const domain = window.location.host;
     const uploadProps = {
         name: 'uploadFile',
-        action: `${JSON.parse(base_url)}/importDate/importJireDate`,
+        action: `${base_url}/importDate/importJireDate`,
         headers: {
             ticket: ticket,
             tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null

@@ -14,7 +14,7 @@
     justify-content: center;
     gap: 20px;
     padding: 0 20px;
-    height: 100%;
+    // height: 100%;
     margin: auto;
     justify-content: center;
     .work-bodar-box-border {
@@ -26,7 +26,7 @@
         min-height: 100px;
         width: 250px;
         border-radius: 4px;
-        height: fit-content;
+        // height: fit-content;
         flex-shrink: 0;
        
         .work-bodar-title {
@@ -53,25 +53,24 @@
             font-size: 13px;
             background-color: #fff;
             width: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            .work-item-id {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            .work-item-assigner {
                 display: flex;
-                justify-content: space-between;
+                align-items: center;
+                gap: 5px;
             }
             .work-item-title {
                 line-height: 30px;
                 cursor: pointer;
-                .work-item-title-left {
-                    color: var(--tiklab-blue);
-                    font-weight: var(--tiklab-font-weight-bold);
-                }
+                color: var(--tiklab-blue);
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+            .work-item-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
         }
+       
         .work-bodar-item-move {
             background-color: #d0e5f2;
         }
