@@ -33,8 +33,8 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 
 }
 
-const goWorkItem = (type, workStore, projectId, router) => {
-    const { setSearchConditionNull, setSearchCondition, sprintId } = workStore;
+const goWorkItem = (type, workStore, projectId, sprintId) => {
+    const { setSearchConditionNull, setSearchCondition } = workStore;
     let initValues = {
         pageParam: {
             pageSize: 20,
@@ -59,22 +59,22 @@ const goWorkItem = (type, workStore, projectId, router) => {
         setSearchCondition(initValues)
         // sessionStorage.removeItem("searchCondition")
         // initFrom(initValues)
-        getWorkList(workStore,router);
+        getWorkList(workStore);
     })
 }
 
-const getWorkList = (workStore, router) => {
+const getWorkList = (workStore) => {
     const { viewType, workShowType, getWorkBoardList } = workStore;
     if (viewType === "tile" && workShowType !== "bodar") {
-        getPageList(workStore, router);
+        getPageList(workStore);
     } else if (viewType === "tree"  && workShowType !== "bodar") {
-        getPageTree(workStore, router);
+        getPageTree(workStore);
     } else if (workShowType === "bodar"){
         getWorkBoardList()
     }
 }
 
-const getPageTree = (workStore, router) => {
+const getPageTree = (workStore) => {
     const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType } = workStore;
 
     getWorkConditionPageTree().then((res) => {
@@ -92,7 +92,7 @@ const getPageTree = (workStore, router) => {
     })
 }
 
-const getPageList = (workStore, projectId) => {
+const getPageList = (workStore) => {
     const { getWorkConditionPage, setWorkIndex, setWorkId, workShowType } = workStore;
     getWorkConditionPage().then((res) => {
         if (res.dataList.length > 0) {

@@ -20,6 +20,7 @@ const WorkTable = (props) => {
         createRecent, setWorkIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
+
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
@@ -65,6 +66,21 @@ const WorkTable = (props) => {
 
     }
 
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
     const columns = [
         {
             title: '事项',
@@ -172,7 +188,7 @@ const WorkTable = (props) => {
             title: '状态',
             dataIndex: ['workStatusNode', 'name'],
             key: 'workStatus',
-            render: (text, record) => <div className={`work-status ${record.workStatusCode}`}>
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
                 {text}
             </div>
         },
@@ -195,7 +211,7 @@ const WorkTable = (props) => {
                     </svg> */}
                     <Popconfirm
                         title="确定删除事项?"
-                        onConfirm={() =>deleteWork(record.id) }
+                        onConfirm={() => deleteWork(record.id)}
                         // onCancel={cancel}
                         okText="是"
                         cancelText="否"

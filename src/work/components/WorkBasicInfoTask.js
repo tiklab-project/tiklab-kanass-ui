@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Input, Upload, message, Table, DatePicker, Select, InputNumber, Space, Tabs } from "antd";
+import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
@@ -12,6 +12,8 @@ import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css"
 import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
+import { useDebounce } from "../../common/utils/debounce";
+import { SelectItem, SelectSimple } from "../../common/select"
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -43,8 +45,6 @@ const WorkBasicInfo = (props) => {
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
-    const [parentWorkItem, setParentWorkItem] = useState("")
-
     const [selectItemList, setSelectItemList] = useState()
 
     const projectId = props.match.params.id;
@@ -63,18 +63,13 @@ const WorkBasicInfo = (props) => {
                 percent: workInfo.percent,
                 planTime: [moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat), moment(workInfo.planEndTime || getNowFormatDate(), dateFormat)],
                 planTakeupTime: workInfo.planTakeupTime || null,
-                preDependWorkItem: workInfo.preDependWorkItem?.id,
+                preDependWorkItem: workInfo.preDependWorkItem ? {value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title} : null,
                 sprint: workInfo.sprint?.id,
-                parentWorkItem: workInfo.parentWorkItem?.id,
+                parentWorkItem: workInfo.parentWorkItem ? {value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title} : null,
                 eachType: workInfo.eachType
             })
             setPlanTakeupTimeValue(workInfo.planTakeupTime)
-            // 父事项
-            if (workInfo.parentWorkItem) {
-                setParentWorkItem(workInfo.parentWorkItem.id)
-            } else {
-                setParentWorkItem("")
-            }
+
 
             extDataForm.resetFields();
             if (workInfo.extData) {
@@ -82,8 +77,6 @@ const WorkBasicInfo = (props) => {
             } else {
                 extDataForm.setFieldsValue("{}")
             }
-
-            let descReplace;
             if (workInfo.desc) {
                 setSlateValue(workInfo.desc)
             }
@@ -93,7 +86,7 @@ const WorkBasicInfo = (props) => {
 
     useEffect(() => {
         findFormConfig({ id: workInfo.workType.form.id })
-        findFieldList({ code: "taskType" }).then(res => {
+        findFieldList({ code: "demandType" }).then(res => {
             if (res.code === 0) {
                 setSelectItemList(res.data[0].selectItemList)
             }
@@ -250,6 +243,7 @@ const WorkBasicInfo = (props) => {
      */
     const updateSingle = (changedValues) => {
         let changeKey = Object.keys(changedValues)[0];
+        console.log(Object.values(changedValues)[0])
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
             console.log(changedValues)
@@ -296,8 +290,26 @@ const WorkBasicInfo = (props) => {
             }
         }
         if (changeKey === "parentWorkItem") {
-            changedValues.parentWorkItem = {
-                id: changedValues.parentWorkItem
+            changedValues.parentWorkItem = changedValues.parentWorkItem === "nullstring" ? 
+            {
+                id: "nullstring"
+            }
+            :
+            {
+                id: changedValues.parentWorkItem.value,
+                title: changedValues.parentWorkItem.label
+            }
+        }
+        
+        if (changeKey === "preDependWorkItem") {
+            changedValues.preDependWorkItem = changedValues.preDependWorkItem === "nullstring" ? 
+            {
+                id: "nullstring"
+            }
+            :
+            {
+                id: changedValues.preDependWorkItem.value,
+                title: changedValues.preDependWorkItem.label,
             }
         }
         if (changeKey === "attachment") {
@@ -305,12 +317,6 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.attachment
             }
         }
-        if (changeKey === "preDependWorkItem") {
-            changedValues.preDependWorkItem = {
-                id: changedValues.preDependWorkItem
-            }
-        }
-
         let data = {
             ...changedValues,
             id: workId,
@@ -318,6 +324,7 @@ const WorkBasicInfo = (props) => {
         }
         editWork(data).then(res => {
             if (res.code === 0) {
+                console.log(changedValues)
                 setWorkInfo({ ...workInfo, ...changedValues })
                 if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
                     workList[workIndex - 1] = { ...workList[workIndex - 1], ...changedValues }
@@ -362,6 +369,7 @@ const WorkBasicInfo = (props) => {
     const [hoverFieldName, setHoverFieldName] = useState("")
     const [fieldName, setFieldName] = useState("")
     const changeStyle = (value) => {
+        console.log(value)
         setFieldName(value)
     }
 
@@ -408,8 +416,9 @@ const WorkBasicInfo = (props) => {
         }
     }
 
+    const [parentLoading, setParentLoading] = useState(false);
     // 根据id 或者事项标题查找可被关联的上级事项
-    const searchParentByWord = (value) => {
+    const searchParentByWord = useDebounce((value) => {
         const params = {
             id: workId,
             projectId: projectId,
@@ -417,14 +426,16 @@ const WorkBasicInfo = (props) => {
             title: value,
             likeId: value
         }
+        setParentLoading(true)
         findCanBeRelationParentWorkItemList(params).then(res => {
             if (res.code === 0) {
+                setParentLoading(false)
                 setParentList(res.data.dataList);
             }
         })
-    }
+    }, [500])
 
-    const searchPerByWord = (value) => {
+    const searchPerByWord = useDebounce((value) => {
         const params = {
             id: workId,
             projectId: projectId,
@@ -436,9 +447,10 @@ const WorkBasicInfo = (props) => {
             console.log(res)
             if (res.code === 0) {
                 setPreWorkList(res.data.dataList);
+                console.log(res.data.dataList)
             }
         })
-    }
+    }, [1000])
     return (
         <div className="work-info">
             {contextHolder}
@@ -457,7 +469,7 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
-                            <Form.Item label="任务类型" name="eachType"
+                            <Form.Item label="缺陷类型" name="eachType"
                                 hasFeedback={showValidateStatus === "eachType" ? true : false}
                                 validateStatus={validateStatus}
                             >
@@ -552,7 +564,7 @@ const WorkBasicInfo = (props) => {
                                 >
                                     {
                                         userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
+                                            return <Select.Option value={item.user?.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
                                         })
                                     }
                                 </Select>
@@ -668,104 +680,75 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
-                                    showSearch
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="parentWorkItem"
-                                    bordered={fieldName === "parentWorkItem" ? true : false}
-                                    suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("parentWorkItem")}
-                                    onBlur={() => setFieldName("")}
-                                    onSearch={(value) => searchParentByWord(value)}
+                                
+                                <SelectSimple
+                                    name="parentWorkItem"
+                                    onSearchChange = {(value) => searchParentByWord(value)}
+                                    title={"无"}
+                                    simpleClassName = {fieldName === "parentWorkItem" ? "select-focused" : ""}
+                                    onFocus = {() => changeStyle("parentWorkItem")}
+                                    onBlur = {() => changeStyle("")}
+
+                                    suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                     onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                     onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
-                                        parentList && parentList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>
-                                                <Space>
-                                                    {
-                                                        item.workTypeSys.iconUrl ?
-                                                            <img
-                                                                src={version === "cloud" ?
-                                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                                    :
-                                                                    (upload_url + item.workTypeSys?.iconUrl)
-                                                                }
-                                                                alt=""
-                                                                className="img-icon"
-
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={'/images/workType2.png'}
-                                                                alt=""
-                                                                className="img-icon"
-                                                            />
-
-                                                    }
-                                                    {item.title}
-                                                </Space>
-                                            </Select.Option>
+                                        parentList && parentList.length > 0 ? parentList.map(item => {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.title}
+                                                key={item.id}
+                                                imgUrl={version === "cloud" ?
+                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                    :
+                                                    (upload_url + item.workTypeSys?.iconUrl)}
+                                            />
                                         })
+                                        :
+                                        <Empty image="/images/nodata.png" description="没有查到~" />
                                     }
-                                </Select>
+                                </SelectSimple>
                             </Form.Item>
 
                             <Form.Item name="preDependWorkItem" label="前置事项"
-                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
+                                hasFeedback={showValidateStatus === "preDependWorkItem" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
-                                    showSearch
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="preDependWorkItem"
-                                    bordered={fieldName === "preDependWorkItem" ? true : false}
-                                    suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("preDependWorkItem")}
-                                    onBlur={() => setFieldName("")}
-                                    onSearch={(value) => searchPerByWord(value)}
+                                <SelectSimple
+                                    name="preDependWorkItem"
+                                    onSearchChange = {(value) => searchPerByWord(value)}
+                                    title={"无"}
+                                    simpleClassName = {fieldName === "preDependWorkItem" ? "select-focused" : ""}
+                                    onFocus = {() => changeStyle("preDependWorkItem")}
+                                    onBlur = {() => changeStyle("")}
+                                    
+                                    suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? true : false}
                                     onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
                                     onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
                                 >
                                     {
-                                        preWorkList && preWorkList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>
-                                                <Space>
-                                                    {
-                                                        item.workTypeSys.iconUrl ?
-                                                            <img
-                                                                src={version === "cloud" ?
-                                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                                    :
-                                                                    (upload_url + item.workTypeSys?.iconUrl)
-                                                                }
-                                                                alt=""
-                                                                className="img-icon"
-
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={'/images/workType2.png'}
-                                                                alt=""
-                                                                className="img-icon"
-                                                            />
-
-                                                    }
-                                                    {item.title}
-                                                </Space>
-                                            </Select.Option>
+                                        preWorkList && preWorkList.length > 0 ? preWorkList.map(item => {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.title}
+                                                key={item.id}
+                                                imgUrl={version === "cloud" ?
+                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                    :
+                                                    (upload_url + item.workTypeSys?.iconUrl)}
+                                            >
+                                                <div>事项</div>
+                                            </SelectItem>
                                         })
+                                        :
+                                        <Empty image="/images/nodata.png" description="没有查到~" />
                                     }
-                                </Select>
+                                </SelectSimple>
+
+
                             </Form.Item>
-                            
+
                         </Form>
                     </div>
                 </div>
@@ -864,7 +847,7 @@ const WorkBasicInfo = (props) => {
                     <div className="work-detail-upload">
                         <Dragger className="work-detail-upload" {...filesParams}>
                             <p className="ant-upload-drag-icon">
-                                <svg className="list-img" aria-hidden="true">
+                                <svg className="big-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-uploadImg"></use>
                                 </svg>上传附件
                             </p>

@@ -136,7 +136,7 @@ const StageAddModal = (props) => {
                         >   
                             {
                                 uselist && uselist.map((item,index)=> {
-                                    return <Select.Option value={item.user.id} key={item.user.id}>{item.user.name}</Select.Option>
+                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user.name}</Select.Option>
                                 })
                             }
                         </Select>

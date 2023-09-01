@@ -49,8 +49,8 @@ const SprintDetailAside = (props) => {
             title: "事项",
             icon: 'survey',
             url: `/index/${project.id}/sprintdetail/${sprintId}/workTable`,
-            key: "workItem",
-            encoded: "workItem",
+            key: "work",
+            encoded: "work",
         },
         {
             title: "规划",

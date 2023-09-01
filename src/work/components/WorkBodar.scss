@@ -11,12 +11,12 @@
 }
 .work-bodar-list {
     display: flex;
-    justify-content: center;
     gap: 20px;
     padding: 0 20px;
-    // height: 100%;
-    margin: auto;
+    height: 100%;
+    margin: 0 auto;
     justify-content: center;
+
     .work-bodar-box-border {
         border-radius: 4px;
         min-height: 100%;

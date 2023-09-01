@@ -273,7 +273,6 @@ const WorkAddPage = (props) => {
                             <Form.Item
                                 label="负责人"
                                 name="assigner"
-                                hidden = {true}
                                 rules={[{ required: true, message: '请输入负责人!' }]}
                             >
                                 <Select
@@ -284,7 +283,7 @@ const WorkAddPage = (props) => {
                                 >
                                     {
                                         userList && userList.map((item) => {
-                                            return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                         })
                                     }
                                 </Select>
@@ -325,7 +324,7 @@ const WorkAddPage = (props) => {
                             >
                                 {
                                     userList && userList.map((item) => {
-                                        return <Select.Option value={item.user.id} key={item.user.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                     })
                                 }
                             </Select>
@@ -357,7 +356,6 @@ const WorkAddPage = (props) => {
                                 label="所属迭代"
                                 name="sprint"
                                 rules={[{ required: false, message: '请输入所属迭代!' }]}
-                                hidden = {true}
                                 wrapperCol={{
                                     span: 16,
                                 }}
@@ -377,7 +375,6 @@ const WorkAddPage = (props) => {
                             </Form.Item>
                             <Form.Item
                                 label="所属模块"
-                                hidden = {true}
                                 name="module"
                                 rules={[{ required: false, message: '请输入所属模块!' }]}
                             >
@@ -408,6 +405,7 @@ const WorkAddPage = (props) => {
                             <Form.Item
                                 name="planTakeupTime"
                                 label="计划用时"
+                                hidden = {true}
                             >
                                 <Input suffix="小时" type="number" className="" />
                             </Form.Item>

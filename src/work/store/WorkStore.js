@@ -234,7 +234,7 @@ export class WorkStore {
                 if(newIds.indexOf(item.user?.id)> -1){
                     return null
                 }else {
-                    newIds.push(item.user.id)
+                    newIds.push(item.user?.id)
                     newList.push(item)
                 }
             })
@@ -420,7 +420,7 @@ export class WorkStore {
                 id: value.workType
             },
             parentWorkItem: {
-                id: value.parentWorkItem
+                id: value.parentWorkItem ||  "nullstring"
             },
             workPriority: {
                 id: value.workPriority

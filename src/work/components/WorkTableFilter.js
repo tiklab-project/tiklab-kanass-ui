@@ -10,6 +10,7 @@ import WorkSort from "./WorkSort";
 import WorkTypeTab from "./WorkTypeTab";
 import WorkQuickFilter from "./WorkQuickFilter";
 import { getUser } from "tiklab-core-ui";
+import { useDebounce } from "../../common/utils/debounce";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -23,6 +24,7 @@ const WorkTableFilter = (props) => {
         getWorkTypeList, getWorkStatus, userList, findDmFlowList } = workStore;
     const tenant = getUser().tenant;
     const [flowIds, setFlowIds] = useState();
+    const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
 
     useEffect(() => {
         findProjectList();
@@ -72,9 +74,9 @@ const WorkTableFilter = (props) => {
         if (workShowType === "time") {
             getWorkGanttListTree(values)
         }
-    };
+    }
 
-    const handleChange = (field, value) => {
+    const stateChange = (field, value) => {
         search({
             [field]: value,
             pageParam: {
@@ -84,6 +86,20 @@ const WorkTableFilter = (props) => {
         })
     }
 
+    const inputChange = (field, value) => {
+        setInputValue(value)
+        bebounceChange(field, value)
+    }
+
+    const bebounceChange = useDebounce((field, value) => {
+        search({
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        })
+    }, [500])
     const getWorkList = () => {
         if (viewType === "tile") {
             getPageList();
@@ -199,9 +215,9 @@ const WorkTableFilter = (props) => {
                     {
                         userList.map(item => {
                             return <SelectItem
-                                value={item.user.id}
+                                value={item.user?.id}
                                 label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                key={item.user.id}
+                                key={item.user?.id}
                                 imgUrl={item.user?.iconUrl}
 
                             />
@@ -211,9 +227,9 @@ const WorkTableFilter = (props) => {
                 {
                     workStatusList && workStatusList.length > 0 && <SelectSimple
                         name="workStatus"
-                        onChange={(value) => handleChange("workStatusIds", value)}
+                        onChange={(value) => stateChange("workStatusIds", value)}
                         title={"状态"}
-                        ismult={true}
+                        ismult={"true"}
                         selectValue={searchCondition?.workStatusIds}
                     >
                         <div className="select-group-title">未开始</div>
@@ -277,9 +293,9 @@ const WorkTableFilter = (props) => {
                         <Input bordered={false} allowClear
                             className="workList-search-input"
                             key={"search"}
-                            onChange={(value) => handleChange("keyWord", value.target.value)}
+                            onChange={(value) => inputChange("keyWord", value.target.value)}
                             placeholder="事项标题、ID"
-                            value={searchCondition?.keyWord}
+                            value={inputValue}
                         />
                     </div>
                 </div>

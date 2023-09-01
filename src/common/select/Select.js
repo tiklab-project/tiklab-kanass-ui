@@ -1,28 +1,35 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import "./Select.scss"
+import "./Select.scss";
 const SelectSimple = (props) => {
-    const { onChange, ismult, title, children, selectValue, className } = props;
+    const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
+        ismult, title, children, value, className, simpleClassName, suffixIcon } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
+    const [searchValue, setSearchValue] = useState();
 
-    let [selectData, setSelectData] = useState(selectValue ? selectValue : [])
+    let [selectData, setSelectData] = useState(value ? value : (ismult ? [] : null))
     const [selectLength, setSelectLength] = useState(0)
+
+    const inputRef = useRef()
     useEffect(() => {
+        // onFocus()
         window.addEventListener("mousedown", closeModal, false);
         return () => {
+
             window.removeEventListener("mousedown", closeModal, false);
         }
     }, [showDropDown])
 
     useEffect(() => {
-        if (selectValue) {
-            setSelectLength(selectValue.length)
-            setSelectData(selectValue)
-        }else {
+        if (value) {
+            setSelectLength(value.length)
+            setSelectData(value)
+        } else {
             setSelectLength(0)
-            setSelectData([])
+            setSelectData(ismult ? [] : null)
         }
-    }, [selectValue])
+        return;
+    }, [value])
 
 
     const closeModal = (e) => {
@@ -30,6 +37,13 @@ const SelectSimple = (props) => {
             return;
         }
         if (!dropDown.current.contains(e.target) && dropDown.current !== e.target) {
+            if (onBlur) {
+                onBlur()
+            }
+            if (onSearchChange) {
+                cancel()
+            }
+
             setShowDropDown(false)
         }
     }
@@ -58,21 +72,48 @@ const SelectSimple = (props) => {
     }
 
     const clear = () => {
-        setSelectData([])
+        setSelectData(ismult ? [] : null)
         setSelectLength(0)
         onChange(null)
     }
-    return <div className="select-view">
-        <div onClick={() => setShowDropDown(true)} className="select-content">
+
+    const showShowDrop = () => {
+        setShowDropDown(true);
+        if (onFocus) {
+            onFocus();
+        }
+
+    }
+
+
+    const searchInput = (value) => {
+        setSearchValue(value.target.value)
+        onSearchChange(value.target.value)
+    }
+
+    const cancel = () => {
+        setSearchValue(null)
+        onSearchChange && onSearchChange(null)
+        inputRef.current.value = ""
+    }
+
+    const clearValue = () => {
+        setSelectData(ismult ? [] : null)
+        setSelectLength(0)
+        onChange(null)
+    }
+    return <div className={`select-view ${simpleClassName}`}>
+        <div onClick={() => showShowDrop()} className="select-content"
+            onMouseEnter={() => onMouseEnter && onMouseEnter()}
+            onMouseLeave={() => onMouseEnter && onMouseLeave()}
+        >
             {
                 ismult ?
                     <div >
                         {title}
-                        
                     </div>
                     :
-                    <div className={className}>
-                        
+                    <div className={`${className} select-view-text`}>
                         {selectData?.label ? selectData.label : title}
                     </div>
             }
@@ -80,14 +121,42 @@ const SelectSimple = (props) => {
                 {
                     ismult && selectLength > 0 && <div className="select-number">{selectLength}</div>
                 }
-                <svg className="svg-icon" aria-hidden="true" >
-                    <use xlinkHref={`#icon-downdrop`}></use>
-                </svg>
+                {
+                    suffixIcon && <>
+                        {
+                            !ismult && selectData ? <svg className="cancel-svg" aria-hidden="true" onClick={() => clearValue()}>
+                                <use xlinkHref="#icon-cancel"></use>
+                            </svg>
+                                :
+                                <svg className="svg-icon" aria-hidden="true" >
+                                    <use xlinkHref={`#icon-downdrop`}></use>
+                                </svg>
+                        }
+                    </>
+
+
+                }
+
             </div>
 
         </div>
         {
             showDropDown ? <div className="select-dropdown" ref={dropDown}>
+                {
+                    onSearchChange && <div className="select-search-box">
+                        <input className="select-search-input" ref={inputRef} placeholder="搜索" onChange={(value) => searchInput(value)} />
+                        {
+                            searchValue ? <svg className="cancel-svg" aria-hidden="true" onClick={() => cancel()}>
+                                <use xlinkHref="#icon-cancel"></use>
+                            </svg>
+                                :
+                                <svg className="big-svg" aria-hidden="true">
+                                    <use xlinkHref="#icon-search2"></use>
+                                </svg>
+                        }
+                    </div>
+                }
+
                 {
                     React.Children.map(children, (children, i) => {
                         return React.cloneElement(children, { onChange: getValue, selectData: selectData, setShowDropDown: setShowDropDown, ismult: ismult })

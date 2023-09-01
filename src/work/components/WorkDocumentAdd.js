@@ -180,9 +180,9 @@ const WorkDocumentAddmodal = (props) => {
                             {
                                 userList.map(item => {
                                     return <SelectItem
-                                        value={item.user.id}
+                                        value={item.user?.id}
                                         label={item.user.nickname}
-                                        key={item.user.id}
+                                        key={item.user?.id}
                                     />
                                 })
                             }

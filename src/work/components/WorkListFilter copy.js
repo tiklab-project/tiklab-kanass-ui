@@ -170,9 +170,9 @@ const WorkListFilter = (props) => {
                                 {
                                     userList.map(item => {
                                         return <SelectItem
-                                            value={item.user.id}
+                                            value={item.user?.id}
                                             label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.user.id}
+                                            key={item.user?.id}
                                             imgUrl={item.user?.iconUrl}
 
                                         />

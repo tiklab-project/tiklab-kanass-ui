@@ -1,5 +1,6 @@
 .workitem-tab {
     height: 100%;
+
     .workitem-detail-row {
         // height: calc(100% - 60px);
         // overflow: auto;
@@ -20,10 +21,11 @@
             border-bottom: 2px solid var(--tiklab-blue);
             color: var(--tiklab-blue);
         }
-        
-        .tabs-bar  {
+
+        .tabs-bar {
             cursor: pointer;
         }
+
         .tabs-more {
             position: relative;
 
@@ -51,11 +53,12 @@
                 .tabs-dropdown-item:hover {
                     background-color: var(--tiklab-gray-300);
                 }
+
                 .tabs-dropdown-select {
                     background-color: var(--tiklab-gray-400);
                 }
             }
-           
+
             .tabs-dropdown-show {
                 display: block;
             }
@@ -85,7 +88,20 @@
                 width: 36%;
                 border-radius: 4px;
             }
+
+            .select-view {
+                height: 30px;
+                padding: 0 11px;
+            }
+
+            .select-view:hover {
+                background-color: #f7f8fa;
+            }
+            .ant-empty {
+                margin-bottom: 10px;
+            }
         }
+
         .desc-preview {
             border-radius: 4px;
             background: var(--tiklab-gray-600);
@@ -96,22 +112,28 @@
             border-radius: 4px;
             width: 100%;
             margin-bottom: 20px;
+
             .edit {
                 border: 1px solid #f0f0f0;
                 border-radius: 3px;
             }
+
             .ant-select-selection-placeholder {
-                color: rgba(0,0,0, 0.85);
+                color: rgba(0, 0, 0, 0.85);
             }
+
             .ant-select:hover {
                 background-color: #f7f8fa;
             }
+
             .ant-picker-borderless {
                 cursor: pointer;
             }
+
             .ant-picker-borderless:hover {
                 background-color: #f7f8fa !important;
             }
+
             .ant-input-number {
                 margin-right: 10px;
             }
@@ -119,10 +141,12 @@
             .ant-input-number:hover {
                 background-color: #f7f8fa;
             }
+
             .ant-upload-drag {
                 border: 0;
                 background-color: var(--tiklab-gray-600);
             }
+
             .ant-avatar {
                 width: 20px;
                 height: 20px;
@@ -139,16 +163,16 @@
                 color: var(--tiklab-gray-500);
                 font-size: 13px;
             }
-    
+
             .ant-upload-select-text {
                 margin-bottom: 10px;
             }
-    
+
             .work-detail-upload {
                 height: 80px;
             }
-            
-          
+
+
             .desc-botton {
                 display: flex;
                 justify-content: flex-start;
@@ -157,6 +181,7 @@
                 gap: 10px;
             }
         }
+
         .desc-preview {
             padding: 10px;
             background-color: var(--tiklab-gray-600);

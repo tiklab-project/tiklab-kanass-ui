@@ -4,7 +4,11 @@
     height: 35px;
     line-height: 35px;
     padding: 0px 20px;
-   
+   .select-item-text {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+   }
 
 }
 .select-item:hover {

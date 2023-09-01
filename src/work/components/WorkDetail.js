@@ -217,7 +217,7 @@ const WorkDetail = (props) => {
             if (res.code === 0) {
                 if (updateField === "assigner") {
                     const user = userList.filter(item => {
-                        return item.user.id === updateData.assigner
+                        return item.user?.id === updateData.assigner
                     })
                     workList[workIndex - 1].assigner = user[0].user;
                     workInfo.assigner = user[0].user;
@@ -463,7 +463,7 @@ const WorkDetail = (props) => {
                                                         >
                                                             {
                                                                 userList && userList.map((item) => {
-                                                                    return <Select.Option value={item.user.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
+                                                                    return <Select.Option value={item.user?.id} key={item.id}><Space><UserIcon name={item.user?.nickname ? item.user?.nickname : item.user?.name} />{item.user?.nickname ? item.user?.nickname : item.user?.name}</Space></Select.Option>
                                                                 })
                                                             }
                                                         </Select>
