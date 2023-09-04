@@ -97,7 +97,9 @@ const SelectSimple = (props) => {
         inputRef.current.value = ""
     }
 
-    const clearValue = () => {
+    const clearValue = (event) => {
+        event.stopPropagation();
+        event.preventDefault()
         setSelectData(ismult ? [] : null)
         setSelectLength(0)
         onChange(null)
@@ -124,7 +126,7 @@ const SelectSimple = (props) => {
                 {
                     suffixIcon && <>
                         {
-                            !ismult && selectData ? <svg className="cancel-svg" aria-hidden="true" onClick={() => clearValue()}>
+                            !ismult && selectData ? <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
                                 <use xlinkHref="#icon-cancel"></use>
                             </svg>
                                 :

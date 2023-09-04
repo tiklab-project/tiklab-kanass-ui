@@ -116,8 +116,7 @@ const WorkFilterForm = (props) => {
                 currentPage: 1,
             }
         }
-        const states = ["DONE"]
-        getStateNodeList({ excNodeStatus: states }).then(data => {
+        getStateNodeList({ quickName: "pending" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues)
             initFrom(initValues)
@@ -135,8 +134,7 @@ const WorkFilterForm = (props) => {
                 currentPage: 1,
             }
         }
-        const states = "DONE"
-        getStateNodeList({ nodeStatus: states }).then(data => {
+        getStateNodeList({ quickName: "done" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues)
             initFrom(initValues)

@@ -139,7 +139,7 @@ const MessageList = (props) => {
                                             <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                                 onClick = {() => goToMessage(item.link,item.id)}
-                                                style={{flex: 1}}
+                                                style={{flex: 1,width: "314px"}}
                                             />
                                             <div className={`message-status ${item.status === 0 ? "status-unread" : "status-read"}`}></div>
                                         </div>
@@ -161,7 +161,7 @@ const MessageList = (props) => {
                                             <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                                 className = "message-item"
-                                                style={{flex: 1}}
+                                                style={{flex: 1, width: "314px"}}
                                                 onClick = {() => goToMessage(item.link,item.id)}
                                             />
                                             <div className={`message-status ${item.status === 1 ? "status-read" : "status-unread"}`}></div>

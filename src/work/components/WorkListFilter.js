@@ -7,7 +7,7 @@ import { observer, inject } from "mobx-react";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import { SelectSimple, SelectItem } from "../../common/select";
-import WorkQuickFilter from "./WorkQuickFilter"
+import WorkFilterQuick from "./WorkFilterQuick"
 const WorkListFilter = (props) => {
     const { workStore, form, showWorkListFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -95,7 +95,6 @@ const WorkListFilter = (props) => {
         <div>
             {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
-                    {/* <WorkQuickFilter getWorkList={getWorkList} flowIds={flowIds} /> */}
 
                     <div className="worklist-search-large" ref= {workListSearch}>
                         <div className="search-input">

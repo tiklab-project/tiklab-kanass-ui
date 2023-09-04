@@ -1,35 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
-import { SelectSimple, SelectItem } from "../../common/select";
-import { withRouter } from "react-router";
+import "./Work.scss";
 import { observer, inject } from "mobx-react";
-import { Select } from 'antd';
-
-const WorkQuickFilter = (props) => {
-    const { workStore, heightFilter } = props;
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
+import "./WorkQuickTab.scss";
+import { withRouter } from "react-router";
+import { getUser } from "tiklab-core-ui";
+const WorkQuickTab = (props) => {
+    const { workStore } = props;
+    const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { setSearchCondition, findStateNodeList,quickFilterValue, setQuickFilterValue,
-        findDmFlowList, viewType, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, setWorkIndex, setWorkId } = workStore;
-    const [flowIds, setFlowIds] = useState();
-    useEffect(() => {
-        findDmFlowList({ domainId: projectId }).then(res => {
-            if (res.code === 0) {
-                const list = [];
-                res.data.map(item => {
-                    list.push(item.flow.id)
-                })
-                setFlowIds(list)
-            }
-        })
+    // 解析store数据
+    const { getWorkConditionPage, getWorkConditionPageTree,
+        workShowType, getWorkBoardList, setWorkId, setWorkIndex,
+        viewType, setSearchCondition, findStateNodeList, setQuickFilterValue, quickFilterValue } = workStore;
 
-        return;
-    }, [])
+    const userId = getUser().userId;
     const quickFilterList = [
-        {
-            value: "all",
-            name: "所有"
-        },
+       
         {
             value: "pending",
             name: "我的待办"
@@ -48,32 +34,14 @@ const WorkQuickFilter = (props) => {
         }
     ]
 
-    const getStateNodeList = async (value) => {
-        const stateNodeList = []
-        await findStateNodeList(value).then(res => {
-            if (res.code === 0) {
-                if (res.data.length > 0) {
-                    res.data.map(item => {
-                        stateNodeList.push(item.node.id)
-                    })
-                }
-            }
-        })
-        const newStateNodeList = stateNodeList.filter((item, index) => {
-            return stateNodeList.indexOf(item) === index;  // 因为indexOf 只能查找到第一个  
-        });
 
-        return newStateNodeList;
-    }
+
 
     const selectMenu = (value) => {
-        let data = value;
-        if( workShowType !== "list"){
+        if (workShowType !== "list") {
             setQuickFilterValue(value)
-            data = value.value;
         }
-        
-        switch (data) {
+        switch (value) {
             case "all":
                 getAllWorkItem();
                 break;
@@ -92,6 +60,7 @@ const WorkQuickFilter = (props) => {
             default:
                 break;
         }
+        
 
     }
 
@@ -100,11 +69,13 @@ const WorkQuickFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
+            builderId: null,
+            workStatusIds: [],
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
             },
-            workStatusIds: []
+            
         }
         setSearchCondition(initValues)
         getWorkList();
@@ -115,12 +86,13 @@ const WorkQuickFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
+            builderId: null,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
             }
         }
-        getStateNodeList({ inNodeStatus: ['TODO', 'PROGRESS'], inFlowIds: flowIds }).then(data => {
+        getStateNodeList({ quickName: "pending" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues);
             getWorkList();
@@ -132,12 +104,13 @@ const WorkQuickFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
+            builderId: null,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
             }
         }
-        getStateNodeList({ nodeStatus: 'DONE', inFlowIds: flowIds }).then(data => {
+        getStateNodeList({ quickName: "done" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues);
             getWorkList();
@@ -149,6 +122,8 @@ const WorkQuickFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
+            builderId: userId,
+            workStatusIds: [],
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -162,6 +137,8 @@ const WorkQuickFilter = (props) => {
         let initValues = {
             sprintId: sprintId,
             overdue: true,
+            builderId: null,
+            workStatusIds: [],
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -207,46 +184,58 @@ const WorkQuickFilter = (props) => {
         })
     }
 
-    return (<>
-        {
-            workShowType === "list" ? <Select
-                // mode="multiple"
-                placeholder="快速筛选"
-                className="work-select"
-                key="quickFilter"
-                maxTagCount={1}
-                getPopupContainer={() => heightFilter.current}
-                onChange={(value) => selectMenu(value)}
-            >
-                {
-                    quickFilterList && quickFilterList.map((item) => {
-                        return <Select.Option value={item.value} key={item.label}>{item.name}</Select.Option>
+
+
+    const getStateNodeList = async (value) => {
+        const stateNodeList = []
+        await findStateNodeList(value).then(res => {
+            if (res.code === 0) {
+                if (res.data.length > 0) {
+                    res.data.map(item => {
+                        stateNodeList.push(item.id)
                     })
                 }
-            </Select>
-            :
-            <SelectSimple name="quickFilter"
-                onChange={(value) => selectMenu(value)}
-                title={"所有"}
-                ismult={false}
-                selectValue={quickFilterValue}
-            >
-                {
-                    quickFilterList.map(item => {
-                        return <SelectItem
-                            value={item.value}
-                            label={item.name}
-                            key={item.value}
+            }
+        })
+        return stateNodeList;
+    }
 
-                        />
-                    })
-                }
-            </SelectSimple>
-
+    const setWorkNum = (num) => {
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
         }
+        return showNum;
+    }
 
-    </>
+    return (
+        <div className="work-quick-tabs">
+            <div 
+                className={`tabs-bar ${quickFilterValue === "all" ? "tabs-bar-select" : ""}`} 
+                onClick={() => selectMenu("all")} key={"all"}
+            >
+                全部
+                {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span> */}
+                {/* <span>({setWorkNum(1009)})</span> */}
+            </div>
+            {
+                quickFilterList && quickFilterList.map(item => {
+                    return <div 
+                        key={item.value} 
+                        className={`tabs-bar ${quickFilterValue === item.value ? "tabs-bar-select" : ""}`} 
+                        onClick={() => selectMenu(item.value)}
+                    >   
+                        {item.name}
+                        {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.workType.code])})</span> */}
+                    </div>
+                })
+            }
 
+
+        </div>
     )
 }
-export default withRouter(inject("workStore")(observer(WorkQuickFilter)));
+export default withRouter(inject("workStore", "workCalendarStore")(observer(WorkQuickTab)));

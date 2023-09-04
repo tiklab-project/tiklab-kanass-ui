@@ -36,9 +36,9 @@ export class SprintPlanStore {
     @action
 	getNoPlanWorkList = async(value) => {
         this.setNoPlanSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemList", value)
+        const data = await Service("/workItem/findWorkItemPage", value)
 		if(data.code=== 0){
-            this.noPlanWorkList = data.data;
+            this.noPlanWorkList = data.data.dataList;
         }
         return data;
     }
@@ -50,9 +50,9 @@ export class SprintPlanStore {
     @action
 	getWorkList = async(value) => {
         this.setSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemList", this.searchCondition)
+        const data = await Service("/workItem/findWorkItemPage", this.searchCondition)
         if(data.code === 0){
-            this.planWorkList = data.data;
+            this.planWorkList = data.data.dataList;
         }
 		return data;
     }

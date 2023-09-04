@@ -26,7 +26,7 @@ export class WorkStore {
     @observable workInfo = [];
     @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
-    @observable quickFilterValue = {label: '所有', value: 'all'}
+    @observable quickFilterValue = "all";
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -76,8 +76,7 @@ export class WorkStore {
     @observable detailCrumbArray = [];
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
-    
-
+    @observable workBoardCurrentPage = [];
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;
@@ -257,17 +256,35 @@ export class WorkStore {
     getWorkBoardList = async (value) => {
         this.setSearchCondition(value)
         this.getWorkItemNum();
+        this.workBoardCurrentPage = []
+        this.workBoardList = []
         const data = await Service("/workItem/findWorkBoardList",this.searchCondition);
         if (data.code === 0) {
             this.workBoardList = data.data;
             const listLength = this.workBoardList.length
             let length = this.workBoardList[0].workItemList.length;
+            this.workBoardCurrentPage.push(this.workBoardList[0].workItemList.currentPage)
             for (let j = 1; j < listLength; j++) {
+                this.workBoardCurrentPage.push(this.workBoardList[j].workItemList.currentPage)
                 if (this.workBoardList[j].workItemList.length > length) {
                     length = this.workBoardList[j].workItemList.length;
                 }
             }
+            console.log(this.workBoardCurrentPage)
             this.workBoardListLength = length;
+        }
+        return data;
+    }
+
+    findChangePageWorkBoardList = async (value) => {
+        this.setSearchCondition(value)
+        this.getWorkItemNum();
+        const data = await Service("/workItem/findChangePageWorkBoardList",this.searchCondition);
+        if (data.code === 0) {
+            const index = value.index;
+            this.workBoardCurrentPage[index] = data.data.workItemList.currentPage;
+            this.workBoardList[index].workItemList.dataList.push(...data.data.workItemList.dataList);
+            
         }
         return data;
     }
@@ -684,7 +701,7 @@ export class WorkStore {
 
     @action
     findStateNodeList = async(value) => {
-        const data = await Service("/stateNodeFlow/findStateNodeFlowList", value)
+        const data = await Service("/stateNode/findQuickFilterStateNodeList", value)
         return data;
 
     }

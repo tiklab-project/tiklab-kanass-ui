@@ -5,7 +5,7 @@ import moment from 'moment';
 import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
-import WorkQuickFilter from "./WorkQuickFilter"
+import WorkFilterQuick from "./WorkFilterQuick"
 import { finWorkList } from "./WorkGetList"
 const { RangePicker } = DatePicker;
 const WorkFilterHigh = (props) => {
@@ -190,15 +190,9 @@ const WorkFilterHigh = (props) => {
             <Form
                 form={form}
                 name="control-hooks"
-                // onFinish={search}
-                // layout={l?ayout}
                 layout="vertical"
                 className="workitem-filter-height"
                 labelAlign="left"
-                // initialValues={{
-                //     workPriorityIds: ['56035266d43ed3e87d1919fcde3848ea']
-
-                // }}
                 onValuesChange={(changedValues, allValues) => changeField(changedValues, allValues)}
                 {...formItemLayout}
 
@@ -206,7 +200,7 @@ const WorkFilterHigh = (props) => {
                 {
                     workShowType === "list" && <>
                         <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
-                            <WorkQuickFilter heightFilter={heightFilter} />
+                            <WorkFilterQuick heightFilter={heightFilter} />
                         </Form.Item>
 
                         <Form.Item name="assignerIds" label={labelHidden ? null : "负责人"} rules={[{ required: false }]} >

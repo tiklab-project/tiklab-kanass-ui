@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 const SelectItem = (props) => {
     const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown, children } = props;
-    console.log(props)
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -58,6 +57,7 @@ const SelectItem = (props) => {
                         onClick={(e) => getValue(e)}
                         onChange={(e) => getValue(e)}
                         defaultChecked={selectData?.value === value ? true : false}
+
                     />
 
             }

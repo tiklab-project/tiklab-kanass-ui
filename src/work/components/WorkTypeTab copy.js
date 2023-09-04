@@ -169,6 +169,8 @@ const WorkTypeTab = (props) => {
                                 return <div key={item.id} className={`tabs-dropdown-item ${tabValue.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name}</div>
                             })
                         }
+
+
                     </div>
                 </div>
             }

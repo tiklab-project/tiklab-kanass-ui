@@ -7,8 +7,8 @@ import { withRouter } from "react-router";
 import { SelectSimple, SelectItem } from "../../common/select";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
-import WorkTypeTab from "./WorkTypeTab";
-import WorkQuickFilter from "./WorkQuickFilter";
+import WorkQuickTab from "./WorkQuickTab";
+import WorkFilterType from "./WorkFilterType";
 import { getUser } from "tiklab-core-ui";
 import { useDebounce } from "../../common/utils/debounce";
 
@@ -21,9 +21,8 @@ const WorkTableFilter = (props) => {
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
         setWorkIndex, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList, findDmFlowList } = workStore;
+        getWorkTypeList, getWorkStatus, userList } = workStore;
     const tenant = getUser().tenant;
-    const [flowIds, setFlowIds] = useState();
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
 
     useEffect(() => {
@@ -31,15 +30,6 @@ const WorkTableFilter = (props) => {
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
         getWorkStatus()
-        findDmFlowList({ domainId: projectId }).then(res => {
-            if (res.code === 0) {
-                const list = [];
-                res.data.map(item => {
-                    list.push(item.flow.id)
-                })
-                setFlowIds(list)
-            }
-        })
         return
     }, [])
 
@@ -175,12 +165,8 @@ const WorkTableFilter = (props) => {
 
     return (
         <div className="work-table-second">
-            <WorkTypeTab />
+            <WorkQuickTab />
             <div className="work-table-filter">
-                <WorkQuickFilter
-                    getWorkList={getWorkList}
-                    flowIds={flowIds}
-                />
                 {
                     props.match.path == "/index/workTable" &&
                     <SelectSimple name="projectIds"
@@ -204,7 +190,7 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
-
+                <WorkFilterType />
                 <SelectSimple
                     name="assignerIds"
                     onChange={(value) => selectChange("assignerIds", value)}
@@ -219,7 +205,6 @@ const WorkTableFilter = (props) => {
                                 label={item.user?.nickname ? item.user?.nickname : item.user?.name}
                                 key={item.user?.id}
                                 imgUrl={item.user?.iconUrl}
-
                             />
                         })
                     }

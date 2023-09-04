@@ -138,6 +138,22 @@ const WorkAside = (props) => {
         }
     }
 
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
+
     const TreeSecondDom = (children, faIndex, faid, deep) => {
         return (
             <div className={`work-aside-ul ${isExpandedTree(faid) ? null : 'work-aside-hidden'} `} key={faIndex}>
@@ -189,7 +205,7 @@ const WorkAside = (props) => {
                                         </div>
                                         <div className="work-aside-item-second" id={childItem.id}>{childItem.title}</div>
                                     </div>
-                                    <div className={`work-aside-status ${childItem.workStatusCode}`}>
+                                    <div className={`work-aside-status ${setStatuStyle(childItem.workStatusNode.id)}`}>
                                         {childItem.workStatusNode.name}
                                     </div>
                                 </div>
@@ -255,7 +271,7 @@ const WorkAside = (props) => {
                         </div>
                         <div className="work-aside-item-second" id={item.id}>{item.title}</div>
                     </div>
-                    <div className={`work-aside-status ${item.workStatusCode}`}>
+                    <div className={`work-aside-status ${setStatuStyle(item.workStatusNode.id)}`}>
                         {item.workStatusNode.name}
                     </div>
 

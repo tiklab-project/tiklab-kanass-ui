@@ -1,0 +1,56 @@
+.work-quick-tabs {
+    display: flex;
+    gap: 10px;
+    height: 42px;
+    line-height: 42px;
+    justify-content: space-between;
+    .tabs-bar-select {
+        border-bottom: 2px solid var(--tiklab-blue);
+        color: var(--tiklab-blue);
+    }
+    
+    .tabs-bar  {
+        cursor: pointer;
+        padding: 0 5px;
+    }
+    .tabs-more {
+        position: relative;
+
+        .tabs-more-button {
+            height: 42px;
+            line-height: 42px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tabs-dropdown {
+            position: absolute;
+            background-color: #fff;
+            z-index: 3;
+            width: 100px;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+            .tabs-dropdown-item {
+                padding: 0 20px;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .tabs-dropdown-item:hover {
+                background-color: var(--tiklab-gray-300);
+            }
+            .tabs-dropdown-select {
+                background-color: var(--tiklab-gray-400);
+            }
+        }
+       
+        .tabs-dropdown-show {
+            display: block;
+        }
+
+        .tabs-dropdown-hidden {
+            display: none;
+        }
+    }
+}

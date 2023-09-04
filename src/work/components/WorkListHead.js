@@ -5,7 +5,10 @@ import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
 import WorkFilterSort from "./WorkChangeView";
 import "./WorkListHead.scss"
-import WorkFilterForm from "./WorkTypeTab";
+import WorkFilterType from "./WorkFilterType";
+import WorkFilterQuick from "./WorkFilterQuick";
+import WorkFilterMaster from "./WorkFilterMaster";
+import WorkFilterProject from "./WorkFilterProject";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkCreatDropdown from "./workCreatDropdown";
 
@@ -117,8 +120,15 @@ const WorkListHead = (props) => {
                     />
                 </div>
             </div>
-            <div style={{ padding: "0 10px" }}>
-                <WorkFilterForm labelHidden={true} layout={layout} />
+            <div className="worklist-head-second">
+                <WorkFilterQuick />
+                {
+                    props.match.path.indexOf("/index/workList") !== -1 && <WorkFilterProject />
+                }
+                <WorkFilterType />
+                {
+                    props.match.path.indexOf("/index/workList") === -1 && <WorkFilterMaster />
+                }
             </div>
         </div>
     )
