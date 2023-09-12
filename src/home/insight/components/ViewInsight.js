@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Provider } from "mobx-react";
+import { Provider, observer } from "mobx-react";
 import "./ViewInsight.scss";
 import ReportItem from "./ReportItem"
 import { withRouter } from "react-router";
@@ -44,24 +44,25 @@ const ViewInsight = (props) => {
                         item.static = true;
                     })
                     setReportList(list)
-                    setInsightDetail(res.data)
+                    
                 }
-
+                setInsightDetail(res.data)
             }
         })
+        return;
     }, [])
 
     /**
      * 跳转到编辑视图
      */
     const goEditInsight = () => {
-        props.history.push(`/index/home/insight/newInsight/${props.match.params.id}`)
+        props.history.push(`/index/insight/newInsight/${props.match.params.id}`)
     }
 
     return (
         <Provider {...store}>
             <div className="view-insight">
-            <Breadcumb firstText="仪表盘列表" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
+            <Breadcumb firstText="仪表盘列表" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
                 <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
             </Breadcumb>
             <div className="view-insight-content">
@@ -112,4 +113,4 @@ const ViewInsight = (props) => {
     )
 }
 
-export default withRouter(ViewInsight);
+export default withRouter(observer(ViewInsight));

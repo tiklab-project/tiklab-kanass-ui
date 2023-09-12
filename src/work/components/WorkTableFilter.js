@@ -21,10 +21,10 @@ const WorkTableFilter = (props) => {
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
         setWorkIndex, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList } = workStore;
+        getWorkTypeList, getWorkStatus, userList, quickFilterValue } = workStore;
     const tenant = getUser().tenant;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
-
+    
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
@@ -196,7 +196,7 @@ const WorkTableFilter = (props) => {
                     onChange={(value) => selectChange("assignerIds", value)}
                     title={"负责人"}
                     ismult={true}
-                    selectValue={searchCondition?.assignerIds}
+                    value={searchCondition?.assignerIds}
                 >
                     {
                         userList.map(item => {
@@ -215,7 +215,7 @@ const WorkTableFilter = (props) => {
                         onChange={(value) => stateChange("workStatusIds", value)}
                         title={"状态"}
                         ismult={"true"}
-                        selectValue={searchCondition?.workStatusIds}
+                        value={searchCondition?.workStatusIds}
                     >
                         <div className="select-group-title">未开始</div>
                         {
@@ -285,7 +285,7 @@ const WorkTableFilter = (props) => {
                     </div>
                 </div>
                 <WorkFilterModal layout={"horizontal"} {...props} />
-                <WorkSort sorter={sorter} />
+                {/* <WorkSort sorter={sorter} /> */}
             </div>
         </div>
 

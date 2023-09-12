@@ -23,7 +23,6 @@ const OrgaAside = (props) => {
 
     const renderMenu = (data, deep) => {
         return (
-            // <PrivilegeButton code={data.encoded} key={data.key}>
             <li
                 style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                 className={`orga-aside-li orga-aside-second ${data.key === selectKey ? "orga-aside-select" : ""}`}
@@ -37,7 +36,6 @@ const OrgaAside = (props) => {
                 </svg>
                 <span>{data.title}</span>
             </li>
-            // </PrivilegeButton>
         )
     }
     
@@ -102,7 +100,6 @@ const OrgaAside = (props) => {
                     设置
                 </div>
             </div>
-
         </Fragment>
     )
 }

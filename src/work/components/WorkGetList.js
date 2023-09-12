@@ -34,7 +34,7 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 }
 
 const goWorkItem = (type, workStore, projectId, sprintId) => {
-    const { setSearchConditionNull, setSearchCondition } = workStore;
+    const { setSearchConditionNull, setSearchCondition, setQuickFilterValue } = workStore;
     let initValues = {
         pageParam: {
             pageSize: 20,
@@ -54,7 +54,7 @@ const goWorkItem = (type, workStore, projectId, sprintId) => {
         default:
             break;
     }
-
+    
     setSearchConditionNull().then(res => {
         setSearchCondition(initValues)
         // sessionStorage.removeItem("searchCondition")

@@ -81,7 +81,10 @@ class SprintSurveyStore {
                 currentPage: value.currentPage
             },
             bgroup: "teamwire",
-            userId: value.userId
+            userId: value.userId,
+            content: {
+                sprintId: value.sprintId
+            }
         }
         const data = await Service("/todo/findtodopage", params)
         if(data.code === 0) {

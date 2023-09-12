@@ -7,21 +7,21 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 import React, { useEffect, useState } from 'react';
-import { observer, inject } from "mobx-react";
-import "./HomePage.scss";
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
-import HomeSurvey from "./HomeSurvey";
-const Home = (props) => {
-
+import { renderRoutes } from "react-router-config";
+import "./Insight.scss"
+const Insight = (props) => {
+    const { route } = props;
+  
     return (
-        <Row className="home" >
+        <Row className="insight">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <HomeSurvey />
+                {renderRoutes(route.routes)}
             </Col>
         </Row>
     );
 }
 
 
-export default withRouter(inject("homeStore")(observer(Home)));
+export default withRouter(Insight);

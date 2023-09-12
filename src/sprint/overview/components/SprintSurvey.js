@@ -64,7 +64,7 @@ const SprintSurvey = (props) => {
 
         findlogpage()
 
-        findtodopage({ userId: masterId })
+        findtodopage({ userId: masterId, sprintId: sprintId })
 
         return;
     }, [sprintId])

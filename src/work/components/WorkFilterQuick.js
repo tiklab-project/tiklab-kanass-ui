@@ -12,26 +12,26 @@ const WorkFilterQuick = (props) => {
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue,
       viewType, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, setWorkIndex, setWorkId } = workStore;
-    
+        
     const userId = getUser().userId;
 
     const quickFilterList = [
        
         {
             value: "pending",
-            name: "我的待办"
+            label: "我的待办"
         },
         {
             value: "ending",
-            name: "我的已办"
+            label: "我的已办"
         },
         {
             value: "creat",
-            name: "我创建的"
+            label: "我创建的"
         },
         {
             value: "overdue",
-            name: "已逾期"
+            label: "已逾期"
         }
     ]
 
@@ -212,14 +212,14 @@ const WorkFilterQuick = (props) => {
             onChange={(value) => selectMenu(value)}
             title={"所有"}
             ismult={false}
-            selectValue={quickFilterValue}
+            value={quickFilterValue}
             suffixIcon = {true}
         >
             {
                 quickFilterList.map(item => {
                     return <SelectItem
                         value={item.value}
-                        label={item.name}
+                        label={item.label}
                         key={item.value}
 
                     />

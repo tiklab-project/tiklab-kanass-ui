@@ -17,7 +17,7 @@ const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
-        createRecent, setWorkIndex } = WorkStore;
+        createRecent, setWorkIndex, setQuickFilterValue } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
 
@@ -33,9 +33,13 @@ const WorkTable = (props) => {
 
     useEffect(() => {
         setWorkShowType("table")
+        setQuickFilterValue({
+            value: "all",
+            label: "全部"
+        })
         finWorkList(path, WorkStore, projectId, sprintId);
         return;
-    }, [])
+    }, [projectId])
 
     const goProdetail = (record, index) => {
         console.log(record, index)
@@ -82,14 +86,107 @@ const WorkTable = (props) => {
         return name;
     }
 
+    //  排序
+    const [sortArray, setSortArray] = useState(["title"]);
+    const sorterTable = (pagination, filters, sorter, extra) => {
+        
+        const setSortParams = (sorter) => {
+            const field = sorter.columnKey;
+            const order = sorter.order;
+            let isAsc = "";
+            let sortType = "";
+            if (order === "ascend") {
+                isAsc = "asc"
+            }
+            if (order === "descend") {
+                isAsc = "desc"
+            }
+            if(!order) {
+                return
+            }
+            switch (field) {
+                case "title":
+                    sortType = "id";
+                    break;
+                case "assignerId":
+                    sortType = "assigner_id";
+                    break;
+                case "builderId":
+                    sortType = "builder_id";
+                    break;
+                case "project":
+                    sortType = "project_id";
+                    break;
+                case "workPriority":
+                    sortType = "work_priority_id";
+                    break;
+                case "workStatus":
+                    sortType = "work_status_node_id";
+                    break;
+                case "buildTime":
+                    sortType = "build_time";
+                    break;
+                default:
+                    break;
+            }
+            
+            const params = {
+                name: sortType,
+                orderType: isAsc
+            }
+
+            return params;
+        }
+        console.log(sorter)
+        if(extra.action === "sort"){
+            let sortParams = [];
+            let sortArray = []
+            if(!(sorter instanceof Array)){
+                if(sorter.order){
+                    sortParams.push(setSortParams(sorter));
+                    sortArray.push(sorter.columnKey);
+                }else {
+                    sortParams.push({
+                        name: "id",
+                        orderType: "desc"
+                    });
+                    sortArray.push("title");
+                }
+                
+            }else {
+                sorter.map(item => {
+                    sortParams.push(setSortParams(item));
+                    sortArray.push(item.columnKey);
+                })
+            }
+            setSortArray(sortArray)
+            searchCondition.orderParams = sortParams;
+            searchCondition.pageParam = {
+                pageSize: 20,
+                currentPage: 1
+            }
+            if (viewType === "tree") {
+                getWorkConditionPageTree()
+            }
+            if (viewType === "tile") {
+                getWorkConditionPage()
+            }
+        }
+       
+
+    }
+
     
-    const columns = [
+    const workColumns = [
         {
-            title: '事项',
+            title: '标题',
             dataIndex: 'title',
             key: 'title',
-            className: "work-first-col",
-            render: (text, record, index) => <div className="work-name" onClick={() => goProdetail(record, index)} >
+            className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
                         record.workTypeSys.iconUrl ?
@@ -118,9 +215,53 @@ const WorkTable = (props) => {
             </div>
         },
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+                {text}
+            </div>
+        },
+        {
+            title: '优先级',
+            dataIndex: ['workPriority', 'name'],
+            key: 'workPriority',
+            sorter: {
+                multiple: 1
+            },
+            className: `${sortArray.indexOf("workPriority") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img">
+                    {
+                        record.workPriority?.iconUrl ? <img
+                            src={'/images/' + record.workPriority?.iconUrl}
+                            alt=""
+                            className="img-icon"
+                        />
+                            :
+                            <img
+                                src={'/images/proivilege1.png'}
+                                alt=""
+                                className="img-icon"
+                            />
+                    }
+
+                </div>
+                <div className="work-info-text">{text || "暂无设置"}</div>
+            </div>
+        },
+        {
             title: '负责人',
             dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',
+            className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div className="work-info-text">{text}</div>
@@ -130,15 +271,180 @@ const WorkTable = (props) => {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
             key: 'builderId',
+            sorter: {
+                multiple: 1
+            },
+            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div className="work-info-text">{text}</div>
             </div>
         },
         {
+            title: '创建时间',
+            dataIndex: "buildTime",
+            key: 'buildTime',
+            sorter: {
+                multiple: 1
+            },
+            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            render: (text, record) => <div className="work-info-text">
+                {text.slice(0, 10)}
+            </div>
+        },
+        
+        {
+            title: '操作',
+            width: "60",
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-edit"></use>
+                    </svg> */}
+                    <Popconfirm
+                        title="确定删除事项?"
+                        onConfirm={() => deleteWork(record.id)}
+                        // onCancel={cancel}
+                        okText="是"
+                        cancelText="否"
+                    >
+                        <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
+                            <use xlinkHref="#icon-delete"></use>
+                        </svg>
+                    </Popconfirm>
+
+                    {/* <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-more"></use>
+                    </svg> */}
+                </Space>
+            ),
+        }
+    ];
+
+    const projectColums = [
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
+                <div className="work-icon">
+                    {
+                        record.workTypeSys.iconUrl ?
+                            <img
+                                src={version === "cloud" ?
+                                    (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                    :
+                                    (upload_url + record.workTypeSys?.iconUrl)
+                                }
+                                alt=""
+                                className="list-img"
+
+                            />
+                            :
+                            <img
+                                src={'/images/workType2.png'}
+                                alt=""
+                                className="list-img"
+                            />
+                    }
+                </div>
+                <div>
+                    <div className="work-key">{record.id}</div>
+                    <div className="work-text">{text}</div>
+                </div>
+            </div>
+        },
+        {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+                {text}
+            </div>
+        },
+        {
+            title: '优先级',
+            dataIndex: ['workPriority', 'name'],
+            key: 'workPriority',
+            className: `${sortArray.indexOf("workPriority") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 3
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img">
+                    {
+                        record.workPriority?.iconUrl ? <img
+                            src={'/images/' + record.workPriority?.iconUrl}
+                            alt=""
+                            className="img-icon"
+                        />
+                            :
+                            <img
+                                src={'/images/proivilege1.png'}
+                                alt=""
+                                className="img-icon"
+                            />
+                    }
+
+                </div>
+                <div className="work-info-text">{text || "暂无设置"}</div>
+            </div>
+        },
+        {
+            title: '负责人',
+            dataIndex: ['assigner', 'nickname'],
+            key: 'assignerId',
+            className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 4
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div className="work-info-text">{text}</div>
+            </div>
+        },
+        {
+            title: '创建人',
+            dataIndex: ['builder', 'nickname'],
+            key: 'builderId',
+            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 5
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div className="work-info-text">{text}</div>
+            </div>
+        },
+        {
+            title: '创建时间',
+            dataIndex: "buildTime",
+            key: 'buildTime',
+            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 6
+            },
+            render: (text, record) => <div className="work-info-text">
+                {text.slice(0, 10)}
+            </div>
+        },
+        {
             title: '项目',
             dataIndex: ['project', 'projectName'],
             key: 'project',
+            className: `${sortArray.indexOf("project") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 7
+            },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
                     {
@@ -162,46 +468,7 @@ const WorkTable = (props) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-        {
-            title: '优先级',
-            dataIndex: ['workPriority', 'name'],
-            key: 'workPriority',
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={'/images/' + record.workPriority?.iconUrl}
-                            alt=""
-                            className="img-icon"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon"
-                            />
-                    }
-
-                </div>
-                <div className="work-info-text">{text || "暂无设置"}</div>
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
-            </div>
-        },
-        {
-            title: '创建时间',
-            dataIndex: "buildTime",
-            key: 'workStatus',
-            render: (text, record) => <div className="work-info-text">
-                {text.slice(0, 10)}
-            </div>
-        },
+        
         {
             title: '操作',
             width: "60",
@@ -218,7 +485,7 @@ const WorkTable = (props) => {
                         okText="是"
                         cancelText="否"
                     >
-                        <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                        <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
                     </Popconfirm>
@@ -231,9 +498,9 @@ const WorkTable = (props) => {
         }
     ];
 
-
     // 改变页数
     const changePage = (page) => {
+        console.log("page")
         const values = {
             pageParam: {
                 pageSize: 20,
@@ -274,10 +541,11 @@ const WorkTable = (props) => {
                         <div className="work-table">
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
-                                    columns={columns}
+                                    columns={props.location.pathname === "/index/workTable" ?  projectColums : workColumns}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     // onChange={sorter}
+                                    showSorterTooltip = {false}
                                     pagination={{
                                         total: total,
                                         pageSize: 20,
@@ -285,6 +553,7 @@ const WorkTable = (props) => {
                                         onChange: changePage,
                                         position: ["bottomCenter"]
                                     }}
+                                    onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
                                     expandable={{
                                         expandIcon: ({ expanded, onExpand, record }) => (
                                             record.children && record.children.length > 0 ? expanded ?

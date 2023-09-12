@@ -46,11 +46,16 @@ class HomeStore {
     @observable 
     activeKey = "survey";
     // 待办的条件分页
+    @observable todoTotal = 0;
     @observable todoCondition = {
         pageParam: {
             pageSize: 20,
             currentPage: 1
         },
+        orderParams: [{
+            name: "createtime",
+            orderType:"desc"
+        }],
         bgroup: "teamwire",
         content: {}
     }
@@ -290,36 +295,38 @@ class HomeStore {
         this.endTaskList = [];
         this.overdueTaskList = [];
                     
-        const params={
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            },
-            orderParams: [{
-                name: "timestamp",
-                orderType:"asc"
-            }],
-            bgroup: "teamwire",
-            userId: value.userId,
-            content: {
-                projectId: value.projectId
-            }
-        }
+        // const params={
+        //     pageParam: {
+        //         pageSize: 10,
+        //         currentPage: 1
+        //     },
+        //     orderParams: [{
+        //         name: "timestamp",
+        //         orderType:"asc"
+        //     }],
+        //     bgroup: "teamwire",
+        //     userId: value.userId,
+        //     content: {
+        //         projectId: value.projectId
+        //     }
+        // }
         this.setTodoCondition(value)
-        const data = await Service("/todo/findtodopage", params);
+        const data = await Service("/todo/findtodopage", this.todoCondition);
         if(data.code === 0) {
             const list = data.data.dataList;
-            list.map(item => {
-                if(item.status === 1){
-                    this.todoTaskList.push(item)
-                }
-                if(item.status === 2){
-                    this.endTaskList.push(item)
-                }
-                if(item.status === 3){
-                    this.overdueTaskList.push(item)
-                }
-            })
+            this.todoTaskList = list;
+            this.todoTotal = data.data.totalRecord;
+            // list.map(item => {
+            //     if(item.status === 1){
+            //         this.todoTaskList.push(item)
+            //     }
+            //     if(item.status === 2){
+            //         this.endTaskList.push(item)
+            //     }
+            //     if(item.status === 3){
+            //         this.overdueTaskList.push(item)
+            //     }
+            // })
             // this.todoTaskList = data.data.dataList;
         }
         return data;

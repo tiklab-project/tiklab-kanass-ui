@@ -18,19 +18,19 @@ const WorkQuickTab = (props) => {
        
         {
             value: "pending",
-            name: "我的待办"
+            label: "我的待办"
         },
         {
             value: "ending",
-            name: "我的已办"
+            label: "我的已办"
         },
         {
             value: "creat",
-            name: "我创建的"
+            label: "我创建的"
         },
         {
             value: "overdue",
-            name: "已逾期"
+            label: "已逾期"
         }
     ]
 
@@ -41,7 +41,7 @@ const WorkQuickTab = (props) => {
         if (workShowType !== "list") {
             setQuickFilterValue(value)
         }
-        switch (value) {
+        switch (value.value) {
             case "all":
                 getAllWorkItem();
                 break;
@@ -149,10 +149,29 @@ const WorkQuickTab = (props) => {
     }
 
     const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
+        if ((workShowType === "list" || workShowType === "table" || workShowType === "time") && viewType === "tree") {
+            getWorkConditionPageTree().then((res) => {
+                if (workShowType === "list") {
+                    if (res.dataList.length > 0) {
+                        setWorkId(res.dataList[0].id)
+                        setWorkIndex(1)
+                    }
+
+                }
+            })
+        }
+        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+            getWorkConditionPage().then((res) => {
+                if (workShowType === "list") {
+                    if (res.dataList.length > 0) {
+                        setWorkId(res.dataList[0].id)
+                        setWorkIndex(1)
+                    }
+                }
+            })
+        }
+        if (workShowType === "bodar") {
+            getWorkBoardList()
         }
     }
 
@@ -214,8 +233,8 @@ const WorkQuickTab = (props) => {
     return (
         <div className="work-quick-tabs">
             <div 
-                className={`tabs-bar ${quickFilterValue === "all" ? "tabs-bar-select" : ""}`} 
-                onClick={() => selectMenu("all")} key={"all"}
+                className={`tabs-bar ${quickFilterValue?.value === "all" ? "tabs-bar-select" : ""}`} 
+                onClick={() => selectMenu({value: "all", label: "全部"})} key={"all"}
             >
                 全部
                 {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span> */}
@@ -225,10 +244,10 @@ const WorkQuickTab = (props) => {
                 quickFilterList && quickFilterList.map(item => {
                     return <div 
                         key={item.value} 
-                        className={`tabs-bar ${quickFilterValue === item.value ? "tabs-bar-select" : ""}`} 
-                        onClick={() => selectMenu(item.value)}
+                        className={`tabs-bar ${quickFilterValue?.value === item.value ? "tabs-bar-select" : ""}`} 
+                        onClick={() => selectMenu(item)}
                     >   
-                        {item.name}
+                        {item.label}
                         {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.workType.code])})</span> */}
                     </div>
                 })

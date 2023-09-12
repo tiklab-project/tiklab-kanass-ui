@@ -18,7 +18,7 @@
         .sprint-plan-box {
             border-radius: 4px;
             background: #f7f7f7;
-            padding-bottom: 10px;
+            padding-bottom: 2px;
             width: 500px;
 
             .sprint-plan-box-top {
@@ -57,11 +57,30 @@
 
             .sprint-plan-box-content {
                 height: calc(100% - 100px);
+                overflow: auto;
+            }
+
+            .sprint-plan-box-content::-webkit-scrollbar {
+                width: 5px;
+            }
+            .sprint-plan-box-content::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background: var(--tiklab-gray-400);
+            }
+            .sprint-plan-box-content::-webkit-scrollbar-track {
+                border-radius: 0;
+                background: var(--tiklab-gray-600);
             }
 
             .sprint-plan-list {
                 overflow: auto;
                 padding: 0 20px;
+                .change-page {
+                    display: flex;
+                    justify-content: center;
+                    color: var(--tiklab-blue);
+                    cursor: pointer;
+                }
             }
 
             .sprint-plan-item-box {

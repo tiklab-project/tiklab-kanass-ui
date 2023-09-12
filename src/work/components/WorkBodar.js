@@ -15,7 +15,7 @@ import { finWorkList } from "./WorkGetList"
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
-        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, workBoardCurrentPage } = WorkStore;
+        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, workBoardCurrentPage, setQuickFilterValue } = WorkStore;
     console.log(workBoardListLength)
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
@@ -37,6 +37,10 @@ const WorkBodar = (props) => {
     const projectId = props.match.params.id;
     useEffect(() => {
         setWorkShowType("bodar")
+        setQuickFilterValue({
+            value: "all",
+            label: "全部"
+        })
         finWorkList(path, WorkStore, projectId, sprintId)
         return;
     }, [])
@@ -236,9 +240,6 @@ const WorkBodar = (props) => {
 
                                                                 </div>
                                                             })
-                                                        }
-                                                        {
-                                                            console.log(item.workItemList.totalPage,workBoardCurrentPage[3], workBoardCurrentPage )
                                                         }
                                                         {
                                                             workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && workBoardCurrentPage[index] < item.workItemList.totalPage && <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>

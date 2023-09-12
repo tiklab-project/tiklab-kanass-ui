@@ -24,13 +24,13 @@ const ProdeScrumAside = (props) => {
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
-    const projectId = props.match.params.id;
+    const [projectId, setProjectId] = useState(props.match.params.id); 
     // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
     // 当前选中菜单key
     const path = props.location.pathname.split("/")[4];
     // 路由
-    const scrumProrouter = [
+    const scrumProrouter = (projectId) =>[
         {
             title: `${t('survey')}`,
             icon: 'survey',
@@ -105,7 +105,7 @@ const ProdeScrumAside = (props) => {
         
     ];
 
-    const normalProrouter = [
+    const normalProrouter = (projectId) => [
         {
             title: `${t('survey')}`,
             icon: 'survey',
@@ -173,15 +173,15 @@ const ProdeScrumAside = (props) => {
         }
     ];
 
-    const [projectRouter, setProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter : normalProrouter); 
+    const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id)); 
+
+    const [projectRouter, setProjectRouter] = useState([]);
 
     const [moreMenu, setMoreMenu] = useState()
 
     const [morePath, setMorePath] = useState()
+
     const resizeUpdate = (e) => {
-        // console.log(e.innerHeight)
-        // let h = e.target.innerHeight;
-        // setHeight(h);
         // 通过事件对象获取浏览器窗口的高度
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
         // console.log(documentHeight)
@@ -195,8 +195,8 @@ const ProdeScrumAside = (props) => {
         }else {
             num = menuNum > 7 ? 7 : menuNum;
         }
-        setProjectRouter(projectRouter.slice(0, num))
-        const hiddenMenu = projectRouter.slice(num, projectRouter.length)
+        setProjectRouter(allProjectRouter.slice(0, num))
+        const hiddenMenu = allProjectRouter.slice(num, allProjectRouter.length)
         setMoreMenu(hiddenMenu)
         let data = [];
         hiddenMenu.map(item =>{
@@ -208,15 +208,20 @@ const ProdeScrumAside = (props) => {
     };
 
     useEffect(() => {
-        // let h = window.innerHeight;
-        // setHeight(h)
         resizeUpdate(document.getElementById("root"))
         window.addEventListener("resize", resizeUpdate);
         return () => {
             // 组件销毁时移除监听事件
             window.removeEventListener('resize', resizeUpdate);
         }
-    }, [])
+
+    }, [allProjectRouter])
+
+    useEffect(() => {
+        setAllProjectRouter(project?.projectType.type === "scrum" ? scrumProrouter(project.id) : normalProrouter(project.id))
+        console.log(project)
+        return;
+    }, [project])
     /**
      * 点击左侧菜单
      * @param {*} key 
@@ -244,6 +249,7 @@ const ProdeScrumAside = (props) => {
                         project = {project}
                     />
                     <div className="project-menu" ref = {projectMenu}>
+                        
                         {
                             projectRouter && projectRouter.map((item,index) =>  {return isShowText ? 
                                 <div className={`project-menu-submenu ${path.indexOf(item.key) !== -1 ? "project-menu-select" : ""}`}

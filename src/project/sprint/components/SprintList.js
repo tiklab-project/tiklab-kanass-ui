@@ -31,7 +31,7 @@ const Sprint = (props) => {
 
     const project = JSON.parse(localStorage.getItem("project"));
     // 登录者id
-    const masterId = getUser().userId;
+    const userId = getUser().userId;
     // 获取关注的迭代
     const [focusSprintList, setFocusSprintList] = useState([])
     // tab的key
@@ -96,7 +96,7 @@ const Sprint = (props) => {
      */
     const getFocusSprint = () => {
         const params = {
-            masterId: masterId,
+            masterId: userId,
             projectId: projectId
         }
         findSprintFocusList(params).then(data => {
@@ -120,7 +120,7 @@ const Sprint = (props) => {
     const addFocusSprint = (sprintId) => {
         const params = {
             sprintId: sprintId,
-            masterId: masterId,
+            masterId: userId,
             projectId: projectId
         }
         createSprintFocus(params).then(data => {
@@ -139,7 +139,7 @@ const Sprint = (props) => {
     const deleteFocusSprint = (sprintId) => {
         const params = {
             sprintId: sprintId,
-            masterId: masterId,
+            masterId: userId,
             projectId: projectId
         }
         deleteSprintFocus(params).then(data => {
@@ -206,7 +206,7 @@ const Sprint = (props) => {
                 findSprintList({ projectId: projectId, sprintStateId: null });
                 break;
             case "focus":
-                findFocusSprintList({ projectId: projectId, master: masterId });
+                findFocusSprintList({ projectId: projectId, master: userId });
                 break;
 
             default:

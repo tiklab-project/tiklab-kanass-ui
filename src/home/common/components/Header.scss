@@ -50,6 +50,9 @@
                 height: 48px;
                 line-height: 48px;
             }
+            &-item:hover {
+                background: rgba(255,255,255, 0.3);
+            }
         }
 
         &-left {

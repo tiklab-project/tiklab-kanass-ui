@@ -104,7 +104,7 @@ const SelectSimple = (props) => {
         setSelectLength(0)
         onChange(null)
     }
-    return <div className={`select-view ${simpleClassName}`}>
+    return <div className={`select-view ${simpleClassName ? simpleClassName : ""}`}>
         <div onClick={() => showShowDrop()} className="select-content"
             onMouseEnter={() => onMouseEnter && onMouseEnter()}
             onMouseLeave={() => onMouseEnter && onMouseLeave()}

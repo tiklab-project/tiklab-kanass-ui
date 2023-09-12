@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Provider } from "mobx-react";
+import { Provider, observer } from "mobx-react";
 import { message, Empty } from "antd"
 import "./NewInsight.scss";
 import ReportItem from "./ReportItem"
@@ -79,7 +79,7 @@ const NewInsight = (props) => {
         } else {
             updateInsight(params).then(res => {
                 if (res.code === 0) {
-                    props.history.push(`/index/home/insight/viewInsight/${insightId}`)
+                    props.history.push(`/index/insight/viewInsight/${insightId}`)
                 }
             })
         }
@@ -105,11 +105,11 @@ const NewInsight = (props) => {
 
     return (
         <Provider {...store}>
-            <div>
+            <>
                 <div className="new-insight">
                     <div className="new-insight-left">
 
-                        <Breadcumb firstText="仪表盘列表" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                        <Breadcumb firstText="仪表盘列表" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
                             <div className="insight-head-action">
                                 <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
                                 <Button onClick={() => saveInsight()} type="primary">保存</Button>
@@ -168,7 +168,7 @@ const NewInsight = (props) => {
                     setShowReportList={setShowReportList}
                 />
 
-            </div>
+            </>
         </Provider>
 
 
@@ -177,4 +177,4 @@ const NewInsight = (props) => {
     )
 }
 
-export default withRouter(NewInsight);
+export default withRouter(observer(NewInsight));

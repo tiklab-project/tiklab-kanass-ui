@@ -1,40 +1,39 @@
 .project-version {
     height: calc(100vh - 55px);
-    padding: var(--tiklab-padding-item);;
+    padding: var(--tiklab-padding-item);
     .version-name {
         color: var(--tiklab-blue);
-    }
-    .version-name:hover {
         cursor: pointer;
-        text-decoration: underline;
     }
-    .version-top {
+    .version-tabs {
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        align-items: center;
-    }
-    .version-breadcrumb {
-        display: flex;
-        align-items: center;
-        padding: 10px 0px;
-        font-size: 15px;
-        font-weight: var(--tiklab-font-weight-bold);
-        &-icon {
-            width: 25px;
-            height: 25px;
+        height: 50px;
+        line-height: 50px;
+        
+        .version-tab {
+            font-size: var(--tiklab-font-13);;
+            cursor: pointer;
+            height: 50px;
+            line-height: 50px;
+            margin-right: 20px;
         }
-        &-second {
-            width: 20px;
-            height: 15px;
-            margin: 0 6px;
+        .version-tab:last-child {
+            margin-right: 0;
+        }
+        .active-tabs {
+            border-bottom: 2px solid var(--tiklab-blue);
         }
     }
-    
+
 
     .version-filter {
         display: flex;
         gap: 10px;
-        margin-top: 20px;
+        margin: 15px 0;
+        align-items: center;
+        justify-content: space-between;
     }
     .version-search {
         width: 200px;

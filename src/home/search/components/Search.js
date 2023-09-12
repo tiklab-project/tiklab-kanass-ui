@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, useCallback } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss";
 import { Empty } from "antd";
@@ -17,8 +17,9 @@ import SearchStore from "../store/Search";
 import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+
 const Search = (props) => {
-    const { getSearchSore, setKeyWord, findRecentList, 
+    const { getSearchSore, setKeyWord, findRecentList,
         updateRecent, findWorkItemByKeyWorks, findProjectList } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
@@ -26,6 +27,8 @@ const Search = (props) => {
     const [workItemList, setWorkItemList] = useState([]);
     const [isSeach, setIsSeach] = useState(false);
 
+    const [keyboardIndex, setKeyboardIndex] = useState({ modal: "project", index: 0 });
+    const [keyboards, setKeyboards] = useState();
     // 查找结果的弹窗是否显示
     const [show, setShow] = useState(false)
     // 登录者id
@@ -36,45 +39,76 @@ const Search = (props) => {
     const inputRef = useRef();
 
     useEffect(() => {
-        findRecent()
-        return
-    }, [])
-
-    const findRecent = () => {
-        findRecentList({ model: "project" }).then(res => {
-            if (res.code === 0) {
-                
-                setProjectList(res.data)
-            }
-        })
-
-        findRecentList({ model: "workItem" }).then(res => {
-            if (res.code === 0) {
-                setWorkItemList(res.data)
-            }
-        })
-
-    }
-
-    const searchByKeyWork = (value) =>{
-        findWorkItemByKeyWorks({title: value}).then(res => {
-            if (res.code === 0) {
-                setWorkItemList(res.data.dataList)
-                console.log(res.data.dataList)
-            }
-        })
-        findProjectList({projectName: value}).then(res => {
-            if (res.code === 0) {
-                if(res.data && res.data.length > 0){
-                    setProjectList(res.data)
-                }else{
-                    setProjectList([])
+        
+        function keyBordar(e){
+            console.log(e)
+            if (e.code === 'ArrowDown') {
+                if( keyboardIndex.modal === "project" && keyboardIndex.index + 1 < projectList.length ){
+                    setKeyboardIndex(keyboardIndex => ({ modal: keyboardIndex.modal, index: keyboardIndex.index + 1 }))
+                    // setKeyboards(keyBordars => keyBordars + 1)
                 }
+                if( keyboardIndex.modal === "project" && keyboardIndex.index + 1 === projectList.length ){
+                    setKeyboardIndex({ modal: "workItem", index: 0 })
+                }
+                if( keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 < workItemList.length ){
+                    setKeyboardIndex({ modal: "workItem", index: keyboardIndex.index + 1 })
+                } 
+                
+                if( keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 === workItemList.length ){
+                    setKeyboardIndex({ modal: "project", index: 0 })
+                }  
             }
-        })
-    }
+            if (e.code === 'ArrowUp') {
+                if( keyboardIndex.modal === "project" && keyboardIndex.index > 0 ){
+                    setKeyboardIndex({ modal: "project", index: keyboardIndex.index - 1 })
+                }
+                if( keyboardIndex.modal === "project" && keyboardIndex.index === 0 ){
+                    setKeyboardIndex({ modal: "workItem", index: workItemList.length - 1 })
+                }
+                if( keyboardIndex.modal === "workItem" && keyboardIndex.index > 0 ){
+                    setKeyboardIndex({ modal: "workItem", index: keyboardIndex.index - 1 })
+                } 
+                
+                if( keyboardIndex.modal === "workItem" && keyboardIndex.index === 0 ){
+                    setKeyboardIndex({ modal: "project", index: projectList.length - 1 })
+                } 
+            }
+            if(e.keyCode === 13){
+                if(isSeach){
+                    if(keyboardIndex.modal === "workItem"){
+                        toSearchWorkItem(workItemList[keyboardIndex.index])
+                        
+                    }
+    
+                    if(keyboardIndex.modal === "project"){
+                        toSearchProject(projectList[keyboardIndex.index])
+                    }
+                }else {
+                    if(keyboardIndex.modal === "workItem"){
+                        toWorkItem(workItemList[keyboardIndex.index])
+                        
+                    }
+    
+                    if(keyboardIndex.modal === "project"){
+                        toProject(projectList[keyboardIndex.index])
+                    }
+                }
+               
+            }   
+            console.log(keyboardIndex)
+        }
+        
+        window.addEventListener("keydown", keyBordar);
+        return () => {
+            window.removeEventListener("keydown", keyBordar);
+        };
+    }, [keyboardIndex])
+
+   
+
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
+        
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
@@ -88,6 +122,67 @@ const Search = (props) => {
             setShow(false)
         }
     }
+
+    const findRecent = () => {
+        let projectListLength = 0;
+        setKeyboards("55")
+        findRecentList({ model: "project" }).then(res => {
+            if (res.code === 0) {
+                projectListLength = res.data.length
+                if (projectListLength > 5) {
+                    setProjectList(res.data.slice(0, 5))
+                } else {
+                    setProjectList(res.data)
+                }
+                if (projectListLength > 0) {
+                    setKeyboardIndex({ modal: "project", index: 0 })
+                }
+            }
+        })
+
+        console.log(keyboards)
+
+        findRecentList({ model: "workItem" }).then(res => {
+            if (res.data.length > 5) {
+                setWorkItemList(res.data.slice(0, 5))
+            } else {
+                setWorkItemList(res.data)
+            }
+            // if (projectListLength <= 0 && res.data.length > 0) {
+            //     setKeyboardIndex({ modal: "workItem", index: 0 })
+            // }
+        })
+
+
+    }
+
+    const searchByKeyWork = (value) => {
+        let projectListLength = 0;
+        findProjectList({ projectName: value }).then(res => {
+            if (res.code === 0) {
+                projectListLength = res.data.length;
+                if (res.data && projectListLength > 0) {
+                    setProjectList(res.data)
+                } else {
+                    setProjectList([])
+                }
+                if (projectListLength > 0) {
+                    setKeyboardIndex({ modal: "project", index: 0 })
+                }
+            }
+        })
+
+        findWorkItemByKeyWorks({ title: value }).then(res => {
+            if (res.code === 0) {
+                setWorkItemList(res.data.dataList)
+            }
+            if (projectListLength <= 0 && res.data.dataList.length > 0) {
+                setKeyboardIndex({ modal: "workItem", index: 0 })
+            }
+        })
+    }
+
+
 
     /**
      * 改变查找关键字时候，重新搜索
@@ -118,7 +213,9 @@ const Search = (props) => {
     const toProject = async (data) => {
         // 创建最近访问的信息
         updateRecent({ id: data.modelId })
-        props.history.push(`/index/projectDetail/${data.modelId}/workTable`)
+        props.history.replace(`/index/projectDetail/${data.modelId}/workTable`)
+        console.log(props)
+        // location.reload();
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -128,7 +225,7 @@ const Search = (props) => {
 
     const toSearchProject = async (data) => {
         // 创建最近访问的信息
-        props.history.push(`/index/projectDetail/${data.id}/workTable`)
+        props.history.replace(`/index/projectDetail/${data.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -142,7 +239,6 @@ const Search = (props) => {
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
-        // setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.modelId}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -152,7 +248,6 @@ const Search = (props) => {
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
-        // setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys.iconUrl }]);
         props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.id}`)
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -162,15 +257,14 @@ const Search = (props) => {
      * 点击回车跳转到结果页面
      * @param {键盘值} value 
      */
-    const submit = (value) => {
-        if (value.keyCode === 13) {
-            getSearchSore(value.target.value)
-            setKeyWord(value.target.value)
-            props.history.push(`/index/searchResult`)
-            setShow(false)
-        }
-    }
-
+    // const submit = (value) => {
+    //     if (value.keyCode === 13) {
+    //         getSearchSore(value.target.value)
+    //         setKeyWord(value.target.value)
+    //         props.history.push(`/index/searchResult`)
+    //         setShow(false)
+    //     }
+    // }
 
 
     /**
@@ -201,9 +295,8 @@ const Search = (props) => {
                     <input
                         className="search-input"
                         onChange={changeValue}
-                        onKeyDown={submit}
                         onFocus={showBox}
-                        ref = {inputRef}
+                        ref={inputRef}
                         placeholder="搜索项目、事项"
                     />
                 </div>
@@ -216,11 +309,8 @@ const Search = (props) => {
                                         projectList.length > 0 && <div className="sort-box">
                                             <div className="sort-title">项目</div>
                                             {
-                                                console.log(projectList)
-                                            }
-                                            {
-                                                projectList.map((item) => {
-                                                    return <div className="item-box" key={item.id}>
+                                                projectList.map((item, index) => {
+                                                    return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id} >
                                                         <div className="item-one" onClick={() => toSearchProject(item)}>
                                                             <img
                                                                 src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
@@ -243,10 +333,10 @@ const Search = (props) => {
                                         workItemList.length > 0 && <div className="sort-box">
                                             <div className="sort-title">事项</div>
                                             {
-                                                workItemList.map((item) => {
-                                                    return <div className="item-box" key={item.id}>
+                                                workItemList.map((item, index) => {
+                                                    return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                         <div className="item-one" onClick={() => toSearchWorkItem(item)}>
-                                                        <img
+                                                            <img
                                                                 src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                                 alt=""
                                                             />
@@ -275,8 +365,8 @@ const Search = (props) => {
                                         projectList.length > 0 ?
                                             <>
                                                 {
-                                                    projectList.map((item) => {
-                                                        return <div className="item-box" key={item.id}>
+                                                    projectList.map((item, index) => {
+                                                        return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                             <div className="item-one" onClick={() => toProject(item)}>
                                                                 <img
                                                                     src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
@@ -303,10 +393,10 @@ const Search = (props) => {
                                     {
                                         workItemList.length > 0 ? <>
                                             {
-                                                workItemList.map((item) => {
-                                                    return <div className="item-box" key={item.id}>
+                                                workItemList.map((item, index) => {
+                                                    return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                         <div className="item-one" onClick={() => toWorkItem(item)}>
-                                                        <img
+                                                            <img
                                                                 src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                 alt=""
                                                             />

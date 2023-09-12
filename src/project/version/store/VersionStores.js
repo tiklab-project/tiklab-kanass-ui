@@ -10,64 +10,74 @@ import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class VersionStore {
     // 版本列表
-    @observable 
+    @observable
     versionList = [];
+
+    @observable
+    versionFocusList = [];
     // 版本信息
     @observable versionItem = [];
     // 搜索版本的标题
     @observable searchVersionName = [];
     // 查找版本的分页参数
-    @observable 
+    @observable
     searchCondition = {
-        currentPage: 1
+        sortParams: [{
+            name: "title",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1
+        }
     };
     // 版本id
     @observable versionId = "";
+
+    // 迭代查询分页参数
+    @observable
+    versionFocusParams = {
+        orderParams: [{
+            name: "name",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1
+        }
+    };
 
     /**
      * 设置版本id
      * @param {版本id} value 
      */
-    @action 
+    @action
     getVersionId = (value) => {
         this.versionId = value
     }
-    
+
     /**
      * 查找项目下的版本
      * @param {项目id} value 
      * @returns 
      */
     @action
-	getVersionList = async(value) => {
-        Object.assign(this.searchCondition, {...value})
-        const params={
-            projectId: this.searchCondition.projectId,
-            name: this.searchCondition.name,
-            sortParams: [{
-                name: "title",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: this.searchCondition.currentPage
-            }
-        }
-        const data = await Service("/projectVersion/findVersionPage", params)
-        if(data.code === 0){
-            
+    getVersionList = async (value) => {
+        Object.assign(this.searchCondition, { ...value })
+        const data = await Service("/projectVersion/findVersionPage", this.searchCondition)
+        if (data.code === 0) {
             this.versionList = data.data.dataList
         }
         return data;
     }
-    
+
     /**
      * 添加版本
      * @param {版本信息} value 
      * @returns 
      */
     @action
-	addVersion = async(value) => {
+    addVersion = async (value) => {
         let params = {
             name: value.name,
             versionState: value.versionState,
@@ -79,49 +89,49 @@ export class VersionStore {
         }
         const data = await Service("/projectVersion/createVersion", params)
         return data;
-		
+
     }
-    
+
     /**
      * 删除版本
      * @param {版本id} params 
      */
     @action
-	deleVersion = async(value) => {
+    deleVersion = async (value) => {
         const param = new FormData()
         param.append("id", value)
 
         const data = await Service("/projectVersion/deleteVersion", param)
-        if(data.code=== 0 ){
+        if (data.code === 0) {
             this.getVersionList()
         }
         return data;
     }
-    
+
     /**
      * 根据id查找版本
      * @param {版本id} params 
      * @returns 
      */
     @action
-	searchVersionById = async(params) => {
-        
+    searchVersionById = async (params) => {
+
         const param = new FormData()
         param.append("id", params.id)
         const data = await Service("/projectVersion/findVersion", params);
-        if(data.code === 0){
-             this.versionItem = data.data;
+        if (data.code === 0) {
+            this.versionItem = data.data;
         }
         return data;
     }
-    
+
     /**
      * 修改版本
      * @param {版本信息} value 
      * @returns 
      */
     @action
-	editVersion = async(value) => {
+    editVersion = async (value) => {
         let params = {
             id: value.id,
             name: value.name,
@@ -142,9 +152,9 @@ export class VersionStore {
      * @returns 
      */
     @action
-    findVersion = async(value) => {
+    findVersion = async (value) => {
         const params = new FormData();
-        params.append("id",value)
+        params.append("id", value)
         const data = await Service("/projectVersion/findVersion", params);
         return data;
     }
@@ -159,5 +169,62 @@ export class VersionStore {
         const data = await Service("/recent/createRecent", value)
         return data;
     }
+
+    @action
+    createRecent = async (value) => {
+        const data = await Service("/recent/createRecent", value)
+        return data;
+    }
+
+    @action
+    findVersionFocusList = async (value) => {
+        Object.assign(this.versionFocusParams, { ...value })
+        const data = await Service("/versionFocus/findVersionFocusList", value)
+
+        return data;
+    }
+
+    @action
+    findFocusVersionList = async (value) => {
+        Object.assign(this.versionFocusParams, { ...value })
+        const data = await Service("/projectVersion/findVersionFocusList", value)
+        if (data.code === 0) {
+            this.versionList = data.data;
+        }
+        return data;
+    }
+
+    // @action
+    // findFocusSprintList = async (value) => {
+    //     Object.assign(this.sprintPageParams, { ...value })
+    //     const data = await Service("/sprint/findFocusSprintList", this.sprintPageParams)
+    //     if (data.code === 0) {
+    //         this.sprintlist = data.data;
+    //     }
+    //     return data.data;
+    // }
+
+    /**
+     * 添加迭代关注
+     * @param {*} value 
+     * @returns 
+     */
+    @action
+    createVersionFocus = async (value) => {
+        const data = await Service("/versionFocus/createVersionFocus", value)
+        return data;
+    }
+
+    /**
+     * 取消关注
+     * @param {*} value 
+     * @returns 
+     */
+    @action
+    deleteVersionFocus = async (value) => {
+        const data = await Service("/versionFocus/deleteVersionFocusByQuery", value)
+        return data;
+    }
+
 }
 export default new VersionStore();

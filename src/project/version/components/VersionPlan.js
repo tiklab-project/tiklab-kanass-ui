@@ -145,6 +145,8 @@ const VersionPlan = (props) => {
         }
         findVersionWorkItemList(params)
     }
+    
+
 
     return (<Provider {...store}>
         <div className="version-workitem">

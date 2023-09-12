@@ -165,7 +165,7 @@ const WorkListFilter = (props) => {
                                 onChange={(value) => handleChange("assignerIds", value)} 
                                 title={"负责人"} 
                                 ismult={true}
-                                selectValue={searchCondition?.assignerIds}
+                                value={searchCondition?.assignerIds}
                             >
                                 {
                                     userList.map(item => {

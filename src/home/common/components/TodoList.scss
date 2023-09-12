@@ -1,6 +1,13 @@
+.todo {
+    height: calc(100vh - 48px);
+    overflow: auto;
+}
 .todo-list-page {
     padding: var(--tiklab-padding-item);;
     background: #fff;
+    .todo-select {
+        width: 200px;
+    }
     .todo-filter {
         padding: 15px 0;
         width: 100%;
@@ -10,5 +17,9 @@
     .todo-item {
         margin-bottom: 10px;
         cursor: pointer;
+    }
+    .todo-pagination {
+        text-align: center;
+        margin-top: 10px;
     }
 }

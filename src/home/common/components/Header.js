@@ -14,9 +14,9 @@ import { withRouter } from 'react-router';
 import { getUser } from 'tiklab-core-ui';
 import MessageList from "./MessageList"
 import { observer, inject } from "mobx-react";
-import { AppLink } from 'tiklab-licence-ui';
+import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
 import UserIcon from '../../../common/UserIcon/UserIcon';
-
+import HeadMoreMenu from "./HeadMoreMenu";
 const Header = props => {
     const { logo, languageSelectData = [], routers, systemRoleStore} = props;
     // 被点击菜单的key
@@ -66,6 +66,8 @@ const Header = props => {
                     <div key='project' onClick={() => changeCurrentLink(routers[1])} className={`frame-header-link-item ${menuKey === "project" ? 'frame-header-link-active' : null}`}> {routers[1].title}</div>
                     <div key='projectSet' onClick={() => changeCurrentLink(routers[2])} className={`frame-header-link-item ${menuKey === "projectSet" ? 'frame-header-link-active' : null}`}> {routers[2].title}</div>
                     <div key='work' onClick={() => changeCurrentLink(routers[3])} className={`frame-header-link-item ${menuKey === "work" ? 'frame-header-link-active' : null}`}> {routers[3].title}</div>
+                    <div key='insight' onClick={() => changeCurrentLink(routers[4])} className={`frame-header-link-item ${menuKey === "insight" ? 'frame-header-link-active' : null}`}> {routers[4].title}</div>
+                    <HeadMoreMenu /> 
                 </div>
             )
         }
@@ -236,27 +238,8 @@ const Header = props => {
                             </div>
                         </div>
                         <MessageList />
-                        <div className="frame-header-icon">
-                            <div className="frame-header-help" data-title="帮助与支持">
-                                <Dropdown overlay={helpMenu} trigger={"click"}>
-                                    <Space>
-                                        <svg aria-hidden="true" className="header-icon" style = {{stroke:'#fff'}} >
-                                            <use xlinkHref="#icon-help"></use>
-                                        </svg>
-                                    </Space>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="frame-header-icon">
-                            <div className="frame-header-name" data-title="个人资料与设置">
-                                <Dropdown overlay={useMenu} trigger={"click"}>
-                                    <Space>
-                                        <UserIcon  size = "big" name = {user.nickname ? user.nickname : user.name}/>
-                                    </Space>
-                                </Dropdown>
-                            </div>
-                        </div>
+                        <HelpLink />
+                        <AvatarLink {...props}/>
                     </div>
                 </div>
             </Col>

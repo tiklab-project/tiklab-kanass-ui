@@ -45,6 +45,11 @@ const Layout = (props) => {
             to: '/index/workTable',
             title: '事项',
             key: 'work'
+        },
+        {
+            to: '/index/insight/list',
+            title: '仪表盘',
+            key: 'insight'
         }
     ]
 

@@ -21,7 +21,7 @@ import { setSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkList = (props) => {
     const projectId = props.match.params.id;
-    const {workId, setWorkShowType} = WorkStore;
+    const {workId, setWorkShowType, setQuickFilterValue} = WorkStore;
     const path = props.match.path;
     const store = {
         workStore: WorkStore,
@@ -30,6 +30,7 @@ const WorkList = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
         setWorkShowType("list")
+        setQuickFilterValue(null)
         finWorkList(path, WorkStore, projectId, sprintId)
     }, [projectId])
 

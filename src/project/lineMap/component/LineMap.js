@@ -60,20 +60,21 @@ const Linemap = (props) => {
             <Row style={{ height: "100%" }}>
                 <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-linemap">
-                        <Breadcumb
-                            firstText="路线图"
-                        ></Breadcumb>
-                        <Tabs defaultActiveKey="sprint" onChange={onChange} activeKey={type}>
-                            <Tabs.TabPane tab="迭代" key="sprint">
+                        <div className="project-linemap-head">
+                            <div className="project-linemap-title">路线图</div>
+                            <div className="line-map-tab">
+                                <div className={`tab-tabpane ${type === "sprint" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("sprint")}>
+                                    迭代
+                                </div>
+                                <div className={`tab-tabpane ${type === "version" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("version")}>
+                                    版本
+                                </div>
+                                <div className={`tab-tabpane ${type === "epic" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("epic")}>
+                                    需求集
+                                </div>
+                            </div>
 
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="版本" key="version">
-                                {/* <VersionLineMap data={versionList} type={type} /> */}
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="需求集" key="epic">
-
-                            </Tabs.TabPane>
-                        </Tabs>
+                        </div>
 
                         {
                             type === "sprint" &&

@@ -135,6 +135,7 @@ const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statisti
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
+const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
 const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
 const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight"))
@@ -156,6 +157,7 @@ const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
+const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Routers = [
     {
         path: "/login",
@@ -189,33 +191,44 @@ const Routers = [
                         key: "ProjectSet"
 
                     },
-                    {
-                        path: "/index/home/todoList",
-                        exact: false,
-                        component: WorkTodo,
-                        key: "ProjectSet"
+                    
+                 
+                ]
+            },
+            {
+                path: "/index/todoList",
+                exact: false,
+                component: WorkTodo,
+                key: "ProjectSet"
 
-                    },
+            },
+            {
+                path: "/index/insight",
+                exact: false,
+                component: Insight,
+                key: "ProjectSet",
+                routes: [
                     {
-                        path: "/index/home/insight/list",
+                        path: "/index/insight/list",
                         exact: false,
                         component: InsightList,
                         key: "ProjectSet"
                     },
                     {
-                        path: "/index/home/insight/newInsight/:id",
+                        path: "/index/insight/newInsight/:id",
                         exact: false,
                         component: NewInsight,
                         key: "ProjectSet"
                     },
                     {
-                        path: "/index/home/insight/viewInsight/:id",
+                        path: "/index/insight/viewInsight/:id",
                         exact: false,
                         component: ViewInsight,
                         key: "ProjectSet"
                     }
                 ]
             },
+            
             {
                 path: "/index/project",
                 exact: true,
@@ -368,21 +381,6 @@ const Routers = [
                                 component: StatisticsMore,
                                 exact: true
                             }
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectUser",
-                            //     component: LogProjectUser,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectWork",
-                            //     component: LogProjectWork,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logUserProject",
-                            //     component: LogUserProject,
-                            //     exact: true
-                            // }
                         ]
                     },
                 ]
@@ -732,6 +730,11 @@ const Routers = [
                     {
                         path: "/index/setting/version",
                         component: LicenceVersion,
+                        exact: true
+                    },
+                    {
+                        path: "/index/setting/backups",
+                        component: Backups,
                         exact: true
                     }
                 ]

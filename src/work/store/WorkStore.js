@@ -2,7 +2,6 @@ import { observable, action, extendObservable } from "mobx";
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
 import { getUser } from "tiklab-core-ui";
-import { async } from "@antv/x6/lib/registry/marker/async";
 export class WorkStore {
     @observable workBoardList = [];
     @observable workUserGroupBoardList = [];
@@ -35,7 +34,7 @@ export class WorkStore {
     @observable editorContent = [];
     @observable searchCondition = {
         orderParams: [{
-            name: "order_num",
+            name: "id",
             orderType: "desc"
         }],
         pageParam: {
@@ -321,7 +320,7 @@ export class WorkStore {
         function setValue() {
             that.searchCondition = {
                 orderParams: [{
-                    name: "order_num",
+                    name: "id",
                     orderType: "desc"
                 }],
                 pageParam: {
@@ -712,7 +711,7 @@ export class WorkStore {
             projectId: value.projectId,
             sprintId: value.sprintId,
             orderParams: [{
-                name: "order_num",
+                name: "id",
                 orderType: "desc"
             }],
             pageParam: {

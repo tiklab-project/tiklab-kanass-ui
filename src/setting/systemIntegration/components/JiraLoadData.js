@@ -109,9 +109,6 @@ const LoadData = (props) => {
                         }
 
                     </div>
-                    {/* <div onClick={() => setTimer()}>开启</div>
-
-                    <div onClick={() => closeTimer()}>关闭</div> */}
                 </div>
             </Col>
         </Row>

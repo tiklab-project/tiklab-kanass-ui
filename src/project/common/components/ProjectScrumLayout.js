@@ -27,6 +27,7 @@ const ProjectScrumDetail = (props) => {
     const [project, setProject] = useState();
 
     useEffect(() => {
+        console.log(projectId)
         /**
          * 从信息页面跳入项目详情页面时，获取项目id
          */

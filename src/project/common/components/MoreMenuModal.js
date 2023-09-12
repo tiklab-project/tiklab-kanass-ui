@@ -17,7 +17,7 @@ const MoreMenuModel = (props) => {
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[4];
-    console.log(path, morePath)
+
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
     // 菜单弹窗ref

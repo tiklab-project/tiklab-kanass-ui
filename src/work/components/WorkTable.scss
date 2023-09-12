@@ -8,6 +8,34 @@
         display: flex;
         align-items: center;
     }
+    
+    .ant-table-thead {
+        .work-first-col {
+            display: table-cell;
+        }
+       
+        .ant-table-cell:hover {
+            .ant-table-column-sorter-full {
+                visibility: visible;
+            }
+        }
+        .hidden-sort-icon {
+            .ant-table-column-sorter-full {
+                visibility: hidden;
+            }
+        }
+        .show-sort-icon {
+            .ant-table-column-sorter-full {
+                visibility: visible;
+            }
+        }
+        th.ant-table-column-sort {
+            background: #fff;
+        }
+    }
+    td.ant-table-column-sort {
+        background-color: #fff;
+    }
     .work-icon {
         img {
             margin-right: 5px;

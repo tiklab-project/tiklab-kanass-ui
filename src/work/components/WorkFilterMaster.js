@@ -11,40 +11,17 @@ const WorkFilterMaster = (props) => {
     const { searchCondition, userList, workShowType, viewType, getWorkConditionPageTree, 
         getWorkConditionPage, getWorkBoardList, setWorkId, setWorkIndex } = workStore;
 
-    const [workTypeList, setWorkTypeList] = useState([]);
-
-    // useEffect(() => {
-    //     findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
-    //         if (res.code === 0) {
-    //             setWorkTypeList(res.data)
-    //         }
-    //     })
-
-    //     findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
-    //         if (res.code === 0) {
-    //             // setWorkCustom(res.data)
-
-    //             if (res.data.length > 0) {
-    //                 setWorkTypeList(workTypeList.push(res.data))
-
-    //             }
-
-    //         }
-    //     })
-    // }, [])
-
-
-
 
 
     const selectType = (value) => {
         if (value === "all") {
-            search({ assignerIds: [] })
+            search({ assignerIds: [], assigner: value })
         } else if (!value) {
             search({ assignerIds: [] })
         } else {
             search({
                 assignerIds: [value.value],
+                assigner: value ,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1,
@@ -87,7 +64,7 @@ const WorkFilterMaster = (props) => {
             onChange={(value) => selectType(value)}
             title={"负责人"}
             ismult={false}
-            selectValue={searchCondition?.assignerIds}
+            value={searchCondition?.assigner}
             suffixIcon={true}
         >
             {

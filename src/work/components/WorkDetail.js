@@ -16,7 +16,7 @@ import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import { SwapRightOutlined } from '@ant-design/icons';
 import Button from "../../common/button/Button";
-import UserIcon from "../../common/UserIcon/UserIcon";
+import { SelectSimple, SelectItem } from "../../common/select";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import { FlowChartLink } from "tiklab-flow-ui";
 const WorkDetail = (props) => {
@@ -42,6 +42,7 @@ const WorkDetail = (props) => {
     const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
     const [transformList, setTransformList] = useState([])
+    const [assigner, setAssigner] = useState()
     const workDetailTop = useRef();
     const getWorkDetail = (id) => {
         setInfoLoading(true)
@@ -51,8 +52,8 @@ const WorkDetail = (props) => {
                 setWorkInfo(res)
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-
-                percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
+                setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
+                // percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
     }
@@ -104,7 +105,7 @@ const WorkDetail = (props) => {
     }
 
     const changeStatus = (transition) => {
-        if(userId !== workInfo.assigner?.id){
+        if (userId !== workInfo.assigner?.id) {
             message.error("没有权限")
             return
         }
@@ -130,7 +131,7 @@ const WorkDetail = (props) => {
                     }
                 })
             }
-            if(res.code === 40000){
+            if (res.code === 40000) {
                 message.error(res.msg)
             }
         })
@@ -258,13 +259,13 @@ const WorkDetail = (props) => {
 
     );
     const goCrumWork = (index, id) => {
-        const lastCrum = detailCrumbArray[detailCrumbArray.length-1];
-        if(lastCrum.type === "flow"){
+        const lastCrum = detailCrumbArray[detailCrumbArray.length - 1];
+        if (lastCrum.type === "flow") {
             setShowFlow(false)
-        }else {
+        } else {
             setWorkId(id)
         }
-        
+
         const array = detailCrumbArray.slice(0, index + 1)
         setSessionStorage("detailCrumbArray", array)
     }
@@ -379,6 +380,15 @@ const WorkDetail = (props) => {
                                         </div>
 
                                         <div className="work-detail-tab-botton">
+
+                                            <Dropdown overlay={menu} trigger={"click"} getPopupContainer={() => workDetailTop.current}>
+                                                <Button className="botton-background" style={{ marginRight: "10px" }}>
+                                                    {workStatus}
+                                                    <svg className="svg-icon" aria-hidden="true">
+                                                        <use xlinkHref="#icon-downdrop"></use>
+                                                    </svg>
+                                                </Button>
+                                            </Dropdown>
                                             <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
                                                 <Popconfirm
                                                     title="确定删除事项?"
@@ -387,22 +397,14 @@ const WorkDetail = (props) => {
                                                     okText="是"
                                                     cancelText="否"
                                                 >
-                                                    <Button style={{ marginRight: "10px" }} >
-                                                        <svg className="svg-icon" aria-hidden="true">
+                                                    <Button  >
+                                                        <svg className="img-icon" aria-hidden="true">
                                                             <use xlinkHref="#icon-delete"></use>
                                                         </svg>
                                                         删除
                                                     </Button>
                                                 </Popconfirm>
                                             </PrivilegeProjectButton>
-                                            <Dropdown overlay={menu} trigger={"click"} className="sf" getPopupContainer={() => workDetailTop.current}>
-                                                <Button className="botton-background">
-                                                    {workStatus}
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-downdrop"></use>
-                                                    </svg>
-                                                </Button>
-                                            </Dropdown>
                                             <div className="more">
                                                 <svg className="svg-icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-more"></use>
@@ -412,16 +414,16 @@ const WorkDetail = (props) => {
                                     </div>
                                     <div className="work-item-title-bottom">
                                         <div className="work-item-info">
-                                            <div className="work-item-info-item">
+                                            {/* <div className="work-item-info-item">
                                                 <span className="work-item-info-title">类型: </span>
                                                 <span>{workInfo?.workTypeSys?.name}</span>
                                             </div>
                                             <div className="work-item-info-item">
                                                 <span className="work-item-info-title">ID: </span>
                                                 <span>{workInfo?.id}</span>
-                                            </div>
+                                            </div> */}
                                             <div className="work-item-info-item">
-                                                <div className="work-item-info-title">进度: </div>
+                                                {/* <div className="work-item-info-title">进度: </div>
                                                 <Form form={percentForm}>
                                                     <Form.Item name="percent"
                                                         hasFeedback={showValidateStatus === "percent" ? true : false}
@@ -437,13 +439,17 @@ const WorkDetail = (props) => {
                                                             }}
                                                         />
                                                     </Form.Item>
-                                                </Form>
-
+                                                </Form> */}
+                                                {/* <div></div> */}
+                                                <span className="work-item-info-label">进度</span> 
+                                                <span className="work-item-info-value">
+                                                    <input defaultValue={percentValue}  value={percentValue} type="number" onChange={(value) => setPercentValue(value.target.value)}/>%
+                                                </span>
                                             </div>
 
                                             <div className="work-item-info-item">
-                                                <div className="work-item-info-title">负责人: </div>
-                                                <Form form={percentForm}>
+                                                {/* <div className="work-item-info-title">负责人: </div> */}
+                                                {/* <Form form={percentForm}>
                                                     <Form.Item name="assigner"
                                                     >
                                                         <Select
@@ -469,8 +475,27 @@ const WorkDetail = (props) => {
                                                         </Select>
 
                                                     </Form.Item>
-                                                </Form>
+                                                </Form> */}
+                                                <span className="work-item-info-label">负责人</span>
+                                                <SelectSimple name="assigner"
+                                                        onChange={(value) => updateSingle(workInfo.id, { assigner: value.value }, "assigner")}
+                                                        title={"负责人"}
+                                                        ismult={false}
+                                                        value={assigner}
+                                                    >
+                                                        {
+                                                            userList.map(item => {
+                                                                return <SelectItem
+                                                                    value={item.user?.id}
+                                                                    label={item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                                                    key={item.user?.id}
+                                                                    imgUrl={item.user?.iconUrl}
+                                                                />
+                                                            })
+                                                        }
+                                                    </SelectSimple>
 
+                                                {/* <span className="work-item-info-value">{workInfo.assigner.nickname}</span> */}
                                             </div>
                                         </div>
                                         <>

@@ -76,7 +76,7 @@ const Survey = (props) => {
 
         findRecentPage()
         return;
-    }, [projectId])
+    }, [])
 
 
     useEffect(() => {

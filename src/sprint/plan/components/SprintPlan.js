@@ -12,33 +12,52 @@ const SprintPlan = (props) => {
         workStore: WorkStore
     }
     const [dragEvent, setDragEvent] = useState()
-    const projectId =JSON.parse(localStorage.getItem("project"))?.id;
+    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     const sprintId = localStorage.getItem("sprintId")
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
-    const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
-        getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition } = SprintPlanStore;
-    const [startId, setStartId] = useState()
+    const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
+        getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
+        planTotal, noPlanTotal } = SprintPlanStore;
+    const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
     const [boxLength, setBoxLength] = useState(90)
     // 拖放效果
     useEffect(() => {
-        getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
-        getWorkList({ projectId: projectId, sprintId: sprintId })
+        getNoPlanWorkList(
+            {
+                projectId: projectId,
+                sprintIdIsNull: true,
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1
+                }
+            }
+        )
+        getWorkList(
+            {
+                projectId: projectId,
+                sprintId: sprintId,
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1
+                }
+            }
+        )
         getSprintList({ projectId: projectId })
 
         getSelectUserList(projectId)
-        getWorkTypeList({projectId: projectId});
+        getWorkTypeList({ projectId: projectId });
         getWorkStatus()
-       
+
 
         return
     }, [])
 
     useEffect(() => {
-        if(noPlanWorkList && planWorkList) {
+        if (noPlanWorkList && planWorkList) {
             const length = noPlanWorkList.length > planWorkList.length ? noPlanWorkList.length * 90 + 90 : planWorkList.length * 90 + 90
             setBoxLength(length)
         }
@@ -55,7 +74,7 @@ const SprintPlan = (props) => {
     }
 
     const moveStart = (id, sprintId) => {
-        setStartId(id)
+        setMoveWorkId(id)
         setStartSprintId(sprintId)
         const dragEvent = event.target
         dragEvent.style.background = "#d0e5f2";
@@ -69,7 +88,7 @@ const SprintPlan = (props) => {
     const changeSprintPlan = (Sid) => {
         event.preventDefault();
         let params = {
-            startId: startId,
+            startId: moveWorkId,
             endId: sprintId
         }
         // 移动拖动的元素到所选择的放置目标节点
@@ -79,8 +98,13 @@ const SprintPlan = (props) => {
             // event.target.appendChild( dragEvent );
             setSprint(params).then((res) => {
                 if (res.code === 0) {
-                    getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
-                    getWorkList({ projectId: projectId, sprintIdIsNull: false })
+                    const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
+                    setNoPlanWorkList(newNoPlanWorkList)
+
+                    const addWorkList = noPlanWorkList.filter(item => { return item.id == moveWorkId })
+                    planWorkList.unshift(...addWorkList)
+                    console.log(addWorkList, planWorkList)
+                    setPlanWorkList(planWorkList)
                 }
             })
         }
@@ -89,16 +113,21 @@ const SprintPlan = (props) => {
     const delSprintPlan = (Sid) => {
         event.preventDefault();
         let params = {
-            startId: startId
+            startId: moveWorkId
         }
         // 移动拖动的元素到所选择的放置目标节点
         if (startSprintId && Sid !== startSprintId) {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
-                    getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
-                    getWorkList({ projectId: projectId, sprintIdIsNull: false })
+                    const newNoPlanWorkList = planWorkList.filter(item => { return item.id != moveWorkId })
+                    setPlanWorkList(newNoPlanWorkList)
+
+                    const addWorkList = planWorkList.filter(item => { return item.id == moveWorkId })
+                    noPlanWorkList.unshift(...addWorkList)
+                    setNoPlanWorkList(noPlanWorkList)
                 }
+                
             })
         }
     }
@@ -123,13 +152,33 @@ const SprintPlan = (props) => {
         setWorkShowType("border")
     }
 
+    const changeNoPlanSprintPage = () => {
+        const data = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: noPlanSearchCondition.pageParam.currentPage + 1
+            }
+        }
+        getNoPlanWorkList(data)
+    }
+
+    const changePlanSprintPage = () => {
+        const data = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: searchCondition.pageParam.currentPage + 1
+            }
+        }
+        getWorkList(data)
+    }
+
     return (<Provider {...store}>
         <div className="sprint-plan">
             <div className="sprint-plan-content">
                 <div className="sprint-plan-box"
                     onDrop={() => delSprintPlan(null)}
                     onDragOver={dragover}
-                    style = {{height: boxLength}}
+                // style = {{height: boxLength}}
                 >
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">待办规划事项</div>
@@ -139,7 +188,7 @@ const SprintPlan = (props) => {
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
                                 ismult={true}
-                                selectValue={noPlanSearchCondition?.workTypeIds}
+                                value={noPlanSearchCondition?.workTypeIds}
                             >
                                 {
                                     workTypeList.map(item => {
@@ -156,13 +205,13 @@ const SprintPlan = (props) => {
                                 name="assignerIds"
                                 onChange={(value) => handleChange("assignerIds", value)}
                                 title={"负责人"} ismult={true}
-                                selectValue={noPlanSearchCondition?.assignerIds}
+                                value={noPlanSearchCondition?.assignerIds}
                             >
                                 {
                                     userList.map(item => {
                                         return <SelectItem
                                             value={item.id}
-                                            label={ item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
                                             key={item.id}
                                             imgUrl={item.user?.iconUrl}
 
@@ -175,7 +224,7 @@ const SprintPlan = (props) => {
                                 onChange={(value) => handleChange("workStatusIds", value)}
                                 title={"状态"}
                                 ismult={true}
-                                selectValue={noPlanSearchCondition?.workStatusIds}
+                                value={noPlanSearchCondition?.workStatusIds}
                             >
                                 {
                                     workStatusList.map(item => {
@@ -193,7 +242,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                noPlanWorkList && noPlanWorkList.map((item,index) => {
+                                noPlanWorkList && noPlanWorkList.length > 0 && noPlanWorkList.map((item, index) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
@@ -204,7 +253,7 @@ const SprintPlan = (props) => {
                                         <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
                                             <div className="work-item-title-left" >
                                                 {
-                                                    item.workTypeSys.iconUrl ?
+                                                    item.workTypeSys?.iconUrl ?
                                                         <img
                                                             src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
@@ -230,13 +279,16 @@ const SprintPlan = (props) => {
                                     </div>
                                 })
                             }
+                            {
+                                noPlanTotal > 1 && noPlanSearchCondition.pageParam.currentPage < noPlanTotal &&
+                                <div className="change-page" onClick={() => changeNoPlanSprintPage()}>加载更多</div>
+                            }
                         </div>
                     </div>
                 </div>
                 <div className="sprint-plan-box"
                     onDrop={() => changeSprintPlan(sprintId)}
                     onDragOver={dragover}
-                    style = {{height: boxLength}}
                 >
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">迭代下事项</div>
@@ -246,7 +298,7 @@ const SprintPlan = (props) => {
                                 onChange={(value) => findSprintWorkItem("workTypeIds", value)}
                                 title={"类型"}
                                 ismult={true}
-                                selectValue={searchCondition?.workTypeIds}
+                                value={searchCondition?.workTypeIds}
                             >
                                 {
                                     workTypeList.map(item => {
@@ -263,7 +315,7 @@ const SprintPlan = (props) => {
                                 name="assignerIds"
                                 onChange={(value) => findSprintWorkItem("assignerIds", value)}
                                 title={"负责人"} ismult={true}
-                                selectValue={searchCondition?.assignerIds}
+                                value={searchCondition?.assignerIds}
                             >
                                 {
                                     userList.map(item => {
@@ -282,7 +334,7 @@ const SprintPlan = (props) => {
                                 onChange={(value) => findSprintWorkItem("workStatusIds", value)}
                                 title={"状态"}
                                 ismult={true}
-                                selectValue={searchCondition?.workStatusIds}
+                                value={searchCondition?.workStatusIds}
                             >
                                 {
                                     workStatusList.map(item => {
@@ -301,46 +353,46 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                planWorkList && planWorkList.map((item, index) => {
-                                    if (item.sprint && item.sprint.id === sprintId) {
-                                        return <div
-                                            className="sprint-plan-item-box"
-                                            onDrag={() => moveSprintPlanItem(item.id)}
-                                            draggable="true"
-                                            onDragStart={() => moveStart(item.id, sprintId)}
-                                            key={item.id}
-                                        >
-                                            <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
-                                                <div className="work-item-title-left" >
-                                                    {
-                                                        item.workTypeSys.iconUrl ?
-                                                            <img
-                                                                src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}                                       
-                                                                alt=""
-                                                                className="svg-icon"
+                                planWorkList && planWorkList.length > 0 && planWorkList.map((item, index) => {
+                                    return <div
+                                        className="sprint-plan-item-box"
+                                        onDrag={() => moveSprintPlanItem(item.id)}
+                                        draggable="true"
+                                        onDragStart={() => moveStart(item.id, sprintId)}
+                                        key={item.id}
+                                    >
+                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
+                                            <div className="work-item-title-left" >
+                                                {
+                                                    item.workTypeSys?.iconUrl ?
+                                                        <img
+                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
+                                                            alt=""
+                                                            className="svg-icon"
 
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={'/images/workType2.png'}
-                                                                alt=""
-                                                                className="svg-icon"
-                                                            />
-                                                    }
-                                                    {item.title}
-                                                </div>
-                                                <div>
-                                                    <span >{item.id}</span>
-                                                </div>
+                                                        />
+                                                        :
+                                                        <img
+                                                            src={'/images/workType2.png'}
+                                                            alt=""
+                                                            className="svg-icon"
+                                                        />
+                                                }
+                                                {item.title}
                                             </div>
-                                            <div className="work-item-id">
-                                                <div userInfo={item.user} />
+                                            <div>
+                                                <span >{item.id}</span>
                                             </div>
-
                                         </div>
-                                    }
+                                        <div className="work-item-id">
+                                            <div userInfo={item.user} />
+                                        </div>
+                                    </div>
 
                                 })
+                            }
+                            {
+                                planTotal > 1 && searchCondition.pageParam.currentPage < planTotal && <div className="change-page" onClick={() => changePlanSprintPage()}>加载更多</div>
                             }
                         </div>
                     </div>
@@ -351,12 +403,12 @@ const SprintPlan = (props) => {
             <WorkBorderDetail
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
-                showPage = {false}
+                showPage={false}
                 {...props}
             />
         </div>
     </Provider>
-        
+
 
     )
 }

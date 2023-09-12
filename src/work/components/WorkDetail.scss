@@ -222,14 +222,42 @@
                 font-size: 14px;
                 gap: 20px;
                 .work-item-info-item {
-                    margin-right: 2px;
-                    height: 32px;
-                    line-height: 32px;
-                    border-radius: 4px;
+                    height: 25px;
+                    line-height: 25px;
                     display: flex;
                     .ant-input-number {
                         border: 0;
                         background-color: transparent;
+                    }
+                    .work-item-info-label {
+                        font-weight: 600;
+                        color: #909aaa;
+                        margin-right: 10px;
+                    }
+                    .work-item-info-value {
+                        background: #fafafa;
+                        height: 25px;
+                        line-height: 25px;
+                        display: block;
+                        padding: 0 10px;
+                        border-radius: 5px;
+                        min-width: 70px;
+                        
+                        input {
+                            outline: none;
+                            border: 0;
+                            background: #fafafa;
+                            height: 25px;
+                            line-height: 25px;
+                            min-width: 20px;
+                            max-width: 50px;
+                        }
+                    }
+                    .select-view {
+                        background: #fafafa;
+                        padding: 0 10px;
+                        border-radius: 5px;
+                        width: 70px;
                     }
                 }
 
@@ -280,6 +308,7 @@
     .work-flow-item {
         padding: 10px 15px;
         cursor: pointer;
+        white-space: nowrap;
         .work-flow-text {
             padding: 3px;
             font-size: 12px;

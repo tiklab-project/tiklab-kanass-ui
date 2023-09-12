@@ -1,6 +1,7 @@
 .insight-list {
     background-color: #fff;
-    padding: 20px 15px;
+    padding: var(--tiklab-padding-item);
+    height: 100%;
     .insight-search-add {
         padding: 15px 0px;
         text-align: right;

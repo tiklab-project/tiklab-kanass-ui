@@ -6,27 +6,29 @@ export class SprintPlanStore {
     @observable sprintList = [];
     @observable searchCondition = {
         sortParams: [{
-            name: "order_num",
+            name: "id",
             orderType:"desc"
         }],
         pageParam: {
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1
         }
     };
 
     @observable noPlanSearchCondition = {
         sortParams: [{
-            name: "title",
+            name: "id",
             orderType:"asc"
         }],
         pageParam: {
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1
         }
     };
+    @observable noPlanCurrent = 0;
+    @observable planCurrent = 0;
     @observable noPlanTotal = 0;
-
+    @observable planTotal = 0;
 
     @action
     setNoPlanSearchCondition = (value) => {
@@ -34,11 +36,22 @@ export class SprintPlanStore {
     }
 
     @action
+    setNoPlanWorkList = (value) => {
+        this.noPlanWorkList = value;
+    }
+
+    @action
 	getNoPlanWorkList = async(value) => {
         this.setNoPlanSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemPage", value)
+        const data = await Service("/workItem/findWorkItemPage", this.noPlanSearchCondition)
 		if(data.code=== 0){
-            this.noPlanWorkList = data.data.dataList;
+            if(data.data.currentPage === 1){
+                this.noPlanWorkList = data.data.dataList;
+            }else {
+                this.noPlanWorkList.push(...data.data.dataList);
+            }
+            
+            this.noPlanTotal = data.data.totalPage;
         }
         return data;
     }
@@ -48,11 +61,22 @@ export class SprintPlanStore {
     }
 
     @action
+    setPlanWorkList = (value) => {
+        console.log(value)
+        this.planWorkList = value;
+    }
+
+    @action
 	getWorkList = async(value) => {
         this.setSearchCondition(value)
         const data = await Service("/workItem/findWorkItemPage", this.searchCondition)
         if(data.code === 0){
-            this.planWorkList = data.data.dataList;
+            if(data.data.currentPage === 1){
+                this.planWorkList = data.data.dataList;
+            }else {
+                this.planWorkList.push(...data.data.dataList);
+            }
+            this.planTotal = data.data.totalPage;
         }
 		return data;
     }

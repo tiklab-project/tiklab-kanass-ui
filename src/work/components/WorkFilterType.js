@@ -39,23 +39,27 @@ const WorkFilterType = (props) => {
 
     const selectType = (value) => {
         if (value === "all" ) {
-            search({ workTypeId: "" })
-            setTabValue({
-                id: "all", 
-                type: "system",
-                label: value.label,
+            search({ 
+                workTypeId: "",
+                workType: null,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1,
                 }
             })
         } else if (!value){
-            search({ workTypeId: "" })
-            setTabValue(null)
+            search({ 
+                workTypeId: "",
+                workType: null,
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
+            })
         } else {
-            setTabValue({ id: value.value, type: "system", value: value.value, label: value.label })
             search({
                 workTypeId: value.value,
+                workType: value,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1,
@@ -98,7 +102,7 @@ const WorkFilterType = (props) => {
             onChange={(value) => selectType(value)}
             title={"事项类型"}
             ismult={false}
-            selectValue={searchCondition.workTypeId}
+            value={searchCondition.workType}
             suffixIcon = {true}
         >
             {

@@ -182,6 +182,12 @@ const setDevRouter= [
         ]
     }, 
     {
+        title: "备份与恢复",
+        icon: 'plugin',
+        id: '/index/setting/backups',
+        code: 13
+    },
+    {
         title: "版本与许可证",
         icon: 'plugin',
         id: '/index/setting/version',

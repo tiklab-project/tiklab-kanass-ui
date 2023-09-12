@@ -136,6 +136,7 @@ const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statisti
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
+const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
 const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
 const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight"))
@@ -156,11 +157,15 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
-
+const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 export {
     Login,
     ProjectLogOut,
     Search,
+    Insight,
+    InsightList,
+    NewInsight,
+    ViewInsight,
     HomeStore,
     VailProductUserPage,
     ProjectNotFound,
@@ -260,9 +265,6 @@ export {
     ProjectWorkStatistics,
     LoadData,
     UrlData,
-    InsightList,
-    NewInsight,
-    ViewInsight,
     TaskListContent,
     TodoTempListContent,
     MyTodoTaskContent,
@@ -272,5 +274,6 @@ export {
     ProjectLogTypeList,
     EpicDetail,
     Stage,
-    StageDetail
+    StageDetail,
+    Backups
 }

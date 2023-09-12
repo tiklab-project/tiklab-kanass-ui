@@ -300,7 +300,7 @@ const WorkFilterForm = (props) => {
                 onChange={(value) => selectChange("workTypeIds", value)}
                 title={"类型"}
                 ismult={true}
-                selectValue={searchCondition?.workTypeIds}
+                value={searchCondition?.workTypeIds}
             >
                 {
                     workTypeList.map(item => {
