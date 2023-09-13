@@ -11,17 +11,29 @@ import {Service} from "../../../common/utils/requset"
 class EpicStore {
     @observable uselist = [];
     @observable workTypeList = []
+    // @observable searchCondition = {
+    //     orderParams: [{
+    //         title: "标题",
+    //         name: "title",
+    //         orderType: "asc"
+    //     }],
+    //     pageParam: {
+    //         pageSize: 10,
+    //         currentPage: 1,
+    //     }
+    // };
+
     @observable searchCondition = {
         orderParams: [{
-            title: "标题",
-            name: "title",
-            orderType: "asc"
+            name: "id",
+            orderType: "desc"
         }],
         pageParam: {
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1,
         }
     };
+    @observable epicList = [];
 
     /**
      * 创建史诗
@@ -168,6 +180,36 @@ class EpicStore {
         const data = await Service("/workTypeDm/findWorkTypeDmList",value);
         if(data.code === 0){
             this.workTypeList = data.data;
+        }
+        return data.data;
+    }
+
+
+
+
+
+
+
+    // 9.13
+    @action
+    getWorkConditionPageTree = async(value) => {
+        this.tableLoading = true;
+        Object.assign(this.searchCondition,  { ...value })
+        let data = [];
+        data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
+        if (data.code === 0) {
+            this.tableLoading = false;
+            if(this.searchCondition.pageParam.currentPage === 1 || this.workShowType !== "list" ){
+                this.epicList = data.data.dataList
+            }
+            if(this.searchCondition.pageParam.currentPage > 1 && this.workShowType === "list" ) {
+                this.epicList.push(...data.data.dataList);
+            }
+            
+            this.currentPage = this.searchCondition.pageParam.currentPage;
+            this.totalPage = data.data.totalPage;
+            this.total = data.data.totalRecord;
+            
         }
         return data.data;
     }

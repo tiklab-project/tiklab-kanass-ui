@@ -12,7 +12,7 @@ const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
     }
-    const { treePath, workStore,workType, projectId,type } = props;
+    const { treePath, workStore,workType, projectId,type, workTypeCode } = props;
 
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
@@ -20,15 +20,24 @@ const WorkChild = (props) => {
     const [workItemTitle, setWorkItemTitle] = useState()
 
     const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,setWorkId, addWork,getWorkConditionPage, createRecent } = workStore;
+        workId,setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId } = workStore;
 
-    const { getWorkChildList,deleWorkChild } = WorkChildStore;
+    const { getWorkChildList,deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
+    const [demandId, setDemand] = useState();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
     const tenant = getUser().tenant;
     useEffect(() => {
-        findWorkChildList()
+        
+        if(workTypeCode === "epic"){
+            findWorkTypeListByCode().then(res => {
+                setDemand(res.data)
+                findWorkChildList()
+            })
+        }else {
+            findWorkChildList()
+        }
         return;
     }, [workId])
 
@@ -36,11 +45,16 @@ const WorkChild = (props) => {
         const params = {
             parentId: workId,
             workTypeId: workType.id,
+            workTypeSysId: null,
             title: null,
             pageParam: {
                 currentPage: 1,
                 pageSize: 20
             }
+        }
+        if(workTypeCode === "epic"){
+            params.workTypeId = null;
+            params.workTypeSysId = demandId;
         }
         getWorkChildList(params).then(res => {
             if (res.code === 0) {
@@ -49,17 +63,6 @@ const WorkChild = (props) => {
 
         })
     }
-
-    const onChangePage = (page) => {
-        const params = {
-            pageParam: {
-                currentPage: page.current,
-                pageSize: 20
-            }
-        }
-        getWorkChildList(params)
-    }
-
     const delectChild = (id) => {
         const params = {
             id: id
@@ -78,9 +81,6 @@ const WorkChild = (props) => {
         })
     }
 
-    // const goWorkItem = (id) => {
-    //     props.history.push(`/index/projectScrumDetail/${id}/work/all`)
-    // }
 
     const goWorkItem = (record) => {
         setWorkId(record.id)
@@ -101,6 +101,37 @@ const WorkChild = (props) => {
             props.history.push(`/index/projectDetail/${project.id}/workDetail/${record.id}`)
         }
         
+    }
+
+   
+
+    const createChildWorkItem = () => {
+
+        const params = {
+            title: workItemTitle, 
+            parentWorkItem: workId,
+            project: projectId,
+            builder: getUser().userId,
+            sprint: sprintId,
+            workType: workType.id,
+            assigner: project?.master.id,
+        }
+        if(workTypeCode === "epic"){
+            params.workType = demandTypeId
+        }
+        addWork(params).then(res => {
+            if(res.code === 0){
+                showAddChild(false)
+                findWorkChildList()
+                if (workShowType === "bodar") {
+                    getWorkBoardList()
+                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
+                    getWorkConditionPageTree()
+                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+                    getWorkConditionPage()
+                }
+            }
+        })
     }
 
     const columns = [
@@ -160,31 +191,6 @@ const WorkChild = (props) => {
     ];
 
 
-    const createChildWorkItem = () => {
-        const params = {
-            title: workItemTitle, 
-            parentWorkItem: workId,
-            project: projectId,
-            builder: getUser().userId,
-            sprint: sprintId,
-            workType: workType.id,
-            assigner: project?.master.id,
-        }
-        addWork(params).then(res => {
-            if(res.code === 0){
-                showAddChild(false)
-                findWorkChildList()
-                if (workShowType === "bodar") {
-                    getWorkBoardList()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                    getWorkConditionPageTree()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                    getWorkConditionPage()
-                }
-            }
-        })
-    }
-
     return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
@@ -213,6 +219,7 @@ const WorkChild = (props) => {
                         getWorkChildList = {getWorkChildList}
                         setChildWorkList = {setChildWorkList}
                         treePath = {treePath}
+                        demandId = {demandId}
                     />
                 }
                 {

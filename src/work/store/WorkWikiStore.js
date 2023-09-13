@@ -120,5 +120,14 @@ export class WorkWikiStore {
         }
         return urlData;
     }
+
+    @action
+    findRepositoryUserList = async(value) => {
+        const params = new FormData();
+        params.append("repositoryIds", value)
+        const data = await Service("/wikirepository/findRepositoryUserList", params)
+
+        return data;
+    }
 }
 export default new WorkWikiStore();

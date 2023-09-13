@@ -12,13 +12,14 @@ const WorkDocumentAddmodal = (props) => {
     // const projectId = props.match.params.id;
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
         findProjectWikiRepositoryList, findUnRelationWorkDocumentList,
-        unRelationTotal, unRelationWorkCondition } = workWikiStore;
+        findRepositoryUserList, unRelationWorkCondition } = workWikiStore;
 
     const {userList,getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
-
+    const [repositoryallIdList, setRepositoryallIdList] = useState([]);
+    const [repositoryValue, setRepositoryValue] = useState()
 
     useEffect(() => {
         if (selectDocument === true) {
@@ -31,17 +32,19 @@ const WorkDocumentAddmodal = (props) => {
                         res.data.map(item => {
                             list.push(item.id)
                         })
-
+                        setRepositoryallIdList(list)
                         findUnRelationWorkDocumentList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
                                 setDocumentList(data.data.dataList)
                             }
                         })
+                        findRepositoryUserList(list)
                     }
 
                 }
             })
         }
+        
         return;
     }, [selectDocument])
 
@@ -70,18 +73,36 @@ const WorkDocumentAddmodal = (props) => {
 
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
-        const params = {
-            repositoryId: value,
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
+        let params;
+        if(value){
+            params = {
+                repositoryId: value?.value,
+                repositoryIds: [],
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
+            }
+        }else {
+            params = {
+                repositoryId: null,
+                repositoryIds: repositoryallIdList,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
             }
         }
+        setRepositoryValue(value)
         findUnRelationWorkDocumentList(params).then((data) => {
             if (data.code === 0) {
                 setDocumentList(data.data.dataList)
             }
         })
+    }
+
+    const searchUnselectUser = () => {
+
     }
     const searchSelectWorkRepository = (value) => {
         const categoryQuery = {
@@ -126,30 +147,6 @@ const WorkDocumentAddmodal = (props) => {
     const info = () => {
         message.info('请选择事项');
     };
-
-    const goWikiRepository = () => {
-        // searchpro(projectId).then(res => {
-        //     if(res.code === 0){
-        //         props.history.push(`/index/projectDetail/${projectId}/wiki`)
-        //     }
-        // })
-        props.history.push(`/index/projectDetail/${projectId}/wiki`)
-    }
-
-    const changePage = (pagination) => {
-        const params = {
-            pageParam: {
-                pageSize: 10,
-                currentPage: pagination
-            }
-        }
-        findUnRelationWorkDocumentList(params).then((data) => {
-            if (data.code === 0) {
-                setDocumentList(data.data.dataList)
-            }
-
-        })
-    }
     const documentAdd = useRef()
     return (
         <>
@@ -157,9 +154,12 @@ const WorkDocumentAddmodal = (props) => {
 
                 <div className="document-add-search">
                     <InputSearch style={{ minWidth: "250px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"文档名称"} />
-                    <SelectSimple name="repository"
+                    <SelectSimple 
+                        name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
                         title={"知识库"}
+                        suffixIcon = {true}
+                        value = {repositoryValue}
                     >
                         {
                             repositoryallList.map(item => {
@@ -174,8 +174,9 @@ const WorkDocumentAddmodal = (props) => {
                     </SelectSimple>
                     {
                         userList && userList.length > 0 && <SelectSimple name="user"
-                            onChange={(value) => searchUnselectWorkRepository(value)}
+                            onChange={(value) => searchUnselectUser(value)}
                             title={"文档作者"}
+                            suffixIcon = {true}
                         >
                             {
                                 userList.map(item => {

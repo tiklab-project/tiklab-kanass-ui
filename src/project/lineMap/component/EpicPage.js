@@ -19,9 +19,9 @@ const EpicPage = (props) => {
     const store = {
         epicStore: EpicStore
     }
-    const { findEpicList } = EpicStore;
+    const { findEpicList, getWorkConditionPageTree, epicList } = EpicStore;
     // 史诗列表
-    const [epicList, setEpicList] = useState([])
+    // const [epicList, setEpicList] = useState([])
     // 若添加下级史诗，父级的id
     const [parent, setParentId] = useState();
     // 添加史诗的类型，第一级或者子级
@@ -35,11 +35,7 @@ const EpicPage = (props) => {
      * 获取第一级史诗
      */
     useEffect(() => {
-        findEpicList({ projectId: projectId, epicParentNull: true }).then(res => {
-            if (res.code === 0) {
-                setEpicList(res.data)
-            }
-        })
+        getWorkConditionPageTree({ projectId: projectId, workTypeCode: "epic" })
     }, [])
 
     /**
@@ -47,11 +43,11 @@ const EpicPage = (props) => {
      * @param {*} value 
      */
     const onSearch = (value) => {
-        findEpicList({ projectId: projectId, epicName: value }).then(res => {
-            if (res.code === 0) {
-                setEpicList(res.data)
-            }
-        })
+        // findEpicList({ projectId: projectId, epicName: value }).then(res => {
+        //     if (res.code === 0) {
+        //         setEpicList(res.data)
+        //     }
+        // })
     }
 
     /**
@@ -81,13 +77,14 @@ const EpicPage = (props) => {
                     <EpicLineMap data={epicList} setShowEpicAddModal={setShowEpicAddModal} setParentId={setParentId}
                         setAddChild={setAddChild} />
                 </div>
-                <EpicAddModal
+                {/* <EpicAddModal
                     showEpicAddModal={showEpicAddModal}
                     setShowEpicAddModal={setShowEpicAddModal}
                     setEpicList={setEpicList}
                     parent={parent}
                     addChild={addChild}
-                />
+                /> */}
+                
 
             </div>
         </Provider>

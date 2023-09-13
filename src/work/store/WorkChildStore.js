@@ -122,7 +122,14 @@ class WorkChildStore {
             this.getWorkChildList()
         }
         return data;
-		
+    }
+
+    @action
+	findWorkTypeListByCode = async() => {
+        const params  = new FormData();
+        params.append("code", "demand")
+        const data = await Service("/workType/findWorkTypeListByCode", params)
+        return data;
     }
 }
 export default new WorkChildStore();

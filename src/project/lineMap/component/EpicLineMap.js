@@ -205,10 +205,10 @@ const EpicLineMap = (props) => {
         data.map((item) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
-            let start = item?.startTime;
+            let start = item?.planBeginTime;
             startPra = Date.parse(start);
 
-            let end = item?.endTime;
+            let end = item?.planEndTime;
             endPra = Date.parse(end);
 
             // 画布开始时间转化为毫秒
@@ -390,7 +390,7 @@ const EpicLineMap = (props) => {
                                         <div
                                             className="epic-name-left-name"
                                             onClick={() => goEpicDetail(item)}>
-                                            {item.epicName}
+                                            {item.title}
                                         </div>
                                     </div>
 
@@ -475,21 +475,6 @@ const EpicLineMap = (props) => {
                                     tableTd(data, 0, 0)
 
                                 }
-                                <ul >
-                                    <li style={{ listStyleType: "none" }}>
-                                        <div key={0} className="table-tr">
-                                            <div className="table-td table-border" style={{ borderRight: "solid #d8d8dd 1px" }}>
-                                                <div className="add-epic-botton" onClick={() => setShowEpicAddModal(true)}>
-                                                    + 添加需求集
-                                                </div>
-
-                                            </div>
-                                            {/* <div className="table-td table-border">{item.startTime}</div>
-                                                <div className="table-td table-border">{item.endTime}</div> */}
-                                            <div className="table-gatter table-border"></div>
-                                        </div>
-                                    </li>
-                                </ul>
                             </li>
                             <div className="table-pic" id="table-pic" ref={ganttOuter}>
                                 <div id="epic" ref={ganttCore} style={{ width: ganttWidth }} className="gantt-box" />

@@ -78,20 +78,27 @@
                 border-bottom: 1px solid rgb(223, 225, 230);
             }
 
-            .ant-row {
-                overflow: inherit;
-            }
+            
             .right {
-                width: 60%;
+                width: 50%;
                 border-radius: 4px;
                 flex: 1;
             }
 
             .left {
-                width: 36%;
+                width: 50%;
                 border-radius: 4px;
             }
 
+            
+            .ant-empty {
+                margin-bottom: 10px;
+            }
+        }
+        .detail-bottom {
+            .ant-row {
+                overflow: inherit;
+            }
             .select-view {
                 height: 30px;
                 padding: 0 11px;
@@ -99,9 +106,6 @@
 
             .select-view:hover {
                 background-color: #f7f8fa;
-            }
-            .ant-empty {
-                margin-bottom: 10px;
             }
         }
 

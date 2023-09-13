@@ -99,10 +99,13 @@ const Search = (props) => {
         }
         
         window.addEventListener("keydown", keyBordar);
+        if(!show){
+            window.removeEventListener("keydown", keyBordar);
+        }
         return () => {
             window.removeEventListener("keydown", keyBordar);
         };
-    }, [keyboardIndex])
+    }, [keyboardIndex, show])
 
    
 

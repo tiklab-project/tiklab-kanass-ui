@@ -32,6 +32,7 @@ export class WorkStore {
     @observable totalPage = 1
     @observable currentPage = 1
     @observable editorContent = [];
+    @observable demandTypeId = ""
     @observable searchCondition = {
         orderParams: [{
             name: "id",
@@ -360,7 +361,6 @@ export class WorkStore {
             
         }
         return data.data;
-
     }
 
     @action
@@ -586,9 +586,17 @@ export class WorkStore {
     //获取事项类型
     @action
     getWorkTypeList = async(value) => {
+
+
         const data = await Service("/workTypeDm/findWorkTypeDmList",value);
         if(data.code === 0){
             this.workTypeList = data.data;
+            data.data.map(item => {
+                if(item.workType.code === "demand"){
+                    this.demandTypeId = item.id;
+                }
+            })
+            
         }
         return data.data;
     }
@@ -678,14 +686,6 @@ export class WorkStore {
     }
 
 
-    @action
-    findWorkTypeIds = async(value) => {
-        const params = new FormData()
-        params.append("code", value.code)
-        const data = await Service("/workType/findWorkTypeIds", params);
-        return data;
-
-    }
 
     @action
     findTaskWorkType = async(value) => {

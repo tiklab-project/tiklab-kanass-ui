@@ -6,10 +6,10 @@ import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "tiklab-core-ui";
 const WorkChildAddmodal = (props) => {
-    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId } = props;
+    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId } = props;
 
     const { workId, workShowType, viewType, getWorkConditionPageTree, 
-        getWorkConditionPage, findPriority, priorityList, getWorkStatus,workStatusList } = workStore;
+        getWorkConditionPage, findPriority, priorityList, getWorkStatus,workStatusList, demandTypeId } = workStore;
 
     const { addWorkChild, findSelectWorkItemList,
         getWorkChildList, selectChildToTal, selectWorkChildList } = workChild;
@@ -42,10 +42,13 @@ const WorkChildAddmodal = (props) => {
     const findWorkItem = (value) => {
         const params = {
             projectId: projectId,
-            workTypeId: workType.id,
+            workTypeId: workType.workType.id,
             id: workId,
             title: null,
             ...value
+        }
+        if(demandId) {
+            params.workTypeId = demandId;
         }
         findSelectWorkItemList(params)
     }
@@ -92,7 +95,7 @@ const WorkChildAddmodal = (props) => {
             if (workType.code !== "epic") {
                 params = {
                     parentId: workId,
-                    workTypeId: workType.id
+                    workTypeId: demandTypeId
                 }
             } else {
                 params = {

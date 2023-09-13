@@ -191,24 +191,7 @@ const WorkTableFilter = (props) => {
                     </SelectSimple>
                 }
                 <WorkFilterType />
-                <SelectSimple
-                    name="assignerIds"
-                    onChange={(value) => selectChange("assignerIds", value)}
-                    title={"负责人"}
-                    ismult={true}
-                    value={searchCondition?.assignerIds}
-                >
-                    {
-                        userList.map(item => {
-                            return <SelectItem
-                                value={item.user?.id}
-                                label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                key={item.user?.id}
-                                imgUrl={item.user?.iconUrl}
-                            />
-                        })
-                    }
-                </SelectSimple>
+               
                 {
                     workStatusList && workStatusList.length > 0 && <SelectSimple
                         name="workStatus"
@@ -269,6 +252,25 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
+                <SelectSimple
+                    name="assignerIds"
+                    onChange={(value) => selectChange("assignerIds", value)}
+                    title={"负责人"}
+                    ismult={true}
+                    value={searchCondition?.assignerIds}
+                >
+                    {
+                        userList.map(item => {
+                            return <SelectItem
+                                value={item.user?.id}
+                                label={item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                key={item.user?.id}
+                                imgUrl={item.user?.iconUrl}
+                            />
+                        })
+                    }
+                </SelectSimple>
+                <WorkFilterModal layout={"horizontal"} {...props} />
 
                 <div className="worklist-table-search">
                     <div className="search-input">
@@ -284,8 +286,10 @@ const WorkTableFilter = (props) => {
                         />
                     </div>
                 </div>
-                <WorkFilterModal layout={"horizontal"} {...props} />
-                {/* <WorkSort sorter={sorter} /> */}
+                {
+                    workShowType === "bodar" && <WorkSort sorter={sorter} />
+                }
+                
             </div>
         </div>
 

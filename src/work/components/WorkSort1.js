@@ -2,19 +2,19 @@ import React, { useEffect, useState, useRef } from "react";
 import "./WorkSort.scss";
 
 const WorkSort = (props) => {
-    const { buttonType, sorter } = props;
+    const { sorter, buttonType } = props;
     const [showSortDropDown, setShowSortDropDown] = useState(false);
     const sortDropDown = useRef();
 
     const [isAsc, setIsAsc] = useState("desc");
     const [sortType, setSortType] = useState({
-        value: "id",
+        value: "order_num",
         title: "事项ID"
     })
 
     const attribute = [
         {
-            value: "id",
+            value: "order_num",
             title: "事项ID"
         },
         {
@@ -59,40 +59,22 @@ const WorkSort = (props) => {
         }
     }
 
-    let [sortArray, setSortArray] = useState([{name: "id", orderType: "desc"}]);
-    const upDownSort = (sortName, sortType) => {
-        console.log(JSON.stringify({name: sortName}), JSON.stringify(sortArray))
-        JSON.stringify(sortArray).indexOf()
-        if(sortType === "cancel") {
-            sortArray = sortArray.filter((item) => {
-                return !(item.name === sortName);
-            })
-        }else {
-            const result = sortArray.some(function(item) {
-                if (item.name == sortName) {
-                    return true;
-                }
-            })
-
-            if(result) {
-                sortArray.map((item, index) => {
-                    if(item.name === sortName){
-                        sortArray[index].orderType = sortType;
-                    }
-                    return item;
-                })
-            }else {
-                sortArray.push({
-                    name: sortName, 
-                    orderType: sortType
-                })
+    const upDownSort = (item) => {
+        
+        if(item.value === sortType.value){
+            if(isAsc === "desc"){
+                sorter(item.value, "asc")
+                setIsAsc("asc")  
             }
-            
+            if(isAsc === "asc"){
+                sorter(item.value, "desc")
+                setIsAsc("desc")  
+            }  
+        }else {
+            sorter(item.value, isAsc)
         }
-        setSortArray([...sortArray])
-        sorter(sortArray)
+        setSortType(item)
     }
-
     return <div className="work-view">
         {
             buttonType === "button" ?
@@ -130,24 +112,19 @@ const WorkSort = (props) => {
                     attribute.map(item => {
                         return <div
                             className={`work-view-item`}
-                            key={item.value} >
+                            key={item.value} onClick={() => upDownSort(item)}>
                             {/* <div style={{ width: "80px" }}>  */}
                                 <div className="view-item-name">
                                     {item.title}
                                 </div>
-                                <div className={`view-sort-botton ${JSON.stringify(sortArray).indexOf(JSON.stringify({name: item.value, orderType: "asc"})) > -1 ? "sort-type-select" : ""}`} onClick={() => upDownSort(item.value, "asc")}>
+                                <div className={`view-sort-botton ${item.value === sortType.value && isAsc === "asc" ? "sort-type-select" : ""}`}>
                                     <svg className="svg-icon" aria-hidden="true" >
                                         <use xlinkHref="#icon-shengxu"></use>
                                     </svg>
                                 </div>
-                                <div className={`view-sort-botton ${JSON.stringify(sortArray).indexOf(JSON.stringify({name: item.value, orderType: "desc"})) > -1 ? "sort-type-select" : ""}`} onClick={() => upDownSort(item.value, "desc")}>
+                                <div className={`view-sort-botton ${item.value === sortType.value && isAsc === "desc" ? "sort-type-select" : ""}`}>
                                     <svg className="svg-icon" aria-hidden="true" >
                                         <use xlinkHref="#icon-jiangxu"></use>
-                                    </svg>
-                                </div>
-                                <div className={`view-sort-botton`}  onClick={() => upDownSort(item.value, "cancel")}>
-                                    <svg className="svg-icon" aria-hidden="true" >
-                                        <use xlinkHref="#icon-cancelSorter"></use>
                                     </svg>
                                 </div>
                             {/* </div> */}

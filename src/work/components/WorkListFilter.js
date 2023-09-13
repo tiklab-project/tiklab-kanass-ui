@@ -6,8 +6,6 @@ import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
-import { SelectSimple, SelectItem } from "../../common/select";
-import WorkFilterQuick from "./WorkFilterQuick"
 const WorkListFilter = (props) => {
     const { workStore, form, showWorkListFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -68,12 +66,7 @@ const WorkListFilter = (props) => {
         }
     };
 
-    const sorter = (sortType, isAsc) => {
-        const sortParams = [];
-        sortParams.push({
-            name: sortType,
-            orderType: isAsc
-        })
+    const sorter = (sortParams) => {
         searchCondition.orderParams = sortParams;
         searchCondition.pageParam = {
             pageSize: 20,

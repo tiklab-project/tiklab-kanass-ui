@@ -22,7 +22,6 @@ const WorkDetailBottom = (props) => {
     const [workTypeText, setWorkTypeText] = useState("事项")
     const [taskType, setTaskType] = useState()
     const workCode = workInfo.workTypeCode;
-    const projectId = props.match.params.id;
     useEffect(() => {
         if (workInfo) {
             if (workInfo.workTypeCode) {
@@ -37,7 +36,7 @@ const WorkDetailBottom = (props) => {
                         setWorkTypeText("缺陷");
                         break;
                     case "epic":
-                        setWorkTypeText("史诗");
+                        setWorkTypeText("需求");
                         break;
                     default:
                         setWorkTypeText("事项");
@@ -94,6 +93,7 @@ const WorkDetailBottom = (props) => {
                 case "task":
                     return <WorkBasicInfoTask {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />;
                 case "demand":
+                case "epic":
                     return <WorkBasicInfoDemand {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />
                 case "defect":
                     return <WorkBasicInfoDefect {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />
@@ -131,86 +131,104 @@ const WorkDetailBottom = (props) => {
                         </div>
                     </div>
                 </div>
-                {
-                    workShowType === "list" ?
-                        <div className="workitem-detail-row">
-                            {/* <Col xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} lg={{span: "24"}}> */}
-                            <div className="workitem-tabs-content">
+                <div className="workitem-detail-row">
+                    {/* <Col xl={{ span: "24" }} xxl={{ span: "18", offset: "3" }} lg={{span: "24"}}> */}
+                    <div className="workitem-tabs-content">
+                        {
+                            tabValue === 1 &&
+                            <div className="tabs-tabpanel">
                                 {
-                                    tabValue === 1 &&
-                                    <div className="tabs-tabpanel">
-                                        {
-                                            workInfo && deatilType()
-                                        }
-                                    </div>
-                                }
-                                {
-                                    tabValue === 2 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkRelation type={workTypeText} projectId={workInfo?.project?.id} {...props} />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 3 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkChild
-                                            workId={workId}
-                                            workType={workInfo.workType}
-                                            flow={workInfo.flow}
-                                            viewType={viewType}
-                                            treePath={workInfo.treePath}
-                                            projectId={workInfo.project.id}
-                                            type={`子${workTypeText}`}
-                                            {...props}
-                                        />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 4 && workCode === "demand" &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkChild
-                                            workId={workId}
-                                            workType={taskType}
-                                            treePath={workInfo.treePath}
-                                            projectId={workInfo.project.id}
-                                            type="任务"
-                                            {...props}
-                                        />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 5 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkLog surplusTime={workInfo.surplusTime} planTakeupTime={workInfo.planTakeupTime} {...props} />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 6 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkDynamic {...props} />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 7 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkComment workId={workId} />
-                                    </div>
-                                }
-                                {
-                                    tabValue === 8 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkRepository {...props} projectId = {workInfo.project.id}/>
-                                    </div>
-                                }
-                                {
-                                    tabValue === 9 &&
-                                    <div className="tabs-tabpanel">
-                                        <WorkTestCaseList {...props} projectId = {workInfo.project.id}/>
-                                    </div>
+                                    workInfo && deatilType()
                                 }
                             </div>
-                            {/* </Col> */}
-                        </div>
+                        }
+                        {
+                            tabValue === 2 &&
+                            <div className="tabs-tabpanel">
+                                <WorkRelation type={workTypeText} projectId={workInfo?.project?.id} {...props} />
+                            </div>
+                        }
+                        {
+                            tabValue === 3 && workInfo.workTypeCode !== "epic" &&
+                            <div className="tabs-tabpanel">
+                                <WorkChild
+                                    workId={workId}
+                                    workType={workInfo.workType}
+
+                                    flow={workInfo.flow}
+                                    viewType={viewType}
+                                    treePath={workInfo.treePath}
+                                    projectId={workInfo.project.id}
+                                    type={`子${workTypeText}`}
+                                    {...props}
+                                />
+                            </div>
+                        }
+                        {
+                            tabValue === 3 && workInfo.workTypeCode === "epic" &&
+                            <div className="tabs-tabpanel">
+                                <WorkChild
+                                    workId={workId}
+                                    workType={workInfo.workType}
+                                    workTypeCode={workInfo.workTypeCode}
+                                    flow={workInfo.flow}
+                                    viewType={viewType}
+                                    treePath={workInfo.treePath}
+                                    projectId={workInfo.project.id}
+                                    type={`${workTypeText}`}
+                                    {...props}
+                                />
+                            </div>
+                        }
+                        {
+                            tabValue === 4 && workCode === "demand" &&
+                            <div className="tabs-tabpanel">
+                                <WorkChild
+                                    workId={workId}
+                                    workType={taskType}
+                                    treePath={workInfo.treePath}
+                                    projectId={workInfo.project.id}
+                                    type="任务"
+                                    {...props}
+                                />
+                            </div>
+                        }
+                        {
+                            tabValue === 5 &&
+                            <div className="tabs-tabpanel">
+                                <WorkLog surplusTime={workInfo.surplusTime} planTakeupTime={workInfo.planTakeupTime} {...props} />
+                            </div>
+                        }
+                        {
+                            tabValue === 6 &&
+                            <div className="tabs-tabpanel">
+                                <WorkDynamic {...props} />
+                            </div>
+                        }
+                        {
+                            tabValue === 7 &&
+                            <div className="tabs-tabpanel">
+                                <WorkComment workId={workId} />
+                            </div>
+                        }
+                        {
+                            tabValue === 8 &&
+                            <div className="tabs-tabpanel">
+                                <WorkRepository {...props} projectId={workInfo.project.id} />
+                            </div>
+                        }
+                        {
+                            tabValue === 9 &&
+                            <div className="tabs-tabpanel">
+                                <WorkTestCaseList {...props} projectId={workInfo.project.id} />
+                            </div>
+                        }
+                    </div>
+                    {/* </Col> */}
+                </div>
+                {/* {
+                    workShowType === "list" ?
+                        
                         :
                         <div className="workitem-tabs-content workitem-detail-row">
                             {
@@ -275,17 +293,17 @@ const WorkDetailBottom = (props) => {
                             {
                                 tabValue === 8 &&
                                 <div className="tabs-tabpanel">
-                                    <WorkRepository {...props} projectId = {workInfo.project.id}/>
+                                    <WorkRepository {...props} projectId={workInfo.project.id} />
                                 </div>
                             }
                             {
                                 tabValue === 9 &&
                                 <div className="tabs-tabpanel">
-                                    <WorkTestCaseList {...props} projectId = {workInfo.project.id}/>
+                                    <WorkTestCaseList {...props} projectId={workInfo.project.id} />
                                 </div>
                             }
                         </div>
-                }
+                } */}
             </div>
         </Fragment>
 

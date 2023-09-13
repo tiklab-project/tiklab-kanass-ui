@@ -26,20 +26,20 @@ const WorkBasicInfo = (props) => {
     };
 
     const layout = {
-        labelCol: { span: 5 },
-        wrapperCol: { span: 14 },
+        labelCol: { span: 4 },
+        wrapperCol: { span: 18 },
     };
 
-    const layoutRight = {
-        labelCol: { span: 3 },
-        wrapperCol: { span: 21 },
+    const layoutBottom = {
+        labelCol: { span: 2 },
+        wrapperCol: { span: 18 },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, sprintList, priorityList, editWork,
-        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList
+        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList, userList
     } = workStore;
     const workIndex = getSessionStorage("workIndex");
 
@@ -63,9 +63,9 @@ const WorkBasicInfo = (props) => {
                 percent: workInfo.percent,
                 planTime: [moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat), moment(workInfo.planEndTime || getNowFormatDate(), dateFormat)],
                 planTakeupTime: workInfo.planTakeupTime || null,
-                preDependWorkItem: workInfo.preDependWorkItem ? {value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title} : null,
+                preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
-                parentWorkItem: workInfo.parentWorkItem ? {value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title} : null,
+                parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
             setPlanTakeupTimeValue(workInfo.planTakeupTime)
@@ -290,27 +290,27 @@ const WorkBasicInfo = (props) => {
             }
         }
         if (changeKey === "parentWorkItem") {
-            changedValues.parentWorkItem = changedValues.parentWorkItem === "nullstring" ? 
-            {
-                id: "nullstring"
-            }
-            :
-            {
-                id: changedValues.parentWorkItem.value,
-                title: changedValues.parentWorkItem.label
-            }
+            changedValues.parentWorkItem = changedValues.parentWorkItem === "nullstring" ?
+                {
+                    id: "nullstring"
+                }
+                :
+                {
+                    id: changedValues.parentWorkItem.value,
+                    title: changedValues.parentWorkItem.label
+                }
         }
-        
+
         if (changeKey === "preDependWorkItem") {
-            changedValues.preDependWorkItem = changedValues.preDependWorkItem === "nullstring" ? 
-            {
-                id: "nullstring"
-            }
-            :
-            {
-                id: changedValues.preDependWorkItem.value,
-                title: changedValues.preDependWorkItem.label,
-            }
+            changedValues.preDependWorkItem = changedValues.preDependWorkItem === "nullstring" ?
+                {
+                    id: "nullstring"
+                }
+                :
+                {
+                    id: changedValues.preDependWorkItem.value,
+                    title: changedValues.preDependWorkItem.label,
+                }
         }
         if (changeKey === "attachment") {
             changedValues.fileName = {
@@ -469,7 +469,7 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
-                            <Form.Item label="缺陷类型" name="eachType"
+                            <Form.Item label="需求类型" name="eachType"
                                 hasFeedback={showValidateStatus === "eachType" ? true : false}
                                 validateStatus={validateStatus}
                             >
@@ -595,6 +595,70 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
+
+
+
+                            <Form.Item label="负责人" name="assigner"
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectAssigner"
+                                    bordered={fieldName === "assigner" ? true : false}
+                                    suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("assigner")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("assigner")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                    getPopupContainer={() => formRef.current}
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item name="planTakeupTime" label="计划用时"
+                                hasFeedback={showValidateStatus === "planTakeupTime" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <InputNumber
+                                    suffix="小时"
+                                    bordered={fieldName === "planTakeupTime" ? true : false}
+                                    suffixIcon={fieldName === "planTakeupTime" || hoverFieldName == "planTakeupTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("planTakeupTime")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("planTakeupTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    onChange={(value) => updataPlanTime(value)}
+                                    value={planTakeupTimeValue}
+                                />
+                                小时
+                            </Form.Item>
+                        </Form>
+                    </div>
+                    <div className="right" ref={formRef}>
+                        <Form
+                            {...layout}
+                            initialValues={{ remember: true }}
+                            form={detailForm}
+                            onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
+                            labelAlign="left"
+                            colon={false}
+                        >
+
+                            <Form.Item label="事项类型" name="workType"
+                                hasFeedback={showValidateStatus === "workType" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.workTypeSys?.name}</div>
+                            </Form.Item>
+                            <Form.Item label="状态" name="workStatus"
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
+                            </Form.Item>
                             <Form.Item label="所属模块" name="module"
                                 hasFeedback={showValidateStatus === "module" ? true : false}
                                 validateStatus={validateStatus}
@@ -619,138 +683,144 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-
                             <Form.Item label="创建人" name="builder"
                                 hasFeedback={showValidateStatus === "builder" ? true : false}
                                 validateStatus={validateStatus}
                             >
                                 <div style={{ padding: "0 11px" }}>{workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}</div>
                             </Form.Item>
+                            <Form.Item name="percent" label="进度"
+                                hasFeedback={showValidateStatus === "percent" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+
+                                <InputNumber min={1} max={100}
+                                    // value={workInfo?.percent ? workInfo?.percent : 0}
+
+                                    value={workInfo.percent}
+
+                                    key="percent"
+                                    bordered={fieldName === "percent" ? true : false}
+                                    suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("percent")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("percent")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                />
+                                %
+                            </Form.Item>
+
+
+
+
+
+
                         </Form>
                     </div>
-                    <div className="right" ref={formRef}>
-                        <Form
-                            {...layoutRight}
-                            initialValues={{ remember: true }}
-                            form={detailForm}
-                            onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
-                            labelAlign="left"
-                            colon={false}
+
+                </div>
+                <div className="detail-bottom">
+                    <Form
+                        {...layoutBottom}
+                        initialValues={{ remember: true }}
+                        form={detailForm}
+                        onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
+                        labelAlign="left"
+                        colon={false}
+                    >
+                        <Form.Item
+                            name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
+                            hasFeedback={showValidateStatus === "planTime" ? true : false}
+                            validateStatus={validateStatus}
                         >
-                            <Form.Item
-                                name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
-                                hasFeedback={showValidateStatus === "planTime" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <RangePicker
-                                    locale={locale}
-                                    format={dateFormat}
-                                    allowClear={false}
-                                    className="work-select"
-                                    bordered={fieldName === "planTime" ? true : false}
-                                    suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planTime")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planTime")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer={() => formRef.current}
-                                    showTime
-                                />
-                            </Form.Item>
+                            <RangePicker
+                                locale={locale}
+                                format={dateFormat}
+                                allowClear={false}
+                                className="work-select"
+                                bordered={fieldName === "planTime" ? true : false}
+                                suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
+                                onFocus={() => changeStyle("planTime")}
+                                onBlur={() => setFieldName("")}
+                                onMouseEnter={() => setHoverFieldName("planTime")}
+                                onMouseLeave={() => setHoverFieldName("")}
+                                getPopupContainer={() => formRef.current}
+                                showTime
+                            />
+                        </Form.Item>
+                        <Form.Item name="parentWorkItem" label="上级事项"
+                            hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
+                            validateStatus={validateStatus}
+                        >
 
+                            <SelectSimple
+                                name="parentWorkItem"
+                                onSearchChange={(value) => searchParentByWord(value)}
+                                title={"无"}
+                                simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
+                                onFocus={() => changeStyle("parentWorkItem")}
+                                onBlur={() => changeStyle("")}
 
-                            <Form.Item name="planTakeupTime" label="计划用时"
-                                hasFeedback={showValidateStatus === "planTakeupTime" ? true : false}
-                                validateStatus={validateStatus}
+                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
+                                onMouseEnter={() => setHoverFieldName("parentWorkItem")}
+                                onMouseLeave={() => setHoverFieldName("")}
                             >
-                                <InputNumber
-                                    suffix="小时"
-                                    bordered={fieldName === "planTakeupTime" ? true : false}
-                                    suffixIcon={fieldName === "planTakeupTime" || hoverFieldName == "planTakeupTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planTakeupTime")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planTakeupTime")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    onChange={(value) => updataPlanTime(value)}
-                                    value={planTakeupTimeValue}
-                                />
-                                小时
-                            </Form.Item>
-                            <Form.Item name="parentWorkItem" label="上级事项"
-                                hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                
-                                <SelectSimple
-                                    name="parentWorkItem"
-                                    onSearchChange = {(value) => searchParentByWord(value)}
-                                    title={"无"}
-                                    simpleClassName = {fieldName === "parentWorkItem" ? "select-focused" : ""}
-                                    onFocus = {() => changeStyle("parentWorkItem")}
-                                    onBlur = {() => changeStyle("")}
-
-                                    suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
-                                    onMouseEnter={() => setHoverFieldName("parentWorkItem")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                >
-                                    {
-                                        parentList && parentList.length > 0 ? parentList.map(item => {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.title}
-                                                key={item.id}
-                                                imgUrl={version === "cloud" ?
-                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                    :
-                                                    (upload_url + item.workTypeSys?.iconUrl)}
-                                            />
-                                        })
+                                {
+                                    parentList && parentList.length > 0 ? parentList.map(item => {
+                                        return <SelectItem
+                                            value={item.id}
+                                            label={item.title}
+                                            key={item.id}
+                                            imgUrl={version === "cloud" ?
+                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                :
+                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                        />
+                                    })
                                         :
                                         <Empty image="/images/nodata.png" description="没有查到~" />
-                                    }
-                                </SelectSimple>
-                            </Form.Item>
+                                }
+                            </SelectSimple>
+                        </Form.Item>
 
-                            <Form.Item name="preDependWorkItem" label="前置事项"
-                                hasFeedback={showValidateStatus === "preDependWorkItem" ? true : false}
-                                validateStatus={validateStatus}
+                        <Form.Item name="preDependWorkItem" label="前置事项"
+                            hasFeedback={showValidateStatus === "preDependWorkItem" ? true : false}
+                            validateStatus={validateStatus}
+                        >
+                            <SelectSimple
+                                name="preDependWorkItem"
+                                onSearchChange={(value) => searchPerByWord(value)}
+                                title={"无"}
+                                simpleClassName={fieldName === "preDependWorkItem" ? "select-focused" : ""}
+                                onFocus={() => changeStyle("preDependWorkItem")}
+                                onBlur={() => changeStyle("")}
+
+                                suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? true : false}
+                                onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
+                                onMouseLeave={() => setHoverFieldName("")}
                             >
-                                <SelectSimple
-                                    name="preDependWorkItem"
-                                    onSearchChange = {(value) => searchPerByWord(value)}
-                                    title={"无"}
-                                    simpleClassName = {fieldName === "preDependWorkItem" ? "select-focused" : ""}
-                                    onFocus = {() => changeStyle("preDependWorkItem")}
-                                    onBlur = {() => changeStyle("")}
-                                    
-                                    suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? true : false}
-                                    onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                >
-                                    {
-                                        preWorkList && preWorkList.length > 0 ? preWorkList.map(item => {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.title}
-                                                key={item.id}
-                                                imgUrl={version === "cloud" ?
-                                                    (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                    :
-                                                    (upload_url + item.workTypeSys?.iconUrl)}
-                                            >
-                                                <div>事项</div>
-                                            </SelectItem>
-                                        })
+                                {
+                                    preWorkList && preWorkList.length > 0 ? preWorkList.map(item => {
+                                        return <SelectItem
+                                            value={item.id}
+                                            label={item.title}
+                                            key={item.id}
+                                            imgUrl={version === "cloud" ?
+                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
+                                                :
+                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                        >
+                                            <div>事项</div>
+                                        </SelectItem>
+                                    })
                                         :
                                         <Empty image="/images/nodata.png" description="没有查到~" />
-                                    }
-                                </SelectSimple>
+                                }
+                            </SelectSimple>
 
 
-                            </Form.Item>
-
-                        </Form>
-                    </div>
+                        </Form.Item>
+                    </Form>
                 </div>
 
                 <Form

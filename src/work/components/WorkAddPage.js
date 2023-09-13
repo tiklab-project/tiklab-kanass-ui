@@ -40,6 +40,7 @@ const WorkAddPage = (props) => {
 
         switch (workType.workType.code) {
             case "demand":
+            case "epic":
                 findFieldList({ code: "demandType" }).then(res => {
                     if (res.code === 0) {
                         setSelectItem(res.data[0])
@@ -405,7 +406,7 @@ const WorkAddPage = (props) => {
                             <Form.Item
                                 name="planTakeupTime"
                                 label="计划用时"
-                                hidden = {true}
+                                hidden={true}
                             >
                                 <Input suffix="小时" type="number" className="" />
                             </Form.Item>
