@@ -28,10 +28,12 @@ const WorkList = (props) => {
         workCalendarStore: WorkCalendarStore
     };
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
+    
     useEffect(() => {
         setWorkShowType("list")
         setQuickFilterValue(null)
-        finWorkList(path, WorkStore, projectId, sprintId)
+        finWorkList(path, WorkStore, projectId, sprintId, versionId);
     }, [projectId])
 
     useEffect(() => {

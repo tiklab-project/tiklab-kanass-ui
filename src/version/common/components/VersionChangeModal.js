@@ -88,7 +88,7 @@ const VersionChangeModal = (props) => {
                     :
                     <div className='version-title-icon' onClick={showMoreMenu} >
                        <img 
-                            src={('/images/project1.png')} 
+                            src={('/images/version.png')} 
                             className="list-img"
                             alt=""
                         />

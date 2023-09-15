@@ -17,6 +17,7 @@ const WorkFilterSort = (props) => {
     const versionInfo = getVersionInfo();
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const path = props.match.path;
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -57,8 +58,6 @@ const WorkFilterSort = (props) => {
     }
     const changeWorkView = (value, route) => {
         setWorkShowType(value)
-       
-    
         if(path.indexOf("projectDetail") > -1){
             props.history.push(`/index/projectDetail/${projectId}/work${route}`)
         }
@@ -68,6 +67,9 @@ const WorkFilterSort = (props) => {
 
         if(path.indexOf("sprintdetail") > 1){
             props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work${route}`)
+        }
+        if(path.indexOf("versiondetail") > 1){
+            props.history.push(`/index/${projectId}/versiondetail/${versionId}/work${route}`)
         }
         // switch (value) {
         //     case "list":

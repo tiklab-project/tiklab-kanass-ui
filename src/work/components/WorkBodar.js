@@ -31,6 +31,7 @@ const WorkBodar = (props) => {
     const tenant = getUser().tenant;
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
@@ -42,7 +43,7 @@ const WorkBodar = (props) => {
             value: "all",
             label: "全部"
         })
-        finWorkList(path, WorkStore, projectId, sprintId)
+        finWorkList(path, WorkStore, projectId, sprintId, versionId);
         return;
     }, [])
 

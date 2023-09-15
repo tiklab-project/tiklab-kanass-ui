@@ -1016,7 +1016,15 @@ const Routers = [
                         component: Dynamic,
                         key: "ProjectSetSurvey"
                     },
-
+                    {
+                        path: "/index/:id/versiondetail/:version/workList",
+                        component: WorkList,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workList/:workId",
+                        component: WorkList,
+                        exact: true
+                    },
                     {
                         path: "/index/:id/versiondetail/:version/workTable",
                         component: WorkTable,
