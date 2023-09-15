@@ -8,44 +8,44 @@
  */
 import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset";
-class SprintSurveyStore {
+class VersionSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
 
 
     @action
-	StatSprintProcessWorkItem = async(value) => {
-        const params = new FormData();
-        params.append("sprintId",value.sprintId)
-        params.append("masterId",value.masterId)
-        const data = await Service("/workItemStat/statSprintProcessWorkItem", value)
-        return data;
-    }
-
-    @action
 	statWorkItemByBusStatus = async(value) => {
         const params = new FormData();
-        params.append("sprintId",value.sprintId)
+        params.append("versionId",value.versionId)
         params.append("masterId",value.masterId)
         params.append("projectId",value.projectId)
         const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", params)
         return data;
     }
 
+
+    @action
+	StatVersionWorkItemByBusStatus = async(value) => {
+        const params = new FormData();
+        params.append("versionId",value.versionId)
+        const data = await Service("/workItemStat/statVersionWorkItemByBusStatus", value)
+        return data;
+    }
+
     // 获取迭代基本信息
     @action
-	FindSprint = async(value) => {
+	findVersion = async(value) => {
         const params = new FormData();
-        params.append("id",value.sprintId)
-        const data = await Service("/sprint/findSprint", params)
+        params.append("id",value.versionId)
+        const data = await Service("/projectVersion/findVersion", params)
         return data;
     }
 
      // 燃尽图
     @action
-    FindSprintBurnDowmChartPage = async(sprintId)=> {
+    FindVersionBurnDowmChartPage = async(versionId)=> {
         const params={
-            sprintId: sprintId,
+            versionId: versionId,
             sortParams: [{
                 name: "recordTime",
                 orderType:"desc"
@@ -55,7 +55,7 @@ class SprintSurveyStore {
                 currentPage: 1
             }
         }
-        const data = await Service("/sprintBurnDowmChart/findSprintBurnDowmChartPage", params)
+        const data = await Service("/versionBurnDowmChart/findVersionBurnDowmChartPage", params)
         return data;
     }
 
@@ -66,7 +66,10 @@ class SprintSurveyStore {
                 pageSize: 20,
                 currentPage: 1
             },
-            bgroup: "teamwire"
+            bgroup: "teamwire",
+            content: {
+                versionId: value.versionId
+            }
         }
         const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
@@ -85,7 +88,7 @@ class SprintSurveyStore {
             bgroup: "teamwire",
             userId: value.userId,
             content: {
-                sprintId: value.sprintId
+                versionId: value.versionId
             }
         }
         const data = await Service("/todo/findtodopage", params)
@@ -95,4 +98,4 @@ class SprintSurveyStore {
     }
       
 }
-export default new SprintSurveyStore();
+export default new VersionSurveyStore();

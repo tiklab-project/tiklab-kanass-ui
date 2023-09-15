@@ -7,38 +7,41 @@
  * @LastEditTime: 2022-02-08 15:47:40
  */
 import React, { useEffect, useState } from "react";
-import "../components/sprintSurvey.scss";
+import "../components/versionSurvey.scss";
 import { Row, Col, Progress, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
-import SprintSurveyStore from "../store/SprintSurveyStore"
-const SprintSurvey = (props) => {
-    const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
+import VersionSurveyStore from "../store/VersionSurveyStore"
+const VersionSurvey = (props) => {
+    const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
+        findtodopage, todoTaskList, statWorkItemByBusStatus } = VersionSurveyStore;
 
-
-    const sprintId = props.match.params.sprint;
+    const versionId = props.match.params.version;
+    const [versionInfo, setVersionInfo] = useState();
     const projectId = props.match.params.id;
-    const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
     const masterName = getUser().name;
+    const [workStatusList, setWorkStatusList] = useState();
     // 进度
     const [percent, setPercent] = useState()
-    // 事项状态列表
-    const [workStatusList, setWorkStatusList] = useState();
     useEffect(() => {
         const data = {
             masterId: masterId,
-            sprintId: sprintId,
+            versionId: versionId,
             projectId: projectId
         }
-        FindSprint({ sprintId: sprintId }).then(res => {
-            setSprintInfo(res.data)
-            const sprint = res.data;
-            FindSprintBurnDowmChartPage(sprintId).then(res => {
+        statWorkItemByBusStatus(data).then(res => {
+            setWorkStatusList(res.data)
+            const percent = res.data[3].groupCount / res.data[0].groupCount;
+            setPercent(percent ? percent.toFixed(2) : 0)
+        })
+        findVersion({ versionId: versionId }).then(res => {
+            setVersionInfo(res.data)
+            const version = res.data;
+            FindVersionBurnDowmChartPage(versionId).then(res => {
                 if (res.code === 0) {
                     let timerXaixs = [];
                     let workCountYaixs = [];
@@ -52,13 +55,13 @@ const SprintSurvey = (props) => {
                         })
                     } else {
                         timerXaixs.push(moment().format("YYYY-MM-DD"));
-                        Yaxis.push(sprint.workNumber);
-                        workCountYaixs.push(sprint.workNumber);
+                        Yaxis.push(version.workNumber);
+                        workCountYaixs.push(version.workNumber);
                         let i = 1;
                         for (i = 1; i <= 6; i++) {
                             timerXaixs.push(moment().subtract(i, "days").format("YYYY-MM-DD"));
-                            workCountYaixs.push(sprint.workNumber);
-                            Yaxis.push(sprint.workNumber * (7 - i) / 7);
+                            workCountYaixs.push(version.workNumber);
+                            Yaxis.push(version.workNumber * (7 - i) / 7);
                         }
                     }
                     burnDownChart(timerXaixs, workCountYaixs, Yaxis)
@@ -66,24 +69,20 @@ const SprintSurvey = (props) => {
             })
         })
         // 燃尽图
+       
 
-        statWorkItemByBusStatus(data).then(res => {
-            setWorkStatusList(res.data)
-            const percent = res.data[3].groupCount / res.data[0].groupCount;
-            setPercent(percent ? percent.toFixed(2) : 0)
-        })
-        findlogpage({ userId: masterId, sprintId: sprintId })
+        findlogpage({ userId: masterId, versionId: versionId })
 
-        findtodopage({ userId: masterId, sprintId: sprintId })
+        findtodopage({ userId: masterId, versionId: versionId })
 
         return;
-    }, [sprintId])
+    }, [versionId])
 
     /**
      * 燃尽图
      */
     const burnDownChart = (timerXaixs, workCountYaixs, Yaxis) => {
-        const burnDown = echarts.init(document.getElementById('sprint-burn-down'));
+        const burnDown = echarts.init(document.getElementById('version-burn-down'));
         let option;
         option = {
             color: ['#5470c6', '#91cc75'],
@@ -126,109 +125,109 @@ const SprintSurvey = (props) => {
     return (
         <Row style={{ height: "100%", background: "#f9f9f9" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                <div className="sprint-survey">
-                    <div className="sprint-survey-top">
-                        <div className="sprint-info-box">
-                            <div className="sprint-info-title">
+                <div className="version-survey">
+                    <div className="version-survey-top">
+                        <div className="version-info-box">
+                            <div className="version-info-title">
                                 <img
                                     src={('/images/project1.png')}
                                     alt=""
                                     className="list-img"
                                 />
-                                {sprintInfo && sprintInfo.sprintName}
+                                {versionInfo && versionInfo.name}
                             </div>
-                            <div className="sprint-container">
-                                <div className="sprint-item">
-                                    <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={masterName} />
+                            <div className="version-container">
+                                {/* <div className="version-item">
+                                    <UserIcon userInfo={versionInfo?.master} size = "big" className="item-icon" name = {masterName}/>
                                     <div className="item-content">
-                                        <div className="item-top">{sprintInfo?.master?.nickname}</div>
-                                        <div className="item-bottom">项目负责人</div>
+                                        <div className="item-top">{versionInfo?.master?.nickname}</div>
+                                        <div className="item-bottom">版本负责人</div>
                                     </div>
-                                </div>
-                                <div className="sprint-work">
-                                    <div className="sprint-item">
+                                </div> */}
+                                <div className="version-work">
+                                    <div className="version-item">
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[0].groupCount}</div>
+                                        <div className="item-top">{workStatusList && workStatusList[0].groupCount}</div>
                                             <div className="item-bottom">全部事项</div>
                                         </div>
                                     </div>
-                                    <div className="sprint-item">
+                                    <div className="version-item">
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-nostart"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
+                                        <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
                                             <div className="item-bottom">未开始</div>
                                         </div>
                                     </div>
-                                    <div className="sprint-item">
+                                    <div className="version-item">
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-progress"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
+                                        <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
                                             <div className="item-bottom">进行中</div>
                                         </div>
                                     </div>
-                                    <div className="sprint-item">
+                                    <div className="version-item">
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                        <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
                                             <div className="item-bottom">已完成</div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div className="sprint-item">
+                                <div className="version-item">
                                     <svg className="status-img" aria-hidden="true">
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
                                         <div className="item-top">已开始</div>
-                                        <div className="item-bottom">迭代状态</div>
+                                        <div className="item-bottom">版本状态</div>
                                     </div>
                                 </div>
 
-                                <div className="sprint-item">
+                                <div className="version-item">
                                     <svg className="status-img" aria-hidden="true">
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">2022-10-21 ~ 2022-10-22</div>
-                                        <div className="item-bottom">迭代周期状态</div>
+                                        <div className="item-top">{versionInfo?.startTime} ~ {versionInfo?.publishDate}</div>
+                                        <div className="item-bottom">版本周期状态</div>
                                     </div>
                                 </div>
 
-                                <div className="sprint-item">
+                                <div className="version-item">
                                     <svg className="status-img" aria-hidden="true">
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>
                                     <div className="item-content">
                                         <div className="item-top item-progress"><Progress percent={100} status="active" /></div>
-                                        <div className="item-bottom">迭代进度</div>
+                                        <div className="item-bottom">版本进度</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="burn-down-box">
-                            <div className="burn-down-title">迭代燃尽图</div>
-                            <div className="burn-down" id="sprint-burn-down">
+                       <div className="burn-down-box">
+                            <div className="burn-down-title">版本燃尽图</div>
+                            <div className="burn-down" id="version-burn-down">
 
                             </div>
                         </div>
                     </div>
-                    <div className="sprint-survey-middle">
-                        <div className="sprint-pending-workitem">
-                            <div className="sprint-title">
+                    <div className="version-survey-middle">
+                        <div className="version-pending-workitem">
+                            <div className="version-title">
                                 <span className="name">待办事项</span>
                                 {
-                                    todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
+                                    todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/versiondetail/${versionId}/workTodo`) }}>
                                         <svg aria-hidden="true" className="svg-icon">
                                             <use xlinkHref="#icon-rightjump"></use>
                                         </svg>
@@ -236,7 +235,7 @@ const SprintSurvey = (props) => {
                                 }
 
                             </div>
-                            <div className="sprint-pending-workitem-list">
+                            <div className="version-pending-workitem-list">
                                 {
                                     todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                         return <div
@@ -252,13 +251,13 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="sprint-survey-middle">
-                        <div className="sprint-sprint-box" >
+                    <div className="version-survey-middle">
+                        <div className="version-version-box" >
                             <div className="dynamic-box">
-                                <div className="sprint-title">
+                                <div className="version-title">
                                     <span className="name">相关动态</span>
                                     {
-                                        opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
+                                        opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/versiondetail/${versionId}/dynamic`) }}>
                                             <svg aria-hidden="true" className="svg-icon">
                                                 <use xlinkHref="#icon-rightjump"></use>
                                             </svg>
@@ -283,10 +282,10 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="sprint-survey-bottom">
+                    {/* <div className="version-survey-bottom">
                         <div className="bottom-left">
                             <div className="title">我的事项</div>
-                            <div className="sprint-survey-work">
+                            <div className="version-survey-work">
                                 {
                                     workStatusList && workStatusList.map((item, index) => {
                                         return <div className="work-item" key={index}>
@@ -305,24 +304,24 @@ const SprintSurvey = (props) => {
                         </div>
                         <div className="bottom-right">
                             <div className="title">进行中事项</div>
-                            <div className="sprint">
+                            <div className="version">
                                 {
                                     workItemList && workItemList.map((item, index) => {
-                                        return <div className="sprint-item" key={index}>
-                                            <div className="sprint-item-left">
+                                        return <div className="version-item" key={index}>
+                                            <div className="version-item-left">
                                                 <svg className="svg-icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-workItemProcess"></use>
                                                 </svg>
-                                                <div className="sprint-name">
+                                                <div className="version-name">
                                                     {item.title}
                                                 </div>
                                             </div>
 
 
-                                            <div className="sprint-date">
+                                            <div className="version-date">
                                                 {item.planBeginTime} ~ {item.planEndTime}
                                             </div>
-                                            <div className="sprint-process">
+                                            <div className="version-process">
                                                 50%
                                             </div>
                                         </div>
@@ -338,4 +337,4 @@ const SprintSurvey = (props) => {
     )
 }
 
-export default observer(SprintSurvey);
+export default observer(VersionSurvey);

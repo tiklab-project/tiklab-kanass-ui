@@ -1,37 +1,37 @@
-.epic {
+.sprint {
     margin-top: 15px;
-    .epic-action {
+    .sprint-action {
         display: flex;
         justify-content: space-between;
-        .epic-action-right {
+        .sprint-action-right {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        .epic-view {
+        .sprint-view {
             display: flex;
             // border: 1px solid #f0f0f0;
             align-items: center;
             border-radius: 4px;
-            .epic-view-item {
+            .sprint-view-item {
                 padding: 0 15px;
                 height: 32px;
                 line-height: 32px;
                 cursor: pointer;
             }
-            .epic-view-select {
+            .sprint-view-select {
                 color: #fff;
                 background-color: var(--tiklab-blue);
                 border: 1px solid var(--tiklab-blue);
             }
-            .epic-view-week {
+            .sprint-view-week {
                 border: 1px solid #f0f0f0;
                 border-right: 0;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
             }
 
-            .epic-view-month {
+            .sprint-view-month {
                 border: 1px solid #f0f0f0;
                 border-left: 0;
 
@@ -42,12 +42,16 @@
             }
         }
     }
-    .epic-name {
+    .sprint-name {
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--tiklab-blue);
+        
+    }
+    .sprint-name:hover{
+        background-color: var(--tiklab-gray-400);
         
     }
 }

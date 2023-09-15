@@ -6,7 +6,6 @@ const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
-const Search = AsyncComponent(() => import("./home/search/components/Search"))
 //组织中心
 const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
@@ -115,8 +114,12 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-//迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
+
+// 迭代
+const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
+const Versionsurvey = AsyncComponent(() => import("./version/overview/components/VersionSurvey"))
+const VersionWorkItemPlan = AsyncComponent(() => import("./version/plan/components/VersionPlan"))
 // 搜索页面
 const SearchResult = AsyncComponent(() => import('./home/search/components/SearchResult'))
 
@@ -158,10 +161,10 @@ const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
+
 export {
     Login,
     ProjectLogOut,
-    Search,
     Insight,
     InsightList,
     NewInsight,
@@ -275,5 +278,9 @@ export {
     EpicDetail,
     Stage,
     StageDetail,
-    Backups
+    Backups,
+    VersionHome,
+    Versionsurvey,
+    VersionWorkItemPlan
+
 }

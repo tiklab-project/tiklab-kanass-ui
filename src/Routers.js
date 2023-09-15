@@ -114,8 +114,12 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-//迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
+
+// 迭代
+const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
+const Versionsurvey = AsyncComponent(() => import("./version/overview/components/VersionSurvey"))
+const VersionWorkItemPlan = AsyncComponent(() => import("./version/plan/components/VersionPlan"))
 // 搜索页面
 const SearchResult = AsyncComponent(() => import('./home/search/components/SearchResult'))
 
@@ -158,6 +162,7 @@ const StageDetail = AsyncComponent(() => import("./project/stage/component/Stage
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
+
 const Routers = [
     {
         path: "/login",
@@ -428,49 +433,6 @@ const Routers = [
                     }
                 ]
             },
-
-            // {
-            //     path: "/index/work",
-            //     component: WorkAll,
-            //     key: 'WorkAll',
-            //     routes: [
-            //         {
-            //             path: "/index/work/workTable",
-            //             component: WorkTable,
-                        
-            //         },
-            //         {
-            //             path: "/index/work/workTable/:workId",
-            //             component: WorkTable,
-            //             exact: true
-            //         },
-            //         {
-            //             path: "/index/work/workBodar",
-            //             component: WorkBodar,
-            //         },
-            //         {
-            //             path: "/index/work/workBodar/:workId",
-            //             component: WorkBodar,
-            //             exact: true
-            //         },
-
-            //         {
-            //             path: "/index/work/workList",
-            //             component: WorkList,
-            //             routes: [
-            //                 {
-            //                     path: "/index/work/workList/:workId",
-            //                     component: WorkDetailPage
-            //                 }
-            //             ]
-            //         },
-            //         {
-            //             path: "/index/work/*",
-            //             component: () => <Redirect to="/index/work/worklist" />,
-            //             exact: true
-            //         }
-            //     ]
-            // },
             {
                 path: "/index/workDetail/:workId",
                 component: WorkDetailPage,
@@ -775,6 +737,11 @@ const Routers = [
                         component: Linemap,
                     },
                     {
+                        path: "/index/projectDetail/:id/linemap/:workId",
+                        component: Linemap,
+                        exact: true
+                    },
+                    {
                         path: "/index/projectDetail/:id/sprintPlan",
                         component: PlanSprint,
                     },
@@ -1015,17 +982,59 @@ const Routers = [
                         path: "/index/:id/sprintdetail/:sprint/workBodar/:workId",
                         component: WorkBodar,
                         exact: true
+                    }
+                ]
+            },
+
+            {
+                path: "/index/:id/versiondetail/:version",
+                component: VersionHome,
+                routes: [
+                    {
+                        path: "/index/:id/versiondetail/:version/workItem",
+                        component: Work,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workDetail/:workId",
+                        component: WorkDetailPage,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workDetail",
+                        component: WorkTableDetail,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/survey",
+                        component: Versionsurvey,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/plan",
+                        component: VersionWorkItemPlan,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/dynamic",
+                        exact: false,
+                        component: Dynamic,
+                        key: "ProjectSetSurvey"
                     },
 
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workList",
-                        component: WorkList,
-                        routes: [
-                            {
-                                path: "/index/:id/sprintdetail/:sprint/:workId",
-                                component: WorkDetailPage
-                            }
-                        ]
+                        path: "/index/:id/versiondetail/:version/workTable",
+                        component: WorkTable,
+                        
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workTable/:workId",
+                        component: WorkTable,
+                        exact: true
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workBodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workBodar/:workId",
+                        component: WorkBodar,
+                        exact: true
                     },
                 ]
             },

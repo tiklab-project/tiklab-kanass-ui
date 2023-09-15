@@ -8,15 +8,20 @@
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
-import { Graph, Shape } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import "./LineMap.scss";
+import "./Epic.scss"
 import RowScroll from "./RowScroll";
-import ColScroll from "./CoLScroll";
+import ColScroll from "./CoLScroll"
+import { withRouter } from "react-router";
 import moment from 'moment';
 const VersionLineMap = (props) => {
     // 获取当前年月日
-    const { lineMapStore } = props;
-    const { updateVersion } = lineMapStore;
+    const { data, setShowEpicAddModal, setAddChild, setParentId,
+        archiveView, setGraph, graph } = props;
+
+
+    // const { updateEpic } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -24,19 +29,37 @@ const VersionLineMap = (props) => {
 
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
-    const [ganttWidth, setGanttWidth] = useState()
-    // 展示的原始数组
-    const { data, type } = props;
-    console.log(data)
+    const [ganttWidth, setGanttWidth] = useState(0)
 
     // 使用于路线图显示的数据
-    const [ganttdata, setGantt] = useState()
+    const [ganttdata, setGantt] = useState();
+    const [expandedTree, setExpandedTree] = useState([])
 
-    // 画布
-    const [graph, getGraph] = useState()
+    const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
+    const unitLength = archiveView === "month" ? 10 : 24;
+
 
     useEffect(() => {
-        setdateArray(getDate())
+        if (data.length > 0) {
+
+            setGantt(setNode(data))
+        }
+        return
+    }, [data, expandedTree])
+
+    useEffect(() => {
+        // 画布参数
+        if (ganttCore?.current) {
+            setdateArray(getDate())
+            creatGraph()
+
+            setGantt(setNode(data))
+        }
+
+        return;
+    }, [archiveView])
+    
+    const creatGraph = () => {
         // 开始与结束日期，解析一个表示某个日期的字符串，
         // 并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数
         let start = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`;
@@ -46,17 +69,17 @@ const VersionLineMap = (props) => {
 
         // 用开始日期与结束日期定义画布的宽度
         let graphWidth = Math.abs(start - end);
-        graphWidth = Math.floor(graphWidth / (3600 * 1000));
 
+
+        graphWidth = Math.floor(graphWidth / archiveBase) + unitLength
         setGanttWidth(graphWidth)
-        // 进入页面显示当前时间
 
-        // 画布参数
+
         const graph = new Graph({
-            container: document.getElementById(type),
+            container: document.getElementById("epic"),
             width: graphWidth,
             grid: {
-                size: 24,
+                size: unitLength,
                 visible: false,
                 type: 'doubleMesh',
                 args: [
@@ -87,6 +110,7 @@ const VersionLineMap = (props) => {
                 },
             }
         })
+
         graph.on("node:change:position", ({ node, options }) => {
             const nodeBox = node.getBBox();
             const sprintId = node.id;
@@ -97,14 +121,14 @@ const VersionLineMap = (props) => {
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
 
-            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
-            endTime = moment(endTime).format('YYYY-MM-DD');
-            params.publishDate = endTime;
+            let publishDate = (startX + nodeWidth) * 1000 + firstDate;
+            publishDate = moment(publishDate).format('YYYY-MM-DD');
+            params.publishDate = publishDate;
 
-            let startTime = startX * (1000 * 3600) + firstDate;
+            let startTime = startX * 1000 + firstDate;
             startTime = moment(startTime).format('YYYY-MM-DD');
             params.startTime = startTime;
-            updateVersion(params)
+            // updateEpic(params)
         })
 
         graph.on("node:change:size", ({ node, options }) => {
@@ -120,27 +144,26 @@ const VersionLineMap = (props) => {
             if (direction === "right") {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
-                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+                const dataTime = (startX + nodeWidth) * 1000 + firstDate;
                 let day = moment(dataTime).format('YYYY-MM-DD');
                 params.publishDate = day;
             }
             if (direction === "left") {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
-                const dataTime = startX * (1000 * 3600) + firstDate;
+                const dataTime = startX * 1000 + firstDate;
                 let day = moment(dataTime).format('YYYY-MM-DD');
                 params.startTime = day;
             }
-            updateVersion(params)
+            updateEpic(params)
 
         })
-        getGraph(graph)
-        return;
-    }, [])
 
-    /**
-     * 渲染画布
-     */
+        setGraph(graph)
+    }
+
+
+    //渲染画布
     const setGarph = () => {
         graph.fromJSON(ganttdata)
     }
@@ -152,9 +175,10 @@ const VersionLineMap = (props) => {
     const [scrollLeft, setScrollLeft] = useState()
     useEffect(() => {
         if (ganttdata !== undefined) {
+            document.getElementById("epic").style.height = (ganttdata.nodes.length * 50);
             setGarph()
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * 24 : 365 * 24) : (isLeapYear(currentYear - 1) ? 366 * 24 : 365 * 24);
+        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
         setScrollLeft(scrollWidth)
 
         document.getElementById('table-pic').scrollTo({ left: scrollWidth });
@@ -162,65 +186,39 @@ const VersionLineMap = (props) => {
         return
     }, [ganttdata])
 
-    /**
-     * 原始数据变化重新计算路线渲染数据
-     */
-    useEffect(() => {
-        if (data.length > 0) {
-            setGantt(setNode(data))
-        }
-        return
-    }, [data])
-
-
     // 画布节点数据
     let ylength = 0;
-    /**
-     * 路线节点数据
-     * @param {*} data 
-     * @returns 
-     */
+
+    //路线节点数据
     const setNode = (data) => {
         let nodes = [];
         let edges = []
         data.map((item) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
-            if (type === "version") {
-                let start = item?.startTime.split(" ");
-                startPra = Date.parse(start[0]);
+            let start = item?.startTime;
+            startPra = Date.parse(start);
 
-                let end = item?.publishDate?.split(" ");
-                endPra = Date.parse(end[0]);
-            } else {
-                if (item.startTime) {
-                    let start = item?.startTime?.split(" ");
-                    startPra = Date.parse(start[0]);
-                } else {
-                    startPra = 0;
-                }
-                if (item.endTime) {
-                    let end = item?.endTime.split(" ");
-                    endPra = Date.parse(end[0]);
-                } else {
-                    endPra = 0;
-                }
+            let end = item?.publishDate;
+            endPra = Date.parse(end);
+            if(startPra === endPra){
+                endPra = 86400000  + endPra;
             }
-
             // 画布开始时间转化为毫秒
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
 
             // 每个事项的x轴
             let xAxis = Math.abs(startPra - firstDate);
-            xAxis = Math.floor(xAxis / (3600 * 1000));
+            xAxis = Math.floor(xAxis / archiveBase);
 
             // 每个事项的y轴
             let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
-            length = Math.floor(length / (3600 * 1000));
+            length = Math.floor(length / archiveBase);
+
             nodes.push(
                 {
                     id: item.id,
@@ -236,6 +234,7 @@ const VersionLineMap = (props) => {
                     }
                 }
             )
+
             // 连接线的数据
             if (item.preDependWorkItem && item.preDependWorkItem.id) {
                 edges.push({
@@ -254,6 +253,13 @@ const VersionLineMap = (props) => {
                 })
             }
 
+            if (item.children && item.children.length > 0 && isExpandedTree(item.id)) {
+                let childrenData = setNode(item.children)
+                nodes = nodes.concat(childrenData.nodes)
+                edges = edges.concat(childrenData.edges)
+                // setGanttHeight()
+            }
+            return nodes;
         })
         let item = { nodes: nodes, edges: edges }
         return item;
@@ -284,13 +290,28 @@ const VersionLineMap = (props) => {
         const array = []
         monthArray.map((item) => {
             for (let i = item.firstmonth; i <= item.lastmonth; i++) {
-                array.push({ month: `${item.year}年${i + 1}月`, day: getMonthCount(item.year, i) })
+                const year = item.year;
+                const month = i + 1;
+                const days = getMonthCount(item.year, i);
+                // const date = `${year}-${month}-${day}`
+                array.push({ month: `${year}年${month}月`, day: days, week: getWeekDay(year, month, days) })
             }
             return array
         })
         return array;
     }
 
+    const getWeekDay = (year, month, days) => {
+        const weeks = days.map(day => {
+            const dateArray = `${year}-${month}-${day}`;
+            const date = new Date(dateArray);
+            const weekNum = date.getDay();
+            const weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
+            const week = weekArray[weekNum];
+            return week;
+        })
+        return weeks;
+    }
 
     /**
      * 1.获得每个月的日期有多少，判断平年闰年[四年一闰，百年不闰，四百年再闰]
@@ -323,26 +344,76 @@ const VersionLineMap = (props) => {
         }
     };
 
+    const addChidEpic = (id) => {
+        setShowEpicAddModal(true)
+        setParentId(id)
+        setAddChild("child")
+    }
 
-    /**
-     * 绘制表格
-     * @param {*} data 
-     * @returns 
-     */
-    const tableTd = (data) => {
-        return (data && data.map((item) => {
+    // 树的展开与闭合
+
+    const isExpandedTree = (key) => {
+        return expandedTree.some(item => item === key)
+    }
+    const setOpenOrClose = (key) => {
+        if (isExpandedTree(key)) {
+            setExpandedTree(expandedTree.filter(item => item !== key))
+        } else {
+            setExpandedTree(expandedTree.concat(key))
+        }
+        console.log(expandedTree)
+    }
+
+    
+    //绘制表格
+    const tableTd = (data, fid, deep) => {
+        return (data && data.length > 0 && data.map((item, index) => {
             return (
                 <Fragment key={item.id}>
-                    <ul >
+                    <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
                         <li style={{ listStyleType: "none" }}>
-                            <div key={item.id} className="table-tr">
-                                <div className="table-td table-border" style={{ borderRight: "solid #d8d8dd 1px" }}>
-                                    {item.sprintName || item.name || item.epicName}
+                            <div key={item.id} className="table-tr ">
+                                <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
+                                    <div>
+                                        {
+                                            item.children && item.children.length > 0 ?
+                                            <>
+
+                                                {
+                                                    isExpandedTree(item.id) ?
+                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-workDown"></use>
+                                                        </svg> :
+                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-workRight"></use>
+                                                        </svg>
+                                                }
+                                            </>
+                                            :
+                                                <>
+                                                  
+                                                </>
+                                        }
+                                    </div>
+                                    <div
+                                        className="epic-name"
+                                        >
+                                        {item.name}
+                                    </div>
                                 </div>
-                                {/* <div className="table-td table-border">{item.startTime}</div>
-                                    <div className="table-td table-border">{item.endTime}</div> */}
+                                <div className="table-td table-border table-td-status">{item.versionState}</div>
+                                <div className="table-td table-border table-td-time">{item.startTime} ~ {item.publishDate}</div>
                                 <div className="table-gatter table-border"></div>
                             </div>
+                            {
+                                isExpandedTree(item.id) &&  <div>
+                                {
+                                    item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                }
+                                </div>
+                            }
+                           
+                            
                         </li>
                     </ul>
                 </Fragment>
@@ -371,37 +442,47 @@ const VersionLineMap = (props) => {
 
 
     return (
-        <>
-            <div className="version-linemap">
+        <div className="epic-linemap">
+            <div>
                 <div className="linemap-time">
                     <div className="time-table">
                         <div className="table-hearder">
-                            <div className="table-hearder-text table-border">
+                            <div className="table-hearder-text table-border table-hearder-title">
                                 标题
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-status">
+                                状态
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-time">
+                                时间
                             </div>
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>
                                         {
                                             dateArray && dateArray.map((item, index) => {
-                                                return <div style={{ width: `${24 * item.day.length}px`, height: "25px" }} key={index} className="table-month-td">
+                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
                                                     {item.month}
                                                 </div>
                                             })
                                         }
                                     </div>
-                                    <div className="table-date" id="table-date">
-                                        {
-                                            dateArray && dateArray.map((item, index) => {
-                                                return item.day.map((dayitem, dayindex) => {
-                                                    return <div style={{ width: "24px", height: "25px" }} className="table-day" key={`${index}${dayindex}`}>
-                                                        {dayitem}
-                                                    </div>
+                                    {
+                                        archiveView === "week" && <div className="table-date" id="table-date">
+                                            {
+                                                dateArray && dateArray.map((item, index) => {
+                                                    return item.day.map((dayitem, dayindex) => {
+                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
+                                                            className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                            key={`${index}${dayindex}`}
+                                                        >
+                                                            {dayitem}
+                                                        </div>
+                                                    })
                                                 })
-
-                                            })
-                                        }
-                                    </div>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -409,11 +490,34 @@ const VersionLineMap = (props) => {
                             <div ref={timerColCore}>
                                 <li style={{ listStyleType: "none" }} id="table-content" >
                                     {
-                                        tableTd(data)
+                                        tableTd(data, 0, 0)
                                     }
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id={type} ref={ganttCore} style={{ width: ganttWidth, height: data?.length * 50 }} className="gantt-box" />
+                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                    <div className="table-date-background">
+                                        {
+                                            archiveView === "month" && dateArray && dateArray.map((item, index) => {
+                                                return <div
+                                                    style={{ width: `${unitLength * item.day.length}px` }}
+                                                    key={index}
+                                                    className="table-month"
+                                                />
+                                            })
+                                        }
+                                        {
+                                            archiveView === "week" && dateArray && dateArray.map((item, index) => {
+                                                return item.day.map((dayitem, dayindex) => {
+                                                    return <div style={{ width: unitLength, maxWidth: unitLength }}
+                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                        key={`${index}${dayindex}`}
+                                                    >
+                                                    </div>
+                                                })
+
+                                            })
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -436,8 +540,10 @@ const VersionLineMap = (props) => {
                     />
                 }
             </div>
-        </>
+
+
+        </div>
     )
 }
 
-export default inject("lineMapStore")(observer(VersionLineMap));
+export default withRouter(inject("lineMapStore")(observer(VersionLineMap))); 

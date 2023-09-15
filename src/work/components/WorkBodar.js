@@ -15,7 +15,8 @@ import { finWorkList } from "./WorkGetList"
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
-        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, workBoardCurrentPage, setQuickFilterValue } = WorkStore;
+        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, 
+        workBoardCurrentPage, setQuickFilterValue, setWorkList } = WorkStore;
     console.log(workBoardListLength)
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")

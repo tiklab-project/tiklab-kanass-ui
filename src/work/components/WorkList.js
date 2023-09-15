@@ -21,7 +21,7 @@ import { setSessionStorage } from "../../common/utils/setSessionStorage";
 
 const WorkList = (props) => {
     const projectId = props.match.params.id;
-    const {workId, setWorkShowType, setQuickFilterValue} = WorkStore;
+    const {workId, setWorkShowType, setQuickFilterValue, setWorkList} = WorkStore;
     const path = props.match.path;
     const store = {
         workStore: WorkStore,

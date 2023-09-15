@@ -15,13 +15,10 @@ import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
 import moment from 'moment';
-const SprintLineMap = (props) => {
+const EpicLineMap = (props) => {
     // 获取当前年月日
-    const { data, setShowEpicAddModal, setAddChild, setParentId,
-        archiveView, setGraph, graph } = props;
-
-
-    // const { updateEpic } = lineMapStore;
+    const { data, setShowEpicAddModal, setAddChild, setParentId, lineMapStore, } = props;
+    const { updateEpic, createRecent } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -35,30 +32,27 @@ const SprintLineMap = (props) => {
     const [ganttdata, setGantt] = useState();
     const [expandedTree, setExpandedTree] = useState([])
 
-    const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
-    const unitLength = archiveView === "month" ? 10 : 24;
-
-
-    useEffect(() => {
-        if (data.length > 0) {
-
-            setGantt(setNode(data))
-        }
-        return
-    }, [data, expandedTree])
+    const projectId = props.match.params.id;
+    // 画布
+    const [graph, getGraph] = useState()
 
     useEffect(() => {
+        console.log(ganttOuter)
         // 画布参数
         if (ganttCore?.current) {
             setdateArray(getDate())
             creatGraph()
-
-            setGantt(setNode(data))
         }
 
         return;
-    }, [archiveView])
-    
+    }, [])
+    console.log("ganttOuter", ganttOuter)
+    useEffect(() => {
+        console.log(ganttOuter)
+        return;
+    }, [ganttOuter?.current])
+
+
     const creatGraph = () => {
         // 开始与结束日期，解析一个表示某个日期的字符串，
         // 并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数
@@ -69,17 +63,15 @@ const SprintLineMap = (props) => {
 
         // 用开始日期与结束日期定义画布的宽度
         let graphWidth = Math.abs(start - end);
-
-
-        graphWidth = Math.floor(graphWidth / archiveBase) + unitLength
+        graphWidth = Math.floor(graphWidth / (3600 * 1000)) + 24;
+        console.log()
         setGanttWidth(graphWidth)
-
-
+        console.log("重新画图")
         const graph = new Graph({
             container: document.getElementById("epic"),
             width: graphWidth,
             grid: {
-                size: unitLength,
+                size: 24,
                 visible: false,
                 type: 'doubleMesh',
                 args: [
@@ -121,14 +113,14 @@ const SprintLineMap = (props) => {
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
 
-            let endTime = (startX + nodeWidth) * 1000 + firstDate;
+            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
             endTime = moment(endTime).format('YYYY-MM-DD');
             params.endTime = endTime;
 
-            let startTime = startX * 1000 + firstDate;
+            let startTime = startX * (1000 * 3600) + firstDate;
             startTime = moment(startTime).format('YYYY-MM-DD');
             params.startTime = startTime;
-            // updateEpic(params)
+            updateEpic(params)
         })
 
         graph.on("node:change:size", ({ node, options }) => {
@@ -144,14 +136,14 @@ const SprintLineMap = (props) => {
             if (direction === "right") {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
-                const dataTime = (startX + nodeWidth) * 1000 + firstDate;
+                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
                 let day = moment(dataTime).format('YYYY-MM-DD');
                 params.endTime = day;
             }
             if (direction === "left") {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
-                const dataTime = startX * 1000 + firstDate;
+                const dataTime = startX * (1000 * 3600) + firstDate;
                 let day = moment(dataTime).format('YYYY-MM-DD');
                 params.startTime = day;
             }
@@ -159,9 +151,8 @@ const SprintLineMap = (props) => {
 
         })
 
-        setGraph(graph)
+        getGraph(graph)
     }
-
 
     //渲染画布
     const setGarph = () => {
@@ -178,13 +169,29 @@ const SprintLineMap = (props) => {
             document.getElementById("epic").style.height = (ganttdata.nodes.length * 50);
             setGarph()
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
+        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * 24 : 365 * 24) : (isLeapYear(currentYear - 1) ? 366 * 24 : 365 * 24);
         setScrollLeft(scrollWidth)
 
         document.getElementById('table-pic').scrollTo({ left: scrollWidth });
         document.getElementById('table-timer').scrollTo({ left: scrollWidth });
         return
     }, [ganttdata])
+
+    //原始数据变化重新计算路线渲染数据
+    useEffect(() => {
+        if (data.length > 0) {
+            setGantt(setNode(data))
+        }
+        return
+    }, [data])
+
+    useEffect(() => {
+        if (data.length > 0) {
+            setGantt(setNode(data))
+        }
+        return
+    }, [expandedTree])
+
 
     // 画布节点数据
     let ylength = 0;
@@ -193,31 +200,30 @@ const SprintLineMap = (props) => {
     const setNode = (data) => {
         let nodes = [];
         let edges = []
+        console.log(data)
         data.map((item) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
-            let start = item?.startTime;
+            let start = item?.planBeginTime;
             startPra = Date.parse(start);
 
-            let end = item?.endTime;
+            let end = item?.planEndTime;
             endPra = Date.parse(end);
-            if(startPra === endPra){
-                endPra = 86400000  + endPra;
-            }
+
             // 画布开始时间转化为毫秒
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
 
             // 每个事项的x轴
             let xAxis = Math.abs(startPra - firstDate);
-            xAxis = Math.floor(xAxis / archiveBase);
+            xAxis = Math.floor(xAxis / (3600 * 1000));
 
             // 每个事项的y轴
             let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
-            length = Math.floor(length / archiveBase);
+            length = Math.floor(length / (3600 * 1000));
 
             nodes.push(
                 {
@@ -253,8 +259,9 @@ const SprintLineMap = (props) => {
                 })
             }
 
-            if (item.children && item.children.length > 0 && isExpandedTree(item.id)) {
+            if (item.children && item.children.length > 0 && !isExpandedTree(item.id)) {
                 let childrenData = setNode(item.children)
+                console.log(childrenData)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
                 // setGanttHeight()
@@ -290,28 +297,13 @@ const SprintLineMap = (props) => {
         const array = []
         monthArray.map((item) => {
             for (let i = item.firstmonth; i <= item.lastmonth; i++) {
-                const year = item.year;
-                const month = i + 1;
-                const days = getMonthCount(item.year, i);
-                // const date = `${year}-${month}-${day}`
-                array.push({ month: `${year}年${month}月`, day: days, week: getWeekDay(year, month, days) })
+                array.push({ month: `${item.year}年${i + 1}月`, day: getMonthCount(item.year, i) })
             }
             return array
         })
         return array;
     }
 
-    const getWeekDay = (year, month, days) => {
-        const weeks = days.map(day => {
-            const dateArray = `${year}-${month}-${day}`;
-            const date = new Date(dateArray);
-            const weekNum = date.getDay();
-            const weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
-            const week = weekArray[weekNum];
-            return week;
-        })
-        return weeks;
-    }
 
     /**
      * 1.获得每个月的日期有多少，判断平年闰年[四年一闰，百年不闰，四百年再闰]
@@ -361,59 +353,51 @@ const SprintLineMap = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
-    
+    const goEpicDetail = (item) => {
+        props.history.push(`/index/projectDetail/${projectId}/epic/${item.id}`)
+
+    }
     //绘制表格
     const tableTd = (data, fid, deep) => {
-        return (data && data.length > 0 && data.map((item, index) => {
+        return (data && data.length > 0 && data.map((item) => {
             return (
                 <Fragment key={item.id}>
-                    <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
+                    <ul className={isExpandedTree(fid) ? "table-hidden" : null}>
                         <li style={{ listStyleType: "none" }}>
                             <div key={item.id} className="table-tr ">
-                                <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
+                                <div className="table-td table-border table-td-name">
                                     <div>
                                         {
-                                            item.children && item.children.length > 0 ?
+                                            item.children && item.children.length > 0 &&
                                             <>
-
                                                 {
                                                     isExpandedTree(item.id) ?
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workDown"></use>
-                                                        </svg> :
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workRight"></use>
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-down"></use>
+                                                        </svg>
+                                                        :
+                                                        <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <use xlinkHref="#icon-right"></use>
                                                         </svg>
                                                 }
                                             </>
-                                            :
-                                                <>
-                                                  
-                                                </>
                                         }
                                     </div>
                                     <div
-                                        className="epic-name"
-                                        onClick={() => goEpicWorkDetail(item, index)}>
-                                        {item.sprintName}
+                                        className="epic-name-left-name"
+                                        onClick={() => goEpicDetail(item)}>
+                                        {item.title}
                                     </div>
                                 </div>
-                                <div className="table-td table-border table-td-status">{item.sprintState.name}</div>
-                                <div className="table-td table-border table-td-time">{item.startTime} ~ {item.endTime}</div>
+                                <div className="table-td table-border table-td-status">{item.workStatusNode.name}</div>
+                                <div className="table-td table-border table-td-time">{item.planBeginTime} ~ {item.planEndTime}</div>
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
-                                isExpandedTree(item.id) &&  <div>
-                                {
-                                    item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
-                                }
-                                </div>
+                                item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
                             }
-                           
-                            
                         </li>
                     </ul>
                 </Fragment>
@@ -461,28 +445,24 @@ const SprintLineMap = (props) => {
                                     <div className="table-month" id="table-month" ref={timerCore}>
                                         {
                                             dateArray && dateArray.map((item, index) => {
-                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
+                                                return <div style={{ width: `${24 * item.day.length}px`, height: "25px" }} key={index} className="table-month-td">
                                                     {item.month}
                                                 </div>
                                             })
                                         }
                                     </div>
-                                    {
-                                        archiveView === "week" && <div className="table-date" id="table-date">
-                                            {
-                                                dateArray && dateArray.map((item, index) => {
-                                                    return item.day.map((dayitem, dayindex) => {
-                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
-                                                            className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                            key={`${index}${dayindex}`}
-                                                        >
-                                                            {dayitem}
-                                                        </div>
-                                                    })
+                                    <div className="table-date" id="table-date">
+                                        {
+                                            dateArray && dateArray.map((item, index) => {
+                                                return item.day.map((dayitem, dayindex) => {
+                                                    return <div style={{ width: "24px", height: "25px" }} className="table-day" key={`${index}${dayindex}`}>
+                                                        {dayitem}
+                                                    </div>
                                                 })
-                                            }
-                                        </div>
-                                    }
+
+                                            })
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -494,30 +474,7 @@ const SprintLineMap = (props) => {
                                     }
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
-                                    <div className="table-date-background">
-                                        {
-                                            archiveView === "month" && dateArray && dateArray.map((item, index) => {
-                                                return <div
-                                                    style={{ width: `${unitLength * item.day.length}px` }}
-                                                    key={index}
-                                                    className="table-month"
-                                                />
-                                            })
-                                        }
-                                        {
-                                            archiveView === "week" && dateArray && dateArray.map((item, index) => {
-                                                return item.day.map((dayitem, dayindex) => {
-                                                    return <div style={{ width: unitLength, maxWidth: unitLength }}
-                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                        key={`${index}${dayindex}`}
-                                                    >
-                                                    </div>
-                                                })
-
-                                            })
-                                        }
-                                    </div>
+                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth }} className="gantt-box" />
                                 </div>
                             </div>
                         </div>
@@ -542,8 +499,9 @@ const SprintLineMap = (props) => {
             </div>
 
 
+
         </div>
     )
 }
 
-export default withRouter(inject("lineMapStore")(observer(SprintLineMap))); 
+export default withRouter(inject("lineMapStore")(observer(EpicLineMap))); 

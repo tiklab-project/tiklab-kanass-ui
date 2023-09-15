@@ -11,6 +11,7 @@ import React,{useRef,useEffect} from "react";
 
 const RowScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore,ganttWidth,scrollLeft} = props;
+    console.log(ganttWidth)
     const rowScrollRef = useRef();
     const boxRowScrollRef = useRef();
 

@@ -16,7 +16,7 @@ import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo } = props;
-    const { workId, workShowType, findTaskWorkType, viewType } = workStore;
+    const { workId, workShowType, findDmWorkTypeByCode, viewType } = workStore;
     // 富文本内容
 
     const [workTypeText, setWorkTypeText] = useState("事项")
@@ -45,7 +45,7 @@ const WorkDetailBottom = (props) => {
             }
         }
         if (workInfo.workTypeCode === "demand") {
-            findTaskWorkType({ code: "task", projectId: workInfo.project.id }).then(res => {
+            findDmWorkTypeByCode({ code: "task", projectId: workInfo.project.id }).then(res => {
                 if (res.code === 0) {
                     setTaskType(res.data)
                 }

@@ -163,11 +163,11 @@ const WorkAside = (props) => {
                             <div key={childItem.id}>
                                 <div
                                     key={childItem.id}
-                                    style={{ paddingLeft: deep * 16 + 28 }}
+                                    style={{ paddingLeft: deep * 16 + 10 }}
                                     className={`work-aside-item work-aside-child  ${childItem.id === workId ? "work-aside-select" : ""}`}
                                     onClick={(event) => changeWorkChilden(childItem, faIndex)}
                                 >
-                                    {Spans(num)}
+                                    {/* {Spans(num)} */}
                                     <div className="work-aside-item-icon">
                                         {
                                             childItem.children && childItem.children.length > 0 ?
@@ -178,7 +178,10 @@ const WorkAside = (props) => {
                                                     <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(childItem.id)}>
                                                         <use xlinkHref="#icon-workRight"></use>
                                                     </svg>
-                                                ) : <div></div>
+                                                ) :
+                                                <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-point"></use>
+                                            </svg>
                                         }
                                     </div>
                                     {
@@ -230,7 +233,7 @@ const WorkAside = (props) => {
                     className={`work-aside-item work-aside-child ${item.id === workId ? "work-aside-select" : ""}`}
                     onClick={(event) => changeWorkChilden(item, index)}
                 >
-                    {Spans(num)}
+                    {/* {Spans(num)} */}
                     <div className="work-aside-item-icon">
                         {
                             item.children && item.children.length > 0 ?
@@ -242,7 +245,7 @@ const WorkAside = (props) => {
                                         <use xlinkHref="#icon-workRight"></use>
                                     </svg>
                                 ) :
-                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-point"></use>
                                 </svg>
                         }

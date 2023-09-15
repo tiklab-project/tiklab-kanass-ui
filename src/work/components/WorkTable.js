@@ -17,11 +17,12 @@ const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
-        createRecent, setWorkIndex, setQuickFilterValue } = WorkStore;
+        createRecent, setWorkIndex, setQuickFilterValue, setWorkList } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
 
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
 
@@ -37,8 +38,7 @@ const WorkTable = (props) => {
             value: "all",
             label: "全部"
         })
-        finWorkList(path, WorkStore, projectId, sprintId);
-        return;
+        finWorkList(path, WorkStore, projectId, sprintId, versionId);
     }, [projectId])
 
     const goProdetail = (record, index) => {
@@ -66,6 +66,14 @@ const WorkTable = (props) => {
         if (path === `/index/workTable`) {
             console.log(props.history)
             props.history.replace(`/index/workTable/${record.id}`)
+        }
+        if (path === `/index/:id/sprintdetail/:sprint/workTable`) {
+            console.log(props.history)
+            props.history.replace(`/index/${projectId}/sprintdetail/${sprintId}/workTable/${record.id}`)
+        }
+
+        if (path === `/index/:id/versiondetail/:version/workTable`) {
+            props.history.replace(`/index/${projectId}/versiondetail/${versionId}/workTable/${record.id}`)
         }
 
     }
@@ -565,7 +573,7 @@ const WorkTable = (props) => {
                                                 </svg>
                                                 :
                                                 <>
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                    <svg className="svg-icon" aria-hidden="true">
                                                         <use xlinkHref="#icon-point"></use>
                                                     </svg>
                                                 </>

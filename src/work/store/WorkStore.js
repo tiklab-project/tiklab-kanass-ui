@@ -354,7 +354,7 @@ export class WorkStore {
             if(this.searchCondition.pageParam.currentPage > 1 && this.workShowType === "list" ) {
                 this.workList.push(...data.data.dataList);
             }
-            
+            console.log(this.workList)
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
@@ -688,14 +688,13 @@ export class WorkStore {
 
 
     @action
-    findTaskWorkType = async(value) => {
+    findDmWorkTypeByCode = async(value) => {
         const params = new FormData()
         params.append("code", value.code)
         params.append("projectId", value.projectId)
-        const data = await Service("/workTypeDm/findTaskWorkType", params);
+        const data = await Service("/workTypeDm/findDmWorkTypeByCode", params);
 
         return data;
-
     }
 
     @action

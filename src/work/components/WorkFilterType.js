@@ -38,34 +38,34 @@ const WorkFilterType = (props) => {
    
 
     const selectType = (value) => {
-        if (value === "all" ) {
-            search({ 
-                workTypeId: "",
-                workType: null,
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
-            })
-        } else if (!value){
-            search({ 
-                workTypeId: "",
-                workType: null,
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
-            })
-        } else {
-            search({
-                workTypeId: value.value,
-                workType: value,
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
-            })
-        } 
+        // if (value === "all" ) {
+        //     search({ 
+        //         workTypeId: "",
+        //         workType: null,
+        //         pageParam: {
+        //             pageSize: 20,
+        //             currentPage: 1,
+        //         }
+        //     })
+        // } else if (!value){
+        //     search({ 
+        //         workTypeId: "",
+        //         workType: null,
+        //         pageParam: {
+        //             pageSize: 20,
+        //             currentPage: 1,
+        //         }
+        //     })
+        // } else {
+           
+        // } 
+        search({
+            workTypeIds: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        })
     }
 
     const search = values => {
@@ -101,7 +101,7 @@ const WorkFilterType = (props) => {
         <SelectSimple name="workType"
             onChange={(value) => selectType(value)}
             title={"事项类型"}
-            ismult={false}
+            ismult={"true"}
             value={searchCondition.workType}
             suffixIcon = {true}
         >

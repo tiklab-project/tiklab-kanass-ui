@@ -17,6 +17,8 @@ const WorkBorderDetail = (props) => {
     const { isModalVisible, setIsModalVisible, showPage, modelRef } = props;
     const path = props.match.path;
     const projectId = props.match.params.id;
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const bodyWidth = document.querySelector('body').offsetWidth;
     const [drawerWidth, setDrawerWidth] = useState()
     const showModal = () => {
@@ -57,22 +59,40 @@ const WorkBorderDetail = (props) => {
         }
         if (!detailRef.current.contains(e.target) && detailRef.current !== e.target) {
             if (path === `/index/projectDetail/:id/workTable`) {
-                console.log(props.history)
                 props.history.replace(`/index/projectDetail/${projectId}/workTable`)
             }
             if (path === `/index/projectDetail/:id/workBodar`) {
-                console.log(props.history)
                 props.history.replace(`/index/projectDetail/${projectId}/workBodar`)
             }
-
+            
             if (path === `/index/workTable`) {
-                console.log(props.history)
                 props.history.replace(`/index/workTable`)
             }
             if (path === `/index/workBodar`) {
-                console.log(props.history)
                 props.history.replace(`/index/workBodar`)
             }
+            
+            if (path === `/index/:id/sprintdetail/:sprint/workTable`) {
+                props.history.replace(`/index/${projectId}/sprintdetail/${sprintId}/workTable`)
+            }
+            if (path === `/index/:id/sprintdetail/:sprint/workBodar`) {
+                props.history.replace(`/index/${projectId}/sprintdetail/${sprintId}/workBodar`)
+            }
+
+            if (path === `/index/:id/versiondetail/:version/workTable`) {
+                props.history.replace(`/index/${projectId}/versiondetail/${versionId}/workTable`)
+            }
+            if (path === `/index/:id/versiondetail/:version/workBodar`) {
+                props.history.replace(`/index/${projectId}/versiondetail/${versionId}/workBodar`)
+            }
+
+
+
+            if (path === `/index/projectDetail/:id/linemap`) {
+                console.log(props.history)
+                props.history.replace(`/index/projectDetail/${projectId}/linemap`)
+            }
+            
             setIsModalVisible(false)
         }
     }
@@ -84,6 +104,8 @@ const WorkBorderDetail = (props) => {
         }
         setIsModalVisible(false);
     };
+
+    
     return (<>
         <Drawer
             placement="right"

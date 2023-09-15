@@ -59,7 +59,8 @@ const VersionTable = (props) => {
         }
         createRecent(params)
 
-        props.history.push(`/index/projectDetail/${projectId}/versionDetail/${id}`)
+        props.history.push({ pathname: `/index/${projectId}/versionDetail/${id}/survey` })
+        localStorage.setItem("sprintId", id);
     }
 
     const statusName = {

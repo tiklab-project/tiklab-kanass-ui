@@ -1,12 +1,18 @@
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-const finWorkList = (router, workStore, projectId, sprintId) => {
+const finWorkList = (router, workStore, projectId, sprintId, versionId) => {
     const setValue = () => {
         switch (router) {
             case "/index/:id/sprintdetail/:sprint/workList":
             case "/index/:id/sprintdetail/:sprint/workTable":
             case "/index/:id/sprintdetail/:sprint/workBodar":
-                goWorkItem("sprint", workStore, projectId, sprintId)
+                goWorkItem("sprint", workStore, projectId, sprintId, versionId)
                 break;
+            case "/index/:id/versiondetail/:version/workList":
+            case "/index/:id/versiondetail/:version/workTable":
+            case "/index/:id/versiondetail/:version/workBodar":
+                goWorkItem("version", workStore, projectId, sprintId, versionId)
+                break;
+
             case "/index/workList":
             case "/index/workTable":
             case "/index/workBodar":
@@ -33,7 +39,7 @@ const finWorkList = (router, workStore, projectId, sprintId) => {
 
 }
 
-const goWorkItem = (type, workStore, projectId, sprintId) => {
+const goWorkItem = (type, workStore, projectId, sprintId, versionId) => {
     const { setSearchConditionNull, setSearchCondition, setQuickFilterValue } = workStore;
     let initValues = {
         pageParam: {
@@ -45,16 +51,20 @@ const goWorkItem = (type, workStore, projectId, sprintId) => {
         case "sprint":
             initValues = { ...initValues, projectIds: [projectId], sprintIds: [sprintId] };
             break;
+        case "version":
+            initValues = { ...initValues, projectIds: [projectId], versionId: versionId };
+            break;
+
         case "project":
             initValues = { ...initValues, projectIds: [projectId] };
             break;
         case "system":
-            initValues = { ...initValues, projectIds: []};
+            initValues = { ...initValues, projectIds: [] };
             break;
         default:
             break;
     }
-    
+
     setSearchConditionNull().then(res => {
         setSearchCondition(initValues)
         // sessionStorage.removeItem("searchCondition")
@@ -67,9 +77,9 @@ const getWorkList = (workStore) => {
     const { viewType, workShowType, getWorkBoardList } = workStore;
     if (viewType === "tile" && workShowType !== "bodar") {
         getPageList(workStore);
-    } else if (viewType === "tree"  && workShowType !== "bodar") {
+    } else if (viewType === "tree" && workShowType !== "bodar") {
         getPageTree(workStore);
-    } else if (workShowType === "bodar"){
+    } else if (workShowType === "bodar") {
         getWorkBoardList()
     }
 }
