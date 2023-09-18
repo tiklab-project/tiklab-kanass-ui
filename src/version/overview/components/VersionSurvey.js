@@ -49,8 +49,8 @@ const VersionSurvey = (props) => {
                     if (res.data.dataList.length > 0) {
                         res.data.dataList.map((item, index) => {
                             timerXaixs.push(item.recordTime);
-                            workCountYaixs.push(item.remainWorkItemCount);
-                            Yaxis.push(item.totalWorkItemCount * (7 - index) / 7);
+                            workCountYaixs.push(item.remainWorkitemCount);
+                            Yaxis.push(item.totalWorkitemCount * (7 - index) / 7);
                             return;
                         })
                     } else {

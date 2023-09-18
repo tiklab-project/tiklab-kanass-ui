@@ -63,7 +63,7 @@ export class ProjectSurveyStore {
     findDynamicPage = async (projectId) => {
         const params = {
             projectId: projectId,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType: "asc"
             }],
@@ -85,7 +85,7 @@ export class ProjectSurveyStore {
     findProjectBurnDowmChartPage = async (projectId) => {
         const params = {
             projectId: projectId,
-            sortParams: [{
+            orderParams: [{
                 name: "recordTime",
                 orderType: "desc"
             }],
@@ -172,7 +172,7 @@ export class ProjectSurveyStore {
     @action
     findRecentPage = async () => {
         const params={
-            sortParams: [{
+            orderParams: [{
                 name: "recentTime",
                 orderType:"asc"
             }],

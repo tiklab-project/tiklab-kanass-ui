@@ -53,7 +53,7 @@ export class ProjectWorkTypeStore {
 	findWorkTypeDmList = async(value) => {
         const params = {
             projectId: value.projectId,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType:"asc"
             }]
@@ -73,7 +73,7 @@ export class ProjectWorkTypeStore {
 	findSelectWorkTypeDmList = async(value) => {
         const params = {
             selectIds: value.selectIds,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType:"asc"
             }]
@@ -95,7 +95,7 @@ export class ProjectWorkTypeStore {
         const params = {
             name: value?.name,
             grouper: "system",
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType:"asc"
             }]

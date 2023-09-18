@@ -6,18 +6,71 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 09:18:04
  */
-import React, {useRef} from "react";
+import React, { useEffect, useRef } from "react";
 
-const CoLScroll =(props)=> {
-    const {timerOuter,timerCore,ganttOuter,ganttCore} = props;
+const CoLScroll = (props) => {
+    const { timerOuter, timerCore, ganttOuter, ganttCore } = props;
+    console.log("存在")
+    // 滑块
+    const colScrollRef = useRef();
+    // 滚轴
+    const boxColScrollRef = useRef()
 
+    useEffect(() => {
+        if (timerCore.current.offsetHeight > 0) {
+            const timerHeight = timerCore.current.offsetHeight;
+            const boxHeight = boxColScrollRef.current.offsetHeight;
+            const timerOuterHeight = timerOuter.current.offsetHeight;
+            const tranlate = timerHeight / boxHeight;
+            const colScrollHeight = Math.floor(timerOuterHeight / tranlate);
+            colScrollRef.current.style.height = colScrollHeight;
+            console.log(colScrollHeight)
+        }
+
+        
+    }, [timerCore.current.offsetHeight])
+    useEffect(() => {
+        const handleWheel = (e) => {
+            const scrollSlider = colScrollRef.current;
+            const boxScroll = boxColScrollRef.current
+            const sliderTop = scrollSlider?.offsetTop;
+
+            // 向下移动
+            if (e.deltaY > 0) {
+                scrollSlider.style.top = sliderTop + e.deltaY + "px";
+                if (scrollSlider.offsetTop >= boxScroll.offsetHeight - scrollSlider.offsetHeight) {
+                    scrollSlider.style.top = boxScroll.offsetHeight - scrollSlider.offsetHeight + "px";
+                }
+                if (scrollSlider.offsetTop < 0) {
+                    scrollSlider.style.top = "0px";
+                }
+            }
+
+            if (e.deltaY < 0) {
+                scrollSlider.style.top = sliderTop + e.deltaY + "px";
+                if (scrollSlider.offsetTop <= 0) {
+                    scrollSlider.style.top = "0px";
+                }
+                if (scrollSlider.offsetTop > boxScroll.offsetHeight - scrollSlider.offsetHeight) {
+                    scrollSlider.style.top = boxScroll.offsetHeight - scrollSlider.offsetHeight + "px";
+                }
+            }
+
+            sliderChangeY(scrollSlider.offsetTop, boxScroll.offsetHeight - scrollSlider.offsetHeight);
+        }
+
+        window.addEventListener('wheel', handleWheel)
+        return () => {
+            window.removeEventListener('wheel', handleWheel)
+        }
+    }, [colScrollRef.current])
     /**
      * 纵向滚动轴的拖动
      */
     const sliderChangeY = (value, scrollHeight) => {
         const timerOuterDom = timerOuter.current;
         const timerCoreDom = timerCore.current;
-        
+
         const ganttOuterDom = ganttOuter.current;
         const ganttCoreDom = ganttCore.current;
 
@@ -34,10 +87,7 @@ const CoLScroll =(props)=> {
         timerOuterDom.scrollTo({ top: timerSilder })
         ganttOuterDom.scrollTo({ top: ganttSilder })
     }
-    // 滑块
-    const colScrollRef = useRef();
-    // 滚轴
-    const boxColScrollRef = useRef()
+
     // 移动滚轴
     const colScroll = () => {
         const scrollSlider = colScrollRef.current;
@@ -81,7 +131,7 @@ const CoLScroll =(props)=> {
         }
     }
 
-    return(
+    return (
         <div className="scroll-col">
             <div className="scroll-box" ref={boxColScrollRef}>
                 <div className="scroll-slider"

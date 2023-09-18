@@ -17,11 +17,12 @@ import { withRouter } from "react-router";
 import moment from 'moment';
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
+
 const EpicLineMap = (props) => {
     // 获取当前年月日
-    const { data, setShowEpicAddModal, setAddChild, setParentId, lineMapStore,
-        archiveView, setGraph, graph, workStore } = props;
-
+    const { data, totalPage, total, currentPage, lineMapStore,
+        archiveView, setGraph, graph, workStore, changePage, workTypeList } = props;
     const { setWorkId, setWorkIndex, createRecent } = workStore;
 
     const { updateEpic } = lineMapStore;
@@ -40,7 +41,6 @@ const EpicLineMap = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef()
 
-    // const [archiveView, setArchiveView] = useState("month");
 
     const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
     const unitLength = archiveView === "month" ? 10 : 24;
@@ -52,12 +52,18 @@ const EpicLineMap = (props) => {
 
     useEffect(() => {
         if (data.length > 0) {
-
             setGantt(setNode(data))
         }
         return
     }, [data, expandedTree])
 
+    useEffect(() => {
+        if (data.length > 0) {
+            setGantt(setNode(data))
+        }
+    }, [currentPage])
+
+    // 切换视图
     useEffect(() => {
         // 画布参数
         if (ganttCore?.current) {
@@ -69,9 +75,7 @@ const EpicLineMap = (props) => {
 
         return;
     }, [archiveView])
-    // useEffect(() => {
 
-    // }, [])
     const creatGraph = () => {
         if (graph) {
             console.log("销毁画布")
@@ -95,6 +99,7 @@ const EpicLineMap = (props) => {
         const graph = new Graph({
             container: document.getElementById("epic"),
             width: graphWidth,
+            autoResize: true,
             grid: {
                 size: unitLength,
                 visible: false,
@@ -190,9 +195,19 @@ const EpicLineMap = (props) => {
      * 路线渲染数据变化就从新渲染画布
      */
     const [scrollLeft, setScrollLeft] = useState()
+    const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
         if (ganttdata !== undefined) {
             document.getElementById("epic").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
+            const picBoxHeight = document.getElementById('table-pic').offsetHeight;
+            if (picBoxHeight < ganttdata.nodes.length * 50) {
+                setIsShowCol(true)
+                document.getElementById("epic").style.height = (ganttdata.nodes.length * 50 + 30);
+                document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50 + 30);
+            } else {
+                setIsShowCol(false)
+            }
             setGarph()
         }
         const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
@@ -208,6 +223,7 @@ const EpicLineMap = (props) => {
 
     //路线节点数据
     const setNode = (data) => {
+
         let nodes = [];
         let edges = []
         data.map((item) => {
@@ -217,10 +233,7 @@ const EpicLineMap = (props) => {
             startPra = Date.parse(start);
 
             let end = item?.planEndTime;
-            endPra = Date.parse(end);
-            if(startPra === endPra){
-                endPra = 86400000  + endPra;
-            }
+            endPra = Date.parse(end) + 86400000;
             // 画布开始时间转化为毫秒
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
@@ -279,6 +292,7 @@ const EpicLineMap = (props) => {
             return nodes;
         })
         let item = { nodes: nodes, edges: edges }
+        console.log(item)
         return item;
     }
 
@@ -361,11 +375,6 @@ const EpicLineMap = (props) => {
         }
     };
 
-    const addChidEpic = (id) => {
-        setShowEpicAddModal(true)
-        setParentId(id)
-        setAddChild("child")
-    }
 
     // 树的展开与闭合
 
@@ -414,19 +423,19 @@ const EpicLineMap = (props) => {
                                     <div>
                                         {
                                             item.children && item.children.length > 0 ?
-                                            <>
+                                                <>
 
-                                                {
-                                                    isExpandedTree(item.id) ?
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workDown"></use>
-                                                        </svg> :
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workRight"></use>
-                                                        </svg>
-                                                }
-                                            </>
-                                            :
+                                                    {
+                                                        isExpandedTree(item.id) ?
+                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workDown"></use>
+                                                            </svg> :
+                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workRight"></use>
+                                                            </svg>
+                                                    }
+                                                </>
+                                                :
                                                 <>
                                                     <svg className="svg-icon" aria-hidden="true">
                                                         <use xlinkHref="#icon-point"></use>
@@ -441,20 +450,21 @@ const EpicLineMap = (props) => {
                                     </div>
                                 </div>
                                 <div className="table-td table-border table-td-status">{item.workStatusNode.name}</div>
-                                <div className="table-td table-border table-td-time">{item.planBeginTime} ~ {item.planEndTime}</div>
+                                <div className="table-td table-border table-td-time">{item.planBeginTime.slice(0, 10)} ~ {item.planEndTime.slice(0, 10)}</div>
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
-                                isExpandedTree(item.id) &&  <div>
-                                {
-                                    item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
-                                }
+                                isExpandedTree(item.id) && <div>
+                                    {
+                                        item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                    }
                                 </div>
                             }
-                           
-                            
+
+
                         </li>
                     </ul>
+
                 </Fragment>
             )
         }
@@ -530,11 +540,13 @@ const EpicLineMap = (props) => {
                                 <li style={{ listStyleType: "none" }} id="table-content" >
                                     {
                                         tableTd(data, 0, 0)
+
                                     }
+
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
                                     <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
-                                    <div className="table-date-background">
+                                    <div className="table-date-background" id="table-date-background">
                                         {
                                             archiveView === "month" && dateArray && dateArray.map((item, index) => {
                                                 return <div
@@ -557,10 +569,34 @@ const EpicLineMap = (props) => {
                                             })
                                         }
                                     </div>
+
                                 </div>
+                                {
+                                    data.length <= 0 && <div className="epci-empty">
+                                        没有需求和需求集，点击<WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />添加
+                                    </div>
+                                }
+                                {
+                                    totalPage > 0 && <>
+                                        {
+                                            <div className="epic-change-page" >
+                                                <div>{data.length}个, 共{total}个</div>
+                                                {
+                                                    currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage()}>点击加载</div>
+                                                        :
+                                                        <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+
+                                                }
+                                            </div>
+                                        }
+                                    </>
+                                }
+
                             </div>
+
                         </div>
                     </div>
+
                 </div>
                 <RowScroll
                     timerCore={timerCore}
@@ -571,7 +607,7 @@ const EpicLineMap = (props) => {
                     scrollLeft={scrollLeft}
                 />
                 {
-                    data && data.length > 15 && <ColScroll
+                    isShowCol && <ColScroll
                         timerCore={timerColCore}
                         timerOuter={timerColOuter}
                         ganttCore={ganttCore}

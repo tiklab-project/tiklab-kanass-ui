@@ -51,9 +51,9 @@
 }
 
 .epic-linemap {
-    height: calc(100% - 210px);
+    height: calc(100% - 165px);
+    position: relative;
 
-    .epic-linemap-content {}
 }
 
 .linemap {
@@ -61,7 +61,7 @@
 }
 
 .linemap-time {
-    margin-top: 20px;
+    margin-top: 15px;
     position: relative;
     height: 100%;
 
@@ -356,11 +356,11 @@
     justify-content: flex-end;
     position: absolute;
     top: 50;
-    right: 0;
-
+    right: -15;
+    height: calc(100% - 50px);
     .scroll-box {
         width: 10px;
-        height: calc(100vh - 270px);
+        height: 100%;
         background-color: #f5f5f5;
         border-radius: 4px;
         position: relative;

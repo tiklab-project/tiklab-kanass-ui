@@ -27,7 +27,7 @@ export class PlanStore {
         const params={
             projectId: this.searchCondition.projectId,
             planName: this.searchCondition.planName,
-            sortParams: [{
+            orderParams: [{
                 name: "planName",
                 orderType:"asc"
             }],

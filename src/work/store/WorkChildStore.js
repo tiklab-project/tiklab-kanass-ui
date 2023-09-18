@@ -8,7 +8,7 @@ class WorkChildStore {
     @observable selectChildToTal = 0;
     @observable childWorkItemTotal = 0;
     @observable searchCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "id",
             orderType:"desc"
         }],
@@ -19,7 +19,7 @@ class WorkChildStore {
     };
 
     @observable searchSelectCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "id",
             orderType:"desc"
         }],

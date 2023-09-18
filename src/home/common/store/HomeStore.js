@@ -134,7 +134,7 @@ class HomeStore {
     @action
     findDynamicPage = async(value)=> {
         const params={
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
@@ -182,7 +182,7 @@ class HomeStore {
     @action
     findRecentPage = async () => {
         const params={
-            sortParams: [{
+            orderParams: [{
                 name: "recentTime",
                 orderType:"asc"
             }],

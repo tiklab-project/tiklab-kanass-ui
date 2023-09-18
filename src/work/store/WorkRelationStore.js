@@ -7,7 +7,7 @@ class WorkRelationStore {
     @observable searchWorkRelationName = [];
     @observable unRelationTotal = 1;
     @observable searchCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "createTime",
             orderType:"asc"
         }],
@@ -44,7 +44,7 @@ class WorkRelationStore {
         const params={
             workItemId: this.searchSelectCondition.workItemId,
             title: this.searchSelectCondition.title,
-            sortParams: [{
+            orderParams: [{
                 name: "id",
                 orderType:"desc"
             }],

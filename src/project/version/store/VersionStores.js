@@ -22,7 +22,7 @@ export class VersionStore {
     // 查找版本的分页参数
     @observable
     searchCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "title",
             orderType: "asc"
         }],

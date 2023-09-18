@@ -354,7 +354,7 @@ export class WorkStore {
             if(this.searchCondition.pageParam.currentPage > 1 && this.workShowType === "list" ) {
                 this.workList.push(...data.data.dataList);
             }
-            console.log(this.workList)
+            
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;

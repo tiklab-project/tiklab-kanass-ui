@@ -18,7 +18,7 @@ export class ProjectTypeStore {
         this.projectTypeName = name
         const params = {
             name: this.projectTypeName,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType: "asc"
             }],

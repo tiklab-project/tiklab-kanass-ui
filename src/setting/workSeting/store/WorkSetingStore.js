@@ -39,7 +39,7 @@ export class WorkSetingStore {
         const params = {
             name: value?.name,
             scope: 0,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType: "asc"
             }]
@@ -55,7 +55,7 @@ export class WorkSetingStore {
         const params = {
             name: value?.name,
             grouper: "system",
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType: "asc"
             }]
@@ -188,7 +188,7 @@ export class WorkSetingStore {
         this.workPriorityName = name
         const params = {
             name: this.workPriorityName,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 sortType: "asc"
             }],

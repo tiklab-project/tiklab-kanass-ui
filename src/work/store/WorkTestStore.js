@@ -42,7 +42,7 @@ export class WorkTestStore {
             repositoryIds: this.findDoucmnetCondition.repositoryIds,
             name: this.findDoucmnetCondition.name,
             workItemId: this.findDoucmnetCondition.workItemId,
-            sortParams: [{
+            orderParams: [{
                 name: "name",
                 orderType:"asc"
             }],

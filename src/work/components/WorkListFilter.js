@@ -66,8 +66,8 @@ const WorkListFilter = (props) => {
         }
     };
 
-    const sorter = (sortParams) => {
-        searchCondition.orderParams = sortParams;
+    const sorter = (orderParams) => {
+        searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {
             pageSize: 20,
             currentPage: 1

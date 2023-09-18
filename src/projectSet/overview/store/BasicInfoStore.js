@@ -40,7 +40,7 @@ export class BasicInfoStore {
     findDynamicPage = async(value)=> {
         const params={
             projectIds: value.projectIds ? value.projectIds : null,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],

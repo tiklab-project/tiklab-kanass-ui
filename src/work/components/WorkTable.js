@@ -147,14 +147,14 @@ const WorkTable = (props) => {
         }
         console.log(sorter)
         if(extra.action === "sort"){
-            let sortParams = [];
+            let orderParams = [];
             let sortArray = []
             if(!(sorter instanceof Array)){
                 if(sorter.order){
-                    sortParams.push(setSortParams(sorter));
+                    orderParams.push(setSortParams(sorter));
                     sortArray.push(sorter.columnKey);
                 }else {
-                    sortParams.push({
+                    orderParams.push({
                         name: "id",
                         orderType: "desc"
                     });
@@ -163,12 +163,12 @@ const WorkTable = (props) => {
                 
             }else {
                 sorter.map(item => {
-                    sortParams.push(setSortParams(item));
+                    orderParams.push(setSortParams(item));
                     sortArray.push(item.columnKey);
                 })
             }
             setSortArray(sortArray)
-            searchCondition.orderParams = sortParams;
+            searchCondition.orderParams = orderParams;
             searchCondition.pageParam = {
                 pageSize: 20,
                 currentPage: 1

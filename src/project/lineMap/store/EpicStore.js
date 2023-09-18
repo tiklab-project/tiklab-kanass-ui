@@ -215,11 +215,8 @@ class EpicStore {
     }
 
     @action
-    findDmWorkTypeByCode = async(value) => {
-        const params = new FormData()
-        params.append("code", value.code)
-        params.append("projectId", value.projectId)
-        const data = await Service("/workTypeDm/findDmWorkTypeByCode", params);
+    findWorkTypeDmList = async(value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList", value);
 
         return data;
     }

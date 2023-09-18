@@ -46,7 +46,7 @@ class VersionSurveyStore {
     FindVersionBurnDowmChartPage = async(versionId)=> {
         const params={
             versionId: versionId,
-            sortParams: [{
+            orderParams: [{
                 name: "recordTime",
                 orderType:"desc"
             }],

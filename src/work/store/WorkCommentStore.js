@@ -26,7 +26,7 @@ export class WorkCommentStore {
         Object.assign(this.workCommentPage, {...value});
         let params = {
             workItemId: value.workItemId,
-            sortParams: [{
+            orderParams: [{
                 name: "createTime",
                 orderType: "asc"
             }],

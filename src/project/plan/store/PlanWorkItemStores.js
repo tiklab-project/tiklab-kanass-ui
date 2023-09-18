@@ -21,7 +21,7 @@ export class PlanWorkItemStore {
             title: this.searchCondition.title,
             workTypeId: this.searchCondition.workTypeId,
             planId: this.searchCondition.planId,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
@@ -48,7 +48,7 @@ export class PlanWorkItemStore {
             planId: this.searchSelectCondition.planId,
             title: this.searchSelectCondition.title,
             parentIdIsNull: true,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],

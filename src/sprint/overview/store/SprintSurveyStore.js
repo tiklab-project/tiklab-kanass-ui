@@ -46,7 +46,7 @@ class SprintSurveyStore {
     FindSprintBurnDowmChartPage = async(sprintId)=> {
         const params={
             sprintId: sprintId,
-            sortParams: [{
+            orderParams: [{
                 name: "recordTime",
                 orderType:"desc"
             }],

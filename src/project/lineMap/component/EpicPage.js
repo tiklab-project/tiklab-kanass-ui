@@ -16,17 +16,19 @@ import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import EpicStore from '../store/EpicStore';
 import WorkStore from "../../../work/store/WorkStore";
+import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 const EpicPage = (props) => {
     const store = {
         epicStore: EpicStore,
         workStore: WorkStore
     }
-    const { findDmWorkTypeByCode } = EpicStore;
-    const { getWorkConditionPageTree, workList } = WorkStore;
+    const { findWorkTypeDmList } = EpicStore;
+    const { getWorkConditionPageTree, workList, setWorkList, currentPage,
+         totalPage, total, searchCondition, setWorkShowType } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
 
-    const [epicTypeInfo, setEpicTypeInfo] = useState();
+    const [workTypeList, setWorkTypeList] = useState();
 
 
     const [graph, setGraph] = useState()
@@ -37,13 +39,25 @@ const EpicPage = (props) => {
 
 
     useEffect(() => {
-        getWorkConditionPageTree({ projectId: projectId, workTypeCode: "epic", epicView: true })
-        findDmWorkTypeByCode({ projectId: projectId, code: "epic" }).then(res => {
+        setWorkList([])
+        setWorkShowType("list")
+        const values = {
+            projectId: projectId, 
+            workTypeCodes: ["epic", "demand"],
+            epicView: true,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        getWorkConditionPageTree(values)
+        findWorkTypeDmList({ projectId: projectId, codes:  ["epic", "demand"] }).then(res => {
             if(res.code === 0){
-                setEpicTypeInfo(res.data)
+                setWorkTypeList(res.data)
             }
             
         })
+        return
     }, [])
 
     /**
@@ -74,6 +88,17 @@ const EpicPage = (props) => {
         console.log(graph)
         graph.dispose()
     }
+
+    const changePage = () => {
+        const values = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: searchCondition?.pageParam?.currentPage + 1,
+            }
+        }
+        getWorkConditionPageTree(values)
+    }
+    
     return (
         <Provider {...store}>
             <div className="epic">
@@ -89,9 +114,7 @@ const EpicPage = (props) => {
                         <div className={`epic-view-item epic-view-week ${archiveView === "week" ? "epic-view-select": "" }`} onClick={() => setArchiveView("week")}>周</div>
                         <div className={`epic-view-item epic-view-month ${archiveView === "month" ? "epic-view-select": "" }`}  onClick={() => changeMonth() }>月</div>
                     </div>   
-                     <Button type="primary" onClick={() => addEpic()}>
-                        添加需求集
-                    </Button>
+                    <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle = {{right: 0}}/>
                     
                     </div>
                     
@@ -100,14 +123,19 @@ const EpicPage = (props) => {
                     {
                         workList && <EpicLineMap  
                         data={workList} 
+                        currentPage = {currentPage}
+                        totalPage = {totalPage}
+                        total = {total}
                         archiveView= {archiveView}
                         graph = {graph}
                         setGraph = {setGraph}
+                        changePage = {changePage}
+                        workTypeList = {workTypeList}
                         />
                     }
                 </div>
-                <WorkAddModel workAddModel={workAddModel} workType={epicTypeInfo} {...props} />
-
+                {/* <WorkAddModel workAddModel={workAddModel} workType={epicTypeInfo} {...props} /> */}
+                
             </div>
         </Provider>
 

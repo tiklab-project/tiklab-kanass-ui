@@ -145,12 +145,12 @@ const WorkTableFilter = (props) => {
 
 
     const sorter = (sortType, isAsc) => {
-        const sortParams = [];
-        sortParams.push({
+        const orderParams = [];
+        orderParams.push({
             name: sortType,
             orderType: isAsc
         })
-        searchCondition.orderParams = sortParams;
+        searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {
             pageSize: 20,
             currentPage: 1

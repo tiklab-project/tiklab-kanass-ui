@@ -21,7 +21,7 @@ export class VersionPlanStore {
     };
     // 搜索被关联的事项列表条件
     @observable searchSelectWorkItemCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "title",
             orderType:"asc"
         }],
@@ -47,7 +47,7 @@ export class VersionPlanStore {
             title: this.searchUnselectCondition.title,
             workTypeId: this.searchUnselectCondition.workTypeId,
             versionIdIsNull: true,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
@@ -77,7 +77,7 @@ export class VersionPlanStore {
         //     projectId: this.searchSelectWorkItemCondition.projectId,
         //     versionId: this.searchSelectWorkItemCondition.versionId,
         //     title: this.searchSelectWorkItemCondition.title,
-        //     sortParams: [{
+        //     orderParams: [{
         //         name: "title",
         //         orderType:"asc"
         //     }],

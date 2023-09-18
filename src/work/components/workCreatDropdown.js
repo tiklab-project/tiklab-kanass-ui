@@ -4,7 +4,8 @@ import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
 import { getUser } from "tiklab-core-ui";
 const WorkCreatDropdown = (props) => {
-    const { workTypeList, buttonType } = props;
+    const { workTypeList, buttonType, modelStyle } = props;
+    console.log(workTypeList)
     const modelRef = useRef()
     const [stateType, setState] = useState();
     const workAddModel = useRef()
@@ -56,8 +57,8 @@ const WorkCreatDropdown = (props) => {
             <div
                 className={`work-type-box ${showModal ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
+                style={modelStyle}
             >
-                {/* <div className="work-type-box-title">选择事项类型</div> */}
                 {
                     workTypeList && workTypeList.map((item) => {
                         return <div className={`work-type-item`}
@@ -76,10 +77,6 @@ const WorkCreatDropdown = (props) => {
                                 />
                                 添加{item.workType.name}
                             </div>
-
-                            {/* <svg className="right-icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-pageRight`}></use>
-                            </svg> */}
                         </div>
 
                     })

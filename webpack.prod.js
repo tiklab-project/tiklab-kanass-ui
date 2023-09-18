@@ -178,7 +178,7 @@ module.exports = merge(baseWebpackConfig, {
                     name: 'chunk-antdUI',
                     chunks: 'async',
                     test: /[\\/]node_modules[\\/]antd[\\/]/,
-                    priority: 85,
+                    priority: 150,
                     reuseExistingChunk: true
                 },
                 icon: {

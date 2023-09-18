@@ -36,7 +36,7 @@ export class ProjectSprintPlanStore {
         const params={
             projectId: value.projectId,
             sprintIdIsNull: value.sprintIdIsNull,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
@@ -61,7 +61,7 @@ export class ProjectSprintPlanStore {
         const params={
             projectId: value.projectId,
             sprintIdIsNull: value.sprintIdIsNull,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
@@ -85,7 +85,7 @@ export class ProjectSprintPlanStore {
 	getSprintList = async(value) => {
         const params={
             projectId: value.projectId,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],

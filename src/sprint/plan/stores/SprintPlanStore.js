@@ -5,7 +5,7 @@ export class SprintPlanStore {
     @observable planWorkList = [];
     @observable sprintList = [];
     @observable searchCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "id",
             orderType:"desc"
         }],
@@ -16,7 +16,7 @@ export class SprintPlanStore {
     };
 
     @observable noPlanSearchCondition = {
-        sortParams: [{
+        orderParams: [{
             name: "id",
             orderType:"asc"
         }],
@@ -85,7 +85,7 @@ export class SprintPlanStore {
 	getSprintList = async(value) => {
         const params={
             projectId: value.projectId,
-            sortParams: [{
+            orderParams: [{
                 name: "title",
                 orderType:"asc"
             }],
