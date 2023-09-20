@@ -20,7 +20,7 @@ export class ProjectTypeStore {
             name: this.projectTypeName,
             orderParams: [{
                 name: "name",
-                sortType: "asc"
+                orderType: "asc"
             }],
             pageParam: {
                 pageSize: 10,

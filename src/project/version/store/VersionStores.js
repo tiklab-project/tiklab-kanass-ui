@@ -23,8 +23,8 @@ export class VersionStore {
     @observable
     searchCondition = {
         orderParams: [{
-            name: "title",
-            orderType: "asc"
+            name: "startTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 20,

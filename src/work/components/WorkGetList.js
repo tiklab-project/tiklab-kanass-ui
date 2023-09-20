@@ -40,7 +40,7 @@ const finWorkList = (router, workStore, projectId, sprintId, versionId) => {
 }
 
 const goWorkItem = (type, workStore, projectId, sprintId, versionId) => {
-    const { setSearchConditionNull, setSearchCondition, setQuickFilterValue } = workStore;
+    const { setSearchConditionNull, setSearchCondition, findStateNodeList } = workStore;
     let initValues = {
         pageParam: {
             pageSize: 20,
@@ -64,13 +64,28 @@ const goWorkItem = (type, workStore, projectId, sprintId, versionId) => {
         default:
             break;
     }
-
-    setSearchConditionNull().then(res => {
-        setSearchCondition(initValues)
-        // sessionStorage.removeItem("searchCondition")
-        // initFrom(initValues)
-        getWorkList(workStore);
+    
+    getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+        initValues = { workStatusIds: data, ...initValues }
+        setSearchConditionNull().then(res => {
+            setSearchCondition(initValues)
+            getWorkList(workStore);
+        })
     })
+}
+
+const getStateNodeList = async (value, findStateNodeList) => {
+    const stateNodeList = []
+    await findStateNodeList(value).then(res => {
+        if (res.code === 0) {
+            if (res.data.length > 0) {
+                res.data.map(item => {
+                    stateNodeList.push(item.id)
+                })
+            }
+        }
+    })
+    return stateNodeList;
 }
 
 const getWorkList = (workStore) => {
@@ -85,7 +100,7 @@ const getWorkList = (workStore) => {
 }
 
 const getPageTree = (workStore) => {
-    const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType } = workStore;
+    const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType, setQuickFilterValue } = workStore;
 
     getWorkConditionPageTree().then((res) => {
         if (res.dataList.length > 0) {

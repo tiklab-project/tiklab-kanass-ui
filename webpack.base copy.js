@@ -11,6 +11,8 @@ const DIST_PATH = path.resolve(__dirname, 'prod');
 
 const envData_dev = require(`./enviroment/enviroment_${process.env.API_ENV}`);
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const isDevelopment = process.env.NODE_ENV !== "prod";
+
 module.exports = {
     output: {
         filename: 'js/[name].[hash:8].js',
@@ -80,14 +82,12 @@ module.exports = {
                 test: /\.(sc|sa|c)ss$/,
                 exclude: sassModuleRegex,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader
-                    },
+                    "style-loader",
                     {
                         loader: "css-loader",
-                        options: {
-                            sourceMap: true
-                        },
+                        // options: {
+                        //     sourceMap: isDevelopment ? true : false
+                        // },
 
                     },
                     {
@@ -108,7 +108,7 @@ module.exports = {
             {
                 test: sassModuleRegex,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    "style-loader",
                     {
                         loader: 'css-loader',
                         options: {
@@ -116,7 +116,7 @@ module.exports = {
                             modules: {
                                 localIdentName: '[local]--[hash:base64:5]',
                             },
-                            sourceMap: true
+                            // sourceMap: isDevelopment ? true : false
                         },
                     },
                     {
@@ -155,13 +155,13 @@ module.exports = {
                 removeAttributeQuotes: true
             }
         }),
-        new webpack.DefinePlugin(envData_dev),
         new MiniCssExtractPlugin({
             filename: 'css/[name].[contenthash].css',
             chunkFilename: 'css/[id].[contenthash].css',
             ignoreOrder: true
         }),
-        // new CssMinimizerPlugin(),
+        new CssMinimizerPlugin(),
+        new webpack.DefinePlugin(envData_dev)
 
     ]
 };

@@ -110,12 +110,12 @@ const MessageList = (props) => {
     
     return (
         <div ref = {messageRef}>
-            <a className="frame-header-language" data-title="消息提示" onClick={() => setOpen(true)}>
+            <div className="frame-header-message" data-title-bottom="消息提示" onClick={() => setOpen(true)}>
                 <Badge count={unReadMessage} size="small">
                     <Avatar
                         size="small" style={{ background: "transparent", fontSize: "22px" }} icon={<MessageOutlined style={{ color: "#fff" }} />} />
                 </Badge>
-            </a>
+            </div>
             <Drawer
                 title="消息"
                 placement={"right"}

@@ -92,7 +92,7 @@ const WorkChildAddmodal = (props) => {
                 getWorkConditionPage()
             }
             let params = {};
-            if (workType.code !== "epic") {
+            if (workType.code === "epic") {
                 params = {
                     parentId: workId,
                     workTypeId: demandTypeId

@@ -10,39 +10,28 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { Col, Row, Dropdown, Space } from "antd";
 import { withRouter } from 'react-router';
-
 import { getUser } from 'tiklab-core-ui';
-import MessageList from "./MessageList"
 import { observer, inject } from "mobx-react";
-import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
-import UserIcon from '../../../common/UserIcon/UserIcon';
+import logo from "../../../assets/images/logo_tw5.png";
 import HeadMoreMenu from "./HeadMoreMenu";
+import Search from "../../search/components/Search";
+import MessageList from "./MessageList";
+import "./Header.scss";
 const Header = props => {
-    const { logo, languageSelectData = [], routers, systemRoleStore} = props;
+    const {  systemRoleStore, AppLink, HelpLink, AvatarLink,} = props;
     // 被点击菜单的key
     const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
     // 语言包
     const { i18n } = useTranslation();
-    const [lan, setLan] = useState(i18n.language);
-    //当前的系统语言
-    const [showLanguage, setShowLanguage] = useState(false);
     // 登录者的信息
     const user = getUser();
 
-    useEffect(()=> {
+    useEffect(() => {
         if (user && user.userId) {
             systemRoleStore.getSystemPermissions(user.userId, "teamwire")
         }
-    },[])
+    }, [])
 
-    /**
-     * 加载语言包
-     * @param {key} param0 
-     */
-    const onClickLan = ({ key }) => {
-        i18n.changeLanguage(languageSelectData[key].value)
-        setLan(languageSelectData[key].value)
-    };
 
     /**
      * 点击菜单跳转
@@ -67,81 +56,13 @@ const Header = props => {
                     <div key='projectSet' onClick={() => changeCurrentLink(routers[2])} className={`frame-header-link-item ${menuKey === "projectSet" ? 'frame-header-link-active' : null}`}> {routers[2].title}</div>
                     <div key='work' onClick={() => changeCurrentLink(routers[3])} className={`frame-header-link-item ${menuKey === "work" ? 'frame-header-link-active' : null}`}> {routers[3].title}</div>
                     <div key='insight' onClick={() => changeCurrentLink(routers[4])} className={`frame-header-link-item ${menuKey === "insight" ? 'frame-header-link-active' : null}`}> {routers[4].title}</div>
-                    <HeadMoreMenu /> 
+                    <HeadMoreMenu />
                 </div>
             )
         }
     }
 
-    /**
-     * 退出登录
-     */
-    const logOut = () => {
-        props.history.push({
-            pathname: '/logout',
-            state:{
-                preRoute: props.location.pathname
-            }
-        })
-    }
-  
-    /**
-     * 个人中心下拉框
-     */
-    const useMenu = (
-        <div className="user-box">
-            <div className='user-head'>
-                个人资料
-            </div>
-            <div className='user-info'>
-                <UserIcon name = {user.nickname ? user.nickname : user.name}/>
-                <div className='user-info-text'>
-                    <div className='user-info-name'>{user.nickname ? user.nickname : user.name}</div>
-                    <div className='user-info-email'>{user.phone || "暂无"}</div>
-                </div>
-            </div>
-            <div 
-                className= "user-language" 
-                onMouseEnter={() => setShowLanguage(true)}
-                onMouseLeave={() => setShowLanguage(false)}
-            >
-                <div 
-                    className="language-text"
-                    
-                >   
-                <div className="language-left">
-                   <svg aria-hidden="true" className="svg-icon" fill="#fff">
-                        <use xlinkHref="#icon-yuyan"></use>
-                    </svg>
-                    语言切换  
-                </div>
-                    
-                    <svg aria-hidden="true" className="svg-icon" fill="#fff">
-                        <use xlinkHref="#icon-right">
 
-                        </use>
-                    </svg>
-                </div>
-                {
-                    showLanguage && <div className= "language-box">
-                        <div className="language-box-item language-box-select">
-                            中文
-                        </div>
-                        <div className="language-box-item">
-                            英文
-                        </div>
-                    </div>
-                }
-                
-            </div>
-            <div onClick={logOut} className='user-logout'>
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-logout"></use>
-                </svg>
-                退出
-            </div>
-        </div>
-    );
 
     /**
      * 跳转到系统设置
@@ -151,68 +72,34 @@ const Header = props => {
         sessionStorage.setItem("menuKey", "set")
     };
 
-    const goToHomes = (value) => {
-        window.open( homes_url + value, '_blank')
-    }
-    /**
-     * 帮助下拉框
-     */
-    const helpMenu = (
-        <div className="help-box">
-            <div className="help-head">
-                帮助
-            </div>
-            <div className="help-item" onClick={() => goToHomes("/document/documentList")}>
-                <span className="help-item-left">
-                    <svg aria-hidden="true" className="svg-icon">
-                        <use xlinkHref="#icon-doc"></use>
-                    </svg>
-                    文档
-                </span>
-
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-jump"></use>
-                </svg>
-            </div>
-            <div className="help-item" onClick={() => goToHomes("/question/questionList")}>
-                <span className="help-item-left">
-                    <svg aria-hidden="true" className="svg-icon">
-                        <use xlinkHref="#icon-cuservice"></use>
-                    </svg>
-                    社区支持
-                </span>
-
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-jump"></use>
-                </svg>
-            </div>
-            <div className="help-item" onClick={() => goToHomes("/account/workOrder/workOrderList")}>
-                <span className="help-item-left">
-                    <svg aria-hidden="true" className="svg-icon">
-                        <use xlinkHref="#icon-workorder"></use>
-                    </svg>
-                    在线工单
-                </span>
-
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-jump"></use>
-                </svg>
-            </div>
-            <div className="help-item" onClick={() => goToHomes("/account/group/onlineservice")}>
-                <span className="help-item-left">
-                    <svg aria-hidden="true" className="svg-icon">
-                        <use xlinkHref="#icon-community"></use>
-                    </svg>
-                    在线客服
-                </span>
-
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-jump"></use>
-                </svg>
-            </div>
-        </div>
-    )
-
+    // 系统顶部菜单
+    const routers = [
+        {
+            to: '/index/home/survey',
+            title: '首页',
+            key: 'home'
+        },
+        {
+            to: '/index/project',
+            title: '项目',
+            key: 'project'
+        },
+        {
+            to: '/index/projectSetList',
+            title: '项目集',
+            key: 'projectSet'
+        },
+        {
+            to: '/index/workTable',
+            title: '事项',
+            key: 'work'
+        },
+        {
+            to: '/index/insight/list',
+            title: '仪表盘',
+            key: 'insight'
+        }
+    ]
     return (
         <Row className="frame-header">
             <Col span={12}>
@@ -225,11 +112,11 @@ const Header = props => {
             <Col span={12}>
                 <div className={'frame-header-right'}>
                     <div className='frame-header-right-search-wrap'>
-                        {props.search}
+                        <Search />
                     </div>
                     <div className={'frame-header-right-text'}>
                         <div className="frame-header-icon">
-                            <div className="frame-header-set" data-title="系统设置" onClick={() => goSet()}>
+                            <div className="frame-header-set" data-title-bottom="系统设置" onClick={() => goSet()}>
                                 <Space>
                                     <svg aria-hidden="true" className="header-icon">
                                         <use xlinkHref="#icon-iconsetsys"></use>
@@ -239,11 +126,11 @@ const Header = props => {
                         </div>
                         <MessageList />
                         <HelpLink />
-                        <AvatarLink {...props}/>
+                        <AvatarLink {...props} />
                     </div>
                 </div>
             </Col>
-            
+
         </Row>
     )
 }

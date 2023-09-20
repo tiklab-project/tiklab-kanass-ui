@@ -25,7 +25,7 @@ export class WorkStore {
     @observable workInfo = [];
     @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
-    @observable quickFilterValue = "all";
+    @observable quickFilterValue = {value: "pending", label: "我的待办"};
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -45,8 +45,9 @@ export class WorkStore {
     };
     @observable workId = "";
     @observable workIndex = "";
-
+    @observable treeIndex = [];
     
+   
     // 当前事项的状态index 
     @observable indexParams = {
         statusIndex: "",
@@ -77,6 +78,12 @@ export class WorkStore {
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
     @observable workBoardCurrentPage = [];
+
+    @action 
+    setTreeIndex = (value) => {
+        this.treeIndex = value
+    }
+
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;
@@ -374,6 +381,16 @@ export class WorkStore {
     }
 
     @action
+    findWorkItemNumByQuickSearch = async(value) => {
+        this.setSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemNumByQuickSearch",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+        }
+        return data.data;
+    }
+
+    @action
     findWorkItemNumByWorkStatus = async(value) => {
         this.setSearchCondition(value)
         const data = await Service("/workItem/findWorkItemNumByWorkStatus",this.searchCondition);
@@ -389,7 +406,7 @@ export class WorkStore {
             this.findWorkItemNumByWorkStatus()
         }
         if (this.viewType === "tree" && this.workShowType !== "bodar") {
-            this.findWorkItemNumByWorkType()
+            this.findWorkItemNumByQuickSearch()
         }
     }
 

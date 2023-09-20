@@ -610,7 +610,7 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("assigner")}
                                     onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
+                                    // allowClear
                                     getPopupContainer={() => formRef.current}
                                 >
                                     {

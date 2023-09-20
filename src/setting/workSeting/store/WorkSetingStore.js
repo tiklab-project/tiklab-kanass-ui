@@ -41,7 +41,7 @@ export class WorkSetingStore {
             scope: 0,
             orderParams: [{
                 name: "name",
-                sortType: "asc"
+                orderType: "asc"
             }]
         }
         const data = await Service("/workType/findWorkTypeList", params)
@@ -57,7 +57,7 @@ export class WorkSetingStore {
             grouper: "system",
             orderParams: [{
                 name: "name",
-                sortType: "asc"
+                orderType: "asc"
             }]
         }
 
@@ -189,8 +189,8 @@ export class WorkSetingStore {
         const params = {
             name: this.workPriorityName,
             orderParams: [{
-                name: "name",
-                sortType: "asc"
+                name: "sort",
+                orderType: "asc"
             }],
             pageParam: {
                 pageSize: 10,

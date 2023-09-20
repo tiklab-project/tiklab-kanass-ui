@@ -94,7 +94,7 @@ export class VersionPlanStore {
                 currentPage: this.searchCondition.currentPage
             }
         }
-        const data = await Service("/version/findVersionList", params)
+        const data = await Service("/projectVersion/findVersionList", params)
         if(data.code=== 0){
             this.versionList = data.data;
         }

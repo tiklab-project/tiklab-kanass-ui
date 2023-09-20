@@ -6,7 +6,7 @@ export class VersionDetailStore {
 
     @action
     findVersionList = async(value) => {
-        const data = await Service("/version/findVersionList", value)
+        const data = await Service("/projectVersion/findVersionList", value)
         if(data.code === 0){
             this.versionList = data.data
         }
@@ -16,7 +16,7 @@ export class VersionDetailStore {
     findVersion = async(value) => {
         const params = new FormData();
         params.append("id", value.id)
-        const data = await Service("/version/findVersion", params)
+        const data = await Service("/projectVersion/findVersion", params)
         if(data.code === 0){
             this.version = data.data
         }

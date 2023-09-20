@@ -13,7 +13,6 @@ const WorkChild = (props) => {
         workChild: WorkChildStore
     }
     const { treePath, workStore,workType, projectId,type, workTypeCode } = props;
-
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);
@@ -103,10 +102,8 @@ const WorkChild = (props) => {
         
     }
 
-   
 
     const createChildWorkItem = () => {
-
         const params = {
             title: workItemTitle, 
             parentWorkItem: workId,

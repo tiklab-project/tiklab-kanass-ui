@@ -17,7 +17,7 @@ const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
-        createRecent, setWorkIndex, setQuickFilterValue, setWorkList } = WorkStore;
+        createRecent, setWorkIndex, setQuickFilterValue, setWorkList, treeIndex, setTreeIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
 
@@ -35,14 +35,15 @@ const WorkTable = (props) => {
     useEffect(() => {
         setWorkShowType("table")
         setQuickFilterValue({
-            value: "all",
-            label: "全部"
+            value: "pending",
+            label: "我的待办"
         })
         finWorkList(path, WorkStore, projectId, sprintId, versionId);
     }, [projectId])
 
+    // let [treeIndex, setTreeIndex] = useState([])
+
     const goProdetail = (record, index) => {
-        console.log(record, index)
         const params = {
             name: record.title,
             model: "workItem",
@@ -54,9 +55,14 @@ const WorkTable = (props) => {
         createRecent(params)
 
         setWorkId(record.id)
-        // setSessionStorage("workIndex", index + 1)
         setWorkIndex(index + 1)
-        // setSessionStorage("searchCondition", searchCondition)
+
+        // 层级的索引
+        treeIndex.length = 0;
+        setTreeIndex(treeIndex)
+        getWorkLevelIndex(record.treePath, record.id)
+
+
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
         if (path === `/index/projectDetail/:id/workTable`) {
@@ -78,6 +84,26 @@ const WorkTable = (props) => {
 
     }
 
+    const getWorkLevelIndex = (value, workId) => {
+        let treePath = value;
+        if(typeof(treePath) === "string" && treePath.length > 0){
+            const hightLevel =  treePath.split(";");
+            hightLevel.unshift(workId)
+            let hightLevelIndex = hightLevel.length - 2;
+
+            const getIndex = (data, hightLevelIndex) => {
+                const num = data.findIndex((item) => item.id === hightLevel[hightLevelIndex])
+                hightLevelIndex--;
+                treeIndex.push(num)
+                if(hightLevelIndex >= 0){
+                    getIndex(data[num].children, hightLevelIndex);
+                }
+            }
+            getIndex(workList, hightLevelIndex);
+            setTreeIndex([...treeIndex])
+            console.log(treeIndex)
+        }
+    }
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -145,7 +171,7 @@ const WorkTable = (props) => {
 
             return params;
         }
-        console.log(sorter)
+
         if(extra.action === "sort"){
             let orderParams = [];
             let sortArray = []

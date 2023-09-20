@@ -39,9 +39,9 @@ const WorkBasicInfo = (props) => {
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, sprintList, priorityList, editWork,
-        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList, userList
+        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList, 
+        userList,searchWorkById, workIndex, treeIndex, 
     } = workStore;
-    const workIndex = getSessionStorage("workIndex");
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
@@ -326,13 +326,69 @@ const WorkBasicInfo = (props) => {
             if (res.code === 0) {
                 console.log(changedValues)
                 setWorkInfo({ ...workInfo, ...changedValues })
-                if (props.match.path === "/index/projectDetail/:id/work" || props.match.path === "/index/work" || props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
-                    workList[workIndex - 1] = { ...workList[workIndex - 1], ...changedValues }
-                    setWorkList([...workList])
+
+                //  更新列表数据
+                if ((props.match.path.indexOf("/index/projectDetail/:id/work") > -1 || 
+                props.match.path.indexOf("/index/work") > -1 || 
+                props.match.path.indexof("/index/:id/sprintdetail/:sprint/work") > -1 ||
+                props.match.path.indexof("/index/:id/versiondetail/:version/work") > -1) && 
+                (changeKey === "assigner" || changeKey === "workPriority")
+                ) {
+
+                    searchWorkById(workId).then((res) => {
+                        if (res) {
+                            workList[workIndex - 1] = res
+                            setWorkList([...workList])
+                        }
+                    })
+                }
+
+                if(changeKey === "parentWorkItem"){
+                    if(changedValues.parentWorkItem.id === "nullstring"){
+                        searchWorkById(workId).then((res) => {
+                            if (res) {
+                                deleteAndQueryDeepData(workList, treeIndex)
+                                workList.splice(workIndex-1, 0 ,res)
+                               
+                                console.log(workList)
+                                setWorkList([...workList])
+                            }
+                        })
+                    }else {
+                        
+                    }
+                    
                 }
             }
         })
         setFieldName("")
+    }
+
+    // 事项更换上级之后把当前事项从列表中移除
+    const deleteAndQueryDeepData = (originalArray, indexes) =>{
+        if (indexes.length === 0) {
+          return undefined; // 如果索引数组为空，返回 undefined
+        }
+      
+        const currentIndex = indexes.shift(); // 获取当前层级的下标
+        if (currentIndex < 0 || currentIndex >= originalArray.length) {
+          return undefined; // 下标越界，返回 undefined 表示未找到数据
+        }
+      
+        if (indexes.length === 0) {
+          // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
+          return originalArray.splice(currentIndex, 1)[0];
+        }
+      
+        const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
+        const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
+      
+        // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
+        // if (result === undefined) {
+        //   originalArray.splice(currentIndex, 1);
+        // }
+        
+        return result;
     }
 
     const updataPlanTime = (value) => {
@@ -610,7 +666,6 @@ const WorkBasicInfo = (props) => {
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("assigner")}
                                     onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
                                     getPopupContainer={() => formRef.current}
                                 >
                                     {
@@ -748,7 +803,9 @@ const WorkBasicInfo = (props) => {
                                 showTime
                             />
                         </Form.Item>
-                        <Form.Item name="parentWorkItem" label="上级事项"
+                        <Form.Item 
+                            name="parentWorkItem" 
+                            label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
                         >
@@ -760,7 +817,6 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("parentWorkItem")}
                                 onBlur={() => changeStyle("")}
-
                                 suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}

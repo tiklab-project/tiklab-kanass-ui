@@ -55,7 +55,7 @@ export class ProjectWorkTypeStore {
             projectId: value.projectId,
             orderParams: [{
                 name: "name",
-                sortType:"asc"
+                orderType:"asc"
             }]
         }
         const data = await Service("/workTypeDm/findWorkTypeDmList", params)
@@ -75,7 +75,7 @@ export class ProjectWorkTypeStore {
             selectIds: value.selectIds,
             orderParams: [{
                 name: "name",
-                sortType:"asc"
+                orderType:"asc"
             }]
         }
 
@@ -97,7 +97,7 @@ export class ProjectWorkTypeStore {
             grouper: "system",
             orderParams: [{
                 name: "name",
-                sortType:"asc"
+                orderType:"asc"
             }]
         }
 

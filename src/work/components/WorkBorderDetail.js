@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-21 11:38:24
  */
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react';
-import { Modal, Button, Drawer } from 'antd';
+import { Modal, Select, Drawer } from 'antd';
 import WorkDetail from "./WorkDetail";
 import "./WorkDetail.scss"
 import { observer, inject } from "mobx-react";
@@ -32,7 +32,6 @@ const WorkBorderDetail = (props) => {
 
     useEffect(() => {
         const width = document.querySelector('body').offsetWidth;
-        console.log(isModalVisible)
         if (isModalVisible) {
             if (width > 1400) {
                 setDrawerWidth("60vw")
@@ -57,21 +56,30 @@ const WorkBorderDetail = (props) => {
         if (!detailRef.current) {
             return;
         }
-        if (!detailRef.current.contains(e.target) && detailRef.current !== e.target) {
+        let IsSelectclear = false;
+        if (e.target.localName === "path") {
+            const classList = e.target.parentElement.parentElement.classList;
+            if (classList.value === "anticon anticon-close-circle") {
+                IsSelectclear = true
+            }
+        }else {
+            IsSelectclear = false
+        }
+        if (!detailRef.current.contains(e.target) && detailRef.current !== e.target && !IsSelectclear) {
             if (path === `/index/projectDetail/:id/workTable`) {
                 props.history.replace(`/index/projectDetail/${projectId}/workTable`)
             }
             if (path === `/index/projectDetail/:id/workBodar`) {
                 props.history.replace(`/index/projectDetail/${projectId}/workBodar`)
             }
-            
+
             if (path === `/index/workTable`) {
                 props.history.replace(`/index/workTable`)
             }
             if (path === `/index/workBodar`) {
                 props.history.replace(`/index/workBodar`)
             }
-            
+
             if (path === `/index/:id/sprintdetail/:sprint/workTable`) {
                 props.history.replace(`/index/${projectId}/sprintdetail/${sprintId}/workTable`)
             }
@@ -92,7 +100,6 @@ const WorkBorderDetail = (props) => {
                 console.log(props.history)
                 props.history.replace(`/index/projectDetail/${projectId}/linemap`)
             }
-            
             setIsModalVisible(false)
         }
     }
@@ -105,14 +112,32 @@ const WorkBorderDetail = (props) => {
         setIsModalVisible(false);
     };
 
-    
+    const test = [
+        {
+            value: 'jack',
+            label: 'Jack',
+        },
+        {
+            value: 'lucy',
+            label: 'Lucy',
+        },
+        {
+            value: 'Yiminghe',
+            label: 'yiminghe',
+        },
+        {
+            value: 'disabled',
+            label: 'Disabled',
+            disabled: true,
+        },
+    ];
     return (<>
         <Drawer
             placement="right"
             onClose={closeDrawer}
             // title={"事项详情"}
             visible={isModalVisible}
-            className={`${isModalVisible ?  "work-table-detail" : ''} `}
+            className={`${isModalVisible ? "work-table-detail" : ''} `}
             // width={drawerWidth}
             closable={false}
             destroyOnClose={true}
@@ -122,6 +147,24 @@ const WorkBorderDetail = (props) => {
             <div ref={detailRef}>
                 <WorkDetail {...props} showPage={showPage} setIsModalVisible={setIsModalVisible} />
             </div>
+            {/* <div ref={detailRef}>
+               
+                <Select
+                    defaultValue="lucy"
+                    style={{
+                        width: 120,
+                    }}
+                    allowClear
+                >
+                    {
+                        test && test.map((item) => {
+                            return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
+                        })
+                    }
+                </Select>
+            </div> */}
+
+
 
         </Drawer>
     </>

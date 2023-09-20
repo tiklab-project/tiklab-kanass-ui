@@ -36,6 +36,8 @@ module.exports = merge(baseWebpackConfig, {
     ],
     plugins: [
         new BundleAnalyzerPlugin({analyzerPort: 8880,}),
+       
+        
         new optimizeCss({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),

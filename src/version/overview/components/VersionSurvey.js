@@ -130,7 +130,7 @@ const VersionSurvey = (props) => {
                         <div className="version-info-box">
                             <div className="version-info-title">
                                 <img
-                                    src={('/images/project1.png')}
+                                    src={('/images/version.png')}
                                     alt=""
                                     className="list-img"
                                 />

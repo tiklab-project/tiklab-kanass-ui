@@ -1,0 +1,17 @@
+/**
+* @name: header
+* @author: mahai
+* @date: 2021-09-01 16:52
+* @description：header
+* @update: 2021-09-01 16:52
+*/
+
+.frame {
+    height: 100vh;
+    overflow: hidden;
+
+    .frame-content {
+        height: calc(100vh - 48px);
+    }
+
+}

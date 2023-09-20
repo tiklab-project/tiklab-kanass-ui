@@ -250,7 +250,9 @@ const WorkDetail = (props) => {
         <div className="work-flow-transition">
             {
                 transformList.length > 0 && transformList.map(item => {
-                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined /> <span className="work-flow-text">{item.toNode.name}</span> </div>
+                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined /> 
+                        <span className="work-flow-text">{item.toNode.name}</span> 
+                    </div>
                 })
             }
             <div className="work-flow-view" onClick={() => viewFlow()}>查看工作流</div>

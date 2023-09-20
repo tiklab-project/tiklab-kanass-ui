@@ -5,7 +5,6 @@ import Button from "../../common/button/Button";
 import { getUser } from "tiklab-core-ui";
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle } = props;
-    console.log(workTypeList)
     const modelRef = useRef()
     const [stateType, setState] = useState();
     const workAddModel = useRef()

@@ -7,15 +7,14 @@
  * @LastEditTime: 2022-04-25 16:14:15
  */
 import React from 'react';
-import logo from "../../../assets/images/logo_tw5.png";
-import { renderRoutes } from "react-router-config";
-import LocalHeader from "./Header";
-import "../components/Header.scss";
-import "../components/HomePage.scss";
 
+import { renderRoutes } from "react-router-config";
+import Header from "./Header";
+import "./HomeLayout.scss"
+import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
 import { UserVerify } from 'tiklab-eam-ui';
 import { connect } from 'tiklab-plugin-core-ui';
-import Search from "../../search/components/Search";
+
 import { Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore"
 const Layout = (props) => {
@@ -24,56 +23,15 @@ const Layout = (props) => {
     }
     const route = props.route.routes;
 
-    // 系统顶部菜单
-    const routers = [
-        {
-            to: '/index/home/survey',
-            title: '首页',
-            key: 'home'
-        },
-        {
-            to: '/index/project',
-            title: '项目',
-            key: 'project'
-        },
-        {
-            to: '/index/projectSetList',
-            title: '项目集',
-            key: 'projectSet'
-        },
-        {
-            to: '/index/workTable',
-            title: '事项',
-            key: 'work'
-        },
-        {
-            to: '/index/insight/list',
-            title: '仪表盘',
-            key: 'insight'
-        }
-    ]
-
-    // 退出登录
-    const projectLogout = () => {
-        props.history.push({
-            pathname: '/logout',
-            state: {
-                preRoute: props.location.pathname
-            }
-        })
-    }
-
     return (
         <Provider {...store}>
             <div className="frame">
-                 <LocalHeader
+                <Header
+                    AppLink={AppLink}
+                    HelpLink={HelpLink}
+                    AvatarLink={AvatarLink}
                     {...props}
-                    logo={logo}
-                    projectLogout={projectLogout}
-                    search={<Search {...props} />}
-                    routers={routers}
-                >
-                </LocalHeader>
+                />
                 <div className="frame-content">
                     {renderRoutes(route)}
                 </div>

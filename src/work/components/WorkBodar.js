@@ -10,7 +10,7 @@ import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
-import { Form, Row, Col } from "antd";
+import { Select, Row, Col } from "antd";
 import { finWorkList } from "./WorkGetList"
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
@@ -40,8 +40,8 @@ const WorkBodar = (props) => {
     useEffect(() => {
         setWorkShowType("bodar")
         setQuickFilterValue({
-            value: "all",
-            label: "全部"
+            value: "pending",
+            label: "我的待办"
         })
         finWorkList(path, WorkStore, projectId, sprintId, versionId);
         return;
