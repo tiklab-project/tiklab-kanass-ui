@@ -15,6 +15,7 @@ const WorkFilterHigh = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const heightFilter = useRef()
     const formItemLayout = {
         labelCol: { span: 6 },
@@ -25,7 +26,7 @@ const WorkFilterHigh = (props) => {
         getWorkBoardList, getWorkGanttListTree, setWorkId, setWorkIndex,
         viewType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue, eveWorkTypeNum } = workStore;
 
     useEffect(() => {
         findPriority()
@@ -39,28 +40,7 @@ const WorkFilterHigh = (props) => {
         initForm()
     }, [searchCondition])
 
-    const quickFilterList = [
-        {
-            value: "all",
-            name: "所有"
-        },
-        {
-            value: "pending",
-            name: "我的待办"
-        },
-        {
-            value: "ending",
-            name: "我的已办"
-        },
-        {
-            value: "creat",
-            name: "我创建的"
-        },
-        {
-            value: "overdue",
-            name: "已逾期"
-        }
-    ]
+
     //查找事务
     const changeField = (changedValues, allValues) => {
         const field = Object.keys(changedValues)[0];
@@ -138,8 +118,17 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
-        setQuickFilterValue({ label: '所有', value: 'all' })
-        finWorkList(path, workStore, projectId, sprintId)
+        if(workShowType === "list"){
+            setQuickFilterValue({ label: `所有(${eveWorkTypeNum.all})`, value: 'all' })
+        }else {
+            setQuickFilterValue({ label: '所有', value: 'all' })
+        }
+        const params = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId
+        }
+        finWorkList(path, workStore, "reset", params)
     }
 
     const findWorkItem = (value) => {
@@ -199,9 +188,9 @@ const WorkFilterHigh = (props) => {
             >
                 {
                     workShowType === "list" && <>
-                        <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
+                        {/* <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
                             <WorkFilterQuick heightFilter={heightFilter} />
-                        </Form.Item>
+                        </Form.Item> */}
 
                         <Form.Item name="assignerIds" label={labelHidden ? null : "负责人"} rules={[{ required: false }]} >
                             <Select

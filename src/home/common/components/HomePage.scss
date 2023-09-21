@@ -61,7 +61,7 @@
         background-color: #fff;
         border-radius: 4px;
         padding: 0 10px 10px;
-        height: 175px;
+        height: fit-content;
 
         .home-project {
             display: flex;
@@ -122,6 +122,9 @@
                     height: 30px;
                     line-height: 30px;
                 }
+            }
+            .ant-empty {
+                width: 100%;
             }
         }
     }

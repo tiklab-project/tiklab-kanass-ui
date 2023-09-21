@@ -16,8 +16,7 @@ const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
         setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, 
-        workBoardCurrentPage, setQuickFilterValue, setWorkList } = WorkStore;
-    console.log(workBoardListLength)
+        workBoardCurrentPage, setQuickFilterValue } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -43,7 +42,12 @@ const WorkBodar = (props) => {
             value: "pending",
             label: "我的待办"
         })
-        finWorkList(path, WorkStore, projectId, sprintId, versionId);
+        const params = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId
+        }
+        finWorkList(path, WorkStore,"pending", params);
         return;
     }, [])
 
@@ -188,7 +192,7 @@ const WorkBodar = (props) => {
                                         key={item.state.id}
                                     >
                                         <div className="work-bodar-title">
-                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
+                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
                                         </div>
 
                                         {
@@ -270,7 +274,7 @@ const WorkBodar = (props) => {
                                                 // style={{ height: `${item.length * 83 + 60}px` }}
                                                 >
                                                     <div className="work-bodar-title">
-                                                        <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.length} 个事项</span></div>
+                                                        <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
                                                     </div>
                                                     {
                                                         workList.workItemList.length > 0 && workList.workItemList.map((workItem, workIndex) => {

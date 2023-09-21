@@ -47,7 +47,7 @@ const HomeSurvey = (props) => {
     const getRecentProject = () => {
         setRecentLoading(true)
         statProjectWorkItem(3).then((res) => {
-            if (res.code === 0 && res.data.length > 0) {
+            if (res.code === 0) {
                 setRecentProjectList(res.data)
                 setRecentLoading(false)
             }
@@ -247,7 +247,7 @@ const HomeSurvey = (props) => {
                     
                     <div className="home-project">
                         {
-                            recentProjectList && recentProjectList.map((item, index) => {
+                            recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
                                 if (index < 4) {
                                     return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
                                         <div className="item-title">
@@ -277,6 +277,8 @@ const HomeSurvey = (props) => {
                                 }
 
                             })
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
                         }
                     </div>
                 </Spin>

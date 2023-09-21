@@ -11,11 +11,11 @@ const WorkQuickTab = (props) => {
     // 解析store数据
     const { getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, setWorkId, setWorkIndex,
-        viewType, setSearchCondition, findStateNodeList, setQuickFilterValue, quickFilterValue } = workStore;
-
+        viewType, setSearchCondition, findStateNodeList, setQuickFilterValue, 
+        quickFilterValue, eveWorkTypeNum } = workStore;
+    
     const userId = getUser().userId;
     const quickFilterList = [
-       
         {
             value: "pending",
             label: "我的待办"
@@ -66,6 +66,7 @@ const WorkQuickTab = (props) => {
 
     const getAllWorkItem = () => {
         const initValues = {
+            isQuick: true,
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
@@ -83,6 +84,7 @@ const WorkQuickTab = (props) => {
 
     const getPendingWorkItem = () => {
         let initValues = {
+            isQuick: true,
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
@@ -101,6 +103,7 @@ const WorkQuickTab = (props) => {
 
     const getEndingWorkItem = () => {
         let initValues = {
+            isQuick: true,
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
@@ -119,6 +122,7 @@ const WorkQuickTab = (props) => {
 
     const getCreatWorkItem = () => {
         let initValues = {
+            isQuick: true,
             projectId: projectId,
             sprintId: sprintId,
             overdue: false,
@@ -135,6 +139,7 @@ const WorkQuickTab = (props) => {
 
     const getOverdueWorkItem = () => {
         let initValues = {
+            isQuick: true,
             sprintId: sprintId,
             overdue: true,
             builderId: null,
@@ -237,7 +242,7 @@ const WorkQuickTab = (props) => {
                 onClick={() => selectMenu({value: "all", label: "全部"})} key={"all"}
             >
                 全部
-                {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span> */}
+                <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span>
                 {/* <span>({setWorkNum(1009)})</span> */}
             </div>
             {
@@ -248,7 +253,7 @@ const WorkQuickTab = (props) => {
                         onClick={() => selectMenu(item)}
                     >   
                         {item.label}
-                        {/* <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.workType.code])})</span> */}
+                        <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.value])})</span>
                     </div>
                 })
             }

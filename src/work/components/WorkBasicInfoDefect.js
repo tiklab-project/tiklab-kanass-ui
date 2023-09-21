@@ -435,17 +435,17 @@ const WorkBasicInfo = (props) => {
 
 
     const editorDesc = () => {
-
-        let data = {
-            id: workId,
-            desc: slateValue,
-            updateField: "desc"
-        }
-        editWork(data).then(res => {
-            if (res.code === 0) {
-                setEditorType(false);
-            }
-        })
+        setEditorType(false);
+        // let data = {
+        //     id: workId,
+        //     desc: slateValue,
+        //     updateField: "desc"
+        // }
+        // editWork(data).then(res => {
+        //     if (res.code === 0) {
+        //         
+        //     }
+        // })
     }
 
     const cancel = () => {
@@ -507,6 +507,25 @@ const WorkBasicInfo = (props) => {
             }
         })
     }, [1000])
+
+    /**
+     * 更新描述
+     */
+    const updataDesc = useDebounce((value) => {
+        setSlateValue(value);
+        
+        let data = {
+            id: workId,
+            desc: value,
+            updateField: "desc"
+        }
+        editWork(data).then(res=> {
+            if(res.code === 0){
+                workInfo.desc = value
+            }
+        })
+    }, [500]) 
+
     return (
         <div className="work-info">
             {contextHolder}
@@ -764,12 +783,6 @@ const WorkBasicInfo = (props) => {
                                 />
                                 %
                             </Form.Item>
-
-
-
-
-
-
                         </Form>
                     </div>
 
@@ -804,8 +817,7 @@ const WorkBasicInfo = (props) => {
                             />
                         </Form.Item>
                         <Form.Item 
-                            name="parentWorkItem" 
-                            label="上级事项"
+                            name="parentWorkItem" label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
                         >
@@ -926,7 +938,8 @@ const WorkBasicInfo = (props) => {
                                     base_url={base_url}
                                     value={slateValue}
                                     minHeight={300}
-                                    onChange={setSlateValue}
+                                    // onChange={setSlateValue}
+                                    onChange = {(value) => updataDesc(value)}
                                     {...props}
                                 >
                                     <div style={{ padding: "10px" }}>

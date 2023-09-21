@@ -13,7 +13,7 @@ const { RangePicker } = DatePicker;
 
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
-    const { workStore, workType, workAddPageRef, setShowAddModel } = props;
+    const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel } = props;
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
@@ -105,7 +105,6 @@ const WorkAddPage = (props) => {
 
         return;
     }, [])
-
     // 获取自定义表单
     const getForm = (id) => {
         findFormConfig({ id: id })
@@ -213,11 +212,17 @@ const WorkAddPage = (props) => {
     }
 
     const [newWorkItem, setNewWorkItem] = useState();
-
+    
     const changeWorkItem = (changedValues) => {
         setNewWorkItem({ ...newWorkItem, ...changedValues })
+        setIsEditStart(true)
+        console.log("change")
     }
 
+    const changeDesc = (value) => {
+        setSlateValue(value)
+        setIsEditStart(true)
+    }
     return (
         <Fragment>
             <div className="work-add-page">
@@ -411,7 +416,6 @@ const WorkAddPage = (props) => {
                                 <Input suffix="小时" type="number" className="" />
                             </Form.Item>
                             <Form.Item
-                                // name="desc"
                                 label="描述"
                                 wrapperCol={{
                                     span: 18,
@@ -421,7 +425,7 @@ const WorkAddPage = (props) => {
                                     <DocumentEditor
                                         focusEditor={true}
                                         value={slateValue}
-                                        onChange={setSlateValue}
+                                        onChange={(value) => changeDesc(value)}
                                         minHeight={300}
                                         ticket={ticket}
                                         tenant={tenant}
@@ -438,7 +442,7 @@ const WorkAddPage = (props) => {
 
                     <div className="work-add-button">
                         <Button type="primary" onClick={() => onFinish()}>创建</Button>
-                        <Button onClick={() => setShowAddModel(false)}>取消</Button>
+                        <Button onClick={() => handleCancel()}>取消</Button>
                     </div>
                 </div>
             </div>

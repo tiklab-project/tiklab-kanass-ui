@@ -26,7 +26,7 @@ const WorkDetail = (props) => {
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
-        setAlertText, setIsShowAlert, findTransitionList
+        setAlertText, setIsShowAlert, findTransitionList, findWorkItemRelationModelCount
     } = workStore;
     const detailCrumbArray = getSessionStorage("detailCrumbArray");
     const projectId = props.match.params.id;
@@ -44,8 +44,10 @@ const WorkDetail = (props) => {
     const [transformList, setTransformList] = useState([])
     const [assigner, setAssigner] = useState()
     const workDetailTop = useRef();
+    const [relationModalNum, setRelationModalNum] = useState();
     const getWorkDetail = (id) => {
         setInfoLoading(true)
+        
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
@@ -53,6 +55,11 @@ const WorkDetail = (props) => {
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
+                findWorkItemRelationModelCount({workItemId: res.id, workTypeCode : res.workTypeCode}).then(res => {
+                    if(res.code === 0){
+                        setRelationModalNum(res.data)
+                    }
+                })
                 // percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
             }
         })
@@ -418,7 +425,14 @@ const WorkDetail = (props) => {
                                 </div>
                             </div>
                             <div className="work-detail-tab">
-                                {workInfo && <WorkDetailBottom workInfo={workInfo} setWorkInfo={setWorkInfo} getWorkDetail={getWorkDetail} workDeatilForm={workDeatilForm} {...props} />}
+                                { workInfo && <WorkDetailBottom 
+                                    workInfo={workInfo} 
+                                    setWorkInfo={setWorkInfo} 
+                                    getWorkDetail={getWorkDetail} 
+                                    workDeatilForm={workDeatilForm}
+                                    relationModalNum = {relationModalNum}
+                                    {...props} 
+                                />}
                             </div>
                         </>
                             :

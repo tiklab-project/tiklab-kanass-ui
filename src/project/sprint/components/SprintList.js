@@ -74,7 +74,7 @@ const Sprint = (props) => {
      * @param {输入框的值} data 
      */
     const onSearch = (data) => {
-        findSprintList({ sprintName: data.target.value })
+        findSprintList({ sprintName: data })
     }
 
     /**
@@ -264,7 +264,6 @@ const Sprint = (props) => {
                         <div className="project-sprint-contant">
                             <div className="sprint-box">
                                 <div className="sprint-table">
-
                                     <div className="sprint-item sprint-table-head">
                                         <div style={{ flex: 1 }}>
                                             迭代名称

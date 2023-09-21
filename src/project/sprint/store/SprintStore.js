@@ -92,8 +92,8 @@ export class SprintStore {
      */
     @action
     findFocusSprintList = async (value) => {
-        Object.assign(this.sprintPageParams, { ...value })
-        const data = await Service("/sprint/findFocusSprintList", this.sprintPageParams)
+        // Object.assign(this.sprintPageParams, { ...value })
+        const data = await Service("/sprint/findFocusSprintList", value)
         if (data.code === 0) {
             this.sprintlist = data.data;
         }

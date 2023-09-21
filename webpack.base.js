@@ -161,7 +161,7 @@ module.exports = {
             chunkFilename: 'css/[id].[contenthash].css',
             ignoreOrder: true
         }),
-        // new CssMinimizerPlugin(),
+        new CssMinimizerPlugin(),
 
     ]
 };

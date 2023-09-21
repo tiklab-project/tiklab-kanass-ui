@@ -262,7 +262,7 @@ export class WorkStore {
     // 获取看板视图事项列表
     getWorkBoardList = async (value) => {
         this.setSearchCondition(value)
-        this.getWorkItemNum();
+        // this.getWorkItemNum();
         this.workBoardCurrentPage = []
         this.workBoardList = []
         const data = await Service("/workItem/findWorkBoardList",this.searchCondition);
@@ -285,7 +285,7 @@ export class WorkStore {
 
     findChangePageWorkBoardList = async (value) => {
         this.setSearchCondition(value)
-        this.getWorkItemNum();
+        // this.getWorkItemNum();
         const data = await Service("/workItem/findChangePageWorkBoardList",this.searchCondition);
         if (data.code === 0) {
             const index = value.index;
@@ -351,7 +351,7 @@ export class WorkStore {
         this.setSearchCondition(value)
         let data = [];
         // 获取每个事项类型的个数
-        this.getWorkItemNum();
+        // this.getWorkItemNum();
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
@@ -387,7 +387,7 @@ export class WorkStore {
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
         }
-        return data.data;
+        return data;
     }
 
     @action
@@ -402,9 +402,9 @@ export class WorkStore {
 
     @action
     getWorkItemNum = () => {
-        if(this.viewType === "tile" || this.workShowType === "bodar"){
-            this.findWorkItemNumByWorkStatus()
-        }
+        // if(this.viewType === "tile" || this.workShowType === "bodar"){
+        //     this.findWorkItemNumByWorkStatus()
+        // }
         if (this.viewType === "tree" && this.workShowType !== "bodar") {
             this.findWorkItemNumByQuickSearch()
         }
@@ -415,7 +415,7 @@ export class WorkStore {
         this.setSearchCondition(value);
         
         this.tableLoading = true;
-        this.getWorkItemNum();
+        // this.getWorkItemNum();
 
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
@@ -815,6 +815,15 @@ export class WorkStore {
     @action
     findCanBeRelationPerWorkItemList = async (value) => {
         const data = await Service("/workItem/findCanBeRelationPerWorkItemList", value)
+        return data;
+    }
+
+    @action
+    findWorkItemRelationModelCount = async (value) => {
+        const params = new FormData();
+        params.append("workItemId", value.workItemId)
+        params.append("workTypeCode", value.workTypeCode)
+        const data = await Service("/workItem/findWorkItemRelationModelCount", params)
         return data;
     }
 

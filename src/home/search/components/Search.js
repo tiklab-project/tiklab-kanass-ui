@@ -16,7 +16,6 @@ import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";
 import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
-import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 
 const Search = (props) => {
     const { getSearchSore, setKeyWord, findRecentList,
@@ -37,11 +36,10 @@ const Search = (props) => {
     // 搜索下拉框ref
     const dropDown = useRef();
     const inputRef = useRef();
+    const userId = getUser().userId;
 
     useEffect(() => {
-        
         function keyBordar(e){
-            console.log(e)
             if (e.code === 'ArrowDown') {
                 if( keyboardIndex.modal === "project" && keyboardIndex.index + 1 < projectList.length ){
                     setKeyboardIndex(keyboardIndex => ({ modal: keyboardIndex.modal, index: keyboardIndex.index + 1 }))
@@ -128,8 +126,7 @@ const Search = (props) => {
 
     const findRecent = () => {
         let projectListLength = 0;
-        setKeyboards("55")
-        findRecentList({ model: "project" }).then(res => {
+        findRecentList({ model: "project", masterId: userId }).then(res => {
             if (res.code === 0) {
                 projectListLength = res.data.length
                 if (projectListLength > 5) {
@@ -145,7 +142,7 @@ const Search = (props) => {
 
         console.log(keyboards)
 
-        findRecentList({ model: "workItem" }).then(res => {
+        findRecentList({ model: "workItem", masterId: userId }).then(res => {
             if (res.data.length > 5) {
                 setWorkItemList(res.data.slice(0, 5))
             } else {

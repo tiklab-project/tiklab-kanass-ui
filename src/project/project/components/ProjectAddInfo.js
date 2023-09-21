@@ -9,6 +9,7 @@ import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";
+import { useDebounce } from "../../../common/utils/debounce";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -22,7 +23,7 @@ const layout = {
 
 const ProjectAddInfo = (props) => {
     const { createProject, workType, setCurrentStep, setLoading } = props;
-    const {findIconList, creatIcon} = ProjectStore;
+    const {findIconList, creatIcon, creatProjectKey} = ProjectStore;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -37,8 +38,11 @@ const ProjectAddInfo = (props) => {
     const [iconUrl, setIconUrl] = useState("project1.png")
 
     const [iconList, setIconList] = useState();
+    const [key, setKey] = useState();
+   
     useEffect(() => {
         getIconList()
+        
     },[])
 
     const getIconList = () => {
@@ -47,6 +51,16 @@ const ProjectAddInfo = (props) => {
         })
     }
 
+    const setProjectKey = useDebounce((value) => {
+        creatProjectKey(value.replace(/\s+/g, '')).then(res => {
+            if(res.code === 0){
+                setKey(res.data)
+                form.setFieldsValue({
+                    projectKey: res.data
+                })
+            }
+        })
+    }, [500])
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const upLoadIcon = {
@@ -202,7 +216,7 @@ const ProjectAddInfo = (props) => {
                             },
                         ]}
                     >
-                        <Input placeholder="使用中英文、数字、空格组合" />
+                        <Input placeholder="使用中英文、数字、空格组合" onChange={(value)=> setProjectKey(value.target.value)}/>
                     </Form.Item>
                     <Form.Item
                         label="项目Key"

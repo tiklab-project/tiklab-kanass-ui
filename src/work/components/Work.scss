@@ -99,8 +99,13 @@
             }
         } 
     }
+    
 }
-
+.work-addmodel-close-cinfirm {
+    .ant-modal-content{
+        padding: 20px 0;
+    }
+}
 .empty-work {
     display: flex;
     align-items: center;

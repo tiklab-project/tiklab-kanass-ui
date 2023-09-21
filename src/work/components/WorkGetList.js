@@ -1,34 +1,31 @@
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-const finWorkList = (router, workStore, projectId, sprintId, versionId) => {
+const finWorkList = (router, workStore,searchType, params) => {
     const setValue = () => {
         switch (router) {
             case "/index/:id/sprintdetail/:sprint/workList":
             case "/index/:id/sprintdetail/:sprint/workTable":
             case "/index/:id/sprintdetail/:sprint/workBodar":
-                goWorkItem("sprint", workStore, projectId, sprintId, versionId)
+                goWorkItem("sprint", workStore,searchType, params)
                 break;
             case "/index/:id/versiondetail/:version/workList":
             case "/index/:id/versiondetail/:version/workTable":
             case "/index/:id/versiondetail/:version/workBodar":
-                goWorkItem("version", workStore, projectId, sprintId, versionId)
+                goWorkItem("version", workStore,searchType,params)
                 break;
 
             case "/index/workList":
             case "/index/workTable":
             case "/index/workBodar":
-                goWorkItem("system", workStore, projectId)
+                goWorkItem("system", workStore, searchType, params)
                 break;
             case "/index/projectDetail/:id/workList":
             case "/index/projectDetail/:id/workList/:workId":
             case "/index/projectDetail/:id/workTable":
             case "/index/projectDetail/:id/workBodar":
-                goWorkItem("project", workStore, projectId, router)
-                break;
-            case "/index/workone/:id":
-                goWorkItem("systemOne", workStore, projectId)
+                goWorkItem("project", workStore,searchType, params)
                 break;
             case "/index/projectDetail/:id/workone/:id":
-                goWorkItem("projectOne", workStore, projectId)
+                goWorkItem("projectOne", workStore, searchType, params)
                 break;
             default:
                 break;
@@ -39,8 +36,9 @@ const finWorkList = (router, workStore, projectId, sprintId, versionId) => {
 
 }
 
-const goWorkItem = (type, workStore, projectId, sprintId, versionId) => {
-    const { setSearchConditionNull, setSearchCondition, findStateNodeList } = workStore;
+const goWorkItem = (type, workStore, searchType, params) => {
+    const {sprintId, versionId, projectId} = params;
+    const { setSearchConditionNull, setSearchCondition, findStateNodeList, findWorkItemNumByQuickSearch, workShowType, setQuickFilterValue } = workStore;
     let initValues = {
         pageParam: {
             pageSize: 20,
@@ -64,14 +62,26 @@ const goWorkItem = (type, workStore, projectId, sprintId, versionId) => {
         default:
             break;
     }
-    
-    getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
-        initValues = { workStatusIds: data, ...initValues }
+    if(searchType === "reset"){
         setSearchConditionNull().then(res => {
             setSearchCondition(initValues)
             getWorkList(workStore);
         })
-    })
+    }else {
+       getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+            initValues = { workStatusIds: data, ...initValues }
+            setSearchConditionNull().then(res => {
+                setSearchCondition(initValues)
+                findWorkItemNumByQuickSearch().then(res=> {
+                    if(res.code === 0 && workShowType === "list"){
+                        setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                    }
+                })
+                getWorkList(workStore);
+            })
+        }) 
+    }
+    
 }
 
 const getStateNodeList = async (value, findStateNodeList) => {

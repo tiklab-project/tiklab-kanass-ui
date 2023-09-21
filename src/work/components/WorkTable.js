@@ -17,7 +17,7 @@ const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
-        createRecent, setWorkIndex, setQuickFilterValue, setWorkList, treeIndex, setTreeIndex } = WorkStore;
+        createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
 
@@ -38,7 +38,12 @@ const WorkTable = (props) => {
             value: "pending",
             label: "我的待办"
         })
-        finWorkList(path, WorkStore, projectId, sprintId, versionId);
+        const params = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId
+        }
+        finWorkList(path, WorkStore,"pending", params);
     }, [projectId])
 
     // let [treeIndex, setTreeIndex] = useState([])

@@ -16,7 +16,9 @@
         line-height: 32px;
         border-bottom: 1px solid var(--tiklab-gray-200);
         padding: 0 15px;
-
+        .tabs-bar-num {
+            font-size: 12px;
+        }
         .tabs-bar-select {
             border-bottom: 2px solid var(--tiklab-blue);
             color: var(--tiklab-blue);
@@ -40,7 +42,7 @@
                 position: absolute;
                 background-color: #fff;
                 z-index: 3;
-                width: 100px;
+                width: fit-content;
                 border-radius: 5px;
                 box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
 
@@ -48,6 +50,7 @@
                     padding: 0 20px;
                     height: 40px;
                     line-height: 40px;
+                    white-space: nowrap;
                 }
 
                 .tabs-dropdown-item:hover {

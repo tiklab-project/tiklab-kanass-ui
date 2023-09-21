@@ -963,7 +963,16 @@ const Routers = [
                         component: WorkTodo,
                         key: "ProjectSetSurvey"
                     },
-
+                    {
+                        path: "/index/:id/sprintdetail/:sprint/workList",
+                        component: WorkList,
+                        
+                    },
+                    {
+                        path: "/index/:id/sprintdetail/:sprint/workList/:workId",
+                        component: WorkList,
+                        exact: true
+                    },
                     {
                         path: "/index/:id/sprintdetail/:sprint/workTable",
                         component: WorkTable,

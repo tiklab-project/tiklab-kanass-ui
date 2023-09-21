@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Spin, Table, Space, Select } from 'antd';
+import { Spin, Table, Space, Select, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
@@ -13,7 +13,7 @@ const { Option } = Select;
 const ProjectContent = (props) => {
     const { projectStore } = props;
     const { findProjectList, prolist, statProjectWorkItem, createRecent, findRecentProjectPage,
-        findJoinProjectList, createProjectFocus, findProjectFocusList, 
+        findJoinProjectList, createProjectFocus, findProjectFocusList,
         deleteProjectFocusByQuery, findFocusProjectList, activeTabs, setActiveTabs
     } = projectStore;
 
@@ -71,8 +71,8 @@ const ProjectContent = (props) => {
             name: project.projectName,
             model: "project",
             modelId: project.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
             iconUrl: project.iconUrl
         }
         createRecent(params)
@@ -86,8 +86,8 @@ const ProjectContent = (props) => {
             name: project.projectName,
             model: "project",
             modelId: project.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
         }
         createRecent(params)
         props.history.push({ pathname: `/index/projectDetail/${project.id}/projectSetDetail/basicInfo` })
@@ -221,7 +221,7 @@ const ProjectContent = (props) => {
             align: "left",
             render: (text, record) => (
                 <Space>
-                    <UserIcon name = {text}/>
+                    <UserIcon name={text} />
                     {text}
                 </Space>
             )
@@ -288,40 +288,42 @@ const ProjectContent = (props) => {
                     </div>
                 </div>
                 <Spin spinning={recentLoading} delay={500} >
-                <div className="home-project">
-                    {
-                        recentProjectList && recentProjectList.map((item, index) => {
-                            if (index < 4) {
-                                return <div className="project-item" key={item.project.id} onClick={() => goProdetail(item.project)}>
-                                    <div className="item-title">
-                                        {
-                                            item.project.iconUrl ?
-                                                <img
-                                                    src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
-                                                    alt=""
-                                                    className="list-img"
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/project1.png')}
-                                                    alt=""
-                                                    className="list-img"
-                                                />
+                    <div className="home-project">
+                        {
+                            recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
+                                if (index < 4) {
+                                    return <div className="project-item" key={item.project.id} onClick={() => goProdetail(item.project)}>
+                                        <div className="item-title">
+                                            {
+                                                item.project.iconUrl ?
+                                                    <img
+                                                        src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
+                                                        alt=""
+                                                        className="list-img"
+                                                    />
+                                                    :
+                                                    <img
+                                                        src={('/images/project1.png')}
+                                                        alt=""
+                                                        className="list-img"
+                                                    />
 
-                                        }
-                                        <span>{item.project.projectName}</span>
+                                            }
+                                            <span>{item.project.projectName}</span>
+                                        </div>
+                                        <div className="item-work">
+                                            <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
+                                            <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
+                                        </div>
+
                                     </div>
-                                    <div className="item-work">
-                                        <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
-                                        <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
-                                    </div>
+                                }
 
-                                </div>
-                            }
-
-                        })
-                    }
-                </div>
+                            })
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
+                        }
+                    </div>
                 </Spin>
             </div>
             <div className="project-tabs-search">

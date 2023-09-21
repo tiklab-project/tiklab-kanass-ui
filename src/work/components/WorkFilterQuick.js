@@ -11,8 +11,12 @@ const WorkFilterQuick = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue,
       viewType, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, setWorkIndex, setWorkId } = workStore;
-        
+        workShowType, setWorkIndex, setWorkId, eveWorkTypeNum } = workStore;
+    
+    // useEffect(()=> {
+    //     setQuickFilterValue({ label: `我的待办(${eveWorkTypeNum.pending})`, value: 'pending' })
+    // }, [])
+
     const userId = getUser().userId;
 
     const quickFilterList = [
@@ -207,10 +211,21 @@ const WorkFilterQuick = (props) => {
         })
     }
 
+    const setWorkNum = (num) => {
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
+        }
+        return showNum;
+    }
+
     return (<div className="work-quick-filter">
         <SelectSimple name="quickFilter"
             onChange={(value) => selectMenu(value)}
-            title={"所有"}
+            title={`所有(${setWorkNum(eveWorkTypeNum.all)})`}
             ismult={false}
             value={quickFilterValue}
             suffixIcon = {true}
@@ -219,7 +234,7 @@ const WorkFilterQuick = (props) => {
                 quickFilterList.map(item => {
                     return <SelectItem
                         value={item.value}
-                        label={item.label}
+                        label={`${item.label}(${setWorkNum(eveWorkTypeNum[item.value])})`}
                         key={item.value}
 
                     />

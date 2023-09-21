@@ -1,6 +1,6 @@
 .work-quick-tabs {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     height: 42px;
     line-height: 42px;
     justify-content: space-between;
@@ -11,7 +11,7 @@
     
     .tabs-bar  {
         cursor: pointer;
-        padding: 0 5px;
+        flex-shrink: 0;
     }
     .tabs-more {
         position: relative;

@@ -224,6 +224,14 @@ export class ProjectStore {
         const data = await Service("/workItemStat/statProjectWorkItem", params)
         return data;
     }
+    
+    @action
+    creatProjectKey = async(value) => {
+        const params = new FormData();
+        params.append("projectName", value)
+        const data = await Service("/project/creatProjectKey", params)
+        return data;
+    }
 }
 
 export default new ProjectStore();
