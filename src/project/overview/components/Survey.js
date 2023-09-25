@@ -387,7 +387,7 @@ const Survey = (props) => {
                                             <div className="item-bottom">全部事项</div>
                                         </div>
                                     </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(1)}>
+                                    {/* <div className="project-item status-item" onClick={() => goWorkItemList(1)}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-nostart"></use>
                                         </svg>
@@ -395,31 +395,31 @@ const Survey = (props) => {
                                             <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
                                             <div className="item-bottom">未开始</div>
                                         </div>
-                                    </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(3)}>
+                                    </div> */}
+                                    <div className="project-item status-item" onClick={() => goWorkItemList(2)}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-progress"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
-                                            <div className="item-bottom">进行中</div>
+                                            <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                            <div className="item-bottom">待办</div>
                                         </div>
                                     </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(2)}>
+                                    <div className="project-item status-item" onClick={() => goWorkItemList(1)}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
                                             <div className="item-bottom">已完成</div>
                                         </div>
                                     </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(4)}>
+                                    <div className="project-item status-item" onClick={() => goWorkItemList(3)}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-overdue"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[4].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
                                             <div className="item-bottom">已逾期</div>
                                         </div>
                                     </div>

@@ -297,7 +297,7 @@ const WorkDetail = (props) => {
                             <div className="work-detail-crumb">
                                 {
                                     props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/workTable`)}>事项
-                                        <svg className="img-icon" aria-hidden="true" style={{ marginLeft: "5px" }}>
+                                        <svg className="img-icon-right" aria-hidden="true" style={{ marginLeft: "5px" }}>
                                             <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>
                                     </div>
@@ -311,7 +311,7 @@ const WorkDetail = (props) => {
                                                     item.type === "flow" ? <img
                                                         src={item.iconUrl}
                                                         alt=""
-                                                        className="img-icon"
+                                                        className="img-icon-right"
                                                     />
                                                         :
                                                         <img
@@ -321,7 +321,7 @@ const WorkDetail = (props) => {
                                                                 (upload_url + item.iconUrl)
                                                             }
                                                             alt=""
-                                                            className="img-icon"
+                                                            className="img-icon-right"
                                                         />
                                                 }
 
@@ -334,7 +334,7 @@ const WorkDetail = (props) => {
                                                     item.type === "flow" ? <img
                                                         src={item.iconUrl}
                                                         alt=""
-                                                        className="img-icon"
+                                                        className="img-icon-right"
                                                     />
                                                         :
                                                         <img
@@ -344,7 +344,7 @@ const WorkDetail = (props) => {
                                                                 (upload_url + item.iconUrl)
                                                             }
                                                             alt=""
-                                                            className="img-icon"
+                                                            className="img-icon-right"
                                                         />
                                                 }
                                                 <span className="work-detail-crumb-text">{item.id}</span>
@@ -407,7 +407,7 @@ const WorkDetail = (props) => {
                                                     cancelText="否"
                                                 >
                                                     <Button  >
-                                                        <svg className="img-icon" aria-hidden="true">
+                                                        <svg className="img-icon-right" aria-hidden="true">
                                                             <use xlinkHref="#icon-delete"></use>
                                                         </svg>
                                                         删除

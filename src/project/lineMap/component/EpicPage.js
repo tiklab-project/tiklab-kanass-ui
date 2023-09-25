@@ -24,7 +24,7 @@ const EpicPage = (props) => {
     }
     const { findWorkTypeDmList } = EpicStore;
     const { getWorkConditionPageTree, workList, setWorkList, currentPage,
-         totalPage, total, searchCondition, setWorkShowType } = WorkStore;
+        totalPage, total, searchCondition, setWorkShowType, setSearchConditionNull } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
 
@@ -41,21 +41,30 @@ const EpicPage = (props) => {
     useEffect(() => {
         setWorkList([])
         setWorkShowType("list")
-        const values = {
-            projectId: projectId, 
-            workTypeCodes: ["epic", "demand"],
-            epicView: true,
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
+        setSearchConditionNull(null).then(res => {
+            const values = {
+                projectId: projectId,
+                workTypeCodes: ["epic", "demand"],
+                epicView: true,
+                orderParams: [
+                    {
+                        name: "plan_begin_time",
+                        orderType :"asc"
+                    }
+                ],
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
             }
-        }
-        getWorkConditionPageTree(values)
-        findWorkTypeDmList({ projectId: projectId, codes:  ["epic", "demand"] }).then(res => {
-            if(res.code === 0){
+            getWorkConditionPageTree(values)
+        })
+       
+        findWorkTypeDmList({ projectId: projectId, codes: ["epic", "demand"] }).then(res => {
+            if (res.code === 0) {
                 setWorkTypeList(res.data)
             }
-            
+
         })
         return
     }, [])
@@ -66,24 +75,14 @@ const EpicPage = (props) => {
      */
     const onSearch = (value) => {
 
-        getWorkConditionPageTree({title: value}).then(res => {
+        getWorkConditionPageTree({ title: value }).then(res => {
             console.log(workList)
         })
     }
 
-    /**
-     * 添加史诗
-     */
-    const addEpic = () => {
-        // setShowEpicAddModal(true)
-        // setAddChild("father")
-        // setParentId(null)
-        workAddModel.current.setShowAddModel(true)
-    }
-
     const [archiveView, setArchiveView] = useState("week")
     const changeMonth = () => {
-        setArchiveView("month"); 
+        setArchiveView("month");
         console.log("oopt")
         console.log(graph)
         graph.dispose()
@@ -99,6 +98,7 @@ const EpicPage = (props) => {
         getWorkConditionPageTree(values)
     }
     
+
     return (
         <Provider {...store}>
             <div className="epic">
@@ -110,32 +110,32 @@ const EpicPage = (props) => {
                         onChange={onSearch}
                     />
                     <div className="epic-action-right">
-                    <div className="epic-view">
-                        <div className={`epic-view-item epic-view-week ${archiveView === "week" ? "epic-view-select": "" }`} onClick={() => setArchiveView("week")}>周</div>
-                        <div className={`epic-view-item epic-view-month ${archiveView === "month" ? "epic-view-select": "" }`}  onClick={() => changeMonth() }>月</div>
-                    </div>   
-                    <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle = {{right: 0}}/>
-                    
+                        <div className="epic-view">
+                            <div className={`epic-view-item epic-view-week ${archiveView === "week" ? "epic-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                            <div className={`epic-view-item epic-view-month ${archiveView === "month" ? "epic-view-select" : ""}`} onClick={() => changeMonth()}>月</div>
+                        </div>
+                        <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
+
                     </div>
-                    
+
                 </div>
-                <div>
+                <>
                     {
-                        workList && <EpicLineMap  
-                        data={workList} 
-                        currentPage = {currentPage}
-                        totalPage = {totalPage}
-                        total = {total}
-                        archiveView= {archiveView}
-                        graph = {graph}
-                        setGraph = {setGraph}
-                        changePage = {changePage}
-                        workTypeList = {workTypeList}
+                        workList && <EpicLineMap
+                            data={workList}
+                            currentPage={currentPage}
+                            totalPage={totalPage}
+                            total={total}
+                            archiveView={archiveView}
+                            graph={graph}
+                            setGraph={setGraph}
+                            changePage={changePage}
+                            workTypeList={workTypeList}
                         />
                     }
-                </div>
+                </>
                 {/* <WorkAddModel workAddModel={workAddModel} workType={epicTypeInfo} {...props} /> */}
-                
+
             </div>
         </Provider>
 

@@ -180,11 +180,12 @@ class HomeStore {
      * @returns 
      */
     @action
-    findRecentPage = async () => {
+    findRecentPage = async(masterId) => {
         const params={
+            masterId: masterId,
             orderParams: [{
                 name: "recentTime",
-                orderType:"asc"
+                orderType:"desc"
             }],
             pageParam: {
                 pageSize: 10,

@@ -42,19 +42,65 @@
             }
         }
     }
+    // .epic-name {
+    //     cursor: pointer;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     color: var(--tiklab-blue);
+        
+    // }
     .epic-name {
-        cursor: pointer;
         display: flex;
         align-items: center;
-        justify-content: center;
-        color: var(--tiklab-blue);
-        
+        text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        .img-icon-right {
+            flex-shrink: 0;
+        }
+        .epic-key {
+            color: var(--tiklab-gray-500);
+            line-height: 25px;
+            margin-right: 5px;
+        }
+        .epic-text {
+            cursor: pointer;
+            color: var(--tiklab-blue);
+            line-height: 25px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 300px;
+        }
+        .epic-text:hover {
+            text-decoration: underline;
+        }
     }
+
     .epci-empty {
         display: flex;
         align-items: center;
         height: 100px;
         justify-content: center;
+    }
+    .epic-linemap {
+        .work-status {
+            padding: 2px 3px;
+            background: #e2e1e4;
+            border-radius: 4px;
+            font-size: 10px;
+            width: fit-content;
+            color: #2b333e;
+        }
+        .work-status-process{
+            background: #b0d5dfa1;
+            color: #132c33;
+        }
+        .work-status-done {
+            background: #dfecd5e3;
+            color: #5e5314;
+        }
     }
     .epic-change-page {
         text-align: center;

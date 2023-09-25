@@ -95,13 +95,13 @@ const WorkTypeSystem = (props) => {
                                     version === "cloud" ? <img
                                         src={(upload_url + record.iconUrl + "?tenant=" + tenant)}
                                         alt=""
-                                        className="img-icon"
+                                        className="img-icon-right"
                                     />
                                         :
                                         <img
                                             src={(upload_url + record.iconUrl)}
                                             alt=""
-                                            className="img-icon"
+                                            className="img-icon-right"
                                         />
                                 }
                             </Fragment>
@@ -110,7 +110,7 @@ const WorkTypeSystem = (props) => {
                                 <img
                                     src={('images/workType1.png')}
                                     alt=""
-                                    className="img-icon"
+                                    className="img-icon-right"
                                 />
                         }
                     </div>

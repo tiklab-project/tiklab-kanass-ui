@@ -79,7 +79,7 @@ const ChangeProjectSetIcon = (props) => {
                                         key={item.id} 
                                         onClick={() => { setprojectSetIconUrl(item.iconUrl) }}
                                     >
-                                        <img src={('images/' + item.iconUrl)} alt="" className="img-icon"/>
+                                        <img src={('images/' + item.iconUrl)} alt="" className="img-icon-right"/>
                                     </div>
                                 })
                             }

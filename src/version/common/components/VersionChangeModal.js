@@ -118,7 +118,7 @@ const VersionChangeModal = (props) => {
 
                             >
                                 <img
-                                    className="img-icon"
+                                    className="img-icon-right"
                                     src={('images/version.png')}
                                     title={item.name}
                                     alt=""

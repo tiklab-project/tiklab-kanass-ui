@@ -151,12 +151,12 @@ const SearchResult = (props) => {
                                                                         switch(item.index) {
                                                                             case "Project": 
                                                                                 return <div className="item-one" onClick={()=>toProject(toItem.id)}>
-                                                                                            <img src={project} alt="" className="img-icon"/>
+                                                                                            <img src={project} alt="" className="img-icon-right"/>
                                                                                             <span>{toItem.projectName}</span>
                                                                                         </div>;
                                                                             case "WorkItem":
                                                                                 return <div className="item-one" onClick={()=>toWorkItem(toItem.id, toItem.project.id)}>
-                                                                                            <img src={project} alt="" className="img-icon"/>
+                                                                                            <img src={project} alt="" className="img-icon-right"/>
                                                                                             <span>{toItem.title}</span>
                                                                                         </div>;
                                                                         }

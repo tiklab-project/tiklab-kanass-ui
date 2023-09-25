@@ -568,7 +568,7 @@ const WorkBasicInfo = (props) => {
                                                     <img
                                                         src={('images/project1.png')}
                                                         alt=""
-                                                        className="img-icon"
+                                                        className="img-icon-right"
                                                     />
                                                     {item.name}
                                                 </Space>
@@ -604,13 +604,13 @@ const WorkBasicInfo = (props) => {
                                                             <img
                                                                 src={('images/' + item.iconUrl)}
                                                                 alt=""
-                                                                className="img-icon"
+                                                                className="img-icon-right"
                                                             />
                                                             :
                                                             <img
                                                                 src={('images/project1.png')}
                                                                 alt=""
-                                                                className="img-icon"
+                                                                className="img-icon-right"
                                                             />
 
                                                     }

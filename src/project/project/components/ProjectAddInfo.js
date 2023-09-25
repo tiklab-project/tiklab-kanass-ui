@@ -277,7 +277,7 @@ const ProjectAddInfo = (props) => {
 
                                         <img 
                                             src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
-                                            alt="" className="img-icon" 
+                                            alt="" className="img-icon-right" 
                                         />
                                     </div>
                                 })

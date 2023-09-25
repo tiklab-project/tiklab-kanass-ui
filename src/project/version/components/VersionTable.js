@@ -150,13 +150,13 @@ const VersionTable = (props) => {
         {
             title: "开始日期",
             dataIndex: "startTime",
-            key: "versionTime",
+            key: "startTime",
             align: "left",
         },
         {
             title: "发布日期",
-            dataIndex: "startTime",
-            key: "startTime",
+            dataIndex: "publishDate",
+            key: "publishDate",
             align: "left",
 
         },

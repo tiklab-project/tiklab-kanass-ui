@@ -226,7 +226,7 @@ const PlanTable = (props) => {
                                             }
                                             <img 
                                                 src={`${upload_url}file/${childItem.workType.iconUrl}?tenant=${tenant}`} 
-                                                className="img-icon"
+                                                className="img-icon-right"
                                                 alt="" 
                                             />
                                             {childItem.title}

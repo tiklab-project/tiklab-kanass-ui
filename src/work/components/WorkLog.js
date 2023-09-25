@@ -194,7 +194,7 @@ const WorkLog = (props) => {
                                                     </div>
 
                                                     <div className="log-action" ref = {logAction}>
-                                                        <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} onClick={() => showEdit(item.id)}>
+                                                        <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} onClick={() => showEdit(item.id)}>
                                                             <use xlinkHref="#icon-edit"></use>
                                                         </svg>
                                                         <Popconfirm
@@ -206,7 +206,7 @@ const WorkLog = (props) => {
                                                             placement="topRight"
                                                         >
                                                             <span>
-                                                               <svg className="img-icon" aria-hidden="true" style={{ cursor: "pointer" }} >
+                                                               <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer" }} >
                                                                 <use xlinkHref="#icon-delete"></use>
                                                             </svg> 
                                                             </span>

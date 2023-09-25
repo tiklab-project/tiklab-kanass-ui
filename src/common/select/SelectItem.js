@@ -61,7 +61,7 @@ const SelectItem = (props) => {
                     />
 
             }
-            {imgUrl && <img className="img-icon" src={`${imgUrl}`} width="15" height="15" />}
+            {imgUrl && <img className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />}
                     <div className="select-item-text">{label}</div>
 
         </div>

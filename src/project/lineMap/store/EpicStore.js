@@ -186,10 +186,6 @@ class EpicStore {
 
 
 
-
-
-
-
     // 9.13
     @action
     getWorkConditionPageTree = async(value) => {
@@ -221,5 +217,7 @@ class EpicStore {
         return data;
     }
 
+
+    
 }
 export default new EpicStore();

@@ -279,13 +279,13 @@ const WorkTable = (props) => {
                         record.workPriority?.iconUrl ? <img
                             src={'/images/' + record.workPriority?.iconUrl}
                             alt=""
-                            className="img-icon"
+                            className="img-icon-right"
                         />
                             :
                             <img
                                 src={'/images/proivilege1.png'}
                                 alt=""
-                                className="img-icon"
+                                className="img-icon-right"
                             />
                     }
 
@@ -424,13 +424,13 @@ const WorkTable = (props) => {
                         record.workPriority?.iconUrl ? <img
                             src={'/images/' + record.workPriority?.iconUrl}
                             alt=""
-                            className="img-icon"
+                            className="img-icon-right"
                         />
                             :
                             <img
                                 src={'/images/proivilege1.png'}
                                 alt=""
-                                className="img-icon"
+                                className="img-icon-right"
                             />
                     }
 
@@ -493,13 +493,13 @@ const WorkTable = (props) => {
                                 :
                                 (upload_url + record.project?.iconUrl)}
                             alt=""
-                            className="img-icon"
+                            className="img-icon-right"
                         />
                             :
                             <img
                                 src={'/images/project3.png'}
                                 alt=""
-                                className="img-icon"
+                                className="img-icon-right"
                             />
                     }
 

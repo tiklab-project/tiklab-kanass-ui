@@ -66,7 +66,7 @@ const ProjectSetProjectList = (props) => {
                     {
                         record.iconUrl ?
                             <img
-                                src={('/images/' + record.iconUrl)}
+                                src={version === "cloud" ? (upload_url + record.iconUrl + "?tenant=" + tenant) : (upload_url + record.iconUrl)}
                                 alt=""
                                 className="list-img"
                             />

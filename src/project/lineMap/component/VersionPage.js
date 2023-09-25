@@ -20,7 +20,7 @@ const VersionPage = (props) => {
     }
     const projectId = props.match.params.id;
     const [versionList, setVersionList] = useState([])
-    const { findVersionRoadMap, } = LineMapStore;
+    const { findVersionRoadMap, versionRoadList} = LineMapStore;
 
     const [graph, setGraph] = useState()
     /**
@@ -77,8 +77,8 @@ const VersionPage = (props) => {
                 </div>
                 <div>
                     {
-                        versionList && <VersionLineMap  
-                        data={versionList} 
+                        versionRoadList && <VersionLineMap  
+                        data={versionRoadList} 
                         archiveView= {archiveView}
                         graph = {graph}
                         setGraph = {setGraph}

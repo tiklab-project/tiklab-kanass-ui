@@ -118,7 +118,7 @@ const SprintChangeModal = (props) => {
 
                             >
                                 <img
-                                    className="img-icon"
+                                    className="img-icon-right"
                                     src={('images/project1.png')}
                                     title={item.sprintName}
                                     alt=""

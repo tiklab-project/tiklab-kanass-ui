@@ -227,7 +227,7 @@ const WorkPriorityAddModal = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div className={`project-priority-add-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
                                        
-                                        {item.iconUrl && <img src={('/images/' + item.iconUrl)} alt="" className="img-icon"/>}
+                                        {item.iconUrl && <img src={('/images/' + item.iconUrl)} alt="" className="img-icon-right"/>}
                                     </div>
                                 })
                             }

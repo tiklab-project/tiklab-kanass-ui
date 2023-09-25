@@ -72,7 +72,7 @@ const WorkCreatDropdown = (props) => {
                                         (upload_url + item.workType?.iconUrl)
                                     }
                                     alt=""
-                                    className="img-icon"
+                                    className="img-icon-right"
                                 />
                                 添加{item.workType.name}
                             </div>

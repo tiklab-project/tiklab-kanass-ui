@@ -10,7 +10,7 @@ import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset"
 export class LineMapStore {
     @observable sprintRoadList = [];
-
+    @observable versionRoadList = [];
     /**
      * 获取迭代路线图
      * @param {项目id} projectId 
@@ -21,6 +21,9 @@ export class LineMapStore {
         const param = new FormData()
         param.append("projectId", projectId)
         const data = await Service("/roadMap/findSprintRoadMap", param)
+        if(data.code === 0){
+            this.sprintRoadList = data.data;
+        }
         return data;
     }
 
@@ -41,6 +44,9 @@ export class LineMapStore {
         const param = new FormData()
         param.append("projectId", projectId)
         const data = await Service("/roadMap/findVersionRoadMap", param)
+        if(data.code === 0){
+            this.versionRoadList = data.data;
+        }
         return data;
     }
 
@@ -81,6 +87,18 @@ export class LineMapStore {
         const data = await Service("/recent/createRecent", value)
         return data;
        
+    }
+
+    @action
+    updateSprint = async(values) => {
+        const data = await Service("/sprint/updateSprint", values)
+        return data;
+    }
+
+    @action
+    updateVersion = async (value) => {
+        const data = await Service("/projectVersion/updateVersion", value);
+        return data;
     }
 }
 

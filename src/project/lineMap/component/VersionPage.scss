@@ -52,7 +52,24 @@
     }
     .version-name:hover{
         background-color: var(--tiklab-gray-400);
-        
+    }
+    .version-linemap {
+        .version-status {
+            padding: 2px 3px;
+            background: #e2e1e4;
+            border-radius: 4px;
+            font-size: 10px;
+            width: fit-content;
+            color: #2b333e;
+        }
+        .version-status-process{
+            background: #b0d5dfa1;
+            color: #132c33;
+        }
+        .version-status-done {
+            background: #dfecd5e3;
+            color: #5e5314;
+        }
     }
 }
 

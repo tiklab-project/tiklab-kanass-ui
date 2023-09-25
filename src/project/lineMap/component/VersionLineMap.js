@@ -15,13 +15,13 @@ import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
 import moment from 'moment';
+import { useDebounce } from "../../../common/utils/debounce";
 const VersionLineMap = (props) => {
     // 获取当前年月日
-    const { data, setShowEpicAddModal, setAddChild, setParentId,
-        archiveView, setGraph, graph } = props;
+    const { data, archiveView, setGraph, graph, lineMapStore } = props;
 
 
-    // const { updateEpic } = lineMapStore;
+    const { updateVersion } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -37,6 +37,9 @@ const VersionLineMap = (props) => {
 
     const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
     const unitLength = archiveView === "month" ? 10 : 24;
+
+    const firstDate = moment().subtract(1, "year").format("YYYY-MM-DD");
+    const firstDateMillisecond = Date.parse(firstDate);
 
 
     useEffect(() => {
@@ -111,57 +114,73 @@ const VersionLineMap = (props) => {
             }
         })
 
-        graph.on("node:change:position", ({ node, options }) => {
-            const nodeBox = node.getBBox();
-            const sprintId = node.id;
-            const startX = nodeBox.x;
-            const nodeWidth = nodeBox.width;
-            let params = { id: "", startTime: "", publishDate: "" };
-            params.id = sprintId;
-            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-            firstDate = Date.parse(firstDate);
+        graph.on("node:change:position", ({ node, options }) =>updateByChangeNodePosition({node}))
 
-            let publishDate = (startX + nodeWidth) * 1000 + firstDate;
-            publishDate = moment(publishDate).format('YYYY-MM-DD');
-            params.publishDate = publishDate;
-
-            let startTime = startX * 1000 + firstDate;
-            startTime = moment(startTime).format('YYYY-MM-DD');
-            params.startTime = startTime;
-            // updateEpic(params)
-        })
-
-        graph.on("node:change:size", ({ node, options }) => {
-            const nodeBox = node.getBBox();
-
-            const sprintId = node.id;
-            let params = { id: "", startTime: "", publishDate: "" };
-            params.id = sprintId;
-
-            const direction = options.relativeDirection;
-            const startX = nodeBox.x;
-            const nodeWidth = nodeBox.width;
-            if (direction === "right") {
-                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-                firstDate = Date.parse(firstDate);
-                const dataTime = (startX + nodeWidth) * 1000 + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
-                params.publishDate = day;
-            }
-            if (direction === "left") {
-                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-                firstDate = Date.parse(firstDate);
-                const dataTime = startX * 1000 + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
-                params.startTime = day;
-            }
-            updateEpic(params)
-
-        })
+        graph.on("node:change:size", ({ node, options }) =>updateByChangeNodeSize({node, options}))
 
         setGraph(graph)
     }
 
+    const updateByChangeNodePosition = useDebounce(({ node, options }) => {
+        const nodeBox = node.getBBox();
+        const sprintId = node.id;
+        const startX = nodeBox.x;
+        const nodeWidth = nodeBox.width;
+        const index = node.store.data.index;
+        let params = { id: "", startTime: "", endTime: "" };
+        params.id = sprintId;
+
+        let endTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
+        endTime = moment(endTime).subtract(1, "day").format('YYYY-MM-DD');
+        params.publishDate = endTime;
+
+        let startTime = startX * archiveBase  + firstDateMillisecond;
+        startTime = moment(startTime).format('YYYY-MM-DD');
+        params.startTime = startTime;
+        updateVersion(params).then(res => {
+            if(res.code === 0){
+                data[index].publishDate = endTime;
+                data[index].startTime = startTime;
+            }
+        })
+    }, [500])
+
+    const updateByChangeNodeSize = useDebounce(({ node, options }) => {
+        console.log(node)
+        const nodeBox = node.getBBox();
+
+        const sprintId = node.id;
+        let params = { id: "", startTime: "", endTime: "" };
+        params.id = sprintId;
+        const index = node.store.data.index;
+
+        const direction = options.relativeDirection;
+        const startX = nodeBox.x;
+        const nodeWidth = nodeBox.width;
+        if (direction === "right") {
+        
+            const dataTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
+            let day = moment(dataTime).subtract(1, "day").format('YYYY-MM-DD');
+            params.publishDate = day;
+            updateVersion(params).then(res => {
+                if(res.code === 0){
+                    data[index].publishDate = day;
+                }
+            })
+        }
+        if (direction === "left") {
+            const dataTime = startX * archiveBase + firstDateMillisecond;
+            let day = moment(dataTime).format('YYYY-MM-DD');
+            params.startTime = day;
+            updateVersion(params).then(res => {
+                if(res.code === 0){
+                    data[index].startTime = day;
+                }
+                
+            })
+        }
+    
+    }, [500])
 
     //渲染画布
     const setGarph = () => {
@@ -193,7 +212,7 @@ const VersionLineMap = (props) => {
     const setNode = (data) => {
         let nodes = [];
         let edges = []
-        data.map((item) => {
+        data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
             let start = item?.startTime;
@@ -201,15 +220,11 @@ const VersionLineMap = (props) => {
 
             let end = item?.publishDate;
             endPra = Date.parse(end);
-            if(startPra === endPra){
-                endPra = 86400000  + endPra;
-            }
+            endPra = 86400000  + endPra;
             // 画布开始时间转化为毫秒
-            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-            firstDate = Date.parse(firstDate);
 
             // 每个事项的x轴
-            let xAxis = Math.abs(startPra - firstDate);
+            let xAxis = Math.abs(startPra - firstDateMillisecond);
             xAxis = Math.floor(xAxis / archiveBase);
 
             // 每个事项的y轴
@@ -222,14 +237,17 @@ const VersionLineMap = (props) => {
             nodes.push(
                 {
                     id: item.id,
+                    index: index,
                     x: xAxis,
                     y: yAxis,
                     width: length,
                     height: 24,
                     attrs: {
                         body: {
-                            fill: 'var(--tiklab-blue)', // 背景颜色
-                            stroke: 'var(--tiklab-gray-400)',  // 边框颜色
+                            rx: 5,
+                            ry: 5,
+                            fill: setTimeAxisStyle(item.versionState), // 背景颜色
+                            stroke: setTimeAxisStyle(item.versionState),  // 边框颜色
                         },
                     }
                 }
@@ -257,11 +275,11 @@ const VersionLineMap = (props) => {
                 let childrenData = setNode(item.children)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
-                // setGanttHeight()
             }
             return nodes;
         })
         let item = { nodes: nodes, edges: edges }
+        console.log(item)
         return item;
     }
 
@@ -344,12 +362,6 @@ const VersionLineMap = (props) => {
         }
     };
 
-    const addChidEpic = (id) => {
-        setShowEpicAddModal(true)
-        setParentId(id)
-        setAddChild("child")
-    }
-
     // 树的展开与闭合
 
     const isExpandedTree = (key) => {
@@ -390,9 +402,7 @@ const VersionLineMap = (props) => {
                                                 }
                                             </>
                                             :
-                                                <>
-                                                  
-                                                </>
+                                            <></>
                                         }
                                     </div>
                                     <div
@@ -401,7 +411,14 @@ const VersionLineMap = (props) => {
                                         {item.name}
                                     </div>
                                 </div>
-                                <div className="table-td table-border table-td-status">{item.versionState}</div>
+                                <div className="table-td table-border table-td-status">
+                                    <span className={`version-status ${setStatuStyle(item.versionState.id).className}`}>
+                                        {setStatuStyle(item.versionState.id).stateName}
+                                    </span>
+                                </div>
+                                <div className={`table-td table-border table-td-assigner`}>
+                                        {item.master?.name}
+                                </div>
                                 <div className="table-td table-border table-td-time">{item.startTime} ~ {item.publishDate}</div>
                                 <div className="table-gatter table-border"></div>
                             </div>
@@ -412,8 +429,6 @@ const VersionLineMap = (props) => {
                                 }
                                 </div>
                             }
-                           
-                            
                         </li>
                     </ul>
                 </Fragment>
@@ -437,12 +452,63 @@ const VersionLineMap = (props) => {
     const timerColOuter = useRef();
     const timerColCore = useRef();
 
-    //  const ganttOuter = useRef();
-    //  const ganttCore = useRef();
+    const setStatuStyle = (id) => {
+        let name = {
+            className: "",
+            stateName: ""
+        };
+        switch (id) {
+            case "0":
+                name = {
+                    className: "version-status-todo",
+                    stateName: "未开始"
+                };
+                break;
+            case "1":
+                name = {
+                    className: "version-status-process",
+                    stateName: "进行中"
+                };
+                break;
+            case "2":
+                name = {
+                    className: "version-status-done",
+                    stateName: "已结束"
+                };
+                break;
+            default:
+                name = {
+                    className: "version-status-todo",
+                    stateName: "未开始"
+                };
+                break;
+        }
+        return name;
+    }
+
+    // 时间轴的样式
+    const setTimeAxisStyle = (id) => {
+        let color = "";
+        switch (id) {
+            case "000000":
+                color = "#e2e1e4"
+                break;
+            case "111111":
+                color = "#b0d5dfa1"
+                break;
+            case "222222":
+                color = "#dfecd5e3"
+                break;
+            default:
+                color = "#e2e1e4"
+                break;
+        }
+        return color;
+    }
 
 
     return (
-        <div className="epic-linemap">
+        <div className="version-linemap">
             <div>
                 <div className="linemap-time">
                     <div className="time-table">
@@ -452,6 +518,9 @@ const VersionLineMap = (props) => {
                             </div>
                             <div className="table-hearder-text table-border table-hearder-status">
                                 状态
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-assigner">
+                                负责人
                             </div>
                             <div className="table-hearder-text table-border table-hearder-time">
                                 时间

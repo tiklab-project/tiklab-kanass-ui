@@ -20,7 +20,7 @@ const SprintPage = (props) => {
     }
     const projectId = props.match.params.id;
     const [sprintList, setSprintList] = useState([])
-    const { findSprintRoadMap, } = LineMapStore;
+    const { findSprintRoadMap, sprintRoadList} = LineMapStore;
 
     const [graph, setGraph] = useState()
     /**
@@ -30,9 +30,9 @@ const SprintPage = (props) => {
 
     useEffect(() => {
         findSprintRoadMap(projectId).then((data) => {
-            if (data.code === 0) {
-                setSprintList(data.data)
-            }
+            // if (data.code === 0) {
+            //     setSprintList(data.data)
+            // }
         })
     }, [])
 
@@ -78,11 +78,12 @@ const SprintPage = (props) => {
                 </div>
                 <div>
                     {
-                        sprintList && <SprintLineMap  
-                        data={sprintList} 
+                        sprintRoadList && <SprintLineMap  
+                        data={sprintRoadList} 
                         archiveView= {archiveView}
                         graph = {graph}
                         setGraph = {setGraph}
+                        setSprintList= {setSprintList}
                         />
                     }
                 </div>

@@ -73,10 +73,15 @@ $form-input-color: #e3e8f07d;
     padding: var(--tiklab-padding-item);
 }
 
-.img-icon {
+.img-icon-right {
     width: 16px;
     height: 16px;
     margin-right: 5px;
+}
+
+.img-icon {
+    width: 16px;
+    height: 16px;
 }
 
 .svg-icon {

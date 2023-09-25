@@ -40,8 +40,8 @@ const VersionAddmodal = (props) => {
             const values = {
                 ...fieldsValue,
                 project: projectId,
-                'publishDate': fieldsValue['publishDate'].format('YYYY-MM-DD HH:mm:ss'),
-                'startTime': fieldsValue['startTime'].format('YYYY-MM-DD HH:mm:ss')
+                'publishDate': fieldsValue['publishDate'].format('YYYY-MM-DD'),
+                'startTime': fieldsValue['startTime'].format('YYYY-MM-DD')
             };
             if (props.type === "edit") {
                 values.id = props.id

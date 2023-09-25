@@ -196,7 +196,7 @@ const SprintPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={item.workType.iconUrl}
+                                            imgUrl={`${upload_url}${item.workType.iconUrl}`}
                                         />
                                     })
                                 }
@@ -210,9 +210,9 @@ const SprintPlan = (props) => {
                                 {
                                     userList.map(item => {
                                         return <SelectItem
-                                            value={item.id}
+                                            value={item.user?.id}
                                             label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.id}
+                                            key={item.user?.id}
                                             imgUrl={item.user?.iconUrl}
 
                                         />
@@ -306,7 +306,7 @@ const SprintPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={item.workType.iconUrl}
+                                            imgUrl={`${upload_url}${item.workType.iconUrl}`}
                                         />
                                     })
                                 }
@@ -320,9 +320,9 @@ const SprintPlan = (props) => {
                                 {
                                     userList.map(item => {
                                         return <SelectItem
-                                            value={item.id}
+                                            value={item.user?.id}
                                             label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.id}
+                                            key={item.user?.id}
                                             imgUrl={item.user?.iconUrl}
 
                                         />

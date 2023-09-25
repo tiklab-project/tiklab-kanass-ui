@@ -308,7 +308,7 @@ const WorkAddPage = (props) => {
                                                     <img
                                                         src={('images/project1.png')}
                                                         alt=""
-                                                        className="img-icon"
+                                                        className="img-icon-right"
                                                     />
                                                     {item.name}
                                                 </Select.Option>

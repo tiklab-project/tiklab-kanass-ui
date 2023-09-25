@@ -158,7 +158,7 @@ const ProjectTypeAddModal = (props) => {
                             {
                                 iconList && iconList.map((item) => {
                                     return <div className={`project-type-add-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon" />
+                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon-right" />
                                     </div>
                                 })
                             }

@@ -153,13 +153,13 @@ const ProjectSetChangeModal = (props) => {
                                 item.iconUrl ?
                                     <img
                                         src={('images/' + item.iconUrl)}
-                                        className="img-icon"
+                                        className="img-icon-right"
                                         title={item.name}
                                         alt=""
                                     />
                                     :
                                     <img
-                                        className="img-icon"
+                                        className="img-icon-right"
                                         src={('images/project1.png')}
                                         title={item.name}
                                         alt=""

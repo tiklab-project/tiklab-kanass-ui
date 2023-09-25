@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
-import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message } from "antd";
+import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message, Alert } from "antd";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
@@ -40,6 +40,7 @@ const BasicInfo = props => {
         },
     };
     const [form] = Form.useForm();
+    const [confirmForm] = Form.useForm();
     const projectId = props.match.params.id;
     const { projectStore } = props;
     const { deleproList, updateProject, searchpro, projectTypelist,
@@ -146,13 +147,17 @@ const BasicInfo = props => {
     };
 
     const handleOk = () => {
-        deleproList(projectId).then(response => {
-            if (response.code === 0) {
-                message.success('删除成功');
-                props.history.push("/index/project")
-            }
+        confirmForm.validateFields().then((fieldsValue) => {
+            deleproList(projectId).then(response => {
+                if (response.code === 0) {
+                    message.success('删除成功');
+                    setIsModalVisible(false);
+                    props.history.push("/index/project")
+                }
+            })
+            
         })
-        setIsModalVisible(false);
+
     };
 
     const handleCancel = () => {
@@ -174,6 +179,8 @@ const BasicInfo = props => {
                 项目图标信息，可见范围，负责人等信息，可点击修改</div>
         </div>
     );
+
+    const [confirmProjectName, setConfirmProjectName] = useState();
 
     const projectDelete = () => (
         <div>
@@ -332,6 +339,7 @@ const BasicInfo = props => {
                                 <div className="project-set-icon-block">
                                     此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                                 </div>
+
                                 <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>
                                     <div className="change-botton" onClick={() => showModal()}>
                                         删除项目
@@ -342,9 +350,43 @@ const BasicInfo = props => {
                     </Collapse>
 
                 </div>
-                <Modal title="是否删除" visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
-                    此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
-                </Modal>
+                <div className="project-delete-confirm">
+                    <Modal title="确定删除" getContainer = {false} visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
+                        <Alert message=" 此项目及其事务、组件、附件和版本将被永久删除" type="error" showIcon />
+
+                        <Form
+                            form={confirmForm}
+                            name="dependencies"
+                            autoComplete="off"
+                            style={{
+                                maxWidth: 600,
+                            }}
+                            layout="vertical"
+                        >
+
+
+                            <Form.Item
+                                label="项目名称"
+                                name="confirmProjectName"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: `请输入项目名称`,
+                                    },
+                                    ({ getFieldValue }) => ({
+                                        validator(rule, value) {
+                                            //getFieldValue可以获得其他输入框的内容
+                                            if (projectInfo?.projectName !== value) return Promise.reject(`请输入${projectInfo?.projectName}`);
+                                            return Promise.resolve();
+                                        }
+                                    })
+                                ]}
+                            >
+                                <Input value={confirmProjectName} onChange={(value) => setConfirmProjectName(value.target.value)} />
+                            </Form.Item>
+                        </Form>
+                    </Modal>
+                </div>
 
                 <ProjectIconChange
                     visible={visible}

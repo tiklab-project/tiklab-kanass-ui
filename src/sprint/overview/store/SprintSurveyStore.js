@@ -82,6 +82,10 @@ class SprintSurveyStore {
                 pageSize: 20,
                 currentPage: value.currentPage
             },
+            orderParams: [{
+                name: "createtime",
+                orderType:"desc"
+            }],
             bgroup: "teamwire",
             userId: value.userId,
             content: {

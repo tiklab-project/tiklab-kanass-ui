@@ -131,13 +131,13 @@ const ProjectSetBasicInfo = props => {
     const projectSetInfoDesc = () => (
         <div>
             <div className="projectSet-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use xlinkHref="#icon-projectDetail"></use>
                 </svg>
                 项目集信息
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 项目集图标信息，可见范围，负责人等信息，可点击修改</div>
@@ -147,13 +147,13 @@ const ProjectSetBasicInfo = props => {
     const projectSetDelete = () => (
         <div>
             <div className="projectSet-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use xlinkHref="#icon-projectDelete"></use>
                 </svg>
                 删除项目
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 删除项目

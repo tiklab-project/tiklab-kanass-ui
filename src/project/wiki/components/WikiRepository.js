@@ -60,13 +60,13 @@ const WikiRepository = (props) => {
                         <img
                             src={('/images/' + record.iconUrl)}
                             alt=""
-                            className="img-icon"
+                            className="img-icon-right"
                         />
                         :
                         <img
                             src={('images/repository1.png')}
                             alt=""
-                            className="img-icon"
+                            className="img-icon-right"
                         />
                 }
                 <span className="repository-name" onClick={() => goWikiDetail(record)} >{text}</span>

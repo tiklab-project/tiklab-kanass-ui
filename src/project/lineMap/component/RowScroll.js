@@ -11,15 +11,15 @@ import React,{useRef,useEffect} from "react";
 
 const RowScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore,ganttWidth,scrollLeft} = props;
-    console.log(ganttWidth)
+
     const rowScrollRef = useRef();
     const boxRowScrollRef = useRef();
 
     useEffect(() => {
         const scrollSlider = rowScrollRef.current;
         const boxScroll = boxRowScrollRef.current;
-
-        const left = scrollLeft / (ganttWidth - 1000) * (boxScroll.offsetWidth - scrollSlider.offsetWidth);
+        console.log(boxRowScrollRef)
+        const left = scrollLeft / (ganttWidth - boxScroll.offsetWidth) * (boxScroll.offsetWidth - scrollSlider.offsetWidth);
 
         scrollSlider.style.left = left + "px";
         return;

@@ -21,10 +21,7 @@ const Linemap = (props) => {
     // 当前显示路线图类型，迭代或版本
     const [type, setType] = useState("sprint");
 
-    useEffect(() => {
 
-        return;
-    }, [type])
 
     /**
      * 改变类型

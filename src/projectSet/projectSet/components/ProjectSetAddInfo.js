@@ -189,7 +189,7 @@ const ProjectSetAddInfo = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div key={item.key} className={`projectSet-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
                        
-                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon" />
+                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon-right" />
                                     </div>
                                 })
                             }

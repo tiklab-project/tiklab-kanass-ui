@@ -35,7 +35,7 @@ const HomeSurvey = (props) => {
         // 获取待办列表
         findTodopage({ userId: userId })
 
-        findRecentPage().then(res => {
+        findRecentPage(userId).then(res => {
             console.log(res)
         })
         return;
@@ -272,7 +272,6 @@ const HomeSurvey = (props) => {
                                             <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
                                             <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
                                         </div>
-
                                     </div>
                                 }
 
