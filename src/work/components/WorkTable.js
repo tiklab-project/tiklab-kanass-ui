@@ -12,6 +12,7 @@ import WorkBorderDetail from "./WorkBorderDetail";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
+import { renderRoutes } from "react-router-config";
 
 const WorkTable = (props) => {
     // const { form } = props
@@ -20,7 +21,7 @@ const WorkTable = (props) => {
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
-
+    const {route} = props;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -43,7 +44,7 @@ const WorkTable = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        finWorkList(path, WorkStore,"pending", params);
+        finWorkList(path, WorkStore,params);
     }, [projectId])
 
     // let [treeIndex, setTreeIndex] = useState([])
@@ -70,23 +71,9 @@ const WorkTable = (props) => {
 
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
         setIsModalVisible(true)
-        if (path === `/index/projectDetail/:id/workTable`) {
-            console.log(props.history)
-            props.history.replace(`/index/projectDetail/${projectId}/workTable/${record.id}`)
-        }
-        if (path === `/index/workTable`) {
-            console.log(props.history)
-            props.history.replace(`/index/workTable/${record.id}`)
-        }
-        if (path === `/index/:id/sprintdetail/:sprint/workTable`) {
-            console.log(props.history)
-            props.history.replace(`/index/${projectId}/sprintdetail/${sprintId}/workTable/${record.id}`)
-        }
-
-        if (path === `/index/:id/versiondetail/:version/workTable`) {
-            props.history.replace(`/index/${projectId}/versiondetail/${versionId}/workTable/${record.id}`)
-        }
-
+        console.log(props)
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/${record.id}`)
     }
 
     const getWorkLevelIndex = (value, workId) => {
@@ -106,7 +93,6 @@ const WorkTable = (props) => {
             }
             getIndex(workList, hightLevelIndex);
             setTreeIndex([...treeIndex])
-            console.log(treeIndex)
         }
     }
     const setStatuStyle = (id) => {
@@ -580,7 +566,7 @@ const WorkTable = (props) => {
                         <div className="work-table">
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
-                                    columns={props.location.pathname === "/index/workTable" ?  projectColums : workColumns}
+                                    columns={props.location.pathname === "/index/work/table" ?  projectColums : workColumns}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     // onChange={sorter}

@@ -13,7 +13,8 @@ import "../components/ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
-import ProjectStore from "../../project/store/ProjectStore"
+import ProjectStore from "../../project/store/ProjectStore";
+import WorkStore from "../../../work/store/WorkStore";
 const ProjectScrumDetail = (props) => {
     const store = {
         projectStore: ProjectStore
@@ -21,6 +22,7 @@ const ProjectScrumDetail = (props) => {
     const { route, systemRoleStore } = props;
 
     const { searchpro, findProjectList } = ProjectStore;
+    const { setSearchConditionNull, setSearchType } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
     // 项目详情
@@ -42,7 +44,12 @@ const ProjectScrumDetail = (props) => {
 
         //获取项目列表
         findProjectList()
-        return
+        setSearchConditionNull()
+        setSearchType("pending")
+        return () => {
+            setSearchConditionNull()
+            setSearchType("pending")
+        }
     }, [projectId])
 
 

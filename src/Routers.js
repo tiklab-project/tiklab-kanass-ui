@@ -86,6 +86,7 @@ const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
 const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
 const WorkBodar = AsyncComponent(() => import('./work/components/WorkBodar'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
+const WorkBorderDetail = AsyncComponent(() => import('./work/components/WorkBorderDetail'))
 const WorkDetailPage = AsyncComponent(() => import('./work/components/WorkDetailPage'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 
@@ -403,36 +404,43 @@ const Routers = [
                 key: "Sprint"
             },
 
+           
             {
-                path: "/index/workTable",
-                component: WorkTable,
-                
-            },
-            {
-                path: "/index/workTable/:workId",
-                component: WorkTable,
-                exact: true
-            },
-            {
-                path: "/index/workBodar",
-                component: WorkBodar,
-            },
-            {
-                path: "/index/workBodar/:workId",
-                component: WorkBodar,
-                exact: true
-            },
-
-            {
-                path: "/index/workList",
-                component: WorkList,
+                path: "/index/work",
+                component: Work,
                 routes: [
                     {
-                        path: "/index/workList/:workId",
-                        component: WorkDetailPage
-                    }
+                        path: "/index/work/table",
+                        component: WorkTable,
+                        
+                    },
+                    {
+                        path: "/index/work/table/:workId",
+                        component: WorkTable,
+                        exact: true
+                    },
+                    {
+                        path: "/index/work/bodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/index/work/bodar/:workId",
+                        component: WorkBodar,
+                        exact: true
+                    },
+                    {
+                        path: "/index/work/list",
+                        component: WorkList,
+                        routes: [
+                            {
+                                path: "/index/work/list/:workId",
+                                component: WorkDetailPage
+                            }
+                        ]
+                    },
                 ]
             },
+           
             {
                 path: "/index/workDetail/:workId",
                 component: WorkDetailPage,
@@ -762,63 +770,30 @@ const Routers = [
                         component: EpicDetail,
                     },
                     {
-                        path: "/index/projectDetail/:id/workTable",
-                        component: WorkTable,
-                        
+                        path: "/index/projectDetail/:id/work",
+                        component: Work,
+                        routes: [
+                            {
+                                path: "/index/projectDetail/:id/work/table",
+                                component: WorkTable
+                            },
+                            
+                            {
+                                path: "/index/projectDetail/:id/work/bodar",
+                                component: WorkBodar,
+                            },
+                            {
+                                path: "/index/projectDetail/:id/work/list",
+                                component: WorkList
+                            },
+                        ]
                     },
-                    {
-                        path: "/index/projectDetail/:id/workTable/:workId",
-                        component: WorkTable,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workBodar",
-                        component: WorkBodar,
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workBodar/:workId",
-                        component: WorkBodar,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workList/:workId",
-                        component: WorkList,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workList",
-                        component: WorkList,
-                        // exact: true
-                    },
+                   
                     
                     {
                         path: "/index/projectDetail/:id/WorkDetail",
                         component: WorkTableDetail,
                         exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/work/:statetype",
-                        component: Work,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/work/:statetype/:workitemid",
-                        component: Work,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workone/:workId",
-                        component: WorkDetailPage,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workDetail/:workId",
-                        component: WorkDetailPage,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/scrum/:type",
-                        component: Work
                     },
                     {
                         path: "/index/projectDetail/:id/addDemand",
@@ -958,39 +933,18 @@ const Routers = [
                         key: "ProjectSetSurvey"
                     },
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workTodo",
-                        exact: false,
-                        component: WorkTodo,
-                        key: "ProjectSetSurvey"
-                    },
-                    {
-                        path: "/index/:id/sprintdetail/:sprint/workList",
+                        path: "/index/:id/sprintdetail/:sprint/work/list",
                         component: WorkList,
                         
                     },
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workList/:workId",
-                        component: WorkList,
-                        exact: true
-                    },
-                    {
-                        path: "/index/:id/sprintdetail/:sprint/workTable",
+                        path: "/index/:id/sprintdetail/:sprint/work/table",
                         component: WorkTable,
                         
                     },
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workTable/:workId",
-                        component: WorkTable,
-                        exact: true
-                    },
-                    {
-                        path: "/index/:id/sprintdetail/:sprint/workBodar",
+                        path: "/index/:id/sprintdetail/:sprint/work/bodar",
                         component: WorkBodar,
-                    },
-                    {
-                        path: "/index/:id/sprintdetail/:sprint/workBodar/:workId",
-                        component: WorkBodar,
-                        exact: true
                     }
                 ]
             },
@@ -1026,33 +980,17 @@ const Routers = [
                         key: "ProjectSetSurvey"
                     },
                     {
-                        path: "/index/:id/versiondetail/:version/workList",
+                        path: "/index/:id/versiondetail/:version/work/list",
                         component: WorkList,
                     },
                     {
-                        path: "/index/:id/versiondetail/:version/workList/:workId",
-                        component: WorkList,
-                        exact: true
-                    },
-                    {
-                        path: "/index/:id/versiondetail/:version/workTable",
+                        path: "/index/:id/versiondetail/:version/work/table",
                         component: WorkTable,
-                        
                     },
                     {
-                        path: "/index/:id/versiondetail/:version/workTable/:workId",
-                        component: WorkTable,
-                        exact: true
-                    },
-                    {
-                        path: "/index/:id/versiondetail/:version/workBodar",
+                        path: "/index/:id/versiondetail/:version/work/bodar",
                         component: WorkBodar,
-                    },
-                    {
-                        path: "/index/:id/versiondetail/:version/workBodar/:workId",
-                        component: WorkBodar,
-                        exact: true
-                    },
+                    }
                 ]
             },
         ]

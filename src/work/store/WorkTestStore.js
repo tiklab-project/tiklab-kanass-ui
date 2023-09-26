@@ -108,5 +108,17 @@ export class WorkTestStore {
         }
         return urlData;
     }
+
+    @action
+    findTestOnRepositoryUserList = async(value) => {
+        // const params = new FormData();
+        // params.append("repositoryIds", value)
+        const params = {
+            repositoryIds: value
+        }
+        const data = await Service("/workTestCase/findTestOnRepositoryUserList", params)
+
+        return data;
+    }
 }
 export default new WorkTestStore();

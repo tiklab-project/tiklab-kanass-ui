@@ -168,7 +168,7 @@ const WorkTableFilter = (props) => {
             <WorkQuickTab />
             <div className="work-table-filter">
                 {
-                    props.match.path == "/index/workTable" &&
+                    props.match.path == "/index/work/table" &&
                     <SelectSimple name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
                         title={"项目"} ismult={true}

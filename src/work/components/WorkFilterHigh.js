@@ -26,7 +26,8 @@ const WorkFilterHigh = (props) => {
         getWorkBoardList, getWorkGanttListTree, setWorkId, setWorkIndex,
         viewType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue, eveWorkTypeNum } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue, eveWorkTypeNum,
+        setSearchType } = workStore;
 
     useEffect(() => {
         findPriority()
@@ -128,7 +129,8 @@ const WorkFilterHigh = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        finWorkList(path, workStore, "reset", params)
+        setSearchType('all')
+        finWorkList(path, workStore, params)
     }
 
     const findWorkItem = (value) => {

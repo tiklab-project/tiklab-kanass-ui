@@ -20,7 +20,7 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
         findRecentPage, recentList,updateRecent } = ProjectSurveyStore;
-    const { setWorkId } = Workstore;
+    const { setWorkId, setSearchType } = Workstore;
     //当前用户名字
     const masterName = getUser().name;
     // 项目id
@@ -195,45 +195,32 @@ const Survey = (props) => {
      * 点击跳转到工作列表
      * @param {tab key} index 
      */
-    const goWorkItemList = (index) => {
-        switch (index) {
-            case 0:
-                goAllWorkItemList();
-                break;
-            case 1:
-                goTodoWorkItemList()
-                break;
-            case 2:
-                goDoneWorkItemList()
-                break;
-            case 3:
-                goProcess();
-                break;
-            case 4:
-                props.history.push({ pathname: `/index/projectDetail/${projectId}/workList/overdue` })
-            default:
-                break;
-        }
+    const goWorkItemList = (value) => {
+        setSearchType(value)
+        props.history.push(`/index/projectDetail/${projectId}/work/table`)
     }
 
     /**
      * 跳转到全部事项列表
      */
     const goAllWorkItemList = () => {
-        props.history.push(`/index/projectDetail/${projectId}/workList/all`)
+        setSearchType("all")
+        
+        
     }
 
-    /**
-     * 跳转到进行中事项列表
-     */
-    const goProcess = () => {
-        props.history.push({ pathname: `/index/projectDetail/${projectId}/workList/process` })
-    }
+    // /**
+    //  * 跳转到进行中事项列表
+    //  */
+    // const goProcess = () => {
+    //     props.history.push({ pathname: `/index/projectDetail/${projectId}/workList/process` })
+    // }
 
     /**
      * 跳转到待办事项列表
      */
     const goTodoWorkItemList = () => {
+        // setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
         props.history.push(`/index/projectDetail/${projectId}/workList/workTodo`)
     }
 
@@ -378,48 +365,42 @@ const Survey = (props) => {
                                     </div>
                                 </div>
                                 <div className="project-work">
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(0)}>
+                                    <div className="project-item status-item" onClick={() => goWorkItemList("all")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[0].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.all}</div>
                                             <div className="item-bottom">全部事项</div>
                                         </div>
                                     </div>
-                                    {/* <div className="project-item status-item" onClick={() => goWorkItemList(1)}>
-                                        <svg className="status-img" aria-hidden="true">
-                                            <use xlinkHref="#icon-nostart"></use>
-                                        </svg>
-                                        <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
-                                            <div className="item-bottom">未开始</div>
-                                        </div>
-                                    </div> */}
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(2)}>
+                                    
+                                    <div className="project-item status-item" onClick={() => goWorkItemList("pending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-progress"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.pending}</div>
                                             <div className="item-bottom">待办</div>
                                         </div>
                                     </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(1)}>
+                                    
+                                    <div className="project-item status-item" onClick={() => goWorkItemList("ending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
+                                            <div className="item-top">{workStatusList &&  workStatusList.ending}</div>
                                             <div className="item-bottom">已完成</div>
                                         </div>
                                     </div>
-                                    <div className="project-item status-item" onClick={() => goWorkItemList(3)}>
+
+                                    <div className="project-item status-item" onClick={() => goWorkItemList("overdue")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-overdue"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.overdue}</div>
                                             <div className="item-bottom">已逾期</div>
                                         </div>
                                     </div>

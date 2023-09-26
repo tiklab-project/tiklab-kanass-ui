@@ -66,7 +66,7 @@ const EpicPage = (props) => {
             }
 
         })
-        return
+        return 
     }, [])
 
     /**

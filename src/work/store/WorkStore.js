@@ -26,6 +26,7 @@ export class WorkStore {
     @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
     @observable quickFilterValue = {value: "pending", label: "我的待办"};
+    @observable searchType = "pending"
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -79,6 +80,10 @@ export class WorkStore {
     @observable eveWorkTypeNum = {};
     @observable workBoardCurrentPage = [];
 
+    @action
+    setSearchType = (value) => {
+        this.searchType = value;
+    }
     @action 
     setTreeIndex = (value) => {
         this.treeIndex = value

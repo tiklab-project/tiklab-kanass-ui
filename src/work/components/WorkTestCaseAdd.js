@@ -1,47 +1,57 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Button, Table, Select, message, Input } from 'antd';
+import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
+import { Table } from 'antd';
 import { observer, inject } from "mobx-react";
-import { withRouter } from "react-router";
-
-const { Search } = Input;
-const { Option } = Select;
-
+import "./WorkTestCaseAdd.scss";
+import InputSearch from "../../common/input/InputSearch"
+import { SelectSimple, SelectItem } from "../../common/select";
+import { getUser } from "tiklab-core-ui";
 const WorkTestCaseAddmodal = (props) => {
-    const { workTestStore, workStore,projectId, setWorkTestCaseList, projectStore } = props;
+    const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
     const { workId } = workStore;
     // const {searchpro} =  projectStore;
+    // const projectId = props.match.params.id;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
-        findProjectTestRepositoryList, findUnRelationWorkTestCaseList, unRelationWorkCondition, unRelationTotal } = workTestStore;
-    const [visible, setVisible] = useState(false);
+        findProjectTestRepositoryList, findUnRelationWorkTestCaseList,
+        findTestOnRepositoryUserList, unRelationWorkCondition } = workTestStore;
+
+    const {userList,getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
     const [testCaseList, setTestCaseList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
-    const showModal = () => {
-        setVisible(true)
-    };
-    const path = props.location.pathname.split("/")[2];
+    const [repositoryallIdList, setRepositoryallIdList] = useState([]);
+    const [repositoryValue, setRepositoryValue] = useState()
+    const [testCaseUserList, setTestCaseUserList] = useState([]);
     useEffect(() => {
-        if (visible === true) {
+        if (selectTestCase === true) {
+            getSelectUserList(projectId)
             findProjectTestRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
-                    if(res.data.length > 0){
-                        let list = []
+                    let list = []
+                    if (res.data.length > 0) {
                         res.data.map(item => {
                             list.push(item.id)
                         })
+                        setRepositoryallIdList(list)
                         findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
                                 setTestCaseList(data.data.dataList)
                             }
                         })
+                        findTestOnRepositoryUserList(list).then(res => {
+                            if(res.code === 0){
+                                setTestCaseUserList(res.data)
+                            }
+                            
+                        })
                     }
-                    
+
                 }
             })
         }
+        
         return;
-    }, [visible])
+    }, [selectTestCase])
 
     const columns = [
         {
@@ -51,7 +61,7 @@ const WorkTestCaseAddmodal = (props) => {
             width: 150
         },
         {
-            title: "目录",
+            title: "用例库",
             dataIndex: "testCategoryName",
             key: "workStatus",
             width: 150
@@ -64,31 +74,59 @@ const WorkTestCaseAddmodal = (props) => {
         }
     ];
 
-    const onCancel = () => {
-        setVisible(false);
-    };
+
 
     // 选择知识库筛选数据
     const searchUnselectWorkRepository = (value) => {
-        const params = {
-            repositoryIds: [value],
-            pageParam: {
-                pageSize: 1,
-                currentPage: 1
+        let params;
+        if(value){
+            params = {
+                repositoryId: value?.value,
+                repositoryIds: [],
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
+            }
+        }else {
+            params = {
+                repositoryId: null,
+                repositoryIds: repositoryallIdList,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
             }
         }
-        // setSelectRepository()
+        setRepositoryValue(value)
         findUnRelationWorkTestCaseList(params).then((data) => {
             if (data.code === 0) {
                 setTestCaseList(data.data.dataList)
             }
         })
     }
+
+    const searchUnselectUser = (value) => {
+        console.log(value)
+        const categoryQuery = {
+            creatUserId: value.value,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
+            if (data.code === 0) {
+                setTestCaseList(data.data.dataList)
+            }
+
+        })
+    }
     const searchSelectWorkRepository = (value) => {
         const categoryQuery = {
             name: value,
             pageParam: {
-                pageSize: 1,
+                pageSize: 10,
                 currentPage: 1
             }
         }
@@ -108,20 +146,17 @@ const WorkTestCaseAddmodal = (props) => {
         const workItemTestCase = [];
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
-                workItemTestCase.push({ testCaseId: selectedRow[i].id, workItemId: workId, repositoryId: selectedRow[i].repositoryId })
-
+                // createWorkTestCase({id: selectedRowKeys[i],workitemId:workId })
+                workItemTestCase.push({ testCaseId: selectedRow[i].id, workItemId: workId, repositoryId: selectedRow[i].kanassRepositoryId })
             }
             createWorkTestCase(workItemTestCase).then((data) => {
                 if (data.code === 0) {
-
                     findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
                         setWorkTestCaseList([...data])
-                        setVisible(false)
                     })
-
+                    showSelectTestCase(false)
                 }
             })
-
         } else {
             info()
         }
@@ -130,103 +165,83 @@ const WorkTestCaseAddmodal = (props) => {
     const info = () => {
         message.info('请选择事项');
     };
-
-    const goTestRepository = () => {
-        // searchpro(projectId).then(res => {
-        //     if(res.code === 0){
-        //         props.history.push(`/index/projectDetail/${projectId}/test`)
-        //     }
-        // })
-        props.history.push(`/index/projectDetail/${projectId}/test`)
-    }
-
-    const changePage = (pagination) => {
-        const params = {
-            pageParam: {
-                pageSize: 1,
-                currentPage: pagination
-            }
-        }
-        findUnRelationWorkTestCaseList(params).then((data) => {
-            if (data.code === 0) {
-                setDocumentList(data.data.dataList)
-            }
-
-        })
-    }
+    const testCaseAdd = useRef()
     return (
         <>
-            <div className="addmodel">
-                {
-                    props.type !== "edit" ? <Button onClick={showModal}>
-                        +{props.name}
-                    </Button> :
-                        <span onClick={showModal} style={{ color: "var(--tiklab-gray-400)" }}>{props.name}</span>
-                }
-                <Modal
-                    title="选择测试用例"
-                    visible={visible}
-                    onCancel={onCancel}
-                    width={800}
-                    onOk={submitWorkRepositoryList}
-                    className="work-kanass-addmodel"
-                    destroyOnClose={true}
-                    closable={false}
-                >
-                    {
-                        repositoryallList && repositoryallList.length > 0 ?
-                            <Fragment>
-                                <div className="work-kanass-search" style={{ marginBottom: "20px" }}>
-                                    选择用例仓库：
-                                    <Select
-                                        style={{ width: 200 }}
-                                        allowClear
-                                        onChange={(value) => searchUnselectWorkRepository(value)}
-                                    >
-                                        {
-                                            repositoryallList && repositoryallList.map((item) => {
-                                                return <Select.Option value={item.id} key={item.id}>{item.testRepositoryName}</Select.Option>
-                                            })
-                                        }
-                                    </Select>
-                                    <Search
-                                        allowClear
-                                        placeholder="请输入用例关键字"
-                                        onSearch={searchSelectWorkRepository}
-                                        enterButton
-                                        style={{ width: 200, marginLeft: "10px" }}
-                                    />
-                                </div>
-                                <Table
-                                    columns={columns}
-                                    dataSource={testCaseList}
-                                    rowKey={record => record.id}
-                                    rowSelection={{
-                                        selectedRow,
-                                        onChange: selectWorkRepository,
-                                        getCheckboxProps: (record) => ({
-                                            disabled: record.rele === true
-                                        })
-                                    }}
-                                    okText="确定"
-                                    cancelText="取消"
-                                    pagination={{
-                                        total: unRelationTotal,
-                                        pageSize: unRelationWorkCondition.pageParam.pageSize,
-                                        current: unRelationWorkCondition.pageParam.currentPage,
-                                        onChange: changePage
-                                    }}
+            <div className="testCase-add" ref={testCaseAdd}>
+
+                <div className="testCase-add-search">
+                    <InputSearch style={{ minWidth: "250px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"文档名称"} />
+                    <SelectSimple 
+                        name="repository"
+                        onChange={(value) => searchUnselectWorkRepository(value)}
+                        title={"测试用例库"}
+                        suffixIcon = {true}
+                        value = {repositoryValue}
+                    >
+                        {
+                            repositoryallList.map(item => {
+                                return <SelectItem
+                                    value={item.id}
+                                    label={item.testRepositoryName}
+                                    key={item.id}
+                                    imgUrl={`${base_url}/${item.iconUrl}`}
                                 />
-                            </Fragment>
-                            :
-                            <div>暂无关联用例仓库，请去  <Button type="primary" onClick={() => goTestRepository()}>添加</Button></div>
+                            })
+                        }
+                    </SelectSimple>
+                    {
+                        testCaseUserList && testCaseUserList.length > 0 && <SelectSimple name="user"
+                            onChange={(value) => searchUnselectUser(value)}
+                            title={"文档作者"}
+                            suffixIcon = {true}
+                        >
+                            {
+                                testCaseUserList.map(item => {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.nickname}
+                                        key={item.id}
+                                    />
+                                })
+                            }
+                        </SelectSimple>
                     }
 
-                </Modal>
+
+                    <div className="testCase-add-submit" style={{width: "66px"}}>
+                        <span onClick={() => submitWorkRepositoryList()}>
+                            确定
+                        </span>
+                        <span style={{ marginLeft: "10px" }} onClick={() => showSelectTestCase(false)}>
+                            取消
+                        </span>
+                    </div>
+                </div>
+                <div className="testCase-add-model">
+                    <Table
+                        columns={columns}
+                        dataSource={testCaseList}
+                        rowKey={record => record.id}
+                        rowSelection={{
+                            selectedRow,
+                            onChange: selectWorkRepository,
+                            getCheckboxProps: (record) => ({
+                                disabled: record.rele === true
+                            })
+                        }}
+                        okText="确定"
+                        cancelText="取消"
+                        pagination={false}
+                    />
+                </div>
+
+
             </div>
+
 
         </>
     );
 };
 
-export default withRouter(inject('workStore', 'workTestStore')(observer(WorkTestCaseAddmodal)));
+export default inject('workStore', 'workTestStore')(observer(WorkTestCaseAddmodal));

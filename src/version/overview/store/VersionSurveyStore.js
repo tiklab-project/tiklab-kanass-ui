@@ -15,11 +15,11 @@ class VersionSurveyStore {
 
     @action
 	statWorkItemByBusStatus = async(value) => {
-        const params = new FormData();
-        params.append("versionId",value.versionId)
-        params.append("masterId",value.masterId)
-        params.append("projectId",value.projectId)
-        const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", params)
+        const params = {
+            projectIds: [value.projectId],
+            versionId: value.versionId
+        }
+        const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;
     }
 

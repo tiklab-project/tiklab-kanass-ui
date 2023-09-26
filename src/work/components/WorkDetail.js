@@ -47,7 +47,6 @@ const WorkDetail = (props) => {
     const [relationModalNum, setRelationModalNum] = useState();
     const getWorkDetail = (id) => {
         setInfoLoading(true)
-        
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
             if (res) {
@@ -296,7 +295,7 @@ const WorkDetail = (props) => {
                         <div className="work-detail-crumb-col">
                             <div className="work-detail-crumb">
                                 {
-                                    props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/workTable`)}>事项
+                                    props.match.path === "/index/projectDetail/:id/workDetail/:workId" && <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/work/table`)}>事项
                                         <svg className="img-icon-right" aria-hidden="true" style={{ marginLeft: "5px" }}>
                                             <use xlinkHref="#icon-rightBlue"></use>
                                         </svg>

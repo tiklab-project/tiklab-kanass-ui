@@ -47,7 +47,7 @@ const WorkBodar = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        finWorkList(path, WorkStore,"pending", params);
+        finWorkList(path, WorkStore, params);
         return;
     }, [])
 
@@ -145,16 +145,21 @@ const WorkBodar = (props) => {
         setIndexParams(index, statusid)
         setWorkIndex(index)
         setWorkId(workItem.id)
+
+        const pathname = props.match.url;;
+        props.history.replace(`${pathname}/${workItem.id}`)
         setIsModalVisible(true)
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        if (path === `/index/projectDetail/:id/workBodar`) {
-            console.log(props.history)
-            props.history.replace(`/index/projectDetail/${projectId}/workBodar/${workItem.id}`)
-        }
-        if (path === `/index/workBodar`) {
-            console.log(props.history)
-            props.history.replace(`/index/workBodar/${workItem.id}`)
-        }
+        // if (path === `/index/projectDetail/:id/workBodar`) {
+        //     console.log(props.history)
+        //     props.history.replace(`/index/projectDetail/${projectId}/workBodar/${workItem.id}`)
+        // }
+        // if (path === `/index/workBodar`) {
+        //     console.log(props.history)
+        //     props.history.replace(`/index/workBodar/${workItem.id}`)
+        // }
+
+        
     }
 
     const changePage = (item, index) => {

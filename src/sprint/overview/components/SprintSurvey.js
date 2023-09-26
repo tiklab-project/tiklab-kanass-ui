@@ -14,11 +14,12 @@ import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
-import SprintSurveyStore from "../store/SprintSurveyStore"
+import SprintSurveyStore from "../store/SprintSurveyStore";
+import WorkStore from "../../../work/store/WorkStore";
 const SprintSurvey = (props) => {
     const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
-
+    const {setSearchType} = WorkStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -122,6 +123,14 @@ const SprintSurvey = (props) => {
         window.location.href = url
     }
 
+    /**
+         * 点击跳转到工作列表
+         * @param {tab key} index 
+         */
+    const goWorkItemList = (value) => {
+        setSearchType(value)
+        props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work/table`)
+    }
 
     return (
         <Row style={{ height: "100%", background: "#f9f9f9" }}>
@@ -146,40 +155,40 @@ const SprintSurvey = (props) => {
                                     </div>
                                 </div>
                                 <div className="sprint-work">
-                                    <div className="sprint-item">
+                                    <div className="sprint-item"  onClick={() => goWorkItemList("all")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[0].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.all}</div>
                                             <div className="item-bottom">全部事项</div>
                                         </div>
                                     </div>
-                                    <div className="sprint-item">
-                                        <svg className="status-img" aria-hidden="true">
-                                            <use xlinkHref="#icon-nostart"></use>
-                                        </svg>
-                                        <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
-                                            <div className="item-bottom">未开始</div>
-                                        </div>
-                                    </div>
-                                    <div className="sprint-item">
+                                    <div className="sprint-item" onClick={() => goWorkItemList("pending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-progress"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
-                                            <div className="item-bottom">进行中</div>
+                                            <div className="item-top">{workStatusList && workStatusList.pending}</div>
+                                            <div className="item-bottom">待办</div>
                                         </div>
                                     </div>
-                                    <div className="sprint-item">
+                                    <div className="sprint-item" onClick={() => goWorkItemList("ending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                            <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.ending}</div>
                                             <div className="item-bottom">已完成</div>
+                                        </div>
+                                    </div>
+                                    <div className="sprint-item" onClick={() => goWorkItemList("overdue")}>
+                                        <svg className="status-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-overdue"></use>
+                                        </svg>
+                                        <div className="item-content">
+                                            <div className="item-top">{workStatusList && workStatusList.overdue}</div>
+                                            <div className="item-bottom">已逾期</div>
                                         </div>
                                     </div>
                                 </div>

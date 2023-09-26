@@ -215,12 +215,6 @@ const WorkDocumentAddmodal = (props) => {
                         okText="确定"
                         cancelText="取消"
                         pagination={false}
-                    // pagination={{
-                    //     total: unRelationTotal,
-                    //     pageSize: unRelationWorkCondition.pageParam.pageSize,
-                    //     current: unRelationWorkCondition.pageParam.currentPage,
-                    //     onChange: changePage
-                    // }}
                     />
                 </div>
 

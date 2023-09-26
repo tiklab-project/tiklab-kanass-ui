@@ -7,21 +7,23 @@
  * @LastEditTime: 2021-10-09 15:25:16
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Button, Input, Row, Table, Col } from 'antd';
+import { Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
-import "./WorkTestCase.scss"
+import "./WorkTestCaseList.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
-import {applyJump} from "tiklab-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
+import Button from "../../common/button/Button"
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore
     }
     const { workStore, projectId } = props;
     const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = WorkTestStore;
-    const { workId } = workStore;
+    const { workId, getSelectUserList } = workStore;
     const [testCaseList, setWorkTestCaseList] = useState([])
     const [selectIds, setSelectIds] = useState()
+    const [selectTestCase, showSelectTestCase] = useState(false);
     useEffect(() => {
         findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
             setWorkTestCaseList([...data])
@@ -39,7 +41,7 @@ const WorkTestCaseList = (props) => {
             }
         })
     }
-    
+
     const columns = [
         {
             title: "标题",
@@ -51,9 +53,9 @@ const WorkTestCaseList = (props) => {
             ),
         },
         {
-            title: "目录",
-            dataIndex: "testCategoryName",
-            key: "workStatus",
+            title: "用例库",
+            dataIndex: "testCaseName",
+            key: "testCaseName",
             width: 150
         },
         {
@@ -73,44 +75,44 @@ const WorkTestCaseList = (props) => {
         }
     ];
 
-    const goCaseDetail = (record)=>{
-        if(record.exist){
+    const goCaseDetail = (record) => {
+        if (record.exist) {
             switch (record.caseType) {
                 case "api-unit":
-                    toCaseDetail("apiUnitId",record)
+                    toCaseDetail("apiUnitId", record)
                     break;
                 case "api-scene":
-                    toCaseDetail("apiSceneId",record)
+                    toCaseDetail("apiSceneId", record)
                     break;
                 case "api-perform":
-                    toCaseDetail("apiPerfId",record)
+                    toCaseDetail("apiPerfId", record)
                     break;
                 case "web-scene":
-                    toCaseDetail("webSceneId",record)
+                    toCaseDetail("webSceneId", record)
                     break;
                 case "web-perform":
-                    toCaseDetail("webPerfId",record)
+                    toCaseDetail("webPerfId", record)
                     break;
                 case "app-scene":
-                    toCaseDetail("appSceneId",record)
+                    toCaseDetail("appSceneId", record)
                     break;
                 case "app-perform":
-                    toCaseDetail("appPerfId",record)
+                    toCaseDetail("appPerfId", record)
                     break;
                 case "function":
-                    toCaseDetail("functionId",record)
+                    toCaseDetail("functionId", record)
                     break;
-    
+
             }
-        }else {
+        } else {
             return;
         }
-        
+
     }
 
 
     const toCaseDetail = (caseType, data) => {
-        findSystemUrl({name: "teston"}).then(res=> {
+        findSystemUrl({ name: "teston" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
             applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
         })
@@ -119,24 +121,38 @@ const WorkTestCaseList = (props) => {
         <div className="work-repository">
             <div className="repository-top">
                 <div className="repository-top-title">关联用例({testCaseList.length})</div>
-                <WorkTestCaseAddmodal
-                    {...props}
-                    name="添加测试用例"
-                    selectIds={selectIds}
-                    setWorkTestCaseList={setWorkTestCaseList}
-                    projectId = {projectId}
+                <div className="child-top-botton">
+                    <Button onClick={() => { showSelectTestCase(true) }}>
+                        添加文档
+                    </Button>
+                </div>
+
+            </div>
+            <div className="testcase-content">
+
+                {
+                    selectTestCase && <WorkTestCaseAddmodal
+                        {...props}
+                        name="添加测试用例"
+                        selectIds={selectIds}
+                        setWorkTestCaseList={setWorkTestCaseList}
+                        projectId={projectId}
+                        showSelectTestCase={showSelectTestCase}
+                        selectTestCase={selectTestCase}
+                        getSelectUserList={getSelectUserList}
+                    />
+                }
+                <Table
+                    className="repository-table"
+                    columns={columns}
+                    dataSource={testCaseList}
+                    rowKey={record => record.id}
+                    pagination={false}
                 />
             </div>
-            <Table
-                className="repository-table"
-                columns={columns}
-                dataSource={testCaseList}
-                rowKey={record => record.id}
-                pagination={false}
-            />
         </div>
     </Provider>
-        
+
     )
 }
 export default inject(

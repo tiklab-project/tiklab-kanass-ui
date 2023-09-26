@@ -48,7 +48,7 @@ const VersionDetailAside = (props) => {
         {
             title: "事项",
             icon: 'survey',
-            url: `/index/${project.id}/versiondetail/${versionId}/workTable`,
+            url: `/index/${project.id}/versiondetail/${versionId}/work/table`,
             key: "work",
             encoded: "work",
         },

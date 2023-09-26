@@ -213,7 +213,7 @@ const Search = (props) => {
     const toProject = async (data) => {
         // 创建最近访问的信息
         updateRecent({ id: data.modelId })
-        props.history.replace(`/index/projectDetail/${data.modelId}/workTable`)
+        props.history.replace(`/index/projectDetail/${data.modelId}/work/table`)
         console.log(props)
         // location.reload();
         // 存储用于被点击菜单的回显
@@ -225,7 +225,7 @@ const Search = (props) => {
 
     const toSearchProject = async (data) => {
         // 创建最近访问的信息
-        props.history.replace(`/index/projectDetail/${data.id}/workTable`)
+        props.history.replace(`/index/projectDetail/${data.id}/work/table`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)

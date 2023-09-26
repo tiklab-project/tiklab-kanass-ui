@@ -13,11 +13,25 @@ import "../components/SprintLayout.scss";
 import { renderRoutes } from "react-router-config";
 import SprintDetailAside from "./SprintDetailAside";
 import SprintDetailStore from "../store/SprintDetailStore";
+import WorkStore from "../../../work/store/WorkStore";
+
 const Sprintdetail = (props) => {
+    const { route } = props;
     const store = {
         sprintDetailStore: SprintDetailStore
     }
-    const { route } = props;
+    const { setSearchConditionNull, setSearchType } = WorkStore;
+    useEffect(() => {
+        setSearchConditionNull()
+        setSearchType("pending")
+        return () => {
+            setSearchConditionNull()
+            setSearchType("pending")
+        }
+    }, []);
+    
+
+    
     return (<Provider {...store}>
         <Layout className="sprint-detail">
             <SprintDetailAside />

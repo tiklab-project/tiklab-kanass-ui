@@ -102,7 +102,7 @@ const WorkFilterType = (props) => {
             onChange={(value) => selectType(value)}
             title={"事项类型"}
             ismult={"true"}
-            value={searchCondition.workType}
+            value={searchCondition.workTypeIds}
             suffixIcon = {true}
         >
             {

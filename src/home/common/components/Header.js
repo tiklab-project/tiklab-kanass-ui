@@ -90,7 +90,7 @@ const Header = props => {
             key: 'projectSet'
         },
         {
-            to: '/index/workTable',
+            to: '/index/work/table',
             title: '事项',
             key: 'work'
         },

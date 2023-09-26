@@ -12,7 +12,7 @@ const WorkQuickTab = (props) => {
     const { getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, setWorkId, setWorkIndex,
         viewType, setSearchCondition, findStateNodeList, setQuickFilterValue, 
-        quickFilterValue, eveWorkTypeNum } = workStore;
+        quickFilterValue, eveWorkTypeNum, setSearchType } = workStore;
     
     const userId = getUser().userId;
     const quickFilterList = [
@@ -40,6 +40,7 @@ const WorkQuickTab = (props) => {
     const selectMenu = (value) => {
         if (workShowType !== "list") {
             setQuickFilterValue(value)
+            setSearchType(value.value)
         }
         switch (value.value) {
             case "all":
@@ -180,34 +181,7 @@ const WorkQuickTab = (props) => {
         }
     }
 
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
+    
 
 
     const getStateNodeList = async (value) => {

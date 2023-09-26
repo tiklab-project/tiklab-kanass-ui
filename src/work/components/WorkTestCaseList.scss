@@ -20,4 +20,10 @@
         padding: 15px;
         border-radius: 4px;
     }
+    .testcase-content {
+        background: #fff;
+        border-radius: 4px;
+        position: relative;
+        height: calc(100% - 100px);
+    }
 }

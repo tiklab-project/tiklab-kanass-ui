@@ -19,7 +19,8 @@ import { Form, Row, Col } from "antd";
 import "../components/Work.scss";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
-import {setSessionStorage} from "../../common/utils/setSessionStorage";
+import { setSessionStorage } from "../../common/utils/setSessionStorage";
+
 const Work = (props) => {
     const store = {
         workStore: WorkStore,
@@ -27,120 +28,75 @@ const Work = (props) => {
     };
 
     const { workShowType, setSearchConditionNull, setSearchCondition, getWorkConditionPageTree,
-        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType, 
-        setQuickFilterValue, setTabValue} = WorkStore;
-    
+        getWorkConditionPage, viewType, setWorkIndex, setWorkId, setWorkShowType,
+        setQuickFilterValue, setTabValue, findWorkItemNumByWorkType } = WorkStore;
+
     const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const [form] = Form.useForm();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
-        setQuickFilterValue({label: '所有', value: 'all'})
-        setTabValue({id: "all", type: "system"})
-        if (props.match.path === "/index/:id/sprintdetail/:sprint/workItem") {
-            goSprintWorkItem()
-            setWorkShowType("table")
+        setQuickFilterValue({ label: '所有', value: 'all' })
+        setTabValue({ id: "all", type: "system" })
+        // setWorkShowType("table")
+        switch (props.match.path) {
+            case "/index/:id/sprintdetail/:sprint/workItem":
+                goWorkItem("sprint")
+                break;
+            case "/index/work":
+                goWorkItem("system")
+                break;
+            case "/index/projectDetail/:id/work":
+                goWorkItem("project")
+                break;
+            case "/index/workone/:id":
+                goWorkItem("systemOne")
+                break;
+            case "/index/projectDetail/:id/workone/:id":
+                goWorkItem("projectOne")
+                break;
+            default:
+                break;
         }
-
-        if (props.match.path === "/index/work") {
-            setWorkShowType("table")
-            goSystemWorkItem()
-        }
-        if (props.match.path === "/index/workone/:id") {
-            const id = props.match.params.id;
-            let initValues = {
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
-            }
-            initValues = { id: id, ...initValues }
-            setSearchCondition(initValues)
-            setWorkId(id)
-            getWorkList();
-            return
-        }
-
-        if (props.match.path === "/index/projectDetail/:id/workone/:id") {
-            const id = props.match.params.id;
-
-            let initValues = {
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
-            }
-            initValues = { id: id, ...initValues }
-            setSearchCondition(initValues)
-            getWorkList();
-            return
-        }
-
-        if (props.match.path === "/index/projectDetail/:id/work") {
-            setWorkShowType("table")
-            goProjectWorkItem()
-        }
-
-
+        return;
     }, [])
 
-    // 进入系统下事项
-    const goSystemWorkItem = () => {
+    const goWorkItem = (type) => {
+        const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
+        const id = props.match.params.id;
         let initValues = {
+            ...searchData,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
             }
         }
+        switch (type) {
+            case "sprint":
+                initValues = { ...initValues, projectIds: [projectId], sprintIds: [sprintId] };
+                break;
+            case "project":
+                initValues = { ...initValues, projectIds: [projectId] };
+                break;
+            case "projectOne":
+                initValues = { ...initValues, projectIds: [projectId], id: id };
+                break;
+            case "systemOne":
+                initValues = { ...initValues, id: id };
+                break;
+            default:
+                break;
+        }
+
         setSearchConditionNull().then(res => {
-            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
-            initValues = { ...initValues, ...searchData };
             setSearchCondition(initValues)
             sessionStorage.removeItem("searchCondition")
             initFrom(initValues)
             getWorkList();
-        })
-        
-
-    }
-
-    const goSprintWorkItem = () => {
-        let initValues = {
-            projectIds: [projectId],
-            sprintIds: [sprintId],
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchConditionNull().then(() => {
-            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
-            initValues = { projectIds: [projectId], ...initValues, ...searchData };
-            setSearchCondition(initValues)
-            sessionStorage.removeItem("searchCondition")
-            initFrom(initValues)
-            getWorkList();
+            findWorkItemNumByWorkType();
         })
     }
 
-    // 由项目首页筛选进入事项页面
-    const goProjectWorkItem = () => {
-        // console.log(sessionStorage.getItem("searchCondition"))
-        let initValues = {
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
-        }
-        setSearchConditionNull().then(() => {
-            const searchData = JSON.parse(sessionStorage.getItem("searchCondition"));
-            initValues = { projectIds: [projectId], ...initValues, ...searchData };
-            setSearchCondition(initValues)
-            sessionStorage.removeItem("searchCondition")
-            initFrom(initValues)
-            getWorkList()
-        })
-    }
 
     const initFrom = (fromValue) => {
         form.setFieldsValue({
@@ -163,16 +119,10 @@ const Work = (props) => {
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id"
-                ) {
+                if (workShowType === "list") {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    if (workShowType === "list") {
-                        setWorkIndex(1)
-                        setWorkId(res.dataList[0].id)
-                        setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
-                    }
+                    setWorkId(res.dataList[0].id)
+                    setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
                 }
             } else {
                 setWorkIndex(0)
@@ -184,15 +134,11 @@ const Work = (props) => {
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
+                if (workShowType === "list") {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    if (workShowType === "list") {
-                        setWorkIndex(1)
-                        setWorkId(res.dataList[0].id)
-                        setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
-                    }
+                    setWorkId(res.dataList[0].id)
+                    props.history.push(`/index/projectDetail/${projectId}/workList/${res.dataList[0].id}`)
+                    setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
                 }
             } else {
                 setWorkIndex(0)
@@ -204,7 +150,7 @@ const Work = (props) => {
     return (<Provider {...store}>
         <Fragment>
             {
-                workShowType === "list" &&  <Worklist {...props} form={form}></Worklist>
+                workShowType === "list" && <Worklist {...props} form={form}></Worklist>
             }
             {
                 workShowType === "table" && <WorkTableContent {...props} form={form}></WorkTableContent>
@@ -259,7 +205,7 @@ const Work = (props) => {
             }
         </Fragment>
     </Provider>
-        
+
 
     )
 }

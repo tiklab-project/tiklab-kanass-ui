@@ -13,10 +13,21 @@ import "../components/VersionLayout.scss";
 import { renderRoutes } from "react-router-config";
 import VersionDetailAside from "./VersionDetailAside";
 import VersionDetailStore from "../store/VersionDetailStore";
+import WorkStore from "../../../work/store/WorkStore";
 const Versiondetail = (props) => {
     const store = {
         versionDetailStore: VersionDetailStore
     }
+    const { setSearchConditionNull, setSearchType } = WorkStore;
+    useEffect(() => {
+        setSearchConditionNull()
+        setSearchType("pending")
+        return () => {
+            setSearchConditionNull()
+            setSearchType("pending")
+        }
+    }, []);
+    
     const { route } = props;
     return (<Provider {...store}>
         <Layout className="version-detail">

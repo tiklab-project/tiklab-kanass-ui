@@ -48,7 +48,7 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/workTable`,
+            url: `/index/projectDetail/${projectId}/work/table`,
             key: "work",
             encoded: "Work",
         },
@@ -123,7 +123,7 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/workTable`,
+            url: `/index/projectDetail/${projectId}/work/table`,
             key: "work",
             encoded: "Work",
         },
@@ -219,7 +219,7 @@ const ProdeScrumAside = (props) => {
 
     useEffect(() => {
         setAllProjectRouter(project?.projectType.type === "scrum" ? scrumProrouter(project.id) : normalProrouter(project.id))
-        console.log(project)
+
         return;
     }, [project])
     /**

@@ -11,7 +11,7 @@ const WorkFilterQuick = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue,
       viewType, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, setWorkIndex, setWorkId, eveWorkTypeNum } = workStore;
+      workShowType, setWorkIndex, setWorkId, eveWorkTypeNum, setSearchType } = workStore;
     
     // useEffect(()=> {
     //     setQuickFilterValue({ label: `我的待办(${eveWorkTypeNum.pending})`, value: 'pending' })
@@ -61,7 +61,9 @@ const WorkFilterQuick = (props) => {
         let data = value;
         if (workShowType !== "list") {
             setQuickFilterValue(value)
+            
             data = value.value;
+            setSearchType(data)
         }
         if(!value) {
             getAllWorkItem();
@@ -87,7 +89,7 @@ const WorkFilterQuick = (props) => {
                     break;
             }
         }
-        
+        setSearchType("pending")
 
     }
 

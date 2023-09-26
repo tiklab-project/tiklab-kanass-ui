@@ -70,7 +70,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        props.history.push(`/index/projectDetail/${project.id}/workTable`)
+        props.history.push(`/index/projectDetail/${project.id}/work/table`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };

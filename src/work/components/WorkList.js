@@ -37,18 +37,20 @@ const WorkList = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        finWorkList(path, WorkStore,"pending", params);
+        finWorkList(path, WorkStore, params);
     }, [projectId])
 
     useEffect(() => {
         if(workId && workId.length > 0){
-            if(path === `/index/projectDetail/:id/workList`){
-                console.log(`/index/projectDetail/${projectId}/workList/${workId}`)
-                props.history.push(`/index/projectDetail/${projectId}/workList/${workId}`)
-            }
-            if(path === `/index/workList`){
-                props.history.push(`/index/workList/${workId}`)
-            }
+            const pathname = props.match.url;
+            props.history.push(`${pathname}/${workId}`)
+            // if(path === `/index/projectDetail/:id/work/list`){
+            //     console.log(`/index/projectDetail/${projectId}/workList/${workId}`)
+            //     props.history.push(`/index/projectDetail/${projectId}/workList/${workId}`)
+            // }
+            // if(path === `/index/workList`){
+            //     props.history.push(`/index/workList/${workId}`)
+            // }
         }
     }, [workId]);
 

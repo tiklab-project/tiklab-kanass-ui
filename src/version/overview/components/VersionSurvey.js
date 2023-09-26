@@ -14,16 +14,17 @@ import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
-import VersionSurveyStore from "../store/VersionSurveyStore"
+import VersionSurveyStore from "../store/VersionSurveyStore";
+import WorkStore from "../../../work/store/WorkStore";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = VersionSurveyStore;
+    const { setSearchType } = WorkStore;
 
     const versionId = props.match.params.version;
     const [versionInfo, setVersionInfo] = useState();
     const projectId = props.match.params.id;
     const masterId = getUser().userId;
-    const masterName = getUser().name;
     const [workStatusList, setWorkStatusList] = useState();
     // 进度
     const [percent, setPercent] = useState()
@@ -69,7 +70,7 @@ const VersionSurvey = (props) => {
             })
         })
         // 燃尽图
-       
+
 
         findlogpage({ userId: masterId, versionId: versionId })
 
@@ -121,7 +122,14 @@ const VersionSurvey = (props) => {
         window.location.href = url
     }
 
-
+    /**
+     * 点击跳转到工作列表
+     * @param {tab key} index 
+     */
+    const goWorkItemList = (value) => {
+        setSearchType(value)
+        props.history.push(`/index/${projectId}/versiondetail/${versionId}/work/table`)
+    }
     return (
         <Row style={{ height: "100%", background: "#f9f9f9" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -137,48 +145,41 @@ const VersionSurvey = (props) => {
                                 {versionInfo && versionInfo.name}
                             </div>
                             <div className="version-container">
-                                {/* <div className="version-item">
-                                    <UserIcon userInfo={versionInfo?.master} size = "big" className="item-icon" name = {masterName}/>
-                                    <div className="item-content">
-                                        <div className="item-top">{versionInfo?.master?.nickname}</div>
-                                        <div className="item-bottom">版本负责人</div>
-                                    </div>
-                                </div> */}
                                 <div className="version-work">
-                                    <div className="version-item">
+                                    <div className="version-item" onClick={() => goWorkItemList("all")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                        <div className="item-top">{workStatusList && workStatusList[0].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.all}</div>
                                             <div className="item-bottom">全部事项</div>
                                         </div>
                                     </div>
-                                    <div className="version-item">
+                                    <div className="version-item" onClick={() => goWorkItemList("pending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-nostart"></use>
                                         </svg>
                                         <div className="item-content">
-                                        <div className="item-top">{workStatusList && workStatusList[1].groupCount}</div>
-                                            <div className="item-bottom">未开始</div>
+                                            <div className="item-top">{workStatusList && workStatusList.pending}</div>
+                                            <div className="item-bottom">待办</div>
                                         </div>
                                     </div>
-                                    <div className="version-item">
-                                        <svg className="status-img" aria-hidden="true">
-                                            <use xlinkHref="#icon-progress"></use>
-                                        </svg>
-                                        <div className="item-content">
-                                        <div className="item-top">{workStatusList && workStatusList[3].groupCount}</div>
-                                            <div className="item-bottom">进行中</div>
-                                        </div>
-                                    </div>
-                                    <div className="version-item">
+                                    <div className="version-item" onClick={() => goWorkItemList("ending")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
-                                        <div className="item-top">{workStatusList && workStatusList[2].groupCount}</div>
+                                            <div className="item-top">{workStatusList && workStatusList.ending}</div>
                                             <div className="item-bottom">已完成</div>
+                                        </div>
+                                    </div>
+                                    <div className="version-item" onClick={() => goWorkItemList("overdue")}>
+                                        <svg className="status-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-overdue"></use>
+                                        </svg>
+                                        <div className="item-content">
+                                            <div className="item-top">{workStatusList && workStatusList.overdue}</div>
+                                            <div className="item-bottom">已逾期</div>
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +216,7 @@ const VersionSurvey = (props) => {
                                 </div>
                             </div>
                         </div>
-                       <div className="burn-down-box">
+                        <div className="burn-down-box">
                             <div className="burn-down-title">版本燃尽图</div>
                             <div className="burn-down" id="version-burn-down">
 

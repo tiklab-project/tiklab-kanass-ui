@@ -59,24 +59,25 @@ const WorkFilterSort = (props) => {
     const changeWorkView = (value, route) => {
         setWorkShowType(value)
         if(path.indexOf("projectDetail") > -1){
-            props.history.push(`/index/projectDetail/${projectId}/work${route}`)
+            props.history.push(`/index/projectDetail/${projectId}/work/${value}`)
         }
         if(path.indexOf("work") === 7){
-            props.history.push(`/index/work${route}`)
+
+            props.history.push(`/index/work/${value}`)
         }
 
         if(path.indexOf("sprintdetail") > 1){
-            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work${route}`)
+            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work/${value}`)
         }
         if(path.indexOf("versiondetail") > 1){
-            props.history.push(`/index/${projectId}/versiondetail/${versionId}/work${route}`)
+            props.history.push(`/index/${projectId}/versiondetail/${versionId}/work/${value}`)
         }
         // switch (value) {
         //     case "list":
                
         //         break;
         //     case "table":
-        //         props.history.push(`/index/projectDetail/${projectId}/workTable`)
+        //         props.history.push(`/index/projectDetail/${projectId}/work/table`)
         //         // if (viewType === "tile") {
         //         //     getWorkConditionPage(data);
         //         // } else if (viewType === "tree") {

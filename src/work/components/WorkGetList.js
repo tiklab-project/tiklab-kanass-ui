@@ -1,45 +1,41 @@
+/**
+ * 初始进入事项页面
+ */
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-const finWorkList = (router, workStore,searchType, params) => {
+import { getUser } from "tiklab-core-ui";
+const finWorkList = (router, workStore, params) => {
     const setValue = () => {
-        switch (router) {
-            case "/index/:id/sprintdetail/:sprint/workList":
-            case "/index/:id/sprintdetail/:sprint/workTable":
-            case "/index/:id/sprintdetail/:sprint/workBodar":
-                goWorkItem("sprint", workStore,searchType, params)
-                break;
-            case "/index/:id/versiondetail/:version/workList":
-            case "/index/:id/versiondetail/:version/workTable":
-            case "/index/:id/versiondetail/:version/workBodar":
-                goWorkItem("version", workStore,searchType,params)
-                break;
-
-            case "/index/workList":
-            case "/index/workTable":
-            case "/index/workBodar":
-                goWorkItem("system", workStore, searchType, params)
-                break;
-            case "/index/projectDetail/:id/workList":
-            case "/index/projectDetail/:id/workList/:workId":
-            case "/index/projectDetail/:id/workTable":
-            case "/index/projectDetail/:id/workBodar":
-                goWorkItem("project", workStore,searchType, params)
-                break;
-            case "/index/projectDetail/:id/workone/:id":
-                goWorkItem("projectOne", workStore, searchType, params)
-                break;
-            default:
-                break;
+        console.log(router)
+        let type = "";
+        if(router.indexOf("/index/work") > -1){
+            type = "system"
+            
         }
+        if(router.indexOf("/index/projectDetail/:id/work") > -1){
+            type = "project"
+            
+        }
+        if(router.indexOf("/index/:id/sprintdetail/:sprint/work") > -1){
+            type = "sprint"
+            
+        }
+        if(router.indexOf("/index/:id/versiondetail/:version/work") > -1){
+            type = "version"
+            
+        }
+        goWorkItem(type, workStore, params)
     }
     setValue();
 
 
 }
 
-const goWorkItem = (type, workStore, searchType, params) => {
-    const {sprintId, versionId, projectId} = params;
-    const { setSearchConditionNull, setSearchCondition, findStateNodeList, findWorkItemNumByQuickSearch, workShowType, setQuickFilterValue } = workStore;
+const goWorkItem = (type, workStore, params) => {
+    const { sprintId, versionId, projectId  } = params;
+    const { setSearchConditionNull, setSearchCondition, findStateNodeList, findWorkItemNumByQuickSearch, workShowType, 
+        setQuickFilterValue, searchType, setSearchType } = workStore;
     let initValues = {
+        workTypeCodes: null,
         pageParam: {
             pageSize: 20,
             currentPage: 1
@@ -62,26 +58,103 @@ const goWorkItem = (type, workStore, searchType, params) => {
         default:
             break;
     }
-    if(searchType === "reset"){
-        setSearchConditionNull().then(res => {
-            setSearchCondition(initValues)
-            getWorkList(workStore);
-        })
-    }else {
-       getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
-            initValues = { workStatusIds: data, ...initValues }
+    switch (searchType) {
+        
+        case "reset":
             setSearchConditionNull().then(res => {
                 setSearchCondition(initValues)
-                findWorkItemNumByQuickSearch().then(res=> {
-                    if(res.code === 0 && workShowType === "list"){
-                        setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                getWorkList(workStore);
+            });
+            break;
+        case "pending":
+            getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                findWorkItemNumByQuickSearch().then(res => {
+                    if (res.code === 0) {
+                        if(workShowType === "list"){
+                            setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                        }else {
+                            setQuickFilterValue({ label: `我的待办`, value: 'pending' })
+                        }
+                        
+                    }
+                })
+                getWorkList(workStore);
+            });
+            break;
+        case "ending":
+            getStateNodeList({ quickName: "done" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                findWorkItemNumByQuickSearch().then(res => {
+                    if (res.code === 0) {
+                        if(workShowType === "list"){
+                            setQuickFilterValue({ label: `我的已办(${res.data.ending})`, value: 'ending' })
+                        }else {
+                            setQuickFilterValue({ label: `我的已办`, value: 'ending' })
+                        }
                     }
                 })
                 getWorkList(workStore);
             })
-        }) 
+            break;
+        case "overdue":
+            initValues = { ...initValues, workStatusIds: [], overdue: true }
+            setSearchCondition(initValues)
+            findWorkItemNumByQuickSearch().then(res => {
+                if (res.code === 0 ) {
+                    if(workShowType === "list"){
+                        setQuickFilterValue({ label: `已逾期(${res.data.overdue})`, value: 'overdue' })
+                    }else {
+                        setQuickFilterValue({ label: `已逾期`, value: 'overdue' })
+                    }
+                }
+            })
+            getWorkList(workStore);
+            break;
+        case "creat":
+            initValues = { ...initValues, workStatusIds: [], overdue: false,  builderId: getUser().userId}
+            setSearchCondition(initValues)
+            findWorkItemNumByQuickSearch().then(res => {
+                if (res.code === 0 ) {
+                    if(workShowType === "list"){
+                        setQuickFilterValue({ label: `我创建的(${res.data.creat})`, value: 'creat' })
+                    }else {
+                        setQuickFilterValue({ label: `我创建的`, value: 'creat' })
+                    }
+                }
+            })
+            getWorkList(workStore);
+            break;
+        case "all":
+            setSearchCondition(initValues)
+            findWorkItemNumByQuickSearch().then(res => {
+                if (res.code === 0 ) {
+                    if(workShowType === "list"){
+                        setQuickFilterValue({ label: `全部(${res.data.all})`, value: 'all' })
+                    }else {
+                        setQuickFilterValue({ label: `全部`, value: 'all' })
+                    }
+                }
+            })
+            getWorkList(workStore);
+            break;
+        default:
+            getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                findWorkItemNumByQuickSearch().then(res => {
+                    if (res.code === 0 && workShowType === "list") {
+                        setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                    }
+                })
+                getWorkList(workStore);
+            });
+            break;
     }
     
+
 }
 
 const getStateNodeList = async (value, findStateNodeList) => {

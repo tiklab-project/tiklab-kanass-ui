@@ -19,6 +19,7 @@ import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
+import { getUser } from "tiklab-core-ui";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
@@ -36,7 +37,7 @@ const EpicLineMap = (props) => {
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
     const [ganttWidth, setGanttWidth] = useState(0)
-
+    const tenant = getUser().tenant;
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
     const [expandedTree, setExpandedTree] = useState([])

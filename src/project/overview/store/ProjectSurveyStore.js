@@ -18,12 +18,15 @@ export class ProjectSurveyStore {
      */
     @action
     statWorkItemByBusStatus = async (projectId, masterId) => {
-        const params = new FormData();
-        params.append("projectId", projectId)
-        if (masterId) {
-            params.append("masterId", masterId)
+        // const params = new FormData();
+        // params.append("projectId", projectId)
+        // if (masterId) {
+        //     params.append("masterId", masterId)
+        // }
+        const params = {
+            projectIds: [projectId]
         }
-        const data = await Service("/workItemStat/statProjectWorkItemByBusStatus", params)
+        const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;
     }
 
