@@ -66,6 +66,13 @@ class SprintSurveyStore {
                 pageSize: 20,
                 currentPage: 1
             },
+            orderParams: [{
+                name: "create_time",
+                orderType:"desc"
+            }],
+            content: {
+                sprintId: value.sprintId
+            },
             bgroup: "teamwire"
         }
         const data = await Service("/oplog/findlogpage", params)

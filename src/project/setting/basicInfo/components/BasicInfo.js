@@ -18,6 +18,7 @@ import ProjectIconChange from "./ProjectIconChange"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../../common/utils/setImageUrl";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -219,12 +220,7 @@ const BasicInfo = props => {
                                         <div>
                                             {
                                                 iconUrl ? <Fragment>
-                                                    {
-                                                        version === "cloud" ? <img src={(upload_url + iconUrl + "?tenant=" + tenant)} alt="" width={60} height={60} />
-                                                            :
-                                                            <img src={(upload_url + iconUrl)} alt="" width={60} height={60} />
-
-                                                    }
+                                                    <img src={setImageUrl(iconUrl)} alt="" width={60} height={60} />
                                                 </Fragment>
 
                                                     :

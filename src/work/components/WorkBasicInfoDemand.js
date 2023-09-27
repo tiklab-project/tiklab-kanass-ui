@@ -14,6 +14,7 @@ import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
+import setImageUrl from "../../common/utils/setImageUrl";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -161,40 +162,19 @@ const WorkBasicInfo = (props) => {
             key: 'name',
             render: (text, record) => {
                 return (
-                    record.type.indexOf("image") === -1 ? <Fragment>
-                        {
-                            version === "cloud" ? <a href={`/file/${record.attachmentUrl}?tenant=${tenant}`}
-                                target="_blank"
-                            >
-                                {text}
-                            </a>
-                                :
-                                <a href={`${upload_url}file/${record.attachmentUrl}`}
-                                    target="_blank"
-                                >
-                                    {text}
-                                </a>
-                        }
+                    record.type.indexOf("image") === -1 ?
 
-                    </Fragment>
+                        <a href={setImageUrl("/file/" + record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
                         :
-                        <Fragment>
-                            {
-                                version === "cloud" ?
-                                    <a href={`${upload_url}image/${record.attachmentUrl}?tenant=${tenant}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                                    :
-                                    <a href={`${upload_url}image/${record.attachmentUrl}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                            }
-
-                        </Fragment>
+                        <a href={setImageUrl("/image/" +record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
 
                 )
             }
@@ -771,10 +751,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         />
                                     })
                                         :
@@ -805,10 +782,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         >
                                             <div>事项</div>
                                         </SelectItem>

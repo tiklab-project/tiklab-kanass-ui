@@ -5,7 +5,10 @@ import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 import WorkStore from "../../../work/store/WorkStore";
-import VersionPlanStore from "../stores/VersionPlanStore"
+import VersionPlanStore from "../stores/VersionPlanStore";
+import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../common/utils/setImageUrl";
 const VersionPlan = (props) => {
     const store = {
         versionPlanStore: VersionPlanStore,
@@ -23,7 +26,8 @@ const VersionPlan = (props) => {
         planTotal, noPlanTotal } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
-    const [boxLength, setBoxLength] = useState(90)
+    const [boxLength, setBoxLength] = useState(90);
+    const tenant = getUser().tenant;
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -143,11 +147,14 @@ const VersionPlan = (props) => {
      * @param {事项id} id 
      * @param {*} index 
      */
-    const goWorkItem = (id, index) => {
+    const goWorkItem = (work, index) => {
         setWorkIndex(index)
-        setWorkId(id)
+        setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
+        setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/${work.id}`)
     }
 
     const changeNoPlanVersionPage = () => {
@@ -193,7 +200,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={item.workType.iconUrl}
+                                            imgUrl = {setImageUrl(item.workType?.iconUrl)}
                                         />
                                     })
                                 }
@@ -247,14 +254,14 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
+                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
                                             <div className="work-item-title-left" >
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
-                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
+                                                            src = {setImageUrl(item.workTypeSys.iconUrl)}
 
                                                         />
                                                         :
@@ -303,7 +310,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={item.workType.iconUrl}
+                                            imgUrl = {setImageUrl(item.workType?.iconUrl)}
                                         />
                                     })
                                 }
@@ -358,14 +365,14 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, versionId)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
+                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
                                             <div className="work-item-title-left" >
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
-                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
+                                                            src = {setImageUrl(item.workTypeSys.iconUrl)}
 
                                                         />
                                                         :
@@ -397,12 +404,12 @@ const VersionPlan = (props) => {
                 </div>
             </div>
 
-            {/* <WorkBorderDetail
+            <WorkBorderDetail
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
                 {...props}
-            /> */}
+            />
         </div>
     </Provider>
 

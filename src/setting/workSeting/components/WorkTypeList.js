@@ -5,6 +5,7 @@ import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../common/utils/setImageUrl";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -91,22 +92,11 @@ const WorkTypeList = (props) => {
                 <div className="work-type-name" >
                     <div className="work-type-icon">
                         {
-                            record.iconUrl ? <Fragment>
-                                {
-                                    version ==="cloud"? <img
-                                        src={(upload_url + record.iconUrl + "?tenant=" + tenant)}
-                                        alt=""
-                                        className="img-icon-right"
-                                    />
-                                    :
-                                    <img
-                                        src={(upload_url + record.iconUrl)}
-                                        alt=""
-                                        className="img-icon-right"
-                                    />
-                                }
-
-                            </Fragment>
+                            record.iconUrl ? <img
+                                src={setImageUrl(record.iconUrl)}
+                                alt=""
+                                className="img-icon-right"
+                            />
 
                                 :
                                 <img

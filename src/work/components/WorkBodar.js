@@ -12,6 +12,7 @@ import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { Select, Row, Col } from "antd";
 import { finWorkList } from "./WorkGetList"
+import setImageUrl from '../../common/utils/setImageUrl';
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
@@ -295,11 +296,7 @@ const WorkBodar = (props) => {
                                                                         {
                                                                             workItem.workTypeSys.iconUrl ?
                                                                                 <img
-                                                                                    src={version === "cloud" ?
-                                                                                        (upload_url + workItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                                                        :
-                                                                                        (upload_url + workItem.workTypeSys?.iconUrl)
-                                                                                    }
+                                                                                    src = {setImageUrl(workItem.workTypeSys?.iconUrl)}
                                                                                     alt=""
                                                                                     className="svg-icon"
 

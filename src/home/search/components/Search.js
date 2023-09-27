@@ -16,6 +16,9 @@ import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";
 import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
+import { withRouter } from "react-router";
+import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+import setImageUrl from "../../../common/utils/setImageUrl";
 
 const Search = (props) => {
     const { getSearchSore, setKeyWord, findRecentList,
@@ -239,7 +242,8 @@ const Search = (props) => {
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
-        props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.modelId}`)
+        props.history.push(`/index/projectDetail/${data.project.id}/work/${data.modelId}`)
+        setSessionStorage("detailCrumbArray", [{ id: data.modelId, title: data.name, iconUrl: data.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
 
@@ -248,7 +252,8 @@ const Search = (props) => {
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
-        props.history.push(`/index/projectDetail/${data.project.id}/workDetail/${data.id}`)
+        props.history.push(`/index/projectDetail/${data.project.id}/work/${data.id}`)
+        setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys?.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
 
@@ -313,8 +318,8 @@ const Search = (props) => {
                                                     return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id} >
                                                         <div className="item-one" onClick={() => toSearchProject(item)}>
                                                             <img
-                                                                src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                 alt=""
+                                                                src = {setImageUrl(item.iconUrl)}
                                                             />
                                                             <span>{item.projectName}</span>
                                                             <div className="item-desc">
@@ -337,8 +342,8 @@ const Search = (props) => {
                                                     return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                         <div className="item-one" onClick={() => toSearchWorkItem(item)}>
                                                             <img
-                                                                src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                                 alt=""
+                                                                src = {setImageUrl(item.workTypeSys?.iconUrl)}
                                                             />
                                                             <span>{item.title}</span>
                                                             <div className="item-desc">
@@ -369,8 +374,8 @@ const Search = (props) => {
                                                         return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                             <div className="item-one" onClick={() => toProject(item)}>
                                                                 <img
-                                                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                     alt=""
+                                                                    src = {setImageUrl(item.iconUrl)}
                                                                 />
                                                                 <span>{item.name}</span>
                                                                 <div className="item-desc">
@@ -397,8 +402,8 @@ const Search = (props) => {
                                                     return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                         <div className="item-one" onClick={() => toWorkItem(item)}>
                                                             <img
-                                                                src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
                                                                 alt=""
+                                                                src = {setImageUrl(item.iconUrl)}
                                                             />
                                                             <span>{item.name}</span>
                                                             <div className="item-desc">
@@ -422,4 +427,4 @@ const Search = (props) => {
         </Fragment>
     )
 }
-export default inject("homeStore")(observer(Search));
+export default withRouter(inject("homeStore")(observer(Search)));

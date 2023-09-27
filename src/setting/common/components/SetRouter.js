@@ -178,15 +178,16 @@ const setDevRouter= [
                 id: '/index/setting/logList',
                 // purviewCode: "SysLogList",
                 code: 10-1,
-            }
+            }, 
+            {
+                title: "备份与恢复",
+                icon: 'plugin',
+                id: '/index/setting/backups',
+                code: 10-2
+            },
         ]
     }, 
-    {
-        title: "备份与恢复",
-        icon: 'plugin',
-        id: '/index/setting/backups',
-        code: 13
-    },
+   
     {
         title: "版本与许可证",
         icon: 'plugin',
@@ -492,7 +493,13 @@ const setPrdRouter= [
                 id: '/index/setting/logList',
                 // purviewCode: "SysLogList",
                 code: 10-1,
-            }
+            },
+            {
+                title: "备份与恢复",
+                icon: 'plugin',
+                id: '/index/setting/backups',
+                code: 10-2
+            },
         ]
     }, 
     {

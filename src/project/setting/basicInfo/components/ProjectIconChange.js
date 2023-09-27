@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import UploadIcon1 from "../../../../assets/images/uploadIcon.png";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
 import {getUser} from "tiklab-core-ui"
+import setImageUrl from "../../../../common/utils/setImageUrl";
 const ProjectIconChange = (props) => {
 
     const [form] = Form.useForm();
@@ -120,13 +121,7 @@ const ProjectIconChange = (props) => {
                                         className={`project-icon ${item.iconUrl === projectIconUrl ? "icon-select" : null}`} 
                                         key={item.id} onClick={() => { setProjectIconUrl(item.iconUrl) }}
                                     >
-                                        {
-                                            version === "cloud" ?<img src={(upload_url + item.iconUrl+"?tenant=" + tenant)} alt="" className="list-img"/> 
-                                            :
-                                            <img src={(upload_url + item.iconUrl)} alt="" className="list-img"/>
-
-                                        }
-                                        
+                                        <img src={setImageUrl(item.iconUrl)} alt="" className="list-img"/>
                                     </div>
                                 })
                             }

@@ -13,6 +13,7 @@ import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
 import { renderRoutes } from "react-router-config";
+import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkTable = (props) => {
     // const { form } = props
@@ -21,7 +22,7 @@ const WorkTable = (props) => {
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
-    const {route} = props;
+    const { route } = props;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,7 +45,7 @@ const WorkTable = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        finWorkList(path, WorkStore,params);
+        finWorkList(path, WorkStore, params);
     }, [projectId])
 
     // let [treeIndex, setTreeIndex] = useState([])
@@ -78,8 +79,8 @@ const WorkTable = (props) => {
 
     const getWorkLevelIndex = (value, workId) => {
         let treePath = value;
-        if(typeof(treePath) === "string" && treePath.length > 0){
-            const hightLevel =  treePath.split(";");
+        if (typeof (treePath) === "string" && treePath.length > 0) {
+            const hightLevel = treePath.split(";");
             hightLevel.unshift(workId)
             let hightLevelIndex = hightLevel.length - 2;
 
@@ -87,7 +88,7 @@ const WorkTable = (props) => {
                 const num = data.findIndex((item) => item.id === hightLevel[hightLevelIndex])
                 hightLevelIndex--;
                 treeIndex.push(num)
-                if(hightLevelIndex >= 0){
+                if (hightLevelIndex >= 0) {
                     getIndex(data[num].children, hightLevelIndex);
                 }
             }
@@ -114,7 +115,7 @@ const WorkTable = (props) => {
     //  排序
     const [sortArray, setSortArray] = useState(["title"]);
     const sorterTable = (pagination, filters, sorter, extra) => {
-        
+
         const setSortParams = (sorter) => {
             const field = sorter.columnKey;
             const order = sorter.order;
@@ -126,7 +127,7 @@ const WorkTable = (props) => {
             if (order === "descend") {
                 isAsc = "desc"
             }
-            if(!order) {
+            if (!order) {
                 return
             }
             switch (field) {
@@ -154,7 +155,7 @@ const WorkTable = (props) => {
                 default:
                     break;
             }
-            
+
             const params = {
                 name: sortType,
                 orderType: isAsc
@@ -163,22 +164,22 @@ const WorkTable = (props) => {
             return params;
         }
 
-        if(extra.action === "sort"){
+        if (extra.action === "sort") {
             let orderParams = [];
             let sortArray = []
-            if(!(sorter instanceof Array)){
-                if(sorter.order){
+            if (!(sorter instanceof Array)) {
+                if (sorter.order) {
                     orderParams.push(setSortParams(sorter));
                     sortArray.push(sorter.columnKey);
-                }else {
+                } else {
                     orderParams.push({
                         name: "id",
                         orderType: "desc"
                     });
                     sortArray.push("title");
                 }
-                
-            }else {
+
+            } else {
                 sorter.map(item => {
                     orderParams.push(setSortParams(item));
                     sortArray.push(item.columnKey);
@@ -197,11 +198,11 @@ const WorkTable = (props) => {
                 getWorkConditionPage()
             }
         }
-       
+
 
     }
 
-    
+
     const workColumns = [
         {
             title: '标题',
@@ -216,11 +217,7 @@ const WorkTable = (props) => {
                     {
                         record.workTypeSys.iconUrl ?
                             <img
-                                src={version === "cloud" ?
-                                    (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                    :
-                                    (upload_url + record.workTypeSys?.iconUrl)
-                                }
+                                src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
                                 className="list-img"
 
@@ -317,7 +314,7 @@ const WorkTable = (props) => {
                 {text.slice(0, 10)}
             </div>
         },
-        
+
         {
             title: '操作',
             width: "60",
@@ -361,11 +358,7 @@ const WorkTable = (props) => {
                     {
                         record.workTypeSys.iconUrl ?
                             <img
-                                src={version === "cloud" ?
-                                    (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                    :
-                                    (upload_url + record.workTypeSys?.iconUrl)
-                                }
+                                src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
                                 className="list-img"
 
@@ -474,10 +467,7 @@ const WorkTable = (props) => {
                 <div className="work-info-img">
                     {
                         record.project.iconUrl ? <img
-                            src={version === "cloud" ?
-                                (upload_url + record.project?.iconUrl + "?tenant=" + tenant)
-                                :
-                                (upload_url + record.project?.iconUrl)}
+                            src={setImageUrl(record.project?.iconUrl)}
                             alt=""
                             className="img-icon-right"
                         />
@@ -493,7 +483,7 @@ const WorkTable = (props) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-        
+
         {
             title: '操作',
             width: "60",
@@ -566,11 +556,11 @@ const WorkTable = (props) => {
                         <div className="work-table">
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
-                                    columns={props.location.pathname === "/index/work/table" ?  projectColums : workColumns}
+                                    columns={props.location.pathname === "/index/work/table" ? projectColums : workColumns}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     // onChange={sorter}
-                                    showSorterTooltip = {false}
+                                    showSorterTooltip={false}
                                     pagination={{
                                         total: total,
                                         pageSize: 20,

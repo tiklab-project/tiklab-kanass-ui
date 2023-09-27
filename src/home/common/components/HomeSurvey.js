@@ -14,6 +14,7 @@ import { Empty, Tabs, Spin } from 'antd';
 import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage"
+import setImageUrl from '../../../common/utils/setImageUrl';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -137,7 +138,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
+                                    src= {setImageUrl(item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -165,7 +166,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
+                                    src= {setImageUrl(item.iconUrl)}
                                     alt=""
                                     className="list-img"
                                 />
@@ -254,9 +255,9 @@ const HomeSurvey = (props) => {
                                             {
                                                 item.project.iconUrl ?
                                                     <img
-                                                        src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
                                                         alt=""
                                                         className="list-img"
+                                                        src= {setImageUrl(item.project.iconUrl)}
                                                     />
                                                     :
                                                     <img

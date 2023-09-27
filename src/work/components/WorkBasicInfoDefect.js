@@ -14,6 +14,7 @@ import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
+import setImageUrl from "../../common/utils/setImageUrl";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -39,8 +40,8 @@ const WorkBasicInfo = (props) => {
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, sprintList, priorityList, editWork,
-        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList, 
-        userList,searchWorkById, workIndex, treeIndex, 
+        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
+        userList, searchWorkById, workIndex, treeIndex,
     } = workStore;
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
@@ -161,40 +162,19 @@ const WorkBasicInfo = (props) => {
             key: 'name',
             render: (text, record) => {
                 return (
-                    record.type.indexOf("image") === -1 ? <Fragment>
-                        {
-                            version === "cloud" ? <a href={`/file/${record.attachmentUrl}?tenant=${tenant}`}
-                                target="_blank"
-                            >
-                                {text}
-                            </a>
-                                :
-                                <a href={`${upload_url}file/${record.attachmentUrl}`}
-                                    target="_blank"
-                                >
-                                    {text}
-                                </a>
-                        }
+                    record.type.indexOf("image") === -1 ?
 
-                    </Fragment>
+                        <a href={setImageUrl("/file/" + record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
                         :
-                        <Fragment>
-                            {
-                                version === "cloud" ?
-                                    <a href={`${upload_url}image/${record.attachmentUrl}?tenant=${tenant}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                                    :
-                                    <a href={`${upload_url}image/${record.attachmentUrl}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                            }
-
-                        </Fragment>
+                        <a href={setImageUrl("/image/" +record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
 
                 )
             }
@@ -328,11 +308,11 @@ const WorkBasicInfo = (props) => {
                 setWorkInfo({ ...workInfo, ...changedValues })
 
                 //  更新列表数据
-                if ((props.match.path.indexOf("/index/projectDetail/:id/work") > -1 || 
-                props.match.path.indexOf("/index/work") > -1 || 
-                props.match.path.indexof("/index/:id/sprintdetail/:sprint/work") > -1 ||
-                props.match.path.indexof("/index/:id/versiondetail/:version/work") > -1) && 
-                (changeKey === "assigner" || changeKey === "workPriority")
+                if ((props.match.path.indexOf("/index/projectDetail/:id/work") > -1 ||
+                    props.match.path.indexOf("/index/work") > -1 ||
+                    props.match.path.indexof("/index/:id/sprintdetail/:sprint/work") > -1 ||
+                    props.match.path.indexof("/index/:id/versiondetail/:version/work") > -1) &&
+                    (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
 
                     searchWorkById(workId).then((res) => {
@@ -343,21 +323,21 @@ const WorkBasicInfo = (props) => {
                     })
                 }
 
-                if(changeKey === "parentWorkItem"){
-                    if(changedValues.parentWorkItem.id === "nullstring"){
+                if (changeKey === "parentWorkItem") {
+                    if (changedValues.parentWorkItem.id === "nullstring") {
                         searchWorkById(workId).then((res) => {
                             if (res) {
                                 deleteAndQueryDeepData(workList, treeIndex)
-                                workList.splice(workIndex-1, 0 ,res)
-                               
+                                workList.splice(workIndex - 1, 0, res)
+
                                 console.log(workList)
                                 setWorkList([...workList])
                             }
                         })
-                    }else {
-                        
+                    } else {
+
                     }
-                    
+
                 }
             }
         })
@@ -365,29 +345,29 @@ const WorkBasicInfo = (props) => {
     }
 
     // 事项更换上级之后把当前事项从列表中移除
-    const deleteAndQueryDeepData = (originalArray, indexes) =>{
+    const deleteAndQueryDeepData = (originalArray, indexes) => {
         if (indexes.length === 0) {
-          return undefined; // 如果索引数组为空，返回 undefined
+            return undefined; // 如果索引数组为空，返回 undefined
         }
-      
+
         const currentIndex = indexes.shift(); // 获取当前层级的下标
         if (currentIndex < 0 || currentIndex >= originalArray.length) {
-          return undefined; // 下标越界，返回 undefined 表示未找到数据
+            return undefined; // 下标越界，返回 undefined 表示未找到数据
         }
-      
+
         if (indexes.length === 0) {
-          // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
-          return originalArray.splice(currentIndex, 1)[0];
+            // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
+            return originalArray.splice(currentIndex, 1)[0];
         }
-      
+
         const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
         const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
-      
+
         // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
         // if (result === undefined) {
         //   originalArray.splice(currentIndex, 1);
         // }
-        
+
         return result;
     }
 
@@ -513,18 +493,18 @@ const WorkBasicInfo = (props) => {
      */
     const updataDesc = useDebounce((value) => {
         setSlateValue(value);
-        
+
         let data = {
             id: workId,
             desc: value,
             updateField: "desc"
         }
-        editWork(data).then(res=> {
-            if(res.code === 0){
+        editWork(data).then(res => {
+            if (res.code === 0) {
                 workInfo.desc = value
             }
         })
-    }, [500]) 
+    }, [500])
 
     return (
         <div className="work-info">
@@ -816,7 +796,7 @@ const WorkBasicInfo = (props) => {
                                 showTime
                             />
                         </Form.Item>
-                        <Form.Item 
+                        <Form.Item
                             name="parentWorkItem" label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
@@ -839,10 +819,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         />
                                     })
                                         :
@@ -873,10 +850,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         >
                                             <div>事项</div>
                                         </SelectItem>
@@ -939,7 +913,7 @@ const WorkBasicInfo = (props) => {
                                     value={slateValue}
                                     minHeight={300}
                                     // onChange={setSlateValue}
-                                    onChange = {(value) => updataDesc(value)}
+                                    onChange={(value) => updataDesc(value)}
                                     {...props}
                                 >
                                     <div style={{ padding: "10px" }}>

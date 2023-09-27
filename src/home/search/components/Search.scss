@@ -1,7 +1,7 @@
 .search {
     .search-box {
         height: 30px;
-        
+
         background: #fff;
         display: flex;
         border-radius: 7px;
@@ -18,9 +18,11 @@
             color: #000;
         }
     }
+
     .search-short-box {
         width: 200px;
     }
+
     .search-long-box {
         width: 500px;
     }
@@ -57,7 +59,7 @@
                 display: flex;
                 align-items: center;
                 height: 35px;
-                
+
                 cursor: pointer;
 
                 img {
@@ -71,17 +73,23 @@
                     margin-left: 20px;
                     overflow: hidden;
                     flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
+
             .item-desc {
                 color: #999;
                 font-size: 12px;
             }
+
             .item-one:hover {
                 background-color: #f5f7fa;
             }
 
         }
+
         .keyboard-select {
             background-color: #f5f7fa;
         }
@@ -89,8 +97,10 @@
 
     .recent-box {
         padding: 0 15px;
+
         .recent-work {
             margin-bottom: 10px;
+
             .recent-work-title {
                 font-size: 13px;
                 color: #999;
@@ -104,21 +114,25 @@
                     align-items: center;
                     justify-content: space-between;
                     padding-bottom: 20px;
+
                     .work-item-img {
                         display: flex;
                         align-items: center;
                         color: #333;
-                        img{
+
+                        img {
                             width: 20px;
                             height: 20px;
                             margin-right: 10px;
                         }
                     }
-                    .work-item-project, .work-item-status {
+
+                    .work-item-project,
+                    .work-item-status {
                         font-size: 12px;
                         color: #999;
                     }
-                    
+
                 }
             }
         }
@@ -130,24 +144,28 @@
                 font-weight: 500;
                 padding: 10px 0;
             }
+
             .recent-project-list {
                 .project-item {
                     display: flex;
                     align-items: center;
                     padding-bottom: 20px;
                     cursor: pointer;
+
                     .project-item-img {
 
-                        img{
+                        img {
                             width: 20px;
                             height: 20px;
                             margin-right: 10px;
                         }
+
                         width: 60%;
                         display: flex;
                         align-items: center;
                         color: #333;
                     }
+
                     .project-type {
                         font-size: 12px;
                         color: #999;

@@ -5,6 +5,7 @@ import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../common/utils/setImageUrl";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
     const tenant = getUser().tenant;
@@ -205,10 +206,9 @@ const WorkRelationAddModal = (props) => {
                                                     {
                                                         item.workTypeSys?.iconUrl ?
                                                             <img
-                                                                src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                                 alt=""
                                                                 className="svg-icon"
-
+                                                                src = {setImageUrl(item.workTypeSys?.iconUrl)}
                                                             />
                                                             :
                                                             <img

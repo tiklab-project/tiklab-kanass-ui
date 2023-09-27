@@ -6,6 +6,7 @@ import WorkRelationAddmodal from "./WorkRelationAdd";
 import Button from "../../common/button/Button";
 import WorkRelationStore from "../store/WorkRelationStore";
 import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
+import setImageUrl from "../../common/utils/setImageUrl";
 const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
@@ -64,12 +65,11 @@ const WorkRelation = (props) => {
             render: (text, record) => <div className="work-name" >
                 <div className="work-title" onClick={() => goWorkItem(record.workItem) }>
                     {
-                        record.workItem?.workType?.iconUrl ?
+                        record.workItem?.workTypeSys?.iconUrl ?
                             <img
-                                src={'/images/' + record.workItem?.workType?.iconUrl}
                                 alt=""
                                 className="svg-icon"
-
+                                src = {setImageUrl(record.workItem?.workTypeSys?.iconUrl)}
                             />
                             :
                             <img

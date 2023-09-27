@@ -5,6 +5,7 @@ import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../common/utils/setImageUrl";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId } = props;
 
@@ -245,10 +246,9 @@ const WorkChildAddmodal = (props) => {
                                             {
                                                 item.workTypeSys?.iconUrl ?
                                                     <img
-                                                        src={version === "cloud" ? (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys?.iconUrl)}
                                                         alt=""
                                                         className="svg-icon"
-
+                                                        src = {setImageUrl(item.workTypeSys?.iconUrl)}
                                                     />
                                                     :
                                                     <img

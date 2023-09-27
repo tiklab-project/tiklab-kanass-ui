@@ -8,6 +8,7 @@ import { useState } from "react";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
+import setImageUrl from "../../../common/utils/setImageUrl";
 const { Option } = Select;
 
 const ProjectContent = (props) => {
@@ -184,9 +185,9 @@ const ProjectContent = (props) => {
                         {
                             record.iconUrl ?
                                 <img
-                                    src={version === "cloud" ? (upload_url + record.iconUrl + "?tenant=" + tenant) : (upload_url + record.iconUrl)}
                                     alt=""
                                     className="list-img"
+                                    src = {setImageUrl(record.iconUrl)}
                                 />
                                 :
                                 <img
@@ -297,9 +298,9 @@ const ProjectContent = (props) => {
                                             {
                                                 item.project.iconUrl ?
                                                     <img
-                                                        src={version === "cloud" ? (upload_url + item.project.iconUrl + "?tenant=" + tenant) : (upload_url + item.project.iconUrl)}
                                                         alt=""
                                                         className="list-img"
+                                                        src = {setImageUrl(item.project.iconUrl)}
                                                     />
                                                     :
                                                     <img

@@ -7,6 +7,7 @@ import Button from "../../common/button/Button";
 import WorkChildStore from "../store/WorkChildStore";
 import { getUser } from "tiklab-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
+import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkChild = (props) => {
     const store = {
@@ -141,9 +142,9 @@ const WorkChild = (props) => {
                     {
                         record.workTypeSys?.iconUrl ?
                             <img
-                                src={version === "cloud" ? (upload_url + record.workTypeSys?.iconUrl + "?tenant=" + tenant) : (upload_url + record.workTypeSys?.iconUrl)}
                                 alt=""
                                 className="svg-icon"
+                                src = {setImageUrl(record.workTypeSys?.iconUrl)}
 
                             />
                             :

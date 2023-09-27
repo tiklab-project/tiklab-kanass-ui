@@ -24,7 +24,6 @@ const SprintDetailAside = (props) => {
     const { t, i18n } = useTranslation();
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
-    console.log(props)
     const sprintId = props.match.params.sprint;
 
     const [isShowText, SetIsShowText] = useState(false)

@@ -8,7 +8,7 @@ class WorkRelationStore {
     @observable unRelationTotal = 1;
     @observable searchCondition = {
         orderParams: [{
-            name: "createTime",
+            name: "buildTime",
             orderType:"asc"
         }],
         pageParam: {
@@ -45,7 +45,7 @@ class WorkRelationStore {
             workItemId: this.searchSelectCondition.workItemId,
             title: this.searchSelectCondition.title,
             orderParams: [{
-                name: "id",
+                name: "buildTime",
                 orderType:"desc"
             }],
             pageParam: {

@@ -14,6 +14,7 @@ import Button from "../../../../common/button/Button";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../../common/utils/setImageUrl";
 
 
 const WorkTypeAddModal = (props) => {
@@ -85,12 +86,8 @@ const WorkTypeAddModal = (props) => {
                     <div className="work-type-icon">
                         {
                             record.iconUrl ?
-                                <img
-                                    src={version === "cloud" ?
-                                        (upload_url + record.iconUrl + "?tenant=" + tenant)
-                                        :
-                                        (upload_url + record.iconUrl)
-                            }
+                                <img 
+                                    src = {setImageUrl(record.iconUrl)}
                                     alt=""
                                     className="img-icon-right"
                                 />

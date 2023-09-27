@@ -20,6 +20,7 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../common/utils/setImageUrl";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
@@ -259,10 +260,10 @@ const EpicLineMap = (props) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
             let start = item?.planBeginTime;
-            startPra = Date.parse(start.substring(0, 10));
+            startPra = Date.parse(start?.substring(0, 10));
 
             let end = item?.planEndTime;
-            endPra = Date.parse(end.substring(0, 10)) + 86400000;
+            endPra = Date.parse(end?.substring(0, 10)) + 86400000;
             // 画布开始时间转化为毫秒
 
             // 每个事项的x轴
@@ -476,11 +477,7 @@ const EpicLineMap = (props) => {
                                                 </>
                                         }
                                         <img
-                                            src={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)
-                                            }
+                                            src = {setImageUrl(item.workTypeSys?.iconUrl)}
                                             alt=""
                                             className="img-icon"
                                         />

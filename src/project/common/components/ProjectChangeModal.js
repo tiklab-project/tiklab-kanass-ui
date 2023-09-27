@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../../common/utils/setImageUrl";
 const ProjectChangeModal = (props) => {
     const { isShowText, searchpro, project, projectStore } = props;
     const { findMyAllProjectList, allProlist } = projectStore;
@@ -118,11 +119,7 @@ const ProjectChangeModal = (props) => {
                         {
                             project?.iconUrl ?
                                 <img
-                                    src={version === "cloud" ?
-                                        (upload_url + project?.iconUrl + "?tenant=" + tenant)
-                                        :
-                                        (upload_url + project?.iconUrl)
-                                    }
+                                    src={setImageUrl(project?.iconUrl)}
                                     className="list-img"
                                     alt=""
                                 />
@@ -151,24 +148,12 @@ const ProjectChangeModal = (props) => {
                         :
                         <div className='project-title-icon' onClick={showMoreMenu} >
                             {
-                                project?.iconUrl ? <Fragment>
-                                    {
-                                        version === "cloud" ? <img
-                                            src={(upload_url + project?.iconUrl + "?tenant=" + tenant)}
-                                            title={project?.projectName} alt=""
-                                            className="list-img"
-                                            style={{ marginRight: "0px" }}
-                                        />
-                                            :
-                                            <img
-                                                src={(upload_url + project?.iconUrl)}
-                                                title={project?.projectName} alt=""
-                                                className="list-img"
-                                                style={{ marginRight: "0px" }}
-                                            />
-                                    }
-
-                                </Fragment>
+                                project?.iconUrl ? <img
+                                        src={setImageUrl(project?.iconUrl)}
+                                        title={project?.projectName} alt=""
+                                        className="list-img"
+                                        style={{ marginRight: "0px" }}
+                                    />
                                     :
                                     <img
                                         src={('images/project1.png')}
@@ -205,11 +190,7 @@ const ProjectChangeModal = (props) => {
                                 {
                                     item.iconUrl ?
                                         <img
-                                            src={version === "cloud" ?
-                                                (upload_url + item.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.iconUrl)
-                                            }
+                                            src={setImageUrl(item.iconUrl)}
                                             className="img-icon-right"
                                             title={item.projectName}
                                             alt=""

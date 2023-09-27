@@ -10,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";
 import { useDebounce } from "../../../common/utils/debounce";
+import setImageUrl from "../../../common/utils/setImageUrl";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -276,8 +277,9 @@ const ProjectAddInfo = (props) => {
                                     return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
 
                                         <img 
-                                            src={version === "cloud" ? (upload_url + item.iconUrl + "?tenant=" + tenant) : (upload_url + item.iconUrl)}
-                                            alt="" className="img-icon-right" 
+                                            alt="" 
+                                            className="img-icon-right" 
+                                            src = {setImageUrl(item.iconUrl)}
                                         />
                                     </div>
                                 })

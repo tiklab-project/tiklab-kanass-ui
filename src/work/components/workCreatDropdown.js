@@ -3,6 +3,7 @@ import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
 import { getUser } from "tiklab-core-ui";
+import setImageUrl from "../../common/utils/setImageUrl";
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle } = props;
     const modelRef = useRef()
@@ -66,11 +67,7 @@ const WorkCreatDropdown = (props) => {
                         >
                             <div>
                                 <img
-                                    src={version === "cloud" ?
-                                        (upload_url + item.workType?.iconUrl + "?tenant=" + tenant)
-                                        :
-                                        (upload_url + item.workType?.iconUrl)
-                                    }
+                                    src = {setImageUrl(item.workType?.iconUrl)}
                                     alt=""
                                     className="img-icon-right"
                                 />

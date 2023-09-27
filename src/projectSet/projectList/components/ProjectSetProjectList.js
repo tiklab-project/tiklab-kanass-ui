@@ -15,6 +15,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import { withRouter } from 'react-router';
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
+import setImageUrl from '../../../common/utils/setImageUrl';
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -66,7 +67,7 @@ const ProjectSetProjectList = (props) => {
                     {
                         record.iconUrl ?
                             <img
-                                src={version === "cloud" ? (upload_url + record.iconUrl + "?tenant=" + tenant) : (upload_url + record.iconUrl)}
+                                src = {setImageUrl(record.iconUrl)}
                                 alt=""
                                 className="list-img"
                             />

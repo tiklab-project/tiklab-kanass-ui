@@ -3,6 +3,7 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterQuick.scss";
+import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkFilterProject = (props) => {
     const { workStore, heightFilter } = props;
@@ -80,11 +81,7 @@ const WorkFilterProject = (props) => {
                         value={item.id}
                         label={item.projectName}
                         key={item.id}
-                        imgUrl={version === "cloud" ?
-                            (upload_url + item.iconUrl + "?tenant=" + tenant)
-                            :
-                            (upload_url + item.iconUrl)
-                        }
+                        imgUrl={setImageUrl(item.iconUrl)}
                     />
                 })
             }

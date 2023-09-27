@@ -14,6 +14,7 @@ import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
+import setImageUrl from "../../common/utils/setImageUrl";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -161,40 +162,18 @@ const WorkBasicInfo = (props) => {
             key: 'name',
             render: (text, record) => {
                 return (
-                    record.type.indexOf("image") === -1 ? <Fragment>
-                        {
-                            version === "cloud" ? <a href={`/file/${record.attachmentUrl}?tenant=${tenant}`}
-                                target="_blank"
-                            >
-                                {text}
-                            </a>
-                                :
-                                <a href={`${upload_url}file/${record.attachmentUrl}`}
-                                    target="_blank"
-                                >
-                                    {text}
-                                </a>
-                        }
-
-                    </Fragment>
+                    record.type.indexOf("image") === -1 ?
+                        <a href={setImageUrl("/file/" + record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
                         :
-                        <Fragment>
-                            {
-                                version === "cloud" ?
-                                    <a href={`${upload_url}image/${record.attachmentUrl}?tenant=${tenant}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                                    :
-                                    <a href={`${upload_url}image/${record.attachmentUrl}`}
-                                        target="_blank"
-                                    >
-                                        {text}
-                                    </a>
-                            }
-
-                        </Fragment>
+                        <a href={setImageUrl("/image/" +record.attachmentUrl)}
+                            target="_blank"
+                        >
+                            {text}
+                        </a>
 
                 )
             }
@@ -689,26 +668,26 @@ const WorkBasicInfo = (props) => {
                                 <div style={{ padding: "0 11px" }}>{workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}</div>
                             </Form.Item>
                             <Form.Item name="percent" label="进度"
-                            hasFeedback={showValidateStatus === "percent" ? true : false}
-                            validateStatus={validateStatus}
-                        >
+                                hasFeedback={showValidateStatus === "percent" ? true : false}
+                                validateStatus={validateStatus}
+                            >
 
-                            <InputNumber min={1} max={100}
-                                // value={workInfo?.percent ? workInfo?.percent : 0}
-            
-                                value={workInfo.percent}
-                               
-                                key="percent"
-                                bordered={fieldName === "percent" ? true : false}
-                                suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
-                                onFocus={() => changeStyle("percent")}
-                                onBlur={() => setFieldName("")}
-                                onMouseEnter={() => setHoverFieldName("percent")}
-                                onMouseLeave={() => setHoverFieldName("")}
-                            />
-                            %
-                        </Form.Item>
-                            
+                                <InputNumber min={1} max={100}
+                                    // value={workInfo?.percent ? workInfo?.percent : 0}
+
+                                    value={workInfo.percent}
+
+                                    key="percent"
+                                    bordered={fieldName === "percent" ? true : false}
+                                    suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("percent")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("percent")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                />
+                                %
+                            </Form.Item>
+
 
 
 
@@ -727,25 +706,25 @@ const WorkBasicInfo = (props) => {
                         colon={false}
                     >
                         <Form.Item
-                                name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
-                                hasFeedback={showValidateStatus === "planTime" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <RangePicker
-                                    locale={locale}
-                                    format={dateFormat}
-                                    allowClear={false}
-                                    className="work-select"
-                                    bordered={fieldName === "planTime" ? true : false}
-                                    suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planTime")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planTime")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer={() => formRef.current}
-                                    showTime
-                                />
-                            </Form.Item>
+                            name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
+                            hasFeedback={showValidateStatus === "planTime" ? true : false}
+                            validateStatus={validateStatus}
+                        >
+                            <RangePicker
+                                locale={locale}
+                                format={dateFormat}
+                                allowClear={false}
+                                className="work-select"
+                                bordered={fieldName === "planTime" ? true : false}
+                                suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
+                                onFocus={() => changeStyle("planTime")}
+                                onBlur={() => setFieldName("")}
+                                onMouseEnter={() => setHoverFieldName("planTime")}
+                                onMouseLeave={() => setHoverFieldName("")}
+                                getPopupContainer={() => formRef.current}
+                                showTime
+                            />
+                        </Form.Item>
 
                         <Form.Item name="parentWorkItem" label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
@@ -770,10 +749,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         />
                                     })
                                         :
@@ -804,10 +780,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={version === "cloud" ?
-                                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                :
-                                                (upload_url + item.workTypeSys?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
                                         >
                                             <div>事项</div>
                                         </SelectItem>

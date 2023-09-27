@@ -786,6 +786,10 @@ const Routers = [
                                 path: "/index/projectDetail/:id/work/list",
                                 component: WorkList
                             },
+                            {
+                                path: "/index/projectDetail/:id/work/:workId",
+                                component: WorkDetailPage
+                            },
                         ]
                     },
                    

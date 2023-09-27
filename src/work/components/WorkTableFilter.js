@@ -11,6 +11,7 @@ import WorkQuickTab from "./WorkQuickTab";
 import WorkFilterType from "./WorkFilterType";
 import { getUser } from "tiklab-core-ui";
 import { useDebounce } from "../../common/utils/debounce";
+import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -179,12 +180,7 @@ const WorkTableFilter = (props) => {
                                     value={item.id}
                                     label={item.projectName}
                                     key={item.id}
-                                    // imgUrl={item.iconUrl}
-                                    imgUrl={version === "cloud" ?
-                                        (upload_url + item.iconUrl + "?tenant=" + tenant)
-                                        :
-                                        (upload_url + item.iconUrl)
-                                    }
+                                    imgUrl = {setImageUrl(item.iconUrl)}
                                 />
                             })
                         }

@@ -222,6 +222,9 @@ const StatisticsWork = (props) => {
                         <Select
                             placeholder="选择一个统计项"
                             onChange={onGenderChange}
+                            style={{
+                                width: 120,
+                              }}
                         >
                             {
                                 statisticalList && statisticalList.map(item => {

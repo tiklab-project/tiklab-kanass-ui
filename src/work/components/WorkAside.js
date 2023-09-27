@@ -6,6 +6,7 @@ import "./WorkAside.scss"
 import { Spin } from 'antd';
 import { getUser } from 'tiklab-core-ui';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
+import setImageUrl from '../../common/utils/setImageUrl';
 
 const WorkAside = (props) => {
     // 选择事务
@@ -187,11 +188,7 @@ const WorkAside = (props) => {
                                     {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
-                                                src={version === "cloud" ?
-                                                    (upload_url + childItem.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                                    :
-                                                    (upload_url + childItem.workTypeSys?.iconUrl)
-                                                }
+                                                src = {setImageUrl(childItem.workTypeSys.iconUrl)}
                                                 alt=""
                                                 className="img-icon-right"
                                             />
@@ -251,21 +248,18 @@ const WorkAside = (props) => {
                         }
                     </div>
                     {
-                        item.workTypeSys?.iconUrl ? <img
-                            src={version === "cloud" ?
-                                (upload_url + item.workTypeSys?.iconUrl + "?tenant=" + tenant)
-                                :
-                                (upload_url + item.workTypeSys?.iconUrl)
-                            }
+                        item.workTypeSys?.iconUrl ? 
+                        <img
+                            src = {setImageUrl(item.workTypeSys?.iconUrl)}
                             alt=""
                             className="img-icon-right"
                         />
-                            :
-                            <img
-                                src={('images/workType1.png')}
-                                alt=""
-                                className="img-icon-right"
-                            />
+                        :
+                        <img
+                            src={('images/workType1.png')}
+                            alt=""
+                            className="img-icon-right"
+                        />
                     }
 
                     <div className="work-aside-item-name">

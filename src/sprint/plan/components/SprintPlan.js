@@ -5,7 +5,10 @@ import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
 import WorkStore from "../../../work/store/WorkStore";
-import SprintPlanStore from "../stores/SprintPlanStore"
+import SprintPlanStore from "../stores/SprintPlanStore";
+import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+import setImageUrl from "../../../common/utils/setImageUrl";
+import { getUser } from "tiklab-core-ui";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -23,7 +26,8 @@ const SprintPlan = (props) => {
         planTotal, noPlanTotal } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
-    const [boxLength, setBoxLength] = useState(90)
+    const [boxLength, setBoxLength] = useState(90);
+    const tenant = getUser().tenant;
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -145,11 +149,14 @@ const SprintPlan = (props) => {
      * @param {事项id} id 
      * @param {*} index 
      */
-    const goWorkItem = (id, index) => {
+    const goWorkItem = (work, index) => {
         setWorkIndex(index)
-        setWorkId(id)
+        setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
+        setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/${work.id}`)
     }
 
     const changeNoPlanSprintPage = () => {
@@ -250,14 +257,14 @@ const SprintPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
+                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
                                             <div className="work-item-title-left" >
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
-                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
+                                                            src= {setImageUrl(item.workTypeSys.iconUrl)}
 
                                                         />
                                                         :
@@ -306,7 +313,7 @@ const SprintPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                            imgUrl = {setImageUrl(item.workType?.iconUrl)}
                                         />
                                     })
                                 }
@@ -361,15 +368,14 @@ const SprintPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, sprintId)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item.id, index)}>
+                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
                                             <div className="work-item-title-left" >
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
-                                                            src={version === "cloud" ? (upload_url + item.workTypeSys.iconUrl + "?tenant=" + tenant) : (upload_url + item.workTypeSys.iconUrl)}
                                                             alt=""
                                                             className="svg-icon"
-
+                                                            src = {setImageUrl(item.workTypeSys.iconUrl)}
                                                         />
                                                         :
                                                         <img
