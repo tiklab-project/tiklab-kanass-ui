@@ -9,6 +9,7 @@ import SprintPlanStore from "../stores/SprintPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { getUser } from "tiklab-core-ui";
+import { useDebounce } from "../../../common/utils/debounce";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -136,13 +137,13 @@ const SprintPlan = (props) => {
         }
     }
 
-    const handleChange = (field, value) => {
+    const handleChange = useDebounce((field, value) => {
         getNoPlanWorkList({ [field]: value })
-    }
+    }, [500])
 
-    const findSprintWorkItem = (field, value) => {
+    const findSprintWorkItem = useDebounce((field, value) => {
         getWorkList({ [field]: value })
-    }
+    },[500])
 
     /**
      * 显示事项详情抽屉
@@ -190,7 +191,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">待办规划事项</div>
                         <div className="sprint-plan-filter">
-                            <InputSearch onChange={(value) => handleChange("title", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => handleChange("likeId", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
@@ -300,7 +301,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">迭代下事项</div>
                         <div className="sprint-plan-filter">
-                            <InputSearch onChange={(value) => findSprintWorkItem("title", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => findSprintWorkItem("likeId", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => findSprintWorkItem("workTypeIds", value)}
                                 title={"类型"}

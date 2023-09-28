@@ -202,7 +202,7 @@ const NewWorkItemTrend = (props) => {
                 <div className="new-trend-top">
                     <div className="new-trend-title">
                         <div>
-                            新建项目趋势
+                            新建事项趋势
                         </div>
                         {
                             !isView && <div className="report-action">

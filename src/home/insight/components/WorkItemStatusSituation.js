@@ -93,7 +93,7 @@ const WorkItemStatusSituation = (props) => {
             <div className="workitem-situation-top">
                 <div className="workitem-situation-title">
                     <div>
-                        项目进展概况
+                        项目事项进展概况
                     </div>
                     {
                         !isView && <div className="report-action">

@@ -208,7 +208,7 @@ const EndWorkItemTrend = (props) => {
                 <div className="end-trend-top">
                     <div className="end-trend-title">
                         <div>
-                            完成项目趋势
+                            完成事项趋势
                         </div>
                         {
                             !isView && <div className="report-action">
