@@ -39,12 +39,14 @@ const ProjectOperateTable = (props) => {
      */
     useEffect(() => {
         if (isEditor) {
-            form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
+            
             statisticsProjectOperateList({projectSetId: condition.data.data.projectSetId}).then(res => {
                 if (res.code === 0) {
                     setProjectOPerteList(res.data)
                 }
             })
+        }else {
+            form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
         }
     }, [isEditor])
 
@@ -53,11 +55,11 @@ const ProjectOperateTable = (props) => {
      * @param {表单数据} value 
      */
     const editReport = (value) => {
-        statisticsProjectOperateList(value).then(res => {
-            if (res.code === 0) {
-                setProjectOPerteList(res.data)
-            }
-        })
+        // statisticsProjectOperateList(value).then(res => {
+        //     if (res.code === 0) {
+        //         setProjectOPerteList(res.data)
+        //     }
+        // })
         reportList.lg[index].data.data = value;
         reportList.lg[index].data.isEdit = true;
         setIsEditor(!isEditor)
@@ -78,7 +80,6 @@ const ProjectOperateTable = (props) => {
                     <div className="operate-title">
                         <div>
                             项目进展
-
                         </div>
                         {
                             !isView && <div className="report-action">

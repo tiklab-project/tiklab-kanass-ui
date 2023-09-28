@@ -44,8 +44,10 @@ const UserWorkItem = (props) => {
     useEffect(() => {
         if(isEditor){
             const params = { projectId: condition.data.data.projectId }
-            form.setFieldsValue({projectId: condition.data.data.projectId})
+            
             statisticsUserWorkItem(params)
+        }else {
+            form.setFieldsValue({projectId: condition.data.data.projectId})
         }
         
     },[isEditor])
@@ -152,7 +154,7 @@ const UserWorkItem = (props) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
         reportList.lg[index].data.isEdit = true;
-        statisticsUserWorkItem(values)
+        // statisticsUserWorkItem(values)
     }
 
     /**

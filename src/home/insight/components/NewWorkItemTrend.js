@@ -17,7 +17,7 @@ import moment from "moment";
 const { RangePicker } = DatePicker;
 
 const NewWorkItemTrend = (props) => {
-    const { insightStore, index, isView, editInsight,condition } = props;
+    const { insightStore, index, isView, editInsight, condition } = props;
     const { statisticsNewWorkItemCount, findAllProject, reportList } = insightStore;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
@@ -37,7 +37,7 @@ const NewWorkItemTrend = (props) => {
      * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
-        const data  =condition.data.data;
+        const data = condition.data.data;
         if (isEditor) {
             const params = {
                 startDate: data.startDate,
@@ -49,14 +49,18 @@ const NewWorkItemTrend = (props) => {
             }
             setStatisticsData(params)
 
-            const formData = {
-                dateRanger:[moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')],
-                cellTime: data.cellTime,
-                workItemTypeCode: data.workItemTypeCode,
-                projectId: data.projectId
+
+        } else {
+            if (data) {
+                const formData = {
+                    dateRanger: data.startDate ?  [moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')] : null,
+                    cellTime: data.cellTime,
+                    workItemTypeCode: data.workItemTypeCode,
+                    projectId: data.projectId
+                }
+                form.setFieldsValue(formData)
             }
 
-            form.setFieldsValue(formData)
         }
 
     }, [isEditor])
@@ -135,7 +139,7 @@ const NewWorkItemTrend = (props) => {
         }
 
         setIsEditor(!isEditor)
-        setStatisticsData(params)
+        // setStatisticsData(params)
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;
         console.log(params, index, reportList)
@@ -228,7 +232,7 @@ const NewWorkItemTrend = (props) => {
                             onFinish={editReport}
                             wrapperCol={{ span: 12 }}
                             labelCol={{ span: 6 }}
-                            layout = "vertical"
+                            layout="vertical"
                         >
                             <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
                                 <Select

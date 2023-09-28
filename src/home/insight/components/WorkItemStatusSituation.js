@@ -47,20 +47,22 @@ const WorkItemStatusSituation = (props) => {
      * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
-        findAllProject().then(res => {
-            setProjectList(res.data)
-        })
+       
+        const data = condition.data.data
+        const params = {
+            projectId: data.projectId,
+            workItemTypeCode: data.workItemTypeCode
+        }
         if (isEditor) {
-            const data = condition.data.data
-            const params = {
-                projectId: data.projectId,
-                workItemTypeCode: data.workItemTypeCode
-            }
-            form.setFieldsValue(params)
             
             statisticsWorkItemStatusCount(params).then(res => {
                 setWorkItemStatusCount(res.data)
             })
+        }else {
+            findAllProject().then(res => {
+                setProjectList(res.data)
+            })
+            form.setFieldsValue(params)
         }
         return;
 
@@ -74,9 +76,9 @@ const WorkItemStatusSituation = (props) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
         reportList.lg[index].data.isEdit = true;
-        statisticsWorkItemStatusCount(values).then(res => {
-            setWorkItemStatusCount(res.data)
-        })
+        // statisticsWorkItemStatusCount(values).then(res => {
+        //     setWorkItemStatusCount(res.data)
+        // })
     }
 
     /**

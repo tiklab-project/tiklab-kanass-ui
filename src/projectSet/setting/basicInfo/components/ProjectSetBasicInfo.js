@@ -150,13 +150,13 @@ const ProjectSetBasicInfo = props => {
                 <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use xlinkHref="#icon-projectDelete"></use>
                 </svg>
-                删除项目
+                删除项目集
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
                 <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
-                删除项目
+                删除项目集
             </div>
         </div>
     );
@@ -262,11 +262,9 @@ const ProjectSetBasicInfo = props => {
 
                                         <span>此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
                                     </div>
-                                    <PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>
                                         <div className="change-botton" onClick={() => showModal()}>
                                             删除项目集
                                         </div>
-                                    </PrivilegeProjectButton>
 
                                 </div>
                             </div>

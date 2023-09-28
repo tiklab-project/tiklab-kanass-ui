@@ -27,6 +27,7 @@ const ProjectSetWorkItem = (props) => {
     // 统计项目成员的列表
     const [projectWorkitem, setProjectWorkitem] = useState([])
 
+    const [value, setValue] = useState()
     useEffect(() => {
         /**
          * 查找所有项目集并设置默认项目集
@@ -42,8 +43,9 @@ const ProjectSetWorkItem = (props) => {
     useEffect(() => {
         if (isEditor) {
             const params = { projectSetId: condition.data.data.projectSetId }
-            form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
             statisticsProjectWorkItem(params)
+        }else {
+            form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
         }
 
     }, [isEditor])
@@ -120,7 +122,7 @@ const ProjectSetWorkItem = (props) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
         reportList.lg[index].data.isEdit = true;
-        statisticsProjectWorkItem(values)
+        // statisticsProjectWorkItem(values)
     }
 
     /**

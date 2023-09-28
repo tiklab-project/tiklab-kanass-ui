@@ -6,6 +6,11 @@
     .report-action-edit {
         margin-right: 10px;
         color: var(--tiklab-blue);
+        cursor: pointer;
         
+    }
+    .report-action-delete {
+        cursor: pointer;
+        color: var(--tiklab-blue);
     }
 }

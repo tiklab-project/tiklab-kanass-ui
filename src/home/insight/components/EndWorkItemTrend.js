@@ -55,15 +55,19 @@ const EndWorkItemTrend = (props) => {
                 projectId: data.projectId
             }
 
-            const formData = {
-                dateRanger:[moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')],
-                cellTime: data.cellTime,
-                workItemTypeCode: data.workItemTypeCode,
-                projectId: data.projectId
-            }
-
-            form.setFieldsValue(formData)
+            
             setStatisticsData(params)
+        }else {
+            if (data) {
+                const formData = {
+                    dateRanger: data.startDate ? [moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')] : null,
+                    cellTime: data.cellTime,
+                    workItemTypeCode: data.workItemTypeCode,
+                    projectId: data.projectId
+                }
+    
+                form.setFieldsValue(formData)
+            }
         }
 
     }, [isEditor])
@@ -144,7 +148,7 @@ const EndWorkItemTrend = (props) => {
         }
 
         setIsEditor(!isEditor)
-        setStatisticsData(params)
+        // setStatisticsData(params)
 
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;

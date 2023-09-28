@@ -43,8 +43,9 @@ const ProjectSetMember = (props) => {
             const value = {
                 projectSetId: condition.data.data.projectSetId
             }
-            form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
             statisticsProjectUser(value)
+        }else {
+            form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
         }
         
     },[isEditor])
@@ -118,7 +119,7 @@ const ProjectSetMember = (props) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
         reportList.lg[index].data.isEdit = true;
-        statisticsProjectUser(values)
+        // statisticsProjectUser(values)
     }
 
     /**
