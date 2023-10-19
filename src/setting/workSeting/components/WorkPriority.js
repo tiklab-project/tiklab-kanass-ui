@@ -17,6 +17,7 @@ const WorkPriority = (props) => {
 
     useEffect(() => {
         getWorkPriorityList()
+        return;
     }, []);
 
     const deleWorkPriority = (id) => {

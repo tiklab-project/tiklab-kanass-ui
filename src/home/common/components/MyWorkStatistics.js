@@ -23,6 +23,7 @@ const MyWorkStatistics = (props) => {
                 setWorkStatusList(res.data)
             }
         })
+        return;
      },[])
 
      /**

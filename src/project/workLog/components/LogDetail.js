@@ -64,7 +64,7 @@ const LogDetail = (props) => {
                 setWorkContent(res.data.workContent)
             })
         }
-
+        return;
     }, [logDetailVisable])
 
     /**

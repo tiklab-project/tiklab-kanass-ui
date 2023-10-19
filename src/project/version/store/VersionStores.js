@@ -10,15 +10,15 @@ import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class VersionStore {
     // 版本列表
-    @observable
-    versionList = [];
+    @observable versionList = [];
 
-    @observable
-    versionFocusList = [];
+    @observable versionFocusList = [];
     // 版本信息
     @observable versionItem = [];
     // 搜索版本的标题
     @observable searchVersionName = [];
+
+    @observable userList = [];
     // 查找版本的分页参数
     @observable
     searchCondition = {
@@ -78,16 +78,7 @@ export class VersionStore {
      */
     @action
     addVersion = async (value) => {
-        let params = {
-            name: value.name,
-            versionState: value.versionState,
-            publishDate: value.publishDate,
-            startTime: value.startTime,
-            project: {
-                id: value.project
-            }
-        }
-        const data = await Service("/projectVersion/createVersion", params)
+        const data = await Service("/projectVersion/createVersion", value)
         return data;
 
     }
@@ -223,6 +214,21 @@ export class VersionStore {
     @action
     deleteVersionFocus = async (value) => {
         const data = await Service("/versionFocus/deleteVersionFocusByQuery", value)
+        return data;
+    }
+    @action
+    getUseList = async (projectId) => {
+        const params = {
+            domainId: projectId,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/dmUser/findDmUserPage", params)
+        if (data.code === 0) {
+            this.userList = data.data.dataList;
+        }
         return data;
     }
 

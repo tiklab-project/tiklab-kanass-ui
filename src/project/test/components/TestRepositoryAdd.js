@@ -18,7 +18,7 @@ const TestRepositoryAdd = (props) => {
                 }
             })
         }
-        
+        return;
     }, [testAddvisible])
 
     //提交用户列表

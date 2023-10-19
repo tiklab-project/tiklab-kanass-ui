@@ -32,7 +32,8 @@ const StageAddModal = (props) => {
      * 获取项目成员
      */
     useEffect(()=> {
-        getUseList({projectId: projectId})
+        getUseList({projectId: projectId});
+        return;
     },[])
 
     /**

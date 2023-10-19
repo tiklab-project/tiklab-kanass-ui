@@ -29,9 +29,7 @@ const ProjectSetTable = (props) => {
     const userId = getUser().userId;
 
     useEffect(() => {
-        // findAllProjectSet()
         findRecentProjectSetList({})
-        // findProjectSetFocus()
         getUseList()
         return;
     }, [])

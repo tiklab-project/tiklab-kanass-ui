@@ -31,6 +31,7 @@ const WorkFilterType = (props) => {
 
             }
         })
+        return;
     }, [])
 
 

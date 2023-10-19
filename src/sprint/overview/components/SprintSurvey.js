@@ -70,7 +70,7 @@ const SprintSurvey = (props) => {
 
         statWorkItemByBusStatus(data).then(res => {
             setWorkStatusList(res.data)
-            const percent = res.data[3].groupCount / res.data[0].groupCount;
+            const percent = res.data?.ending / res.data?.all;
             setPercent(percent ? percent.toFixed(2) : 0)
         })
         findlogpage({ userId: masterId, sprintId: sprintId })
@@ -148,7 +148,7 @@ const SprintSurvey = (props) => {
                             </div>
                             <div className="sprint-container">
                                 <div className="sprint-item">
-                                    <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={masterName} />
+                                    <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={sprintInfo?.master.nickname} />
                                     <div className="item-content">
                                         <div className="item-top">{sprintInfo?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>
@@ -292,54 +292,6 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="sprint-survey-bottom">
-                        <div className="bottom-left">
-                            <div className="title">我的事项</div>
-                            <div className="sprint-survey-work">
-                                {
-                                    workStatusList && workStatusList.map((item, index) => {
-                                        return <div className="work-item" key={index}>
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-workitemstate"></use>
-                                            </svg>
-                                            <div className="work-count">
-                                                <div className="work-num">{item.groupCount}</div>
-                                                <div className="work-text">{item.statusName}</div>
-                                            </div>
-                                        </div>
-                                    })
-                                }
-
-                            </div>
-                        </div>
-                        <div className="bottom-right">
-                            <div className="title">进行中事项</div>
-                            <div className="sprint">
-                                {
-                                    workItemList && workItemList.map((item, index) => {
-                                        return <div className="sprint-item" key={index}>
-                                            <div className="sprint-item-left">
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-workItemProcess"></use>
-                                                </svg>
-                                                <div className="sprint-name">
-                                                    {item.title}
-                                                </div>
-                                            </div>
-
-
-                                            <div className="sprint-date">
-                                                {item.planBeginTime} ~ {item.planEndTime}
-                                            </div>
-                                            <div className="sprint-process">
-                                                50%
-                                            </div>
-                                        </div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </Col>
         </Row>

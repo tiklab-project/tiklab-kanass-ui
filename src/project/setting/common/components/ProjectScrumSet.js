@@ -34,7 +34,6 @@ const ProjectScrumSet = (props)=>{
         searchpro(props.match.params.id).then((res)=> {
             setProjectname(res.projectName)
         })
-        // 初始化权限
        
         return 
     }, [projectId])

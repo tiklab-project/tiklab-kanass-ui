@@ -35,10 +35,12 @@ const WorkFilterHigh = (props) => {
         getModuleList(projectId)
         getWorkStatus()
         getSelectUserList(projectId);
+        return;
     }, [])
 
     useEffect(() => {
         initForm()
+        return;
     }, [searchCondition])
 
 

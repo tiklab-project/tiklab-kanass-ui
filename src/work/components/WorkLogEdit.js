@@ -54,7 +54,7 @@ const WorkLogEdit = (props) => {
                 )
             })
         }
-        
+        return;
     }, [visible])
 
 

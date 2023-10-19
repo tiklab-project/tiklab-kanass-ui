@@ -52,7 +52,7 @@ const StatisticsAsicde = (props) => {
                 setLogMenuList([...logMenuList])
             }
         }
-
+        return;
     }, [])
     // 选中的菜单
     const [selectRouter, setSelectRouter] = useState("workItem")

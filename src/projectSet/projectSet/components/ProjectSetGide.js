@@ -14,12 +14,9 @@ import "./projectSetGide.scss"
 import { withRouter } from "react-router";
 import ProjectSetStore from "../store/ProjectSetStore";
 const ProjectSetGide = (props) => {
-    const { getUseList } = ProjectSetStore;
     const [name, setName] = useState("添加项目集")
 
-    // useEffect(() => {
-    //     getUseList()
-    // })
+
     return (
         <div className="projectSet-gide">
             <div>

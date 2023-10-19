@@ -15,7 +15,7 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 
 const VersionAddmodal = (props) => {
-    const { versionStore, findVersion } = props;
+    const { versionStore, findVersion, userList, getUseList } = props;
     const { editVersion, addVersion, searchVersionById } = versionStore;
     const [form] = Form.useForm();
     // 弹窗显示
@@ -39,19 +39,27 @@ const VersionAddmodal = (props) => {
         form.validateFields().then((fieldsValue) => {
             const values = {
                 ...fieldsValue,
-                project: projectId,
+                master: {
+                    id: fieldsValue.master
+                },
+                project: {
+                    id: projectId
+                },
+
                 'publishDate': fieldsValue['publishDate'].format('YYYY-MM-DD'),
                 'startTime': fieldsValue['startTime'].format('YYYY-MM-DD')
             };
             if (props.type === "edit") {
                 values.id = props.id
                 editVersion(values).then(() => {
+                    form.resetFields();
                     setVisible(false);
                 })
             } else {
                 addVersion(values).then(() => {
                     findVersion({ projectId: projectId })
                     setVisible(false);
+                    form.resetFields();
                 })
             }
         })
@@ -70,6 +78,7 @@ const VersionAddmodal = (props) => {
      * 显示编辑弹窗，若是编辑模式，初始化表单
      */
     const showModal = () => {
+        getUseList(projectId)
         setVisible(true);
         if (props.type === "edit") {
             searchVersionById({ id: props.id }).then((res) => {
@@ -111,13 +120,9 @@ const VersionAddmodal = (props) => {
                     </PrivilegeProjectButton>
                     :
                     <PrivilegeProjectButton code={'VersionEdit'} domainId={projectId}  {...props}>
-                        {/* <Button onClick={showModal} style={{ color: "var(--tiklab-gray-400)" }} type="dashed">
-                            {props.name}
-                        </Button> */}
                          <svg className="svg-icon" aria-hidden="true" onClick={showModal} style = {{cursor: "pointer"}}>
                             <use xlinkHref="#icon-edit"></use>
                         </svg>
-
                     </PrivilegeProjectButton>
 
                 }
@@ -174,6 +179,29 @@ const VersionAddmodal = (props) => {
                                 }
                             </Select>
                         </Form.Item>
+                        
+                        <Form.Item
+                            label="负责人"
+                            name="master"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入负责人',
+                                },
+                            ]}
+                        >
+                            <Select
+                                placeholder="负责人"
+                                allowClear
+                            >
+                                {
+                                    userList && userList.map((item, index) => {
+                                        return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+
                         <Form.Item
                             label="起始时间"
                             name="startTime"

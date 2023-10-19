@@ -5,12 +5,7 @@ import { finWorkList } from "./WorkGetList";
 
 const Work = (props) => {
     const { route } = props;
-    const { setSearchType } = WorkStore;
-    useEffect(() => {
-        // return () => {
-        //     setSearchType("pending")
-        // };
-    }, [])
+
 
     return <>
         {renderRoutes(route.routes)}

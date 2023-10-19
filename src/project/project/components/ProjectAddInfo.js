@@ -43,7 +43,7 @@ const ProjectAddInfo = (props) => {
    
     useEffect(() => {
         getIconList()
-        
+        return;
     },[])
 
     const getIconList = () => {

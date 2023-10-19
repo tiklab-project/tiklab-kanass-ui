@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import "../components/versionSurvey.scss";
-import { Row, Col, Progress, Empty } from 'antd';
+import { Row, Col, Progress, Empty, Select } from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
@@ -16,9 +16,10 @@ import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import VersionSurveyStore from "../store/VersionSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
+import { CaretDownOutlined } from '@ant-design/icons';
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, statWorkItemByBusStatus } = VersionSurveyStore;
+        findtodopage, todoTaskList, statWorkItemByBusStatus, userList, getUseList } = VersionSurveyStore;
     const { setSearchType } = WorkStore;
 
     const versionId = props.match.params.version;
@@ -36,7 +37,7 @@ const VersionSurvey = (props) => {
         }
         statWorkItemByBusStatus(data).then(res => {
             setWorkStatusList(res.data)
-            const percent = res.data[3].groupCount / res.data[0].groupCount;
+            const percent = res.data?.ending / res.data?.all;
             setPercent(percent ? percent.toFixed(2) : 0)
         })
         findVersion({ versionId: versionId }).then(res => {
@@ -70,7 +71,7 @@ const VersionSurvey = (props) => {
             })
         })
         // 燃尽图
-
+        getUseList(projectId)
 
         findlogpage({ userId: masterId, versionId: versionId })
 
@@ -78,7 +79,8 @@ const VersionSurvey = (props) => {
 
         return;
     }, [versionId])
-
+    const [hoverFieldName, setHoverFieldName] = useState("")
+    const [fieldName, setFieldName] = useState("")
     /**
      * 燃尽图
      */
@@ -130,6 +132,9 @@ const VersionSurvey = (props) => {
         setSearchType(value)
         props.history.push(`/index/${projectId}/versiondetail/${versionId}/work/table`)
     }
+    const changeFieldName = (value) => {
+        setFieldName(value)
+    }
     return (
         <Row style={{ height: "100%", background: "#f9f9f9" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
@@ -145,6 +150,31 @@ const VersionSurvey = (props) => {
                                 {versionInfo && versionInfo.name}
                             </div>
                             <div className="version-container">
+                                <div className="version-item">
+                                    <UserIcon userInfo={versionInfo?.master} size="big" className="item-icon" name={versionInfo?.master.nickname} />
+                                    <div className="item-content">
+                                        <div className="item-top">{versionInfo?.master?.nickname}</div>
+                                        <div className="item-bottom">项目负责人</div>
+                                        {/* <Select
+                                            placeholder="无"
+                                            className="work-select"
+                                            key="selectAssigner"
+                                            bordered={fieldName === "assigner" ? true : false}
+                                            suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
+                                            onFocus={() => changeFieldName("assigner")}
+                                            onBlur={() => setFieldName("")}
+                                            onMouseEnter={() => setHoverFieldName("assigner")}
+                                            onMouseLeave={() => setHoverFieldName("")}
+                                            allowClear
+                                        >
+                                            {
+                                                userList && userList.map((item, index) => {
+                                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                                })
+                                            }
+                                        </Select> */}
+                                    </div>
+                                </div>
                                 <div className="version-work">
                                     <div className="version-item" onClick={() => goWorkItemList("all")}>
                                         <svg className="status-img" aria-hidden="true">
@@ -283,54 +313,7 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="version-survey-bottom">
-                        <div className="bottom-left">
-                            <div className="title">我的事项</div>
-                            <div className="version-survey-work">
-                                {
-                                    workStatusList && workStatusList.map((item, index) => {
-                                        return <div className="work-item" key={index}>
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-workitemstate"></use>
-                                            </svg>
-                                            <div className="work-count">
-                                                <div className="work-num">{item.groupCount}</div>
-                                                <div className="work-text">{item.statusName}</div>
-                                            </div>
-                                        </div>
-                                    })
-                                }
-
-                            </div>
-                        </div>
-                        <div className="bottom-right">
-                            <div className="title">进行中事项</div>
-                            <div className="version">
-                                {
-                                    workItemList && workItemList.map((item, index) => {
-                                        return <div className="version-item" key={index}>
-                                            <div className="version-item-left">
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-workItemProcess"></use>
-                                                </svg>
-                                                <div className="version-name">
-                                                    {item.title}
-                                                </div>
-                                            </div>
-
-
-                                            <div className="version-date">
-                                                {item.planBeginTime} ~ {item.planEndTime}
-                                            </div>
-                                            <div className="version-process">
-                                                50%
-                                            </div>
-                                        </div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div> */}
+                   
                 </div>
             </Col>
         </Row>

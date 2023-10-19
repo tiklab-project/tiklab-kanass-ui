@@ -36,6 +36,7 @@ const UserWorkItem = (props) => {
         findAllProject().then(res => {
             setProjectList(res.data)
         })
+        return;
     }, [])
 
      /**
@@ -49,7 +50,7 @@ const UserWorkItem = (props) => {
         }else {
             form.setFieldsValue({projectId: condition.data.data.projectId})
         }
-        
+        return;
     },[isEditor])
 
     /**

@@ -56,6 +56,7 @@ const Index = observer((props) => {
             setPluginData(res)
             setVisable(false)
         })
+        return;
     }, []);
 
     return (

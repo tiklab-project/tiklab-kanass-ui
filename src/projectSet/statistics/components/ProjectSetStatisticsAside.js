@@ -94,6 +94,7 @@ const StatisticsAsicde = (props) => {
                 setLogMenuList([...logMenuList])
             }
         }
+        return;
     }, [])
 
     const isExpandedTree = (key) => {

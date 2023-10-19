@@ -22,6 +22,7 @@ const SelectSimple = (props) => {
             setSelectLength(0)
             setSelectData([])
         }
+        return;
     }, [selectValue])
 
 

@@ -22,7 +22,7 @@ const WorkListFilter = (props) => {
         getWorkStatus();
         findProjectList();
         getSelectUserList(projectId)
-       
+        return;
     }, [])
 
   

@@ -32,6 +32,7 @@ const WorkListHead = (props) => {
                 list.push(item.user)
             })
         });
+        return;
     }, [])
 
     const getPageList = (value) => {

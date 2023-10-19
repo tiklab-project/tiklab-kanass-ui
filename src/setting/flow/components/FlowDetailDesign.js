@@ -7,6 +7,7 @@ const FlowDetailDesign = (props) => {
     const {userList, findUserList} = FlowStore;
     useEffect(()=> {
         findUserList()
+        return;
     }, [])
     return (
         <FlowChart isBase = {false} userList = {userList}/>

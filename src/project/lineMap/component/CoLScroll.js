@@ -27,7 +27,7 @@ const CoLScroll = (props) => {
             console.log(colScrollHeight)
         }
 
-        
+        return;
     }, [timerCore.current.offsetHeight])
     useEffect(() => {
         const handleWheel = (e) => {

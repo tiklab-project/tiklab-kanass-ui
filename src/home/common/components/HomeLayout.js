@@ -10,8 +10,7 @@ import React from 'react';
 
 import { renderRoutes } from "react-router-config";
 import Header from "./Header";
-import "./HomeLayout.scss"
-import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
+import "./HomeLayout.scss";
 import { UserVerify } from 'tiklab-eam-ui';
 import { connect } from 'tiklab-plugin-core-ui';
 
@@ -26,12 +25,7 @@ const Layout = (props) => {
     return (
         <Provider {...store}>
             <div className="frame">
-                <Header
-                    AppLink={AppLink}
-                    HelpLink={HelpLink}
-                    AvatarLink={AvatarLink}
-                    {...props}
-                />
+                <Header {...props} />
                 <div className="frame-content">
                     {renderRoutes(route)}
                 </div>

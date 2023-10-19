@@ -36,6 +36,7 @@ const NewInsight = (props) => {
 
     useEffect(() => {
         getInsightById()
+        return;
     }, [])
 
     /**

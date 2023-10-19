@@ -32,6 +32,7 @@ const EpicAddModal = (props) => {
      */
     useEffect(()=> {
         getUseList({projectId: projectId})
+        return;
     },[])
 
     /**

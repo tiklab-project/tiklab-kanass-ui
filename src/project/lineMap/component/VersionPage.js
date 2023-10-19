@@ -34,6 +34,7 @@ const VersionPage = (props) => {
                 setVersionList(data.data)
             }
         })
+        return;
     }, [])
 
     /**

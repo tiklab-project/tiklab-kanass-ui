@@ -39,6 +39,7 @@ const ProjectIconChange = (props) => {
 
     useEffect(() => {
         getIconList()
+        return;
     },[])
     const projectId = props.match.params.id;
     const onFinish = () => {

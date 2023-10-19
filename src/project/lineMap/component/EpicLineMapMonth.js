@@ -37,7 +37,6 @@ const EpicLineMap = (props) => {
     const [graph, getGraph] = useState()
 
     useEffect(() => {
-        console.log(ganttOuter)
         // 画布参数
         if (ganttCore?.current) {
             setdateArray(getDate())
@@ -46,11 +45,6 @@ const EpicLineMap = (props) => {
 
         return;
     }, [])
-    console.log("ganttOuter", ganttOuter)
-    useEffect(() => {
-        console.log(ganttOuter)
-        return;
-    }, [ganttOuter?.current])
 
 
     const creatGraph = () => {

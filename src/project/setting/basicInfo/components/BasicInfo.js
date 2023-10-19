@@ -65,7 +65,6 @@ const BasicInfo = props => {
 
     useEffect(() => {
 
-
         info()
         getProjectTypeList()
         getUseList()

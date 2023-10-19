@@ -29,6 +29,7 @@ const WorkTableAside=(props) => {
                 setWorkTypeText("事项");
                 break;
         }
+        return;
     },[workType])
 
     

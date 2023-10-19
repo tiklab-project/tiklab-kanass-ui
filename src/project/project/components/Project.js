@@ -20,6 +20,7 @@ const Project = (props) => {
     const { findMyAllProjectList, allProlist } = ProjectStore;
     useEffect(() => {
         findMyAllProjectList();
+        return;
     }, [])
     return (
         <Provider {...store}>

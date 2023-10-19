@@ -288,6 +288,7 @@ const WorkAside = (props) => {
         if (workAsideList.current) {
             setWorkAside(workAsideList.current.scrollTop)
         }
+        return;
     }, [workAsideList.current])
 
     const onScroll = (e) => {

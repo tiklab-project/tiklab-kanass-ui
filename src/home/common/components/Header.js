@@ -16,9 +16,10 @@ import logo from "../../../assets/images/logo_tw5.png";
 import HeadMoreMenu from "./HeadMoreMenu";
 import Search from "../../search/components/Search";
 import MessageList from "./MessageList";
+import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
 import "./Header.scss";
 const Header = props => {
-    const {  systemRoleStore, AppLink, HelpLink, AvatarLink,} = props;
+    const {  systemRoleStore} = props;
     // 被点击菜单的key
     const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
     // 语言包
@@ -30,6 +31,7 @@ const Header = props => {
         if (user && user.userId) {
             systemRoleStore.getSystemPermissions(user.userId, "teamwire")
         }
+        return;
     }, [])
 
 

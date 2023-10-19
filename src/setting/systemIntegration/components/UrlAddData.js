@@ -31,6 +31,7 @@ const UrlAddData = (props) => {
                 }
             })
         }
+        return;
     }, [urlId])
 
     const onFinish = () => {

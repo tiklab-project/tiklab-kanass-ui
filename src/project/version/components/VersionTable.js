@@ -26,7 +26,8 @@ const VersionTable = (props) => {
         versionStore: VersionStore
     }
     const { versionList, getVersionList, deleVersion, createRecent, 
-        findVersionFocusList, createVersionFocus, deleteVersionFocus, findFocusVersionList } = VersionStore;
+        findVersionFocusList, createVersionFocus, deleteVersionFocus, 
+        findFocusVersionList, userList, getUseList } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
@@ -304,6 +305,8 @@ const VersionTable = (props) => {
                                 type="add"
                                 id="0"
                                 findVersion={findVersion}
+                                getUseList = {getUseList}
+                                userList = {userList}
                                 {...props}
                             />
                         </Breadcumb>

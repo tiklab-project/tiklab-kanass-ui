@@ -405,7 +405,6 @@ const WorkBasicInfo = (props) => {
     const [hoverFieldName, setHoverFieldName] = useState("")
     const [fieldName, setFieldName] = useState("")
     const changeStyle = (value) => {
-        console.log(value)
         setFieldName(value)
     }
 

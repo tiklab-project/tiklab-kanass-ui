@@ -33,6 +33,7 @@ const WorkListFilter = (props) => {
                 setFlowIds(list)
             }
         })
+        return;
     }, [])
 
     const handleChange = (field, value) => {

@@ -29,11 +29,8 @@ const SprintPage = (props) => {
 
 
     useEffect(() => {
-        findSprintRoadMap(projectId).then((data) => {
-            // if (data.code === 0) {
-            //     setSprintList(data.data)
-            // }
-        })
+        findSprintRoadMap(projectId);
+        return;
     }, [])
 
     /**

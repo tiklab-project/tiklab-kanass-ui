@@ -38,20 +38,15 @@ const WorkList = (props) => {
             versionId: versionId
         }
         finWorkList(path, WorkStore, params);
+        return;
     }, [projectId])
 
     useEffect(() => {
         if(workId && workId.length > 0){
             const pathname = props.match.url;
             props.history.push(`${pathname}/${workId}`)
-            // if(path === `/index/projectDetail/:id/work/list`){
-            //     console.log(`/index/projectDetail/${projectId}/workList/${workId}`)
-            //     props.history.push(`/index/projectDetail/${projectId}/workList/${workId}`)
-            // }
-            // if(path === `/index/workList`){
-            //     props.history.push(`/index/workList/${workId}`)
-            // }
         }
+        return;
     }, [workId]);
 
     return (

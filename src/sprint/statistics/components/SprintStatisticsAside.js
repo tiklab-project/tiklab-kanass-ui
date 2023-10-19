@@ -62,8 +62,6 @@ const StatisticsAsicde = (props) => {
     const projectId = props.match.params.id;
     const path = props.match.path.split("/")[2];
     console.log(props)
-    useEffect(() => {
-    }, [])
 
     useEffect(() => {
         if (versionInfo.expired === false) {
@@ -92,6 +90,7 @@ const StatisticsAsicde = (props) => {
                 setLogMenuList([...logMenuList])
             }
         }
+        return;
     }, [])
 
     const isExpandedTree = (key) => {

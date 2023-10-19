@@ -11,7 +11,7 @@ import {Service} from "../../../common/utils/requset";
 class VersionSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
-
+    @observable userList = []
 
     @action
 	statWorkItemByBusStatus = async(value) => {
@@ -95,6 +95,22 @@ class VersionSurveyStore {
         if(data.code === 0) {
             this.todoTaskList = data.data.dataList;
         }
+    }
+
+    @action
+    getUseList = async (projectId) => {
+        const params = {
+            domainId: projectId,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/dmUser/findDmUserPage", params)
+        if (data.code === 0) {
+            this.userList = data.data.dataList;
+        }
+        return data;
     }
       
 }

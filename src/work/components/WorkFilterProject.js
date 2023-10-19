@@ -13,6 +13,7 @@ const WorkFilterProject = (props) => {
 
     useEffect(() => {
         findProjectList()
+        return;
     }, [])
 
     const selectChange = (value) => {

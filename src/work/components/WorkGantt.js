@@ -36,6 +36,7 @@ const WorkGantt = (props) => {
     }
     useEffect(() => {
         changePage(1)
+        return;
     }, [])
     return (
         <div>

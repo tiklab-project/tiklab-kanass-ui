@@ -3,7 +3,7 @@ import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
 
 const Login = AsyncComponent(() => import('./login/Login'))
-const VailProductUserPage =  AsyncComponent(() => import('./login/VaildProductUserPage'))
+const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
@@ -17,13 +17,13 @@ const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/Proje
 const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
 
 // const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
-const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowList'))
-const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/ProjectSystemFlowListSystem'))
+const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
+const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
 
-const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/ProjectFlowStatusList'))
-const FlowDetailView = AsyncComponent(() => import('./setting/flow/FlowDetailView'))    
-const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/FlowDetailDesign'))
-const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/ProjectNodeStatusList'))
+const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))
+const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
+const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
 // 状态组件
 
 // 消息
@@ -41,7 +41,7 @@ const workPriority = AsyncComponent(() => import('./setting/workSeting/component
 const WorkTypeFlow = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeFlow'))
 const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeForm'))
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
-const ProjectPlugin = AsyncComponent(() => import('./setting/plugin/ProjectPlugin.js'))
+const ProjectPlugin = AsyncComponent(() => import('./setting/plugins/ProjectPlugin'))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -52,15 +52,12 @@ const ProjectRole = AsyncComponent(() => import('./setting/privilege/ProjectRole
 //组织用户
 const OrgaContent = AsyncComponent(() => import('./setting/orga/Orga'))
 const OrgaUser = AsyncComponent(() => import('./setting/orga/User'))
-const ProjectDirectory = AsyncComponent(()=> import("./setting/user/ProjectDirectory"))
-const ProjectUserGroup = AsyncComponent(()=> import("./setting/user/ProjectUserGroup"))
+const ProjectDirectory = AsyncComponent(() => import("./setting/user/ProjectDirectory"))
+const ProjectUserGroup = AsyncComponent(() => import("./setting/user/ProjectUserGroup"))
 const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/ProjectSystemUserGroup"))
 
-const Index = AsyncComponent(() => import('./home/common/components/HomeLayout'))
-// const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
-const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
 // 项目
@@ -69,7 +66,9 @@ const ProjectAdd = AsyncComponent(() => import('./project/project/components/Pro
 const ProjectDetail = AsyncComponent(() => import('./project/common/components/ProjectScrumLayout'))
 const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
-const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/ProjectFlow'))
+const ProjectFlowList = AsyncComponent(() => import('./project/setting/projectFlow/components/ProjectFlow'))
+const ProjectFlowDetailDesign = AsyncComponent(() => import("./project/setting/projectFlow/components/ProjectFlowDetailDesign"))
+
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
@@ -80,7 +79,11 @@ const TestRepository = AsyncComponent(() => import('./project/test/components/Te
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
+const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
+const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
+const WorkBodar = AsyncComponent(() => import('./work/components/WorkBodar'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
+const WorkBorderDetail = AsyncComponent(() => import('./work/components/WorkBorderDetail'))
 const WorkDetailPage = AsyncComponent(() => import('./work/components/WorkDetailPage'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 
@@ -100,17 +103,21 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 // 项目权限
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
-const StatisticsWork = AsyncComponent(()=> import('./statistics/components/StatisticsStatusWork'))
+const StatisticsWork = AsyncComponent(() => import('./statistics/components/StatisticsStatusWork'))
 const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
 // 迭代
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
-const Sprintsurvey = AsyncComponent(()=> import("./sprint/overview/components/SprintSurvey"))
+const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-//迭代统计
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
+
+// 迭代
+const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
+const Versionsurvey = AsyncComponent(() => import("./version/overview/components/VersionSurvey"))
+const VersionWorkItemPlan = AsyncComponent(() => import("./version/plan/components/VersionPlan"))
 // 搜索页面
 const SearchResult = AsyncComponent(() => import('./home/search/components/SearchResult'))
 
@@ -130,6 +137,7 @@ const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statisti
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
+const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
 const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
 const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight"))
@@ -151,6 +159,7 @@ const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
+
 const RoutersSaas = [
     {
         path: "/login",
@@ -168,7 +177,6 @@ const RoutersSaas = [
         component: ProjectLogOut,
     },
     {
-        component: Index,
         path: "/index",
         routes: [
             {
@@ -177,40 +185,51 @@ const RoutersSaas = [
                 component: HomePage,
                 key: 'home',
                 routes: [
-                    {   
+                    {
                         path: "/index/home/survey",
                         exact: false,
                         component: HomeSurvey,
                         key: "ProjectSet"
-                        
+
                     },
-                    {   
-                        path: "/index/home/todoList",
-                        exact: false,
-                        component: WorkTodo,
-                        key: "ProjectSet"
-                        
-                    },
+                    
+                 
+                ]
+            },
+            {
+                path: "/index/todoList",
+                exact: false,
+                component: WorkTodo,
+                key: "ProjectSet"
+
+            },
+            {
+                path: "/index/insight",
+                exact: false,
+                component: Insight,
+                key: "ProjectSet",
+                routes: [
                     {
-                        path: "/index/home/insight/list",
+                        path: "/index/insight/list",
                         exact: false,
                         component: InsightList,
                         key: "ProjectSet"
                     },
                     {
-                        path: "/index/home/insight/newInsight/:id",
+                        path: "/index/insight/newInsight/:id",
                         exact: false,
                         component: NewInsight,
                         key: "ProjectSet"
                     },
                     {
-                        path: "/index/home/insight/viewInsight/:id",
+                        path: "/index/insight/viewInsight/:id",
                         exact: false,
                         component: ViewInsight,
                         key: "ProjectSet"
                     }
                 ]
             },
+            
             {
                 path: "/index/project",
                 exact: true,
@@ -219,7 +238,7 @@ const RoutersSaas = [
 
             },
             {
-                path:"/index/404",
+                path: "/index/404",
                 exact: true,
                 component: ProjectNotFound,
                 key: 'NotFound'
@@ -252,7 +271,7 @@ const RoutersSaas = [
                 exact: true,
                 component: ViewInsight,
             },
-        
+
             {
                 path: "/index/dynamic",
                 exact: false,
@@ -271,7 +290,7 @@ const RoutersSaas = [
                 //         component: ProjectSetList,
                 //         key: "ProjectSet"
                 //     },
-                    
+
                 // ]
             },
             {
@@ -280,7 +299,7 @@ const RoutersSaas = [
                 component: ProjectSetAdd,
                 key: "ProjectSet"
             },
-           
+
             {
                 path: "/index/projectSetdetail/:projectSetId",
                 exact: false,
@@ -363,21 +382,6 @@ const RoutersSaas = [
                                 component: StatisticsMore,
                                 exact: true
                             }
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectUser",
-                            //     component: LogProjectUser,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logProjectWork",
-                            //     component: LogProjectWork,
-                            //     exact: true
-                            // },
-                            // {
-                            //     path: "/index/projectSetdetail/:projectSetId/statistics/logUserProject",
-                            //     component: LogUserProject,
-                            //     exact: true
-                            // }
                         ]
                     },
                 ]
@@ -394,48 +398,44 @@ const RoutersSaas = [
                 component: Sprint,
                 key: "Sprint"
             },
+
+           
             {
                 path: "/index/work",
-                component: WorkAll,
-                key: 'WorkAll',
+                component: Work,
                 routes: [
                     {
-                        path: "/index/work/worklist",
-                        component: Work,
+                        path: "/index/work/table",
+                        component: WorkTable,
+                        
+                    },
+                    {
+                        path: "/index/work/table/:workId",
+                        component: WorkTable,
                         exact: true
                     },
                     {
-                        path: "/index/work/worklist/:statetype",
-                        component: Work,
+                        path: "/index/work/bodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/index/work/bodar/:workId",
+                        component: WorkBodar,
                         exact: true
                     },
                     {
-                        path: "/index/work/worklist/:statetype/:workitemid",
-                        component: Work,
-                        exact: true
+                        path: "/index/work/list",
+                        component: WorkList,
+                        routes: [
+                            {
+                                path: "/index/work/list/:workId",
+                                component: WorkDetailPage
+                            }
+                        ]
                     },
-                    // {
-                    //     path: "/index/work/workone/:id",
-                    //     component: WorkDetail,
-                    //     exact: true
-                    // },
-                    {
-                        path: "/index/work/workadd",
-                        component: WorkAddPage,
-                        exact: true
-                    },
-                    // {
-                    //     path: "/index/work/workDetail/:workId",
-                    //     component: WorkDetailPage,
-                    //     exact: true
-                    // },
-                    {
-                        path: "/index/work/*",
-                        component: () => <Redirect to="/index/work/worklist" />,
-                        exact: true
-                    }
                 ]
             },
+           
             {
                 path: "/index/workDetail/:workId",
                 component: WorkDetailPage,
@@ -735,6 +735,11 @@ const RoutersSaas = [
                         component: Linemap,
                     },
                     {
+                        path: "/index/projectDetail/:id/linemap/:workId",
+                        component: Linemap,
+                        exact: true
+                    },
+                    {
                         path: "/index/projectDetail/:id/sprintPlan",
                         component: PlanSprint,
                     },
@@ -757,36 +762,32 @@ const RoutersSaas = [
                     {
                         path: "/index/projectDetail/:id/work",
                         component: Work,
-                        exact: true
+                        routes: [
+                            {
+                                path: "/index/projectDetail/:id/work/table",
+                                component: WorkTable
+                            },
+                            
+                            {
+                                path: "/index/projectDetail/:id/work/bodar",
+                                component: WorkBodar,
+                            },
+                            {
+                                path: "/index/projectDetail/:id/work/list",
+                                component: WorkList
+                            },
+                            {
+                                path: "/index/projectDetail/:id/work/:workId",
+                                component: WorkDetailPage
+                            },
+                        ]
                     },
+                   
+                    
                     {
                         path: "/index/projectDetail/:id/WorkDetail",
                         component: WorkTableDetail,
                         exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/work/:statetype",
-                        component: Work,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/work/:statetype/:workitemid",
-                        component: Work,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workone/:workId",
-                        component: WorkDetailPage,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/workDetail/:workId",
-                        component: WorkDetailPage,
-                        exact: true
-                    },
-                    {
-                        path: "/index/projectDetail/:id/scrum/:type",
-                        component: Work
                     },
                     {
                         path: "/index/projectDetail/:id/addDemand",
@@ -872,7 +873,7 @@ const RoutersSaas = [
                             },
                             {
                                 path: "/index/projectDetail/:id/projectSetDetail/projectFlowDetail/:flowId",
-                                component: FlowDetailDesign,
+                                component: ProjectFlowDetailDesign,
                                 exact: true
                             }
                         ]
@@ -926,11 +927,64 @@ const RoutersSaas = [
                         key: "ProjectSetSurvey"
                     },
                     {
-                        path: "/index/:id/sprintdetail/:sprint/workTodo",
+                        path: "/index/:id/sprintdetail/:sprint/work/list",
+                        component: WorkList,
+                        
+                    },
+                    {
+                        path: "/index/:id/sprintdetail/:sprint/work/table",
+                        component: WorkTable,
+                        
+                    },
+                    {
+                        path: "/index/:id/sprintdetail/:sprint/work/bodar",
+                        component: WorkBodar,
+                    }
+                ]
+            },
+
+            {
+                path: "/index/:id/versiondetail/:version",
+                component: VersionHome,
+                routes: [
+                    {
+                        path: "/index/:id/versiondetail/:version/workItem",
+                        component: Work,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workDetail/:workId",
+                        component: WorkDetailPage,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/workDetail",
+                        component: WorkTableDetail,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/survey",
+                        component: Versionsurvey,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/plan",
+                        component: VersionWorkItemPlan,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/dynamic",
                         exact: false,
-                        component: WorkTodo,
+                        component: Dynamic,
                         key: "ProjectSetSurvey"
                     },
+                    {
+                        path: "/index/:id/versiondetail/:version/work/list",
+                        component: WorkList,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/work/table",
+                        component: WorkTable,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/work/bodar",
+                        component: WorkBodar,
+                    }
                 ]
             },
         ]

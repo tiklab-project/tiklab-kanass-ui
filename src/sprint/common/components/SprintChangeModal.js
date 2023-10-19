@@ -21,6 +21,7 @@ const SprintChangeModal = (props) => {
     }
     useEffect(() => {
         findSprintList({projectId: projectId})
+        return;
     },[])
 
     useEffect(() => {

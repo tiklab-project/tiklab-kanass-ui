@@ -41,6 +41,7 @@ const MessageList = (props) => {
                 setUnReadMessage(res.data.totalRecord)
             }
         })
+        return;
     }, [open])
 
      /**
@@ -51,6 +52,7 @@ const MessageList = (props) => {
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
+        
     },[])
     
     /**

@@ -84,6 +84,7 @@ const InsightList = (props) => {
     useEffect(() => {
         findInsightList()
         findInsightFocusList({masterId: userId})
+        return;
     }, [])
 
     // const getInsightList = () => {

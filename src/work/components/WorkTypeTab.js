@@ -33,6 +33,7 @@ const WorkTypeTab = (props) => {
 
             }
         })
+        return;
     }, [])
 
     useEffect(() => {

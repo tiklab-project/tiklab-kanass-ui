@@ -20,7 +20,8 @@ const VersionChangeModal = (props) => {
         modelRef.current.style.left = setButton.current.clientWidth
     }
     useEffect(() => {
-        findVersionList({projectId: projectId})
+        findVersionList({projectId: projectId});
+        return;
     },[])
 
     useEffect(() => {

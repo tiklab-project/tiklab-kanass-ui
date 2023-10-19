@@ -46,6 +46,7 @@ const WorkTable = (props) => {
             versionId: versionId
         }
         finWorkList(path, WorkStore, params);
+        return;
     }, [projectId])
 
     // let [treeIndex, setTreeIndex] = useState([])

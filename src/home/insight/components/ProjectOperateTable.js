@@ -32,6 +32,7 @@ const ProjectOperateTable = (props) => {
             setProjectSetList(res.data)
             setProjectSetId(res.data[0].id)
         })
+        return;
     }, [])
 
     /**
@@ -48,6 +49,7 @@ const ProjectOperateTable = (props) => {
         }else {
             form.setFieldsValue({projectSetId: condition.data.data.projectSetId})
         }
+        return;
     }, [isEditor])
 
     /**

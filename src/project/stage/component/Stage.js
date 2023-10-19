@@ -45,6 +45,7 @@ const Stage = (props) => {
                 setStageList(res.data)
             }
         })
+        return;
     }, [])
 
     /**

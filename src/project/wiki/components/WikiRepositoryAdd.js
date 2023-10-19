@@ -16,6 +16,7 @@ const WikiRepositoryAdd = (props) => {
                 setRepositoryList(res.data)
             }
         })
+        return;
     }, [])
 
     //提交用户列表

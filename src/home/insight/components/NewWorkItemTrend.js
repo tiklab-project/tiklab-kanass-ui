@@ -31,6 +31,7 @@ const NewWorkItemTrend = (props) => {
         findAllProject().then(res => {
             setProjectList(res.data)
         })
+        return;
     }, [])
 
     /**
@@ -62,7 +63,7 @@ const NewWorkItemTrend = (props) => {
             }
 
         }
-
+        return;
     }, [isEditor])
 
     /**
