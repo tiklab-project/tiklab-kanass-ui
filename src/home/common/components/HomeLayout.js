@@ -15,7 +15,8 @@ import { UserVerify } from 'tiklab-eam-ui';
 import { connect } from 'tiklab-plugin-core-ui';
 
 import { Provider } from 'mobx-react';
-import HomeStore from "../store/HomeStore"
+import HomeStore from "../store/HomeStore";
+import { AppLink, HelpLink, AvatarLink } from 'tiklab-licence-ui';
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore
@@ -25,7 +26,7 @@ const Layout = (props) => {
     return (
         <Provider {...store}>
             <div className="frame">
-                <Header {...props} />
+                <Header AppLink= {AppLink} HelpLink = {HelpLink} AvatarLink = {AvatarLink} {...props} />
                 <div className="frame-content">
                     {renderRoutes(route)}
                 </div>
