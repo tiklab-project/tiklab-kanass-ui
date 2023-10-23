@@ -219,7 +219,7 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top item-progress"><Progress percent={100} status="active" /></div>
+                                        <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
                                         <div className="item-bottom">迭代进度</div>
                                     </div>
                                 </div>

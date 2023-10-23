@@ -515,11 +515,11 @@ const WorkTable = (props) => {
     ];
 
     // 改变页数
-    const changePage = (page) => {
-        console.log("page")
+    const changePage = (page, pageSize) => {
+        console.log(page, pageSize)
         const values = {
             pageParam: {
-                pageSize: 20,
+                pageSize: pageSize,
                 currentPage: page,
             }
         }
@@ -560,11 +560,10 @@ const WorkTable = (props) => {
                                     columns={props.location.pathname === "/index/work/table" ? projectColums : workColumns}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
-                                    // onChange={sorter}
                                     showSorterTooltip={false}
                                     pagination={{
                                         total: total,
-                                        pageSize: 20,
+                                        pageSize: searchCondition.pageParam.pageSize,
                                         current: searchCondition.pageParam.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"]

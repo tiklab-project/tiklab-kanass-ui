@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 11:10:30
  */
-import React, { useState, useEffect,Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import "./ProjectStatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { useSelector } from "tiklab-plugin-core-ui";
@@ -101,29 +101,40 @@ const StatisticsAsicde = (props) => {
                 <span>统计</span>
             </div>
             <div className='statistics-type-title'>
-                {
-                    !isExpandedTree("work") ?
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
-                            <use xlinkHref="#icon-workDown"></use>
-                        </svg> :
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
-                            <use xlinkHref="#icon-workRight"></use>
-                        </svg>
-                }
+                <div className="statistics-type-title-left">
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                        <use xlinkHref="#icon-statistics-work"></use>
+                    </svg>
 
-                事项统计
-            </div>
-            <div key={'workItem'}>
-                <div
-                    className={`statistics-menu-firstmenu ${workReportList[0].key === selectRouter ? "statistics-menu-select" : ""}`}
-                    onClick={() => selectKey(workReportList[0].key)}
-                    key={workReportList[0].key}
-                >
-                    <span>
-                        {workReportList[0].title}
-                    </span>
+                    事项统计
                 </div>
+                <div>
+                    {
+                        !isExpandedTree("work") ?
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                                <use xlinkHref="#icon-statistics-down"></use>
+                            </svg> :
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                                <use xlinkHref="#icon-statistics-up"></use>
+                            </svg>
+                    }
+                </div>
+
             </div>
+            {
+                !isExpandedTree("work") && <div key={'workItem'}>
+                    <div
+                        className={`statistics-menu-firstmenu ${workReportList[0].key === selectRouter ? "statistics-menu-select" : ""}`}
+                        onClick={() => selectKey(workReportList[0].key)}
+                        key={workReportList[0].key}
+                    >
+                        <span>
+                            {workReportList[0].title}
+                        </span>
+                    </div>
+                </div>
+            }
+
             {
                 workMenuList && workMenuList.length > 0 ? <Fragment>
                     {
@@ -148,16 +159,24 @@ const StatisticsAsicde = (props) => {
                     }
 
                     <div className='statistics-type-title'>
-                        {
-                            !isExpandedTree("log") && logMenuList && logMenuList.length > 0 ?
-                                <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                    <use xlinkHref="#icon-workDown"></use>
-                                </svg> :
-                                <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                    <use xlinkHref="#icon-workRight"></use>
-                                </svg>
-                        }
-                        日志统计
+                        <div className="statistics-type-title-left">
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                                <use xlinkHref="#icon-statistics-work"></use>
+                            </svg>
+
+                            日志统计
+                        </div>
+                        <div>
+                            {
+                                !isExpandedTree("log") && logMenuList && logMenuList.length > 0 ?
+                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
+                                        <use xlinkHref="#icon-statistics-down"></use>
+                                    </svg> :
+                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
+                                        <use xlinkHref="#icon--statistics-up"></use>
+                                    </svg>
+                            }
+                        </div>
                     </div>
                     {
                         !isExpandedTree("log") && <div className="statistics-menu">

@@ -19,6 +19,7 @@ import "../components/insightList.scss";
 import InsightAddModal from "./InsightAddModal";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import InsightStore from "../store/InsightStore";
+import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from "tiklab-core-ui";
 const { confirm } = Modal;
 
@@ -83,17 +84,10 @@ const InsightList = (props) => {
     const userId = getUser().userId
     useEffect(() => {
         findInsightList()
-        findInsightFocusList({masterId: userId})
+        findInsightFocusList({ masterId: userId })
         return;
     }, [])
 
-    // const getInsightList = () => {
-    //     findInsightList().then(res => {
-    //         if (res.code === 0) {
-    //             setInsightList(res.data)
-    //         }
-    //     })
-    // }
     const addPanel = () => {
         setVisible(true)
     }
@@ -128,14 +122,34 @@ const InsightList = (props) => {
         }
     }
 
+    const onSearch = value => {
+        console.log(value)
+        switch (activeTabs) {
+            case "1":
+                findInsightList({ insightName: value })
+                break;
+            case "2":
+                findRecentInsightList({ insightName: value })
+                break;
+            case "3":
+                findInsightList({ master: userId, insightName: value })
+                break;
+            case "4":
+                findFocusInsightList({ master: userId, insightName: value });
+                break
+            default:
+                break;
+        }
+    };
+
     const deleteFocusInsight = (id) => {
         const value = {
             insightId: id,
             masterId: userId
         }
         deleteInsightFocusByQuery(value).then(res => {
-            if(res.code === 0){
-                findInsightFocusList({masterId: userId})
+            if (res.code === 0) {
+                findInsightFocusList({ masterId: userId })
             }
         })
     }
@@ -145,8 +159,8 @@ const InsightList = (props) => {
             insightId: id
         }
         createInsightFocus(value).then(res => {
-            if(res.code === 0){
-                findInsightFocusList({masterId: userId})
+            if (res.code === 0) {
+                findInsightFocusList({ masterId: userId })
             }
         })
     }
@@ -188,16 +202,16 @@ const InsightList = (props) => {
                         <use xlinkHref="#icon-delete"></use>
                     </svg>
                     <div className="project-icon">
-                    {
-                        focusInsightList.indexOf(record.id) !== -1 ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusInsight(record.id)}>
-                                <use xlinkHref="#icon-view"></use>
-                            </svg>
-                            :
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusInsight(record.id)}>
-                                <use xlinkHref="#icon-noview"></use>
-                            </svg>
-                    }
+                        {
+                            focusInsightList.indexOf(record.id) !== -1 ?
+                                <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusInsight(record.id)}>
+                                    <use xlinkHref="#icon-view"></use>
+                                </svg>
+                                :
+                                <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusInsight(record.id)}>
+                                    <use xlinkHref="#icon-noview"></use>
+                                </svg>
+                        }
 
                     </div>
                 </Space>
@@ -217,51 +231,23 @@ const InsightList = (props) => {
                         </Button>
                     </Breadcumb>
                     <div className="insight-tabs-search">
-                        <div className="insight-filter">
-                            <div className="insight-tabs">
-                                {
-                                    insightTab.map(item => {
-                                        return <div
-                                            className={`insight-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
-                                            key={item.key}
-                                            onClick={() => selectTabs(item.key)}
-                                        >
-                                            {item.title}
-                                        </div>
-                                    })
-                                }
-                            </div>
-                            <div className="vertical-bar" />
-                            <Input
-                                className="filter-search"
-                                placeholder="请输入名字"
-                                onChange={(value) => onSearch(value)}
-                                suffix={
-                                    <SearchOutlined
-                                        style={{
-                                            color: 'rgba(0,0,0,.45)',
-                                        }}
-                                    />
-                                }
-                            />
-                            <div className="vertical-bar" />
-                            <span className="project-num">({insightList && insightList.length}仪表盘)</span>
-
+                        <div className="insight-tabs">
+                            {
+                                insightTab.map(item => {
+                                    return <div
+                                        className={`insight-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
+                                        key={item.key}
+                                        onClick={() => selectTabs(item.key)}
+                                    >
+                                        {item.title}
+                                    </div>
+                                })
+                            }
                         </div>
 
+
                         <div className="search-add">
-                            {/* <Input
-                                className="search"
-                                onChange={(value) => onSearch(value)}
-                                placeholder="请输入项目名字"
-                                suffix={
-                                    <SearchOutlined
-                                        style={{
-                                            color: 'rgba(0,0,0,.45)',
-                                        }}
-                                    />
-                                }
-                            /> */}
+                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"仪表盘名字"} />
                         </div>
                     </div>
                     <InsightAddModal setVisible={setVisible} visible={visible} />

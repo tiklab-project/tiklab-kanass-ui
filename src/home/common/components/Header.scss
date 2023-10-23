@@ -9,11 +9,10 @@
 .frame-header {
     display: flex;
     align-items: center;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
     justify-content: space-between;
     position: relative;
     z-index: 3;
-    background-color: var(--tiklab-blue);
 
     .frame-header-logo {
         height: var(--tiklab-head-height);
@@ -32,25 +31,33 @@
         display: flex;
         flex-direction: row;
         margin-left: 15px;
+        gap: 20px;
 
         &-active {
-            color: #f7f7f7;
-            background: rgba(255, 255, 255, 0.3);
+            border-bottom: var(--tiklab-blue) 2px solid;
+            color: var(--tiklab-blue);
         }
 
         &-item {
             cursor: pointer;
-            margin-right: 10px;
-            padding: 0 10px;
             overflow: hidden;
-            color: #fff;
             height: 48px;
             line-height: 48px;
             flex-shrink: 0;
+            span {
+                padding: 5px;
+            }
+            
         }
 
         &-item:hover {
-            background: rgba(255, 255, 255, 0.3);
+            span {
+                
+                background: #E1EDFF;
+                border-radius: 3px;
+                color: var(--tiklab-blue);
+            }
+
         }
     }
 

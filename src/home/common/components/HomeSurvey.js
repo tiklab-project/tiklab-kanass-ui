@@ -104,7 +104,7 @@ const HomeSurvey = (props) => {
 
     const goProject = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/projectDetail/${item.modelId}/work`)
+        props.history.push(`/index/projectDetail/${item.modelId}/work/table`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     }
@@ -113,7 +113,7 @@ const HomeSurvey = (props) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
         setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        props.history.push(`/index/projectDetail/${item.project.id}/workDetail/${item.modelId}`)
+        props.history.push(`/index/projectDetail/${item.project.id}/work/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }
 

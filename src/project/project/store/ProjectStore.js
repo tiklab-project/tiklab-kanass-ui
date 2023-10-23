@@ -117,11 +117,6 @@ export class ProjectStore {
     @action
     updateProject = async(values) => {
         const data = await Service("/project/updateProject", values)
-        if(data.code === 0){
-            if (data.code === 0) {
-                this.findProjectList()
-            }
-        }
         return data;
     }
 

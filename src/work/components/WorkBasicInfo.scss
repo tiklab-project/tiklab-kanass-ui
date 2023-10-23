@@ -18,6 +18,8 @@
         padding: 0 15px;
         .tabs-bar-num {
             font-size: 12px;
+            padding-left: 3px;
+            color: #999;
         }
         .tabs-bar-select {
             border-bottom: 2px solid var(--tiklab-blue);
@@ -51,6 +53,7 @@
                     height: 40px;
                     line-height: 40px;
                     white-space: nowrap;
+                    cursor: pointer;
                 }
 
                 .tabs-dropdown-item:hover {

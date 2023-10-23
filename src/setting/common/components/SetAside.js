@@ -46,7 +46,7 @@ const SetAside = (props) => {
                 >
                     <span className="orga-aside-item-left">
                         {
-                            data.icon && <svg className="svg-icon" aria-hidden="true">
+                            data.icon && <svg className="img-icon-right" aria-hidden="true">
                                 <use xlinkHref={`#icon-${data.icon}`}></use>
                             </svg>
                         }
@@ -84,7 +84,7 @@ const SetAside = (props) => {
 
                         {
                             item.icon && <span to={item.id} className="orga-aside-item-left">
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="img-icon-right" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.icon}`}></use>
                                 </svg>
                                 <span className="orga-aside-title">{item.title}</span>

@@ -73,7 +73,7 @@ const goWorkItem = (type, workStore, params) => {
                 findWorkItemNumByQuickSearch().then(res => {
                     if (res.code === 0) {
                         if(workShowType === "list"){
-                            setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                            setQuickFilterValue({ label: `我的待办 ${res.data.pending}`, value: 'pending' })
                         }else {
                             setQuickFilterValue({ label: `我的待办`, value: 'pending' })
                         }
@@ -146,7 +146,7 @@ const goWorkItem = (type, workStore, params) => {
                 setSearchCondition(initValues)
                 findWorkItemNumByQuickSearch().then(res => {
                     if (res.code === 0 && workShowType === "list") {
-                        setQuickFilterValue({ label: `我的待办(${res.data.pending})`, value: 'pending' })
+                        setQuickFilterValue({ label: `我的待办 ${res.data.pending}`, value: 'pending' })
                     }
                 })
                 getWorkList(workStore);

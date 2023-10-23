@@ -71,9 +71,6 @@
         height: 16px;
     }
     
-    .project-table-box {
-        margin-top: 0;
-    }
     .project-filter {
         display: flex;
         align-items: center;
@@ -182,6 +179,7 @@
             }
         }
         .project-table-box {
+            margin-top: 15px;
             .project-name {
                 display: flex;
                 align-items: center;

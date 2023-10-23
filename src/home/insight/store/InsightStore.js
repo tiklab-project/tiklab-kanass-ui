@@ -229,19 +229,20 @@ export class InsightStore {
      * 按照条件查找仪表盘
      * @returns 
      */
-    @action
-    findInsightList = async() => {
-        const params = {
-            orderParams: [{
-                name: "insightName",
-                orderType: "asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            }
+    @observable insightSearch = {
+        orderParams: [{
+            name: "insightName",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
         }
-        const data = await Service("/insight/findInsightList", params)
+    }
+    @action
+    findInsightList = async(value) => {
+        Object.assign(this.insightSearch, { ...value })
+        const data = await Service("/insight/findInsightList", this.insightSearch)
         if(data.code === 0){
             this.insightList = data.data;
         }

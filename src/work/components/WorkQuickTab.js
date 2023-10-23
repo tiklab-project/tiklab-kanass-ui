@@ -216,7 +216,7 @@ const WorkQuickTab = (props) => {
                 onClick={() => selectMenu({value: "all", label: "全部"})} key={"all"}
             >
                 全部
-                <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span>
+                <span style={{fontSize: "12px", paddingLeft: "3px", color: "#999"}}>{setWorkNum(eveWorkTypeNum.all)}</span>
                 {/* <span>({setWorkNum(1009)})</span> */}
             </div>
             {
@@ -227,7 +227,7 @@ const WorkQuickTab = (props) => {
                         onClick={() => selectMenu(item)}
                     >   
                         {item.label}
-                        <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.value])})</span>
+                        <span style={{fontSize: "12px", paddingLeft: "3px", color: "#999"}}>{setWorkNum(eveWorkTypeNum[item.value])}</span>
                     </div>
                 })
             }

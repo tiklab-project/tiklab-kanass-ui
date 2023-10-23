@@ -11,6 +11,7 @@ import { observer, inject } from "mobx-react";
 import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message, Alert } from "antd";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
+
 import moment from 'moment';
 import "../components/BasicInfo.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
@@ -115,14 +116,12 @@ const BasicInfo = props => {
                 id: projectId,
                 iconUrl: iconUrl
             }
-
-            // if (props.type === "add") {
-            //     addProlist(data)
-            // } else {
-            //     updateProject(data)
-            // }
-            updateProject(data);
-            // setVisible(false);
+            updateProject(data).then(res => {
+                if(res.code === 0){
+                    message.success("修改成功");
+                    setDisabled(true);
+                }
+            });
         })
     }
     // 状态类型
@@ -249,7 +248,7 @@ const BasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    onValuesChange={onFinish}
+                                    // onValuesChange={onFinish}
                                 >
                                     <Form.Item
                                         label="项目名称"
@@ -263,6 +262,7 @@ const BasicInfo = props => {
                                     >
                                         <Select
                                             placeholder="项目类型"
+                                            disabled
                                             allowClear
                                         >
                                             {

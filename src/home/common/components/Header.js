@@ -12,14 +12,14 @@ import { Col, Row, Dropdown, Space } from "antd";
 import { withRouter } from 'react-router';
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
-import logo from "../../../assets/images/logo_tw5.png";
+import logo from "../../../assets/images/logo_tw3.png";
 import HeadMoreMenu from "./HeadMoreMenu";
 import Search from "../../search/components/Search";
 import MessageList from "./MessageList";
 
 import "./Header.scss";
 const Header = props => {
-    const {  systemRoleStore, AppLink, HelpLink, AvatarLink} = props;
+    const { systemRoleStore, AppLink, HelpLink, AvatarLink } = props;
     // 被点击菜单的key
     const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
     // 语言包
@@ -53,11 +53,24 @@ const Header = props => {
         if (routers) {
             return (
                 <div className={'frame-header-link'}>
-                    <div key='home' onClick={() => changeCurrentLink(routers[0])} className={`frame-header-link-item ${menuKey === "home" ? 'frame-header-link-active' : null}`}> {routers[0].title}</div>
+                    {
+                        routers.map(item => {
+                            return <div key={item.key}
+                                onClick={() => changeCurrentLink(item)}
+                                className={`frame-header-link-item ${menuKey === item.key ? 'frame-header-link-active' : null}`}
+                            >
+                                <span>
+                                    {item.title}
+                                </span>
+
+                            </div>
+                        })
+                    }
+                    {/* <div key='home' onClick={() => changeCurrentLink(routers[0])} className={`frame-header-link-item ${menuKey === "home" ? 'frame-header-link-active' : null}`}> {routers[0].title}</div>
                     <div key='project' onClick={() => changeCurrentLink(routers[1])} className={`frame-header-link-item ${menuKey === "project" ? 'frame-header-link-active' : null}`}> {routers[1].title}</div>
                     <div key='projectSet' onClick={() => changeCurrentLink(routers[2])} className={`frame-header-link-item ${menuKey === "projectSet" ? 'frame-header-link-active' : null}`}> {routers[2].title}</div>
                     <div key='work' onClick={() => changeCurrentLink(routers[3])} className={`frame-header-link-item ${menuKey === "work" ? 'frame-header-link-active' : null}`}> {routers[3].title}</div>
-                    <div key='insight' onClick={() => changeCurrentLink(routers[4])} className={`frame-header-link-item ${menuKey === "insight" ? 'frame-header-link-active' : null}`}> {routers[4].title}</div>
+                    <div key='insight' onClick={() => changeCurrentLink(routers[4])} className={`frame-header-link-item ${menuKey === "insight" ? 'frame-header-link-active' : null}`}> {routers[4].title}</div> */}
                     <HeadMoreMenu />
                 </div>
             )
