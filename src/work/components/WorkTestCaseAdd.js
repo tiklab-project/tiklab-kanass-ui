@@ -81,8 +81,7 @@ const WorkTestCaseAddmodal = (props) => {
         let params;
         if(value){
             params = {
-                repositoryId: value?.value,
-                repositoryIds: [],
+                repositoryIds: [value?.value],
                 pageParam: {
                     pageSize: 10,
                     currentPage: 1
@@ -90,7 +89,6 @@ const WorkTestCaseAddmodal = (props) => {
             }
         }else {
             params = {
-                repositoryId: null,
                 repositoryIds: repositoryallIdList,
                 pageParam: {
                     pageSize: 10,

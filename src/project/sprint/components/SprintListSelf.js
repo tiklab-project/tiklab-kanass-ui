@@ -11,7 +11,7 @@ import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Input, Row, Col } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import "../components/sprint.scss";
+import "./sprint.scss";
 import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";

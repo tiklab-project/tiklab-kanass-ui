@@ -76,8 +76,7 @@ const WorkDocumentAddmodal = (props) => {
         let params;
         if(value){
             params = {
-                repositoryId: value?.value,
-                repositoryIds: [],
+                repositoryIds: [value?.value],
                 pageParam: {
                     pageSize: 10,
                     currentPage: 1
@@ -85,7 +84,6 @@ const WorkDocumentAddmodal = (props) => {
             }
         }else {
             params = {
-                repositoryId: null,
                 repositoryIds: repositoryallIdList,
                 pageParam: {
                     pageSize: 10,

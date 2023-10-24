@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { ContainerTwoTone } from '@ant-design/icons';
-import "../components/SprintPlan.scss";
+import "./SprintPlan.scss";
 import { observer } from "mobx-react";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import { Row, Col } from 'antd';
