@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-16 10:57:23
  */
 
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout, Button } from "antd";
@@ -26,7 +26,7 @@ const VersionDetailAside = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
     console.log(props)
     const versionId = props.match.params.version;
-
+    const setButton = useRef();
     const [isShowText, SetIsShowText] = useState(false)
 
     const path = props.location.pathname.split("/")[5];
@@ -143,7 +143,15 @@ const VersionDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div className="version-expend" onClick={toggleCollapsed} >
+                    <div onClick={()=> props.history.push(`/index/${project.id}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-set"></use>
+                        </svg>
+                        <span>
+                            设置
+                        </span>
+                    </div>
+                    {/* <div className="version-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ?
                                 <svg className="svg-icon" aria-hidden="true">
@@ -154,7 +162,7 @@ const VersionDetailAside = (props) => {
                                     <use xlinkHref="#icon-rightcircle"></use>
                                 </svg>
                         }
-                    </div>
+                    </div> */}
                 </div>
             </Sider>
         </Fragment>

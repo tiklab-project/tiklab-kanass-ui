@@ -25,9 +25,9 @@ const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
     }
-    const { versionList, getVersionList, deleVersion, createRecent, 
-        findVersionFocusList, createVersionFocus, deleteVersionFocus, 
-        findFocusVersionList, userList, getUseList } = VersionStore;
+    const { versionList,setVersionList, getVersionList, deleVersion, createRecent,
+        createVersionFocus, deleteVersionFocus,
+        findFocusVersionList, userList, getUseList, searchCondition, total } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
@@ -36,12 +36,7 @@ const VersionTable = (props) => {
     const userId = getUser().userId;
     // 初始化
     useEffect(() => {
-        const params = {
-            masterId: userId,
-            projectId: projectId
-        }
-        getFocusVersion(params)
-        findVersion({ projectId: projectId })
+        findVersion({ projectId: projectId, versionState: "111111"  })
         return;
     }, []);
 
@@ -70,63 +65,65 @@ const VersionTable = (props) => {
         "2": "已结束"
     }
 
-    /**
-    * 获取关注的迭代列表
-    */
-    const getFocusVersion = (params) => {
-        findVersionFocusList(params).then(data => {
-            if (data.code === 0) {
-                let list = []
-                if (data.data.length > 0) {
-                    data.data.map(item => {
-                        list.push(item.version.id)
-                    })
-                }
-                setFocusVersionList([...list])
-            }
-        })
-    }
 
-     /**
-     * 添加关注的迭代
-     * @param {迭代id} versionId 
-     */
-     const addFocusVersion = (versionId) => {
+
+    /**
+    * 添加关注的迭代
+    * @param {迭代id} versionId 
+    */
+    const addFocusVersion = (versionId, index) => {
         const params = {
-            version: {id: versionId},
+            version: { id: versionId },
             masterId: userId,
             projectId: projectId
         }
         createVersionFocus(params).then(data => {
             if (data.code === 0) {
-                focusVersionList.push(versionId)
-                setFocusVersionList([...focusVersionList])
+                versionList[index].focusIs = true
+                setVersionList([...versionList])
+                console.log(versionList)
+                // focusVersionList.push(versionId)
+                // setFocusVersionList([...focusVersionList])
             }
         })
     }
 
-     /**
-     * 取消关注
-     * @param {迭代id} versionId 
-     */
-     const deleteFocusVersion = (versionId) => {
+    /**
+    * 取消关注
+    * @param {迭代id} versionId 
+    */
+    const deleteFocusVersion = (versionId, index) => {
         const params = {
-            version: {id: versionId},
+            version: { id: versionId },
             masterId: userId,
             projectId: projectId
         }
         deleteVersionFocus(params).then(data => {
             if (data.code === 0) {
-                const index = focusVersionList.indexOf(versionId);
-                if (index > -1) {
-                    focusVersionList.splice(index, 1);
-                }
-                setFocusVersionList([...focusVersionList])
+                versionList[index].focusIs = false
+                setVersionList([...versionList])
             }
         })
     }
 
-
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "000000":
+                name = "version-status-todo";
+                break;
+            case "111111":
+                name = "version-status-process";
+                break;
+            case "222222":
+                name = "version-status-done";
+                break;
+            default:
+                name = "version-status-process";
+                break;
+        }
+        return name;
+    }
     // 列表的列
     const columns = [
         {
@@ -149,17 +146,13 @@ const VersionTable = (props) => {
         },
 
         {
-            title: "开始日期",
+            title: "计划日期",
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-        },
-        {
-            title: "发布日期",
-            dataIndex: "publishDate",
-            key: "publishDate",
-            align: "left",
-
+            render: (text, record) => <span>
+                {record.startTime} ~ {record.publishDate}
+            </span>
         },
         {
             title: "实际发布日期",
@@ -170,24 +163,26 @@ const VersionTable = (props) => {
         },
         {
             title: "状态",
-            dataIndex: "versionState",
+            dataIndex: ["versionState", "name"],
             key: "versionTime",
             align: "left",
-            render: (text) => <span>{statusName[text]}</span>,
+            render: (text, record) => <div className={`version-status ${setStatuStyle(record.versionState.id)}`}>
+                {text}
+            </div>
         },
         {
             title: "操作",
             key: "action",
             width: "100px",
-            render: (text, record) => (
+            render: (text, record, index) => (
                 <Space size="middle">
                     {
-                        focusVersionList.indexOf(record.id) !== -1 ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusVersion(record.id)}>
+                        record.focusIs ?
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusVersion(record.id, index)}>
                                 <use xlinkHref="#icon-view"></use>
                             </svg>
                             :
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusVersion(record.id)}>
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusVersion(record.id, index)}>
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
@@ -214,7 +209,7 @@ const VersionTable = (props) => {
         setLoading(true)
         getVersionList(value).then((res) => {
             setLoading(false)
-            
+
 
         })
     }
@@ -266,31 +261,47 @@ const VersionTable = (props) => {
      * tab 切换
      * @param {tab key} key 
      */
-    const selectTabs = (key) => {
+    const selectTabs = (key,page ) => {
         setActiveTabs(key)
         // setFilterType(key)
+        const params = {
+            projectId: projectId,
+            pageParam: {
+                pageSize: searchCondition.pageParam.pageSize,
+                currentPage: page,
+            }
+        }
         switch (key) {
             case "pending":
-                getVersionList({ projectId: projectId, versionState: "1" });
+                getVersionList({ versionState: "111111", ...params });
                 break;
             case "creating":
-                getVersionList({ projectId: projectId, versionState: "0" });
+                getVersionList({ versionState: "000000", ...params });
                 break;
             case "ending":
-                getVersionList({ projectId: projectId, versionState: "2" });
+                getVersionList({ versionState: "222222", ...params });
                 break;
             case "all":
-                getVersionList({ projectId: projectId, versionState: null });
+                getVersionList({  versionState: null, ...params });
                 break;
             case "focus":
-                findFocusVersionList({ projectId: projectId, master: userId });
+                findFocusVersionList({ master: userId, ...params });
                 break;
 
             default:
                 break;
         }
     }
-
+    const changePage = (page, pageSize) => {
+        console.log(page, pageSize)
+        selectTabs(activeTabs, page)
+        // const values = {
+        //     pageParam: {
+        //         pageSize: pageSize,
+        //         currentPage: page,
+        //     }
+        // }
+    }
     return (<Provider {...store}>
         <div className="project-version">
             <Row >
@@ -305,8 +316,8 @@ const VersionTable = (props) => {
                                 type="add"
                                 id="0"
                                 findVersion={findVersion}
-                                getUseList = {getUseList}
-                                userList = {userList}
+                                getUseList={getUseList}
+                                userList={userList}
                                 {...props}
                             />
                         </Breadcumb>
@@ -317,7 +328,7 @@ const VersionTable = (props) => {
                                         return <div
                                             className={`version-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
                                             key={item.key}
-                                            onClick={() => selectTabs(item.key)}
+                                            onClick={() => selectTabs(item.key, 1)}
                                         >
                                             {item.title}
                                         </div>
@@ -338,11 +349,18 @@ const VersionTable = (props) => {
                                     columns={columns}
                                     dataSource={versionList}
                                     rowKey={(record) => record.id}
-                                    pagination={false}
+                                    pagination={activeTabs !== "focus" ? {
+                                        total: total,
+                                        pageSize: searchCondition.pageParam.pageSize,
+                                        current: searchCondition.pageParam.currentPage,
+                                        onChange: changePage,
+                                        position: ["bottomCenter"],
+                                        hideOnSinglePage: true,
+                                        simple: true
+                                    }: false}
 
                                     loading={loading}
                                     onSearch={onSearch}
-                                    onChange={false}
                                 />
                             </div>
                         </div>

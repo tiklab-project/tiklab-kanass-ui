@@ -8,10 +8,10 @@
  */
 
 import React, { useRef, useEffect, useState, Fragment } from "react";
-import { Input, Row, Col } from 'antd';
+import { Space, Row, Col, Table } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import "../components/sprint.scss";
+import "./sprintList.scss";
 import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -19,14 +19,15 @@ import Button from "../../../common/button/Button";
 import InputSearch from '../../../common/input/InputSearch'
 import SprintStore from "../store/SprintStore";
 import { Provider, observer } from "mobx-react";
+import { useDebounce } from "../../../common/utils/debounce";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
     }
     const projectId = props.match.params.id;
-    const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList, 
-        sprintlist, delesprintList,createSprintFocus, findSprintFocusList, 
-        deleteSprintFocus, findFocusSprintList,setFilterType, createRecent
+    const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList,
+        sprintList, delesprintList, createSprintFocus, findSprintFocusList,
+        deleteSprintFocus, findFocusSprintList, setFilterType, createRecent
     } = SprintStore;
 
     const project = JSON.parse(localStorage.getItem("project"));
@@ -61,8 +62,8 @@ const Sprint = (props) => {
             name: sprintName,
             model: "sprint",
             modelId: id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
         }
         createRecent(params)
         props.history.push({ pathname: `/index/${projectId}/sprintdetail/${id}/survey` })
@@ -73,9 +74,9 @@ const Sprint = (props) => {
      * 根据名字模糊搜索迭代
      * @param {输入框的值} data 
      */
-    const onSearch = (data) => {
+    const onSearch = useDebounce((data) => {
         findSprintList({ sprintName: data })
-    }
+    }, [500]) 
 
     /**
      * 显示添加或者编辑弹窗
@@ -220,12 +221,91 @@ const Sprint = (props) => {
      */
     const deleSprintList = (id) => {
         delesprintList(id).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 selectTabs("all")
             }
-            
+
         })
     }
+
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "000000":
+                name = "sprint-status-todo";
+                break;
+            case "111111":
+                name = "sprint-status-process";
+                break;
+            case "222222":
+                name = "sprint-status-done";
+                break;
+            default:
+                name = "sprint-status-process";
+                break;
+        }
+        return name;
+    }
+    
+    const columns = [
+        {
+            title: "迭代名称",
+            dataIndex: "sprintName",
+            key: "sprintName",
+            render: (text, record) => (
+                <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
+
+            ),
+        },
+        {
+            title: "负责人",
+            dataIndex: ["master", "nickname"],
+            key: "master",
+            render: (text) => <span>{text}</span>,
+        },
+
+        {
+            title: "计划日期",
+            dataIndex: "data",
+            key: "startTime",
+            align: "left",
+            render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
+        },
+        {
+            title: "状态",
+            dataIndex: ["sprintState", "name"],
+            key: "sprintState",
+            align: "left",
+            render: (text, record) => <div className={`sprint-status ${setStatuStyle(record.sprintState.id)}`}>
+                {text}
+            </div>
+        },
+        {
+            title: "操作",
+            key: "action",
+            width: "100px",
+            render: (text, record) => (
+                <Space size="middle">
+                    {
+                        focusSprintList.indexOf(record.id) !== -1 ?
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(record.id)}>
+                                <use xlinkHref="#icon-view"></use>
+                            </svg>
+                            :
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusSprint(record.id)}>
+                                <use xlinkHref="#icon-noview"></use>
+                            </svg>
+                    }
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleSprintList(record.id)} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-delete"></use>
+                    </svg>
+
+
+                </Space>
+
+            ),
+        },
+    ];
     return (<Provider {...store}>
         <div className="project-sprint">
             <Row>
@@ -263,69 +343,14 @@ const Sprint = (props) => {
                         </div>
                         <div className="project-sprint-contant">
                             <div className="sprint-box">
-                                <div className="sprint-table">
-                                    <div className="sprint-item sprint-table-head">
-                                        <div style={{ flex: 1 }}>
-                                            迭代名称
-                                        </div>
-                                        <div className="time">日期</div>
-                                        <div style={{ width: "120px" }}>状态</div>
-
-                                        <div className="action" style={{ width: "120px" }}>
-                                            操作
-                                        </div>
-                                    </div>
-                                    {
-                                        sprintlist && sprintlist.length > 0 ?
-                                            <Fragment>
-                                                <div className="sprint-list" >
-                                                    {
-                                                        sprintlist && sprintlist.map((item, index) => {
-                                                            return <div className="sprint-item" key={item.id}>
-                                                                <div className="name" onClick={() => goSprintDetail(item.id, item.sprintName)}>
-                                                                    <svg className="icon" aria-hidden="true">
-                                                                        <use xlinkHref="#icon-plan"></use>
-                                                                    </svg>
-                                                                    {item.sprintName}
-                                                                </div>
-
-                                                                <div className="time">{item.startTime} ~ {item.endTime}</div>
-                                                                <div style={{ width: "120px" }}>
-                                                                    <span className="sprint-state">
-                                                                        {item.sprintState.name}
-                                                                    </span>
-                                                                </div>
-                                                                <div className="action" style={{ width: "120px", display: "flex", gap: "15px" }}>
-                                                                    {
-                                                                        focusSprintList.indexOf(item.id) !== -1 ?
-                                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(item.id)}>
-                                                                                <use xlinkHref="#icon-view"></use>
-                                                                            </svg>
-                                                                            :
-                                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusSprint(item.id)}>
-                                                                                <use xlinkHref="#icon-noview"></use>
-                                                                            </svg>
-                                                                    }
-                                                                    <PrivilegeProjectButton code={'SprintEdit'} domainId={projectId}  {...props}>
-                                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", item.id)} style={{ cursor: "pointer" }}>
-                                                                            <use xlinkHref="#icon-edit"></use>
-                                                                        </svg>
-
-                                                                    </PrivilegeProjectButton>
-                                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleSprintList(item.id)} style={{ cursor: "pointer" }}>
-                                                                        <use xlinkHref="#icon-delete"></use>
-                                                                    </svg>
-
-                                                                </div>
-                                                            </div>
-                                                        })
-                                                    }
-                                                </div>
-                                            </Fragment>
-                                            :
-                                            <div className="sprint-item">暂无数据</div>
-                                    }
-                                </div>
+                                <Table
+                                    columns={columns}
+                                    dataSource={sprintList}
+                                    rowKey={(record) => record.id}
+                                    pagination={false}
+                                    onSearch={onSearch}
+                                    onChange={false}
+                                />
                             </div>
                         </div>
                     </div>
@@ -344,7 +369,7 @@ const Sprint = (props) => {
             />
         </div>
     </Provider>
-        
+
     )
 
 }

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-16 10:57:23
  */
 
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout, Button } from "antd";
@@ -81,7 +81,7 @@ const SprintDetailAside = (props) => {
     const backProject = () => {
         props.history.push(`/index/projectDetail/${project.id}/sprint`)
     }
-
+    const setButton = useRef(null)
     return (
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='sprint-detail-side'>
@@ -93,11 +93,11 @@ const SprintDetailAside = (props) => {
 
 
                     <ul className="sprint-menu">
-                        <div className= "sprint-back-project">
+                        <div className="sprint-back-project">
                             {
                                 isShowText ?
                                     <div className={`sprint-menu-submenu`}
-                                        onClick = {() => backProject()}
+                                        onClick={() => backProject()}
                                     >
                                         <svg className="menu-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-backproject"></use>
@@ -108,7 +108,7 @@ const SprintDetailAside = (props) => {
                                     </div>
                                     :
                                     <div className={`sprint-menu-submenu-icon`}
-                                        onClick = {() => backProject()}
+                                        onClick={() => backProject()}
                                     >
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-backproject"></use>
@@ -150,7 +150,15 @@ const SprintDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div className="sprint-expend" onClick={toggleCollapsed} >
+                    <div onClick={()=> props.history.push(`/index/${project.id}/sprintdetail/${sprintId}/setting`)}  ref={setButton} className="sprint-set-icon setting">
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-set"></use>
+                        </svg>
+                        <span>
+                            设置
+                        </span>
+                    </div>
+                    {/* <div className="sprint-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ?
                                 <svg className="svg-icon" aria-hidden="true">
@@ -161,7 +169,7 @@ const SprintDetailAside = (props) => {
                                     <use xlinkHref="#icon-rightcircle"></use>
                                 </svg>
                         }
-                    </div>
+                    </div> */}
                 </div>
             </Sider>
         </Fragment>

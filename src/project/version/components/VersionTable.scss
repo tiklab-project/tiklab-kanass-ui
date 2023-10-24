@@ -1,29 +1,67 @@
 .project-version {
     height: calc(100vh - 55px);
     padding: var(--tiklab-padding-item);
+
     .version-name {
         color: var(--tiklab-blue);
         cursor: pointer;
     }
+
     .version-tabs {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 50px;
         line-height: 50px;
-        
+
         .version-tab {
-            font-size: var(--tiklab-font-13);;
+            font-size: var(--tiklab-font-13);
+            ;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
             margin-right: 20px;
         }
+
         .version-tab:last-child {
             margin-right: 0;
         }
+
         .active-tabs {
             border-bottom: 2px solid var(--tiklab-blue);
+        }
+    }
+
+    .version-table-box {
+        .version-status {
+            padding: 2px 3px;
+            background: #e2e1e4;
+            border-radius: 4px;
+            font-size: 10px;
+            width: fit-content;
+            color: #2b333e;
+        }
+
+        .version-status-todo {
+            background: #e2e1e4;
+            color: #2b333e;
+        }
+
+        .version-status-process {
+            background: #b0d5dfa1;
+            color: #132c33;
+        }
+
+        .version-status-done {
+            background: #dfecd5e3;
+            color: #5e5314;
+        }
+
+        .ant-pagination-simple .ant-pagination-simple-pager input {
+            user-select: none;
+            pointer-events: none;
+            padding: 0;
+            border: 0;
         }
     }
 
@@ -35,13 +73,16 @@
         align-items: center;
         justify-content: space-between;
     }
+
     .version-search {
         width: 200px;
-        border-radius: 4px;;
-        
+        border-radius: 4px;
+        ;
+
     }
+
     .span-botton {
         cursor: pointer;
     }
-    
+
 }

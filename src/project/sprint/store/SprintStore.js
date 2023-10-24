@@ -12,7 +12,7 @@ import { Service } from "../../../common/utils/requset"
 export class SprintStore {
     // 迭代列表
     @observable
-    sprintlist = [];
+    sprintList = [];
 
     // 搜索迭代的名字
     @observable
@@ -65,7 +65,7 @@ export class SprintStore {
     getsprintlist = async() => {
         const data = await Service("/sprint/findAllSprint", params)
         if (data.code === 0) {
-            this.sprintlist = data.data;
+            this.sprintList = data.data;
         }
         return data;
     }
@@ -80,7 +80,7 @@ export class SprintStore {
         Object.assign(this.sprintPageParams, { ...value })
         const data = await Service("/sprint/findSprintList", this.sprintPageParams)
         if (data.code === 0) {
-            this.sprintlist = data.data;
+            this.sprintList = data.data;
         }
         return data.data;
     }
@@ -95,7 +95,7 @@ export class SprintStore {
         // Object.assign(this.sprintPageParams, { ...value })
         const data = await Service("/sprint/findFocusSprintList", value)
         if (data.code === 0) {
-            this.sprintlist = data.data;
+            this.sprintList = data.data;
         }
         return data.data;
     }

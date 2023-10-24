@@ -94,8 +94,9 @@ const Linemap = AsyncComponent(() => import('./project/lineMap/component/LineMap
 
 const Version = AsyncComponent(() => import('./project/version/components/VersionTable'))
 const VersionDetail = AsyncComponent(() => import('./project/version/components/VersionDeatil.js'))
-
 const VersionPlan = AsyncComponent(() => import('./project/version/components/VersionPlan'))
+const VersionBasicInfo = AsyncComponent(() => import('./version/setting/components/VersionBasicInfo'))
+
 const PrivilegeDomainUser = AsyncComponent(() => import('./project/user/User'));
 const Plan = AsyncComponent(() => import('./project/plan/components/Plan'));
 const PlanWorkItem = AsyncComponent(() => import('./project/plan/components/PlanWorkItem'));
@@ -116,7 +117,7 @@ const SprintHome = AsyncComponent(() => import('./sprint/common/components/Sprin
 const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
-
+const SprintBasicInfo = AsyncComponent(() => import("./sprint/setting/components/SprintBasicInfo"))
 // 迭代
 const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
 const Versionsurvey = AsyncComponent(() => import("./version/overview/components/VersionSurvey"))
@@ -931,6 +932,10 @@ const Routers = [
                         component: SprintPlan,
                     },
                     {
+                        path: "/index/:id/sprintdetail/:sprint/setting",
+                        component: SprintBasicInfo,
+                    },
+                    {
                         path: "/index/:id/sprintdetail/:sprint/dynamic",
                         exact: false,
                         component: Dynamic,
@@ -976,6 +981,10 @@ const Routers = [
                     {
                         path: "/index/:id/versiondetail/:version/plan",
                         component: VersionWorkItemPlan,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/setting",
+                        component: VersionBasicInfo,
                     },
                     {
                         path: "/index/:id/versiondetail/:version/dynamic",

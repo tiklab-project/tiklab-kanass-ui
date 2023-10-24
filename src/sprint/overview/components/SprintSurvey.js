@@ -199,7 +199,7 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">已开始</div>
+                                        <div className="item-top">{sprintInfo?.sprintState.name}</div>
                                         <div className="item-bottom">迭代状态</div>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">2022-10-21 ~ 2022-10-22</div>
+                                        <div className="item-top">{sprintInfo?.startTime} ~ {sprintInfo?.endTime}</div>
                                         <div className="item-bottom">迭代周期状态</div>
                                     </div>
                                 </div>

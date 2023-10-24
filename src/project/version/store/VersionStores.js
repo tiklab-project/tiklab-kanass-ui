@@ -20,6 +20,7 @@ export class VersionStore {
 
     @observable userList = [];
     // 查找版本的分页参数
+    @observable total = [];
     @observable
     searchCondition = {
         orderParams: [{
@@ -47,6 +48,10 @@ export class VersionStore {
         }
     };
 
+    @action
+    setVersionList = (value) => {
+        this.versionList = value;
+    }
     /**
      * 设置版本id
      * @param {版本id} value 
@@ -66,7 +71,8 @@ export class VersionStore {
         Object.assign(this.searchCondition, { ...value })
         const data = await Service("/projectVersion/findVersionPage", this.searchCondition)
         if (data.code === 0) {
-            this.versionList = data.data.dataList
+            this.versionList = data.data.dataList;
+            this.total = data.data.totalRecord;
         }
         return data;
     }
@@ -161,24 +167,21 @@ export class VersionStore {
         return data;
     }
 
-    @action
-    createRecent = async (value) => {
-        const data = await Service("/recent/createRecent", value)
-        return data;
-    }
 
     @action
     findVersionFocusList = async (value) => {
         Object.assign(this.versionFocusParams, { ...value })
-        const data = await Service("/versionFocus/findVersionFocusList", value)
-
+        const data = await Service("/versionFocus/findVersionFocusList", this.versionFocusParams)
+        if (data.code === 0) {
+            this.versionList = data.data;
+        }
         return data;
     }
 
     @action
     findFocusVersionList = async (value) => {
         Object.assign(this.versionFocusParams, { ...value })
-        const data = await Service("/projectVersion/findVersionFocusList", value)
+        const data = await Service("/projectVersion/findVersionFocusList", this.versionFocusParams)
         if (data.code === 0) {
             this.versionList = data.data;
         }
