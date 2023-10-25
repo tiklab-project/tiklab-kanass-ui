@@ -18,7 +18,7 @@ import setImageUrl from "../../common/utils/setImageUrl";
 const WorkTable = (props) => {
     // const { form } = props
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType,
+        detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
@@ -561,6 +561,7 @@ const WorkTable = (props) => {
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
+                                    rowClassName = {(record, index) => record.id === workId ? "work-table-select": ""}
                                     pagination={{
                                         total: total,
                                         pageSize: searchCondition.pageParam.pageSize,

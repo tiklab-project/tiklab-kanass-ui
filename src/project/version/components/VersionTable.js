@@ -358,7 +358,6 @@ const VersionTable = (props) => {
                                         hideOnSinglePage: true,
                                         simple: true
                                     }: false}
-
                                     loading={loading}
                                     onSearch={onSearch}
                                 />

@@ -15,7 +15,7 @@ import { observer, inject } from "mobx-react";
 const WorkBorderDetail = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore } = props;
-
+    const { setWorkId } = workStore;
 
     console.log("强制刷新", props)
     const showModal = () => {
@@ -56,22 +56,22 @@ const WorkBorderDetail = (props) => {
             console.log(pathname);
             props.history.replace(`${pathname}`)
             setIsModalVisible(false)
+            setWorkId(0)
         }
     }
 
     const closeDrawer = () => {
+        console.log("关闭")
         let pathname = props.location.pathname;
         const index = pathname.lastIndexOf("\/");
         pathname = pathname.substring(0, index);
         console.log(pathname);
         props.history.replace(`${pathname}`)
         setIsModalVisible(false);
+        setWorkId(0)
     };
 
     return (<>
-    {
-        console.log(isModalVisible)
-    }
         <Drawer
             placement="right"
             onClose={closeDrawer}

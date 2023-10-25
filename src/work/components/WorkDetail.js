@@ -285,6 +285,10 @@ const WorkDetail = (props) => {
         setSessionStorage("detailCrumbArray", [{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
+    const closeDrawer = () => {
+        setIsModalVisible(false)
+        setWorkId(0)
+    }
     const [showFlow, setShowFlow] = useState(false)
     return (
         <Skeleton loading={infoLoading} active>
@@ -346,7 +350,7 @@ const WorkDetail = (props) => {
                                 }
                             </div>
                             {
-                                workShowType !== "list" && <div className="work-detail-close" onClick={() => setIsModalVisible(false)}>
+                                workShowType !== "list" && <div className="work-detail-close" onClick={() => closeDrawer()}>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-close"></use>
                                     </svg>
