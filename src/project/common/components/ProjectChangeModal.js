@@ -210,7 +210,7 @@ const ProjectChangeModal = (props) => {
                     })
                 }
                 {
-                    allProlist.length > 0 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
+                    allProlist.length > 5 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
                 }
 
             </div>
