@@ -26,7 +26,7 @@ const StatisticsAsicde = (props) => {
 
     const [logMenuList, setLogMenuList] = useState([])
     useEffect(() => {
-        if (versionInfo.expired === true) {
+        if (versionInfo.expired !== false) {
             const workConfigList = pluginStore.filter(item => item.key === "work-statistics");
             if (workConfigList.length > 0) {
                 workConfigList.map(item => {

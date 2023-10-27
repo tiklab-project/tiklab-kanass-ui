@@ -1,6 +1,9 @@
 import React from "react";
 import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
+// import WorkGantt from "./work/components/WorkGantt";
+
+const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
 const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
@@ -430,6 +433,11 @@ const Routers = [
                         exact: true
                     },
                     {
+                        path: "/index/work/gantt",
+                        component: WorkGantt,
+                        exact: true
+                    },
+                    {
                         path: "/index/work/list",
                         component: WorkList,
                         routes: [
@@ -788,9 +796,14 @@ const Routers = [
                                 component: WorkList
                             },
                             {
+                                path: "/index/projectDetail/:id/work/gantt",
+                                component: WorkGantt,
+                            },
+                            {
                                 path: "/index/projectDetail/:id/work/:workId",
                                 component: WorkDetailPage
-                            },
+                            }
+                            
                         ]
                     },
                    
@@ -824,6 +837,7 @@ const Routers = [
                         path: "/index/projectDetail/:id/planWorkItem/:id",
                         component: PlanWorkItem,
                     },
+                   
                     {
                         path: "/index/projectDetail/:id/log",
                         component: ProjectLog,
@@ -947,6 +961,10 @@ const Routers = [
                         
                     },
                     {
+                        path: "/index/:id/sprintdetail/:sprint/work/gantt",
+                        component: WorkGantt,
+                    },
+                    {
                         path: "/index/:id/sprintdetail/:sprint/work/table",
                         component: WorkTable,
                         
@@ -995,6 +1013,10 @@ const Routers = [
                     {
                         path: "/index/:id/versiondetail/:version/work/list",
                         component: WorkList,
+                    },
+                    {
+                        path: "/index/:id/versiondetail/:version/work/gantt",
+                        component: WorkGantt,
                     },
                     {
                         path: "/index/:id/versiondetail/:version/work/table",
