@@ -14,6 +14,7 @@ import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
 const SprintPage = (props) => {
+    const sprintLineRef = useRef();
     // 项目id
     const store = {
         lineMapStore: LineMapStore
@@ -56,14 +57,7 @@ const SprintPage = (props) => {
         <Provider {...store}>
             <div className="sprint">
                 <div className="sprint-action">
-                    {/* <InputSearch
-                        placeholder="迭代名字"
-                        allowClear
-                        style={{ width: 300 }}
-                        onChange={onSearch}
-                    />
-                     */}
-                     <div></div>
+                    <div onClick={() => sprintLineRef.current.goToday()} className="sprint-today">今天</div>
                     <div className="sprint-action-right">
                     <div className="sprint-view">
                         <div className={`sprint-view-item sprint-view-week ${archiveView === "week" ? "sprint-view-select": "" }`} onClick={() => setArchiveView("week")}>周</div>
@@ -76,6 +70,7 @@ const SprintPage = (props) => {
                 <div>
                     {
                         sprintRoadList && <SprintLineMap  
+                        sprintLineRef = {sprintLineRef}
                         data={sprintRoadList} 
                         archiveView= {archiveView}
                         graph = {graph}

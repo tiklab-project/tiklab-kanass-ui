@@ -14,13 +14,14 @@ import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
 const VersionPage = (props) => {
+    const versionLineRef = useRef();
     // 项目id
     const store = {
         lineMapStore: LineMapStore
     }
     const projectId = props.match.params.id;
     const [versionList, setVersionList] = useState([])
-    const { findVersionRoadMap, versionRoadList} = LineMapStore;
+    const { findVersionRoadMap, versionRoadList } = LineMapStore;
 
     const [graph, setGraph] = useState()
     /**
@@ -43,7 +44,7 @@ const VersionPage = (props) => {
      */
     const onSearch = (value) => {
 
-        getWorkConditionPageTree({title: value}).then(res => {
+        getWorkConditionPageTree({ title: value }).then(res => {
             console.log(versionList)
         })
     }
@@ -51,7 +52,7 @@ const VersionPage = (props) => {
 
     const [archiveView, setArchiveView] = useState("week")
     const changeMonth = () => {
-        setArchiveView("month"); 
+        setArchiveView("month");
         console.log("oopt")
         console.log(graph)
         graph.dispose()
@@ -60,29 +61,24 @@ const VersionPage = (props) => {
         <Provider {...store}>
             <div className="version">
                 <div className="version-action">
-                    {/* <InputSearch
-                        placeholder="版本名字"
-                        allowClear
-                        style={{ width: 300 }}
-                        onChange={onSearch}
-                    /> */}
-                    <div></div>
+                    <div onClick={() => versionLineRef.current.goToday()} className="version-today">今天</div>
                     <div className="version-action-right">
-                    <div className="version-view">
-                        <div className={`version-view-item version-view-week ${archiveView === "week" ? "version-view-select": "" }`} onClick={() => setArchiveView("week")}>周</div>
-                        <div className={`version-view-item version-view-month ${archiveView === "month" ? "version-view-select": "" }`}  onClick={() => changeMonth() }>月</div>
-                    </div>   
-                    
+                        <div className="version-view">
+                            <div className={`version-view-item version-view-week ${archiveView === "week" ? "version-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                            <div className={`version-view-item version-view-month ${archiveView === "month" ? "version-view-select" : ""}`} onClick={() => changeMonth()}>月</div>
+                        </div>
+
                     </div>
-                    
+
                 </div>
                 <div>
                     {
-                        versionRoadList && <VersionLineMap  
-                        data={versionRoadList} 
-                        archiveView= {archiveView}
-                        graph = {graph}
-                        setGraph = {setGraph}
+                        versionRoadList && <VersionLineMap
+                            versionLineRef={versionLineRef}
+                            data={versionRoadList}
+                            archiveView={archiveView}
+                            graph={graph}
+                            setGraph={setGraph}
                         />
                     }
                 </div>

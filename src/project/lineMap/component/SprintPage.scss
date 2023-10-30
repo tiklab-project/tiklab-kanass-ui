@@ -1,5 +1,15 @@
 .sprint {
     margin-top: 15px;
+    .sprint-today {
+        background-color: var(--tiklab-blue);
+        height: 32px;
+        line-height: 32px;
+        width: 60px;
+        border-radius: 4px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+    }
     .sprint-action {
         display: flex;
         justify-content: space-between;

@@ -22,11 +22,57 @@ const StatisticsAsicde = (props) => {
             type: "work"
         }
     ];
+    // const workReportLiswt = [
+    //     {
+    //         key: "workItem",
+    //         title: "事项字段统计",
+    //         type: "work"
+    //     },
+    //     {
+    //         key: "workBulidEnd",
+    //         title: "事项创建与解决统计",
+    //         type: 'bulidend',
+    //     },
+    //     {
+    //         key: "workNewTrend",
+    //         title: "事项新增趋势",
+    //         type: 'newtrend',
+    //     },
+    //     {
+    //         key: "workEndTrend",
+    //         title: "事项完成趋势",
+    //         type: 'endtrend'
+    //     },
+    //     {
+    //         key: "workNewTotalTrend",
+    //         title: "事项累计新建趋势",
+    //         type: 'newtotaltrend'
+    //     },
+    //     {
+    //         key: "workEndTotalTrend",
+    //         title: "事项累计完成趋势",
+    //         type: "endtotaltrend"
+    //     }
+    // ]
+
+    // const logReportListw = [
+    //     {
+    //         key: "logProjectUser",
+    //         title: "日志项目成员统计",
+    //         type: "logprojectuser"
+    //     },
+    //     {
+    //         key: "logProjectWork",
+    //         title: "日志项目事项统计",
+    //         type: "logprojectwork"
+    //     },
+    // ]
     const [workMenuList, setWorkMenuList] = useState([])
 
     const [logMenuList, setLogMenuList] = useState([])
+
     useEffect(() => {
-        if (versionInfo.expired !== false) {
+        if (versionInfo.expired === false) {
             const workConfigList = pluginStore.filter(item => item.key === "work-statistics");
             if (workConfigList.length > 0) {
                 workConfigList.map(item => {
@@ -97,12 +143,12 @@ const StatisticsAsicde = (props) => {
 
     return (
         <div className="project-statistics-aside">
-            <div className="statistics-aside-title">
-                <span>统计</span>
+            <div className="statistics-top-title">
+                <span>统计dd</span>
             </div>
-            <div className='statistics-type-title'>
+            <div className='statistics-type-title'  onClick={() => setOpenOrClose("work")}>
                 <div className="statistics-type-title-left">
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                    <svg className="menu-icon" aria-hidden="true" >
                         <use xlinkHref="#icon-statistics-work"></use>
                     </svg>
 
@@ -111,10 +157,10 @@ const StatisticsAsicde = (props) => {
                 <div>
                     {
                         !isExpandedTree("work") ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                            <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-statistics-down"></use>
                             </svg> :
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
+                            <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-statistics-up"></use>
                             </svg>
                     }
@@ -157,46 +203,50 @@ const StatisticsAsicde = (props) => {
                             }
                         </div>
                     }
-
-                    <div className='statistics-type-title'>
-                        <div className="statistics-type-title-left">
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
-                                <use xlinkHref="#icon-statistics-work"></use>
-                            </svg>
-
-                            日志统计
-                        </div>
-                        <div>
-                            {
-                                !isExpandedTree("log") && logMenuList && logMenuList.length > 0 ?
-                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                        <use xlinkHref="#icon-statistics-down"></use>
-                                    </svg> :
-                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                        <use xlinkHref="#icon--statistics-up"></use>
-                                    </svg>
-                            }
-                        </div>
-                    </div>
                     {
-                        !isExpandedTree("log") && <div className="statistics-menu">
-                            {
-                                logMenuList && logMenuList.length > 0 && logMenuList.map((item, index) => {
-                                    return <div key={index}>
-                                        <div
-                                            className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
-                                            onClick={() => selectKey(item.key)}
-                                            key={item.key}
-                                        >
-                                            <span>
-                                                {item.title}
-                                            </span>
-                                        </div>
-                                    </div>
+                        logMenuList && logMenuList.length > 0 && <Fragment>
+                            <div className='statistics-type-title' onClick={() => setOpenOrClose("log")}>
+                                <div className="statistics-type-title-left">
+                                    <svg className="menu-icon" aria-hidden="true" >
+                                        <use xlinkHref="#icon-statistics-work"></use>
+                                    </svg>
 
-                                })
+                                    日志统计
+                                </div>
+                                <div>
+                                    {
+                                        !isExpandedTree("log") ?
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-statistics-down"></use>
+                                            </svg> :
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-statistics-up"></use>
+                                            </svg>
+                                    }
+                                </div>
+                            </div>
+                            {
+                                !isExpandedTree("log") && <div className="statistics-menu">
+                                    {
+                                        logMenuList && logMenuList.map((item, index) => {
+                                            return <div key={index}>
+                                                <div
+                                                    className={`statistics-menu-firstmenu ${item.key === selectRouter ? "statistics-menu-select" : ""}`}
+                                                    onClick={() => selectKey(item.key)}
+                                                    key={item.key}
+                                                >
+                                                    <span>
+                                                        {item.title}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        })
+                                    }
+                                </div>
                             }
-                        </div>
+                        </Fragment>
+
                     }
                 </Fragment>
                     :

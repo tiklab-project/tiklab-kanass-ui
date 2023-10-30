@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 11:10:30
  */
-import React, { useEffect, useState, Fragment, useRef } from "react";
+import React, { useEffect, useState, Fragment, useRef, useImperativeHandle } from "react";
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
@@ -18,7 +18,7 @@ import moment from 'moment';
 import { useDebounce } from "../../../common/utils/debounce";
 const VersionLineMap = (props) => {
     // 获取当前年月日
-    const { data, archiveView, setGraph, graph, lineMapStore } = props;
+    const { data, archiveView, setGraph, graph, lineMapStore, versionLineRef } = props;
 
 
     const { updateVersion } = lineMapStore;
@@ -205,6 +205,14 @@ const VersionLineMap = (props) => {
         return
     }, [ganttdata])
 
+    const goToday = () => {
+        document.getElementById('table-pic').scrollLeft = scrollLeft;
+        document.getElementById('table-timer').scrollLeft = scrollLeft;
+    }
+
+    useImperativeHandle(versionLineRef, () => ({
+        goToday: goToday
+    }))
     // 画布节点数据
     let ylength = 0;
 

@@ -40,23 +40,23 @@ const StatisticsAsicde = (props) => {
         // }
     ]
 
-    const logReportList = [
-        // {
-        //     key: "logUserProject",
-        //     title: "日志成员项目统计",
-        //     type: "logprojectuser"
-        // },
-        // {
-        //     key: "logProjectUser",
-        //     title: "日志项目成员统计",
-        //     type: "logprojectuser"
-        // },
-        // {
-        //     key: "logProjectWork",
-        //     title: "日志项目事项统计",
-        //     type: "logprojectwork"
-        // }
-    ]
+    // const logReportList = [
+    //     {
+    //         key: "logUserProject",
+    //         title: "日志成员项目统计",
+    //         type: "logprojectuser"
+    //     },
+    //     {
+    //         key: "logProjectUser",
+    //         title: "日志项目成员统计",
+    //         type: "logprojectuser"
+    //     },
+    //     {
+    //         key: "logProjectWork",
+    //         title: "日志项目事项统计",
+    //         type: "logprojectwork"
+    //     }
+    // ]
 
     const [selectRouter, setSelectRouter] = useState("workItem")
 
@@ -65,7 +65,7 @@ const StatisticsAsicde = (props) => {
 
     const [workMenuList, setWorkMenuList] = useState([])
 
-    const [logMenuList, setLogMenuList] = useState(logReportList)
+    const [logMenuList, setLogMenuList] = useState([])
 
     useEffect(() => {
         if (versionInfo.expired === false) {
@@ -117,33 +117,42 @@ const StatisticsAsicde = (props) => {
 
     return (
         <div className="projectSet-statistics-aside">
-            <div className="statistics-aside-title">
+            <div className="statistics-top-title">
                 <span>统计</span>
             </div>
-            <div className='statistics-type-title'>
-                {
-                    !isExpandedTree("work") ?
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
-                            <use xlinkHref="#icon-workDown"></use>
-                        </svg> :
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("work")}>
-                            <use xlinkHref="#icon-workRight"></use>
-                        </svg>
-                }
+            <div className='statistics-type-title'  onClick={() => setOpenOrClose("work")}>
+                <div className="statistics-type-title-left">
+                    <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-statistics-work"></use>
+                    </svg>
 
-                事项统计
-            </div>
-            <div key={'workItem'}>
-                <div
-                    className={`statistics-menu-firstmenu ${workReportList[0].key === selectRouter ? "statistics-menu-select" : ""}`}
-                    onClick={() => selectKey(workReportList[0].key)}
-                    key={workReportList[0].key}
-                >
-                    <span>
-                        {workReportList[0].title}
-                    </span>
+                    事项统计
+                </div>
+                <div>
+                    {
+                        !isExpandedTree("work") ?
+                            <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-statistics-down"></use>
+                            </svg> :
+                            <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-statistics-up"></use>
+                            </svg>
+                    }
                 </div>
             </div>
+            {
+                !isExpandedTree("work") && <div key={'workItem'}>
+                    <div
+                        className={`statistics-menu-firstmenu ${workReportList[0].key === selectRouter ? "statistics-menu-select" : ""}`}
+                        onClick={() => selectKey(workReportList[0].key)}
+                        key={workReportList[0].key}
+                    >
+                        <span>
+                            {workReportList[0].title}
+                        </span>
+                    </div>
+                </div>
+            }
             {
                 workMenuList && workMenuList.length > 0 ? <Fragment>
                     {
@@ -168,17 +177,25 @@ const StatisticsAsicde = (props) => {
                     }
                     {
                         logMenuList && logMenuList.length > 0 && <Fragment>
-                            <div className='statistics-type-title'>
-                                {
-                                    !isExpandedTree("log") ?
-                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                            <use xlinkHref="#icon-workDown"></use>
-                                        </svg> :
-                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose("log")}>
-                                            <use xlinkHref="#icon-workRight"></use>
-                                        </svg>
-                                }
-                                日志统计
+                            <div className='statistics-type-title' onClick={() => setOpenOrClose("log")}>
+                                <div className="statistics-type-title-left">
+                                    <svg className="menu-icon" aria-hidden="true" >
+                                        <use xlinkHref="#icon-statistics-work"></use>
+                                    </svg>
+
+                                    日志统计
+                                </div>
+                                <div>
+                                    {
+                                        !isExpandedTree("work") ?
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-statistics-down"></use>
+                                            </svg> :
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-statistics-up"></use>
+                                            </svg>
+                                    }
+                                </div>
                             </div>
                             {
                                 !isExpandedTree("log") && <div className="statistics-menu">
@@ -204,18 +221,18 @@ const StatisticsAsicde = (props) => {
 
                     }
                 </Fragment>
-                :
-                <div key={"moreMenu"}>
-                    <div
-                        className={`statistics-menu-firstmenu ${ "moreMenu" === selectRouter ? "statistics-menu-select" : ""}`}
-                        onClick={() => selectKey("moreMenu")}
-                        key={"moreMenu"}
-                    >
-                        <span>
-                            更多统计
-                        </span>
+                    :
+                    <div key={"moreMenu"}>
+                        <div
+                            className={`statistics-menu-firstmenu ${"moreMenu" === selectRouter ? "statistics-menu-select" : ""}`}
+                            onClick={() => selectKey("moreMenu")}
+                            key={"moreMenu"}
+                        >
+                            <span>
+                                更多统计
+                            </span>
+                        </div>
                     </div>
-                </div>
             }
 
 

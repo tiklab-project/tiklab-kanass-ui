@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 11:10:30
  */
-import React, { useEffect, useState, Fragment, useRef } from "react";
+import React, { useEffect, useState, Fragment, useRef, useImperativeHandle } from "react";
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
@@ -19,7 +19,7 @@ import { useDebounce } from "../../../common/utils/debounce";
 const SprintLineMap = (props) => {
     // 获取当前年月日
     const { data, setShowEpicAddModal, setAddChild, setParentId,
-        archiveView, setGraph, graph, lineMapStore, setSprintList } = props;
+        archiveView, setGraph, graph, lineMapStore, sprintLineRef } = props;
 
 
     const { updateSprint } = lineMapStore;
@@ -188,6 +188,15 @@ const SprintLineMap = (props) => {
     const setGarph = () => {
         graph.fromJSON(ganttdata)
     }
+
+    const goToday = () => {
+        document.getElementById('table-pic').scrollLeft = scrollLeft;
+        document.getElementById('table-timer').scrollLeft = scrollLeft;
+    }
+
+    useImperativeHandle(sprintLineRef, () => ({
+        goToday: goToday
+    }))
 
     /**
      * 解决异步问题

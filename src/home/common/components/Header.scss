@@ -16,7 +16,7 @@
 
     .frame-header-logo {
         height: var(--tiklab-head-height);
-        width: 100px;
+        width: 120px;
         margin-right: 20px;
         margin-left: 10px;
 
@@ -30,7 +30,6 @@
     .frame-header-link {
         display: flex;
         flex-direction: row;
-        margin-left: 15px;
         gap: 20px;
 
         &-active {

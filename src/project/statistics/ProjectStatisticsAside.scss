@@ -4,14 +4,20 @@
     border-right: 2px solid var(--tiklab-gray-200);
     height: 100%;
 
-    .statistics-aside-title {
+    .statistics-top-title {
         padding: 10px 20px;
         font-size: var(--tiklab-font-16);
         font-weight: var(--tiklab-font-weight-bold);
         border-bottom: 1px var(--tiklab-gray-200) solid;
+        
+    }
+
+    .statistics-type-title:hover {
+        background-color: var(--tiklab-gray-300);
     }
 
     .statistics-type-title {
+        cursor: pointer;
         padding: 0 20px;
         height: 40px;
         line-height: 40px;
@@ -47,7 +53,7 @@
             line-height: 40px;
             width: 100%;
             align-items: center;
-            padding-left: 38px;
+            padding-left: 43px;
         }
 
         &-select {
