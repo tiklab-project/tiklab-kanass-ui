@@ -7,11 +7,13 @@
     .work-first-col {
         display: flex;
         align-items: center;
+        
     }
     
     .ant-table-thead {
         .work-first-col {
             display: table-cell;
+            padding-left: 23px;
         }
        
         .ant-table-cell:hover {
@@ -84,7 +86,7 @@
         }
         .work-text {
             cursor: pointer;
-            color: var(--tiklab-blue);
+            
             line-height: 25px;
             height: 22px;
             text-overflow: ellipsis;
@@ -93,6 +95,7 @@
             width: 300px;
         }
         .work-text:hover {
+            color: var(--tiklab-blue);
             text-decoration: underline;
         }
     }

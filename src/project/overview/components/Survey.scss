@@ -5,75 +5,31 @@
 
 .project-survey {
     padding: var(--tiklab-padding-item);
+    background-color: var(--tiklab-gray-600);
 
-    .project-work-statistics {
+    .box-title {
         display: flex;
-        width: 100%;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 20px;
-
-        &-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 250px;
-            background-color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            padding: 20px;
-        }
-
-        &-icon {
-            width: var(--tiklab-icon-size-32);
-            height: var(--tiklab-icon-size-32);
-            margin-right: 10px;
-        }
-
-        .work-statistics-num,
-        .work-statistics-text {
-            text-align: center;
-            width: 100px;
-            height: 40px;
-            line-height: 40px;
-            font-weight: var(--tiklab-font-weight-bold);
-        }
-    }
-
-    .title {
-        line-height: 50px;
         font-size: 16px;
         font-weight: var(--tiklab-font-weight-bold);
-        background: #F4F5F7;
-        padding-left: 20px;
-        border-radius: 4px;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        // border-bottom: 1px solid #f0f0f0;
     }
 
     .upper-box {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
 
         .project-box {
-            padding: 10px;
+            padding: 15px;
             background-color: #fff;
             border-radius: 4px;
             width: 500px;
-
-            .project-title {
-                display: flex;
-                align-items: center;
-                font-size: 16px;
-                font-weight: var(--tiklab-font-weight-bold);
-                height: 40px;
-                line-height: 40px;
-                margin-bottom: 10px;
-
-                &-icon {
-                    width: 30px;
-                    height: 30px;
-                }
-            }
-
+            box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
             .project-container {
                 .tiklab-profile .ant-avatar {
                     width: 24px !important;
@@ -120,10 +76,13 @@
         }
 
         .burn-down-box {
-            width: calc(100% - 520px);
-            padding: 10px;
+            width: calc(100% - 515px);
+            padding: 15px;
             background-color: #fff;
             border-radius: 4px;
+
+            box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px,
+                rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
 
             .burn-down {
                 width: calc(100% - 20px);
@@ -133,101 +92,17 @@
 
     }
 
-    .third-box {
-        margin-top: 20px;
 
-        .dynamic-box {
-            background-color: #fff;
-            border-radius: 4px;
-            padding-bottom: 20px;
-
-            &-title {
-                width: 100%;
-                height: 40px;
-                line-height: 40px;
-                font-weight: var(--tiklab-font-weight-bold);
-                padding: 0 10px;
-                display: flex;
-                justify-content: space-between;
-
-                .more {
-                    color: var(--tiklab-blue);
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .dynamic-list {
-                .dynamic-item {
-                    padding: 10px 20px;
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .pending-todo {
-            border-radius: 4px;
-            background-color: #fff;
-            padding-bottom: 20px;
-
-            .todo-list-item {
-                padding: 0 20px;
-                margin-bottom: 10px;
-            }
-
-            &-title {
-                width: 100%;
-                height: 40px;
-                line-height: 40px;
-                font-weight: var(--tiklab-font-weight-bold);
-                padding: 0 10px;
-                display: flex;
-                justify-content: space-between;
-
-                .more {
-                    color: var(--tiklab-blue);
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            &-list {
-                margin-top: 10px;
-            }
-
-            .pending-todo-item {
-                .pending-todo-left {
-                    display: flex;
-                    align-items: center;
-                }
-
-                .pending-todo-process {
-                    width: 80px;
-                }
-
-                width: 100%;
-                padding: 0 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
+    .dynamic-box {
+        background-color: #fff;
+        border-radius: 4px;
+        padding-bottom: 20px;
+        padding: 15px;
+        box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
+ 
+        .dynamic-list {
+            .dynamic-item {
                 cursor: pointer;
-
-                .pending-todo-icon {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 4px;
-                    margin-right: 10px;
-                }
-
-                .name {
-                    color: var(--tiklab-blue)
-                }
-
-                .pending-workitem-date {
-                    color: #999;
-                    font-size: 12px;
-                }
             }
         }
     }
@@ -235,13 +110,8 @@
     .epic-box {
         background-color: #fff;
         border-radius: 4px;
-
-        &-title {
-            height: 40px;
-            line-height: 40px;
-            padding-left: 10px;
-            font-weight: var(--tiklab-font-weight-bold);
-        }
+        box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
+        padding: 15px;
 
         &-timeline {
             display: flex;
@@ -282,12 +152,15 @@
     .recent-click {
         margin: 0 auto;
         margin-top: 15px;
-        padding: 0 10px 10px;
+        padding: 15px;
         background-color: #fff;
         border-radius: 4px;
         padding-bottom: 20px;
         flex: 1;
         margin-bottom: 15px;
+
+        box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
+
         &-title {
             width: 100%;
             height: 40px;
@@ -296,6 +169,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             .more:hover {
                 text-decoration: underline;
             }
@@ -313,26 +187,31 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+
             .project-item-content {
                 .content-name {
                     cursor: pointer;
                     color: var(--tiklab-blue);
                 }
+
                 .content-type {
                     font-size: 12px;
                     color: var(--tiklab-gray-500);
                 }
             }
         }
+
         .work-item {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+
             .work-content {
                 .content-name {
                     cursor: pointer;
                     color: var(--tiklab-blue);
                 }
+
                 .content-type {
                     font-size: 12px;
                     color: var(--tiklab-gray-500);
@@ -344,11 +223,13 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+
             .version-content {
                 .content-name {
                     cursor: pointer;
                     color: var(--tiklab-blue);
                 }
+
                 .content-type {
                     font-size: 12px;
                     color: var(--tiklab-gray-500);
@@ -360,17 +241,20 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+
             .sprint-content {
                 .content-name {
                     cursor: pointer;
                     color: var(--tiklab-blue);
                 }
+
                 .content-type {
                     font-size: 12px;
                     color: var(--tiklab-gray-500);
                 }
             }
         }
+
         .item-time {
             flex: 1;
             text-align: right;

@@ -288,7 +288,7 @@ const HomeSurvey = (props) => {
 
             <div className="recent-click">
                 <div className="recent-click-title">
-                    <span className="name">我最近查看</span>
+                    <span className="name">常用的</span>
                 </div>
                 <div className="recent-click-list">
                     {

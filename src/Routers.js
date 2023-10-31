@@ -119,7 +119,7 @@ const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage')
 const SprintHome = AsyncComponent(() => import('./sprint/common/components/SprintLayout'))
 const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/SprintSurvey"))
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
-const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/components/SprintStatistics'))
+const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/SprintStatistics'))
 const SprintBasicInfo = AsyncComponent(() => import("./sprint/setting/components/SprintBasicInfo"))
 // 迭代
 const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
@@ -138,7 +138,7 @@ const ProjectSetDomainRole = AsyncComponent(() => import('./projectSet/user/Proj
 const ProjectSetUser = AsyncComponent(() => import('./projectSet/user/ProjectSetUser'));
 const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/components/ProjectSetSetting"))
 const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/components/ProjectSetBasicInfo"))
-const ProjectWorkStatistics = AsyncComponent(() => import("./projectSet/statistics/components/ProjectSetStatistics"))
+const ProjectSetStatistics = AsyncComponent(() => import("./projectSet/statistics/ProjectSetStatistics"))
 
 // 导入外部数据
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
@@ -379,7 +379,7 @@ const Routers = [
                     },
                     {
                         path: "/index/projectSetdetail/:projectSetId/statistics",
-                        component: ProjectWorkStatistics,
+                        component: ProjectSetStatistics,
                         routes: [
                             {
                                 path: "/index/projectSetdetail/:projectSetId/statistics/workItem",
@@ -387,7 +387,7 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/projectSetdetail/:projectSetId/statistics/moreMenu",
+                                path: "/index/projectSetdetail/:projectSetId/statistics/advert",
                                 component: StatisticsMore,
                                 exact: true
                             }
@@ -852,7 +852,7 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/projectDetail/:id/statistics/moreMenu",
+                                path: "/index/projectDetail/:id/statistics/advert",
                                 component: StatisticsMore,
                                 exact: true
                             }
@@ -919,7 +919,7 @@ const Routers = [
                                 exact: true
                             },
                             {
-                                path: "/index/:id/sprintdetail/:sprint/statistics/moreMenu",
+                                path: "/index/:id/sprintdetail/:sprint/statistics/advert",
                                 component: StatisticsMore,
                                 exact: true
                             }

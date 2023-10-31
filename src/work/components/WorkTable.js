@@ -581,9 +581,9 @@ const WorkTable = (props) => {
                                                 </svg>
                                                 :
                                                 <>
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-point"></use>
-                                                    </svg>
+                                                <div className="svg-icon">
+
+                                                </div>
                                                 </>
                                         )
                                     }}

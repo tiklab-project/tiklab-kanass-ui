@@ -61,7 +61,6 @@ const Index = observer((props) => {
     }, []);
 
     return (
-        
         <PluginProvider store={pluginData}>
             <Provider {...allStore}>
                 <ConfigProvider locale={zhCN}>

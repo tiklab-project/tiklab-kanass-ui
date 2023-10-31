@@ -1,14 +1,13 @@
 .sprint {
     margin-top: 15px;
     .sprint-today {
-        background-color: var(--tiklab-blue);
         height: 32px;
         line-height: 32px;
         width: 60px;
         border-radius: 4px;
-        color: #fff;
         text-align: center;
         cursor: pointer;
+        border: 1px solid #d9d9d9;
     }
     .sprint-action {
         display: flex;
@@ -57,10 +56,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--tiklab-blue);
+        
         
     }
     .sprint-name:hover{
+        color: var(--tiklab-blue);
         background-color: var(--tiklab-gray-400);
         
     }

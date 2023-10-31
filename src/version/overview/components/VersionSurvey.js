@@ -136,7 +136,7 @@ const VersionSurvey = (props) => {
         setFieldName(value)
     }
     return (
-        <Row style={{ height: "100%", background: "#f9f9f9" }}>
+        <Row style={{ height: "100%" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-survey">
                     <div className="version-survey-top">
@@ -155,24 +155,6 @@ const VersionSurvey = (props) => {
                                     <div className="item-content">
                                         <div className="item-top">{versionInfo?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>
-                                        {/* <Select
-                                            placeholder="无"
-                                            className="work-select"
-                                            key="selectAssigner"
-                                            bordered={fieldName === "assigner" ? true : false}
-                                            suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
-                                            onFocus={() => changeFieldName("assigner")}
-                                            onBlur={() => setFieldName("")}
-                                            onMouseEnter={() => setHoverFieldName("assigner")}
-                                            onMouseLeave={() => setHoverFieldName("")}
-                                            allowClear
-                                        >
-                                            {
-                                                userList && userList.map((item, index) => {
-                                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                                                })
-                                            }
-                                        </Select> */}
                                     </div>
                                 </div>
                                 <div className="version-work">
@@ -247,14 +229,13 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                         <div className="burn-down-box">
-                            <div className="burn-down-title">版本燃尽图</div>
+                            <div className="version-title">版本燃尽图</div>
                             <div className="burn-down" id="version-burn-down">
 
                             </div>
                         </div>
                     </div>
-                    <div className="version-survey-middle">
-                        <div className="version-pending-workitem">
+                    <div className="version-pending-workitem">
                             <div className="version-title">
                                 <span className="name">待办事项</span>
                                 {
@@ -281,39 +262,39 @@ const VersionSurvey = (props) => {
                                 }
                             </div>
                         </div>
-                    </div>
-                    <div className="version-survey-middle">
+                    {/* <div className="version-survey-middle">
                         <div className="version-version-box" >
-                            <div className="dynamic-box">
-                                <div className="version-title">
-                                    <span className="name">相关动态</span>
-                                    {
-                                        opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/versiondetail/${versionId}/dynamic`) }}>
-                                            <svg aria-hidden="true" className="svg-icon">
-                                                <use xlinkHref="#icon-rightjump"></use>
-                                            </svg>
-                                        </div>
-                                    }
+                            
+                        </div>
+                    </div> */}
+                    <div className="dynamic-box">
+                        <div className="version-title">
+                            <span className="name">相关动态</span>
+                            {
+                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/versiondetail/${versionId}/dynamic`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                                </div>
-                                <div className="dynamic-list">
-                                    {
-                                        opLogList.length > 0 ? opLogList.map(item => {
-                                            return <div
-                                                dangerouslySetInnerHTML={{ __html: item.data }}
-                                                className="dynamic-item"
-                                                onClick={() => goOpLogDetail(item.link)}
-                                                key={item.id}
-                                            />
-                                        })
-                                            :
-                                            <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                                    }
-                                </div>
-                            </div>
+                        </div>
+                        <div className="dynamic-list">
+                            {
+                                opLogList.length > 0 ? opLogList.map(item => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        onClick={() => goOpLogDetail(item.link)}
+                                        key={item.id}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            }
                         </div>
                     </div>
-                   
+
                 </div>
             </Col>
         </Row>

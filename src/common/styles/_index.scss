@@ -23,10 +23,12 @@
 }
 
 .span-botton {
-    color: var(--tiklab-blue);
+    
     cursor: pointer;
 }
-
+.span-botton:hover {
+    color: var(--tiklab-blue);
+}
 .delete {
     color: red;
 }

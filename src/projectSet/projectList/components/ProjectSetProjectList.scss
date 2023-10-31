@@ -28,11 +28,12 @@
 
             .project-text {
                 cursor: pointer;
-                color: var(--tiklab-blue);
+                
                 line-height: 25px;
             }
 
             .project-text:hover {
+                color: var(--tiklab-blue);
                 text-decoration: underline;
             }
         }

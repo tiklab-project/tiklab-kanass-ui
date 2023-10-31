@@ -19,7 +19,7 @@ import WorkStore from "../../../work/store/WorkStore";
 const SprintSurvey = (props) => {
     const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
-    const {setSearchType} = WorkStore;
+    const { setSearchType } = WorkStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -133,7 +133,7 @@ const SprintSurvey = (props) => {
     }
 
     return (
-        <Row style={{ height: "100%", background: "#f9f9f9" }}>
+        <Row style={{ height: "100%" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
@@ -155,7 +155,7 @@ const SprintSurvey = (props) => {
                                     </div>
                                 </div>
                                 <div className="sprint-work">
-                                    <div className="sprint-item"  onClick={() => goWorkItemList("all")}>
+                                    <div className="sprint-item" onClick={() => goWorkItemList("all")}>
                                         <svg className="status-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
@@ -226,70 +226,64 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                         <div className="burn-down-box">
-                            <div className="burn-down-title">迭代燃尽图</div>
+                            <div className="sprint-title">迭代燃尽图</div>
                             <div className="burn-down" id="sprint-burn-down">
 
                             </div>
                         </div>
                     </div>
-                    <div className="sprint-survey-middle">
-                        <div className="sprint-pending-workitem">
-                            <div className="sprint-title">
-                                <span className="name">待办事项</span>
-                                {
-                                    todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
-                                        <svg aria-hidden="true" className="svg-icon">
-                                            <use xlinkHref="#icon-rightjump"></use>
-                                        </svg>
-                                    </div>
-                                }
+                    <div className="sprint-pending-workitem">
+                        <div className="sprint-title">
+                            <span className="name">待办事项</span>
+                            {
+                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                            </div>
-                            <div className="sprint-pending-workitem-list">
-                                {
-                                    todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                        return <div
-                                            dangerouslySetInnerHTML={{ __html: item.data }}
-                                            className="dynamic-item"
-                                            key={item.id}
-                                            onClick={() => goTodoDetail(item.link)}
-                                        />
-                                    })
-                                        :
-                                        <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                                }
-                            </div>
+                        </div>
+                        <div className="sprint-pending-workitem-list">
+                            {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        key={item.id}
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
                         </div>
                     </div>
-                    <div className="sprint-survey-middle">
-                        <div className="sprint-sprint-box" >
-                            <div className="dynamic-box">
-                                <div className="sprint-title">
-                                    <span className="name">相关动态</span>
-                                    {
-                                        opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
-                                            <svg aria-hidden="true" className="svg-icon">
-                                                <use xlinkHref="#icon-rightjump"></use>
-                                            </svg>
-                                        </div>
-                                    }
+                    <div className="dynamic-box">
+                        <div className="sprint-title">
+                            <span className="name">相关动态</span>
+                            {
+                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                                </div>
-                                <div className="dynamic-list">
-                                    {
-                                        opLogList.length > 0 ? opLogList.map(item => {
-                                            return <div
-                                                dangerouslySetInnerHTML={{ __html: item.data }}
-                                                className="dynamic-item"
-                                                onClick={() => goOpLogDetail(item.link)}
-                                                key={item.id}
-                                            />
-                                        })
-                                            :
-                                            <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                                    }
-                                </div>
-                            </div>
+                        </div>
+                        <div className="dynamic-list">
+                            {
+                                opLogList.length > 0 ? opLogList.map(item => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        onClick={() => goOpLogDetail(item.link)}
+                                        key={item.id}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            }
                         </div>
                     </div>
                 </div>

@@ -300,28 +300,31 @@ const Survey = (props) => {
         props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
     }
     return (
-        <Row style={{ height: "100%", backgroundColor: "var(--tiklab-gray-600)", overflow: "auto" }}>
+        <Row style={{ height: "100%", overflow: "auto" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-survey">
                     <div className="upper-box">
                         <div className="project-box">
-                            <div className="project-title">
-                                {
-                                    project?.iconUrl ?
-                                        <img
-                                            alt=""
-                                            className="list-img"
-                                            src={setImageUrl(project.iconUrl)}
-                                        />
-                                        :
-                                        <img
-                                            src={('/images/project1.png')}
-                                            alt=""
-                                            className="list-img"
-                                        />
+                            <div className="box-title">
+                                <span>
+                                    {
+                                        project?.iconUrl ?
+                                            <img
+                                                alt=""
+                                                className="list-img"
+                                                src={setImageUrl(project.iconUrl)}
+                                            />
+                                            :
+                                            <img
+                                                src={('/images/project1.png')}
+                                                alt=""
+                                                className="list-img"
+                                            />
 
-                                }
-                                {project && project.projectName}
+                                    }
+                                    {project && project.projectName}
+                                </span>
+
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
@@ -406,30 +409,30 @@ const Survey = (props) => {
                             </div>
                         </div>
                         <div className="burn-down-box">
-                            <div className="burn-down-title">项目燃尽图</div>
+                            <div className="box-title">项目燃尽图</div>
                             <div className="burn-down" id="burn-down">
 
                             </div>
                         </div>
                     </div>
                     <div className="epic-box">
-                        <div className="epic-box-title">
+                        <div className="box-title">
                             里程碑
                         </div>
 
                         <div className="epic-box-timeline">
                             {
-                                milestoneList?.length > 0 ? 
-                                <MilestoneTimeline milestonelist={milestoneList} /> 
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
+                                milestoneList?.length > 0 ?
+                                    <MilestoneTimeline milestonelist={milestoneList} />
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
                             }
 
                         </div>
                     </div>
                     <div className="recent-click">
-                        <div className="recent-click-title">
-                            <span className="name">我最近查看</span>
+                        <div className="box-title">
+                            <span className="name">常用的</span>
                         </div>
                         <div className="recent-click-list">
                             {
@@ -437,36 +440,34 @@ const Survey = (props) => {
                                     return recentItem(item)
                                 })
                                     :
-                                    <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
+                                    <Empty image="/images/nodata.png" description="暂时没有点击过事项~" />
                             }
                         </div>
                     </div>
-                    <div className="third-box">
-                        <div className="dynamic-box">
-                            <div className="dynamic-box-title">
-                                <div className="name">相关动态</div>
-                                <div className="more" onClick={() => goDynamicList()}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
+                    <div className="dynamic-box">
+                        <div className="box-title">
+                            <div className="name">相关动态</div>
+                            <div className="more" onClick={() => goDynamicList()}>
+                                <svg aria-hidden="true" className="svg-icon">
+                                    <use xlinkHref="#icon-rightjump"></use>
+                                </svg>
+                            </div>
 
-                                {/* <div className="more" onClick={() => { props.history.push(`/index/sprint/${userId}`) }}>更多...</div> */}
-                            </div>
-                            <div className="dynamic-list">
-                                {
-                                    logList.length > 0 ? logList.map(item => {
-                                        return <div
-                                            dangerouslySetInnerHTML={{ __html: item.data }}
-                                            className="dynamic-item"
-                                            onClick={() => goOpLogDetail(item.link)}
-                                            key={item.id}
-                                        />
-                                    })
-                                        :
-                                        <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                                }
-                            </div>
+                            {/* <div className="more" onClick={() => { props.history.push(`/index/sprint/${userId}`) }}>更多...</div> */}
+                        </div>
+                        <div className="dynamic-list">
+                            {
+                                logList.length > 0 ? logList.map(item => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        onClick={() => goOpLogDetail(item.link)}
+                                        key={item.id}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            }
                         </div>
                     </div>
 

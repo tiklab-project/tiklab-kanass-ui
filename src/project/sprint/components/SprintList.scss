@@ -56,8 +56,10 @@
     }
     .sprint-box {
         .sprint-name {
-            color: var(--tiklab-blue);
             cursor: pointer;
+        }
+        .sprint-name:hover {
+            color: var(--tiklab-blue);
         }
         .sprint-status {
             padding: 2px 3px;

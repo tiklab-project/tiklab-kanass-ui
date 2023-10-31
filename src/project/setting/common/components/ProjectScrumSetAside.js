@@ -90,7 +90,7 @@ const ProjectScrumSetAside =(props) => {
 
     return(
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth = "50" width="180">
+            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth = "50" width="200">
                 <div className={`project-aside ${isShowText ? "": "project-icon"}`}>
                     <div className="project-title title">
                         设置

@@ -1,16 +1,8 @@
-/*
- * @Descripttion: 项目统计右侧菜单
- * @version: 1.0.0
- * @Author: 袁婕轩
- * @Date: 2021-03-30 10:14:58
- * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
- */
-import React, { useState, useEffect, Fragment } from 'react';
+import React from 'react';
+import { withRouter } from "react-router-dom";
+import { observer, inject } from "mobx-react";
 import StatisticsAside from '../../statistics/components/StatisticsAside';
-const ProjectStatisticsAsicde = (props) => {
-    
-
+const SprintStatisticsAside = (props) => {
     const workReportList = [
         {
             key: "workItem",
@@ -54,12 +46,12 @@ const ProjectStatisticsAsicde = (props) => {
             key: "logProjectWork",
             title: "日志项目事项统计",
             type: "logprojectwork"
-        },
+        }
     ]
-    
-    return (
-       <StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "work-statistics" logKey = "log-statistics"/>
+
+
+    return (<StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "sprint-statistics" logKey = "sprintlog-statistics"/>
     )
 }
 
-export default ProjectStatisticsAsicde;
+export default withRouter(observer(SprintStatisticsAside));

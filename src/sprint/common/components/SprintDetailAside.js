@@ -84,7 +84,7 @@ const SprintDetailAside = (props) => {
     const setButton = useRef(null)
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='sprint-detail-side'>
+            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='sprint-detail-side'>
                 <div className={`sprint-aside-content ${isShowText ? "" : "sprint-icon"}`}>
                     <SprintChangeModal
                         isShowText={isShowText}

@@ -6,11 +6,16 @@ import "./StatisticsMore.scss";
 
 const StatisticsMore = (props) => {
     const goPlugin = () => {
-        window.open(`${homes_url}/account/subscribe/subscribeList`)
+        window.open('http://tiklab.net/product/teamwire')
     }
     return (
-        <div className="statistics-more" onClick={() => goPlugin()}>
-            付费插件需要 <Button type="primary">升级企业版</Button>
+        <div className="statistics-advert" onClick={() => goPlugin()}>
+            <div className="statistics-advert-title">高级统计筛选</div>
+            <svg className="statistics-advert-icon" aria-hidden="true">
+                <use xlinkHref="#icon-staticticsAdvert"></use>
+            </svg>
+            <div>更多统计需要升级企业版</div>
+            <Button type="primary">升级企业版</Button>
         </div>
     )
 

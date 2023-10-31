@@ -3,8 +3,10 @@
     padding: var(--tiklab-padding-item);
 
     .version-name {
-        color: var(--tiklab-blue);
         cursor: pointer;
+    }
+    .version-name:hover {
+        color: var(--tiklab-blue);
     }
 
     .version-tabs {
@@ -77,7 +79,6 @@
     .version-search {
         width: 200px;
         border-radius: 4px;
-        ;
 
     }
 

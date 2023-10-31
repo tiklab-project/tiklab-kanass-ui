@@ -63,7 +63,7 @@
     }
 }
 .project {
-    padding: var(--tiklab-padding-item);;
+    // padding: var(--tiklab-padding-item);;
     overflow: auto;
     height: calc(100vh - var(--tiklab-head-height));
     .ant-avatar {
@@ -119,6 +119,7 @@
     .project-content {
         height: 100%;
         background-color: #fff;
+        // padding: 15px;
         .ant-layout-sider {
             background-color: #fff;
             height: 100%;
@@ -175,7 +176,7 @@
             .ant-col {
                 height: 100%;
                 background-color: #fff;
-                // padding: 20px 20px;
+                padding: var(--tiklab-padding-item);
             }
         }
         .project-table-box {
@@ -189,11 +190,11 @@
                 }
                 .project-text {
                     cursor: pointer;
-                    color: var(--tiklab-blue);
                     line-height: 25px;
                 }
                 .project-text:hover {
                     text-decoration: underline;
+                    color: var(--tiklab-blue);
                 }
             }
             .project-status {

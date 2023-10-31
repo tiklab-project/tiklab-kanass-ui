@@ -7,24 +7,24 @@
  * @LastEditTime: 2021-12-29 19:04:53
  */
 import React, { Fragment } from "react";
-import StatisticsAsicde from "./ProjectStatisticsAside";
+import ProjectStatisticsAsicde from "./ProjectStatisticsAside";
 import { Layout, Row, Col } from 'antd';
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router";
-import "./ProjectStatistics.scss"
+import "../../statistics/components/Statistics.scss"
 const { Sider } = Layout;
 const ProjectStatistics = (props) => {
     // 路由
     const route = props.route
     return (
-        <Layout className="porject-statistics">
+        <Layout className="statistics">
             <Sider trigger={null} width="250">
-                <StatisticsAsicde
+                <ProjectStatisticsAsicde
                     {...props}
                 />
             </Sider>
 
-            <Layout className="porject-statistics-content" style={{ background: "#fff" }}>
+            <Layout className="statistics-content" style={{ background: "#fff" }}>
                 <Row>
                     <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                         {renderRoutes(route.routes)}

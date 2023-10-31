@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-12-08 09:24:33
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { observer} from "mobx-react";
+import { observer } from "mobx-react";
 import { Empty, Row, Col } from "antd";
 import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
@@ -16,7 +16,7 @@ import BasicInfoStore from "../store/BasicInfoStore";
 const ProjectSetSurvey = props => {
 
     const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
-        findtodopage, todoTaskList,findProjectList } = BasicInfoStore;
+        findtodopage, todoTaskList, findProjectList } = BasicInfoStore;
     const [workItemList, setWorkItemList] = useState();
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
@@ -63,7 +63,7 @@ const ProjectSetSurvey = props => {
         localStorage.setItem("project", JSON.stringify(project));
         localStorage.setItem("projectId", project.id);
         localStorage.setItem("projectTypeId", project.projectType.id);
-      
+
 
         props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
     };
@@ -87,7 +87,7 @@ const ProjectSetSurvey = props => {
                                     <use xlinkHref="#icon-program"></use>
                                 </svg>
                                 <div className="projectSet-info-content">
-                                    <div className="projectSet-info-content-item">
+                                    <div className="projectSet-info-content-item box-title">
                                         {projectSet.name}
                                     </div>
                                     <div className="projectSet-info-content-item">
@@ -115,9 +115,11 @@ const ProjectSetSurvey = props => {
                             </div>
                         </div>
                         <div className="projectSet-process-project">
-                            <div className="projectSet-process-project-title">
+                            <div className="box-title">
                                 <span className="name">进行中项目</span>
-                                <span className="more" onClick={() => goProcessProject()}>更多...</span>
+                                <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()}>
+                                    <use xlinkHref="#icon-rightjump"></use>
+                                </svg>
                             </div>
                             <div className="projectSet-process-project-list">
                                 {
@@ -150,62 +152,59 @@ const ProjectSetSurvey = props => {
                             </div>
                         </div>
                     </div>
-                    <div className="projectSet-survey-middle">
-                        <div className="projectSet-pending-workitem">
-                            <div className="projectSet-pending-workitem-title">
-                                <span className="name">待办事项</span>
-                                {
-                                    todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/workTodo`) }}>
-                                        <svg aria-hidden="true" className="svg-icon">
-                                            <use xlinkHref="#icon-rightjump"></use>
-                                        </svg>
-                                    </div>
-                                }
+                    {/* <div className="projectSet-survey-middle">
+                       
+                    </div> */}
+                    <div className="projectSet-pending-workitem">
+                        <div className="box-title">
+                            <span className="name">待办事项</span>
+                            {
+                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/workTodo`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                            </div>
-                            <div className="projectSet-pending-workitem-list">
-                                {
-                                    todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                        return <div
-                                            dangerouslySetInnerHTML={{ __html: item.data }}
-                                            className="dynamic-item"
-                                            onClick={() => goTodoDetail(item.link)}
-                                        />
-                                    })
-                                        :
-                                        <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                                }
-                            </div>
+                        </div>
+                        <div className="projectSet-pending-workitem-list">
+                            {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
                         </div>
                     </div>
-                    <div className="projectSet-survey-middle">
-                        <div className="projectSet-sprint-box" >
-                            <div className="dynamic-box">
-                                <div className="dynamic-box-title">
-                                    <span className="name">相关动态</span>
-                                    {
-                                        opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/dynamic`) }}>
-                                            <svg aria-hidden="true" className="svg-icon">
-                                                <use xlinkHref="#icon-rightjump"></use>
-                                            </svg>
-                                        </div>
-                                    }
+                    <div className="dynamic-box">
+                        <div className="box-title">
+                            <span className="name">相关动态</span>
+                            {
+                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/dynamic`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                                </div>
-                                <div className="dynamic-list">
-                                    {
-                                        opLogList.length > 0 ? opLogList.map(item => {
-                                            return <div
-                                                dangerouslySetInnerHTML={{ __html: item.data }}
-                                                className="dynamic-item"
-                                                onClick={() => goOpLogDetail(item.link)}
-                                            />
-                                        })
-                                            :
-                                            <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                                    }
-                                </div>
-                            </div>
+                        </div>
+                        <div className="dynamic-list">
+                            {
+                                opLogList.length > 0 ? opLogList.map(item => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="dynamic-item"
+                                        onClick={() => goOpLogDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            }
                         </div>
                     </div>
                 </div>

@@ -21,7 +21,7 @@ const StatisticsWork = (props) => {
             title: '姓名',
             dataIndex: 'statisticalTitle',
             key: 'name',
-            render: text => <a>{text}</a>,
+            render: text => <span>{text}</span>,
         },
         {
             title: '数量',

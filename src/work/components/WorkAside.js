@@ -180,15 +180,14 @@ const WorkAside = (props) => {
                                                         <use xlinkHref="#icon-workRight"></use>
                                                     </svg>
                                                 ) :
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-point"></use>
-                                            </svg>
+                                                <div className="svg-icon">
+                                                </div>
                                         }
                                     </div>
                                     {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
-                                                src = {setImageUrl(childItem.workTypeSys.iconUrl)}
+                                                src={setImageUrl(childItem.workTypeSys.iconUrl)}
                                                 alt=""
                                                 className="img-icon-right"
                                             />
@@ -242,24 +241,22 @@ const WorkAside = (props) => {
                                         <use xlinkHref="#icon-workRight"></use>
                                     </svg>
                                 ) :
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-point"></use>
-                                </svg>
+                                <div className="svg-icon" />
                         }
                     </div>
                     {
-                        item.workTypeSys?.iconUrl ? 
-                        <img
-                            src = {setImageUrl(item.workTypeSys?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                        :
-                        <img
-                            src={('images/workType1.png')}
-                            alt=""
-                            className="img-icon-right"
-                        />
+                        item.workTypeSys?.iconUrl ?
+                            <img
+                                src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                alt=""
+                                className="img-icon-right"
+                            />
+                            :
+                            <img
+                                src={('images/workType1.png')}
+                                alt=""
+                                className="img-icon-right"
+                            />
                     }
 
                     <div className="work-aside-item-name">
