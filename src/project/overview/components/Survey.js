@@ -300,7 +300,7 @@ const Survey = (props) => {
         props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
     }
     return (
-        <Row style={{ height: "100%", overflow: "auto" }}>
+        <Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-600)" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-survey">
                     <div className="upper-box">

@@ -133,7 +133,7 @@ const SprintSurvey = (props) => {
     }
 
     return (
-        <Row style={{ height: "100%" }}>
+        <Row style={{ height: "100%", background: "var(--tiklab-gray-600)" }}>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
