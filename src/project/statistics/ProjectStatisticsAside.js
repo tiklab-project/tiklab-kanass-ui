@@ -15,7 +15,7 @@ const ProjectStatisticsAsicde = (props) => {
         {
             key: "workItem",
             title: "事项字段统计",
-            type: "work"
+            type: "workItem"
         },
         {
             key: "workBulidEnd",

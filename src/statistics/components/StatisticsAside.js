@@ -41,6 +41,7 @@ const StatisticsAsicde = (props) => {
                     })
                     
                 })
+                console.log(list)
                 setWorkMenuList([...list])
             }
 
@@ -104,7 +105,6 @@ const StatisticsAsicde = (props) => {
         if (props.match.path === "/index/projectSetdetail/:projectSetId/statistics") {
             url = `/index/projectSetdetail/${projectSetId}/statistics`;
         }
-
         if (versionInfo.expired === false || type === 'workItem') {
             url = `${url}/${type}`;
         } else {
