@@ -35,19 +35,28 @@ const ReportList = (props) => {
         // const x = isRight ? 12 : 0;
         // const y = Math.floor((reportIndex - 1) / 2) * 12;
         let x = 0;
+        let y = 0;
         const list = reportList.lg
-        const lastList = list[list.length - 1];
-        if(lastList.x === 0){
-            if((12 - lastList.w) < item.minW){
-                x = 0
-            }else { 
-                x = lastList.w
+        let lastList = {};
+        if(list.length > 0){
+            lastList = list[list.length - 1];
+            if(lastList.x === 0){
+                if((12 - lastList.w) < item.minW){
+                    x = 0
+                }else { 
+                    x = lastList.w
+                }
             }
+            y =  lastList.y + lastList.h;
+        }else {
+            x = 0
+            y =  0
         }
+        
 
         const report = {
             x: x, 
-            y: lastList.y + lastList.h, 
+            y: y, 
             w: item.minW, 
             h: item.minH,
             // minH: item.minH,

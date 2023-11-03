@@ -231,8 +231,8 @@ export class InsightStore {
      */
     @observable insightSearch = {
         orderParams: [{
-            name: "insightName",
-            orderType: "asc"
+            name: "createdTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 10,
