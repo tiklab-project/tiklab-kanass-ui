@@ -1,6 +1,7 @@
 .work-aside {
-    width: 370px;
+    width: 300px;
     border-right: 1px solid var(--tiklab-gray-200);
+
     ul {
         padding: 0
     }
@@ -8,10 +9,11 @@
     .work-aside-option {
         border-radius: 4px;
         // position: relative;
-        height: calc(100vh - 136px);
+        height: calc(100vh - 156px);
         overflow: auto;
         // overflow-y: auto;
         width: 100%;
+
         .work-aside-top {
             padding: 10px;
             display: flex;
@@ -44,14 +46,17 @@
     .work-aside-option::-webkit-scrollbar {
         width: 5px;
     }
+
     .work-aside-option::-webkit-scrollbar-thumb {
         border-radius: 5px;
         background: var(--tiklab-gray-500);
     }
+
     .work-aside-option::-webkit-scrollbar-track {
         border-radius: 0;
         background: var(--tiklab-gray-600);
     }
+
     // .work-aside-option {
     //     -ms-overflow-style: none;
     //     overflow: -moz-scrollbars-none;
@@ -81,6 +86,7 @@
                 flex: 1;
                 overflow: hidden;
                 padding-right: 10px;
+
                 .work-aside-item-first {
                     display: inline-flex;
                     justify-content: space-between;
@@ -94,6 +100,7 @@
                         color: #fff;
                     }
                 }
+
                 .work-aside-item-second {
                     height: 22px;
                     text-overflow: ellipsis;
@@ -110,10 +117,12 @@
                 width: fit-content;
                 color: #2b333e;
             }
-            .work-status-process{
+
+            .work-status-process {
                 background: #b0d5dfa1;
                 color: #132c33;
             }
+
             .work-status-done {
                 background: #dfecd5e3;
                 color: #5e5314;
@@ -141,6 +150,7 @@
         height: 45px;
         border-top: 1px solid #f0f0f0;
     }
+
     .work-aside-bottom {
         text-align: center;
         font-size: 12px;
@@ -150,14 +160,29 @@
         justify-content: center;
         padding: 5px 0;
         font-weight: 600;
+        gap: 10px;
         // border-top: 1px solid var(--tiklab-gray-200);
-        .work-aside-button {
-            padding-left: 5px;
-            color: var(--tiklab-blue);
+        // .work-aside-button {
+        //     padding-left: 5px;
+        //     color: var(--tiklab-blue);
+        // }
+        // .work-aside-button:hover{
+        //     text-decoration: underline;
+        // }
+        .page-button {
+            height: 20px;
+            width: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            align-items: center;
+            justify-content: center;
+            .page-disable {
+                color: #ccc;
+            }
         }
-        .work-aside-button:hover{
-            text-decoration: underline;
+        .page-button:hover {
+            background: #f7f7f7;
         }
     }
 }
-

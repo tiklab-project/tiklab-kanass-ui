@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect } from 'react';
 import { Layout, Row, Col } from 'antd';
-import Procontent from "./ProjectContent";
+import ProjectList from "./ProjectList";
 import ProjectGide from "./ProjectGide"
 import "../components/project.scss";
 import { observer, Provider } from "mobx-react";
@@ -30,7 +30,7 @@ const Project = (props) => {
                         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                             {
                                 allProlist && allProlist.length > 0 ?
-                                    <Procontent /> : <ProjectGide />
+                                    <ProjectList /> : <ProjectGide />
                             }
                         </Col>
                     </Row>

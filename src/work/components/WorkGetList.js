@@ -73,7 +73,7 @@ const goWorkItem = (type, workStore, params) => {
                 findWorkItemNumByQuickSearch().then(res => {
                     if (res.code === 0) {
                         if(workShowType === "list"){
-                            setQuickFilterValue({ label: `我的待办 ${res.data.pending}`, value: 'pending' })
+                            setQuickFilterValue({ label: `我的待办`, value: 'pending' })
                         }else {
                             setQuickFilterValue({ label: `我的待办`, value: 'pending' })
                         }
@@ -90,7 +90,7 @@ const goWorkItem = (type, workStore, params) => {
                 findWorkItemNumByQuickSearch().then(res => {
                     if (res.code === 0) {
                         if(workShowType === "list"){
-                            setQuickFilterValue({ label: `我的已办(${res.data.ending})`, value: 'ending' })
+                            setQuickFilterValue({ label: `我的已办`, value: 'ending' })
                         }else {
                             setQuickFilterValue({ label: `我的已办`, value: 'ending' })
                         }
@@ -105,7 +105,7 @@ const goWorkItem = (type, workStore, params) => {
             findWorkItemNumByQuickSearch().then(res => {
                 if (res.code === 0 ) {
                     if(workShowType === "list"){
-                        setQuickFilterValue({ label: `已逾期(${res.data.overdue})`, value: 'overdue' })
+                        setQuickFilterValue({ label: `已逾期`, value: 'overdue' })
                     }else {
                         setQuickFilterValue({ label: `已逾期`, value: 'overdue' })
                     }
@@ -119,7 +119,7 @@ const goWorkItem = (type, workStore, params) => {
             findWorkItemNumByQuickSearch().then(res => {
                 if (res.code === 0 ) {
                     if(workShowType === "list"){
-                        setQuickFilterValue({ label: `我创建的(${res.data.creat})`, value: 'creat' })
+                        setQuickFilterValue({ label: `我创建的`, value: 'creat' })
                     }else {
                         setQuickFilterValue({ label: `我创建的`, value: 'creat' })
                     }
@@ -132,7 +132,7 @@ const goWorkItem = (type, workStore, params) => {
             findWorkItemNumByQuickSearch().then(res => {
                 if (res.code === 0 ) {
                     if(workShowType === "list"){
-                        setQuickFilterValue({ label: `全部(${res.data.all})`, value: 'all' })
+                        setQuickFilterValue({ label: `全部`, value: 'all' })
                     }else {
                         setQuickFilterValue({ label: `全部`, value: 'all' })
                     }

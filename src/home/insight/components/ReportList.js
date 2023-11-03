@@ -23,7 +23,8 @@ import { Modal, Tabs } from "antd";
 
 const ReportList = (props) => {
     const { insightStore, showReportList, setShowReportList, reportIndex, setReportIndex } = props;
-    const { addReportList } = insightStore;
+    const { addReportList, reportList } = insightStore;
+    console.log(reportList)
 
     /**
      * 添加报告
@@ -31,12 +32,26 @@ const ReportList = (props) => {
      */
     const addReport = (item) => {
         const isRight = reportIndex % 2 === 0 ? true : false;
-        const x = isRight ? 12 : 0;
-        const y = Math.floor((reportIndex - 1) / 2) * 12;
-        const reportList = {
-            x: x, y: y, w: 6, h: 12,
-            minH: item.minH,
-            minW: item.minW,
+        // const x = isRight ? 12 : 0;
+        // const y = Math.floor((reportIndex - 1) / 2) * 12;
+        let x = 0;
+        const list = reportList.lg
+        const lastList = list[list.length - 1];
+        if(lastList.x === 0){
+            if((12 - lastList.w) < item.minW){
+                x = 0
+            }else { 
+                x = lastList.w
+            }
+        }
+
+        const report = {
+            x: x, 
+            y: lastList.y + lastList.h, 
+            w: item.minW, 
+            h: item.minH,
+            // minH: item.minH,
+            // minW: item.minW,
             i: reportIndex.toString(), static: false,
             data: {
                 type: item.type,
@@ -47,12 +62,12 @@ const ReportList = (props) => {
             }
         };
         setReportIndex(reportIndex + 1)
-        addReportList(reportList)
+        addReportList(report)
         setShowReportList(false)
     }
 
     // 报告列表
-    const reportList = [
+    const reportAddList = [
         {
             title: "项目集",
             code: "projectSet",
@@ -78,7 +93,8 @@ const ReportList = (props) => {
                     title: "项目进展",
                     desc: "以表格形式展示项目进展",
                     type: "projectOperate",
-                    minH: 9
+                    minH: 12,
+                    minW: 12
                 },
             ]
         },
@@ -155,7 +171,7 @@ const ReportList = (props) => {
 
             <Tabs defaultActiveKey="1">
                 {
-                    reportList && reportList.map(report => {
+                    reportAddList && reportAddList.map(report => {
                         return <Tabs.TabPane tab={report.title} key={report.code}>
                             <div className="report-list">
                                 {

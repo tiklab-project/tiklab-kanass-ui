@@ -120,13 +120,13 @@ const ProjectChangeModal = (props) => {
                             project?.iconUrl ?
                                 <img
                                     src={setImageUrl(project?.iconUrl)}
-                                    className="list-img"
+                                    className="icon-40"
                                     alt=""
                                 />
                                 :
                                 <img
                                     src={('/images/project1.png')}
-                                    className="list-img"
+                                    className="icon-40"
                                     alt=""
                                 />
                         }
@@ -151,13 +151,13 @@ const ProjectChangeModal = (props) => {
                                 project?.iconUrl ? <img
                                         src={setImageUrl(project?.iconUrl)}
                                         title={project?.projectName} alt=""
-                                        className="list-img"
+                                        className="icon-32"
                                         style={{ marginRight: "0px" }}
                                     />
                                     :
                                     <img
                                         src={('images/project1.png')}
-                                        className="list-img"
+                                        className="icon-32"
                                         title={project?.projectName}
                                         style={{ marginRight: "0px" }}
                                         alt=""

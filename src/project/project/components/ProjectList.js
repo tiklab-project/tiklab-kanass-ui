@@ -11,7 +11,7 @@ import Button from "../../../common/button/Button";
 import setImageUrl from "../../../common/utils/setImageUrl";
 const { Option } = Select;
 
-const ProjectContent = (props) => {
+const ProjectList = (props) => {
     const { projectStore } = props;
     const { findProjectList, prolist, statProjectWorkItem, createRecent, findRecentProjectPage,
         findJoinProjectList, createProjectFocus, findProjectFocusList,
@@ -186,14 +186,14 @@ const ProjectContent = (props) => {
                             record.iconUrl ?
                                 <img
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                     src = {setImageUrl(record.iconUrl)}
                                 />
                                 :
                                 <img
                                     src={('/images/project1.png')}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
                         }
 
@@ -299,14 +299,14 @@ const ProjectContent = (props) => {
                                                 item.project.iconUrl ?
                                                     <img
                                                         alt=""
-                                                        className="list-img"
+                                                        className="icon-32"
                                                         src = {setImageUrl(item.project.iconUrl)}
                                                     />
                                                     :
                                                     <img
                                                         src={('/images/project1.png')}
                                                         alt=""
-                                                        className="list-img"
+                                                        className="icon-32"
                                                     />
 
                                             }
@@ -359,4 +359,4 @@ const ProjectContent = (props) => {
         </Fragment>
     )
 }
-export default inject('projectStore')(withRouter(observer(ProjectContent)));
+export default inject('projectStore')(withRouter(observer(ProjectList)));

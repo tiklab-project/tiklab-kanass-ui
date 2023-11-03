@@ -217,7 +217,7 @@ const WorkQuickTab = (props) => {
             >
                 全部
                 <span style={{fontSize: "12px", paddingLeft: "3px", color: "#999"}}>{setWorkNum(eveWorkTypeNum.all)}</span>
-                {/* <span>({setWorkNum(1009)})</span> */}
+
             </div>
             {
                 quickFilterList && quickFilterList.map(item => {

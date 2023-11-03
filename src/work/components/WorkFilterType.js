@@ -101,7 +101,7 @@ const WorkFilterType = (props) => {
     return (<div className="work-type-filter">
         <SelectSimple name="workType"
             onChange={(value) => selectType(value)}
-            title={"事项类型"}
+            title={"类型"}
             ismult={"true"}
             value={searchCondition.workTypeIds}
             suffixIcon = {true}

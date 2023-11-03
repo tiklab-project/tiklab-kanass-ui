@@ -241,7 +241,7 @@ const ProdeScrumAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='project-detail-side'>
+            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='project-detail-side'>
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
                     <ProjectChangeModal  
                         isShowText = {isShowText} 

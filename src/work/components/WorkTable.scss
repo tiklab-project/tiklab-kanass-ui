@@ -38,11 +38,11 @@
     td.ant-table-column-sort {
         background-color: #fff;
     }
-    .work-icon {
-        img {
-            margin-right: 5px;
-        }
-    }
+    // .work-icon {
+    //     img {
+    //         margin-right: 5px;
+    //     }
+    // }
     .work-info-text {
         font-size: 13px;
     }
@@ -82,7 +82,8 @@
         margin-left: 5px;
         .work-key {
             color: var(--tiklab-gray-500);
-            line-height: 25px;
+            line-height: 20px;
+            font-size: 12px;
         }
         .work-text {
             cursor: pointer;

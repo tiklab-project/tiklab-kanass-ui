@@ -136,17 +136,17 @@ const HomeSurvey = (props) => {
 
                     <div className="project-item-icon">
                         {
-                            item.iconUrl ?
+                            item?.project?.iconUrl ?
                                 <img
-                                    src= {setImageUrl(item.iconUrl)}
+                                    src= {setImageUrl(item.project.iconUrl)}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
                                 :
                                 <img
                                     src={('/images/project1.png')}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
 
                         }
@@ -168,13 +168,13 @@ const HomeSurvey = (props) => {
                                 <img
                                     src= {setImageUrl(item.iconUrl)}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
                                 :
                                 <img
                                     src={('/images/workType1.png')}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
 
                         }
@@ -196,13 +196,13 @@ const HomeSurvey = (props) => {
                                 <img
                                     src={('/images/' + item.iconUrl)}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
                                 :
                                 <img
                                     src={('/images/version.png')}
                                     alt=""
-                                    className="list-img"
+                                    className="icon-32"
                                 />
 
                         }
@@ -222,7 +222,7 @@ const HomeSurvey = (props) => {
                         <img
                             src={('/images/sprint.png')}
                             alt=""
-                            className="list-img"
+                            className="icon-32"
                         />
                     </div>
                     <div className="sprint-content">
@@ -256,14 +256,14 @@ const HomeSurvey = (props) => {
                                                 item.project.iconUrl ?
                                                     <img
                                                         alt=""
-                                                        className="list-img"
+                                                        className="icon-32"
                                                         src= {setImageUrl(item.project.iconUrl)}
                                                     />
                                                     :
                                                     <img
                                                         src={('/images/project1.png')}
                                                         alt=""
-                                                        className="list-img"
+                                                        className="icon-32"
                                                     />
 
                                             }

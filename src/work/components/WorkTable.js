@@ -220,14 +220,14 @@ const WorkTable = (props) => {
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
                             />
                     }
                 </div>
@@ -361,14 +361,14 @@ const WorkTable = (props) => {
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
                             />
                     }
                 </div>
@@ -547,7 +547,7 @@ const WorkTable = (props) => {
 
     return (
         <Provider {...store}>
-            <Row style={{ height: "100%", overflow: "auto" }}>
+            <Row style={{ height: "100%", overflow: "auto",background: "#fff" }}>
                 <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                     <>
                         <div className="work-list-col">

@@ -224,7 +224,7 @@ const WorkFilterQuick = (props) => {
     return (<div className="work-quick-filter">
         <SelectSimple name="quickFilter"
             onChange={(value) => selectMenu(value)}
-            title={`所有 ${setWorkNum(eveWorkTypeNum.all)}`}
+            title={`全部`}
             ismult={false}
             value={quickFilterValue}
             suffixIcon = {true}
@@ -233,7 +233,7 @@ const WorkFilterQuick = (props) => {
                 quickFilterList.map(item => {
                     return <SelectItem
                         value={item.value}
-                        label={`${item.label} ${setWorkNum(eveWorkTypeNum[item.value])}`}
+                        label={`${item.label}`}
                         key={item.value}
 
                     />

@@ -360,12 +360,13 @@ export class WorkStore {
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
-            if(this.searchCondition.pageParam.currentPage === 1 || this.workShowType !== "list" ){
-                this.workList = data.data.dataList
-            }
-            if(this.searchCondition.pageParam.currentPage > 1 && this.workShowType === "list" ) {
-                this.workList.push(...data.data.dataList);
-            }
+            // if(this.searchCondition.pageParam.currentPage === 1 || this.workShowType !== "list" ){
+            //     this.workList = data.data.dataList
+            // }
+            // if(this.searchCondition.pageParam.currentPage > 1 && this.workShowType === "list" ) {
+            //     this.workList.push(...data.data.dataList);
+            // }
+            this.workList = data.data.dataList
             
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;

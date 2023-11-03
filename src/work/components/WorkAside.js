@@ -7,7 +7,7 @@ import { Spin } from 'antd';
 import { getUser } from 'tiklab-core-ui';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import setImageUrl from '../../common/utils/setImageUrl';
-
+import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -91,26 +91,31 @@ const WorkAside = (props) => {
         }
     }
 
-    const changePage = () => {
-        const values = {
-            pageParam: {
-                pageSize: 20,
-                currentPage: searchCondition?.pageParam?.currentPage + 1,
+    const changePage = (page) => {
+        if (page > totalPage || page < 1) {
+            return
+        } else {
+            const values = {
+                pageParam: {
+                    pageSize: searchCondition.pageParam.pageSize,
+                    currentPage: page,
+                }
+            }
+            if (viewType === "tree") {
+                getWorkConditionPageTree(values).then((res) => {
+                    setWorkId(res.dataList[0]?.id)
+                    setWorkIndex(1)
+
+                })
+            }
+            if (viewType === "tile") {
+                getWorkConditionPage(values).then((res) => {
+                    setWorkId(res.dataList[0]?.id)
+                    setWorkIndex(1)
+                })
             }
         }
-        if (viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                setWorkId(res.dataList[0]?.id)
-                setWorkIndex(1)
 
-            })
-        }
-        if (viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                setWorkId(res.dataList[0]?.id)
-                setWorkIndex(1)
-            })
-        }
 
     }
 
@@ -189,13 +194,13 @@ const WorkAside = (props) => {
                                             <img
                                                 src={setImageUrl(childItem.workTypeSys.iconUrl)}
                                                 alt=""
-                                                className="img-icon-right"
+                                                className="icon-32"
                                             />
                                             :
                                             <img
                                                 src={('images/workType1.png')}
                                                 alt=""
-                                                className="img-icon-right"
+                                                className="icon-32"
                                             />
                                     }
                                     <div className="work-aside-item-name">
@@ -249,13 +254,13 @@ const WorkAside = (props) => {
                             <img
                                 src={setImageUrl(item.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="img-icon-right"
+                                className="icon-32"
                             />
                             :
                             <img
                                 src={('images/workType1.png')}
                                 alt=""
-                                className="img-icon-right"
+                                className="icon-32"
                             />
                     }
 
@@ -319,19 +324,29 @@ const WorkAside = (props) => {
                     </div>
                 </Spin>
 
-                <div className="work-aside-bottom" >
-                    <div>{workList.length}个, 共{total}个</div>
-                    {
-                        currentPage < totalPage ? <div className="work-aside-button" onClick={() => changePage()}>点击加载</div>
-                            :
-                            <div style={{ paddingLeft: "10px" }}>已加载全部</div>
 
-                    }
-                </div>
 
                 {/* </div> */}
             </div>
+            <div className="work-aside-bottom" >
+                <div className="page-button" onClick={() => changePage(currentPage - 1)}>
+                    <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+                </div>
 
+                <span>
+                    {currentPage}
+                </span>
+                <span>
+                    &nbsp; / &nbsp;
+                </span>
+                <span>
+                    {totalPage}
+                </span>
+                <div className="page-button" onClick={() => changePage(currentPage + 1)}>
+                    <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                </div>
+
+            </div>
         </div>
     )
 }

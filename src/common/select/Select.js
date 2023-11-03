@@ -115,7 +115,7 @@ const SelectSimple = (props) => {
                         {title}
                     </div>
                     :
-                    <div className={`${className} select-view-text`}>
+                    <div className={`${className} select-view-text`} title = {selectData?.label ? selectData.label : title}>
                         {selectData?.label ? selectData.label : title}
                     </div>
             }

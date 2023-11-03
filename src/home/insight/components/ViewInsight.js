@@ -62,7 +62,7 @@ const ViewInsight = (props) => {
     return (
         <Provider {...store}>
             <div className="view-insight">
-            <Breadcumb firstText="仪表盘列表" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
+            <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
                 <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
             </Breadcumb>
             <div className="view-insight-content">

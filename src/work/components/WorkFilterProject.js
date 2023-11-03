@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
-import "./WorkFilterQuick.scss";
+import "./WorkFilterProject.scss";
 import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkFilterProject = (props) => {
@@ -69,7 +69,7 @@ const WorkFilterProject = (props) => {
 
 
 
-    return (<div className="work-quick-filter">
+    return (<div className="work-project-filter">
         <SelectSimple name="projectId"
             onChange={(value) => selectChange(value)}
             title={"项目"}
