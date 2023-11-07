@@ -9,7 +9,6 @@ import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import WorkQuickTab from "./WorkQuickTab";
 import WorkFilterType from "./WorkFilterType";
-import { getUser } from "tiklab-core-ui";
 import { useDebounce } from "../../common/utils/debounce";
 import setImageUrl from "../../common/utils/setImageUrl";
 
@@ -22,8 +21,7 @@ const WorkTableFilter = (props) => {
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
         setWorkIndex, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList, quickFilterValue } = workStore;
-    const tenant = getUser().tenant;
+        getWorkTypeList, getWorkStatus, userList } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
     
     useEffect(() => {
@@ -170,7 +168,8 @@ const WorkTableFilter = (props) => {
             <div className="work-table-filter">
                 {
                     props.match.path == "/index/work/table" &&
-                    <SelectSimple name="projectIds"
+                    <SelectSimple 
+                        name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
                         title={"项目"} ismult={true}
                     >
@@ -188,8 +187,9 @@ const WorkTableFilter = (props) => {
                 }
                 <WorkFilterType />
                
-                {
-                    workStatusList && workStatusList.length > 0 && <SelectSimple
+                {/* {
+                    workStatusList && workStatusList.length > 0 && 
+                    <SelectSimple
                         name="workStatus"
                         onChange={(value) => stateChange("workStatusIds", value)}
                         title={"状态"}
@@ -265,7 +265,7 @@ const WorkTableFilter = (props) => {
                             />
                         })
                     }
-                </SelectSimple>
+                </SelectSimple> */}
                 <WorkFilterModal layout={"horizontal"} {...props} />
 
                 <div className="worklist-table-search">
