@@ -63,9 +63,9 @@
         "tiklab-slate-ui": ">=^1.0.1",
         "tiklab-privilege-ui": "^1.0.2",
         "tiklab-todotask-ui": ">=^1.0.2",
-        "slate": "0.66.0",
-        "slate-history": "0.65.3",
-        "slate-react": "0.66.0"
+        "slate": "0.100.0",
+        "slate-history": "0.100.0",
+        "slate-react": "0.100.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -147,9 +147,9 @@
         "sass-resources-loader": "^2.2.1",
         "single-spa": "5.9.2",
         "single-spa-react": "4.1.1",
-        "slate": "^0.66.0",
-        "slate-history": "^0.65.3",
-        "slate-react": "^0.66.0",
+        "slate": "^0.100.0",
+        "slate-history": "^0.100.0",
+        "slate-react": "^0.100.0",
         "style-loader": "^2.0.0",
         "svg-sprite-loader": "^6.0.11",
         "svgo-loader": "^3.0.1",

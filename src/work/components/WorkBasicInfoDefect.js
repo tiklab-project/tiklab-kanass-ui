@@ -410,7 +410,7 @@ const WorkBasicInfo = (props) => {
 
     // 转换描述编辑模式setEditorType
     const [editorType, setEditorType] = useState(false);
-    const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+    const [slateValue, setSlateValue] = useState()
 
 
     const editorDesc = () => {
@@ -934,9 +934,11 @@ const WorkBasicInfo = (props) => {
                             :
                             <div onClick={() => { setEditorType(true) }} className="desc-preview">
                                 {
+                                    console.log(slateValue)
+                                }
+                                {
                                     slateValue && <PreviewEditor
                                         value={slateValue}
-                                        onChange={setSlateValue}
                                         base_url={base_url}
                                         ticket={ticket}
                                         tenant={tenant}

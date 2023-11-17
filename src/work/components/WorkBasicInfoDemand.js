@@ -355,7 +355,7 @@ const WorkBasicInfo = (props) => {
 
     // 转换描述编辑模式setEditorType
     const [editorType, setEditorType] = useState(false);
-    const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+    const [slateValue, setSlateValue] = useState()
 
 
     const editorDesc = () => {
