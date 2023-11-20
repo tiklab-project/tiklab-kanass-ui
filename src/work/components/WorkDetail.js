@@ -19,6 +19,7 @@ import Button from "../../common/button/Button";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import { FlowChartLink } from "tiklab-flow-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
+import { removeNodeInTree } from "../../common/utils/treeDataAction";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
@@ -35,10 +36,7 @@ const WorkDetail = (props) => {
     const inputRef = useRef()
     const [workInfo, setWorkInfo] = useState();
     const [workStatus, setWorkStatus] = useState("nostatus")
-    const tenant = getUser().tenant;
-    const [percentValue, setPercentValue] = useState(0)
-    const [isFocus, setIsFocus] = useState()
-    const path = props.match.path.split("/")[2];
+    const [isFocus, setIsFocus] = useState();
     const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
     const [transformList, setTransformList] = useState([])
@@ -54,8 +52,8 @@ const WorkDetail = (props) => {
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
-                findWorkItemRelationModelCount({workItemId: res.id, workTypeCode : res.workTypeCode}).then(res => {
-                    if(res.code === 0){
+                findWorkItemRelationModelCount({ workItemId: res.id, workTypeCode: res.workTypeCode }).then(res => {
+                    if (res.code === 0) {
                         setRelationModalNum(res.data)
                     }
                 })
@@ -84,28 +82,17 @@ const WorkDetail = (props) => {
 
     const deleteWork = () => {
         detWork(workId).then(() => {
+            if (workShowType === "table") {
+                setIsModalVisible(false)
+                removeNodeInTree(workList, workId)
+                setWorkList([...workList])
+            }
             if (workShowType === "bodar") {
-                getWorkBoardList().then((res) => {
-                    if (res[indexParams.statusIndex].workItemList.length > 0) {
-                        initForm(res[indexParams.statusIndex].workItemList[0].id, indexParams.workIndex);
-                    }
-                })
-            } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                getWorkConditionPageTree().then((res) => {
-                    if (total === defaultCurrent) {
-                        getWorkDetail(res.dataList[0].id);
-                    } else {
-                        getWorkDetail(res.dataList[defaultCurrent - 1].id);
-                    }
-                })
-            } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                getWorkConditionPage().then((res) => {
-                    if (total === defaultCurrent) {
-                        getWorkDetail(res.dataList[0].id);
-                    } else {
-                        getWorkDetail(res.dataList[defaultCurrent - 1].id);
-                    }
-                })
+                getWorkBoardList()
+            }
+            if (workShowType === "list") {
+                removeNodeInTree(workList, workId, setWorkId, setSessionStorage)
+                setWorkList([...workList])
             }
         })
     }
@@ -151,9 +138,6 @@ const WorkDetail = (props) => {
             }
         })
     }
-    const [validateStatus, setValidateStatus] = useState("validating")
-    const [showValidateStatus, setShowValidateStatus] = useState(false)
-
 
     const updateByBlur = (event, id) => {
         event.stopPropagation();
@@ -204,43 +188,6 @@ const WorkDetail = (props) => {
 
     }
 
-
-    const [fieldName, setFieldName] = useState("")
-    const changeStyle = (value) => {
-        setFieldName(value)
-    }
-
-    const updateSingle = (workId, updateData, updateField) => {
-        setFieldName("")
-        let data = {
-            ...updateData,
-            id: workId,
-            updateField: updateField
-        }
-        setIsShowAlert(true)
-        setAlertText("保存中...")
-
-        editWork(data).then(res => {
-            if (res.code === 0) {
-                if (updateField === "assigner") {
-                    const user = userList.filter(item => {
-                        return item.user?.id === updateData.assigner
-                    })
-                    workList[workIndex - 1].assigner = user[0].user;
-                    workInfo.assigner = user[0].user;
-                    setWorkList([...workList])
-                }
-
-                setValidateStatus("success")
-                setAlertText("保存成功！")
-
-                setTimeout(() => {
-                    setIsShowAlert(false)
-
-                }, 1000)
-            }
-        })
-    }
     const focusTitleInput = () => {
         inputRef.current.focus()
         setIsFocus(true)
@@ -256,8 +203,8 @@ const WorkDetail = (props) => {
         <div className="work-flow-transition">
             {
                 transformList.length > 0 && transformList.map(item => {
-                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined /> 
-                        <span className="work-flow-text">{item.toNode.name}</span> 
+                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined />
+                        <span className="work-flow-text">{item.toNode.name}</span>
                     </div>
                 })
             }
@@ -298,9 +245,9 @@ const WorkDetail = (props) => {
                         detailCrumbArray?.length > 0 &&
                         <div className="work-detail-crumb-col">
                             <div className="work-detail-crumb">
-                                
+
                                 {
-                                    props.match.path === "/index/projectDetail/:id/work/:workId" && 
+                                    props.match.path === "/index/projectDetail/:id/work/:workId" &&
                                     <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/work/table`)}>事项 &nbsp;/ &nbsp;</div>
                                 }
                                 {
@@ -316,7 +263,7 @@ const WorkDetail = (props) => {
                                                     />
                                                         :
                                                         <img
-                                                            src = {setImageUrl(item.iconUrl)}
+                                                            src={setImageUrl(item.iconUrl)}
                                                             alt=""
                                                             className="img-icon-right"
                                                         />
@@ -336,7 +283,7 @@ const WorkDetail = (props) => {
                                                         :
                                                         <img
 
-                                                            src = {setImageUrl(item.iconUrl)}
+                                                            src={setImageUrl(item.iconUrl)}
                                                             alt=""
                                                             className="img-icon-right"
                                                         />
@@ -399,6 +346,7 @@ const WorkDetail = (props) => {
                                                     // onCancel={cancel}
                                                     okText="是"
                                                     cancelText="否"
+                                                    getPopupContainer={() => workDetailTop.current}
                                                 >
                                                     <Button  >
                                                         <svg className="img-icon-right" aria-hidden="true">
@@ -415,17 +363,17 @@ const WorkDetail = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                             </div>
                             <div className="work-detail-tab">
-                                { workInfo && <WorkDetailBottom 
-                                    workInfo={workInfo} 
-                                    setWorkInfo={setWorkInfo} 
-                                    getWorkDetail={getWorkDetail} 
+                                {workInfo && <WorkDetailBottom
+                                    workInfo={workInfo}
+                                    setWorkInfo={setWorkInfo}
+                                    getWorkDetail={getWorkDetail}
                                     workDeatilForm={workDeatilForm}
-                                    relationModalNum = {relationModalNum}
-                                    {...props} 
+                                    relationModalNum={relationModalNum}
+                                    {...props}
                                 />}
                             </div>
                         </>

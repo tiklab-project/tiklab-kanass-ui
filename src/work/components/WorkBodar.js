@@ -200,7 +200,6 @@ const WorkBodar = (props) => {
                                         <div className="work-bodar-title">
                                             <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
                                         </div>
-
                                         {
                                             isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
                                                 <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} onDrop={() => changeStatus(item.state.id, index, item)}>

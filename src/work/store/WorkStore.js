@@ -173,9 +173,12 @@ export class WorkStore {
 
     // 看板视图移动位置后，列表交换
     changeBorderList = (startBoxIndex, startWorkBoxIndex, index, targetStatusId) => {
-        Object.assign(this.workBoardList[startBoxIndex].workItemList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
-        this.workBoardList[index].workItemList.push(this.workBoardList[startBoxIndex].workItemList[startWorkBoxIndex])
-        this.workBoardList[startBoxIndex].workItemList.splice(startWorkBoxIndex, 1)
+        // console.log(startBoxIndex, startWorkBoxIndex)
+        // console.log(this.workBoardList)
+        // console.log(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
+        Object.assign(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
+        this.workBoardList[index].workItemList.dataList.push(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
+        this.workBoardList[startBoxIndex].workItemList.dataList.splice(startWorkBoxIndex, 1)
     }
 
     // 若调用接口失败，则还原
@@ -267,7 +270,6 @@ export class WorkStore {
     // 获取看板视图事项列表
     getWorkBoardList = async (value) => {
         this.setSearchCondition(value)
-        // this.getWorkItemNum();
         this.workBoardCurrentPage = []
         this.workBoardList = []
         const data = await Service("/workItem/findWorkBoardList",this.searchCondition);
@@ -282,7 +284,6 @@ export class WorkStore {
                     length = this.workBoardList[j].workItemList.length;
                 }
             }
-            console.log(this.workBoardCurrentPage)
             this.workBoardListLength = length;
         }
         return data;

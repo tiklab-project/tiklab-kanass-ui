@@ -187,7 +187,7 @@ const WorkTableFilter = (props) => {
                 }
                 <WorkFilterType />
                
-                {/* {
+                {
                     workStatusList && workStatusList.length > 0 && 
                     <SelectSimple
                         name="workStatus"
@@ -265,7 +265,7 @@ const WorkTableFilter = (props) => {
                             />
                         })
                     }
-                </SelectSimple> */}
+                </SelectSimple>
                 <WorkFilterModal layout={"horizontal"} {...props} />
 
                 <div className="worklist-table-search">

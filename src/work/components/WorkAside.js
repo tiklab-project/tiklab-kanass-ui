@@ -17,8 +17,7 @@ const WorkAside = (props) => {
         workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
         searchCondition, total } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
-    const project = JSON.parse(localStorage.getItem("project"));
-    const tenant = getUser().tenant;
+
 
     // 点击选择事项列表
     const changeWorkChilden = (workItem, index) => {
@@ -119,17 +118,7 @@ const WorkAside = (props) => {
 
     }
 
-    //树的层级
-    let num = 0;
 
-    const Spans = (num) => {
-        let span = []
-        for (let i = 0; i < num; i++) {
-            span.push(<span style={{ width: "20px" }} key={i}></span>)
-
-        }
-        return span;
-    }
 
     // 树的展开与闭合
     const isExpandedTree = (key) => {
@@ -173,7 +162,6 @@ const WorkAside = (props) => {
                                     className={`work-aside-item work-aside-child  ${childItem.id === workId ? "work-aside-select" : ""}`}
                                     onClick={(event) => changeWorkChilden(childItem, faIndex)}
                                 >
-                                    {/* {Spans(num)} */}
                                     <div className="work-aside-item-icon">
                                         {
                                             childItem.children && childItem.children.length > 0 ?

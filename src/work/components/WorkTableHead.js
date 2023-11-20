@@ -55,7 +55,7 @@ const WorkTableHead = (props) => {
 
     const menuPlugin = (
         <Menu>
-            <Menu.Item>
+            {/* <Menu.Item>
                 {
                     pluginStore.filter(item => item.point === "import-modal").length > 0 ? <div onClick={() => importFile()}>导入</div> :
                         <Popconfirm
@@ -66,7 +66,7 @@ const WorkTableHead = (props) => {
                             <div onClick={() => buy()}>导入ss?</div>
                         </Popconfirm>
                 }
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
                 <div onClick={() => exportFile()}>导出</div>
             </Menu.Item>

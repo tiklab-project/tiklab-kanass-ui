@@ -934,9 +934,6 @@ const WorkBasicInfo = (props) => {
                             :
                             <div onClick={() => { setEditorType(true) }} className="desc-preview">
                                 {
-                                    console.log(slateValue)
-                                }
-                                {
                                     slateValue && <PreviewEditor
                                         value={slateValue}
                                         base_url={base_url}
