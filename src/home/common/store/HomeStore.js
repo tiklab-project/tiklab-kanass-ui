@@ -183,18 +183,15 @@ class HomeStore {
     findRecentPage = async(masterId) => {
         const params={
             masterId: masterId,
+            model: "workItem",
             orderParams: [{
                 name: "recentTime",
                 orderType:"desc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            }
+            }]
         }
-        const data = await Service("/recent/findRecentPage", params)
+        const data = await Service("/recent/findRecentListToModel", params)
         if(data.code === 0){
-            this.recentList = data.data.dataList;
+            this.recentList = data.data;
         }
         return data;
     }

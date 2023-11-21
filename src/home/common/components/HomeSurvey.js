@@ -47,7 +47,7 @@ const HomeSurvey = (props) => {
      */
     const getRecentProject = () => {
         setRecentLoading(true)
-        statProjectWorkItem(3).then((res) => {
+        statProjectWorkItem(4).then((res) => {
             if (res.code === 0) {
                 setRecentProjectList(res.data)
                 setRecentLoading(false)
@@ -111,9 +111,11 @@ const HomeSurvey = (props) => {
 
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
-        setWorkId(item.modelId)
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
-        props.history.push(`/index/projectDetail/${item.project.id}/work/${item.modelId}`)
+        const workItem = item.object;
+        setWorkId(workItem.id)
+        
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
+        props.history.push(`/index/projectDetail/${workItem.project.id}/work/${workItem.id}`)
         sessionStorage.setItem("menuKey", "project")
     }
 
@@ -138,7 +140,7 @@ const HomeSurvey = (props) => {
                         {
                             item?.project?.iconUrl ?
                                 <img
-                                    src= {setImageUrl(item.project.iconUrl)}
+                                    src={setImageUrl(item.project.iconUrl)}
                                     alt=""
                                     className="icon-32"
                                 />
@@ -166,7 +168,7 @@ const HomeSurvey = (props) => {
                         {
                             item.iconUrl ?
                                 <img
-                                    src= {setImageUrl(item.iconUrl)}
+                                    src={setImageUrl(item.iconUrl)}
                                     alt=""
                                     className="icon-32"
                                 />
@@ -245,40 +247,40 @@ const HomeSurvey = (props) => {
                 </div>
 
                 <Spin spinning={recentLoading} delay={500} >
-                    
+
                     <div className="home-project">
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
-                                if (index < 4) {
-                                    return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
-                                        <div className="item-title">
-                                            {
-                                                item.project.iconUrl ?
-                                                    <img
-                                                        alt=""
-                                                        className="icon-32"
-                                                        src= {setImageUrl(item.project.iconUrl)}
-                                                    />
-                                                    :
-                                                    <img
-                                                        src={('/images/project1.png')}
-                                                        alt=""
-                                                        className="icon-32"
-                                                    />
 
-                                            }
-                                            <span>{item.project.projectName}</span>
-                                        </div>
-                                        <div className="item-work">
-                                            <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
-                                            <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
-                                        </div>
+                                return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
+                                    <div className="item-title">
+                                        {
+                                            item.project.iconUrl ?
+                                                <img
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={setImageUrl(item.project.iconUrl)}
+                                                />
+                                                :
+                                                <img
+                                                    src={('/images/project1.png')}
+                                                    alt=""
+                                                    className="icon-32"
+                                                />
+
+                                        }
+                                        <span>{item.project.projectName}</span>
                                     </div>
-                                }
+                                    <div className="item-work">
+                                        <div className="process-work"><span style={{ color: "#999" }}>待办事项</span><span>{item.processWorkItemCount}</span></div>
+                                        <div className="end-work"><span style={{ color: "#999" }}>已完成事项</span><span>{item.endWorkItemCount}</span></div>
+                                    </div>
+                                </div>
+
 
                             })
-                            :
-                            <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
                         }
                     </div>
                 </Spin>
@@ -293,7 +295,32 @@ const HomeSurvey = (props) => {
                 <div className="recent-click-list">
                     {
                         recentList && recentList.length > 0 && recentList.map(item => {
-                            return recentItem(item)
+                            return <div className="work-item" key={item.object.id}>
+                                <div className="work-icon">
+                                    {
+                                        item.object.workTypeSys.iconUrl ?
+                                            <img
+                                                src={setImageUrl(item.object.workTypeSys.iconUrl)}
+                                                alt=""
+                                                className="icon-32"
+                                            />
+                                            :
+                                            <img
+                                                src={('/images/workType1.png')}
+                                                alt=""
+                                                className="icon-32"
+                                            />
+
+                                    }
+                                </div>
+                                <div className="work-content">
+                                    <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
+                                    <div className="content-type">{item.object.project.projectName}</div>
+                                </div>
+                                <div className="item-time">
+                                    {item.recentTime}
+                                </div>
+                            </div>
                         })
                     }
                 </div>

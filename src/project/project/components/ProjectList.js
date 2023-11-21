@@ -27,7 +27,7 @@ const ProjectList = (props) => {
     useEffect(() => {
         findJoinProjectList({})
         setRecentLoading(true)
-        statProjectWorkItem(3).then(res => {
+        statProjectWorkItem(4).then(res => {
             setRecentProjectList(res.data)
             setRecentLoading(false)
         })
@@ -292,7 +292,7 @@ const ProjectList = (props) => {
                     <div className="home-project">
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
-                                if (index < 4) {
+
                                     return <div className="project-item" key={item.project.id} onClick={() => goProdetail(item.project)}>
                                         <div className="item-title">
                                             {
@@ -318,9 +318,8 @@ const ProjectList = (props) => {
                                         </div>
 
                                     </div>
-                                }
-
-                            })
+                                })
+                            
                             :
                             <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
                         }
