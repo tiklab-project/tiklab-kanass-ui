@@ -6,12 +6,12 @@ import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
+import { searchWorkList } from "./WorkSearch";
 const WorkListFilter = (props) => {
     const { workStore, form, showWorkListFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const { getWorkConditionPageTree, getWorkConditionPage,
-        workShowType, viewType, setWorkIndex, setWorkId,
-        searchCondition, getWorkBoardList, getWorkStatus,
+        viewType, searchCondition,  getWorkStatus,
         findProjectList, getSelectUserList} = workStore;
 
     const [showSearch, setShowSearch] = useState(false);
@@ -37,33 +37,7 @@ const WorkListFilter = (props) => {
     }
 
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(values)
-        }
+        searchWorkList(workStore, values)
     };
 
     const sorter = (orderParams) => {

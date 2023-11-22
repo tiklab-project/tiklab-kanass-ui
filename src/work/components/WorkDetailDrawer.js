@@ -12,7 +12,7 @@ import WorkDetail from "./WorkDetail";
 import "./WorkDetail.scss"
 import { observer, inject } from "mobx-react";
 
-const WorkBorderDetail = (props) => {
+const WorkDetailDrawer = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore } = props;
     const { setWorkId } = workStore;
@@ -87,11 +87,10 @@ const WorkBorderDetail = (props) => {
                 <WorkDetail {...props} showPage={showPage} setIsModalVisible={setIsModalVisible} />
             </div>
         </Drawer>
-        {/* <div>sss</div> */}
     </>
 
 
     );
 };
 
-export default inject("workStore")(observer(WorkBorderDetail));
+export default inject("workStore")(observer(WorkDetailDrawer));

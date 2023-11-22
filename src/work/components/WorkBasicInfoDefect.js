@@ -170,7 +170,7 @@ const WorkBasicInfo = (props) => {
                             {text}
                         </a>
                         :
-                        <a href={setImageUrl("/image/" +record.attachmentUrl)}
+                        <a href={setImageUrl("/image/" + record.attachmentUrl)}
                             target="_blank"
                         >
                             {text}

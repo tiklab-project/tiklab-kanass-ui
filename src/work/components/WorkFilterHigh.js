@@ -7,6 +7,7 @@ import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import WorkFilterQuick from "./WorkFilterQuick"
 import { finWorkList } from "./WorkGetList"
+import { searchWorkList } from "./WorkSearch";
 const { RangePicker } = DatePicker;
 const WorkFilterHigh = (props) => {
     // 查找表单
@@ -22,9 +23,7 @@ const WorkFilterHigh = (props) => {
         wrapperCol: { span: 24 }
     };
     // 解析store数据
-    const { getWorkConditionPage, getWorkConditionPageTree, workShowType,
-        getWorkBoardList, getWorkGanttListTree, setWorkId, setWorkIndex,
-        viewType, priorityList, findPriority, getsprintlist, sprintList,
+    const { workShowType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
         getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue, eveWorkTypeNum,
         setSearchType } = workStore;
@@ -136,33 +135,7 @@ const WorkFilterHigh = (props) => {
     }
 
     const findWorkItem = (value) => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(value).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList?.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(value).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(value)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(value)
-        }
+        searchWorkList(workStore, value)
     }
     const dateFormat = "YYYY-MM-DD"
     const initForm = () => {

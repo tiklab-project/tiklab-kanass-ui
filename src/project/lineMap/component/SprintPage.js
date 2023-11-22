@@ -34,18 +34,6 @@ const SprintPage = (props) => {
         return;
     }, [])
 
-    /**
-     * 根据史诗名称搜索史诗
-     * @param {*} value 
-     */
-    const onSearch = (value) => {
-
-        getWorkConditionPageTree({title: value}).then(res => {
-            console.log(sprintList)
-        })
-    }
-
-
     const [archiveView, setArchiveView] = useState("week")
     const changeMonth = () => {
         setArchiveView("month"); 

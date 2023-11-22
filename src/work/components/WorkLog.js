@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Modal, Table, Space, Popconfirm, Form, Input, Select, Row, Col } from 'antd';
+import { Modal, Table, Space, Popconfirm, Form, Input, Select, Row, Col, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import { getUser } from 'tiklab-core-ui';
@@ -165,8 +165,9 @@ const WorkLog = (props) => {
 
                 {/* <div className="worklog-table-title">工时列表</div> */}
                 <div className="work-log-list">
+
                     {
-                        workLogList.map(item => {
+                        workLogList.length > 0 ? workLogList.map(item => {
                             return <>
                                 <div className="work-log-item">
                                     <div style={{ flex: 1 }}>
@@ -217,10 +218,6 @@ const WorkLog = (props) => {
                                                 </div>
 
                                         }
-
-
-
-
                                     </div>
 
                                 </div>
@@ -229,6 +226,8 @@ const WorkLog = (props) => {
                             </>
 
                         })
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有工时记录~" />
                     }
                 </div>
             </div>

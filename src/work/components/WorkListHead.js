@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { Menu } from "antd";
 import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
-import WorkFilterSort from "./WorkChangeView";
+import WorkChangeView from "./WorkChangeView";
 import "./WorkListHead.scss"
 import WorkFilterType from "./WorkFilterType";
 import WorkFilterQuick from "./WorkFilterQuick";
@@ -35,22 +35,7 @@ const WorkListHead = (props) => {
         return;
     }, [])
 
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
+   
 
     useEffect(() => {
         setWorkBreadCrumbText("全部事项")
@@ -75,21 +60,32 @@ const WorkListHead = (props) => {
 
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
+                    setWorkId(list[0].id)
                 } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
+                    setWorkIndex(0)
+                    setWorkId(0)
                 }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
             }
         })
     }
-
+    const getPageList = (value) => {
+        getWorkConditionPage(value).then((res) => {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
+                    setWorkIndex(1)
+                    setWorkId(list[0].id)
+                } else {
+                    setWorkIndex(0)
+                    setWorkId(0)
+                }
+            }
+        })
+    }
 
 
     return (
@@ -108,7 +104,7 @@ const WorkListHead = (props) => {
                         </svg>
                     </div>
 
-                    <WorkFilterSort
+                    <WorkChangeView
                         getPageList={getPageList}
                         getPageTree={getPageTree}
                         getWorkConditionPage={getWorkConditionPage}

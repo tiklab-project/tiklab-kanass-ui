@@ -38,16 +38,7 @@ const VersionPage = (props) => {
         return;
     }, [])
 
-    /**
-     * 根据史诗名称搜索史诗
-     * @param {*} value 
-     */
-    const onSearch = (value) => {
 
-        getWorkConditionPageTree({ title: value }).then(res => {
-            console.log(versionList)
-        })
-    }
 
 
     const [archiveView, setArchiveView] = useState("week")

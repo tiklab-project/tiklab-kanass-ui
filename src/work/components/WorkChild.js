@@ -14,6 +14,7 @@ const WorkChild = (props) => {
         workChild: WorkChildStore
     }
     const { treePath, workStore,workType, projectId,type, workTypeCode } = props;
+    
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);
@@ -27,7 +28,7 @@ const WorkChild = (props) => {
     const [demandId, setDemand] = useState();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
-    const tenant = getUser().tenant;
+    
     useEffect(() => {
         
         if(workTypeCode === "epic"){
@@ -113,6 +114,7 @@ const WorkChild = (props) => {
             sprint: sprintId,
             workType: workType.id,
             assigner: project?.master.id,
+            desc: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]"
         }
         if(workTypeCode === "epic"){
             params.workType = demandTypeId

@@ -188,7 +188,6 @@ const ProdeScrumAside = (props) => {
         // setHeight(documentHeight);
         const menuHeight = documentHeight - 200;
         const menuNum = Math.floor(menuHeight / 60);
-        console.log(menuHeight, menuNum)
         let num  = 0;
         if(project?.projectType.type === "scrum"){
             num= menuNum > 7 ? 7 : menuNum;

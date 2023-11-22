@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterQuick.scss"
 import { getUser } from "tiklab-core-ui";
+import { setWorkDeatilInList } from "./WorkSearch";
 
 const WorkFilterQuick = (props) => {
     const { workStore, heightFilter } = props;
@@ -175,51 +176,9 @@ const WorkFilterQuick = (props) => {
     }
 
     const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
+        setWorkDeatilInList(workStore)
     }
 
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (workShowType === "list") {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const setWorkNum = (num) => {
-        let showNum;
-        const isMax = Math.floor(num / 1000);
-        if(isMax >= 1){
-            showNum = `${isMax}k+`
-        }else {
-            showNum = num;
-        }
-        return showNum;
-    }
 
     return (<div className="work-quick-filter">
         <SelectSimple name="quickFilter"

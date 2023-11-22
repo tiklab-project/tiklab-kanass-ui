@@ -8,18 +8,20 @@ import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import WorkBorderDetail from "./WorkBorderDetail";
+import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
 import { renderRoutes } from "react-router-config";
 import setImageUrl from "../../common/utils/setImageUrl";
+import { removeTableTree } from "../../common/utils/treeDataAction";
 
 const WorkTable = (props) => {
     // const { form } = props
+    
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
-        createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex } = WorkStore;
+        createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
     const { route } = props;
@@ -36,6 +38,7 @@ const WorkTable = (props) => {
 
     useEffect(() => {
         setWorkShowType("table")
+        console.log(workShowType)
         setQuickFilterValue({
             value: "pending",
             label: "我的待办"
@@ -189,7 +192,7 @@ const WorkTable = (props) => {
             setSortArray(sortArray)
             searchCondition.orderParams = orderParams;
             searchCondition.pageParam = {
-                pageSize: 20,
+                pageSize: searchCondition.pageParam.pageSize,
                 currentPage: 1
             }
             if (viewType === "tree") {
@@ -534,11 +537,16 @@ const WorkTable = (props) => {
     // 删除事项
     const deleteWork = (id) => {
         detWork(id).then(() => {
-            if (viewType === "tree") {
-                getWorkConditionPageTree()
-            }
-            if (viewType === "tile") {
-                getWorkConditionPage()
+            removeTableTree(workList, id)
+            if (workList.length == 0) {
+                if (viewType === "tree") {
+                    getWorkConditionPageTree()
+                }
+                if (viewType === "tile") {
+                    getWorkConditionPage()
+                }
+            }else {
+                setWorkList([...workList])
             }
         })
     }
@@ -591,7 +599,7 @@ const WorkTable = (props) => {
                             </Spin>
                         </div>
                     </>
-                    <WorkBorderDetail
+                    <WorkDetailDrawer
                         isModalVisible={isModalVisible}
                         setIsModalVisible={setIsModalVisible}
                         modelRef={modelRef}

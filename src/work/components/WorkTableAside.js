@@ -2,9 +2,10 @@ import React,{ useState, useRef, useEffect } from "react";
 import { observer, inject, useStaticRendering } from "mobx-react";
 import "./WorkTable.scss";
 import "./WorkTableAside.scss"
+import { setWorkDeatilInList } from "./WorkSearch";
 const WorkTableAside=(props) => {
     const {workStore, form } =props
-    const {setWorkBreadCrumbText,getWorkConditionPageTree,getWorkConditionPage, viewType, setSearchCondition,
+    const {setWorkBreadCrumbText,setSearchCondition,
         setWorkId, setWorkIndex, findStateNodeList, setSearchConditionNull,statWorkItemOverdue} = workStore;
    
     const workType = props.match.params.type ? props.match.params.type : null;
@@ -59,11 +60,7 @@ const WorkTableAside=(props) => {
         }
     }
     const getWorkList = () =>{
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
+        setWorkDeatilInList(workStore)
     }
 
     const getAllWorkItem = () => {
@@ -157,41 +154,6 @@ const WorkTableAside=(props) => {
             }
         })
         return stateNodeList;
-    }
-
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id" 
-                ) {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            }else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            }else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
     }
 
     const initFrom = (fromValue) => {

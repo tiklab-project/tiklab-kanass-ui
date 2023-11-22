@@ -4,24 +4,24 @@ import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import { SelectSimple, SelectItem } from "../../common/select";
-const WorkFilterForm = (props) => {
+import { searchWorkList, setWorkDeatilInList } from "./WorkSearch";
+const WorkFilter = (props) => {
     // 查找表单
     const [form] = Form.useForm();
     const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 解析store数据
     const { projectList, setSearchCondition, searchCondition,
-        getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, getWorkGanttListTree, workTypeList,
+        getWorkConditionPage, getWorkConditionPageTree, workTypeList,
         setWorkId, setWorkIndex, viewType, setSearchConditionNull,
-        findStateNodeList, statWorkItemOverdue, 
+        findStateNodeList, statWorkItemOverdue,
         findProjectList, getSelectUserList, getWorkTypeList, getWorkStatus, userList } = workStore;
 
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
-        getWorkTypeList({projectId: projectId});
+        getWorkTypeList({ projectId: projectId });
         getWorkStatus()
         getAllWorkItem()
         return
@@ -31,33 +31,7 @@ const WorkFilterForm = (props) => {
 
     //查找事务
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(values)
-        }
+        searchWorkList(workStore, values)
     };
 
     const selectMenu = (type) => {
@@ -83,11 +57,7 @@ const WorkFilterForm = (props) => {
         }
     }
     const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
+        setWorkDeatilInList(workStore)
     }
 
     const getAllWorkItem = () => {
@@ -180,35 +150,31 @@ const WorkFilterForm = (props) => {
 
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id"
-                ) {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
+                    setWorkId(list[0].id)
                 } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
+                    setWorkIndex(0)
+                    setWorkId(0)
                 }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
             }
+           
         })
     }
 
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
                     setWorkIndex(1)
-                    setWorkId(props.match.params.id)
+                    setWorkId(list[0].id)
                 } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
+                    setWorkIndex(0)
+                    setWorkId(0)
                 }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
             }
         })
     }
@@ -330,9 +296,9 @@ const WorkFilterForm = (props) => {
                 </SelectSimple>
             }
 
-           
+
 
         </div>
     )
 }
-export default withRouter(inject("workStore", "workCalendarStore")(observer(WorkFilterForm)));
+export default withRouter(inject("workStore", "workCalendarStore")(observer(WorkFilter)));

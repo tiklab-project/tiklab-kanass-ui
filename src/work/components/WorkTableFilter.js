@@ -11,6 +11,7 @@ import WorkQuickTab from "./WorkQuickTab";
 import WorkFilterType from "./WorkFilterType";
 import { useDebounce } from "../../common/utils/debounce";
 import setImageUrl from "../../common/utils/setImageUrl";
+import { searchWorkList } from "./WorkSearch";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -19,8 +20,7 @@ const WorkTableFilter = (props) => {
     // 解析store数据
     const { projectList, searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, getWorkGanttListTree, setWorkId,
-        setWorkIndex, viewType, findProjectList, getSelectUserList,
+        workShowType, viewType, findProjectList, getSelectUserList,
         getWorkTypeList, getWorkStatus, userList } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
     
@@ -36,33 +36,7 @@ const WorkTableFilter = (props) => {
 
     //查找事务
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(values)
-        }
+        searchWorkList(workStore, values)
     }
 
     const stateChange = (field, value) => {
@@ -89,48 +63,6 @@ const WorkTableFilter = (props) => {
             }
         })
     }, [500])
-    const getWorkList = () => {
-        if (viewType === "tile") {
-            getPageList();
-        } else if (viewType === "tree") {
-            getPageTree();
-        }
-    }
-
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
 
     const selectChange = (field, value) => {
         search({

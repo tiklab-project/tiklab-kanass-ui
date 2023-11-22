@@ -4,11 +4,11 @@ import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterProject.scss";
 import setImageUrl from "../../common/utils/setImageUrl";
+import { searchWorkList } from "./WorkSearch";
 
 const WorkFilterProject = (props) => {
     const { workStore, heightFilter } = props;
-    const { findProjectList, projectList, viewType, getWorkConditionPage, getWorkConditionPageTree,
-          workShowType, setWorkIndex, setWorkId  } = workStore;
+    const { findProjectList, projectList } = workStore;
 
 
     useEffect(() => {
@@ -38,33 +38,7 @@ const WorkFilterProject = (props) => {
     }
 
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
-        if (workShowType === "time") {
-            getWorkGanttListTree(values)
-        }
+        searchWorkList(workStore, values)
     }
 
 

@@ -4,18 +4,17 @@ import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
-import { getUser } from 'tiklab-core-ui';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import setImageUrl from '../../common/utils/setImageUrl';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
+import { setWorkDeatilInList } from './WorkSearch';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
     const workAsideList = useRef()
     const { workStore } = props;
-    const { tableLoading, getWorkConditionPageTree, getWorkConditionPage, setWorkId,
-        workId, viewType, setWorkIndex, workList, currentPage, createRecent, totalPage,
-        searchCondition, total } = workStore;
+    const { tableLoading, setWorkId, workId, setWorkIndex, workList, currentPage, totalPage,
+        searchCondition } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
 
 
@@ -100,25 +99,9 @@ const WorkAside = (props) => {
                     currentPage: page,
                 }
             }
-            if (viewType === "tree") {
-                getWorkConditionPageTree(values).then((res) => {
-                    setWorkId(res.dataList[0]?.id)
-                    setWorkIndex(1)
-
-                })
-            }
-            if (viewType === "tile") {
-                getWorkConditionPage(values).then((res) => {
-                    setWorkId(res.dataList[0]?.id)
-                    setWorkIndex(1)
-                })
-            }
+            setWorkDeatilInList(workStore, values)
         }
-
-
     }
-
-
 
     // 树的展开与闭合
     const isExpandedTree = (key) => {

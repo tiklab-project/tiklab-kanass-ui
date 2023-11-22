@@ -6,10 +6,12 @@ import { useSelector } from "tiklab-plugin-core-ui";
 import { withRouter } from "react-router";
 import { getVersionInfo } from "tiklab-core-ui"
 import { removeSessionStorage } from "../../common/utils/setSessionStorage";
-const WorkFilterSort = (props) => {
+import { observer, inject } from "mobx-react";
+
+const WorkChangeView = (props) => {
     const { getPageList, getPageTree, getWorkConditionPage,
-        getWorkConditionPageTree, getWorkBoardList, viewType,
-        workShowType, setWorkShowType, setViewType, buttonType, searchCondition } = props;
+        getWorkConditionPageTree, buttonType, workStore } = props;
+    const {viewType, workShowType, setWorkShowType, setViewType} = workStore
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const gantte = useRef()
@@ -72,25 +74,7 @@ const WorkFilterSort = (props) => {
         if(path.indexOf("versiondetail") > 1){
             props.history.push(`/index/${projectId}/versiondetail/${versionId}/work/${value}`)
         }
-        // switch (value) {
-        //     case "list":
-               
-        //         break;
-        //     case "table":
-        //         props.history.push(`/index/projectDetail/${projectId}/work/table`)
-        //         // if (viewType === "tile") {
-        //         //     getWorkConditionPage(data);
-        //         // } else if (viewType === "tree") {
-        //         //     getWorkConditionPageTree(data);
-        //         // }
-        //         break;
-        //     case "bodar":
-        //         props.history.push(`/index/projectDetail/${projectId}/workBodar`)
-        //         // getWorkBoardList();
-        //         break;
-        //     default:
-        //         break;
-        // }
+  
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
     };
@@ -99,7 +83,6 @@ const WorkFilterSort = (props) => {
     const changTileOrTree = (e) => {
         const value = e.target.value
         setViewType(value)
-
         switch (value) {
             case "tile":
                 if (workShowType === "list") {
@@ -205,5 +188,4 @@ const WorkFilterSort = (props) => {
         }
     </div>
 }
-
-export default withRouter(WorkFilterSort);
+export default withRouter(inject("workStore")(observer(WorkChangeView)));

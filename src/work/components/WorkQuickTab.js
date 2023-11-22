@@ -4,14 +4,13 @@ import { observer, inject } from "mobx-react";
 import "./WorkQuickTab.scss";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
+import { searchWorkList } from "./WorkSearch";
 const WorkQuickTab = (props) => {
     const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     // 解析store数据
-    const { getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, setWorkId, setWorkIndex,
-        viewType, setSearchCondition, findStateNodeList, setQuickFilterValue, 
+    const { workShowType,  setSearchCondition, findStateNodeList, setQuickFilterValue, 
         quickFilterValue, eveWorkTypeNum, setSearchType } = workStore;
     
     const userId = getUser().userId;
@@ -155,30 +154,7 @@ const WorkQuickTab = (props) => {
     }
 
     const getWorkList = () => {
-        if ((workShowType === "list" || workShowType === "table" || workShowType === "time") && viewType === "tree") {
-            getWorkConditionPageTree().then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage().then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList()
-        }
+       searchWorkList(workStore)
     }
 
     

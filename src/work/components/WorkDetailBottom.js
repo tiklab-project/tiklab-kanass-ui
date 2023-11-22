@@ -16,6 +16,8 @@ import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo, relationModalNum } = props;
+    const treePath = workInfo.treePath;
+    const deep = treePath ? treePath.split(";").length : 1;
     const { workId, workShowType, findDmWorkTypeByCode, viewType } = workStore;
     // 富文本内容
 
@@ -133,16 +135,21 @@ const WorkDetailBottom = (props) => {
                         关联事项
                         <span className="tabs-bar-num">{relationModalNum?.relationWork}</span>
                     </div>
-                    <div className={`tabs-bar ${tabValue === 3 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(3)}>
-                        子{workTypeText}
-                        <span className="tabs-bar-num">{relationModalNum?.childrenWork}</span>
-                    </div>
                     {
-                        workCode === "demand" && <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
-                            任务
-                            <span className="tabs-bar-num">{relationModalNum?.childrenTaskWork}</span>
-                        </div>
+                        deep < 3 && <>
+                            <div className={`tabs-bar ${tabValue === 3 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(3)}>
+                                子{workTypeText}
+                                <span className="tabs-bar-num">{relationModalNum?.childrenWork}</span>
+                            </div>
+                            {
+                                workCode === "demand" && <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
+                                    任务
+                                    <span className="tabs-bar-num">{relationModalNum?.childrenTaskWork}</span>
+                                </div>
+                            }
+                        </>
                     }
+
                     <div className={`tabs-bar ${tabValue === 5 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(5)}>
                         工时
                         <span className="tabs-bar-num">{relationModalNum?.workLog}</span>
@@ -163,7 +170,7 @@ const WorkDetailBottom = (props) => {
                         </div>
 
                         <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
-                           
+
                             <div className={`tabs-dropdown-item ${tabValue === 7 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("评论", 7)}>
                                 评论
                                 <span className="tabs-bar-num">{relationModalNum?.workComment}</span>
@@ -196,12 +203,11 @@ const WorkDetailBottom = (props) => {
                             </div>
                         }
                         {
-                            tabValue === 3 && workInfo.workTypeCode !== "epic" &&
+                            tabValue === 3 && workInfo.workTypeCode !== "epic" && deep < 3 &&
                             <div className="tabs-tabpanel">
                                 <WorkChild
                                     workId={workId}
                                     workType={workInfo.workType}
-
                                     flow={workInfo.flow}
                                     viewType={viewType}
                                     treePath={workInfo.treePath}
@@ -212,7 +218,7 @@ const WorkDetailBottom = (props) => {
                             </div>
                         }
                         {
-                            tabValue === 3 && workInfo.workTypeCode === "epic" &&
+                            tabValue === 3 && workInfo.workTypeCode === "epic" && deep < 3 &&
                             <div className="tabs-tabpanel">
                                 <WorkChild
                                     workId={workId}
@@ -228,7 +234,7 @@ const WorkDetailBottom = (props) => {
                             </div>
                         }
                         {
-                            tabValue === 4 && workCode === "demand" &&
+                            tabValue === 4 && workCode === "demand" && deep < 3 &&
                             <div className="tabs-tabpanel">
                                 <WorkChild
                                     workId={workId}

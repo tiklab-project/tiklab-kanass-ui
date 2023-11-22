@@ -3,7 +3,7 @@ import "../components/versionPlan.scss";
 import { observer, inject, Provider } from "mobx-react";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
-import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
+import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import VersionPlanStore from "../stores/VersionPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
@@ -404,7 +404,7 @@ const VersionPlan = (props) => {
                 </div>
             </div>
 
-            <WorkBorderDetail
+            <WorkDetailDrawer
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}

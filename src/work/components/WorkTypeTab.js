@@ -3,13 +3,12 @@ import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import "./WorkTypeTab.scss";
 import { withRouter } from "react-router";
+import { searchWorkList } from "./WorkSearch";
 const WorkTypeTab = (props) => {
     const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 解析store数据
-    const { getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, getWorkBoardList, setWorkId, setWorkIndex,
-        viewType, findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum } = workStore;
+    const {  findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum } = workStore;
 
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
@@ -89,30 +88,7 @@ const WorkTypeTab = (props) => {
 
     //查找事务
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table" || workShowType === "time") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
+        searchWorkList(workStore, values)
     };
 
     const setWorkNum = (num) => {

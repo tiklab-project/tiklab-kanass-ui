@@ -14,7 +14,7 @@ import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
-import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
+import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import VersionPlanStore from "../store/VersionPlanStores"
 import WorkStore from "../../../work/store/WorkStore";
 const VersionPlan = (props) => {
@@ -184,7 +184,7 @@ const VersionPlan = (props) => {
                 }}
                 onChange = {(pagination) => pageDown(pagination)}
             />
-            <WorkBorderDetail
+            <WorkDetailDrawer
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 {...props}

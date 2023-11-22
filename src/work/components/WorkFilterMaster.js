@@ -3,13 +3,11 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterType.scss"
+import { searchWorkList } from "./WorkSearch";
 
 const WorkFilterMaster = (props) => {
     const { workStore } = props;
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { searchCondition, userList, workShowType, viewType, getWorkConditionPageTree, 
-        getWorkConditionPage, getWorkBoardList, setWorkId, setWorkIndex } = workStore;
+    const { searchCondition, userList } = workStore;
 
 
 
@@ -31,30 +29,7 @@ const WorkFilterMaster = (props) => {
     }
 
     const search = values => {
-        if ((workShowType === "list" || workShowType === "table" || workShowType === "time") && viewType === "tree") {
-            getWorkConditionPageTree(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-
-                }
-            })
-        }
-        if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-            getWorkConditionPage(values).then((res) => {
-                if (workShowType === "list") {
-                    if (res.dataList.length > 0) {
-                        setWorkId(res.dataList[0].id)
-                        setWorkIndex(1)
-                    }
-                }
-            })
-        }
-        if (workShowType === "bodar") {
-            getWorkBoardList(values)
-        }
+        searchWorkList(workStore, values)
     };
 
 

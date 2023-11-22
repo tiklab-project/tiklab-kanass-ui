@@ -278,7 +278,7 @@ const ProjectAddInfo = (props) => {
 
                                         <img 
                                             alt="" 
-                                            className="img-icon-right" 
+                                            className="img-icon" 
                                             src = {setImageUrl(item.iconUrl)}
                                         />
                                     </div>

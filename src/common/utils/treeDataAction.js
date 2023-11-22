@@ -30,7 +30,6 @@ const removeNodeInTree = (tree, id, setWorkId, setSessionStorage) => { // 通过
     if (!tree || !tree.length) {
         return
     }
-
     for (let i = 0; i < tree.length; i++) {
         if (tree[i].id === id) {
             tree.splice(i, 1);
@@ -54,6 +53,8 @@ const removeNodeInTree = (tree, id, setWorkId, setSessionStorage) => { // 通过
 
     }
 }
+
+
 
 const removeNodeChildren = (fNode, tree, id, setWorkId, setSessionStorage) => {
     if (!tree || !tree.length) {
@@ -86,5 +87,17 @@ const removeNodeChildren = (fNode, tree, id, setWorkId, setSessionStorage) => {
     }
 }
 
-
-export { removeNodeInTree};
+const removeTableTree = (tree, id) => { // 通过id从数组（树结构）中移除元素
+    if (!tree || !tree.length) {
+        return
+    }
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].id === id) {
+            tree.splice(i, 1);
+        } else {
+            removeTableTree(tree[i].children, id)
+        }
+    }
+    console.log(tree)
+}
+export { removeNodeInTree, removeTableTree};

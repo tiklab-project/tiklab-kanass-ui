@@ -75,9 +75,7 @@ const EpicPage = (props) => {
      */
     const onSearch = (value) => {
 
-        getWorkConditionPageTree({ title: value }).then(res => {
-            console.log(workList)
-        })
+        getWorkConditionPageTree({ title: value })
     }
 
     const [archiveView, setArchiveView] = useState("week")

@@ -19,7 +19,8 @@ import Button from "../../common/button/Button";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import { FlowChartLink } from "tiklab-flow-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
-import { removeNodeInTree } from "../../common/utils/treeDataAction";
+import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
+import { setWorkDeatilInList } from "./WorkSearch";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
@@ -84,8 +85,19 @@ const WorkDetail = (props) => {
         detWork(workId).then(() => {
             if (workShowType === "table") {
                 setIsModalVisible(false)
-                removeNodeInTree(workList, workId)
-                setWorkList([...workList])
+                removeTableTree(workList, workId)
+                //如果本页被删除完，重新请求接口
+                if (workList.length == 0) {
+                    if (viewType === "tree") {
+                        getWorkConditionPageTree()
+                    }
+                    if (viewType === "tile") {
+                        getWorkConditionPage()
+                    }
+                }else {
+                    setWorkList([...workList])
+                }
+
             }
             if (workShowType === "bodar") {
                 getWorkBoardList()
@@ -93,6 +105,11 @@ const WorkDetail = (props) => {
             if (workShowType === "list") {
                 removeNodeInTree(workList, workId, setWorkId, setSessionStorage)
                 setWorkList([...workList])
+                if (workList.length == 0) {
+                    setWorkDeatilInList(workStore)
+                }else {
+                    setWorkList([...workList])
+                }
             }
         })
     }

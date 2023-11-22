@@ -15,7 +15,7 @@ import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
 import moment from 'moment';
-import WorkBorderDetail from "../../../work/components/WorkBorderDetail";
+import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
@@ -700,7 +700,7 @@ const EpicLineMap = (props) => {
                     />
                 }
             </div>
-            <WorkBorderDetail
+            <WorkDetailDrawer
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}

@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 import { useSelector } from "tiklab-plugin-core-ui";
 import "./WorkTableHead.scss";
 import WorkAddModel from "./WorkAddModel";
-import WorkFilterSort from "./WorkChangeView";
+import WorkChangeView from "./WorkChangeView";
 import Button from "../../common/button/Button";
 import WorkCreatDropdown from "./workCreatDropdown";
 
@@ -73,50 +73,12 @@ const WorkTableHead = (props) => {
         </Menu>
     );
 
-    const buy = () => {
-        message.info('暂未开通购买渠道')
-    }
-
-    const importFile = () => {
-        setIsModalVisible(true);
-    };
-
-
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if (res.dataList.length > 0) {
-                setWorkIndex(1)
-                setWorkId(res.dataList[0].id)
-                props.history.push(`/index/projectDetail/${projectId}/workList/${res.dataList[0].id}`)
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
-
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if (res.dataList.length > 0) {
-                if (props.match.path === "/index/projectDetail/:id/workMessage/:id") {
-                    setWorkIndex(1)
-                    setWorkId(props.match.params.id)
-                } else {
-                    setWorkIndex(1)
-                    setWorkId(res.dataList[0].id)
-                }
-            } else {
-                setWorkIndex(0)
-                setWorkId(0)
-            }
-        })
-    }
 
 
     return (
         <Fragment>
             <div className="work-breadcrumb">
-                <div className="work-title">事项</div>
+                <div className="work-title">事项w</div>
                 <div className="work-top-right">
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
@@ -128,9 +90,7 @@ const WorkTableHead = (props) => {
                             </svg>
                         </Button>
                     </Dropdown>
-                    <WorkFilterSort
-                        getPageList={getPageList}
-                        getPageTree={getPageTree}
+                    <WorkChangeView
                         searchCondition={searchCondition}
                         getWorkConditionPage={getWorkConditionPage}
                         getWorkConditionPageTree={getWorkConditionPageTree}

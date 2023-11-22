@@ -36,10 +36,10 @@ const goWorkItem = (type, workStore, params) => {
         setQuickFilterValue, searchType, setSearchType } = workStore;
     let initValues = {
         workTypeCodes: null,
-        pageParam: {
-            pageSize: 20,
-            currentPage: 1
-        }
+        // pageParam: {
+        //     pageSize: 20,
+        //     currentPage: 1
+        // }
     }
     switch (type) {
         case "sprint":
@@ -186,16 +186,19 @@ const getPageTree = (workStore) => {
     const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType, setQuickFilterValue } = workStore;
 
     getWorkConditionPageTree().then((res) => {
-        if (res.dataList.length > 0) {
+        if(res.code === 0){
+            const list = res.data.dataList;
             if (workShowType === "list") {
-                setWorkIndex(1)
-                const workItem = res.dataList[0];
-                setWorkId(res.dataList[0].id)
-                setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+                if (list.length > 0) {
+                    setWorkIndex(1)
+                    const workItem = list[0];
+                    setWorkId(workItem.id)
+                    setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])    
+                }else {
+                    setWorkId(0)
+                    setWorkIndex(0)
+                }
             }
-        } else {
-            setWorkIndex(0)
-            setWorkId(0)
         }
     })
 }
@@ -203,7 +206,8 @@ const getPageTree = (workStore) => {
 const getPageList = (workStore) => {
     const { getWorkConditionPage, setWorkIndex, setWorkId, workShowType } = workStore;
     getWorkConditionPage().then((res) => {
-        if (res.dataList.length > 0) {
+        const list = res.data.dataList
+        if (list.length > 0) {
             if (workShowType === "list") {
                 // setWorkIndex(1)
                 // setWorkId(res.dataList[0].id)

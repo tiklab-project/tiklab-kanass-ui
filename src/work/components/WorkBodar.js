@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
-import WorkBorderDetail from "./WorkBorderDetail";
+import WorkDetailDrawer from "./WorkDetailDrawer";
 import "./WorkBodar.scss";
 import { withRouter } from "react-router";
 import UserIcon from '../../common/UserIcon/UserIcon';
@@ -13,11 +13,13 @@ import WorkTableFilter from "./WorkTableFilter";
 import { Select, Row, Col } from "antd";
 import { finWorkList } from "./WorkGetList"
 import setImageUrl from '../../common/utils/setImageUrl';
+
+
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
         setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, 
-        workBoardCurrentPage, setQuickFilterValue } = WorkStore;
+        workBoardCurrentPage, setQuickFilterValue, workShowType } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -39,6 +41,7 @@ const WorkBodar = (props) => {
     const projectId = props.match.params.id;
     useEffect(() => {
         setWorkShowType("bodar")
+        console.log(workShowType)
         setQuickFilterValue({
             value: "pending",
             label: "我的待办"
@@ -329,7 +332,7 @@ const WorkBodar = (props) => {
                             }
                             )
                         }
-                        <WorkBorderDetail
+                        <WorkDetailDrawer
                             isModalVisible={isModalVisible}
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
