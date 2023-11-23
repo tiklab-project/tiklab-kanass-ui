@@ -504,7 +504,10 @@ const WorkBasicInfo = (props) => {
             }
         })
     }, [500])
-
+    const [visableCustomForm, setVisableCustomForm] = useState(false);
+    const openCustomForm = () => {
+        setVisableCustomForm(!visableCustomForm)
+    }
     return (
         <div className="work-info">
             {contextHolder}
@@ -862,9 +865,14 @@ const WorkBasicInfo = (props) => {
 
                         </Form.Item>
                     </Form>
+                    <div className={`form-custom-open ${visableCustomForm ? "open" : "close"}`} onClick={() => openCustomForm()}>
+                        <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(record.id)}>
+                            <use xlinkHref="#icon-caret-left"></use>
+                        </svg>
+                    </div>
                 </div>
-
-                <Form
+                {
+                    visableCustomForm ? <Form
                     {...layoutExForm}
                     initialValues={{ remember: true }}
                     form={extDataForm}
@@ -893,6 +901,9 @@ const WorkBasicInfo = (props) => {
                         })
                     }
                 </Form>
+                :<></>
+                }
+                
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

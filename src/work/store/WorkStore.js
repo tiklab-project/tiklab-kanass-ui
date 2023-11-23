@@ -40,7 +40,7 @@ export class WorkStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 2,
+            pageSize: 20,
             currentPage: 1,
         }
     };
@@ -338,7 +338,7 @@ export class WorkStore {
                     orderType: "desc"
                 }],
                 pageParam: {
-                    pageSize: 2,
+                    pageSize: 20,
                     currentPage: 1,
                 }
             }

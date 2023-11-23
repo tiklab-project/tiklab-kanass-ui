@@ -102,6 +102,11 @@
             }
         }
         .detail-bottom {
+            display: flex;
+            align-items: flex-end;
+            .ant-form {
+                flex: 1;
+            }
             .ant-row {
                 overflow: inherit;
             }
@@ -109,9 +114,21 @@
                 height: 30px;
                 padding: 0 11px;
             }
-
             .select-view:hover {
                 background-color: #f7f8fa;
+            }
+            .form-custom-open {
+                height: 30px;
+                margin-bottom: 10px;
+                padding: 6px 0;
+            }
+            .close {
+                transition: all 0.2s;
+            }
+
+            .open {
+                transform: rotate(-90deg);
+                transition: all 0.2s;
             }
         }
 

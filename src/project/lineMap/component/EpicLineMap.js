@@ -425,16 +425,16 @@ const EpicLineMap = (props) => {
     }
 
     const goEpicWorkDetail = (workItem, index) => {
-        const params = {
-            name: workItem.title,
-            model: "workItem",
-            modelId: workItem.id,
-            project: { id: project.id },
-            projectType: { id: project.projectType.id },
-            iconUrl: workItem.workTypeSys.iconUrl
-        }
+        // const params = {
+        //     name: workItem.title,
+        //     model: "workItem",
+        //     modelId: workItem.id,
+        //     project: { id: project.id },
+        //     projectType: { id: project.projectType.id },
+        //     iconUrl: workItem.workTypeSys.iconUrl
+        // }
 
-        createRecent(params)
+        // createRecent(params)
 
         setWorkIndex(index)
         setWorkId(workItem.id)

@@ -78,7 +78,7 @@ const WorkTableHead = (props) => {
     return (
         <Fragment>
             <div className="work-breadcrumb">
-                <div className="work-title">事项w</div>
+                <div className="work-title">事项</div>
                 <div className="work-top-right">
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
