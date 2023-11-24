@@ -864,8 +864,8 @@ const WorkBasicInfo = (props) => {
 
                         </Form.Item>
                     </Form>
-                    <div className={`form-custom-open ${visableCustomForm ? "open" : "close"}`} onClick={() => openCustomForm()}>
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(record.id)}>
+                    <div className={`form-custom-open `} onClick={() => openCustomForm()}>
+                        <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}` }aria-hidden="true">
                             <use xlinkHref="#icon-caret-left"></use>
                         </svg>
                     </div>

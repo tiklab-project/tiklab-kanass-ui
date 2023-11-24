@@ -16,7 +16,7 @@ import Button from "../../../common/button/Button";
 
 const VersionAddmodal = (props) => {
     const { versionStore, findVersion, userList, getUseList } = props;
-    const { editVersion, addVersion, searchVersionById } = versionStore;
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState } = versionStore;
     const [form] = Form.useForm();
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
@@ -41,6 +41,9 @@ const VersionAddmodal = (props) => {
                 ...fieldsValue,
                 master: {
                     id: fieldsValue.master
+                },
+                versionState: {
+                    id: fieldsValue.versionState
                 },
                 project: {
                     id: projectId
@@ -80,6 +83,7 @@ const VersionAddmodal = (props) => {
     const showModal = () => {
         getUseList(projectId)
         setVisible(true);
+        findAllVersionState()
         if (props.type === "edit") {
             searchVersionById({ id: props.id }).then((res) => {
                 form.setFieldsValue({
@@ -94,20 +98,20 @@ const VersionAddmodal = (props) => {
     };
 
     // 状态类型
-    const status = [
-        {
-            name: "未开始",
-            id: "0"
-        },
-        {
-            name: "进行中",
-            id: "1"
-        },
-        {
-            name: "已发布",
-            id: "2"
-        }
-    ]
+    // const status = [
+    //     {
+    //         name: "未开始",
+    //         id: "0"
+    //     },
+    //     {
+    //         name: "进行中",
+    //         id: "1"
+    //     },
+    //     {
+    //         name: "已发布",
+    //         id: "2"
+    //     }
+    // ]
 
     return (
         <>

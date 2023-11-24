@@ -8,6 +8,7 @@
  */
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
+import { async } from "@antv/x6/lib/registry/marker/async";
 export class VersionStore {
     // 版本列表
     @observable versionList = [];
@@ -17,6 +18,8 @@ export class VersionStore {
     @observable versionItem = [];
     // 搜索版本的标题
     @observable searchVersionName = [];
+
+    @observable status = [];
 
     @observable userList = [];
     // 查找版本的分页参数
@@ -231,6 +234,15 @@ export class VersionStore {
         const data = await Service("/dmUser/findDmUserPage", params)
         if (data.code === 0) {
             this.userList = data.data.dataList;
+        }
+        return data;
+    }
+    
+    @action
+    findAllVersionState = async() => {
+        const data = await Service("/versionState/findAllVersionState")
+        if (data.code === 0) {
+            this.status = data.data;
         }
         return data;
     }
