@@ -32,7 +32,7 @@ const WorkBasicInfo = (props) => {
     };
 
     const layoutBottom = {
-        labelCol: { span: 2 },
+        labelCol: { span: 3 },
         wrapperCol: { span: 18 },
     };
     const [messageApi, contextHolder] = message.useMessage();

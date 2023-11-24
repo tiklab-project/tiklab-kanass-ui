@@ -27,7 +27,7 @@ const WorkBasicInfo = (props) => {
     };
 
     const layout = {
-        labelCol: { span: 4 },
+        labelCol: { span: 3 },
         wrapperCol: { span: 18 },
     };
 

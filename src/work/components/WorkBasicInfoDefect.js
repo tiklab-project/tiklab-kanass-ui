@@ -32,8 +32,8 @@ const WorkBasicInfo = (props) => {
     };
 
     const layoutBottom = {
-        labelCol: { span: 2 },
-        wrapperCol: { span: 18 },
+        labelCol: { span: 3 },
+        wrapperCol: { span: 20 },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -779,7 +779,8 @@ const WorkBasicInfo = (props) => {
                         colon={false}
                     >
                         <Form.Item
-                            name="planTime" label="计划日期" wrapperCol={{ span: 16 }}
+                            name="planTime" label="计划日期" 
+                            // wrapperCol={{ span: 16 }}
                             hasFeedback={showValidateStatus === "planTime" ? true : false}
                             validateStatus={validateStatus}
                         >
@@ -841,7 +842,6 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "preDependWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("preDependWorkItem")}
                                 onBlur={() => changeStyle("")}
-
                                 suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
@@ -861,7 +861,6 @@ const WorkBasicInfo = (props) => {
                                         <Empty image="/images/nodata.png" description="没有查到~" />
                                 }
                             </SelectSimple>
-
 
                         </Form.Item>
                     </Form>
