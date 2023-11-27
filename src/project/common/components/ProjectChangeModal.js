@@ -10,14 +10,13 @@
 
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
-import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
-import { getUser } from "tiklab-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import { Tooltip } from "antd";
 const ProjectChangeModal = (props) => {
     const { isShowText, searchpro, project, projectStore } = props;
-    const { findMyAllProjectList, allProlist } = projectStore;
+    const { findMyAllProjectList,allProlist, findProjectSortRecentTime } = projectStore;
     const [changeProjectList, setChangeProjectList] = useState([]);
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
@@ -27,22 +26,16 @@ const ProjectChangeModal = (props) => {
     const modelRef = useRef()
     // 点击按钮的ref
     const setButton = useRef()
-    const tenant = getUser().tenant;
-    const { t } = useTranslation();
 
     /**
      * 显示菜单
      */
     const showMoreMenu = () => {
         setShowMenu(!showMenu)
-        findMyAllProjectList().then(res => {
+        findMyAllProjectList({})
+        findProjectSortRecentTime({projectId: project?.id}).then(res => {
             if (res.code === 0) {
-                if (res.data.length > 5) {
-                    setChangeProjectList(res.data.slice(0, 6))
-                } else {
-                    setChangeProjectList(res.data)
-                }
-
+                setChangeProjectList(res.data)
             }
         })
         // 设置弹窗的位置在按钮旁边
@@ -85,9 +78,19 @@ const ProjectChangeModal = (props) => {
                 localStorage.setItem("project", JSON.stringify(data.data));
                 props.history.push(`/index/projectDetail/${id}/work/table`)
                 localStorage.setItem("projectId", id);
-                // // 重置事项id
-                // setWorkType(null)
-                // 关闭切换弹窗
+
+                // 创建最近访问的信息
+                const project = data.data;
+                const params = {
+                    name: project.projectName,
+                    model: "project",
+                    modelId: project.id,
+                    project: { id: project.id },
+                    projectType: { id: project.projectType.id },
+                    iconUrl: project.iconUrl
+                }
+                createRecent(params)
+
                 setShowMenu(false)
                 location.reload();
             }
@@ -116,20 +119,11 @@ const ProjectChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
-                        {
-                            project?.iconUrl ?
-                                <img
-                                    src={setImageUrl(project?.iconUrl)}
-                                    className="icon-40"
-                                    alt=""
-                                />
-                                :
-                                <img
-                                    src={('/images/project1.png')}
-                                    className="icon-40"
-                                    alt=""
-                                />
-                        }
+                        <img
+                            src={setImageUrl(project?.iconUrl)}
+                            className="icon-40"
+                            alt=""
+                        />
 
                         <div className={`project-text `} >
                             <div>
@@ -146,29 +140,26 @@ const ProjectChangeModal = (props) => {
                         </div>
                     </div>
                         :
-                        <div className='project-title-icon' onClick={showMoreMenu} >
-                            {
-                                project?.iconUrl ? <img
-                                        src={setImageUrl(project?.iconUrl)}
-                                        title={project?.projectName} alt=""
-                                        className="icon-32"
-                                        style={{ marginRight: "0px" }}
-                                    />
-                                    :
-                                    <img
-                                        src={('images/project1.png')}
-                                        className="icon-32"
-                                        title={project?.projectName}
-                                        style={{ marginRight: "0px" }}
-                                        alt=""
-                                    />
-                            }
-                            <div className={`project-toggleCollapsed`}>
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-down"></use>
-                                </svg>
+
+                        <Tooltip placement="right" title={project?.projectName}>
+                            <div className='project-title-icon' onClick={showMoreMenu} >
+                                <img
+                                    src={setImageUrl(project?.iconUrl)}
+                                    title={project?.projectName}
+                                    // alt={project?.projectName}
+                                    className="icon-32"
+                                    style={{ marginRight: "0px" }}
+                                />
+                                <div className={`project-toggleCollapsed`}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-down"></use>
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
+                        </Tooltip>
+
+
+
                 }
             </div>
 
@@ -177,44 +168,66 @@ const ProjectChangeModal = (props) => {
                 ref={modelRef}
                 style={{}}
             >
-                <div className="change-project-head">切换项目</div>
+                <div className="change-project-head">选择项目</div>
+                <div className={`change-project-item change-project-selectItem`}
+                    onClick={() => selectProjectId(project.id, project.projectType.id)}
+                    key={project.id}
+                    onMouseOver={() => handleMouseOver(project.id)}
+                    onMouseOut={handleMouseOut}
+                >
+                    <img
+                        src={setImageUrl(project.iconUrl)}
+                        className="icon-32"
+                        title={project.projectName}
+                        alt=""
+                    />
+                    <div className="project-info">
+                        <div className="project-name">
+                            {project.projectName}
+                        </div>
+                        <div className="project-type">
+                            {project.projectType.name}
+                        </div>
+                    </div>
+                    <svg className="svg-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-selected"></use>
+                    </svg>
+                </div>
+
                 {
                     changeProjectList && changeProjectList.map((item) => {
                         if (item.id !== project?.id) {
-                            return <div className={`change-project-name ${item.id === selectProject ? "change-project-selectName" : ""}`}
+                            return <div className={`change-project-item`}
                                 onClick={() => selectProjectId(item.id, item.projectType.id)}
                                 key={item.id}
                                 onMouseOver={() => handleMouseOver(item.id)}
                                 onMouseOut={handleMouseOut}
                             >
-                                {
-                                    item.iconUrl ?
-                                        <img
-                                            src={setImageUrl(item.iconUrl)}
-                                            className="img-icon-right"
-                                            title={item.projectName}
-                                            alt=""
-                                        />
-                                        :
-                                        <img
-                                            className="img-icon-right"
-                                            src={('/images/project1.png')}
-                                            title={item.projectName}
-                                            alt=""
-                                        />
-                                }
-                                {item.projectName}
+                                <img
+                                    src={setImageUrl(item.iconUrl)}
+                                    className="icon-32"
+                                    title={item.projectName}
+                                    alt=""
+                                />
+                                <div className="project-info">
+                                    <div className="project-name">
+                                        {item.projectName}
+                                    </div>
+                                    <div className="project-type">
+                                        {item.projectType.name}
+                                    </div>
+                                </div>
+
                             </div>
                         }
 
                     })
                 }
                 {
-                    allProlist.length > 5 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
+                    allProlist.length > 6 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
                 }
-
             </div>
-        </div>
+        </div >
     )
 }
 export default withRouter(inject('projectStore')(observer(ProjectChangeModal)));

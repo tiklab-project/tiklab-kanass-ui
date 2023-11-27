@@ -47,13 +47,9 @@ const ProjectSetSurvey = props => {
 
         findtodopage({ userId: getUser().id })
         findlogpage()
-        // statProjectSetWorkItemProcess(["1350d500c60d2dfa78608ce0813bc64a", "edcf0a272504f4b5217731661aaf1a47"])
         return;
     }, [])
 
-    const goTodoWorkItemList = () => {
-        props.history.push(`/index/work/worklist/process`)
-    }
 
     const goProcessProject = () => {
         props.history.push(`/index/projectSetdetail/${projectSetId}/dynamic`)

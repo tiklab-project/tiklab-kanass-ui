@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const ProjectList = (props) => {
     const { projectStore } = props;
-    const { findProjectList, prolist, statProjectWorkItem, createRecent, findRecentProjectPage,
+    const { findProjectList, prolist, findProjectSortRecentTime, createRecent, findRecentProjectList,
         findJoinProjectList, createProjectFocus, findProjectFocusList,
         deleteProjectFocusByQuery, findFocusProjectList, activeTabs, setActiveTabs
     } = projectStore;
@@ -27,8 +27,8 @@ const ProjectList = (props) => {
     useEffect(() => {
         findJoinProjectList({})
         setRecentLoading(true)
-        statProjectWorkItem(4).then(res => {
-            setRecentProjectList(res.data)
+        findProjectSortRecentTime({}).then(res => {
+            setRecentProjectList(res.data.splice(0, 4))
             setRecentLoading(false)
         })
         findProjectFocus(userId)
@@ -100,7 +100,7 @@ const ProjectList = (props) => {
                 findJoinProjectList({ projectName: value, creator: null })
                 break;
             case "2":
-                findRecentProjectPage({ projectName: value })
+                findRecentProjectList({ projectName: value })
                 break;
             case "3":
                 findProjectList({ master: userId, projectName: value })
@@ -124,7 +124,7 @@ const ProjectList = (props) => {
                 findJoinProjectList({ creator: null })
                 break;
             case "2":
-                findRecentProjectPage()
+                findRecentProjectList()
                 break;
             case "3":
                 findFocusProjectList({ master: userId })
@@ -279,8 +279,7 @@ const ProjectList = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} >
-                </Button>
+                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} />
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="title">
@@ -293,14 +292,14 @@ const ProjectList = (props) => {
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
 
-                                    return <div className="project-item" key={item.project.id} onClick={() => goProdetail(item.project)}>
+                                    return <div className="project-item" key={item.id} onClick={() => goProdetail(item)}>
                                         <div className="item-title">
                                             {
-                                                item.project.iconUrl ?
+                                                item.iconUrl ?
                                                     <img
                                                         alt=""
                                                         className="icon-32"
-                                                        src = {setImageUrl(item.project.iconUrl)}
+                                                        src = {setImageUrl(item.iconUrl)}
                                                     />
                                                     :
                                                     <img
@@ -310,7 +309,7 @@ const ProjectList = (props) => {
                                                     />
 
                                             }
-                                            <span>{item.project.projectName}</span>
+                                            <span>{item.projectName}</span>
                                         </div>
                                         <div className="item-work">
                                             <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>

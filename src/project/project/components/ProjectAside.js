@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -34,7 +34,7 @@ const prorouter = [
 ]
 const Proaside = (props) => {
     const {projectStore} = props;
-    const {findProjectList,findJoinProjectList, findRecentProjectPage} = projectStore
+    const {findProjectList,findJoinProjectList, findRecentProjectList} = projectStore
     const [showMenu, setShowMenu] = useState(true)
     const [selectMenu,setSelectMenu] = useState("1")
     const userId = getUser().userId
@@ -50,7 +50,7 @@ const Proaside = (props) => {
                 findProjectList()
                 break;
             case "2":
-                findRecentProjectPage()
+                findRecentProjectList()
                 break;
             case "3":
                 findProjectList({master:userId})

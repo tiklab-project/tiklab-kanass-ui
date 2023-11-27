@@ -54,7 +54,7 @@ export class ProjectStore {
     }
     
     @action
-    findRecentProjectPage = async(value) => {
+    findRecentProjectList = async(value) => {
         const params = {
             projectName : value?.projectName,
             orderParams: [{
@@ -66,7 +66,8 @@ export class ProjectStore {
                 currentPage: this.projectPageParams.current
             }
         }
-        const data = await Service("/project/findRecentProjectPage", params)
+        
+        const data = await Service("/project/findRecentProjectList", params)
         if(data.code === 0){
             this.prolist = data.data;
         }
@@ -213,10 +214,9 @@ export class ProjectStore {
 
 
     @action
-	statProjectWorkItem = async(value) => {
-        const params = new FormData();
-        params.append("num",value)
-        const data = await Service("/workItemStat/statProjectWorkItem", params)
+	findProjectSortRecentTime = async(value) => {
+
+        const data = await Service("/project/findProjectSortRecentTime", value)
         return data;
     }
     

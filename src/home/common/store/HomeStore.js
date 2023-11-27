@@ -77,10 +77,8 @@ class HomeStore {
      * @returns 
      */
     @action
-	statProjectWorkItem = async(value) => {
-        const param = new FormData();
-        param.append("num",value)
-        const data = await Service("/workItemStat/statProjectWorkItem", param)
+	findProjectSortRecentTime = async(value) => {
+        const data = await Service("/project/findProjectSortRecentTime", value)
         return data;
     }
 

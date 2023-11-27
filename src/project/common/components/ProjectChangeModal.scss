@@ -38,6 +38,7 @@
         width: 100%;
         align-items: center;
         padding: 10px 22px;
+        cursor: pointer;
         .project-aside-icon {
             width: 15px;
             height: 15px;
@@ -52,8 +53,8 @@
         position: absolute;
         top: 0;
         z-index: 100;
-        width: 200px;
-        border-radius: 4px;
+        width: 300px;
+        border-radius: 5px;
         background: #fff;
         box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
         .change-project-head {
@@ -61,18 +62,30 @@
             line-height: 40px;
             font-weight: 500;
             font-size: 14px;
-            padding: 0 20px;
+            padding: 0 15px;
             border-bottom: 1px solid #F0F0F0;
         }
 
-        .change-project-name {
-            height: 40px;
-            line-height: 40px;
-            padding-left: 20px;
+        .change-project-item {
+            padding:0 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            .project-info {
+                line-height: 30px;
+                flex: 1;
+                .project-type {
+                    font-size: 12px;
+                    color: var(--tiklab-gray-500);
+                }
+            }
         }
-    
-        .change-project-selectName {
+        .change-project-item:hover {
+            background-color: var(--tiklab-gray-300);
+        }
+        .change-project-selectItem {
             background-color: var(--tiklab-gray-400);
         }
        

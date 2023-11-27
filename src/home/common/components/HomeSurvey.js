@@ -19,7 +19,7 @@ const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
     const { homeStore } = props
-    const { statProjectWorkItem, createRecent,
+    const { findProjectSortRecentTime, createRecent,
         findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
         updateRecent, overdueTaskList, endTaskList
     } = homeStore;
@@ -47,9 +47,9 @@ const HomeSurvey = (props) => {
      */
     const getRecentProject = () => {
         setRecentLoading(true)
-        statProjectWorkItem(4).then((res) => {
+        findProjectSortRecentTime({}).then((res) => {
             if (res.code === 0) {
-                setRecentProjectList(res.data)
+                setRecentProjectList(res.data.splice(0, 4))
                 setRecentLoading(false)
             }
         });
@@ -252,14 +252,14 @@ const HomeSurvey = (props) => {
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
 
-                                return <div className="project-item" key={item.project.id} onClick={() => goProjectDetail(item.project)}>
+                                return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
                                     <div className="item-title">
                                         {
-                                            item.project.iconUrl ?
+                                            item.iconUrl ?
                                                 <img
                                                     alt=""
                                                     className="icon-32"
-                                                    src={setImageUrl(item.project.iconUrl)}
+                                                    src={setImageUrl(item.iconUrl)}
                                                 />
                                                 :
                                                 <img
@@ -269,18 +269,18 @@ const HomeSurvey = (props) => {
                                                 />
 
                                         }
-                                        <span>{item.project.projectName}</span>
+                                        <span>{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
                                         <div className="process-work"><span style={{ color: "#999" }}>待办事项</span><span>{item.processWorkItemCount}</span></div>
-                                        <div className="end-work"><span style={{ color: "#999" }}>已完成事项</span><span>{item.endWorkItemCount}</span></div>
+                                        <div className="end-work"><span style={{ color: "#999" }}>已完成事项</span><span>{item.endWorkItemNumber}</span></div>
                                     </div>
                                 </div>
 
 
                             })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
                         }
                     </div>
                 </Spin>
@@ -294,7 +294,7 @@ const HomeSurvey = (props) => {
                 </div>
                 <div className="recent-click-list">
                     {
-                        recentList && recentList.length > 0 && recentList.map(item => {
+                        recentList && recentList.length > 0 ? recentList.map(item => {
                             return <div className="work-item" key={item.object.id}>
                                 <div className="work-icon">
                                     {
@@ -322,6 +322,8 @@ const HomeSurvey = (props) => {
                                 </div>
                             </div>
                         })
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有~" />
                     }
                 </div>
             </div>
