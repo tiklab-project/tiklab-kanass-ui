@@ -151,7 +151,7 @@ const WorkDocumentAddmodal = (props) => {
             <div className="document-add" ref={documentAdd}>
 
                 <div className="document-add-search">
-                    <InputSearch style={{ minWidth: "250px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"文档名称"} />
+                    <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"文档名称"} />
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
