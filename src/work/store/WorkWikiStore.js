@@ -11,7 +11,7 @@ import { Service } from "../../common/utils/requset";
 export class WorkWikiStore {
     @observable workDoucumentList = [];
     @observable doucumentList = [];
-
+    @observable userList = []
     @observable findDoucmnetCondition = {
         currentPage: 1  
     };
@@ -123,10 +123,13 @@ export class WorkWikiStore {
 
     @action
     findRepositoryUserList = async(value) => {
-        const params = new FormData();
-        params.append("repositoryIds", value)
+        const params = {
+            domainId: value
+        }
         const data = await Service("/wikirepository/findRepositoryUserList", params)
-
+        if(data.code === 0){
+            this.userList = data.data
+        }
         return data;
     }
 }

@@ -12,9 +12,9 @@ const WorkDocumentAddmodal = (props) => {
     // const projectId = props.match.params.id;
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
         findProjectWikiRepositoryList, findUnRelationWorkDocumentList,
-        findRepositoryUserList, unRelationWorkCondition } = workWikiStore;
+        findRepositoryUserList, userList } = workWikiStore;
 
-    const {userList,getSelectUserList } = workStore;
+    // const {userList,getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
@@ -23,7 +23,7 @@ const WorkDocumentAddmodal = (props) => {
 
     useEffect(() => {
         if (selectDocument === true) {
-            getSelectUserList(projectId)
+            // getSelectUserList(projectId)
             findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
@@ -32,13 +32,13 @@ const WorkDocumentAddmodal = (props) => {
                         res.data.map(item => {
                             list.push(item.id)
                         })
+                        findRepositoryUserList(res.data[0].id)
                         setRepositoryallIdList(list)
                         findUnRelationWorkDocumentList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
                                 setDocumentList(data.data.dataList)
                             }
                         })
-                        findRepositoryUserList(list)
                     }
 
                 }
@@ -82,6 +82,7 @@ const WorkDocumentAddmodal = (props) => {
                     currentPage: 1
                 }
             }
+            findRepositoryUserList(value?.value)
         }else {
             params = {
                 repositoryIds: repositoryallIdList,
@@ -90,6 +91,7 @@ const WorkDocumentAddmodal = (props) => {
                     currentPage: 1
                 }
             }
+            findRepositoryUserList(repositoryallIdList[0])
         }
         setRepositoryValue(value)
         findUnRelationWorkDocumentList(params).then((data) => {
