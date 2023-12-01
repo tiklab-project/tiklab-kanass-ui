@@ -12,7 +12,7 @@ import { Provider, observer } from "mobx-react";
 import "./ViewInsight.scss";
 import ReportItem from "./ReportItem"
 import { withRouter } from "react-router";
-import { Empty } from "antd";
+import { Col, Empty, Row } from "antd";
 import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../../node_modules/react-resizable/css/styles.css"
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -31,9 +31,9 @@ const ViewInsight = (props) => {
     // 仪表盘报告列表
     const [reportList, setReportList] = useState()
     useEffect(() => {
-         /**
-         * 获取仪表盘的详情
-         */
+        /**
+        * 获取仪表盘的详情
+        */
         const params = new FormData();
         params.append("id", props.match.params.id)
         findInsight(params).then(res => {
@@ -44,7 +44,7 @@ const ViewInsight = (props) => {
                         item.static = true;
                     })
                     setReportList(list)
-                    
+
                 }
                 setInsightDetail(res.data)
             }
@@ -61,55 +61,60 @@ const ViewInsight = (props) => {
 
     return (
         <Provider {...store}>
-            <div className="view-insight">
-            <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
-                <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
-            </Breadcumb>
-            <div className="view-insight-content">
-                {
-                    reportList && reportList.lg && reportList.lg.length > 0 ?
-                        <ResponsiveGridLayout
-                            className="layout"
-                            layouts={reportList}
-                            rowHeight={30}
-                            measureBeforeMount={true}
-                            breakpoints={{ lg: 1200 }}
-                        >
+            <Row className="view-insight-row">
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                    <div className="view-insight">
+                        <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                            <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
+                        </Breadcumb>
+                        <div className="view-insight-content">
                             {
-                                reportList && reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
-                                    return (<div key={item.i} data-grid={item}>
+                                reportList && reportList.lg && reportList.lg.length > 0 ?
+                                    <ResponsiveGridLayout
+                                        className="layout"
+                                        layouts={reportList}
+                                        rowHeight={30}
+                                        measureBeforeMount={true}
+                                        breakpoints={{ lg: 1200 }}
+                                    >
+                                        {
+                                            reportList && reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
+                                                return (<div key={item.i} data-grid={item}>
 
-                                        <ReportItem isView={true} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
+                                                    <ReportItem isView={true} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
 
-                                    </div>)
-                                })
+                                                </div>)
+                                            })
+                                        }
+
+                                    </ResponsiveGridLayout>
+                                    :
+                                    <Empty
+                                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <span>
+                                                暂无报表，请编辑
+                                            </span>
+                                        }
+                                    >
+                                        <div className="empty-action-save" onClick={() => goEditInsight()}>
+                                            <div>
+                                                去编辑
+                                            </div>
+                                        </div>
+                                    </Empty>
                             }
 
-                        </ResponsiveGridLayout>
-                        :
-                        <Empty
-                            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                            imageStyle={{
-                                height: 60,
-                            }}
-                            description={
-                                <span>
-                                    暂无报表，请编辑
-                                </span>
-                            }
-                        >
-                            <div className="empty-action-save" onClick={() => goEditInsight()}>
-                                <div>
-                                    去编辑
-                                </div>
-                            </div>
-                        </Empty>
-                }
+                        </div>
+                    </div>
+                </Col>
+            </Row>
 
-            </div>
-        </div>
         </Provider>
-        
+
     )
 }
 

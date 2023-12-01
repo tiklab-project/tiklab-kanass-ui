@@ -164,26 +164,26 @@ const WorkChild = (props) => {
             title: "事件类型",
             dataIndex: ["workTypeSys", "name"],
             key: "workType",
-            width: "20%"
+            width: "10%"
 
         },
         {
             title: "事项状态",
             dataIndex: ["workStatusNode", "name"],
             key: "workStatus",
-            width: "20%"
+            width: "10%"
         },
         {
             title: "负责人",
             dataIndex: ["assigner", "name"],
             key: "assigner",
-            width: "20%"
+            width: "10%"
         },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            width: "20%",
+            width: "5%",
             render: (text, record) => (
                 <span onClick={() => delectChild(record.id)} className="span-botton" >删除</span>
             ),

@@ -58,6 +58,10 @@
         .sprint-name {
             cursor: pointer;
         }
+        .sprint-item {
+            display: flex;
+            align-items: center;
+        }
         .sprint-name:hover {
             color: var(--tiklab-blue);
         }

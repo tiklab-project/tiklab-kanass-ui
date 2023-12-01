@@ -43,7 +43,10 @@
             width: fit-content;
             color: #2b333e;
         }
-
+        .version-master {
+            display: flex;
+            align-items: center;
+        }
         .version-status-todo {
             background: #e2e1e4;
             color: #2b333e;

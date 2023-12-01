@@ -71,7 +71,7 @@ const VersionChangeModal = (props) => {
                     isShowText ? <div className="version-title title" onClick={showMoreMenu}>
                         <img 
                             src={('/images/version.png')} 
-                            className="list-img"
+                            className="icon-32"
                             alt=""
                         />
 
@@ -90,7 +90,7 @@ const VersionChangeModal = (props) => {
                     <div className='version-title-icon' onClick={showMoreMenu} >
                        <img 
                             src={('/images/version.png')} 
-                            className="list-img"
+                            className="icon-32"
                             alt=""
                         />
                         <div className={`version-toggleCollapsed`}>

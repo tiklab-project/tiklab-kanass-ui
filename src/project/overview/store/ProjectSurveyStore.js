@@ -179,6 +179,7 @@ export class ProjectSurveyStore {
                 name: "recentTime",
                 orderType:"desc"
             }],
+            model: "workItem",
             projectId: JSON.parse(localStorage.getItem("project")).id
         }
         const data = await Service("/recent/findRecentListToModel", params)

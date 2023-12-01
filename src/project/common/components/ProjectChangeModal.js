@@ -16,7 +16,7 @@ import setImageUrl from "../../../common/utils/setImageUrl";
 import { Tooltip } from "antd";
 const ProjectChangeModal = (props) => {
     const { isShowText, searchpro, project, projectStore } = props;
-    const { findMyAllProjectList,allProlist, findProjectSortRecentTime } = projectStore;
+    const { findMyAllProjectList,allProlist, findProjectSortRecentTime, createRecent } = projectStore;
     const [changeProjectList, setChangeProjectList] = useState([]);
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
@@ -209,7 +209,7 @@ const ProjectChangeModal = (props) => {
                                     title={item.projectName}
                                     alt=""
                                 />
-                                <div className="project-info">
+                                <div className="project-item-info">
                                     <div className="project-name">
                                         {item.projectName}
                                     </div>

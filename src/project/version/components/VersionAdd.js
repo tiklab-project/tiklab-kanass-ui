@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-21 11:22:59
  */
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
@@ -15,8 +15,8 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 
 const VersionAddmodal = (props) => {
-    const { versionStore, findVersion, userList, getUseList } = props;
-    const { editVersion, addVersion, searchVersionById, status, findAllVersionState } = versionStore;
+    const { versionStore, findVersion, userList, getUseList, setActiveTabs } = props;
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState, getVersionList, searchCondition } = versionStore;
     const [form] = Form.useForm();
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
@@ -62,6 +62,17 @@ const VersionAddmodal = (props) => {
                 addVersion(values).then(() => {
                     findVersion({ projectId: projectId })
                     setVisible(false);
+                    setActiveTabs("all")
+
+                    const params = {
+                        versionState: null,
+                        projectId: projectId,
+                        pageParam: {
+                            pageSize: searchCondition.pageParam.pageSize,
+                            currentPage: 1,
+                        }
+                    }
+                    getVersionList(params)
                     form.resetFields();
                 })
             }
@@ -83,7 +94,13 @@ const VersionAddmodal = (props) => {
     const showModal = () => {
         getUseList(projectId)
         setVisible(true);
-        findAllVersionState()
+        findAllVersionState().then(res => {
+            if(res.code === 0){
+                form.setFieldsValue({
+                    versionState: res?.data[0]?.id
+                })
+            }
+        })
         if (props.type === "edit") {
             searchVersionById({ id: props.id }).then((res) => {
                 form.setFieldsValue({
@@ -97,21 +114,7 @@ const VersionAddmodal = (props) => {
         }
     };
 
-    // 状态类型
-    // const status = [
-    //     {
-    //         name: "未开始",
-    //         id: "0"
-    //     },
-    //     {
-    //         name: "进行中",
-    //         id: "1"
-    //     },
-    //     {
-    //         name: "已发布",
-    //         id: "2"
-    //     }
-    // ]
+
 
     return (
         <>
@@ -175,6 +178,7 @@ const VersionAddmodal = (props) => {
                             <Select
                                 placeholder="版本状态"
                                 allowClear
+                                
                             >
                                 {
                                     status && status.map((item, index) => {

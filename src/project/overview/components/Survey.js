@@ -324,7 +324,6 @@ const Survey = (props) => {
                                     }
                                     {project && project.projectName}
                                 </span>
-
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
@@ -437,7 +436,32 @@ const Survey = (props) => {
                         <div className="recent-click-list">
                             {
                                 recentList && recentList.length > 0 ? recentList.map(item => {
-                                    return recentItem(item)
+                                    return <div className="work-item" key={item.id}>
+                                    <div className="work-icon">
+                                        {
+                                            item.object.iconUrl ?
+                                                <img
+                                                    alt=""
+                                                    className="list-img"
+                                                    src={setImageUrl(item.object.iconUrl)}
+                                                />
+                                                :
+                                                <img
+                                                    src={('/images/workType1.png')}
+                                                    alt=""
+                                                    className="list-img"
+                                                />
+                
+                                        }
+                                    </div>
+                                    <div className="work-content">
+                                        <div className="content-name" onClick={() => goWorkItem(item.object)}>{item.object.title}</div>
+                                        <div className="content-type">{item.object.project.projectName}</div>
+                                    </div>
+                                    <div className="item-time">
+                                        {item.recentTime}
+                                    </div>
+                                </div>
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有点击过事项~" />

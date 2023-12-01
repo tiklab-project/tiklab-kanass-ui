@@ -122,7 +122,7 @@ const ProjectIconChange = (props) => {
                                         className={`project-icon ${item.iconUrl === projectIconUrl ? "icon-select" : null}`} 
                                         key={item.id} onClick={() => { setProjectIconUrl(item.iconUrl) }}
                                     >
-                                        <img src={setImageUrl(item.iconUrl)} alt="" className="list-img"/>
+                                        <img src={setImageUrl(item.iconUrl)} alt="" className="icon-40"/>
                                     </div>
                                 })
                             }

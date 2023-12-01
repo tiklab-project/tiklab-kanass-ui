@@ -87,7 +87,7 @@ const ReportList = (props) => {
                     desc: "柱状图形式对比项目成员个数",
                     type: "projectUser",
                     minH: 12,
-                    minW: 6
+                    minW: 12
                 },
                 {
                     icon: projectWorkImg,
@@ -95,7 +95,7 @@ const ReportList = (props) => {
                     desc: "柱状图对比展示事项个数",
                     type: "projectWork",
                     minH: 12,
-                    minW: 6
+                    minW: 12
                 },
                 {
                     icon: projectOperateImg,
@@ -118,7 +118,7 @@ const ReportList = (props) => {
                     desc: "显示每个成员的事项个数",
                     type: "userWork",
                     minH: 12,
-                    minW: 6
+                    minW: 12
                 }
             ]
         },
@@ -132,7 +132,7 @@ const ReportList = (props) => {
                     desc: "折线图形式展示事项新增趋势",
                     type: "newTrend",
                     minH: 12,
-                    minW: 6
+                    minW: 12
                 },
                 {
                     icon: endTrendImg,
@@ -157,7 +157,7 @@ const ReportList = (props) => {
                     desc: "显示每天新增，完成，剩余的事项",
                     type: "workTrend",
                     minH: 12,
-                    minW: 6
+                    minW: 12
                 }
             ]
         },

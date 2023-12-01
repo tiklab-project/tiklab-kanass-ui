@@ -325,9 +325,6 @@ const WorkTable = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg> */}
                     <Popconfirm
                         title="确定删除事项?"
                         onConfirm={() => deleteWork(record.id)}

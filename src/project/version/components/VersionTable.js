@@ -18,6 +18,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import VersionStore from "../store/VersionStores";
 import InputSearch from '../../../common/input/InputSearch';
 import { getUser } from "tiklab-core-ui";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const { RangePicker } = DatePicker;
 
@@ -25,7 +26,7 @@ const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
     }
-    const { versionList,setVersionList, getVersionList, deleVersion, createRecent,
+    const { versionList, setVersionList, getVersionList, deleVersion, createRecent,
         createVersionFocus, deleteVersionFocus,
         findFocusVersionList, userList, getUseList, searchCondition, total } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
@@ -36,7 +37,7 @@ const VersionTable = (props) => {
     const userId = getUser().userId;
     // 初始化
     useEffect(() => {
-        findVersion({ projectId: projectId, versionState: "111111"  })
+        findVersion({ projectId: projectId, versionState: "111111" })
         return;
     }, []);
 
@@ -131,18 +132,28 @@ const VersionTable = (props) => {
             dataIndex: "name",
             key: "name",
             render: (text, record) => (
-                <>
-
-                    <span className="version-name" onClick={() => goDetail(record.id, text)}>{text}</span>
-                </>
+                <div className="version-master" onClick={() => goDetail(record.id, text)}>
+                    <img
+                        src={'/images/version.png'}
+                        alt=""
+                        className="img-icon-right"
+                    />
+                    <span className="version-name" >{text}</span>
+                </div>
 
             ),
         },
         {
-            title: "所属项目",
-            dataIndex: ["project", "projectName"],
-            key: "project.projectName",
-            render: (text) => <span>{text}</span>,
+            title: '负责人',
+            dataIndex: ['master', 'nickname'],
+            key: 'builderId',
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record) => <div className="version-master">
+                <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div >{text}</div>
+            </div>
         },
 
         {
@@ -160,6 +171,11 @@ const VersionTable = (props) => {
             key: "relaPublishDate",
             align: "left",
             render: (text) => <span>{text ? text : "---"}</span>,
+        },
+        {
+            title: "事项",
+            dataIndex: "workNumber",
+            key: "workNumber"
         },
         {
             title: "状态",
@@ -261,7 +277,7 @@ const VersionTable = (props) => {
      * tab 切换
      * @param {tab key} key 
      */
-    const selectTabs = (key,page ) => {
+    const selectTabs = (key, page) => {
         setActiveTabs(key)
         // setFilterType(key)
         const params = {
@@ -282,7 +298,7 @@ const VersionTable = (props) => {
                 getVersionList({ versionState: "222222", ...params });
                 break;
             case "all":
-                getVersionList({  versionState: null, ...params });
+                getVersionList({ versionState: null, ...params });
                 break;
             case "focus":
                 findFocusVersionList({ master: userId, ...params });
@@ -318,6 +334,7 @@ const VersionTable = (props) => {
                                 findVersion={findVersion}
                                 getUseList={getUseList}
                                 userList={userList}
+                                setActiveTabs = {setActiveTabs}
                                 {...props}
                             />
                         </Breadcumb>
@@ -357,7 +374,7 @@ const VersionTable = (props) => {
                                         position: ["bottomCenter"],
                                         hideOnSinglePage: true,
                                         simple: true
-                                    }: false}
+                                    } : false}
                                     loading={loading}
                                     onSearch={onSearch}
                                 />

@@ -66,6 +66,7 @@ const ModuleAddModal = (props) => {
                 editModuleById(fieldsValue)
             }
             setVisible(false);
+            form.resetFields();
         })
 
     };

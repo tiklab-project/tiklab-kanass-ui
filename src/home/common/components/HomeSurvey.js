@@ -272,7 +272,7 @@ const HomeSurvey = (props) => {
                                         <span>{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
-                                        <div className="process-work"><span style={{ color: "#999" }}>待办事项</span><span>{item.processWorkItemCount}</span></div>
+                                        <div className="process-work"><span style={{ color: "#999" }}>待办事项</span><span>{item.processWorkItemNumber}</span></div>
                                         <div className="end-work"><span style={{ color: "#999" }}>已完成事项</span><span>{item.endWorkItemNumber}</span></div>
                                     </div>
                                 </div>

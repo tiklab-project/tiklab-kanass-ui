@@ -1,59 +1,75 @@
-.insight-list {
-    background-color: #fff;
-    padding: var(--tiklab-padding-item);
+.insight-list-row {
     height: 100%;
-    .insight-search-add {
-        padding: 15px 0px;
-        text-align: right;
-        display: flex;
-        justify-content: space-between;
-    
-    }
-    .action-botton {
-        color: var(--tiklab-blue);
-    }
-    .action-delete {
-        color: red;
-    }
-    .insight-tabs-search {
-        display: flex;
-        justify-content: space-between;
-    }
-    .insight-table-box {
-        margin-top: 15px;
-    }
-    .insight-tabs {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 50px;
-        line-height: 50px;
-        gap: 15px;
-        .insight-tab {
-            color: #707070;
-            font-size: 13px;
-            cursor: pointer;
+    overflow: auto;
+    background-color: #fff;
+    .insight-list {
+        background-color: #fff;
+        padding: var(--tiklab-padding-item);
+        height: 100%;
+
+        .insight-search-add {
+            padding: 15px 0px;
+            text-align: right;
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        .action-botton {
+            color: var(--tiklab-blue);
+        }
+
+        .action-delete {
+            color: red;
+        }
+
+        .insight-tabs-search {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .insight-table-box {
+            margin-top: 15px;
+        }
+
+        .insight-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             height: 50px;
             line-height: 50px;
-        }
-        .active-tabs {
-            font-weight: var(--tiklab-font-weight-bold);
-            color: #000;
-            border-bottom: 2px solid var(--tiklab-blue);
-        }
-    }
-    .insight-name {
-        color: var(--tiklab-blue);
-        cursor: pointer;
-    }
-    .insight-name:hover {
-        text-decoration: underline;
-    }
+            gap: 15px;
 
+            .insight-tab {
+                color: #707070;
+                font-size: 13px;
+                cursor: pointer;
+                height: 50px;
+                line-height: 50px;
+            }
+
+            .active-tabs {
+                font-weight: var(--tiklab-font-weight-bold);
+                color: #000;
+                border-bottom: 2px solid var(--tiklab-blue);
+            }
+        }
+
+        .insight-name {
+            color: var(--tiklab-blue);
+            cursor: pointer;
+        }
+
+        .insight-name:hover {
+            text-decoration: underline;
+        }
+
+    }
 }
+
 .insight-delete-modal {
     .ant-modal-body {
         padding: 24px !important;
     }
-    
+
 }

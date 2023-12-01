@@ -26,8 +26,8 @@ const layout = {
 
 const SprintAddModal = (props) => {
     const [form] = Form.useForm();
-    const { uselist, getUseList, sprintStore, sprintStateList, setVisible, visible, sprintId } = props;
-    const { searchSprint, addsprintlist, editSprint } = sprintStore;
+    const { uselist, getUseList, sprintStore, sprintStateList, setVisible, visible, sprintId, setActiveTabs } = props;
+    const { searchSprint, addsprintlist, editSprint, findSprintList } = sprintStore;
     const dateFormat = 'YYYY/MM/DD';
     // 项目id
     const projectId = props.match.params.id;
@@ -76,7 +76,12 @@ const SprintAddModal = (props) => {
                 }
             }
             if (props.type === "add") {
-                addsprintlist(data)
+                addsprintlist(data).then(res => {
+                    if(res.code === 0){
+                        setActiveTabs("all")
+                        findSprintList({ projectId: projectId, sprintStateId: null });
+                    }
+                })
             } else {
                 data = {
                     ...data,

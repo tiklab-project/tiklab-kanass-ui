@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Provider, observer } from "mobx-react";
-import { message, Empty } from "antd"
+import { message, Empty, Row, Col } from "antd"
 import "./NewInsight.scss";
 import ReportItem from "./ReportItem"
 import ReportList from "./ReportList"
@@ -107,67 +107,72 @@ const NewInsight = (props) => {
     return (
         <Provider {...store}>
             <>
-                <div className="new-insight">
-                    <div className="new-insight-left">
+                <Row className="new-insight-row">
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                        <div className="new-insight">
+                            <div className="new-insight-left">
 
-                        <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
-                            <div className="insight-head-action">
-                                <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
-                                <Button onClick={() => saveInsight()} type="primary">保存</Button>
-                                <Button onClick={() => props.history.goBack()}>取消</Button>
-                            </div>
+                                <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                                    <div className="insight-head-action">
+                                        <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
+                                        <Button onClick={() => saveInsight()} type="primary">保存</Button>
+                                        <Button onClick={() => props.history.goBack()}>取消</Button>
+                                    </div>
 
-                        </Breadcumb>
+                                </Breadcumb>
 
-                        <div className="new-insight-content">
-                            {
-                                reportList && reportList.lg.length > 0 ? <ResponsiveGridLayout
-                                    className="layout"
-                                    layouts={reportList}
-                                    rowHeight={30}
-                                    measureBeforeMount={true}
-                                    breakpoints={{ lg: 1200 }}
-                                    onLayoutChange={addLayout}
-                                >
+                                <div className="new-insight-content">
                                     {
-                                        reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
-                                            return (<div key={item.i} data-grid={item}>
+                                        reportList && reportList.lg.length > 0 ? <ResponsiveGridLayout
+                                            className="layout"
+                                            layouts={reportList}
+                                            rowHeight={30}
+                                            measureBeforeMount={true}
+                                            breakpoints={{ lg: 1200 }}
+                                            onLayoutChange={addLayout}
+                                        >
+                                            {
+                                                reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
+                                                    return (<div key={item.i} data-grid={item}>
 
-                                                <ReportItem isView={false} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
+                                                        <ReportItem isView={false} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
 
-                                            </div>)
-                                        })
+                                                    </div>)
+                                                })
+                                            }
+
+                                        </ResponsiveGridLayout>
+                                            :
+                                            <Empty
+                                                image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                                                imageStyle={{
+                                                    height: 60,
+                                                }}
+                                                description={
+                                                    <span>
+                                                        暂无报表，请添加
+                                                    </span>
+                                                }
+                                            >
+                                                <div className="empty-action-save" onClick={() => setShowReportList(true)}>
+                                                    <div>
+                                                        添加
+                                                    </div>
+                                                </div>
+                                            </Empty>
                                     }
-
-                                </ResponsiveGridLayout>
-                                    :
-                                    <Empty
-                                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                暂无报表，请添加
-                                            </span>
-                                        }
-                                    >
-                                        <div className="empty-action-save" onClick={() => setShowReportList(true)}>
-                                            <div>
-                                                添加
-                                            </div>
-                                        </div>
-                                    </Empty>
-                            }
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <ReportList
-                    showReportList={showReportList}
-                    reportIndex={reportIndex}
-                    setReportIndex={setReportIndex}
-                    setShowReportList={setShowReportList}
-                />
+                        <ReportList
+                            showReportList={showReportList}
+                            reportIndex={reportIndex}
+                            setReportIndex={setReportIndex}
+                            setShowReportList={setShowReportList}
+                        />
+                    </Col>
+                </Row>
+
 
             </>
         </Provider>

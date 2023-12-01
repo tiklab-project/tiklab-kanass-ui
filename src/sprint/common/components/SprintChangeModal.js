@@ -70,8 +70,8 @@ const SprintChangeModal = (props) => {
                 {
                     isShowText ? <div className="sprint-title title" onClick={showMoreMenu}>
                         <img 
-                            src={('/images/project1.png')} 
-                            className="list-img"
+                            src={('/images/sprint.png')} 
+                            className="icon-32"
                             alt=""
                         />
 
@@ -88,9 +88,9 @@ const SprintChangeModal = (props) => {
                     </div>
                     :
                     <div className='sprint-title-icon' onClick={showMoreMenu} >
-                       <img 
-                            src={('/images/project1.png')} 
-                            className="list-img"
+                        <img 
+                            src={('/images/sprint.png')} 
+                            className="icon-32"
                             alt=""
                         />
                         <div className={`sprint-toggleCollapsed`}>

@@ -20,6 +20,7 @@ import InputSearch from '../../../common/input/InputSearch'
 import SprintStore from "../store/SprintStore";
 import { Provider, observer } from "mobx-react";
 import { useDebounce } from "../../../common/utils/debounce";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -253,15 +254,29 @@ const Sprint = (props) => {
             dataIndex: "sprintName",
             key: "sprintName",
             render: (text, record) => (
-                <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
+                <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
+                    <img
+                        src={'/images/sprint.png'}
+                        alt=""
+                        className="img-icon-right"
+                    />
+                   <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
+                </div>
+                
 
             ),
         },
         {
-            title: "负责人",
-            dataIndex: ["master", "nickname"],
-            key: "master",
-            render: (text) => <span>{text}</span>,
+            title: '负责人',
+            dataIndex: ['master', 'nickname'],
+            key: 'builderId',
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record) => <div className="sprint-item">
+                <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div >{text}</div>
+            </div>
         },
 
         {
@@ -270,6 +285,12 @@ const Sprint = (props) => {
             key: "startTime",
             align: "left",
             render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
+        },
+        {
+            title: "事项",
+            dataIndex: "workNumber",
+            key: "workNumber",
+            align: "left"
         },
         {
             title: "状态",
@@ -365,6 +386,7 @@ const Sprint = (props) => {
                 sprintStateList={sprintStateList}
                 setVisible={setVisible}
                 visible={visible}
+                setActiveTabs = {setActiveTabs}
                 {...props}
             />
         </div>
