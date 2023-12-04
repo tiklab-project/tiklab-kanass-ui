@@ -44,7 +44,7 @@ class HomeStore {
     overdueTaskList = [];
     // 当天被激活的tab
     @observable 
-    activeKey = "survey";
+    activeKey = "1";
     // 待办的条件分页
     @observable todoTotal = 0;
     @observable todoCondition = {
@@ -64,6 +64,29 @@ class HomeStore {
     @observable isDynamicReachBottom = true;
 
     @observable recentList = [];
+    
+    @observable insightList = [];
+    @observable insightSearch = {
+        orderParams: [{
+            name: "createdTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
+    }
+    
+    @action
+    findInsightList = async(value) => {
+        Object.assign(this.insightSearch, { ...value })
+        const data = await Service("/insight/findInsightList", this.insightSearch)
+        if(data.code === 0){
+            this.insightList = data.data;
+        }
+        return data;
+    }
+
     // 设置被激活tab
     @action
     setActiveKey = (value) => {

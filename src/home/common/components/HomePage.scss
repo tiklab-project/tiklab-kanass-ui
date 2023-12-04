@@ -4,27 +4,32 @@
     // background: var(--tiklab-gray-600);
     position: relative;
     z-index: 0;
-    padding: 15px 20px 20px;
+    padding: 0 20px 20px;
 
     .home-tab {
         display: flex;
-        gap: 30px;
-        height: 50px;
-        line-height: 50px;
-        border-bottom: 1px solid #f0f0f0;
-        margin-bottom: 20px;
+        gap: 20px;
         position: sticky;
-        top: 0;
+        // top: 0;
         background: var(--tiklab-gray-600);
-        z-index: 1;
-
+        // z-index: 1;
+        padding: 15px 0;
         .home-tab-item {
             cursor: pointer;
+            background-color: #fff;
+            height: 32px;
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 32px;
+
         }
 
         .home-tab-select {
             font-weight: var(--tiklab-font-weight-bold);
-            border-bottom: 2px solid var(--tiklab-blue);
+            color: var(--tiklab-blue);
+            border: 2px solid var(--tiklab-blue);
         }
     }
 

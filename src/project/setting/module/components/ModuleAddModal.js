@@ -7,23 +7,26 @@
  * @LastEditTime: 2021-05-08 16:32:40
  */
 
-import React from "react";
-import { Modal, Form, Input } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Modal, Form, Input, TreeSelect } from 'antd';
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { inject, observer } from "mobx-react";
 import Button from "../../../../common/button/Button";
+import ModuleStore from "../store/ModuleStore";
 import { withRouter } from "react-router";
-
+const { TreeNode } = TreeSelect;
 const ModuleAddModal = (props) => {
+    const { parent, type, visible, setVisible, modalName, id, modulelist } = props;
+    console.log(parent)
+    const { createModule, searchModuleById, editModuleById } = ModuleStore;
     // form ref
     const [form] = Form.useForm();
+    // const [parentId, setParentId] = useState(parent.id)
 
     // 弹框显示
-    const [visible, setVisible] = React.useState(false);
+
     // 项目id
     const projectId = props.match.params.id;
-    // 解析props
-    const { editModuleById, searchModuleById, addModule } = props;
     // 表单的宽度
     const layout = {
         labelCol: {
@@ -37,33 +40,64 @@ const ModuleAddModal = (props) => {
     /**
      * 显示弹窗
      */
-    const showModal = () => {
-        setVisible(true);
-        if (props.type === "edit") {
-            searchModuleById(props.id).then((res) => {
-                if (res.code === 0) {
-                    form.setFieldsValue({
-                        moduleName: res.data.moduleName,
-                        id: res.data.id,
-                        desc: res.data.desc
-                    })
-                }
+    // const showModal = () => {
+    //     setVisible(true);
+    //     if (props.type === "edit") {
+    //         searchModuleById(props.id).then((res) => {
+    //             if (res.code === 0) {
+    //                 form.setFieldsValue({
+    //                     moduleName: res.data.moduleName,
+    //                     id: res.data.id,
+    //                     desc: res.data.desc
+    //                 })
+    //             }
 
-            })
+    //         })
+    //     }
+    // };
+    useEffect(() => {
+        if (visible) {
+            if (type === "edit") {
+                searchModuleById(id).then((res) => {
+                    if (res.code === 0) {
+
+                        form.setFieldsValue({
+                            moduleName: res.data.moduleName,
+                            id: res.data.id,
+                            desc: res.data.desc,
+                            parent: res.data.parent?.id || parent
+                        })
+                    }
+
+                })
+            }else {
+                form.setFieldsValue({
+                    parent: parent
+                })
+            }
         }
-    };
+    }, [visible])
 
     /**
      * 提交表单
      */
     const onFinish = () => {
         form.validateFields().then((fieldsValue) => {
+            console.log(fieldsValue)
             fieldsValue.project = { id: props.projectid };
+            const params = {
+                ...fieldsValue,
+                project: { id: props.projectid },
+                parent: {
+                    id: fieldsValue.parent || "nullstring"
+                }
+            }
             if (props.type === "add") {
-                addModule(fieldsValue)
+                createModule(params)
+
             } else {
-                fieldsValue.id = props.id
-                editModuleById(fieldsValue)
+                params.id = props.id
+                editModuleById(params)
             }
             setVisible(false);
             form.resetFields();
@@ -79,24 +113,36 @@ const ModuleAddModal = (props) => {
         setVisible(false);
     };
 
+    const moduleTree= (dataList)=>{
+        return dataList?.map(item=> {
+            if((item.id != id && type === "edit") || type === "add"){
+               return item.children ?
+                <TreeNode value={item.id} title={item.moduleName} key={item.id}>
+                    {
+                        moduleTree(item.children)
+                    }
+                </TreeNode>
+                :
+                <TreeNode value={item.id} title={item.moduleName} key={item.id}/> 
+            }
+            
+        })
+    }
+
     return (
         <div className="addmodel">
-            {
+            {/* {
                 props.type !== "edit" ?
-                    <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
-                        <Button type="primary" onClick={showModal}>
-                            +{props.name}
-                        </Button>
-                    </PrivilegeProjectButton>
+                   
                     :
                     <PrivilegeProjectButton code={'ModuleEdit'} domainId={projectId}  {...props}>
                         <svg className="svg-icon" aria-hidden="true" onClick={showModal} style={{ cursor: "pointer" }}>
                             <use xlinkHref="#icon-edit"></use>
                         </svg>
                     </PrivilegeProjectButton>
-            }
+            } */}
             <Modal
-                title={props.name}
+                title={modalName}
                 visible={visible}
                 onOk={onFinish}
                 onCancel={onFinishFailed}
@@ -113,6 +159,25 @@ const ModuleAddModal = (props) => {
                     form={form}
                     layout="vertical"
                 >
+                    <Form.Item
+                        label="上级模块"
+                        name="parent"
+                    >
+                        <TreeSelect
+                            showSearch
+                            style={{ width: '100%' }}
+                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            placeholder="Please select"
+                            allowClear
+                            // value = {parentId}
+                            // onChange={(value)=> setParentId(value)}
+                            treeDefaultExpandAll
+                        >   
+                        {
+                            moduleTree(modulelist)
+                        }
+                        </TreeSelect>
+                    </Form.Item>
                     <Form.Item
                         label="模块名称"
                         name="moduleName"
@@ -143,4 +208,4 @@ const ModuleAddModal = (props) => {
     );
 };
 
-export default withRouter(ModuleAddModal);
+export default withRouter(observer(ModuleAddModal));

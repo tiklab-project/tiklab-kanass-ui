@@ -25,7 +25,7 @@ const LogContent = (props) => {
     }
     const { findWorkLogPage, logList, selectLogCondition } = LogStore;
     const [dateValue, setDateValue] = useState()
-
+    console.log(selectLogCondition)
     // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
     // 选中的tab key
@@ -45,6 +45,7 @@ const LogContent = (props) => {
      */
      useEffect(() => {
         getList()
+       
         return;
     }, [])
 
@@ -97,8 +98,8 @@ const LogContent = (props) => {
         },
         {
             title: "项目",
-            dataIndex: ["workItem", "title"],
-            key: "workItem",
+            dataIndex: ["project", "projectName"],
+            key: "projectName",
             align: "left",
 
         },
@@ -157,8 +158,8 @@ const LogContent = (props) => {
 
     return (<Provider {...store}>
         <Row style={{ height: "100%" }}>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                <div style={{ padding: "20px" }}>
+            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} >
+                <div style={{ padding: "20px" }} className="workItem-log">
                     <Breadcumb
                         {...props}
                         firstText="工时"
@@ -194,7 +195,11 @@ const LogContent = (props) => {
                         dataSource={logList}
                         rowKey={(record) => record.id}
                         onChange={changePage}
-                        pagination={selectLogCondition.pageParam}
+                        pagination={{
+                            onChange: changePage,
+                            position: ["bottomCenter"],
+                            ...selectLogCondition.pageParam
+                        }}
                     />
 
                     <LogDetail logId = {logId} listIndex = {listIndex} logDetailVisable = {logDetailVisable} setLogDetailVisable = {setLogDetailVisable}/>

@@ -1,26 +1,28 @@
-
-
-.new-insight-row {
-    height: 100%;
-    overflow: auto;
-   .new-insight {
+// .new-insight-row {
+//     height: 100%;
+//     overflow: auto;
+.new-insight {
     display: flex;
     justify-content: space-between;
     height: 100%;
     padding: var(--tiklab-padding-item);
+
     // background-color: #fff;
     .project-breadcrumb-icon {
         width: 25px;
         height: 25px;
     }
+
     .new-insight-left {
         flex: 1;
+
         .insight-head-action {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
         }
+
         .new-insight-head {
             display: flex;
             justify-content: space-between;
@@ -68,9 +70,11 @@
 
     .new-insight-content {
         margin: 0 5px;
+
         .ant-empty {
             margin-top: 100px;
         }
+
         .empty-action-save {
             background: var(--tiklab-blue);
             color: #fff;
@@ -88,7 +92,6 @@
 
 .new-insight-report {
     width: 250px;
-} 
 }
 
 
@@ -99,4 +102,3 @@
 .hidden-report {
     display: none;
 }
-

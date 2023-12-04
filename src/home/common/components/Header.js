@@ -71,7 +71,7 @@ const Header = props => {
                     <div key='projectSet' onClick={() => changeCurrentLink(routers[2])} className={`frame-header-link-item ${menuKey === "projectSet" ? 'frame-header-link-active' : null}`}> {routers[2].title}</div>
                     <div key='work' onClick={() => changeCurrentLink(routers[3])} className={`frame-header-link-item ${menuKey === "work" ? 'frame-header-link-active' : null}`}> {routers[3].title}</div>
                     <div key='insight' onClick={() => changeCurrentLink(routers[4])} className={`frame-header-link-item ${menuKey === "insight" ? 'frame-header-link-active' : null}`}> {routers[4].title}</div> */}
-                    <HeadMoreMenu />
+                    {/* <HeadMoreMenu /> */}
                 </div>
             )
         }
@@ -110,10 +110,15 @@ const Header = props => {
             key: 'work'
         },
         {
-            to: '/index/insight/list',
-            title: '仪表盘',
-            key: 'insight'
-        }
+            to: '/index/log',
+            title: '工时',
+            key: 'log'
+        },
+        // {
+        //     to: '/index/insight/list',
+        //     title: '仪表盘',
+        //     key: 'insight'
+        // }
     ]
     return (
         <Row className="frame-header">

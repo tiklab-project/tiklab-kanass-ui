@@ -298,7 +298,7 @@ const EpicLineMap = (props) => {
             )
 
             // 连接线的数据
-            if (item.preDependWorkItem && item.preDependWorkItem.id) {
+            if (item.preDependWorkItem && item.preDependWorkItem.id && havePreDependWorkItem(data, item.preDependWorkItem.id)) {
                 edges.push({
                     // String，必须，起始节点 id
                     source: item.id,
@@ -327,7 +327,12 @@ const EpicLineMap = (props) => {
 
         return item;
     }
-
+    /**
+     * 判断前置事项是否在当前列表中
+     */
+    const havePreDependWorkItem = (list, preWorkItemId) => {
+        return list.some(item => item.id === preWorkItemId)
+    }
     /**
      * 时间轴数据
      * @returns 

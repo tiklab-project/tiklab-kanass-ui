@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-18 09:46:31
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
@@ -14,20 +14,27 @@ const { TextArea } = Input;
 
 const LogAdd = (props) => {
     const { showLogAdd, setShowLogAdd, logStore, changeTabs, activeTab } = props;
-    const { findWorkItemList, addWorkLog } = logStore;
+    const { findWorkItemPage, addWorkLog, findJoinProjectList, projectList } = logStore;
     const [addLog] = Form.useForm();
     // 搜索的事项列表
     const [workItemList, setWorkItemList] = useState([])
     // 用时
-    const [planTakeupTime, setPlanTakeupTime]  = useState(0)
+    const [planTakeupTime, setPlanTakeupTime] = useState(0)
     // 剩余时间
-    const [surplusTime, setSurplusTime]  = useState(0)
-
-    // 项目id
-    const projectId = props.match.params.id;
+    const [surplusTime, setSurplusTime] = useState(0)
+    const [projectId, setProjectId] = useState(props.match.params.id)
+    const path = props.location.pathname;
+    console.log(props)
     // const [projectId, setProjectId] = useState()
     // 搜索关键字
     const [value, setValue] = useState();
+
+    useEffect(()=> {
+        if(!projectId) {
+            findJoinProjectList({})
+        }
+        return;
+    },[])
     /**
      * 添加日志
      */
@@ -64,14 +71,14 @@ const LogAdd = (props) => {
     const searchWorkItem = (value) => {
         console.log(value)
         if (value) {
-            findWorkItemList({ title: value, projectId:  projectId}).then(res => {
+            findWorkItemPage({ title: value, projectId: projectId }).then(res => {
                 if (res.code === 0) {
-                    setWorkItemList(res.data)
+                    setWorkItemList(res.data.dataList)
                 }
             })
         }
     }
-    
+
 
     /**
      * 根据搜索结果改变工时信息
@@ -84,6 +91,20 @@ const LogAdd = (props) => {
         // setProjectId(option.projectId)
         setValue(newValue);
     };
+    const changeProject = (value) => {
+        setProjectId(value)
+        findWorkItemPage({ projectId: value }).then(res => {
+            if (res.code === 0) {
+                setWorkItemList(res.data.dataList)
+                if(res.data.dataList.length > 0){
+                  setValue(res.data.dataList[0].id);  
+                }else {
+                    setValue()
+                }
+                
+            }
+        })
+    }
 
     return (
         <Modal
@@ -102,6 +123,35 @@ const LogAdd = (props) => {
                 layout="vertical"
 
             >
+                {
+                    path === "/index/log" && <Form.Item
+                        label="项目"
+                        name="project"
+                        rules={[
+                            {
+                                required: true,
+                                message: "请选择项目",
+                            },
+                        ]}
+                    >
+                        <Select
+                            showSearch
+                            value={value}
+                            onChange={changeProject}
+                            optionFilterProp='children'
+                        >
+                            {
+                                projectList.length > 0 && projectList.map((item) => {
+                                    return <Select.Option
+                                        value={item.id}
+                                        key={item.id}
+                                        projectId={item.id}
+                                    >{item.projectName}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                }
                 <Form.Item
                     label="事项"
                     name="workItem"
@@ -118,16 +168,15 @@ const LogAdd = (props) => {
                         onSearch={searchWorkItem}
                         onChange={changeSearchTitle}
                         optionFilterProp='children'
-                        placeholder = "输入关键字搜索"
                     >
                         {
                             workItemList.length > 0 && workItemList.map((item) => {
-                                return <Select.Option 
-                                    value={item.id} 
-                                    key={item.id} 
+                                return <Select.Option
+                                    value={item.id}
+                                    key={item.id}
                                     projectId={item.project.id}
-                                    surplusTime = {item.surplusTime}
-                                    planTakeupTime = {item.planTakeupTime}
+                                    surplusTime={item.surplusTime}
+                                    planTakeupTime={item.planTakeupTime}
                                 >{item.title}</Select.Option>
                             })
                         }

@@ -167,7 +167,7 @@ const StageDetail = AsyncComponent(() => import("./project/stage/component/Stage
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
-
+const WorkLog = AsyncComponent(()=> import("./project/workLog/components/LogContent"))
 const Routers = [
     {
         path: "/login",
@@ -194,16 +194,45 @@ const Routers = [
                 component: HomePage,
                 key: 'home',
                 routes: [
-                    {
+                    {   
                         path: "/index/home/survey",
                         exact: false,
                         component: HomeSurvey,
                         key: "ProjectSet"
-
+                        
                     },
-                    
-                 
+                    {   
+                        path: "/index/home/todoList",
+                        exact: false,
+                        component: WorkTodo,
+                        key: "ProjectSet"
+                        
+                    },
+                    {
+                        path: "/index/home/insight/list",
+                        exact: false,
+                        component: InsightList,
+                        key: "ProjectSet"
+                    },
+                    {
+                        path: "/index/home/insight/newInsight/:id",
+                        exact: false,
+                        component: NewInsight,
+                        key: "ProjectSet"
+                    },
+                    {
+                        path: "/index/home/insight/viewInsight/:id",
+                        exact: false,
+                        component: ViewInsight,
+                        key: "ProjectSet"
+                    }
                 ]
+            },
+            {
+                path: "/index/log",
+                exact: false,
+                component: WorkLog,
+                key: "WorkItemLog"
             },
             {
                 path: "/index/todoList",

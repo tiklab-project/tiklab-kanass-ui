@@ -43,7 +43,7 @@ export class ModuleStore {
      * @param {*} values 
      */
     @action
-	addModule = async(values) => {
+	createModule = async(values) => {
         const data = await Service("/module/createModule", values)
         if(data.code === 0){
             this.findModulePage(values.project.id,this.searchModuleName)
@@ -62,11 +62,7 @@ export class ModuleStore {
         param.append("id", moduleId)
         const data = await Service("/module/deleteModule", param)
 		if(data.code=== 0){
-            this.findModulePage(projectId,this.searchModuleName).then((res)=> {
-                if(res.data.dataList.length === 0){
-                    that.modulePageParam.current--
-                }
-            })
+            this.findModulePage(projectId,this.searchModuleName)
         }
         return data;
     }
@@ -120,10 +116,10 @@ export class ModuleStore {
                 currentPage: this.modulePageParam.current
             }
         }
-        const data = await Service("/module/findModulePage", params)
+        const data = await Service("/module/findModuleListTree", params)
         if(data.code===0){
-            this.modulelist = data.data.dataList
-            this.modulePageParam.totalRecord = data.data.totalRecord
+            this.modulelist = data.data
+            // this.modulePageParam.totalRecord = data.data.totalRecord
         }
         return data;
     }

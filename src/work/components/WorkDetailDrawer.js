@@ -17,7 +17,6 @@ const WorkDetailDrawer = (props) => {
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore } = props;
     const { setWorkId } = workStore;
 
-    console.log("强制刷新", props)
     const showModal = () => {
         setIsModalVisible(true);
     }

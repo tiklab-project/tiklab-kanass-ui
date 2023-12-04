@@ -37,6 +37,19 @@ export class LogStore {
         }
     }
 
+    @observable projectList = [];
+    /**
+     * 查找所有的项目
+     * @returns 
+     */
+    @action
+    findJoinProjectList = async(value) => { 
+        const data = await Service("/project/findJoinProjectList", value)
+        if(data.code === 0){
+            this.projectList = data.data;
+        }
+        return data
+    }
     /**
      * 查找所有的日志
      * @returns 
@@ -110,8 +123,19 @@ export class LogStore {
      * @returns 
      */
     @action
-    findWorkItemList = async(value) => {
-        const data = await Service("/workItem/findWorkItemList", value);
+    findWorkItemPage = async(value) => {
+        const params = {
+            orderParams: [{
+                name: "id",
+                orderType: "asc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            },
+            ...value
+        }
+        const data = await Service("/workItem/findWorkItemPage", params);
         return data;
     }
 

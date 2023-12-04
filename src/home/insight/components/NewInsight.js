@@ -80,7 +80,7 @@ const NewInsight = (props) => {
         } else {
             updateInsight(params).then(res => {
                 if (res.code === 0) {
-                    props.history.push(`/index/insight/viewInsight/${insightId}`)
+                    props.history.push(`/index/home/insight/viewInsight/${insightId}`)
                 }
             })
         }
@@ -107,12 +107,12 @@ const NewInsight = (props) => {
     return (
         <Provider {...store}>
             <>
-                <Row className="new-insight-row">
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                {/* <Row className="new-insight-row">
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
                         <div className="new-insight">
                             <div className="new-insight-left">
 
-                                <Breadcumb firstText="仪表盘" firstUrl="/index/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                                <Breadcumb firstText="仪表盘" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
                                     <div className="insight-head-action">
                                         <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
                                         <Button onClick={() => saveInsight()} type="primary">保存</Button>
@@ -170,8 +170,8 @@ const NewInsight = (props) => {
                             setReportIndex={setReportIndex}
                             setShowReportList={setShowReportList}
                         />
-                    </Col>
-                </Row>
+                    {/* </Col>
+                </Row> */}
 
 
             </>

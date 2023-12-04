@@ -1,20 +1,23 @@
-.insight-list-row {
-    height: 100%;
-    overflow: auto;
-    background-color: #fff;
+// .insight-list-row {
+//     height: 100%;
+//     overflow: auto;
+//     background-color: #fff;
     .insight-list {
         background-color: #fff;
         padding: var(--tiklab-padding-item);
-        height: 100%;
-
+        // height: 100%;
+        // min-height: calc(100vh - 145px);
         .insight-search-add {
             padding: 15px 0px;
             text-align: right;
             display: flex;
             justify-content: space-between;
+           
 
         }
-
+        .search-add {
+            gap: 20px;
+        }
         .action-botton {
             color: var(--tiklab-blue);
         }
@@ -65,7 +68,6 @@
         }
 
     }
-}
 
 .insight-delete-modal {
     .ant-modal-body {

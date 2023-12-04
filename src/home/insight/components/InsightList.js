@@ -57,7 +57,7 @@ const InsightList = (props) => {
 
 
     const goEditInsight = (id) => {
-        props.history.push(`/index/insight/newInsight/${id}`)
+        props.history.push(`/index/home/insight/newInsight/${id}`)
     }
 
     const delInsight = (id) => {
@@ -99,7 +99,7 @@ const InsightList = (props) => {
             modelId: record.id
         }
         createRecent(params)
-        props.history.push(`/index/insight/viewInsight/${record.id}`)
+        props.history.push(`/index/home/insight/viewInsight/${record.id}`)
     }
 
     const selectTabs = (key) => {
@@ -222,50 +222,52 @@ const InsightList = (props) => {
 
     return (
         <Provider {...store}>
-            <Row className="insight-list-row">
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                    <div>
-                        {/* <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}> */}
-                        <div className="insight-list">
-                            <Breadcumb firstText="仪表盘">
-                                <Button type="primary" onClick={() => addPanel()}>
-                                    添加仪表盘
-                                </Button>
-                            </Breadcumb>
-                            <div className="insight-tabs-search">
-                                <div className="insight-tabs">
-                                    {
-                                        insightTab.map(item => {
-                                            return <div
-                                                className={`insight-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
-                                                key={item.key}
-                                                onClick={() => selectTabs(item.key)}
-                                            >
-                                                {item.title}
-                                            </div>
-                                        })
-                                    }
-                                </div>
+            {/* <Row className="insight-list-row">
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
+            <div>
+                {/* <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}> */}
+                <div className="insight-list">
+                    {/* <Breadcumb firstText="仪表盘">
+                                
+                            </Breadcumb> */}
+                    <div className="insight-tabs-search">
+                        <div className="insight-tabs">
+                            {
+                                insightTab.map(item => {
+                                    return <div
+                                        className={`insight-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
+                                        key={item.key}
+                                        onClick={() => selectTabs(item.key)}
+                                    >
+                                        {item.title}
+                                    </div>
+                                })
+                            }
+                        </div>
 
 
-                                <div className="search-add">
-                                    <InputSearch onChange={(value) => onSearch(value)} placeholder={"仪表盘名字"} />
-                                </div>
-                            </div>
-                            <InsightAddModal setVisible={setVisible} visible={visible} />
-                            <div className="insight-table-box">
-                                <Table
-                                    columns={columns}
-                                    dataSource={insightList}
-                                    rowKey={record => record.id}
-                                    // onChange={handleTableChange}
-                                    pagination={false}
-                                />
-                            </div>
+                        <div className="search-add">
+
+                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"仪表盘名字"} />
+                            <Button type="primary" onClick={() => addPanel()}>
+                                添加仪表盘
+                            </Button>
                         </div>
                     </div>
-                </Col>
-            </Row>
+                    <InsightAddModal setVisible={setVisible} visible={visible} />
+                    <div className="insight-table-box">
+                        <Table
+                            columns={columns}
+                            dataSource={insightList}
+                            rowKey={record => record.id}
+                            // onChange={handleTableChange}
+                            pagination={false}
+                        />
+                    </div>
+                </div>
+            </div>
+            {/* </Col>
+            </Row> */}
 
         </Provider>
 
