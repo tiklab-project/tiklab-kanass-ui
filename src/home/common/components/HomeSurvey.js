@@ -71,7 +71,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        props.history.push(`/index/projectDetail/${project.id}/work/table`)
+        props.history.push(`/projectDetail/${project.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
@@ -80,7 +80,7 @@ const HomeSurvey = (props) => {
      * 跳转到待办列表
      */
     const goTodoWorkItemList = () => {
-        props.history.push(`/index/home/todoList`)
+        props.history.push(`/home/todoList`)
         setActiveKey("todoList")
     }
 
@@ -104,7 +104,7 @@ const HomeSurvey = (props) => {
 
     const goProject = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/projectDetail/${item.modelId}/work/table`)
+        props.history.push(`/projectDetail/${item.modelId}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     }
@@ -113,23 +113,40 @@ const HomeSurvey = (props) => {
         updateRecent({ id: item.id })
         const workItem = item.object;
         setWorkId(workItem.id)
-        
+
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
-        props.history.push(`/index/projectDetail/${workItem.project.id}/work/${workItem.id}`)
+        props.history.push(`/projectDetail/${workItem.project.id}/work/${workItem.id}`)
         sessionStorage.setItem("menuKey", "project")
     }
 
     const goVersion = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
+        props.history.push(`/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
         sessionStorage.setItem("menuKey", "project")
     }
 
     const goSprint = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
+        props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
         sessionStorage.setItem("menuKey", "project")
     }
+
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
+
     const recentItem = (item) => {
         let element;
         switch (item.model) {
@@ -269,18 +286,18 @@ const HomeSurvey = (props) => {
                                                 />
 
                                         }
-                                        <span>{item.projectName}</span>
+                                        <span className="item-name">{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
-                                        <div className="process-work"><span style={{ color: "#999" }}>待办事项</span><span>{item.processWorkItemNumber}</span></div>
-                                        <div className="end-work"><span style={{ color: "#999" }}>已完成事项</span><span>{item.endWorkItemNumber}</span></div>
+                                        <div className="process-work"><span className="work-label" style={{ color: "#999" }}>待办</span><span>{item.processWorkItemNumber}</span></div>
+                                        <div className="end-work"><span className="work-label" style={{ color: "#999" }}>已完成</span><span>{item.endWorkItemNumber}</span></div>
                                     </div>
                                 </div>
 
 
                             })
-                            :
-                            <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
                         }
                     </div>
                 </Spin>
@@ -296,6 +313,7 @@ const HomeSurvey = (props) => {
                     {
                         recentList && recentList.length > 0 ? recentList.map(item => {
                             return <div className="work-item" key={item.object.id}>
+                                <div className="work-left">
                                 <div className="work-icon">
                                     {
                                         item.object.workTypeSys.iconUrl ?
@@ -315,15 +333,23 @@ const HomeSurvey = (props) => {
                                 </div>
                                 <div className="work-content">
                                     <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                    <div className="content-type">{item.object.project.projectName}</div>
+                                    <div className="content-type">{item.object.id}</div>
                                 </div>
-                                <div className="item-time">
+                                </div>
+                                <div className="work-project">{item.object.project.projectName}</div>
+                                <div style={{width: "100px"}}>
+                                <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
+                                    {item.object.workStatusNode.name}
+                                </div>
+                                </div>
+                               
+                                <div className="work-time">
                                     {item.recentTime}
                                 </div>
                             </div>
                         })
-                        :
-                        <Empty image="/images/nodata.png" description="暂时没有~" />
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有~" />
                     }
                 </div>
             </div>

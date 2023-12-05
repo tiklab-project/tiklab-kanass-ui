@@ -3,7 +3,7 @@ import {SystemFlow} from 'tiklab-flow-ui';
 
 const ProjectSystemFlowList = (props) => {
     return (
-        <SystemFlow isBase = {false}  viewRouter = {"/index/setting/flowDetailView"} designRouter = {"/index/setting/flowDetailDesign"}/>
+        <SystemFlow isBase = {false}  viewRouter = {"/setting/flowDetailView"} designRouter = {"/setting/flowDetailDesign"}/>
     )
 }
 export default ProjectSystemFlowList;

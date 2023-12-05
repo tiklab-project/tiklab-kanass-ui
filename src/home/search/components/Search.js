@@ -216,7 +216,7 @@ const Search = (props) => {
     const toProject = async (data) => {
         // 创建最近访问的信息
         updateRecent({ id: data.modelId })
-        props.history.replace(`/index/projectDetail/${data.modelId}/work/table`)
+        props.history.replace(`/projectDetail/${data.modelId}/workTable`)
         console.log(props)
         // location.reload();
         // 存储用于被点击菜单的回显
@@ -228,7 +228,7 @@ const Search = (props) => {
 
     const toSearchProject = async (data) => {
         // 创建最近访问的信息
-        props.history.replace(`/index/projectDetail/${data.id}/work/table`)
+        props.history.replace(`/projectDetail/${data.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -242,7 +242,7 @@ const Search = (props) => {
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
-        props.history.push(`/index/projectDetail/${data.project.id}/work/${data.modelId}`)
+        props.history.push(`/projectDetail/${data.project.id}/work/${data.modelId}`)
         setSessionStorage("detailCrumbArray", [{ id: data.modelId, title: data.name, iconUrl: data.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -252,7 +252,7 @@ const Search = (props) => {
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
-        props.history.push(`/index/projectDetail/${data.project.id}/work/${data.id}`)
+        props.history.push(`/projectDetail/${data.project.id}/work/${data.id}`)
         setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys?.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
@@ -266,7 +266,7 @@ const Search = (props) => {
     //     if (value.keyCode === 13) {
     //         getSearchSore(value.target.value)
     //         setKeyWord(value.target.value)
-    //         props.history.push(`/index/searchResult`)
+    //         props.history.push(`/searchResult`)
     //         setShow(false)
     //     }
     // }

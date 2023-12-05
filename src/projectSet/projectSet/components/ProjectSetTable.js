@@ -44,12 +44,12 @@ const ProjectSetTable = (props) => {
         createRecent(params)
 
         localStorage.setItem("projectSet", JSON.stringify(record))
-        props.history.push(`/index/projectSetdetail/${record.id}/survey`)
+        props.history.push(`/projectSetdetail/${record.id}/survey`)
     }
 
     const goToProjectSetSet = (record) => {
         localStorage.setItem("projectSet", JSON.stringify(record))
-        props.history.push(`/index/projectSetdetail/${record.id}/projectSetset/basicInfo`)
+        props.history.push(`/projectSetdetail/${record.id}/projectSetset/basicInfo`)
     }
 
     const onSearch = (value) => {
@@ -99,19 +99,13 @@ const ProjectSetTable = (props) => {
                 {text}
             </Space>,
         },
-        {
-            title: "负责人",
-            dataIndex: ["master", "nickname"],
-            key: "master",
-            align: "left",
-
-        },
+       
         {
             title: "计划时间",
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-            width: "20%",
+            width: "25%",
             render: (text, record) => <>
                 {record.startTime} - {record.endTime}
             </>
@@ -121,15 +115,23 @@ const ProjectSetTable = (props) => {
             dataIndex: "projectNumber",
             key: "projectNumber",
             align: "left",
-            width: "20%",
+            width: "10%",
             render: (text, record) => <span>
                 {text > 0 ? text : 0}
             </span>
         },
         {
+            title: "负责人",
+            dataIndex: ["master", "nickname"],
+            key: "master",
+            align: "left",
+            width: "15%"
+
+        },
+        {
             title: "操作",
             align: "left",
-            width: "60px",
+            width: "10%",
             render: (text, record) =>
                 <div style={{ display: "flex", gap: "15px" }}>
                     {
@@ -206,11 +208,11 @@ const ProjectSetTable = (props) => {
 
     return <div className="projectSet-list">
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcumb firstText="项目集">
                     <Button
                         style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
+                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
                     </Button>
                 </Breadcumb>
 

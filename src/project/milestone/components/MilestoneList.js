@@ -11,7 +11,7 @@ import { Input, Table, Space, Row, Col } from "antd";
 import MilestoneAddEditModal from "./MilestoneAddEditModal";
 import { observer, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import "../components/milestone.scss";
+import "./milestoneList.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import MilestoneTimeline from "./MilestoneTimeline"
 import { withRouter } from "react-router";
@@ -121,7 +121,7 @@ const MilestoneList = (props) => {
     return ( <Provider {...store}>
         <div className="project-milestone">
             <Row >
-                <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-milestone-list">
                         <Breadcumb
                             firstText="里程碑"
@@ -136,7 +136,7 @@ const MilestoneList = (props) => {
                         <MilestoneTimeline milestonelist = {milestonelist}/>
                         <div className="project-milestone-contant">
 
-                            <div className="insight-table-box">
+                            <div className="milestone-table-box">
                                 <Table
                                     columns={columns}
                                     dataSource={milestonelist}

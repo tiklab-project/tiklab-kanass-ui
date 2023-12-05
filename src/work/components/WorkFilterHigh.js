@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { Form, DatePicker, Select } from 'antd';
 import Button from "../../common/button/Button";
 import moment from 'moment';
-import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import WorkFilterQuick from "./WorkFilterQuick"

@@ -94,7 +94,7 @@ const VersionDetail = (props) => {
      * @param {*} item 
      */
     const changeVersion = (item) => {
-        props.history.push(`/index/projectDetail/${projectId}/versionDetail/${item.id}`)
+        props.history.push(`/projectDetail/${projectId}/versionDetail/${item.id}`)
         setMouseActive(false)
     }
 
@@ -157,13 +157,13 @@ const VersionDetail = (props) => {
     }
     return (<Provider {...store}>
         <Row >
-            <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-detail">
                     {
                         planInfo && <Fragment>
                             <div className="version-top">
                                 <div className="version-breadcrumb">
-                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/index/projectDetail/${projectId}/version`)}>版本</span>
+                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/version`)}>版本</span>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>

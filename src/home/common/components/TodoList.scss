@@ -3,14 +3,13 @@
     overflow: auto;
 }
 .todo-list-page {
-    padding: var(--tiklab-padding-item);;
+    padding: var(--tiklab-padding);;
     background: #fff;
-    min-height: calc(100vh - 145px);
     .todo-select {
         width: 200px;
     }
     .todo-filter {
-        padding: 15px 0;
+        padding-bottom: var(--tiklab-padding);
         width: 100%;
         display: flex;
         gap: 20px;

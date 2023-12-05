@@ -11,7 +11,7 @@ import { observer, inject } from "mobx-react";
 const WorkChangeView = (props) => {
     const { getPageList, getPageTree, getWorkConditionPage,
         getWorkConditionPageTree, buttonType, workStore } = props;
-    const {viewType, workShowType, setWorkShowType, setViewType} = workStore
+    const {viewType, workShowType, setWorkShowType, setViewType, setWorkId} = workStore
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const gantte = useRef()
@@ -58,21 +58,22 @@ const WorkChangeView = (props) => {
     const goPlugin = () => {
         window.open(`${homes_url}/account/subscribe/subscribeList`)
     }
-    const changeWorkView = (value, route) => {
+    const changeWorkView = (value) => {
         setWorkShowType(value)
+        setWorkId()
         if(path.indexOf("projectDetail") > -1){
-            props.history.push(`/index/projectDetail/${projectId}/work/${value}`)
+            props.history.push(`/projectDetail/${projectId}/work${value}`)
         }
-        if(path.indexOf("work") === 7){
+        if(path.indexOf("work") === 1){
 
-            props.history.push(`/index/work/${value}`)
+            props.history.push(`/work${value}`)
         }
 
         if(path.indexOf("sprintdetail") > 1){
-            props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work/${value}`)
+            props.history.push(`/${projectId}/sprintdetail/${sprintId}/work${value}`)
         }
         if(path.indexOf("versiondetail") > 1){
-            props.history.push(`/index/${projectId}/versiondetail/${versionId}/work/${value}`)
+            props.history.push(`/${projectId}/versiondetail/${versionId}/work${value}`)
         }
   
         removeSessionStorage("detailCrumbArray");
@@ -129,7 +130,7 @@ const WorkChangeView = (props) => {
                             return <div
                                 key={item.value}
                                 className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(item.value, item.path)}>
+                                onClick={() => changeWorkView(item.path)}>
                                 <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.value}`}></use>
                                 </svg>
@@ -141,7 +142,7 @@ const WorkChangeView = (props) => {
                     {
                         pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
                             className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
-                            onClick={() => changeWorkView("gantt", "gantt")}>
+                            onClick={() => changeWorkView("Gantt")}>
                             <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-time`}></use>
                             </svg>

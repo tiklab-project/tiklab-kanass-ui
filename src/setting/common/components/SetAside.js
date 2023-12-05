@@ -13,7 +13,7 @@ import { setDevRouter, setPrdRouter } from "./SetRouter";
 import { PrivilegeButton } from "tiklab-privilege-ui"
 const SetAside = (props) => {
     // 无子级菜单处理
-    const [selectKey, setSelectKey] = useState("/index/organ/organ");
+    const [selectKey, setSelectKey] = useState("/organ/organ");
 
     const [router, setRouterMenu] = useState(setDevRouter)
     const select = (key) => {
@@ -61,7 +61,7 @@ const SetAside = (props) => {
     }
     
     // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState(["/index/organ/organ"])
+    const [expandedTree, setExpandedTree] = useState(["/organ/organ"])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)

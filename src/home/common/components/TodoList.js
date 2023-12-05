@@ -41,21 +41,21 @@ const TodoList = (props) => {
             content: null
         }
         // 根据不同的url 设置不同的面包屑
-        if (props.route?.path === "/index/projectDetail/:id/workTodo") {
+        if (props.route?.path === "/projectDetail/:id/workTodo") {
             const projectId = props.match.params.id;
             setFirstText("项目概况")
             findTodopage({ ...params, content: {projectId: projectId}})
         }
-        if (props.match?.path === "/index/todoList") {
+        if (props.match?.path === "/todoList") {
             setFirstText(null)
             findTodopage(params)
         }
 
-        if (props.route?.path === "/index/projectSetdetail/:id/workTodo") {
+        if (props.route?.path === "/projectSetdetail/:id/workTodo") {
             setFirstText("项目集概况")
         }
 
-        if (props.route?.path === "/index/:id/sprintdetail/:sprint/workTodo") {
+        if (props.route?.path === "/:id/sprintdetail/:sprint/workTodo") {
             setFirstText("迭代概况")
         }
         return;

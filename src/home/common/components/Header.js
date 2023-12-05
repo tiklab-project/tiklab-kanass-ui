@@ -21,7 +21,7 @@ import "./Header.scss";
 const Header = props => {
     const { systemRoleStore, AppLink, HelpLink, AvatarLink } = props;
     // 被点击菜单的key
-    const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/index/home") ? sessionStorage.getItem("menuKey") : "home";
+    const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/home") ? sessionStorage.getItem("menuKey") : "home";
     // 语言包
     const { i18n } = useTranslation();
     // 登录者的信息
@@ -83,39 +83,39 @@ const Header = props => {
      * 跳转到系统设置
      */
     const goSet = () => {
-        props.history.push("/index/setting/organ")
+        props.history.push("/setting/organ")
         sessionStorage.setItem("menuKey", "set")
     };
 
     // 系统顶部菜单
     const routers = [
         {
-            to: '/index/home/survey',
+            to: '/home/survey',
             title: '首页',
             key: 'home'
         },
         {
-            to: '/index/project',
+            to: '/project',
             title: '项目',
             key: 'project'
         },
         {
-            to: '/index/projectSetList',
+            to: '/projectSetList',
             title: '项目集',
             key: 'projectSet'
         },
         {
-            to: '/index/work/table',
+            to: '/workTable',
             title: '事项',
             key: 'work'
         },
         {
-            to: '/index/log',
+            to: '/log',
             title: '工时',
             key: 'log'
         },
         // {
-        //     to: '/index/insight/list',
+        //     to: '/insight/list',
         //     title: '仪表盘',
         //     key: 'insight'
         // }

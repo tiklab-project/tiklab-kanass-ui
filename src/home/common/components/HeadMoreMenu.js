@@ -23,7 +23,7 @@ const HeadMoreMenu = (props) => {
     }
     
     const goTodoList = () => {
-        props.history.push("/index/todoList")
+        props.history.push("/todoList")
         sessionStorage.setItem("menuKey", "todoList")
         setShowDropDown(false)
     }

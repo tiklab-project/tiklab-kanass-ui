@@ -56,7 +56,7 @@ const VersionTable = (props) => {
         }
         createRecent(params)
 
-        props.history.push({ pathname: `/index/${projectId}/versionDetail/${id}/survey` })
+        props.history.push({ pathname: `/${projectId}/versionDetail/${id}/survey` })
         localStorage.setItem("sprintId", id);
     }
 
@@ -321,7 +321,7 @@ const VersionTable = (props) => {
     return (<Provider {...store}>
         <div className="project-version">
             <Row >
-                <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-version-list">
 
                         <Breadcumb

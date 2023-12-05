@@ -6,7 +6,7 @@
 .version-survey {
     height: calc(100vh - 48px);
     overflow: auto;
-    padding: var(--tiklab-padding-item);
+    padding: var(--tiklab-padding);
 
     .ant-row {
         background: #f0f2f5;
@@ -48,7 +48,7 @@
         gap: 20px;
         margin-bottom: 15px;
         .version-info-box {
-            padding: var(--tiklab-padding-item);
+            padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
             width: 500px;
@@ -117,7 +117,7 @@
             background-color: #fff;
             border-radius: 4px;
             height: 420px;
-            padding: var(--tiklab-padding-item);
+            padding: var(--tiklab-padding);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);
@@ -128,13 +128,13 @@
 
     .version-pending-workitem {
         background-color: #fff;
-        padding: var(--tiklab-padding-item);
+        padding: var(--tiklab-padding);
         margin-bottom: 15px;
     }
 
     .dynamic-box {
         background-color: #fff;
-        padding: var(--tiklab-padding-item);
+        padding: var(--tiklab-padding);
         .dynamic-item {
             margin-bottom: 10px;
             cursor: pointer;

@@ -20,11 +20,11 @@ const ProjectSetDetail = (props) => {
                 {...props}
             />
             <Layout className="prodetail-content">
-                <Row justify="start">
-                    <Col lg={{ span: 24 }}>
+                {/* <Row justify="start">
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
                         {renderRoutes(route.routes)}
-                    </Col>
-                </Row>
+                    {/* </Col>
+                </Row> */}
             </Layout>
         </Layout >
     </Provider>

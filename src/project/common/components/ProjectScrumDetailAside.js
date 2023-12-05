@@ -27,34 +27,34 @@ const ProdeScrumAside = (props) => {
     // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
     // 当前选中菜单key
-    const path = props.location.pathname.split("/")[4];
+    const path = props.location.pathname.split("/")[3];
     // 路由
     const scrumProrouter = (projectId) =>[
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/index/projectDetail/${projectId}/survey`,
+            url: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: `${t('line_photo')}`,
             icon: 'line',
-            url: `/index/projectDetail/${projectId}/linemap`,
+            url: `/projectDetail/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/work/table`,
+            url: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('sprint')}`,
             icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/sprint`,
+            url: `/projectDetail/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
         },
@@ -62,42 +62,42 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('version')}`,
             icon: 'version',
-            url: `/index/projectDetail/${projectId}/version`,
+            url: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            url: `/index/projectDetail/${projectId}/milestone`,
+            url: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "工时",
             icon: 'log',
-            url: `/index/projectDetail/${projectId}/log`,
+            url: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: "知识库",
             icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/wiki`,
+            url: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/test`,
+            url: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            url: `/index/projectDetail/${projectId}/statistics/workItem`,
+            url: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         }
@@ -108,21 +108,21 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/index/projectDetail/${projectId}/survey`,
+            url: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "计划",
             icon: 'survey',
-            url: `/index/projectDetail/${projectId}/stage`,
+            url: `/projectDetail/${projectId}/stage`,
             key: "stage",
             encoded: "stage",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/index/projectDetail/${projectId}/work/table`,
+            url: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
@@ -131,42 +131,42 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('version')}`,
             icon: 'version',
-            url: `/index/projectDetail/${projectId}/version`,
+            url: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            url: `/index/projectDetail/${projectId}/milestone`,
+            url: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "工时",
             icon: 'log',
-            url: `/index/projectDetail/${projectId}/log`,
+            url: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: "知识库",
             icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/wiki`,
+            url: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'sprint',
-            url: `/index/projectDetail/${projectId}/test`,
+            url: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            url: `/index/projectDetail/${projectId}/statistics/workItem`,
+            url: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         }

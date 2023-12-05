@@ -1,6 +1,6 @@
 .projectSet-survey {
     height: calc(100vh - var(--tiklab-head-height));
-    padding: var(--tiklab-padding-item);;
+    padding: var(--tiklab-padding);;
     overflow: auto;
     background-color: var(--tiklab-gray-600);
     .more {
@@ -16,8 +16,8 @@
         justify-content: space-between;
         font-size: 16px;
         font-weight: var(--tiklab-font-weight-bold);
-        height: 30px;
-        line-height: 30px;
+        // height: 30px;
+        // line-height: 30px;
         margin-bottom: 10px;
     }
     .projectSet-survey-top {
@@ -29,14 +29,15 @@
             flex: 1;
             height: 100px;
             border-radius: 4px;
-            height: fit-content;
+            height: 220px;
             // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-            padding: var(--tiklab-padding-item);
+            padding: var(--tiklab-padding);
             background-color: #fff;
             .projectSet-info {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding-bottom: 20px;
                 .svg-icon {
                     margin-right: 10px;
                 }
@@ -48,12 +49,6 @@
             }
             .projectSet-info-content {
                 flex: 1;
-            }
-            .projectSet-info-content-item {
-                height: 40px;
-                line-height: 40px;
-                // font-weight: var(--tiklab-font-weight-bold);
-                // font-size: 16px;
             }
             .projectSet-infobottom {
                 display: flex;
@@ -76,8 +71,9 @@
             border-radius: 4px;
             margin-left: 20px;
             // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-            padding: var(--tiklab-padding-item);
+            padding: var(--tiklab-padding);
             background-color: #fff;
+            height: 220px;
             &-list {
                 margin-top: 10px;
             }
@@ -126,7 +122,7 @@
         border-radius: 4px;
         flex: 1;
         // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-        padding: var(--tiklab-padding-item);;
+        padding: var(--tiklab-padding);;
         min-height: 300px;
         .dynamic-list {
             margin-top: 10px;
@@ -165,7 +161,7 @@
         margin-top: 15px;
         padding-bottom: 15px;
         // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-        padding: var(--tiklab-padding-item);
+        padding: var(--tiklab-padding);
         margin-bottom: 15px;
         min-height: 300px;
         &-list {

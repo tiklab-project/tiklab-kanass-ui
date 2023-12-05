@@ -18,7 +18,7 @@ import { removeTableTree } from "../../common/utils/treeDataAction";
 
 const WorkTable = (props) => {
     // const { form } = props
-    
+
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
@@ -542,7 +542,7 @@ const WorkTable = (props) => {
                 if (viewType === "tile") {
                     getWorkConditionPage()
                 }
-            }else {
+            } else {
                 setWorkList([...workList])
             }
         })
@@ -552,21 +552,19 @@ const WorkTable = (props) => {
 
     return (
         <Provider {...store}>
-            <Row style={{ height: "100%", overflow: "auto",background: "#fff" }}>
-                <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                    <>
-                        <div className="work-list-col">
-                            <WorkTableHead />
-                            <WorkTableFilter />
-                        </div>
-                        <div className="work-table">
+            <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
+                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                    <div className="work-table">
+                        <WorkTableHead />
+                        <WorkTableFilter />
+                        <div className="work-table-content">
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
-                                    columns={props.location.pathname === "/index/work/table" ? projectColums : workColumns}
+                                    columns={props.location.pathname === "/workTable" ? projectColums : workColumns}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
-                                    rowClassName = {(record, index) => record.id === workId ? "work-table-select": ""}
+                                    rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
                                     pagination={{
                                         total: total,
                                         pageSize: searchCondition.pageParam.pageSize,
@@ -586,16 +584,16 @@ const WorkTable = (props) => {
                                                 </svg>
                                                 :
                                                 <>
-                                                <div className="svg-icon">
+                                                    <div className="svg-icon">
 
-                                                </div>
+                                                    </div>
                                                 </>
                                         )
                                     }}
                                 />
                             </Spin>
                         </div>
-                    </>
+                    </div>
                     <WorkDetailDrawer
                         isModalVisible={isModalVisible}
                         setIsModalVisible={setIsModalVisible}

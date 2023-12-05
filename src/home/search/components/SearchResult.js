@@ -72,7 +72,7 @@ const SearchResult = (props) => {
 
     const toProject = async(id) => {
         localStorage.setItem("projectId",id)
-        await props.history.push("/index/prodetail/survey")
+        await props.history.push("/prodetail/survey")
         setShow("hidden")
         // location.reload();
 
@@ -80,7 +80,7 @@ const SearchResult = (props) => {
 
     const toWorkItem = async(id) => {
         setWorkId(id)
-        await props.history.push("/index/prodetail/work")
+        await props.history.push("/prodetail/work")
         setShow("hidden")
         // location.reload();
 

@@ -38,7 +38,7 @@ const WorkGantt = (props) => {
     }, [projectId])
     return (<Provider {...store}>
         <Row style={{ height: "100%", overflow: "auto" }}>
-            <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+            <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                 <>
                     <div className="work-list-col">
                         <WorkTableHead />

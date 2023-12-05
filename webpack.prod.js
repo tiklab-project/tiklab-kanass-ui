@@ -31,7 +31,7 @@ module.exports = merge(baseWebpackConfig, {
         type: 'filesystem', // 使用文件缓存
     },
     entry: [
-        path.resolve(__dirname, './src/index.js'),
+        path.resolve(__dirname, './src.js'),
         
     ],
     plugins: [

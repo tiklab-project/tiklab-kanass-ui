@@ -1,10 +1,7 @@
 .project-module {
-    padding: 10px;
-    &-contant {
-        padding: 20px 0;
-    }
-    .module-search {
-        width: 200px;
-        border-radius: 4px;;
+    padding: var(--tiklab-padding);
+    .search-add {
+        width: 250px;
+        padding: var(--tiklab-padding) 0;
     }
 }

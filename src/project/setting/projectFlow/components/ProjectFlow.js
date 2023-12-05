@@ -7,25 +7,31 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-21 13:02:38
  */
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 import { ProjectFlow } from 'tiklab-flow-ui';
 import { withRouter } from "react-router";
 import ProjectFlowStore from "../store/ProjectFlowStore"
 import { observer } from "mobx-react";
+import { Col, Row } from "antd";
 
 const ProjectProjectFlowList = (props) => {
-    const {getUserList, userList} = ProjectFlowStore;
+    const { getUserList, userList } = ProjectFlowStore;
     const projectId = props.match.params.id;
     const [router, setRouter] = useState();
-    
-    useEffect(() => {
-        setRouter(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`);
 
-        getUserList({projectId: "projectId"})
+    useEffect(() => {
+        setRouter(`/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`);
+
+        getUserList({ projectId: "projectId" })
         return
-    },[])
+    }, [])
     return (
-        <ProjectFlow domainId={projectId} viewRouter = {router} designRouter = {router} {...props}/>
+        <Row>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <ProjectFlow domainId={projectId} viewRouter={router} designRouter={router} {...props} />
+            </Col>
+        </Row>
+
 
     )
 }

@@ -129,12 +129,12 @@ const SprintSurvey = (props) => {
          */
     const goWorkItemList = (value) => {
         setSearchType(value)
-        props.history.push(`/index/${projectId}/sprintdetail/${sprintId}/work/table`)
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
     }
 
     return (
         <Row style={{ height: "100%", background: "var(--tiklab-gray-600)" }}>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
                         <div className="sprint-info-box">
@@ -236,7 +236,7 @@ const SprintSurvey = (props) => {
                         <div className="sprint-title">
                             <span className="name">待办事项</span>
                             {
-                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
+                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
                                     <svg aria-hidden="true" className="svg-icon">
                                         <use xlinkHref="#icon-rightjump"></use>
                                     </svg>
@@ -263,7 +263,7 @@ const SprintSurvey = (props) => {
                         <div className="sprint-title">
                             <span className="name">相关动态</span>
                             {
-                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
+                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
                                     <svg aria-hidden="true" className="svg-icon">
                                         <use xlinkHref="#icon-rightjump"></use>
                                     </svg>

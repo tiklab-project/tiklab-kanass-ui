@@ -16,7 +16,7 @@ const Home = (props) => {
     const { route, insightStore, homeStore } = props;
     const { activeKey, setActiveKey, findInsightList } = homeStore;
     // 仪表盘地址
-    const [insightUrl, setInsightUrl] = useState('/index/home/insight/list')
+    const [insightUrl, setInsightUrl] = useState('/home/insight/list')
     // 当前url
     const path = props.location.pathname;
 
@@ -44,7 +44,7 @@ const Home = (props) => {
         findInsightList().then(res => {
             if (res.code === 0) {
                 if (res.data.length > 0) {
-                    setInsightUrl(`/index/home/insight/viewInsight/${res.data[0].id}`)
+                    setInsightUrl(`/home/insight/viewInsight/${res.data[0].id}`)
                 }
 
             }
@@ -65,8 +65,8 @@ const Home = (props) => {
         <Row className="home" >
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="home-tab">
-                    <div className={`home-tab-item ${activeKey === "survey" ? "home-tab-select" : ""}`} key={1} onClick={() => selectRouter("/index/home/survey", "survey")}>概况</div>
-                    <div className={`home-tab-item ${activeKey === "todoList" ? "home-tab-select" : ""}`} key={2} onClick={() => selectRouter("/index/home/todoList", "todoList")}>待办</div>
+                    <div className={`home-tab-item ${activeKey === "survey" ? "home-tab-select" : ""}`} key={1} onClick={() => selectRouter("/home/survey", "survey")}>概况</div>
+                    <div className={`home-tab-item ${activeKey === "todoList" ? "home-tab-select" : ""}`} key={2} onClick={() => selectRouter("/home/todoList", "todoList")}>待办</div>
                     <div className={`home-tab-item ${activeKey === "insight" ? "home-tab-select" : ""}`} key={3} onClick={() => selectRouter(insightUrl, "insight")}>仪表盘</div>
                 </div>
                 {renderRoutes(route.routes)}

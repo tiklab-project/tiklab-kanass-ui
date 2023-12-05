@@ -18,7 +18,7 @@ const WorkDetailDrawer = (props) => {
 
     return (
         <Row style={{ height: "100%", overflow: "auto" }}>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                 <WorkDetail detailRef={detailRef} {...props} showPage = {true} />
             </Col>
         </Row>

@@ -12,7 +12,7 @@ import { withRouter } from "react-router-dom";
 import orgaRouter from "./OrgaRouter"
 
 const OrgaAside = (props) => {
-    const [selectKey, setSelectKey] = useState("/index/organ/organ");
+    const [selectKey, setSelectKey] = useState("/organ/organ");
     // const {pluginConfig} = pluginsStore;
     const select = (key) => {
         setSelectKey(key)
@@ -40,7 +40,7 @@ const OrgaAside = (props) => {
     }
     
     // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState(["/index/organ/organ"])
+    const [expandedTree, setExpandedTree] = useState(["/organ/organ"])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
@@ -96,7 +96,7 @@ const OrgaAside = (props) => {
                         })
                     }
                 </ul>
-                <div className="orga-change" onClick={() => props.history.push("/index/setting/projectType")}>
+                <div className="orga-change" onClick={() => props.history.push("/setting/projectType")}>
                     设置
                 </div>
             </div>

@@ -33,40 +33,36 @@ const Linemap = (props) => {
 
     return (
         <Provider {...store}>
-            {/* <Row style={{ height: "100%" }}>
-                <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}> */}
-                    <div className="project-linemap">
-                        <div className="project-linemap-head">
-                            <div className="project-linemap-title">路线图</div>
-                            <div className="line-map-tab">
-                                <div className={`tab-tabpane ${type === "sprint" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("sprint")}>
-                                    迭代
-                                </div>
-                                <div className={`tab-tabpane ${type === "version" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("version")}>
-                                    版本
-                                </div>
-                                <div className={`tab-tabpane ${type === "epic" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("epic")}>
-                                    需求池
-                                </div>
-                            </div>
-
+            <div className="project-linemap">
+                <div className="project-linemap-head">
+                    <div className="project-linemap-title">路线图</div>
+                    <div className="line-map-tab">
+                        <div className={`tab-tabpane ${type === "sprint" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("sprint")}>
+                            迭代
                         </div>
-
-                        {
-                            type === "sprint" &&
-                            <SprintPage />
-                        }
-                        {
-                            type === "version" &&
-                            <VersionPage />
-                        }
-                        {
-                            type === "epic" &&
-                            <EpicPage />
-                        }
+                        <div className={`tab-tabpane ${type === "version" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("version")}>
+                            版本
+                        </div>
+                        <div className={`tab-tabpane ${type === "epic" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("epic")}>
+                            需求池
+                        </div>
                     </div>
-                {/* </Col>
-            </Row> */}
+
+                </div>
+
+                {
+                    type === "sprint" &&
+                    <SprintPage />
+                }
+                {
+                    type === "version" &&
+                    <VersionPage />
+                }
+                {
+                    type === "epic" &&
+                    <EpicPage />
+                }
+            </div>
         </Provider>
 
 

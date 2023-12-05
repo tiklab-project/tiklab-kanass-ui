@@ -116,11 +116,11 @@ const SprintPlan = (props) => {
 
     return (
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-plan">
                     <Breadcrumb
                         firstText="迭代列表"
-                        firstUrl={"/index/prodetail/sprint"}
+                        firstUrl={"/prodetail/sprint"}
                         secondText="迭代规划"
                         {...props}
                     />

@@ -75,12 +75,12 @@ const WorkTypeList = (props) => {
 
     const [loading, setLoading] = useState(false)
     const goFlow = (id) => {
-        // props.history.push("/index/setting/systemFlow")
-        props.history.push(`/index/setting/flowDetailDesign/${id}`)
+        // props.history.push("/setting/systemFlow")
+        props.history.push(`/setting/flowDetailDesign/${id}`)
     }
 
     const goForm = (id) => {
-        props.history.push(`/index/setting/FormDetail/${id}`)
+        props.history.push(`/setting/FormDetail/${id}`)
     }
 
     const columns = [
@@ -190,8 +190,8 @@ const WorkTypeList = (props) => {
     ];
 
     return (<Provider {...store}>
-        <Row>
-            <Col lg={{ span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
+        {/* <Row>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
                 <div className="work-type">
                     <Breadcumb
                         firstText="事项类型"
@@ -221,8 +221,8 @@ const WorkTypeList = (props) => {
                         />
                     </div>
                 </div>
-            </Col>
-        </Row>
+            {/* </Col>
+        </Row> */}
     </Provider>
 
     );

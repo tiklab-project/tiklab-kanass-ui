@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Form, Input, Row, Col } from 'antd';
-import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import "./WorkTableFilter.scss";
 import { withRouter } from "react-router";
@@ -99,7 +98,7 @@ const WorkTableFilter = (props) => {
             <WorkQuickTab />
             <div className="work-table-filter">
                 {
-                    props.match.path == "/index/work/table" &&
+                    props.match.path == "/workTable" &&
                     <SelectSimple 
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}

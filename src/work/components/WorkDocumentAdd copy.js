@@ -132,10 +132,10 @@ const WorkDocumentAddmodal = (props) => {
     const goWikiRepository = () => {
         // searchpro(projectId).then(res => {
         //     if(res.code === 0){
-        //         props.history.push(`/index/projectDetail/${projectId}/wiki`)
+        //         props.history.push(`/projectDetail/${projectId}/wiki`)
         //     }
         // })
-        props.history.push(`/index/projectDetail/${projectId}/wiki`)
+        props.history.push(`/projectDetail/${projectId}/wiki`)
     }
 
     const changePage = (pagination) => {

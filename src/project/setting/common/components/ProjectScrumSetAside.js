@@ -23,48 +23,48 @@ const ProjectScrumSetAside =(props) => {
         {
             title: `${t('projectInfo')}`,
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/basicInfo`,
+            key: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
             encoded: "Survey",
         },
         {
             title: "事项类型",
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/projectWorkType`,
+            key: `/projectDetail/${projectId}/projectSetDetail/projectWorkType`,
             encoded: "WorkType",
         },
         {
             title: `${t('user')}`,
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/user`,
+            key: `/projectDetail/${projectId}/projectSetDetail/user`,
             encoded: "User",
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/projectDomainRole`,
+            key: `/projectDetail/${projectId}/projectSetDetail/projectDomainRole`,
             encoded: "Privilege",
         },
         {
             title: "流程",
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/projectFlow`,
+            key: `/projectDetail/${projectId}/projectSetDetail/projectFlow`,
             encoded: "WorkFlow",
         },
         {
             title: "表单",
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/projectForm`,
+            key: `/projectDetail/${projectId}/projectSetDetail/projectForm`,
             encoded: "WorkForm",
         },
         {
             title: `${t('module')}`,
             icon: 'survey',
-            key: `/index/projectDetail/${projectId}/projectSetDetail/module`,
+            key: `/projectDetail/${projectId}/projectSetDetail/module`,
             encoded: "Module"
         }
     ];
     // 当前选中路由
-    const [selectKey,setSelectKey] = useState(`/index/projectDetail/${projectId}/projectSetDetail/basicInfo`);
+    const [selectKey,setSelectKey] = useState(`/projectDetail/${projectId}/projectSetDetail/basicInfo`);
 
     // 菜单是否折叠
     const [isShowText,SetIsShowText] = useState(true)

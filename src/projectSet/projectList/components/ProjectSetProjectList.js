@@ -51,7 +51,7 @@ const ProjectSetProjectList = (props) => {
         localStorage.setItem("projectId", project.id);
         localStorage.setItem("projectTypeId", project.projectType.id);
 
-        props.history.push(`/index/projectDetail/${project.id}/work/table`)
+        props.history.push(`/projectDetail/${project.id}/workTable`)
 
     };
 
@@ -262,12 +262,12 @@ const ProjectSetProjectList = (props) => {
     }
     return <Provider {...store}>
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSetDetail">
                     <Breadcumb
                         firstText={projectSet.name}
                         secondText="项目"
-                        firstUrl="/index/projectSet/projectSetList"
+                        firstUrl="/projectSet/projectSetList"
                     >
                         {/* <PrivilegeButton code={'RelationProject'} domainId={projectSetId}  {...props}> */}
                         <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>

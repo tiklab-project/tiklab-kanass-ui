@@ -20,7 +20,7 @@ const ProjectGide =(props) => {
             </div>
             <div className= "gide-right">
                 <div>您还没有项目，请先</div>
-                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} >
+                <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} >
                 </Button>
             </div>
         </div>

@@ -110,8 +110,8 @@ const ProjectType = () => {
     ];
 
     return (
-        <Row>
-            <Col lg={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+        // <Row>
+        //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-type">
                     <Breadcumb
                         firstText="项目类型"
@@ -137,8 +137,8 @@ const ProjectType = () => {
                         }
                     </div>
                 </div>
-            </Col>
-        </Row>
+        //     </Col>
+        // </Row>
     );
 };
 export default observer(ProjectType);

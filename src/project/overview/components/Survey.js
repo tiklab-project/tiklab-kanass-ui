@@ -175,7 +175,7 @@ const Survey = (props) => {
     * 跳转到动态列表
     */
     const goDynamicList = () => {
-        props.history.push(`/index/projectDetail/${projectId}/dynamic`)
+        props.history.push(`/projectDetail/${projectId}/dynamic`)
     }
 
     /**
@@ -193,11 +193,25 @@ const Survey = (props) => {
      */
     const goWorkItemList = (value) => {
         setSearchType(value)
-        props.history.push(`/index/projectDetail/${projectId}/work/table`)
+        props.history.push(`/projectDetail/${projectId}/workTable`)
     }
 
 
-
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
 
     const recentItem = (item) => {
         let element;
@@ -286,22 +300,22 @@ const Survey = (props) => {
         setWorkId(item.modelId)
         setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
 
-        props.history.push(`/index/projectDetail/${item.project.id}/work/${item.modelId}`)
+        props.history.push(`/projectDetail/${item.project.id}/work/${item.modelId}`)
     }
 
     const goVersion = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
+        props.history.push(`/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
 
     }
 
     const goSprint = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/index/${item.project.id}/sprintdetail/${item.modelId}/survey`)
+        props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
     }
     return (
         <Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-600)" }}>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-survey">
                     <div className="upper-box">
                         <div className="project-box">
@@ -414,12 +428,12 @@ const Survey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="epic-box">
+                    <div className="milestone-box">
                         <div className="box-title">
                             里程碑
                         </div>
 
-                        <div className="epic-box-timeline">
+                        <div className="milestone-box-timeline">
                             {
                                 milestoneList?.length > 0 ?
                                     <MilestoneTimeline milestonelist={milestoneList} />
@@ -436,32 +450,41 @@ const Survey = (props) => {
                         <div className="recent-click-list">
                             {
                                 recentList && recentList.length > 0 ? recentList.map(item => {
-                                    return <div className="work-item" key={item.id}>
-                                    <div className="work-icon">
-                                        {
-                                            item.object.iconUrl ?
-                                                <img
-                                                    alt=""
-                                                    className="list-img"
-                                                    src={setImageUrl(item.object.iconUrl)}
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/workType1.png')}
-                                                    alt=""
-                                                    className="list-img"
-                                                />
-                
-                                        }
+                                    return <div className="work-item" key={item.object.id}>
+                                        <div className="work-left">
+                                            <div className="work-icon">
+                                                {
+                                                    item.object.workTypeSys.iconUrl ?
+                                                        <img
+                                                            src={setImageUrl(item.object.workTypeSys.iconUrl)}
+                                                            alt=""
+                                                            className="icon-32"
+                                                        />
+                                                        :
+                                                        <img
+                                                            src={('/images/workType1.png')}
+                                                            alt=""
+                                                            className="icon-32"
+                                                        />
+
+                                                }
+                                            </div>
+                                            <div className="work-content">
+                                                <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
+                                                <div className="content-type">{item.object.id}</div>
+                                            </div>
+                                        </div>
+                                        <div className="work-project">{item.object.workPriority?.name ? item.object.workPriority?.name : "暂无设置"}</div>
+                                        <div style={{width: "100px"}}>
+                                            <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
+                                                {item.object.workStatusNode.name}
+                                            </div>
+                                        </div>
+
+                                        <div className="work-time">
+                                            {item.recentTime}
+                                        </div>
                                     </div>
-                                    <div className="work-content">
-                                        <div className="content-name" onClick={() => goWorkItem(item.object)}>{item.object.title}</div>
-                                        <div className="content-type">{item.object.project.projectName}</div>
-                                    </div>
-                                    <div className="item-time">
-                                        {item.recentTime}
-                                    </div>
-                                </div>
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有点击过事项~" />
@@ -477,7 +500,7 @@ const Survey = (props) => {
                                 </svg>
                             </div>
 
-                            {/* <div className="more" onClick={() => { props.history.push(`/index/sprint/${userId}`) }}>更多...</div> */}
+                            {/* <div className="more" onClick={() => { props.history.push(`/sprint/${userId}`) }}>更多...</div> */}
                         </div>
                         <div className="dynamic-list">
                             {

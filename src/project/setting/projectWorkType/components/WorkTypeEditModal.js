@@ -133,7 +133,7 @@ const WorkTypeEditModal = (props) => {
                             </Select>
 
                         </Form.Item>
-                        {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/index/setting/form")}>没有自定义表单，点击添加</div>}
+                        {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/setting/form")}>没有自定义表单，点击添加</div>}
                         <Form.Item
                             label="流程配置"
                             name="flow"

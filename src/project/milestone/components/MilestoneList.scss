@@ -1,0 +1,21 @@
+.project-milestone {
+    height: calc(100vh - 55px);
+    padding: var(--tiklab-padding);;
+    .search {
+        width: 200px;
+        margin-top: 20px;
+    }
+    .milestone-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+   
+    &-list {
+        flex: 1;
+        .milestone-table-box {
+            padding-top: var(--tiklab-padding);
+        }
+    }
+}

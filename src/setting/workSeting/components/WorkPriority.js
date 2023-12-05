@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Space, message, Row, Col,Table } from "antd";
+import { Input, Space, message, Row, Col, Table } from "antd";
 import WorkPriorityAddmodal from "./WorkPriorityAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkPriority.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore";
 const WorkPriority = (props) => {
-    const store  = {
+    const store = {
         workSetingStore: WorkSetingStore
     }
     const { workPrioritylist, getWorkPriorityList,
@@ -146,35 +146,32 @@ const WorkPriority = (props) => {
     ];
 
     return (<Provider {...store}>
-        <Row>
-            <Col lg={{  span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
-                <div className="work-priority" >
-                    <Breadcumb
-                        firstText="事项优先级"
-                    >
-                        <WorkPriorityAddmodal
-                            name="添加优先级"
-                            typeName="优先级"
-                            type="add"
-                            group="system"
-                            addWorkList={addWorkPriorityList}
-                            editWorkPriorityList={editWorkPriorityList}
-                        ></WorkPriorityAddmodal>
-                    </Breadcumb>
-                    <div style={{ padding: "20px 0" }}>
-                        <Table
-                            columns={columns}
-                            rowKey={(record) => record.id}
-                            loading={loading}
-                            dataSource={workPrioritylist}
-                            pagination={false}
-                        />
-                    </div>
-                </div>
-            </Col>
-        </Row>
+
+        <div className="work-priority" >
+            <Breadcumb
+                firstText="事项优先级"
+            >
+                <WorkPriorityAddmodal
+                    name="添加优先级"
+                    typeName="优先级"
+                    type="add"
+                    group="system"
+                    addWorkList={addWorkPriorityList}
+                    editWorkPriorityList={editWorkPriorityList}
+                ></WorkPriorityAddmodal>
+            </Breadcumb>
+            <div style={{ padding: "20px 0" }}>
+                <Table
+                    columns={columns}
+                    rowKey={(record) => record.id}
+                    loading={loading}
+                    dataSource={workPrioritylist}
+                    pagination={false}
+                />
+            </div>
+        </div>
     </Provider>
-        
+
     );
 };
 export default observer(WorkPriority);

@@ -56,7 +56,7 @@ const ViewInsight = (props) => {
      * 跳转到编辑视图
      */
     const goEditInsight = () => {
-        props.history.push(`/index/home/insight/newInsight/${props.match.params.id}`)
+        props.history.push(`/home/insight/newInsight/${props.match.params.id}`)
     }
 
     return (
@@ -64,7 +64,7 @@ const ViewInsight = (props) => {
             {/* <Row className="view-insight-row">
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
                     <div className="view-insight">
-                        <Breadcumb firstText="仪表盘" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                        <Breadcumb firstText="仪表盘" firstUrl="/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
                             <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
                         </Breadcumb>
                         <div className="view-insight-content">

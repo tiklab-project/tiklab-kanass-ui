@@ -75,11 +75,11 @@ const WorkTypeSystem = (props) => {
 
     const [loading, setLoading] = useState(false)
     const goFlow = (id) => {
-        props.history.push("/index/organ/workTypeFlow/" + id)
+        props.history.push("/organ/workTypeFlow/" + id)
     }
 
     const goForm = (id) => {
-        props.history.push("/index/organ/workTypeForm/" + id)
+        props.history.push("/organ/workTypeForm/" + id)
     }
 
     const columns = [
@@ -201,7 +201,7 @@ const WorkTypeSystem = (props) => {
 
     return (<Provider {...store}>
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="work-type">
                     <Breadcumb
                         firstText="事项类型"

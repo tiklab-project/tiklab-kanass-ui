@@ -97,7 +97,7 @@ const StageDetail = (props) => {
      * @param {*} item 
      */
     const changeStage = (item) => {
-        props.history.push(`/index/projectDetail/${projectId}/stageDetail/${item.id}`)
+        props.history.push(`/projectDetail/${projectId}/stageDetail/${item.id}`)
         setMouseActive(false)
     }
 
@@ -117,7 +117,7 @@ const StageDetail = (props) => {
     const deleStage = () => {
         deleteStage({ id: stageId }).then(res => {
             if (res.code === 0) {
-                props.history.push(`/index/projectDetail/${projectId}/stage`)
+                props.history.push(`/projectDetail/${projectId}/stage`)
             }
         })
     }
@@ -172,7 +172,7 @@ const StageDetail = (props) => {
 
     return (<Provider {...store}>
         <Row >
-            <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="stage-detail">
                     {
                         stageInfo && <Fragment>
@@ -182,7 +182,7 @@ const StageDetail = (props) => {
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-home"></use>
                                         </svg>
-                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/index/projectDetail/${projectId}/stage`)}>阶段</span>
+                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/stage`)}>阶段</span>
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-right1"></use>
                                         </svg>

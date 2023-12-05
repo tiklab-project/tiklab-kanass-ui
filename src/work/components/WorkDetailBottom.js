@@ -160,10 +160,6 @@ const WorkDetailBottom = (props) => {
                     </div>
                     <div className="tabs-more">
                         <div className="tabs-more-button" >
-                            {/* <div className={`tabs-bar ${[6, 7, 8, 9].indexOf(tabValue) !== -1 ? "tabs-bar-select" : ""}`}  onClick={() => setTabMore(moreTabValue.text, moreTabValue.value)}>
-                                {moreTabValue.text} 
-                                <span className="tabs-bar-num">({setMoreTabsNum(moreTabValue.value)})</span>
-                            </div> */}
                             <svg className="svg-icon" aria-hidden="true" onClick={() => setShowMoreTab(true)}>
                                 <use xlinkHref="#icon-more"></use>
                             </svg>
@@ -277,7 +273,6 @@ const WorkDetailBottom = (props) => {
                             </div>
                         }
                     </div>
-                    {/* </Col> */}
                 </div>
 
             </div>

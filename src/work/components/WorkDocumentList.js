@@ -45,7 +45,7 @@ const WorkDocumentList = (props) => {
         if (data.exist) {
             findSystemUrl({ name: "kanass" }).then(res => {
                 const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
-                applyJump(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
+                applyJump(`${kanassUrl}/#/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
             })
         } else {
             return

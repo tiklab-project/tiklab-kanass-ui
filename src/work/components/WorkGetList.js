@@ -7,19 +7,19 @@ const finWorkList = (router, workStore, params) => {
     const setValue = () => {
         console.log(router)
         let type = "";
-        if(router.indexOf("/index/work") > -1){
+        if(router.indexOf("/work") > -1){
             type = "system"
             
         }
-        if(router.indexOf("/index/projectDetail/:id/work") > -1){
+        if(router.indexOf("/projectDetail/:id/work") > -1){
             type = "project"
             
         }
-        if(router.indexOf("/index/:id/sprintdetail/:sprint/work") > -1){
+        if(router.indexOf("/:id/sprintdetail/:sprint/work") > -1){
             type = "sprint"
             
         }
-        if(router.indexOf("/index/:id/versiondetail/:version/work") > -1){
+        if(router.indexOf("/:id/versiondetail/:version/work") > -1){
             type = "version"
             
         }

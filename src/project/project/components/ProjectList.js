@@ -9,6 +9,7 @@ import UserIcon from "../../../common/UserIcon/UserIcon";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import "./projectList.scss";
 const { Option } = Select;
 
 const ProjectList = (props) => {
@@ -78,7 +79,7 @@ const ProjectList = (props) => {
         }
         createRecent(params)
 
-        props.history.push({ pathname: `/index/projectDetail/${project.id}/work/table` })
+        props.history.push({ pathname: `/projectDetail/${project.id}/workTable` })
 
     };
 
@@ -91,7 +92,7 @@ const ProjectList = (props) => {
             projectType: { id: project.projectType.id },
         }
         createRecent(params)
-        props.history.push({ pathname: `/index/projectDetail/${project.id}/projectSetDetail/basicInfo` })
+        props.history.push({ pathname: `/projectDetail/${project.id}/projectSetDetail/basicInfo` })
     }
     const onSearch = value => {
         console.log(value)
@@ -187,7 +188,7 @@ const ProjectList = (props) => {
                                 <img
                                     alt=""
                                     className="icon-32"
-                                    src = {setImageUrl(record.iconUrl)}
+                                    src={setImageUrl(record.iconUrl)}
                                 />
                                 :
                                 <img
@@ -233,7 +234,7 @@ const ProjectList = (props) => {
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-            width: "20%",
+            width: "25%",
             render: (text, record) => (
                 <>
                     {record.startTime} - {record.endTime}
@@ -245,6 +246,7 @@ const ProjectList = (props) => {
             dataIndex: "projectState",
             key: "projectState",
             align: "left",
+            width: "10%",
             render: (text, record) => (
                 <div className="project-status">{status[text]}</div>
             )
@@ -279,7 +281,7 @@ const ProjectList = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} />
+                <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="title">
@@ -292,35 +294,34 @@ const ProjectList = (props) => {
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
 
-                                    return <div className="project-item" key={item.id} onClick={() => goProdetail(item)}>
-                                        <div className="item-title">
-                                            {
-                                                item.iconUrl ?
-                                                    <img
-                                                        alt=""
-                                                        className="icon-32"
-                                                        src = {setImageUrl(item.iconUrl)}
-                                                    />
-                                                    :
-                                                    <img
-                                                        src={('/images/project1.png')}
-                                                        alt=""
-                                                        className="icon-32"
-                                                    />
+                                return <div className="project-item" key={item.id} onClick={() => goProdetail(item)}>
+                                    <div className="item-title">
+                                        {
+                                            item.iconUrl ?
+                                                <img
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={setImageUrl(item.iconUrl)}
+                                                />
+                                                :
+                                                <img
+                                                    src={('/images/project1.png')}
+                                                    alt=""
+                                                    className="icon-32"
+                                                />
 
-                                            }
-                                            <span>{item.projectName}</span>
-                                        </div>
-                                        <div className="item-work">
-                                            <div className="process-work"><span style={{ color: "#999" }}>未处理的事务</span><span>{item.processWorkItemCount}</span></div>
-                                            <div className="end-work"><span style={{ color: "#999" }}>已处理事务</span><span>{item.endWorkItemCount}</span></div>
-                                        </div>
-
+                                        }
+                                        <span className="item-name">{item.projectName}</span>
                                     </div>
-                                })
-                            
-                            :
-                            <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
+                                    <div className="item-work">
+                                        <div className="process-work"><span className="work-label" style={{ color: "#999" }}>待办</span><span>{item.processWorkItemNumber}</span></div>
+                                        <div className="end-work"><span className="work-label" style={{ color: "#999" }}>已完成</span><span>{item.endWorkItemNumber}</span></div>
+                                    </div>
+                                </div>
+                            })
+
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
                         }
                     </div>
                 </Spin>

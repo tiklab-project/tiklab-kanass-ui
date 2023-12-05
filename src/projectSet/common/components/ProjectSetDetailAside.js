@@ -24,7 +24,7 @@ const ProjectSetDetailAside = (props) => {
     // 切换宽菜单与窄菜单的参数
     const [isShowText, SetIsShowText] = useState(false)
     // 当前选中路由
-    const [selectKey, setSelectKey] = useState(`/index/prodetail/survey`);
+    const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
     // 项目集id
     const projectSetId = props.match.params.projectSetId;
     // 路由
@@ -32,19 +32,19 @@ const ProjectSetDetailAside = (props) => {
         {
             title: `概览`,
             icon: 'survey',
-            key: `/index/projectSetdetail/${projectSetId}/survey`,
+            key: `/projectSetdetail/${projectSetId}/survey`,
             encoded: "Survey",
         },
         {
             title: `项目`,
             icon: 'project',
-            key: `/index/projectSetdetail/${projectSetId}/projectSetProjectList`,
+            key: `/projectSetdetail/${projectSetId}/projectSetProjectList`,
             encoded: "Pannel",
         },
         {
             title: `统计`,
             icon: 'project',
-            key: `/index/projectSetdetail/${projectSetId}/statistics/workItem`,
+            key: `/projectSetdetail/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
         }
     ];

@@ -11,7 +11,7 @@ const WorkTypeForm = props => {
                 {
                     breadcrumbName: '事项类型列表', 
                     disabled:false,      
-                    path: '/index/organ/worktype'     
+                    path: '/organ/worktype'     
                 },
                 {
                     breadcrumbName: '表单列表', 

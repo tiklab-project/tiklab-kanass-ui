@@ -308,10 +308,10 @@ const WorkBasicInfo = (props) => {
                 setWorkInfo({ ...workInfo, ...changedValues })
 
                 //  更新列表数据
-                if ((props.match.path.indexOf("/index/projectDetail/:id/work") > -1 ||
-                    props.match.path.indexOf("/index/work") > -1 ||
-                    props.match.path.indexof("/index/:id/sprintdetail/:sprint/work") > -1 ||
-                    props.match.path.indexof("/index/:id/versiondetail/:version/work") > -1) &&
+                if ((props.match.path.indexOf("/projectDetail/:id/work") > -1 ||
+                    props.match.path.indexOf("/work") > -1 ||
+                    props.match.path.indexof("/:id/sprintdetail/:sprint/work") > -1 ||
+                    props.match.path.indexof("/:id/versiondetail/:version/work") > -1) &&
                     (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
 

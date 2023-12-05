@@ -80,7 +80,7 @@ const NewInsight = (props) => {
         } else {
             updateInsight(params).then(res => {
                 if (res.code === 0) {
-                    props.history.push(`/index/home/insight/viewInsight/${insightId}`)
+                    props.history.push(`/home/insight/viewInsight/${insightId}`)
                 }
             })
         }
@@ -112,7 +112,7 @@ const NewInsight = (props) => {
                         <div className="new-insight">
                             <div className="new-insight-left">
 
-                                <Breadcumb firstText="仪表盘" firstUrl="/index/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
+                                <Breadcumb firstText="仪表盘" firstUrl="/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
                                     <div className="insight-head-action">
                                         <Button onClick={() => setShowReportList(true)} type="primary">添加</Button>
                                         <Button onClick={() => saveInsight()} type="primary">保存</Button>

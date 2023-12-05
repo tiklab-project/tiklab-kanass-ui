@@ -98,8 +98,8 @@ const WorkChild = (props) => {
         }
         createRecent(params)
         console.log(props)
-        if(props.match.path === "/index/projectDetail/:id/workDetail/:workId"){
-            props.history.push(`/index/projectDetail/${project.id}/workDetail/${record.id}`)
+        if(props.match.path === "/projectDetail/:id/workDetail/:workId"){
+            props.history.push(`/projectDetail/${project.id}/workDetail/${record.id}`)
         }
         
     }

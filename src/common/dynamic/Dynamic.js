@@ -12,7 +12,7 @@ const WorkItemDynamic = (props) => {
             localStorage.setItem("projectTypeId", project.projectType.id)
             // setWorkId(id)
             // setWorkIndex(1)
-            props.history.push(`/index/prodetail/workone/${id}`)
+            props.history.push(`/prodetail/workone/${id}`)
         }
     }
     //区分动态类型

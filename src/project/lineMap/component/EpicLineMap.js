@@ -445,7 +445,7 @@ const EpicLineMap = (props) => {
         setWorkId(workItem.id)
         setIsModalVisible(true)
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        props.history.replace(`/index/projectDetail/${projectId}/linemap/${workItem.id}`)
+        props.history.replace(`/projectDetail/${projectId}/linemap/${workItem.id}`)
 
         setIsModalVisible(true)
 

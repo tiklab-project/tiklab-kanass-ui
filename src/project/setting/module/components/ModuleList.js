@@ -98,16 +98,16 @@ const ModuleList = (props) => {
             dataIndex: "moduleName",
             key: "moduleName",
             // render: (text, record) => (
-            //     <Link to={`/index/moduledetail/${record.id}`}>{text}</Link>
+            //     <Link to={`/moduledetail/${record.id}`}>{text}</Link>
             // ),
         },
-        {
-            title: "所属项目",
-            dataIndex: ["project", "projectName"],
-            key: "project.projectName",
-            width: "20%",
-            render: (text) => <span>{text}</span>,
-        },
+        // {
+        //     title: "所属项目",
+        //     dataIndex: ["project", "projectName"],
+        //     key: "project.projectName",
+        //     width: "20%",
+        //     render: (text) => <span>{text}</span>,
+        // },
         {
             title: "描述",
             dataIndex: "desc",
@@ -117,7 +117,7 @@ const ModuleList = (props) => {
         {
             title: "操作",
             key: "action",
-            width: "20%",
+            width: "15%",
             render: (text, record) => (
                 <Space size="middle">
                     {/* <ModuleAddmodal
@@ -148,7 +148,7 @@ const ModuleList = (props) => {
     ];
     return (
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-module">
                     <Breadcumb
                         firstText="模块"

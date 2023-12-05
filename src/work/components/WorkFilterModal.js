@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
-import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import "./WorkAsideFilter.scss";
 import WorkFilterHigh from "./WorkFilterHigh";

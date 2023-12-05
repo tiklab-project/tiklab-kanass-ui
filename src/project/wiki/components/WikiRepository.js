@@ -43,8 +43,8 @@ const WikiRepository = (props) => {
         
         findSystemUrl({name: "kanass"}).then(res=> {
             const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            // window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
-            applyJump(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
+            // window.open(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
+            applyJump(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
         })
     }
     // 列表的列
@@ -117,7 +117,7 @@ const WikiRepository = (props) => {
     return (<Provider {...store}>
         <div className="wiki-repository">
             <Row >
-                <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="wiki-repository-list">
 
                         <Breadcumb

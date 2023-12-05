@@ -16,7 +16,7 @@ import BasicInfoStore from "../store/BasicInfoStore";
 const ProjectSetSurvey = props => {
 
     const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
-        findtodopage, todoTaskList, findProjectList } = BasicInfoStore;
+        findtodopage, todoTaskList, findProjectList, findProjectSet } = BasicInfoStore;
     const [workItemList, setWorkItemList] = useState();
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
@@ -52,7 +52,7 @@ const ProjectSetSurvey = props => {
 
 
     const goProcessProject = () => {
-        props.history.push(`/index/projectSetdetail/${projectSetId}/dynamic`)
+        props.history.push(`/projectSetdetail/${projectSetId}/dynamic`)
     }
 
     const goProdetail = (project) => {
@@ -61,7 +61,7 @@ const ProjectSetSurvey = props => {
         localStorage.setItem("projectTypeId", project.projectType.id);
 
 
-        props.history.push(`/index/projectScrumDetail/${project.id}/survey`)
+        props.history.push(`/projectScrumDetail/${project.id}/survey`)
     };
 
     const goOpLogDetail = (url) => {
@@ -74,7 +74,7 @@ const ProjectSetSurvey = props => {
 
     return (
         <Row className="projectSet-survey">
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div>
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
@@ -94,19 +94,19 @@ const ProjectSetSurvey = props => {
                             <div className="projectSet-infobottom">
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">可见范围</div>
-                                    <div className="projectSet-info-result">所有人可见</div>
+                                    <div className="projectSet-info-result">{projectSet.projectSetLimits === 0  ? "所有人可见" : "成员可见"} </div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">项目数量</div>
-                                    <div className="projectSet-info-result">所有人可见</div>
+                                    <div className="projectSet-info-result">0</div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">计划开始日期</div>
-                                    <div className="projectSet-info-result">2022-07-28</div>
+                                    <div className="projectSet-info-result">{projectSet.startTime}</div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">计划结束时间</div>
-                                    <div className="projectSet-info-result">2022-07-28</div>
+                                    <div className="projectSet-info-result">{projectSet.endTime}</div>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@ const ProjectSetSurvey = props => {
                         <div className="box-title">
                             <span className="name">待办事项</span>
                             {
-                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/workTodo`) }}>
+                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) }}>
                                     <svg aria-hidden="true" className="svg-icon">
                                         <use xlinkHref="#icon-rightjump"></use>
                                     </svg>
@@ -181,7 +181,7 @@ const ProjectSetSurvey = props => {
                         <div className="box-title">
                             <span className="name">相关动态</span>
                             {
-                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/index/projectSetdetail/${projectSetId}/dynamic`) }}>
+                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/dynamic`) }}>
                                     <svg aria-hidden="true" className="svg-icon">
                                         <use xlinkHref="#icon-rightjump"></use>
                                     </svg>

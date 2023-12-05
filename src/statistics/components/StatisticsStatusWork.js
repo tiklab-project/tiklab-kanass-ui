@@ -186,7 +186,7 @@ const StatisticsWork = (props) => {
         exportPDF('事项字段统计', [titleRef.current, pdfRef.current])
     }
     return (
-        <>
+        <div className="statistics-work">
             <div className="statistics-work-top" >
                 <div className="statistics-work-title" ref={titleRef}>事项状态统计</div>
 
@@ -255,7 +255,7 @@ const StatisticsWork = (props) => {
                
             </div>
 
-        </>
+        </div>
     )
 
 }

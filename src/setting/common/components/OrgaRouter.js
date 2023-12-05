@@ -10,7 +10,7 @@ const orgaRouter = [
         {
             title: "组织管理",
             icon: 'orgamanage',
-            key: '/index/organ/organ',
+            key: '/organ/organ',
             encoded: "SysOrga",
             code: 1-1,
             
@@ -18,7 +18,7 @@ const orgaRouter = [
         {
             title: '用户管理',
             icon: 'usermanage',
-            key: '/index/organ/user',
+            key: '/organ/user',
             encoded: "SysUser",
             code: 1-2,
         },
@@ -26,7 +26,7 @@ const orgaRouter = [
     
             title: "目录管理",
             icon: 'category',
-            key: '/index/organ/directory',
+            key: '/organ/directory',
             encoded: "SysMessage",
             code: 1-3,
         }

@@ -19,9 +19,9 @@ import WorkDetail from "./WorkDetail";
 import { finWorkList } from "./WorkGetList";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 
-const WorkList = (props) => {
+const WorkListSystem = (props) => {
     const projectId = props.match.params.id;
-    const {workId, setWorkShowType} = WorkStore;
+    const { workId, setWorkShowType } = WorkStore;
     const path = props.match.path;
     const store = {
         workStore: WorkStore,
@@ -29,7 +29,7 @@ const WorkList = (props) => {
     };
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
-    
+
     useEffect(() => {
         setWorkShowType("list")
         const params = {
@@ -37,13 +37,12 @@ const WorkList = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        console.log("加载")
         finWorkList(path, WorkStore, params);
         return;
     }, [projectId])
 
     useEffect(() => {
-        if(workId && workId.length > 0){
+        if (workId && workId.length > 0) {
             const pathname = props.match.url;
             props.history.push(`${pathname}/${workId}`)
         }
@@ -52,23 +51,26 @@ const WorkList = (props) => {
 
     return (
         <Provider {...store}>
-            <div className="work-list">
-                <WorkAside
-                    {...props}
-                />
-                <Row style={{ flex: 1 }}>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+            <Row style={{ flex: 1 }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+
+                    <div className="work-list">
+                        <WorkAside
+                            {...props}
+                        />
+
                         <div className="work-list-detail">
                             <WorkDetail {...props}></WorkDetail>
                             {/* {renderRoutes(route.routes)} */}
                         </div>
-                    </Col>
-                </Row>
 
-            </div>
+
+                    </div>
+                </Col>
+            </Row>
         </Provider>
 
     )
 };
 
-export default withRouter(observer(WorkList));
+export default withRouter(observer(WorkListSystem));

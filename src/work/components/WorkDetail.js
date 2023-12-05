@@ -22,15 +22,17 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";
 const WorkDetail = (props) => {
-    const [percentForm] = Form.useForm();
+    // const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
-        setAlertText, setIsShowAlert, findTransitionList, findWorkItemRelationModelCount
+        findTransitionList, findWorkItemRelationModelCount
     } = workStore;
-    const detailCrumbArray = getSessionStorage("detailCrumbArray");
+    const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
+    // const detailCrumbArray = getSessionStorage("detailCrumbArray")
+    console.log(detailCrumbArray)
     const projectId = props.match.params.id;
     const userId = getUser().userId;
     const workDeatilForm = useRef()
@@ -62,8 +64,9 @@ const WorkDetail = (props) => {
             }
         })
     }
-
+    // console.log(workId)
     useEffect(() => {
+        console.log("sb")
         setWorkInfo()
         if (workId && workId.length > 0) {
             getWorkTypeList({ projectId: projectId });
@@ -80,7 +83,9 @@ const WorkDetail = (props) => {
         return
     }, [workId]);
 
-
+    useEffect(()=> {
+        setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+    }, [workId, workShowType])
     const deleteWork = () => {
         detWork(workId).then(() => {
             if (workShowType === "table") {
@@ -255,7 +260,7 @@ const WorkDetail = (props) => {
     }
     const [showFlow, setShowFlow] = useState(false)
     return (
-        <Skeleton loading={infoLoading} active>
+        <Skeleton loading = {infoLoading}  active>
             {
                 workInfo ? <div className="work-detail">
                     {
@@ -264,8 +269,8 @@ const WorkDetail = (props) => {
                             <div className="work-detail-crumb">
 
                                 {
-                                    props.match.path === "/index/projectDetail/:id/work/:workId" &&
-                                    <div className="work-detail-crumb-item" onClick={() => props.history.push(`/index/projectDetail/${projectId}/work/table`)}>事项 &nbsp;/ &nbsp;</div>
+                                    props.match.path === "/projectDetail/:id/work/:workId" &&
+                                    <div className="work-detail-crumb-item" onClick={() => props.history.push(`/projectDetail/${projectId}/workTable`)}>事项 &nbsp;/ &nbsp;</div>
                                 }
                                 {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
@@ -320,10 +325,10 @@ const WorkDetail = (props) => {
                                     </svg>
                                 </div>
                             }
-
                         </div>
 
                     }
+                    
                     {
                         !showFlow ? <>
                             <div className="work-detail-top" ref={workDetailTop}>
@@ -397,7 +402,6 @@ const WorkDetail = (props) => {
                             :
                             <FlowChartLink flowId={workInfo.workType.flow.id} />
                     }
-
 
                 </div>
                     :

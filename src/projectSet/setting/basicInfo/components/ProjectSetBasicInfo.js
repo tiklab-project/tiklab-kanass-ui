@@ -118,7 +118,7 @@ const ProjectSetBasicInfo = props => {
     const handleOk = () => {
         deleProjectSet(projectSetId).then(response => {
             if (response.code === 0) {
-                props.history.push("/index/projectSetList")
+                props.history.push("/projectSetList")
             }
         })
         setIsModalVisible(false);
@@ -163,7 +163,7 @@ const ProjectSetBasicInfo = props => {
 
     return (
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSet-set-basicinfo">
                     <Breadcumb
                         firstText="项目集信息"

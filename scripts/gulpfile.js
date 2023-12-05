@@ -19,7 +19,7 @@ const resolve = dir => path.join(__dirname, ".", dir);
 const libDir = resolve("../lib");
 const esDir = resolve("../es");
 const scssDir = resolve("../src/**/*.scss");
-const indexJsDir = resolve("../src/**/style/index.js");
+const indexJsDir = resolve("../src/**/style.js");
 
 // 复制 postcss 文件到 lib es 文件夹下
 // gulp.task("copy-postcss", () => {

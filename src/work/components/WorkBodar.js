@@ -154,13 +154,13 @@ const WorkBodar = (props) => {
         props.history.replace(`${pathname}/${workItem.id}`)
         setIsModalVisible(true)
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        // if (path === `/index/projectDetail/:id/workBodar`) {
+        // if (path === `/projectDetail/:id/workBodar`) {
         //     console.log(props.history)
-        //     props.history.replace(`/index/projectDetail/${projectId}/workBodar/${workItem.id}`)
+        //     props.history.replace(`/projectDetail/${projectId}/workBodar/${workItem.id}`)
         // }
-        // if (path === `/index/workBodar`) {
+        // if (path === `/workBodar`) {
         //     console.log(props.history)
-        //     props.history.replace(`/index/workBodar/${workItem.id}`)
+        //     props.history.replace(`/workBodar/${workItem.id}`)
         // }
 
         
@@ -181,15 +181,15 @@ const WorkBodar = (props) => {
     return (
         <Provider {...store}>
             <Fragment>
-                <Row>
-                    <Col className="work-col" lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                        <div className="work-list-col" style={{ background: "#fff" }}>
+                <Row  style={{ background: "#fff" }}>
+                    <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                        <div className="work-bodar-filter" style={{ background: "#fff" }}>
                             <WorkTableHead />
                             <WorkTableFilter />
                         </div>
                     </Col>
                 </Row>
-                <div className="work-bodar">
+                <div className="work-bodar-content">
                     <div className="work-bodar-flex">
                         <div className="work-bodar-list">
                             {

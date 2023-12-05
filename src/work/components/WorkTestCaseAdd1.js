@@ -19,7 +19,7 @@ const WorkTestCaseAddmodal = (props) => {
     const showModal = () => {
         setVisible(true)
     };
-    const path = props.location.pathname.split("/")[2];
+    const path = props.location.pathname.split("/")[1];
     useEffect(() => {
         if (visible === true) {
             findProjectTestRepositoryList({ projectId: projectId }).then(res => {
@@ -134,10 +134,10 @@ const WorkTestCaseAddmodal = (props) => {
     const goTestRepository = () => {
         // searchpro(projectId).then(res => {
         //     if(res.code === 0){
-        //         props.history.push(`/index/projectDetail/${projectId}/test`)
+        //         props.history.push(`/projectDetail/${projectId}/test`)
         //     }
         // })
-        props.history.push(`/index/projectDetail/${projectId}/test`)
+        props.history.push(`/projectDetail/${projectId}/test`)
     }
 
     const changePage = (pagination) => {

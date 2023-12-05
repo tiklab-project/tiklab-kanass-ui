@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./Work.scss";
 import { observer, inject } from "mobx-react";
 import "./WorkQuickTab.scss";
 import { withRouter } from "react-router";

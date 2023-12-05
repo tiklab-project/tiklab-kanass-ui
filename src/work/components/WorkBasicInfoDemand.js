@@ -93,6 +93,7 @@ const WorkBasicInfo = (props) => {
             }
         })
         findWorkAttachList(workInfo.id)
+        console.log("走廊")
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
             initForm(workInfo)
@@ -308,10 +309,10 @@ const WorkBasicInfo = (props) => {
                 setWorkInfo({ ...workInfo, ...changedValues })
 
                 //  更新列表数据
-                if ((props.match.path.indexOf("/index/projectDetail/:id/work") > -1 ||
-                    props.match.path.indexOf("/index/work") > -1 ||
-                    props.match.path.indexof("/index/:id/sprintdetail/:sprint/work") > -1 ||
-                    props.match.path.indexof("/index/:id/versiondetail/:version/work") > -1) &&
+                if ((props.match.path.indexOf("/projectDetail/:id/work") > -1 ||
+                    props.match.path.indexOf("/work") > -1 ||
+                    props.match.path.indexof("/:id/sprintdetail/:sprint/work") > -1 ||
+                    props.match.path.indexof("/:id/versiondetail/:version/work") > -1) &&
                     (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
 
@@ -511,7 +512,7 @@ const WorkBasicInfo = (props) => {
     return (
         <div className="work-info">
             {contextHolder}
-            <div className="other-title">
+             <div className="other-title">
                 基本信息:
             </div>
             <div className="work-detail-box">
@@ -603,29 +604,6 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            {/* <Form.Item label="报告人" name="reporter"
-                                hasFeedback={showValidateStatus === "reporter" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    bordered={fieldName === "reporter" ? true : false}
-                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("reporter")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item> */}
 
                             <Form.Item
                                 label="所属迭代" name="sprint"
@@ -988,7 +966,7 @@ const WorkBasicInfo = (props) => {
                         )
                     }
                 </Fragment>
-            </div>
+            </div> 
         </div>
     )
 };

@@ -30,7 +30,7 @@ const Plan = (props) => {
 
     return (
         <Row >
-            <Col lg={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-plan">
                     <PlanAside />
                     <div className="project-plan-list">

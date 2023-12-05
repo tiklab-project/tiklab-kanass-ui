@@ -1,6 +1,6 @@
 .test-repository {
     .test-repository-list {
-        padding: 15px;
+        padding: var(--tiklab-padding);
     }
     .repository-delete {
         color: var(--tiklab-blue);

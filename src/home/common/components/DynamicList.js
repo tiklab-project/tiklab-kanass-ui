@@ -22,7 +22,7 @@ const DynamicList = (props) => {
     const [firstText, setFirstText] = useState();
     
     useEffect(() => {
-        if(props.route.path === "/index/projectDetail/:id/dynamic"){
+        if(props.route.path === "/projectDetail/:id/dynamic"){
             setFirstText("项目概况")
             const projectId = props.match.params.id;
             findLogpage({ userId: userId, projectId:  projectId})
@@ -32,14 +32,14 @@ const DynamicList = (props) => {
                 }
             })
         }  
-        if(props.route.path === "/index/dynamic"){
+        if(props.route.path === "/dynamic"){
             setFirstText("首页")
         }
 
-        if(props.route.path === "/index/projectSetdetail/:id/dynamic"){
+        if(props.route.path === "/projectSetdetail/:id/dynamic"){
             setFirstText("项目集概况")
         }
-        if(props.route.path === "/index/projectDetail/:id/sprintdetail/:sprint/dynamic"){
+        if(props.route.path === "/projectDetail/:id/sprintdetail/:sprint/dynamic"){
             setFirstText("迭代概况")
         }
         return;
@@ -58,7 +58,7 @@ const DynamicList = (props) => {
                 {...props}
                 firstText={firstText}
                 secondText="日志列表"
-                // firstUrl="/index/home"
+                // firstUrl="/home"
             />
             <div className="dynamic-filter">
                 <Select

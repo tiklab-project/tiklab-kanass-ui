@@ -4,7 +4,7 @@ import {Form} from 'tiklab-form-ui';
 
 const FormListSystem = (props) => {
     return (
-        <Form isBase = {true} router = {`/index/setting/FormDetail`}/>
+        <Form isBase = {true} router = {`/setting/FormDetail`}/>
     )
 }
 export default FormListSystem;

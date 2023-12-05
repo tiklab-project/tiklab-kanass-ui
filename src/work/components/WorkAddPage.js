@@ -254,7 +254,7 @@ const WorkAddPage = (props) => {
                                 <Input />
                             </Form.Item>
                             {
-                                props.match.path === "/index/work/worklist/:statetype" &&
+                                props.match.path === "/work/worklist/:statetype" &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"

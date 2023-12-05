@@ -11,7 +11,7 @@ const WorkTypeFlow = props => {
                 {
                     breadcrumbName: '事项类型列表', 
                     disabled:false,      
-                    path: '/index/organ/worktype'     
+                    path: '/organ/worktype'     
                 },
                 {
                     breadcrumbName: '流程列表', 

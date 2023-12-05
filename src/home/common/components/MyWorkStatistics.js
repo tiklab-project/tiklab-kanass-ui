@@ -33,16 +33,16 @@ const MyWorkStatistics = (props) => {
      const goWorkItemList = (index) => {
         switch (index) {
             case 0:
-                props.history.push({ pathname: "/index/work/worklist/all"})
+                props.history.push({ pathname: "/work/worklist/all"})
                 break;
             case 1:
-                props.history.push({ pathname: "/index/work/worklist/done"})
+                props.history.push({ pathname: "/work/worklist/done"})
                 break;
             case 2:
-                props.history.push({ pathname: "/index/work/worklist/process"});
+                props.history.push({ pathname: "/work/worklist/process"});
                 break
             case 3:
-                props.history.push({ pathname: "/index/work/worklist/overdue"})
+                props.history.push({ pathname: "/work/worklist/overdue"})
                 break;
             default:
                 break;

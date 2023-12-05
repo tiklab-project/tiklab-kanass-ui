@@ -28,7 +28,7 @@ const SprintDetailAside = (props) => {
 
     const [isShowText, SetIsShowText] = useState(false)
 
-    const path = props.location.pathname.split("/")[5];
+    const path = props.location.pathname.split("/")[4];
 
     useEffect(() => {
         findSprint({ id: sprintId })
@@ -40,28 +40,28 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/index/${project.id}/sprintdetail/${sprintId}/survey`,
+            url: `/${project.id}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/index/${project.id}/sprintdetail/${sprintId}/work/table`,
+            url: `/${project.id}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
             icon: 'survey',
-            url: `/index/${project.id}/sprintdetail/${sprintId}/plan`,
+            url: `/${project.id}/sprintdetail/${sprintId}/plan`,
             key: "plan",
             encoded: "plan",
         },
         {
             title: "统计",
             icon: 'survey',
-            url: `/index/${project.id}/sprintdetail/${sprintId}/statistics/workItem`,
+            url: `/${project.id}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -79,7 +79,7 @@ const SprintDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/index/projectDetail/${project.id}/sprint`)
+        props.history.push(`/projectDetail/${project.id}/sprint`)
     }
     const setButton = useRef(null)
     return (
@@ -150,7 +150,7 @@ const SprintDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={()=> props.history.push(`/index/${project.id}/sprintdetail/${sprintId}/setting`)}  ref={setButton} className="sprint-set-icon setting">
+                    <div onClick={()=> props.history.push(`/${project.id}/sprintdetail/${sprintId}/setting`)}  ref={setButton} className="sprint-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>

@@ -151,7 +151,7 @@ const BasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push("/index/project")
+                    props.history.push("/project")
                 }
             })
             
@@ -199,7 +199,7 @@ const BasicInfo = props => {
     );
     return (
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-set-basicinfo">
                     <Breadcumb
                         firstText="项目信息"

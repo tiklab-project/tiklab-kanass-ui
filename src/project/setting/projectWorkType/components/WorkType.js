@@ -95,7 +95,7 @@ const WorkType = (props) => {
      * @param {流程id} id 
      */
     const goFlow = (id) => {
-        props.history.push(`/index/projectDetail/${projectId}/projectSetDetail/projectFlowDetail/${id}`)
+        props.history.push(`/projectDetail/${projectId}/projectSetDetail/projectFlowDetail/${id}`)
     }
 
     /**
@@ -103,7 +103,7 @@ const WorkType = (props) => {
      * @param {表单id} id 
      */
     const goForm = (id) => {
-        props.history.push(`/index/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
+        props.history.push(`/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
     }
 
     const columns = [
@@ -154,7 +154,7 @@ const WorkType = (props) => {
             title: "操作",
             key: "action",
             align: "left",
-            width: '20%',
+            width: '10%',
             render: (text, record) => (
                 <Space size="middle">
                     {
@@ -198,7 +198,7 @@ const WorkType = (props) => {
 
     return (<Provider {...store}>
         <Row>
-            <Col lg={{ span: "18", offset: "3" }} xxl={{ span: "14", offset: "4" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-work-type">
                     <Breadcumb
                         firstText="事项类型"

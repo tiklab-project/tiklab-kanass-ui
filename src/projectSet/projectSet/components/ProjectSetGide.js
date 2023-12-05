@@ -26,7 +26,7 @@ const ProjectSetGide = (props) => {
                 <div>您还没有项目集合，请先</div>
                 <Button
                         style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
+                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
                     </Button>
             </div>
            

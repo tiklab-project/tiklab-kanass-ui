@@ -76,7 +76,7 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                props.history.push(`/index/projectDetail/${id}/work/table`)
+                props.history.push(`/projectDetail/${id}/workTable`)
                 localStorage.setItem("projectId", id);
 
                 // 创建最近访问的信息
@@ -224,7 +224,7 @@ const ProjectChangeModal = (props) => {
                     })
                 }
                 {
-                    allProlist.length > 6 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
+                    allProlist.length > 6 && <div className="change-project-more" onClick={() => props.history.push("/project")}>查看更多</div>
                 }
             </div>
         </div >

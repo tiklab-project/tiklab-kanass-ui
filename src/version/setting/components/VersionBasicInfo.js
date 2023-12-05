@@ -124,7 +124,7 @@ const VersionBasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push(`/index/projectDetail/${projectId}/version`)
+                    props.history.push(`/projectDetail/${projectId}/version`)
                 }
             })
             
@@ -171,7 +171,7 @@ const VersionBasicInfo = props => {
     );
     return (
         <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-set-basicinfo">
                     <Breadcumb
                         firstText="版本信息"

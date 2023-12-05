@@ -29,7 +29,7 @@ const VersionDetailAside = (props) => {
     const setButton = useRef();
     const [isShowText, SetIsShowText] = useState(false)
 
-    const path = props.location.pathname.split("/")[5];
+    const path = props.location.pathname.split("/")[4];
 
     useEffect(() => {
         findVersion({ id: versionId })
@@ -41,21 +41,21 @@ const VersionDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/index/${project.id}/versiondetail/${versionId}/survey`,
+            url: `/${project.id}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/index/${project.id}/versiondetail/${versionId}/work/table`,
+            url: `/${project.id}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
             icon: 'survey',
-            url: `/index/${project.id}/versiondetail/${versionId}/plan`,
+            url: `/${project.id}/versiondetail/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
         }
@@ -72,7 +72,7 @@ const VersionDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/index/projectDetail/${project.id}/version`)
+        props.history.push(`/projectDetail/${project.id}/version`)
     }
 
     return (
@@ -143,7 +143,7 @@ const VersionDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={()=> props.history.push(`/index/${project.id}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
+                    <div onClick={()=> props.history.push(`/${project.id}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>

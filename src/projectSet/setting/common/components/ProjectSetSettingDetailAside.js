@@ -24,24 +24,24 @@ const ProjectSetSettingDetailAside = (props) => {
         {
             title: "项目集信息",
             icon: 'survey',
-            key: `/index/projectSetdetail/${projectSetId}/projectSetset/basicInfo`,
+            key: `/projectSetdetail/${projectSetId}/projectSetset/basicInfo`,
             encoded: "Survey",
         },
         {
             title: `${t('user')}`,
             icon: 'survey',
-            key: `/index/projectSetdetail/${projectSetId}/projectSetset/user`,
+            key: `/projectSetdetail/${projectSetId}/projectSetset/user`,
             encoded: "DominRole",
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
-            key: `/index/projectSetdetail/${projectSetId}/projectSetset/dominRole`,
+            key: `/projectSetdetail/${projectSetId}/projectSetset/dominRole`,
             encoded: "User",
         }
     ];
     // 当前选中路由
-    const [selectKey, setSelectKey] = useState(`/index/projectScrumDetail/${projectSetId}/projectSetDetail/basicInfo`);
+    const [selectKey, setSelectKey] = useState(`/projectScrumDetail/${projectSetId}/projectSetDetail/basicInfo`);
 
     // 菜单是否折叠
     const [isShowText, SetIsShowText] = useState(true)
@@ -66,7 +66,7 @@ const ProjectSetSettingDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push("/index/prodetail/survey")
+        props.history.push("/prodetail/survey")
     }
 
 
