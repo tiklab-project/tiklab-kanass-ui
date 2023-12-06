@@ -45,8 +45,8 @@
             padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
-            width: 500px;
-
+            flex: 1;
+            height: 440px;
             .sprint-info-title {
                 display: flex;
                 align-items: center;
@@ -98,12 +98,11 @@
             }
         }
         .burn-down-box {
-            width: calc(100% - 515px);
-            padding: 10px;
+            flex: 1;
+            padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
-            height: 430px;
-            padding: var(--tiklab-padding);
+            height: 440px;
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);

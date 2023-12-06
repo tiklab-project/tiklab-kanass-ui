@@ -27,6 +27,7 @@ const ProdeScrumAside = (props) => {
     // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
     // 当前选中菜单key
+    console.log(props.location.pathname.split("/"))
     const path = props.location.pathname.split("/")[3];
     // 路由
     const scrumProrouter = (projectId) =>[
@@ -250,7 +251,7 @@ const ProdeScrumAside = (props) => {
                         
                         {
                             projectRouter && projectRouter.map((item,index) =>  {return isShowText ? 
-                                <div className={`project-menu-submenu ${path.indexOf(item.key) !== -1 ? "project-menu-select" : ""}`}
+                                <div className={`project-menu-submenu ${(path && path.indexOf(item.key) !== -1 )? "project-menu-select" : ""}`}
                                     key={item.encoded}
                                     onClick={() => selectMenu(item.url)}
                                 >
@@ -262,7 +263,7 @@ const ProdeScrumAside = (props) => {
                                     </span>
                                 </div> 
                                 :
-                                <div className={`project-menu-submenu-icon ${path.indexOf(item.key) !== -1 ? "project-menu-select" : ""}`}
+                                <div className={`project-menu-submenu-icon ${(path && path.indexOf(item.key) !== -1 ) ? "project-menu-select" : ""}`}
                                     key={item.encoded}
                                     onClick={() => selectMenu(item.url)}
                                 >

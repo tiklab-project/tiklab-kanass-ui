@@ -253,6 +253,7 @@ const Sprint = (props) => {
             title: "迭代名称",
             dataIndex: "sprintName",
             key: "sprintName",
+            width: "25%",
             render: (text, record) => (
                 <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
                     <img
@@ -266,10 +267,21 @@ const Sprint = (props) => {
 
             ),
         },
+       
+
+        {
+            title: "计划日期",
+            dataIndex: "data",
+            key: "startTime",
+            align: "left",
+            width: "25%",
+            render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
+        },
         {
             title: '负责人',
             dataIndex: ['master', 'nickname'],
             key: 'builderId',
+            
             sorter: {
                 multiple: 1
             },
@@ -277,14 +289,6 @@ const Sprint = (props) => {
                 <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div >{text}</div>
             </div>
-        },
-
-        {
-            title: "计划日期",
-            dataIndex: "data",
-            key: "startTime",
-            align: "left",
-            render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
         },
         {
             title: "事项",
@@ -330,7 +334,7 @@ const Sprint = (props) => {
     return (<Provider {...store}>
         <div className="project-sprint">
             <Row>
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-sprint-list">
                         <Breadcumb
                             firstText="迭代"

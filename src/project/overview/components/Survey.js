@@ -474,7 +474,6 @@ const Survey = (props) => {
                                                 <div className="content-type">{item.object.id}</div>
                                             </div>
                                         </div>
-                                        <div className="work-project">{item.object.workPriority?.name ? item.object.workPriority?.name : "暂无设置"}</div>
                                         <div style={{width: "100px"}}>
                                             <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
                                                 {item.object.workStatusNode.name}

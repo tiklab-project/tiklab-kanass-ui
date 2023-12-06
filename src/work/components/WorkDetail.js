@@ -22,7 +22,7 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";
 const WorkDetail = (props) => {
-    // const [percentForm] = Form.useForm();
+    const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,

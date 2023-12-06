@@ -186,6 +186,11 @@ const Routers = [
         component: ProjectLogOut,
     },
     {
+        path: "/",
+        component: () => <Redirect to="/home/survey" />,
+        exact: true,
+    },
+    {
         component: Index,
         path: "/",
         routes: [
@@ -1056,10 +1061,6 @@ const Routers = [
             },
         ]
     },
-    {
-        path: "/",
-        component: () => <Redirect to="/home/survey" />,
-        exact: true
-    },
+    
 ]
 export default Routers;

@@ -2,6 +2,20 @@
     padding: 20px;
     height: calc(100vh - 49px);
     background: #fff;
+    .worklog-content {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: normal;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        padding-right: 20px;
+        cursor: pointer;
+    }
+    .worklog-content:hover {
+        color: var(--tiklab-blue);
+    }
 }
 
 
@@ -10,26 +24,33 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
+
     .log-tabs {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         height: 50px;
         line-height: 50px;
-        .log-tab{
-            font-size: var(--tiklab-font-13);;
+
+        .log-tab {
+            font-size: var(--tiklab-font-13);
+            ;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
             margin-right: 20px;
         }
+
         .log-tab:last-child {
             margin-right: 0;
         }
+
         .active-tabs {
             font-weight: var(--tiklab-font-weight-bold);
             color: #000;
             border-bottom: 2px solid var(--tiklab-blue);
-        }   
+        }
     }
+
+    
 }

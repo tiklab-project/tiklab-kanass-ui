@@ -45,6 +45,7 @@ export class WorkLogStore {
             workItem: {
                 id: value.workItem
             },
+            user: value.user,
             // worker: {
             //     id: value.worker
             // },

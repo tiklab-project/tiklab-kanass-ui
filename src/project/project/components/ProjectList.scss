@@ -6,20 +6,23 @@
     .home-project {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         margin-top: 10px;
-        overflow: auto;
-        gap: 20px;
-        padding-bottom: 20px;
-        height: 156px;
+        overflow: hidden;
+        gap: 10px;
+        padding-bottom: 10px;
+        height: 104px;
         .project-item:hover {
             border-radius: 4px 4px 0 0;
             border-bottom: 2px solid var(--tiklab-blue);
             transition: 500;
         }
+
         .project-item {
             max-width: 240px;
+            min-width: 204px;
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             box-sizing: content-box;
             flex-shrink: 0;
             border-radius: 4px;
@@ -27,18 +30,21 @@
             background-color: var(--tiklab-gray-600);
             box-sizing: border-box;
             border-bottom: 2px solid var(--tiklab-gray-600);
-
+            
             .item-title {
                 margin-bottom: 10px;
                 font-weight: var(--tiklab-font-weight-bold);
                 display: inline-flex;
                 align-items: center;
                 font-size: 16px;
+                
                 .item-name {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
+                    min-width: 140px;
                 }
+
                 .project-icon {
                     width: 30px;
                     height: 30px;
@@ -54,7 +60,7 @@
 
             .item-work {
                 display: flex;
-                gap: 20px;
+                gap: 10px;
             }
 
             .process-work,
@@ -65,10 +71,15 @@
                 justify-content: space-between;
                 height: 30px;
                 line-height: 30px;
+                gap: 5px;
                 .work-label {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
+                    width: 60px;
+                }
+                .work-num {
+                    width: 25px;
                 }
             }
         }

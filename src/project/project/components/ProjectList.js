@@ -275,7 +275,16 @@ const ProjectList = (props) => {
                 </div>
         }
     ];
-
+    const setWorkNum = (num) => {
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
+        }
+        return showNum;
+    }
     return (
         <Fragment>
             <Breadcumb
@@ -314,14 +323,30 @@ const ProjectList = (props) => {
                                         <span className="item-name">{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
-                                        <div className="process-work"><span className="work-label" style={{ color: "#999" }}>待办</span><span>{item.processWorkItemNumber}</span></div>
-                                        <div className="end-work"><span className="work-label" style={{ color: "#999" }}>已完成</span><span>{item.endWorkItemNumber}</span></div>
+                                        <div className="process-work">
+                                            <span className="work-label" style={{ color: "#999" }}>
+                                                待办事项
+                                            </span>
+                                            <span>
+                                                {setWorkNum(item.processWorkItemNumber)}
+                                            </span>
+                                        </div>
+                                        <div className="end-work">
+                                            <span className="work-label" style={{ color: "#999" }}>
+                                                已完成事项
+                                            </span>
+                                            <span>
+                                                {setWorkNum(item.endWorkItemNumber)}
+                                            </span>
+                                        </div>
+
                                     </div>
                                 </div>
-                            })
 
+
+                            })
                                 :
-                                <Empty image="/images/nodata.png" description="暂时没有查看过项目~" />
+                                <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
                         }
                     </div>
                 </Spin>

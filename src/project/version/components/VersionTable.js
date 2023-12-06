@@ -131,6 +131,7 @@ const VersionTable = (props) => {
             title: "版本名称",
             dataIndex: "name",
             key: "name",
+            width: "25%",
             render: (text, record) => (
                 <div className="version-master" onClick={() => goDetail(record.id, text)}>
                     <img
@@ -142,6 +143,25 @@ const VersionTable = (props) => {
                 </div>
 
             ),
+        },
+        
+
+        {
+            title: "计划日期",
+            dataIndex: "startTime",
+            key: "startTime",
+            align: "left",
+            width: "25%",
+            render: (text, record) => <span>
+                {record.startTime} ~ {record.publishDate}
+            </span>
+        },
+        {
+            title: "实际发布日期",
+            dataIndex: "relaPublishDate",
+            key: "relaPublishDate",
+            align: "left",
+            render: (text) => <span>{text ? text : "---"}</span>,
         },
         {
             title: '负责人',
@@ -155,23 +175,7 @@ const VersionTable = (props) => {
                 <div >{text}</div>
             </div>
         },
-
-        {
-            title: "计划日期",
-            dataIndex: "startTime",
-            key: "startTime",
-            align: "left",
-            render: (text, record) => <span>
-                {record.startTime} ~ {record.publishDate}
-            </span>
-        },
-        {
-            title: "实际发布日期",
-            dataIndex: "relaPublishDate",
-            key: "relaPublishDate",
-            align: "left",
-            render: (text) => <span>{text ? text : "---"}</span>,
-        },
+       
         {
             title: "事项",
             dataIndex: "workNumber",
@@ -321,7 +325,7 @@ const VersionTable = (props) => {
     return (<Provider {...store}>
         <div className="project-version">
             <Row >
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-version-list">
 
                         <Breadcumb

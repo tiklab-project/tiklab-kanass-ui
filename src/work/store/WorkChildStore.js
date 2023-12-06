@@ -78,7 +78,7 @@ class WorkChildStore {
     @action
 	getWorkChildList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value});
-        const data = await Service("/workItem/findWorkItemPage", this.searchSelectCondition)
+        const data = await Service("/workItem/findWorkItemList", this.searchSelectCondition)
         return data;
     }
     //添加已选择事项

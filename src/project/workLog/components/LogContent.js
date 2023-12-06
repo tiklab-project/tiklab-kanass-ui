@@ -19,6 +19,7 @@ import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
 import moment from "moment";
 import LogStore from "../store/LogStore";
+import { Span } from "slate";
 const LogContent = (props) => {
     const store = {
         logStore: LogStore
@@ -87,46 +88,54 @@ const LogContent = (props) => {
     }
 
     const columns = [
+        // {
+        //     title: "事项",
+        //     dataIndex: ["workItem", "title"],
+        //     key: "workItem",
+        //     align: "left",
+        //     render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="span-botton">
+        //         {text}
+        //     </Space>,
+        // },
         {
-            title: "事项",
-            dataIndex: ["workItem", "title"],
-            key: "workItem",
+            title: "工作内容",
+            dataIndex: "workContent",
+            key: "workContent",
             align: "left",
-            render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="span-botton">
-                {text}
-            </Space>,
+            width: "50%",
+            ellipsis: true,
+            render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="worklog-content">
+                    {text}
+            </div>,
         },
         {
             title: "项目",
             dataIndex: ["project", "projectName"],
             key: "projectName",
             align: "left",
-
+            width: "15%"
         },
         {
             title: "负责人",
             dataIndex: ["user", "name"],
             key: "user",
             align: "left",
+            width: "10%"
         },
         {
             title: "记录日期",
             dataIndex: "workDate",
             key: "workDate",
-            align: "left",
+            align: "left"
         },
         {
             title: "用时",
             dataIndex: "takeupTime",
             key: "endTime",
             align: "left",
+            width: "7%"
         },
-        {
-            title: "工作内容",
-            dataIndex: "workContent",
-            key: "workContent",
-            align: "left",
-        }
+        
     ];
 
     /**
@@ -157,8 +166,8 @@ const LogContent = (props) => {
     }
 
     return (<Provider {...store}>
-        <Row style={{ height: "100%",background: "#fff" }}>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+        <Row style={{ height: "100%",background: "#fff", overflow: "auto" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "20", offset: "2" }}>
                 <div style={{ padding: "20px" }} className="workItem-log">
                     <Breadcumb
                         {...props}

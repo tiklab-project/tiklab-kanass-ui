@@ -304,7 +304,7 @@ const BasicInfo = props => {
                                         >
                                             {
                                                 uselist && uselist.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                                    return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
                                                 })
                                             }
                                         </Select>

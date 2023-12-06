@@ -25,7 +25,6 @@ const SprintSurvey = (props) => {
     const projectId = props.match.params.id;
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
-    const masterName = getUser().name;
     // 进度
     const [percent, setPercent] = useState()
     // 事项状态列表

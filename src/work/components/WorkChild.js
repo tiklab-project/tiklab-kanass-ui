@@ -59,7 +59,7 @@ const WorkChild = (props) => {
         }
         getWorkChildList(params).then(res => {
             if (res.code === 0) {
-                setChildWorkList(res.data.dataList)
+                setChildWorkList(res.data)
             }
 
         })

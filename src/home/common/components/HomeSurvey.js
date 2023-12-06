@@ -49,7 +49,7 @@ const HomeSurvey = (props) => {
         setRecentLoading(true)
         findProjectSortRecentTime({}).then((res) => {
             if (res.code === 0) {
-                setRecentProjectList(res.data.splice(0, 4))
+                setRecentProjectList(res.data)
                 setRecentLoading(false)
             }
         });
@@ -256,6 +256,17 @@ const HomeSurvey = (props) => {
         }
         return element;
     }
+    const setWorkNum = (num) => {
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
+        }
+        return showNum;
+    }
+
     return (
         <div className="home-content">
             <div className="recent-project">
@@ -289,8 +300,23 @@ const HomeSurvey = (props) => {
                                         <span className="item-name">{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
-                                        <div className="process-work"><span className="work-label" style={{ color: "#999" }}>待办</span><span>{item.processWorkItemNumber}</span></div>
-                                        <div className="end-work"><span className="work-label" style={{ color: "#999" }}>已完成</span><span>{item.endWorkItemNumber}</span></div>
+                                        <div className="process-work">
+                                            <span className="work-label" style={{ color: "#999" }}>
+                                                待办事项
+                                            </span>
+                                            <span>
+                                                {setWorkNum(item.processWorkItemNumber)}
+                                            </span>
+                                        </div>
+                                        <div className="end-work">
+                                            <span className="work-label" style={{ color: "#999" }}>
+                                                已完成事项
+                                            </span>
+                                            <span>
+                                                {setWorkNum(item.endWorkItemNumber)}
+                                            </span>
+                                        </div>
+                             
                                     </div>
                                 </div>
 
@@ -333,10 +359,10 @@ const HomeSurvey = (props) => {
                                 </div>
                                 <div className="work-content">
                                     <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                    <div className="content-type">{item.object.id}</div>
+                                    <div className="content-type">{item.object.project.projectName}</div>
                                 </div>
                                 </div>
-                                <div className="work-project">{item.object.project.projectName}</div>
+                                {/* <div className="work-project">{item.object.project.projectName}</div> */}
                                 <div style={{width: "100px"}}>
                                 <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
                                     {item.object.workStatusNode.name}

@@ -83,6 +83,9 @@ const WorkLog = (props) => {
             // value.workDate = date
             value.projectId = projectId
             value.workItem = workId
+            value.user = {
+                id: getUser().userId
+            }
             if (modalType === "add") {
                 addWorkLog(value)
                 AddLog.resetFields()

@@ -16,9 +16,10 @@
         .work-bodar-list {
             display: flex;
             gap: 20px;
-            padding: 0 var(-tiklab-padding);
+            padding: 20px;
             height: 100%;
             margin: 0 auto;
+            overflow: auto;
             
             // justify-content: center;
             

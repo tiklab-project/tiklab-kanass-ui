@@ -115,7 +115,7 @@ const LogDetail = (props) => {
                 placement="right"
                 onClose={onClose}
                 visible={logDetailVisable}
-                width={350}
+                width={500}
                 mask={false}
                 className="log-detail-drawer"
                 getContainer={false}
@@ -167,7 +167,6 @@ const LogDetail = (props) => {
 
                                     <TextArea
                                         rows={3}
-                                        maxLength={6}
                                         value={workContent}
                                         style={{ marginLeft: "-10px" }}
                                         onChange={(value) => changeWorkLog(value, "workContent")}

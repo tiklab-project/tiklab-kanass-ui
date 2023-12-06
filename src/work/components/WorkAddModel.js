@@ -10,6 +10,7 @@ import React, { useImperativeHandle, useState, useRef, useEffect } from "react";
 import { Modal, message } from 'antd';
 // import "../../common/components/projectDetail.scss";
 import WorkAddPage from "./WorkAddPage";
+import "./WorkAddModel.scss"
 import { observer, inject } from "mobx-react";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
@@ -58,7 +59,7 @@ const WorkAddModel = (props) => {
             visible={showAddModel}
             // visible = {true}
             className="work-addmodel"
-            width={910}
+            width={970}
             destroyOnClose={true}
             onOk={handleOk}
             onCancel={handleCancel}

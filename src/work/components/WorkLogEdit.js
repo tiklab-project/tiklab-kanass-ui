@@ -77,7 +77,12 @@ const WorkLogEdit = (props) => {
         AddLog.validateFields().then(value => {
             value.projectId = projectId
             value.workItem = workId
+            value.user = {
+                id: getUser().userId
+            }
+            console.log(value)
             if (type === "creat") {
+                debugger
                 addWorkLog(value)
                 AddLog.resetFields()
             } else {

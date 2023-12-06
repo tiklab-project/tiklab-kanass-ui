@@ -234,7 +234,7 @@ const SprintBasicInfo = props => {
                                         >
                                             {
                                                 useList && useList.map((item, index) => {
-                                                    return <Select.Option value={item.user.id} key={item.user.id}>{item.user.nickname}</Select.Option>
+                                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname}</Select.Option>
                                                 })
                                             }
                                         </Select>

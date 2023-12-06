@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
+import { getUser } from "tiklab-core-ui";
 const { TextArea } = Input;
 
 const LogAdd = (props) => {
@@ -46,6 +47,9 @@ const LogAdd = (props) => {
                 },
                 workItem: {
                     id: fieldsValue.workItem
+                },
+                user: {
+                    id: getUser().userId
                 },
                 takeupTime: fieldsValue.takeupTime,
                 workContent: fieldsValue.workContent
@@ -105,7 +109,9 @@ const LogAdd = (props) => {
             }
         })
     }
-
+    const onChange = (e) => {
+        console.log(e);
+      };
     return (
         <Modal
             title={"添加日志"}
@@ -216,7 +222,7 @@ const LogAdd = (props) => {
                         },
                     ]}
                 >
-                    <TextArea rows={4} />
+                    <TextArea rows={4}/>
                 </Form.Item>
             </Form>
         </Modal>

@@ -14,4 +14,4 @@ const VailProductUserPage = (props) => {
         <ExcludeProductUser {...props}/>
     )
 }
-export default inject("eamStore")(observer(VailProductUserPage));
+export default observer(VailProductUserPage);
