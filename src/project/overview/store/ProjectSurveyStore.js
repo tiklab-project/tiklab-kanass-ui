@@ -179,12 +179,16 @@ export class ProjectSurveyStore {
                 name: "recentTime",
                 orderType:"desc"
             }],
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            },
             model: "workItem",
             projectId: JSON.parse(localStorage.getItem("project")).id
         }
         const data = await Service("/recent/findRecentListToModel", params)
         if(data.code === 0){
-            this.recentList = data.data;
+            this.recentList = data.data.slice(0,10);
         }
         return data;
     }

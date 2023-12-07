@@ -89,7 +89,7 @@ const ProjectSetProjectList = (props) => {
         },
         {
             title: "项目类型",
-            width: "20%",
+            width: "15%",
             dataIndex: ["projectType", "name"],
             key: "projectType",
             align: "left",
@@ -136,13 +136,12 @@ const ProjectSetProjectList = (props) => {
         },
         {
             title: "事项完成/总数量",
-            dataIndex: "worklItemNumber",
-            key: "worklItemNumber",
+            dataIndex: "workItemNumber",
+            key: "workItemNumber",
             align: "left",
-            width: "10%",
             render: (text, record) => (
                 <>
-                    {record.quantityNumber} / {record.worklItemNumber}
+                    {record.endWorkItemNumber} / {record.workItemNumber}
                 </>
             )
         },

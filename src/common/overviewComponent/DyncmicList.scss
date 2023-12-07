@@ -1,35 +1,33 @@
-.dynamic-col {
+.dynamic-box {
+    background-color: #fff;
+    border-radius: 4px;
+    padding-bottom: 20px;
     padding: var(--tiklab-padding);
-}
-
-.dynamic-list-page {
-    background: #fff;
-
-    .dynamic-list-top {
-        position: sticky;
-        top: 0;
-        z-index: 3;
-        background: #fff;
-        padding: 15px 15px 0;
+    .box-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+        // height: 30px;
+        // line-height: 30px;
+        margin-bottom: 10px;
+        // border-bottom: 1px solid #f0f0f0;
     }
-
     .dynamic-list {
-        padding: 0 15px 15px;
         .dynamic-item {
             margin-bottom: 10px;
-
             .dynamic-work-title:hover {
                 color: var(--tiklab-blue);
             }
         }
-
         .dynamic-item:nth-child(4n+1) {
             .dynamic-user-icon {
                 background-color: #cadbf3;
             }
         }
 
-        .dynamic-item:nth-child(4n+2) {
+        .dynamic-item:nth-child(4n+2){
             .dynamic-user-icon {
                 background-color: #deedd7;
             }
@@ -41,19 +39,10 @@
             }
         }
 
-        .dynamic-item:nth-child(4n+4) {
+        .dynamic-item:nth-child(4n+4){
             .dynamic-user-icon {
                 background-color: #e8eaf6;
             }
         }
-    }
-
-    .dynamic-filter {
-        padding: 15px 0;
-        width: 100%;
-        display: flex;
-        gap: 20px;
-
-       
     }
 }

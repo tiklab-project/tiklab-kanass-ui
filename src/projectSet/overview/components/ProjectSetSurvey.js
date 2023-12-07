@@ -13,6 +13,7 @@ import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
 import { getUser } from 'tiklab-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
+import DyncmicList from "../../../common/overviewComponent/DyncmicList";
 const ProjectSetSurvey = props => {
 
     const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
@@ -70,7 +71,10 @@ const ProjectSetSurvey = props => {
     const goTodoDetail = (url) => {
         window.location.href = url
     }
+    const goDynamicList = () => {
+        props.history.push(`/projectSetdetail/${projectSetId}/dynamic`)
 
+    }
 
     return (
         <Row className="projectSet-survey">
@@ -94,7 +98,7 @@ const ProjectSetSurvey = props => {
                             <div className="projectSet-infobottom">
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">可见范围</div>
-                                    <div className="projectSet-info-result">{projectSet.projectSetLimits === 0  ? "所有人可见" : "成员可见"} </div>
+                                    <div className="projectSet-info-result">{projectSet.projectSetLimits === 0 ? "所有人可见" : "成员可见"} </div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">项目数量</div>
@@ -151,24 +155,22 @@ const ProjectSetSurvey = props => {
                     {/* <div className="projectSet-survey-middle">
                        
                     </div> */}
-                    <div className="projectSet-pending-workitem">
+                    <div className="projectSet-todo">
                         <div className="box-title">
                             <span className="name">待办事项</span>
-                            {
-                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) }}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
-                            }
+                            <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) }}>
+                                <svg aria-hidden="true" className="svg-icon">
+                                    <use xlinkHref="#icon-rightjump"></use>
+                                </svg>
+                            </div>
 
                         </div>
-                        <div className="projectSet-pending-workitem-list">
+                        <div className="projectSet-todo-list">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
+                                        className="todo-item"
                                         onClick={() => goTodoDetail(item.link)}
                                     />
                                 })
@@ -177,7 +179,7 @@ const ProjectSetSurvey = props => {
                             }
                         </div>
                     </div>
-                    <div className="dynamic-box">
+                    {/* <div className="dynamic-box">
                         <div className="box-title">
                             <span className="name">相关动态</span>
                             {
@@ -202,7 +204,8 @@ const ProjectSetSurvey = props => {
                                     <Empty image="/images/nodata.png" description="暂时没有动态~" />
                             }
                         </div>
-                    </div>
+                    </div> */}
+                    <DyncmicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
             </Col>
         </Row>

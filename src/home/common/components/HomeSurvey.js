@@ -20,8 +20,8 @@ const { TabPane } = Tabs;
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
-        findTodopage, todoTaskList, setActiveKey, findRecentPage, recentList,
-        updateRecent, overdueTaskList, endTaskList
+        findTodopage, setActiveKey, findRecentPage, recentList,
+        updateRecent, overdueTaskList, endTaskList, todoTaskList
     } = homeStore;
     const tenant = getUser().tenant;
     const { setWorkId, searchWorkById } = WorkStore;
@@ -30,11 +30,14 @@ const HomeSurvey = (props) => {
     //最近查看的项目列表
     const [recentProjectList, setRecentProjectList] = useState();
     const [recentLoading, setRecentLoading] = useState(false);
-
+    const [todoTask, setTodoTaskList] = useState([])
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
-        findTodopage({ userId: userId })
+        findTodopage({ userId: userId,  pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }})
 
         findRecentPage(userId).then(res => {
             console.log(res)
@@ -259,9 +262,9 @@ const HomeSurvey = (props) => {
     const setWorkNum = (num) => {
         let showNum;
         const isMax = Math.floor(num / 1000);
-        if(isMax >= 1){
+        if (isMax >= 1) {
             showNum = `${isMax}k+`
-        }else {
+        } else {
             showNum = num;
         }
         return showNum;
@@ -271,7 +274,7 @@ const HomeSurvey = (props) => {
         <div className="home-content">
             <div className="recent-project">
                 <div className="title">
-                    <div className="name">最近项目</div>
+                    <div className="name">常用项目</div>
                 </div>
 
                 <Spin spinning={recentLoading} delay={500} >
@@ -316,7 +319,7 @@ const HomeSurvey = (props) => {
                                                 {setWorkNum(item.endWorkItemNumber)}
                                             </span>
                                         </div>
-                             
+
                                     </div>
                                 </div>
 
@@ -333,42 +336,42 @@ const HomeSurvey = (props) => {
 
             <div className="recent-click">
                 <div className="recent-click-title">
-                    <span className="name">常用的</span>
+                    <span className="name">常用事项</span>
                 </div>
                 <div className="recent-click-list">
                     {
                         recentList && recentList.length > 0 ? recentList.map(item => {
                             return <div className="work-item" key={item.object.id}>
                                 <div className="work-left">
-                                <div className="work-icon">
-                                    {
-                                        item.object.workTypeSys.iconUrl ?
-                                            <img
-                                                src={setImageUrl(item.object.workTypeSys.iconUrl)}
-                                                alt=""
-                                                className="icon-32"
-                                            />
-                                            :
-                                            <img
-                                                src={('/images/workType1.png')}
-                                                alt=""
-                                                className="icon-32"
-                                            />
+                                    <div className="work-icon">
+                                        {
+                                            item.object.workTypeSys.iconUrl ?
+                                                <img
+                                                    src={setImageUrl(item.object.workTypeSys.iconUrl)}
+                                                    alt=""
+                                                    className="icon-32"
+                                                />
+                                                :
+                                                <img
+                                                    src={('/images/workType1.png')}
+                                                    alt=""
+                                                    className="icon-32"
+                                                />
 
-                                    }
-                                </div>
-                                <div className="work-content">
-                                    <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                    <div className="content-type">{item.object.project.projectName}</div>
-                                </div>
+                                        }
+                                    </div>
+                                    <div className="work-content">
+                                        <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
+                                        <div className="content-type">{item.object.project.projectName}</div>
+                                    </div>
                                 </div>
                                 {/* <div className="work-project">{item.object.project.projectName}</div> */}
-                                <div style={{width: "100px"}}>
-                                <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
-                                    {item.object.workStatusNode.name}
+                                <div style={{ width: "100px" }}>
+                                    <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
+                                        {item.object.workStatusNode.name}
+                                    </div>
                                 </div>
-                                </div>
-                               
+
                                 <div className="work-time">
                                     {item.recentTime}
                                 </div>
@@ -380,8 +383,9 @@ const HomeSurvey = (props) => {
                 </div>
             </div>
             <div className="todo-work">
-                <div className="todo-work-title">
-                    <span className="name">待办任务</span><div>
+                <div className="todo-work-top">
+                    <span className="name">待办事项</span>
+                    <div>
                         <span className="more" onClick={() => goTodoWorkItemList()}>
                             <svg aria-hidden="true" className="svg-icon">
                                 <use xlinkHref="#icon-rightjump"></use>
@@ -396,7 +400,7 @@ const HomeSurvey = (props) => {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
+                                        className="todo-item"
                                         key={item.id}
                                         onClick={() => goTodoDetail(item.link)}
                                     />
@@ -410,7 +414,7 @@ const HomeSurvey = (props) => {
                                 endTaskList.length > 0 ? endTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
+                                        className="todo-item"
                                         key={item.id}
                                         onClick={() => goTodoDetail(item.link)}
                                     />
@@ -424,7 +428,7 @@ const HomeSurvey = (props) => {
                                 overdueTaskList.length > 0 ? overdueTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
+                                        className="todo-item"
                                         key={item.id}
                                         onClick={() => goTodoDetail(item.link)}
                                     />

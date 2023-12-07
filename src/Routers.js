@@ -65,6 +65,7 @@ const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
 const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
+const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoListPage"))
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
@@ -243,7 +244,7 @@ const Routers = [
             {
                 path: "/todoList",
                 exact: false,
-                component: WorkTodo,
+                component: WorkTodoPage,
                 key: "ProjectSet"
 
             },
@@ -391,7 +392,7 @@ const Routers = [
                     {
                         path: "/projectSetdetail/:projectSetId/workTodo",
                         exact: false,
-                        component: WorkTodo,
+                        component: WorkTodoPage,
                         key: "ProjectSetSurvey"
                     },
                     {
@@ -858,7 +859,7 @@ const Routers = [
                     },
                     {
                         path: "/projectDetail/:id/workTodo",
-                        component: WorkTodo,
+                        component: WorkTodoPage,
                     },
                     {
                         path: "/projectDetail/:id/dynamic",
@@ -983,8 +984,7 @@ const Routers = [
                     {
                         path: "/:id/sprintdetail/:sprint/dynamic",
                         exact: false,
-                        component: Dynamic,
-                        key: "ProjectSetSurvey"
+                        component: Dynamic
                     },
                     {
                         path: "/:id/sprintdetail/:sprint/workList",
@@ -1037,9 +1037,7 @@ const Routers = [
                     },
                     {
                         path: "/:id/versiondetail/:version/dynamic",
-                        exact: false,
-                        component: Dynamic,
-                        key: "ProjectSetSurvey"
+                        component: Dynamic
                     },
                     {
                         path: "/:id/versiondetail/:version/workList",

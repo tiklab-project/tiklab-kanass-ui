@@ -91,18 +91,44 @@
     }
 
 
-    .dynamic-box {
-        background-color: #fff;
-        border-radius: 4px;
-        padding-bottom: 20px;
-        padding: var(--tiklab-padding);
+    // .dynamic-box {
+    //     background-color: #fff;
+    //     border-radius: 4px;
+    //     padding-bottom: 20px;
+    //     padding: var(--tiklab-padding);
  
-        .dynamic-list {
-            .dynamic-item {
-                cursor: pointer;
-            }
-        }
-    }
+    //     .dynamic-list {
+    //         .dynamic-item {
+    //             margin-bottom: 10px;
+    //             .dynamic-work-title:hover {
+    //                 color: var(--tiklab-blue);
+    //             }
+    //         }
+    //         .dynamic-item:nth-child(4n+1) {
+    //             .dynamic-user-icon {
+    //                 background-color: #cadbf3;
+    //             }
+    //         }
+
+    //         .dynamic-item:nth-child(4n+2){
+    //             .dynamic-user-icon {
+    //                 background-color: #deedd7;
+    //             }
+    //         }
+
+    //         .dynamic-item:nth-child(4n+3) {
+    //             .dynamic-user-icon {
+    //                 background-color: #ffebee;
+    //             }
+    //         }
+
+    //         .dynamic-item:nth-child(4n+4){
+    //             .dynamic-user-icon {
+    //                 background-color: #e8eaf6;
+    //             }
+    //         }
+    //     }
+    // }
 
     .milestone-box {
         background-color: #fff;

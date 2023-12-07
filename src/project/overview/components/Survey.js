@@ -19,6 +19,7 @@ import Workstore from "../../../work/store/WorkStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import DyncmicList from "../../../common/overviewComponent/DyncmicList";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
@@ -298,9 +299,9 @@ const Survey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.name, iconUrl: item.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.object.name, iconUrl: item.object.workTypeSys.iconUrl }])
 
-        props.history.push(`/projectDetail/${item.project.id}/work/${item.modelId}`)
+        props.history.push(`/projectDetail/${item.object.project.id}/work/${item.object.id}`)
     }
 
     const goVersion = (item) => {
@@ -445,7 +446,7 @@ const Survey = (props) => {
                     </div>
                     <div className="recent-click">
                         <div className="box-title">
-                            <span className="name">常用的</span>
+                            <span className="name">常用事项</span>
                         </div>
                         <div className="recent-click-list">
                             {
@@ -490,7 +491,8 @@ const Survey = (props) => {
                             }
                         </div>
                     </div>
-                    <div className="dynamic-box">
+                    <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
+                    {/* <div className="dynamic-box">
                         <div className="box-title">
                             <div className="name">相关动态</div>
                             <div className="more" onClick={() => goDynamicList()}>
@@ -498,8 +500,6 @@ const Survey = (props) => {
                                     <use xlinkHref="#icon-rightjump"></use>
                                 </svg>
                             </div>
-
-                            {/* <div className="more" onClick={() => { props.history.push(`/sprint/${userId}`) }}>更多...</div> */}
                         </div>
                         <div className="dynamic-list">
                             {
@@ -515,7 +515,7 @@ const Survey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有动态~" />
                             }
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
             </Col>

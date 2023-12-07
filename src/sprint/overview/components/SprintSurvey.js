@@ -16,6 +16,7 @@ import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import SprintSurveyStore from "../store/SprintSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
+import DyncmicList from "../../../common/overviewComponent/DyncmicList";
 const SprintSurvey = (props) => {
     const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
@@ -130,7 +131,10 @@ const SprintSurvey = (props) => {
         setSearchType(value)
         props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
     }
-
+    const goDynamicList = () => {
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/dynamic`)
+        
+    }
     return (
         <Row style={{ height: "100%", background: "var(--tiklab-gray-600)" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -231,11 +235,11 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="sprint-pending-workitem">
+                    <div className="sprint-todo">
                         <div className="sprint-title">
                             <span className="name">待办事项</span>
                             {
-                                todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
+                                todoTaskList.length > 10 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) }}>
                                     <svg aria-hidden="true" className="svg-icon">
                                         <use xlinkHref="#icon-rightjump"></use>
                                     </svg>
@@ -243,12 +247,12 @@ const SprintSurvey = (props) => {
                             }
 
                         </div>
-                        <div className="sprint-pending-workitem-list">
+                        <div className="sprint-todo-list">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
+                                        className="todo-item"
                                         key={item.id}
                                         onClick={() => goTodoDetail(item.link)}
                                     />
@@ -258,7 +262,7 @@ const SprintSurvey = (props) => {
                             }
                         </div>
                     </div>
-                    <div className="dynamic-box">
+                    {/* <div className="dynamic-box">
                         <div className="sprint-title">
                             <span className="name">相关动态</span>
                             {
@@ -284,7 +288,8 @@ const SprintSurvey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有动态~" />
                             }
                         </div>
-                    </div>
+                    </div> */}
+                    <DyncmicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
                 </div>
             </Col>
         </Row>

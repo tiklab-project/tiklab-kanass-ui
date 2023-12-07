@@ -167,9 +167,6 @@ const VersionTable = (props) => {
             title: '负责人',
             dataIndex: ['master', 'nickname'],
             key: 'builderId',
-            sorter: {
-                multiple: 1
-            },
             render: (text, record) => <div className="version-master">
                 <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div >{text}</div>

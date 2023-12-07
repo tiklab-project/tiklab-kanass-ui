@@ -16,6 +16,7 @@ import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import VersionSurveyStore from "../store/VersionSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
+import DyncmicList from "../../../common/overviewComponent/DyncmicList";
 import { CaretDownOutlined } from '@ant-design/icons';
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
@@ -120,6 +121,15 @@ const VersionSurvey = (props) => {
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
+
+    /**
+    * 跳转到动态列表
+    */
+    const goDynamicList = () => {
+        props.history.push(`/${versionId}/versiondetail/${versionId}/dynamic`)
+        
+    }
+
     const goTodoDetail = (url) => {
         window.location.href = url
     }
@@ -235,39 +245,35 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="version-pending-workitem">
-                            <div className="version-title">
-                                <span className="name">待办事项</span>
-                                {
-                                    todoTaskList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/versiondetail/${versionId}/workTodo`) }}>
-                                        <svg aria-hidden="true" className="svg-icon">
-                                            <use xlinkHref="#icon-rightjump"></use>
-                                        </svg>
-                                    </div>
-                                }
+                    <div className="version-todo-work">
+                        <div className="version-title">
+                            <span className="name">待办事项</span>
+                            {
+                                todoTaskList.length > 10 && <div className="more"
+                                    onClick={() => { props.history.push(`/projectScrumDetail/:id/versiondetail/${versionId}/workTodo`) }}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-rightjump"></use>
+                                    </svg>
+                                </div>
+                            }
 
-                            </div>
-                            <div className="version-pending-workitem-list">
-                                {
-                                    todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                        return <div
-                                            dangerouslySetInnerHTML={{ __html: item.data }}
-                                            className="dynamic-item"
-                                            key={item.id}
-                                            onClick={() => goTodoDetail(item.link)}
-                                        />
-                                    })
-                                        :
-                                        <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                                }
-                            </div>
                         </div>
-                    {/* <div className="version-survey-middle">
-                        <div className="version-version-box" >
-                            
+                        <div className="version-todo-work-list">
+                            {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                                    return <div
+                                        dangerouslySetInnerHTML={{ __html: item.data }}
+                                        className="todo-item"
+                                        key={item.id}
+                                        onClick={() => goTodoDetail(item.link)}
+                                    />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
                         </div>
-                    </div> */}
-                    <div className="dynamic-box">
+                    </div>
+                    {/* <div className="dynamic-box">
                         <div className="version-title">
                             <span className="name">相关动态</span>
                             {
@@ -293,7 +299,8 @@ const VersionSurvey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有动态~" />
                             }
                         </div>
-                    </div>
+                    </div> */}
+                    <DyncmicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>
             </Col>

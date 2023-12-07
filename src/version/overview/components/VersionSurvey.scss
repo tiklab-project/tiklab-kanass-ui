@@ -125,12 +125,57 @@
 
     }
 
-    .version-pending-workitem {
+    .version-todo-work {
         background-color: #fff;
         padding: var(--tiklab-padding);
         margin-bottom: 15px;
-    }
+        .todo-item {
+            margin-bottom: 10px;
+        }
+        .todo-item {
+            margin-bottom: 10px;
+            // .todo-user-icon {
+            //     border: #ff0000 1px solid;
+            // }
+        }
+        .todo-work-title:hover {
+            color: var(--tiklab-blue);
+            cursor: pointer;
+        }
 
+
+        .todo-item:nth-child(4n+1) {
+            .todo-user-icon {
+                background-color: #cadbf3;
+            }
+        }
+
+        .todo-item:nth-child(4n+2){
+            .todo-user-icon {
+                background-color: #deedd7;
+            }
+        }
+
+        .todo-item:nth-child(4n+3) {
+            .todo-user-icon {
+                background-color: #ffebee;
+            }
+        }
+
+        .todo-item:nth-child(4n+4){
+            .todo-user-icon {
+                background-color: #e8eaf6;
+            }
+        }
+    }
+    // .version-todo-list {
+    //     padding: var(--tiklab-padding);
+    //     margin-bottom: 15px;
+    //     background-color: #fff;
+    //     .todo-item {
+    //         margin-bottom: 10px;
+    //     }
+    // }
     .dynamic-box {
         background-color: #fff;
         padding: var(--tiklab-padding);
@@ -138,9 +183,37 @@
             margin-bottom: 10px;
             cursor: pointer;
         }
-
         .dynamic-list {
-            padding-bottom: 20px;
+            .dynamic-item {
+                margin-bottom: 10px;
+                .dynamic-work-title:hover {
+                    color: var(--tiklab-blue);
+                }
+            }
+            .dynamic-item:nth-child(4n+1) {
+                .dynamic-user-icon {
+                    background-color: #cadbf3;
+                }
+            }
+
+            .dynamic-item:nth-child(4n+2){
+                .dynamic-user-icon {
+                    background-color: #deedd7;
+                }
+            }
+
+            .dynamic-item:nth-child(4n+3) {
+                .dynamic-user-icon {
+                    background-color: #ffebee;
+                }
+            }
+
+            .dynamic-item:nth-child(4n+4){
+                .dynamic-user-icon {
+                    background-color: #e8eaf6;
+                }
+            }
         }
+
     }
 }

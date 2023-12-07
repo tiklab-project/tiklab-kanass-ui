@@ -49,7 +49,7 @@ class HomeStore {
     @observable todoTotal = 0;
     @observable todoCondition = {
         pageParam: {
-            pageSize: 20,
+            pageSize: 10,
             currentPage: 1
         },
         orderParams: [{
@@ -281,13 +281,15 @@ class HomeStore {
     findLogpage = async(value)=> {
         const params={
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1
             },
             bgroup: "teamwire",
             userId: value.userId,
             content: {
-                projectId: value.projectId
+                projectId: value.projectId,
+                versionId: value.versionId,
+                sprintId: value.sprintId
             }
         }
         

@@ -462,6 +462,9 @@ export class WorkStore {
             workStatus: {
                 id: value.workStatus
             },
+            projectVersion: {
+                id: value.versionId
+            },
             module: {
                 id: value.module
             },

@@ -45,7 +45,7 @@ export class BasicInfoStore {
                 orderType:"asc"
             }],
             pageParam: {
-                pageSize: value.pageSize,
+                pageSize: 10,
                 currentPage: 1
             }
         }
@@ -58,7 +58,7 @@ export class BasicInfoStore {
     findPrecessProjectList = async (values) => {
         Object.assign(this.projectPageParams, { ...values })
         const data = await Service("/projectSet/findProjectList", this.projectPageParams)
-        this.projectRelevance = data.data.dataList
+        this.projectRelevance = data.data
         return data;
     }
 
@@ -66,7 +66,7 @@ export class BasicInfoStore {
     findlogpage = async(value)=> {
         const params={
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1
             },
             bgroup: "teamwire"
@@ -83,7 +83,7 @@ export class BasicInfoStore {
     findtodopage = async(value)=> {
         const params={
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1
             },
             bgroup: "teamwire",

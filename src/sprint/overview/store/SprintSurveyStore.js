@@ -63,7 +63,7 @@ class SprintSurveyStore {
     findlogpage = async(value)=> {
         const params={
             pageParam: {
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1
             },
             orderParams: [{

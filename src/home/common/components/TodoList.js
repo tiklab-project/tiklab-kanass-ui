@@ -44,15 +44,17 @@ const TodoList = (props) => {
         if (props.route?.path === "/projectDetail/:id/workTodo") {
             const projectId = props.match.params.id;
             setFirstText("项目概况")
-            findTodopage({ ...params, content: {projectId: projectId}})
+            findTodopage({ ...params, content: { projectId: projectId } })
         }
-        if (props.match?.path === "/todoList") {
-            setFirstText(null)
+        console.log(props.match?.path)
+        if (props.match?.path === "/home/todoList") {
+            setFirstText("首页")
             findTodopage(params)
         }
 
-        if (props.route?.path === "/projectSetdetail/:id/workTodo") {
+        if (props.route?.path === "/projectSetdetail/:projectSetId/workTodo") {
             setFirstText("项目集概况")
+            findTodopage(params)
         }
 
         if (props.route?.path === "/:id/sprintdetail/:sprint/workTodo") {
@@ -84,7 +86,7 @@ const TodoList = (props) => {
 
     const changeProject = (value) => {
         setSprintValue(null)
-        findSprintList({projectId: value}).then(res => {
+        findSprintList({ projectId: value }).then(res => {
             if (res.code === 0) {
                 setSprintList(res.data)
             }
@@ -137,19 +139,21 @@ const TodoList = (props) => {
                 pageSize: 20,
                 currentPage: page
             }
-            
+
         }
         findTodopage(params)
     };
 
     return (
-        // <Row  className="todo">
+        // <Row className="todo">
         //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="todo-list-page">
-                    {/* <Breadcumb
+                <Breadcumb
                         {...props}
-                        firstText="待办列表"
-                    /> */}
+                        firstText={firstText}
+                        secondText="待办事项"
+                    // firstUrl="/home"
+                    />
                     <div className="todo-filter">
                         {/* <Select
                             placeholder="项目集"
@@ -188,7 +192,7 @@ const TodoList = (props) => {
                             key="sprint"
                             width={200}
                             onChange={(value) => changeSprint(value)}
-                            value = {sprintValue}
+                            value={sprintValue}
                         >
                             {
                                 sprintList && sprintList.map((item) => {
@@ -216,11 +220,11 @@ const TodoList = (props) => {
                             onChange={onPageChange}
                             defaultCurrent={1}
                             total={todoTotal}
-                            current = {todoCondition.pageParam.currentPage}
-                            showSizeChanger = {false}
-                            defaultPageSize ={20}
-                            pageSize = {20}
-                            // disabled
+                            current={todoCondition.pageParam.currentPage}
+                            showSizeChanger={false}
+                            defaultPageSize={20}
+                            pageSize={20}
+                        // disabled
                         />
                     </div>
 

@@ -22,6 +22,7 @@ const WorkAddPage = (props) => {
 
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const project = JSON.parse(localStorage.getItem("project"));
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
@@ -126,7 +127,9 @@ const WorkAddPage = (props) => {
             values.workType = workType.id;
             values.desc = slateValue;
             values.extData = {}
-
+            if(versionId){
+                values.versionId = versionId
+            }
             let keys = Object.keys(values)
             keys = keys.map((item) => {
                 return item.slice(6)
