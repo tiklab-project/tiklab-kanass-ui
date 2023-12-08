@@ -144,7 +144,7 @@
     
     
     .project-content {
-        // height: 100%;
+        height: calc(100vh - 48px);
         background-color: #fff;
         // padding: 15px;
         .ant-layout-sider {

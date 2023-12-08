@@ -144,7 +144,7 @@ module.exports = {
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
-            title: 'TeamWire',
+            title: 'Kanass',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
             filename: 'index.html',
