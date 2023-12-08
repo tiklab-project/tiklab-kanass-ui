@@ -9,7 +9,7 @@
 import {Service} from "../../../common/utils/requset"
 import { observable, action, extendObservable } from "mobx";
 
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 
 class HomeStore {
     // 项目列表
@@ -56,7 +56,7 @@ class HomeStore {
             name: "createtime",
             orderType:"desc"
         }],
-        bgroup: "teamwire",
+        bgroup: "kanass",
         content: {}
     }
     
@@ -136,7 +136,7 @@ class HomeStore {
     @action
 	statTodoWorkItem = async(value) => {
         const params={
-            bgroup : "teamwire",
+            bgroup : "kanass",
             status: 1,
             pageParam: {
                 pageSize: value.pageSize,
@@ -238,7 +238,7 @@ class HomeStore {
             sendType: 'site',
             receiver: getUser().userId,
             status: value.status,
-            bgroup: "teamwire"
+            bgroup: "kanass"
         }
         
         const data = await Service("/message/messageItem/findMessageItemPage", params)
@@ -284,7 +284,7 @@ class HomeStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             userId: value.userId,
             content: {
                 projectId: value.projectId,
@@ -325,7 +325,7 @@ class HomeStore {
         //         name: "timestamp",
         //         orderType:"asc"
         //     }],
-        //     bgroup: "teamwire",
+        //     bgroup: "kanass",
         //     userId: value.userId,
         //     content: {
         //         projectId: value.projectId

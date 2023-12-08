@@ -14,7 +14,7 @@ import WorkTypeEditmodal from "./WorkTypeEditModal"
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
 
 const WorkType = (props) => {

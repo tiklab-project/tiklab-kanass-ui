@@ -140,7 +140,7 @@ export class ProjectSurveyStore {
                 pageSize: 10,
                 currentPage: value.currentPage
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             userId: value.userId,
             content: {
                 projectId: value.projectId
@@ -162,7 +162,7 @@ export class ProjectSurveyStore {
                 pageSize: 10,
                 currentPage: value.currentPage
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             content: {
                 projectId: value.projectId
             }

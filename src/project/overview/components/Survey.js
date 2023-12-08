@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from "react";
 import "../components/Survey.scss"
 import { observer, inject } from "mobx-react";
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"
@@ -315,7 +315,7 @@ const Survey = (props) => {
         props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
     }
     return (
-        <Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-600)" }}>
+        <Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-survey">
                     <div className="upper-box">

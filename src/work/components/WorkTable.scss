@@ -1,11 +1,11 @@
 // .work-list-col {
-//     padding: var(--tiklab-padding);
+//     padding: var(--thoughtware-padding);
 // }
 .work-table {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
 
     .work-table-content {
-        padding-top: var(--tiklab-padding);
+        padding-top: var(--thoughtware-padding);
         .ant-pagination {
             margin: 16px 0 0;
         }
@@ -65,7 +65,7 @@
             display: flex;
             align-items: center;
 
-            .tiklab-profile {
+            .thoughtware-profile {
                 .ant-avatar {
                     width: 16px !important;
                     height: 16px !important;
@@ -98,7 +98,7 @@
             margin-left: 5px;
 
             .work-key {
-                color: var(--tiklab-gray-500);
+                color: var(--thoughtware-gray-500);
                 line-height: 20px;
                 font-size: 12px;
             }
@@ -115,7 +115,7 @@
             }
 
             .work-text:hover {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 text-decoration: underline;
             }
         }

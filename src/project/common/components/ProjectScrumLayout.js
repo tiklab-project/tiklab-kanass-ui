@@ -12,7 +12,7 @@ import ProdeScrumAside from "./ProjectScrumDetailAside";
 import "../components/ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
 const ProjectScrumDetail = (props) => {

@@ -1,12 +1,12 @@
 .project-version {
     height: calc(100vh - 55px);
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
 
     .version-name {
         cursor: pointer;
     }
     .version-name:hover {
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
     }
 
     .version-tabs {
@@ -17,7 +17,7 @@
         line-height: 50px;
 
         .version-tab {
-            font-size: var(--tiklab-font-13);
+            font-size: var(--thoughtware-font-13);
             ;
             cursor: pointer;
             height: 50px;
@@ -30,7 +30,7 @@
         }
 
         .active-tabs {
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
         }
     }
 

@@ -10,7 +10,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
-import { PrivilegeButton } from "tiklab-privilege-ui"
+import { PrivilegeButton } from "thoughtware-privilege-ui"
 const SetAside = (props) => {
     // 无子级菜单处理
     const [selectKey, setSelectKey] = useState("/organ/organ");

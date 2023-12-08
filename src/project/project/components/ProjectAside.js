@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-02-12 13:59:12
  */
 import React,{Fragment,useState} from 'react';
-import {getUser} from 'tiklab-core-ui'
+import {getUser} from 'thoughtware-core-ui'
 import {observer, inject} from "mobx-react";
 
 const prorouter = [

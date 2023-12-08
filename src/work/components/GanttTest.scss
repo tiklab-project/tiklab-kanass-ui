@@ -17,18 +17,18 @@
             justify-content: space-between;
             align-items: center;
             height: 50px;
-            background-color: var(--tiklab-gray-200);
+            background-color: var(--thoughtware-gray-200);
             overflow: hidden;
         　　text-overflow: ellipsis;
         　　white-space: nowrap;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             position: relative;
             top: 0;
             .table-hearder-gatter  {
                 width: 1000px;
                 height: 50px;
-                border-left: 2px solid  var(--tiklab-gray);
-                font-weight: var(--tiklab-font-weight-bold);
+                border-left: 2px solid  var(--thoughtware-gray);
+                font-weight: var(--thoughtware-font-weight-bold);
                 overflow: auto;
             }
             .table-hearder-gatter::-webkit-scrollbar { 
@@ -59,7 +59,7 @@
                 height: 25px;
                 display: inline-flex;
                 text-align: center;
-                border-bottom: 1px solid  var(--tiklab-gray);
+                border-bottom: 1px solid  var(--thoughtware-gray);
                 line-height: 25px;
             }
             .table-day {
@@ -119,7 +119,7 @@
         max-height: calc(100% - 50px);
         overflow-x: auto;
         overflow-y: hidden;
-        border-left: var(--tiklab-gray-200) 2px solid;
+        border-left: var(--thoughtware-gray-200) 2px solid;
         .table-overflow {
             overflow: auto;
         }
@@ -129,13 +129,13 @@
             text-align: center;
         }
         .table-day {
-            border-right: var(--tiklab-gray-200) solid 1px;
+            border-right: var(--thoughtware-gray-200) solid 1px;
         }
         .table-timer {
             .table-month {
                 height: 25px;
                 line-height: 25px;
-                background-color:  var(--tiklab-gray-200);
+                background-color:  var(--thoughtware-gray-200);
                 display: inline-flex;
                 .table-month-td {
                     border-right: solid #fff 1px;

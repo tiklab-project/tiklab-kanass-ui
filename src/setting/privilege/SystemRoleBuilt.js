@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect,useState } from "react";
-import { SystemRole } from 'tiklab-privilege-ui';
+import { SystemRole } from 'thoughtware-privilege-ui';
 import { inject, observer } from "mobx-react";
 
 // 系统功能管理
@@ -8,7 +8,7 @@ const SystemRoleBuilt = props => {
 
     return (
         <SystemRole
-            bgroup={'teamwire'}
+            bgroup={'kanass'}
             isBase = {true}
             {...props}
         />

@@ -69,60 +69,60 @@ module.exports = merge(baseWebpackConfig, {
                     priority: 90,
                     reuseExistingChunk: true
                 },
-                tiklabFormUI: {
-                    name: 'chunk-tiklab-form-ui',
+                thoughtwareFormUI: {
+                    name: 'chunk-thoughtware-form-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-form-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-form-ui[\\/]/,
                     priority: 90,
                     reuseExistingChunk: true
                 },
-                tiklabPrivilegeUI: {
-                    name: 'chunk-tiklab-privilege-ui',
+                thoughtwarePrivilegeUI: {
+                    name: 'chunk-thoughtware-privilege-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-privilege-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-privilege-ui[\\/]/,
                     priority: 70,
                     minChunks: 1,
                     reuseExistingChunk: true
                 },
-                tiklabPluginUI: {
-                    name: 'chunk-tiklab-plugin-ui',
+                thoughtwarePluginUI: {
+                    name: 'chunk-thoughtware-plugin-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-plugin-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-plugin-ui[\\/]/,
                     priority: 50,
                     reuseExistingChunk: true
                 },
-                tiklabUserUI: {
-                    name: 'chunk-tiklab-user-ui',
+                thoughtwareUserUI: {
+                    name: 'chunk-thoughtware-user-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-user-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-user-ui[\\/]/,
                     priority: 60,
                     reuseExistingChunk: true
                 },
-                tiklabCoreUI: {
-                    name: 'chunk-tiklab-core-ui',
+                thoughtwareCoreUI: {
+                    name: 'chunk-thoughtware-core-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-core-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-core-ui[\\/]/,
                     priority: 50,
                     reuseExistingChunk: true
                 },
-                tiklabMessageUI: {
-                    name: 'chunk-tiklab-message-ui',
+                thoughtwareMessageUI: {
+                    name: 'chunk-thoughtware-message-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-message-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-message-ui[\\/]/,
                     priority: 80,
                     reuseExistingChunk: true
                 },
-                tiklabEamUI: {
-                    name: 'chunk-tiklab-eam-ui',
+                thoughtwareEamUI: {
+                    name: 'chunk-thoughtware-eam-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-eam-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-eam-ui[\\/]/,
                     priority: 50,
                     reuseExistingChunk: true
                 },
-                tiklabSlateUI: {
-                    name: 'chunk-tiklab-slate-ui',
+                thoughtwareSlateUI: {
+                    name: 'chunk-thoughtware-slate-ui',
                     chunks: 'all',
-                    test: /[\\/]node_modules[\\/]tiklab-slate-ui[\\/]/,
+                    test: /[\\/]node_modules[\\/]thoughtware-slate-ui[\\/]/,
                     priority: 100,
                     reuseExistingChunk: false
                 },

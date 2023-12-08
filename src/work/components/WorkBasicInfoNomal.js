@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "tiklab-slate-ui";
-import { SwitchPreliminaryType } from "tiklab-form-ui";
-import "tiklab-slate-ui/es/tiklab-slate.css"
+import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
+import { SwitchPreliminaryType } from "thoughtware-form-ui";
+import "thoughtware-slate-ui/es/thoughtware-slate.css"
 import "./WorkBasicInfo.scss";
 import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";

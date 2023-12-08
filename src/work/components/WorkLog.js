@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Modal, Table, Space, Popconfirm, Form, Input, Select, Row, Col, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import "./WorkLog.scss";
 import dayjs from "dayjs";
 import WorkLogStore from "../store/WorkLogStore";

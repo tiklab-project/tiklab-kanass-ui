@@ -15,7 +15,7 @@
     z-index: 3;
     
     .frame-header-logo {
-        height: var(--tiklab-head-height);
+        height: var(--thoughtware-head-height);
         width: 120px;
         margin-right: 20px;
         margin-left: 10px;
@@ -33,8 +33,8 @@
         gap: 20px;
 
         &-active {
-            border-bottom: var(--tiklab-blue) 2px solid;
-            color: var(--tiklab-blue);
+            border-bottom: var(--thoughtware-blue) 2px solid;
+            color: var(--thoughtware-blue);
         }
 
         &-item {
@@ -54,7 +54,7 @@
                 
                 background: #E1EDFF;
                 border-radius: 3px;
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
             }
 
         }
@@ -108,7 +108,7 @@
 
             .messageNum {
                 font-size: 25px;
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
             }
 
         }

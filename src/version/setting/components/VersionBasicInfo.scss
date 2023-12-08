@@ -7,7 +7,7 @@
     font-weight: 600;
 }
 .version-set-basicinfo {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     .version-set-title {
         height: 40px;
         line-height: 40px;
@@ -34,7 +34,7 @@
         text-align: center;
         height: 30px;
         line-height: 30px;
-        background: var(--tiklab-blue);
+        background: var(--thoughtware-blue);
         color: #fff;
         border-radius: 4px;
         width: 100px;
@@ -64,7 +64,7 @@
             box-sizing: content-box;
         }
         .icon-select {
-            border: 2px solid var(--tiklab-blue);
+            border: 2px solid var(--thoughtware-blue);
         }
     }
 }

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle } = props;

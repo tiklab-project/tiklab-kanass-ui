@@ -14,7 +14,7 @@
         height: 104px;
         .project-item:hover {
             border-radius: 4px 4px 0 0;
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
             transition: 500;
         }
 
@@ -27,13 +27,13 @@
             flex-shrink: 0;
             border-radius: 4px;
             cursor: pointer;
-            background-color: var(--tiklab-gray-600);
+            background-color: var(--thoughtware-gray-600);
             box-sizing: border-box;
-            border-bottom: 2px solid var(--tiklab-gray-600);
+            border-bottom: 2px solid var(--thoughtware-gray-600);
             
             .item-title {
                 margin-bottom: 10px;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 display: inline-flex;
                 align-items: center;
                 font-size: 16px;
@@ -90,9 +90,9 @@
     }
 }
 .project {
-    // padding: var(--tiklab-padding);;
+    // padding: var(--thoughtware-padding);;
     overflow: auto;
-    height: calc(100vh - var(--tiklab-head-height));
+    height: calc(100vh - var(--thoughtware-head-height));
     .ant-avatar {
         width: 16px;
         height: 16px;
@@ -113,7 +113,7 @@
         }
         .active-tabs {
             color: #000;
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
         }
         .filter-search {
             width: 150px;
@@ -127,7 +127,7 @@
         height: 50px;
         line-height: 50px;
         .project-tab{
-            font-size: var(--tiklab-font-13);;
+            font-size: var(--thoughtware-font-13);;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
@@ -150,10 +150,10 @@
         .ant-layout-sider {
             background-color: #fff;
             height: 100%;
-            border-right: 2px solid var(--tiklab-gray-200);
+            border-right: 2px solid var(--thoughtware-gray-200);
             .project-aside {
                 height: 100%;
-                background:var(--tiklab-gray);
+                background:var(--thoughtware-gray);
                 .project-title {
                     height: 40px;
                     display: flex;
@@ -162,9 +162,9 @@
                     justify-content: space-between;
                     align-items: center;
                     padding: 0 20px;
-                    font-weight: var(--tiklab-font-weight-bold);
+                    font-weight: var(--thoughtware-font-weight-bold);
                     color: #000;
-                    border-bottom: 1px solid var(--tiklab-gray-200);
+                    border-bottom: 1px solid var(--thoughtware-gray-200);
                 }
                 .project-menu {
                     list-style-type:none;
@@ -186,11 +186,11 @@
                     }
                     .project-menu-submenu:hover {
                         cursor: pointer;
-                        color: var(--tiklab-blue);
+                        color: var(--thoughtware-blue);
                     }
                     .project-menu-select {
-                        background-color: var(--tiklab-gray-400);
-                        border-left: 3px solid var(--tiklab-blue);
+                        background-color: var(--thoughtware-gray-400);
+                        border-left: 3px solid var(--thoughtware-blue);
                     }
                 }
                 .hidden-menu {
@@ -204,7 +204,7 @@
             .ant-col {
                 height: 100%;
                 background-color: #fff;
-                padding: var(--tiklab-padding);
+                padding: var(--thoughtware-padding);
             }
         }
         .project-table-box {
@@ -213,7 +213,7 @@
                 display: flex;
                 align-items: center;
                 .project-key {
-                    color: var(--tiklab-gray-500);
+                    color: var(--thoughtware-gray-500);
                     line-height: 25px;
                 }
                 .project-text {
@@ -222,12 +222,12 @@
                 }
                 .project-text:hover {
                     text-decoration: underline;
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
             }
             .project-status {
                 padding: 5px 6px;
-                background: var(--tiklab-gray-400);
+                background: var(--thoughtware-gray-400);
                 border-radius: 4px;
                 font-size: 13px;
                 width: fit-content;
@@ -250,12 +250,12 @@
             div {
                 margin-bottom: 20px;
                 font-size: 16px;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
             }
             padding: 20px;
         }
         .project-gide-botton {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
             cursor: pointer;
         }
     }

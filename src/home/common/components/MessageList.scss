@@ -9,7 +9,7 @@
 }
 
 .frame-header-drawer {
-    top: var(--tiklab-head-height);
+    top: var(--thoughtware-head-height);
     .ant-drawer-header {
         padding: 9px 20px;
         border-bottom: 0
@@ -55,7 +55,7 @@
             .message-item-title {
                 height: 40px;
                 line-height: 40px;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 font-size: 16px;
                 .message-item-time{
                     padding: 0 10px;
@@ -80,7 +80,7 @@
             cursor: pointer;
         }
         .message-list-bottom:hover {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
         
     }

@@ -4,7 +4,7 @@ import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { observer, Provider } from "mobx-react";
 import {  Row, Col } from 'antd';
-import { RemoteComponent } from "tiklab-plugin-core-ui";
+import { RemoteComponent } from "thoughtware-plugin-core-ui";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
 import { finWorkList } from "./WorkGetList";

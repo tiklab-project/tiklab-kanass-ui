@@ -11,7 +11,7 @@ import { Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkTestCaseList.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
-import { applyJump } from "tiklab-core-ui";
+import { applyJump } from "thoughtware-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
 import Button from "../../common/button/Button"
 const WorkTestCaseList = (props) => {

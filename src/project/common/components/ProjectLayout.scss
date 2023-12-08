@@ -1,19 +1,19 @@
 .project-prodetail {
     height: calc(100vh - 48px);
     .prodetail-row {
-        height: calc(100vh - var(--tiklab-head-height));
+        height: calc(100vh - var(--thoughtware-head-height));
     }
 
     .project-detail-side {
-        // background-color: var(--tiklab-gray-600);
+        // background-color: var(--thoughtware-gray-600);
         border-right: 1px solid #f0f0f0;
 
         .ant-layout-sider-children {
             .project-aside {
-                height: calc(100vh - var(--tiklab-head-height));
+                height: calc(100vh - var(--thoughtware-head-height));
                 display: flex;
                 flex-direction: column;
-                background: var(--tiklab-gray-600);
+                background: var(--thoughtware-gray-600);
 
                 ul {
                     padding: 0;
@@ -37,7 +37,7 @@
                 }
 
                 .setting:hover {
-                    background-color: var(--tiklab-gray-400);
+                    background-color: var(--thoughtware-gray-400);
                 }
 
                 .setting {
@@ -87,16 +87,16 @@
                     }
 
                     .project-menu-submenu-icon:hover {
-                        background-color: var(--tiklab-gray-400);
+                        background-color: var(--thoughtware-gray-400);
                     }
 
                     .project-menu-submenu:hover {
-                        background-color: var(--tiklab-gray-300);
+                        background-color: var(--thoughtware-gray-300);
                     }
 
                     .project-menu-select {
-                        background-color: var(--tiklab-gray-400);
-                        border-left: 3px solid var(--tiklab-blue);
+                        background-color: var(--thoughtware-gray-400);
+                        border-left: 3px solid var(--thoughtware-blue);
                     }
                 }
 
@@ -125,7 +125,7 @@
                     }
 
                     .right:hover {
-                        color: var(--tiklab-blue);
+                        color: var(--thoughtware-blue);
                     }
                 }
             }

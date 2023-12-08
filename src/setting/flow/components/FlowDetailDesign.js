@@ -1,6 +1,6 @@
 
 import React, { useEffect } from "react";
-import {FlowChart} from 'tiklab-flow-ui';
+import {FlowChart} from 'thoughtware-flow-ui';
 import { observer } from "mobx-react";
 import FlowStore from "../store/FlowStore"
 const FlowDetailDesign = (props) => {

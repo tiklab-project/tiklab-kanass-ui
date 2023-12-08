@@ -11,13 +11,13 @@ import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
-import { getUser } from 'tiklab-core-ui'
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { getUser } from 'thoughtware-core-ui'
 import "./WorkDetail.scss";
 import { SwapRightOutlined } from '@ant-design/icons';
 import Button from "../../common/button/Button";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-import { FlowChartLink } from "tiklab-flow-ui";
+import { FlowChartLink } from "thoughtware-flow-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";

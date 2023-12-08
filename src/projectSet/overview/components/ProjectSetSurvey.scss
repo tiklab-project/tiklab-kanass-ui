@@ -1,10 +1,10 @@
 .projectSet-survey {
-    height: calc(100vh - var(--tiklab-head-height));
-    padding: var(--tiklab-padding);;
+    height: calc(100vh - var(--thoughtware-head-height));
+    padding: var(--thoughtware-padding);;
     overflow: auto;
-    background-color: var(--tiklab-gray-600);
+    background-color: var(--thoughtware-gray-600);
     .more {
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
         margin-left: 10px;
         cursor: pointer;
         display: flex;
@@ -15,7 +15,7 @@
         align-items: center;
         justify-content: space-between;
         font-size: 16px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         // height: 30px;
         // line-height: 30px;
         margin-bottom: 10px;
@@ -31,7 +31,7 @@
             border-radius: 4px;
             height: 220px;
             // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-            padding: var(--tiklab-padding);
+            padding: var(--thoughtware-padding);
             background-color: #fff;
             .projectSet-info {
                 display: flex;
@@ -71,7 +71,7 @@
             border-radius: 4px;
             margin-left: 20px;
             // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-            padding: var(--tiklab-padding);
+            padding: var(--thoughtware-padding);
             background-color: #fff;
             height: 220px;
             &-list {
@@ -99,7 +99,7 @@
                     margin-right: 10px;
                 }
                 .name {
-                    color: var(--tiklab-blue)
+                    color: var(--thoughtware-blue)
                 }
                 .projectSet-process-project-date {
                     color: #999;
@@ -122,7 +122,7 @@
         border-radius: 4px;
         flex: 1;
         // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-        padding: var(--tiklab-padding);;
+        padding: var(--thoughtware-padding);;
         min-height: 300px;
         .dynamic-list {
             margin-top: 10px;
@@ -144,7 +144,7 @@
             }
             .dynamic-name {
                 .name {
-                    color: var(--tiklab-blue)
+                    color: var(--thoughtware-blue)
                 }
             }
             
@@ -161,7 +161,7 @@
         margin-top: 15px;
         padding-bottom: 15px;
         // box-shadow: rgba(168, 176, 189, 0.25) 0px 4px 8px -2px, rgba(188, 194, 205, 0.31) 0px 0px 1px 0px;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         margin-bottom: 15px;
         min-height: 300px;
         &-list {
@@ -170,7 +170,7 @@
                 margin-bottom: 10px;
             }
             .todo-work-title:hover {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 cursor: pointer;
             }
     
@@ -223,7 +223,7 @@
                 margin-right: 10px;
             }
             // .name {
-            //     color: var(--tiklab-blue)
+            //     color: var(--thoughtware-blue)
             // }
             .projectSet-pending-workitem-date {
                 color: #999;

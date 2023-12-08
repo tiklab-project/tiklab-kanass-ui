@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-11 16:37:03
  */
 import { createContext } from 'react';
-import {EAM_STORE, EamStore} from 'tiklab-eam-ui/es/store';
+import {EAM_STORE, EamStore} from 'thoughtware-eam-ui/es/store';
 
 function createStores() {
     return {

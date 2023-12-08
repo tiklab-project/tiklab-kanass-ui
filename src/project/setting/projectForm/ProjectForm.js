@@ -10,7 +10,7 @@
 
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { ProjectForm } from 'tiklab-form-ui';
+import { ProjectForm } from 'thoughtware-form-ui';
 
 const ProjectFormList = (props) => {
     const projectId = props.match.params.id;

@@ -14,7 +14,7 @@ import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
-import {applyJump} from "tiklab-core-ui";
+import {applyJump} from "thoughtware-core-ui";
 import WikiRepositoryStore from "../store/WikiRepositoryStore";
 const WikiRepository = (props) => {
     const store = {

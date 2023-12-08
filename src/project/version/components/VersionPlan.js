@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Space } from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
 import { observer, inject, Provider } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
@@ -87,7 +87,7 @@ const VersionPlan = (props) => {
                                 className="img-icon-right"
                             />
                     }
-                    <span style={{ cursor: "pointer", color: "var(--tiklab-blue)" }} onClick={() => goWorkItem(record.id, index)}>
+                    <span style={{ cursor: "pointer", color: "var(--thoughtware-blue)" }} onClick={() => goWorkItem(record.id, index)}>
                         {text}
                     </span>
                 </>

@@ -11,8 +11,8 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
-import { orgStores } from "tiklab-user-ui/es/store";
-import { enableAxiosCE } from 'tiklab-core-ui';
+import { orgStores } from "thoughtware-user-ui/es/store";
+import { enableAxiosCE } from 'thoughtware-core-ui';
 import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -21,11 +21,11 @@ import './common/language/i18n'
 import "./index.scss"
 
 import { observer } from "mobx-react"
-import { pluginLoader, PluginProvider } from "tiklab-plugin-core-ui";
+import { pluginLoader, PluginProvider } from "thoughtware-plugin-core-ui";
 import "./assets/index";
 import resources from "./common/language/resources";
-import {useVersion} from "tiklab-eam-ui/es/utils";
-import {privilegeStores} from "tiklab-privilege-ui/es/store";
+import {useVersion} from "thoughtware-eam-ui/es/utils";
+import {privilegeStores} from "thoughtware-privilege-ui/es/store";
 enableAxiosCE()
 const Index = observer((props) => {
 

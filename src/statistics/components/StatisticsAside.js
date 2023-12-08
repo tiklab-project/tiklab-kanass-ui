@@ -9,8 +9,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
-import { useSelector } from "tiklab-plugin-core-ui";
-import { getVersionInfo } from "tiklab-core-ui";
+import { useSelector } from "thoughtware-plugin-core-ui";
+import { getVersionInfo } from "thoughtware-core-ui";
 const StatisticsAsicde = (props) => {
     const { workReportList, logReportList, workKey, logKey } = props;
     const pluginStore = useSelector(state => state.pluginStore);

@@ -19,7 +19,7 @@
 }
 
 .work-table-detail {
-    top: var(--tiklab-head-height) !important;
+    top: var(--thoughtware-head-height) !important;
     height: calc(100vh - 48px) !important;
     // width: 1000;
     .ant-drawer-body {
@@ -77,7 +77,7 @@
             align-items: center;
             // margin-right: 5px;
             .work-detail-crumb-text:hover{
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 text-decoration: underline;
                 cursor: pointer;
             }
@@ -142,7 +142,7 @@
 
             .work-item-title:focus-visible {
                 outline: 0;
-                border: 2px solid var(--tiklab-blue);
+                border: 2px solid var(--thoughtware-blue);
                 min-width: 100px;
                 border-radius: 2px;
                 padding: 0 10px;
@@ -150,7 +150,7 @@
             }
 
             .work-item-title:hover {
-                background-color: var(--tiklab-gray-400);
+                background-color: var(--thoughtware-gray-400);
             }
 
             .work-item-title:focus {
@@ -159,7 +159,7 @@
 
             .work-item-title-focus {
                 background-color: #fff;
-                border: 1px solid var(--tiklab-blue);
+                border: 1px solid var(--thoughtware-blue);
                 padding: 0 20px 0 10px;
             }
 
@@ -191,7 +191,7 @@
                     align-items: center;
 
                     .title-change-true {
-                        background: var(--tiklab-blue);
+                        background: var(--thoughtware-blue);
                         color: #fff;
                         height: 20px;
                         line-height: 20px;
@@ -271,7 +271,7 @@
                     border: 0;
                 }
 
-                .tiklab-profile {
+                .thoughtware-profile {
                     .ant-avatar {
                         width: 16px !important;
                         height: 16px !important;
@@ -289,7 +289,7 @@
     }
 
     .other-title {
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         margin-bottom: 5px;
         font-size: 13px;
     }
@@ -319,7 +319,7 @@
     }
 
     .work-flow-item:hover {
-        background-color: var(--tiklab-gray-400);
+        background-color: var(--thoughtware-gray-400);
     }
 
     .work-flow-view {
@@ -329,7 +329,7 @@
     }
 
     .work-flow-view:hover {
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
     }
 
 }

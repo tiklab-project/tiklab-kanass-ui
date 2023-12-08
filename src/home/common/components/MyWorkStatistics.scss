@@ -7,7 +7,7 @@
         width: 100%;
         height: 40px;
         line-height: 40px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         padding: 0 10px;
         display: flex;
         align-items: center;
@@ -57,10 +57,10 @@
             }
         }
         .work-statistics-item:hover .work-num{
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
         .work-statistics-item:hover .work-text{
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
     }
 }

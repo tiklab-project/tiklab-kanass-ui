@@ -106,7 +106,7 @@ const EpicPlanAddmodal = (props) => {
                     <Button type="primary" onClick={showModal}>
                         +{props.name}
                     </Button>
-                    : <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
+                    : <span onClick={showModal} style={{color: "var(--thoughtware-gray-400)"}}>{props.name}</span>
             }
             <Modal
                 title="选择事项"

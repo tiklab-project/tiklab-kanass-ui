@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {SystemFlow} from "tiklab-flow-ui";
+import {SystemFlow} from "thoughtware-flow-ui";
 
 const WorkTypeFlow = props => {
 

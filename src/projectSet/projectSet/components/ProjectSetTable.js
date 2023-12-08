@@ -13,7 +13,7 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";
 
 const ProjectSetTable = (props) => {

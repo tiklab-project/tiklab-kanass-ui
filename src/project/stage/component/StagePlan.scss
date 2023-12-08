@@ -1,13 +1,13 @@
 .stage-workitem {
     .stage-table {
         margin-top: 10px;
-        border-bottom: 1px solid var(--tiklab-gray-400);
+        border-bottom: 1px solid var(--thoughtware-gray-400);
         .stage-table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             line-height: 30px;
-            border-bottom: 1px solid var(--tiklab-gray-400);
+            border-bottom: 1px solid var(--thoughtware-gray-400);
             color: #5E6C84;
             font-size: 12px;
             font-weight: 600;
@@ -36,7 +36,7 @@
                     align-items: center;
                 }
                 .stageName {
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
             }
             .stage-item-title, .stage-item-data {
@@ -61,7 +61,7 @@
                     align-items: center;
                 }
                 .workitemName {
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
             }
             .workitem-row-title, .workitem-row-data {
@@ -72,7 +72,7 @@
             }
             .workitem-row-action {
                 cursor: pointer;
-                color: var(--tiklab-blue)
+                color: var(--thoughtware-blue)
             }
             .workitem-row {
                 padding: 5px;

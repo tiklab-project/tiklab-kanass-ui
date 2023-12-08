@@ -1,7 +1,7 @@
 .home {
-    height: calc(100vh - var(--tiklab-head-height));
+    height: calc(100vh - var(--thoughtware-head-height));
     overflow: auto;
-    // background: var(--tiklab-gray-600);
+    // background: var(--thoughtware-gray-600);
     position: relative;
     z-index: 0;
     padding: 0 20px 20px;
@@ -11,7 +11,7 @@
         gap: 20px;
         position: sticky;
         // top: 0;
-        background: var(--tiklab-gray-600);
+        background: var(--thoughtware-gray-600);
         // z-index: 1;
         padding: 20px 0 15px 0;
 
@@ -28,14 +28,14 @@
         }
 
         .home-tab-select {
-            font-weight: var(--tiklab-font-weight-bold);
-            color: var(--tiklab-blue);
-            background-color: var(--tiklab-gray-200);
+            font-weight: var(--thoughtware-font-weight-bold);
+            color: var(--thoughtware-blue);
+            background-color: var(--thoughtware-gray-200);
         }
     }
 
     // .home-content {
-    //     background: var(--tiklab-gray-600);
+    //     background: var(--thoughtware-gray-600);
     // }
 
     .title {
@@ -47,7 +47,7 @@
         justify-content: space-between;
 
         .name {
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
 
         .more:hover {
@@ -55,7 +55,7 @@
         }
 
         .more {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -66,7 +66,7 @@
         overflow: hidden;
         background-color: #fff;
         border-radius: 4px;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         height: fit-content;
 
         .home-project {
@@ -81,7 +81,7 @@
 
             .project-item:hover {
                 border-radius: 4px 4px 0 0;
-                border-bottom: 2px solid var(--tiklab-blue);
+                border-bottom: 2px solid var(--thoughtware-blue);
                 transition: 500;
             }
 
@@ -94,13 +94,13 @@
                 flex-shrink: 0;
                 border-radius: 4px;
                 cursor: pointer;
-                background-color: var(--tiklab-gray-600);
+                background-color: var(--thoughtware-gray-600);
                 box-sizing: border-box;
-                border-bottom: 2px solid var(--tiklab-gray-600);
+                border-bottom: 2px solid var(--thoughtware-gray-600);
 
                 .item-title {
                     margin-bottom: 10px;
-                    font-weight: var(--tiklab-font-weight-bold);
+                    font-weight: var(--thoughtware-font-weight-bold);
                     display: inline-flex;
                     align-items: center;
                     font-size: 16px;
@@ -162,14 +162,14 @@
     .todo-work {
         margin: 0 auto;
         margin-top: 15px;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         background-color: #fff;
         border-radius: 4px;
         flex: 1;
 
         &-top {
             width: 100%;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -179,7 +179,7 @@
             }
 
             .more {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 margin-left: 10px;
                 cursor: pointer;
                 display: flex;
@@ -197,7 +197,7 @@
                 // }
             }
             .todo-work-title:hover {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 cursor: pointer;
             }
 
@@ -231,7 +231,7 @@
     .recent-click {
         margin: 0 auto;
         margin-top: 15px;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         background-color: #fff;
         border-radius: 4px;
         flex: 1;
@@ -239,7 +239,7 @@
 
         &-title {
             width: 100%;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -250,7 +250,7 @@
             }
 
             .more {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
                 margin-left: 10px;
                 cursor: pointer;
                 display: flex;
@@ -269,12 +269,12 @@
             .project-item-content {
                 .content-name:hover {
                     cursor: pointer;
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
 
                 .content-type {
                     font-size: 12px;
-                    color: var(--tiklab-gray-500);
+                    color: var(--thoughtware-gray-500);
                 }
             }
 
@@ -300,7 +300,7 @@
 
                     .content-name:hover {
                         cursor: pointer;
-                        color: var(--tiklab-blue);
+                        color: var(--thoughtware-blue);
                     }
 
                     .content-name {
@@ -311,7 +311,7 @@
 
                     .content-type {
                         font-size: 13px;
-                        color: var(--tiklab-gray-500);
+                        color: var(--thoughtware-gray-500);
                     }
                 }
             }
@@ -356,12 +356,12 @@
             .version-content {
                 .content-name:hover {
                     cursor: pointer;
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
 
                 .content-type {
                     font-size: 12px;
-                    color: var(--tiklab-gray-500);
+                    color: var(--thoughtware-gray-500);
                 }
             }
         }
@@ -374,12 +374,12 @@
             .sprint-content {
                 .content-name:hover {
                     cursor: pointer;
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
 
                 .content-type {
                     font-size: 12px;
-                    color: var(--tiklab-gray-500);
+                    color: var(--thoughtware-gray-500);
                 }
             }
         }

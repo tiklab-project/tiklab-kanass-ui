@@ -11,7 +11,7 @@
     }
 
     .worklist-filter-active {
-        background-color: var(--tiklab-gray-400)
+        background-color: var(--thoughtware-gray-400)
     }
 
     .worklist-filter-item {
@@ -25,7 +25,7 @@
     }
 
     .worklist-filter-item:hover {
-        background-color: var(--tiklab-gray-400);
+        background-color: var(--thoughtware-gray-400);
     }
 
     .filter-modal {
@@ -43,7 +43,7 @@
         text-align: center;
         font-size: 15px;
         padding: 5px 15px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;

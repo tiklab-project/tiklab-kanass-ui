@@ -19,7 +19,7 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
 
 const EpicLineMap = (props) => {
@@ -551,7 +551,7 @@ const EpicLineMap = (props) => {
     // 时间轴的样式
     const setTimeAxisStyle = (id) => {
         let color = {
-            backgroundColor: "var(--tiklab-blue)",
+            backgroundColor: "var(--thoughtware-blue)",
             borderColor: "#fff"
         };
         switch (id) {

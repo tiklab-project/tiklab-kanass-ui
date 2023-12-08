@@ -44,15 +44,15 @@
                 background-color: #E6EDFA;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 position: relative;
                 top: 0;
 
                 .table-hearder-gatter {
                     width: 1000px;
                     height: 50px;
-                    border-left: 1px solid var(--tiklab-gray);
-                    font-weight: var(--tiklab-font-weight-bold);
+                    border-left: 1px solid var(--thoughtware-gray);
+                    font-weight: var(--thoughtware-font-weight-bold);
                     overflow: auto;
                 }
 
@@ -90,7 +90,7 @@
                     height: 25px;
                     display: inline-flex;
                     text-align: center;
-                    border-bottom: 1px solid var(--tiklab-gray);
+                    border-bottom: 1px solid var(--thoughtware-gray);
                     line-height: 25px;
                 }
 

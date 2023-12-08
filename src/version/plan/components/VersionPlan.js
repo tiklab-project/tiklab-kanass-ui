@@ -7,7 +7,7 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import VersionPlanStore from "../stores/VersionPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
 const VersionPlan = (props) => {
     const store = {

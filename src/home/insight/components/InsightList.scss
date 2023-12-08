@@ -4,7 +4,7 @@
 //     background-color: #fff;
     .insight-list {
         background-color: #fff;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         // height: 100%;
         // min-height: calc(100vh - 145px);
         .insight-search-add {
@@ -19,7 +19,7 @@
             gap: 20px;
         }
         .action-botton {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
 
         .action-delete {
@@ -52,14 +52,14 @@
             }
 
             .active-tabs {
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 color: #000;
-                border-bottom: 2px solid var(--tiklab-blue);
+                border-bottom: 2px solid var(--thoughtware-blue);
             }
         }
 
         .insight-name {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
             cursor: pointer;
         }
 

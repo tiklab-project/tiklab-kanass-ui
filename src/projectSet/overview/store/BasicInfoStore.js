@@ -69,7 +69,7 @@ export class BasicInfoStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "teamwire"
+            bgroup: "kanass"
         }
         const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
@@ -86,7 +86,7 @@ export class BasicInfoStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             userId: value.userId
         }
         const data = await Service("/todo/findtodopage", params)

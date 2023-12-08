@@ -10,7 +10,7 @@ import React, { useEffect } from "react";
 import { Breadcrumb, Input, Table, Space, Button, Divider, Layout, Row, Col, } from 'antd';
 import PlanWorkItemAddmodal from "./PlanWorkItemAdd";
 import { observer, inject } from "mobx-react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import "./Plan.scss"
 import PlanWorkItemStore from "../store/PlanWorkItemStores";
 const { Search } = Input;

@@ -1,5 +1,5 @@
 .project-linemap {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     background-color: #fff;
 
     .project-linemap-head {
@@ -10,8 +10,8 @@
         line-height: 40px;
 
         .project-linemap-title {
-            font-size: var(--tiklab-font-16);
-            font-weight: var(--tiklab-font-weight-bold);
+            font-size: var(--thoughtware-font-16);
+            font-weight: var(--thoughtware-font-weight-bold);
             display: flex;
             align-items: center;
         }
@@ -30,8 +30,8 @@
             }
 
             .tab-tabpane-select {
-                color: var(--tiklab-blue);
-                border-bottom: 2px solid var(--tiklab-blue);
+                color: var(--thoughtware-blue);
+                border-bottom: 2px solid var(--thoughtware-blue);
             }
         }
     }
@@ -100,7 +100,7 @@
             height: 50px;
             background-color: #fafafa;
             overflow: hidden;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             position: relative;
             top: 0;
 
@@ -108,7 +108,7 @@
                 flex: 1;
                 height: 50px;
 
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 overflow: auto;
             }
 
@@ -142,7 +142,7 @@
 
             .table-hearder-time {
                 width: 250px;
-                border-right: 1px solid var(--tiklab-gray);
+                border-right: 1px solid var(--thoughtware-gray);
             }
 
             .table-timer {
@@ -164,7 +164,7 @@
                 height: 25px;
                 display: inline-flex;
                 text-align: center;
-                border-bottom: 1px solid var(--tiklab-gray);
+                border-bottom: 1px solid var(--thoughtware-gray);
                 line-height: 25px;
 
                 .table-weekday {

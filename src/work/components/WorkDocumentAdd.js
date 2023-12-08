@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 const WorkDocumentAddmodal = (props) => {
     const { workWikiStore, workStore, setWorkDocumentList, projectId, showSelectDocument, selectDocument } = props;
     const { workId } = workStore;

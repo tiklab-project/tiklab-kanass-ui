@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Menu, Dropdown, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
-import { useSelector } from "tiklab-plugin-core-ui";
+import { useSelector } from "thoughtware-plugin-core-ui";
 import "./WorkTableHead.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkChangeView from "./WorkChangeView";

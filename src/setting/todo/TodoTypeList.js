@@ -1,8 +1,8 @@
 import React from "react";
-import {TodoType} from "tiklab-todotask-ui/es";
+import {TodoType} from "thoughtware-todotask-ui/es";
 
 const TodoTypeListContent = props =>{
-    return <TodoType {...props} bgroup={"teamwire"}/>
+    return <TodoType {...props} bgroup={"kanass"}/>
 }
 
 export default TodoTypeListContent;

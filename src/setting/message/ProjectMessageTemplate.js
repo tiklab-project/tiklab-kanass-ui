@@ -1,9 +1,9 @@
 import React from "react";
-import {MessageTemplate} from 'tiklab-message-ui';
+import {MessageTemplate} from 'thoughtware-message-ui';
 
 const ProjectMessageTemplate = (props) => {
     return (
-        <MessageTemplate bgroup = "teamwire"/>
+        <MessageTemplate bgroup = "kanass"/>
     )
 }
 export default ProjectMessageTemplate;

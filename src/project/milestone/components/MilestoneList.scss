@@ -1,6 +1,6 @@
 .project-milestone {
     height: calc(100vh - 55px);
-    padding: var(--tiklab-padding);;
+    padding: var(--thoughtware-padding);;
     .search {
         width: 200px;
         margin-top: 20px;
@@ -15,7 +15,7 @@
     &-list {
         flex: 1;
         .milestone-table-box {
-            padding-top: var(--tiklab-padding);
+            padding-top: var(--thoughtware-padding);
         }
     }
 }

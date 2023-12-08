@@ -66,7 +66,7 @@ class VersionSurveyStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             content: {
                 versionId: value.versionId
             }
@@ -85,7 +85,7 @@ class VersionSurveyStore {
                 pageSize: 20,
                 currentPage: value.currentPage
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             userId: value.userId,
             content: {
                 versionId: value.versionId

@@ -3,7 +3,7 @@
 }
 
 .version-plan {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     height: 100%;
     background: #fff;
 
@@ -66,11 +66,11 @@
             }
             .version-plan-box-content::-webkit-scrollbar-thumb {
                 border-radius: 5px;
-                background: var(--tiklab-gray-400);
+                background: var(--thoughtware-gray-400);
             }
             .version-plan-box-content::-webkit-scrollbar-track {
                 border-radius: 0;
-                background: var(--tiklab-gray-600);
+                background: var(--thoughtware-gray-600);
             }
 
             .version-plan-list {
@@ -79,7 +79,7 @@
                 .change-page {
                     display: flex;
                     justify-content: center;
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                     cursor: pointer;
                 }
             }
@@ -107,8 +107,8 @@
                     line-height: 30px;
                     cursor: pointer;
                     .work-item-title-left {
-                        color: var(--tiklab-blue);
-                        font-weight: var(--tiklab-font-weight-bold);
+                        color: var(--thoughtware-blue);
+                        font-weight: var(--thoughtware-font-weight-bold);
                     }
                 }
 

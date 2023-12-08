@@ -8,7 +8,7 @@ import WorkStore from "../../../work/store/WorkStore";
 import SprintPlanStore from "../stores/SprintPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { useDebounce } from "../../../common/utils/debounce";
 const SprintPlan = (props) => {
     const store = {

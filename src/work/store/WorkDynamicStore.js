@@ -17,7 +17,7 @@ export class WorkDynamicStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "teamwire",
+            bgroup: "kanass",
             content: {
                 workItemId: value.workItemId
             }

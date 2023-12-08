@@ -10,7 +10,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input } from "antd";
 import { Drawer } from 'antd';
 import "./LogDetail.scss";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { inject, observer } from "mobx-react";
 const { TextArea } = Input;
 const LogDetail = (props) => {

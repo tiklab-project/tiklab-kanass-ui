@@ -1,9 +1,9 @@
 import React from "react";
-import {AuthConfig} from 'tiklab-user-ui';
+import {AuthConfig} from 'thoughtware-user-ui';
 
 const ProjectAuthConfig = (props) => {
     return (
-        <AuthConfig bgroup = "teamwire"/>
+        <AuthConfig bgroup = "kanass"/>
     )
 }
 export default ProjectAuthConfig;

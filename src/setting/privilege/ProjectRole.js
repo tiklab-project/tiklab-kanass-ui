@@ -1,5 +1,5 @@
 import React from "react";
-import { ProjectRole } from 'tiklab-privilege-ui';
+import { ProjectRole } from 'thoughtware-privilege-ui';
 import { inject, observer } from "mobx-react";
 
 const ProjectRoleList = props => {
@@ -8,7 +8,7 @@ const ProjectRoleList = props => {
     return (
         // <div className="test">
             < ProjectRole
-                bgroup={'teamwire'}
+                bgroup={'kanass'}
                 isBase = {true}
                 {...props}
             />

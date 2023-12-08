@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { Empty, Row, Col } from "antd";
 import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
 import DyncmicList from "../../../common/overviewComponent/DyncmicList";
 const ProjectSetSurvey = props => {

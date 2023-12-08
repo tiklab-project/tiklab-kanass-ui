@@ -1,7 +1,7 @@
 
 
 .projectSet-set-delete {
-    color: var(--tiklab-blue);
+    color: var(--thoughtware-blue);
 }
 
 .projectSet-info-title {
@@ -12,11 +12,11 @@
 }
 
 .projectSet-set-basicinfo {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     .projectSet-set-title {
         height: 40px;
         line-height: 40px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         font-size: 15px;
         margin-bottom: 10px;
     }
@@ -31,7 +31,7 @@
         height: 30px;
         line-height: 30px;
         margin-bottom: 20px;
-        background: var(--tiklab-blue);
+        background: var(--thoughtware-blue);
         color: #fff;
         border-radius: 4px;
         width: 100px;
@@ -57,7 +57,7 @@
             box-sizing: content-box;
         }
         .icon-select {
-            border: 2px solid var(--tiklab-blue);
+            border: 2px solid var(--thoughtware-blue);
         }
     }
 }

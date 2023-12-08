@@ -5,7 +5,7 @@ import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
 import Button from "../../common/button/Button";
 import WorkChildStore from "../store/WorkChildStore";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import setImageUrl from "../../common/utils/setImageUrl";
 

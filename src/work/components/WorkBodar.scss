@@ -1,5 +1,5 @@
 .work-bodar-filter {
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
 }
 
 .work-bodar-content {
@@ -26,7 +26,7 @@
             .work-bodar-box-border {
                 border-radius: 4px;
                 min-height: 100%;
-                border: 2px var(--tiklab-blue) dashed;
+                border: 2px var(--thoughtware-blue) dashed;
             }
             .work-bodar-box {
                 min-height: 100px;
@@ -59,7 +59,7 @@
                     .change-page {
                         display: flex;
                         justify-content: center;
-                        color: var(--tiklab-blue);
+                        color: var(--thoughtware-blue);
                         cursor: pointer;
                     }
                 }
@@ -69,11 +69,11 @@
                 }
                 .work-border-box-list::-webkit-scrollbar-thumb {
                     border-radius: 5px;
-                    background: var(--tiklab-gray-400);
+                    background: var(--thoughtware-gray-400);
                 }
                 .work-border-box-list::-webkit-scrollbar-track {
                     border-radius: 0;
-                    background: var(--tiklab-gray-600);
+                    background: var(--thoughtware-gray-600);
                 }
                 .work-bodar-item{
                     margin: 0 auto;
@@ -91,8 +91,8 @@
                     .work-item-title {
                         line-height: 30px;
                         cursor: pointer;
-                        color: var(--tiklab-blue);
-                        font-weight: var(--tiklab-font-weight-bold);
+                        color: var(--thoughtware-blue);
+                        font-weight: var(--thoughtware-font-weight-bold);
                     }
                     .work-item-bottom {
                         display: flex;
@@ -108,7 +108,7 @@
         }
         .work-bodar-name {
             font-size: 16px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             padding: 20px;
         }
     }

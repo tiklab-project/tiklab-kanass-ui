@@ -8,7 +8,7 @@
  * @LastEditTime: 2022-01-21 13:02:38
  */
 import React, { useState, useEffect } from "react";
-import { ProjectFlow } from 'tiklab-flow-ui';
+import { ProjectFlow } from 'thoughtware-flow-ui';
 import { withRouter } from "react-router";
 import ProjectFlowStore from "../store/ProjectFlowStore"
 import { observer } from "mobx-react";

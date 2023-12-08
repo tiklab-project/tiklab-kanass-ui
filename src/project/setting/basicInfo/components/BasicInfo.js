@@ -16,9 +16,9 @@ import moment from 'moment';
 import "../components/BasicInfo.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectIconChange from "./ProjectIconChange"
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Collapse } from 'antd';
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
 const { Panel } = Collapse;
 

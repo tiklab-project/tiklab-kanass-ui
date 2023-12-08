@@ -2,13 +2,13 @@
     background-color: #fff;
     border-radius: 4px;
     padding-bottom: 20px;
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     .box-title {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 16px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         // height: 30px;
         // line-height: 30px;
         margin-bottom: 10px;
@@ -18,7 +18,7 @@
         .dynamic-item {
             margin-bottom: 10px;
             .dynamic-work-title:hover {
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
             }
         }
         .dynamic-item:nth-child(4n+1) {

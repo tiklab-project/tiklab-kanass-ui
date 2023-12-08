@@ -7,13 +7,13 @@
         line-height: 32px;
     }
     .work-title {
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
         cursor: pointer;
     }
     .child-create-input {
         height: 35px;
         border-radius: 4px;
-        border: 1px solid var(--tiklab-blue);
+        border: 1px solid var(--thoughtware-blue);
         display: flex;
         justify-content: space-between;
         padding: 0 10px;
@@ -35,7 +35,7 @@
             gap: 10px;
             .create-submit {
                 cursor: pointer;
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
             }
 
             .create-cancel {
@@ -48,7 +48,7 @@
 
     .child-top-title {
         font-size: 16px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
     }
     .child-top-botton {
         display: flex;

@@ -73,7 +73,7 @@ class SprintSurveyStore {
             content: {
                 sprintId: value.sprintId
             },
-            bgroup: "teamwire"
+            bgroup: "kanass"
         }
         const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
@@ -93,7 +93,7 @@ class SprintSurveyStore {
                 name: "createtime",
                 orderType:"desc"
             }],
-            bgroup: "teamwire",
+            bgroup: "kanass",
             userId: value.userId,
             content: {
                 sprintId: value.sprintId

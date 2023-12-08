@@ -1,9 +1,9 @@
 import React from "react";
-import { MessageSendType } from 'tiklab-message-ui';
+import { MessageSendType } from 'thoughtware-message-ui';
 
 const ProjectMessageSendType = (props) => {
     return (
-        <MessageSendType bgroup = "teamwire" isBase = {true}/>
+        <MessageSendType bgroup = "kanass" isBase = {true}/>
     )
 }
 export default ProjectMessageSendType;

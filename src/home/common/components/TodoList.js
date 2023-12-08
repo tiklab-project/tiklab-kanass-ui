@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Empty, Select, Row, Col, Pagination } from "antd";
 import { inject, observer } from "mobx-react";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import "./TodoList.scss"
 import { withRouter } from "react-router";
 const TodoList = (props) => {

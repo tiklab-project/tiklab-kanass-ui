@@ -125,7 +125,7 @@ const  PlanAddModal = (props) => {
                     +{props.name}
                 </Button>
                 :
-                <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}} type="link">
+                <span onClick={showModal} style={{color: "var(--thoughtware-gray-400)"}} type="link">
                     {props.name}
                 </span>
 

@@ -111,7 +111,7 @@ export class SearchStore{
     @action
 	statTodoWorkItem = async(value) => {
         const params={
-            bgroup : "teamwire",
+            bgroup : "kanass",
             status: 1,
             pageParam: {
                 pageSize: value.pageSize,

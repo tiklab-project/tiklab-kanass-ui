@@ -1,5 +1,5 @@
 import React from "react";
-import { Version } from 'tiklab-licence-ui';
+import { Version } from 'thoughtware-licence-ui';
 import { Table,Icon } from "antd";
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 const ProjectAuthConfig = (props) => {
@@ -109,7 +109,7 @@ const ProjectAuthConfig = (props) => {
         }
     ]
     return (
-        <Version bgroup="teamwire">
+        <Version bgroup="kanass">
             <Table
                 bordered
                 columns={columns}

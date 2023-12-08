@@ -3,7 +3,7 @@ import WorkDetailDrawer from "./WorkDetailDrawer";
 import "./WorkBodar.scss";
 import { withRouter } from "react-router";
 import UserIcon from '../../common/UserIcon/UserIcon';
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { Provider, observer } from "mobx-react";
 import WorkStore from "../store/WorkStore";

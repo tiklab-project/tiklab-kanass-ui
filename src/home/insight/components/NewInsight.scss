@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between;
     height: 100%;
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
 
     // background-color: #fff;
     .project-breadcrumb-icon {
@@ -32,7 +32,7 @@
 
             .insight-head-title {
                 font-size: 16px;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 height: 40px;
                 line-height: 40px;
                 display: inline-flex;
@@ -56,7 +56,7 @@
                 }
 
                 .action-save {
-                    background: var(--tiklab-blue);
+                    background: var(--thoughtware-blue);
                     color: #fff;
                 }
 
@@ -76,7 +76,7 @@
         }
 
         .empty-action-save {
-            background: var(--tiklab-blue);
+            background: var(--thoughtware-blue);
             color: #fff;
             width: 60px;
             height: 30px;

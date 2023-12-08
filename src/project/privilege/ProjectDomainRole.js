@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-18 09:20:30
  */
 import React from "react";
-import { DomainRole } from 'tiklab-privilege-ui';
+import { DomainRole } from 'thoughtware-privilege-ui';
 import { inject, observer } from "mobx-react";
 import { Row, Col } from "antd";
 
@@ -20,7 +20,7 @@ const ProjectDomainRole = props => {
                 <DomainRole
                     {...props}
                     domainId={projectId}
-                    bgroup = {"teamwire"}
+                    bgroup = {"kanass"}
                 />
             </Col>
         </Row>

@@ -6,7 +6,7 @@
 .version-survey {
     height: calc(100vh - 48px);
     overflow: auto;
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
 
     .ant-row {
         background: #f0f2f5;
@@ -22,7 +22,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -33,7 +33,7 @@
         }
 
         .more {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
             margin-left: 10px;
             cursor: pointer;
             display: flex;
@@ -48,7 +48,7 @@
         gap: 20px;
         margin-bottom: 15px;
         .version-info-box {
-            padding: var(--tiklab-padding);
+            padding: var(--thoughtware-padding);
             background-color: #fff;
             border-radius: 4px;
             flex: 1;
@@ -58,7 +58,7 @@
                 display: flex;
                 align-items: center;
                 font-size: 16px;
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 height: 40px;
                 line-height: 40px;
                 margin-bottom: 10px;
@@ -70,7 +70,7 @@
             }
 
             .version-container {
-                .tiklab-profile .ant-avatar {
+                .thoughtware-profile .ant-avatar {
                     width: 24px !important;
                     height: 24px !important;
                 }
@@ -91,7 +91,7 @@
                         }
 
                         .item-bottom {
-                            color: var(--tiklab-gray-500);
+                            color: var(--thoughtware-gray-500);
                             font-size: 12px;
                         }
 
@@ -113,7 +113,7 @@
 
         .burn-down-box {
             flex: 1;
-            padding: var(--tiklab-padding);
+            padding: var(--thoughtware-padding);
             background-color: #fff;
             border-radius: 4px;
             height: 440px;
@@ -127,7 +127,7 @@
 
     .version-todo-work {
         background-color: #fff;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         margin-bottom: 15px;
         .todo-item {
             margin-bottom: 10px;
@@ -139,7 +139,7 @@
             // }
         }
         .todo-work-title:hover {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
             cursor: pointer;
         }
 
@@ -169,7 +169,7 @@
         }
     }
     // .version-todo-list {
-    //     padding: var(--tiklab-padding);
+    //     padding: var(--thoughtware-padding);
     //     margin-bottom: 15px;
     //     background-color: #fff;
     //     .todo-item {
@@ -178,7 +178,7 @@
     // }
     .dynamic-box {
         background-color: #fff;
-        padding: var(--tiklab-padding);
+        padding: var(--thoughtware-padding);
         .dynamic-item {
             margin-bottom: 10px;
             cursor: pointer;
@@ -187,7 +187,7 @@
             .dynamic-item {
                 margin-bottom: 10px;
                 .dynamic-work-title:hover {
-                    color: var(--tiklab-blue);
+                    color: var(--thoughtware-blue);
                 }
             }
             .dynamic-item:nth-child(4n+1) {

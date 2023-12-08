@@ -338,8 +338,8 @@ const Gantt=(props) => {
                                                 <span className="table-icon">
                                                 {
                                                     isExpandedTree(item.id) ? 
-                                                        <PlusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--tiklab-gray-400)"}}/> : 
-                                                            <MinusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--tiklab-gray-400)"}}/>
+                                                        <PlusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--thoughtware-gray-400)"}}/> : 
+                                                            <MinusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--thoughtware-gray-400)"}}/>
                                                 }</span>}
                                             {item.title}
                                         </div>

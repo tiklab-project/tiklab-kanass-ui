@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react";
 import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId } = props;

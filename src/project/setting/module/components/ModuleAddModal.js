@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, TreeSelect } from 'antd';
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { inject, observer } from "mobx-react";
 import Button from "../../../../common/button/Button";
 import ModuleStore from "../store/ModuleStore";

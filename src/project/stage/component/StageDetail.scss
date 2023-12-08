@@ -1,5 +1,5 @@
 .stage-detail {
-    height: calc(100vh - var(--tiklab-head-height));
+    height: calc(100vh - var(--thoughtware-head-height));
     background-color: #fff;
     .stage-detail-top {
         display: flex;
@@ -15,15 +15,15 @@
 
         .stage-name {
             font-size: 18px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
         .stage-name:hover {
             min-width: fit-content;
-            background-color: var(--tiklab-gray-400);
+            background-color: var(--thoughtware-gray-400);
         }
         .stage-name-edit {
             width: 50%;
-            border: var(--tiklab-blue) 2px solid;
+            border: var(--thoughtware-blue) 2px solid;
             padding: 10px;
             border-radius: 4px;
         }
@@ -60,7 +60,7 @@
         }
 
         &-first:hover {
-            color: var(--tiklab-blue)
+            color: var(--thoughtware-blue)
         }
         &-second {
             width: 20px;
@@ -76,8 +76,8 @@
                 border-radius: 4px;
             }
             .stage-breadcrumb-text:hover {
-                color: var(--tiklab-blue);
-                border: 1px solid var(--tiklab-blue);
+                color: var(--thoughtware-blue);
+                border: 1px solid var(--thoughtware-blue);
             }
             &-modal {
                 width: 100px;
@@ -103,7 +103,7 @@
                 }
                 
                 &-submenu:hover {
-                    background-color: var(--tiklab-gray-400);
+                    background-color: var(--thoughtware-gray-400);
                 }
                 &-submenu {
                     height: 40px;
@@ -115,7 +115,7 @@
                 }
                 
                 &-select {
-                    background-color: var(--tiklab-gray-400);
+                    background-color: var(--thoughtware-gray-400);
                 }
             }
         }
@@ -133,8 +133,8 @@
 
         .workitem-title {
             font-size: 15px;
-            font-weight: var(--tiklab-font-weight-bold);
-            /* color: var(--tiklab-blue); */
+            font-weight: var(--thoughtware-font-weight-bold);
+            /* color: var(--thoughtware-blue); */
             margin: 20px 0;
             display: flex;
             justify-content: space-between;
@@ -147,7 +147,7 @@
     }
     .stage-workitem-title {
         font-size: 15px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         margin: 15px 0;
         display: flex;
         justify-content: space-between;
@@ -155,6 +155,6 @@
     }
     .delete-workitem {
         cursor: pointer;
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
     }
 }

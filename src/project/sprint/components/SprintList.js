@@ -10,9 +10,9 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Space, Row, Col, Table } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import "./sprintList.scss";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";

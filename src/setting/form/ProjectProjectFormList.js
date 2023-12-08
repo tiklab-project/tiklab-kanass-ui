@@ -1,5 +1,5 @@
 import React from "react";
-import {ProjectForm} from 'tiklab-form-ui';
+import {ProjectForm} from 'thoughtware-form-ui';
 
 const ProjectProjectFormList = (props) => {
     return (

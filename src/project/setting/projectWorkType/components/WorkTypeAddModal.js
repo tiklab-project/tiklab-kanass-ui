@@ -13,7 +13,7 @@ import "./WorkType.scss"
 import Button from "../../../../common/button/Button";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
 
 

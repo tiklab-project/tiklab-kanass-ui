@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import "./WorkChangeView.scss";
 import { Radio, Popconfirm } from 'antd';
 import Button from "../../common/button/Button";
-import { useSelector } from "tiklab-plugin-core-ui";
+import { useSelector } from "thoughtware-plugin-core-ui";
 import { withRouter } from "react-router";
-import { getVersionInfo } from "tiklab-core-ui"
+import { getVersionInfo } from "thoughtware-core-ui"
 import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 import { observer, inject } from "mobx-react";
 

@@ -4,7 +4,7 @@ import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
     const { workId } = workStore;

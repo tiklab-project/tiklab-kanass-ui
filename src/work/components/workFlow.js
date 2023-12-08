@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { FlowChartLink } from "tiklab-flow-ui";
+import { FlowChartLink } from "thoughtware-flow-ui";
 
 const WorkFlow = (props) => {
     const {flowId} = props;

@@ -1,8 +1,8 @@
 import React from "react";
-import {LogTemplate} from "tiklab-security-ui";
+import {LogTemplate} from "thoughtware-security-ui";
 
 const MyLogTemplateList = props =>{
-    return <LogTemplate {...props} bgroup={"teamwire"}/>
+    return <LogTemplate {...props} bgroup={"kanass"}/>
 }
 
 export default MyLogTemplateList

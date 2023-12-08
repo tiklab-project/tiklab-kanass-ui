@@ -7,11 +7,11 @@
  * @LastEditTime: 2022-01-27 11:39:35
  */
 import React from "react";
-import { Orga } from 'tiklab-user-ui';
+import { Orga } from 'thoughtware-user-ui';
 
 const OrgaList = () => {
     return (
-        <Orga bgroup = "teamwire"/>
+        <Orga bgroup = "kanass"/>
     )
 }
 

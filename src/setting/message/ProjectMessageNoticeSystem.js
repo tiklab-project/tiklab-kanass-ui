@@ -1,9 +1,9 @@
 import React from "react";
-import {MessageNotice} from 'tiklab-message-ui';
+import {MessageNotice} from 'thoughtware-message-ui';
 
 const ProjectMessageNoticeSystem = (props) => {
     return (
-        <MessageNotice {...props} bgroup={'teamwire'} isBase={true}/>
+        <MessageNotice {...props} bgroup={'kanass'} isBase={true}/>
     )
 }
 export default ProjectMessageNoticeSystem;

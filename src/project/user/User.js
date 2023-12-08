@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-21 11:22:59
  */
 import React from "react";
-import { DomainUser } from 'tiklab-user-ui';
+import { DomainUser } from 'thoughtware-user-ui';
 import { Row, Col } from "antd";
 
 const User = props => {
@@ -20,7 +20,7 @@ const User = props => {
                     <DomainUser
                         {...props}
                         domainId={projectId}
-                        bgroup = {"teamwire"}
+                        bgroup = {"kanass"}
                     />
                 </div>
             </Col>

@@ -5,7 +5,7 @@ import UploadIcon1 from "../../../assets/images/uploadIcon.png";
 import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
 import { useState } from "react";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";

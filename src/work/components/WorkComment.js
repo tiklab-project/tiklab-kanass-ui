@@ -9,7 +9,7 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Input, Button, Empty, Pagination, Row, Col } from "antd";
 import "./WorkComment.scss";
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import { observer } from "mobx-react";
 import moment from 'moment';
 import WorkCommentStore from "../store/WorkCommentStore";

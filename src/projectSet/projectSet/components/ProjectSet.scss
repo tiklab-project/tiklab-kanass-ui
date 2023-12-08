@@ -1,6 +1,6 @@
 .projectSet{
     overflow: auto;
-    height: calc(100vh - var(--tiklab-head-height));
+    height: calc(100vh - var(--thoughtware-head-height));
     .projectSet-search-tab {
         display: flex;
         justify-content: space-between;
@@ -28,9 +28,9 @@
             margin: 0 10px;
         }
         .active-tabs {
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             color: #000;
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
         }
         .filter-search {
             width: 120px;
@@ -39,8 +39,8 @@
     }
 
     .projectSet-list{
-        padding: var(--tiklab-padding);;
-        height: calc(100vh - var(--tiklab-head-height));
+        padding: var(--thoughtware-padding);;
+        height: calc(100vh - var(--thoughtware-head-height));
         background-color: #fff;
         .projectSet-top-breadcrumb {
             display: flex;
@@ -57,15 +57,15 @@
         gap: 10px;
 
         .projectSet-tab {
-            font-size: var(--tiklab-font-13);;
+            font-size: var(--thoughtware-font-13);;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
         }
         .active-tabs {
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             color: #000;
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
         }
     }
     .projectSet-content {
@@ -75,7 +75,7 @@
             border-right: 1px solid #f0f0f0;
             .projectSet-aside {
                 height: 100%;
-                background: var(--tiklab-gray-600);
+                background: var(--thoughtware-gray-600);
                 .projectSet-title {
                     height: 40px;
                     display: flex;
@@ -84,7 +84,7 @@
                     justify-content: space-between;
                     align-items: center;
                     padding: 0 20px;
-                    font-weight: var(--tiklab-font-weight-bold);
+                    font-weight: var(--thoughtware-font-weight-bold);
                     color: #000;
                     border-bottom: 1px solid #f0f2f5;
                 }
@@ -107,8 +107,8 @@
                         align-items: center;
                     }
                     .projectSet-menu-select {
-                        background-color: var(--tiklab-gray-400);
-                        border-left: 3px solid var(--tiklab-gray-400);
+                        background-color: var(--thoughtware-gray-400);
+                        border-left: 3px solid var(--thoughtware-gray-400);
                     }
                 }
                 .hidden-menu {

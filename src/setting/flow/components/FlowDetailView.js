@@ -1,5 +1,5 @@
 import React from "react";
-import {FlowChartLink} from 'tiklab-flow-ui';
+import {FlowChartLink} from 'thoughtware-flow-ui';
 
 const FlowDetailView = (props) => {
     return (

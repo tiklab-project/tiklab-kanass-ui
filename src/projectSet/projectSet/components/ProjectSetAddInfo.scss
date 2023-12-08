@@ -32,8 +32,8 @@
             }
 
             .type-desc {
-                font-size: var(--tiklab-font-12);
-                color: var(--tiklab-gray-500);
+                font-size: var(--thoughtware-font-12);
+                color: var(--thoughtware-gray-500);
             }
         }
 
@@ -82,13 +82,13 @@
         }
 
         .limit-select {
-            border: 1px solid var(--tiklab-blue);
-            box-shadow: 0 0 3px var(--tiklab-gray-400)56;
+            border: 1px solid var(--thoughtware-blue);
+            box-shadow: 0 0 3px var(--thoughtware-gray-400)56;
         }
     }
     .projectSet-type-head {
         font-size: 20px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
         margin-bottom: 10px;
     }
 
@@ -111,7 +111,7 @@
     }
 
     .icon-select {
-        border: 1px solid var(--tiklab-blue);
+        border: 1px solid var(--thoughtware-blue);
         box-shadow: 0 0 3px #0063FF56;
         border-radius: 4px;
     }

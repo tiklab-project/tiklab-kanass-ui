@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { Col, Row, Dropdown, Space } from "antd";
 import { withRouter } from 'react-router';
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import { observer, inject } from "mobx-react";
 import logo from "../../../assets/images/logo_tw3.png";
 import HeadMoreMenu from "./HeadMoreMenu";
@@ -29,7 +29,7 @@ const Header = props => {
 
     useEffect(() => {
         if (user && user.userId) {
-            systemRoleStore.getSystemPermissions(user.userId, "teamwire")
+            systemRoleStore.getSystemPermissions(user.userId, "kanass")
         }
         return;
     }, [])

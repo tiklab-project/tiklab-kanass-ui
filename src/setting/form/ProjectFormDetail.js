@@ -1,5 +1,5 @@
 import React from "react";
-import {FormDesign} from 'tiklab-form-ui';
+import {FormDesign} from 'thoughtware-form-ui';
 
 const FlowDetail = (props) => {
     return (

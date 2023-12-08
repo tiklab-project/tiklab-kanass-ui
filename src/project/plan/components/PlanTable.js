@@ -14,7 +14,7 @@ import PlanAdd from "./PlanAddModal";
 import WorkAddModel from "../../../work/components/WorkAddModel";
 import "./Plan.scss"
 import PlanAddmodal from "./PlanAddModal";
-import { getUser } from 'tiklab-core-ui';
+import { getUser } from 'thoughtware-core-ui';
 import setImageUrl from "../../../common/utils/setImageUrl";
 
 const PlanTable = (props) => {

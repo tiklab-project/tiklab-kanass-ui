@@ -1,9 +1,9 @@
 import React from "react";
-import {MessageManagement} from 'tiklab-message-ui';
+import {MessageManagement} from 'thoughtware-message-ui';
 
 const ProjectMessageManagement = (props) => {
     return (
-        <MessageManagement bgroup = "teamwire"/>
+        <MessageManagement bgroup = "kanass"/>
     )
 }
 export default ProjectMessageManagement;

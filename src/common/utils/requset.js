@@ -9,7 +9,7 @@
 
 import axios from "axios";
 
-import {Axios as service} from "tiklab-core-ui";
+import {Axios as service} from "thoughtware-core-ui";
 
 const Service = (url, data) => {
     return service.request({

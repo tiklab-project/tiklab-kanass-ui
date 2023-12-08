@@ -3,7 +3,7 @@ import { Modal, Form, Upload, message } from 'antd';
 import { withRouter } from "react-router";
 import UploadIcon1 from "../../../../assets/images/uploadIcon.png";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
-import {getUser} from "tiklab-core-ui"
+import {getUser} from "thoughtware-core-ui"
 import setImageUrl from "../../../../common/utils/setImageUrl";
 const ProjectIconChange = (props) => {
 

@@ -6,7 +6,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkCalendarStore from '../store/WorkCalendarStore';

@@ -1,7 +1,7 @@
 .project-sprint-list {
     background-color: #fff;
     height: 100vh;
-    padding: var(--tiklab-padding);;
+    padding: var(--thoughtware-padding);;
     flex: 1;
     .sprint-tabs {
         display: flex;
@@ -11,7 +11,7 @@
         line-height: 50px;
         
         .sprint-tab {
-            font-size: var(--tiklab-font-13);;
+            font-size: var(--thoughtware-font-13);;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
@@ -22,7 +22,7 @@
         }
         .active-tabs {
             color: #000;
-            border-bottom: var(--tiklab-gray-400) 2px solid;
+            border-bottom: var(--thoughtware-gray-400) 2px solid;
         }
     }
 
@@ -41,7 +41,7 @@
             margin: 0 10px;
         }
         .active-tabs {
-            border-bottom: 2px solid var(--tiklab-blue);
+            border-bottom: 2px solid var(--thoughtware-blue);
         }
         .filter-search {
             width: 120px;
@@ -63,7 +63,7 @@
             align-items: center;
         }
         .sprint-name:hover {
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
         .sprint-status {
             padding: 2px 3px;

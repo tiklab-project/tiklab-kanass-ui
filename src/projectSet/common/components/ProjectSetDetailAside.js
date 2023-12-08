@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import "./ProjectSetDetailAside.scss";
 import ProjectSetSetButton from "./ProjectSetSettingButton";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
-import { getUser } from "tiklab-core-ui";
+import { getUser } from "thoughtware-core-ui";
 
 const { Sider } = Layout;
 
