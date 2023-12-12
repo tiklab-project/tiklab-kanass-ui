@@ -1,7 +1,7 @@
 import React from "react";
 import "./DyncmicList.scss";
 import { Empty } from "antd";
-
+import DyncmicItem from "./DynamicItem"
 const DyncmicList = (props) => {
     const {logList, goDynamicList, goOpLogDetail} = props;
     return (
@@ -14,17 +14,11 @@ const DyncmicList = (props) => {
                 </svg>
             </div>
 
-            {/* <div className="more" onClick={() => { props.history.push(`/sprint/${userId}`) }}>更多...</div> */}
         </div>
         <div className="dynamic-list">
             {
                 logList.length > 0 ? logList.map(item => {
-                    return <div
-                        dangerouslySetInnerHTML={{ __html: item.data }}
-                        className="dynamic-item"
-                        onClick={() => goOpLogDetail(item.link)}
-                        key={item.id}
-                    />
+                    return <DyncmicItem content = {item.data} type = {item.actionType.id}/>
                 })
                     :
                     <Empty image="/images/nodata.png" description="暂时没有动态~" />

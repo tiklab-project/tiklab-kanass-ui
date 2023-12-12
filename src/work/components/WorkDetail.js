@@ -60,13 +60,21 @@ const WorkDetail = (props) => {
                         setRelationModalNum(res.data)
                     }
                 })
-                // percentForm.setFieldsValue({ percent: res.percent, assigner: res.assigner?.id })
+                if (props.match.path === "/projectDetail/:id/work/:workId") {
+                    setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl}])
+                }
             }
         })
     }
-    // console.log(workId)
+    // console.log("workdetail-------------", props)
     useEffect(() => {
-        console.log("sb")
+        if (props.match.path === "/projectDetail/:id/work/:workId") {
+            const id = props.match.params.workId;
+            setWorkId(id)
+        }
+    }, [])
+
+    useEffect(() => {
         setWorkInfo()
         if (workId && workId.length > 0) {
             getWorkTypeList({ projectId: projectId });
@@ -83,7 +91,7 @@ const WorkDetail = (props) => {
         return
     }, [workId]);
 
-    useEffect(()=> {
+    useEffect(() => {
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }, [workId, workShowType])
     const deleteWork = () => {
@@ -99,7 +107,7 @@ const WorkDetail = (props) => {
                     if (viewType === "tile") {
                         getWorkConditionPage()
                     }
-                }else {
+                } else {
                     setWorkList([...workList])
                 }
 
@@ -112,7 +120,7 @@ const WorkDetail = (props) => {
                 setWorkList([...workList])
                 if (workList.length == 0) {
                     setWorkDeatilInList(workStore)
-                }else {
+                } else {
                     setWorkList([...workList])
                 }
             }
@@ -260,7 +268,7 @@ const WorkDetail = (props) => {
     }
     const [showFlow, setShowFlow] = useState(false)
     return (
-        <Skeleton loading = {infoLoading}  active>
+        <Skeleton loading={infoLoading} active>
             {
                 workInfo ? <div className="work-detail">
                     {
@@ -328,7 +336,7 @@ const WorkDetail = (props) => {
                         </div>
 
                     }
-                    
+
                     {
                         !showFlow ? <>
                             <div className="work-detail-top" ref={workDetailTop}>

@@ -9,7 +9,7 @@ const WorkDetailPage = (props) => {
         workStore: WorkStore
     }
     const detailRef = useRef()
-
+    
 
     return (<Provider {...store}>
         <Row style={{ height: "100%", overflow: "auto" }}>

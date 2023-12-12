@@ -70,7 +70,7 @@ class SprintSurveyStore {
                 name: "create_time",
                 orderType:"desc"
             }],
-            content: {
+            data: {
                 sprintId: value.sprintId
             },
             bgroup: "kanass"
@@ -86,7 +86,7 @@ class SprintSurveyStore {
     findtodopage = async(value)=> {
         const params={
             pageParam: {
-                pageSize: 20,
+                pageSize: value.pageSize,
                 currentPage: value.currentPage
             },
             orderParams: [{
@@ -95,7 +95,8 @@ class SprintSurveyStore {
             }],
             bgroup: "kanass",
             userId: value.userId,
-            content: {
+            status: value.status,
+            data: {
                 sprintId: value.sprintId
             }
         }

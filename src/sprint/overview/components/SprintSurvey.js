@@ -16,7 +16,8 @@ import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import SprintSurveyStore from "../store/SprintSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
-import DyncmicList from "../../../common/overviewComponent/DyncmicList";
+import DynamicList from "../../../common/overviewComponent/DynamicList";
+import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const SprintSurvey = (props) => {
     const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
@@ -75,7 +76,7 @@ const SprintSurvey = (props) => {
         })
         findlogpage({ userId: masterId, sprintId: sprintId })
 
-        findtodopage({ userId: masterId, sprintId: sprintId })
+        findtodopage({ userId: masterId, sprintId: sprintId, status: 1, pageSize: 10 })
 
         return;
     }, [sprintId])
@@ -135,8 +136,12 @@ const SprintSurvey = (props) => {
         props.history.push(`/${projectId}/sprintdetail/${sprintId}/dynamic`)
         
     }
+    const goToListPage = () => {
+        props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) 
+    }
+
     return (
-        <Row style={{ height: "100%", background: "var(--thoughtware-gray-600)" }}>
+        <Row style={{ height: "100%", background: "var(--thoughtware-gray-600)", overflow: "auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
@@ -235,7 +240,7 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="sprint-todo">
+                    {/* <div className="sprint-todo">
                         <div className="sprint-title">
                             <span className="name">待办事项</span>
                             {
@@ -261,35 +266,10 @@ const SprintSurvey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </div>
-                    </div>
-                    {/* <div className="dynamic-box">
-                        <div className="sprint-title">
-                            <span className="name">相关动态</span>
-                            {
-                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/dynamic`) }}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
-                            }
-
-                        </div>
-                        <div className="dynamic-list">
-                            {
-                                opLogList.length > 0 ? opLogList.map(item => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
-                                        onClick={() => goOpLogDetail(item.link)}
-                                        key={item.id}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                            }
-                        </div>
                     </div> */}
-                    <DyncmicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
+                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"sprint"}/>
+                  
+                    <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
                 </div>
             </Col>
         </Row>

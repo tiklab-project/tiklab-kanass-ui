@@ -13,7 +13,7 @@ import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
 import { getUser } from 'thoughtware-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
-import DyncmicList from "../../../common/overviewComponent/DyncmicList";
+import DynamicList from "../../../common/overviewComponent/DynamicList";
 const ProjectSetSurvey = props => {
 
     const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
@@ -205,7 +205,7 @@ const ProjectSetSurvey = props => {
                             }
                         </div>
                     </div> */}
-                    <DyncmicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
+                    <DynamicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
             </Col>
         </Row>

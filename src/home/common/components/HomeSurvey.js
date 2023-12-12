@@ -15,6 +15,7 @@ import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage"
 import setImageUrl from '../../../common/utils/setImageUrl';
+import TodoListItem from '../../../common/overviewComponent/TodoListItem';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -34,10 +35,10 @@ const HomeSurvey = (props) => {
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
-        findTodopage({ userId: userId,  pageParam: {
+        findTodopage({ userId: userId,status: 1,  pageParam: {
             pageSize: 10,
             currentPage: 1
-        }})
+        }}, )
 
         findRecentPage(userId).then(res => {
             console.log(res)
@@ -270,6 +271,14 @@ const HomeSurvey = (props) => {
         return showNum;
     }
 
+    const getTodoList = (value) => {
+        console.log(value)
+        findTodopage({ userId: userId,status: value,  pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }}, )
+
+    }
     return (
         <div className="home-content">
             <div className="recent-project">
@@ -394,8 +403,17 @@ const HomeSurvey = (props) => {
                     </div>
                 </div>
                 <div className="todo-work-list">
-                    <Tabs defaultActiveKey="1">
-                        <TabPane tab="进行中" key="todo">
+                    <Tabs defaultActiveKey="1" onChange={(value) => getTodoList(value)}>
+                        <TabPane tab="进行中" key="1">
+                            {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                                    return <TodoListItem content = {item.data} />
+                                })
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                            }
+                        </TabPane>
+                        <TabPane tab="已完成" key="2">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                     return <div
@@ -409,23 +427,9 @@ const HomeSurvey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </TabPane>
-                        <TabPane tab="已完成" key="end">
-                            {
-                                endTaskList.length > 0 ? endTaskList.map((item) => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="todo-item"
-                                        key={item.id}
-                                        onClick={() => goTodoDetail(item.link)}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </TabPane>
                         <TabPane tab="已逾期" key="3">
                             {
-                                overdueTaskList.length > 0 ? overdueTaskList.map((item) => {
+                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
                                     return <div
                                         dangerouslySetInnerHTML={{ __html: item.data }}
                                         className="todo-item"
@@ -433,8 +437,8 @@ const HomeSurvey = (props) => {
                                         onClick={() => goTodoDetail(item.link)}
                                     />
                                 })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </TabPane>
                     </Tabs>

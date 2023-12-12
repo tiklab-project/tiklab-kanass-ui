@@ -67,7 +67,7 @@ class VersionSurveyStore {
                 currentPage: 1
             },
             bgroup: "kanass",
-            content: {
+            data: {
                 versionId: value.versionId
             }
         }
@@ -87,7 +87,7 @@ class VersionSurveyStore {
             },
             bgroup: "kanass",
             userId: value.userId,
-            content: {
+            data: {
                 versionId: value.versionId
             }
         }

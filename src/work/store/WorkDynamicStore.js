@@ -18,7 +18,7 @@ export class WorkDynamicStore {
                 currentPage: 1
             },
             bgroup: "kanass",
-            content: {
+            data: {
                 workItemId: value.workItemId
             }
         }

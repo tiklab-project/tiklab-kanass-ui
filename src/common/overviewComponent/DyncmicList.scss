@@ -21,19 +21,19 @@
                 color: var(--thoughtware-blue);
             }
         }
-        .dynamic-item:nth-child(4n+1) {
+        .dynamic-list-item:nth-child(4n+1) {
             .dynamic-user-icon {
                 background-color: #cadbf3;
             }
         }
 
-        .dynamic-item:nth-child(4n+2){
+        .dynamic-list-item:nth-child(4n+2){
             .dynamic-user-icon {
                 background-color: #deedd7;
             }
         }
 
-        .dynamic-item:nth-child(4n+3) {
+        .dynamic-list:nth-child(4n+3) {
             .dynamic-user-icon {
                 background-color: #ffebee;
             }

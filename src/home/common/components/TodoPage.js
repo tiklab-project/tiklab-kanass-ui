@@ -12,14 +12,14 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Empty, Select, Row, Col, Pagination } from "antd";
 import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
-import "./TodoList.scss"
+import "./TodoPage.scss"
 import { withRouter } from "react-router";
-import TodoListPage  from "./TodoList"
+import TodoListPage  from "./TodoPageList"
 const TodoListPafe = (props) => {
     const { homeStore } = props;
 
     return (
-        <Row className="todo">
+        <Row className="todo-page">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <TodoListPage {...props}></TodoListPage>
             </Col>

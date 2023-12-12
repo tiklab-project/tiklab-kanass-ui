@@ -129,7 +129,7 @@ const VersionPlan = (props) => {
                     noPlanWorkList.unshift(...addWorkList)
                     setNoPlanWorkList(noPlanWorkList)
                 }
-                
+
             })
         }
     }
@@ -176,7 +176,21 @@ const VersionPlan = (props) => {
         }
         getWorkList(data)
     }
-
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
     return (<Provider {...store}>
         <div className="version-plan">
             <div className="version-plan-content">
@@ -200,7 +214,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl = {setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
                                         />
                                     })
                                 }
@@ -254,31 +268,37 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
-                                            <div className="work-item-title-left" >
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                            <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
                                                             alt=""
-                                                            className="svg-icon"
-                                                            src = {setImageUrl(item.workTypeSys.iconUrl)}
+                                                            className="icon-32"
+                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
 
                                                         />
                                                         :
                                                         <img
                                                             src={'/images/workType2.png'}
                                                             alt=""
-                                                            className="svg-icon"
+                                                            className="icon-32"
                                                         />
                                                 }
-                                                {item.title}
+
                                             </div>
-                                            <div>
-                                                <span >{item.id}</span>
+                                            <div className="work-item-info">
+                                                <div className="work-item-id">{item.id}</div>
+                                                <div className="work-item-title">{item.title}</div>
                                             </div>
+                                        </div >
+                                        <div className="work-item-master">
+                                            <div className="work-item-id">{item.assigner?.nickname}</div>
                                         </div>
-                                        <div className="work-item-id">
-                                            <div userInfo={item.user} />
+                                        <div className={`work-item-status`}>
+                                            <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                                {item.workStatusNode.name}
+                                            </div>
                                         </div>
                                     </div>
                                 })
@@ -310,7 +330,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl = {setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
                                         />
                                     })
                                 }
@@ -365,31 +385,37 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, versionId)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-title" onClick={() => goWorkItem(item, index)}>
-                                            <div className="work-item-title-left" >
+                                         <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                            <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
                                                         <img
                                                             alt=""
-                                                            className="svg-icon"
-                                                            src = {setImageUrl(item.workTypeSys.iconUrl)}
+                                                            className="icon-32"
+                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
 
                                                         />
                                                         :
                                                         <img
                                                             src={'/images/workType2.png'}
                                                             alt=""
-                                                            className="svg-icon"
+                                                            className="icon-32"
                                                         />
                                                 }
-                                                {item.title}
+
                                             </div>
-                                            <div>
-                                                <span >{item.id}</span>
+                                            <div className="work-item-info">
+                                                <div className="work-item-id">{item.id}</div>
+                                                <div className="work-item-title">{item.title}</div>
                                             </div>
+                                        </div >
+                                        <div className="work-item-master">
+                                            <div className="work-item-id">{item.assigner?.nickname}</div>
                                         </div>
-                                        <div className="work-item-id">
-                                            <div userInfo={item.user} />
+                                        <div className={`work-item-status`}>
+                                            <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                                {item.workStatusNode.name}
+                                            </div>
                                         </div>
                                     </div>
 

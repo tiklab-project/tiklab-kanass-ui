@@ -13,6 +13,7 @@ import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import { Select, Row, Col } from "antd";
 import "./DynamicList.scss";
+import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 
 const DynamicList = (props) => {
     const { homeStore } = props;
@@ -134,10 +135,7 @@ const DynamicList = (props) => {
                 <div className="dynamic-list">
                     {
                         opLogList && opLogList.map((item) => {
-                            return <div
-                                dangerouslySetInnerHTML={{ __html: item.data }}
-                                className="dynamic-item"
-                            />
+                            return <DynamicItem content = {item.data} type = {item.actionType.id}/>
                         })
                     }
                 </div>

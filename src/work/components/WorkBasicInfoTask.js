@@ -22,18 +22,18 @@ const WorkBasicInfo = (props) => {
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const layoutExForm = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 16 },
+        labelCol: { lg: {span: 6}, xxl: {span: 4} },
+        wrapperCol: {lg: {span: 18}, xxl : { span: 20 }},
     };
 
     const layout = {
-        labelCol: { span: 3 },
-        wrapperCol: { span: 18 },
+        labelCol: { lg: {span: 6}, xxl: {span: 4} },
+        wrapperCol: {lg: {span: 18}, xxl : { span: 20 }},
     };
 
     const layoutBottom = {
-        labelCol: { span: 2 },
-        wrapperCol: { span: 18 },
+        labelCol: { lg: {span: 3}, xxl: {span: 2} },
+        wrapperCol: { lg: {span: 21}, xxl : { span: 22 } },
     };
     const [messageApi, contextHolder] = message.useMessage();
 

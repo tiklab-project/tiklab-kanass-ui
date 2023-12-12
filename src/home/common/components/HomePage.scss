@@ -192,39 +192,11 @@
 
             .todo-item {
                 margin-bottom: 10px;
-                // .todo-user-icon {
-                //     border: #ff0000 1px solid;
-                // }
             }
-            .todo-work-title:hover {
-                color: var(--thoughtware-blue);
-                cursor: pointer;
-            }
+            
 
 
-            .todo-item:nth-child(4n+1) {
-                .todo-user-icon {
-                    background-color: #cadbf3;
-                }
-            }
-
-            .todo-item:nth-child(4n+2){
-                .todo-user-icon {
-                    background-color: #deedd7;
-                }
-            }
-
-            .todo-item:nth-child(4n+3) {
-                .todo-user-icon {
-                    background-color: #ffebee;
-                }
-            }
-
-            .todo-item:nth-child(4n+4){
-                .todo-user-icon {
-                    background-color: #e8eaf6;
-                }
-            }
+          
         }
     }
 

@@ -65,8 +65,8 @@ const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
 const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
-const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoListPage"))
-const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoList"))
+const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
+const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageList"))
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
 const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
@@ -189,6 +189,7 @@ const Routers = [
     {
         path: "/",
         component: () => <Redirect to="/home/survey" />,
+        
         exact: true,
     },
     {
@@ -962,7 +963,7 @@ const Routers = [
                         component: Work,
                     },
                     {
-                        path: "/:id/sprintdetail/:sprint/workDetail/:workId",
+                        path: "/:id/sprintdetail/:sprint/work/:workId",
                         component: WorkDetailPage,
                     },
                     {

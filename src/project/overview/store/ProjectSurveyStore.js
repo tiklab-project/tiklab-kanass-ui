@@ -142,7 +142,7 @@ export class ProjectSurveyStore {
             },
             bgroup: "kanass",
             userId: value.userId,
-            content: {
+            data: {
                 projectId: value.projectId
             }
         }
@@ -163,7 +163,7 @@ export class ProjectSurveyStore {
                 currentPage: value.currentPage
             },
             bgroup: "kanass",
-            content: {
+            data: {
                 projectId: value.projectId
             }
 

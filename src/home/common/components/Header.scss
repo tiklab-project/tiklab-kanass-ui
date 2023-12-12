@@ -13,18 +13,23 @@
     justify-content: space-between;
     position: relative;
     z-index: 3;
-    
+
     .frame-header-logo {
         height: var(--thoughtware-head-height);
-        width: 120px;
         margin-right: 20px;
         margin-left: 10px;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        display: flex;
+        align-items: center;
+        .logo-img {
+            height: 24px;
         }
+
+        .logo-text {
+            margin-left: 10px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
     }
 
     .frame-header-link {
@@ -43,15 +48,16 @@
             height: 48px;
             line-height: 48px;
             flex-shrink: 0;
+
             span {
                 padding: 5px;
             }
-            
+
         }
 
         &-item:hover {
             span {
-                
+
                 background: #E1EDFF;
                 border-radius: 3px;
                 color: var(--thoughtware-blue);

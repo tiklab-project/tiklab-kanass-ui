@@ -19,7 +19,7 @@ import Workstore from "../../../work/store/WorkStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import setImageUrl from "../../../common/utils/setImageUrl";
-import DyncmicList from "../../../common/overviewComponent/DyncmicList";
+import DyncmicList from "../../../common/overviewComponent/DynamicList";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,

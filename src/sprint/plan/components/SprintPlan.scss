@@ -88,28 +88,69 @@
                 margin: 0 auto;
                 border-radius: 4px;
                 margin-bottom: 10px;
-                padding: 10px;
+                padding: 10px var(--thoughtware-padding);
                 font-size: 13px;
                 background-color: #fff;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
 
-                .work-item-id {
+               gap: 20px;
+
+                .work-item-left {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    min-width: 0;
+                    flex: 1;
+                    .work-item-info {
+                        line-height: 30px;
+                        flex-shrink: 1;
+                        min-width: 0;
+                    }
+                    .work-item-id {
+                        font-size: 12px;
+                        color: var(--thoughtware-gray-500);
+                    }
+                    .work-item-title {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+                .work-item-master {
+                    flex-shrink: 0;
+                    width: 60px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    display: flex;
-                    justify-content: space-between;
                 }
 
-                .work-item-title {
-                    line-height: 30px;
-                    cursor: pointer;
-                    .work-item-title-left {
-                        color: var(--thoughtware-blue);
-                        font-weight: var(--thoughtware-font-weight-bold);
-                    }
+                .work-item-status {
+                    flex-shrink: 0;
+                    width: 60px;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+                .work-status {
+                    padding: 2px 3px;
+                    background: #e2e1e4;
+                    border-radius: 4px;
+                    font-size: 10px;
+                    width: fit-content;
+                    color: #2b333e;
+                    flex-shrink: 0;
+                } 
+        
+    
+                .work-status-process {
+                    background: #b0d5dfa1;
+                    color: #132c33;
+                }
+    
+                .work-status-done {
+                    background: #dfecd5e3;
+                    color: #5e5314;
                 }
 
             }

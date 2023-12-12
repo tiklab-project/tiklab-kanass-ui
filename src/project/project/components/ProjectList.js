@@ -29,7 +29,7 @@ const ProjectList = (props) => {
         findJoinProjectList({})
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
-            setRecentProjectList(res.data.splice(0, 4))
+            setRecentProjectList(res.data)
             setRecentLoading(false)
         })
         findProjectFocus(userId)

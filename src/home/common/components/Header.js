@@ -12,8 +12,7 @@ import { Col, Row, Dropdown, Space } from "antd";
 import { withRouter } from 'react-router';
 import { getUser } from 'thoughtware-core-ui';
 import { observer, inject } from "mobx-react";
-import logo from "../../../assets/images/logo_tw3.png";
-import HeadMoreMenu from "./HeadMoreMenu";
+import logo from "../../../assets/images/logo.png";
 import Search from "../../search/components/Search";
 import MessageList from "./MessageList";
 
@@ -125,7 +124,10 @@ const Header = props => {
             <Col span={12}>
                 <div className={'frame-header-left'}>
                     <AppLink isSSO={false} />
-                    {logo && <div className={'frame-header-logo'}><img src={logo} alt={'logo'} /></div>}
+                    {logo && <div className={'frame-header-logo'}>
+                        <img src={logo} alt={'logo'} className="logo-img"/>
+                        <div className="logo-text">Kanass</div>
+                    </div>}
                     {renderRouter()}
                 </div>
             </Col>

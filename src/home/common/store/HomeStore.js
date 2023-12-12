@@ -57,7 +57,7 @@ class HomeStore {
             orderType:"desc"
         }],
         bgroup: "kanass",
-        content: {}
+        data: {}
     }
     
     // 是否是动态最后一页
@@ -286,7 +286,7 @@ class HomeStore {
             },
             bgroup: "kanass",
             userId: value.userId,
-            content: {
+            data: {
                 projectId: value.projectId,
                 versionId: value.versionId,
                 sprintId: value.sprintId
@@ -313,8 +313,6 @@ class HomeStore {
     @action
     findTodopage = async(value)=> {
         this.todoTaskList = [];
-        this.endTaskList = [];
-        this.overdueTaskList = [];
                     
         // const params={
         //     pageParam: {
@@ -337,18 +335,6 @@ class HomeStore {
             const list = data.data.dataList;
             this.todoTaskList = list;
             this.todoTotal = data.data.totalRecord;
-            // list.map(item => {
-            //     if(item.status === 1){
-            //         this.todoTaskList.push(item)
-            //     }
-            //     if(item.status === 2){
-            //         this.endTaskList.push(item)
-            //     }
-            //     if(item.status === 3){
-            //         this.overdueTaskList.push(item)
-            //     }
-            // })
-            // this.todoTaskList = data.data.dataList;
         }
         return data;
     }

@@ -1,0 +1,71 @@
+.todo-list-item {
+    display: flex; 
+    align-items: center; 
+    font-size: 14px; 
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .todo-list-item-left {
+        display: flex;
+        align-items: center;
+        flex-shrink: 1;
+        min-width: 0;
+        .todo-user-icon {
+            width: 32px; 
+            height: 32px;
+            border-radius: 32px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .todo-content {
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            flex-shrink: 1;
+            min-width: 0;
+            .todo-work-item {
+                line-height: 30px; 
+                display: flex; 
+                align-items: center; 
+                height: 30px;
+                .todo-work-title {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .todo-work-title:hover {
+                    color: var(--thoughtware-blue);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .todo-time {
+        font-size: 13px;
+        flex-shrink: 0
+    }
+}
+.todo-list-item:nth-child(4n+1) {
+    .todo-user-icon {
+        background-color: #cadbf3;
+    }
+}
+
+.todo-list-item:nth-child(4n+2){
+    .todo-user-icon {
+        background-color: #deedd7;
+    }
+}
+
+.todo-list-item:nth-child(4n+3) {
+    .todo-user-icon {
+        background-color: #ffebee;
+    }
+}
+
+.todo-list-item:nth-child(4n+4){
+    .todo-user-icon {
+        background-color: #e8eaf6;
+    }
+}

@@ -24,7 +24,6 @@ const WorkTable = (props) => {
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
     const tenant = getUser().tenant;
     const projectId = props.match.params.id;
-    const { route } = props;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -491,9 +490,6 @@ const WorkTable = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => goProdetail(record)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg> */}
                     <Popconfirm
                         title="确定删除事项?"
                         onConfirm={() => deleteWork(record.id)}
@@ -505,10 +501,6 @@ const WorkTable = (props) => {
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
                     </Popconfirm>
-
-                    {/* <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-more"></use>
-                    </svg> */}
                 </Space>
             ),
         }
