@@ -259,7 +259,7 @@ const Sprint = (props) => {
                     <img
                         src={'/images/sprint.png'}
                         alt=""
-                        className="img-icon-right"
+                        className="icon-32"
                     />
                    <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
                 </div>
@@ -276,19 +276,6 @@ const Sprint = (props) => {
             align: "left",
             width: "25%",
             render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
-        },
-        {
-            title: '负责人',
-            dataIndex: ['master', 'nickname'],
-            key: 'builderId',
-            
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record) => <div className="sprint-item">
-                <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div >{text}</div>
-            </div>
         },
         {
             title: "事项",

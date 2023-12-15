@@ -1,0 +1,69 @@
+.message-list-item {
+    display: flex; 
+    align-items: center; 
+    font-size: 14px; 
+    justify-content: space-between;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    .message-list-item-left {
+        display: flex;
+        align-items: center;
+        flex-shrink: 1;
+        min-width: 0;
+        gap: 10px;
+        .message-user-icon {
+            width: 32px; 
+            height: 32px;
+            border-radius: 32px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .message-content {
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 1;
+            min-width: 0;
+            .message-work-action {
+                line-height: 30px; 
+            }
+            .message-work-item {
+                line-height: 30px; 
+                display: flex; 
+                align-items: center; 
+                height: 30px;
+                .message-work-title {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .message-work-title:hover {
+                    color: var(--thoughtware-blue);
+                    cursor: pointer;
+                }
+                .message-work-oldvalue {
+                    padding: 5px 10px; 
+                    background-color: #F4F5F7; 
+                    font-size: 12px; 
+                    line-height: 15px;
+                    border-radius: 5px; 
+                    margin: 0 10px;
+                }
+                .message-work-newValue {
+                    padding: 5px 10px; 
+                    background-color: #F4F5F7; 
+                    font-size: 12px; 
+                    line-height: 15px;
+                    border-radius: 5px; 
+                    margin: 0 10px;
+                }
+            }
+        }
+    }
+    .message-time {
+        flex-shrink: 0
+    }
+}

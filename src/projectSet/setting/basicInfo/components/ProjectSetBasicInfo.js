@@ -26,7 +26,7 @@ const ProjectSetBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 12,
+            span: 20,
         },
     };
     const formTailLayout = {
@@ -62,7 +62,12 @@ const ProjectSetBasicInfo = props => {
 
     useEffect(() => {
         info()
-        getUseList()
+        getUseList().then(res => {
+            if (res.code === 0) {
+                console.log(uselist)
+            }
+
+        })
         return;
     }, [])
 
@@ -100,7 +105,7 @@ const ProjectSetBasicInfo = props => {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),
                 endTime: time[1].format("YYYY-MM-DD"),
-                master: { id: values.master },
+                master: { id: values.master?.id },
                 id: projectSetId
             }
 
@@ -143,7 +148,7 @@ const ProjectSetBasicInfo = props => {
                 项目集图标信息，可见范围，负责人等信息，可点击修改</div>
         </div>
     );
-    
+
     const projectSetDelete = () => (
         <div>
             <div className="projectSet-info-title">
@@ -170,8 +175,7 @@ const ProjectSetBasicInfo = props => {
                     />
                     <Collapse expandIconPosition={"right"}>
                         <Panel header={projectSetInfoDesc()} key="1" >
-                            <div className="projectSet-set-icon">
-                                <div className="projectSet-set-icon-block">
+                                {/* <div className="projectSet-set-icon-block">
                                     <div>
                                         {
                                             iconUrl ?
@@ -193,7 +197,7 @@ const ProjectSetBasicInfo = props => {
                                         </div>
                                     </PrivilegeProjectButton>
 
-                                </div>
+                                </div> */}
                                 <Form
                                     {...layout}
                                     name="basic"
@@ -206,6 +210,38 @@ const ProjectSetBasicInfo = props => {
                                     labelAlign={"left"}
                                     onValuesChange={onFinish}
                                 >
+                                    {/* <div className="projectSet-set-icon">
+                                        <Form.Item
+                                            label="项目图标"
+                                            className="projectSet-form-icon"
+                                            {...layout}
+                                            labelAlign="left"
+                                        >
+                                            <div className="projectSet-form-icon-content">
+                                                <div>
+                                                    {
+                                                        iconUrl ? <Fragment>
+                                                            <img src={setImageUrl(iconUrl)} alt="" width={60} height={60} />
+                                                        </Fragment>
+
+                                                            :
+                                                            <img
+                                                                src={('images/project1.png')}
+                                                                alt="" width={60} height={60}
+                                                            />
+                                                    }
+                                                    <span>项目图标，可点击更改按钮修改icon</span>
+                                                </div>
+
+                                                <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectSetId}  {...props}>
+                                                    <div className="change-button" onClick={() => setVisible(true)}>
+                                                        更改图标
+                                                    </div>
+                                                </PrivilegeProjectButton>
+                                            </div>
+                                        </Form.Item>
+                                    </div> */}
+
                                     <Form.Item
                                         label="项目集名称"
                                         name="name"
@@ -230,7 +266,7 @@ const ProjectSetBasicInfo = props => {
                                         >
                                             {
                                                 uselist && uselist.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                                    return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
                                                 })
                                             }
                                         </Select>
@@ -253,18 +289,18 @@ const ProjectSetBasicInfo = props => {
                                         </Button>
                                     </Form.Item>
                                 </Form>
-                            </div>
+
                         </Panel>
                         <Panel header={projectSetDelete()} key="2" >
                             <div className="projectSet-set-icon">
-                                <div className="projectSet-set-icon-block">
-                                    <div>
+                                <div>
+                                    <div className="projectSet-delete-block">
 
                                         <span>此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
                                     </div>
-                                        <div className="change-botton" onClick={() => showModal()}>
-                                            删除项目集
-                                        </div>
+                                    <div className="change-button  delete-button" onClick={() => showModal()}>
+                                        删除项目集
+                                    </div>
 
                                 </div>
                             </div>
@@ -274,7 +310,14 @@ const ProjectSetBasicInfo = props => {
 
 
                 </div>
-                <Modal title="是否删除" visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
+                <Modal
+                    title="是否删除"
+                    visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel}
+                    okText={"确定"}
+                    cancelText={"取消"}
+                    okType="danger"
+                    okButtonProps={{ type: "primary" }}
+                >
                     此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                 </Modal>
                 <ProjectSetIcon

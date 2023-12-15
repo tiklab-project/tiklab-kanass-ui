@@ -127,7 +127,7 @@ const SprintBasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push(`/projectDetail/${projectId}/version`)
+                    props.history.push(`/projectDetail/${projectId}/sprint`)
                 }
             })
             
@@ -142,13 +142,13 @@ const SprintBasicInfo = props => {
     const sprintInfoDesc = () => (
         <div>
             <div className="sprint-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
-                    <use xlinkHref="#icon-sprintDetail"></use>
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
+                    <use xlinkHref="#icon-projectDetail"></use>
                 </svg>
                 迭代信息
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 迭代图标信息，可见范围，负责人等信息，可点击修改</div>
@@ -160,13 +160,13 @@ const SprintBasicInfo = props => {
     const sprintDelete = () => (
         <div>
             <div className="sprint-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
-                    <use xlinkHref="#icon-sprintDelete"></use>
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
+                    <use xlinkHref="#icon-projectDelete"></use>
                 </svg>
                 删除迭代
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 删除迭代
@@ -262,10 +262,10 @@ const SprintBasicInfo = props => {
                         <Panel header={sprintDelete()} key="2">
                             <div className="sprint-set-delete">
                                 <div className="sprint-set-icon-block">
-                                    删除迭代，包含迭代与事项的关联关系，等
+                                    删除迭代，包含迭代与事项的关联关系
                                 </div>
 
-                                <div className="change-botton" onClick={() => showModal()}>
+                                <div className="change-button delete-button"  onClick={() => showModal()}>
                                     删除迭代
                                 </div>
                             </div>
@@ -274,7 +274,14 @@ const SprintBasicInfo = props => {
 
                 </div>
                 <div className="sprint-delete-confirm">
-                    <Modal title="确定删除" getContainer = {false} visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
+                    <Modal 
+                        title="确定删除" 
+                        getContainer = {false} 
+                        visible={isModalVisible} 
+                        closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}
+                        okType="danger"
+                        okButtonProps={{type: "primary"}}
+                    >
                         删除迭代，包含迭代与事项的关联关系
                     </Modal>
                 </div>

@@ -119,13 +119,13 @@ const WorkType = (props) => {
                                 <img
                                     src = {setImageUrl(record.workType.iconUrl)}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                                 :
                                 <img
                                     src={('images/workType1.png')}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                         }
                     </div>

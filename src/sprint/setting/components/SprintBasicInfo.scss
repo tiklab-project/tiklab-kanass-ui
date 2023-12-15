@@ -29,8 +29,9 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 15px;
+        color: #ff0000;
     }
-    .change-botton {
+    .change-button {
         text-align: center;
         height: 30px;
         line-height: 30px;
@@ -39,11 +40,10 @@
         border-radius: 4px;
         width: 100px;
         font-size: 12px;
+        cursor: pointer;
     }
-    .sprint-set-delete {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .delete-button {
+        background-color: #ff0000;
     }
 }
 .sprint-info {

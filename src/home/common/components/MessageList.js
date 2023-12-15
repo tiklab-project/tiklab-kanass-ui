@@ -13,6 +13,7 @@ import { MessageOutlined } from '@ant-design/icons';
 import "./MessageList.scss"
 import { withRouter } from 'react-router';
 import { useEffect } from 'react';
+import MessageItem from '../../../common/overviewComponent/MessageItem';
 
 
 const MessageList = (props) => {
@@ -138,10 +139,18 @@ const MessageList = (props) => {
                                 {
                                     messageList && messageList.length > 0 && messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
-                                            <div
+                                            {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                                 onClick = {() => goToMessage(item.link,item.id)}
                                                 style={{flex: 1,width: "314px"}}
+                                            /> */}
+                                            <MessageItem 
+                                                id = {item.id} 
+                                                content = {item.data} 
+                                                type = {item.messageType.id} 
+                                                status = {item.status}
+                                                item = {item}
+                                                updateMessageDispatchItem = {updateMessageDispatchItem}
                                             />
                                             <div className={`message-status ${item.status === 0 ? "status-unread" : "status-read"}`}></div>
                                         </div>
@@ -160,11 +169,18 @@ const MessageList = (props) => {
                                 {
                                     messageList && messageList.length > 0 && messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
-                                            <div
+                                            {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                                 className = "message-item"
                                                 style={{flex: 1, width: "314px"}}
                                                 onClick = {() => goToMessage(item.link,item.id)}
+                                            /> */}
+                                            <MessageItem 
+                                                id = {item.id} 
+                                                content = {item.data} 
+                                                type = {item.messageType.id} 
+                                                status = {item.status}
+                                                updateMessageDispatchItem = {updateMessageDispatchItem}
                                             />
                                             <div className={`message-status ${item.status === 1 ? "status-read" : "status-unread"}`}></div>
                                         </div>

@@ -180,7 +180,7 @@ const ProjectSetAddInfo = (props) => {
                     >
                         <TextArea rows={3} />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         label="图标"
                         name="icon"
                     >
@@ -189,12 +189,12 @@ const ProjectSetAddInfo = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div key={item.key} className={`projectSet-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
                        
-                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon-right" />
+                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon" />
                                     </div>
                                 })
                             }
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     <div className="projectSet-add-submit">
                         <Button htmlType="button" onClick={() => props.history.goBack()}>
                             取消

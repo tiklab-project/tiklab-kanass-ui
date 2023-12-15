@@ -21,6 +21,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import InsightStore from "../store/InsightStore";
 import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from "thoughtware-core-ui";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const { confirm } = Modal;
 
 const InsightList = (props) => {
@@ -176,9 +177,15 @@ const InsightList = (props) => {
         },
         {
             title: "创建人",
-            dataIndex: ["master", "name"],
+            dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={text} />
+                    {text}
+                </Space>
+            )
         },
         {
             title: "创建时间",

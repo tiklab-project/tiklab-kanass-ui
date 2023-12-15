@@ -52,7 +52,7 @@ export class ProjectSetStore {
     @action
     getUseList = async() => {
         const data = await Service("/user/user/findAllUser")
-        if(data === 0){
+        if(data.code === 0){
             this.uselist = data.data;
         }
         return data

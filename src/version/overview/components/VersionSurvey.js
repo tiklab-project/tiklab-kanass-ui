@@ -273,33 +273,6 @@ const VersionSurvey = (props) => {
                             }
                         </div>
                     </div>
-                    {/* <div className="dynamic-box">
-                        <div className="version-title">
-                            <span className="name">相关动态</span>
-                            {
-                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectScrumDetail/:id/versiondetail/${versionId}/dynamic`) }}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
-                            }
-
-                        </div>
-                        <div className="dynamic-list">
-                            {
-                                opLogList.length > 0 ? opLogList.map(item => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
-                                        onClick={() => goOpLogDetail(item.link)}
-                                        key={item.id}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                            }
-                        </div>
-                    </div> */}
                     <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>

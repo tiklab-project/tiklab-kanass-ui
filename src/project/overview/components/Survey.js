@@ -494,7 +494,7 @@ const Survey = (props) => {
                     <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
                     {/* <div className="dynamic-box">
                         <div className="box-title">
-                            <div className="name">相关动态</div>
+                            <div className="name">最新动态</div>
                             <div className="more" onClick={() => goDynamicList()}>
                                 <svg aria-hidden="true" className="svg-icon">
                                     <use xlinkHref="#icon-rightjump"></use>

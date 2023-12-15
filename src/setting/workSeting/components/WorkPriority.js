@@ -81,7 +81,7 @@ const WorkPriority = (props) => {
                         <img
                             src={(`/images/${record.iconUrl}`)}
                             alt=""
-                            className="img-icon-right"
+                            className="icon-32"
                         />
 
                     </div>

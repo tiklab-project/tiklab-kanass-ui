@@ -89,13 +89,13 @@ const WorkTypeAddModal = (props) => {
                                 <img 
                                     src = {setImageUrl(record.iconUrl)}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                                 :
                                 <img
                                     src={('images/workType1.png')}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                         }
                     </div>

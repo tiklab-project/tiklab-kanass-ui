@@ -137,7 +137,7 @@ const VersionTable = (props) => {
                     <img
                         src={'/images/version.png'}
                         alt=""
-                        className="img-icon-right"
+                        className="icon-32"
                     />
                     <span className="version-name" >{text}</span>
                 </div>
@@ -162,15 +162,6 @@ const VersionTable = (props) => {
             key: "relaPublishDate",
             align: "left",
             render: (text) => <span>{text ? text : "---"}</span>,
-        },
-        {
-            title: '负责人',
-            dataIndex: ['master', 'nickname'],
-            key: 'builderId',
-            render: (text, record) => <div className="version-master">
-                <div style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div >{text}</div>
-            </div>
         },
        
         {

@@ -29,7 +29,7 @@ const TodoListItem = (props) => {
             <div className="todo-list-item-left">
                 <div className="todo-user-icon">{createUserIcon}</div>
                 <div className="todo-content">
-                    <div>{createUser.nickname}向您分配了事项 </div>
+                    <div>{createUser.nickname}向你分配了事项 </div>
                     <div className="todo-work-item">
                         <div className="todo-work-title" onClick={() => goTodoDetail()}>{workItemTitle}</div>
                     </div>

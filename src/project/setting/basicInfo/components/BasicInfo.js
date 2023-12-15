@@ -166,13 +166,13 @@ const BasicInfo = props => {
     const projectInfoDesc = () => (
         <div>
             <div className="project-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use xlinkHref="#icon-projectDetail"></use>
                 </svg>
                 项目信息
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 项目图标信息，可见范围，负责人等信息，可点击修改</div>
@@ -184,13 +184,13 @@ const BasicInfo = props => {
     const projectDelete = () => (
         <div>
             <div className="project-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use xlinkHref="#icon-projectDelete"></use>
                 </svg>
                 删除项目
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 删除项目
@@ -231,7 +231,7 @@ const BasicInfo = props => {
                                         </div>
 
                                         <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
-                                            <div className="change-botton" onClick={() => setVisible(true)}>
+                                            <div className="change-button" onClick={() => setVisible(true)}>
                                                 更改图标
                                             </div>
                                         </PrivilegeProjectButton>
@@ -336,7 +336,7 @@ const BasicInfo = props => {
                                 </div>
 
                                 <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>
-                                    <div className="change-botton" onClick={() => showModal()}>
+                                    <div className="change-button delete-button" onClick={() => showModal()}>
                                         删除项目
                                     </div>
                                 </PrivilegeProjectButton>
@@ -346,7 +346,18 @@ const BasicInfo = props => {
 
                 </div>
                 <div className="project-delete-confirm">
-                    <Modal title="确定删除" getContainer = {false} visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
+                    <Modal 
+                        title="确定删除" 
+                        getContainer = {false} 
+                        visible={isModalVisible} 
+                        closable={false} 
+                        onOk={handleOk} 
+                        onCancel={handleCancel} 
+                        okText={"确定"} 
+                        cancelText={"取消"}
+                        okType = "danger"
+                        okButtonProps={{type: "primary"}}
+                    >
                         <Alert message=" 此项目及其事务、组件、附件和版本将被永久删除" type="error" showIcon />
 
                         <Form

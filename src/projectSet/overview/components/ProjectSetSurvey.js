@@ -83,7 +83,7 @@ const ProjectSetSurvey = props => {
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
                             <div className="projectSet-info">
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="icon-32" aria-hidden="true">
                                     <use xlinkHref="#icon-program"></use>
                                 </svg>
                                 <div className="projectSet-info-content">
@@ -181,7 +181,7 @@ const ProjectSetSurvey = props => {
                     </div>
                     {/* <div className="dynamic-box">
                         <div className="box-title">
-                            <span className="name">相关动态</span>
+                            <span className="name">最新动态</span>
                             {
                                 opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/dynamic`) }}>
                                     <svg aria-hidden="true" className="svg-icon">

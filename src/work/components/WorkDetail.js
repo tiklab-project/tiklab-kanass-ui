@@ -66,13 +66,12 @@ const WorkDetail = (props) => {
             }
         })
     }
-    // console.log("workdetail-------------", props)
     useEffect(() => {
         if (props.match.path === "/projectDetail/:id/work/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
         }
-    }, [])
+    }, [props.match.params.workId])
 
     useEffect(() => {
         setWorkInfo()

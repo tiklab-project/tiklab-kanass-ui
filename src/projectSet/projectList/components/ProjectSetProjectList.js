@@ -69,13 +69,13 @@ const ProjectSetProjectList = (props) => {
                             <img
                                 src = {setImageUrl(record.iconUrl)}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
                             />
                             :
                             <img
                                 src={('/images/project1.png')}
                                 alt=""
-                                className="list-img"
+                                className="icon-32"
                             />
                     }
 

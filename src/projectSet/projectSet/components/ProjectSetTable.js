@@ -93,7 +93,7 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "30%",
             render: (text, record) => <Space onClick={() => goProjectSetDetail(record)} className="span-botton">
-                <svg className="svg-icon" aria-hidden="true">
+                <svg className="icon-32" aria-hidden="true">
                     <use xlinkHref="#icon-program"></use>
                 </svg>
                 {text}

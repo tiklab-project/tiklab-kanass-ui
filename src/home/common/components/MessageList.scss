@@ -34,12 +34,11 @@
             justify-content: space-between;
             padding-bottom: 10px;
             cursor: pointer;
+            gap: 10px;
             .message-status {
                 width: 6px;
                 height: 6px;
-                
                 border-radius: 6px;
-                margin-left: 15px;
                 
             }
             .status-unread {
@@ -47,6 +46,29 @@
             }
             .status-read {
                 background-color: #00ff00;
+            }
+        }
+        .message-list:nth-child(4n+1) {
+            .message-user-icon {
+                background-color: #cadbf3;
+            }
+        }
+        
+        .message-list:nth-child(4n+2){
+            .message-user-icon {
+                background-color: #deedd7;
+            }
+        }
+        
+        .message-list:nth-child(4n+3) {
+            .message-user-icon {
+                background-color: #ffebee;
+            }
+        }
+        
+        .message-list:nth-child(4n+4){
+            .message-user-icon {
+                background-color: #e8eaf6;
             }
         }
         .message-item-text {

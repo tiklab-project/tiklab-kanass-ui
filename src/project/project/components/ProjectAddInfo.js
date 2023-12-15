@@ -49,6 +49,7 @@ const ProjectAddInfo = (props) => {
     const getIconList = () => {
         findIconList({ iconType: "project" }).then((res) => {
             setIconList(res.data)
+            setIconUrl(res.data[0].iconUrl)
         })
     }
 

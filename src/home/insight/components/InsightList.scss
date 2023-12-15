@@ -59,11 +59,12 @@
         }
 
         .insight-name {
-            color: var(--thoughtware-blue);
+            
             cursor: pointer;
         }
 
         .insight-name:hover {
+            color: var(--thoughtware-blue);
             text-decoration: underline;
         }
 

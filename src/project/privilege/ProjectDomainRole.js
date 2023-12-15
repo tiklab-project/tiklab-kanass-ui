@@ -15,15 +15,15 @@ const ProjectDomainRole = props => {
     const projectId = props.match.params.id;
 
     return (
-        <Row>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+        // <Row>
+        //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <DomainRole
                     {...props}
                     domainId={projectId}
                     bgroup = {"kanass"}
                 />
-            </Col>
-        </Row>
+        //     </Col>
+        // </Row>
     )
 }
 

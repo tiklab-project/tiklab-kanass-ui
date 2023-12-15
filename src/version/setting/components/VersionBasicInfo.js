@@ -139,13 +139,13 @@ const VersionBasicInfo = props => {
     const versionInfoDesc = () => (
         <div>
             <div className="version-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
-                    <use xlinkHref="#icon-versionDetail"></use>
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
+                    <use xlinkHref="#icon-projectDetail"></use>
                 </svg>
                 版本信息
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 版本图标信息，可见范围，负责人等信息，可点击修改</div>
@@ -156,13 +156,13 @@ const VersionBasicInfo = props => {
     const versionDelete = () => (
         <div>
             <div className="version-info-title">
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
-                    <use xlinkHref="#icon-versionDelete"></use>
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
+                    <use xlinkHref="#icon-projectDelete"></use>
                 </svg>
                 删除版本
             </div>
             <div style={{ fontSize: "12px", color: "#999" }}>
-                <svg aria-hidden="true" className="img-icon" fill="#fff">
+                <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
                 删除版本
@@ -252,10 +252,10 @@ const VersionBasicInfo = props => {
                         <Panel header={versionDelete()} key="2">
                             <div className="version-set-delete">
                                 <div className="version-set-icon-block">
-                                    删除版本，包含版本与事项的关联关系，等
+                                    删除版本，包含版本与事项的关联关系
                                 </div>
 
-                                <div className="change-botton" onClick={() => showModal()}>
+                                <div className="change-button delete-button" onClick={() => showModal()}>
                                     删除版本
                                 </div>
                             </div>
@@ -264,7 +264,18 @@ const VersionBasicInfo = props => {
 
                 </div>
                 <div className="version-delete-confirm">
-                    <Modal title="确定删除" getContainer = {false} visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}>
+                    <Modal 
+                        title="确定删除" 
+                        getContainer = {false} 
+                        visible={isModalVisible} 
+                        closable={false} 
+                        onOk={handleOk} 
+                        onCancel={handleCancel} 
+                        okText={"确定"} 
+                        cancelText={"取消"}
+                        okType="danger"
+                        okButtonProps={{type: "primary"}}
+                    >
                         删除版本，包含版本与事项的关联关系
                     </Modal>
                 </div>

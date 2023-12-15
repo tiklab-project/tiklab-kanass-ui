@@ -95,7 +95,7 @@ const WorkTypeSystem = (props) => {
                                 <img
                                     src={setImageUrl(record.iconUrl)}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                             </Fragment>
 
@@ -103,7 +103,7 @@ const WorkTypeSystem = (props) => {
                                 <img
                                     src={('images/workType1.png')}
                                     alt=""
-                                    className="img-icon-right"
+                                    className="icon-32"
                                 />
                         }
                     </div>
