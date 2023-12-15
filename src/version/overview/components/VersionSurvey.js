@@ -17,7 +17,7 @@ import moment from 'moment';
 import VersionSurveyStore from "../store/VersionSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
-import { CaretDownOutlined } from '@ant-design/icons';
+import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus, userList, getUseList } = VersionSurveyStore;
@@ -79,8 +79,7 @@ const VersionSurvey = (props) => {
         findtodopage({ userId: masterId, versionId: versionId })
 
         return;
-    }, [versionId])
-    const [hoverFieldName, setHoverFieldName] = useState("")
+    }, [versionId]);
     const [fieldName, setFieldName] = useState("")
     /**
      * 燃尽图
@@ -142,8 +141,8 @@ const VersionSurvey = (props) => {
         setSearchType(value)
         props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
     }
-    const changeFieldName = (value) => {
-        setFieldName(value)
+    const goToListPage = () => {
+        props.history.push(`/${projectId}/versiondetail/${versionId}/workTodo`) 
     }
     return (
         <Row style={{ height: "100%", background: "var(--thoughtware-gray-600)", overflow: "auto" }}>
@@ -245,7 +244,7 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="version-todo-work">
+                    {/* <div className="version-todo-work">
                         <div className="version-title">
                             <span className="name">待办事项</span>
                             {
@@ -272,7 +271,8 @@ const VersionSurvey = (props) => {
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </div>
-                    </div>
+                    </div> */}
+                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"version"}/>
                     <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>

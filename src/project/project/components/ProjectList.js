@@ -295,7 +295,7 @@ const ProjectList = (props) => {
             <div className="project-recent-box">
                 <div className="title">
                     <div>
-                        最近项目
+                        常用项目
                     </div>
                 </div>
                 <Spin spinning={recentLoading} delay={500} >

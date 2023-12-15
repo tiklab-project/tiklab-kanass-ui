@@ -171,7 +171,6 @@ const EpicLineMap = (props) => {
         editWork(params2)
         data[index].planBeginTime = startTime;
         data[index].planEndTime = endTime;
-        console.log(data)
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {

@@ -31,7 +31,7 @@ const ProjectAddInfo = (props) => {
             {
                 type: 'array',
                 required: true,
-                message: 'Please select time!',
+                message: '选择时间',
             }
         ]
     };

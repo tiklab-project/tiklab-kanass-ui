@@ -11,7 +11,8 @@ import { observer } from "mobx-react";
 import "./WorkDynamic.scss"
 import { Empty } from 'antd';
 import "./WorkDynamic.scss";
-import WorkDynamicStore from '../store/WorkDynamicStore'
+import WorkDynamicStore from '../store/WorkDynamicStore';
+import DynamicListItem from "../../common/overviewComponent/DynamicItem"
 const WorkDynamic = (props) => {
     const { workStore } = props;
     const { findlogpage } = WorkDynamicStore;
@@ -31,10 +32,7 @@ const WorkDynamic = (props) => {
         <div className="work-dynamic">
             {
                 list && list.length > 0 ? list.map(item => {
-                    return <div
-                        dangerouslySetInnerHTML={{ __html: item.data }}
-                        className="todo-item"
-                    />
+                    return <DynamicListItem content = {item.data} type = {item.actionType.id} />
                 }) :
                     <Empty />
             }

@@ -14,23 +14,23 @@ const WorkFilterType = (props) => {
     const [workTypeList, setWorkTypeList] = useState([]);
 
     useEffect(() => {
-        findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
+        findWorkTypeDmList({ projectId: projectId }).then(res => {
             if (res.code === 0) {
                 setWorkTypeList(res.data)
             }
         })
 
-        findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
-            if (res.code === 0) {
-                // setWorkCustom(res.data)
+        // findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
+        //     if (res.code === 0) {
+        //         // setWorkCustom(res.data)
+            
+        //         if (res.data.length > 0) {
+        //             setWorkTypeList(workTypeList.push(res.data))
 
-                if (res.data.length > 0) {
-                    setWorkTypeList(workTypeList.push(res.data))
+        //         }
 
-                }
-
-            }
-        })
+        //     }
+        // })
         return;
     }, [])
 
@@ -82,7 +82,7 @@ const WorkFilterType = (props) => {
             suffixIcon = {true}
         >
             {
-                workTypeList.map(item => {
+                workTypeList && workTypeList.length > 0 && workTypeList?.map(item => {
                     return <SelectItem
                         value={item.workType.id}
                         label={item.workType.name}

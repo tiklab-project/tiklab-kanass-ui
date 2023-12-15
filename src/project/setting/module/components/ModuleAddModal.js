@@ -167,7 +167,7 @@ const ModuleAddModal = (props) => {
                             showSearch
                             style={{ width: '100%' }}
                             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                            placeholder="Please select"
+                            placeholder="选择上级模块"
                             allowClear
                             // value = {parentId}
                             // onChange={(value)=> setParentId(value)}

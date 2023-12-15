@@ -229,14 +229,8 @@ const InsightList = (props) => {
 
     return (
         <Provider {...store}>
-            {/* <Row className="insight-list-row">
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
             <div>
-                {/* <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}> */}
                 <div className="insight-list">
-                    {/* <Breadcumb firstText="仪表盘">
-                                
-                            </Breadcumb> */}
                     <div className="insight-tabs-search">
                         <div className="insight-tabs">
                             {

@@ -149,7 +149,8 @@ const UrlData = AsyncComponent(() => import('./setting/systemIntegration/compone
 const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
 const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
-const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight"))
+const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
+// const ViewInsight1 = AsyncComponent(() => import("./home/insight/components/ViewInsight1.js"))
 //工时
 const TaskListContent = AsyncComponent(() => import('./setting/todo/TaskList.js'))
 const TodoTempListContent = AsyncComponent(() => import('./setting/todo/TodoTempList'))
@@ -236,6 +237,12 @@ const Routers = [
                     }
                 ]
             },
+            // {
+            //     path: "/insight1",
+            //     exact: false,
+            //     component: ViewInsight1,
+            //     key: "ProjectSet"
+            // },
             {
                 path: "/log",
                 exact: false,
@@ -500,36 +507,43 @@ const Routers = [
                     {
                         path: "/setting/organ",
                         component: OrgaContent,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/user",
                         component: OrgaUser,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/directory",
                         component: ProjectDirectory,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/usergroup",
                         component: ProjectUserGroup,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/usersystemgroup",
                         component: ProjectSystemUserGroup,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/workstatus",
                         component: ProjectFlowStatusList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/nodestatus",
                         component: ProjectNodeStatusList,
+                        row: true,
                         exact: true
                     },
                     {
@@ -566,161 +580,192 @@ const Routers = [
                     {
                         path: "/setting/systemFeature",
                         component: SystemFeature,
+                        row: true,
                         exact: true
                     },
                     // 系统内置角色管理
                     {
                         path: "/setting/systemRoleBuilt",
                         component: SystemRoleBuilt,
+                        row: true,
                         exact: true
                     },
                     // 系统角色管理
                     {
                         path: "/setting/systemRole",
                         component: SystemRole,
+                        row: true,
                         exact: true
                     },
                     // 项目功能管理
                     {
                         path: "/setting/projectFeature",
                         component: ProjectFeature,
+                        row: true,
                         exact: true
                     },
                     // 项目角色管理
                     {
                         path: "/setting/projectRole",
                         component: ProjectRole,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/preliminaryType",
                         component: ProjectProjectDirectory,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/preliminaryTypeSys",
                         component: ProjectProjectDirectorySys,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/preliminarySystem",
                         component: ProjectPreliminaryListSystem,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/preliminary",
                         component: ProjectPreliminaryList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/form",
                         component: FormList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/FormDetail/:formId",
                         component: FormDetail,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/formsystem",
                         component: FormListSystem,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/projectForm",
                         component: ProjectProjectFormList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/projectFormDetail/:id",
                         component: FormDetail,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/systemFlow",
                         component: ProjectSystemFlowList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/flowDetailView/:flowId",
                         component: FlowDetailView,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/flowDetailDesign/:flowId",
                         component: FlowDetailDesign,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/systemFlowsystem",
                         component: ProjectSystemFlowListSystem,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageManagement",
                         component: ProjectMessageManagement,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageNotice",
                         component: ProjectMessageNotice,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageNoticeSystem",
                         component: ProjectMessageNoticeSystem,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageTemplate",
                         component: ProjectMessageTemplate,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageType",
                         component: ProjectMessageType,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/messageSendType",
                         component: ProjectMessageSendType,
+                        row: true,
                         exact: true
                     },
 
                     {
                         path: "/setting/taskList",
                         component: TaskListContent,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/myTodoTask",
                         component: MyTodoTaskContent,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/todoTypeTask",
                         component: TodoTypeListContent,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/todoTempList",
                         component: TodoTempListContent,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/logList",
                         component: LogList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/myLogTemplateList",
                         component: LogTemplateList,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/projectLogTypeList",
                         component: ProjectLogTypeList,
+                        row: true,
                         exact: true
                     },
                     {
@@ -736,16 +781,19 @@ const Routers = [
                     {
                         path: "/setting/plugin",
                         component: ProjectPlugin,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/version",
                         component: LicenceVersion,
+                        row: true,
                         exact: true
                     },
                     {
                         path: "/setting/backups",
                         component: Backups,
+                        row: true,
                         exact: true
                     }
                 ]
@@ -806,6 +854,7 @@ const Routers = [
                         path: "/projectDetail/:id/versionDetail/:versionId",
                         component: VersionDetail,
                     },
+                   
                     {
                         path: "/projectDetail/:id/epic/:epicId",
                         component: EpicDetail,
@@ -988,6 +1037,11 @@ const Routers = [
                         component: Dynamic
                     },
                     {
+                        path: "/:id/sprintdetail/:sprint/workTodo",
+                        exact: false,
+                        component: WorkTodoPage
+                    },
+                    {
                         path: "/:id/sprintdetail/:sprint/workList",
                         component: WorkList,
                         
@@ -1055,7 +1109,11 @@ const Routers = [
                     {
                         path: "/:id/versiondetail/:version/workBodar",
                         component: WorkBodar,
-                    }
+                    },
+                    {
+                        path: "/:id/versiondetail/:version/workTodo",
+                        component: WorkTodoPage,
+                    },
                 ]
             },
         ]

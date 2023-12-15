@@ -35,7 +35,7 @@ const HomeSurvey = (props) => {
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
-        findTodopage({ userId: userId,status: 1,  pageParam: {
+        findTodopage({ userId: userId,status: 1, data: {},  pageParam: {
             pageSize: 10,
             currentPage: 1
         }}, )
@@ -273,11 +273,10 @@ const HomeSurvey = (props) => {
 
     const getTodoList = (value) => {
         console.log(value)
-        findTodopage({ userId: userId,status: value,  pageParam: {
+        findTodopage({ userId: userId,status: value, pageParam: {
             pageSize: 10,
             currentPage: 1
         }}, )
-
     }
     return (
         <div className="home-content">

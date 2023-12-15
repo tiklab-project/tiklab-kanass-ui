@@ -181,7 +181,7 @@ const ProjectChangeModal = (props) => {
                         title={project.projectName}
                         alt=""
                     />
-                    <div className="project-info">
+                    <div className="project-item-info">
                         <div className="project-name">
                             {project.projectName}
                         </div>

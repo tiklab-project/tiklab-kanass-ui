@@ -14,25 +14,45 @@ import "../components/ProjectSetSurvey.scss";
 import { getUser } from 'thoughtware-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
+import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const ProjectSetSurvey = props => {
 
     const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
-        findtodopage, todoTaskList, findProjectList, findProjectSet } = BasicInfoStore;
+        findtodopage, findProjectList, findProjectSet } = BasicInfoStore;
     const [workItemList, setWorkItemList] = useState();
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
-    const projectSet = JSON.parse(localStorage.getItem("projectSet"))
+    const projectSet = JSON.parse(localStorage.getItem("projectSet"));
+    const [todoTaskList, setTodoTaskList] = useState([])
+    const [logList, setLogList] = useState([])
     useEffect(() => {
         // info()
-        findProjectList().then(res => {
+        findProjectList({projectSetId: projectSetId}).then(res => {
             if (res.code === 0) {
                 const list = res.data;
                 let ids = []
+                let todo = []
                 if (list.length > 0) {
                     list.map(item => {
                         ids.push(item.id)
+                        findtodopage({projectId: item.id }).then(res=> {
+                            if(res.code === 0){
+                                todoTaskList.push(...res.data.dataList)
+                                setTodoTaskList([...todoTaskList])
+                            }
+                        })
+                        findlogpage({projectId: item.id }).then(res=> {
+                            if(res.code === 0){
+                                logList.push(...res.data.dataList)
+                                setLogList([...logList])
+                            }
+                        })
                     })
+                    // setTodoTaskList(todoTaskList)
+                    setProcessProjectList(list.filter(item => item.projectState === 2))
                 }
+                // findtodopage({projectIds: ids })
+                // findlogpage({projectIds: ids })
                 statProjectSetWorkItemProcess(ids).then(res => {
                     if (res.code === 0) {
                         setWorkItemList(res.data.slice(0, 6))
@@ -40,14 +60,13 @@ const ProjectSetSurvey = props => {
                 })
             }
         })
-        findPrecessProjectList({ projectSetId: projectSetId, projectState: "2" }).then(res => {
-            if (res.code === 0) {
-                setProcessProjectList(res.data)
-            }
-        })
+        // findPrecessProjectList({ projectSetId: projectSetId, projectState: "2" }).then(res => {
+        //     if (res.code === 0) {
+        //         setProcessProjectList(res.data)
+        //     }
+        // })
 
-        findtodopage({ userId: getUser().id })
-        findlogpage()
+        
         return;
     }, [])
 
@@ -75,7 +94,9 @@ const ProjectSetSurvey = props => {
         props.history.push(`/projectSetdetail/${projectSetId}/dynamic`)
 
     }
-
+    const goToListPage = () => {
+        props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) 
+    }
     return (
         <Row className="projectSet-survey">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -117,9 +138,9 @@ const ProjectSetSurvey = props => {
                         <div className="projectSet-process-project">
                             <div className="box-title">
                                 <span className="name">进行中项目</span>
-                                <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()}>
+                                {/* <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()}>
                                     <use xlinkHref="#icon-rightjump"></use>
-                                </svg>
+                                </svg> */}
                             </div>
                             <div className="projectSet-process-project-list">
                                 {
@@ -152,60 +173,9 @@ const ProjectSetSurvey = props => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="projectSet-survey-middle">
-                       
-                    </div> */}
-                    <div className="projectSet-todo">
-                        <div className="box-title">
-                            <span className="name">待办事项</span>
-                            <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) }}>
-                                <svg aria-hidden="true" className="svg-icon">
-                                    <use xlinkHref="#icon-rightjump"></use>
-                                </svg>
-                            </div>
+                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"projectSet"}/>
 
-                        </div>
-                        <div className="projectSet-todo-list">
-                            {
-                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="todo-item"
-                                        onClick={() => goTodoDetail(item.link)}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </div>
-                    </div>
-                    {/* <div className="dynamic-box">
-                        <div className="box-title">
-                            <span className="name">最新动态</span>
-                            {
-                                opLogList.length > 20 && <div className="more" onClick={() => { props.history.push(`/projectSetdetail/${projectSetId}/dynamic`) }}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
-                            }
-
-                        </div>
-                        <div className="dynamic-list">
-                            {
-                                opLogList.length > 0 ? opLogList.map(item => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
-                                        onClick={() => goOpLogDetail(item.link)}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                            }
-                        </div>
-                    </div> */}
-                    <DynamicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
+                    <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
             </Col>
         </Row>

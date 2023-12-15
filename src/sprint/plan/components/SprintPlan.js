@@ -296,9 +296,9 @@ const SprintPlan = (props) => {
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
-                                        <div className="work-item-master">
+                                        {/* <div className="work-item-master">
                                             <div className="work-item-id">{item.assigner?.nickname}</div>
-                                        </div>
+                                        </div> */}
                                         <div className={`work-item-status`}>
                                             <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
                                                 {item.workStatusNode.name}
@@ -413,9 +413,9 @@ const SprintPlan = (props) => {
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
-                                        <div className="work-item-master">
+                                        {/* <div className="work-item-master">
                                             <div className="work-item-id">{item.assigner?.nickname}</div>
-                                        </div>
+                                        </div> */}
                                         <div className={`work-item-status`}>
                                             <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
                                                 {item.workStatusNode.name}

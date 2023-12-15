@@ -4,9 +4,31 @@
     .todo-select {
         width: 200px;
     }
+    .todo-list-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        .todo-tab {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            .todo-tab-item {
+                cursor: pointer;
+                height: 30px;
+                line-height: 30px;
+                margin: 0 10px;
+            }
+            .todo-tab-item:hover {
+                color: var(--thoughtware-bule);
+            }
+            .todo-tab-select {
+                border-bottom: 2px solid var(--thoughtware-blue);
+                color: var(--thoughtware-blue);
+            }
+        }
+    }
     .todo-filter {
-        padding-bottom: var(--thoughtware-padding);
-        width: 100%;
         display: flex;
         gap: 20px;
     }

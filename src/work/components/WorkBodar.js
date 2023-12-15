@@ -18,7 +18,7 @@ import setImageUrl from '../../common/utils/setImageUrl';
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, workBoardListLength, findToNodeList,
-        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, 
+        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList,
         workBoardCurrentPage, setQuickFilterValue, workShowType } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
@@ -163,7 +163,7 @@ const WorkBodar = (props) => {
         //     props.history.replace(`/workBodar/${workItem.id}`)
         // }
 
-        
+
     }
 
     const changePage = (item, index) => {
@@ -181,7 +181,7 @@ const WorkBodar = (props) => {
     return (
         <Provider {...store}>
             <Fragment>
-                <Row  style={{ background: "#fff" }}>
+                <Row style={{ background: "#fff" }}>
                     <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                         <div className="work-bodar-filter" style={{ background: "#fff" }}>
                             <WorkTableHead />
@@ -194,76 +194,79 @@ const WorkBodar = (props) => {
                         <div className="work-bodar-list">
                             {
                                 boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {
-                                    return <div className={`work-bodar-box`}
+                                    if (item.state) {
+                                        return <div className={`work-bodar-box`}
 
-                                        onDragOver={dragover}
-                                        id={`targetBox${index}`}
-                                        key={item.state.id}
-                                    >
-                                        <div className="work-bodar-title">
-                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
-                                        </div>
-                                        {
-                                            isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
-                                                <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} onDrop={() => changeStatus(item.state.id, index, item)}>
+                                            onDragOver={dragover}
+                                            id={`targetBox${index}`}
+                                            key={item.state.id}
+                                        >
+                                            <div className="work-bodar-title">
+                                                <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
+                                            </div>
+                                            {
+                                                isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
+                                                    <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} onDrop={() => changeStatus(item.state.id, index, item)}>
 
-                                                </div>
-                                                :
-                                                <>
-                                                    <div className="work-border-box-list">
-                                                        {
-                                                            item.workItemList.dataList.length > 0 && item.workItemList.dataList.map((workItem, workIndex) => {
-                                                                return <div
-                                                                    className={`work-bodar-item ${moveWorkId === workItem.id ? "work-bodar-item-move" : ""}`}
-                                                                    key={workItem.id}
-                                                                    onDrag={() => moveWorkItem()}
-                                                                    draggable={"true"}
-                                                                    onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
-                                                                >
-                                                                    <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
-                                                                        {workItem.title}
-                                                                    </div>
-
-                                                                    <div className="work-item-bottom">
-                                                                        <div>
-                                                                            {
-                                                                                workItem.workTypeSys?.iconUrl ?
-                                                                                    <img
-                                                                                        src={(upload_url + workItem.workTypeSys?.iconUrl)}
-                                                                                        alt=""
-                                                                                        className="menu-icon"
-
-                                                                                    />
-                                                                                    :
-                                                                                    <img
-                                                                                        src={'/images/workType2.png'}
-                                                                                        alt=""
-                                                                                        className="menu-icon"
-                                                                                    />
-                                                                            }
-                                                                            <span >{workItem.id}</span>
-                                                                        </div>
-                                                                        <div className="work-item-assigner"
-                                                                            onClick={() => showModal(workItem, workIndex, index)}
-                                                                        >
-                                                                            <span>{workItem.assigner?.nickname}</span>
-                                                                            <UserIcon userInfo={workItem.assigner} name={workItem.assigner?.nickname} />
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            })
-                                                        }
-                                                        {
-                                                            workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && workBoardCurrentPage[index] < item.workItemList.totalPage && <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
-                                                        }
                                                     </div>
+                                                    :
+                                                    <>
+                                                        <div className="work-border-box-list">
+                                                            {
+                                                                item.workItemList.dataList.length > 0 && item.workItemList.dataList.map((workItem, workIndex) => {
+                                                                    return <div
+                                                                        className={`work-bodar-item ${moveWorkId === workItem.id ? "work-bodar-item-move" : ""}`}
+                                                                        key={workItem.id}
+                                                                        onDrag={() => moveWorkItem()}
+                                                                        draggable={"true"}
+                                                                        onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
+                                                                    >
+                                                                        <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
+                                                                            {workItem.title}
+                                                                        </div>
 
-                                                </>
+                                                                        <div className="work-item-bottom">
+                                                                            <div>
+                                                                                {
+                                                                                    workItem.workTypeSys?.iconUrl ?
+                                                                                        <img
+                                                                                            src={(upload_url + workItem.workTypeSys?.iconUrl)}
+                                                                                            alt=""
+                                                                                            className="menu-icon"
 
-                                        }
-                                    </div>
+                                                                                        />
+                                                                                        :
+                                                                                        <img
+                                                                                            src={'/images/workType2.png'}
+                                                                                            alt=""
+                                                                                            className="menu-icon"
+                                                                                        />
+                                                                                }
+                                                                                <span >{workItem.id}</span>
+                                                                            </div>
+                                                                            <div className="work-item-assigner"
+                                                                                onClick={() => showModal(workItem, workIndex, index)}
+                                                                            >
+                                                                                <span>{workItem.assigner?.nickname}</span>
+                                                                                <UserIcon userInfo={workItem.assigner} name={workItem.assigner?.nickname} />
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                })
+                                                            }
+                                                            {
+                                                                workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && workBoardCurrentPage[index] < item.workItemList.totalPage && <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
+                                                            }
+                                                        </div>
+
+                                                    </>
+
+                                            }
+                                        </div>
+                                    }
+
                                 })
                             }
                         </div>
@@ -298,7 +301,7 @@ const WorkBodar = (props) => {
                                                                         {
                                                                             workItem.workTypeSys.iconUrl ?
                                                                                 <img
-                                                                                    src = {setImageUrl(workItem.workTypeSys?.iconUrl)}
+                                                                                    src={setImageUrl(workItem.workTypeSys?.iconUrl)}
                                                                                     alt=""
                                                                                     className="svg-icon"
 

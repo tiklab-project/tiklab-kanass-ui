@@ -26,6 +26,8 @@ const Setting = (props) => {
         }
         return
     }, [])
+    const commonRouter  = route.routes.filter(item => item.row === true)
+    const selfRouter  = route.routes.filter(item => item.row !== true)
     return (
         <Fragment>
             <SystemNav
@@ -42,10 +44,10 @@ const Setting = (props) => {
                     <Content
                         className="orga-background"
                     >   
-                        {renderRoutes(route.routes.slice(0,1))}
+                        {renderRoutes(commonRouter)}
                         <Row style={{height: "calc(100vh - 49px)"}}>
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                                {renderRoutes(route.routes.slice(1,route.routes.length))}
+                                {renderRoutes(selfRouter)}
                             </Col>
                         </Row>
 

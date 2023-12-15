@@ -10,6 +10,7 @@ export class VersionDetailStore {
         if(data.code === 0){
             this.versionList = data.data
         }
+        return data;
     }
 
     @action

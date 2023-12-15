@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 const SprintChangeModal = (props) => {
     // console.log(props)
     const { isShowText, sprintDetailStore } = props;
-    const { findSprintList,findSprint, sprintList, sprint } = sprintDetailStore;
+    const { findSprintList, findSprint, sprintList, sprint } = sprintDetailStore;
     const [showMenu, setShowMenu] = useState(false);
     const [selectSprint, setSelectSprint] = useState(false)
 
@@ -19,10 +19,22 @@ const SprintChangeModal = (props) => {
         setSelectSprint(sprintId)
         modelRef.current.style.left = setButton.current.clientWidth
     }
+    const [showSprintList, setShowSprintList] = useState()
     useEffect(() => {
-        findSprintList({projectId: projectId})
+        findSprintList({ projectId: projectId }).then(res => {
+            if (res.code === 0) {
+                let list = res.data;
+                list = list.filter(item => item.id !== sprintId)
+                if (list.length > 5) {
+                    setShowSprintList(res.data.slice(0, 6))
+                } else {
+                    setShowSprintList(list)
+                }
+
+            }
+        })
         return;
-    },[])
+    }, [sprintId])
 
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
@@ -46,7 +58,7 @@ const SprintChangeModal = (props) => {
      */
     const selectSprintId = (id) => {
         // 切换选中项目，获取项目详情
-        findSprint({id: id}).then(data => {
+        findSprint({ id: id }).then(data => {
             if (data.code === 0) {
                 props.history.push(`/${projectId}/sprintdetail/${id}/survey`)
                 localStorage.setItem("sprintId", id);
@@ -69,8 +81,8 @@ const SprintChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="sprint-title title" onClick={showMoreMenu}>
-                        <img 
-                            src={('/images/sprint.png')} 
+                        <img
+                            src={('/images/sprint.png')}
                             className="icon-32"
                             alt=""
                         />
@@ -86,19 +98,19 @@ const SprintChangeModal = (props) => {
                             </svg>
                         </div>
                     </div>
-                    :
-                    <div className='sprint-title-icon' onClick={showMoreMenu} >
-                        <img 
-                            src={('/images/sprint.png')} 
-                            className="icon-32"
-                            alt=""
-                        />
-                        <div className={`sprint-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
-                            </svg>
+                        :
+                        <div className='sprint-title-icon' onClick={showMoreMenu} >
+                            <img
+                                src={('/images/sprint.png')}
+                                className="icon-32"
+                                alt=""
+                            />
+                            <div className={`sprint-toggleCollapsed`}>
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-down"></use>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
                 }
             </div>
 
@@ -108,10 +120,28 @@ const SprintChangeModal = (props) => {
                 style={{}}
             >
                 <div className="change-sprint-head">切换迭代</div>
+                <div className={`change-sprint-item change-sprint-selectName`}
+                    key={sprintId}
+
+                >
+                    <img
+                        className="icon-32"
+                        src={('images/sprint.png')}
+                        title={sprint?.sprintName}
+                        alt=""
+                    />
+                    <div className="change-sprint-info">
+                        <div className="change-sprint-name">{sprint?.sprintName}</div>
+                        <div className="change-sprint-state">{sprint?.sprintState?.name}</div>
+                    </div>
+                     <svg className="svg-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-selected"></use>
+                    </svg>
+                </div>
                 {
-                    sprintList && sprintList.map((item) => {
-                        if(item.id !== sprintId){
-                            return <div className={`change-sprint-name ${item.id === selectSprint ? "change-sprint-selectName" : ""}`}
+                    showSprintList && showSprintList.map((item) => {
+                        if (item.id !== sprintId) {
+                            return <div className={`change-sprint-item ${item.id === selectSprint ? "change-sprint-selectName" : ""}`}
                                 onClick={() => selectSprintId(item.id)}
                                 key={item.id}
                                 onMouseOver={() => handleMouseOver(item.id)}
@@ -119,16 +149,23 @@ const SprintChangeModal = (props) => {
 
                             >
                                 <img
-                                    className="img-icon-right"
-                                    src={('images/project1.png')}
+                                    className="icon-32"
+                                    src={('images/sprint.png')}
                                     title={item.sprintName}
                                     alt=""
                                 />
-                                {item.sprintName}
+                                <div className="change-sprint-info">
+                                    <div className="change-sprint-name">{item.sprintName}</div>
+                                    <div className="change-sprint-state">{item.sprintState.name}</div>
+                                </div>
                             </div>
                         }
-                        
+
                     })
+                }
+                {
+                    sprintList.length > 6 &&
+                    <div className="change-sprint-more" onClick={() => props.history.push(`/projectDetail/${projectId}/sprint`)}>查看更多</div>
                 }
             </div>
         </div>

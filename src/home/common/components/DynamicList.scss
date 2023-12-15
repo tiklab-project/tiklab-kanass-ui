@@ -4,7 +4,7 @@
 
 .dynamic-list-page {
     background: #fff;
-
+    min-height: calc(100vh - 88px);
     .dynamic-list-top {
         // position: sticky;
         top: 0;

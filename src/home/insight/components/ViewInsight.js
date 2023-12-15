@@ -65,7 +65,7 @@ const ViewInsight = (props) => {
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
                     <div className="view-insight">
                         <Breadcumb firstText="仪表盘" firstUrl="/home/insight/list" secondText={insightDetail && insightDetail.insightName}>
-                            <Button onClick={() => goEditInsight()} type="primary"> 编辑</Button>
+                            <Button onClick={() => goEditInsight()} type="primary">编辑</Button>
                         </Breadcumb>
                         <div className="view-insight-content">
                             {

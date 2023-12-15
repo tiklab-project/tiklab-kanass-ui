@@ -277,7 +277,11 @@ const WorkDetail = (props) => {
 
                                 {
                                     props.match.path === "/projectDetail/:id/work/:workId" &&
-                                    <div className="work-detail-crumb-item" onClick={() => props.history.push(`/projectDetail/${projectId}/workTable`)}>事项 &nbsp;/ &nbsp;</div>
+                                    <div className="work-detail-crumb-item" onClick={() => props.history.push(`/projectDetail/${projectId}/workTable`)}> 
+                                    <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-pageLeft"></use>
+                                    </svg>
+                                     事项 &nbsp;/ &nbsp;</div>
                                 }
                                 {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {

@@ -137,7 +137,7 @@ const SprintSurvey = (props) => {
         
     }
     const goToListPage = () => {
-        props.history.push(`/projectScrumDetail/:id/sprintdetail/${sprintId}/workTodo`) 
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTodo`) 
     }
 
     return (

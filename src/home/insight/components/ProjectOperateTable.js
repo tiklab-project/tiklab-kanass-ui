@@ -114,19 +114,19 @@ const ProjectOperateTable = (props) => {
 
                                                 <div className="project-operate-row">新增/完成事项</div>
                                                 <div className="project-operate-row">存量事项</div>
-                                                <div className="project-operate-row">事项交付周期</div>
+                                                {/* <div className="project-operate-row">事项交付周期</div> */}
 
                                                 <div className="project-operate-row">新增/完成需求</div>
                                                 <div className="project-operate-row">存量需求</div>
-                                                <div className="project-operate-row">需求交付周期</div>
+                                                {/* <div className="project-operate-row">需求交付周期</div> */}
 
                                                 <div className="project-operate-row">新增/完成任务</div>
                                                 <div className="project-operate-row">存量任务</div>
-                                                <div className="project-operate-row">任务交付周期</div>
+                                                {/* <div className="project-operate-row">任务交付周期</div> */}
 
                                                 <div className="project-operate-row">新增/修复缺陷</div>
                                                 <div className="project-operate-row">存量缺陷</div>
-                                                <div className="project-operate-row">缺陷修复周期</div>
+                                                {/* <div className="project-operate-row">缺陷修复周期</div> */}
 
                                                 <div className="project-operate-row">已超期事项</div>
                                             </div>
@@ -152,19 +152,19 @@ const ProjectOperateTable = (props) => {
                                                             </div>
                                                             <div className="project-operate-row">{item.newWorkItemCount}/{item.endWorkItemCount}</div>
                                                             <div className="project-operate-row">{item.noEndWorkItemCount}</div>
-                                                            <div className="project-operate-row">{item.workItemEndAveragePeriod}</div>
+                                                            {/* <div className="project-operate-row">{item.workItemEndAveragePeriod}</div> */}
 
                                                             <div className="project-operate-row">{item.newDemand}/{item.endDemandCount}</div>
                                                             <div className="project-operate-row">{item.noEndDemandCount}</div>
-                                                            <div className="project-operate-row">{item.demandEndAveragePeriod}</div>
+                                                            {/* <div className="project-operate-row">{item.demandEndAveragePeriod}</div> */}
 
                                                             <div className="project-operate-row">{item.newTask}/{item.endTaskCount}</div>
                                                             <div className="project-operate-row">{item.noEndTaskCount}</div>
-                                                            <div className="project-operate-row">{item.taskEndAveragePeriod}</div>
+                                                            {/* <div className="project-operate-row">{item.taskEndAveragePeriod}</div> */}
 
                                                             <div className="project-operate-row">{item.newBug}/{item.endBugCount}</div>
                                                             <div className="project-operate-row">{item.noEndBugCount}</div>
-                                                            <div className="project-operate-row">{item.bugEndAveragePeriod}</div>
+                                                            {/* <div className="project-operate-row">{item.bugEndAveragePeriod}</div> */}
 
                                                             <div className="project-operate-row">{item.overdueWorkItemCount}</div>
                                                         </div>

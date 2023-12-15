@@ -76,7 +76,6 @@ const WorkTypeAddModal = (props) => {
             } else {
                 data.id = props.id
                 data.grouper = grouper
-                console.log(data)
                 editWorkTypeList(data)
             }
             setVisible(false);

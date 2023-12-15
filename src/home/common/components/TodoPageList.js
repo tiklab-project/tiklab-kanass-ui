@@ -15,6 +15,7 @@ import { getUser } from "thoughtware-core-ui";
 import { withRouter } from "react-router";
 import "./TodoPageList.scss"
 import TodoListItem from "../../../common/overviewComponent/TodoListItem";
+import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 const TodoList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList, findProjectList, findSprintList, findProjectSetList,
@@ -28,11 +29,12 @@ const TodoList = (props) => {
     const [sprintValue, setSprintValue] = useState()
     // 面包屑第一个标题
     const [firstText, setFirstText] = useState();
-
+    const projectId = props.match.params.id;
+    const versionId = props.match.params.version;
+    const sprintId = props.match.params.sprint;
     useEffect(() => {
         getSerchList()
         const params = {
-            userId: userId,
             status: 1,
             pageParam: {
                 pageSize: 20,
@@ -44,7 +46,7 @@ const TodoList = (props) => {
         if (props.route?.path === "/projectDetail/:id/workTodo") {
             const projectId = props.match.params.id;
             setFirstText("项目概况")
-            findTodopage({ ...params, content: { projectId: projectId } })
+            findTodopage({ ...params, data: { projectId: projectId } })
         }
         console.log(props.match?.path)
         if (props.match?.path === "/home/todoList") {
@@ -59,6 +61,11 @@ const TodoList = (props) => {
 
         if (props.route?.path === "/:id/sprintdetail/:sprint/workTodo") {
             setFirstText("迭代概况")
+            findTodopage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
+        }
+        if (props.route?.path === "/:id/versiondetail/:version/workTodo") {
+            setFirstText("版本概况")
+            findTodopage({ ...params, data: { versionId: versionId, projectId: projectId } })
         }
         return;
     }, [])
@@ -138,65 +145,95 @@ const TodoList = (props) => {
         }
         findTodopage(params)
     };
-
+    const getTodoList = (value) => {
+        console.log(value)
+        setActiveKey(value)
+        findTodopage({
+            userId: userId, status: value, pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        },)
+    }
+    const [activeKey, setActiveKey] = useState(1)
     return (<div className="todo-list-page">
-        {/* <Breadcumb
-            {...props}
-            firstText={firstText}
-            secondText="待办事项"
-        /> */}
-        <div className="todo-filter">
-            <Select
-                placeholder="项目"
-                allowClear
-                className="todo-select"
-                key="project"
-                onChange={(value) => changeProject(value)}
-                width={200}
-            >
-                {
-                    projectList && projectList.map((item) => {
-                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                    })
-                }
-            </Select>
+        {
+            props.match?.path !== "/home/todoList" && <Breadcrumb
+                {...props}
+                firstText={firstText}
+                secondText="待办事项"
+            />
+        }
 
-            <Select
-                placeholder="迭代"
-                allowClear
-                className="todo-select"
-                key="sprint"
-                width={200}
-                onChange={(value) => changeSprint(value)}
-                value={sprintValue}
-            >
+        <div className="todo-list-top">
+            <div className="todo-tab">
+                <div className={`todo-tab-item ${activeKey === 1 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(1)}>进行中</div>
+                <div className={`todo-tab-item ${activeKey === 2 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(2)}>完成</div>
+                <div className={`todo-tab-item ${activeKey === 3 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(3)}>逾期</div>
+            </div>
+            <div className="todo-filter">
                 {
-                    sprintList && sprintList.map((item) => {
-                        return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                    })
+                   ( props.match?.path === "/home/todoList" || props.match?.path === "/projectSetdetail/:projectSetId/workTodo") &&
+                    <Select
+                        placeholder="项目"
+                        allowClear
+                        className="todo-select"
+                        key="project"
+                        onChange={(value) => changeProject(value)}
+                        width={200}
+                    >
+                        {
+                            projectList && projectList.map((item) => {
+                                return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                            })
+                        }
+                    </Select>
                 }
-            </Select>
+
+
+                <Select
+                    placeholder="迭代"
+                    allowClear
+                    className="todo-select"
+                    key="sprint"
+                    width={200}
+                    onChange={(value) => changeSprint(value)}
+                    value={sprintValue}
+                >
+                    {
+                        sprintList && sprintList.map((item) => {
+                            return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                        })
+                    }
+                </Select>
+            </div>
         </div>
+
         <div className="todo-list">
             {
                 todoTaskList && todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                    return <TodoListItem content = {item.data} goTodoDetail = {()=>goTodoDetail(item.workItemId)}/>
+                    return <>
+                        <TodoListItem content={item.data} goTodoDetail={() => goTodoDetail(item.workItemId)} />
+                    </>
+
                 })
                     :
                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
             }
         </div>
-        <div className="todo-pagination">
-            <Pagination
-                onChange={onPageChange}
-                defaultCurrent={1}
-                total={todoTotal}
-                current={todoCondition.pageParam.currentPage}
-                showSizeChanger={false}
-                defaultPageSize={20}
-                pageSize={20}
-            />
-        </div>
+        {
+            todoTaskList && todoTaskList.length > 0 && <div className="todo-pagination">
+                <Pagination
+                    onChange={onPageChange}
+                    defaultCurrent={1}
+                    total={todoTotal}
+                    current={todoCondition.pageParam.currentPage}
+                    showSizeChanger={false}
+                    defaultPageSize={20}
+                    pageSize={20}
+                />
+            </div>
+        }
 
     </div>
 

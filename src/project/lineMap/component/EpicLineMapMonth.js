@@ -194,7 +194,6 @@ const EpicLineMap = (props) => {
     const setNode = (data) => {
         let nodes = [];
         let edges = []
-        console.log(data)
         data.map((item) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;

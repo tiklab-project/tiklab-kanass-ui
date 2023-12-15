@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 const TodoListItem = (props) => {
     const { content, model } = props;
     const data = JSON.parse(content)
-    console.log(data)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId, projectId } = data;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;

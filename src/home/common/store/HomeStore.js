@@ -312,23 +312,7 @@ class HomeStore {
      */
     @action
     findTodopage = async(value)=> {
-        this.todoTaskList = [];
-                    
-        // const params={
-        //     pageParam: {
-        //         pageSize: 10,
-        //         currentPage: 1
-        //     },
-        //     orderParams: [{
-        //         name: "timestamp",
-        //         orderType:"asc"
-        //     }],
-        //     bgroup: "kanass",
-        //     userId: value.userId,
-        //     content: {
-        //         projectId: value.projectId
-        //     }
-        // }
+        this.todoTaskList = [];   
         this.setTodoCondition(value)
         const data = await Service("/todo/findtodopage", this.todoCondition);
         if(data.code === 0) {

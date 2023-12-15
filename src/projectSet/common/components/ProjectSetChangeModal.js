@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ProjectSetChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
+import { Tooltip } from "antd";
 
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText } = props;
@@ -112,9 +113,6 @@ const ProjectSetChangeModal = (props) => {
                                 <div>
                                     {projectSet.name}
                                 </div>
-                                {/* <div className='type'>
-                                    {projectType}
-                                </div> */}
                             </div>
                             <div className={`projectSet-toggleCollapsed`}>
                                 <svg className="svg-icon" aria-hidden="true">
@@ -123,7 +121,8 @@ const ProjectSetChangeModal = (props) => {
                             </div>
                         </div>
                         :
-                        <div className="projectSet-change-icon">
+                        <Tooltip placement="right" title={projectSet?.name}>
+                            <div className="projectSet-change-icon">
                             <svg className="list-img" aria-hidden="true">
                                 <use xlinkHref="#icon-program"></use>
                             </svg>
@@ -131,6 +130,8 @@ const ProjectSetChangeModal = (props) => {
                                 <use xlinkHref="#icon-down"></use>
                             </svg>
                         </div>
+                        </Tooltip>
+                        
                     }
 
                 </div>

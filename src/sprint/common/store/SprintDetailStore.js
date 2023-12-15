@@ -10,6 +10,7 @@ export class SprintDetailStore {
         if(data.code === 0){
             this.sprintList = data.data
         }
+        return data
     }
 
     @action

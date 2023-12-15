@@ -227,7 +227,6 @@ const VersionTable = (props) => {
      * @param {*} values 
      */
     const onSearch = (data) => {
-        console.log(data)
         findVersion({ name: data })
         // 重置分页参数，从第一页开始搜索
         // setPageParam({ current: 1, pageSize: 10 })

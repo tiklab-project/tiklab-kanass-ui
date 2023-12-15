@@ -19,10 +19,22 @@ const VersionChangeModal = (props) => {
         setSelectVersion(versionId)
         modelRef.current.style.left = setButton.current.clientWidth
     }
+    const [showVersionList, setShowVersionList] = useState()
     useEffect(() => {
-        findVersionList({projectId: projectId});
+        findVersionList({projectId: projectId}).then(res => {
+            if (res.code === 0) {
+                let list = res.data;
+                list = list.filter(item => item.id !== versionId)
+                if (list.length > 5) {
+                    setShowVersionList(res.data.slice(0, 6))
+                } else {
+                    setShowVersionList(list)
+                }
+
+            }
+        });
         return;
-    },[])
+    },[versionId])
 
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
@@ -108,27 +120,52 @@ const VersionChangeModal = (props) => {
                 style={{}}
             >
                 <div className="change-version-head">切换版本</div>
+                <div className={`change-version-item change-version-selectName`}
+                    key={versionId}
+
+                >
+                    <img
+                        className="icon-32"
+                        src={('images/version.png')}
+                        title={version?.name}
+                        alt=""
+                    />
+                    <div className="change-version-info">
+                        <div className="change-version-name">{version?.name}</div>
+                        <div className="change-version-state">{version?.versionState?.name}</div>
+                    </div>
+                     <svg className="svg-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-selected"></use>
+                    </svg>
+                </div>
                 {
-                    versionList && versionList.map((item) => {
+                    showVersionList && showVersionList.map((item) => {
                         if(item.id !== versionId){
-                            return <div className={`change-version-name ${item.id === selectVersion ? "change-version-selectName" : ""}`}
+                            return <div className={`change-version-item ${item.id === selectVersion ? "change-version-selectName" : ""}`}
                                 onClick={() => selectVersionId(item.id)}
                                 key={item.id}
                                 onMouseOver={() => handleMouseOver(item.id)}
                                 onMouseOut={handleMouseOut}
-
                             >
-                                <img
-                                    className="img-icon-right"
+                                 <img
+                                    className="icon-32"
                                     src={('images/version.png')}
                                     title={item.name}
                                     alt=""
                                 />
-                                {item.name}
+                                <div className="change-version-info">
+                                    <div className="change-version-name">{item.name}</div>
+                                    <div className="change-version-state">{item.versionState.name}</div>
+                                </div>
                             </div>
                         }
                         
                     })
+                }
+
+                {
+                    versionList.length > 6 &&
+                    <div className="change-version-more" onClick={() => props.history.push(`/projectDetail/${projectId}/version`)}>查看更多</div>
                 }
             </div>
         </div>

@@ -70,18 +70,18 @@
         display: flex;
         line-height: 30px;
         color: #999;
-        cursor: pointer;
 
         .work-detail-crumb-item {
             display: inline-flex;
             align-items: center;
             // margin-right: 5px;
-            .work-detail-crumb-text:hover{
+            .work-detail-crumb-icon:hover{
                 color: var(--thoughtware-blue);
-                text-decoration: underline;
+                // text-decoration: underline;
                 cursor: pointer;
             }
         }
+
     }
     .work-detail-close:hover {
         cursor: pointer;

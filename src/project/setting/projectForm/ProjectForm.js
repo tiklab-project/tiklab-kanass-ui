@@ -21,12 +21,7 @@ const ProjectFormList = (props) => {
     }, [])
 
     return (
-        <Row>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <ProjectForm domainId={projectId} router={router} formIdTag="" />
-            </Col>
-        </Row>
-
+        <ProjectForm domainId={projectId} router={router} formIdTag="" />
     )
 }
 export default ProjectFormList;

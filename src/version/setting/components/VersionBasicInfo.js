@@ -52,7 +52,7 @@ const VersionBasicInfo = props => {
             {
                 type: 'array',
                 required: true,
-                message: 'Please select time!',
+                message: '选择计划时间!',
             }
         ]
     };

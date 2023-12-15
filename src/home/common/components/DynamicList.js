@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
-import { Select, Row, Col } from "antd";
+import { Select, Row, Col, Empty } from "antd";
 import "./DynamicList.scss";
 import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 
@@ -23,6 +23,7 @@ const DynamicList = (props) => {
     const [firstText, setFirstText] = useState();
     const versionId = props.match.params.version;
     const sprintId =  props.match.params.sprint;
+    const projectId = props.match.params.id;
     useEffect(() => {
         if (props.route.path === "/projectDetail/:id/dynamic") {
             setFirstText("项目概况")
@@ -55,6 +56,8 @@ const DynamicList = (props) => {
     }, [])
 
     const selectProject = (option) => {
+        console.log(option)
+        findLogpage({ projectId: option })
         // getModuleList(option)
         // getsprintlist(option)
         // getSelectUserList(option);
@@ -71,7 +74,8 @@ const DynamicList = (props) => {
                     // firstUrl="/home"
                     />
                     <div className="dynamic-filter">
-                        <Select
+                        
+                        {/* <Select
                             placeholder="项目集"
                             allowClear
                             className="dynamic-select"
@@ -84,24 +88,26 @@ const DynamicList = (props) => {
                                     return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
                                 })
                             }
-                        </Select>
+                        </Select> */}
+                        {
+                            props.route.path === "/projectSetdetail/:projectSetId/dynamic" && <Select
+                                placeholder="项目"
+                                allowClear
+                                className="dynamic-select"
+                                key="selectProject2"
+                                onSelect={selectProject}
+                                width={150}
+                            >
+                                {
+                                    projectList && projectList.map((item) => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        }
+                        
 
-                        <Select
-                            placeholder="项目"
-                            allowClear
-                            className="dynamic-select"
-                            key="selectProject2"
-                            onSelect={selectProject}
-                            width={100}
-                        >
-                            {
-                                projectList && projectList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select>
-
-                        <Select
+                        {/* <Select
                             placeholder="迭代"
                             allowClear
                             className="dynamic-select"
@@ -114,14 +120,14 @@ const DynamicList = (props) => {
                                     return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
                                 })
                             }
-                        </Select>
+                        </Select> */}
                         <Select
                             placeholder="事项"
                             allowClear
                             className="dynamic-select"
                             key="selectProject4"
                             onSelect={selectProject}
-                            width={100}
+                            width={150}
                         >
                             {
                                 projectList && projectList.map((item) => {
@@ -134,9 +140,11 @@ const DynamicList = (props) => {
 
                 <div className="dynamic-list">
                     {
-                        opLogList && opLogList.map((item) => {
+                        opLogList && opLogList.length > 0 ?  opLogList.map((item) => {
                             return <DynamicItem content = {item.data} type = {item.actionType.id}/>
                         })
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有动态~" />
                     }
                 </div>
             </div>

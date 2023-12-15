@@ -17,17 +17,6 @@ export class BasicInfoStore {
         }
     }
 
-    @observable projectPageParams = {
-        orderParams: [{
-            name: "projectName",
-            orderType: "asc"
-        }],
-        pageParam: {
-            pageSize: 10,
-            currentPage: 1
-        }
-    }
-
     @action
     statProjectSetWorkItemProcess = async (values) => {
         const params = new FormData();
@@ -69,7 +58,10 @@ export class BasicInfoStore {
                 pageSize: 10,
                 currentPage: 1
             },
-            bgroup: "kanass"
+            bgroup: "kanass",
+            data: {
+                projectId: value.projectId
+            }
         }
         const data = await Service("/oplog/findlogpage", params)
         if(data.code === 0) {
@@ -87,7 +79,10 @@ export class BasicInfoStore {
                 currentPage: 1
             },
             bgroup: "kanass",
-            userId: value.userId
+            userId: value.userId,
+            data: {
+                projectId: value.projectId
+            }
         }
         const data = await Service("/todo/findtodopage", params)
         if(data.code === 0) {

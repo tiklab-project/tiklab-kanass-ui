@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 const DynamicListItem = (props) => {
     const { content, model, type } = props;
     const data = JSON.parse(content)
-    console.log(data)
     const { createUserIcon, createUser, master, workItemTitle, receiveTime, createTime, workItemId,
         projectId, oldValue, newValue, projectName } = data;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
