@@ -18,7 +18,7 @@ export class SprintPlanStore {
     @observable noPlanSearchCondition = {
         orderParams: [{
             name: "id",
-            orderType:"asc"
+            orderType:"desc"
         }],
         pageParam: {
             pageSize: 20,
@@ -43,7 +43,7 @@ export class SprintPlanStore {
     @action
 	getNoPlanWorkList = async(value) => {
         this.setNoPlanSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemPage", this.noPlanSearchCondition)
+        const data = await Service("/workItem/findConditionWorkItemPage", this.noPlanSearchCondition)
 		if(data.code=== 0){
             if(data.data.currentPage === 1){
                 this.noPlanWorkList = data.data.dataList;
@@ -69,7 +69,7 @@ export class SprintPlanStore {
     @action
 	getWorkList = async(value) => {
         this.setSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemPage", this.searchCondition)
+        const data = await Service("/workItem/findConditionWorkItemPage", this.searchCondition)
         if(data.code === 0){
             if(data.data.currentPage === 1){
                 this.planWorkList = data.data.dataList;

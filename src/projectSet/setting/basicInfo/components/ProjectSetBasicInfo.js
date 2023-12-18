@@ -296,7 +296,7 @@ const ProjectSetBasicInfo = props => {
                                 <div>
                                     <div className="projectSet-delete-block">
 
-                                        <span>此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。</span>
+                                        <span>此项目集将被永久删除。</span>
                                     </div>
                                     <div className="change-button  delete-button" onClick={() => showModal()}>
                                         删除项目集

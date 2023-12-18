@@ -35,6 +35,8 @@ const SprintPlan = (props) => {
             {
                 projectId: projectId,
                 sprintIdIsNull: true,
+                assignerIds: null,
+                keyWord: null,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -45,6 +47,8 @@ const SprintPlan = (props) => {
             {
                 projectId: projectId,
                 sprintId: sprintId,
+                assignerIds: null,
+                keyWord: null,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -138,11 +142,23 @@ const SprintPlan = (props) => {
     }
 
     const handleChange = useDebounce((field, value) => {
-        getNoPlanWorkList({ [field]: value })
+        getNoPlanWorkList({ 
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            }
+        })
     }, [500])
 
     const findSprintWorkItem = useDebounce((field, value) => {
-        getWorkList({ [field]: value })
+        getWorkList({ 
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            } 
+        })
     }, [500])
 
     /**
@@ -205,7 +221,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">待办规划事项</div>
                         <div className="sprint-plan-filter">
-                            <InputSearch onChange={(value) => handleChange("likeId", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
@@ -321,7 +337,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">迭代下事项</div>
                         <div className="sprint-plan-filter">
-                            <InputSearch onChange={(value) => findSprintWorkItem("likeId", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => findSprintWorkItem("keyWord", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => findSprintWorkItem("workTypeIds", value)}
                                 title={"类型"}

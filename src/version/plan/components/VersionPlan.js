@@ -34,6 +34,7 @@ const VersionPlan = (props) => {
             {
                 projectId: projectId,
                 versionIdIsNull: true,
+                keyWord: null,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -135,11 +136,23 @@ const VersionPlan = (props) => {
     }
 
     const handleChange = (field, value) => {
-        getNoPlanWorkList({ [field]: value })
+        getNoPlanWorkList({
+            [field]: value,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        })
     }
 
     const findVersionWorkItem = (field, value) => {
-        getWorkList({ [field]: value })
+        getWorkList({ 
+            [field]: value,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            } 
+        })
     }
 
     /**
@@ -201,7 +214,7 @@ const VersionPlan = (props) => {
                     <div className="version-plan-box-top">
                         <div className="version-plan-title">待办规划事项</div>
                         <div className="version-plan-filter">
-                            <InputSearch onChange={(value) => handleChange("title", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
@@ -228,9 +241,9 @@ const VersionPlan = (props) => {
                                 {
                                     userList.map(item => {
                                         return <SelectItem
-                                            value={item.id}
+                                            value={item.user?.id}
                                             label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.id}
+                                            key={item.user?.id}
                                             imgUrl={item.user?.iconUrl}
 
                                         />
@@ -315,9 +328,9 @@ const VersionPlan = (props) => {
                     onDragOver={dragover}
                 >
                     <div className="version-plan-box-top">
-                        <div className="version-plan-title">迭代下事项</div>
+                        <div className="version-plan-title">版本下事项</div>
                         <div className="version-plan-filter">
-                            <InputSearch onChange={(value) => findVersionWorkItem("title", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => findVersionWorkItem("keyWord", value)} placeholder={"搜索事项名称"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => findVersionWorkItem("workTypeIds", value)}
                                 title={"类型"}
@@ -344,9 +357,9 @@ const VersionPlan = (props) => {
                                 {
                                     userList.map(item => {
                                         return <SelectItem
-                                            value={item.id}
+                                            value={item.user?.id}
                                             label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.id}
+                                            key={item.user?.id}
                                             imgUrl={item.user?.iconUrl}
 
                                         />
@@ -385,7 +398,7 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, versionId)}
                                         key={item.id}
                                     >
-                                         <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
                                             <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
