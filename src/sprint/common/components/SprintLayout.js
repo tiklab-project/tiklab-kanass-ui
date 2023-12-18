@@ -23,10 +23,10 @@ const Sprintdetail = (props) => {
     const { setSearchConditionNull, setSearchType } = WorkStore;
     useEffect(() => {
         setSearchConditionNull()
-        setSearchType("pending")
+        setSearchType("all")
         return () => {
             setSearchConditionNull()
-            setSearchType("pending")
+            setSearchType("all")
         }
     }, []);
     

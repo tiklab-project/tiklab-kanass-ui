@@ -37,7 +37,7 @@ const WorkList = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        console.log("加载")
+        
         finWorkList(path, WorkStore, params);
         return;
     }, [projectId])

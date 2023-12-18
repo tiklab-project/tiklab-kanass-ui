@@ -33,11 +33,11 @@ const VersionTable = (props) => {
     // 项目id
     const projectId = props.match.params.id;
     // tab的key
-    const [activeTabs, setActiveTabs] = useState("pending")
+    const [activeTabs, setActiveTabs] = useState("all")
     const userId = getUser().userId;
     // 初始化
     useEffect(() => {
-        findVersion({ projectId: projectId, versionState: "111111" })
+        findVersion({ projectId: projectId, versionState: null })
         return;
     }, []);
 

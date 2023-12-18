@@ -54,6 +54,7 @@
         .work-add-page-form {
             overflow: auto;
             padding: 0 15px;
+            min-height: calc(100% - 100px);
         }
 
         .work-add-form {

@@ -39,8 +39,8 @@ const WorkTable = (props) => {
         setWorkShowType("table")
         console.log(workShowType)
         setQuickFilterValue({
-            value: "pending",
-            label: "我的待办"
+            value: "all",
+            label: "全部"
         })
         const params = {
             projectId: projectId,

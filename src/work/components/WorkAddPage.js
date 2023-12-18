@@ -17,7 +17,7 @@ const WorkAddPage = (props) => {
     const { moduleList, sprintList, userList, findProjectList, projectList,
         getModuleList, getsprintlist, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
-        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList
+        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList, versionList,findVersionList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -34,6 +34,7 @@ const WorkAddPage = (props) => {
             project: projectId,
             sprint: sprintId,
             assigner: project?.master.id,
+
             // reporter: getUser().userId,
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
@@ -88,6 +89,17 @@ const WorkAddPage = (props) => {
                     form.setFieldsValue({
                         sprint: sprintId ? sprintId : sprintList[0]?.id
                     })
+                }
+            })
+            findVersionList(projectId).then(res => {
+                if (res.code === 0) {
+                    if(res.data.length > 0) {
+                        form.setFieldsValue({
+                        
+                            projectVersion: versionId ? versionId : res.data[0]?.id
+                        })
+                    }
+                    
                 }
             })
             getSelectUserList(projectId);
@@ -378,6 +390,24 @@ const WorkAddPage = (props) => {
                                     {
                                         sprintList && sprintList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="所属版本"
+                                name="projectVersion"
+                                rules={[{ required: false, message: '请输入所属版本!' }]}
+                            >
+                                <Select
+                                    placeholder="版本"
+                                    allowClear
+                                    className="work-select"
+                                    key="selectProjectVersion"
+                                >
+                                    {
+                                        versionList && versionList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                         })
                                     }
                                 </Select>

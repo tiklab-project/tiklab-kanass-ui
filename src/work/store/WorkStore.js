@@ -15,6 +15,7 @@ export class WorkStore {
     // 添加事项页面获取项目列表，迭代列表，用户列表，模块列表，事项列表
     @observable projectList = [];
     @observable moduleList = [];
+    @observable versionList = [];
     @observable sprintList = [];
     @observable userList = [];
     @observable workAllList = [];
@@ -25,8 +26,8 @@ export class WorkStore {
     @observable workInfo = [];
     @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
-    @observable quickFilterValue = {value: "pending", label: "我的待办"};
-    @observable searchType = "pending"
+    @observable quickFilterValue = {value: "all", label: "全部"};
+    @observable searchType = "all"
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -211,6 +212,23 @@ export class WorkStore {
         return data;
     }
 
+    @action
+    findVersionList = async(projectId) => {
+        const params = {
+            projectId: projectId,
+            orderParams: [{
+                name: "startTime",
+                orderType: "desc"
+            }]
+        }
+        const data = await Service("/projectVersion/findVersionList",params);
+        if(data.code === 0){
+            this.versionList = data.data;
+            console.log(this.versionList)
+        }
+        return data;
+    }
+
     // 根据项目id查找迭代
     @action
     getsprintlist = async(projectid) => {
@@ -218,8 +236,8 @@ export class WorkStore {
             projectId: projectid,
             sprintName: "",
             orderParams: [{
-                name: "sprintName",
-                orderType: "asc"
+                name: "startTime",
+                orderType: "desc"
             }]
         }
         const data = await Service("/sprint/findSprintList",params);
@@ -463,7 +481,7 @@ export class WorkStore {
                 id: value.workStatus
             },
             projectVersion: {
-                id: value.versionId
+                id: value.projectVersion
             },
             module: {
                 id: value.module

@@ -10,7 +10,6 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Space, Row, Col, Table } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import "./sprintList.scss";
 import { getUser } from "thoughtware-core-ui";
 import { withRouter } from "react-router";
@@ -20,7 +19,6 @@ import InputSearch from '../../../common/input/InputSearch'
 import SprintStore from "../store/SprintStore";
 import { Provider, observer } from "mobx-react";
 import { useDebounce } from "../../../common/utils/debounce";
-import UserIcon from "../../../common/UserIcon/UserIcon";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -37,7 +35,7 @@ const Sprint = (props) => {
     // 获取关注的迭代
     const [focusSprintList, setFocusSprintList] = useState([])
     // tab的key
-    const [activeTabs, setActiveTabs] = useState("pending")
+    const [activeTabs, setActiveTabs] = useState("all")
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
     // 操作类型， edit,add

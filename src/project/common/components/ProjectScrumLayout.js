@@ -45,10 +45,10 @@ const ProjectScrumDetail = (props) => {
         //获取项目列表
         findProjectList()
         setSearchConditionNull()
-        setSearchType("pending")
+        setSearchType("all")
         return () => {
             setSearchConditionNull()
-            setSearchType("pending")
+            setSearchType("all")
         }
     }, [projectId])
 

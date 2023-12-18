@@ -120,9 +120,9 @@ const WorkFilterHigh = (props) => {
         form.resetFields()
         setSearchConditionNull()
         if(workShowType === "list"){
-            setQuickFilterValue({ label: `所有(${eveWorkTypeNum.all})`, value: 'all' })
+            setQuickFilterValue({ label: `全部(${eveWorkTypeNum.all})`, value: 'all' })
         }else {
-            setQuickFilterValue({ label: '所有', value: 'all' })
+            setQuickFilterValue({ label: '全部', value: 'all' })
         }
         const params = {
             projectId: projectId,

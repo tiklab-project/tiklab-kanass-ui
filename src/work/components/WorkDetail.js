@@ -28,7 +28,7 @@ const WorkDetail = (props) => {
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
-        findTransitionList, findWorkItemRelationModelCount
+        findTransitionList, findWorkItemRelationModelCount, findVersionList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     // const detailCrumbArray = getSessionStorage("detailCrumbArray")
@@ -80,6 +80,7 @@ const WorkDetail = (props) => {
             getModuleList(projectId)
             getsprintlist(projectId)
             getSelectUserList(projectId);
+            findVersionList(projectId)
             findPriority()
             getWorkDetail(workId)
 
