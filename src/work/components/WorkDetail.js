@@ -21,6 +21,7 @@ import { FlowChartLink } from "thoughtware-flow-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";
+import { setWorkTitle } from "./WorkArrayChange";
 const WorkDetail = (props) => {
     const [percentForm] = Form.useForm();
     const { workStore, showPage, setIsModalVisible } = props;
@@ -46,6 +47,8 @@ const WorkDetail = (props) => {
     const [assigner, setAssigner] = useState()
     const workDetailTop = useRef();
     const [relationModalNum, setRelationModalNum] = useState();
+    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const versionId = props.match.params.version ? props.match.params.version : null;
     const getWorkDetail = (id) => {
         setInfoLoading(true)
         searchWorkById(id).then((res) => {
@@ -66,8 +69,16 @@ const WorkDetail = (props) => {
             }
         })
     }
+    const isDetail = () => {
+        let isView = false;
+        if(props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
+        || props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
+            isView = true;
+        }
+        return isView;
+    }
     useEffect(() => {
-        if (props.match.path === "/projectDetail/:id/work/:workId") {
+        if (isDetail()) {
             const id = props.match.params.workId;
             setWorkId(id)
         }
@@ -187,16 +198,20 @@ const WorkDetail = (props) => {
         }
 
         if (name !== workInfo.title) {
+            console.log(workId)
             editWork(params).then(res => {
                 if (res.code === 0) {
-                    if (document.getElementById(workId)) {
-                        document.getElementById(workId).innerHTML = name;
-                    }
+                    
                     if (workShowType === "list") {
                         workInfo.title = name;
+                        if (document.getElementById(workId)) {
+                            document.getElementById(workId).innerHTML = name;
+                        }
                     } else {
-                        workList[workIndex - 1].title = name;
-                        setWorkList([...workList])
+                        // workList[workIndex - 1].title = name;
+                        // setWorkList([...workList])
+                        const list = setWorkTitle(workList, workId, name)
+                        setWorkList([...list])
                     }
 
 
@@ -266,7 +281,21 @@ const WorkDetail = (props) => {
         setIsModalVisible(false)
         setWorkId(0)
     }
-    const [showFlow, setShowFlow] = useState(false)
+    const [showFlow, setShowFlow] = useState(false);
+    const goWorkList = () => {
+
+
+        if(props.match.path === "/projectDetail/:id/work/:workId"){
+            props.history.push(`/projectDetail/${projectId}/workTable`)
+        }
+        if(props.match.path === "/:id/versiondetail/:version/work/:workId"){
+            props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
+        }
+        if(props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
+            props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
+        }
+        
+    }
     return (
         <Skeleton loading={infoLoading} active>
             {
@@ -277,8 +306,8 @@ const WorkDetail = (props) => {
                             <div className="work-detail-crumb">
 
                                 {
-                                    props.match.path === "/projectDetail/:id/work/:workId" &&
-                                    <div className="work-detail-crumb-item" onClick={() => props.history.push(`/projectDetail/${projectId}/workTable`)}> 
+                                    isDetail() &&
+                                    <div className="work-detail-crumb-item" onClick={() =>goWorkList() }> 
                                     <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-pageLeft"></use>
                                     </svg>

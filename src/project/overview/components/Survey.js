@@ -20,6 +20,7 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import DyncmicList from "../../../common/overviewComponent/DynamicList";
+import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
@@ -314,6 +315,11 @@ const Survey = (props) => {
         updateRecent({ id: item.id })
         props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
     }
+
+    const goToListPage = () => {
+        props.history.push(`/projectDetail/${projectId}/workTodo`) 
+    }
+
     return (
         <Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -491,31 +497,9 @@ const Survey = (props) => {
                             }
                         </div>
                     </div>
+                    <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/>
                     <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
-                    {/* <div className="dynamic-box">
-                        <div className="box-title">
-                            <div className="name">最新动态</div>
-                            <div className="more" onClick={() => goDynamicList()}>
-                                <svg aria-hidden="true" className="svg-icon">
-                                    <use xlinkHref="#icon-rightjump"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="dynamic-list">
-                            {
-                                logList.length > 0 ? logList.map(item => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="dynamic-item"
-                                        onClick={() => goOpLogDetail(item.link)}
-                                        key={item.id}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                            }
-                        </div>
-                    </div> */}
+                    
 
                 </div>
             </Col>

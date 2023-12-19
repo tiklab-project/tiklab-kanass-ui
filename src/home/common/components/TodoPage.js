@@ -20,15 +20,8 @@ const TodoListPafe = (props) => {
     return (
         <Row className="todo-page">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                {/* <div style={{background: "#fff", paddingTop: "20px"}}> */}
-                {/* <Breadcrumb
-                    {...props}
-                    firstText={firstText}
-                    secondText="待办事项"
-                /> */}
+
                 <TodoListPage {...props}></TodoListPage>
-                {/* </div> */}
-                
             </Col>
         </Row>
 

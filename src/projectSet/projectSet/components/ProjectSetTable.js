@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-02-10 10:35:43
  */
 import React, { useEffect, useState, Fragment } from 'react';
-import { Table, Space, Row, Col } from 'antd';
+import { Table, Space, Row, Col, Empty } from 'antd';
 import "./ProjectSet.scss";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
@@ -20,16 +20,22 @@ const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
     const { getProjectSetlist, projectSetList, getUseList, findProjectSetFocusList,
         deleteProjectSetFocusByQuery, createProjectSetFocus, findRecentProjectSetList,
-        findFocusProjectSetList, findAllProjectSet, createRecent } = projectSetStore;
+        findFocusProjectSetList, findJoinProjectSetList, createRecent } = projectSetStore;
 
     const [name, setName] = useState("添加项目集")
 
-    const [activeTabs, setActiveTabs] = useState("2")
+    const [activeTabs, setActiveTabs] = useState("1")
     const [focusProjectSetList, setFocusProjectSetList] = useState([])
+    const [recentProjectSetList, setRecentProjectSetList] = useState([])
     const userId = getUser().userId;
 
     useEffect(() => {
-        findRecentProjectSetList({})
+        // findRecentProjectSetList({})
+        findRecentProjectSetList({}).then(res => {
+            if (res.code === 0) {
+                setRecentProjectSetList(res.data)
+            }
+        })
         getUseList()
         return;
     }, [])
@@ -53,7 +59,7 @@ const ProjectSetTable = (props) => {
     }
 
     const onSearch = (value) => {
-        getProjectSetlist({ name: value })
+        findJoinProjectSetList({ name: value })
     }
 
     const pageDowm = (pagination) => {
@@ -93,13 +99,11 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "30%",
             render: (text, record) => <Space onClick={() => goProjectSetDetail(record)} className="span-botton">
-                <svg className="icon-32" aria-hidden="true">
-                    <use xlinkHref="#icon-program"></use>
-                </svg>
+                <div className="projectSet-table-icon">{record.name.slice(0, 1)}</div>
                 {text}
             </Space>,
         },
-       
+
         {
             title: "计划时间",
             dataIndex: "startTime",
@@ -158,11 +162,6 @@ const ProjectSetTable = (props) => {
             icon: "project"
         },
         {
-            title: '我最近浏览的',
-            key: '2',
-            icon: "projectSetrencent"
-        },
-        {
             title: '我收藏的',
             key: '3',
             icon: "projectSetfocus"
@@ -178,10 +177,7 @@ const ProjectSetTable = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findAllProjectSet()
-                break;
-            case "2":
-                findRecentProjectSetList({})
+                findJoinProjectSetList({})
                 break;
             case "3":
                 findFocusProjectSetList({ master: userId })
@@ -194,17 +190,7 @@ const ProjectSetTable = (props) => {
         }
     }
 
-    const findProjectSetFocus = (id) => {
-        findProjectSetFocusList({ masterId: id }).then(res => {
-            if (res.code === 0) {
-                const focusList = res.data;
-                focusList.map(item => {
-                    focusProjectSetList.push(item.projectSetId)
-                })
-                setFocusProjectSetList(focusProjectSetList)
-            }
-        })
-    }
+
 
     return <div className="projectSet-list">
         <Row>
@@ -215,25 +201,64 @@ const ProjectSetTable = (props) => {
                         type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
                     </Button>
                 </Breadcumb>
-
-                <div className="projectSet-search-tab">
-                    {/* <div className="projectSet-filter"> */}
-                        <div className="projectSet-tabs">
-                            {
-                                projectTab.map(item => {
-                                    return <div
-                                        className={`projectSet-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
-                                        key={item.key}
-                                        onClick={() => selectTabs(item.key)}
-                                    >
-                                        {item.title}
-                                    </div>
-                                })
-                            }
+                <div className="projectSet-recent-box">
+                    <div className="title">
+                        <div>
+                            常用项目集
                         </div>
-                        <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目集名称"} />
-                        {/* <span className="projectSet-num">{projectSetList && projectSetList.length}个项目集</span> */}
-                    {/* </div> */}
+                    </div>
+                    <div className="recent-projectSet">
+                        {
+                            recentProjectSetList && recentProjectSetList.length > 0 ? recentProjectSetList.map((item, index) => {
+
+                                return <div className="projectSet-item" key={item.id} onClick={() => goProjectSetDetail(item)}>
+                                    <div className="item-title">
+                                        <div className="item-icon">{item.name.slice(0, 1)}</div>
+                                        <span className="item-name">{item.name}</span>
+                                    </div>
+                                    <div className="item-info">
+                                        <div className="info-master">
+                                            <span className="info-label" style={{ color: "#999" }}>
+                                                负责人
+                                            </span>
+                                            <span className="info-value">
+                                                {item.master?.nickname}
+                                            </span>
+                                        </div>
+                                        <div className="info-project">
+                                            <span className="info-label" style={{ color: "#999" }}>
+                                                关联项目
+                                            </span>
+                                            <span className="info-value">
+                                                {item.projectNumber}
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            })
+                                :
+                                <Empty image="/images/nodata.png" description="暂时没有点击过项目集~" />
+                        }
+                    </div>
+                </div>
+                <div className="projectSet-search-tab">
+                    <div className="projectSet-tabs">
+                        {
+                            projectTab.map(item => {
+                                return <div
+                                    className={`projectSet-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
+                                    key={item.key}
+                                    onClick={() => selectTabs(item.key)}
+                                >
+                                    {item.title}
+                                </div>
+                            })
+                        }
+                    </div>
+                    <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目集名称"} />
                 </div>
                 <div>
                     <div className="projectSet-table-box">
@@ -243,6 +268,7 @@ const ProjectSetTable = (props) => {
                             rowKey={record => record.id}
                             pagination={false}
                             onChange={pageDowm}
+                            className = "projectSet-table-item"
                         />
                     </div>
 

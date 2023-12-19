@@ -18,6 +18,13 @@ export class BasicInfoStore {
     }
 
     @action
+    createRecent = async (value) => {
+        const data = await Service("/recent/createRecent", value)
+        return data;
+
+    }
+    
+    @action
     statProjectSetWorkItemProcess = async (values) => {
         const params = new FormData();
         params.append("ids", values)

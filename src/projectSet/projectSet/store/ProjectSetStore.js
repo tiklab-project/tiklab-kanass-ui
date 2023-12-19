@@ -188,6 +188,20 @@ export class ProjectSetStore {
         return data;
     }
 
+    findJoinProjectSetList = async(value) => {
+        const data = await Service("/projectSet/findJoinProjectSetList", value);
+        if(data.code === 0){
+            this.projectSetList = data.data;
+            this.allProjectSetList = data.data
+        }
+        return data;
+    }
+
+    findProjectSetSortRecentTime = async(value) => {
+        const data = await Service("/projectSet/findProjectSetSortRecentTime", value);
+
+        return data;
+    }
     /**
      * 添加项目集收藏
      * @param {*} value 
@@ -218,17 +232,11 @@ export class ProjectSetStore {
     }
 
     @action
-    findRecentProjectSetList = async(value) => {
-        const params = {
-            orderParams: [{
-                name: "recentTime",
-                orderType: "asc"
-            }]
-        }
+    findRecentProjectSetList = async(params) => {
         const data = await Service("/projectSet/findRecentProjectSetList", params);
-        if(data.code === 0){
-            this.projectSetList = data.data;
-        }
+        // if(data.code === 0){
+        //     this.projectSetList = data.data;
+        // }
         return data;
     }
 

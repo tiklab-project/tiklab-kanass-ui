@@ -75,20 +75,6 @@ const DynamicList = (props) => {
                     />
                     <div className="dynamic-filter">
                         
-                        {/* <Select
-                            placeholder="项目集"
-                            allowClear
-                            className="dynamic-select"
-                            key="selectProject"
-                            onSelect={selectProject}
-                            width={100}
-                        >
-                            {
-                                projectList && projectList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select> */}
                         {
                             props.route.path === "/projectSetdetail/:projectSetId/dynamic" && <Select
                                 placeholder="项目"
@@ -107,34 +93,6 @@ const DynamicList = (props) => {
                         }
                         
 
-                        {/* <Select
-                            placeholder="迭代"
-                            allowClear
-                            className="dynamic-select"
-                            key="selectProject3"
-                            onSelect={selectProject}
-                            width={100}
-                        >
-                            {
-                                projectList && projectList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select> */}
-                        <Select
-                            placeholder="事项"
-                            allowClear
-                            className="dynamic-select"
-                            key="selectProject4"
-                            onSelect={selectProject}
-                            width={150}
-                        >
-                            {
-                                projectList && projectList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select>
                     </div>
                 </div>
 

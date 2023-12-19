@@ -78,6 +78,11 @@ class HomeStore {
     }
     
     @action
+    setTodoTaskList = (value) => {
+        this.todoTaskList = value
+    }
+
+    @action
     findInsightList = async(value) => {
         Object.assign(this.insightSearch, { ...value })
         const data = await Service("/insight/findInsightList", this.insightSearch)
@@ -311,14 +316,17 @@ class HomeStore {
      * @returns 
      */
     @action
-    findTodopage = async(value)=> {
+    findTodopage = async(value, type)=> {
         this.todoTaskList = [];   
         this.setTodoCondition(value)
         const data = await Service("/todo/findtodopage", this.todoCondition);
         if(data.code === 0) {
             const list = data.data.dataList;
-            this.todoTaskList = list;
-            this.todoTotal = data.data.totalRecord;
+            if(type !== "projectSet"){
+                this.todoTaskList = list;
+                this.todoTotal = data.data.totalRecord;
+            }
+            
         }
         return data;
     }
@@ -332,7 +340,7 @@ class HomeStore {
         const data = await Service("/project/findAllProject");
         return data;
     }
-    
+
     /**
      * 获取迭代列表
      * @param {*} value 

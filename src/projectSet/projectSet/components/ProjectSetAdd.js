@@ -88,6 +88,9 @@ const ProjectSetAdd = (props) => {
                     lg={{ span: "18", offset: "3" }}
                     xl={{ span: "14", offset: "5" }}
                     xxl={{ span: "10", offset: "7" }}
+                    sm={24} 
+
+                    md={24}
                     style={{ height: "100%" }}
                 >
                     <Head />

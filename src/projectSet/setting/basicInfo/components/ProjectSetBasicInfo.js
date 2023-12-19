@@ -318,7 +318,7 @@ const ProjectSetBasicInfo = props => {
                     okType="danger"
                     okButtonProps={{ type: "primary" }}
                 >
-                    此项目集及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
+                    此项目集与项目的关联关系将被解除。
                 </Modal>
                 <ProjectSetIcon
                     visible={visible}

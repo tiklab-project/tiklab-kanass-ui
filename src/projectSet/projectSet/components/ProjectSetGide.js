@@ -25,11 +25,11 @@ const ProjectSetGide = (props) => {
             <div className="gide-right">
                 <div>您还没有项目集合，请先</div>
                 <Button
-                        style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
-                    </Button>
+                    style={{ width: "fit-content" }}
+                    type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
+                </Button>
             </div>
-           
+
         </div>
     )
 }

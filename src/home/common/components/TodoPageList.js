@@ -18,7 +18,7 @@ import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 const TodoList = (props) => {
     const { homeStore } = props;
-    const { findTodopage, todoTaskList, findProjectList, findSprintList, findProjectSetList,
+    const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,findSprintList, findProjectSetList,
         findProjectSetProjectList, todoTotal, todoCondition } = homeStore;
     //登录者id
     const userId = getUser().userId;
@@ -32,6 +32,9 @@ const TodoList = (props) => {
     const projectId = props.match.params.id;
     const versionId = props.match.params.version;
     const sprintId = props.match.params.sprint;
+    console.log(props)
+    const path = props.match?.path
+    // const [todoTaskList, setTodoTaskList] = useState([])
     useEffect(() => {
         getSerchList()
         const params = {
@@ -48,15 +51,34 @@ const TodoList = (props) => {
             setFirstText("项目概况")
             findTodopage({ ...params, data: { projectId: projectId } })
         }
-        console.log(props.match?.path)
-        if (props.match?.path === "/home/todoList") {
+        if (path === "/home/todoList") {
             setFirstText("首页")
             findTodopage(params)
         }
 
         if (props.route?.path === "/projectSetdetail/:projectSetId/workTodo") {
             setFirstText("项目集概况")
-            findTodopage(params)
+            const projectSetId = props.match.params.projectSetId;
+            setTodoTaskList([])
+            findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
+                if (res.code === 0) {
+                    const list = res.data;
+                    if (list.length > 0) {
+                        let todos = []
+                        list.map(item => {
+                            findTodopage({data: {projectId: item.id} }, "projectSet").then(res => {
+                                if (res.code === 0) {
+                                    console.log(todoTaskList)
+                                    todos.push(...res.data.dataList)
+                                    setTodoTaskList([...todos])
+                                }
+                            })
+                        })
+                    }else {
+                        setTodoTaskList([])
+                    }
+                }
+            })
         }
 
         if (props.route?.path === "/:id/sprintdetail/:sprint/workTodo") {
@@ -74,25 +96,31 @@ const TodoList = (props) => {
      * 获取搜索参数的列表
      */
     const getSerchList = () => {
-        findProjectList().then(res => {
-            if (res.code === 0) {
-                setProjectList(res.data)
-            }
-        })
-        findSprintList({}).then(res => {
-            if (res.code === 0) {
-                setSprintList(res.data)
-            }
-        })
+        if(path === "/home/todoList") {
+            findProjectList().then(res => {
+                if (res.code === 0) {
+                    setProjectList(res.data)
+                }
+            })
+        }
+        if(path === "/projectSetdetail/:projectSetId/workTodo"){
+            const projectSetId = props.match.params.projectSetId;
+            findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
+                if (res.code === 0) {
+                    setProjectList(res.data)
+                }
+            })
+        }
+       
     }
 
     const changeProject = (value) => {
         setSprintValue(null)
-        findSprintList({ projectId: value }).then(res => {
-            if (res.code === 0) {
-                setSprintList(res.data)
-            }
-        })
+        // findSprintList({ projectId: value }).then(res => {
+        //     if (res.code === 0) {
+        //         setSprintList(res.data)
+        //     }
+        // })
         searchTodo("projectId", value)
     }
 
@@ -108,7 +136,7 @@ const TodoList = (props) => {
      */
     const searchTodo = (key, value) => {
         const params = {
-            content: {
+            data: {
                 [key]: value
             }
         }
@@ -158,7 +186,7 @@ const TodoList = (props) => {
     const [activeKey, setActiveKey] = useState(1)
     return (<div className="todo-list-page">
         {
-            props.match?.path !== "/home/todoList" && <Breadcrumb
+            path !== "/home/todoList" && <Breadcrumb
                 {...props}
                 firstText={firstText}
                 secondText="待办事项"
@@ -173,7 +201,7 @@ const TodoList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   ( props.match?.path === "/home/todoList" || props.match?.path === "/projectSetdetail/:projectSetId/workTodo") &&
+                   ( path === "/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear
@@ -190,22 +218,6 @@ const TodoList = (props) => {
                     </Select>
                 }
 
-
-                <Select
-                    placeholder="迭代"
-                    allowClear
-                    className="todo-select"
-                    key="sprint"
-                    width={200}
-                    onChange={(value) => changeSprint(value)}
-                    value={sprintValue}
-                >
-                    {
-                        sprintList && sprintList.map((item) => {
-                            return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                        })
-                    }
-                </Select>
             </div>
         </div>
 

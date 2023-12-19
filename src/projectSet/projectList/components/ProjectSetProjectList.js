@@ -67,7 +67,7 @@ const ProjectSetProjectList = (props) => {
                     {
                         record.iconUrl ?
                             <img
-                                src = {setImageUrl(record.iconUrl)}
+                                src={setImageUrl(record.iconUrl)}
                                 alt=""
                                 className="icon-32"
                             />
@@ -263,15 +263,10 @@ const ProjectSetProjectList = (props) => {
         <Row>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSetDetail">
-                    <Breadcumb
-                        firstText={projectSet.name}
-                        secondText="项目"
-                        firstUrl="/projectSet/projectSetList"
-                    >
-                        {/* <PrivilegeButton code={'RelationProject'} domainId={projectSetId}  {...props}> */}
-                        <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
-                        {/* </PrivilegeButton> */}
 
+
+                    <Breadcumb firstText="项目">
+                        <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
                     </Breadcumb>
                     <div>
                         <div className="search-add">

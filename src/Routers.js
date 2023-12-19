@@ -1071,7 +1071,7 @@ const Routers = [
                         component: Work,
                     },
                     {
-                        path: "/:id/versiondetail/:version/workDetail/:workId",
+                        path: "/:id/versiondetail/:version/work/:workId",
                         component: WorkDetailPage,
                     },
                     {

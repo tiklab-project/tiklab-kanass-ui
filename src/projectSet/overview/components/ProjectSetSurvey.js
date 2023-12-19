@@ -15,19 +15,17 @@ import { getUser } from 'thoughtware-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
+import setImageUrl from "../../../common/utils/setImageUrl";
 const ProjectSetSurvey = props => {
 
-    const { statProjectSetWorkItemProcess, findPrecessProjectList, opLogList, findlogpage,
-        findtodopage, findProjectList, findProjectSet } = BasicInfoStore;
-    const [workItemList, setWorkItemList] = useState();
+    const { findlogpage, findtodopage, findProjectList, createRecent } = BasicInfoStore;
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     const [todoTaskList, setTodoTaskList] = useState([])
     const [logList, setLogList] = useState([])
     useEffect(() => {
-        // info()
-        findProjectList({projectSetId: projectSetId}).then(res => {
+        findProjectList({ projectSetId: projectSetId }).then(res => {
             if (res.code === 0) {
                 const list = res.data;
                 let ids = []
@@ -35,38 +33,26 @@ const ProjectSetSurvey = props => {
                 if (list.length > 0) {
                     list.map(item => {
                         ids.push(item.id)
-                        findtodopage({projectId: item.id }).then(res=> {
-                            if(res.code === 0){
+                        findtodopage({ projectId: item.id }).then(res => {
+                            if (res.code === 0) {
                                 todoTaskList.push(...res.data.dataList)
                                 setTodoTaskList([...todoTaskList])
                             }
                         })
-                        findlogpage({projectId: item.id }).then(res=> {
-                            if(res.code === 0){
+                        findlogpage({ projectId: item.id }).then(res => {
+                            if (res.code === 0) {
                                 logList.push(...res.data.dataList)
                                 setLogList([...logList])
                             }
                         })
                     })
                     // setTodoTaskList(todoTaskList)
-                    setProcessProjectList(list.filter(item => item.projectState === 2))
+                    console.log(list, list.filter(item => item.projectState === "2"))
+                    setProcessProjectList(list.filter(item => item.projectState === "2"))
                 }
-                // findtodopage({projectIds: ids })
-                // findlogpage({projectIds: ids })
-                statProjectSetWorkItemProcess(ids).then(res => {
-                    if (res.code === 0) {
-                        setWorkItemList(res.data.slice(0, 6))
-                    }
-                })
             }
         })
-        // findPrecessProjectList({ projectSetId: projectSetId, projectState: "2" }).then(res => {
-        //     if (res.code === 0) {
-        //         setProcessProjectList(res.data)
-        //     }
-        // })
 
-        
         return;
     }, [])
 
@@ -77,11 +63,17 @@ const ProjectSetSurvey = props => {
 
     const goProdetail = (project) => {
         localStorage.setItem("project", JSON.stringify(project));
-        localStorage.setItem("projectId", project.id);
-        localStorage.setItem("projectTypeId", project.projectType.id);
+        const params = {
+            name: project.projectName,
+            model: "project",
+            modelId: project.id,
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
+            iconUrl: project.iconUrl
+        }
+        createRecent(params)
 
-
-        props.history.push(`/projectScrumDetail/${project.id}/survey`)
+        props.history.push(`/projectDetail/${project.id}/workTable`)
     };
 
     const goOpLogDetail = (url) => {
@@ -95,7 +87,7 @@ const ProjectSetSurvey = props => {
 
     }
     const goToListPage = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/workTodo`) 
+        props.history.push(`/projectSetdetail/${projectSetId}/workTodo`)
     }
     return (
         <Row className="projectSet-survey">
@@ -150,18 +142,25 @@ const ProjectSetSurvey = props => {
                                             onClick={() => goProdetail(item)}
                                         >
                                             <div className="projectSet-process-project-left">
-                                                <svg className="menu-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-zuoyepiaotiaoyue"></use>
-                                                </svg>
+                                                <div>
+                                                    <img
+                                                        src={setImageUrl(item.iconUrl)}
+                                                        className="icon-32"
+                                                        title={item.projectName}
+                                                        alt=""
+                                                    />
+                                                </div>
+
                                                 <div className="projectSet-process-project-name">
+                                                    
+                                                    <div className="projectSet-process-project-date">{item.projectKey}</div>
                                                     <div className="name">{item.projectName}</div>
-                                                    <div className="projectSet-process-project-date">{item.endTime}</div>
                                                 </div>
                                             </div>
 
-                                            <div className="projectSet-process-project-project">
+                                            {/* <div className="projectSet-process-project-project">
                                                 {item.projectType.name}
-                                            </div>
+                                            </div> */}
                                             <div className="projectSet-process-project-process">
                                                 {item.master.name}
                                             </div>
@@ -173,7 +172,7 @@ const ProjectSetSurvey = props => {
                             </div>
                         </div>
                     </div>
-                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"projectSet"}/>
+                    <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"projectSet"} />
 
                     <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>

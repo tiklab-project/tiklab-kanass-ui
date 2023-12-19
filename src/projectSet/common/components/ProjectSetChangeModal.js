@@ -14,8 +14,9 @@ import { Tooltip } from "antd";
 
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText } = props;
-    const { findAllProjectSet, findProjectSet } = projectSetStore;
+    const { findProjectSetSortRecentTime, findProjectSet, findJoinProjectSetList } = projectSetStore;
     const [projectSetAllList, setProjectSetAllList] = useState()
+    const [allProjectSetList, setFindJoinProjectSetList] = useState([])
     // 点击显示弹窗按钮
     const setButton = useRef()
     // 弹窗的显示与不显示控制参数
@@ -41,8 +42,16 @@ const ProjectSetChangeModal = (props) => {
      * 获取全部项目集，用于切换
      */
     useEffect(() => {
-        findAllProjectSet().then(res => {
-            setProjectSetAllList(res.data)
+        findJoinProjectSetList({}).then(res=> {
+            if(res.code === 0){
+                setFindJoinProjectSetList(res.data)
+            }
+        })
+        findProjectSetSortRecentTime({projectSetId: projectSet?.id}).then(res => {
+            if(res.code === 0){
+                setProjectSetAllList(res.data)
+            }
+            
         })
         return
     }, [])
@@ -103,72 +112,89 @@ const ProjectSetChangeModal = (props) => {
 
     return (
         <div className="change-projectSet">
-                <div  onClick={() =>showDropDown()} ref = {setButton}>
-                    {
-                        isShowText ? <div className="projectSet-change-title">
-                           <svg className="list-img" aria-hidden="true">
-                                <use xlinkHref="#icon-program"></use>
-                            </svg>
-                            <div className={`projectSet-text `} >
-                                <div>
-                                    {projectSet.name}
-                                </div>
-                            </div>
-                            <div className={`projectSet-toggleCollapsed`}>
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-down"></use>
-                                </svg>
+            <div onClick={() => showDropDown()} ref={setButton}>
+                {
+                    isShowText ? <div className="projectSet-change-title">
+                        <svg className="list-img" aria-hidden="true">
+                            <use xlinkHref="#icon-program"></use>
+                        </svg>
+                        <div className={`projectSet-text `} >
+                            <div>
+                                {projectSet.name}
                             </div>
                         </div>
-                        :
-                        <Tooltip placement="right" title={projectSet?.name}>
-                            <div className="projectSet-change-icon">
-                            <svg className="list-img" aria-hidden="true">
-                                <use xlinkHref="#icon-program"></use>
-                            </svg>
+                        <div className={`projectSet-toggleCollapsed`}>
                             <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-down"></use>
                             </svg>
                         </div>
+                    </div>
+                        :
+                        <Tooltip placement="right" title={projectSet?.name}>
+                            <div className="projectSet-change-icon">
+                                <svg className="list-img" aria-hidden="true">
+                                    <use xlinkHref="#icon-program"></use>
+                                </svg>
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-down"></use>
+                                </svg>
+                            </div>
                         </Tooltip>
-                        
-                    }
 
-                </div>
+                }
+
+            </div>
 
             <div
                 className={`change-projectSet-box ${showMenu ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
             >
-                <div className="change-projectSet-head">切换项目集</div>
+                <div className="change-projectSet-head">选择项目集</div>
+                <div className={`change-projectSet-item change-projectSet-selectItem`}
+
+                    key={projectSet.id}
+
+                >
+                    <svg className="list-img" aria-hidden="true">
+                        <use xlinkHref="#icon-program"></use>
+                    </svg>
+                    <div className="projectSet-item-info">
+                        <div className="projectSet-name">
+                            {projectSet.name}
+                        </div>
+                        <div className="projectSet-type">
+                            {projectSet.master?.nickname}
+                        </div>
+                    </div>
+                    <svg className="svg-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-selected"></use>
+                    </svg>
+                </div>
                 {
                     projectSetAllList && projectSetAllList.map((item) => {
-                        return <div className={`change-projectSet-name ${item.id === selectProject ? "change-projectSet-selectName" : ""}`}
+                        return <div className={`change-projectSet-item ${item.id === selectProject ? "change-projectSet-selectName" : ""}`}
                             onClick={() => selectProjectSetId(item)}
                             key={item.id}
                             onMouseOver={() => handleMouseOver(item.id)}
                             onMouseOut={handleMouseOut}
 
                         >
-                            {
-                                item.iconUrl ?
-                                    <img
-                                        src={('images/' + item.iconUrl)}
-                                        className="img-icon-right"
-                                        title={item.name}
-                                        alt=""
-                                    />
-                                    :
-                                    <img
-                                        className="img-icon-right"
-                                        src={('images/project1.png')}
-                                        title={item.name}
-                                        alt=""
-                                    />
-                            }
-                            {item.name}
+                            <svg className="list-img" aria-hidden="true">
+                                <use xlinkHref="#icon-program"></use>
+                            </svg>
+                            <div className="projectSet-item-info">
+                                <div className="projectSet-name">
+                                    {item.name}
+                                </div>
+                                <div className="projectSet-type">
+                                    {item.master?.nickname}
+                                </div>
+                            </div>
                         </div>
                     })
+                }
+                {
+                    allProjectSetList.length > 6 && <div className="change-projectSet-more" onClick={() => props.history.push("/project")}>查看更多</div>
                 }
             </div>
         </div>

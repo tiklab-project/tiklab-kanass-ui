@@ -94,7 +94,7 @@ const DynamicListItem = (props) => {
                             <div className="dynamic-content">
                                 <div className="dynamic-work-action">{master.nickname}修改了事项负责人</div>
                                 <div className="dynamic-work-item">
-                                    <div class="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
+                                    <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
                                     <div
                                         className="dynamic-work-oldvalue"
                                     >

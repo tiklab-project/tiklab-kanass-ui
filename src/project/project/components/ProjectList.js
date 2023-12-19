@@ -346,7 +346,7 @@ const ProjectList = (props) => {
 
                             })
                                 :
-                                <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
+                                <Empty image="/images/nodata.png" description="暂时没有点击过项目~" />
                         }
                     </div>
                 </Spin>

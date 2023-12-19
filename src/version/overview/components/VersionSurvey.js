@@ -244,34 +244,6 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="version-todo-work">
-                        <div className="version-title">
-                            <span className="name">待办事项</span>
-                            {
-                                todoTaskList.length > 10 && <div className="more"
-                                    onClick={() => { props.history.push(`/projectScrumDetail/:id/versiondetail/${versionId}/workTodo`) }}>
-                                    <svg aria-hidden="true" className="svg-icon">
-                                        <use xlinkHref="#icon-rightjump"></use>
-                                    </svg>
-                                </div>
-                            }
-
-                        </div>
-                        <div className="version-todo-work-list">
-                            {
-                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="todo-item"
-                                        key={item.id}
-                                        onClick={() => goTodoDetail(item.link)}
-                                    />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </div>
-                    </div> */}
                     <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"version"}/>
                     <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
