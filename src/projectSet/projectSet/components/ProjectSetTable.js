@@ -99,7 +99,7 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "30%",
             render: (text, record) => <Space onClick={() => goProjectSetDetail(record)} className="span-botton">
-                <div className="projectSet-table-icon">{record.name.slice(0, 1)}</div>
+                <div className={`projectSet-table-icon projectSet-color-${record.color}`}>{record.name.slice(0, 1)}</div>
                 {text}
             </Space>,
         },
@@ -213,7 +213,7 @@ const ProjectSetTable = (props) => {
 
                                 return <div className="projectSet-item" key={item.id} onClick={() => goProjectSetDetail(item)}>
                                     <div className="item-title">
-                                        <div className="item-icon">{item.name.slice(0, 1)}</div>
+                                        <div className={`item-icon projectSet-color-${item.color}`}>{item.name.slice(0, 1)}</div>
                                         <span className="item-name">{item.name}</span>
                                     </div>
                                     <div className="item-info">

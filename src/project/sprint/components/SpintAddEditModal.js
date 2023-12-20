@@ -36,7 +36,15 @@ const SprintAddModal = (props) => {
      * 显示添加编辑弹窗，若是编辑模型，初始化表单
      */
     const showModal = () => {
-        getUseList(projectId)
+        getUseList(projectId).then(res=> {
+            console.log(res)
+            if(res.code === 0 && props.type === "add" && res.data.length > 0){
+                form.setFieldsValue({
+                    master: res.data[0]?.user?.id,
+                })
+            }
+                
+        })
         if (props.type === "edit") {
             searchSprint(sprintId).then((res) => {
                 form.setFieldsValue({

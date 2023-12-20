@@ -19,10 +19,7 @@ export class ModuleStore {
 
     // 分页参数
     @observable 
-    modulePageParam = {
-        current: 1,
-        pageSize: 10,
-        totalRecord: ""
+    searchCondition = {
     };
     
 
@@ -57,12 +54,12 @@ export class ModuleStore {
      * @param {*} projectId 
      */
     @action
-	deleModule = async(moduleId,projectId) => {
+	deleModule = async(moduleId) => {
         const param = new FormData()
         param.append("id", moduleId)
         const data = await Service("/module/deleteModule", param)
 		if(data.code=== 0){
-            this.findModulePage(projectId,this.searchModuleName)
+            this.findModulePage()
         }
         return data;
     }
@@ -101,25 +98,11 @@ export class ModuleStore {
      * @returns 
      */
     @action
-	findModulePage = async(projectId,moduleName) => {
-        this.searchSprintId = projectId
-        this.searchModuleName = moduleName
-        const params={
-            projectId: projectId,
-            moduleName: moduleName,
-            orderParams: [{
-                name: "moduleName",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: this.modulePageParam.pageSize,
-                currentPage: this.modulePageParam.current
-            }
-        }
-        const data = await Service("/module/findModuleListTree", params)
+	findModulePage = async(value) => {
+        Object.assign(this.searchCondition, { ...value })
+        const data = await Service("/module/findModuleListTree", this.searchCondition)
         if(data.code===0){
             this.modulelist = data.data
-            // this.modulePageParam.totalRecord = data.data.totalRecord
         }
         return data;
     }
@@ -130,7 +113,7 @@ export class ModuleStore {
      */
     @action
     setPageParam = (value)=> {
-        this.modulePageParam = {...value}
+        this.searchCondition = {...value}
     }
 }
 

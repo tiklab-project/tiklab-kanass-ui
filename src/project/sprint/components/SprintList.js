@@ -8,7 +8,7 @@
  */
 
 import React, { useRef, useEffect, useState, Fragment } from "react";
-import { Space, Row, Col, Table } from 'antd';
+import { Space, Row, Col, Table, Dropdown, Menu, Modal } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import "./sprintList.scss";
 import { getUser } from "thoughtware-core-ui";
@@ -19,6 +19,7 @@ import InputSearch from '../../../common/input/InputSearch'
 import SprintStore from "../store/SprintStore";
 import { Provider, observer } from "mobx-react";
 import { useDebounce } from "../../../common/utils/debounce";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -75,7 +76,7 @@ const Sprint = (props) => {
      */
     const onSearch = useDebounce((data) => {
         findSprintList({ sprintName: data })
-    }, [500]) 
+    }, [500])
 
     /**
      * 显示添加或者编辑弹窗
@@ -245,7 +246,34 @@ const Sprint = (props) => {
         }
         return name;
     }
-    
+    // const moreMenu = (id) => {
+    //     return <Menu onClick={(value) => selectAction(value, id)}>
+    //         <Menu.Item key="delete">
+    //             <div>删除</div>
+    //         </Menu.Item>
+    //     </Menu>
+    // };
+
+    // const selectAction = (value, id) => {
+    //     console.log(value)
+    //     if(value.key === "delete"){
+    //         Modal.confirm({
+    //             title: '确定删除?',
+    //             centered: true,
+    //             onOk() { deleteSprintById(id) },
+    //             onCancel() { },
+    //         });
+    //     }
+    // }
+
+    const deleteSprintById = (id) => {
+        delesprintList(id).then(res => {
+            if (res.code === 0) {
+                selectTabs("all")
+            }
+        })
+    }
+
     const columns = [
         {
             title: "迭代名称",
@@ -259,14 +287,10 @@ const Sprint = (props) => {
                         alt=""
                         className="icon-32"
                     />
-                   <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
+                    <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
                 </div>
-                
-
             ),
         },
-       
-
         {
             title: "计划日期",
             dataIndex: "data",
@@ -306,11 +330,19 @@ const Sprint = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleSprintList(record.id)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-delete"></use>
-                    </svg>
 
+                    {/* <Dropdown
+                        overlay={() => moreMenu(record.id)}
+                        placement="bottomLeft"
+                        trigger="click"
+                    >
+                        <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                            <use xlinkHref="#icon-more"></use>
+                        </svg>
 
+                    </Dropdown> */}
+
+                    <DeleteModal deleteFunction = {deleSprintList} id = {record.id}/>
                 </Space>
 
             ),
@@ -375,7 +407,7 @@ const Sprint = (props) => {
                 sprintStateList={sprintStateList}
                 setVisible={setVisible}
                 visible={visible}
-                setActiveTabs = {setActiveTabs}
+                setActiveTabs={setActiveTabs}
                 {...props}
             />
         </div>

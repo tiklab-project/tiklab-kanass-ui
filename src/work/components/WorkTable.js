@@ -15,6 +15,7 @@ import { finWorkList } from "./WorkGetList";
 import { renderRoutes } from "react-router-config";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { removeTableTree } from "../../common/utils/treeDataAction";
+import DeleteModal from "../../common/deleteModal/deleteModal";
 
 const WorkTable = (props) => {
     // const { form } = props
@@ -323,24 +324,8 @@ const WorkTable = (props) => {
             width: "60",
             key: 'action',
             render: (text, record) => (
-                <Space size="middle">
-                    <Popconfirm
-                        title="确定删除事项?"
-                        onConfirm={() => deleteWork(record.id)}
-                        // onCancel={cancel}
-                        okText="是"
-                        cancelText="否"
-                    >
-                        <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-delete"></use>
-                        </svg>
-                    </Popconfirm>
-
-                    {/* <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-more"></use>
-                    </svg> */}
-                </Space>
-            ),
+                <DeleteModal deleteFunction = {deleteWork} id = {record.id}/>
+            )
         }
     ];
 
@@ -489,19 +474,20 @@ const WorkTable = (props) => {
             width: "60",
             key: 'action',
             render: (text, record) => (
-                <Space size="middle">
-                    <Popconfirm
-                        title="确定删除事项?"
-                        onConfirm={() => deleteWork(record.id)}
-                        // onCancel={cancel}
-                        okText="是"
-                        cancelText="否"
-                    >
-                        <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-delete"></use>
-                        </svg>
-                    </Popconfirm>
-                </Space>
+                // <Space size="middle">
+                //     <Popconfirm
+                //         title="确定删除事项?"
+                //         onConfirm={() => deleteWork(record.id)}
+                //         // onCancel={cancel}
+                //         okText="是"
+                //         cancelText="否"
+                //     >
+                //         <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
+                //             <use xlinkHref="#icon-delete"></use>
+                //         </svg>
+                //     </Popconfirm>
+                // </Space>
+                <DeleteModal deleteFunction = {deleteWork} id = {record.id}/>
             ),
         }
     ];

@@ -7,48 +7,42 @@
  * @LastEditTime: 2021-11-26 14:34:25
  */
 import { observable, action } from "mobx";
-import {Service} from "../../common/utils/requset";
+import { Service } from "../../common/utils/requset";
 export class WorkCommentStore {
     @observable workCommentPage = {
-        current: 1,
-        defaultCurrent: 1,
-        pageSize: "6"
+        orderParams: [{
+            name: "createTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
     };
 
     @action
-    createWorkComment = async(value) => {
+    createWorkComment = async (value) => {
         const data = await Service("/workComment/createWorkComment", value)
         return data;
     }
 
     @action
-    findWorkCommentPage = async(value) => {
-        Object.assign(this.workCommentPage, {...value});
-        let params = {
-            workItemId: value.workItemId,
-            orderParams: [{
-                name: "createTime",
-                orderType: "asc"
-            }],
-            pageParam: {
-                pageSize: 6,
-                currentPage: this.workCommentPage.current
-            }
-        }
-        const data = await Service("/workComment/findWorkCommentPage", params)
+    findWorkCommentPage = async (value) => {
+        Object.assign(this.workCommentPage, { ...value });
+        const data = await Service("/workComment/findWorkCommentPage", this.workCommentPage)
         return data;
     }
 
     @action
-    updateWorkComment = async(value) => {
+    updateWorkComment = async (value) => {
         const data = await Service("/workComment/updateWorkComment", value)
         return data;
     }
 
     @action
-    deleteWorkComment = async(value) => {
+    deleteWorkComment = async (value) => {
         const params = new FormData();
-        params.append("id",value.id)
+        params.append("id", value.id)
         const data = await Service("/workComment/deleteWorkComment", params)
         return data;
     }

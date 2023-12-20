@@ -51,6 +51,11 @@
                     line-height: 15px;
                     border-radius: 5px; 
                     margin: 0 10px;
+                    max-width: 200px;
+                    min-width: 60px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
                 .message-work-newValue {
                     padding: 5px 10px; 
@@ -59,6 +64,11 @@
                     line-height: 15px;
                     border-radius: 5px; 
                     margin: 0 10px;
+                    max-width: 200px;
+                    min-width: 60px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
             }
         }

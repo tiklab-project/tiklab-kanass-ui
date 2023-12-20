@@ -32,8 +32,6 @@ const WorkDetail = (props) => {
         findTransitionList, findWorkItemRelationModelCount, findVersionList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
-    // const detailCrumbArray = getSessionStorage("detailCrumbArray")
-    console.log(detailCrumbArray)
     const projectId = props.match.params.id;
     const userId = getUser().userId;
     const workDeatilForm = useRef()
@@ -63,8 +61,11 @@ const WorkDetail = (props) => {
                         setRelationModalNum(res.data)
                     }
                 })
+                console.log(props.match.path)
                 if (props.match.path === "/projectDetail/:id/work/:workId") {
+                    console.log(id)
                     setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl}])
+                    setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
                 }
             }
         })
@@ -78,7 +79,13 @@ const WorkDetail = (props) => {
         return isView;
     }
     useEffect(() => {
-        if (isDetail()) {
+        // if (isDetail()) {
+        //     const id = props.match.params.workId;
+        //     console.log(id)
+        //     setWorkId(id)
+        // }
+        if(props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
+        || props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
             const id = props.match.params.workId;
             setWorkId(id)
         }

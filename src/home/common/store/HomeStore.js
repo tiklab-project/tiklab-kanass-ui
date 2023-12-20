@@ -6,44 +6,56 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-25 13:21:47
  */
-import {Service} from "../../../common/utils/requset"
+import { Service } from "../../../common/utils/requset"
 import { observable, action, extendObservable } from "mobx";
 
 import { getUser } from 'thoughtware-core-ui';
 
 class HomeStore {
     // 项目列表
-    @observable 
+    @observable
     ProjectList = [];
     // 消息总条数
-    @observable 
+    @observable
     messageTotal = 0;
     // 消息列表
-    @observable 
+    @observable
     messageList = [];
     // 消息列表是否到最后一页
-    @observable 
+    @observable
     isMessageReachBottom = true;
     // 动态总数
-    @observable 
+    @observable
     dynamicTotal = 0;
     // 动态列表
-    @observable 
+    @observable
     dynamicList = [];
     // 日志列表
-    @observable 
+    @observable
     opLogList = [];
+
+    @observable
+    opLogTotal = [];
+
+    @observable opLogCondition = {
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        },
+        bgroup: "kanass",
+        data: {}
+    }
     // 待办列表
-    @observable 
+    @observable
     todoTaskList = [];
 
-    @observable 
+    @observable
     endTaskList = [];
 
-    @observable 
+    @observable
     overdueTaskList = [];
     // 当天被激活的tab
-    @observable 
+    @observable
     activeKey = "1";
     // 待办的条件分页
     @observable todoTotal = 0;
@@ -54,17 +66,17 @@ class HomeStore {
         },
         orderParams: [{
             name: "createtime",
-            orderType:"desc"
+            orderType: "desc"
         }],
         bgroup: "kanass",
         data: {}
     }
-    
+
     // 是否是动态最后一页
     @observable isDynamicReachBottom = true;
 
     @observable recentList = [];
-    
+
     @observable insightList = [];
     @observable insightSearch = {
         orderParams: [{
@@ -76,17 +88,22 @@ class HomeStore {
             currentPage: 1
         }
     }
-    
+
     @action
     setTodoTaskList = (value) => {
         this.todoTaskList = value
     }
 
     @action
-    findInsightList = async(value) => {
+    setOpLogList = (value) => {
+        this.opLogList = value
+    }
+
+    @action
+    findInsightList = async (value) => {
         Object.assign(this.insightSearch, { ...value })
         const data = await Service("/insight/findInsightList", this.insightSearch)
-        if(data.code === 0){
+        if (data.code === 0) {
             this.insightList = data.data;
         }
         return data;
@@ -97,7 +114,7 @@ class HomeStore {
     setActiveKey = (value) => {
         this.activeKey = value
     }
- 
+
 
     /**
      * 获取当前登陆者最近点击的项目
@@ -105,7 +122,7 @@ class HomeStore {
      * @returns 
      */
     @action
-	findProjectSortRecentTime = async(value) => {
+    findProjectSortRecentTime = async (value) => {
         const data = await Service("/project/findProjectSortRecentTime", value)
         return data;
     }
@@ -115,20 +132,20 @@ class HomeStore {
      * @returns 
      */
     @action
-	statWorkItemByBusStatus = async() => {
+    statWorkItemByBusStatus = async () => {
         const data = await Service("/workItemStat/statWorkItemByBusStatus")
         return data;
     }
-    
+
     /**
      * 获取我管理的项目下的迭代
      * @param {项目id} value 
      * @returns 
      */
     @action
-	manageSprint = async(value) => {
+    manageSprint = async (value) => {
         const params = new FormData();
-        params.append("projectId",value)
+        params.append("projectId", value)
         const data = await Service("/workItemStat/statManageSprint", params)
         return data;
     }
@@ -139,9 +156,9 @@ class HomeStore {
      * @returns 
      */
     @action
-	statTodoWorkItem = async(value) => {
-        const params={
-            bgroup : "kanass",
+    statTodoWorkItem = async (value) => {
+        const params = {
+            bgroup: "kanass",
             status: 1,
             pageParam: {
                 pageSize: value.pageSize,
@@ -158,11 +175,11 @@ class HomeStore {
      * @returns 
      */
     @action
-    findDynamicPage = async(value)=> {
-        const params={
+    findDynamicPage = async (value) => {
+        const params = {
             orderParams: [{
                 name: "title",
-                orderType:"asc"
+                orderType: "asc"
             }],
             pageParam: {
                 pageSize: 20,
@@ -170,18 +187,18 @@ class HomeStore {
             }
         }
         const data = await Service("/dynamic/findDynamicPage", params)
-        if(data.code === 0) {
-            if(value.currentPage === 1){
+        if (data.code === 0) {
+            if (value.currentPage === 1) {
                 this.dynamicList = data.data.dataList
             }
-            if(value.currentPage > 1) {
+            if (value.currentPage > 1) {
                 this.dynamicList.push(...data.data.dataList);
             }
 
             this.dynamicTotal = data.data.totalPage;
-            if(value.currentPage >= this.dynamicTotal) {
+            if (value.currentPage >= this.dynamicTotal) {
                 this.isDynamicReachBottom = false
-            }else {
+            } else {
                 this.isDynamicReachBottom = true
             }
 
@@ -206,17 +223,17 @@ class HomeStore {
      * @returns 
      */
     @action
-    findRecentPage = async(masterId) => {
-        const params={
+    findRecentPage = async (masterId) => {
+        const params = {
             masterId: masterId,
             model: "workItem",
             orderParams: [{
                 name: "recentTime",
-                orderType:"desc"
+                orderType: "desc"
             }]
         }
         const data = await Service("/recent/findRecentListToModel", params)
-        if(data.code === 0){
+        if (data.code === 0) {
             this.recentList = data.data;
         }
         return data;
@@ -236,8 +253,8 @@ class HomeStore {
     @action
     findMessageDispatchItemPage = async (value) => {
         const params = {
-            pageParam:{
-                pageSize:10,
+            pageParam: {
+                pageSize: 10,
                 currentPage: value.page
             },
             sendType: 'site',
@@ -245,21 +262,21 @@ class HomeStore {
             status: value.status,
             bgroup: "kanass"
         }
-        
+
         const data = await Service("/message/messageItem/findMessageItemPage", params)
-        if(data.code === 0){
+        if (data.code === 0) {
             this.messageTotal = data.data.totalPage;
-            if(value.page === 1){
+            if (value.page === 1) {
                 this.messageList = data.data.dataList
             }
-            if(value.page > 1 && this.isMessageReachBottom) {
+            if (value.page > 1 && this.isMessageReachBottom) {
                 this.messageList.push(...data.data.dataList);
             }
 
-           
-            if(value.page >= this.messageTotal) {
+
+            if (value.page >= this.messageTotal) {
                 this.isMessageReachBottom = false
-            }else {
+            } else {
                 this.isMessageReachBottom = true
             }
         }
@@ -277,37 +294,35 @@ class HomeStore {
         return data;
     }
 
-    /**
-     * 获取系统操作日志列表
-     * @param {成员id, 项目id} value 
-     * @returns 
-     */
-    @action
-    findLogpage = async(value)=> {
-        const params={
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            },
-            bgroup: "kanass",
-            userId: value.userId,
-            data: {
-                projectId: value.projectId,
-                versionId: value.versionId,
-                sprintId: value.sprintId
-            }
-        }
-        
-        const data = await Service("/oplog/findlogpage", params);
-        if(data.code === 0) {
-            this.opLogList = data.data.dataList
-        }
-        return data;
-    }
+
 
     @action
     setTodoCondition = (value) => {
-        this.todoCondition = extendObservable(this.todoCondition,  { ...value })
+        this.todoCondition = extendObservable(this.todoCondition, { ...value })
+    }
+
+    @action
+    setOpLogCondition = (value) => {
+        this.opLogCondition = extendObservable(this.opLogCondition, { ...value })
+    }
+
+    /**
+    * 获取系统操作日志列表
+    * @param {成员id, 项目id} value 
+    * @returns 
+    */
+    @action
+    findLogpage = async (value, type) => {
+        this.setOpLogCondition(value)
+        const data = await Service("/oplog/findlogpage", this.opLogCondition);
+        if (data.code === 0) {
+            const list = data.data.dataList
+            if (type !== "projectSet") {
+                this.opLogList = list;
+                this.opLogTotal = data.data.totalRecord;
+            }
+        }
+        return data;
     }
 
     /**
@@ -316,17 +331,17 @@ class HomeStore {
      * @returns 
      */
     @action
-    findTodopage = async(value, type)=> {
-        this.todoTaskList = [];   
+    findTodopage = async (value, type) => {
+        this.todoTaskList = [];
         this.setTodoCondition(value)
         const data = await Service("/todo/findtodopage", this.todoCondition);
-        if(data.code === 0) {
+        if (data.code === 0) {
             const list = data.data.dataList;
-            if(type !== "projectSet"){
+            if (type !== "projectSet") {
                 this.todoTaskList = list;
                 this.todoTotal = data.data.totalRecord;
             }
-            
+
         }
         return data;
     }
@@ -373,9 +388,9 @@ class HomeStore {
         const data = await Service("/projectSet/findProjectList", value);
         return data;
     }
-    
+
     @action
-    findInsightList = async() => {
+    findInsightList = async () => {
         const params = {
             orderParams: [{
                 name: "insightName",
@@ -389,7 +404,7 @@ class HomeStore {
         const data = await Service("/insight/findInsightList", params)
         return data;
     }
-    
+
 
 }
 

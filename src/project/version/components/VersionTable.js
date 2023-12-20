@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import { Table, Space, Row, Col, DatePicker } from "antd";
+import { Table, Space, Row, Col, DatePicker, Dropdown, Menu } from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
@@ -18,9 +18,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import VersionStore from "../store/VersionStores";
 import InputSearch from '../../../common/input/InputSearch';
 import { getUser } from "thoughtware-core-ui";
-import UserIcon from "../../../common/UserIcon/UserIcon";
-
-const { RangePicker } = DatePicker;
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 
 const VersionTable = (props) => {
     const store = {
@@ -60,11 +58,6 @@ const VersionTable = (props) => {
         localStorage.setItem("sprintId", id);
     }
 
-    const statusName = {
-        "0": "未开始",
-        "1": "进行中",
-        "2": "已结束"
-    }
 
 
 
@@ -125,6 +118,17 @@ const VersionTable = (props) => {
         }
         return name;
     }
+
+
+
+    const deletVersionList = (id) => {
+        deleVersion(id).then(res => {
+            if (res.code === 0) {
+                selectTabs("all")
+            }
+        })
+    }
+
     // 列表的列
     const columns = [
         {
@@ -194,13 +198,7 @@ const VersionTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <PrivilegeProjectButton code={'VersionDelete'} domainId={projectId}  {...props}>
-                        <span className="span-botton  delete" onClick={() => deleVersion(record.id)}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-delete"></use>
-                            </svg>
-                        </span>
-                    </PrivilegeProjectButton>
+                    <DeleteModal deleteFunction = {deletVersionList} id = {record.id}/>
 
                 </Space>
 

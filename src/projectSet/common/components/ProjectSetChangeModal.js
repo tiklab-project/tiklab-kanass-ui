@@ -115,9 +115,8 @@ const ProjectSetChangeModal = (props) => {
             <div onClick={() => showDropDown()} ref={setButton}>
                 {
                     isShowText ? <div className="projectSet-change-title">
-                        <svg className="list-img" aria-hidden="true">
-                            <use xlinkHref="#icon-program"></use>
-                        </svg>
+                        <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
+                    
                         <div className={`projectSet-text `} >
                             <div>
                                 {projectSet.name}
@@ -132,9 +131,7 @@ const ProjectSetChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={projectSet?.name}>
                             <div className="projectSet-change-icon">
-                                <svg className="list-img" aria-hidden="true">
-                                    <use xlinkHref="#icon-program"></use>
-                                </svg>
+                                <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
                                 <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-down"></use>
                                 </svg>
@@ -155,9 +152,7 @@ const ProjectSetChangeModal = (props) => {
                     key={projectSet.id}
 
                 >
-                    <svg className="list-img" aria-hidden="true">
-                        <use xlinkHref="#icon-program"></use>
-                    </svg>
+                    <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
                     <div className="projectSet-item-info">
                         <div className="projectSet-name">
                             {projectSet.name}
@@ -179,9 +174,7 @@ const ProjectSetChangeModal = (props) => {
                             onMouseOut={handleMouseOut}
 
                         >
-                            <svg className="list-img" aria-hidden="true">
-                                <use xlinkHref="#icon-program"></use>
-                            </svg>
+                           <div className={`projectSet-icon projectSet-color-${item.color}`}>{item.name?.slice(0, 1)}</div>
                             <div className="projectSet-item-info">
                                 <div className="projectSet-name">
                                     {item.name}
@@ -194,7 +187,7 @@ const ProjectSetChangeModal = (props) => {
                     })
                 }
                 {
-                    allProjectSetList.length > 6 && <div className="change-projectSet-more" onClick={() => props.history.push("/project")}>查看更多</div>
+                    allProjectSetList.length > 6 && <div className="change-projectSet-more" onClick={() => props.history.push("/projectSetList")}>查看更多</div>
                 }
             </div>
         </div>

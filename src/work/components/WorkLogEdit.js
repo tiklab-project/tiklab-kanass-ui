@@ -82,7 +82,6 @@ const WorkLogEdit = (props) => {
             }
             console.log(value)
             if (type === "creat") {
-                debugger
                 addWorkLog(value)
                 AddLog.resetFields()
             } else {

@@ -14,8 +14,9 @@ import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
-import {applyJump} from "thoughtware-core-ui";
+import { applyJump } from "thoughtware-core-ui";
 import WikiRepositoryStore from "../store/WikiRepositoryStore";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const WikiRepository = (props) => {
     const store = {
         wikiRepositoryStore: WikiRepositoryStore
@@ -26,13 +27,13 @@ const WikiRepository = (props) => {
     const [wikiAddvisible, setWikiAddvisible] = useState()
     const [projectWikiList, setProjectWikiList] = useState()
 
-    const delteRepository = (id) => {
-        deleteProjectWikiRepositoryByCondition({repositoryId:id, projectId: projectId }).then(data => {
-            if(data.code === 0){
+    const deleteRepository = (id) => {
+        deleteProjectWikiRepositoryByCondition({ repositoryId: id, projectId: projectId }).then(data => {
+            if (data.code === 0) {
                 message.info('删除成功');
                 findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
-                    if(res.code === 0){
-                       setProjectWikiList(res.data) 
+                    if (res.code === 0) {
+                        setProjectWikiList(res.data)
                     }
                 })
             }
@@ -40,8 +41,8 @@ const WikiRepository = (props) => {
     }
 
     const goWikiDetail = (data) => {
-        
-        findSystemUrl({name: "kanass"}).then(res=> {
+
+        findSystemUrl({ name: "kanass" }).then(res => {
             const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
             // window.open(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
             applyJump(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
@@ -55,20 +56,11 @@ const WikiRepository = (props) => {
             key: "name",
             align: "left",
             render: (text, record) => <div className="repository-title">
-                {
-                    record.iconUrl ?
-                        <img
-                            src={('/images/' + record.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                        :
-                        <img
-                            src={('images/repository1.png')}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                }
+                <img
+                    src={('images/repository1.png')}
+                    alt=""
+                    className="icon-32"
+                />
                 <span className="repository-name" onClick={() => goWikiDetail(record)} >{text}</span>
             </div>,
         },
@@ -89,10 +81,11 @@ const WikiRepository = (props) => {
         {
             title: '操作',
             key: 'action',
+            width: "10%",
             render: (text, record) => (
-              <Space size="small">
-                    <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span>
-              </Space>
+                <Space size="small">
+                   <DeleteModal deleteFunction = {deleteRepository} id = {record.id}/>
+                </Space>
             ),
         }
     ];
@@ -101,10 +94,10 @@ const WikiRepository = (props) => {
     // 初始化
     useEffect(() => {
         findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
-            if(res.code === 0){
-               setProjectWikiList(res.data) 
+            if (res.code === 0) {
+                setProjectWikiList(res.data)
             }
-            
+
         })
         return;
     }, []);
@@ -137,18 +130,18 @@ const WikiRepository = (props) => {
                             pagination={false}
                             onChange={false}
                         />
-                        <WikiRepositoryAdd 
-                            projectId = {projectId} 
-                            wikiAddvisible={wikiAddvisible} 
-                            setWikiAddvisible={setWikiAddvisible} 
-                            setProjectWikiList = {setProjectWikiList}
+                        <WikiRepositoryAdd
+                            projectId={projectId}
+                            wikiAddvisible={wikiAddvisible}
+                            setWikiAddvisible={setWikiAddvisible}
+                            setProjectWikiList={setProjectWikiList}
                         />
                     </div>
                 </Col>
             </Row>
         </div>
     </Provider>
-        
+
 
     );
 };

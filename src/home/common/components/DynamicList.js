@@ -17,47 +17,83 @@ import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 
 const DynamicList = (props) => {
     const { homeStore } = props;
-    const { findLogpage, findProjectList, opLogList } = homeStore;
+    const { findLogpage, findProjectList, opLogList, setOpLogList, findProjectSetProjectList } = homeStore;
     const userId = getUser().userId;
     const [projectList, setProjectList] = useState()
     const [firstText, setFirstText] = useState();
     const versionId = props.match.params.version;
-    const sprintId =  props.match.params.sprint;
+    const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
+    const path = props.match?.path;
     useEffect(() => {
+        getSerchList()
+        const params = {
+            status: 1,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1
+            },
+            data: null
+        }
         if (props.route.path === "/projectDetail/:id/dynamic") {
             setFirstText("项目概况")
             const projectId = props.match.params.id;
-            findLogpage({ userId: userId, projectId: projectId })
-            findProjectList().then(res => {
+            findLogpage({ ...params, data: { projectId: projectId } })
+
+        }
+
+        if (props.route.path === "/projectSetdetail/:projectSetId/dynamic") {
+            setFirstText("项目集概况")
+            const projectSetId = props.match.params.projectSetId;
+            setOpLogList([]);
+            findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
+                if (res.code === 0) {
+                    const list = res.data;
+                    if (list.length > 0) {
+                        let opLogs = []
+                        list.map(item => {
+                            findLogpage({ data: { projectId: item.id } }, "projectSet").then(res => {
+                                if (res.code === 0) {
+                                    console.log(opLogList)
+                                    opLogs.push(...res.data.dataList)
+                                    setOpLogList([...opLogs])
+                                }
+                            })
+                        })
+                    } else {
+                        setOpLogList([])
+                    }
+                }
+            })
+        }
+
+        if (props.route.path === "/:id/sprintdetail/:sprint/dynamic") {
+            findLogpage({ ...params, data: { sprintId: sprintId, projectId: projectId }})
+            setFirstText("迭代概况")
+        }
+        if (props.route.path === "/:id/versiondetail/:version/dynamic") {
+            findLogpage({ ...params, data: { versionId: versionId, projectId: projectId }})
+            setFirstText("版本概况")
+        }
+        return;
+    }, [])
+    /**
+         * 获取搜索参数的列表
+         */
+    const getSerchList = () => {
+        if (path === "/projectSetdetail/:projectSetId/dynamic") {
+            const projectSetId = props.match.params.projectSetId;
+            findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
                 if (res.code === 0) {
                     setProjectList(res.data)
                 }
             })
         }
-        if (props.route.path === "/dynamic") {
-            setFirstText("首页")
-            findLogpage({ userId: userId, projectId: projectId })
-        }
-        if (props.route.path === "/projectSetdetail/:projectSetId/dynamic") {
-            setFirstText("项目集概况")
-            findLogpage({ userId: userId})
-        }
 
-        if (props.route.path === "/:id/sprintdetail/:sprint/dynamic") {
-            findLogpage({ userId: userId, sprintId: sprintId })
-            setFirstText("迭代概况")
-        }
-        if (props.route.path === "/:id/versiondetail/:version/dynamic") {
-            findLogpage({ userId: userId, versionId: versionId })
-            setFirstText("版本概况")
-        }
-        return;
-    }, [])
-
+    }
     const selectProject = (option) => {
         console.log(option)
-        findLogpage({ projectId: option })
+        findLogpage({data: { projectId: option }})
         // getModuleList(option)
         // getsprintlist(option)
         // getSelectUserList(option);
@@ -71,18 +107,18 @@ const DynamicList = (props) => {
                         {...props}
                         firstText={firstText}
                         secondText="最新动态"
-                    // firstUrl="/home"
                     />
-                    <div className="dynamic-filter">
-                        
-                        {
-                            props.route.path === "/projectSetdetail/:projectSetId/dynamic" && <Select
+                    {
+                        (path === "/projectSetdetail/:projectSetId/dynamic") &&
+                        <div className="dynamic-filter">
+
+                            <Select
                                 placeholder="项目"
                                 allowClear
                                 className="dynamic-select"
                                 key="selectProject2"
                                 onSelect={selectProject}
-                                width={150}
+                                style={{ width: 300 }}
                             >
                                 {
                                     projectList && projectList.map((item) => {
@@ -90,19 +126,20 @@ const DynamicList = (props) => {
                                     })
                                 }
                             </Select>
-                        }
-                        
 
-                    </div>
+
+
+                        </div>
+                    }
                 </div>
 
                 <div className="dynamic-list">
                     {
-                        opLogList && opLogList.length > 0 ?  opLogList.map((item) => {
-                            return <DynamicItem content = {item.data} type = {item.actionType.id}/>
+                        opLogList && opLogList.length > 0 ? opLogList.map((item) => {
+                            return <DynamicItem content={item.data} type={item.actionType.id} />
                         })
-                        :
-                        <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有动态~" />
                     }
                 </div>
             </div>

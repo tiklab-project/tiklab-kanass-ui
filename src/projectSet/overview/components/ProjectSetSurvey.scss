@@ -44,7 +44,28 @@
                 justify-content: space-between;
                 align-items: center;
                 padding-bottom: 20px;
-
+                .projectSet-icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 5px;
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 5px;
+                }
+                .projectSet-color-1 {
+                    background-color: #cadbf3;
+                }
+                .projectSet-color-2 {
+                    background-color: #deedd7;
+                }
+                .projectSet-color-3 {
+                    background-color: #ffebee;
+                }
+                .projectSet-color-4 {
+                    background-color: #e8eaf6;
+                }
                 .svg-icon {
                     margin-right: 10px;
                 }

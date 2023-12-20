@@ -33,7 +33,7 @@ const TodoList = (props) => {
     const versionId = props.match.params.version;
     const sprintId = props.match.params.sprint;
     console.log(props)
-    const path = props.match?.path
+    const path = props.match?.path;
     // const [todoTaskList, setTodoTaskList] = useState([])
     useEffect(() => {
         getSerchList()
@@ -43,7 +43,7 @@ const TodoList = (props) => {
                 pageSize: 20,
                 currentPage: 1
             },
-            content: null
+            data: null
         }
         // 根据不同的url 设置不同的面包屑
         if (props.route?.path === "/projectDetail/:id/workTodo") {
@@ -87,7 +87,7 @@ const TodoList = (props) => {
         }
         if (props.route?.path === "/:id/versiondetail/:version/workTodo") {
             setFirstText("版本概况")
-            findTodopage({ ...params, data: { versionId: versionId, projectId: projectId } })
+            findTodopage({ ...params, data: { versionId: versionId, projectId: projectId }})
         }
         return;
     }, [])
@@ -176,8 +176,7 @@ const TodoList = (props) => {
     const getTodoList = (value) => {
         console.log(value)
         setActiveKey(value)
-        findTodopage({
-            userId: userId, status: value, pageParam: {
+        findTodopage({status: value, pageParam: {
                 pageSize: 20,
                 currentPage: 1
             }
@@ -201,7 +200,7 @@ const TodoList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   ( path === "/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
+                   (path === "/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear

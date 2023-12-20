@@ -41,7 +41,13 @@ const MilestoneAddEditModal = (props) => {
      */
     const showModal = () => {
         setVisible(true);
-        getUseList(projectId)
+        getUseList(projectId).then(res => {
+            if(res.code === 0 && props.type === "add" && res.data.length > 0){
+                form.setFieldsValue({
+                    master: res.data[0]?.user?.id,
+                })
+            }
+        })
         if (props.type === "edit") {
             searchMilestoneById(props.id).then((res) => {
                 form.setFieldsValue({
@@ -69,10 +75,18 @@ const MilestoneAddEditModal = (props) => {
                 milestoneTime: fieldsValue.milestoneTime.format("YYYY-MM-DD")
             }
             if (props.type === "add") {
-                addMilestone(value)
+                addMilestone(value).then(res=> {
+                    if(res.code === 0){
+                        form.resetFields()
+                    }
+                })
             } else {
                 value.id = props.id
-                editMilestoneById(value)
+                editMilestoneById(value).then(res=> {
+                    if(res.code === 0){
+                        form.resetFields()
+                    }
+                })
             }
             setVisible(false);
         })

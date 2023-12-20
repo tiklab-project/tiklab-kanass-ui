@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-03-02 13:28:22
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Table, Space, Row, Col, message } from "antd";
 import { Provider, observer } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -16,6 +16,7 @@ import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
 import {applyJump} from "thoughtware-core-ui";
 import TestRepositoryStore from "../store/TestRepositoryStore";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
@@ -59,13 +60,13 @@ const TestRepository = (props) => {
                         <img
                             src={(record.iconUrl)}
                             alt=""
-                            className="img-icon-right"
+                            className="icon-32"
                         />
                         :
                         <img
                             src={('images/repository1.png')}
                             alt=""
-                            className="img-icon-right"
+                            className="icon-32"
                         />
                 }
                 <span className="repository-name">{text}</span>
@@ -81,9 +82,11 @@ const TestRepository = (props) => {
         {
             title: '操作',
             key: 'action',
+            width: "10%",
             render: (text, record) => (
               <Space size="small">
-                    <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span>
+                    {/* <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span> */}
+                    <DeleteModal deleteFunction = {delteRepository} id = {record.id} getPopupContainer = {testRepository.current}/>
               </Space>
             ),
           },
@@ -105,9 +108,9 @@ const TestRepository = (props) => {
     const showTestRepository = () => {
         setTestAddvisible(true)
     }
-
+    const testRepository = useRef(null)
     return (<Provider {...store}>
-          <div className="test-repository">
+          <div className="test-repository" ref = {testRepository}>
             <Row >
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="test-repository-list">

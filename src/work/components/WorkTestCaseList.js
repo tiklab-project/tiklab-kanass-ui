@@ -14,6 +14,7 @@ import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 import { applyJump } from "thoughtware-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
 import Button from "../../common/button/Button"
+import DeleteModal from "../../common/deleteModal/deleteModal";
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore
@@ -68,9 +69,10 @@ const WorkTestCaseList = (props) => {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            width: "15%",
+            width: "10%",
             render: (text, record) => (
-                <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
+                // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
+                <DeleteModal deleteFunction = {delectRepository} id = {record.id} getPopupContainer = {workTestCase.current}/>
             ),
         }
     ];
@@ -117,8 +119,10 @@ const WorkTestCaseList = (props) => {
             applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
         })
     }
+
+    const workTestCase = useRef(null)
     return (<Provider {...store}>
-        <div className="work-repository">
+        <div className="work-repository" ref = {workTestCase}>
             <div className="repository-top">
                 <div className="repository-top-title">关联用例({testCaseList.length})</div>
                 <div className="child-top-botton">

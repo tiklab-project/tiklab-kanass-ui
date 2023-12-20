@@ -129,7 +129,7 @@ const MessageList = (props) => {
                 className="frame-header-drawer"
                 mask={false}
                 destroyOnClose={true}
-                width={375}
+                width={450}
                 getContainer = {false}
             >
                 <div className="message-content">

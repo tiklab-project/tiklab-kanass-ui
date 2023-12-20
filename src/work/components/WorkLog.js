@@ -8,44 +8,22 @@ import dayjs from "dayjs";
 import WorkLogStore from "../store/WorkLogStore";
 import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
-import WorkLogEdit from "./WorkLogEdit"
-const { TextArea } = Input;
+import WorkLogEdit from "./WorkLogEdit";
+import DeleteModal from "../../common/deleteModal/deleteModal";
 
 const WorkLog = (props) => {
     const [visible, setVisible] = useState(false);
-    const [confirmLoading] = useState(false);
-    const { workStore, planTakeupTime, surplusTime } = props;
-    const { getWorkLogList, workLogList, addWorkLog, deleteWorKLog, editWorKLog, searchWorKLog,
-        versionTime } = WorkLogStore;
-    const { workId, workAllList, getWorkAllList } = workStore;
-    const [date, setDate] = useState(dayjs().format(dateFormat))
-    const [modalTitle, setModalTitle] = useState("添加工时")
-    const [modalType, setModalType] = useState("add")
+    const { workStore } = props;
+    const { getWorkLogList, workLogList, deleteWorKLog, versionTime } = WorkLogStore;
+    const { workId } = workStore;
     const [remainTime, setRemainTime] = useState(0)
-    const [userInfo, setUserInfo] = useState([])
-    const projectId = props.match.params.id ? props.match.params.id : null;
-    // 表格样式
-    const [AddLog] = Form.useForm();
     const [editLogId, setEditLogId] = useState()
     const logAction = useRef()
 
     useEffect(() => {
         getGemianTime()
-        // setDate(getNowFormatDate())
         return;
     }, [workId])
-
-    // 获取当前登录用户信息
-    const getUserInfo = () => {
-        let userInfo = { userId: "", name: "" }
-        let user = getUser()
-        userInfo.userId = user.userId;
-        userInfo.name = user?.nickname ? user?.nickname : user?.name;
-        setUserInfo(userInfo)
-        AddLog.setFieldsValue({
-            user: userInfo.userId
-        })
-    }
 
     // 计算剩余时间
     const getGemianTime = (page) => {
@@ -61,87 +39,10 @@ const WorkLog = (props) => {
     }
 
     const showModal = () => {
-        // setModalType("add")
-        // setModalTitle("添加工时")
         setVisible(true);
         setEditLogId()
-        // getWorkAllList()
-        // getUserInfo()
-        // AddLog.setFieldsValue(
-        //     {
-        //         workItem: workId,
-        //         workDate: moment(date, dateFormat),
-        //         versionTime: versionTime,
-        //         surplusTime: remainTime
-        //     }
-        // )
     };
 
-    // 弹窗添加编辑工时
-    const creatLog = () => {
-        AddLog.validateFields().then(value => {
-            // value.workDate = date
-            value.projectId = projectId
-            value.workItem = workId
-            value.user = {
-                id: getUser().userId
-            }
-            if (modalType === "add") {
-                addWorkLog(value)
-                AddLog.resetFields()
-            }
-            // else {
-            //     value.id = logId;
-            //     editWorKLog(value).then(() => {
-            //         getGemianTime()
-            //     })
-            //     AddLog.resetFields()
-            // }
-            setVisible(false);
-        });
-
-    };
-
-    // 删除工时
-    const delectLog = (id) => {
-        deleteWorKLog(id)
-    }
-
-    // 点击取消
-    const handleCancel = () => {
-        setVisible(false);
-    };
-
-    // 编辑工时
-    const [logId, setLogId] = useState()
-    const changeLog = (id) => {
-        setModalTitle("编辑工时")
-        setModalType("edit")
-        setVisible(true);
-        searchWorKLog(id).then((res) => {
-            setDate(res.workDate)
-            setLogId(res.id)
-            AddLog.setFieldsValue(
-                {
-                    workItem: res.workItem.id,
-                    workDate: moment(res.workDate, dateFormat),
-                    takeupTime: res.takeupTime,
-                    workContent: res.workContent,
-                    user: res.user.id,
-                    surplusTime: remainTime,
-                    versionTime: versionTime
-                }
-            )
-        })
-    }
-
-    // 设置日期选择器格式
-    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
-
-    // 改变页码
-    const onChange = (pagination) => {
-        getGemianTime(pagination)
-    }
     const workLog = useRef();
     const showEdit = (id) => {
         setEditLogId(id)
@@ -201,7 +102,7 @@ const WorkLog = (props) => {
                                                         <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} onClick={() => showEdit(item.id)}>
                                                             <use xlinkHref="#icon-edit"></use>
                                                         </svg>
-                                                        <Popconfirm
+                                                        {/* <Popconfirm
                                                             title="确定删除当前工时?"
                                                             onConfirm={() => {deleteWorKLog(item.id)}}
                                                             getPopupContainer = {() => logAction.current}
@@ -215,7 +116,8 @@ const WorkLog = (props) => {
                                                             </svg> 
                                                             </span>
                                                             
-                                                        </Popconfirm>
+                                                        </Popconfirm> */}
+                                                        <DeleteModal deleteFunction = {deleteWorKLog} id= {item.id} getPopupContainer = {workLog.current}/>
 
                                                     </div>
                                                 </div>

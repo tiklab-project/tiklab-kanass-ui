@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-11-26 14:34:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Input, Button, Empty, Pagination, Row, Col } from "antd";
+import { Input, Button, Empty, Pagination, Modal, Col } from "antd";
 import "./WorkComment.scss";
 import { getUser } from 'thoughtware-core-ui';
 import { observer } from "mobx-react";
@@ -42,6 +42,7 @@ const WorkComment = (props) => {
             createWorkComment(data).then(res => {
                 if (res.code === 0) {
                     setIsInPut(false)
+                    setCommentContent("")
                     getCommentList({ workItemId: workId })
                 }
             })
@@ -99,11 +100,25 @@ const WorkComment = (props) => {
      * 删除评论
      */
     const deleteComment = (id) => {
-        deleteWorkComment({ id: id }).then(res => {
-            if (res.code === 0) {
-                getCommentList()
-            }
-        })
+
+        Modal.confirm({
+            title: '确定删除?',
+            centered: true,
+            className: "delete-modal",
+            getContainer: workComment.current,
+            onOk() { deleteData(id) },
+            onCancel() { },
+        });
+
+        const deleteData = () => {
+            deleteWorkComment({ id: id }).then(res => {
+                if (res.code === 0) {
+                    getCommentList()
+
+                }
+            })
+        }
+
     }
     /**
      * 翻页
@@ -111,8 +126,9 @@ const WorkComment = (props) => {
     const changePage = (page, pageSize) => {
         getCommentList({ current: page })
     }
+    const workComment = useRef(null);
     return (<>
-        <div className="work-comment">
+        <div className="work-comment" ref = {workComment}>
             <div className="work-comment-box">
                 <svg className="menu-icon" aria-hidden="true">
                     <use xlinkHref="#icon-icontouxiang1"></use>
@@ -122,7 +138,7 @@ const WorkComment = (props) => {
                     <TextArea
                         rows={4}
                         className="comment-text"
-                        defaultValue={commentContent}
+                        value={commentContent}
                         onChange={(e) => setCommentContent(e.target.value)}
                         ref={commentInput}
                     />

@@ -93,7 +93,7 @@ const WorkPriorityAddModal = (props) => {
             {   
                 props.type !== "edit"?<Button type="primary" onClick={showModal}>
                     {props.name}
-                </Button>: <svg className="svg-icon" aria-hidden="true" onClick={() => showModal()}  style={{ cursor: "pointer", marginRight: "16px" }}>
+                </Button>: <svg className="svg-icon" aria-hidden="true" onClick={() => showModal()}  style={{ cursor: "pointer" }}>
                     <use xlinkHref="#icon-edit"></use>
                 </svg>
             }

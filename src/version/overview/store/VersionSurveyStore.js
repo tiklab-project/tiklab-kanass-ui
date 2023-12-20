@@ -85,8 +85,11 @@ class VersionSurveyStore {
                 pageSize: 20,
                 currentPage: value.currentPage
             },
+            orderParams: [{
+                name: "createtime",
+                orderType:"desc"
+            }],
             bgroup: "kanass",
-            userId: value.userId,
             data: {
                 versionId: value.versionId
             }

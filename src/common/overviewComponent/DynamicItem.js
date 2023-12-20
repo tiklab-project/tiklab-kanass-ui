@@ -4,24 +4,40 @@ import { withRouter } from "react-router";
 const DynamicListItem = (props) => {
     const { content, model, type } = props;
     const data = JSON.parse(content)
-    const { createUserIcon, createUser, master, workItemTitle, receiveTime, createTime, workItemId,
-        projectId, oldValue, newValue, projectName } = data;
+    const { createUserIcon, master, workItemTitle, receiveTime, createTime, 
+        workItemId, projectId, oldValue, newValue, projectName } = data;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const path = props.match.path;
     const goDynamicDetail = () => {
-        switch (model) {
-            case "sprint":
-                props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);
-                break;
-            case "version":
-                props.history.push(`/${projectId}/versiondetail/${versionId}/work/${workItemId}`);
-                break;
-            case "projectSet":
-                props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
-                break;
-            default:
-                props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
-                break;
+        // switch (model) {
+        //     case "sprint":
+        //         props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);
+        //         break;
+        //     case "version":
+        //         props.history.push(`/${projectId}/versiondetail/${versionId}/work/${workItemId}`);
+        //         break;
+        //     case "projectSet":
+        //         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        //         break;
+        //     default:
+        //         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        //         break;
+        // }
+        if(path.indexOf("sprintdetail") > -1){
+            props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);
+        }
+        if(path.indexOf("home") > -1){
+            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        }
+        if(path.indexOf("projectDetail") > -1){
+            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        }
+        if(path.indexOf("versiondetail") > -1){
+            props.history.push(`/${projectId}/versiondetail/${versionId}/work/${workItemId}`);
+        }
+        if(path.indexOf("projectSetdetail") > -1){
+            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
         }
     }
     const setDom = () => {

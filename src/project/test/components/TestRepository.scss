@@ -2,12 +2,12 @@
     .test-repository-list {
         padding: var(--thoughtware-padding);
     }
-    .repository-delete {
-        color: var(--thoughtware-blue);
+
+    .repository-title {
+        
         cursor: pointer;
     }
-    .repository-title {
+    .repository-name:hover {
         color: var(--thoughtware-blue);
-        cursor: pointer;
     }
 }

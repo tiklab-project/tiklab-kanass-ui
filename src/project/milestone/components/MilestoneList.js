@@ -16,6 +16,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import MilestoneTimeline from "./MilestoneTimeline"
 import { withRouter } from "react-router";
 import MilestoneStore from "../store/MilestoneStore"
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const MilestoneList = (props) => {
     // 解析 props
     const store = {
@@ -68,17 +69,7 @@ const MilestoneList = (props) => {
                         id={record.id}
                         {...props}
                     />
-                    <PrivilegeProjectButton code={'MilestoneDele'} disabled={"hidden"} domainId={projectId} {...props}>
-                        {/* <Button
-                            type="link"
-                            onClick={() => deleMilestone(record.id, projectId)}
-                        >
-                            删除
-                        </Button> */}
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => deleMilestone(record.id, projectId)} style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-delete"></use>
-                        </svg>
-                    </PrivilegeProjectButton>
+                    <DeleteModal deleteFunction = {deleMilestone} id = {record.id}/>
                 </Space>
             ),
         },

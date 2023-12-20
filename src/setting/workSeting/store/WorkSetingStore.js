@@ -237,7 +237,7 @@ export class WorkSetingStore {
     deleteWorkPriorityList = async (id) => {
         const params = new FormData()
         params.append("id", id)
-        const data = await Service("/workPriority/deleteWorkPriority", value)
+        const data = await Service("/workPriority/deleteWorkPriority", params)
         if (data.code === 0) {
             this.getWorkPriorityList(this.workPriorityPage, this.workPriorityName).then((res) => {
                 if (res.length === 0) {

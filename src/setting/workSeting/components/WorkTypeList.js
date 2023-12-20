@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Table, Space, message, Row, Col } from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
@@ -6,6 +6,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -140,6 +141,22 @@ const WorkTypeList = (props) => {
             width: '20%',
             render: (text, record) => (
                 <Space size="middle">
+                   
+                    <svg
+                        className="svg-icon" aria-hidden="true"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => upWorkType(record.id)}
+                    >
+                        <use xlinkHref="#icon-totop"></use>
+                    </svg>
+
+                    <svg
+                        className="svg-icon" aria-hidden="true"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => downWorkType(record.id)}
+                    >
+                        <use xlinkHref="#icon-todown"></use>
+                    </svg>
                     {
                         record.grouper === "custom" && <>
                             <WorkTypeAddmodal
@@ -158,71 +175,46 @@ const WorkTypeList = (props) => {
                             >
                                 编辑
                             </WorkTypeAddmodal>
-                            <svg
-                                className="svg-icon" aria-hidden="true"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => deleWorkType(record.id)}
-                            >
-                                <use xlinkHref="#icon-delete"></use>
-                            </svg>
+                            <DeleteModal deleteFunction={deleWorkType} id={record.id} getPopupContainer={workType.current} />
 
 
                         </>
                     }
-                    <svg
-                        className="svg-icon" aria-hidden="true"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => upWorkType(record.id)}
-                    >
-                        <use xlinkHref="#icon-totop"></use>
-                    </svg>
-
-                    <svg
-                        className="svg-icon" aria-hidden="true"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => downWorkType(record.id)}
-                    >
-                        <use xlinkHref="#icon-todown"></use>
-                    </svg>
                 </Space>
             ),
         },
     ];
-
+    const workType = useRef(null)
     return (<Provider {...store}>
-        {/* <Row>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
-                <div className="work-type">
-                    <Breadcumb
-                        firstText="事项类型"
-                    >
-                        <div className="add-botton">
-                            <WorkTypeAddmodal
-                                name="添加事件类型"
-                                type="add"
-                                addWorkTypeList={addCustomWorkTypeList}
-                                fromList={fromList}
-                                getFormList={getFormList}
-                                flowList={flowList}
-                                getFlowList={getFlowList}
-                                creatIcon={creatIcon}
-                                findIconList={findIconList}
-                                bottonType="primary"
-                            ></WorkTypeAddmodal>
-                        </div>
-                    </Breadcumb>
-                    <div style={{ padding: "20px 0" }}>
-                        <Table
-                            columns={columns}
-                            rowKey={(record) => record.id}
-                            loading={loading}
-                            dataSource={workAllTypeList}
-                            pagination={false}
-                        />
-                    </div>
+        <div className="work-type" ref={workType}>
+            <Breadcumb
+                firstText="事项类型"
+            >
+                <div className="add-botton">
+                    <WorkTypeAddmodal
+                        name="添加事件类型"
+                        type="add"
+                        addWorkTypeList={addCustomWorkTypeList}
+                        fromList={fromList}
+                        getFormList={getFormList}
+                        flowList={flowList}
+                        getFlowList={getFlowList}
+                        creatIcon={creatIcon}
+                        findIconList={findIconList}
+                        bottonType="primary"
+                    ></WorkTypeAddmodal>
                 </div>
-            {/* </Col>
-        </Row> */}
+            </Breadcumb>
+            <div style={{ padding: "20px 0" }}>
+                <Table
+                    columns={columns}
+                    rowKey={(record) => record.id}
+                    loading={loading}
+                    dataSource={workAllTypeList}
+                    pagination={false}
+                />
+            </div>
+        </div>
     </Provider>
 
     );

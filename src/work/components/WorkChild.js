@@ -185,7 +185,7 @@ const WorkChild = (props) => {
             key: 'action',
             width: "5%",
             render: (text, record) => (
-                <span onClick={() => delectChild(record.id)} className="span-botton" >删除</span>
+                <span onClick={() => delectChild(record.id)} className="span-botton">移除</span>
             ),
         }
     ];

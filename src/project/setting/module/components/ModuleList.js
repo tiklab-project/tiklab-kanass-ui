@@ -16,6 +16,7 @@ import ModuleStore from "../store/ModuleStore";
 import { observer } from "mobx-react";
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import Button from "../../../../common/button/Button";
+import DeleteModal from "../../../../common/deleteModal/deleteModal";
 const ModuleList = (props) => {
     // 解析 moduleStore
     const { modulelist, searchmodule, findModulePage, createModule, deleModule,
@@ -46,14 +47,14 @@ const ModuleList = (props) => {
     useEffect(() => {
         findModule()
         return null;
-    }, [moduleName, modulePageParam.current]);
+    }, []);
 
     /**
      * 获取模块列表，带分页
      */
     const findModule = () => {
         setLoading(true)
-        findModulePage(projectId, moduleName).then(() => {
+        findModulePage({projectId: projectId}).then(() => {
             setLoading(false)
         })
     }
@@ -120,16 +121,6 @@ const ModuleList = (props) => {
             width: "15%",
             render: (text, record) => (
                 <Space size="middle">
-                    {/* <ModuleAddmodal
-                        name="编辑"
-                        type="edit"
-                        id={record.id}
-                        projectId={projectId}
-                        searchmodule={searchmodule}
-                        editModuleById={editModuleById}
-                        createModule={createModule}
-                        searchModuleById={searchModuleById}
-                    ></ModuleAddmodal> */}
                     <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
                         <svg className="svg-icon" aria-hidden="true" onClick={() => showModal(record, "添加子模块")} style={{ cursor: "pointer" }}>
                             <use xlinkHref="#icon-add2"></use>
@@ -138,10 +129,10 @@ const ModuleList = (props) => {
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleModule(record.id, projectId)} style={{ cursor: "pointer" }}>
+                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => deleModule(record.id, projectId)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-delete"></use>
-                    </svg>
-                    {/* </PrivilegeProjectButton> */}
+                    </svg> */}
+                    <DeleteModal deleteFunction = {deleModule} id = {record.id}/>
                 </Space>
             )
         }

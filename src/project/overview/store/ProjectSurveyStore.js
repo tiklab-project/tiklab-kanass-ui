@@ -140,8 +140,11 @@ export class ProjectSurveyStore {
                 pageSize: 10,
                 currentPage: value.currentPage
             },
+            orderParams: [{
+                name: "createtime",
+                orderType:"desc"
+            }],
             bgroup: "kanass",
-            userId: value.userId,
             data: {
                 projectId: value.projectId
             }

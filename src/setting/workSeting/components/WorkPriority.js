@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Input, Space, message, Row, Col, Table } from "antd";
 import WorkPriorityAddmodal from "./WorkPriorityAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkPriority.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const WorkPriority = (props) => {
     const store = {
         workSetingStore: WorkSetingStore
@@ -90,11 +91,7 @@ const WorkPriority = (props) => {
             )
         },
 
-        {
-            title: "描述",
-            dataIndex: "desc",
-            key: "desc",
-        },
+        
         {
             title: "分组",
             dataIndex: "group",
@@ -105,26 +102,18 @@ const WorkPriority = (props) => {
             )
         },
         {
+            title: "描述",
+            dataIndex: "desc",
+            key: "desc",
+        },
+        {
             title: "操作",
             key: "action",
             align: "left",
             width: '20%',
             render: (text, record) => (
                 <Space size="middle">
-                    <WorkPriorityAddmodal
-                        name="编辑"
-                        typeName="优先级"
-                        type="edit"
-                        id={record.id}
-                        editWorkPriorityList={editWorkPriorityList}
-                        findWorkPriorityListById={findWorkPriorityListById}
-
-                    >
-                        编辑
-                    </WorkPriorityAddmodal>
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => deleWorkPriority(record.id)}>
-                        <use xlinkHref="#icon-delete"></use>
-                    </svg>
+                    
                     <svg
                         className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer" }}
@@ -140,14 +129,30 @@ const WorkPriority = (props) => {
                     >
                         <use xlinkHref="#icon-todown"></use>
                     </svg>
+                    <WorkPriorityAddmodal
+                        name="编辑"
+                        typeName="优先级"
+                        type="edit"
+                        id={record.id}
+                        editWorkPriorityList={editWorkPriorityList}
+                        findWorkPriorityListById={findWorkPriorityListById}
+
+                    >
+                        编辑
+                    </WorkPriorityAddmodal>
+                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => deleWorkPriority(record.id)}>
+                        <use xlinkHref="#icon-delete"></use>
+                    </svg> */}
+                    <DeleteModal deleteFunction={deleWorkPriority} id={record.id} getPopupContainer={workPriority.current} />
                 </Space>
             ),
         },
     ];
-
+    
+    const workPriority = useRef(null)
     return (<Provider {...store}>
 
-        <div className="work-priority" >
+        <div className="work-priority" ref = {workPriority}>
             <Breadcumb
                 firstText="事项优先级"
             >

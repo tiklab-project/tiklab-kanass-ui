@@ -61,7 +61,7 @@ export class MilestoneStore {
         const data = await Service("/milestone/deleteMilestone", param)
         if (data.code === 0) {
             this.findMilestonePage().then((res) => {
-                if (res.dataList.length === 0) {
+                if (res.data.length === 0) {
                     that.milestonePageParam.current--
                 }
             })
@@ -137,15 +137,11 @@ export class MilestoneStore {
     @action
     getUseList = async(projectId) => {
         const params = {
-            domainId: projectId,
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            }
+            domainId: projectId
         }
-        const data = await Service("/dmUser/findDmUserPage", params)
+        const data = await Service("/dmUser/findDmUserList", params)
         if(data.code === 0){
-            this.uselist = data.data.dataList;
+            this.uselist = data.data;
         }
         return data;
     }

@@ -125,7 +125,7 @@ const VersionSurvey = (props) => {
     * 跳转到动态列表
     */
     const goDynamicList = () => {
-        props.history.push(`/${versionId}/versiondetail/${versionId}/dynamic`)
+        props.history.push(`/${projectId}/versiondetail/${versionId}/dynamic`)
         
     }
 

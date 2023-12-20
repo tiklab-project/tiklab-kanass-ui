@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-10-09 15:25:16
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkDocumentList.scss"
@@ -14,6 +14,7 @@ import WorkDocumentAddmodal from "./WorkDocumentAdd"
 import { applyJump } from "thoughtware-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
 import Button from "../../common/button/Button"
+import DeleteModal from "../../common/deleteModal/deleteModal";
 const WorkDocumentList = (props) => {
     const store = {
         workWikiStore: WorkWikiStore
@@ -60,6 +61,7 @@ const WorkDocumentList = (props) => {
             width: 150,
             render: (text, record) => (
                 <span onClick={() => goWikiDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                
             ),
         },
         {
@@ -80,14 +82,15 @@ const WorkDocumentList = (props) => {
             key: 'action',
             width: "15%",
             render: (text, record) => (
-                <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
+                // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
+                <DeleteModal deleteFunction = {delectRepository} id = {record.id} getPopupContainer = {workDocument.current}/>
             ),
         }
     ];
 
-
+    const workDocument = useRef(null)
     return (<Provider {...store}>
-        <div className="work-repository">
+        <div className="work-repository" ref = {workDocument}>
             <div className="repository-top">
                 <div className="repository-top-title">关联文档({workDocumentList.length})</div>
                 <div className="child-top-botton">

@@ -96,9 +96,7 @@ const ProjectSetSurvey = props => {
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
                             <div className="projectSet-info">
-                                <svg className="icon-32" aria-hidden="true">
-                                    <use xlinkHref="#icon-program"></use>
-                                </svg>
+                                <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
                                 <div className="projectSet-info-content">
                                     <div className="projectSet-info-content-item box-title">
                                         {projectSet.name}

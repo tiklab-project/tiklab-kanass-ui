@@ -25,8 +25,6 @@ const LogAdd = (props) => {
     const [surplusTime, setSurplusTime] = useState(0)
     const [projectId, setProjectId] = useState(props.match.params.id)
     const path = props.location.pathname;
-    console.log(props)
-    // const [projectId, setProjectId] = useState()
     // 搜索关键字
     const [value, setValue] = useState();
 
@@ -92,7 +90,6 @@ const LogAdd = (props) => {
     const changeSearchTitle = (newValue, option) => {
         setPlanTakeupTime(option.planTakeupTime)
         setSurplusTime(option.setSurplusTime)
-        // setProjectId(option.projectId)
         setValue(newValue);
     };
     const changeProject = (value) => {
@@ -109,9 +106,7 @@ const LogAdd = (props) => {
             }
         })
     }
-    const onChange = (e) => {
-        console.log(e);
-      };
+
     return (
         <Modal
             title={"添加日志"}
