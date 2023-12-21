@@ -12,15 +12,13 @@ const WorkTypeList = (props) => {
     const store = {
         workSetingStore: WorkSetingStore
     }
-    const { workAllTypeList, getAllWorkTypeList, addCustomWorkTypeList, findWorkTypeListById,
-        editWorkTypeList, deleteWorkTypeCustomList, setWorkTypeList, fromList,
-        getFormList, flowList, getFlowList, creatIcon, findIconList
+    const { workAllTypeList, getAllWorkTypeList, deleteWorkTypeCustomList, setWorkTypeList,
     } = WorkSetingStore;
 
     const tenant = getUser().tenant;
     useEffect(() => {
         getAllWorkTypeList()
-        getFormList()
+        // getFormList()
         return;
     }, []);
 
@@ -163,15 +161,16 @@ const WorkTypeList = (props) => {
                                 name="编辑"
                                 type="edit"
                                 id={record.id}
-                                addWorkTypeList={addCustomWorkTypeList}
-                                editWorkList={editWorkTypeList}
-                                findWorkListById={findWorkTypeListById}
-                                fromList={fromList}
-                                getFormList={getFormList}
-                                flowList={flowList}
-                                getFlowList={getFlowList}
-                                creatIcon={creatIcon}
-                                findIconList={findIconList}
+                                grouper = "custom"
+                                // addWorkTypeList={addCustomWorkTypeList}
+                                // editWorkList={editWorkTypeList}
+                                // findWorkListById={findWorkTypeListById}
+                                // fromList={fromList}
+                                // getFormList={getFormList}
+                                // flowList={flowList}
+                                // getFlowList={getFlowList}
+                                // creatIcon={creatIcon}
+                                // findIconList={findIconList}
                             >
                                 编辑
                             </WorkTypeAddmodal>
@@ -194,13 +193,14 @@ const WorkTypeList = (props) => {
                     <WorkTypeAddmodal
                         name="添加事件类型"
                         type="add"
-                        addWorkTypeList={addCustomWorkTypeList}
-                        fromList={fromList}
-                        getFormList={getFormList}
-                        flowList={flowList}
-                        getFlowList={getFlowList}
-                        creatIcon={creatIcon}
-                        findIconList={findIconList}
+                        grouper = "custom"
+                        // addWorkTypeList={addCustomWorkTypeList}
+                        // fromList={fromList}
+                        // getFormList={getFormList}
+                        // flowList={flowList}
+                        // getFlowList={getFlowList}
+                        // creatIcon={creatIcon}
+                        // findIconList={findIconList}
                         bottonType="primary"
                     ></WorkTypeAddmodal>
                 </div>

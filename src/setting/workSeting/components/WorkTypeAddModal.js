@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Select, Upload, message, } from 'antd';
 import UploadIcon1 from "../../../assets/images/uploadIcon.png"
 import "./workType.scss"
@@ -20,14 +20,20 @@ const WorkTypeAddModal = (props) => {
 
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
-    const {  bottonType,addWorkTypeList, creatIcon, findIconList, workSetingStore } = props;
+    const {  bottonType,addWorkTypeList, workSetingStore, grouper } = props;
     const { getFormList, getFlowList, flowList, fromList, findWorkTypeListById,
-        editWorkTypeList} = workSetingStore;
-    
-    const [grouper, setGruoper] = useState()
-    const [iconList, setIconList] = useState()
+        editWorkTypeList, findIconList, creatIcon, createWorkType} = workSetingStore;
 
-    const [iconUrl, setIconUrl] = useState("")
+    const [iconList, setIconList] = useState();
+
+    const [iconUrl, setIconUrl] = useState("");
+
+    useEffect(() => {
+        // getAllWorkTypeList()
+        getFormList(grouper)
+        return;
+    }, []);
+
     const getIconList = () => {
         findIconList({ iconType: "workType" }).then((res) => {
             setIconList(res.data)
@@ -36,7 +42,7 @@ const WorkTypeAddModal = (props) => {
     const showModal = () => {
         setVisible(true);
         getIconList()
-        getFormList().then((res) => {
+        getFormList(grouper).then((res) => {
             console.log(res)
             if (res && res.length > 0) {
                 form.setFieldsValue({
@@ -58,11 +64,11 @@ const WorkTypeAddModal = (props) => {
                     name: res.name,
                     id: res.id,
                     desc: res.desc,
-                    grouper: res.grouper,
+                    grouper: grouper,
                     form: res.form.id,
                     flow: res.flow.id
                 })
-                setGruoper(res.grouper)
+                // setGruoper(res.grouper)
                 setIconUrl(res.iconUrl)
             })
         }
@@ -72,7 +78,7 @@ const WorkTypeAddModal = (props) => {
         form.validateFields().then((values) => {
             const data = { ...values, iconUrl: iconUrl}
             if (props.type === "add") {
-                addWorkTypeList(data)
+                createWorkType({...data, grouper: grouper})
             } else {
                 data.id = props.id
                 data.grouper = grouper

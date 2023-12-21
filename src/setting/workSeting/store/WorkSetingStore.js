@@ -69,10 +69,10 @@ export class WorkSetingStore {
 
 
     @action
-    addCustomWorkTypeList = async (value) => {
+    createWorkType = async (value) => {
         let params = {
             name: value.name,
-            grouper: "custom",
+            grouper: value.grouper,
             category: value.category,
             code: "nomal",
             form: {
@@ -255,8 +255,8 @@ export class WorkSetingStore {
 
     // 获取所有表单列表
     @action
-    getFormList = async () => {
-        const data = await Service("/form/findFormList", { group: "custom" })
+    getFormList = async (value) => {
+        const data = await Service("/form/findFormList", { group: value })
         if (data.code === 0) {
             this.fromList = data.data
         }

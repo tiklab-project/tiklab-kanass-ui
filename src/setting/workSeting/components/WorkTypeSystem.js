@@ -20,7 +20,7 @@ const WorkTypeSystem = (props) => {
     const tenant = getUser().tenant;
     useEffect(() => {
         getSystemWorkTypeList({ grouper: "system" })
-        getFormList()
+        // getFormList()
         return;
     }, []);
 
