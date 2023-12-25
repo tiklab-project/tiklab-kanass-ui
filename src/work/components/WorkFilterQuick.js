@@ -11,9 +11,9 @@ const WorkFilterQuick = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue,
-      viewType, getWorkConditionPage, getWorkConditionPageTree,
-      workShowType, setWorkIndex, setWorkId, eveWorkTypeNum, setSearchType } = workStore;
-    
+        viewType, getWorkConditionPage, getWorkConditionPageTree,
+        workShowType, setWorkIndex, setWorkId, eveWorkTypeNum, setSearchType } = workStore;
+
 
     const userId = getUser().userId;
 
@@ -60,17 +60,15 @@ const WorkFilterQuick = (props) => {
 
     const selectMenu = (value) => {
         let data = value;
-        if (workShowType !== "list") {
-            setQuickFilterValue(value)
-            
-            data = value.value;
-            setSearchType(data)
-        }
-        if(!value) {
+        setQuickFilterValue(value)
+
+        data = value.value;
+        setSearchType(data)
+        if (!value) {
             getAllWorkItem();
             return
-        }else {
-            switch (data?.value) {
+        } else {
+            switch (data) {
                 case "all":
                     getAllWorkItem();
                     break;
@@ -105,10 +103,10 @@ const WorkFilterQuick = (props) => {
                 pageSize: 20,
                 currentPage: 1,
             },
-            
+
         }
         setSearchCondition(initValues)
-        getWorkList();
+        getWorkList(initValues);
     }
 
     const getPendingWorkItem = () => {
@@ -125,7 +123,7 @@ const WorkFilterQuick = (props) => {
         getStateNodeList({ quickName: "pending" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues);
-            getWorkList();
+            getWorkList(initValues);
         })
     }
 
@@ -143,7 +141,7 @@ const WorkFilterQuick = (props) => {
         getStateNodeList({ quickName: "done" }).then(data => {
             initValues = { workStatusIds: data, ...initValues }
             setSearchCondition(initValues);
-            getWorkList();
+            getWorkList(initValues);
         })
     }
 
@@ -160,7 +158,7 @@ const WorkFilterQuick = (props) => {
             }
         }
         setSearchCondition(initValues);
-        getWorkList();
+        getWorkList(initValues);
     }
 
     const getOverdueWorkItem = () => {
@@ -175,11 +173,11 @@ const WorkFilterQuick = (props) => {
             }
         }
         setSearchCondition(initValues)
-        getWorkList();
+        getWorkList(initValues);
     }
 
-    const getWorkList = () => {
-        setWorkDeatilInList(workStore)
+    const getWorkList = (initValues) => {
+        setWorkDeatilInList(workStore, initValues)
     }
 
 
@@ -189,7 +187,7 @@ const WorkFilterQuick = (props) => {
             title={`全部`}
             ismult={false}
             value={quickFilterValue}
-            suffixIcon = {true}
+            suffixIcon={true}
         >
             {
                 quickFilterList.map(item => {

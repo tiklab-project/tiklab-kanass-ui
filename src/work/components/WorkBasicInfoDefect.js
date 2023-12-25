@@ -394,11 +394,12 @@ const WorkBasicInfo = (props) => {
         let extData = JSON.parse(workInfo.extData)
         console.log(extData)
         let data = {
-            extData: {
+            extData: JSON.stringify({
                 ...extData,
                 ...changedValues,
-            },
-            id: workId
+            }),
+            id: workId,
+            updateField: "extData"
         }
         workInfo.extData = JSON.stringify({
             ...extData,

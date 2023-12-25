@@ -22,12 +22,11 @@ const ProjectProjectFlowList = (props) => {
     useEffect(() => {
         setRouter(`/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`);
 
-        getUserList({ projectId: "projectId" })
+        getUserList({ projectId: projectId })
         return
     }, [])
     return (
-                <ProjectFlow domainId={projectId} viewRouter={router} designRouter={router} {...props} />
-
+        <ProjectFlow domainId={projectId} viewRouter={router} designRouter={router} {...props} />
 
     )
 }

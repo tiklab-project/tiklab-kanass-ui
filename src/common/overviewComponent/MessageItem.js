@@ -5,16 +5,16 @@ const MessageListItem = (props) => {
     const { content, status, type, updateMessageDispatchItem, id, item } = props;
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId,
-        projectId, oldValue, newValue } = data;
+        projectId, oldValue, newValue, spintName } = data;
     const goMessageDetail = () => {
         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
-        if(status === 0){
+        if (status === 0) {
             const value = {
                 id: id,
                 status: "1"
             }
-            updateMessageDispatchItem(value).then(res=> {
-                if(res.code === 0){
+            updateMessageDispatchItem(value).then(res => {
+                if (res.code === 0) {
                     item.status === 1
                 }
             })
@@ -59,6 +59,23 @@ const MessageListItem = (props) => {
                                 <div className="message-work-action">{createUser.nickname}给你分配了事项</div>
                                 <div className="message-work-item">
                                     <div class="message-work-title" onClick={() => goMessageDetail()}>{workItemTitle}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_SPRINTCREATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{createUser.nickname}创建了迭代</div>
+                                <div className="message-work-item">
+                                    <div class="message-work-title" onClick={() => goMessageDetail()}>{spintName}</div>
                                 </div>
 
                             </div>

@@ -62,7 +62,6 @@ const WorkListFilter = (props) => {
         <div>
             {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
-
                     <div className="worklist-search-large" ref= {workListSearch}>
                         <div className="search-input">
                             <svg className="search-icon" aria-hidden="true">

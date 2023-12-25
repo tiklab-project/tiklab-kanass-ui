@@ -1,6 +1,6 @@
 {
     "name": "thoughtware-kanass-ui",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "thoughtware kanass",
     "main": "es/src/ui.js",
     "module": "es/src/ui.js",
@@ -200,15 +200,13 @@
         "thoughtware-flow-ui": "^1.0.2",
         "thoughtware-form-ui": "^1.0.2",
         "thoughtware-licence-ui": "^1.0.2",
-        "thoughtware-message-ui": "^1.0.2",
+        "thoughtware-message-ui": "^1.0.3",
         "thoughtware-plugin-core-ui": "^1.0.2",
         "thoughtware-plugin-manager-ui": "^1.0.2",
         "thoughtware-privilege-ui": "^1.0.2",
         "thoughtware-security-ui": "^1.0.2",
         "thoughtware-slate-ui": "^1.0.2",
         "thoughtware-todotask-ui": "^1.0.2",
-        "thoughtware-user-ui": "^1.0.2",
-        "tiklab-privilege-ui": "^1.0.2",
-        "tiklab-user-ui": "^1.0.2"
+        "thoughtware-user-ui": "^1.0.2"
     }
 }

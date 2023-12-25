@@ -174,9 +174,6 @@ export class WorkStore {
 
     // 看板视图移动位置后，列表交换
     changeBorderList = (startBoxIndex, startWorkBoxIndex, index, targetStatusId) => {
-        // console.log(startBoxIndex, startWorkBoxIndex)
-        // console.log(this.workBoardList)
-        // console.log(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
         Object.assign(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
         this.workBoardList[index].workItemList.dataList.push(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
         this.workBoardList[startBoxIndex].workItemList.dataList.splice(startWorkBoxIndex, 1)
@@ -303,13 +300,14 @@ export class WorkStore {
                 }
             }
             this.workBoardListLength = length;
+            this.findWorkItemNumByWorkType()
         }
         return data;
     }
 
     findChangePageWorkBoardList = async (value) => {
         this.setSearchCondition(value)
-        // this.getWorkItemNum();
+        this.getWorkItemNum();
         const data = await Service("/workItem/findChangePageWorkBoardList",this.searchCondition);
         if (data.code === 0) {
             const index = value.index;
@@ -375,7 +373,7 @@ export class WorkStore {
         this.setSearchCondition(value)
         let data = [];
         // 获取每个事项类型的个数
-        // this.getWorkItemNum();
+        this.getWorkItemNum();
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
@@ -384,7 +382,6 @@ export class WorkStore {
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
-            
         }
         return data;
     }
@@ -399,6 +396,17 @@ export class WorkStore {
         return data.data;
     }
 
+    @action
+    findWorkItemNumByWorkList = async(value) => {
+        this.setSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+            console.log(data)
+        }
+        return data.data;
+    }
+    
     @action
     findWorkItemNumByQuickSearch = async(value) => {
         this.setSearchCondition(value)
@@ -419,22 +427,31 @@ export class WorkStore {
         return data.data;
     }
 
+    // @action
+    // getWorkItemNum = () => {
+    //     // if(this.viewType === "tile" || this.workShowType === "bodar"){
+    //     //     this.findWorkItemNumByWorkStatus()
+    //     // }
+    //     if (this.viewType === "tree" && this.workShowType !== "bodar") {
+    //         this.findWorkItemNumByQuickSearch()
+    //     }
+    // }
+
     @action
     getWorkItemNum = () => {
-        // if(this.viewType === "tile" || this.workShowType === "bodar"){
-        //     this.findWorkItemNumByWorkStatus()
-        // }
+        if(this.viewType === "tile" || this.workShowType === "bodar"){
+            this.findWorkItemNumByWorkList()
+        }
         if (this.viewType === "tree" && this.workShowType !== "bodar") {
-            this.findWorkItemNumByQuickSearch()
+            this.findWorkItemNumByWorkType()
         }
     }
-
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
         
         this.tableLoading = true;
-        // this.getWorkItemNum();
+        this.getWorkItemNum();
 
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
@@ -443,6 +460,7 @@ export class WorkStore {
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
+            this.findWorkItemNumByWorkType()
         }
         return data;
     }

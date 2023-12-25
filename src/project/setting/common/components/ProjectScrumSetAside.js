@@ -62,6 +62,13 @@ const ProjectScrumSetAside =(props) => {
             key: `/projectDetail/${projectId}/projectSetDetail/module`,
             encoded: "Module"
         }
+        ,
+        {
+            title: `消息通知方案`,
+            icon: 'survey',
+            key: `/projectDetail/${projectId}/projectSetDetail/messagenotice`,
+            encoded: "messagenotice"
+        }
     ];
     // 当前选中路由
     const [selectKey,setSelectKey] = useState(`/projectDetail/${projectId}/projectSetDetail/basicInfo`);

@@ -156,9 +156,7 @@ const ProjectSetSurvey = props => {
                                                 </div>
                                             </div>
 
-                                            {/* <div className="projectSet-process-project-project">
-                                                {item.projectType.name}
-                                            </div> */}
+
                                             <div className="projectSet-process-project-process">
                                                 {item.master.name}
                                             </div>

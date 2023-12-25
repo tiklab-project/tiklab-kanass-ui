@@ -382,7 +382,7 @@ const BasicInfo = props => {
                                     ({ getFieldValue }) => ({
                                         validator(rule, value) {
                                             //getFieldValue可以获得其他输入框的内容
-                                            if (projectInfo?.projectName !== value) return Promise.reject(`请输入${projectInfo?.projectName}`);
+                                            if (projectInfo?.projectName !== value) return Promise.reject(`请输入正确的项目名称`);
                                             return Promise.resolve();
                                         }
                                     })

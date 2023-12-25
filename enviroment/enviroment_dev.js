@@ -33,7 +33,7 @@ const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.thoughtware.net")
 const mobile_url = JSON.stringify('http://192.168.10.16:3008/')
-const homes_url = JSON.stringify("http://192.168.10.14")
+const homes_url = JSON.stringify("http://192.168.10.7")
 const kanass_url =JSON.stringify("http://192.168.10.25:3004")
 const eas_url = JSON.stringify("http://eas.test.thoughtware.net")
 module.exports = {

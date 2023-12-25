@@ -11,6 +11,8 @@ import WorkFilterType from "./WorkFilterType";
 import { useDebounce } from "../../common/utils/debounce";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { searchWorkList } from "./WorkSearch";
+import WorkTypeTab from "./WorkTypeTab";
+import WorkFilterQuick from "./WorkFilterQuick";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -95,7 +97,7 @@ const WorkTableFilter = (props) => {
 
     return (
         <div className="work-table-second">
-            <WorkQuickTab />
+            <WorkTypeTab />
             <div className="work-table-filter">
                 {
                     props.match.path == "/workTable" &&
@@ -116,7 +118,7 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
-                <WorkFilterType />
+                <WorkFilterQuick />
                
                 {
                     workStatusList && workStatusList.length > 0 && 

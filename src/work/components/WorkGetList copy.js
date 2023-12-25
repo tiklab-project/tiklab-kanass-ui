@@ -1,23 +1,27 @@
+/**
+ * 初始进入事项页面
+ */
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
+import { getUser } from "thoughtware-core-ui";
 const finWorkList = (router, workStore, params) => {
     const setValue = () => {
         console.log(router)
         let type = "";
-        if (router.indexOf("/work") > -1) {
+        if(router.indexOf("/work") > -1){
             type = "system"
-
+            
         }
-        if (router.indexOf("/projectDetail/:id/work") > -1) {
+        if(router.indexOf("/projectDetail/:id/work") > -1){
             type = "project"
-
+            
         }
-        if (router.indexOf("/:id/sprintdetail/:sprint/work") > -1) {
+        if(router.indexOf("/:id/sprintdetail/:sprint/work") > -1){
             type = "sprint"
-
+            
         }
-        if (router.indexOf("/:id/versiondetail/:version/work") > -1) {
+        if(router.indexOf("/:id/versiondetail/:version/work") > -1){
             type = "version"
-
+            
         }
         goWorkItem(type, workStore, params)
     }
@@ -26,15 +30,16 @@ const finWorkList = (router, workStore, params) => {
 
 }
 
-
 const goWorkItem = (type, workStore, params) => {
     const { sprintId, versionId, projectId  } = params;
-    const { setSearchConditionNull, setSearchCondition } = workStore;
+    const { setSearchConditionNull, setSearchCondition, findStateNodeList, findWorkItemNumByQuickSearch, workShowType, 
+         searchType } = workStore;
     let initValues = {
-        pageParam: {
-            pageSize: 20,
-            currentPage: 1
-        }
+        workTypeCodes: null,
+        // pageParam: {
+        //     pageSize: 20,
+        //     currentPage: 1
+        // }
     }
     switch (type) {
         case "sprint":
@@ -53,11 +58,66 @@ const goWorkItem = (type, workStore, params) => {
         default:
             break;
     }
+    switch (searchType) {
+        
+        case "reset":
+            setSearchConditionNull().then(res => {
+                setSearchCondition(initValues)
+                getWorkList(workStore);
+            });
+            break;
+        case "pending":
+            getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                getWorkList(workStore);
+            });
+            break;
+        case "ending":
+            getStateNodeList({ quickName: "done" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                getWorkList(workStore);
+            })
+            break;
+        case "overdue":
+            initValues = { ...initValues, workStatusIds: [], overdue: true }
+            setSearchCondition(initValues)
+            getWorkList(workStore);
+            break;
+        case "creat":
+            initValues = { ...initValues, workStatusIds: [], overdue: false,  builderId: getUser().userId}
+            setSearchCondition(initValues)
+            getWorkList(workStore);
+            break;
+        case "all":
+            setSearchCondition(initValues)
+            getWorkList(workStore);
+            break;
+        default:
+            getStateNodeList({ quickName: "pending" }, findStateNodeList).then(data => {
+                initValues = { ...initValues, workStatusIds: data }
+                setSearchCondition(initValues)
+                getWorkList(workStore);
+            });
+            break;
+    }
+    
 
-    setSearchConditionNull().then(res => {
-        setSearchCondition(initValues)
-        getWorkList(workStore);
+}
+
+const getStateNodeList = async (value, findStateNodeList) => {
+    const stateNodeList = []
+    await findStateNodeList(value).then(res => {
+        if (res.code === 0) {
+            if (res.data.length > 0) {
+                res.data.map(item => {
+                    stateNodeList.push(item.id)
+                })
+            }
+        }
     })
+    return stateNodeList;
 }
 
 const getWorkList = (workStore) => {
@@ -70,7 +130,6 @@ const getWorkList = (workStore) => {
         getWorkBoardList()
     }
 }
-
 
 const getPageTree = (workStore) => {
     const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType, setQuickFilterValue } = workStore;

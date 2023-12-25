@@ -249,6 +249,11 @@ const setDevRouter= [
                 code: 12-7,
             },
             {
+                title: '项目消息通知方式',
+                id: '/setting/projectMessageNotice',
+                code: 12-19,
+            },
+            {
                 title: '消息类型',
                 id: '/setting/messageType',
                 purviewCode: "SysMessageType",

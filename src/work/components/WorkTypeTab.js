@@ -8,7 +8,7 @@ const WorkTypeTab = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 解析store数据
     const {  findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum } = workStore;
-
+    console.log(eveWorkTypeNum)
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
 
@@ -19,6 +19,7 @@ const WorkTypeTab = (props) => {
         findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
             if (res.code === 0) {
                 setWorkSystem(res.data)
+                console.log(res.data)
             }
         })
 
@@ -108,7 +109,7 @@ const WorkTypeTab = (props) => {
                 onClick={() => selectType("all")} key={"all"}
             >
                 全部
-                <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum.all)})</span>
+                <span style={{fontSize: "12px"}}>{setWorkNum(eveWorkTypeNum.all)}</span>
                 {/* <span>({setWorkNum(1009)})</span> */}
             </div>
             {
@@ -119,18 +120,18 @@ const WorkTypeTab = (props) => {
                         onClick={() => selectType(item.workType)}
                     >   
                         {item.workType.name}
-                        <span style={{fontSize: "12px"}}>({setWorkNum(eveWorkTypeNum[item.workType.code])})</span>
+                        <span style={{fontSize: "12px"}}>{setWorkNum(eveWorkTypeNum[item.workType.code])}</span>
                     </div>
                 })
             }
-            {
+            {/* {
                 workCustom && workCustom.length === 1 && <div className="tabs-more">
                     <div className="tabs-more-button" onClick={() => selectCustomType(moreTabValue)}>
                         <div className={`tabs-bar ${tabValue.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
                     </div>
                 </div>
-            }
-            {
+            } */}
+            {/* {
                 workCustom && workCustom.length > 1 && <div className="tabs-more">
                     <div className="tabs-more-button" onClick={() => setShowMoreTab(true)}>
                         <div className={`tabs-bar ${tabValue.type === "custom" ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
@@ -147,7 +148,7 @@ const WorkTypeTab = (props) => {
                         }
                     </div>
                 </div>
-            }
+            } */}
 
 
         </div>

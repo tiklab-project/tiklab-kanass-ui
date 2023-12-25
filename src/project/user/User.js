@@ -8,7 +8,6 @@
  */
 import React from "react";
 import { DomainUser } from 'thoughtware-user-ui';
-import { Row, Col } from "antd";
 
 const User = props => {
     // 项目id
@@ -19,6 +18,7 @@ const User = props => {
                 {...props}
                 domainId={projectId}
                 bgroup={"kanass"}
+                domainType = "project"
             />
         </div>
     )

@@ -16,6 +16,7 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
+import DeleteModal from "../../../../common/deleteModal/deleteModal";
 
 const WorkType = (props) => {
     const store = {
@@ -157,25 +158,7 @@ const WorkType = (props) => {
             width: '10%',
             render: (text, record) => (
                 <Space size="middle">
-                    {
-                        record.workType.grouper === "custom" && <>
-                            <WorkTypeEditmodal
-                                name="编辑"
-                                id={record.id}
-                            >
-                                编辑
-                            </WorkTypeEditmodal>
-                            <svg
-                                className="svg-icon" aria-hidden="true"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => deleWorkType(record.id)}
-                            >
-                                <use xlinkHref="#icon-delete"></use>
-                            </svg>
-
-
-                        </>
-                    }
+                   
                     <svg
                         className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer" }}
@@ -191,6 +174,19 @@ const WorkType = (props) => {
                     >
                         <use xlinkHref="#icon-todown"></use>
                     </svg>
+                    {
+                        record.workType.grouper === "custom" && <>
+                            <WorkTypeEditmodal
+                                name="编辑"
+                                id={record.id}
+                            >
+                                编辑
+                            </WorkTypeEditmodal>
+                            <DeleteModal deleteFunction = {deleWorkType} id = {record.id}/>
+
+
+                        </>
+                    }
                 </Space>
             ),
         },
