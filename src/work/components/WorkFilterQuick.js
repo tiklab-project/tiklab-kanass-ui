@@ -10,9 +10,7 @@ const WorkFilterQuick = (props) => {
     const { workStore, heightFilter } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue,
-        viewType, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, setWorkIndex, setWorkId, eveWorkTypeNum, setSearchType } = workStore;
+    const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue} = workStore;
 
 
     const userId = getUser().userId;
@@ -63,7 +61,6 @@ const WorkFilterQuick = (props) => {
         setQuickFilterValue(value)
 
         data = value.value;
-        setSearchType(data)
         if (!value) {
             getAllWorkItem();
             return
@@ -88,7 +85,6 @@ const WorkFilterQuick = (props) => {
                     break;
             }
         }
-        setSearchType("all")
 
     }
 

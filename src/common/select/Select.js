@@ -49,7 +49,8 @@ const SelectSimple = (props) => {
     }
 
 
-    const getValue = (e) => {
+    const getValue = (e, option) => {
+        console.log("big")
         if (ismult) {
             const value = e.value;
             const checked = e.checked;
@@ -66,7 +67,7 @@ const SelectSimple = (props) => {
             onChange(selectData)
         } else {
             setSelectData(e)
-            onChange(e)
+            onChange(e, option)
         }
 
     }

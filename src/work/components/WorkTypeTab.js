@@ -55,11 +55,10 @@ const WorkTypeTab = (props) => {
         setMoreTabValue(value)
         search({ workTypeId: value.id })
         setTabValue({
-            id: value.id, type: "custom",
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-            }
+            id: value.id, 
+            type: "custom",
+            value: value.id,
+            label: value.name
         })
         setShowMoreTab(false)
     }
@@ -68,14 +67,18 @@ const WorkTypeTab = (props) => {
         if (value === "all") {
             search({ workTypeId: "" })
             setTabValue({
-                id: "all", type: "system",
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
+                id: "all", 
+                type: "system",
+                value: null,
+                label: null
             })
         } else {
-            setTabValue({ id: value.id, type: "system" })
+            setTabValue({ 
+                id: value.id, 
+                type: "system",
+                value: value.id, 
+                label: value.name
+            })
             search({
                 workTypeId: value.id,
                 pageParam: {
@@ -124,14 +127,14 @@ const WorkTypeTab = (props) => {
                     </div>
                 })
             }
-            {/* {
+            {
                 workCustom && workCustom.length === 1 && <div className="tabs-more">
                     <div className="tabs-more-button" onClick={() => selectCustomType(moreTabValue)}>
                         <div className={`tabs-bar ${tabValue.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
                     </div>
                 </div>
-            } */}
-            {/* {
+            }
+            {
                 workCustom && workCustom.length > 1 && <div className="tabs-more">
                     <div className="tabs-more-button" onClick={() => setShowMoreTab(true)}>
                         <div className={`tabs-bar ${tabValue.type === "custom" ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
@@ -148,7 +151,7 @@ const WorkTypeTab = (props) => {
                         }
                     </div>
                 </div>
-            } */}
+            }
 
 
         </div>

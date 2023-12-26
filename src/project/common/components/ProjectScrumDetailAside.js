@@ -66,19 +66,27 @@ const ProdeScrumAside = (props) => {
             key: "version",
             encoded: "Version",
         },
-        {
-            title: `${t('milestone')}`,
-            icon: 'milestone',
-            url: `/projectDetail/${projectId}/milestone`,
-            key: "milestone",
-            encoded: "Milestone",
-        },
+       
         {
             title: "工时",
             icon: 'log',
             url: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statisticslog',
+            url: `/projectDetail/${projectId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "Statistic",
+        },
+        {
+            title: `${t('milestone')}`,
+            icon: 'milestone',
+            url: `/projectDetail/${projectId}/milestone`,
+            key: "milestone",
+            encoded: "Milestone",
         },
         {
             title: "知识库",
@@ -93,15 +101,7 @@ const ProdeScrumAside = (props) => {
             url: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
-        },
-        {
-            title: `${t('statistic')}`,
-            icon: 'statisticslog',
-            url: `/projectDetail/${projectId}/statistics/workItem`,
-            key: "statistics",
-            encoded: "Statistic",
         }
-        
     ];
 
     const normalProrouter = (projectId) => [
@@ -136,18 +136,25 @@ const ProdeScrumAside = (props) => {
             encoded: "Version",
         },
         {
-            title: `${t('milestone')}`,
-            icon: 'milestone',
-            url: `/projectDetail/${projectId}/milestone`,
-            key: "milestone",
-            encoded: "Milestone",
-        },
-        {
             title: "工时",
             icon: 'log',
             url: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statisticslog',
+            url: `/projectDetail/${projectId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "Statistic",
+        },
+        {
+            title: `${t('milestone')}`,
+            icon: 'milestone',
+            url: `/projectDetail/${projectId}/milestone`,
+            key: "milestone",
+            encoded: "Milestone",
         },
         {
             title: "知识库",
@@ -163,13 +170,7 @@ const ProdeScrumAside = (props) => {
             key: "test",
             encoded: "test",
         },
-        {
-            title: `${t('statistic')}`,
-            icon: 'statisticslog',
-            url: `/projectDetail/${projectId}/statistics/workItem`,
-            key: "statistics",
-            encoded: "Statistic",
-        }
+        
     ];
 
     const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id)); 

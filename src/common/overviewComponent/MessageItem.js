@@ -75,7 +75,7 @@ const MessageListItem = (props) => {
                             <div className="message-content">
                                 <div className="message-work-action">{createUser.nickname}创建了迭代</div>
                                 <div className="message-work-item">
-                                    <div class="message-work-title" onClick={() => goMessageDetail()}>{spintName}</div>
+                                    <div className="message-work-title" onClick={() => goMessageDetail()}>{spintName}</div>
                                 </div>
 
                             </div>

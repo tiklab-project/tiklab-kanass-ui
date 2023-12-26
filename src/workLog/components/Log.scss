@@ -1,0 +1,45 @@
+.log {
+    padding: 20px 20px 0 20px;
+    height: calc(100vh - 49px);
+    background: #fff;
+    .log-tab {
+        display: flex;
+        gap: 20px;
+        position: sticky;
+        padding: 20px 0 15px 0;
+        flex: 1;
+        padding: 0 20px;
+        .log-tab-tabpane {
+            cursor: pointer;
+            background-color: var(--thoughtware-gray-600);
+            height: 32px;
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .log-tabpane-select {
+            font-weight: var(--thoughtware-font-weight-bold);
+            color: var(--thoughtware-blue);
+            background-color: var(--thoughtware-gray-200);
+        }
+    }
+    // .worklog-content {
+    //     text-overflow: ellipsis;
+    //     overflow: hidden;
+    //     white-space: normal;
+    //     word-break: break-word;
+    //     display: -webkit-box;
+    //     -webkit-line-clamp: 2;
+    //     -webkit-box-orient: vertical;
+    //     padding-right: 20px;
+    //     cursor: pointer;
+    // }
+    // .worklog-content:hover {
+    //     color: var(--thoughtware-blue);
+    // }
+}
+
+

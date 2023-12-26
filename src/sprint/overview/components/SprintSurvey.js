@@ -21,7 +21,6 @@ import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const SprintSurvey = (props) => {
     const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
-    const { setSearchType } = WorkStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -129,7 +128,6 @@ const SprintSurvey = (props) => {
          * @param {tab key} index 
          */
     const goWorkItemList = (value) => {
-        setSearchType(value)
         props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
     }
     const goDynamicList = () => {

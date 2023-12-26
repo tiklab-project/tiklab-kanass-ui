@@ -20,13 +20,13 @@ const Sprintdetail = (props) => {
     const store = {
         sprintDetailStore: SprintDetailStore
     }
-    const { setSearchConditionNull, setSearchType } = WorkStore;
+    const { setSearchConditionNull, setTabValue } = WorkStore;
     useEffect(() => {
         setSearchConditionNull()
-        setSearchType("all")
+        setTabValue({id: "all", type: "system"})
         return () => {
             setSearchConditionNull()
-            setSearchType("all")
+            setTabValue({id: "all", type: "system"})
         }
     }, []);
     

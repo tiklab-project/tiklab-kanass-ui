@@ -10,7 +10,6 @@ import React, { useEffect, useState, Fragment, useRef, useImperativeHandle } fro
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
-import "./Epic.scss"
 import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
@@ -79,7 +78,7 @@ const SprintLineMap = (props) => {
 
 
         const graph = new Graph({
-            container: document.getElementById("epic"),
+            container: document.getElementById("sprint"),
             width: graphWidth,
             grid: {
                 size: unitLength,
@@ -205,7 +204,7 @@ const SprintLineMap = (props) => {
     const [scrollLeft, setScrollLeft] = useState()
     useEffect(() => {
         if (ganttdata !== undefined) {
-            document.getElementById("epic").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("sprint").style.height = (ganttdata.nodes.length * 50);
             setGarph()
         }
         const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
@@ -426,7 +425,7 @@ const SprintLineMap = (props) => {
                                         }
                                     </div>
                                     <div
-                                        className="epic-name"
+                                        className="sprint-name"
                                         onClick={() => goEpicWorkDetail(item, index)}>
                                         {item.sprintName}
                                     </div>
@@ -437,7 +436,7 @@ const SprintLineMap = (props) => {
                                     </span>
                                 </div>
                                 <div className="table-td table-border table-td-assigner">{item.master.name}</div>
-                                <div className="table-td table-border table-td-time">{item.startTime} ~ {item.endTime}</div>
+                                {/* <div className="table-td table-border table-td-time">{item.startTime} ~ {item.endTime}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
@@ -526,9 +525,9 @@ const SprintLineMap = (props) => {
                             <div className="table-hearder-text table-border table-hearder-assigner">
                                 负责人
                             </div>
-                            <div className="table-hearder-text table-border table-hearder-time">
+                            {/* <div className="table-hearder-text table-border table-hearder-time">
                                 时间
-                            </div>
+                            </div> */}
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>
@@ -567,7 +566,7 @@ const SprintLineMap = (props) => {
                                     }
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                    <div id="sprint" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
                                     <div className="table-date-background">
                                         {
                                             archiveView === "month" && dateArray && dateArray.map((item, index) => {

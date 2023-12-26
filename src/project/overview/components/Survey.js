@@ -25,7 +25,7 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
         findRecentPage, recentList, updateRecent } = ProjectSurveyStore;
-    const { setWorkId, setSearchType } = Workstore;
+    const { setWorkId } = Workstore;
     //当前用户名字
     const masterName = getUser().name;
     // 项目id
@@ -194,7 +194,6 @@ const Survey = (props) => {
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        setSearchType(value)
         props.history.push(`/projectDetail/${projectId}/workTable`)
     }
 

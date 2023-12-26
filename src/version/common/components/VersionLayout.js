@@ -18,13 +18,13 @@ const Versiondetail = (props) => {
     const store = {
         versionDetailStore: VersionDetailStore
     }
-    const { setSearchConditionNull, setSearchType } = WorkStore;
+    const { setSearchConditionNull, setTabValue } = WorkStore;
     useEffect(() => {
         setSearchConditionNull()
-        setSearchType("all")
+        setTabValue({id: "all", type: "system"})
         return () => {
             setSearchConditionNull()
-            setSearchType("all")
+            setTabValue({id: "all", type: "system"})
         }
     }, []);
     

@@ -9,7 +9,7 @@ const WorkFilterType = (props) => {
     const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { searchCondition, findWorkTypeDmList} = workStore;
+    const { searchCondition, findWorkTypeDmList, tabValue, setTabValue,} = workStore;
 
     const [workTypeList, setWorkTypeList] = useState([]);
 
@@ -38,7 +38,24 @@ const WorkFilterType = (props) => {
 
    
 
-    const selectType = (value) => {
+    const selectType = (value, option) => {
+        console.log(value, option)
+        setTabValue(value)
+        if(value){
+            const tabData = {
+                id: value.value,
+                type: option.grouper,
+                ...value
+            }
+            setTabValue(tabData)
+        }else {
+            setTabValue({
+                id: "all", 
+                type: "system",
+                value: null,
+                label: null
+            })
+        }
         // if (value === "all" ) {
         //     search({ 
         //         workTypeId: "",
@@ -61,7 +78,7 @@ const WorkFilterType = (props) => {
            
         // } 
         search({
-            workTypeIds: value,
+            workTypeId: value.value,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -74,11 +91,12 @@ const WorkFilterType = (props) => {
     };
 
     return (<div className="work-type-filter">
-        <SelectSimple name="workType"
-            onChange={(value) => selectType(value)}
+        <SelectSimple 
+            name="workType"
+            onChange={(value, option) => selectType(value, option)}
             title={"类型"}
-            ismult={"true"}
-            value={searchCondition.workTypeIds}
+            ismult={false}
+            value={tabValue}
             suffixIcon = {true}
         >
             {
@@ -87,6 +105,7 @@ const WorkFilterType = (props) => {
                         value={item.workType.id}
                         label={item.workType.name}
                         key={item.workType.id}
+                        option = {item.workType}
                         
                     />
                 })

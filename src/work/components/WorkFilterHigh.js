@@ -24,8 +24,7 @@ const WorkFilterHigh = (props) => {
     // 解析store数据
     const { workShowType, priorityList, findPriority, getsprintlist, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull, setQuickFilterValue, eveWorkTypeNum,
-        setSearchType } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, tabValue, eveWorkTypeNum } = workStore;
 
     useEffect(() => {
         findPriority()
@@ -119,17 +118,13 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
-        if(workShowType === "list"){
-            setQuickFilterValue({ label: `全部(${eveWorkTypeNum.all})`, value: 'all' })
-        }else {
-            setQuickFilterValue({ label: '全部', value: 'all' })
-        }
+        
         const params = {
             projectId: projectId,
             sprintId: sprintId,
-            versionId: versionId
+            versionId: versionId,
+            workTypeId: tabValue?.id === "all" ? null : tabValue?.id 
         }
-        setSearchType('all')
         finWorkList(path, workStore, params)
     }
 

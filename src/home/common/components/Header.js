@@ -109,7 +109,7 @@ const Header = props => {
             key: 'work'
         },
         {
-            to: '/log',
+            to: '/log/list',
             title: '工时',
             key: 'log'
         },

@@ -121,11 +121,11 @@ const WorkListHead = (props) => {
                 <WorkFilterType />
                 <WorkFilterQuick />
                 {
-                    props.match.path.indexOf("/workList") !== -1 && <WorkFilterProject />
+                    props.match.path == "/workList" && <WorkFilterProject />
                 }
                 
                 {
-                    props.match.path.indexOf("/workList") === -1 && <WorkFilterMaster />
+                    props.match.path != "/workList" && <WorkFilterMaster />
                 }
             </div>
         </div>

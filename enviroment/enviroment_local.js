@@ -9,16 +9,16 @@
 const api =  'http://192.168.10.7:8080';
 const base_url = JSON.stringify(api);
 
-// 决定请求那边的css, js
-const plugin_base_url = JSON.stringify("http://192.168.10.7:8080");
+// 决定请求那边的css, js 一定要写这个!!!!!!!!
+const plugin_base_url = JSON.stringify("http://192.168.10.7:3000");
 
-let plugin_url = `/pluginConfig/getPluginConfig`;
-// let plugin_url = `http://192.168.10.7:3000/plugin.json`;
+// let plugin_url = `/pluginConfig/getPluginConfig`;
+let plugin_url = `http://192.168.10.7:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
 const upload_url = JSON.stringify('http://192.168.10.7:8080')
 
-let fetchMethod = "post"
+let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);
 // 判断是否是用户环境， 如果是用户环境收到切换为true， 如果是内部公司手动切换为false
 const userProduction = true;

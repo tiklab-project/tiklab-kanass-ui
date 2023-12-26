@@ -21,7 +21,6 @@ import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus, userList, getUseList } = VersionSurveyStore;
-    const { setSearchType } = WorkStore;
 
     const versionId = props.match.params.version;
     const [versionInfo, setVersionInfo] = useState();
@@ -138,7 +137,6 @@ const VersionSurvey = (props) => {
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        setSearchType(value)
         props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
     }
     const goToListPage = () => {

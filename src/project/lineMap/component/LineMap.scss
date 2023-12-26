@@ -18,20 +18,25 @@
 
         .line-map-tab {
             display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            gap: 20px;
+            position: sticky;
+            padding: 20px 0 15px 0;
 
             .tab-tabpane {
                 cursor: pointer;
-                height: 40px;
-                line-height: 40px;
+                background-color: var(--thoughtware-gray-600);
+                height: 32px;
+                width: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
             }
 
             .tab-tabpane-select {
+                font-weight: var(--thoughtware-font-weight-bold);
                 color: var(--thoughtware-blue);
-                border-bottom: 2px solid var(--thoughtware-blue);
+                background-color: var(--thoughtware-gray-200);
             }
         }
     }
@@ -138,6 +143,7 @@
 
             .table-hearder-assigner {
                 width: 90px;
+                border-right: 1px solid var(--thoughtware-gray);
             }
 
             .table-hearder-time {
@@ -226,6 +232,7 @@
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                border-right: #f0f0f0 1px solid;
             }
 
             .table-td-time {
@@ -266,7 +273,7 @@
             position: absolute;
             top: 50px;
             right: 0;
-            width: calc(100% - 700px);
+            width: calc(100% - 450px);
             max-height: calc(100% - 50px);
             overflow-x: auto;
             overflow-y: hidden;
@@ -346,7 +353,7 @@
     margin-top: 20px;
 
     .scroll-box {
-        width: calc(100% - 700px);
+        width: calc(100% - 450px);
         height: 10px;
         background-color: #f5f5f5;
         border-radius: 4px;

@@ -1,0 +1,58 @@
+.log-statistics-aside {
+    background-color: #fff;
+    height: 100%;
+    border-right: 1px solid #f0f0f0;
+
+    .statistics-type-title:hover {
+        background-color: var(--thoughtware-gray-300);
+    }
+
+    .statistics-type-title {
+        cursor: pointer;
+        padding: 0 20px;
+        height: 40px;
+        line-height: 40px;
+        font-weight: 500;
+        color: #777;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-left {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+
+    .statistics-menu-firstmenu:hover {
+        cursor: pointer;
+        background-color: var(--thoughtware-gray-300);
+    }
+
+    .statistics-menu-submenu:hover {
+        cursor: pointer;
+        background-color: var(--thoughtware-gray-300);
+    }
+
+    .statistics-menu {
+        list-style-type: none;
+
+        &-firstmenu {
+            height: 40px;
+            display: flex;
+            line-height: 40px;
+            width: 100%;
+            align-items: center;
+            padding-left: 43px;
+            padding-right: 20px;
+            justify-content: space-between;
+        }
+
+        &-select {
+            background-color: var(--thoughtware-gray-400);
+        }
+    }
+}
+
+    

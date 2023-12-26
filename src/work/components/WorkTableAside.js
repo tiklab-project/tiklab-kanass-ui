@@ -1,3 +1,7 @@
+/**
+ * 弃用
+ */
+
 import React,{ useState, useRef, useEffect } from "react";
 import { observer, inject, useStaticRendering } from "mobx-react";
 import "./WorkTable.scss";

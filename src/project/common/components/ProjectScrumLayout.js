@@ -22,7 +22,7 @@ const ProjectScrumDetail = (props) => {
     const { route, systemRoleStore } = props;
 
     const { searchpro, findProjectList } = ProjectStore;
-    const { setSearchConditionNull, setSearchType } = WorkStore;
+    const { setSearchConditionNull, setTabValue } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
     // 项目详情
@@ -45,10 +45,11 @@ const ProjectScrumDetail = (props) => {
         //获取项目列表
         findProjectList()
         setSearchConditionNull()
-        setSearchType("all")
+        // 重置
+        setTabValue({id: "all", type: "system"})
         return () => {
             setSearchConditionNull()
-            setSearchType("all")
+            setTabValue({id: "all", type: "system"})
         }
     }, [projectId])
 

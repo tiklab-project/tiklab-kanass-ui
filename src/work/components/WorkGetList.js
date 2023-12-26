@@ -29,8 +29,9 @@ const finWorkList = (router, workStore, params) => {
 
 const goWorkItem = (type, workStore, params) => {
     const { sprintId, versionId, projectId  } = params;
-    const { setSearchConditionNull, setSearchCondition } = workStore;
+    const { setSearchConditionNull, setSearchCondition,searchCondition } = workStore;
     let initValues = {
+        ...searchCondition,
         pageParam: {
             pageSize: 20,
             currentPage: 1

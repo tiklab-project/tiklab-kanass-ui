@@ -427,7 +427,7 @@ const VersionLineMap = (props) => {
                                 <div className={`table-td table-border table-td-assigner`}>
                                         {item.master?.name}
                                 </div>
-                                <div className="table-td table-border table-td-time">{item.startTime} ~ {item.publishDate}</div>
+                                {/* <div className="table-td table-border table-td-time">{item.startTime} ~ {item.publishDate}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
@@ -530,9 +530,9 @@ const VersionLineMap = (props) => {
                             <div className="table-hearder-text table-border table-hearder-assigner">
                                 负责人
                             </div>
-                            <div className="table-hearder-text table-border table-hearder-time">
+                            {/* <div className="table-hearder-text table-border table-hearder-time">
                                 时间
-                            </div>
+                            </div> */}
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>

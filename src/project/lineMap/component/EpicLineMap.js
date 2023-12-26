@@ -10,7 +10,7 @@ import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
-import "./Epic.scss"
+// import "./Epic.scss"
 import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
@@ -497,7 +497,7 @@ const EpicLineMap = (props) => {
                                 <div className={`table-td table-border table-td-assigner`}>
                                     {item.assigner?.name}
                                 </div>
-                                <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div>
+                                {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
@@ -591,9 +591,9 @@ const EpicLineMap = (props) => {
                             <div className="table-hearder-text table-border table-hearder-assigner">
                                 负责人
                             </div>
-                            <div className="table-hearder-text table-border table-hearder-time">
+                            {/* <div className="table-hearder-text table-border table-hearder-time">
                                 时间
-                            </div>
+                            </div> */}
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>

@@ -85,7 +85,7 @@ const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintLi
 const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
 const TestRepository = AsyncComponent(() => import('./project/test/components/TestRepository'))
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
-const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent"))
+const ProjectLog = AsyncComponent(() => import("./workLog/components/Log.js"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
 const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
@@ -171,7 +171,10 @@ const StageDetail = AsyncComponent(() => import("./project/stage/component/Stage
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
-const WorkLog = AsyncComponent(()=> import("./project/workLog/components/LogContent"))
+const Log = AsyncComponent(()=> import("./workLog/components/Log"))
+const LogViewTable = AsyncComponent(()=> import("./workLog/components/LogViewTable"))
+const LogStatistics = AsyncComponent(()=> import("./workLog/statistics/LogStatistics"))
+const LogStatisticsContent = AsyncComponent(()=> import("./workLog/statistics/LogStatisticsContent"))
 const Routers = [
     {
         path: "/login",
@@ -238,17 +241,34 @@ const Routers = [
                     }
                 ]
             },
-            // {
-            //     path: "/insight1",
-            //     exact: false,
-            //     component: ViewInsight1,
-            //     key: "ProjectSet"
-            // },
             {
                 path: "/log",
                 exact: false,
-                component: WorkLog,
-                key: "WorkItemLog"
+                component: Log,
+                key: "Log",
+                routes: [
+                    {
+                        path: "/log/list",
+                        exact: false,
+                        component: LogViewTable,
+                        key: "LogViewTable"
+                    },
+                    {
+                        path: "/log/statistics",
+                        exact: false,
+                        component: LogStatistics,
+                        key: "LogStatistics",
+                        routes: [
+                            {
+                                path: "/log/statistics/user",
+                                exact: false,
+                                component: LogStatisticsContent,
+                                key: "LogStatisticsContent"
+                            }
+                        ]
+                    },
+                    
+                ]
             },
             {
                 path: "/todoList",
@@ -343,8 +363,7 @@ const Routers = [
                 //         exact: false,
                 //         component: ProjectSetList,
                 //         key: "ProjectSet"
-                //     },
-
+                //     }
                 // ]
             },
             {
@@ -454,14 +473,7 @@ const Routers = [
                 key: "Sprint"
             },
 
-           
-            // {
-            //     path: "/work",
-            //     component: Work,
-            //     routes: [
-            //        ,
-            //     ]
-            // },
+        
             {
                 path: "/workTable",
                 component: WorkTable,

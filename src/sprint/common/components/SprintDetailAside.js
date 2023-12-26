@@ -91,7 +91,6 @@ const SprintDetailAside = (props) => {
                         sprint={sprint}
                     />
 
-
                     <ul className="sprint-menu">
                         <div className="sprint-back-project">
                             {

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 const SelectItem = (props) => {
-    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown, children } = props;
+    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children } = props;
+    console.log(label, option)
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -11,7 +12,7 @@ const SelectItem = (props) => {
             onChange(e.target)
             setChecked(selectData.includes(value))
         } else {
-            onChange({ label: label, value: value })
+            onChange({ label: label, value: value }, option)
             setShowDropDown(false)
         }
 
@@ -26,7 +27,7 @@ const SelectItem = (props) => {
             onChange(selectCheck.current)
             setChecked(selectData.includes(value))
         } else {
-            onChange({ label: label, value: value })
+            onChange({ label: label, value: value }, option)
             setShowDropDown(false)
         }
 

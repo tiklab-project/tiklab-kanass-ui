@@ -6,8 +6,6 @@ import { withRouter } from "react-router";
 import { SelectSimple, SelectItem } from "../../common/select";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
-import WorkQuickTab from "./WorkQuickTab";
-import WorkFilterType from "./WorkFilterType";
 import { useDebounce } from "../../common/utils/debounce";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { searchWorkList } from "./WorkSearch";

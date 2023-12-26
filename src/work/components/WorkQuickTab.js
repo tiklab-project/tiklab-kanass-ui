@@ -10,7 +10,7 @@ const WorkQuickTab = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     // 解析store数据
     const { workShowType,  setSearchCondition, findStateNodeList, setQuickFilterValue, 
-        quickFilterValue, eveWorkTypeNum, setSearchType } = workStore;
+        quickFilterValue, eveWorkTypeNum } = workStore;
     
     const userId = getUser().userId;
     const quickFilterList = [
@@ -38,7 +38,6 @@ const WorkQuickTab = (props) => {
     const selectMenu = (value) => {
         if (workShowType !== "list") {
             setQuickFilterValue(value)
-            setSearchType(value.value)
         }
         switch (value.value) {
             case "all":
