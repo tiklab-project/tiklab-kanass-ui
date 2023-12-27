@@ -85,7 +85,7 @@ const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintLi
 const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
 const TestRepository = AsyncComponent(() => import('./project/test/components/TestRepository'))
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
-const ProjectLog = AsyncComponent(() => import("./workLog/components/Log.js"))
+const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
 const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
@@ -172,9 +172,12 @@ const StageDetail = AsyncComponent(() => import("./project/stage/component/Stage
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(()=> import("./workLog/components/Log"))
-const LogViewTable = AsyncComponent(()=> import("./workLog/components/LogViewTable"))
-const LogStatistics = AsyncComponent(()=> import("./workLog/statistics/LogStatistics"))
-const LogStatisticsContent = AsyncComponent(()=> import("./workLog/statistics/LogStatisticsContent"))
+const LogAllList = AsyncComponent(()=> import("./workLog/logView/components/LogAllList"))
+const LogUserList = AsyncComponent(()=> import("./workLog/logView/components/LogUserList"))
+
+const LogProjectUserStatistics =  AsyncComponent(()=> import("./workLog/statistics/LogProjectUserStatistics.js"))
+const LogProjectWorkItemStatistics = AsyncComponent(()=> import("./workLog/statistics/logProjectWorkItemStatistics.js"))
+const LogUserProjectStatistics = AsyncComponent(()=> import("./workLog/statistics/logUserProjectStatistics.js"))
 const Routers = [
     {
         path: "/login",
@@ -250,23 +253,36 @@ const Routers = [
                     {
                         path: "/log/list",
                         exact: false,
-                        component: LogViewTable,
-                        key: "LogViewTable"
+                        component: LogAllList,
+                        key: "LogAllList"
                     },
                     {
-                        path: "/log/statistics",
+                        path: "/log/userList",
                         exact: false,
-                        component: LogStatistics,
-                        key: "LogStatistics",
-                        routes: [
-                            {
-                                path: "/log/statistics/user",
-                                exact: false,
-                                component: LogStatisticsContent,
-                                key: "LogStatisticsContent"
-                            }
-                        ]
+                        component: LogUserList,
+                        key: "LogUserList"
                     },
+                    {
+                        path: "/log/projectStatistic",
+                        exact: false,
+                        component: LogProjectUserStatistics,
+                        key: "LogProjectUserStatistics",
+                    },
+                    {
+                        path: "/log/workStatistic",
+                        component: LogProjectWorkItemStatistics,
+                        exact: true
+                    },
+                    {
+                        path: "/log/userproject",
+                        component: LogUserProjectStatistics,
+                        exact: true
+                    }, 
+                    {
+                        path: "/log/advert",
+                        component: StatisticsMore,
+                        exact: true
+                    }
                     
                 ]
             },

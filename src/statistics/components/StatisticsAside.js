@@ -105,7 +105,7 @@ const StatisticsAsicde = (props) => {
         if (props.match.path === "/projectSetdetail/:projectSetId/statistics") {
             url = `/projectSetdetail/${projectSetId}/statistics`;
         }
-        if (versionInfo.expired === false || type === 'workItem') {
+        if (versionInfo.expired === false) {
             url = `${url}/${type}`;
         } else {
             url = `${url}/advert`;

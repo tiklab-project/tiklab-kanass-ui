@@ -1,0 +1,9 @@
+
+.log-list {
+    padding: var(--thoughtware-padding);
+    .log-list-top-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+}

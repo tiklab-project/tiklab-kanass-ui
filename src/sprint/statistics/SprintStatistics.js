@@ -15,6 +15,7 @@ import "../../statistics/components/Statistics.scss"
 const { Sider } = Layout;
 const SprintStatistics = (props) => {
     const route = props.route
+    console.log(route)
     return (
         <Layout className="statistics">
             <Sider trigger={null} width="250">
@@ -25,7 +26,7 @@ const SprintStatistics = (props) => {
 
             <Layout className="statistics-content" style={{ background: "#fff" }}>
                 <Row>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                         {renderRoutes(route.routes)}
                     </Col>
                 </Row>

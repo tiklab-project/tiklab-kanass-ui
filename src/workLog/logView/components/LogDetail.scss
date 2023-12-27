@@ -1,0 +1,19 @@
+.log-detail-drawer {
+    .ant-drawer-content-wrapper {
+        top: 48px;
+    }
+}
+.log-detail {
+    .log-detail-item {
+        line-height: 25px;
+        margin-bottom: 20px;
+        .log-detail-label {
+            width: 80px;
+            color: var(--thoughtware-gray-500);;
+        }
+        .log-detail-content {
+            overflow-wrap: anywhere;
+            flex: 1;
+        }
+    }
+}

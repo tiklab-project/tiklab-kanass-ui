@@ -31,7 +31,7 @@ const MessageListItem = (props) => {
                             <div className="message-content">
                                 <div className="message-work-action">{createUser.nickname}修改了事项状态</div>
                                 <div className="message-work-item">
-                                    <div class="message-work-title" onClick={() => goMessageDetail()}>{workItemTitle}</div>
+                                    <div className="message-work-title" onClick={() => goMessageDetail()}>{workItemTitle}</div>
                                     <div
                                         className="message-work-oldvalue"
                                     >
@@ -58,7 +58,7 @@ const MessageListItem = (props) => {
                             <div className="message-content">
                                 <div className="message-work-action">{createUser.nickname}给你分配了事项</div>
                                 <div className="message-work-item">
-                                    <div class="message-work-title" onClick={() => goMessageDetail()}>{workItemTitle}</div>
+                                    <div className="message-work-title" onClick={() => goMessageDetail()}>{workItemTitle}</div>
                                 </div>
 
                             </div>

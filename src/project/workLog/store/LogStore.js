@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-24 09:32:54
  */
 import { observable, action } from "mobx";
-import { Service } from "../../common/utils/requset"
+import { Service } from "../../../common/utils/requset"
 export class LogStore {
     // 工时列表
     @observable 
