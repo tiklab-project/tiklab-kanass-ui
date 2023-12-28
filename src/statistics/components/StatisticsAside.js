@@ -23,43 +23,43 @@ const StatisticsAsicde = (props) => {
     const [logMenuList, setLogMenuList] = useState(logReportList)
 
     useEffect(() => {
-        if (versionInfo.expired === false) {
-            const workConfigList = pluginStore.filter(item => item.key === workKey);
-            if (workConfigList.length > 0) {
-                let list = [
-                    {
-                        key: "workItem",
-                        title: "事项字段统计",
-                        type: "workItem"
-                    }
-                ]
-                workConfigList.map(item => {
-                    list.push({
-                        key: item.id,
-                        title: item.extraProps.title,
-                        type: item.menu
-                    })
+        // if (versionInfo.expired === false) {
+        //     const workConfigList = pluginStore.filter(item => item.key === workKey);
+        //     if (workConfigList.length > 0) {
+        //         let list = [
+        //             {
+        //                 key: "workItem",
+        //                 title: "事项字段统计",
+        //                 type: "workItem"
+        //             }
+        //         ]
+        //         workConfigList.map(item => {
+        //             list.push({
+        //                 key: item.id,
+        //                 title: item.extraProps.title,
+        //                 type: item.menu
+        //             })
                     
-                })
-                console.log(list)
-                setWorkMenuList([...list])
-            }
+        //         })
+        //         console.log(list)
+        //         setWorkMenuList([...list])
+        //     }
 
 
-            const logConfigList = pluginStore.filter(item => item.key === logKey);
-            if (logConfigList.length > 0) {
-                let list = []
-                logConfigList.map(item => {
-                    list.push({
-                        key: item.id,
-                        title: item.extraProps.title,
-                        type: item.menu
-                    })
+        //     const logConfigList = pluginStore.filter(item => item.key === logKey);
+        //     if (logConfigList.length > 0) {
+        //         let list = []
+        //         logConfigList.map(item => {
+        //             list.push({
+        //                 key: item.id,
+        //                 title: item.extraProps.title,
+        //                 type: item.menu
+        //             })
                     
-                })
-                setLogMenuList([...list])
-            }
-        }
+        //         })
+        //         setLogMenuList([...list])
+        //     }
+        // }
         return;
     }, [])
     // 选中的菜单
@@ -105,7 +105,7 @@ const StatisticsAsicde = (props) => {
         if (props.match.path === "/projectSetdetail/:projectSetId/statistics") {
             url = `/projectSetdetail/${projectSetId}/statistics`;
         }
-        if (versionInfo.expired === false) {
+        if (versionInfo.expired === false || type === "workItem"  ) {
             url = `${url}/${type}`;
         } else {
             url = `${url}/advert`;

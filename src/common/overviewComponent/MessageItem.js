@@ -5,9 +5,24 @@ const MessageListItem = (props) => {
     const { content, status, type, updateMessageDispatchItem, id, item } = props;
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId,
-        projectId, oldValue, newValue, spintName } = data;
+        projectId, oldValue, newValue, spintName, sprintId } = data;
     const goMessageDetail = () => {
         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        if (status === 0) {
+            const value = {
+                id: id,
+                status: "1"
+            }
+            updateMessageDispatchItem(value).then(res => {
+                if (res.code === 0) {
+                    item.status === 1
+                }
+            })
+        }
+    }
+
+    const goSprintDetail = () => {
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/survey`);
         if (status === 0) {
             const value = {
                 id: id,
@@ -75,7 +90,7 @@ const MessageListItem = (props) => {
                             <div className="message-content">
                                 <div className="message-work-action">{createUser.nickname}创建了迭代</div>
                                 <div className="message-work-item">
-                                    <div className="message-work-title" onClick={() => goMessageDetail()}>{spintName}</div>
+                                    <div className="message-work-title" onClick={() => goSprintDetail()}>{spintName}</div>
                                 </div>
 
                             </div>

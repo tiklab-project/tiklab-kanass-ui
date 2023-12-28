@@ -170,10 +170,11 @@ const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
+const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(()=> import("./workLog/components/Log"))
-const LogAllList = AsyncComponent(()=> import("./workLog/logView/components/LogAllList"))
-const LogUserList = AsyncComponent(()=> import("./workLog/logView/components/LogUserList"))
+const LogAllList = AsyncComponent(()=> import("./project/workLog/components/LogContent.js"))
+// const LogUserList = AsyncComponent(()=> import("./workLog/logView/components/LogUserList"))
 
 const LogProjectUserStatistics =  AsyncComponent(()=> import("./workLog/statistics/LogProjectUserStatistics.js"))
 const LogProjectWorkItemStatistics = AsyncComponent(()=> import("./workLog/statistics/logProjectWorkItemStatistics.js"))
@@ -256,28 +257,28 @@ const Routers = [
                         component: LogAllList,
                         key: "LogAllList"
                     },
-                    {
-                        path: "/log/userList",
-                        exact: false,
-                        component: LogUserList,
-                        key: "LogUserList"
-                    },
-                    {
-                        path: "/log/projectStatistic",
-                        exact: false,
-                        component: LogProjectUserStatistics,
-                        key: "LogProjectUserStatistics",
-                    },
-                    {
-                        path: "/log/workStatistic",
-                        component: LogProjectWorkItemStatistics,
-                        exact: true
-                    },
-                    {
-                        path: "/log/userproject",
-                        component: LogUserProjectStatistics,
-                        exact: true
-                    }, 
+                    // {
+                    //     path: "/log/userList",
+                    //     exact: false,
+                    //     component: LogUserList,
+                    //     key: "LogUserList"
+                    // },
+                    // {
+                    //     path: "/log/projectStatistic",
+                    //     exact: false,
+                    //     component: LogProjectUserStatistics,
+                    //     key: "LogProjectUserStatistics",
+                    // },
+                    // {
+                    //     path: "/log/workStatistic",
+                    //     component: LogProjectWorkItemStatistics,
+                    //     exact: true
+                    // },
+                    // {
+                    //     path: "/log/userproject",
+                    //     component: LogUserProjectStatistics,
+                    //     exact: true
+                    // }, 
                     {
                         path: "/log/advert",
                         component: StatisticsMore,
@@ -818,6 +819,11 @@ const Routers = [
                     {
                         path: "/setting/version",
                         component: LicenceVersion,
+                        row: true,
+                        exact: true
+                    },{
+                        path: "/setting/productAuth",
+                        component: ProductAuth,
                         row: true,
                         exact: true
                     },

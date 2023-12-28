@@ -186,14 +186,28 @@ const setDevRouter= [
             },
         ]
     }, 
-   
     {
-        title: "版本与许可证",
+        title: "应用",
         icon: 'systemversion',
         id: '/setting/version',
-        purviewCode: "SysVersion",
+        purviewCode: "version",
         code: 11,
+        children: [
+            {
+                title: "版本与许可证",
+                id: '/setting/version',
+                purviewCode: "version",
+                code: 11-1,
+            },
+            {
+                title: "应用访问权限",
+                id: '/setting/productAuth',
+                purviewCode: "version",
+                code: 11-2,
+            },
+        ]
     },
+   
     {
         title: "基础数据",
         icon: 'systemcenter',
@@ -493,11 +507,25 @@ const setPrdRouter= [
     }, 
    
     {
-        title: "版本与许可证",
+        title: "应用",
         icon: 'systemversion',
         id: '/setting/version',
-        purviewCode: "SysVersion",
+        purviewCode: "version",
         code: 11,
-    }
+        children: [
+            {
+                title: "版本与许可证",
+                id: '/setting/version',
+                purviewCode: "version",
+                code: 11-1,
+            },
+            {
+                title: "应用访问权限",
+                id: '/setting/productAuth',
+                purviewCode: "version",
+                code: 11-2,
+            },
+        ]
+    },
 ];
 export  { setDevRouter, setPrdRouter};

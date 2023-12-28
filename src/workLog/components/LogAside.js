@@ -37,18 +37,18 @@ const SetAside = (props) => {
             title: '工时查看',
             path: "/log/list",
             key: "log",
-            children: [
-                {
-                    title: "全部工时",
-                    path: "/log/list",
-                    key: "logList"
-                },
-                {
-                    title: "我的工时",
-                    path: "/log/userList",
-                    key: "userList"
-                },
-            ]
+            // children: [
+            //     {
+            //         title: "全部工时",
+            //         path: "/log/list",
+            //         key: "logList"
+            //     },
+            //     {
+            //         title: "我的工时",
+            //         path: "/log/userList",
+            //         key: "userList"
+            //     },
+            // ]
         },
         {
             title: '工时统计',
@@ -84,7 +84,7 @@ const SetAside = (props) => {
             <li
                 style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                 className={`orga-aside-li orga-aside-second ${data.path === selectKey ? "orga-aside-select" : ""}`}
-                onClick={() => select(data, index)}
+                onClick={() => select(data)}
                 key={data.key}
             >
                 <span className="orga-aside-item-left">
