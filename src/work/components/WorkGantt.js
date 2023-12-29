@@ -38,7 +38,13 @@ const WorkGantt = (props) => {
     }, [projectId])
     return (<Provider {...store}>
         <Row style={{ height: "100%", overflow: "auto" }}>
-            <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
+            <Col 
+                className="work-col" 
+                sm={24} md={24} lg={{ span: 24 }} 
+                xl={{ span: "22", offset: "1" }} 
+                xxl={{ span: "18", offset: "3" }} 
+                style={{ background: "#fff", padding: "20px" }}
+            >
                 <>
                     <div className="work-list-col">
                         <WorkTableHead />
@@ -55,7 +61,7 @@ const WorkGantt = (props) => {
                                 // <Gantt workList = {workList} editWork = {editWork}/>
                                 :
                                 <div style={{ marginTop: "50px" }}>
-                                    <Empty image="/images/nodata.png" description="暂sss时没有事项~" />
+                                    <Empty image="/images/nodata.png" description="暂时没有事项~" />
                                 </div>
 
                         }

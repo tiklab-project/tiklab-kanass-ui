@@ -59,6 +59,7 @@ const WorkChangeView = (props) => {
         window.open(`${homes_url}/account/subscribe/subscribeList`)
     }
     const changeWorkView = (value) => {
+        if(value === workShowType) return;
         setWorkShowType(value)
         setWorkId()
         if(path.indexOf("projectDetail") > -1){
@@ -130,7 +131,7 @@ const WorkChangeView = (props) => {
                             return <div
                                 key={item.value}
                                 className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(item.path)}>
+                                onClick={() => changeWorkView(item.value)}>
                                 <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.value}`}></use>
                                 </svg>
@@ -141,10 +142,10 @@ const WorkChangeView = (props) => {
                     }
                     {
                         pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
-                            className={`dropdown-item ${"time" === workShowType ? "view-type-select" : ""}`}
-                            onClick={() => changeWorkView("Gantt")}>
+                            className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
+                            onClick={() => changeWorkView("gantt")}>
                             <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-time`}></use>
+                                <use xlinkHref={`#icon-gantt`}></use>
                             </svg>
                             甘特图
                         </div>
@@ -156,10 +157,10 @@ const WorkChangeView = (props) => {
                                 onConfirm={(e) => goPlugin(e)}
                                 getPopupContainer={() => treeDropDown.current}
                             >
-                                <div className={`dropdown-buy-item ${"time" === workShowType ? "view-type-select" : ""}`}>
+                                <div className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}>
                                     <div className="dropdown-item">
                                         <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-time`}></use>
+                                            <use xlinkHref={`#icon-gantt`}></use>
                                         </svg>
                                         甘特图
 
