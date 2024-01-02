@@ -253,7 +253,11 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.sprint
             }
         }
-
+        if (changeKey === "projectVersion") {
+            changedValues.projectVersion = {
+                id: changedValues.projectVersion
+            }
+        }
         if (changeKey === "assigner") {
             changedValues.assigner = {
                 id: changedValues.assigner

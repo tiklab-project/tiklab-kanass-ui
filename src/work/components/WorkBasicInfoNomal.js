@@ -241,7 +241,11 @@ const WorkBasicInfo = (props) => {
             })
             changedValues.workPriority = priority[0];
         }
-
+        if (changeKey === "projectVersion") {
+            changedValues.projectVersion = {
+                id: changedValues.projectVersion
+            }
+        }
         if (changeKey === "module") {
             changedValues.module = {
                 id: changedValues.module

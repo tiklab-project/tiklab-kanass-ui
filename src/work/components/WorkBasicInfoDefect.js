@@ -309,7 +309,6 @@ const WorkBasicInfo = (props) => {
         }
         editWork(data).then(res => {
             if (res.code === 0) {
-                console.log(changedValues)
                 setWorkInfo({ ...workInfo, ...changedValues })
 
                 //  更新列表数据
