@@ -398,7 +398,6 @@ export class WorkStore {
         const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
-            console.log(data)
         }
         return data.data;
     }

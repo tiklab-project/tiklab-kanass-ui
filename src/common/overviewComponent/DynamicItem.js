@@ -129,7 +129,8 @@ const DynamicListItem = (props) => {
                     </div >
                 )
                 break;
-
+            default: 
+                    break;
         }
         return dom;
     }

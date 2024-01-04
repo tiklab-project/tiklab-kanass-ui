@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import moment from "moment";
-import "./dynamic.scss"
+import "./Dynamic.scss"
 import { inject, observer } from "mobx-react";
 
 const WorkItemDynamic = (props) => {
