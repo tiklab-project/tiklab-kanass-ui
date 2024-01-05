@@ -43,7 +43,7 @@ const WorkChildAddmodal = (props) => {
     const findWorkItem = (value) => {
         const params = {
             projectId: projectId,
-            workTypeId: workType.workType.id,
+            workTypeId: workType.id,
             id: workId,
             title: null,
             ...value

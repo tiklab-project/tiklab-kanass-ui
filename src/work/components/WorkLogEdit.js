@@ -16,6 +16,8 @@ const WorkLogEdit = (props) => {
     const { getWorkLogList, addWorkLog, editWorKLog, searchWorKLog,
         versionTime } = WorkLogStore;
     const { workId } = workStore;
+    // 设置日期选择器格式
+    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     const [date, setDate] = useState(dayjs().format(dateFormat))
     const [modalTitle, setModalTitle] = useState("添加工时")
     const [modalType, setModalType] = useState("add")
@@ -97,8 +99,7 @@ const WorkLogEdit = (props) => {
     };
 
 
-    // 设置日期选择器格式
-    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+
 
     return (
         <div className="worklog-creat">

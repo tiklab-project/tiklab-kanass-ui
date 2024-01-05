@@ -194,7 +194,7 @@ const WorkChild = (props) => {
     return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
-                <div className="child-top-title">{type}({childWorkList.length})</div>
+                <div className="child-top-title">{type}({childWorkList?.length})</div>
                 {
                     !selectChild &&
                     <div className="child-top-botton">
