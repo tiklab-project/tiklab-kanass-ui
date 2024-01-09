@@ -115,7 +115,6 @@ const WorkItemDynamic = (props) => {
                         </div>
                         <div className="update-content">{dynamicContent.oldValue ? dynamicContent.oldValue.name : "无"} --- {dynamicContent.newValue.name}</div>
                     </div>
-                    
                 )
                 break;
             case "workStatus":

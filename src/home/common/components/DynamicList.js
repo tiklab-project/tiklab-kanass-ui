@@ -126,9 +126,6 @@ const DynamicList = (props) => {
                                     })
                                 }
                             </Select>
-
-
-
                         </div>
                     }
                 </div>
@@ -136,7 +133,7 @@ const DynamicList = (props) => {
                 <div className="dynamic-list">
                     {
                         opLogList && opLogList.length > 0 ? opLogList.map((item) => {
-                            return <DynamicItem content={item.data} type={item.actionType.id} />
+                            return <DynamicItem content={item.data} type={item.actionType.id} {...props}/>
                         })
                             :
                             <Empty image="/images/nodata.png" description="暂时没有动态~" />
