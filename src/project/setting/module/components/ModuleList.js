@@ -20,7 +20,7 @@ import DeleteModal from "../../../../common/deleteModal/deleteModal";
 const ModuleList = (props) => {
     // 解析 moduleStore
     const { modulelist, searchmodule, findModulePage, createModule, deleModule,
-        searchModuleById, editModuleById, modulePageParam, setPageParam
+        searchModuleById, editModuleById, setPageParam
     } = ModuleStore;
 
     const [type, setType] = useState("add")
@@ -37,12 +37,7 @@ const ModuleList = (props) => {
     // 加载中
     const [loading, setLoading] = useState(false)
 
-    // 列表的列
 
-
-    const creatChildMoule = (id) => {
-
-    }
     // 初始化
     useEffect(() => {
         findModule()

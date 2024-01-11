@@ -17,7 +17,6 @@ import { withRouter } from "react-router";
 const { TreeNode } = TreeSelect;
 const ModuleAddModal = (props) => {
     const { parent, type, visible, setVisible, modalName, id, modulelist } = props;
-    console.log(parent)
     const { createModule, searchModuleById, editModuleById } = ModuleStore;
     // form ref
     const [form] = Form.useForm();
@@ -37,24 +36,7 @@ const ModuleAddModal = (props) => {
         },
     };
 
-    /**
-     * 显示弹窗
-     */
-    // const showModal = () => {
-    //     setVisible(true);
-    //     if (props.type === "edit") {
-    //         searchModuleById(props.id).then((res) => {
-    //             if (res.code === 0) {
-    //                 form.setFieldsValue({
-    //                     moduleName: res.data.moduleName,
-    //                     id: res.data.id,
-    //                     desc: res.data.desc
-    //                 })
-    //             }
 
-    //         })
-    //     }
-    // };
     useEffect(() => {
         if (visible) {
             if (type === "edit") {

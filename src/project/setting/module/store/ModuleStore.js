@@ -43,7 +43,7 @@ export class ModuleStore {
 	createModule = async(values) => {
         const data = await Service("/module/createModule", values)
         if(data.code === 0){
-            this.findModulePage(values.project.id,this.searchModuleName)
+            this.findModulePage({projectId: values.project.id})
         }
         return data;
     }
@@ -99,8 +99,8 @@ export class ModuleStore {
      */
     @action
 	findModulePage = async(value) => {
-        Object.assign(this.searchCondition, { ...value })
-        const data = await Service("/module/findModuleListTree", this.searchCondition)
+        // Object.assign(this.searchCondition, { ...value })
+        const data = await Service("/module/findModuleListTree", value)
         if(data.code===0){
             this.modulelist = data.data
         }
