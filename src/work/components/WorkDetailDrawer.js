@@ -48,7 +48,7 @@ const WorkDetailDrawer = (props) => {
             IsSelectclear = false
         }
 
-        if (!detailRef.current.contains(e.target) && detailRef.current !== e.target && !IsSelectclear) {
+        if (!detailRef.current.contains(e.target) && detailRef.current !== e.target && !IsSelectclear && isModalVisible) {
             let pathname = props.location.pathname;
             const index = pathname.lastIndexOf("\/");
             pathname = pathname.substring(0, index);

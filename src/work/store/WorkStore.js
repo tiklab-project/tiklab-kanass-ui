@@ -217,7 +217,6 @@ export class WorkStore {
         const data = await Service("/projectVersion/findVersionList",params);
         if(data.code === 0){
             this.versionList = data.data;
-            console.log(this.versionList)
         }
         return data;
     }

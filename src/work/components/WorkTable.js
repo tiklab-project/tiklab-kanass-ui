@@ -75,10 +75,11 @@ const WorkTable = (props) => {
 
 
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
-        setIsModalVisible(true)
+        
         console.log(props)
         const pathname = props.match.url;
         props.history.push(`${pathname}/${record.id}`)
+        setIsModalVisible(true)
     }
 
     const getWorkLevelIndex = (value, workId) => {

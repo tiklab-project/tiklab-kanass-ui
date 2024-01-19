@@ -23,7 +23,7 @@ const WorkDetailBottom = (props) => {
 
     const [workTypeText, setWorkTypeText] = useState("事项")
     const [taskType, setTaskType] = useState()
-    const workCode = workInfo.workTypeCode;
+    const workTypeCode = workInfo.workTypeCode;
     useEffect(() => {
         if (workInfo) {
             if (workInfo.workTypeCode) {
@@ -142,7 +142,7 @@ const WorkDetailBottom = (props) => {
                                 <span className="tabs-bar-num">{relationModalNum?.childrenWork}</span>
                             </div>
                             {
-                                workCode === "demand" && <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
+                                workTypeCode === "demand" && <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
                                     任务
                                     <span className="tabs-bar-num">{relationModalNum?.childrenTaskWork}</span>
                                 </div>
@@ -230,7 +230,7 @@ const WorkDetailBottom = (props) => {
                             </div>
                         }
                         {
-                            tabValue === 4 && workCode === "demand" && deep < 3 &&
+                            tabValue === 4 && workTypeCode === "demand" && deep < 3 &&
                             <div className="tabs-tabpanel">
                                 <WorkChild
                                     workId={workId}
