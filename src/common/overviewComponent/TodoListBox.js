@@ -18,7 +18,7 @@ const TodoListBox = (props) => {
             <div className="todo-list">
                 {
                     todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                        return <TodoListItem content={item.data} />
+                        return <TodoListItem content={item.data} key={item.id} />
                     })
                         :
                         <Empty image="/images/nodata.png" description="暂时没有待办~" />

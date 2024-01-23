@@ -224,7 +224,7 @@ const TodoList = (props) => {
             {
                 todoTaskList && todoTaskList.length > 0 ? todoTaskList.map((item) => {
                     return <>
-                        <TodoListItem content={item.data} goTodoDetail={() => goTodoDetail(item.workItemId)} />
+                        <TodoListItem content={item.data} goTodoDetail={() => goTodoDetail(item.workItemId)} key={item.id}/>
                     </>
 
                 })

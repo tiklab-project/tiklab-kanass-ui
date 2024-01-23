@@ -2,7 +2,7 @@ import React from "react";
 import "./TodoListItem.scss"
 import { withRouter } from "react-router";
 const TodoListItem = (props) => {
-    const { content, model } = props;
+    const { content, model, key } = props;
     
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId, projectId } = data;
@@ -42,7 +42,7 @@ const TodoListItem = (props) => {
         // }
     }
     return (
-        <div className="todo-list-item" >
+        <div className="todo-list-item" key = {key}>
             <div className="todo-list-item-left">
                 <div className="todo-user-icon">{createUserIcon}</div>
                 <div className="todo-content">

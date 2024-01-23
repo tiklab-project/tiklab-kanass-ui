@@ -349,7 +349,7 @@ const HomeSurvey = (props) => {
                 <div className="recent-click-list">
                     {
                         recentList && recentList.length > 0 ? recentList.map(item => {
-                            return <div className="work-item" key={item.object.id}>
+                            return <div className="work-item" key={item.id}>
                                 <div className="work-left">
                                     <div className="work-icon">
                                         {
@@ -406,7 +406,7 @@ const HomeSurvey = (props) => {
                         <TabPane tab="进行中" key="1">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content = {item.data} />
+                                    return <TodoListItem content = {item.data} key = {item.id}/>
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />

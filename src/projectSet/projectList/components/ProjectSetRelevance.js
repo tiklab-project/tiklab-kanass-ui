@@ -118,7 +118,7 @@ const ProjectSetRelevance = (props) => {
     return <div >
         <Button type="primary" onClick={() => addProjectSet()}>关联项目</Button>
         <Modal
-            title={`关联项目集至：项目集1`}
+            title={`关联项目集至：项目集`}
             visible={visible}
             onOk={sumitFrom}
             onCancel={submitCancel}
