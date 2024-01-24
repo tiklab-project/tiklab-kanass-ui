@@ -136,7 +136,6 @@ const WorkBasicInfo = (props) => {
             const { status } = info.file;
             if (status === 'done') {
                 const res = info.file.response;
-                console.log(info)
                 const params = {
                     workItem: {
                         id: workId

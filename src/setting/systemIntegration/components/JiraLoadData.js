@@ -59,7 +59,6 @@ const LoadData = (props) => {
         showUploadList: false,
         maxCount: 1,
         onChange(info) {
-            console.log(info)
             if(info.event){
                 clearInterval(timer) 
                 // console.log(1, timer)
