@@ -311,6 +311,11 @@ const setDevRouter= [
                 code: 12-15,
             },
             {
+                title: "业务角色",
+                id: '/setting/businessrole',
+                code: 7-3
+            },
+            {
                 title: '表单',
                 id: '/setting/formsystem',
                 purviewCode: "SysFormList",

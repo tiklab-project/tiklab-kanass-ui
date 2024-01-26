@@ -27,6 +27,7 @@ const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/compon
 const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))
 const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
 const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
+const FlowBusinessRoleList = AsyncComponent(() => import('./setting/flow/components/FlowBusinessRoleList'))
 // 状态组件
 
 // 消息
@@ -574,6 +575,12 @@ const Routers = [
                     {
                         path: "/setting/nodestatus",
                         component: ProjectNodeStatusList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/businessrole",
+                        component: FlowBusinessRoleList,
                         row: true,
                         exact: true
                     },

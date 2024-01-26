@@ -23,7 +23,9 @@ import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAc
 import { setWorkDeatilInList } from "./WorkSearch";
 import { setWorkTitle } from "./WorkArrayChange";
 const WorkDetail = (props) => {
-    const [percentForm] = Form.useForm();
+    const [detailForm] = Form.useForm();
+    // const [percentForm] = Form.useForm();
+    
     const { workStore, showPage, setIsModalVisible } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
@@ -112,6 +114,7 @@ const WorkDetail = (props) => {
     useEffect(() => {
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }, [workId, workShowType])
+
     const deleteWork = () => {
         detWork(workId).then(() => {
             if (workShowType === "table") {
@@ -162,13 +165,12 @@ const WorkDetail = (props) => {
                 setWorkStatus(name)
                 searchWorkById(workId).then((res) => {
                     if (res) {
-                        percentForm.setFieldsValue({ assigner: res.assigner?.id })
+                        detailForm.setFieldsValue({ assigner: res.assigner?.id })
                         workInfo.assigner = res.assigner;
                         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                         workList[workIndex - 1].workStatusNode = res.workStatusNode;
                         workList[workIndex - 1].workStatusCode = res.workStatusCode;
-                        // setWorkList([...workList])
                     }
                 })
             }
@@ -443,6 +445,7 @@ const WorkDetail = (props) => {
                                     getWorkDetail={getWorkDetail}
                                     workDeatilForm={workDeatilForm}
                                     relationModalNum={relationModalNum}
+                                    detailForm = {detailForm}
                                     {...props}
                                 />}
                             </div>

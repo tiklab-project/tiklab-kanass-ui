@@ -18,7 +18,8 @@ import setImageUrl from "../../common/utils/setImageUrl";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
-    const [detailForm] = Form.useForm();
+    const { detailForm } = props;
+    // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const layoutExForm = {
@@ -58,6 +59,7 @@ const WorkBasicInfo = (props) => {
             detailForm.setFieldsValue({
                 assigner: workInfo.assigner?.id,
                 builder: workInfo.builder?.id,
+                reporter: workInfo.reporter?.id,
                 module: workInfo.module?.id,
                 workPriority: workInfo.workPriority?.id,
                 workType: workInfo.workType?.id,
@@ -124,10 +126,12 @@ const WorkBasicInfo = (props) => {
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     // 上传附件的信息
+    const upload_url = base_url === "/" ? window.location.hostname : base_url
+
     const filesParams = {
         name: 'uploadFile',
         multiple: true,
-        action: `${base_url}/dfs/upload`,
+        action: `${upload_url}/dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,
@@ -270,9 +274,9 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.builder
             }
         }
-        if (changeKey === "builder") {
-            changedValues.builder = {
-                id: changedValues.builder
+        if (changeKey === "reporter") {
+            changedValues.reporter = {
+                id: changedValues.reporter
             }
         }
         if (changeKey === "parentWorkItem") {
@@ -679,6 +683,30 @@ const WorkBasicInfo = (props) => {
                                     {
                                         userList && userList.map((item) => {
                                             return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item 
+                                label="审核人" 
+                                name="reporter"
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectWorkUser"
+                                    bordered={fieldName === "reporter" ? true : false}
+                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("reporter")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("reporter")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                    getPopupContainer={() => formRef.current}
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user?.id} key={item.id}><Space>{item.user.nickname}</Space></Select.Option>
                                         })
                                     }
                                 </Select>

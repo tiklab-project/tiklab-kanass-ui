@@ -15,7 +15,7 @@ import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
-    const { workStore, workInfo, setWorkInfo, relationModalNum } = props;
+    const { workStore, workInfo, setWorkInfo, relationModalNum, detailForm } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, workShowType, findDmWorkTypeByCode, viewType } = workStore;
@@ -94,14 +94,14 @@ const WorkDetailBottom = (props) => {
         if (workInfo?.workTypeCode) {
             switch (workInfo?.workTypeCode) {
                 case "task":
-                    return <WorkBasicInfoTask {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />;
+                    return <WorkBasicInfoTask {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}/>;
                 case "demand":
                 case "epic":
-                    return <WorkBasicInfoDemand {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />
+                    return <WorkBasicInfoDemand {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm} />
                 case "defect":
-                    return <WorkBasicInfoDefect {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />
+                    return <WorkBasicInfoDefect {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}  />
                 default:
-                    return <WorkBasicInfoNomal {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} />
+                    return <WorkBasicInfoNomal {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}/>
             }
         }
     }
