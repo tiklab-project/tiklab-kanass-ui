@@ -190,19 +190,19 @@ const setDevRouter= [
         title: "应用",
         icon: 'systemversion',
         id: '/setting/version',
-        purviewCode: "version",
+        // purviewCode: "version",
         code: 11,
         children: [
             {
                 title: "版本与许可证",
                 id: '/setting/version',
-                purviewCode: "version",
+                // purviewCode: "version",
                 code: 11-1,
             },
             {
                 title: "应用访问权限",
                 id: '/setting/productAuth',
-                purviewCode: "version",
+                // purviewCode: "version",
                 code: 11-2,
             },
         ]

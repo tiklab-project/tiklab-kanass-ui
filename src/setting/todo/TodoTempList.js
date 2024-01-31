@@ -1,5 +1,5 @@
 import React from "react";
-import {TodoTemp} from "thoughtware-todotask-ui";
+import {TodoTemp} from "thoughtware-message-ui";
 
 const TodoTempListContent = props =>{
     return <TodoTemp {...props} bgroup={"kanass"}/>

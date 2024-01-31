@@ -126,7 +126,7 @@ const WorkBasicInfo = (props) => {
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     // 上传附件的信息
-    const upload_url = base_url === "/" ? window.location.hostname : base_url
+    const upload_url = env === "local" ? base_url : "";
 
     const filesParams = {
         name: 'uploadFile',

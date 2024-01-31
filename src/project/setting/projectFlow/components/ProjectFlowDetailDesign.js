@@ -15,7 +15,7 @@ const ProjectFlowDetailDesign = (props) => {
         return
     },[])
     return (
-        <FlowChart isBase = {false} userList = {userList} userId = {userId}/>
+        <FlowChart domainId={projectId} isBase = {false} userList = {userList} userId = {userId}/>
     )
 }
 

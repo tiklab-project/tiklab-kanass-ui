@@ -62,7 +62,6 @@
         "thoughtware-security-ui": ">=^1.0.2",
         "thoughtware-slate-ui": ">=^1.0.1",
         "thoughtware-privilege-ui": "^1.0.2",
-        "thoughtware-todotask-ui": ">=^1.0.2",
         "slate": "0.100.0",
         "slate-history": "0.100.0",
         "slate-react": "0.100.0"
@@ -206,7 +205,6 @@
         "thoughtware-privilege-ui": "^1.0.2",
         "thoughtware-security-ui": "^1.0.2",
         "thoughtware-slate-ui": "^1.0.2",
-        "thoughtware-todotask-ui": "^1.0.2",
         "thoughtware-user-ui": "^1.0.2"
     }
 }

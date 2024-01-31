@@ -125,7 +125,7 @@ const WorkBasicInfo = (props) => {
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     // 上传附件的信息
-    const upload_url = base_url === "/" ? window.location.hostname : base_url
+    const upload_url = env === "local" ? base_url : "";
     const filesParams = {
         name: 'uploadFile',
         multiple: true,
@@ -966,7 +966,6 @@ const WorkBasicInfo = (props) => {
                                     base_url={base_url}
                                     value={slateValue}
                                     minHeight={300}
-                                    // onChange={setSlateValue}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
                                 >
@@ -981,7 +980,6 @@ const WorkBasicInfo = (props) => {
                             </div>
 
                             <div className="desc-botton">
-
                                 <Button onClick={() => cancel()}>取消</Button>
                                 <Button type="primary" onClick={() => editorDesc()}>确定</Button>
                             </div>
