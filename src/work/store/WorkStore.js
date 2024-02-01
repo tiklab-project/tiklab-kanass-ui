@@ -731,8 +731,7 @@ export class WorkStore {
     }
 
     findTransitionList = async(value) => {
-
-        const data = await Service("/transition/findTransitionList", value);
+        const data = await Service("/transition/findTransitionListByBusiness", value);
         return data;
     }
 

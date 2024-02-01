@@ -182,7 +182,13 @@ const WorkDetail = (props) => {
 
 
     const getTransitionList = (nodeId, flowId) => {
-        findTransitionList({ fromNodeId: nodeId, flowId: flowId }).then(res => {
+        const params = {
+            fromNodeId: nodeId, 
+            flowId: flowId,
+            domainId: workId,
+            userId: userId
+        }
+        findTransitionList(params).then(res => {
             if (res.code === 0) {
                 setTransformList(res.data)
             }
