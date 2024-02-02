@@ -258,6 +258,7 @@ const WorkDetail = (props) => {
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
         newDetailCrumbArray.push({ id: "流程", iconUrl: "/images/flow.png", type: "flow" })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
+        setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }
     const menu = (
         <div className="work-flow-transition">
@@ -283,6 +284,7 @@ const WorkDetail = (props) => {
 
         const array = detailCrumbArray.slice(0, index + 1)
         setSessionStorage("detailCrumbArray", array)
+        setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }
 
     const changPage = (page) => {

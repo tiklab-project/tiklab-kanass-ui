@@ -295,7 +295,7 @@ export class WorkStore {
                 }
             }
             this.workBoardListLength = length;
-            this.findWorkItemNumByWorkType()
+            this.findWorkItemNumByWorkList()
         }
         return data;
     }
@@ -394,7 +394,7 @@ export class WorkStore {
     @action
     findWorkItemNumByWorkList = async(value) => {
         this.setSearchCondition(value)
-        const data = await Service("/workItem/findWorkItemNumByWorkList",this.searchCondition);
+        const data = await Service("/workItem/findWorkItemListNumByWorkType",this.searchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
         }
@@ -433,6 +433,7 @@ export class WorkStore {
 
     @action
     getWorkItemNum = () => {
+        console.log(this.viewType)
         if(this.viewType === "tile" || this.workShowType === "bodar"){
             this.findWorkItemNumByWorkList()
         }
@@ -440,6 +441,7 @@ export class WorkStore {
             this.findWorkItemNumByWorkType()
         }
     }
+
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
@@ -451,10 +453,10 @@ export class WorkStore {
         if (data.code === 0) {
             this.tableLoading = false;
             this.workList = data.data.dataList;
-            this.currentPage = this.searchCondition.pageParam.currentPage;
-            this.totalPage = data.data.totalPage;
-            this.total = data.data.totalRecord;
-            this.findWorkItemNumByWorkType()
+        //     this.currentPage = this.searchCondition.pageParam.currentPage;
+        //     this.totalPage = data.data.totalPage;
+        //     this.total = data.data.totalRecord;
+        //     this.findWorkItemNumByWorkType()
         }
         return data;
     }
