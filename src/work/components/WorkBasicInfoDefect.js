@@ -616,7 +616,6 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                           
 
                             <Form.Item
                                 label="所属迭代" name="sprint"

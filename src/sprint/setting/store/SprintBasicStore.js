@@ -3,17 +3,16 @@ import { Service } from "../../../common/utils/requset"
 
 export class SprintBasicStore {
     @observable useList = [];
-    @observable status = []
+    @observable status = [];
+
     @action
     findSprint = async (values) => {
-
         const param = new FormData()
         param.append("id", values)
         const data = await Service("/sprint/findSprint", param)
         if (data.code === 0) {
             return data;
         }
-
     }
 
     @action
@@ -54,6 +53,24 @@ export class SprintBasicStore {
             this.useList = data.data.dataList;
         }
         return data;
+    }
+
+    
+
+    @action
+    findSelectSprintList = async (values) => {
+        const data = await Service("/sprint/findSelectSprintList", values)
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    @action
+    updataBatchWorkItemSprint = async (values) => {
+        const data = await Service("/sprint/updataBatchWorkItemSprint", values)
+        if (data.code === 0) {
+            return data;
+        }
     }
 
 }
