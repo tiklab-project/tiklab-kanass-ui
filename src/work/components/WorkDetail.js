@@ -25,13 +25,13 @@ import { setWorkTitle } from "./WorkArrayChange";
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
     // const [percentForm] = Form.useForm();
-    
+
     const { workStore, showPage, setIsModalVisible } = props;
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
         getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
-        findTransitionList, findWorkItemRelationModelCount, findVersionList
+        findTransitionList, findWorkItemRelationModelCount, findSelectVersionList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -55,6 +55,14 @@ const WorkDetail = (props) => {
             setInfoLoading(false)
             if (res) {
                 setWorkInfo(res)
+                // 获取选项列表
+                const projectId =  res.project.id
+                getWorkTypeList({ projectId: projectId });
+                getModuleList(projectId)
+                getsprintlist(projectId)
+                getSelectUserList(projectId);
+                findSelectVersionList(projectId)
+
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
@@ -66,7 +74,7 @@ const WorkDetail = (props) => {
                 console.log(props.match.path)
                 if (props.match.path === "/projectDetail/:id/work/:workId") {
                     console.log(id)
-                    setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl}])
+                    setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
                 }
             }
@@ -74,8 +82,8 @@ const WorkDetail = (props) => {
     }
     const isDetail = () => {
         let isView = false;
-        if(props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
-        || props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
+        if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
+            || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
             isView = true;
         }
         return isView;
@@ -86,8 +94,8 @@ const WorkDetail = (props) => {
         //     console.log(id)
         //     setWorkId(id)
         // }
-        if(props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
-        || props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
+        if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
+            || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
         }
@@ -96,11 +104,7 @@ const WorkDetail = (props) => {
     useEffect(() => {
         setWorkInfo()
         if (workId && workId.length > 0) {
-            getWorkTypeList({ projectId: projectId });
-            getModuleList(projectId)
-            getsprintlist(projectId)
-            getSelectUserList(projectId);
-            findVersionList(projectId)
+
             findPriority()
             getWorkDetail(workId)
 
@@ -183,7 +187,7 @@ const WorkDetail = (props) => {
 
     const getTransitionList = (nodeId, flowId) => {
         const params = {
-            fromNodeId: nodeId, 
+            fromNodeId: nodeId,
             flowId: flowId,
             domainId: workId,
             userId: userId
@@ -216,7 +220,7 @@ const WorkDetail = (props) => {
             console.log(workId)
             editWork(params).then(res => {
                 if (res.code === 0) {
-                    
+
                     if (workShowType === "list") {
                         workInfo.title = name;
                         if (document.getElementById(workId)) {
@@ -302,16 +306,16 @@ const WorkDetail = (props) => {
     const goWorkList = () => {
 
 
-        if(props.match.path === "/projectDetail/:id/work/:workId"){
+        if (props.match.path === "/projectDetail/:id/work/:workId") {
             props.history.push(`/projectDetail/${projectId}/workTable`)
         }
-        if(props.match.path === "/:id/versiondetail/:version/work/:workId"){
+        if (props.match.path === "/:id/versiondetail/:version/work/:workId") {
             props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
         }
-        if(props.match.path === "/:id/sprintdetail/:sprint/work/:workId"){
+        if (props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
             props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
         }
-        
+
     }
     return (
         <Skeleton loading={infoLoading} active>
@@ -324,11 +328,11 @@ const WorkDetail = (props) => {
 
                                 {
                                     isDetail() &&
-                                    <div className="work-detail-crumb-item" onClick={() =>goWorkList() }> 
-                                    <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-pageLeft"></use>
-                                    </svg>
-                                     事项 &nbsp;/ &nbsp;</div>
+                                    <div className="work-detail-crumb-item" onClick={() => goWorkList()}>
+                                        <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-pageLeft"></use>
+                                        </svg>
+                                        事项 &nbsp;/ &nbsp;</div>
                                 }
                                 {
                                     detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
@@ -453,7 +457,7 @@ const WorkDetail = (props) => {
                                     getWorkDetail={getWorkDetail}
                                     workDeatilForm={workDeatilForm}
                                     relationModalNum={relationModalNum}
-                                    detailForm = {detailForm}
+                                    detailForm={detailForm}
                                     {...props}
                                 />}
                             </div>

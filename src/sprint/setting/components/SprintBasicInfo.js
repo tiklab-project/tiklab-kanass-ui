@@ -44,7 +44,7 @@ const SprintBasicInfo = props => {
     const [confirmForm] = Form.useForm();
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
-    const { deleteSprint, updateSprint, findSprint, getUseList, useList, status, 
+    const { deleteSprint, updateSprint, findSprint, getUseList, useList, status,
         findAllSprintState, findSelectSprintList } = SprintBasicStore;
     const [disable, setDisabled] = useState(true);
     const [sprintInfo, setSprintInfo] = useState();
@@ -93,42 +93,37 @@ const SprintBasicInfo = props => {
             desc: sprintInfo.desc,
             startTime: [moment(sprintInfo.startTime, dateFormat), moment(sprintInfo.endTime, dateFormat)]
         })
+        setDisabled(false)
+        setIsChangeState(false)
     }
 
     const onFinish = () => {
-        if(isChangeState){
-            // const params = {
-            //     currentSprintId: sprintId,
-            //     projectId: projectId,
-
-            // }
-            // findSelectSprintList(params).then(res => {
-            //     if(res.code  === 0){
-            //         console.log(res.data)
-            //     }
-            // })
+        if (isChangeState) {
             setSprintChangeVisable(true)
+        } else {
+            form.validateFields().then((values) => {
+                const time = values["startTime"]
+                const data = {
+                    ...values,
+                    startTime: time[0].format("YYYY-MM-DD"),
+                    endTime: time[1].format("YYYY-MM-DD"),
+                    master: { id: values.master },
+                    desc: values.desc,
+                    sprintState: {
+                        id: values.sprintState
+                    },
+                    id: sprintId
+                }
+                updateSprint(data).then(res => {
+                    if (res.code === 0) {
+                        setSprintInfo(data)
+                        message.success("修改成功");
+                        setDisabled(true);
+                    }
+                });
+            })
         }
-        // form.validateFields().then((values) => {
-        //     const time = values["startTime"]
-        //     const data = {
-        //         ...values,
-        //         startTime: time[0].format("YYYY-MM-DD"),
-        //         endTime: time[1].format("YYYY-MM-DD"),
-        //         master: { id: values.master },
-        //         desc: values.desc,
-        //         sprintState: {
-        //             id: values.sprintState
-        //         },
-        //         id: sprintId
-        //     }
-        //     updateSprint(data).then(res => {
-        //         if(res.code === 0){
-        //             message.success("修改成功");
-        //             setDisabled(true);
-        //         }
-        //     });
-        // })
+
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -146,7 +141,7 @@ const SprintBasicInfo = props => {
                     props.history.push(`/projectDetail/${projectId}/sprint`)
                 }
             })
-            
+
         })
 
     };
@@ -158,8 +153,11 @@ const SprintBasicInfo = props => {
     const onValuesChange = (changedValues) => {
         console.log(changedValues.sprintState)
         const sprintState = changedValues.sprintState;
-        if(sprintState && sprintState != sprintInfo.sprintState?.id){
+        if (sprintState && sprintState != sprintInfo.sprintState?.id && sprintState === "222222") {
             setIsChangeState(true)
+        }
+        if (sprintState && (sprintState == sprintInfo.sprintState?.id || sprintState !== "222222")) {
+            setIsChangeState(false)
         }
     }
     const sprintInfoDesc = () => (
@@ -288,7 +286,7 @@ const SprintBasicInfo = props => {
                                     删除迭代，包含迭代与事项的关联关系
                                 </div>
 
-                                <div className="change-button delete-button"  onClick={() => showModal()}>
+                                <div className="change-button delete-button" onClick={() => showModal()}>
                                     删除迭代
                                 </div>
                             </div>
@@ -297,24 +295,26 @@ const SprintBasicInfo = props => {
 
                 </div>
                 <div className="sprint-delete-confirm">
-                    <Modal 
-                        title="确定删除" 
-                        getContainer = {false} 
-                        visible={isModalVisible} 
+                    <Modal
+                        title="确定删除"
+                        getContainer={false}
+                        visible={isModalVisible}
                         closable={false} onOk={handleOk} onCancel={handleCancel} okText={"确定"} cancelText={"取消"}
                         okType="danger"
-                        okButtonProps={{type: "primary"}}
+                        okButtonProps={{ type: "primary" }}
                     >
                         删除迭代，包含迭代与事项的关联关系
                     </Modal>
                 </div>
                 <SprintChangeModal
-                    visible = {sprintChangeVisable}
-                    projectId = {projectId}
-                    sprintId = {sprintId}
-                    SprintBasicStore = {SprintBasicStore}
-                    setVisible = {setSprintChangeVisable}
-                    form = {form}
+                    visible={sprintChangeVisable}
+                    projectId={projectId}
+                    sprintId={sprintId}
+                    SprintBasicStore={SprintBasicStore}
+                    setVisible={setSprintChangeVisable}
+                    setSprintInfo = {setSprintInfo}
+                    setDisabled = {setDisabled}
+                    form={form}
                 />
 
             </Col>

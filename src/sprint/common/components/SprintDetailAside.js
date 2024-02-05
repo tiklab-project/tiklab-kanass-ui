@@ -21,7 +21,7 @@ const SprintDetailAside = (props) => {
     const { sprintDetailStore } = props;
     const { findSprint, sprint } = sprintDetailStore;
     //语言包
-    const { t, i18n } = useTranslation();
+
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;
@@ -29,14 +29,9 @@ const SprintDetailAside = (props) => {
     const [isShowText, SetIsShowText] = useState(false)
 
     const path = props.location.pathname.split("/")[4];
-
-    useEffect(() => {
-        findSprint({ id: sprintId })
-        return;
-    }, [sprintId])
-
-    // 路由
-    const router = [
+    const [router, setRouter] = useState();
+    const { t, i18n } = useTranslation();
+    const allRouter = [
         {
             title: `${t('survey')}`,
             icon: 'survey',
@@ -66,6 +61,45 @@ const SprintDetailAside = (props) => {
             encoded: "statistics",
         }
     ];
+
+    const doneRouter = [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey',
+            url: `/${project.id}/sprintdetail/${sprintId}/survey`,
+            key: "survey",
+            encoded: "Survey",
+        },
+        {
+            title: "事项",
+            icon: 'survey',
+            url: `/${project.id}/sprintdetail/${sprintId}/workTable`,
+            key: "work",
+            encoded: "work",
+        },
+        {
+            title: "统计",
+            icon: 'survey',
+            url: `/${project.id}/sprintdetail/${sprintId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "statistics",
+        }
+    ]
+    useEffect(() => {
+        findSprint({ id: sprintId }).then(res => {
+            if (res.data.sprintState.id === "222222") {
+                setRouter(doneRouter)
+            } else {
+                setRouter(allRouter)
+            }
+        })
+        return;
+    }, [sprintId])
+
+    // 路由
+
+
+
 
     //点击左侧菜单
     const selectMenu = (key) => {
@@ -149,7 +183,7 @@ const SprintDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={()=> props.history.push(`/${project.id}/sprintdetail/${sprintId}/setting`)}  ref={setButton} className="sprint-set-icon setting">
+                    <div onClick={() => props.history.push(`/${project.id}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>

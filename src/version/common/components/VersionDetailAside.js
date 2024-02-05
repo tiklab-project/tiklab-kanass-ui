@@ -30,14 +30,22 @@ const VersionDetailAside = (props) => {
     const [isShowText, SetIsShowText] = useState(false)
 
     const path = props.location.pathname.split("/")[4];
-
+    const [router, setRouter] = useState();
     useEffect(() => {
-        findVersion({ id: versionId })
+        findVersion({ id: versionId }).then(res => {
+            if(res.code === 0){
+                if (res.data.versionState.id === "222222") {
+                    setRouter(doneRouter)
+                } else {
+                    setRouter(allRouter)
+                }
+            }
+        })
         return;
     }, [versionId])
 
-    // 路由
-    const router = [
+  
+    const allRouter = [
         {
             title: `${t('survey')}`,
             icon: 'survey',
@@ -60,6 +68,23 @@ const VersionDetailAside = (props) => {
             encoded: "plan",
         }
     ];
+
+    const doneRouter = [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey',
+            url: `/${project.id}/versiondetail/${versionId}/survey`,
+            key: "survey",
+            encoded: "Survey",
+        },
+        {
+            title: "事项",
+            icon: 'survey',
+            url: `/${project.id}/versiondetail/${versionId}/workTable`,
+            key: "work",
+            encoded: "work",
+        }
+    ]
 
     //点击左侧菜单
     const selectMenu = (key) => {

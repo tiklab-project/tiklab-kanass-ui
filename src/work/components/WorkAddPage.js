@@ -14,10 +14,11 @@ const { RangePicker } = DatePicker;
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel } = props;
-    const { moduleList, sprintList, userList, findProjectList, projectList,
-        getModuleList, getsprintlist, getSelectUserList, addWork,
+    const { moduleList, selectSprintList, userList, findProjectList, projectList,
+        getModuleList, findSprintList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
-        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList, versionList,findVersionList
+        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList, 
+        selectVersionList, findSelectVersionList
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -84,14 +85,14 @@ const WorkAddPage = (props) => {
                     })
                 }
             })
-            getsprintlist(projectId).then(res => {
+            findSprintList(projectId).then(res => {
                 if (res.code === 0) {
                     form.setFieldsValue({
-                        sprint: sprintId ? sprintId : sprintList[0]?.id
+                        sprint: sprintId ? sprintId : selectSprintList[0]?.id
                     })
                 }
             })
-            findVersionList(projectId).then(res => {
+            findSelectVersionList(projectId).then(res => {
                 if (res.code === 0) {
                     if(res.data.length > 0) {
                         form.setFieldsValue({
@@ -125,7 +126,7 @@ const WorkAddPage = (props) => {
 
     const selectProject = (option) => {
         getModuleList(option)
-        getsprintlist(option)
+        findSprintList(option)
         getSelectUserList(option);
     }
 
@@ -388,7 +389,7 @@ const WorkAddPage = (props) => {
                                     key="selectSprint"
                                 >
                                     {
-                                        sprintList && sprintList.map((item) => {
+                                        selectSprintList && selectSprintList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
                                         })
                                     }
@@ -406,7 +407,7 @@ const WorkAddPage = (props) => {
                                     key="selectProjectVersion"
                                 >
                                     {
-                                        versionList && versionList.map((item) => {
+                                        selectVersionList && selectVersionList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                         })
                                     }

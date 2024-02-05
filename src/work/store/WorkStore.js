@@ -16,7 +16,9 @@ export class WorkStore {
     @observable projectList = [];
     @observable moduleList = [];
     @observable versionList = [];
+    @observable selectVersionList = [];
     @observable sprintList = [];
+    @observable selectSprintList = [];
     @observable userList = [];
     @observable workAllList = [];
 
@@ -221,9 +223,25 @@ export class WorkStore {
         return data;
     }
 
+    @action
+    findSelectVersionList = async(projectId) => {
+        const params = {
+            projectId: projectId,
+            orderParams: [{
+                name: "startTime",
+                orderType: "desc"
+            }]
+        }
+        const data = await Service("/projectVersion/findSelectVersionList",params);
+        if(data.code === 0){
+            this.selectVersionList = data.data;
+        }
+        return data;
+    }
+
     // 根据项目id查找迭代
     @action
-    getsprintlist = async(projectid) => {
+    findSprintList = async(projectid) => {
         const params = {
             projectId: projectid,
             sprintName: "",
@@ -235,6 +253,23 @@ export class WorkStore {
         const data = await Service("/sprint/findSprintList",params);
         if (data.code === 0) {
             this.sprintList = data.data;
+        }
+        return data;
+    }
+
+    @action
+    getsprintlist = async(projectid) => {
+        const params = {
+            projectId: projectid,
+            sprintName: "",
+            orderParams: [{
+                name: "startTime",
+                orderType: "desc"
+            }]
+        }
+        const data = await Service("/sprint/findSelectSprintList",params);
+        if (data.code === 0) {
+            this.selectSprintList = data.data;
         }
         return data;
     }

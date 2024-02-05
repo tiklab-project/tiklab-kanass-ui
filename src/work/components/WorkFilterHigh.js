@@ -22,13 +22,13 @@ const WorkFilterHigh = (props) => {
         wrapperCol: { span: 24 }
     };
     // 解析store数据
-    const { workShowType, priorityList, findPriority, getsprintlist, sprintList,
+    const { workShowType, priorityList, findPriority, findSprintList, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
         getSelectUserList, userList, setSearchConditionNull, tabValue, eveWorkTypeNum } = workStore;
 
     useEffect(() => {
         findPriority()
-        getsprintlist(projectId)
+        findSprintList(projectId)
         getModuleList(projectId)
         getWorkStatus()
         getSelectUserList(projectId);
@@ -75,9 +75,9 @@ const WorkFilterHigh = (props) => {
                     workPriorityIds: changedValues.workPriorityIds,
                 }
                 break;
-            case "sprintIds":
+            case "currentSprintId":
                 value = {
-                    sprintIds: changedValues.sprintIds,
+                    currentSprintIds: changedValues.currentSprintId,
                 }
                 break;
             case "moduleIds":
@@ -140,7 +140,7 @@ const WorkFilterHigh = (props) => {
             planStartDate: searchCondition.planStartDateStart ? [moment(searchCondition.planStartDateStart, dateFormat), moment(searchCondition.planStartDateEnd, dateFormat)] : null,
             planEndDate: searchCondition.planEndDateStart ? [moment(searchCondition.planEndDateStart, dateFormat), moment(searchCondition.planEndDateEnd, dateFormat)] : null,
             workPriorityIds: searchCondition.workPriorityIds,
-            sprintIds: searchCondition.sprintIds,
+            currentSprintId: searchCondition.currentSprintId,
             moduleIds: searchCondition.moduleIds
         })
     }
@@ -246,7 +246,7 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item name="sprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
+                <Form.Item name="currentSprintId" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"
                         placeholder="所属迭代"

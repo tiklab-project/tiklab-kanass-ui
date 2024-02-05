@@ -18,6 +18,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 import { Collapse } from 'antd';
 import VersionBasicStore from "../store/VersionBasicStore";
+import VersionChangeModal from "./VersionChangeModal";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -46,6 +47,7 @@ const VersionBasicInfo = props => {
     const { deleteVersion, updateVersion, findVersion, getUseList, useList, status, findAllVersionState } = VersionBasicStore;
     const [disable, setDisabled] = useState(true);
     const [versionInfo, setVersionInfo] = useState();
+    const [versionChangeVisable, setVersionChangeVisable] = useState(false)
     // 周期
     const rangeConfig = {
         rules: [
@@ -74,7 +76,7 @@ const VersionBasicInfo = props => {
                     name: data.name,
                     versionState: data.versionState.id,
                     master: data.master.id,
-                    startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
+                    startTime: [moment(data.startTime, dateFormat), moment(data.publishDate, dateFormat)]
                 })
             }
 
@@ -86,30 +88,36 @@ const VersionBasicInfo = props => {
             name: versionInfo.name,
             versionState: versionInfo.versionState.id,
             master: versionInfo.master.id,
-            startTime: [moment(versionInfo.startTime, dateFormat), moment(versionInfo.endTime, dateFormat)]
+            startTime: [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishDate, dateFormat)]
         })
     }
 
     const onFinish = () => {
-        form.validateFields().then((values) => {
-            const time = values["startTime"]
-            const data = {
-                ...values,
-                startTime: time[0].format("YYYY-MM-DD"),
-                endTime: time[1].format("YYYY-MM-DD"),
-                master: { id: values.master },
-                versionState: {
-                    id: values.versionState
-                },
-                id: versionId
-            }
-            updateVersion(data).then(res => {
-                if(res.code === 0){
-                    message.success("修改成功");
-                    setDisabled(true);
+        if (isChangeState) {
+            setVersionChangeVisable(true)
+        } else {
+            form.validateFields().then((values) => {
+                const time = values["startTime"]
+                const data = {
+                    ...values,
+                    startTime: time[0].format("YYYY-MM-DD"),
+                    publishDate: time[1].format("YYYY-MM-DD"),
+                    master: { id: values.master },
+                    versionState: {
+                        id: values.versionState
+                    },
+                    id: versionId
                 }
-            });
-        })
+                updateVersion(data).then(res => {
+                    if(res.code === 0){
+                        message.success("修改成功");
+                        setVersionInfo(data);
+                        setDisabled(true);
+                    }
+                });
+            })
+        }
+        
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -135,6 +143,17 @@ const VersionBasicInfo = props => {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+    const [isChangeState, setIsChangeState] = useState(false)
+    const onValuesChange = (changedValues) => {
+        console.log(changedValues.versionState)
+        const versionState = changedValues.versionState;
+        if (versionState && versionState != versionInfo.versionState?.id && versionState === "222222") {
+            setIsChangeState(true)
+        }
+        if (versionState && (versionState == versionInfo.versionState?.id || versionState !== "222222")) {
+            setIsChangeState(false)
+        }
+    }
 
     const versionInfoDesc = () => (
         <div>
@@ -190,7 +209,7 @@ const VersionBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    // onValuesChange={onFinish}
+                                    onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
                                 >
                                     <Form.Item
                                         label="版本名称"
@@ -279,6 +298,16 @@ const VersionBasicInfo = props => {
                         删除版本，包含版本与事项的关联关系
                     </Modal>
                 </div>
+                <VersionChangeModal 
+                    visible={versionChangeVisable}
+                    projectId={projectId}
+                    versionId={versionId}
+                    VersionBasicStore={VersionBasicStore}
+                    setVisible={setVersionChangeVisable}
+                    setVersionInfo = {setVersionInfo}
+                    setDisabled = {setDisabled}
+                    form={form}
+                />
             </Col>
         </Row >
     )

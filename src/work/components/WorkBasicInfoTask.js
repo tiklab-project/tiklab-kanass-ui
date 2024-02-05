@@ -40,7 +40,7 @@ const WorkBasicInfo = (props) => {
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, sprintList, priorityList,versionList, editWork,
+        attachList, findFormConfig, formList, moduleList, selectSprintList, priorityList,selectVersionList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, workIndex, treeIndex,
     } = workStore;
@@ -654,7 +654,7 @@ const WorkBasicInfo = (props) => {
                                     getPopupContainer={() => formRef.current}
                                 >
                                     {
-                                        sprintList && sprintList.map((item) => {
+                                        selectSprintList && selectSprintList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
                                         })
                                     }
@@ -772,7 +772,7 @@ const WorkBasicInfo = (props) => {
                                     getPopupContainer={() => formRef.current}
                                 >
                                     {
-                                        versionList && versionList.map((item) => {
+                                        selectVersionList && selectVersionList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                         })
                                     }

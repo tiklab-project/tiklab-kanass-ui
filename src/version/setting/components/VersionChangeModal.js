@@ -10,22 +10,21 @@ import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Select, Modal, message } from "antd";
 
-const SprintChangeModal = props => {
-    const {projectId, sprintId, visible, setVisible, SprintBasicStore, form, setDisabled, setSprintInfo} = props;
-    const { findSelectSprintList, updateSprint } = SprintBasicStore;
-    const [selectSprintList, setSelectSprintLis] = useState();
-    const [newSprintId, setNewSprintId] = useState()
+const VersionChangeModal = props => {
+    const {projectId, versionId, visible, setVisible, VersionBasicStore, form, setDisabled, setVersionInfo} = props;
+    const { findSelectVersionList, updateVersion } = VersionBasicStore;
+    const [selectVersionList, setSelectVersionLis] = useState();
+    const [newVersionId, setNewVersionId] = useState()
     useEffect(()=> {
         if(visible){
             const params = {
-                currentSprintId: sprintId,
+                currentVersionId: versionId,
                 projectId: projectId,
-    
             }
         
-            findSelectSprintList(params).then(res => {
+            findSelectVersionList(params).then(res => {
                 if(res.code  === 0){
-                    setSelectSprintLis(res.data)
+                    setSelectVersionLis(res.data)
                 }
             })
         }
@@ -43,15 +42,15 @@ const SprintChangeModal = props => {
                 endTime: time[1].format("YYYY-MM-DD"),
                 master: { id: values.master },
                 desc: values.desc,
-                sprintState: {
-                    id: values.sprintState
+                versionState: {
+                    id: values.versionState
                 },
-                id: sprintId,
-                newSprintId: newSprintId
+                id: versionId,
+                newVersionId: newVersionId
             }
-            updateSprint(data).then(res => {
+            updateVersion(data).then(res => {
                 if(res.code === 0){
-                    setSprintInfo(data)
+                    setVersionInfo(data)
                     message.success("修改成功");
                     setDisabled(true);
                     setVisible(false)
@@ -73,23 +72,23 @@ const SprintChangeModal = props => {
         >
             <div>将未完成事项移动至</div>
             <Select
-                placeholder="迭代"
+                placeholder="版本"
                 allowClear
-                value={newSprintId}
-                onChange = {(value) => {setNewSprintId(value); console.log(value)}}
+                value={newVersionId}
+                onChange = {(value) => {setNewVersionId(value); console.log(value)}}
                 style={{
                     width: '100%',
                   }}
             >
                 {
-                    selectSprintList && selectSprintList.map((item, index) => {
-                        return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                    selectVersionList && selectVersionList.map((item, index) => {
+                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                     })
                 }
-                <Select.Option value={null} key={"noSprint"}>不规划新的迭代</Select.Option>
+                <Select.Option value={null} key={"noVersion"}>不规划新的版本</Select.Option>
             </Select>
         </Modal>
     )
 }
 
-export default observer(SprintChangeModal);
+export default observer(VersionChangeModal);

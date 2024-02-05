@@ -39,7 +39,7 @@ const goWorkItem = (type, workStore, params) => {
     }
     switch (type) {
         case "sprint":
-            initValues = { ...initValues, projectIds: [projectId], sprintIds: [sprintId] };
+            initValues = { ...initValues, projectIds: [projectId], sprintId: sprintId };
             break;
         case "version":
             initValues = { ...initValues, projectIds: [projectId], versionId: versionId };

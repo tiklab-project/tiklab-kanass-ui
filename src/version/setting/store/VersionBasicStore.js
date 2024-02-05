@@ -56,6 +56,12 @@ export class VersionBasicStore {
         return data;
     }
 
+    @action
+    findSelectVersionList = async(values) => {
+        const data = await Service("/projectVersion/findSelectVersionList", values)
+        return data;
+    }
+    
 }
 
 export default new VersionBasicStore();
