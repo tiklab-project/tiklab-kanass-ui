@@ -1005,6 +1005,7 @@ const WorkBasicInfo = (props) => {
                     附件:
                 </div>
             </div>
+            
             <div className="work-detail-box work-attach-box">
 
                 <Fragment>

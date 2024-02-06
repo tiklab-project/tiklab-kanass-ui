@@ -56,7 +56,7 @@ const WorkList = (props) => {
                 <WorkAside
                     {...props}
                 />
-                <Row style={{ flex: 1 }}>
+                <Row style={{ flex: 1, overflow: "auto" }}>
                     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
                         <div className="work-list-detail">
                             <WorkDetail {...props}></WorkDetail>
