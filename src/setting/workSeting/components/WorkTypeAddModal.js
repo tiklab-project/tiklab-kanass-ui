@@ -100,9 +100,10 @@ const WorkTypeAddModal = (props) => {
     // 上传图标
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
+    const upload_url = env === "local" ? base_url : "";
     const upLoadIcon = {
         name: 'uploadFile',
-        action: `${base_url}/dfs/upload`,
+        action: `${upload_url}/dfs/upload`,
         showUploadList: false,
         headers: {
             ticket: ticket,

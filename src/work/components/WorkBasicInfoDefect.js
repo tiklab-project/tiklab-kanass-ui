@@ -15,32 +15,35 @@ import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
+import WorkDetailSelect from "./WorkDetailSprintSelect";
+import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
+const { OptGroup } = Select;
 const WorkBasicInfo = (props) => {
     const { detailForm } = props;
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const layoutExForm = {
-        labelCol: { lg: {span: 6}, xxl: {span: 4} },
-        wrapperCol: {lg: {span: 18}, xxl : { span: 20 }},
+        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
+        wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
     };
 
     const layout = {
-        labelCol: { lg: {span: 6}, xxl: {span: 4} },
-        wrapperCol: {lg: {span: 18}, xxl : { span: 20 }},
+        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
+        wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
     };
 
     const layoutBottom = {
-        labelCol: { lg: {span: 3}, xxl: {span: 2} },
-        wrapperCol: { lg: {span: 21}, xxl : { span: 22 } },
+        labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
+        wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, selectVersionList, selectSprintList, priorityList, editWork,
+        attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, workIndex, treeIndex,
     } = workStore;
@@ -226,7 +229,7 @@ const WorkBasicInfo = (props) => {
      */
     const updateSingle = (changedValues) => {
         let changeKey = Object.keys(changedValues)[0];
-        console.log(Object.values(changedValues)[0])
+        console.log(changedValues)
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
             console.log(changedValues)
@@ -256,7 +259,8 @@ const WorkBasicInfo = (props) => {
         }
         if (changeKey === "sprint") {
             changedValues.sprint = {
-                id: changedValues.sprint
+                id: changedValues.sprint,
+                sprintName: changedValues.sprintName
             }
         }
 
@@ -622,25 +626,14 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "sprint" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectSprint"
-                                    bordered={fieldName === "sprint" ? true : false}
-                                    suffixIcon={fieldName === "sprint" || hoverFieldName == "sprint" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("sprint")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("sprint")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
-                                >
-                                    {
-                                        selectSprintList && selectSprintList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
+                                <WorkDetailSelect 
+                                    selectList = {sprintList} 
+                                    workId = {workId}
+                                    sprint = {workInfo?.sprint}
+                                    hoverFieldName = {hoverFieldName}
+                                    setHoverFieldName = {setHoverFieldName}
+                                    workStore = {workStore}
+                                />
                             </Form.Item>
 
 
@@ -666,8 +659,8 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item 
-                                label="审核人" 
+                            <Form.Item
+                                label="审核人"
                                 name="reporter"
                             >
                                 <Select
@@ -711,7 +704,7 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "buildTime" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                 <div style={{ padding: "0 11px" }}>{workInfo.buildTime}</div>
+                                <div style={{ padding: "0 11px" }}>{workInfo.buildTime}</div>
                             </Form.Item>
                         </Form>
                     </div>
@@ -739,7 +732,7 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "module" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
+                                {/* <Select
                                     placeholder="无"
                                     className="work-select"
                                     key="selectProjectVersion"
@@ -757,7 +750,15 @@ const WorkBasicInfo = (props) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                         })
                                     }
-                                </Select>
+                                </Select> */}
+                                <WorkDetailVersionSelect 
+                                    selectList = {selectVersionList} 
+                                    workId = {workId}
+                                    version = {workInfo?.projectVersion}
+                                    hoverFieldName = {hoverFieldName}
+                                    setHoverFieldName = {setHoverFieldName}
+                                    workStore = {workStore}
+                                />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
                                 hasFeedback={showValidateStatus === "module" ? true : false}
@@ -823,7 +824,7 @@ const WorkBasicInfo = (props) => {
                         colon={false}
                     >
                         <Form.Item
-                            name="planTime" label="计划日期" 
+                            name="planTime" label="计划日期"
                             // wrapperCol={{ span: 16 }}
                             hasFeedback={showValidateStatus === "planTime" ? true : false}
                             validateStatus={validateStatus}
@@ -909,44 +910,44 @@ const WorkBasicInfo = (props) => {
                         </Form.Item>
                     </Form>
                     <div className={`form-custom-open `} onClick={() => openCustomForm()}>
-                        <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}` }aria-hidden="true">
+                        <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}`} aria-hidden="true">
                             <use xlinkHref="#icon-caret-left"></use>
                         </svg>
                     </div>
                 </div>
                 {
                     visableCustomForm ? <Form
-                    {...layoutExForm}
-                    initialValues={{ remember: true }}
-                    form={extDataForm}
-                    labelAlign="left"
-                    onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
-                    className="exdata"
-                    colon={false}
-                >
-                    {
-                        formList && formList.map((item, index) => {
-                            return <Form.Item
-                                label={item.name}
-                                name={`System${item.code}`}
-                                key={item.id}
-                                className="exdata-item"
-                            >
-                                <SwitchPreliminaryType
-                                    code={item.fieldType.code}
-                                    bordered={fieldName === `System${item.code}` ? true : false}
-                                    showArrow={fieldName === `System${item.code}` ? true : false}
-                                    onMouseEnter={() => changeStyle(`System${item.code}`)}
-                                    onMouseLeave={() => setFieldName("")}
-                                    data={item.selectItemList}
-                                />
-                            </Form.Item>
-                        })
-                    }
-                </Form>
-                :<></>
+                        {...layoutExForm}
+                        initialValues={{ remember: true }}
+                        form={extDataForm}
+                        labelAlign="left"
+                        onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
+                        className="exdata"
+                        colon={false}
+                    >
+                        {
+                            formList && formList.map((item, index) => {
+                                return <Form.Item
+                                    label={item.name}
+                                    name={`System${item.code}`}
+                                    key={item.id}
+                                    className="exdata-item"
+                                >
+                                    <SwitchPreliminaryType
+                                        code={item.fieldType.code}
+                                        bordered={fieldName === `System${item.code}` ? true : false}
+                                        showArrow={fieldName === `System${item.code}` ? true : false}
+                                        onMouseEnter={() => changeStyle(`System${item.code}`)}
+                                        onMouseLeave={() => setFieldName("")}
+                                        data={item.selectItemList}
+                                    />
+                                </Form.Item>
+                            })
+                        }
+                    </Form>
+                        : <></>
                 }
-                
+
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

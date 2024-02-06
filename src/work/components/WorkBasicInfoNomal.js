@@ -15,6 +15,8 @@ import { getSessionStorage } from "../../common/utils/setSessionStorage";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
+import WorkDetailSelect from "./WorkDetailSprintSelect";
+import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -40,7 +42,7 @@ const WorkBasicInfo = (props) => {
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, selectSprintList, selectVersionList, priorityList, editWork,
+        attachList, findFormConfig, formList, moduleList, sprintList, selectVersionList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, workIndex, treeIndex,
     } = workStore;
@@ -640,25 +642,14 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "sprint" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectSprint"
-                                    bordered={fieldName === "sprint" ? true : false}
-                                    suffixIcon={fieldName === "sprint" || hoverFieldName == "sprint" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("sprint")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("sprint")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
-                                >
-                                    {
-                                        selectSprintList && selectSprintList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
+                                <WorkDetailSelect 
+                                    selectList = {sprintList} 
+                                    workId = {workId}
+                                    sprint = {workInfo?.sprint}
+                                    hoverFieldName = {hoverFieldName}
+                                    setHoverFieldName = {setHoverFieldName}
+                                    workStore = {workStore}
+                                />
                             </Form.Item>
 
                             <Form.Item 
@@ -758,25 +749,14 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "module" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectProjectVersion"
-                                    bordered={fieldName === "projectVersion" ? true : false}
-                                    suffixIcon={fieldName === "projectVersion" || hoverFieldName == "projectVersion" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("projectVersion")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("projectVersion")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
-                                >
-                                    {
-                                        selectVersionList && selectVersionList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
+                                <WorkDetailVersionSelect 
+                                    selectList = {selectVersionList} 
+                                    workId = {workId}
+                                    version = {workInfo?.projectVersion}
+                                    hoverFieldName = {hoverFieldName}
+                                    setHoverFieldName = {setHoverFieldName}
+                                    workStore = {workStore}
+                                />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
                                 hasFeedback={showValidateStatus === "module" ? true : false}

@@ -564,7 +564,7 @@ export class WorkStore {
     searchWorkById = async(id) => {
         const param = new FormData()
         param.append("id", id)
-        const data = await Service("/workItem/findWorkItem",param);
+        const data = await Service("/workItem/findWorkItemAndSprintVersion",param);
         if(data.code === 0){
             this.workInfo = data.data;
         }
@@ -575,7 +575,7 @@ export class WorkStore {
     findWorkItemById = async(id) => {
         const param = new FormData()
         param.append("id", id)
-        const data = await Service("/workItem/findWorkItem",param);
+        const data = await Service("/workItem/findWorkItemAndSprintVersion",param);
         if(data.code === 0){
             this.workList.unshift(data.data);
             this.workList = [...this.workList]
@@ -894,6 +894,22 @@ export class WorkStore {
         params.append("workItemId", value.workItemId)
         params.append("workTypeCode", value.workTypeCode)
         const data = await Service("/workItem/findWorkItemRelationModelCount", params)
+        return data;
+    }
+
+    @action
+    findWorkVersionList = async (value) => {
+        const params = new FormData();
+        params.append("workId", value)
+        const data = await Service("/projectVersion/findWorkVersionList", params)
+        return data;
+    }
+
+    @action
+    findWorkSprintList = async (value) => {
+        const params = new FormData();
+        params.append("workId", value)
+        const data = await Service("/sprint/findWorkSprintList", params)
         return data;
     }
 

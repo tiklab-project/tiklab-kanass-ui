@@ -30,7 +30,7 @@ const WorkDetail = (props) => {
     const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
         getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
         setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
-        getsprintlist, getSelectUserList, findPriority, viewType, userList, searchWorkById,
+        findSprintList, getSelectUserList, findPriority, viewType, userList, searchWorkById,
         findTransitionList, findWorkItemRelationModelCount, findSelectVersionList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
@@ -59,7 +59,7 @@ const WorkDetail = (props) => {
                 const projectId =  res.project.id
                 getWorkTypeList({ projectId: projectId });
                 getModuleList(projectId)
-                getsprintlist(projectId)
+                findSprintList(projectId)
                 getSelectUserList(projectId);
                 findSelectVersionList(projectId)
 
@@ -89,11 +89,6 @@ const WorkDetail = (props) => {
         return isView;
     }
     useEffect(() => {
-        // if (isDetail()) {
-        //     const id = props.match.params.workId;
-        //     console.log(id)
-        //     setWorkId(id)
-        // }
         if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
             || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
             const id = props.match.params.workId;
