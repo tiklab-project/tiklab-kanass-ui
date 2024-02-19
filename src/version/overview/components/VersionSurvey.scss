@@ -109,6 +109,31 @@
             }
         }
 
+        .version-info-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .version-state-start-button {
+                font-size: 12px;
+                background: var(--thoughtware-blue);
+                padding: 5px 10px;
+                border-radius: 5px;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .version-state-disable-button {
+                font-size: 12px;
+                padding: 5px 10px;
+                border-radius: 5px;
+                background-color: var(--thoughtware-gray-700);
+                color: #999;
+                cursor: no-drop;
+            }
+        }
+
         .burn-down-box {
             flex: 1;
             padding: var(--thoughtware-padding);

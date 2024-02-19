@@ -34,7 +34,7 @@ class SprintSurveyStore {
 
     // 获取迭代基本信息
     @action
-	FindSprint = async(value) => {
+	findSprint = async(value) => {
         const params = new FormData();
         params.append("id",value.sprintId)
         const data = await Service("/sprint/findSprint", params)
@@ -43,7 +43,7 @@ class SprintSurveyStore {
 
      // 燃尽图
     @action
-    FindSprintBurnDowmChartPage = async(sprintId)=> {
+    findSprintBurnDowmChartPage = async(sprintId)=> {
         const params={
             sprintId: sprintId,
             orderParams: [{
@@ -105,6 +105,20 @@ class SprintSurveyStore {
             this.todoTaskList = data.data.dataList;
         }
     }
-      
+
+    @action
+    findSelectSprintList = async (values) => {
+        const data = await Service("/sprint/findSelectSprintList", values)
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    @action
+    updateSprint = async(values) => {
+        const data = await Service("/sprint/updateSprint", values)
+        return data;
+    }
+
 }
 export default new SprintSurveyStore();

@@ -15,11 +15,7 @@ export class SprintBasicStore {
         }
     }
 
-    @action
-    updateSprint = async(values) => {
-        const data = await Service("/sprint/updateSprint", values)
-        return data;
-    }
+   
 
     @action
     findAllSprintState = async() => {
@@ -57,13 +53,7 @@ export class SprintBasicStore {
 
     
 
-    @action
-    findSelectSprintList = async (values) => {
-        const data = await Service("/sprint/findSelectSprintList", values)
-        if (data.code === 0) {
-            return data;
-        }
-    }
+    
 
     @action
     updataBatchWorkItemSprint = async (values) => {

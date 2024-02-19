@@ -18,7 +18,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 import { Collapse } from 'antd';
 import SprintBasicStore from "../store/SprintBasicStore";
-import SprintChangeModal from "./SprintChangeModal";
+import SprintChangeModal from "../../overview/components/SprintEndState";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -75,7 +75,6 @@ const SprintBasicInfo = props => {
                 setSprintInfo(data)
                 form.setFieldsValue({
                     sprintName: data.sprintName,
-                    sprintState: data.sprintState.id,
                     desc: data.desc,
                     master: data.master.id,
                     startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
@@ -88,7 +87,6 @@ const SprintBasicInfo = props => {
     const cancel = () => {
         form.setFieldsValue({
             sprintName: sprintInfo.sprintName,
-            sprintState: sprintInfo.sprintState.id,
             master: sprintInfo.master.id,
             desc: sprintInfo.desc,
             startTime: [moment(sprintInfo.startTime, dateFormat), moment(sprintInfo.endTime, dateFormat)]
@@ -109,9 +107,6 @@ const SprintBasicInfo = props => {
                     endTime: time[1].format("YYYY-MM-DD"),
                     master: { id: values.master },
                     desc: values.desc,
-                    sprintState: {
-                        id: values.sprintState
-                    },
                     id: sprintId
                 }
                 updateSprint(data).then(res => {
@@ -150,16 +145,7 @@ const SprintBasicInfo = props => {
         setIsModalVisible(false);
     };
     const [isChangeState, setIsChangeState] = useState(false)
-    const onValuesChange = (changedValues) => {
-        console.log(changedValues.sprintState)
-        const sprintState = changedValues.sprintState;
-        if (sprintState && sprintState != sprintInfo.sprintState?.id && sprintState === "222222") {
-            setIsChangeState(true)
-        }
-        if (sprintState && (sprintState == sprintInfo.sprintState?.id || sprintState !== "222222")) {
-            setIsChangeState(false)
-        }
-    }
+
     const sprintInfoDesc = () => (
         <div>
             <div className="sprint-info-title">
@@ -175,8 +161,6 @@ const SprintBasicInfo = props => {
                 迭代图标信息，可见范围，负责人等信息，可点击修改</div>
         </div>
     );
-
-    const [confirmProjectName, setConfirmProjectName] = useState();
 
     const sprintDelete = () => (
         <div>
@@ -215,7 +199,6 @@ const SprintBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
                                 >
                                     <Form.Item
                                         label="迭代名称"
@@ -223,21 +206,7 @@ const SprintBasicInfo = props => {
                                     >
                                         <Input placeholder="迭代名称" />
                                     </Form.Item>
-                                    <Form.Item
-                                        label="迭代状态"
-                                        name="sprintState"
-                                    >
-                                        <Select
-                                            placeholder="迭代状态"
-                                            allowClear
-                                        >
-                                            {
-                                                status && status.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                                })
-                                            }
-                                        </Select>
-                                    </Form.Item>
+                                  
 
                                     <Form.Item
                                         label="负责人"
@@ -306,7 +275,7 @@ const SprintBasicInfo = props => {
                         删除迭代，包含迭代与事项的关联关系
                     </Modal>
                 </div>
-                <SprintChangeModal
+                {/* <SprintChangeModal
                     visible={sprintChangeVisable}
                     projectId={projectId}
                     sprintId={sprintId}
@@ -315,7 +284,7 @@ const SprintBasicInfo = props => {
                     setSprintInfo = {setSprintInfo}
                     setDisabled = {setDisabled}
                     form={form}
-                />
+                /> */}
 
             </Col>
         </Row >

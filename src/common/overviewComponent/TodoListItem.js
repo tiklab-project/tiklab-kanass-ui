@@ -9,7 +9,6 @@ const TodoListItem = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const path = props.match.path;
-    console.log(path)
     const goTodoDetail = () => {
         if(path.indexOf("sprintdetail") > -1){
             props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);

@@ -8,18 +8,19 @@
  */
 import React, { useEffect, useState } from "react";
 import "../components/sprintSurvey.scss";
-import { Row, Col, Progress, Empty } from 'antd';
+import { Row, Col, Progress, Empty, Tooltip } from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'thoughtware-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import SprintSurveyStore from "../store/SprintSurveyStore";
-import WorkStore from "../../../work/store/WorkStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
+import SprintEndState from "./SprintEndState";
+import SprintStartState from "./SprintStartState";
 const SprintSurvey = (props) => {
-    const { FindSprint, FindSprintBurnDowmChartPage, opLogList, findlogpage,
+    const { findSprint, findSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
@@ -36,10 +37,11 @@ const SprintSurvey = (props) => {
             sprintId: sprintId,
             projectId: projectId
         }
-        FindSprint({ sprintId: sprintId }).then(res => {
+        findSprint({ sprintId: sprintId }).then(res => {
             setSprintInfo(res.data)
             const sprint = res.data;
-            FindSprintBurnDowmChartPage(sprintId).then(res => {
+            // 燃尽图
+            findSprintBurnDowmChartPage(sprintId).then(res => {
                 if (res.code === 0) {
                     let timerXaixs = [];
                     let workCountYaixs = [];
@@ -66,7 +68,6 @@ const SprintSurvey = (props) => {
                 }
             })
         })
-        // 燃尽图
 
         statWorkItemByBusStatus(data).then(res => {
             setWorkStatusList(res.data)
@@ -119,9 +120,7 @@ const SprintSurvey = (props) => {
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
-    const goTodoDetail = (url) => {
-        window.location.href = url
-    }
+
 
     /**
          * 点击跳转到工作列表
@@ -132,10 +131,48 @@ const SprintSurvey = (props) => {
     }
     const goDynamicList = () => {
         props.history.push(`/${projectId}/sprintdetail/${sprintId}/dynamic`)
-        
+
     }
     const goToListPage = () => {
-        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTodo`) 
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTodo`)
+    }
+
+
+
+    const stateButton = (state) => {
+        let dom = null;
+
+        if (state === "000000" && sprintInfo?.workNumber > 0) {
+            dom = <div className="sprint-state-start-button" onClick={() => changeStateToStart()}>
+                开始迭代
+            </div>
+        }
+
+        if (state === "000000" && sprintInfo?.workNumber <= 0) {
+            dom = <Tooltip placement="bottom" title={"当前迭代没有规划事项，不能开始"}>
+                <div className="sprint-state-disable-button">
+                    开始迭代
+                </div>
+            </Tooltip>
+
+
+        }
+
+        if (state === "111111" && sprintInfo?.workNumber > 0) {
+            dom = <div className="sprint-state-start-button" onClick={() => changeStateToEnd()}>
+                完成迭代
+            </div>
+        }
+        return dom;
+    }
+    const [startStateVisable, setStartStateVisable] = useState(false)
+    const [endStateVisable, setEndStateVisable] = useState(false)
+    const changeStateToStart = () => {
+        setStartStateVisable(true)
+    }
+
+    const changeStateToEnd = () => {
+        setEndStateVisable(true)
     }
 
     return (
@@ -144,14 +181,20 @@ const SprintSurvey = (props) => {
                 <div className="sprint-survey">
                     <div className="sprint-survey-top">
                         <div className="sprint-info-box">
-                            <div className="sprint-info-title">
-                                <img
-                                    src={('/images/project1.png')}
-                                    alt=""
-                                    className="list-img"
-                                />
-                                {sprintInfo && sprintInfo.sprintName}
+                            <div className="sprint-info-top">
+                                <div className="sprint-info-title">
+                                    <img
+                                        src={('/images/project1.png')}
+                                        alt=""
+                                        className="list-img"
+                                    />
+                                    {sprintInfo && sprintInfo.sprintName}
+                                </div>
+                                {
+                                    stateButton(sprintInfo?.sprintState.id)
+                                }
                             </div>
+
                             <div className="sprint-container">
                                 <div className="sprint-item">
                                     <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={sprintInfo?.master.nickname} />
@@ -238,11 +281,29 @@ const SprintSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    
-                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"sprint"}/>
-                  
-                    <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
+
+                    <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"sprint"} />
+
+                    <DynamicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
+                <SprintStartState
+                    visible={startStateVisable}
+                    projectId={projectId}
+                    sprintId={sprintId}
+                    SprintSurveyStore={SprintSurveyStore}
+                    setVisible={setStartStateVisable}
+                    sprintInfo={sprintInfo}
+                    setSprintInfo={setSprintInfo}
+                />
+                <SprintEndState
+                    visible={endStateVisable}
+                    projectId={projectId}
+                    sprintId={sprintId}
+                    SprintSurveyStore={SprintSurveyStore}
+                    setVisible={setEndStateVisable}
+                    sprintInfo={sprintInfo}
+                    setSprintInfo={setSprintInfo}
+                />
             </Col>
         </Row>
 

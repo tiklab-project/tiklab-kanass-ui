@@ -115,6 +115,18 @@ class VersionSurveyStore {
         }
         return data;
     }
+
+    @action
+    updateVersion = async(values) => {
+        const data = await Service("/projectVersion/updateVersion", values)
+        return data;
+    }
+
+    @action
+    findSelectVersionList = async(values) => {
+        const data = await Service("/projectVersion/findSelectVersionList", values)
+        return data;
+    }
       
 }
 export default new VersionSurveyStore();

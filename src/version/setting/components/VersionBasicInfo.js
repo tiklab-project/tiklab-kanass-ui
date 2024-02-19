@@ -74,7 +74,6 @@ const VersionBasicInfo = props => {
                 setVersionInfo(data)
                 form.setFieldsValue({
                     name: data.name,
-                    versionState: data.versionState.id,
                     master: data.master.id,
                     startTime: [moment(data.startTime, dateFormat), moment(data.publishDate, dateFormat)]
                 })
@@ -86,7 +85,6 @@ const VersionBasicInfo = props => {
     const cancel = () => {
         form.setFieldsValue({
             name: versionInfo.name,
-            versionState: versionInfo.versionState.id,
             master: versionInfo.master.id,
             startTime: [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishDate, dateFormat)]
         })
@@ -103,9 +101,6 @@ const VersionBasicInfo = props => {
                     startTime: time[0].format("YYYY-MM-DD"),
                     publishDate: time[1].format("YYYY-MM-DD"),
                     master: { id: values.master },
-                    versionState: {
-                        id: values.versionState
-                    },
                     id: versionId
                 }
                 updateVersion(data).then(res => {
@@ -144,16 +139,7 @@ const VersionBasicInfo = props => {
         setIsModalVisible(false);
     };
     const [isChangeState, setIsChangeState] = useState(false)
-    const onValuesChange = (changedValues) => {
-        console.log(changedValues.versionState)
-        const versionState = changedValues.versionState;
-        if (versionState && versionState != versionInfo.versionState?.id && versionState === "222222") {
-            setIsChangeState(true)
-        }
-        if (versionState && (versionState == versionInfo.versionState?.id || versionState !== "222222")) {
-            setIsChangeState(false)
-        }
-    }
+    
 
     const versionInfoDesc = () => (
         <div>
@@ -209,28 +195,13 @@ const VersionBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
+                                    // onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
                                 >
                                     <Form.Item
                                         label="版本名称"
                                         name="name"
                                     >
                                         <Input placeholder="版本名称" />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="版本状态"
-                                        name="versionState"
-                                    >
-                                        <Select
-                                            placeholder="版本状态"
-                                            allowClear
-                                        >
-                                            {
-                                                status && status.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                                })
-                                            }
-                                        </Select>
                                     </Form.Item>
 
                                     <Form.Item

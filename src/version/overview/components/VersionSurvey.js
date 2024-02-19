@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import "../components/versionSurvey.scss";
-import { Row, Col, Progress, Empty, Select } from 'antd';
+import { Row, Col, Progress, Empty, Select, Tooltip } from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'thoughtware-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
@@ -18,6 +18,8 @@ import VersionSurveyStore from "../store/VersionSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
+import VersionStartState from "./VersionStartState";
+import VersionEndState from "./VersionEndState";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, statWorkItemByBusStatus, userList, getUseList } = VersionSurveyStore;
@@ -142,19 +144,70 @@ const VersionSurvey = (props) => {
     const goToListPage = () => {
         props.history.push(`/${projectId}/versiondetail/${versionId}/workTodo`) 
     }
+
+
+    const stateButton = (state) => {
+        let dom = null;
+
+        if (state === "000000" && versionInfo?.workNumber > 0) {
+            dom = <div className="version-state-start-button" onClick={() => changeStateToStart()}>
+                开始版本
+            </div>
+        }
+
+        if (state === "000000" && versionInfo?.workNumber <= 0) {
+            dom = <Tooltip placement="bottom" title={"当前版本没有规划事项，不能开始"}>
+                <div className="version-state-disable-button">
+                    开始版本
+                </div>
+            </Tooltip>
+
+
+        }
+
+        if (state === "111111" && versionInfo?.workNumber > 0) {
+            dom = <div className="version-state-start-button" onClick={() => changeStateToEnd()}>
+                完成版本
+            </div>
+        }
+        return dom;
+    }
+    const [startStateVisable, setStartStateVisable] = useState(false)
+    const [endStateVisable, setEndStateVisable] = useState(false)
+    const changeStateToStart = () => {
+        setStartStateVisable(true)
+    }
+
+    const changeStateToEnd = () => {
+        setEndStateVisable(true)
+    }
+    
     return (
         <Row style={{ height: "100%", background: "var(--thoughtware-gray-600)", overflow: "auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-survey">
                     <div className="version-survey-top">
                         <div className="version-info-box">
-                            <div className="version-info-title">
+                            {/* <div className="version-info-title">
                                 <img
                                     src={('/images/version.png')}
                                     alt=""
                                     className="list-img"
                                 />
                                 {versionInfo && versionInfo.name}
+                            </div> */}
+                             <div className="version-info-top">
+                                <div className="version-info-title">
+                                    <img
+                                        src={('/images/project1.png')}
+                                        alt=""
+                                        className="list-img"
+                                    />
+                                    {versionInfo && versionInfo.name}
+                                </div>
+                                {
+                                    stateButton(versionInfo?.versionState.id)
+                                }
                             </div>
                             <div className="version-container">
                                 <div className="version-item">
@@ -209,7 +262,7 @@ const VersionSurvey = (props) => {
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">已开始</div>
+                                        <div className="item-top">{versionInfo?.versionState?.name}</div>
                                         <div className="item-bottom">版本状态</div>
                                     </div>
                                 </div>
@@ -246,6 +299,24 @@ const VersionSurvey = (props) => {
                     <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>
+                <VersionStartState
+                    visible={startStateVisable}
+                    projectId={projectId}
+                    versionId={versionId}
+                    VersionSurveyStore={VersionSurveyStore}
+                    setVisible={setStartStateVisable}
+                    versionInfo={versionInfo}
+                    setVersionInfo={setVersionInfo}
+                />
+                <VersionEndState
+                    visible={endStateVisable}
+                    projectId={projectId}
+                    versionId={versionId}
+                    VersionSurveyStore={VersionSurveyStore}
+                    setVisible={setEndStateVisable}
+                    versionInfo={versionInfo}
+                    setVersionInfo={setVersionInfo}
+                />
             </Col>
         </Row>
 
