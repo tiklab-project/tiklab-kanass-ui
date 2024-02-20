@@ -41,7 +41,6 @@ const WorkBodar = (props) => {
     const projectId = props.match.params.id;
     useEffect(() => {
         setWorkShowType("bodar")
-        console.log(workShowType)
         setQuickFilterValue({
             value: "pending",
             label: "我的待办"
@@ -68,7 +67,6 @@ const WorkBodar = (props) => {
         }
         findToNodeList(params).then(res => {
             if (res.code === 0) {
-                // console.log(res.data)
                 setTransitionList(res.data)
                 let list = []
                 res.data && res.data.length > 0 && res.data.map(item => {
@@ -154,14 +152,7 @@ const WorkBodar = (props) => {
         props.history.replace(`${pathname}/${workItem.id}`)
         setIsModalVisible(true)
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        // if (path === `/projectDetail/:id/workBodar`) {
-        //     console.log(props.history)
-        //     props.history.replace(`/projectDetail/${projectId}/workBodar/${workItem.id}`)
-        // }
-        // if (path === `/workBodar`) {
-        //     console.log(props.history)
-        //     props.history.replace(`/workBodar/${workItem.id}`)
-        // }
+
 
 
     }

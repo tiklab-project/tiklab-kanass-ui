@@ -1,8 +1,3 @@
-import { observer } from "mobx-react";
-import WorkStore from "../store/WorkStore";
-
-
-// console.log("searchWorkList", workShowType)
 
 const searchWorkList = (workStore, values) => {
     const {workShowType, viewType, getWorkConditionPageTree, getWorkConditionPage, setWorkId, setWorkIndex, 

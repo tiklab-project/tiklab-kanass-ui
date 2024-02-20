@@ -61,7 +61,6 @@
      preserveModulesRoot: 'components',
      exports: 'named',
      assetFileNames: ({name}) => {
-         console.log(name)
          const {ext, dir, base} = path.parse(name);
          if (ext !== '.css') return '[name].[ext]';
          // 规范 style 的输出格式

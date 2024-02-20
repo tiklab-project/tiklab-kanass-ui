@@ -33,8 +33,6 @@ const setDom = async (ele, pdf) => {
 			width = element.offsetWidth;
 		}
 		height += element.offsetHeight;
-		console.log('height', height)
-		console.log('aa', width, height, scale)
 
 		const canvas = document.createElement('canvas');
 		canvas.width = element.offsetWidth * scale;
@@ -42,12 +40,10 @@ const setDom = async (ele, pdf) => {
 		var contentWidth = canvas.width;
 		var contentHeight = canvas.height;
 
-		console.log('contentWidth', contentWidth, contentHeight)
 		//一页pdf显示html页面生成的canvas高度;
 		var pageHeight = contentWidth / 592.28 * 841.89;
 		//未生成pdf的html页面高度
 		var leftHeight = contentHeight;
-		console.log('leftHeight', leftHeight)
 
 		//页面偏移
 		var position = 0;
@@ -71,8 +67,7 @@ const setDom = async (ele, pdf) => {
 		if(index > 0){
 			startHeight = imageHeightList[index - 1]  + 10
 		}
-		
-		console.log(startHeight)
+
 		if (leftHeight < pageHeight) {
 			pdf.addImage(imgDataUrl, 'png', 5, startHeight, imgWidth, imgHeight, `alias${index}`, 'SLOW');
 		} else {    // 分页

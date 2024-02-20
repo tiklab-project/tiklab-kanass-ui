@@ -76,7 +76,6 @@ const ProjectAddInfo = (props) => {
         },
         onChange(info) {
             if (info.file.status === 'done') {
-                console.log("info.file", info.file);
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,
@@ -133,12 +132,8 @@ const ProjectAddInfo = (props) => {
         })
     }
 
-    const onReset = () => {
-        form.resetFields();
-    };
 
     const checkLimit = (_, value) => {
-        console.log(value)
         if (value) {
             return Promise.resolve();
         }

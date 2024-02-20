@@ -71,7 +71,6 @@ const LogAdd = (props) => {
      * @param {名称} value 
      */
     const searchWorkItem = (value) => {
-        console.log(value)
         if (value) {
             findWorkItemPage({ title: value, projectId: projectId }).then(res => {
                 if (res.code === 0) {

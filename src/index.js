@@ -54,7 +54,6 @@ const Index = observer((props) => {
     useEffect(() => {
         pluginLoader(Routers, resources,i18n, fetchMethod).then(res => {
             setPluginData(res)
-            console.log(res)
             setVisable(false)
         })
         return;

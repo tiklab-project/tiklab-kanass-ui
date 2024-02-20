@@ -12,7 +12,6 @@ const DeleteModal = (props) => {
     };
 
     const selectAction = (value) => {
-        console.log(value)
         if(value.key === "delete"){
             Modal.confirm({
                 title: '确定删除?',

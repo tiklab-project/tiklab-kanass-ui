@@ -43,9 +43,6 @@ const ChangeProjectSetIcon = (props) => {
         })
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
 
     const onCancel = () => {
         form.resetFields();

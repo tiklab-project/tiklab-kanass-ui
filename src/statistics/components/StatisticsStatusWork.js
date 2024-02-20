@@ -146,7 +146,6 @@ const StatisticsWork = (props) => {
     };
 
     const onFinishFailed = (values) => {
-        console.log(values);
     };
     const statisticalList = [
         {
@@ -172,7 +171,6 @@ const StatisticsWork = (props) => {
     ]
 
     const changField = (changedValues, allValues) => {
-        console.log(allValues)
         const params = {
             projectId: projectId,
             projectSetId: projectSetId,

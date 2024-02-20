@@ -32,7 +32,6 @@ const TodoList = (props) => {
     const projectId = props.match.params.id;
     const versionId = props.match.params.version;
     const sprintId = props.match.params.sprint;
-    console.log(props)
     const path = props.match?.path;
     // const [todoTaskList, setTodoTaskList] = useState([])
     useEffect(() => {
@@ -68,7 +67,6 @@ const TodoList = (props) => {
                         list.map(item => {
                             findTodopage({data: {projectId: item.id} }, "projectSet").then(res => {
                                 if (res.code === 0) {
-                                    console.log(todoTaskList)
                                     todos.push(...res.data.dataList)
                                     setTodoTaskList([...todos])
                                 }
@@ -174,7 +172,6 @@ const TodoList = (props) => {
         findTodopage(params)
     };
     const getTodoList = (value) => {
-        console.log(value)
         setActiveKey(value)
         findTodopage({status: value, pageParam: {
                 pageSize: 20,

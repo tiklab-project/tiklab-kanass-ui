@@ -17,7 +17,7 @@ class VersionSurveyStore {
 	statWorkItemByBusStatus = async(value) => {
         const params = {
             projectIds: [value.projectId],
-            versionId: value.versionId
+            currentVersionId: value.versionId
         }
         const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;

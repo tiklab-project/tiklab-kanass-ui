@@ -25,15 +25,6 @@ const WorkPriority = (props) => {
         deleteWorkPriorityList(id)
     }
 
-    const onSearch = (value) => {
-        getWorkPriorityList({ current: 1 }, value)
-    }
-
-    // 改变页码
-    const onChange = (pagination) => {
-        console.log(pagination)
-        getWorkPriorityList(pagination)
-    }
 
     //上移
     const upWorkPriority = (id) => {
@@ -58,7 +49,6 @@ const WorkPriority = (props) => {
         const index = newList.findIndex((item) => {
             return item.id === id
         })
-        console.log(newList.length)
         if (index === newList.length - 1) {
             message.warning('已是最低了！');
         } else {

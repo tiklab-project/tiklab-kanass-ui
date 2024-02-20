@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailVersionSelect.scss"
 const WorkDetailVersionSelect = (props) => {
-    const { selectList, version, setHoverFieldName, workId, workStore } = props;
+    const { selectList, version, setHoverFieldName, hoverFieldName, workId, workStore, workStatusCode } = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
+    
     const { findWorkVersionList, editWork } = workStore;
     const dropdownRef = useRef()
     const [selectVersion, setSelectVersion] = useState(version);
@@ -17,7 +18,8 @@ const WorkDetailVersionSelect = (props) => {
     }, [showDropdown])
 
     useEffect(() => {
-        getWorkVersionList()
+        getWorkVersionList();
+        return null;
     }, [])
 
     const getWorkVersionList = () => {
@@ -35,20 +37,33 @@ const WorkDetailVersionSelect = (props) => {
         if (!dropdownRef.current.contains(e.target) && dropdownRef.current !== e.target) {
             setShowDropdown(false)
             setShowMoreDropdown(false)
-            setHoverFieldName("")
+            console.log(showMoreDropdown)
+            // setHoverFieldName("666666")
+            console.log(hoverFieldName)
         }
     }
     const showMore = (e) => {
         e.stopPropagation();
-        setShowMoreDropdown(true)
-        setShowDropdown(false)
+        setShowMoreDropdown(true);
+        if(workStatusCode != "DONE"){
+            setShowDropdown(false)
+        }else {
+            return
+        }
+        
+        
 
     }
     const showSelect = (e) => {
         e.stopPropagation();
+
         setShowMoreDropdown(false)
-        setShowDropdown(true)
-        setHoverFieldName("projectVersion")
+        if(workStatusCode != "DONE"){
+            setShowDropdown(true)
+        }else {
+            return
+        }
+        
     }
 
     const updateWork = (item) => {
@@ -72,7 +87,7 @@ const WorkDetailVersionSelect = (props) => {
     }
     return (
         <div className="work-detail-version-select" ref={dropdownRef}>
-            <div className="select-input" onClick={(e) => showSelect(e)}>
+            <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ? `} onClick={(e) => showSelect(e)}>
                 <div>{selectVersion?.name ? selectVersion?.name : "无"}
 
                 </div>
@@ -126,7 +141,7 @@ const WorkDetailVersionSelect = (props) => {
                     <div className="more-dropdown-title">关联过的版本</div>
                     {
                         relationVersionList.map(item => {
-                            return <div className="more-item">
+                            return <div className="more-item" key = {item.id}>
                                 {item.name}
                             </div>
                         })

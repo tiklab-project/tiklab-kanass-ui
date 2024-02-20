@@ -18,7 +18,6 @@ const RowScroll =(props)=> {
     useEffect(() => {
         const scrollSlider = rowScrollRef.current;
         const boxScroll = boxRowScrollRef.current;
-        console.log(boxRowScrollRef)
         const left = scrollLeft / (ganttWidth - boxScroll.offsetWidth) * (boxScroll.offsetWidth - scrollSlider.offsetWidth);
 
         scrollSlider.style.left = left + "px";
@@ -29,7 +28,6 @@ const RowScroll =(props)=> {
      * 横向滚动轴的拖动
      */
     const sliderChangeX = (value,srollWidth)=> {
-        // console.log(value)
         const timerOuterDom = timerOuter.current;
         const timerCoreDom = timerCore.current;
         

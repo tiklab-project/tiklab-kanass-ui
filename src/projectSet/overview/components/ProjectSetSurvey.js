@@ -46,8 +46,6 @@ const ProjectSetSurvey = props => {
                             }
                         })
                     })
-                    // setTodoTaskList(todoTaskList)
-                    console.log(list, list.filter(item => item.projectState === "2"))
                     setProcessProjectList(list.filter(item => item.projectState === "2"))
                 }
             }

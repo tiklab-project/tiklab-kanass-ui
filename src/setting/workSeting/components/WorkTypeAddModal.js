@@ -43,7 +43,6 @@ const WorkTypeAddModal = (props) => {
         setVisible(true);
         getIconList()
         getFormList(grouper).then((res) => {
-            console.log(res)
             if (res && res.length > 0) {
                 form.setFieldsValue({
                     form: res[0].id

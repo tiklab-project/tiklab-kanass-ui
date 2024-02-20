@@ -52,7 +52,6 @@ const WorkDetailDrawer = (props) => {
             let pathname = props.location.pathname;
             const index = pathname.lastIndexOf("\/");
             pathname = pathname.substring(0, index);
-            console.log(pathname);
             props.history.replace(`${pathname}`)
             setIsModalVisible(false)
             setWorkId(0)
@@ -60,11 +59,9 @@ const WorkDetailDrawer = (props) => {
     }
 
     const closeDrawer = () => {
-        console.log("关闭")
         let pathname = props.location.pathname;
         const index = pathname.lastIndexOf("\/");
         pathname = pathname.substring(0, index);
-        console.log(pathname);
         props.history.replace(`${pathname}`)
         setIsModalVisible(false);
         setWorkId(0)

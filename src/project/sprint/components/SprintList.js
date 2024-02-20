@@ -110,7 +110,6 @@ const Sprint = (props) => {
                 }
                 setFocusSprintList([...list])
             }
-            console.log(data.data)
         })
     }
 
@@ -246,25 +245,7 @@ const Sprint = (props) => {
         }
         return name;
     }
-    // const moreMenu = (id) => {
-    //     return <Menu onClick={(value) => selectAction(value, id)}>
-    //         <Menu.Item key="delete">
-    //             <div>删除</div>
-    //         </Menu.Item>
-    //     </Menu>
-    // };
 
-    // const selectAction = (value, id) => {
-    //     console.log(value)
-    //     if(value.key === "delete"){
-    //         Modal.confirm({
-    //             title: '确定删除?',
-    //             centered: true,
-    //             onOk() { deleteSprintById(id) },
-    //             onCancel() { },
-    //         });
-    //     }
-    // }
 
     const deleteSprintById = (id) => {
         delesprintList(id).then(res => {
@@ -297,7 +278,7 @@ const Sprint = (props) => {
             key: "startTime",
             align: "left",
             width: "25%",
-            render: (text, record) => <span>{record.startTime} ~ {record.endTime}</span>,
+            render: (text, record) => <span>{record.startTime.slice(0, 10)} ~ {record.endTime.slice(0, 10)}</span>,
         },
         {
             title: "事项",

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailSprintSelect.scss"
 const WorkDetailSprintSelect = (props) => {
-    const { selectList, sprint, setHoverFieldName, workId, workStore } = props;
+    const { selectList, sprint, setHoverFieldName, hoverFieldName, workId, workStore, workStatusCode } = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
     const { findWorkSprintList, editWork } = workStore;
@@ -35,20 +35,29 @@ const WorkDetailSprintSelect = (props) => {
         if (!dropdownRef.current.contains(e.target) && dropdownRef.current !== e.target) {
             setShowDropdown(false)
             setShowMoreDropdown(false)
-            setHoverFieldName("")
         }
     }
     const showMore = (e) => {
         e.stopPropagation();
         setShowMoreDropdown(true)
-        setShowDropdown(false)
+        if(workStatusCode != "DONE"){
+            setShowDropdown(false)
+        }else {
+            return
+        }
+        
 
     }
     const showSelect = (e) => {
         e.stopPropagation();
         setShowMoreDropdown(false)
-        setShowDropdown(true)
-        setHoverFieldName("sprint")
+        if(workStatusCode != "DONE"){
+            
+            setShowDropdown(true)
+        }else {
+            return
+        }
+        
     }
 
     const updateWork = (item) => {
@@ -72,9 +81,9 @@ const WorkDetailSprintSelect = (props) => {
     }
     return (
         <div className="work-detail-sprint-select" ref={dropdownRef}>
-            <div className="select-input" onClick={(e) => showSelect(e)}>
-                <div>{selectSprint?.sprintName ? selectSprint?.sprintName : "无"}
-
+            <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ? `} onClick={(e) => showSelect(e)}>
+                <div>
+                    {selectSprint?.sprintName ? selectSprint?.sprintName : "无"}
                 </div>
                 {
                     showDropdown && selectSprint ?

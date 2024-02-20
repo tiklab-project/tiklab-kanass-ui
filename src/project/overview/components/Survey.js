@@ -74,7 +74,6 @@ const Survey = (props) => {
         // 获取里程碑列表
         findMilestoneList(projectId).then(res => {
             if (res.code === 0) {
-                console.log(res.data)
                 setMilestoneList(res.data)
             }
         })

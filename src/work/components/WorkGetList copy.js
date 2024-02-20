@@ -5,7 +5,6 @@ import { setSessionStorage, getSessionStorage } from "../../common/utils/setSess
 import { getUser } from "thoughtware-core-ui";
 const finWorkList = (router, workStore, params) => {
     const setValue = () => {
-        console.log(router)
         let type = "";
         if(router.indexOf("/work") > -1){
             type = "system"

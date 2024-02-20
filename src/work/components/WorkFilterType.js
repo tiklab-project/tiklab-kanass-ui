@@ -39,7 +39,6 @@ const WorkFilterType = (props) => {
    
 
     const selectType = (value, option) => {
-        console.log(value, option)
         setTabValue(value)
         if(value){
             const tabData = {

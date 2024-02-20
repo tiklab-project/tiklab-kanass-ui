@@ -10,7 +10,6 @@ import React, { useEffect, useRef } from "react";
 
 const CoLScroll = (props) => {
     const { timerOuter, timerCore, ganttOuter, ganttCore } = props;
-    console.log("存在")
     // 滑块
     const colScrollRef = useRef();
     // 滚轴
@@ -24,7 +23,6 @@ const CoLScroll = (props) => {
             const tranlate = timerHeight / boxHeight;
             const colScrollHeight = Math.floor(timerOuterHeight / tranlate);
             colScrollRef.current.style.height = colScrollHeight;
-            console.log(colScrollHeight)
         }
 
         return;

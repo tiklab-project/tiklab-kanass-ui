@@ -19,12 +19,11 @@ const { Sider } = Layout;
 
 const VersionDetailAside = (props) => {
     const { versionDetailStore } = props;
-    const { findVersion, version } = versionDetailStore;
+    const { findVersion, version, setVersionRouter, versionRouter } = versionDetailStore;
     //语言包
     const { t, i18n } = useTranslation();
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
-    console.log(props)
     const versionId = props.match.params.version;
     const setButton = useRef();
     const [isShowText, SetIsShowText] = useState(false)
@@ -35,9 +34,9 @@ const VersionDetailAside = (props) => {
         findVersion({ id: versionId }).then(res => {
             if(res.code === 0){
                 if (res.data.versionState.id === "222222") {
-                    setRouter(doneRouter)
+                    setVersionRouter(doneRouter)
                 } else {
-                    setRouter(allRouter)
+                    setVersionRouter(allRouter)
                 }
             }
         })
@@ -139,7 +138,7 @@ const VersionDetailAside = (props) => {
 
                         </div>
                         {
-                            router && router.map((item, index) => {
+                            versionRouter && versionRouter.map((item, index) => {
                                 return isShowText ?
                                     <div className={`version-menu-submenu ${path.indexOf(item.key) !== -1 ? "version-menu-select" : ""}`}
                                         key={index}

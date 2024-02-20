@@ -81,8 +81,6 @@ const EpicPage = (props) => {
     const [archiveView, setArchiveView] = useState("week")
     const changeMonth = () => {
         setArchiveView("month");
-        console.log("oopt")
-        console.log(graph)
         graph.dispose()
     }
 

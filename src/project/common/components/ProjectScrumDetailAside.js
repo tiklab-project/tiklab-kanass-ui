@@ -184,8 +184,7 @@ const ProdeScrumAside = (props) => {
     const resizeUpdate = (e) => {
         // 通过事件对象获取浏览器窗口的高度
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
-        // console.log(documentHeight)
-        // setHeight(documentHeight);
+
         const menuHeight = documentHeight - 200;
         const menuNum = Math.floor(menuHeight / 60);
         let num  = 0;

@@ -65,7 +65,6 @@ const ProjectOperateTable = (props) => {
         reportList.lg[index].data.data = value;
         reportList.lg[index].data.isEdit = true;
         setIsEditor(!isEditor)
-        console.log(index, reportList)
     }
 
     /**

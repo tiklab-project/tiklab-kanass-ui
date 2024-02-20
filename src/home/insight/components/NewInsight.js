@@ -49,7 +49,6 @@ const NewInsight = (props) => {
             if (res.code === 0) {
                 if (res.data.data) {
                     const report = JSON.parse(res.data.data)
-                    console.log(report)
                     setReportList(report)
                     const index = report.lg.length + 1
                     setReportIndex(index)

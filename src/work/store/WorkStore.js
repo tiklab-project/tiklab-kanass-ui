@@ -468,7 +468,6 @@ export class WorkStore {
 
     @action
     getWorkItemNum = () => {
-        console.log(this.viewType)
         if(this.viewType === "tile" || this.workShowType === "bodar"){
             this.findWorkItemNumByWorkList()
         }

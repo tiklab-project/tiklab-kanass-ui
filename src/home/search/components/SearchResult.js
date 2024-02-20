@@ -54,7 +54,6 @@ const SearchResult = (props) => {
     // 输入中
     const [showRes,setShow] = useState("hidden")
     const changeValue = (value) =>{
-        console.log(searchList,showRes)
         setShow("show")
         setKeyWord(value.target.value)
         getSearch(value.target.value)

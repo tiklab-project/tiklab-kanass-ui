@@ -28,7 +28,7 @@ const SprintAddModal = (props) => {
     const [form] = Form.useForm();
     const { uselist, getUseList, sprintStore, sprintStateList, setVisible, visible, sprintId, setActiveTabs } = props;
     const { searchSprint, addsprintlist, editSprint, findSprintList } = sprintStore;
-    const dateFormat = 'YYYY/MM/DD';
+    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     // 项目id
     const projectId = props.match.params.id;
 
@@ -37,7 +37,6 @@ const SprintAddModal = (props) => {
      */
     const showModal = () => {
         getUseList(projectId).then(res=> {
-            console.log(res)
             if(res.code === 0 && props.type === "add" && res.data.length > 0){
                 form.setFieldsValue({
                     master: res.data[0]?.user?.id,
@@ -77,8 +76,8 @@ const SprintAddModal = (props) => {
             let data = {
                 ...values,
                 master: { id: values.master },
-                startTime: time[0].format("YYYY-MM-DD"),
-                endTime: time[1].format("YYYY-MM-DD"),
+                startTime: time[0].format(dateFormat),
+                endTime: time[1].format(dateFormat),
                 project: {
                     id: props.projectId
                 }
@@ -201,7 +200,7 @@ const SprintAddModal = (props) => {
                                     message: '请选择计划日期',
                                 },
                             ]}>
-                            <RangePicker locale={locale} />
+                            <RangePicker locale={locale} showTime/>
                         </Form.Item>
                         <Form.Item
                             label="迭代描述"

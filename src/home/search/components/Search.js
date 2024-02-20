@@ -95,8 +95,7 @@ const Search = (props) => {
                     }
                 }
                
-            }   
-            console.log(keyboardIndex)
+            }
         }
         
         window.addEventListener("keydown", keyBordar);
@@ -142,9 +141,6 @@ const Search = (props) => {
                 }
             }
         })
-
-        console.log(keyboards)
-
         findRecentList({ model: "workItem", masterId: userId }).then(res => {
             if (res.data.length > 5) {
                 setWorkItemList(res.data.slice(0, 5))
@@ -217,7 +213,6 @@ const Search = (props) => {
         // 创建最近访问的信息
         updateRecent({ id: data.modelId })
         props.history.replace(`/projectDetail/${data.modelId}/workTable`)
-        console.log(props)
         // location.reload();
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")

@@ -59,7 +59,7 @@ const SprintBasicInfo = props => {
             }
         ]
     };
-    const dateFormat = 'YYYY/MM/DD';
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
 
     useEffect(() => {
 
@@ -103,8 +103,8 @@ const SprintBasicInfo = props => {
                 const time = values["startTime"]
                 const data = {
                     ...values,
-                    startTime: time[0].format("YYYY-MM-DD"),
-                    endTime: time[1].format("YYYY-MM-DD"),
+                    startTime: time[0].format(dateFormat),
+                    endTime: time[1].format(dateFormat),
                     master: { id: values.master },
                     desc: values.desc,
                     id: sprintId
@@ -230,7 +230,7 @@ const SprintBasicInfo = props => {
                                         </Select>
                                     </Form.Item>
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} />
+                                        <RangePicker locale={locale} showTime />
                                     </Form.Item>
                                     <Form.Item
                                         label="迭代描述"

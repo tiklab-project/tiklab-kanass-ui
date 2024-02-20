@@ -33,7 +33,6 @@ const WorkGantt = (props) => {
             versionId: versionId
         }
         finWorkList(path, WorkStore, params);
-        console.log(workList)
         return;
     }, [projectId])
     return (<Provider {...store}>

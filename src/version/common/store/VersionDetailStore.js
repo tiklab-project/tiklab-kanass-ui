@@ -3,6 +3,13 @@ import {Service} from "../../../common/utils/requset";
 export class VersionDetailStore {
     @observable versionList = [];
     @observable version = "";
+    @observable versionRouter = [];
+    // const [router, setRouter] = useState();
+
+    @action
+    setVersionRouter = (value) => {
+        this.versionRouter = value
+    }
 
     @action
     findVersionList = async(value) => {

@@ -82,7 +82,6 @@ const WorkLogEdit = (props) => {
             value.user = {
                 id: getUser().userId
             }
-            console.log(value)
             if (type === "creat") {
                 addWorkLog(value)
                 AddLog.resetFields()

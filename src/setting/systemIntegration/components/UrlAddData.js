@@ -21,7 +21,6 @@ const UrlAddData = (props) => {
             params.append("id", urlId);
             findSystemUrl(params).then(res => {
                 if (res.code === 0) {
-                    console.log(res.data)
                     const data = res.data;
                     form.setFieldsValue({
                         name: data.name,

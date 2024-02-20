@@ -19,7 +19,7 @@ const { Sider } = Layout;
 
 const SprintDetailAside = (props) => {
     const { sprintDetailStore } = props;
-    const { findSprint, sprint } = sprintDetailStore;
+    const { findSprint, sprint, sprintRouter, setSprintRouter } = sprintDetailStore;
     //语言包
 
     // 当前选中路由
@@ -29,7 +29,6 @@ const SprintDetailAside = (props) => {
     const [isShowText, SetIsShowText] = useState(false)
 
     const path = props.location.pathname.split("/")[4];
-    const [router, setRouter] = useState();
     const { t, i18n } = useTranslation();
     const allRouter = [
         {
@@ -88,9 +87,9 @@ const SprintDetailAside = (props) => {
     useEffect(() => {
         findSprint({ id: sprintId }).then(res => {
             if (res.data.sprintState.id === "222222") {
-                setRouter(doneRouter)
+                setSprintRouter(doneRouter)
             } else {
-                setRouter(allRouter)
+                setSprintRouter(allRouter)
             }
         })
         return;
@@ -154,7 +153,7 @@ const SprintDetailAside = (props) => {
 
                         </div>
                         {
-                            router && router.map((item, index) => {
+                            sprintRouter && sprintRouter.map((item, index) => {
                                 return isShowText ?
                                     <div className={`sprint-menu-submenu ${path.indexOf(item.key) !== -1 ? "sprint-menu-select" : ""}`}
                                         key={index}

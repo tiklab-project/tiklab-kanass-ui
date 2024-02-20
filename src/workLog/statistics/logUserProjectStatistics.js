@@ -90,8 +90,6 @@ const LogUserProjectStatistics = (props) => {
     }
 
     const changField = (changedValues, allValues) => {
-        console.log(allValues)
-        console.log(Object.keys(changedValues)[0])
         let params;
         if (Object.keys(changedValues)[0] === "dateRanger") {
             params = {

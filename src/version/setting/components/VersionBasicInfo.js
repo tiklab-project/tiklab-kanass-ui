@@ -58,7 +58,7 @@ const VersionBasicInfo = props => {
             }
         ]
     };
-    const dateFormat = 'YYYY/MM/DD';
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
 
     useEffect(() => {
 
@@ -75,7 +75,7 @@ const VersionBasicInfo = props => {
                 form.setFieldsValue({
                     name: data.name,
                     master: data.master.id,
-                    startTime: [moment(data.startTime, dateFormat), moment(data.publishDate, dateFormat)]
+                    startTime: [moment(data.startTime, dateFormat), moment(data.publishTime, dateFormat)]
                 })
             }
 
@@ -86,7 +86,7 @@ const VersionBasicInfo = props => {
         form.setFieldsValue({
             name: versionInfo.name,
             master: versionInfo.master.id,
-            startTime: [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishDate, dateFormat)]
+            startTime: [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishTime, dateFormat)]
         })
     }
 
@@ -98,8 +98,8 @@ const VersionBasicInfo = props => {
                 const time = values["startTime"]
                 const data = {
                     ...values,
-                    startTime: time[0].format("YYYY-MM-DD"),
-                    publishDate: time[1].format("YYYY-MM-DD"),
+                    startTime: time[0].format(dateFormat),
+                    publishTime: time[1].format(dateFormat),
                     master: { id: values.master },
                     id: versionId
                 }
@@ -226,7 +226,7 @@ const VersionBasicInfo = props => {
                                         </Select>
                                     </Form.Item>
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} />
+                                        <RangePicker locale={locale} showTime/>
                                     </Form.Item>
                                     <Form.Item {...formTailLayout} >
                                         <Button onClick={() => cancel()}>

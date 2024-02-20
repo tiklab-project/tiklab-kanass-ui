@@ -23,7 +23,6 @@ const LoadData = (props) => {
     let [timer, setTimerS] = useState()
     // let timer;
     useEffect(()=> {
-        console.log(timer)
         return () => clearInterval(timer)
     }
     , [])
@@ -37,7 +36,6 @@ const LoadData = (props) => {
                 if (res.data.total && res.data.currentNum) {
                     const rr = res.data.currentNum * 100 / res.data.total;
                     setPercent(rr);
-                    console.log(res.data.currentNum,res.data.total )
                 }
                 // setPercent(3 / 10);
                 setCurrentSchedule(currentSchedule)
@@ -61,14 +59,11 @@ const LoadData = (props) => {
         onChange(info) {
             if(info.event){
                 clearInterval(timer) 
-                // console.log(1, timer)
                 setLoading(true)
                 timer = setInterval(() => getJiraInputSchedule(), 2000)
                 setTimerS(timer)
-                console.log(2, timer)
             }
             if(info.file.status === "done"){
-                console.log(timer)
                 clearInterval(timer) 
                 setLoading(false)
                 setTimerS(null)
@@ -78,7 +73,6 @@ const LoadData = (props) => {
                     message.error("导入失败")
                 }
                 
-                console.log(timer)
             }
 
         },

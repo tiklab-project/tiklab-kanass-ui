@@ -38,7 +38,6 @@ const ProjectSetRelevance = (props) => {
 
     // 提交表单
     const sumitFrom = () => {
-        console.log(checkedList)
         const changeList = [];
         checkedList.map((item) => {
             changeList.push(item.id);

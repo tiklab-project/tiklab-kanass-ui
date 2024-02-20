@@ -26,7 +26,6 @@ const LogContent = (props) => {
     }
     const { findWorkLogPage, logList, selectLogCondition } = LogStore;
     const [dateValue, setDateValue] = useState()
-    console.log(selectLogCondition)
     // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
     // 选中的tab key
@@ -71,7 +70,6 @@ const LogContent = (props) => {
             }
             findWorkLogPage(data)
         }
-        console.log([moment().subtract(7, 'days'), moment()])
         setDateValue([moment().subtract(7, 'days'), moment()])
     }
 
@@ -81,7 +79,6 @@ const LogContent = (props) => {
      * @param {日志索引} index 
      */
     const goLogDetail = (id, index) => {
-        console.log(id)
         setLogId(id);
         setLogDetailVisable(true);
         setListIndex(index)

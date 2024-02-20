@@ -60,7 +60,6 @@ const WorkTypeList = (props) => {
         const index = newList.findIndex((item) => {
             return item.id === id
         })
-        console.log(newList.length)
         if (index === newList.length - 1) {
             message.warning('已是最低了！');
         } else {

@@ -232,7 +232,6 @@ const WorkAddPage = (props) => {
     const changeWorkItem = (changedValues) => {
         setNewWorkItem({ ...newWorkItem, ...changedValues })
         setIsEditStart(true)
-        console.log("change")
     }
 
     const changeDesc = (value) => {

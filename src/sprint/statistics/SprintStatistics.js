@@ -15,7 +15,6 @@ import "../../statistics/components/Statistics.scss"
 const { Sider } = Layout;
 const SprintStatistics = (props) => {
     const route = props.route
-    console.log(route)
     return (
         <Layout className="statistics">
             <Sider trigger={null} width="250">

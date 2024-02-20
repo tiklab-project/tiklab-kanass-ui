@@ -61,14 +61,12 @@ const ProjectSetMember = (props) => {
                 const projectSet = res.data.projectSet;
                 const axisValue = []
                 const yAxisValue = []
-                console.log(projectUserList)
                 setProjectUserList(projectUserList)
                 if (projectUserList.length > 0) {
                     projectUserList.map(item => {
                         axisValue.push(item.project.projectName)
                         yAxisValue.push(item.count)
                     })
-                    console.log(axisValue, yAxisValue)
                     let myChart = echarts.init(chartDom);
                     let option = {
                         title: {

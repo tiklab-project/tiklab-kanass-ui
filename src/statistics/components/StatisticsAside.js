@@ -22,46 +22,7 @@ const StatisticsAsicde = (props) => {
     const sprintId = props.match.params.sprint;
     const [logMenuList, setLogMenuList] = useState(logReportList)
 
-    useEffect(() => {
-        // if (versionInfo.expired === false) {
-        //     const workConfigList = pluginStore.filter(item => item.key === workKey);
-        //     if (workConfigList.length > 0) {
-        //         let list = [
-        //             {
-        //                 key: "workItem",
-        //                 title: "事项字段统计",
-        //                 type: "workItem"
-        //             }
-        //         ]
-        //         workConfigList.map(item => {
-        //             list.push({
-        //                 key: item.id,
-        //                 title: item.extraProps.title,
-        //                 type: item.menu
-        //             })
-                    
-        //         })
-        //         console.log(list)
-        //         setWorkMenuList([...list])
-        //     }
-
-
-        //     const logConfigList = pluginStore.filter(item => item.key === logKey);
-        //     if (logConfigList.length > 0) {
-        //         let list = []
-        //         logConfigList.map(item => {
-        //             list.push({
-        //                 key: item.id,
-        //                 title: item.extraProps.title,
-        //                 type: item.menu
-        //             })
-                    
-        //         })
-        //         setLogMenuList([...list])
-        //     }
-        // }
-        return;
-    }, [])
+    
     // 选中的菜单
     const [selectRouter, setSelectRouter] = useState("workItem")
     // 已展开子级的阶段id集合

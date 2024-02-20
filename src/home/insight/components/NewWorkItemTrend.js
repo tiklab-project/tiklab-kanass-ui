@@ -143,7 +143,6 @@ const NewWorkItemTrend = (props) => {
         // setStatisticsData(params)
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;
-        console.log(params, index, reportList)
     }
 
     /**

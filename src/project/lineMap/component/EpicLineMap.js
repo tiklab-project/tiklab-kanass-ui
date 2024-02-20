@@ -82,7 +82,6 @@ const EpicLineMap = (props) => {
 
     const creatGraph = () => {
         if (graph) {
-            console.log("销毁画布")
             graph.dispose()
         }
         // 开始与结束日期，解析一个表示某个日期的字符串，
@@ -174,7 +173,6 @@ const EpicLineMap = (props) => {
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {
-        console.log(node, options)
         const nodeBox = node.getBBox();
         const index = node.store.data.index;
         const workItemId = node.id;
@@ -365,7 +363,6 @@ const EpicLineMap = (props) => {
             }
             return array
         })
-        console.log(array)
         return array;
         
     }
@@ -425,7 +422,6 @@ const EpicLineMap = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     const goEpicWorkDetail = (workItem, index) => {

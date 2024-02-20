@@ -97,7 +97,6 @@ const WorkChild = (props) => {
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
-        console.log(props)
         if(props.match.path === "/projectDetail/:id/workDetail/:workId"){
             props.history.push(`/projectDetail/${project.id}/workDetail/${record.id}`)
         }

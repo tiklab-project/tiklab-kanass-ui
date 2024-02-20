@@ -59,7 +59,6 @@ const ModuleList = (props) => {
      * @param {*} values 
      */
     const onSearch = (values) => {
-        console.log(values)
         setModuleName(values.target.value)
         // 重置分页参数，从第一页开始搜索
         setPageParam({ current: 1, pageSize: 10 })
@@ -75,7 +74,6 @@ const ModuleList = (props) => {
     const showModal = (record, name) => {
         setVisible(true);
         setParent(record?.id)
-        console.log(record?.id)
         setType("add")
         setModalName(name)
     };

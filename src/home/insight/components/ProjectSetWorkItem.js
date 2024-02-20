@@ -16,7 +16,6 @@ import * as echarts from 'echarts';
 
 const ProjectSetWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
-    console.log(index)
     const { statisticsProjectWorkItemCount, findAllProjectSet, reportList } = insightStore;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);

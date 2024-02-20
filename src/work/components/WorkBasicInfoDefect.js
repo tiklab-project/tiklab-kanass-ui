@@ -17,6 +17,7 @@ import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
+import { deleteAndQueryDeepData } from "./WorkGetList";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const { OptGroup } = Select;
@@ -229,10 +230,8 @@ const WorkBasicInfo = (props) => {
      */
     const updateSingle = (changedValues) => {
         let changeKey = Object.keys(changedValues)[0];
-        console.log(changedValues)
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
-            console.log(changedValues)
         }
         if (changedValues.planTime) {
             changedValues.planBeginTime = changedValues.planTime[0].format('YYYY-MM-DD HH:mm:ss')
@@ -345,8 +344,6 @@ const WorkBasicInfo = (props) => {
                             if (res) {
                                 deleteAndQueryDeepData(workList, treeIndex)
                                 workList.splice(workIndex - 1, 0, res)
-
-                                console.log(workList)
                                 setWorkList([...workList])
                             }
                         })
@@ -360,32 +357,32 @@ const WorkBasicInfo = (props) => {
         setFieldName("")
     }
 
-    // 事项更换上级之后把当前事项从列表中移除
-    const deleteAndQueryDeepData = (originalArray, indexes) => {
-        if (indexes.length === 0) {
-            return undefined; // 如果索引数组为空，返回 undefined
-        }
+    // // 事项更换上级之后把当前事项从列表中移除
+    // const deleteAndQueryDeepData = (originalArray, indexes) => {
+    //     if (indexes.length === 0) {
+    //         return undefined; // 如果索引数组为空，返回 undefined
+    //     }
 
-        const currentIndex = indexes.shift(); // 获取当前层级的下标
-        if (currentIndex < 0 || currentIndex >= originalArray.length) {
-            return undefined; // 下标越界，返回 undefined 表示未找到数据
-        }
+    //     const currentIndex = indexes.shift(); // 获取当前层级的下标
+    //     if (currentIndex < 0 || currentIndex >= originalArray.length) {
+    //         return undefined; // 下标越界，返回 undefined 表示未找到数据
+    //     }
 
-        if (indexes.length === 0) {
-            // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
-            return originalArray.splice(currentIndex, 1)[0];
-        }
+    //     if (indexes.length === 0) {
+    //         // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
+    //         return originalArray.splice(currentIndex, 1)[0];
+    //     }
 
-        const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
-        const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
+    //     const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
+    //     const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
 
-        // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
-        // if (result === undefined) {
-        //   originalArray.splice(currentIndex, 1);
-        // }
+    //     // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
+    //     // if (result === undefined) {
+    //     //   originalArray.splice(currentIndex, 1);
+    //     // }
 
-        return result;
-    }
+    //     return result;
+    // }
 
     const updataPlanTime = (value) => {
         setPlanTakeupTimeValue(value)
@@ -403,7 +400,6 @@ const WorkBasicInfo = (props) => {
      */
     const updateExtData = (changedValues) => {
         let extData = JSON.parse(workInfo.extData)
-        console.log(extData)
         let data = {
             extData: JSON.stringify({
                 ...extData,
@@ -496,10 +492,8 @@ const WorkBasicInfo = (props) => {
             likeId: value
         }
         findCanBeRelationPerWorkItemList(params).then(res => {
-            console.log(res)
             if (res.code === 0) {
                 setPreWorkList(res.data.dataList);
-                console.log(res.data.dataList)
             }
         })
     }, [1000])
@@ -633,6 +627,7 @@ const WorkBasicInfo = (props) => {
                                     hoverFieldName = {hoverFieldName}
                                     setHoverFieldName = {setHoverFieldName}
                                     workStore = {workStore}
+                                    workStatusCode = {workInfo.workStatusCode}
                                 />
                             </Form.Item>
 
@@ -758,6 +753,7 @@ const WorkBasicInfo = (props) => {
                                     hoverFieldName = {hoverFieldName}
                                     setHoverFieldName = {setHoverFieldName}
                                     workStore = {workStore}
+                                    workStatusCode = {workInfo.workStatusCode}
                                 />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
@@ -857,7 +853,7 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("parentWorkItem")}
                                 onBlur={() => changeStyle("")}
-                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
+                                suffixIcon= {fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
                             >

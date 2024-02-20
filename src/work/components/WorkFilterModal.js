@@ -29,13 +29,6 @@ const WorkFilterModal = (props) => {
         }
     }
 
-    // useEffect(() => {
-    //     if(workListSearch?.current){
-    //         console.log(workListSearch)
-    //         setHeightFilter(workListSearch.current.clientWidth + 50);
-    //     }
-    // }, [workListSearch?.current])
-
     const [listStyle, setListStyle] = useState()
 
     const showModal = () => {

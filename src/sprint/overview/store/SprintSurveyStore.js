@@ -12,7 +12,6 @@ class SprintSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
 
-
     @action
 	StatSprintProcessWorkItem = async(value) => {
         const params = new FormData();
@@ -26,7 +25,7 @@ class SprintSurveyStore {
 	statWorkItemByBusStatus = async(value) => {
         const params = {
             projectIds: [value.projectId],
-            sprintIds: [value.sprintId]
+            currentSprintId: value.sprintId
         }
         const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;

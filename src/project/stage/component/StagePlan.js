@@ -43,7 +43,6 @@ const StagePlan = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     /**

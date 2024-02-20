@@ -24,7 +24,6 @@ import { Modal, Tabs } from "antd";
 const ReportList = (props) => {
     const { insightStore, showReportList, setShowReportList, reportIndex, setReportIndex } = props;
     const { addReportList, reportList } = insightStore;
-    console.log(reportList)
 
     /**
      * 添加报告
@@ -53,7 +52,6 @@ const ReportList = (props) => {
             y =  0
         }
         
-        console.log(x, y)
         const report = {
             x: x, 
             y: y, 

@@ -28,7 +28,6 @@ const RowScroll =(props)=> {
      * 横向滚动轴的拖动
      */
     const sliderChangeX = (value,srollWidth)=> {
-        // console.log(value)
         const timerOuterDom = timerOuter.current;
         const timerCoreDom = timerCore.current;
         

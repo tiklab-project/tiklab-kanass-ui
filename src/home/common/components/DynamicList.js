@@ -54,7 +54,6 @@ const DynamicList = (props) => {
                         list.map(item => {
                             findLogpage({ data: { projectId: item.id } }, "projectSet").then(res => {
                                 if (res.code === 0) {
-                                    console.log(opLogList)
                                     opLogs.push(...res.data.dataList)
                                     setOpLogList([...opLogs])
                                 }
@@ -92,7 +91,6 @@ const DynamicList = (props) => {
 
     }
     const selectProject = (option) => {
-        console.log(option)
         findLogpage({data: { projectId: option }})
         // getModuleList(option)
         // getsprintlist(option)

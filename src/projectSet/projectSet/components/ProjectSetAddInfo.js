@@ -85,7 +85,6 @@ const ProjectSetAddInfo = (props) => {
     }
 
     const checkLimit = (_, value) => {
-        console.log(value)
         if (value) {
             return Promise.resolve();
         }

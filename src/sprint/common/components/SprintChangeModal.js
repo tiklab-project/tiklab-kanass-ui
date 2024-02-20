@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 
 const SprintChangeModal = (props) => {
-    // console.log(props)
     const { isShowText, sprintDetailStore } = props;
     const { findSprintList, findSprint, sprintList, sprint } = sprintDetailStore;
     const [showMenu, setShowMenu] = useState(false);

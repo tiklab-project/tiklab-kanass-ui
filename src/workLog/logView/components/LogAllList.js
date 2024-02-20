@@ -40,7 +40,6 @@ const LogAllList = (props) => {
             endTime: moment().add(1, 'days').format("YYYY-MM-DD"),
         }
         findWorkLogPage(data)
-        console.log([moment().subtract(7, 'days'), moment()])
         setDateValue([moment().subtract(7, 'days'), moment()])
     }
 

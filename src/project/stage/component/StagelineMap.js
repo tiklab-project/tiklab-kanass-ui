@@ -264,7 +264,6 @@ const LineMapStage = (props) => {
             
             if (item.children && item.children.length > 0 && !isExpandedTree(item.id)) {
                 let childrenData = setNode(item.children)
-                console.log(childrenData)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
                 // setGanttHeight()
@@ -364,7 +363,6 @@ const LineMapStage = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     /**

@@ -146,7 +146,6 @@ export class ProjectSetStore {
         const data = await Service("/projectSet/findProjectIsOrNotRe");
         if (data.code === 0) {
             this.noRelatedProjects = data.data.noRelatedProjects;
-            console.log(this.noRelatedProjects)
             this.relatedProjects = data.data.relatedProjects;
         }
         return data;

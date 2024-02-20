@@ -62,7 +62,6 @@ export class VersionPlanStore {
 
     @action
     setPlanWorkList = (value) => {
-        console.log(value)
         this.planWorkList = value;
     }
 
@@ -86,7 +85,7 @@ export class VersionPlanStore {
         const params={
             projectId: value.projectId,
             orderParams: [{
-                name: "title",
+                name: "name",
                 orderType:"asc"
             }],
             pageParam: {

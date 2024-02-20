@@ -128,7 +128,6 @@ const WorkTypeAddModal = (props) => {
      */
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelelctWorkType(selectedRows)
         },
         onSelect: (record, selected, selectedRows, nativeEvent ) => {

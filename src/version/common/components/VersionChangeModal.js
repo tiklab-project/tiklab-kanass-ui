@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 
 const VersionChangeModal = (props) => {
-    // console.log(props)
     const { isShowText, versionDetailStore } = props;
     const { findVersionList,findVersion, versionList, version } = versionDetailStore;
     const [showMenu, setShowMenu] = useState(false);

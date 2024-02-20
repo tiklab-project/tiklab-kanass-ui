@@ -9,14 +9,42 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Select, Modal, message, DatePicker } from "antd";
+import SprintDetailStore from "../../common/store/SprintDetailStore";
 import "./SprintEndState.scss";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 
 const SprintEndState = props => {
     const { projectId, sprintId, visible, setVisible, SprintSurveyStore, sprintInfo, setSprintInfo } = props;
     const { findSelectSprintList, updateSprint, findSprint } = SprintSurveyStore;
+    const { setSprintRouter } = SprintDetailStore;
     const [selectSprintList, setSelectSprintLis] = useState();
     const [newSprintId, setNewSprintId] = useState()
+    const { t, i18n } = useTranslation();
+    const doneRouter = [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey',
+            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            key: "survey",
+            encoded: "Survey",
+        },
+        {
+            title: "事项",
+            icon: 'survey',
+            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            key: "work",
+            encoded: "work",
+        },
+        {
+            title: "统计",
+            icon: 'survey',
+            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            key: "statistics",
+            encoded: "statistics",
+        }
+    ]
+
     useEffect(() => {
         if (visible) {
             const params = {
@@ -35,11 +63,6 @@ const SprintEndState = props => {
     }, [visible])
 
     const handleOk = () => {
-        console.log("sss")
-        // form.validateFields().then((values) => {
-        //     console.log(values)
-           
-        // })
         const data = {
             sprintState: {
                 id: "222222"
@@ -52,6 +75,7 @@ const SprintEndState = props => {
                 findSprint({ sprintId: sprintId }).then(res => {
                     setSprintInfo(res.data)
                 })
+                setSprintRouter(doneRouter)
                 message.success("修改成功");
                 setVisible(false)
             }
@@ -85,7 +109,7 @@ const SprintEndState = props => {
                         placeholder="迭代"
                         allowClear
                         value={newSprintId}
-                        onChange={(value) => { setNewSprintId(value); console.log(value) }}
+                        onChange={(value) => { setNewSprintId(value);}}
                         style={{
                             width: '100%',
                         }}

@@ -10,13 +10,34 @@ import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Select, Modal, message, DatePicker } from "antd";
 import "./VersionEndState.scss";
+import VersionDetailStore from "../../common/store/VersionDetailStore";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 
 const VersionEndState = props => {
     const { projectId, versionId, visible, setVisible, VersionSurveyStore, versionInfo, setVersionInfo } = props;
     const { findSelectVersionList, updateVersion, findVersion } = VersionSurveyStore;
+    const {setVersionRouter} = VersionDetailStore;
     const [selectVersionList, setSelectVersionLis] = useState();
-    const [newVersionId, setNewVersionId] = useState()
+    const [newVersionId, setNewVersionId] = useState();
+    const { t, i18n } = useTranslation();
+    const doneRouter = [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey',
+            url: `/${projectId}/versiondetail/${versionId}/survey`,
+            key: "survey",
+            encoded: "Survey",
+        },
+        {
+            title: "事项",
+            icon: 'survey',
+            url: `/${projectId}/versiondetail/${versionId}/workTable`,
+            key: "work",
+            encoded: "work",
+        }
+    ]
+
     useEffect(() => {
         if (visible) {
             const params = {
@@ -35,11 +56,6 @@ const VersionEndState = props => {
     }, [visible])
 
     const handleOk = () => {
-        console.log("sss")
-        // form.validateFields().then((values) => {
-        //     console.log(values)
-           
-        // })
         const data = {
             versionState: {
                 id: "222222"
@@ -52,6 +68,7 @@ const VersionEndState = props => {
                 findVersion({ versionId: versionId }).then(res => {
                     setVersionInfo(res.data)
                 })
+                setVersionRouter(doneRouter)
                 message.success("修改成功");
                 setVisible(false)
             }
@@ -85,14 +102,14 @@ const VersionEndState = props => {
                         placeholder="版本"
                         allowClear
                         value={newVersionId}
-                        onChange={(value) => { setNewVersionId(value); console.log(value) }}
+                        onChange={(value) => { setNewVersionId(value);}}
                         style={{
                             width: '100%',
                         }}
                     >
                         {
                             selectVersionList && selectVersionList.map((item, index) => {
-                                return <Select.Option value={item.id} key={item.id}>{item.versionName}</Select.Option>
+                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                             })
                         }
                         <Select.Option value={null} key={"noVersion"}>不规划新的版本</Select.Option>

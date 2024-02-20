@@ -58,9 +58,7 @@ const EpicLineMap = (props) => {
         // 用开始日期与结束日期定义画布的宽度
         let graphWidth = Math.abs(start - end);
         graphWidth = Math.floor(graphWidth / (3600 * 1000)) + 24;
-        console.log()
         setGanttWidth(graphWidth)
-        console.log("重新画图")
         const graph = new Graph({
             container: document.getElementById("epic"),
             width: graphWidth,
@@ -254,7 +252,6 @@ const EpicLineMap = (props) => {
 
             if (item.children && item.children.length > 0 && !isExpandedTree(item.id)) {
                 let childrenData = setNode(item.children)
-                console.log(childrenData)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
                 // setGanttHeight()

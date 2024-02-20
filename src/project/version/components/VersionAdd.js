@@ -18,6 +18,7 @@ const VersionAddmodal = (props) => {
     const { versionStore, findVersion, userList, getUseList, setActiveTabs } = props;
     const { editVersion, addVersion, searchVersionById, status, findAllVersionState, getVersionList, searchCondition } = versionStore;
     const [form] = Form.useForm();
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
     // 项目id
@@ -49,8 +50,8 @@ const VersionAddmodal = (props) => {
                     id: projectId
                 },
 
-                'publishDate': fieldsValue['publishDate'].format('YYYY-MM-DD'),
-                'startTime': fieldsValue['startTime'].format('YYYY-MM-DD')
+                'publishTime': fieldsValue['publishTime'].format(dateFormat),
+                'startTime': fieldsValue['startTime'].format(dateFormat)
             };
             if (props.type === "edit") {
                 values.id = props.id
@@ -106,7 +107,7 @@ const VersionAddmodal = (props) => {
                 form.setFieldsValue({
                     name: res.name,
                     project: res.project.id,
-                    publishDate: res.publishDate ? moment(res.publishDate) : null,
+                    publishTime: res.publishTime ? moment(res.publishTime) : null,
                     startTime: res.startTime ? moment(res.startTime) : null,
                     versionState: res.versionState
                 })
@@ -221,14 +222,15 @@ const VersionAddmodal = (props) => {
                             ]}
                         >   
                             <DatePicker
-                                format="YYYY-MM-DD"
+                                format={dateFormat}
                                 locale={locale}
+                                showTime
                             />
                         </Form.Item>
 
                         <Form.Item
                             label="发布日期"
-                            name="publishDate"
+                            name="publishTime"
                             rules={[
                                 {
                                     required: true,
@@ -237,8 +239,9 @@ const VersionAddmodal = (props) => {
                             ]}
                         >
                             <DatePicker
-                                format="YYYY-MM-DD"
+                                format={dateFormat}
                                 locale={locale}
+                                showTime
                             />
                         </Form.Item>
                     </Form>

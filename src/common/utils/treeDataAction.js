@@ -98,6 +98,5 @@ const removeTableTree = (tree, id) => { // 通过id从数组（树结构）中�
             removeTableTree(tree[i].children, id)
         }
     }
-    console.log(tree)
 }
 export { removeNodeInTree, removeTableTree};

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import "./Select.scss";
 const SelectSimple = (props) => {
     const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
-        ismult, title, children, value, className, simpleClassName, suffixIcon } = props;
+        ismult, title, children, value, className, simpleClassName, suffixIcon, hoverFieldName, fieldName } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
     const [searchValue, setSearchValue] = useState();
@@ -50,7 +50,6 @@ const SelectSimple = (props) => {
 
 
     const getValue = (e, option) => {
-        console.log("big")
         if (ismult) {
             const value = e.value;
             const checked = e.checked;
@@ -79,6 +78,7 @@ const SelectSimple = (props) => {
     }
 
     const showShowDrop = () => {
+        console.log( hoverFieldName, fieldName)
         setShowDropDown(true);
         if (onFocus) {
             onFocus();
@@ -106,9 +106,10 @@ const SelectSimple = (props) => {
         onChange(null)
     }
     return <div className={`select-view ${simpleClassName ? simpleClassName : ""}`}>
-        <div onClick={() => showShowDrop()} className="select-content"
+        <div className="select-content"
             onMouseEnter={() => onMouseEnter && onMouseEnter()}
-            onMouseLeave={() => onMouseEnter && onMouseLeave()}
+            onMouseLeave={() => onMouseLeave && onMouseLeave()}
+            onClick={() => showShowDrop()} 
         >
             {
                 ismult ?
@@ -116,7 +117,7 @@ const SelectSimple = (props) => {
                         {title}
                     </div>
                     :
-                    <div className={`${className} select-view-text`} title = {selectData?.label ? selectData.label : title}>
+                    <div className={`${className} select-view-text`} title={selectData?.label ? selectData.label : title}>
                         {selectData?.label ? selectData.label : title}
                     </div>
             }
@@ -127,9 +128,12 @@ const SelectSimple = (props) => {
                 {
                     suffixIcon && <>
                         {
-                            !ismult && selectData ? <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
-                                <use xlinkHref="#icon-cancel"></use>
-                            </svg>
+                            !ismult && selectData ? <div>
+                                <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
+                                    <use xlinkHref="#icon-cancel"></use>
+                                </svg>
+                            </div>
+
                                 :
                                 <svg className="svg-icon" aria-hidden="true" >
                                     <use xlinkHref={`#icon-downdrop`}></use>
@@ -139,6 +143,9 @@ const SelectSimple = (props) => {
 
 
                 }
+                  {/* <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
+                                    <use xlinkHref="#icon-cancel"></use>
+                                </svg> */}
 
             </div>
 
@@ -161,7 +168,7 @@ const SelectSimple = (props) => {
                 }
 
                 {
-                    React.Children.map(children, (children, i) => {
+                    React.Children?.map(children, (children, i) => {
                         return React.cloneElement(children, { onChange: getValue, selectData: selectData, setShowDropDown: setShowDropDown, ismult: ismult })
                     })
                 }

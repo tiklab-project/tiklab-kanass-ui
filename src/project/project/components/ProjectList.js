@@ -95,7 +95,6 @@ const ProjectList = (props) => {
         props.history.push({ pathname: `/projectDetail/${project.id}/projectSetDetail/basicInfo` })
     }
     const onSearch = value => {
-        console.log(value)
         switch (activeTabs) {
             case "1":
                 findJoinProjectList({ projectName: value, creator: null })

@@ -8,7 +8,6 @@ const WorkTypeTab = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     // 解析store数据
     const {  findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum } = workStore;
-    console.log(eveWorkTypeNum)
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
 
@@ -19,7 +18,6 @@ const WorkTypeTab = (props) => {
         findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
             if (res.code === 0) {
                 setWorkSystem(res.data)
-                console.log(res.data)
             }
         })
 

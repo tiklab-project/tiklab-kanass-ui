@@ -18,7 +18,6 @@ const { RangePicker } = DatePicker;
 const LogFilter = (props) => {
     const { logStore, dateValue, setDateValue } = props;
     const { findWorkLogPage, logList } = logStore;
-    console.log(props)
     const path = props.match.path;
     // 项目id
     const projectId = props.match.params.id;

@@ -79,7 +79,6 @@ const ProjectIconChange = (props) => {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
-                console.log(info.file, info.fileList);
                 const res = info.file.response.data;
                 const params = {
                     iconName: info.file.name,

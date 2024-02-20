@@ -32,9 +32,7 @@ const VersionChangeModal = props => {
     },[visible])
 
     const handleOk = () => {
-        console.log("sss")
         form.validateFields().then((values) => {
-            console.log(values)
             const time = values["startTime"]
             const data = {
                 ...values,
@@ -75,7 +73,7 @@ const VersionChangeModal = props => {
                 placeholder="版本"
                 allowClear
                 value={newVersionId}
-                onChange = {(value) => {setNewVersionId(value); console.log(value)}}
+                onChange = {(value) => {setNewVersionId(value);}}
                 style={{
                     width: '100%',
                   }}

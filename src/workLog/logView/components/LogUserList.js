@@ -44,7 +44,6 @@ const LogUserList = (props) => {
             endTime: moment().add(1, 'days').format('YYYY-MM-DD'),
         }
         findWorkLogPage(data)
-        console.log([moment().subtract(7, 'days'), moment()])
         setDateValue([moment().subtract(7, 'days'), moment()])
     }
 
@@ -55,7 +54,6 @@ const LogUserList = (props) => {
      * @param {日志索引} index 
      */
     const goLogDetail = (id, index) => {
-        console.log(id)
         setLogId(id);
         setLogDetailVisable(true);
         setListIndex(index)

@@ -245,8 +245,8 @@ const VersionDetail = (props) => {
                                         onFocus={() => changeStyle("planPublishTime")}
                                         onBlur={() => setFieldName("")}
                                         suffixIcon={false}
-                                        defaultValue={moment(planInfo.publishDate, dateFormat)}
-                                        onChange={(data, dateString) => updateVersion("publishDate", data, dateString)}
+                                        defaultValue={moment(planInfo.publishTime, dateFormat)}
+                                        onChange={(data, dateString) => updateVersion("publishTime", data, dateString)}
                                     />
                                 </div>
                             </div>

@@ -26,13 +26,13 @@ const VersionStartState = props => {
     const {  versionId, visible, setVisible, VersionSurveyStore, versionInfo, setVersionInfo } = props;
     const { updateVersion, findVersion } = VersionSurveyStore;
     const [form] = Form.useForm();
-    const dateFormat = 'YYYY/MM/DD';
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
     useEffect(() => {
         if (visible) {
             form.setFieldsValue({
                 name: versionInfo?.name,
                 desc: versionInfo?.desc || null,
-                startTime: versionInfo.startTime ? [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishDate, dateFormat)] : null
+                startTime: versionInfo.startTime ? [moment(versionInfo.startTime, dateFormat), moment(versionInfo.publishTime, dateFormat)] : null
             })
         }
 
@@ -40,14 +40,12 @@ const VersionStartState = props => {
     }, [visible])
 
     const handleOk = () => {
-        console.log("sss")
         form.validateFields().then((values) => {
-            console.log(values)
             const time = values["startTime"]
             const data = {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),
-                publishDate: time[1].format("YYYY-MM-DD"),
+                publishTime: time[1].format("YYYY-MM-DD"),
                 desc: values.desc,
                 versionState: {
                     id: "111111"
@@ -106,7 +104,7 @@ const VersionStartState = props => {
                             message: '请选择计划日期',
                         },
                     ]}>
-                    <RangePicker locale={locale} />
+                    <RangePicker locale={locale} showTime/>
                 </Form.Item>
                 <Form.Item
                     label="版本描述"

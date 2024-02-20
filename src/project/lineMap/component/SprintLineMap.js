@@ -145,7 +145,6 @@ const SprintLineMap = (props) => {
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {
-        console.log(node)
         const nodeBox = node.getBBox();
 
         const sprintId = node.id;
@@ -390,7 +389,6 @@ const SprintLineMap = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
 

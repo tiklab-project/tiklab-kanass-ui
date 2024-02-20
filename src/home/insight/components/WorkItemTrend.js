@@ -141,7 +141,6 @@ const WorkItemTrend = (props) => {
             workItemTypeCode: values.workItemTypeCode,
             projectId: values.projectId
         }
-        console.log(params, index)
         setIsEditor(!isEditor)
         // statisticsDayWorkItem(params)
         reportList.lg[index].data.data = params;

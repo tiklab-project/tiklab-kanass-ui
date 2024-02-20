@@ -26,7 +26,7 @@ const SprintStartState = props => {
     const { projectId, sprintId, visible, setVisible, SprintSurveyStore, sprintInfo, setSprintInfo } = props;
     const { updateSprint, findSprint } = SprintSurveyStore;
     const [form] = Form.useForm();
-    const dateFormat = 'YYYY/MM/DD';
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
     useEffect(() => {
         if (visible) {
             form.setFieldsValue({
@@ -40,9 +40,7 @@ const SprintStartState = props => {
     }, [visible])
 
     const handleOk = () => {
-        console.log("sss")
         form.validateFields().then((values) => {
-            console.log(values)
             const time = values["startTime"]
             const data = {
                 ...values,
@@ -106,7 +104,7 @@ const SprintStartState = props => {
                             message: '请选择计划日期',
                         },
                     ]}>
-                    <RangePicker locale={locale} />
+                    <RangePicker locale={locale} showTime />
                 </Form.Item>
                 <Form.Item
                     label="迭代描述"

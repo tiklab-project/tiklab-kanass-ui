@@ -135,7 +135,7 @@ export class VersionStore {
         let params = {
             id: value.id,
             name: value.name,
-            publishDate: value.publishDate,
+            publishTime: value.publishTime,
             startTime: value.startTime,
             project: {
                 id: value.project

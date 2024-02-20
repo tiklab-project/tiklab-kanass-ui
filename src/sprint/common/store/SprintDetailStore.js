@@ -3,6 +3,14 @@ import {Service} from "../../../common/utils/requset";
 export class SprintDetailStore {
     @observable sprintList = [];
     @observable sprint = "";
+    @observable sprintRouter = [];
+    // const [router, setRouter] = useState();
+
+    @action
+    setSprintRouter = (value) => {
+        this.sprintRouter = value
+    }
+
 
     @action
     findSprintList = async(value) => {

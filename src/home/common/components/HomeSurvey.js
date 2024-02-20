@@ -95,7 +95,6 @@ const HomeSurvey = (props) => {
     const goTodoDetail = (url) => {
         const workItemId = url.split("/")[6];
         searchWorkById(workItemId).then((res) => {
-            console.log(res)
             if (res) {
                 setWorkId(workItemId)
 
@@ -272,7 +271,6 @@ const HomeSurvey = (props) => {
     }
 
     const getTodoList = (value) => {
-        console.log(value)
         findTodopage({ userId: userId,status: value, pageParam: {
             pageSize: 10,
             currentPage: 1

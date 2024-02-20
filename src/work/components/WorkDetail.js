@@ -71,9 +71,7 @@ const WorkDetail = (props) => {
                         setRelationModalNum(res.data)
                     }
                 })
-                console.log(props.match.path)
                 if (props.match.path === "/projectDetail/:id/work/:workId") {
-                    console.log(id)
                     setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
                 }
@@ -94,6 +92,7 @@ const WorkDetail = (props) => {
             const id = props.match.params.workId;
             setWorkId(id)
         }
+        return null;
     }, [props.match.params.workId])
 
     useEffect(() => {
@@ -112,6 +111,7 @@ const WorkDetail = (props) => {
 
     useEffect(() => {
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+        return null;
     }, [workId, workShowType])
 
     const deleteWork = () => {
@@ -165,7 +165,8 @@ const WorkDetail = (props) => {
                 searchWorkById(workId).then((res) => {
                     if (res) {
                         detailForm.setFieldsValue({ assigner: res.assigner?.id })
-                        workInfo.assigner = res.assigner;
+                        // workInfo.assigner = res.assigner;
+                        setWorkInfo(res)
                         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                         workList[workIndex - 1].workStatusNode = res.workStatusNode;
@@ -212,7 +213,6 @@ const WorkDetail = (props) => {
         }
 
         if (name !== workInfo.title) {
-            console.log(workId)
             editWork(params).then(res => {
                 if (res.code === 0) {
 

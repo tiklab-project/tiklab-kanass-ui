@@ -78,7 +78,6 @@ const InsightList = (props) => {
             },
 
             onCancel() {
-                console.log('Cancel');
             },
         });
     }
@@ -124,7 +123,6 @@ const InsightList = (props) => {
     }
 
     const onSearch = value => {
-        console.log(value)
         switch (activeTabs) {
             case "1":
                 findInsightList({ insightName: value })

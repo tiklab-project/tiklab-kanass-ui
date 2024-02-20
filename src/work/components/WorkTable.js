@@ -38,7 +38,6 @@ const WorkTable = (props) => {
 
     useEffect(() => {
         setWorkShowType("table")
-        console.log(workShowType)
         setQuickFilterValue({
             value: "all",
             label: "全部"
@@ -68,15 +67,21 @@ const WorkTable = (props) => {
         setWorkId(record.id)
         setWorkIndex(index + 1)
 
-        // 层级的索引
-        treeIndex.length = 0;
-        setTreeIndex(treeIndex)
-        getWorkLevelIndex(record.treePath, record.id)
+        console.log(viewType)
+        if(viewType === "tile"){
+            setTreeIndex(index)
+        }
 
+        if(viewType === "tree"){
+            // 层级的索引
+            // treeIndex.length = 0;
+            setTreeIndex([])
+            getWorkLevelIndex(record.treePath, record.id)
+        }
+       
 
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
-        
-        console.log(props)
+
         const pathname = props.match.url;
         props.history.push(`${pathname}/${record.id}`)
         setIsModalVisible(true)
@@ -84,6 +89,7 @@ const WorkTable = (props) => {
 
     const getWorkLevelIndex = (value, workId) => {
         let treePath = value;
+        console.log(treeIndex)
         if (typeof (treePath) === "string" && treePath.length > 0) {
             const hightLevel = treePath.split(";");
             hightLevel.unshift(workId)
@@ -93,7 +99,7 @@ const WorkTable = (props) => {
                 const num = data.findIndex((item) => item.id === hightLevel[hightLevelIndex])
                 hightLevelIndex--;
                 treeIndex.push(num)
-                if (hightLevelIndex >= 0) {
+                if (hightLevelIndex >= 0 && data[num].children)  {
                     getIndex(data[num].children, hightLevelIndex);
                 }
             }
@@ -495,7 +501,6 @@ const WorkTable = (props) => {
 
     // 改变页数
     const changePage = (page, pageSize) => {
-        console.log(page, pageSize)
         const values = {
             pageParam: {
                 pageSize: pageSize,

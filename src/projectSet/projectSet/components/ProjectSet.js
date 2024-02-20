@@ -19,7 +19,6 @@ const ProjectSet = (props) => {
     const store = {
         projectSetStore: ProjectSetStore
     }
-    console.log(ProjectSetStore)
     const { findJoinProjectSetList, allProjectSetList } = ProjectSetStore;
     //初始化获取项目列表
     useEffect(() => {

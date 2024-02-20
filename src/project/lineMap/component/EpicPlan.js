@@ -113,7 +113,6 @@ const EpicPlan = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     /**

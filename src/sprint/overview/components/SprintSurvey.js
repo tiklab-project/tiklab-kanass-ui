@@ -27,6 +27,7 @@ const SprintSurvey = (props) => {
     const projectId = props.match.params.id;
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
+    const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 进度
     const [percent, setPercent] = useState()
     // 事项状态列表
@@ -258,8 +259,18 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{sprintInfo?.startTime} ~ {sprintInfo?.endTime}</div>
-                                        <div className="item-bottom">迭代周期状态</div>
+                                        <div className="item-top">{sprintInfo?.startTime.slice(0, 10)} ~ {sprintInfo?.endTime.slice(0, 10)}</div>
+                                        <div className="item-bottom">迭代计划周期</div>
+                                    </div>
+                                </div>
+
+                                <div className="sprint-item">
+                                    <svg className="status-img" aria-hidden="true">
+                                        <use xlinkHref="#icon-date"></use>
+                                    </svg>
+                                    <div className="item-content">
+                                        <div className="item-top">{sprintInfo?.relaStartTime ? sprintInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {sprintInfo?.relaEndTime ? sprintInfo?.relaEndTime.slice(0, 10) : "未结束"}</div>
+                                        <div className="item-bottom">迭代实际周期</div>
                                     </div>
                                 </div>
 

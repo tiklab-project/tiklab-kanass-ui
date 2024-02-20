@@ -105,7 +105,6 @@ const WorkTestCaseAddmodal = (props) => {
     }
 
     const searchUnselectUser = (value) => {
-        console.log(value)
         const categoryQuery = {
             creatUserId: value.value,
             pageParam: {

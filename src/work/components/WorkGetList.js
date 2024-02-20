@@ -1,7 +1,6 @@
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 const finWorkList = (router, workStore, params) => {
     const setValue = () => {
-        console.log(router)
         let type = "";
         if (router.indexOf("/work") > -1) {
             type = "system"
@@ -28,8 +27,8 @@ const finWorkList = (router, workStore, params) => {
 
 
 const goWorkItem = (type, workStore, params) => {
-    const { sprintId, versionId, projectId  } = params;
-    const { setSearchConditionNull, setSearchCondition,searchCondition } = workStore;
+    const { sprintId, versionId, projectId } = params;
+    const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
     let initValues = {
         ...searchCondition,
         pageParam: {
@@ -77,15 +76,15 @@ const getPageTree = (workStore) => {
     const { getWorkConditionPageTree, setWorkIndex, setWorkId, workShowType, setQuickFilterValue } = workStore;
 
     getWorkConditionPageTree().then((res) => {
-        if(res.code === 0){
+        if (res.code === 0) {
             const list = res.data.dataList;
             if (workShowType === "list") {
                 if (list.length > 0) {
                     setWorkIndex(1)
                     const workItem = list[0];
                     setWorkId(workItem.id)
-                    setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])    
-                }else {
+                    setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+                } else {
                     setWorkId(0)
                     setWorkIndex(0)
                 }
@@ -111,4 +110,31 @@ const getPageList = (workStore) => {
     })
 }
 
-export { finWorkList };
+
+// 事项更换上级之后把当前事项从列表中移除
+const deleteAndQueryDeepData = (originalArray, indexes) => {
+    if (indexes.length === 0) {
+        return undefined; // 如果索引数组为空，返回 undefined
+    }
+
+    const currentIndex = indexes.shift(); // 获取当前层级的下标
+    if (currentIndex < 0 || currentIndex >= originalArray.length) {
+        return undefined; // 下标越界，返回 undefined 表示未找到数据
+    }
+
+    if (indexes.length === 0) {
+        // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
+        return originalArray.splice(currentIndex, 1)[0];
+    }
+
+    const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
+    const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
+
+    // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
+    // if (result === undefined) {
+    //   originalArray.splice(currentIndex, 1);
+    // }
+
+    return result;
+}
+export { finWorkList, deleteAndQueryDeepData };

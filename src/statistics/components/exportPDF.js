@@ -13,8 +13,6 @@ export const exportPDF = async (title, ele) => {
   let pdf = new jsPDF('p', 'pt', 'a4');
   let width = ele.offsetWidth;
   let height = ele.offsetHeight;
-  console.log('height', height)
-  console.log('aa', width, height, scale)
 
   const canvas = document.createElement('canvas');
   canvas.width = width * scale;
@@ -22,12 +20,10 @@ export const exportPDF = async (title, ele) => {
   var contentWidth = canvas.width;
   var contentHeight = canvas.height;
 
-  console.log('contentWidth', contentWidth, contentHeight)
   //一页pdf显示html页面生成的canvas高度;
   var pageHeight = contentWidth / 592.28 * 841.89;
   //未生成pdf的html页面高度
   var leftHeight = contentHeight;
-  console.log('leftHeight', leftHeight)
   //页面偏移
   var position = 0;
   //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高

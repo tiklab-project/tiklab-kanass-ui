@@ -272,11 +272,20 @@ const VersionSurvey = (props) => {
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{versionInfo?.startTime} ~ {versionInfo?.publishDate}</div>
+                                        <div className="item-top">{versionInfo?.startTime.slice(0, 10)} ~ {versionInfo?.publishTime.slice(0, 10)}</div>
                                         <div className="item-bottom">版本周期状态</div>
                                     </div>
                                 </div>
 
+                                <div className="version-item">
+                                    <svg className="status-img" aria-hidden="true">
+                                        <use xlinkHref="#icon-date"></use>
+                                    </svg>
+                                    <div className="item-content">
+                                        <div className="item-top">{versionInfo?.relaStartTime ? versionInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {versionInfo?.relaPublishTime ? versionInfo?.relaPublishTime.slice(0, 10) : "未发布"}</div>
+                                        <div className="item-bottom">版本实际周期</div>
+                                    </div>
+                                </div>
                                 <div className="version-item">
                                     <svg className="status-img" aria-hidden="true">
                                         <use xlinkHref="#icon-rate"></use>

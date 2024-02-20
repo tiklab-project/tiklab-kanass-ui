@@ -65,7 +65,6 @@ const ModuleAddModal = (props) => {
      */
     const onFinish = () => {
         form.validateFields().then((fieldsValue) => {
-            console.log(fieldsValue)
             fieldsValue.project = { id: props.projectid };
             const params = {
                 ...fieldsValue,

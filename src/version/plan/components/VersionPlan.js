@@ -26,15 +26,14 @@ const VersionPlan = (props) => {
         planTotal, noPlanTotal } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
-    const [boxLength, setBoxLength] = useState(90);
-    const tenant = getUser().tenant;
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
             {
                 projectId: projectId,
-                versionIdIsNull: true,
+                workStatusCodes: ["TODO", "PROGRESS"],
                 keyWord: null,
+                neqVersionId: versionId,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -51,7 +50,7 @@ const VersionPlan = (props) => {
                 }
             }
         )
-        getVersionList({ projectId: projectId })
+        // getVersionList({ projectId: projectId })
 
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
@@ -61,14 +60,6 @@ const VersionPlan = (props) => {
         return
     }, [])
 
-    useEffect(() => {
-        if (noPlanWorkList && planWorkList) {
-            const length = noPlanWorkList.length > planWorkList.length ? noPlanWorkList.length * 90 + 90 : planWorkList.length * 90 + 90
-            setBoxLength(length)
-        }
-
-        return
-    }, [noPlanWorkList, planWorkList])
 
 
     const moveVersionPlanItem = () => {
@@ -106,7 +97,6 @@ const VersionPlan = (props) => {
 
                     const addWorkList = noPlanWorkList.filter(item => { return item.id == moveWorkId })
                     planWorkList.unshift(...addWorkList)
-                    console.log(addWorkList, planWorkList)
                     setPlanWorkList(planWorkList)
                 }
             })
@@ -146,12 +136,12 @@ const VersionPlan = (props) => {
     }
 
     const findVersionWorkItem = (field, value) => {
-        getWorkList({ 
+        getWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
-            } 
+            }
         })
     }
 
@@ -258,13 +248,15 @@ const VersionPlan = (props) => {
                                 value={noPlanSearchCondition?.workStatusIds}
                             >
                                 {
-                                    workStatusList.map(item => {
+                                    workStatusList.filter(item => item.id !== "done").map(item => {
                                         return <SelectItem
                                             value={item.id}
                                             label={item.name}
                                             key={item.id}
                                             imgUrl={item.iconUrl}
                                         />
+
+
                                     })
                                 }
                             </SelectSimple>

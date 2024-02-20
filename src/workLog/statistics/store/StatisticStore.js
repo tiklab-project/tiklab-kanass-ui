@@ -166,7 +166,6 @@ export class StatisticsStore {
             })
 
         }
-        console.log(this.reportList)
         return data;
     }
 

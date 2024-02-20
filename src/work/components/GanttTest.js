@@ -101,7 +101,6 @@ const Gantt=(props) => {
         })
 
         graph.on("node:moved",({ node, options }) => {
-            console.log("sss")
             const nodeBox = node.getBBox();
             const workId = node.id;
             const startX = nodeBox.x;

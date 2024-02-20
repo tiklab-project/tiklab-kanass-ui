@@ -57,7 +57,6 @@ const SprintPlan = (props) => {
      * @param {*} sprintId 
      */
     const moveStart = (id, sprintId) => {
-        console.log(id)
         setStartId(id)
         setStartSprintId(sprintId)
         const dragEvent = event.target

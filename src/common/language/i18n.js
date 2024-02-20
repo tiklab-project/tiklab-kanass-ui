@@ -4,7 +4,6 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import {initReactI18next} from 'react-i18next';
 import resources from "./resources"
-console.log(resources)
 i18n.use(Backend).use(LanguageDetector) //嗅探当前浏览器语言
     .use(initReactI18next)//init i18next
     .init({

@@ -132,21 +132,20 @@ const VersionLineMap = (props) => {
 
         let endTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
         endTime = moment(endTime).subtract(1, "day").format('YYYY-MM-DD');
-        params.publishDate = endTime;
+        params.publishTime = endTime;
 
         let startTime = startX * archiveBase  + firstDateMillisecond;
         startTime = moment(startTime).format('YYYY-MM-DD');
         params.startTime = startTime;
         updateVersion(params).then(res => {
             if(res.code === 0){
-                data[index].publishDate = endTime;
+                data[index].publishTime = endTime;
                 data[index].startTime = startTime;
             }
         })
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {
-        console.log(node)
         const nodeBox = node.getBBox();
 
         const sprintId = node.id;
@@ -161,10 +160,10 @@ const VersionLineMap = (props) => {
         
             const dataTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
             let day = moment(dataTime).subtract(1, "day").format('YYYY-MM-DD');
-            params.publishDate = day;
+            params.publishTime = day;
             updateVersion(params).then(res => {
                 if(res.code === 0){
-                    data[index].publishDate = day;
+                    data[index].publishTime = day;
                 }
             })
         }
@@ -226,7 +225,7 @@ const VersionLineMap = (props) => {
             let start = item?.startTime;
             startPra = Date.parse(start);
 
-            let end = item?.publishDate;
+            let end = item?.publishTime;
             endPra = Date.parse(end);
             endPra = 86400000  + endPra;
             // 画布开始时间转化为毫秒
@@ -287,7 +286,6 @@ const VersionLineMap = (props) => {
             return nodes;
         })
         let item = { nodes: nodes, edges: edges }
-        console.log(item)
         return item;
     }
 
@@ -381,7 +379,6 @@ const VersionLineMap = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     

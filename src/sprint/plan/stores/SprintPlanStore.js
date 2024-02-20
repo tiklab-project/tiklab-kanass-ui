@@ -62,7 +62,6 @@ export class SprintPlanStore {
 
     @action
     setPlanWorkList = (value) => {
-        console.log(value)
         this.planWorkList = value;
     }
 

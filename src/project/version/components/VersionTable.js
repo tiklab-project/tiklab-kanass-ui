@@ -75,9 +75,6 @@ const VersionTable = (props) => {
             if (data.code === 0) {
                 versionList[index].focusIs = true
                 setVersionList([...versionList])
-                console.log(versionList)
-                // focusVersionList.push(versionId)
-                // setFocusVersionList([...focusVersionList])
             }
         })
     }
@@ -148,8 +145,6 @@ const VersionTable = (props) => {
 
             ),
         },
-        
-
         {
             title: "计划日期",
             dataIndex: "startTime",
@@ -157,13 +152,13 @@ const VersionTable = (props) => {
             align: "left",
             width: "25%",
             render: (text, record) => <span>
-                {record.startTime} ~ {record.publishDate}
+                {record.startTime.slice(0, 10)} ~ {record.publishTime?.slice(0, 10)}
             </span>
         },
         {
             title: "实际发布日期",
-            dataIndex: "relaPublishDate",
-            key: "relaPublishDate",
+            dataIndex: "relaPublishTime",
+            key: "relaPublishTime",
             align: "left",
             render: (text) => <span>{text ? text : "---"}</span>,
         },
@@ -298,14 +293,7 @@ const VersionTable = (props) => {
         }
     }
     const changePage = (page, pageSize) => {
-        console.log(page, pageSize)
         selectTabs(activeTabs, page)
-        // const values = {
-        //     pageParam: {
-        //         pageSize: pageSize,
-        //         currentPage: page,
-        //     }
-        // }
     }
     return (<Provider {...store}>
         <div className="project-version">

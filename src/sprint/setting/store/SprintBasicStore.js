@@ -63,6 +63,12 @@ export class SprintBasicStore {
         }
     }
 
+    @action
+    updateSprint = async(values) => {
+        const data = await Service("/sprint/updateSprint", values)
+        return data;
+    }
+
 }
 
 export default new SprintBasicStore();

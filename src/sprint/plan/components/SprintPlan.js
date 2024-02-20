@@ -34,9 +34,10 @@ const SprintPlan = (props) => {
         getNoPlanWorkList(
             {
                 projectId: projectId,
-                sprintIdIsNull: true,
+                workStatusCodes: ["TODO", "PROGRESS"],
                 assignerIds: null,
                 keyWord: null,
+                neqSprintId: sprintId,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -112,7 +113,6 @@ const SprintPlan = (props) => {
 
                     const addWorkList = noPlanWorkList.filter(item => { return item.id == moveWorkId })
                     planWorkList.unshift(...addWorkList)
-                    console.log(addWorkList, planWorkList)
                     setPlanWorkList(planWorkList)
                 }
             })

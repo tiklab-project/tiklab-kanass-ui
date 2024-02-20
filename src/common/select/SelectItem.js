@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 const SelectItem = (props) => {
     const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children } = props;
-    console.log(label, option)
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -19,7 +18,6 @@ const SelectItem = (props) => {
     }
 
     const changeCheck = (e) => {
-        console.log("dd")
         e.stopPropagation()
         selectCheck.current.checked = !selectCheck.current.checked
 
