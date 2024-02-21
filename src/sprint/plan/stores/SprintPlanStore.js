@@ -81,7 +81,7 @@ export class SprintPlanStore {
     }
 
     @action
-	getSprintList = async(value) => {
+	findSprintList = async(value) => {
         const params={
             projectId: value.projectId,
             orderParams: [{

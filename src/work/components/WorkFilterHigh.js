@@ -13,6 +13,9 @@ const WorkFilterHigh = (props) => {
     const [form] = Form.useForm();
     const { workStore, labelHidden, setFiltetModal } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
+    const project = JSON.parse(localStorage.getItem("project"));
+    const projectType = projectId ?  project.projectType?.type : "scrum";
+
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -24,11 +27,13 @@ const WorkFilterHigh = (props) => {
     // 解析store数据
     const { workShowType, priorityList, findPriority, findSprintList, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull, tabValue, eveWorkTypeNum } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList, versionList } = workStore;
+
 
     useEffect(() => {
         findPriority()
         findSprintList(projectId)
+        findVersionList(projectId)
         getModuleList(projectId)
         getWorkStatus()
         getSelectUserList(projectId);
@@ -75,9 +80,14 @@ const WorkFilterHigh = (props) => {
                     workPriorityIds: changedValues.workPriorityIds,
                 }
                 break;
-            case "currentSprintId":
+            case "currentSprintIds":
                 value = {
-                    currentSprintIds: changedValues.currentSprintId,
+                    currentSprintIds: changedValues.currentSprintIds,
+                }
+                break;
+            case "currentVersionIds":
+                value = {
+                    currentVersionIds: changedValues.currentVersionIds,
                 }
                 break;
             case "moduleIds":
@@ -118,12 +128,12 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
-        
+
         const params = {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
-            workTypeId: tabValue?.id === "all" ? null : tabValue?.id 
+            workTypeId: tabValue?.id === "all" ? null : tabValue?.id
         }
         finWorkList(path, workStore, params)
     }
@@ -246,22 +256,51 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item name="currentSprintId" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
-                    <Select
-                        mode="multiple"
-                        placeholder="所属迭代"
-                        className="work-select"
-                        key="assigner"
-                        maxTagCount={1}
-                        getPopupContainer={() => heightFilter.current}
+                {
+                    (projectType === "scrum" && !sprintId) &&
+                    <Form.Item name="currentSprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
+                        <Select
+                            mode="multiple"
+                            placeholder="所属迭代"
+                            className="work-select"
+                            key="sprint"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                        >
+                            {
+                                sprintList && sprintList.map((item) => {
+                                    return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                }
+                {
+                    !versionId &&
+                    <Form.Item
+                        name="currentVersionIds"
+                        label={labelHidden ? null : "所属版本"}
+                        style={{ minWidth: '70px', flex: 1 }}
+                        rules={[{ required: false }]}
                     >
-                        {
-                            sprintList && sprintList.map((item) => {
-                                return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                            })
-                        }
-                    </Select>
-                </Form.Item>
+                        <Select
+                            mode="multiple"
+                            placeholder="所属版本"
+                            className="work-select"
+                            key="version"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                        >
+                            {
+                                versionList && versionList.map((item) => {
+                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                }
+
+
                 <Form.Item name="moduleIds" label={labelHidden ? null : "所属模块"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"

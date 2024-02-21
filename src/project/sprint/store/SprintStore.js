@@ -62,7 +62,7 @@ export class SprintStore {
      * 获取迭代列表
      */
     @action
-    getsprintlist = async() => {
+    findAllSprint = async() => {
         const data = await Service("/sprint/findAllSprint", params)
         if (data.code === 0) {
             this.sprintList = data.data;

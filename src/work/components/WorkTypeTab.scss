@@ -12,6 +12,10 @@
     .tabs-bar  {
         cursor: pointer;
         padding: 0 5px;
+        height: 42px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .tabs-more {
         position: relative;

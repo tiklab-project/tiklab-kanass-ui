@@ -23,7 +23,7 @@ const SprintPlan = (props) => {
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
-        getSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
+        findSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
         planTotal, noPlanTotal } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
@@ -56,7 +56,7 @@ const SprintPlan = (props) => {
                 }
             }
         )
-        getSprintList({ projectId: projectId })
+        findSprintList({ projectId: projectId })
 
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });

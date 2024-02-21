@@ -15,7 +15,7 @@ const WorkAddPage = (props) => {
     const [form] = Form.useForm();
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel } = props;
     const { moduleList, selectSprintList, userList, findProjectList, projectList,
-        getModuleList, findSprintList, getSelectUserList, addWork,
+        getModuleList, findSelectSprintList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList, 
         selectVersionList, findSelectVersionList
@@ -25,6 +25,8 @@ const WorkAddPage = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const project = JSON.parse(localStorage.getItem("project"));
+    const projectType = project.projectType?.type;
+    console.log("project", project)
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
@@ -85,13 +87,16 @@ const WorkAddPage = (props) => {
                     })
                 }
             })
-            findSprintList(projectId).then(res => {
-                if (res.code === 0) {
-                    form.setFieldsValue({
-                        sprint: sprintId ? sprintId : selectSprintList[0]?.id
-                    })
-                }
-            })
+            if(projectType === "scrum"){
+                findSelectSprintList(projectId).then(res => {
+                    if (res.code === 0) {
+                        form.setFieldsValue({
+                            sprint: sprintId ? sprintId : res.data[0]?.id
+                        })
+                    }
+                })
+            }
+           
             findSelectVersionList(projectId).then(res => {
                 if (res.code === 0) {
                     if(res.data.length > 0) {
@@ -126,7 +131,10 @@ const WorkAddPage = (props) => {
 
     const selectProject = (option) => {
         getModuleList(option)
-        findSprintList(option)
+        if(projectType === "scrum"){
+            findSelectSprintList(option)
+        }
+        
         getSelectUserList(option);
     }
 
@@ -134,7 +142,10 @@ const WorkAddPage = (props) => {
         form.validateFields().then((values) => {
             values.builder = getUser().userId;
             values.project = values.project ? values.project : projectId;
-            values.sprint = values.sprint ? values.sprint : null;
+            if(projectType) {
+                values.sprint = values.sprint ? values.sprint : null;
+            }
+            
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
             values.planEndTime = values.planTime[1].format('YYYY-MM-DD HH:mm:ss')
             values.workType = workType.id;
@@ -370,10 +381,8 @@ const WorkAddPage = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-
-
-
-                            <Form.Item
+                            {
+                                projectType === "scrum" &&  <Form.Item
                                 label="所属迭代"
                                 name="sprint"
                                 rules={[{ required: false, message: '请输入所属迭代!' }]}
@@ -394,6 +403,10 @@ const WorkAddPage = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
+                            }
+
+
+                           
                             <Form.Item
                                 label="所属版本"
                                 name="projectVersion"

@@ -152,7 +152,7 @@ const VersionTable = (props) => {
             align: "left",
             width: "25%",
             render: (text, record) => <span>
-                {record.startTime.slice(0, 10)} ~ {record.publishTime?.slice(0, 10)}
+                {record.startTime?.slice(0, 10)} ~ {record.publishTime?.slice(0, 10)}
             </span>
         },
         {

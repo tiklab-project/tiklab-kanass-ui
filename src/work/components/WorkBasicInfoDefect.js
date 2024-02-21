@@ -54,6 +54,7 @@ const WorkBasicInfo = (props) => {
     const [selectItemList, setSelectItemList] = useState()
 
     const projectId = props.match.params.id;
+    const projectType = workInfo?.project?.projectType.type;
 
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
@@ -614,24 +615,23 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-
-                            <Form.Item
-                                label="所属迭代" name="sprint"
-                                hasFeedback={showValidateStatus === "sprint" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <WorkDetailSelect 
-                                    selectList = {sprintList} 
-                                    workId = {workId}
-                                    sprint = {workInfo?.sprint}
-                                    hoverFieldName = {hoverFieldName}
-                                    setHoverFieldName = {setHoverFieldName}
-                                    workStore = {workStore}
-                                    workStatusCode = {workInfo.workStatusCode}
-                                />
-                            </Form.Item>
-
-
+                            {
+                                projectType === "scrum" && <Form.Item
+                                    label="所属迭代" name="sprint"
+                                    hasFeedback={showValidateStatus === "sprint" ? true : false}
+                                    validateStatus={validateStatus}
+                                >
+                                    <WorkDetailSelect
+                                        selectList={sprintList}
+                                        workId={workId}
+                                        sprint={workInfo?.sprint}
+                                        hoverFieldName={hoverFieldName}
+                                        setHoverFieldName={setHoverFieldName}
+                                        workStore={workStore}
+                                        workStatusCode={workInfo.workStatusCode}
+                                    />
+                                </Form.Item>
+                            }
 
                             <Form.Item label="负责人" name="assigner"
                             >
@@ -727,33 +727,14 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "module" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                {/* <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectProjectVersion"
-                                    bordered={fieldName === "projectVersion" ? true : false}
-                                    suffixIcon={fieldName === "projectVersion" || hoverFieldName == "projectVersion" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("projectVersion")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("projectVersion")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
-                                >
-                                    {
-                                        selectVersionList && selectVersionList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select> */}
-                                <WorkDetailVersionSelect 
-                                    selectList = {selectVersionList} 
-                                    workId = {workId}
-                                    version = {workInfo?.projectVersion}
-                                    hoverFieldName = {hoverFieldName}
-                                    setHoverFieldName = {setHoverFieldName}
-                                    workStore = {workStore}
-                                    workStatusCode = {workInfo.workStatusCode}
+                                <WorkDetailVersionSelect
+                                    selectList={selectVersionList}
+                                    workId={workId}
+                                    version={workInfo?.projectVersion}
+                                    hoverFieldName={hoverFieldName}
+                                    setHoverFieldName={setHoverFieldName}
+                                    workStore={workStore}
+                                    workStatusCode={workInfo.workStatusCode}
                                 />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
@@ -853,7 +834,7 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("parentWorkItem")}
                                 onBlur={() => changeStyle("")}
-                                suffixIcon= {fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
+                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
                             >
@@ -1001,7 +982,7 @@ const WorkBasicInfo = (props) => {
                     附件:
                 </div>
             </div>
-            
+
             <div className="work-detail-box work-attach-box">
 
                 <Fragment>

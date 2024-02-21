@@ -7,3 +7,6 @@ prod
 eswidget
 html
 package-lock.json
+.history
+.lh
+.vacode

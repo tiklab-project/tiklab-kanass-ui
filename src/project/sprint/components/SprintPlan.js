@@ -17,7 +17,7 @@ const SprintPlan = (props) => {
     const [dragEvent, setDragEvent] = useState();
     const projectId = props.match.params.id;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
-        getSprintList, sprintList, setSprint, delSprint } = ProjectSprintPlanStore;
+        findSprintList, sprintList, setSprint, delSprint } = ProjectSprintPlanStore;
     // 被移动事项的id
     const [startId, setStartId] = useState()
     // 被移动事项的初始迭代id
@@ -37,7 +37,7 @@ const SprintPlan = (props) => {
         /**
          * 获取所有迭代列表
          */
-        getSprintList({ projectId: projectId })
+        findSprintList({ projectId: projectId })
         return
     }, [])
 

@@ -258,7 +258,7 @@ export class WorkStore {
     }
 
     @action
-    getsprintlist = async(projectid) => {
+    findSelectSprintList = async(projectid) => {
         const params = {
             projectId: projectid,
             sprintName: "",

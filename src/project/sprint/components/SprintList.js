@@ -278,7 +278,7 @@ const Sprint = (props) => {
             key: "startTime",
             align: "left",
             width: "25%",
-            render: (text, record) => <span>{record.startTime.slice(0, 10)} ~ {record.endTime.slice(0, 10)}</span>,
+            render: (text, record) => <span>{record.startTime?.slice(0, 10)} ~ {record.endTime?.slice(0, 10)}</span>,
         },
         {
             title: "事项",

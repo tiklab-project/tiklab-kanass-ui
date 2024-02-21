@@ -53,9 +53,11 @@ const WorkBasicInfo = (props) => {
     const [selectItemList, setSelectItemList] = useState()
 
     const projectId = props.match.params.id;
+    const projectType = workInfo?.project?.projectType.type;
 
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
+
 
     const initForm = (workInfo) => {
         if (workInfo) {
@@ -609,47 +611,24 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            {/* <Form.Item label="报告人" name="reporter"
-                                hasFeedback={showValidateStatus === "reporter" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    bordered={fieldName === "reporter" ? true : false}
-                                    suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("reporter")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
+                           
+                            {
+                                projectType === "scrum" && <Form.Item
+                                    label="所属迭代" name="sprint"
+                                    hasFeedback={showValidateStatus === "sprint" ? true : false}
+                                    validateStatus={validateStatus}
                                 >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.id}><Space><UserIcon name = {item.user.name}/>{item.user.name}</Space></Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item> */}
-
-                            <Form.Item
-                                label="所属迭代" name="sprint"
-                                hasFeedback={showValidateStatus === "sprint" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <WorkDetailSelect
-                                    selectList={sprintList}
-                                    workId={workId}
-                                    sprint={workInfo?.sprint}
-                                    hoverFieldName={hoverFieldName}
-                                    setHoverFieldName={(value)=> {setHoverFieldName(value)}}
-                                    workStatusCode = {workInfo.workStatusCode}
-                                    workStore={workStore}
-                                />
-                            </Form.Item>
-
-
+                                    <WorkDetailSelect
+                                        selectList={sprintList}
+                                        workId={workId}
+                                        sprint={workInfo?.sprint}
+                                        hoverFieldName={hoverFieldName}
+                                        setHoverFieldName={(value) => { setHoverFieldName(value) }}
+                                        workStatusCode={workInfo.workStatusCode}
+                                        workStore={workStore}
+                                    />
+                                </Form.Item>
+                            }
 
                             <Form.Item label="负责人" name="assigner"
                             >
@@ -750,9 +729,9 @@ const WorkBasicInfo = (props) => {
                                     workId={workId}
                                     version={workInfo?.projectVersion}
                                     hoverFieldName={hoverFieldName}
-                                    setHoverFieldName={(value)=> {setHoverFieldName(value)}}
+                                    setHoverFieldName={(value) => { setHoverFieldName(value) }}
                                     workStore={workStore}
-                                    workStatusCode = {workInfo.workStatusCode}
+                                    workStatusCode={workInfo.workStatusCode}
                                 />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
@@ -851,8 +830,8 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("parentWorkItem")}
                                 onBlur={() => changeStyle("")}
-                                hoverFieldName = {hoverFieldName}
-                                fieldName = {fieldName}
+                                hoverFieldName={hoverFieldName}
+                                fieldName={fieldName}
                                 suffixIcon={fieldName === "parentWorkItem" || hoverFieldName === "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
