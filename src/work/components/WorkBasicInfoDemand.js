@@ -793,7 +793,7 @@ const WorkBasicInfo = (props) => {
                         {...layoutBottom}
                         initialValues={{ remember: true }}
                         form={detailForm}
-                        // onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
+                        onValuesChange={(changedValues, allValues) => updateSingle(changedValues, allValues)}
                         labelAlign="left"
                         colon={false}
                     >

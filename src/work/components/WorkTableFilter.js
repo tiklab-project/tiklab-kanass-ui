@@ -138,7 +138,7 @@ const WorkTableFilter = (props) => {
                                         imgUrl={item.iconUrl}
                                     />
                                 } else {
-                                    return <div></div>
+                                    return <div key={item.id}></div>
                                 }
 
                             })
@@ -154,7 +154,7 @@ const WorkTableFilter = (props) => {
                                         imgUrl={item.iconUrl}
                                     />
                                 } else {
-                                    return <div></div>
+                                    return <div key={item.id}></div>
                                 }
 
                             })
@@ -172,7 +172,7 @@ const WorkTableFilter = (props) => {
                                         imgUrl={item.iconUrl}
                                     />
                                 } else {
-                                    return <div></div>
+                                    return <div key={item.id}></div>
                                 }
 
                             })
