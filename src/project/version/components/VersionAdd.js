@@ -13,7 +13,7 @@ import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import Button from "../../../common/button/Button";
-
+const { RangePicker } = DatePicker;
 const VersionAddmodal = (props) => {
     const { versionStore, findVersion, userList, getUseList, setActiveTabs } = props;
     const { editVersion, addVersion, searchVersionById, status, findAllVersionState, getVersionList, searchCondition } = versionStore;
@@ -38,6 +38,7 @@ const VersionAddmodal = (props) => {
      */
     const submitVersion = () => {
         form.validateFields().then((fieldsValue) => {
+            const time = fieldsValue["startTime"]
             const values = {
                 ...fieldsValue,
                 master: {
@@ -49,9 +50,10 @@ const VersionAddmodal = (props) => {
                 project: {
                     id: projectId
                 },
-
-                'publishTime': fieldsValue['publishTime'].format(dateFormat),
-                'startTime': fieldsValue['startTime'].format(dateFormat)
+                startTime: time[0].format(dateFormat),
+                publishTime: time[1].format(dateFormat),
+                // 'publishTime': fieldsValue['publishTime'].format(dateFormat),
+                // 'startTime': fieldsValue['startTime'].format(dateFormat)
             };
             if (props.type === "edit") {
                 values.id = props.id
@@ -107,8 +109,8 @@ const VersionAddmodal = (props) => {
                 form.setFieldsValue({
                     name: res.name,
                     project: res.project.id,
-                    publishTime: res.publishTime ? moment(res.publishTime) : null,
-                    startTime: res.startTime ? moment(res.startTime) : null,
+                    // publishTime: res.publishTime ? moment(res.publishTime) : null,
+                    startTime: res.data.startTime ? [moment(res.data.startTime, dateFormat), moment(res.data.publishTime, dateFormat)] : null,
                     versionState: res.versionState
                 })
             })
@@ -210,8 +212,16 @@ const VersionAddmodal = (props) => {
                                 }
                             </Select>
                         </Form.Item>
-
-                        <Form.Item
+                        <Form.Item name="startTime" label="计划日期"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请选择计划日期',
+                                },
+                            ]}>
+                            <RangePicker locale={locale} showTime/>
+                        </Form.Item>
+                        {/* <Form.Item
                             label="起始时间"
                             name="startTime"
                             rules={[
@@ -224,6 +234,7 @@ const VersionAddmodal = (props) => {
                             <DatePicker
                                 format={dateFormat}
                                 locale={locale}
+                                
                                 showTime
                             />
                         </Form.Item>
@@ -243,7 +254,7 @@ const VersionAddmodal = (props) => {
                                 locale={locale}
                                 showTime
                             />
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
                 </Modal>
             </div>

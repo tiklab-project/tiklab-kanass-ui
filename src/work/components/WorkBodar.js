@@ -221,7 +221,7 @@ const WorkBodar = (props) => {
                                                                                 {
                                                                                     workItem.workTypeSys?.iconUrl ?
                                                                                         <img
-                                                                                            src={(upload_url + workItem.workTypeSys?.iconUrl)}
+                                                                                            src={setImageUrl(workItem.workTypeSys?.iconUrl)}
                                                                                             alt=""
                                                                                             className="menu-icon"
 

@@ -44,8 +44,8 @@ const VersionStartState = props => {
             const time = values["startTime"]
             const data = {
                 ...values,
-                startTime: time[0].format("YYYY-MM-DD"),
-                publishTime: time[1].format("YYYY-MM-DD"),
+                startTime: time[0].format(dateFormat),
+                publishTime: time[1].format(dateFormat),
                 desc: values.desc,
                 versionState: {
                     id: "111111"

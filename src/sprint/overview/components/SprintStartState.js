@@ -44,8 +44,8 @@ const SprintStartState = props => {
             const time = values["startTime"]
             const data = {
                 ...values,
-                startTime: time[0].format("YYYY-MM-DD"),
-                endTime: time[1].format("YYYY-MM-DD"),
+                startTime: time[0].format(dateFormat),
+                endTime: time[1].format(dateFormat),
                 desc: values.desc,
                 sprintState: {
                     id: "111111"
