@@ -17,6 +17,7 @@ import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
+import "./WorkType.scss";
 
 const WorkType = (props) => {
     const store = {

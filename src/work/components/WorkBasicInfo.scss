@@ -212,6 +212,15 @@
                 margin-top: 10px;
                 gap: 10px;
             }
+
+            .work-detail-box-content {
+                padding: 10px;
+                height: 600px;
+                overflow: auto;
+            }
+            .work-detail-box-content::-webkit-scrollbar {
+                width: 0;
+            }
         }
 
         .desc-preview {

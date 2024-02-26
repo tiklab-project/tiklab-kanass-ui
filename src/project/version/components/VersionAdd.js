@@ -28,7 +28,7 @@ const VersionAddmodal = (props) => {
             span: 6,
         },
         wrapperCol: {
-            span: 16,
+            span: 24,
         },
     };
 
@@ -98,7 +98,7 @@ const VersionAddmodal = (props) => {
         getUseList(projectId)
         setVisible(true);
         findAllVersionState().then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 form.setFieldsValue({
                     versionState: res?.data[0]?.id
                 })
@@ -130,7 +130,7 @@ const VersionAddmodal = (props) => {
                     </PrivilegeProjectButton>
                     :
                     <PrivilegeProjectButton code={'VersionEdit'} domainId={projectId}  {...props}>
-                         <svg className="svg-icon" aria-hidden="true" onClick={showModal} style = {{cursor: "pointer"}}>
+                        <svg className="svg-icon" aria-hidden="true" onClick={showModal} style={{ cursor: "pointer" }}>
                             <use xlinkHref="#icon-edit"></use>
                         </svg>
                     </PrivilegeProjectButton>
@@ -181,7 +181,7 @@ const VersionAddmodal = (props) => {
                             <Select
                                 placeholder="版本状态"
                                 allowClear
-                                
+
                             >
                                 {
                                     status && status.map((item, index) => {
@@ -190,7 +190,7 @@ const VersionAddmodal = (props) => {
                                 }
                             </Select>
                         </Form.Item>
-                        
+
                         <Form.Item
                             label="负责人"
                             name="master"
@@ -219,7 +219,12 @@ const VersionAddmodal = (props) => {
                                     message: '请选择计划日期',
                                 },
                             ]}>
-                            <RangePicker locale={locale} showTime/>
+                            <RangePicker
+                                locale={locale}
+                                showTime={{
+                                    defaultValue: [moment('09:00:00', 'HH:mm:ss'), moment('18:00:00', 'HH:mm:ss')]
+                                }}
+                            />
                         </Form.Item>
                         {/* <Form.Item
                             label="起始时间"

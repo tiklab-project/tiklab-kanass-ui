@@ -125,7 +125,7 @@ const SprintPlan = (props) => {
             startId: moveWorkId
         }
         // 移动拖动的元素到所选择的放置目标节点
-        if (startSprintId && Sid !== startSprintId) {
+        if (startSprintId && !Sid ) {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
@@ -402,7 +402,7 @@ const SprintPlan = (props) => {
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
                                         draggable="true"
-                                        onDragStart={() => moveStart(item.id, null)}
+                                        onDragStart={() => moveStart(item.id, sprintId)}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index)}>

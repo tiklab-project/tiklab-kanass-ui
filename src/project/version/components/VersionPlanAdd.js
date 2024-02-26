@@ -130,10 +130,6 @@ const  VersionPlanAddmodal = (props) => {
                 closable = {false}
             >   
                 <div className="version-plan-search">
-                    {/* <Select defaultValue={projectId} style={{ width: 200 }} disabled>
-                        <Select.Option value={projectId}>{projectName}</Select.Option>
-                    </Select> */}
-
                     <Select style={{ width: 200, marginRight: "20px" }} 
                         placeholder="事项类型"
                         onChange={searchUnselectVersionPlanByStatus}

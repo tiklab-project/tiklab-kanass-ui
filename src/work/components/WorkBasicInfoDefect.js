@@ -236,7 +236,7 @@ const WorkBasicInfo = (props) => {
         }
         if (changedValues.planTime) {
             changedValues.planBeginTime = changedValues.planTime[0].format('YYYY-MM-DD HH:mm:ss')
-            changedValues.planEndTime = changedValues.planTime[1].format('YYYY-MM-DD HH:mm:ss')
+            changedValues.planEndTime = changedValues.planTime[1].format('YYYY-MM-DD 23:59:59')
             changeKey = "planBeginTime"
         }
 
@@ -349,7 +349,7 @@ const WorkBasicInfo = (props) => {
                             }
                         })
                     } else {
-
+                        
                     }
 
                 }
@@ -358,32 +358,6 @@ const WorkBasicInfo = (props) => {
         setFieldName("")
     }
 
-    // // 事项更换上级之后把当前事项从列表中移除
-    // const deleteAndQueryDeepData = (originalArray, indexes) => {
-    //     if (indexes.length === 0) {
-    //         return undefined; // 如果索引数组为空，返回 undefined
-    //     }
-
-    //     const currentIndex = indexes.shift(); // 获取当前层级的下标
-    //     if (currentIndex < 0 || currentIndex >= originalArray.length) {
-    //         return undefined; // 下标越界，返回 undefined 表示未找到数据
-    //     }
-
-    //     if (indexes.length === 0) {
-    //         // 如果索引数组为空，表示找到了要删除的数据，将其删除并返回
-    //         return originalArray.splice(currentIndex, 1)[0];
-    //     }
-
-    //     const currentLevelData = originalArray[currentIndex].children; // 获取当前层级的数据
-    //     const result = deleteAndQueryDeepData(currentLevelData, indexes); // 递归查询下一层级的数据
-
-    //     // 如果递归后返回了 undefined，表示在更深的层级未找到数据，则将当前层级的数据删除
-    //     // if (result === undefined) {
-    //     //   originalArray.splice(currentIndex, 1);
-    //     // }
-
-    //     return result;
-    // }
 
     const updataPlanTime = (value) => {
         setPlanTakeupTimeValue(value)
@@ -946,7 +920,7 @@ const WorkBasicInfo = (props) => {
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
                                 >
-                                    <div style={{ padding: "10px" }}>
+                                    <div className="work-detail-box-content" style={{ padding: "10px" }}>
                                         <EditorBigContent
                                             value={slateValue}
                                         />

@@ -133,6 +133,16 @@ const WorkChild = (props) => {
         })
     }
 
+    const updateNameByKey = (event) => {
+
+        if (event.keyCode === 13) {
+            event.stopPropagation();
+            event.preventDefault()
+            createChildWorkItem()
+        }
+
+    }
+
     const columns = [
         {
             title: "标题",
@@ -223,9 +233,13 @@ const WorkChild = (props) => {
                 }
                 {
                     addChild &&  <div className="child-create-input">
-                        <Input placeholder="输入事项名称" onChange={(value) => setWorkItemTitle(value.target.value)}></Input>
+                        <Input 
+                            placeholder="输入事项名称" 
+                            onChange={(value) => setWorkItemTitle(value.target.value)} 
+                            onKeyDown={(event) => updateNameByKey(event)}
+                        />
                         <div className="child-create-submit">
-                            <div className="create-submit" onClick={() =>  createChildWorkItem(false)}>
+                            <div className="create-submit" onClick={() =>  createChildWorkItem()}>
                                 确定
                             </div>
                             <div className="create-cancel" onClick={() => showAddChild(false)}>

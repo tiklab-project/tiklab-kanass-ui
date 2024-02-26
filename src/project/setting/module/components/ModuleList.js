@@ -40,16 +40,17 @@ const ModuleList = (props) => {
 
     // 初始化
     useEffect(() => {
-        findModule()
+        const params = {projectId: projectId};
+        findModule(params)
         return null;
     }, []);
 
     /**
      * 获取模块列表，带分页
      */
-    const findModule = () => {
+    const findModule = (params) => {
         setLoading(true)
-        findModulePage({projectId: projectId}).then(() => {
+        findModulePage(params).then(() => {
             setLoading(false)
         })
     }
@@ -59,9 +60,14 @@ const ModuleList = (props) => {
      * @param {*} values 
      */
     const onSearch = (values) => {
+        const params = {
+            projectId: projectId,
+            moduleName: values.target.value
+        }
         setModuleName(values.target.value)
-        // 重置分页参数，从第一页开始搜索
-        setPageParam({ current: 1, pageSize: 10 })
+        findModule(params)
+        // // 重置分页参数，从第一页开始搜索
+        // setPageParam({ current: 1, pageSize: 10 })
     };
 
     /**
@@ -167,7 +173,7 @@ const ModuleList = (props) => {
                                 rowKey={(record) => record.id}
                                 loading={loading}
                                 onSearch={onSearch}
-                                onChange={changePage}
+                                // onChange={changePage}
                                 pagination={false}
                             />
                         </div>

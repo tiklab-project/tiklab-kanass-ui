@@ -86,7 +86,7 @@ export class ModuleStore {
 	editModuleById = async(values) => {
         const data = await Service("/module/updateModule", values)
         if(data.code===0){
-            this.findModulePage(values.project.id,this.searchModuleName)
+            this.findModulePage(values)
         }
         return data;
     }

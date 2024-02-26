@@ -200,7 +200,12 @@ const SprintAddModal = (props) => {
                                     message: '请选择计划日期',
                                 },
                             ]}>
-                            <RangePicker locale={locale} showTime/>
+                            <RangePicker 
+                                locale={locale} 
+                                showTime={{
+                                    defaultValue: [moment('09:00:00', 'HH:mm:ss'), moment('18:00:00', 'HH:mm:ss')]
+                                }}
+                            />
                         </Form.Item>
                         <Form.Item
                             label="迭代描述"

@@ -147,7 +147,7 @@ const WorkAddPage = (props) => {
             }
             
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
-            values.planEndTime = values.planTime[1].format('YYYY-MM-DD HH:mm:ss')
+            values.planEndTime = values.planTime[1].format('YYYY-MM-DD 23:59:59')
             values.workType = workType.id;
             values.desc = slateValue;
             values.extData = {}

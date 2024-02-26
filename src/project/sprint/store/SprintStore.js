@@ -30,8 +30,8 @@ export class SprintStore {
     @observable
     sprintPageParams = {
         orderParams: [{
-            name: "sprintName",
-            orderType: "asc"
+            name: "startTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 10,
@@ -78,6 +78,7 @@ export class SprintStore {
     @action
     findSprintList = async (value) => {
         Object.assign(this.sprintPageParams, { ...value })
+        console.log(this.sprintPageParams)
         const data = await Service("/sprint/findSprintList", this.sprintPageParams)
         if (data.code === 0) {
             this.sprintList = data.data;
@@ -109,7 +110,7 @@ export class SprintStore {
     addsprintlist = async (values) => {
         const data = await Service("/sprint/createSprint", values)
         if (data.code === 0) {
-            this.findSprintList(values.project.id, this.searchSprintName)
+            this.findSprintList()
         }
         return data;
     }
