@@ -912,5 +912,13 @@ export class WorkStore {
         return data;
     }
 
+    @action
+    findChildrenLevel = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findChildrenLevel", params)
+        return data;
+    }
+
 }
 export default new WorkStore();

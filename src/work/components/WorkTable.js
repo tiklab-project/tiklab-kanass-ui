@@ -75,7 +75,7 @@ const WorkTable = (props) => {
         if(viewType === "tree"){
             // 层级的索引
             // treeIndex.length = 0;
-            setTreeIndex([])
+            setTreeIndex(null)
             getWorkLevelIndex(record.treePath, record.id)
         }
        
@@ -88,23 +88,25 @@ const WorkTable = (props) => {
     }
 
     const getWorkLevelIndex = (value, workId) => {
-        let treePath = value;
+        
+        let treePath = [];
         console.log(treeIndex)
-        if (typeof (treePath) === "string" && treePath.length > 0) {
-            const hightLevel = treePath.split(";");
+        if (typeof (value) === "string" && value.length > 0) {
+            const hightLevel = value.split(";");
             hightLevel.unshift(workId)
             let hightLevelIndex = hightLevel.length - 2;
 
             const getIndex = (data, hightLevelIndex) => {
                 const num = data.findIndex((item) => item.id === hightLevel[hightLevelIndex])
                 hightLevelIndex--;
-                treeIndex.push(num)
+                treePath.push(num)
                 if (hightLevelIndex >= 0 && data[num].children)  {
                     getIndex(data[num].children, hightLevelIndex);
                 }
             }
             getIndex(workList, hightLevelIndex);
-            setTreeIndex([...treeIndex])
+            console.log(treePath)
+            setTreeIndex(treePath)
         }
     }
     const setStatuStyle = (id) => {

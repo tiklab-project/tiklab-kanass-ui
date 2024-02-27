@@ -19,7 +19,7 @@ const WorkDetailVersionSelect = (props) => {
 
     useEffect(() => {
         getWorkVersionList();
-        return null;
+        return;
     }, [])
 
     const getWorkVersionList = () => {
@@ -37,9 +37,6 @@ const WorkDetailVersionSelect = (props) => {
         if (!dropdownRef.current.contains(e.target) && dropdownRef.current !== e.target) {
             setShowDropdown(false)
             setShowMoreDropdown(false)
-            console.log(showMoreDropdown)
-            // setHoverFieldName("666666")
-            console.log(hoverFieldName)
         }
     }
     const showMore = (e) => {

@@ -56,7 +56,7 @@ class WorkChildStore {
     @action
     findSelectWorkItemList = async(value) => {
         Object.assign(this.searchCondition, {...value})
-        const data = await Service("/workItem/findSelectWorkItemList", this.searchCondition)
+        const data = await Service("/workItem/findSelectChildrenWorkItemList", this.searchCondition)
         if(data.code === 0){
             if(this.searchCondition.pageParam.currentPage === 1){
                 this.selectWorkChildList = data.data.dataList;
@@ -66,6 +66,14 @@ class WorkChildStore {
             }
             this.selectChildToTal = data.data.totalPage;
         }
+        return data;
+    }
+
+    @action
+    findChildrenLevel = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findChildrenLevel", params)
         return data;
     }
 

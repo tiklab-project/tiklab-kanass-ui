@@ -18,6 +18,7 @@ const WorkDetailSprintSelect = (props) => {
 
     useEffect(() => {
         getWorkSprintList()
+        return
     }, [])
 
     const getWorkSprintList = () => {

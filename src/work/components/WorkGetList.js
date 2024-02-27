@@ -111,7 +111,7 @@ const getPageList = (workStore) => {
 }
 
 
-// 事项更换上级之后把当前事项从列表中移除
+// 事项更换上级之后把当前事项从父级的下级移除
 const deleteAndQueryDeepData = (originalArray, indexes) => {
     if (indexes.length === 0) {
         return undefined; // 如果索引数组为空，返回 undefined
@@ -137,4 +137,84 @@ const deleteAndQueryDeepData = (originalArray, indexes) => {
 
     return result;
 }
-export { finWorkList, deleteAndQueryDeepData };
+
+// 给事项添加父事项之后，更改列表
+const changeWorkItemParent = (originalArray, oldParentId, newParentId, workItem) => {
+    deleteOldChildren(originalArray, oldParentId, workItem.id);
+    console.log(originalArray)
+    originalArray = addNewParentChildren(originalArray, newParentId, workItem)
+    return originalArray
+    
+}
+
+const deleteOldChildren = (originalArray, oldParentId, workItemId) => {
+    if (oldParentId && oldParentId !== "nullstring") {
+        originalArray.forEach((item, index) => {
+            if (item.id === oldParentId) {
+                item.children.map((childrenItem, index) => {
+                    if (childrenItem.id === workItemId) {
+                        item.children.splice(index, 1)
+                    }
+                })
+            } else {
+                if (item.children && item.children.length > 0) {
+                    deleteOldChildren(item.children, oldParentId, workItemId)
+                }
+            }
+            return item;
+        })
+    }else {
+        originalArray = originalArray.filter(item => item.id != workItemId)
+    }
+    // return originalArray;
+}
+
+const addNewParentChildren = (originalArray, newParentId, workItem) => {
+    originalArray.map(item => {
+        if (item.id === newParentId) {
+            if (item.children && item.children.length >= 0) {
+                item.children.push(workItem)
+            } else {
+                item.children = [workItem];
+            }
+        } else {
+            if (item.children && item.children.length > 0) {
+                addNewParentChildren(item.children, newParentId, workItem)
+            }
+        }
+        return item
+    })
+    return originalArray;
+    
+}
+
+
+// const changeWorkItemList = (originalArray, workItem) => {
+//     originalArray.map((item, index) => {
+//         if(item.id === workItem.id){
+//             const children = item.children;
+//             item = workItem;
+//             item.children = children
+//         }else {
+//             if(item.children && item.children?.length > 0){
+//                 changeWorkItemList(item.children, workItem)
+//             }
+//         }
+//         return item;
+//     })
+//     return originalArray
+// }
+
+const changeWorkItemList = (originalArray, workItem) => {
+    originalArray.forEach((item, index) => {
+        if (item.id === workItem.id) {
+            // 替换整个对象
+            originalArray[index] = { ...workItem, children: item.children };
+        } else if (item.children && item.children.length > 0) {
+            // 递归调用以检查子元素
+            changeWorkItemList(item.children, workItem);
+        }
+    });
+    return originalArray;
+};
+export { finWorkList, deleteAndQueryDeepData, changeWorkItemParent, changeWorkItemList };

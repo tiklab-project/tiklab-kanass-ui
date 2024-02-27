@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Empty } from 'antd';
+import { Empty, message } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -13,7 +13,7 @@ const WorkChildAddmodal = (props) => {
         getWorkConditionPage, findPriority, priorityList, getWorkStatus,workStatusList, demandTypeId } = workStore;
 
     const { addWorkChild, findSelectWorkItemList,
-        getWorkChildList, selectChildToTal, selectWorkChildList } = workChild;
+        getWorkChildList, selectChildToTal, selectWorkChildList, findChildrenLevel } = workChild;
     const tenant = getUser().tenant;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
@@ -70,6 +70,40 @@ const WorkChildAddmodal = (props) => {
         }
     }
 
+    const determineAdd = (id) => {
+        let currentLevel = 0;
+        if(treePath){
+            const parentArray = treePath.split(";")
+            currentLevel = parentArray.length - 1;
+        }
+        // 判断被添加事项有几级
+        findChildrenLevel({id: id}).then(res => {
+            if(res.code === 0){
+                if(res.data === 2){
+                    message.warning("事项限制为三级，所选事项有两级下级事项，不能被添加为子事项");
+                    return;
+                }
+                if(res.data === 1){
+                    if(currentLevel === 0){
+                        creatWorkChild(id)
+                    }else {
+                        message.warning("事项限制为三级，所选事项有一级下级事项，不能被添加为子事项");
+                        return;
+                    }
+                }
+
+                if(res.data === 0){
+                    if(currentLevel < 2){
+                        creatWorkChild(id)
+                    }else {
+                        message.warning("事项限制为三级，所选事项不能被添加为子事项");
+                        return;
+                    }
+                }
+            }
+        })
+    }
+
     const creatWorkChild = (id) => {
         let params = {
             id: id,
@@ -105,12 +139,13 @@ const WorkChildAddmodal = (props) => {
             }
             getWorkChildList(params).then(res => {
                 if (res.code === 0) {
-                    setChildWorkList(res.data.dataList)
+                    setChildWorkList(res.data)
                 }
             })
         })
     }
 
+    
     // 搜索事项
     const searchUnselectWorkByStatus = (key, value) => {
         setCurrent(1)
@@ -241,7 +276,7 @@ const WorkChildAddmodal = (props) => {
                             <div className="child-add-table-title">选择事项</div>
                             {
                                 selectWorkChildList && selectWorkChildList.map(item => {
-                                    return <div className="child-add-work-item" onClick={() => creatWorkChild(item.id)} key={item.id}>
+                                    return <div className="child-add-work-item" onClick={() => determineAdd(item.id)} key={item.id}>
                                         <div className="work-item-icon">
                                             {
                                                 item.workTypeSys?.iconUrl ?
