@@ -6,7 +6,7 @@ import "./StatisticsMore.scss";
 
 const StatisticsMore = (props) => {
     const goPlugin = () => {
-        window.open('http://thoughtware.cn/produce/kanass')
+        window.open('https://thoughtware.cn/download/kanass/ee')
     }
     return (
         <div className="statistics-advert" onClick={() => goPlugin()}>

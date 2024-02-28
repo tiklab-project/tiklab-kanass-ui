@@ -140,6 +140,14 @@ const WorkChangeView = (props) => {
                             </div>
                         })
                     }
+                    <div
+                            className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
+                            onClick={() => changeWorkView("gantt")}>
+                            <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref={`#icon-gantt`}></use>
+                            </svg>
+                            甘特图
+                        </div>
                     {
                         pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
                             className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
@@ -152,7 +160,7 @@ const WorkChangeView = (props) => {
                             :
                             <Popconfirm
                                 ref={gantte}
-                                title="付费插件，是否购买？"
+                                title="企业版功能，是否升级企业版？"
                                 placement="left"
                                 onConfirm={(e) => goPlugin(e)}
                                 getPopupContainer={() => treeDropDown.current}

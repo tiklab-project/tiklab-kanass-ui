@@ -17,7 +17,7 @@ import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
-import { deleteAndQueryDeepData } from "./WorkGetList";
+import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -25,9 +25,10 @@ const WorkBasicInfo = (props) => {
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
+    const exFormRef = useRef();
     const layoutExForm = {
-        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
-        wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
+        labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
+        wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
 
     const layout = {
@@ -45,7 +46,7 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, sprintList, selectVersionList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, treeIndex,
+        userList, searchWorkById, workIndex, treeIndex, findChildrenLevel
     } = workStore;
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
@@ -228,9 +229,9 @@ const WorkBasicInfo = (props) => {
     const [showValidateStatus, setShowValidateStatus] = useState(false)
 
     /**
-     * 字段更新
-     */
-    const updateSingle = (changedValues) => {
+ * 字段更新
+ */
+    const updateSingle = async (changedValues) => {
         let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
@@ -253,15 +254,15 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.module
             }
         }
-
-        if (changeKey === "sprint") {
-            changedValues.sprint = {
-                id: changedValues.sprint
-            }
-        }
         if (changeKey === "projectVersion") {
             changedValues.projectVersion = {
                 id: changedValues.projectVersion
+            }
+        }
+        if (changeKey === "sprint") {
+            changedValues.sprint = {
+                id: changedValues.sprint,
+                sprintName: changedValues.sprintName
             }
         }
 
@@ -271,26 +272,41 @@ const WorkBasicInfo = (props) => {
             }
         }
 
+        if (changeKey === "reporter") {
+            changedValues.reporter = {
+                id: changedValues.reporter
+            }
+        }
+
         if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
             }
         }
         if (changeKey === "reporter") {
-            changedValues.reporter = {
-                id: changedValues.reporter
+            changedValues.builder = {
+                id: changedValues.builder
             }
         }
         if (changeKey === "parentWorkItem") {
-            changedValues.parentWorkItem = changedValues.parentWorkItem === "nullstring" ?
-                {
+            // 判断选择事项是否能被设置为父级
+            if (changedValues.parentWorkItem === "nullstring") {
+                changedValues.parentWorkItem = {
                     id: "nullstring"
                 }
-                :
-                {
-                    id: changedValues.parentWorkItem.value,
-                    title: changedValues.parentWorkItem.label
+            } else {
+                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                if (!disableChange) {
+                    setWorkInfo({ ...workInfo })
+                    return
+                } else {
+                    changedValues.parentWorkItem = {
+                        id: changedValues.parentWorkItem.value,
+                        title: changedValues.parentWorkItem.label
+                    }
                 }
+            }
+
         }
 
         if (changeKey === "preDependWorkItem") {
@@ -314,8 +330,15 @@ const WorkBasicInfo = (props) => {
             id: workId,
             updateField: changeKey
         }
+        update(data, changedValues, changeKey)
+
+        setFieldName("")
+    }
+
+    const update = (data, changedValues, changeKey) => {
         editWork(data).then(res => {
             if (res.code === 0) {
+                const oldParentId = workInfo.parentWorkItem?.id
                 setWorkInfo({ ...workInfo, ...changedValues })
 
                 //  更新列表数据
@@ -325,34 +348,75 @@ const WorkBasicInfo = (props) => {
                     props.match.path.indexof("/:id/versiondetail/:version/work") > -1) &&
                     (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
-
                     searchWorkById(workId).then((res) => {
                         if (res) {
-                            workList[workIndex - 1] = res
-                            setWorkList([...workList])
+                            // workList[workIndex - 1] = res
+                            // 修改列表中数据
+                            const list = changeWorkItemList(workList, res)
+                            setWorkList([...list])
                         }
                     })
                 }
 
                 if (changeKey === "parentWorkItem") {
-                    if (changedValues.parentWorkItem.id === "nullstring") {
-                        searchWorkById(workId).then((res) => {
-                            if (res) {
-                                deleteAndQueryDeepData(workList, treeIndex)
-                                workList.splice(workIndex - 1, 0, res)
+                    searchWorkById(workId).then((res) => {
+                        const list = changeWorkItemParent(workList, changedValues.parentWorkItem?.id, res)
+                        setWorkList([...list])
+                    })
 
-                                setWorkList([...workList])
-                            }
-                        })
-                    } else {
 
-                    }
 
                 }
             }
         })
-        setFieldName("")
     }
+
+    /**
+     * 判断选择事项是否能作为上级
+     * @param {parentId} parentId 
+     * @returns 
+     */
+    const determineUpdate = async (parentId) => {
+        let disableChange = false;
+        try {
+            const res = await searchWorkById(parentId);
+            if (res) {
+                let currentLevel = 0;
+                if (res.treePath) {
+                    const parentArray = res.treePath.split(";");
+                    currentLevel = parentArray.length - 1;
+                }
+
+                const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
+                if (childrenLevelRes.code === 0) {
+                    if (childrenLevelRes.data === 2) {
+                        message.warning("事项限制为三级，所选事项不能作为父级");
+                        disableChange = false;
+                    } else if (childrenLevelRes.data === 1) {
+                        if (currentLevel === 0) {
+                            disableChange = true;
+                        } else {
+                            message.warning("事项限制为三级，所选事项不能作为父级");
+                            disableChange = false;
+                        }
+                    } else if (childrenLevelRes.data === 0) {
+                        if (currentLevel < 2) {
+                            disableChange = true;
+                        } else {
+                            message.warning("事项限制为三级，所选事项不能作为父级");
+                            disableChange = false;
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            // 处理错误
+            console.error(error);
+        }
+
+        return disableChange;
+    };
+
 
 
     const updataPlanTime = (value) => {
@@ -585,7 +649,7 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                           
+
                             {
                                 projectType === "scrum" && <Form.Item
                                     label="所属迭代" name="sprint"
@@ -864,6 +928,7 @@ const WorkBasicInfo = (props) => {
                         </svg>
                     </div>
                 </div>
+                <div ref={exFormRef}>
                 {
                     visableCustomForm ? <Form
                         {...layoutExForm}
@@ -889,6 +954,7 @@ const WorkBasicInfo = (props) => {
                                         onMouseEnter={() => changeStyle(`System${item.code}`)}
                                         onMouseLeave={() => setFieldName("")}
                                         data={item.selectItemList}
+                                        getPopupContainer={() => exFormRef.current}
                                     />
                                 </Form.Item>
                             })
@@ -896,6 +962,7 @@ const WorkBasicInfo = (props) => {
                     </Form>
                         : <></>
                 }
+                </div>
 
             </div>
 

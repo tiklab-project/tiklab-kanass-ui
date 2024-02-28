@@ -110,7 +110,7 @@ const WorkDetailSprintSelect = (props) => {
                             <div className="select-group-option-box">
                                 {
                                     selectList.filter(item => item.sprintState.id === "000000").map(item => {
-                                        return <div className="select-group-option" onClick={() => updateWork(item)}>{item.sprintName}</div>
+                                        return <div className="select-group-option" onClick={() => updateWork(item)} key = {item.id}>{item.sprintName}</div>
                                     })
                                 }
                             </div>
@@ -123,7 +123,7 @@ const WorkDetailSprintSelect = (props) => {
                             <div className="select-group-option-box">
                                 {
                                     selectList.filter(item => item.sprintState.id === "111111").map(item => {
-                                        return <div className="select-group-option" onClick={() => updateWork(item)}>{item.sprintName}</div>
+                                        return <div className="select-group-option" onClick={() => updateWork(item)} key = {item.id}>{item.sprintName}</div>
                                     })
                                 }
                             </div>
@@ -136,7 +136,7 @@ const WorkDetailSprintSelect = (props) => {
                     <div className="more-dropdown-title">关联过的迭代</div>
                     {
                         relationSprintList.map(item => {
-                            return <div className="more-item">
+                            return <div className="more-item" key = {item.id}>
                                 {item.sprintName}
                             </div>
                         })

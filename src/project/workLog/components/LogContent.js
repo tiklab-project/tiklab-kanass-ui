@@ -24,7 +24,7 @@ const LogContent = (props) => {
     const store = {
         logStore: LogStore
     }
-    const { findWorkLogPage, logList, selectLogCondition } = LogStore;
+    const { findWorkLogPage, logList, selectLogCondition, totalLog } = LogStore;
     const [dateValue, setDateValue] = useState()
     // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
@@ -56,7 +56,8 @@ const LogContent = (props) => {
         if (activeTab === "allLog") {
             const data = {
                 projectId: projectId,
-                startTime: moment().subtract(7, 'days').startOf("day").format("YYYY-MM-DD"),
+                // startTime: moment().subtract(7, 'days').startOf("day").format("YYYY-MM-DD"),
+                startTime: "2023-12-01",
                 endTime: moment().add(1, 'days').format("YYYY-MM-DD"),
             }
             findWorkLogPage(data)
@@ -141,11 +142,12 @@ const LogContent = (props) => {
      */
     const changePage = (pagination) => {
         if (activeTab === "allLog") {
-            findWorkLogPage({ worker: null, projectId: projectId, pageParam: { current: pagination.current } })
+            findWorkLogPage({ worker: null, projectId: projectId, pageParam: { currentPage: pagination.current, pageSize: pagination.pageSize} })
         }
         if (activeTab === "myLog") {
-            findWorkLogPage({ worker: userId, projectId: projectId, pageParam: { current: pagination.current } })
+            findWorkLogPage({ worker: userId, projectId: projectId, pageParam: { currentPage: pagination.current, pageSize: pagination.pageSize } })
         }
+        console.log(pagination)
     }
 
     /**
@@ -154,11 +156,18 @@ const LogContent = (props) => {
      */
     const changeTabs = value => {
         setActiveTab(value)
+        const params = {
+            projectId: projectId,
+            pageParam: { 
+                currentPage: 1, 
+                pageSize: 30
+            }
+        }
         if (value === "allLog") {
-            findWorkLogPage({ worker: null, projectId: projectId })
+            findWorkLogPage({ worker: null, ...params })
         }
         if (value === "myLog") {
-            findWorkLogPage({ worker: userId, projectId: projectId })
+            findWorkLogPage({ worker: userId, ...params })
         }
     }
 
@@ -202,8 +211,10 @@ const LogContent = (props) => {
                         rowKey={(record) => record.id}
                         onChange={changePage}
                         pagination={{
-                            onChange: changePage,
+                            // onChange: changePage,
+                            total: totalLog,
                             position: ["bottomCenter"],
+                            current: selectLogCondition.pageParam.currentPage,
                             ...selectLogCondition.pageParam
                         }}
                     />

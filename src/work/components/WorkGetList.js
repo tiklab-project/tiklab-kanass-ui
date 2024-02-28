@@ -139,71 +139,81 @@ const deleteAndQueryDeepData = (originalArray, indexes) => {
 }
 
 // 给事项添加父事项之后，更改列表
-const changeWorkItemParent = (originalArray, oldParentId, newParentId, workItem) => {
-    deleteOldChildren(originalArray, oldParentId, workItem.id);
-    console.log(originalArray)
-    originalArray = addNewParentChildren(originalArray, newParentId, workItem)
+const changeWorkItemParent = (originalArray, newParentId, workItem) => {
+    const deleteItem = deleteOldChildren(originalArray, workItem.id);
+    console.log(deleteItem)
+    const newWorkItem = { ...workItem, children: deleteItem.children }
+    // 更新下级的treepath
+    if(newWorkItem.children && newWorkItem.children.length > 0){
+        updateTreePath(newWorkItem)
+    }
+    console.log(newWorkItem)
+    originalArray = addNewParentChildren(originalArray, newParentId, newWorkItem)
     return originalArray
-    
+
 }
 
-const deleteOldChildren = (originalArray, oldParentId, workItemId) => {
-    if (oldParentId && oldParentId !== "nullstring") {
-        originalArray.forEach((item, index) => {
-            if (item.id === oldParentId) {
-                item.children.map((childrenItem, index) => {
-                    if (childrenItem.id === workItemId) {
-                        item.children.splice(index, 1)
-                    }
-                })
-            } else {
-                if (item.children && item.children.length > 0) {
-                    deleteOldChildren(item.children, oldParentId, workItemId)
-                }
-            }
-            return item;
-        })
-    }else {
-        originalArray = originalArray.filter(item => item.id != workItemId)
+const updateTreePath = (newWorkItem) => {
+    const id = newWorkItem.id;
+    const treePath = id  + ";" + newWorkItem.treePath
+    newWorkItem.children.map(item => {
+        item.treePath = treePath;
+    })
+}
+
+const deleteOldChildren = (originalArray, workItemId) => {
+    let deletedNode = null;
+
+    // 递归删除函数
+    function recursiveDelete(nodes, id) {
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        if (node.id === id) {
+          // 删除当前节点
+          nodes.splice(i, 1);
+          deletedNode = node;
+          return true; // 找到并删除了节点，退出循环
+        }
+        if (node.children && node.children.length > 0) {
+          if (recursiveDelete(node.children, id)) {
+            // 在子节点中找到了并删除了节点，退出循环
+            return true;
+          }
+        }
+      }
+      return false; // 没有找到匹配的节点
     }
-    // return originalArray;
+  
+    // 遍历树的每个节点，查找匹配的节点并删除
+    recursiveDelete(originalArray, workItemId);
+  
+    // 返回被删除的节点
+    return deletedNode;
 }
 
 const addNewParentChildren = (originalArray, newParentId, workItem) => {
-    originalArray.map(item => {
-        if (item.id === newParentId) {
-            if (item.children && item.children.length >= 0) {
-                item.children.push(workItem)
+    if(newParentId && newParentId !== "nullstring"){
+        originalArray.map(item => {
+            if (item.id === newParentId) {
+                if (item.children && item.children.length >= 0) {
+                    item.children.push(workItem)
+                } else {
+                    item.children = [workItem];
+                }
             } else {
-                item.children = [workItem];
+                if (item.children && item.children.length > 0) {
+                    addNewParentChildren(item.children, newParentId, workItem)
+                }
             }
-        } else {
-            if (item.children && item.children.length > 0) {
-                addNewParentChildren(item.children, newParentId, workItem)
-            }
-        }
-        return item
-    })
-    return originalArray;
+            return item
+        })
+    }else {
+        originalArray.unshift(workItem)
+    }
     
+    return originalArray;
+
 }
-
-
-// const changeWorkItemList = (originalArray, workItem) => {
-//     originalArray.map((item, index) => {
-//         if(item.id === workItem.id){
-//             const children = item.children;
-//             item = workItem;
-//             item.children = children
-//         }else {
-//             if(item.children && item.children?.length > 0){
-//                 changeWorkItemList(item.children, workItem)
-//             }
-//         }
-//         return item;
-//     })
-//     return originalArray
-// }
 
 const changeWorkItemList = (originalArray, workItem) => {
     originalArray.forEach((item, index) => {

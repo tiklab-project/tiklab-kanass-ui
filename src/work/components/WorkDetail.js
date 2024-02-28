@@ -22,6 +22,7 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";
 import { setWorkTitle } from "./WorkArrayChange";
+import { changeWorkItemList } from "./WorkGetList";
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
     // const [percentForm] = Form.useForm();
@@ -169,8 +170,11 @@ const WorkDetail = (props) => {
                         setWorkInfo(res)
                         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-                        workList[workIndex - 1].workStatusNode = res.workStatusNode;
-                        workList[workIndex - 1].workStatusCode = res.workStatusCode;
+
+                        const list = changeWorkItemList(workList, res)
+                        setWorkList([...list])
+                        // workList[workIndex - 1].workStatusNode = res.workStatusNode;
+                        // workList[workIndex - 1].workStatusCode = res.workStatusCode;
                     }
                 })
             }
@@ -269,7 +273,6 @@ const WorkDetail = (props) => {
                 })
             }
             <div className="work-flow-view" onClick={() => viewFlow()}>查看工作流</div>
-
         </div>
 
     );
@@ -409,7 +412,6 @@ const WorkDetail = (props) => {
                                         </div>
 
                                         <div className="work-detail-tab-botton">
-
                                             <Dropdown overlay={menu} trigger={"click"} getPopupContainer={() => workDetailTop.current}>
                                                 <Button className="botton-background" style={{ marginRight: "10px" }}>
                                                     {workStatus}
@@ -464,7 +466,7 @@ const WorkDetail = (props) => {
                 </div>
                     :
                     <div style={{ marginTop: "200px" }}>
-                        <Empty image="/images/nodata.png" description="暂时没有事项~" />
+                        <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
                     </div>
 
             }

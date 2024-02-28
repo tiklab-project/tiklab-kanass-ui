@@ -18,7 +18,7 @@ const FormList = AsyncComponent(() => import('./setting/form/ProjectFormList'))
 const FormListSystem = AsyncComponent(() => import('./setting/form/ProjectFormListSystem'))
 const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/ProjectProjectFormList'))
 const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
-
+const ProjectFormDetailSystem = AsyncComponent(() => import('./setting/form/ProjectFormDetailSystem'))
 // const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
 const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
 const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
@@ -682,6 +682,12 @@ const Routers = [
                     {
                         path: "/setting/FormDetail/:formId",
                         component: FormDetail,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/FormDetailSys/:formId",
+                        component: ProjectFormDetailSystem,
                         row: true,
                         exact: true
                     },

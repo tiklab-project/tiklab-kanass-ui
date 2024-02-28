@@ -24,16 +24,17 @@ export class LogStore {
     @observable selectWorkCondition = {
         currentPage: 0
     }
+
+    @observable totalLog = 0;
     // 统计日志的分页参数
     @observable selectLogCondition = {
         orderParams: [{
-            name: "id",
-            orderType: "asc"
+            name: "work_date",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 30,
-            currentPage: 1,
-            total: 1
+            currentPage: 1
         }
     }
 
@@ -96,7 +97,7 @@ export class LogStore {
         const data = await Service("/workLog/findWorkLogPage", this.selectLogCondition);
         if(data.code === 0){
             this.logList = data.data.dataList;
-            this.selectLogCondition.pageParam.total = data.data.totalRecord
+            this.totalLog = data.data.totalRecord
         }
         return data;
     }

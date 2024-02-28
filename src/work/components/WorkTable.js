@@ -60,7 +60,7 @@ const WorkTable = (props) => {
             modelId: record.id,
             project: { id: record.project.id },
             projectType: { id: record.project.projectType.id },
-            iconUrl: record.workTypeSys.iconUrl
+            iconUrl: record.workTypeSys?.iconUrl
         }
         createRecent(params)
 
@@ -228,7 +228,7 @@ const WorkTable = (props) => {
             render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
-                        record.workTypeSys.iconUrl ?
+                        record.workTypeSys?.iconUrl ?
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""

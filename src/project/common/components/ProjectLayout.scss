@@ -158,6 +158,12 @@
     }
 }
 
+.project-empty {
+    height: calc(100vh - 48px);
+    background: #fff;
+    padding: 20% 0;
+}
+
 
 .expend>.ant-table-cell {
     padding-left: 0;

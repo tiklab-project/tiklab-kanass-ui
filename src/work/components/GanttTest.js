@@ -1,7 +1,7 @@
 import React,{ useEffect, useState, Fragment, useRef } from "react";
 import { Graph } from '@antv/x6';
 import { PlusCircleOutlined,MinusCircleOutlined } from '@ant-design/icons';
-import "./GanttTest.scss";
+import "./gantt.scss";
 import RowScroll from "./RowScroll";
 import ColScroll from "./colScroll";
 import moment from "moment";
@@ -81,7 +81,7 @@ const Gantt=(props) => {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
                 const dataTime = startX * (1000 * 3600) + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
+                let day = moment(dataTime).format('YYYY-MM-DD HH:mm:ss');
                 params.planBeginTime = day;
                 params.updateField = "planBeginTime"
             }
@@ -91,7 +91,7 @@ const Gantt=(props) => {
                 let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
                 firstDate = Date.parse(firstDate);
                 const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
+                let day = moment(dataTime).format('YYYY-MM-DD HH:mm:ss');
                 params.planEndTime = day;
                 params.updateField = "planEndTime";
                 editWork(params);
@@ -101,6 +101,7 @@ const Gantt=(props) => {
         })
 
         graph.on("node:moved",({ node, options }) => {
+            console.log("sss")
             const nodeBox = node.getBBox();
             const workId = node.id;
             const startX = nodeBox.x;
@@ -112,13 +113,13 @@ const Gantt=(props) => {
 
 
             let planBeginTime = startX * (1000 * 3600) + firstDate;
-            planBeginTime = moment(planBeginTime).format('YYYY-MM-DD');
+            planBeginTime = moment(planBeginTime).format('YYYY-MM-DD HH:mm:ss');
             params.planBeginTime = planBeginTime;
             params.updateField = "planBeginTime"
             editWork(params)
 
             let planEndTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
-            planEndTime = moment(planEndTime).format('YYYY-MM-DD');
+            planEndTime = moment(planEndTime).format('YYYY-MM-DD HH:mm:ss');
             params.planEndTime = planEndTime;
             params.updateField = "planEndTime"
             editWork(params)
@@ -337,8 +338,8 @@ const Gantt=(props) => {
                                                 <span className="table-icon">
                                                 {
                                                     isExpandedTree(item.id) ? 
-                                                        <PlusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--thoughtware-gray-400)"}}/> : 
-                                                            <MinusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--thoughtware-gray-400)"}}/>
+                                                        <PlusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--tiklab-gray-400)"}}/> : 
+                                                            <MinusCircleOutlined onClick={() => setOpenOrClose(item.id)} style={{color: "var(--tiklab-gray-400)"}}/>
                                                 }</span>}
                                             {item.title}
                                         </div>

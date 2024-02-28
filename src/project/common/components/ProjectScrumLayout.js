@@ -7,9 +7,9 @@
  * @LastEditTime: 2022-03-12 15:19:17
  */
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col } from 'antd';
+import { Layout, Row, Col, Empty } from 'antd';
 import ProdeScrumAside from "./ProjectScrumDetailAside";
-import "../components/ProjectLayout.scss";
+import "./ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
@@ -56,7 +56,7 @@ const ProjectScrumDetail = (props) => {
     return (
         <Provider {...store}>
             {
-                project && <Layout className="project-prodetail">
+                project ? <Layout className="project-prodetail">
 
                     <ProdeScrumAside
                         projectName={"项目1"}
@@ -72,6 +72,11 @@ const ProjectScrumDetail = (props) => {
                         </Row>
                     </Layout>
                 </Layout>
+                :
+                <div className="project-empty">
+                    <Empty image="/images/nodata.png" description="没有该项目或者项目被删除" />
+                </div>
+                
             }
 
         </Provider>

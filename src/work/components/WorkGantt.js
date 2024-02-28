@@ -10,6 +10,7 @@ import "./WorkGantt.scss";
 import { finWorkList } from "./WorkGetList";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
+import Gantt from "./GanttTest"
 import { withRouter } from "react-router";
 const WorkGantt = (props) => {
     const { workList, editWork, setWorkShowType, setQuickFilterValue } = WorkStore;
@@ -52,12 +53,12 @@ const WorkGantt = (props) => {
                     <div>
                         {
                             workList && workList.length > 0 ?
-                                <RemoteComponent
-                                    point="work-gantt"
-                                    isModalType={true}
-                                    extraProps={{ workList: workList, editWork: editWork }}
-                                />
-                                // <Gantt workList = {workList} editWork = {editWork}/>
+                                // <RemoteComponent
+                                //     point="work-gantt"
+                                //     isModalType={true}
+                                //     extraProps={{ workList: workList, editWork: editWork }}
+                                // />
+                                <Gantt workList = {workList} editWork = {editWork}/>
                                 :
                                 <div style={{ marginTop: "50px" }}>
                                     <Empty image="/images/nodata.png" description="暂时没有事项~" />

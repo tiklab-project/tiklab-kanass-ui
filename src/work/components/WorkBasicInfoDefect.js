@@ -26,9 +26,10 @@ const WorkBasicInfo = (props) => {
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
+    const exFormRef = useRef();
     const layoutExForm = {
-        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
-        wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
+        labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
+        wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
 
     const layout = {
@@ -357,64 +358,23 @@ const WorkBasicInfo = (props) => {
                 }
 
                 if (changeKey === "parentWorkItem") {
-                    if (changedValues.parentWorkItem.id === "nullstring") {
-                        // 删除上级，把当前子事项移动到当前事项列表第一个
-                        deleteAndQueryDeepData(workList, treeIndex)
-                        workList.splice(0, 0, workInfo)
-                        setWorkList([...workList])
-                    } else {
-                        // 
-                        const list = changeWorkItemParent(workList, oldParentId, changedValues.parentWorkItem?.id, workInfo)
+                    searchWorkById(workId).then((res) => {
+                        const list = changeWorkItemParent(workList, changedValues.parentWorkItem?.id, res)
                         setWorkList([...list])
-                    }
+                    })
+                    
 
 
                 }
             }
         })
     }
-    // const determineUpdate = async (parentId) => {
-    //     let disableChange = false;
-    //     await searchWorkById(parentId).then((res) => {
-    //         if (res) {
-    //             let currentLevel = 0;
-    //             if (res.treePath) {
-    //                 const parentArray = res.treePath.split(";")
-    //                 currentLevel = parentArray.length - 1;
-    //             }
-    //             // 判断被添加事项有几级
-    //             findChildrenLevel({ id: workId }).then(res => {
-    //                 if (res.code === 0) {
-    //                     if (res.data === 2) {
-    //                         message.warning("事项限制为三级，所选事项不能作为父级");
-    //                         disableChange = false;
-    //                         return;
-    //                     }
-    //                     if (res.data === 1) {
-    //                         if (currentLevel === 0) {
-    //                             disableChange = true;
-    //                         } else {
-    //                             message.warning("事项限制为三级，所选事项不能作为父级");
-    //                             disableChange = false;
-    //                             return;
-    //                         }
-    //                     }
 
-    //                     if (res.data === 0) {
-    //                         if (currentLevel < 2) {
-    //                             disableChange = true;
-    //                         } else {
-    //                             message.warning("事项限制为三级，所选事项不能作为父级");
-    //                             disableChange = false;
-    //                             return;
-    //                         }
-    //                     }
-    //                 }
-    //             })
-    //         }
-    //     })
-    //     return disableChange;
-    // }
+    /**
+     * 判断选择事项是否能作为上级
+     * @param {parentId} parentId 
+     * @returns 
+     */
     const determineUpdate = async (parentId) => {
         let disableChange = false;
         try {
@@ -964,6 +924,7 @@ const WorkBasicInfo = (props) => {
                         </svg>
                     </div>
                 </div>
+                <div ref={exFormRef}>
                 {
                     visableCustomForm ? <Form
                         {...layoutExForm}
@@ -989,6 +950,7 @@ const WorkBasicInfo = (props) => {
                                         onMouseEnter={() => changeStyle(`System${item.code}`)}
                                         onMouseLeave={() => setFieldName("")}
                                         data={item.selectItemList}
+                                        getPopupContainer={() => exFormRef.current}
                                     />
                                 </Form.Item>
                             })
@@ -996,6 +958,8 @@ const WorkBasicInfo = (props) => {
                     </Form>
                         : <></>
                 }
+                </div>
+               
 
             </div>
 
