@@ -513,8 +513,7 @@ const Routers = [
             },
             {
                 path: "/workGantt",
-                component: WorkGantt,
-                exact: true
+                component: WorkGantt
             },
             {
                 path: "/workList",
@@ -934,6 +933,7 @@ const Routers = [
                         path: "/projectDetail/:id/workGantt",
                         component: WorkGantt,
                     },
+                    
                     {
                         path: "/projectDetail/:id/work/:workId",
                         component: WorkDetailPage

@@ -9,9 +9,9 @@ import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 import { observer, inject } from "mobx-react";
 
 const WorkChangeView = (props) => {
-    const { getPageList, getPageTree, getWorkConditionPage,
-        getWorkConditionPageTree, buttonType, workStore } = props;
-    const {viewType, workShowType, setWorkShowType, setViewType, setWorkId} = workStore
+    const {  buttonType, workStore } = props;
+    const {getWorkConditionPage,getWorkConditionPageTree,viewType, workShowType, setWorkShowType, 
+        setViewType, setWorkId, setWorkIndex} = workStore
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const gantte = useRef()
@@ -87,14 +87,14 @@ const WorkChangeView = (props) => {
         setViewType(value)
         switch (value) {
             case "tile":
-                if (workShowType === "list") {
+                if (workShowType === "list" || workShowType === "gantt") {
                     getPageList();
                 } else if (workShowType === "table") {
                     getWorkConditionPage();
                 }
                 break;
             case "tree":
-                if (workShowType === "list") {
+                if (workShowType === "list" || workShowType === "gantt") {
                     getPageTree();
                 } else if (workShowType === "table") {
                     getWorkConditionPageTree();
@@ -105,7 +105,34 @@ const WorkChangeView = (props) => {
         }
         setShowViewDropDown(false)
     }
-
+    const getPageTree = (value) => {
+        getWorkConditionPageTree(value).then((res) => {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
+                    setWorkIndex(1)
+                    setWorkId(list[0].id)
+                } else {
+                    setWorkIndex(0)
+                    setWorkId(0)
+                }
+            }
+        })
+    }
+    const getPageList = (value) => {
+        getWorkConditionPage(value).then((res) => {
+            if(res.code === 0){
+                const list = res.data.dataList;
+                if (list.length > 0) {
+                    setWorkIndex(1)
+                    setWorkId(list[0].id)
+                } else {
+                    setWorkIndex(0)
+                    setWorkId(0)
+                }
+            }
+        })
+    }
 
     return <div className="work-change-view">
         {

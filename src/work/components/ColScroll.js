@@ -6,11 +6,12 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-19 09:18:04
  */
-import React,{useRef} from "react";
+import React,{useEffect, useRef} from "react";
 
 const CowScroll =(props)=> {
     const {timerOuter,timerCore,ganttOuter,ganttCore} = props;
-
+    const colScrollRef = useRef();
+    const boxColScrollRef = useRef()
     /**
      * 纵向滚动轴的拖动
      */
@@ -35,8 +36,43 @@ const CowScroll =(props)=> {
         ganttOuterDom.scrollTo({ top: ganttSilder })
     }
 
-    const colScrollRef = useRef();
-    const boxColScrollRef = useRef()
+    useEffect(() => {
+        const handleWheel = (e) => {
+            const scrollSlider = colScrollRef.current;
+            const boxScroll = boxColScrollRef.current
+            const sliderTop = scrollSlider?.offsetTop;
+
+            // 向下移动
+            if (e.deltaY > 0) {
+                scrollSlider.style.top = sliderTop + e.deltaY + "px";
+                if (scrollSlider.offsetTop >= boxScroll.offsetHeight - scrollSlider.offsetHeight) {
+                    scrollSlider.style.top = boxScroll.offsetHeight - scrollSlider.offsetHeight + "px";
+                }
+                if (scrollSlider.offsetTop < 0) {
+                    scrollSlider.style.top = "0px";
+                }
+            }
+
+            if (e.deltaY < 0) {
+                scrollSlider.style.top = sliderTop + e.deltaY + "px";
+                if (scrollSlider.offsetTop <= 0) {
+                    scrollSlider.style.top = "0px";
+                }
+                if (scrollSlider.offsetTop > boxScroll.offsetHeight - scrollSlider.offsetHeight) {
+                    scrollSlider.style.top = boxScroll.offsetHeight - scrollSlider.offsetHeight + "px";
+                }
+            }
+
+            sliderChangeY(scrollSlider.offsetTop, boxScroll.offsetHeight - scrollSlider.offsetHeight);
+        }
+
+        window.addEventListener('wheel', handleWheel)
+        return () => {
+            window.removeEventListener('wheel', handleWheel)
+        }
+    }, [colScrollRef.current])
+
+    
     const colScroll = () => {
         const scrollSlider = colScrollRef.current;
         const boxScroll = boxColScrollRef.current

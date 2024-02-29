@@ -71,13 +71,18 @@ const WorkBasicInfo = (props) => {
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
                 projectVersion: workInfo.projectVersion?.id,
-                planTime: [moment(workInfo.planBeginTime || getNowFormatDate(), dateFormat), moment(workInfo.planEndTime || getNowFormatDate(), dateFormat)],
+               
                 planTakeupTime: workInfo.planTakeupTime || null,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
+            if(workInfo.planBeginTime && workInfo.planEndTime){
+                detailForm.setFieldsValue({
+                    planTime: [moment(workInfo.planBeginTime, dateFormat), moment(workInfo.planEndTime, dateFormat)],
+                })
+            }
             setPlanTakeupTimeValue(workInfo.planTakeupTime)
 
 

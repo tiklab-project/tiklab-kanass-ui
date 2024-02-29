@@ -16,7 +16,7 @@ const WorkTableHead = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, searchCondition,
-        setWorkIndex, setWorkId, getWorkBoardList, exportWorkItemXml } = workStore;
+        getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView} = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
     const pluginStore = useSelector(state => state.pluginStore);
@@ -80,6 +80,10 @@ const WorkTableHead = (props) => {
             <div className="work-breadcrumb">
                 <div className="work-title">事项</div>
                 <div className="work-top-right">
+                    <div className="work-gantt-view">
+                        <div className={`work-gantt-view-item epic-view-week ${archiveView === "week" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                        <div className={`work-gantt-view-item epic-view-month ${archiveView === "month" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("month")}>月</div>
+                    </div>
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
                     </PrivilegeProjectButton>

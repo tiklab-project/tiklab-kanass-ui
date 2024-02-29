@@ -58,34 +58,7 @@ const WorkListHead = (props) => {
         }
     }
 
-    const getPageTree = (value) => {
-        getWorkConditionPageTree(value).then((res) => {
-            if(res.code === 0){
-                const list = res.data.dataList;
-                if (list.length > 0) {
-                    setWorkIndex(1)
-                    setWorkId(list[0].id)
-                } else {
-                    setWorkIndex(0)
-                    setWorkId(0)
-                }
-            }
-        })
-    }
-    const getPageList = (value) => {
-        getWorkConditionPage(value).then((res) => {
-            if(res.code === 0){
-                const list = res.data.dataList;
-                if (list.length > 0) {
-                    setWorkIndex(1)
-                    setWorkId(list[0].id)
-                } else {
-                    setWorkIndex(0)
-                    setWorkId(0)
-                }
-            }
-        })
-    }
+    
 
 
     return (
@@ -105,10 +78,6 @@ const WorkListHead = (props) => {
                     </div>
 
                     <WorkChangeView
-                        getPageList={getPageList}
-                        getPageTree={getPageTree}
-                        getWorkConditionPage={getWorkConditionPage}
-                        getWorkConditionPageTree={getWorkConditionPageTree}
                         getWorkBoardList={getWorkBoardList}
                         viewType={viewType}
                         workShowType={workShowType}

@@ -62,6 +62,7 @@ export class WorkStore {
 
     // 事项的视图类型
     @observable workShowType = "table"
+    @observable archiveView = "week"
 
     // 事项的视图类型
     @observable viewType = "tree"
@@ -82,6 +83,10 @@ export class WorkStore {
     @observable eveWorkTypeNum = {};
     @observable workBoardCurrentPage = [];
 
+    @action
+    setArchiveView = (value) => {
+        this.archiveView = value
+    }
 
     @action 
     setTreeIndex = (value) => {

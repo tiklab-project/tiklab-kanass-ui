@@ -2,7 +2,7 @@
 const searchWorkList = (workStore, values) => {
     const {workShowType, viewType, getWorkConditionPageTree, getWorkConditionPage, setWorkId, setWorkIndex, 
         getWorkBoardList, getWorkGanttListTree} = workStore;
-    if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
+    if ((workShowType === "list" || workShowType === "table" || workShowType === "gantt") && viewType === "tree") {
         getWorkConditionPageTree(values).then((res) => {
             if(res.code === 0){
                 const list = res.data.dataList;
@@ -15,7 +15,7 @@ const searchWorkList = (workStore, values) => {
             }
         })
     }
-    if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+    if ((workShowType === "list" || workShowType === "table" || workShowType === "gantt") && viewType === "tile") {
         getWorkConditionPage(values).then((res) => {
             if (workShowType === "list") {
                 if (res.dataList.length > 0) {

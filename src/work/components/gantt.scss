@@ -4,11 +4,12 @@
         padding: 0;
     }
     position: relative;
-    height: calc(100vh - 245px);
-    margin: 10px;
+    height: calc(100% - 190px);
+    margin: 20px;
     .time-table {
         text-align: center;
         .table-border {
+            border-bottom: 1px solid #fafafa;
             height: 50px;
             line-height: 50px;
         }
@@ -19,15 +20,17 @@
             height: 50px;
             background-color: var(--thoughtware-gray-200);
             overflow: hidden;
-        　　text-overflow: ellipsis;
-        　　white-space: nowrap;
             font-weight: var(--thoughtware-font-weight-bold);
             position: relative;
             top: 0;
-            .table-hearder-gatter  {
-                width: 1000px;
+            .table-hearder-text {
                 height: 50px;
-                border-left: 2px solid  var(--thoughtware-gray);
+                width: 300px;
+            }
+
+            .table-hearder-gatter  {
+                flex: 1;
+                height: 50px;
                 font-weight: var(--thoughtware-font-weight-bold);
                 overflow: auto;
             }
@@ -39,10 +42,31 @@
                 -ms-overflow-style: none;
                 overflow: -moz-scrollbars-none;
             }
+            
             .table-hearder-text {
                 height: 50px;
-                flex: 1;
+                text-align: left;
+                padding-left: 15px;
             }
+
+            .table-hearder-title {
+                width: 300px;
+            }
+
+            .table-hearder-status {
+                width: 60px;
+            }
+
+            .table-hearder-assigner {
+                width: 90px;
+                border-right: 1px solid var(--thoughtware-gray);
+            }
+
+            .table-hearder-time {
+                width: 250px;
+                border-right: 1px solid var(--thoughtware-gray);
+            }
+
             .table-timer {
                 .table-month {
                     height: 25px;
@@ -77,30 +101,68 @@
             height: 50px;
             .table-td {
                 height: 50px;
-                flex: 1;
                 position: relative;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                padding-left: 15px;
                 text-align: left;
-                padding: 10px;
-                line-height: 30px;
-                padding-left: 20px;
+
                 .table-icon {
-                    margin-right: 5px;
+                    display: inline-block;
+                    position: absolute;
+                    left: 10px;
+                    top: 18px;
                 }
             }
+            .table-td-name {
+                width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                .table-work-name {
+                    display: flex;
+                    align-items: center;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .table-work-id {
+                    color: var(--thoughtware-gray-500);
+                    line-height: 25px;
+                    margin-right: 5px;
+                }
+                .table-work-text {
+                    cursor: pointer;
+                }
+            }
+
+            .table-td-status {
+                width: 60px;
+            }
+
+            .table-td-assigner {
+                width: 90px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                border-right: #f0f0f0 1px solid;
+            }
+
             .table-gatter {
-                width: 1000px;
+                flex: 1
             }
         }
     }
     .table-body  {
         max-height: calc(100% - 50px);
         overflow-y: hidden;
-        ul:nth-child(2n+0)
-        {
-            background:#f7f7f7;
+        .table-grey {
+            background: #f7f7f7;
         }
+        // ul:nth-child(2n+0)
+        // {
+        //     background:#f7f7f7;
+        // }
     }
     .table-pic::-webkit-scrollbar {
         width: 0 !important;
@@ -115,11 +177,30 @@
         position: absolute;
         top: 50px;
         right: 0;
-        width: 1000px;
+        width: calc(100% - 450px);
         max-height: calc(100% - 50px);
         overflow-x: auto;
         overflow-y: hidden;
-        border-left: var(--thoughtware-gray-200) 2px solid;
+        // border-left: var(--thoughtware-gray-200) 2px solid;
+        .table-date-background {
+            // display: flex;
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: inline-flex;
+            text-align: center;
+
+            // line-height: 25px;
+            .table-weekday {
+                border-right: 1px solid #f0f0f0;
+                box-sizing: border-box;
+            }
+
+            .table-month {
+                border-right: 1px solid #f0f0f0;
+            }
+        }
         .table-overflow {
             overflow: auto;
         }
@@ -158,7 +239,7 @@
     margin-top: 20px;
     padding: 0 10px;
     .scroll-box {
-        width: 1000px;
+        width: calc(100% - 450px);
         height: 10px;
         background-color: #f5f5f5;
         border-radius: 4px;
@@ -179,11 +260,11 @@
     justify-content: flex-end;
     position: absolute;
     top: 50;
-    right: 0;
-    height: 100%;
+    right: -13px;
+    height: calc(100% - 50px);
     .scroll-box {
         width: 10px;
-        height: calc(100% - 50px);
+        height: 100%;
         background-color: #f5f5f5;
         border-radius: 4px;
         position: relative;
