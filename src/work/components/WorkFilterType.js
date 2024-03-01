@@ -55,29 +55,8 @@ const WorkFilterType = (props) => {
                 label: null
             })
         }
-        // if (value === "all" ) {
-        //     search({ 
-        //         workTypeId: "",
-        //         workType: null,
-        //         pageParam: {
-        //             pageSize: 20,
-        //             currentPage: 1,
-        //         }
-        //     })
-        // } else if (!value){
-        //     search({ 
-        //         workTypeId: "",
-        //         workType: null,
-        //         pageParam: {
-        //             pageSize: 20,
-        //             currentPage: 1,
-        //         }
-        //     })
-        // } else {
-           
-        // } 
         search({
-            workTypeId: value.value,
+            workTypeId: value? value.value : null,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,

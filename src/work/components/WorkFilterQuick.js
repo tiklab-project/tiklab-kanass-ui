@@ -57,14 +57,13 @@ const WorkFilterQuick = (props) => {
     }
 
     const selectMenu = (value) => {
-        let data = value;
+        
         setQuickFilterValue(value)
-
-        data = value.value;
         if (!value) {
             getAllWorkItem();
             return
         } else {
+            let data = value.value;
             switch (data) {
                 case "all":
                     getAllWorkItem();

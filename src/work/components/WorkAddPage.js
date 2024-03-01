@@ -37,8 +37,6 @@ const WorkAddPage = (props) => {
             project: projectId,
             sprint: sprintId,
             assigner: project?.master.id,
-
-            // reporter: getUser().userId,
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
         getForm(workType.form.id)

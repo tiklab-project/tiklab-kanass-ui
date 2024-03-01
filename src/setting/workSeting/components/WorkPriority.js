@@ -67,7 +67,7 @@ const WorkPriority = (props) => {
             dataIndex: "name",
             key: "name",
             render: (text, record) => (
-                <div className="work-type-name" >
+                <div className="work-priority-name" >
                     <div className="work-type-icon">
                         <img
                             src={(`/images/${record.iconUrl}`)}

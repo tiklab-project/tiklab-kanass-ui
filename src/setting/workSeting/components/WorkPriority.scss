@@ -17,5 +17,12 @@
     }
 }
 .work-priority {
-    padding: var(--thoughtware-padding);;
+    padding: var(--thoughtware-padding);
+    .work-priority-name {
+        display: flex;
+        align-items: center;
+        .work-type-icon {
+            margin-right: 10px;
+        }
+    }
 }

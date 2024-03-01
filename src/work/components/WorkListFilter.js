@@ -68,7 +68,7 @@ const WorkListFilter = (props) => {
                                 <use xlinkHref="#icon-search"></use>
                             </svg>
                             <Input bordered={false} allowClear
-                                placeholder="事项标题"
+                                placeholder="事项标题、ID"
                                 className="workList-search-input"
                                 key={"search"}
                                 value={searchCondition.keyWord}
@@ -86,7 +86,7 @@ const WorkListFilter = (props) => {
                                 <use xlinkHref="#icon-search"></use>
                             </svg>
                             <Input bordered={false} allowClear
-                                placeholder="事项标题"
+                                placeholder="事项标题、ID"
                                 className="workList-search-input"
                                 key={"search"}
                                 value={searchCondition.keyWord}
