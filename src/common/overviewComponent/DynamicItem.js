@@ -2,7 +2,7 @@ import React from "react";
 import "./DynamicItem.scss"
 import { withRouter } from "react-router";
 const DynamicListItem = (props) => {
-    const { content, model, type } = props;
+    const { content, model, type, key } = props;
     const data = JSON.parse(content)
     const { createUserIcon, master, workItemTitle, receiveTime, createTime, 
         workItemId, projectId, oldValue, newValue, projectName } = data;
@@ -45,13 +45,13 @@ const DynamicListItem = (props) => {
         switch (type) {
             case "KANASS_LOGTYPE_PROJECTADD":
                 dom = (
-                    <div className="dynamic-list-item" >
+                    <div className="dynamic-list-item" key = {key}>
                         <div className="dynamic-list-item-left">
                             <div className="dynamic-user-icon">{createUserIcon}</div>
                             <div className="dynamic-content">
                                 <div className="dynamic-work-action">{master}添加了项目</div>
                                 <div className="dynamic-work-item">
-                                    <div class="dynamic-work-title" onClick={() => goDynamicDetail()}>{projectName}</div>
+                                    <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{projectName}</div>
                                 </div>
                             </div>
                         </div>
@@ -61,13 +61,13 @@ const DynamicListItem = (props) => {
                 break;
             case "KANASS_LOGTYPE_WORKITEMADD":
                 dom = (
-                    <div className="dynamic-list-item" >
+                    <div className="dynamic-list-item" key = {key}>
                         <div className="dynamic-list-item-left">
                             <div className="dynamic-user-icon">{createUserIcon}</div>
                             <div className="dynamic-content">
                                 <div className="dynamic-work-action">{master}添加了事项</div>
                                 <div className="dynamic-work-item">
-                                    <div class="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
+                                    <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
                                 </div>
                             </div>
                         </div>
@@ -77,13 +77,13 @@ const DynamicListItem = (props) => {
                 break;
             case "KANASS_LOGTYPE_WORKUPDATESTATUS":
                 dom = (
-                    <div className="dynamic-list-item" >
+                    <div className="dynamic-list-item" key = {key}>
                         <div className="dynamic-list-item-left">
                             <div className="dynamic-user-icon">{createUserIcon}</div>
                             <div className="dynamic-content">
                                 <div className="dynamic-work-action">{master.nickname}修改了事项状态</div>
                                 <div className="dynamic-work-item">
-                                    <div class="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
+                                    <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
                                     <div
                                         className="dynamic-work-oldvalue"
                                     >
@@ -104,7 +104,7 @@ const DynamicListItem = (props) => {
                 break;
             case "KANASS_LOGTYPE_WORKUPDATEMASTER":
                 dom = (
-                    <div className="dynamic-list-item" >
+                    <div className="dynamic-list-item" key = {key}>
                         <div className="dynamic-list-item-left">
                             <div className="dynamic-user-icon">{createUserIcon}</div>
                             <div className="dynamic-content">

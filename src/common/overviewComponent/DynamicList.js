@@ -18,7 +18,7 @@ const DyncmicList = (props) => {
         <div className="dynamic-list">
             {
                 logList.length > 0 ? logList.map(item => {
-                    return <DyncmicItem content = {item.data} type = {item.actionType.id}/>
+                    return <DyncmicItem content = {item.data} type = {item.actionType.id} key = {item.id}/>
                 })
                     :
                     <Empty image="/images/nodata.png" description="暂时没有动态~" />

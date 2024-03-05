@@ -145,6 +145,7 @@ export class ProjectSurveyStore {
                 orderType:"desc"
             }],
             bgroup: "kanass",
+            assignUserId: value.userId,
             data: {
                 projectId: value.projectId
             }
@@ -176,7 +177,7 @@ export class ProjectSurveyStore {
     }
 
     @action
-    findRecentPage = async () => {
+    findRecentPage = async (masterId) => {
         const params={
             orderParams: [{
                 name: "recentTime",
@@ -187,6 +188,7 @@ export class ProjectSurveyStore {
                 currentPage: 1
             },
             model: "workItem",
+            masterId: masterId,
             projectId: JSON.parse(localStorage.getItem("project")).id
         }
         const data = await Service("/recent/findRecentListToModel", params)

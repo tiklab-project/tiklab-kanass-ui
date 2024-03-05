@@ -43,7 +43,7 @@ const Survey = (props) => {
     // 进度
     const [percent, setPercent] = useState()
     // 项目类型
-    const tenant = getUser().tenant;
+    const userId = getUser().userId;
     useEffect(() => {
         // 统计各个状态的事项
         statWorkItemByBusStatus(projectId).then(res => {
@@ -65,7 +65,7 @@ const Survey = (props) => {
         })
 
         // 获取待办列表
-        findtodopage({ projectId: projectId, currentPage: 1 }).then(res => {
+        findtodopage({ projectId: projectId, currentPage: 1, userId: userId }).then(res => {
             if (res.code === 0) {
                 setTodoList(res.data.dataList)
             }
@@ -78,7 +78,7 @@ const Survey = (props) => {
             }
         })
 
-        findRecentPage()
+        findRecentPage(userId)
         return;
     }, [])
 
