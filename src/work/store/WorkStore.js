@@ -409,6 +409,8 @@ export class WorkStore {
         let data = [];
         // 获取每个事项类型的个数
         this.getWorkItemNum();
+        
+        // 两个时间戳相差的毫秒数
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;

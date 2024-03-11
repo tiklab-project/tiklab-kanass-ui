@@ -66,7 +66,9 @@ const EpicPage = (props) => {
             }
 
         })
-        return 
+        return ()=> {
+            setSearchConditionNull(null)
+        }
     }, [])
 
     /**

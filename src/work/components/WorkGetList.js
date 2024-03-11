@@ -53,7 +53,6 @@ const goWorkItem = (type, workStore, params) => {
         default:
             break;
     }
-
     setSearchConditionNull().then(res => {
         setSearchCondition(initValues)
         getWorkList(workStore);

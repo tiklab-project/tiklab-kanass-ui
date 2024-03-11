@@ -18,12 +18,11 @@ import { removeTableTree } from "../../common/utils/treeDataAction";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 
 const WorkTable = (props) => {
-    // const { form } = props
 
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
-    const tenant = getUser().tenant;
+
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -45,7 +44,8 @@ const WorkTable = (props) => {
         const params = {
             projectId: projectId,
             sprintId: sprintId,
-            versionId: versionId
+            versionId: versionId,
+            epicView: null
         }
         finWorkList(path, WorkStore, params);
         return;
