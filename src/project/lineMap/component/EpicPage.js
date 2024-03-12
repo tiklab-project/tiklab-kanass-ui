@@ -24,7 +24,7 @@ const EpicPage = (props) => {
     }
     const { findWorkTypeDmList } = EpicStore;
     const { getWorkConditionPageTree, workList, setWorkList, currentPage,
-        totalPage, total, searchCondition, setWorkShowType, setSearchConditionNull } = WorkStore;
+        totalPage, total, searchCondition, setWorkShowType, setSearchConditionNull,setViewType } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
 
@@ -40,7 +40,9 @@ const EpicPage = (props) => {
 
     useEffect(() => {
         setWorkList([])
-        setWorkShowType("list")
+        setWorkShowType("lineMap")
+        // 设置展示的数据为树形
+        setViewType("tree")
         setSearchConditionNull(null).then(res => {
             const values = {
                 projectId: projectId,
@@ -96,6 +98,8 @@ const EpicPage = (props) => {
         getWorkConditionPageTree(values)
     }
     
+    
+
 
     return (
         <Provider {...store}>
@@ -132,7 +136,6 @@ const EpicPage = (props) => {
                         />
                     }
                 </>
-                {/* <WorkAddModel workAddModel={workAddModel} workType={epicTypeInfo} {...props} /> */}
 
             </div>
         </Provider>

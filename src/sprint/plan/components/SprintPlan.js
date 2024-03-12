@@ -10,6 +10,7 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { getUser } from "thoughtware-core-ui";
 import { useDebounce } from "../../../common/utils/debounce";
+import { removeTableTree } from "../../../common/utils/treeDataAction";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -21,14 +22,14 @@ const SprintPlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItem } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
         findSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
         planTotal, noPlanTotal } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
-    const [boxLength, setBoxLength] = useState(90);
-    const tenant = getUser().tenant;
+    const [listType, setListType] = useState();
+
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -69,7 +70,7 @@ const SprintPlan = (props) => {
     useEffect(() => {
         if (noPlanWorkList && planWorkList) {
             const length = noPlanWorkList.length > planWorkList.length ? noPlanWorkList.length * 90 + 90 : planWorkList.length * 90 + 90
-            setBoxLength(length)
+
         }
 
         return
@@ -166,13 +167,14 @@ const SprintPlan = (props) => {
      * @param {事项id} id 
      * @param {*} index 
      */
-    const goWorkItem = (work, index) => {
+    const goWorkItem = (work, index, type) => {
         setWorkIndex(index)
         setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
         setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
         const pathname = props.match.url;
+        setListType(type)
         props.history.push(`${pathname}/${work.id}`)
     }
 
@@ -209,6 +211,41 @@ const SprintPlan = (props) => {
                 break;
         }
         return name;
+    }
+
+    const deleteWork = (id) => {
+        deleteWorkItem(id).then(res => {
+            if(res.code === 0){
+                setIsModalVisible(false)
+                if(listType === "noPlan"){
+                    removeTableTree(noPlanWorkList, id);
+                    if(noPlanWorkList.length <= 0){
+                        getNoPlanWorkList(
+                            {
+                                pageParam: {
+                                    pageSize: 20,
+                                    currentPage: 1
+                                }
+                            }
+                        )
+                    }
+                }else {
+                    removeTableTree(planWorkList, id);
+                    if(planWorkList.length <= 0){
+                        getWorkList(
+                            {
+                                pageParam: {
+                                    pageSize: 20,
+                                    currentPage: 1
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+            
+            
+        })
     }
     return (<Provider {...store}>
         <div className="sprint-plan">
@@ -288,7 +325,7 @@ const SprintPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
@@ -405,7 +442,7 @@ const SprintPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, sprintId)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
                                             <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
@@ -453,6 +490,7 @@ const SprintPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
+                deleteWork = {deleteWork}
                 {...props}
             />
         </div>

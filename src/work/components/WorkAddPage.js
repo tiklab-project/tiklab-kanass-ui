@@ -26,7 +26,6 @@ const WorkAddPage = (props) => {
     const versionId = props.match.params.version ? props.match.params.version : null;
     const project = JSON.parse(localStorage.getItem("project"));
     const projectType = project.projectType?.type;
-    console.log("project", project)
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");

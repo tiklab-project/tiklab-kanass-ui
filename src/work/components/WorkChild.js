@@ -13,7 +13,7 @@ const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
     }
-    const { treePath, workStore,workType, projectId,type, workTypeCode } = props;
+    const { treePath, workStore,workType, projectId,type, workTypeCode, getTransitionList, workStatusNodeId } = props;
     
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
@@ -30,7 +30,6 @@ const WorkChild = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
     
     useEffect(() => {
-        
         if(workTypeCode === "epic"){
             findWorkTypeListByCode().then(res => {
                 setDemand(res.data)
@@ -122,6 +121,7 @@ const WorkChild = (props) => {
             if(res.code === 0){
                 showAddChild(false)
                 findWorkChildList()
+                getTransitionList(workStatusNodeId, workType?.flow?.id)
                 if (workShowType === "bodar") {
                     getWorkBoardList()
                 } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {

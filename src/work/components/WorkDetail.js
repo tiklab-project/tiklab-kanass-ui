@@ -19,20 +19,16 @@ import Button from "../../common/button/Button";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import { FlowChartLink } from "thoughtware-flow-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
-import { removeNodeInTree, removeTableTree } from "../../common/utils/treeDataAction";
-import { setWorkDeatilInList } from "./WorkSearch";
 import { setWorkTitle } from "./WorkArrayChange";
 import { changeWorkItemList } from "./WorkGetList";
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
-    // const [percentForm] = Form.useForm();
 
-    const { workStore, showPage, setIsModalVisible } = props;
-    const { workList, setWorkList, setWorkId, defaultCurrent, detWork, workShowType,
-        getWorkConditionPageTree, getWorkConditionPage, total, workId, editWork,
-        setWorkIndex, workIndex, getWorkBoardList, getWorkTypeList, getModuleList,
-        findSprintList, getSelectUserList, findPriority, viewType, userList, searchWorkById,
-        findTransitionList, findWorkItemRelationModelCount, findSelectVersionList
+    const { workStore, setIsModalVisible, deleteWork } = props;
+    const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
+        setWorkIndex, getWorkTypeList, getModuleList,findSprintList, getSelectUserList, 
+        findPriority, searchWorkById,findTransitionList, findWorkItemRelationModelCount, 
+        findSelectVersionList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -115,38 +111,38 @@ const WorkDetail = (props) => {
         return null;
     }, [workId, workShowType])
 
-    const deleteWork = () => {
-        detWork(workId).then(() => {
-            if (workShowType === "table") {
-                setIsModalVisible(false)
-                removeTableTree(workList, workId)
-                //如果本页被删除完，重新请求接口
-                if (workList.length == 0) {
-                    if (viewType === "tree") {
-                        getWorkConditionPageTree()
-                    }
-                    if (viewType === "tile") {
-                        getWorkConditionPage()
-                    }
-                } else {
-                    setWorkList([...workList])
-                }
+    // const deleteWork = () => {
+    //     deleteWorkItem(workId).then(() => {
+    //         if (workShowType === "table") {
+    //             setIsModalVisible(false)
+    //             removeTableTree(workList, workId)
+    //             //如果本页被删除完，重新请求接口
+    //             if (workList.length == 0) {
+    //                 if (viewType === "tree") {
+    //                     getWorkConditionPageTree()
+    //                 }
+    //                 if (viewType === "tile") {
+    //                     getWorkConditionPage()
+    //                 }
+    //             } else {
+    //                 setWorkList([...workList])
+    //             }
 
-            }
-            if (workShowType === "bodar") {
-                getWorkBoardList()
-            }
-            if (workShowType === "list") {
-                removeNodeInTree(workList, workId, setWorkId, setSessionStorage)
-                setWorkList([...workList])
-                if (workList.length == 0) {
-                    setWorkDeatilInList(workStore)
-                } else {
-                    setWorkList([...workList])
-                }
-            }
-        })
-    }
+    //         }
+    //         // if (workShowType === "bodar") {
+    //         //     getWorkBoardList()
+    //         // }
+    //         if (workShowType === "list") {
+    //             removeNodeInTree(workList, workId, setWorkId, setSessionStorage)
+    //             setWorkList([...workList])
+    //             if (workList.length == 0) {
+    //                 setWorkDeatilInList(workStore)
+    //             } else {
+    //                 setWorkList([...workList])
+    //             }
+    //         }
+    //     })
+    // }
 
     const changeStatus = (transition) => {
         if (userId !== workInfo.assigner?.id) {
@@ -186,6 +182,7 @@ const WorkDetail = (props) => {
 
 
     const getTransitionList = (nodeId, flowId) => {
+        
         const params = {
             fromNodeId: nodeId,
             flowId: flowId,
@@ -302,8 +299,6 @@ const WorkDetail = (props) => {
     }
     const [showFlow, setShowFlow] = useState(false);
     const goWorkList = () => {
-
-
         if (props.match.path === "/projectDetail/:id/work/:workId") {
             props.history.push(`/projectDetail/${projectId}/workTable`)
         }
@@ -412,7 +407,12 @@ const WorkDetail = (props) => {
                                         </div>
 
                                         <div className="work-detail-tab-botton">
-                                            <Dropdown overlay={menu} trigger={"click"} getPopupContainer={() => workDetailTop.current}>
+                                            <Dropdown 
+                                                overlay={menu} 
+                                                trigger={"click"} 
+                                                getPopupContainer={() => workDetailTop.current} 
+                                                onVisibleChange = {(open) =>  console.log(open)}
+                                            >
                                                 <Button className="botton-background" style={{ marginRight: "10px" }}>
                                                     {workStatus}
                                                     <svg className="svg-icon" aria-hidden="true">
@@ -423,7 +423,7 @@ const WorkDetail = (props) => {
                                             <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
                                                 <Popconfirm
                                                     title="确定删除事项?"
-                                                    onConfirm={() => deleteWork()}
+                                                    onConfirm={() => deleteWork(workId)}
                                                     // onCancel={cancel}
                                                     okText="是"
                                                     cancelText="否"
@@ -455,6 +455,7 @@ const WorkDetail = (props) => {
                                     workDeatilForm={workDeatilForm}
                                     relationModalNum={relationModalNum}
                                     detailForm={detailForm}
+                                    getTransitionList = {getTransitionList}
                                     {...props}
                                 />}
                             </div>

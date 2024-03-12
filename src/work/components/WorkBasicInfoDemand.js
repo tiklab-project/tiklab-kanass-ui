@@ -21,7 +21,7 @@ import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
-    const { detailForm } = props;
+    const { detailForm, getTransitionList } = props;
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();

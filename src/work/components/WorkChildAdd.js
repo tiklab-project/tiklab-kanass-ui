@@ -117,13 +117,14 @@ const WorkChildAddmodal = (props) => {
     }
 
     const createChildWorkItem = (value) => {
+        /** 需要优化 0312 */
         addWorkChild(value).then((res) => {
             showSelectChild(false)
             if (workShowType === "bodar") {
                 getWorkBoardList()
-            } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
+            } else if (viewType === "tree") {
                 getWorkConditionPageTree()
-            } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+            } else if (viewType === "tile") {
                 getWorkConditionPage()
             }
             let params = {};

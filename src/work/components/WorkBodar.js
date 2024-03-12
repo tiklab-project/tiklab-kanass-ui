@@ -17,9 +17,9 @@ import setImageUrl from '../../common/utils/setImageUrl';
 
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
-        workUserGroupBoardList, workBoardListLength, findToNodeList,
+        workUserGroupBoardList, findTransitionList,
         setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList,
-        workBoardCurrentPage, setQuickFilterValue, workShowType } = WorkStore;
+        workBoardCurrentPage, setQuickFilterValue, workShowType, getWorkBoardList, deleteWorkItem } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -30,7 +30,7 @@ const WorkBodar = (props) => {
     const modelRef = useRef()
     const [flowId, setFlowId] = useState()
     const project = JSON.parse(localStorage.getItem("project"));
-    const tenant = getUser().tenant;
+    const userId = getUser().userId;
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -60,12 +60,14 @@ const WorkBodar = (props) => {
         // dragEvent.style.background = "#d0e5f2";
     }
 
-    const findStatusList = (stateId, flowId) => {
+    const findStatusList = (workId,stateId, flowId) => {
         let params = {
-            nodeId: stateId,
-            flowId: flowId
+            domainId: workId,
+            fromNodeId: stateId,
+            flowId: flowId,
+            userId: userId
         }
-        findToNodeList(params).then(res => {
+        findTransitionList(params).then(res => {
             if (res.code === 0) {
                 setTransitionList(res.data)
                 let list = []
@@ -78,7 +80,7 @@ const WorkBodar = (props) => {
         })
     }
 
-
+    // 开始拖动
     const moveStart = (workId, statuId, index, workIndex, flowId) => {
         // event.preventDefault();
         // const dragEvent = event.target
@@ -91,7 +93,7 @@ const WorkBodar = (props) => {
         setStartBoxIndex(index)
         setStartWorkBoxIndex(workIndex)
 
-        findStatusList(statuId, flowId)
+        findStatusList(workId, statuId, flowId)
         setFlowId(flowId)
 
     }
@@ -169,6 +171,19 @@ const WorkBodar = (props) => {
         findChangePageWorkBoardList(data)
     }
 
+    const deleteWork = () => {
+        deleteWorkItem(workId).then(() => {
+            if (workShowType === "bodar") {
+                getWorkBoardList()
+            }
+        })
+    }
+
+    const cancelDrag = () => {
+        setIsSameFlowBox([])
+        setMoveWorkId(null)
+
+    }
     return (
         <Provider {...store}>
             <Fragment>
@@ -197,12 +212,14 @@ const WorkBodar = (props) => {
                                             </div>
                                             {
                                                 isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
-                                                    <div className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} onDrop={() => changeStatus(item.state.id, index, item)}>
-
+                                                    <div 
+                                                        className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} 
+                                                        onDrop={() => changeStatus(item.state.id, index, item)}
+                                                    >
                                                     </div>
                                                     :
                                                     <>
-                                                        <div className="work-border-box-list">
+                                                        <div className="work-border-box-list" onDrop={() => cancelDrag()}>
                                                             {
                                                                 item.workItemList.dataList.length > 0 && item.workItemList.dataList.map((workItem, workIndex) => {
                                                                     return <div
@@ -331,6 +348,7 @@ const WorkBodar = (props) => {
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
                             showPage={true}
+                            deleteWork = {deleteWork}
                             {...props}
                         />
                     </div>

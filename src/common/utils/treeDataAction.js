@@ -26,13 +26,14 @@ const appendNodeInTree = (id, tree, obj, setType) => {
     return tree
 }
 
-const removeNodeInTree = (tree, id, setWorkId, setSessionStorage) => { // 通过id从数组（树结构）中移除元素
+const removeNodeInTree = (fTree, tree, id, setWorkId, setSessionStorage) => { // 通过id从数组（树结构）中移除元素
     if (!tree || !tree.length) {
         return
     }
     for (let i = 0; i < tree.length; i++) {
         if (tree[i].id === id) {
             tree.splice(i, 1);
+            // 设置删除之后定位的事项
             if (tree.length > 0) {
                 if (i !== tree.length) {
                     setWorkId(tree[i].id)
@@ -44,11 +45,20 @@ const removeNodeInTree = (tree, id, setWorkId, setSessionStorage) => { // 通过
                         [{ id: tree[i - 1].id, title: tree[i - 1].title, iconUrl: tree[i - 1].workTypeSys.iconUrl }])
                 }
             } else {
-                setWorkId(0)
-                setSessionStorage("detailCrumbArray", null)
+                if(fTree != null){
+                    setWorkId(fTree.id)
+                    setSessionStorage("detailCrumbArray",
+                            [{ id: fTree.id, title: fTree.title, iconUrl: fTree.workTypeSys.iconUrl }])
+                }else {
+                    setWorkId(0)
+                    setSessionStorage("detailCrumbArray", null)
+                    
+                }
+              
             }
+            return
         } else {
-            removeNodeChildren(tree[i], tree[i].children, id, setWorkId, setSessionStorage)
+            removeNodeInTree(tree[i], tree[i].children, id, setWorkId, setSessionStorage)
         }
 
     }

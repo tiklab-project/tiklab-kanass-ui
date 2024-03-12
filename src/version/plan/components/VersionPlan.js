@@ -22,10 +22,12 @@ const VersionPlan = (props) => {
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
-        getVersionList, setVersion, delVersion, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal } = VersionPlanStore;
+        setVersion, delVersion, noPlanSearchCondition, searchCondition,
+        planTotal, noPlanTotal, deleteWorkItem } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
+    const [listType, setListType] = useState();
+    
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -194,6 +196,42 @@ const VersionPlan = (props) => {
         }
         return name;
     }
+
+    const deleteWork = (id) => {
+        deleteWorkItem(id).then(res => {
+            if(res.code === 0){
+                setIsModalVisible(false)
+                if(listType === "noPlan"){
+                    removeTableTree(noPlanWorkList, id);
+                    if(noPlanWorkList.length <= 0){
+                        getNoPlanWorkList(
+                            {
+                                pageParam: {
+                                    pageSize: 20,
+                                    currentPage: 1
+                                }
+                            }
+                        )
+                    }
+                }else {
+                    removeTableTree(planWorkList, id);
+                    if(planWorkList.length <= 0){
+                        getWorkList(
+                            {
+                                pageParam: {
+                                    pageSize: 20,
+                                    currentPage: 1
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+            
+            
+        })
+    }
+
     return (<Provider {...store}>
         <div className="version-plan">
             <div className="version-plan-content">
@@ -439,6 +477,7 @@ const VersionPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
+                deleteWork = {deleteWork}
                 {...props}
             />
         </div>

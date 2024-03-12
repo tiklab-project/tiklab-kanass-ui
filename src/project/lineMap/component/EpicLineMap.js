@@ -21,12 +21,14 @@ import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import { removeTableTree } from "../../../common/utils/treeDataAction";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
     const { data, totalPage, total, currentPage, lineMapStore,
         archiveView, setGraph, graph, workStore, changePage, workTypeList } = props;
-    const { setWorkId, setWorkIndex, createRecent, editWork } = workStore;
+    const { setWorkId, setWorkIndex, createRecent, editWork, setWorkList, 
+        getWorkConditionPageTree, deleteWorkItem, workList } = workStore;
 
     const { updateEpic } = lineMapStore;
     const todayDate = new Date()
@@ -54,8 +56,8 @@ const EpicLineMap = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
 
     const projectId = props.match.params.id;
-    // 画布
-
+   
+    
 
     useEffect(() => {
         if (data.length > 0) {
@@ -82,6 +84,22 @@ const EpicLineMap = (props) => {
 
         return;
     }, [archiveView])
+
+    // 删除事项
+    const deleteWork = (id) => {
+        deleteWorkItem(id).then(() => {
+            removeTableTree(workList, id)
+            setIsModalVisible(false)
+            if (workList.length == 0) {
+                getWorkConditionPageTree()
+            } else {
+                setWorkList([...workList])
+            }
+        })
+
+    }
+
+
 
     const creatGraph = () => {
         if (graph) {
@@ -692,7 +710,6 @@ const EpicLineMap = (props) => {
 
                         </div>
                     </div>
-
                 </div>
                 <RowScroll
                     timerCore={timerCore}
@@ -716,6 +733,7 @@ const EpicLineMap = (props) => {
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}
                 showPage={true}
+                deleteWork = {deleteWork}
                 {...props}
             />
 

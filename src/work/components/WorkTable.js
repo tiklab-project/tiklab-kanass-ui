@@ -6,13 +6,11 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
-import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
-import { renderRoutes } from "react-router-config";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { removeTableTree } from "../../common/utils/treeDataAction";
 import DeleteModal from "../../common/deleteModal/deleteModal";
@@ -20,7 +18,7 @@ import DeleteModal from "../../common/deleteModal/deleteModal";
 const WorkTable = (props) => {
 
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        detWork, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
+        deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
 
     const projectId = props.match.params.id;
@@ -519,7 +517,7 @@ const WorkTable = (props) => {
 
     // 删除事项
     const deleteWork = (id) => {
-        detWork(id).then(() => {
+        deleteWorkItem(id).then(() => {
             removeTableTree(workList, id)
             if (workList.length == 0) {
                 if (viewType === "tree") {
@@ -535,6 +533,13 @@ const WorkTable = (props) => {
     }
 
 
+    const deleteWorkIndetail = (id) => {
+        if (workShowType === "table") {
+            setIsModalVisible(false)
+            deleteWork(id)
+
+        }
+    }
 
     return (
         <Provider {...store}>
@@ -585,6 +590,7 @@ const WorkTable = (props) => {
                         setIsModalVisible={setIsModalVisible}
                         modelRef={modelRef}
                         showPage={true}
+                        deleteWork = {deleteWorkIndetail}
                         {...props}
                     />
                 </Col>

@@ -96,15 +96,16 @@ const getPageList = (workStore) => {
     const { getWorkConditionPage, setWorkIndex, setWorkId, workShowType } = workStore;
     getWorkConditionPage().then((res) => {
         const list = res.data.dataList
-        if (list.length > 0) {
-            if (workShowType === "list") {
-                // setWorkIndex(1)
-                // setWorkId(res.dataList[0].id)
-                // setSessionStorage("detailCrumbArray", [{ id: res.dataList[0].id, title: res.dataList[0].title, iconUrl: res.dataList[0].workTypeSys.iconUrl }])
+        if (workShowType === "list") {
+            if (list.length > 0) {
+                setWorkIndex(1)
+                const workItem = list[0];
+                setWorkId(workItem.id)
+                setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+            } else {
+                setWorkId(0)
+                setWorkIndex(0)
             }
-        } else {
-            setWorkIndex(0)
-            setWorkId(0)
         }
     })
 }

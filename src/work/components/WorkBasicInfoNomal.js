@@ -21,7 +21,7 @@ import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
-    const { detailForm } = props;
+    const { detailForm, getTransitionList } = props;
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
@@ -343,7 +343,7 @@ const WorkBasicInfo = (props) => {
             if (res.code === 0) {
                 const oldParentId = workInfo.parentWorkItem?.id
                 setWorkInfo({ ...workInfo, ...changedValues })
-
+                getTransitionList(workInfo?.workStatusNode?.id, workInfo?.workType?.flow?.id)
                 //  更新列表数据
                 if ((props.match.path.indexOf("/projectDetail/:id/work") > -1 ||
                     props.match.path.indexOf("/work") > -1 ||

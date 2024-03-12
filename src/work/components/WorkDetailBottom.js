@@ -15,7 +15,7 @@ import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkBasicInfo.scss";
 
 const WorkDetailBottom = (props) => {
-    const { workStore, workInfo, setWorkInfo, relationModalNum, detailForm } = props;
+    const { workStore, workInfo, setWorkInfo, relationModalNum, detailForm, getTransitionList } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, workShowType, findDmWorkTypeByCode, viewType } = workStore;
@@ -94,14 +94,38 @@ const WorkDetailBottom = (props) => {
         if (workInfo?.workTypeCode) {
             switch (workInfo?.workTypeCode) {
                 case "task":
-                    return <WorkBasicInfoTask {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}/>;
+                    return <WorkBasicInfoTask 
+                        {...props} 
+                        workInfo={workInfo} 
+                        setWorkInfo={setWorkInfo} 
+                        detailForm = {detailForm} 
+                        getTransitionList = {getTransitionList}
+                    />;
                 case "demand":
                 case "epic":
-                    return <WorkBasicInfoDemand {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm} />
+                    return <WorkBasicInfoDemand 
+                        {...props} 
+                        workInfo={workInfo} 
+                        setWorkInfo={setWorkInfo} 
+                        detailForm = {detailForm} 
+                        getTransitionList = {getTransitionList}
+                    />
                 case "defect":
-                    return <WorkBasicInfoDefect {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}  />
+                    return <WorkBasicInfoDefect 
+                        {...props} 
+                        workInfo={workInfo} 
+                        setWorkInfo={setWorkInfo} 
+                        detailForm = {detailForm}  
+                        getTransitionList = {getTransitionList}
+                    />
                 default:
-                    return <WorkBasicInfoNomal {...props} workInfo={workInfo} setWorkInfo={setWorkInfo} detailForm = {detailForm}/>
+                    return <WorkBasicInfoNomal 
+                        {...props} 
+                        workInfo={workInfo} 
+                        setWorkInfo={setWorkInfo} 
+                        detailForm = {detailForm}
+                        getTransitionList = {getTransitionList}
+                    />
             }
         }
     }
@@ -209,6 +233,8 @@ const WorkDetailBottom = (props) => {
                                     treePath={workInfo.treePath}
                                     projectId={workInfo.project.id}
                                     type={`子${workTypeText}`}
+                                    workStatusNodeId = {workInfo?.workStatusNode?.id}
+                                    getTransitionList = {getTransitionList}
                                     {...props}
                                 />
                             </div>

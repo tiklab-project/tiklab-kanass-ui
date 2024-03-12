@@ -46,6 +46,17 @@ export class WorkStore {
             currentPage: 1,
         }
     };
+
+    @observable searchBorderChangepageCondition = {
+        orderParams: [{
+            name: "id",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }
+    }
     @observable workId = "";
     @observable workIndex = "";
     @observable treeIndex = [];
@@ -341,9 +352,10 @@ export class WorkStore {
     }
 
     findChangePageWorkBoardList = async (value) => {
-        this.setSearchCondition(value)
+        // this.setSearchCondition(value)
+        Object.assign(this.searchBorderChangepageCondition, value)
         this.getWorkItemNum();
-        const data = await Service("/workItem/findChangePageWorkBoardList",this.searchCondition);
+        const data = await Service("/workItem/findChangePageWorkBoardList",this.searchBorderChangepageCondition);
         if (data.code === 0) {
             const index = value.index;
             this.workBoardCurrentPage[index] = data.data.workItemList.currentPage;
@@ -414,8 +426,17 @@ export class WorkStore {
         data = await Service("/workItem/findWorkItemPageTreeByQuery",this.searchCondition);
         if (data.code === 0) {
             this.tableLoading = false;
-            this.workList = data.data.dataList
             
+            if(this.workShowType === "lineMap"){
+                if(this.searchCondition.pageParam.currentPage <= 1){
+                    this.workList = data.data.dataList
+                }else {
+                    this.workList = this.workList.concat(data.data.dataList)
+                    console.log( this.workList)
+                }
+            }else {
+                this.workList = data.data.dataList
+            }
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
@@ -612,7 +633,7 @@ export class WorkStore {
 
     //删除事项
     @action
-    detWork = async(value) => {
+    deleteWorkItem = async(value) => {
         const params = new FormData()
         params.append("id", value)
         const data = await Service("/workItem/deleteWorkItem",params);
