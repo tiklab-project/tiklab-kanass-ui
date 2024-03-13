@@ -263,6 +263,7 @@ const WorkDetailBottom = (props) => {
                                     workType={taskType}
                                     treePath={workInfo.treePath}
                                     projectId={workInfo.project.id}
+                                    workInfo = {workInfo}
                                     type="任务"
                                     {...props}
                                 />

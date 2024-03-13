@@ -96,7 +96,13 @@
         align-items: center;
         padding-bottom: 10px;
         padding: 0 15px;
-
+        overflow: hidden;
+        .edit-status-modal {
+            .ant-modal-body {
+                padding: var(--thoughtware-padding);
+            }
+            
+        }
         .work-item-title-top {
             display: flex;
             align-items: center;
@@ -299,6 +305,7 @@
 
     .work-detail-tab {
         flex: 1;
+        height: calc(100% - 85px);
         // overflow: auto;
     }
 }

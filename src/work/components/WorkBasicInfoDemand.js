@@ -299,15 +299,16 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                if (!disableChange) {
-                    setWorkInfo({ ...workInfo })
-                    return
-                } else {
-                    changedValues.parentWorkItem = {
-                        id: changedValues.parentWorkItem.value,
-                        title: changedValues.parentWorkItem.label
-                    }
+                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                // if (!disableChange) {
+                //     setWorkInfo({ ...workInfo })
+                //     return
+                // } else {
+                    
+                // }
+                changedValues.parentWorkItem = {
+                    id: changedValues.parentWorkItem.value,
+                    title: changedValues.parentWorkItem.label
                 }
             }
 
@@ -371,6 +372,10 @@ const WorkBasicInfo = (props) => {
 
 
                 }
+            }
+            if(res.code === 3001){
+                setWorkInfo({ ...workInfo });
+                message.warning(res.msg);
             }
         })
     }

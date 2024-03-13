@@ -15,7 +15,7 @@ import { observer, inject } from "mobx-react";
 const WorkDetailDrawer = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore, deleteWork } = props;
-    const { setWorkId } = workStore;
+    const { setWorkId, workShowType } = workStore;
     
     const showModal = () => {
         setIsModalVisible(true);
@@ -49,10 +49,17 @@ const WorkDetailDrawer = (props) => {
         }
 
         if (!detailRef.current.contains(e.target) && detailRef.current !== e.target && !IsSelectclear && isModalVisible) {
-            let pathname = props.location.pathname;
-            const index = pathname.lastIndexOf("\/");
-            pathname = pathname.substring(0, index);
-            props.history.replace(`${pathname}`)
+            console.log(props.location.pathname)
+
+            let pathname = props.location.pathname; // props.location.pathname;
+            if(workShowType === "gantt"){
+                props.history.replace(`${pathname}`)
+            }else {
+                const index = pathname.lastIndexOf("\/");
+                pathname = pathname.substring(0, index);
+                props.history.replace(`${pathname}`)
+            }
+            
             setIsModalVisible(false)
             setWorkId(0)
         }

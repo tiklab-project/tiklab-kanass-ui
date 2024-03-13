@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../thoughtware-flow-ui"
+		},
+		{
+			"path": "../thoughtware-kanass-plugin-ui"
+		}
+	],
+	"settings": {}
+}

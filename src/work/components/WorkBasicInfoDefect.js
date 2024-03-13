@@ -71,14 +71,14 @@ const WorkBasicInfo = (props) => {
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
                 projectVersion: workInfo.projectVersion?.id,
-               
+
                 planTakeupTime: workInfo.planTakeupTime || null,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
-            if(workInfo.planBeginTime && workInfo.planEndTime){
+            if (workInfo.planBeginTime && workInfo.planEndTime) {
                 detailForm.setFieldsValue({
                     planTime: [moment(workInfo.planBeginTime, dateFormat), moment(workInfo.planEndTime, dateFormat)],
                 })
@@ -299,15 +299,16 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                if (!disableChange) {
-                    setWorkInfo({ ...workInfo })
-                    return
-                } else {
-                    changedValues.parentWorkItem = {
-                        id: changedValues.parentWorkItem.value,
-                        title: changedValues.parentWorkItem.label
-                    }
+                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                // if (!disableChange) {
+                //     setWorkInfo({ ...workInfo })
+                //     return
+                // } else {
+                   
+                // }
+                changedValues.parentWorkItem = {
+                    id: changedValues.parentWorkItem.value,
+                    title: changedValues.parentWorkItem.label
                 }
             }
 
@@ -367,7 +368,7 @@ const WorkBasicInfo = (props) => {
                         const list = changeWorkItemParent(workList, changedValues.parentWorkItem?.id, res)
                         setWorkList([...list])
                     })
-                    
+
 
 
                 }
@@ -386,29 +387,42 @@ const WorkBasicInfo = (props) => {
             const res = await searchWorkById(parentId);
             if (res) {
                 let currentLevel = 0;
-                if (res.treePath) {
-                    const parentArray = res.treePath.split(";");
-                    currentLevel = parentArray.length - 1;
-                }
-                
-                const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
-                if (childrenLevelRes.code === 0) {
-                    if (childrenLevelRes.data === 2) {
-                        message.warning("事项限制为三级，所选事项不能作为父级");
-                        disableChange = false;
-                    } else if (childrenLevelRes.data === 1) {
-                        if (currentLevel === 0) {
-                            disableChange = true;
-                        } else {
-                            message.warning("事项限制为三级，所选事项不能作为父级");
+                // 判断选择事项的状态是否能添加为前置事项
+                if (disableChange) {
+                    if (res.workStatusCode === "DONE") {
+                        disableChange = true;
+                    } else {
+                        if (workInfo.workStatusCode !== "TODO") {
                             disableChange = false;
                         }
-                    } else if (childrenLevelRes.data === 0) {
-                        if (currentLevel < 2) {
-                            disableChange = true;
-                        } else {
+                    }
+                }
+
+                // 如果判断状态为可添加，根据层级判断是否可添加
+                if (disableChange) {
+                    if (res.treePath) {
+                        const parentArray = res.treePath.split(";");
+                        currentLevel = parentArray.length - 1;
+                    }
+                    const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
+                    if (childrenLevelRes.code === 0) {
+                        if (childrenLevelRes.data === 2) {
                             message.warning("事项限制为三级，所选事项不能作为父级");
                             disableChange = false;
+                        } else if (childrenLevelRes.data === 1) {
+                            if (currentLevel === 0) {
+                                disableChange = true;
+                            } else {
+                                message.warning("事项限制为三级，所选事项不能作为父级");
+                                disableChange = false;
+                            }
+                        } else if (childrenLevelRes.data === 0) {
+                            if (currentLevel < 2) {
+                                disableChange = true;
+                            } else {
+                                message.warning("事项限制为三级，所选事项不能作为父级");
+                                disableChange = false;
+                            }
                         }
                     }
                 }
@@ -417,7 +431,7 @@ const WorkBasicInfo = (props) => {
             // 处理错误
             console.error(error);
         }
-        
+
         return disableChange;
     };
 
@@ -930,41 +944,41 @@ const WorkBasicInfo = (props) => {
                     </div>
                 </div>
                 <div ref={exFormRef}>
-                {
-                    visableCustomForm ? <Form
-                        {...layoutExForm}
-                        initialValues={{ remember: true }}
-                        form={extDataForm}
-                        labelAlign="left"
-                        onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
-                        className="exdata"
-                        colon={false}
-                    >
-                        {
-                            formList && formList.map((item, index) => {
-                                return <Form.Item
-                                    label={item.name}
-                                    name={`System${item.code}`}
-                                    key={item.id}
-                                    className="exdata-item"
-                                >
-                                    <SwitchPreliminaryType
-                                        code={item.fieldType.code}
-                                        bordered={fieldName === `System${item.code}` ? true : false}
-                                        showArrow={fieldName === `System${item.code}` ? true : false}
-                                        onMouseEnter={() => changeStyle(`System${item.code}`)}
-                                        onMouseLeave={() => setFieldName("")}
-                                        data={item.selectItemList}
-                                        getPopupContainer={() => exFormRef.current}
-                                    />
-                                </Form.Item>
-                            })
-                        }
-                    </Form>
-                        : <></>
-                }
+                    {
+                        visableCustomForm ? <Form
+                            {...layoutExForm}
+                            initialValues={{ remember: true }}
+                            form={extDataForm}
+                            labelAlign="left"
+                            onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
+                            className="exdata"
+                            colon={false}
+                        >
+                            {
+                                formList && formList.map((item, index) => {
+                                    return <Form.Item
+                                        label={item.name}
+                                        name={`System${item.code}`}
+                                        key={item.id}
+                                        className="exdata-item"
+                                    >
+                                        <SwitchPreliminaryType
+                                            code={item.fieldType.code}
+                                            bordered={fieldName === `System${item.code}` ? true : false}
+                                            showArrow={fieldName === `System${item.code}` ? true : false}
+                                            onMouseEnter={() => changeStyle(`System${item.code}`)}
+                                            onMouseLeave={() => setFieldName("")}
+                                            data={item.selectItemList}
+                                            getPopupContainer={() => exFormRef.current}
+                                        />
+                                    </Form.Item>
+                                })
+                            }
+                        </Form>
+                            : <></>
+                    }
                 </div>
-               
+
 
             </div>
 

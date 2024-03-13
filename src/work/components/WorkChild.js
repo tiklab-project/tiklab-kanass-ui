@@ -8,12 +8,13 @@ import WorkChildStore from "../store/WorkChildStore";
 import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import setImageUrl from "../../common/utils/setImageUrl";
-
+import dayjs from "dayjs";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
     }
-    const { treePath, workStore,workType, projectId,type, workTypeCode, getTransitionList, workStatusNodeId } = props;
+    const { treePath, workStore,workType, projectId,type, workTypeCode, 
+        getTransitionList, workStatusNodeId, workInfo } = props;
     
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
@@ -21,14 +22,16 @@ const WorkChild = (props) => {
     const [workItemTitle, setWorkItemTitle] = useState()
 
     const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId } = workStore;
+        workId,setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId, 
+        selectVersionList, sprintList, priorityList } = workStore;
 
     const { getWorkChildList,deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     const [demandId, setDemand] = useState();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const project = JSON.parse(localStorage.getItem("project"));
-    
+    const versionId = props.match.params.version ? props.match.params.version : null;
+    const project = workInfo?.project;
+    const projectType = project?.projectType.type;
     useEffect(() => {
         if(workTypeCode === "epic"){
             findWorkTypeListByCode().then(res => {
@@ -109,11 +112,20 @@ const WorkChild = (props) => {
             parentWorkItem: workId,
             project: projectId,
             builder: getUser().userId,
-            sprint: sprintId,
+            sprint: sprintId ? sprintId : sprintList[0]?.id,
+            projectVersion: versionId ? versionId : selectVersionList[0]?.id,
             workType: workType.id,
+            workPriority: priorityList[0]?.id,
             assigner: project?.master.id,
-            desc: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]"
+            desc: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]",
+            planBeginTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+            planEndTime: dayjs().format("YYYY-MM-DD 23:59:59")
         }
+
+        if(projectType === "scrum"){
+            params.sprint = sprintList[0]?.id
+        }
+
         if(workTypeCode === "epic"){
             params.workType = demandTypeId
         }
@@ -205,7 +217,7 @@ const WorkChild = (props) => {
             <div className="child-top">
                 <div className="child-top-title">{type}({childWorkList?.length})</div>
                 {
-                    !selectChild &&
+                    !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">
                         <Button onClick={() => {showAddChild(true);showSelectChild(false)} }>
                             添加{type}

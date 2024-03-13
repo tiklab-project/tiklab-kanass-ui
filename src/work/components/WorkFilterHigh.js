@@ -27,7 +27,8 @@ const WorkFilterHigh = (props) => {
     // 解析store数据
     const { workShowType, priorityList, findPriority, findSprintList, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
-        getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList, versionList } = workStore;
+        getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList, 
+        versionList, setTabValue } = workStore;
 
 
     useEffect(() => {
@@ -128,7 +129,12 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
-
+        setTabValue({
+            id: "all", 
+            type: "system",
+            value: null,
+            label: null
+        })
         const params = {
             projectId: projectId,
             sprintId: sprintId,

@@ -427,7 +427,7 @@ export class WorkStore {
         if (data.code === 0) {
             this.tableLoading = false;
             
-            if(this.workShowType === "lineMap"){
+            if(this.workShowType === "lineMap" || this.workShowType === "gantt" ){
                 if(this.searchCondition.pageParam.currentPage <= 1){
                     this.workList = data.data.dataList
                 }else {
@@ -513,12 +513,22 @@ export class WorkStore {
 
         let data = await Service("/workItem/findConditionWorkItemPage",this.searchCondition);
         if (data.code === 0) {
+            if(this.workShowType === "lineMap" || this.workShowType === "gantt" ){
+                if(this.searchCondition.pageParam.currentPage <= 1){
+                    this.workList = data.data.dataList;
+                }else {
+                    this.workList = this.workList.concat(data.data.dataList)
+                    console.log( this.workList)
+                }
+            }else {
+                this.workList = data.data.dataList;
+            }
             this.tableLoading = false;
-            this.workList = data.data.dataList;
-        //     this.currentPage = this.searchCondition.pageParam.currentPage;
-        //     this.totalPage = data.data.totalPage;
-        //     this.total = data.data.totalRecord;
-        //     this.findWorkItemNumByWorkType()
+            // this.workList = data.data.dataList;
+            this.currentPage = this.searchCondition.pageParam.currentPage;
+            this.totalPage = data.data.totalPage;
+            this.total = data.data.totalRecord;
+            this.findWorkItemNumByWorkType()
         }
         return data;
     }

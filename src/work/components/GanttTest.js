@@ -16,11 +16,14 @@ import ColScroll from "./ColScroll"
 import { withRouter } from "react-router";
 import dayjs from 'dayjs';
 import { useDebounce } from "../../common/utils/debounce";
+import { Empty } from "antd";
 
 const Gantt = (props) => {
     // 获取当前年月日
-    const { workList, workStore, WorkDetailDrawer, setImageUrl, projectId } = props;
-    const { setWorkId, setWorkIndex, createRecent, editWork, archiveView } = workStore;
+    const { workStore, WorkDetailDrawer, setImageUrl, projectId, sprintId, versionId,
+        useDebounce, archiveView, finWorkList } = props;
+    const { workList, setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total,
+        setQuickFilterValue, setWorkShowType } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -35,7 +38,7 @@ const Gantt = (props) => {
     // 路线图的宽
     const [ganttWidth, setGanttWidth] = useState(0)
     // 使用于路线图显示的数据
-    const [ganttdata, setGantt] = useState();
+    const [ganttdata, setGanttData] = useState();
     const [expandedTree, setExpandedTree] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef()
@@ -43,36 +46,46 @@ const Gantt = (props) => {
 
     const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
     const unitLength = archiveView === "month" ? 10 : 24;
-    const [graph, getGraph] = useState()
+    const [graph, getGraph] = useState();
+    const path = props.match.path;
     // 画布
+    useEffect(() => {
+        setWorkShowType("gantt")
+        setQuickFilterValue({
+            value: "pending",
+            label: "我的待办"
+        })
+        const params = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId
+        }
+        finWorkList(path, workStore, params);
+        return;
+    }, [projectId])
 
 
     useEffect(() => {
         if (workList.length > 0) {
-            setGantt(setNode(workList))
+            setGanttData(setNode(workList))
         }
         return
     }, [workList, expandedTree])
 
-    // useEffect(() => {
-    //     if (workList.length > 0) {
-    //         setGantt(setNode(workList))
-    //     }
-    // }, [currentPage])
-
     // 切换视图
     useEffect(() => {
         // 画布参数
-        debugger
-        if (ganttCore?.current) {
-            setdateArray(getDate())
+        // if (ganttCore?.current) {
+            
+        // }
+        setdateArray(getDate())
             creatGraph()
-
-            setGantt(setNode(workList))
-        }
+            setGanttData(setNode(workList))
 
         return;
     }, [archiveView])
+
+    
 
     const creatGraph = () => {
         if (graph) {
@@ -218,24 +231,25 @@ const Gantt = (props) => {
     const [scrollLeft, setScrollLeft] = useState()
     const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
-        if (ganttdata !== undefined) {
+        if (ganttdata !== undefined && graph) {
             document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50);
             document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
             const picBoxHeight = document.getElementById('table-pic').offsetHeight;
             if (picBoxHeight < ganttdata.nodes.length * 50) {
                 setIsShowCol(true)
-                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50 );
+                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50);
                 document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
             } else {
                 setIsShowCol(false)
             }
             setGarph()
+            const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
+            setScrollLeft(scrollWidth)
+    
+            document.getElementById('table-pic').scrollTo({ left: scrollWidth });
+            document.getElementById('table-timer').scrollTo({ left: scrollWidth });
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
-        setScrollLeft(scrollWidth)
-
-        document.getElementById('table-pic').scrollTo({ left: scrollWidth });
-        document.getElementById('table-timer').scrollTo({ left: scrollWidth });
+       
         return
     }, [ganttdata])
 
@@ -447,8 +461,8 @@ const Gantt = (props) => {
         // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
         // props.history.replace(`/projectDetail/${projectId}/workgantt/${workItem.id}`)
         const pathname = props.match.url;
-        props.history.push(`${pathname}/${workItem.id}`)
-
+        props.history.replace(`${pathname}/${workItem.id}`)
+        console.log(props)
         setIsModalVisible(true)
 
     }
@@ -582,127 +596,133 @@ const Gantt = (props) => {
     return (
         <>
             <div>
-                <div className="work-time">
-                    <div className="time-table">
-                        <div className="table-hearder">
-                            <div className="table-hearder-text table-border table-hearder-title">
-                                标题
-                            </div>
-                            <div className="table-hearder-text table-border table-hearder-status">
-                                状态
-                            </div>
-                            <div className="table-hearder-text table-border table-hearder-assigner">
-                                负责人
-                            </div>
-                            <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
-                                <div className="table-timer" >
-                                    <div className="table-month" id="table-month" ref={timerCore}>
-                                        {
-                                            dateArray && dateArray.map((item, index) => {
-                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
-                                                    {item.month}
-                                                </div>
-                                            })
-                                        }
+                {
+                    workList && workList.length > 0 ?
+                        <div className="work-time">
+                            <div className="time-table">
+                                <div className="table-hearder">
+                                    <div className="table-hearder-text table-border table-hearder-title">
+                                        标题
                                     </div>
-                                    {
-                                        archiveView === "week" && <div className="table-date" id="table-date">
-                                            {
-                                                dateArray && dateArray.map((item, index) => {
-                                                    return item.day.map((dayitem, dayindex) => {
-                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
-                                                            className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                            key={`${index}${dayindex}`}
-                                                        >
-                                                            {dayitem}
+                                    <div className="table-hearder-text table-border table-hearder-status">
+                                        状态
+                                    </div>
+                                    <div className="table-hearder-text table-border table-hearder-assigner">
+                                        负责人
+                                    </div>
+                                    <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
+                                        <div className="table-timer" >
+                                            <div className="table-month" id="table-month" ref={timerCore}>
+                                                {
+                                                    dateArray && dateArray.map((item, index) => {
+                                                        return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
+                                                            {item.month}
                                                         </div>
                                                     })
-                                                })
-                                            }
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className="table-body " id="tale-body" ref={timerColOuter}>
-                            <div ref={timerColCore}>
-                                <li style={{ listStyleType: "none" }} id="table-content" >
-                                    {
-                                        tableTd(workList, 0, 0)
-
-                                    }
-
-                                </li>
-                                <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id="tableGantt" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
-                                    <div className="table-date-background" id="table-date-background">
-                                        {
-                                            archiveView === "month" && dateArray && dateArray.map((item, index) => {
-                                                return <div
-                                                    style={{ width: `${unitLength * item.day.length}px` }}
-                                                    key={index}
-                                                    className="table-month"
-                                                />
-                                            })
-                                        }
-                                        {
-                                            archiveView === "week" && dateArray && dateArray.map((item, index) => {
-                                                return item.day.map((dayitem, dayindex) => {
-                                                    return <div style={{ width: unitLength, maxWidth: unitLength }}
-                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                        key={`${index}${dayindex}`}
-                                                    >
-                                                    </div>
-                                                })
-
-                                            })
-                                        }
-                                    </div>
-
-                                </div>
-                                {
-                                    workList.length <= 0 && <div className="epci-empty">
-                                        没有事项~
-                                    </div>
-                                }
-                                {/* {
-                                    totalPage > 0 && <>
-                                        {
-                                            <div className="epic-change-page" >
-                                                <div>{workList.length}个, 共{total}个</div>
-                                                {
-                                                    currentPage < totalPage ? <div className="change-page-button">点击加载</div>
-                                                        :
-                                                        <div style={{ paddingLeft: "10px" }}>已加载全部</div>
-
                                                 }
                                             </div>
+                                            {
+                                                archiveView === "week" && <div className="table-date" id="table-date">
+                                                    {
+                                                        dateArray && dateArray.map((item, index) => {
+                                                            return item.day.map((dayitem, dayindex) => {
+                                                                return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
+                                                                    className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                                    key={`${index}${dayindex}`}
+                                                                >
+                                                                    {dayitem}
+                                                                </div>
+                                                            })
+                                                        })
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="table-body " id="tale-body" ref={timerColOuter}>
+                                    <div ref={timerColCore}>
+                                        <li style={{ listStyleType: "none" }} id="table-content" >
+                                            {
+                                                tableTd(workList, 0, 0)
+
+                                            }
+
+                                        </li>
+                                        <div className="table-pic" id="table-pic" ref={ganttOuter}>
+                                            <div id="tableGantt" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                            <div className="table-date-background" id="table-date-background">
+                                                {
+                                                    archiveView === "month" && dateArray && dateArray.map((item, index) => {
+                                                        return <div
+                                                            style={{ width: `${unitLength * item.day.length}px` }}
+                                                            key={index}
+                                                            className="table-month"
+                                                        />
+                                                    })
+                                                }
+                                                {
+                                                    archiveView === "week" && dateArray && dateArray.map((item, index) => {
+                                                        return item.day.map((dayitem, dayindex) => {
+                                                            return <div style={{ width: unitLength, maxWidth: unitLength }}
+                                                                className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                                key={`${index}${dayindex}`}
+                                                            >
+                                                            </div>
+                                                        })
+
+                                                    })
+                                                }
+                                            </div>
+
+                                        </div>
+                                        {
+                                            workList.length <= 0 && <div className="epci-empty">
+                                                没有事项~
+                                            </div>
                                         }
-                                    </>
-                                } */}
+                                        {
+                                            totalPage > 0 && <>
+                                                {
+                                                    <div className="epic-change-page" >
+                                                        <div>{workList.length}个, 共{total}个</div>
+                                                        {
+                                                            currentPage < totalPage ? <div className="change-page-button">点击加载</div>
+                                                                :
+                                                                <div style={{ paddingLeft: "10px" }}>已加载全部</div>
 
+                                                        }
+                                                    </div>
+                                                }
+                                            </>
+                                        }
+
+                                    </div>
+
+                                </div>
                             </div>
-
+                            <RowScroll
+                                timerCore={timerCore}
+                                timerOuter={timerOuter}
+                                ganttCore={ganttCore}
+                                ganttOuter={ganttOuter}
+                                ganttWidth={ganttWidth}
+                                scrollLeft={scrollLeft}
+                            />
+                            {
+                                isShowCol && <ColScroll
+                                    timerCore={timerColCore}
+                                    timerOuter={timerColOuter}
+                                    ganttCore={ganttCore}
+                                    ganttOuter={ganttOuter}
+                                />
+                            }
                         </div>
-                    </div>
-                    <RowScroll
-                        timerCore={timerCore}
-                        timerOuter={timerOuter}
-                        ganttCore={ganttCore}
-                        ganttOuter={ganttOuter}
-                        ganttWidth={ganttWidth}
-                        scrollLeft={scrollLeft}
-                    />
-                    {
-                        isShowCol && <ColScroll
-                            timerCore={timerColCore}
-                            timerOuter={timerColOuter}
-                            ganttCore={ganttCore}
-                            ganttOuter={ganttOuter}
-                        />
-                    }
-                </div>
-
+                        :
+                        <div style={{ marginTop: "50px" }}>
+                            <Empty image="/images/nodata.png" description="暂时没有事项~" />
+                        </div>
+                }
             </div>
             <WorkDetailDrawer
                 isModalVisible={isModalVisible}

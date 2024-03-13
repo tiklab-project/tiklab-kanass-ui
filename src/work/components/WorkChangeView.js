@@ -87,17 +87,33 @@ const WorkChangeView = (props) => {
         setViewType(value)
         switch (value) {
             case "tile":
-                if (workShowType === "list" || workShowType === "gantt") {
+                if (workShowType === "list") {
                     getPageList();
                 } else if (workShowType === "table") {
                     getWorkConditionPage();
+                }else if (workShowType === "gantt") {
+                    const values = {
+                        pageParam: {
+                            pageSize: 20,
+                            currentPage: 1,
+                        }
+                    }
+                    getWorkConditionPage(values);
                 }
                 break;
             case "tree":
-                if (workShowType === "list" || workShowType === "gantt") {
+                if (workShowType === "list") {
                     getPageTree();
                 } else if (workShowType === "table") {
                     getWorkConditionPageTree();
+                } else if (workShowType === "gantt") {
+                    const values = {
+                        pageParam: {
+                            pageSize: 20,
+                            currentPage: 1,
+                        }
+                    }
+                    getWorkConditionPageTree(values);
                 }
                 break;
             default:

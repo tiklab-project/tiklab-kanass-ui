@@ -41,6 +41,7 @@ const WorkGantt = (props) => {
         finWorkList(path, WorkStore, params);
         return;
     }, [projectId])
+    
     return (<Provider {...store}>
         <>
             <Row style={{ background: "#fff"}}>

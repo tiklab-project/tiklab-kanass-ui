@@ -82,7 +82,10 @@
                         }
 
                         .edit-box {
-                            height: calc(100% - 96px);
+                            height: calc(100% - 49px);
+                        }
+                        .edit-box::-webkit-scrollbar {
+                            width: 0;
                         }
                     }
                 }

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm, message } from "antd";
+import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm, message, Modal } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
@@ -145,39 +145,47 @@ const WorkDetail = (props) => {
     // }
 
     const changeStatus = (transition) => {
-        if (userId !== workInfo.assigner?.id) {
-            message.error("没有权限")
-            return
-        }
-        const value = {
-            updateField: "workStatusNode",
-            workStatusNode: transition?.toNode?.id,
-            transitionId: transition.id,
-            flowId: transition.flow.id,
-            id: workId
-        }
-        editWork(value).then((res) => {
-            if (res.code === 0) {
-                setWorkStatus(name)
-                searchWorkById(workId).then((res) => {
-                    if (res) {
-                        detailForm.setFieldsValue({ assigner: res.assigner?.id })
-                        // workInfo.assigner = res.assigner;
-                        setWorkInfo(res)
-                        getTransitionList(res.workStatusNode.id, res.workType.flow.id)
-                        setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-
-                        const list = changeWorkItemList(workList, res)
-                        setWorkList([...list])
-                        // workList[workIndex - 1].workStatusNode = res.workStatusNode;
-                        // workList[workIndex - 1].workStatusCode = res.workStatusCode;
+        // if (userId !== workInfo.assigner?.id) {
+        //     message.error("没有权限")
+        //     return
+        // }
+        Modal.confirm({
+            title: "修改之后不能撤回，确认修改状态？",
+            className: "edit-status-modal",
+            getContainer: workDetailTop.current,
+            onOk: () => {
+                const value = {
+                    updateField: "workStatusNode",
+                    workStatusNode: transition?.toNode?.id,
+                    transitionId: transition.id,
+                    flowId: transition.flow.id,
+                    id: workId
+                }
+                editWork(value).then((res) => {
+                    if (res.code === 0) {
+                        setWorkStatus(name)
+                        searchWorkById(workId).then((res) => {
+                            if (res) {
+                                detailForm.setFieldsValue({ assigner: res.assigner?.id })
+                                // workInfo.assigner = res.assigner;
+                                setWorkInfo(res)
+                                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+                                setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
+        
+                                const list = changeWorkItemList(workList, res)
+                                setWorkList([...list])
+                                // workList[workIndex - 1].workStatusNode = res.workStatusNode;
+                                // workList[workIndex - 1].workStatusCode = res.workStatusCode;
+                            }
+                        })
+                    }
+                    if (res.code === 40000) {
+                        message.error(res.msg)
                     }
                 })
             }
-            if (res.code === 40000) {
-                message.error(res.msg)
-            }
         })
+       
     }
 
 
@@ -386,7 +394,7 @@ const WorkDetail = (props) => {
 
                     {
                         !showFlow ? <>
-                            <div className="work-detail-top" ref={workDetailTop}>
+                            <div className="work-detail-top" ref={workDetailTop} >
                                 <div className="work-detail-top-name">
                                     <div className="work-item-title-top">
                                         <div

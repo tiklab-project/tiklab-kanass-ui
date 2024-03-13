@@ -24,6 +24,7 @@ const WorkAddPage = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    // 全局不一定存在
     const project = JSON.parse(localStorage.getItem("project"));
     const projectType = project.projectType?.type;
     const ticket = getUser().ticket;
@@ -98,7 +99,6 @@ const WorkAddPage = (props) => {
                 if (res.code === 0) {
                     if(res.data.length > 0) {
                         form.setFieldsValue({
-                        
                             projectVersion: versionId ? versionId : res.data[0]?.id
                         })
                     }
