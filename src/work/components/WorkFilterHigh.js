@@ -156,7 +156,8 @@ const WorkFilterHigh = (props) => {
             planStartDate: searchCondition.planStartDateStart ? [moment(searchCondition.planStartDateStart, dateFormat), moment(searchCondition.planStartDateEnd, dateFormat)] : null,
             planEndDate: searchCondition.planEndDateStart ? [moment(searchCondition.planEndDateStart, dateFormat), moment(searchCondition.planEndDateEnd, dateFormat)] : null,
             workPriorityIds: searchCondition.workPriorityIds,
-            currentSprintId: searchCondition.currentSprintId,
+            currentSprintIds: searchCondition.currentSprintIds,
+            currentVersionIds: searchCondition.currentVersionIds,
             moduleIds: searchCondition.moduleIds
         })
     }

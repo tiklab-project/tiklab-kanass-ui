@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../thoughtware-kanass-plugin-ui"
+		},
+		{
+			"path": "../thoughtware-form-ui"
 		}
 	],
 	"settings": {}

@@ -493,17 +493,17 @@ const EpicLineMap = (props) => {
 
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="img-icon-right" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workDown"></use>
                                                             </svg> :
-                                                            <svg className="img-icon-right" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
                                                 :
                                                 <>
-                                                    <svg className="img-icon-right" aria-hidden="true">
+                                                    <svg className="img-icon" aria-hidden="true">
                                                         <use xlinkHref="#icon-point"></use>
                                                     </svg>
                                                 </>
@@ -511,7 +511,7 @@ const EpicLineMap = (props) => {
                                         <img
                                             src = {setImageUrl(item.workTypeSys?.iconUrl)}
                                             alt=""
-                                            className="img-icon"
+                                            className="img-25"
                                         />
                                         <span className="epic-key">{item.id}</span>
                                         <div className="epic-text" onClick={() => goEpicWorkDetail(item, index)}>{item.title}</div>

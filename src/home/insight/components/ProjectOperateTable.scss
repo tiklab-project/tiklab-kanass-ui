@@ -1,10 +1,11 @@
 .project-operate {
-    padding: 10px;
+    padding: 10px 0;
     border-radius: 4px;
     width: 100%;
     margin-bottom: 10px;
     height: 100%;
     background-color: #fff;
+    // overflow: auto;
     // box-shadow: 0 2px 15px rgba(0,0,0,.15);
     .project-breadcrumb {
         display: flex;
@@ -29,6 +30,7 @@
         font-weight: var(--thoughtware-font-weight-bold);
         font-size: 16px;
         display: flex;
+        padding: 0 10px;
         margin-bottom: 10px;
         .operate-title {
             display: flex;
@@ -40,7 +42,10 @@
     .project-operate-table {
         text-align: center;
         margin-bottom: 15px;
-        border-bottom: 1px solid #f0f0f0;
+        
+        padding: 0 10px;
+        overflow: auto;
+        height: calc(100% - 70px);
         .project-operate-col {
             display: flex;
             justify-content: space-between;
@@ -59,8 +64,16 @@
             color: #7A869A;
         }
     }
+    .project-operate-table > :last-child {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+
     .project-operate-page {
         text-align: right;
         margin-bottom: 15px;
+    }
+    .ant-form {
+        padding: 0 10px;
     }
 }

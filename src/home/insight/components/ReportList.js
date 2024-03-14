@@ -58,8 +58,8 @@ const ReportList = (props) => {
             y: y, 
             w: item.minW, 
             h: item.minH,
-            // minH: item.minH,
-            // minW: item.minW,
+            minH: item.minH,
+            minW: item.minW,
             i: reportIndex.toString(), static: false,
             data: {
                 type: item.type,

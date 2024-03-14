@@ -172,9 +172,9 @@ const ProjectOperateTable = (props) => {
                                             }
                                         </div>
 
-                                        <div className="project-operate-page">
+                                        {/* <div className="project-operate-page">
                                             <Pagination defaultCurrent={1} total={1} />
-                                        </div>
+                                        </div> */}
                                     </Fragment>
                                     :
                                     <Empty />

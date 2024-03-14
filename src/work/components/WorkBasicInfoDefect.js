@@ -567,7 +567,7 @@ const WorkBasicInfo = (props) => {
             }
         })
     }, [500])
-    const [visableCustomForm, setVisableCustomForm] = useState(false);
+    const [visableCustomForm, setVisableCustomForm] = useState(true);
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
     }
@@ -937,11 +937,14 @@ const WorkBasicInfo = (props) => {
 
                         </Form.Item>
                     </Form>
-                    <div className={`form-custom-open `} onClick={() => openCustomForm()}>
-                        <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}`} aria-hidden="true">
-                            <use xlinkHref="#icon-caret-left"></use>
-                        </svg>
-                    </div>
+                    {
+                        formList && formList.length > 0 && <div className={`form-custom-open `} onClick={() => openCustomForm()}>
+                            <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}`} aria-hidden="true">
+                                <use xlinkHref="#icon-caret-left"></use>
+                            </svg>
+                        </div>
+                    }
+                    
                 </div>
                 <div ref={exFormRef}>
                     {

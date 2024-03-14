@@ -54,8 +54,9 @@
         display: flex;
         align-items: center;
         text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+        white-space: nowrap;
+        overflow: hidden;
+        gap: 5px;
         .img-icon-right {
             flex-shrink: 0;
         }
