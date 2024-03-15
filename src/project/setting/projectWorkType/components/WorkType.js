@@ -183,8 +183,6 @@ const WorkType = (props) => {
                                 编辑
                             </WorkTypeEditmodal>
                             <DeleteModal deleteFunction = {deleWorkType} id = {record.id}/>
-
-
                         </>
                     }
                 </Space>

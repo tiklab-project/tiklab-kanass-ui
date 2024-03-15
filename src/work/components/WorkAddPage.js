@@ -26,7 +26,7 @@ const WorkAddPage = (props) => {
     const versionId = props.match.params.version ? props.match.params.version : null;
     // 全局不一定存在
     const project = JSON.parse(localStorage.getItem("project"));
-    const projectType = project.projectType?.type;
+    const projectType = project?.projectType?.type;
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
@@ -127,6 +127,7 @@ const WorkAddPage = (props) => {
     }
 
     const selectProject = (option) => {
+        console.log(option)
         getModuleList(option)
         if(projectType === "scrum"){
             findSelectSprintList(option)

@@ -356,6 +356,7 @@ export class WorkStore {
         Object.assign(this.searchBorderChangepageCondition, value)
         this.getWorkItemNum();
         const data = await Service("/workItem/findChangePageWorkBoardList",this.searchBorderChangepageCondition);
+        console.log(this.searchBorderChangepageCondition)
         if (data.code === 0) {
             const index = value.index;
             this.workBoardCurrentPage[index] = data.data.workItemList.currentPage;
@@ -955,6 +956,14 @@ export class WorkStore {
         const params = new FormData();
         params.append("id", value.id)
         const data = await Service("/workItem/findChildrenLevel", params)
+        return data;
+    }
+
+    @action
+    findWorkItemAndChidren = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findWorkItemAndChidren", params)
         return data;
     }
 

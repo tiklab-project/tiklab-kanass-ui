@@ -70,7 +70,7 @@ const WorkRelationAddModal = (props) => {
             }
         )
     }
-    
+
     const searchUnselectWorkRelationByTitle = (value) => {
         setCurrent(1)
         setPageSize(20)
@@ -105,95 +105,91 @@ const WorkRelationAddModal = (props) => {
     return (
         <>
             <div className="relation-add" ref={relationAdd}>
-                <div className="relation-add-search">
-                    <InputSearch style = {{minWidth: "250px",flex: 1}} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"根据事项名称，或者id搜索"} />
-                    <SelectSimple name="workTypeIds"
-                        onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
-                        title={"事项类型"} ismult={true}
-                    >
-                        {
-                            workTypeList.map(item => {
-                                return <SelectItem
-                                    value={item.workType.id}
-                                    label={item.workType.name}
-                                    key={item.workType.id}
-                                    imgUrl={`${upload_url}${item.workType.iconUrl}`}
-                                />
-                            })
-                        }
-                    </SelectSimple>
-                    {
-                        workStatusList && workStatusList.length > 0 && <SelectSimple
-                            name="workStatus"
-                            onChange={(value) => searchUnselectWorkRelationByStatus("workStatusIds", value)}
-                            title={"状态"}
-                            ismult={true}
+
+                <div className="relation-add-model" >
+                    <div className="relation-add-search">
+                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"根据事项名称，或者id搜索"} />
+                        <SelectSimple name="workTypeIds"
+                            onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
+                            title={"事项类型"} ismult={true}
                         >
-                            <div className="select-group-title">未开始</div>
                             {
-                                workStatusList.map(item => {
-                                    if (item.id === "todo") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
-                                })
-                            }
-                            <div className="select-group-title">进行中</div>
-                            {
-                                workStatusList.map(item => {
-                                    if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
-                                })
-                            }
-
-
-                            <div className="select-group-title">已完成</div>
-                            {
-                                workStatusList.map(item => {
-                                    if (item.id === "done") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
+                                workTypeList.map(item => {
+                                    return <SelectItem
+                                        value={item.workType.id}
+                                        label={item.workType.name}
+                                        key={item.workType.id}
+                                        imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                    />
                                 })
                             }
                         </SelectSimple>
-                    }
-                    <div className="relation-add-submit">
-                        <span onClick={() => showAddRelation(false)}>
-                            取消
-                        </span>
+                        {
+                            workStatusList && workStatusList.length > 0 && <SelectSimple
+                                name="workStatus"
+                                onChange={(value) => searchUnselectWorkRelationByStatus("workStatusIds", value)}
+                                title={"状态"}
+                                ismult={true}
+                            >
+                                <div className="select-group-title">未开始</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id === "todo") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
+
+                                    })
+                                }
+                                <div className="select-group-title">进行中</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
+
+                                    })
+                                }
+
+
+                                <div className="select-group-title">已完成</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id === "done") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
+
+                                    })
+                                }
+                            </SelectSimple>
+                        }
+                        <div className="relation-add-submit">
+                            <span onClick={() => showAddRelation(false)}>
+                                取消
+                            </span>
+                        </div>
+
                     </div>
-
-                </div>
-                {/* <div className="relation-add-input">
-                    <div>搜索添加关联事项</div>
-                    
-                </div> */}
-                <div className="relation-add-model" >
-
                     <div className="relation-add-table">
                         <div className="relation-add-table-title">选择事项</div>
                         {
@@ -208,7 +204,7 @@ const WorkRelationAddModal = (props) => {
                                                             <img
                                                                 alt=""
                                                                 className="svg-icon"
-                                                                src = {setImageUrl(item.workTypeSys?.iconUrl)}
+                                                                src={setImageUrl(item.workTypeSys?.iconUrl)}
                                                             />
                                                             :
                                                             <img
@@ -250,7 +246,7 @@ const WorkRelationAddModal = (props) => {
                                         <>
                                             {
                                                 unRelationTotal > current ?
-                                                    <div className="relation-add-table-page" onClick={() => loadNextPage()}>{pageText}</div>
+                                                    <div className="relation-add-table-page loading-more" onClick={() => loadNextPage()}>{pageText}</div>
                                                     :
                                                     <div className="relation-add-table-page">到底啦~</div>
                                             }

@@ -360,7 +360,7 @@ const Sprint = (props) => {
                             <InputSearch
                                 placeholder="迭代名称"
                                 allowClear
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={onSearch}
                             />
                         </div>

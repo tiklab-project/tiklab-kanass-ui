@@ -142,13 +142,18 @@ const deleteAndQueryDeepData = (originalArray, indexes) => {
 const changeWorkItemParent = (originalArray, newParentId, workItem) => {
     const deleteItem = deleteOldChildren(originalArray, workItem.id);
     console.log(deleteItem)
-    const newWorkItem = { ...workItem, children: deleteItem.children }
-    // 更新下级的treepath
-    if(newWorkItem.children && newWorkItem.children.length > 0){
-        updateTreePath(newWorkItem)
+    if(deleteItem){
+        const newWorkItem = { ...workItem, children: deleteItem.children }
+        // 更新下级的treepath
+        if(newWorkItem.children && newWorkItem.children.length > 0){
+            updateTreePath(newWorkItem)
+        }
+        console.log(newWorkItem)
+        originalArray = addNewParentChildren(originalArray, newParentId, newWorkItem)
+    }else {
+        originalArray = addNewParentChildren(originalArray, newParentId, workItem)
     }
-    console.log(newWorkItem)
-    originalArray = addNewParentChildren(originalArray, newParentId, newWorkItem)
+
     return originalArray
 
 }

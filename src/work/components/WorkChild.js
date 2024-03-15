@@ -9,6 +9,7 @@ import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import setImageUrl from "../../common/utils/setImageUrl";
 import dayjs from "dayjs";
+import { changeWorkItemParent } from "./WorkGetList";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
@@ -22,8 +23,8 @@ const WorkChild = (props) => {
     const [workItemTitle, setWorkItemTitle] = useState()
 
     const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId, 
-        selectVersionList, sprintList, priorityList } = workStore;
+        workId,workList, setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId, 
+        selectVersionList, sprintList, priorityList, setWorkList, findWorkItemAndChidren } = workStore;
 
     const { getWorkChildList,deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
@@ -73,13 +74,19 @@ const WorkChild = (props) => {
         deleWorkChild(params).then((res) => {
             if (res.code === 0) {
                 findWorkChildList()
-                if (workShowType === "bodar") {
-                    getWorkBoardList()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                    getWorkConditionPageTree()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                    getWorkConditionPage()
-                }
+                // if (workShowType === "bodar") {
+                //     getWorkBoardList()
+                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
+                //     getWorkConditionPageTree()
+                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+                //     getWorkConditionPage()
+                // }
+                findWorkItemAndChidren({id: id}).then(res => {
+                    if (res.code === 0) {
+                        const list = changeWorkItemParent(workList, null, res.data)
+                        setWorkList([...list])
+                    }
+                })
             }
         })
     }
@@ -134,13 +141,19 @@ const WorkChild = (props) => {
                 showAddChild(false)
                 findWorkChildList()
                 getTransitionList(workStatusNodeId, workType?.flow?.id)
-                if (workShowType === "bodar") {
-                    getWorkBoardList()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                    getWorkConditionPageTree()
-                } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                    getWorkConditionPage()
-                }
+                findWorkItemAndChidren({id: res.data}).then(res => {
+                    if (res.code === 0) {
+                        const list = changeWorkItemParent(workList, workId, res.data)
+                        setWorkList([...list])
+                    }
+                })
+                // if (workShowType === "bodar") {
+                //     getWorkBoardList()
+                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
+                //     getWorkConditionPageTree()
+                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
+                //     getWorkConditionPage()
+                // }
             }
         })
     }

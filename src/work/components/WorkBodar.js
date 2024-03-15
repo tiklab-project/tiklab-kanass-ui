@@ -165,7 +165,7 @@ const WorkBodar = (props) => {
             workStatusId: item.state.id,
             pageParam: {
                 pageSize: 20,
-                currentPage: item.workItemList.currentPage + 1
+                currentPage: workBoardCurrentPage[index] + 1
             }
         }
         findChangePageWorkBoardList(data)
@@ -265,7 +265,9 @@ const WorkBodar = (props) => {
                                                                 })
                                                             }
                                                             {
-                                                                workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && workBoardCurrentPage[index] < item.workItemList.totalPage && <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
+                                                                workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && 
+                                                                workBoardCurrentPage[index] < item.workItemList.totalPage && 
+                                                                <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
                                                             }
                                                         </div>
 

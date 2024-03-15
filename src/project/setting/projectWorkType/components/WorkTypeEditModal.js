@@ -99,7 +99,7 @@ const WorkTypeEditModal = (props) => {
                         form={form}
                     >
 
-                        <Form.Item
+                        {/* <Form.Item
                             label="类型名称"
                             name="name"
                             rules={[
@@ -110,7 +110,7 @@ const WorkTypeEditModal = (props) => {
                             ]}
                         >
                             <Input />
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item
                             label="表单配置"
                             name="form"

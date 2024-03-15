@@ -332,7 +332,7 @@ const VersionTable = (props) => {
                             <InputSearch
                                 placeholder="版本名称"
                                 allowClear
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={onSearch}
                             />
                         </div>

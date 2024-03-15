@@ -6,14 +6,15 @@ import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
+import { changeWorkItemParent } from "./WorkGetList";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId } = props;
 
-    const { workId, workShowType, viewType, getWorkConditionPageTree, 
-        getWorkConditionPage, findPriority, priorityList, getWorkStatus,workStatusList, demandTypeId } = workStore;
+    const { workId, workShowType, findPriority, priorityList, getWorkStatus, workStatusList, 
+        demandTypeId, findWorkItemAndChidren, workList, setWorkList } = workStore;
 
-    const { addWorkChild, findSelectWorkItemList,
-        getWorkChildList, selectChildToTal, selectWorkChildList, findChildrenLevel } = workChild;
+    const { addWorkChild, findSelectWorkItemList, getWorkChildList, selectChildToTal, 
+        selectWorkChildList, findChildrenLevel, getWorkBoardList,  } = workChild;
     const tenant = getUser().tenant;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
@@ -48,7 +49,7 @@ const WorkChildAddmodal = (props) => {
             title: null,
             ...value
         }
-        if(demandId) {
+        if (demandId) {
             params.workTypeId = demandId;
         }
         findSelectWorkItemList(params)
@@ -70,32 +71,33 @@ const WorkChildAddmodal = (props) => {
         }
     }
 
-    const determineAdd = (id) => {
+    const determineAdd = (item) => {
+        const id = item.id;
         let currentLevel = 0;
-        if(treePath){
+        if (treePath) {
             const parentArray = treePath.split(";")
             currentLevel = parentArray.length - 1;
         }
         // 判断被添加事项有几级
-        findChildrenLevel({id: id}).then(res => {
-            if(res.code === 0){
-                if(res.data === 2){
+        findChildrenLevel({ id: id }).then(res => {
+            if (res.code === 0) {
+                if (res.data === 2) {
                     message.warning("事项限制为三级，所选事项有两级下级事项，不能被添加为子事项");
                     return;
                 }
-                if(res.data === 1){
-                    if(currentLevel === 0){
-                        creatWorkChild(id)
-                    }else {
+                if (res.data === 1) {
+                    if (currentLevel === 0) {
+                        creatWorkChild(item)
+                    } else {
                         message.warning("事项限制为三级，所选事项有一级下级事项，不能被添加为子事项");
                         return;
                     }
                 }
 
-                if(res.data === 0){
-                    if(currentLevel < 2){
-                        creatWorkChild(id)
-                    }else {
+                if (res.data === 0) {
+                    if (currentLevel < 2) {
+                        creatWorkChild(item)
+                    } else {
                         message.warning("事项限制为三级，所选事项不能被添加为子事项");
                         return;
                     }
@@ -104,7 +106,8 @@ const WorkChildAddmodal = (props) => {
         })
     }
 
-    const creatWorkChild = (id) => {
+    const creatWorkChild = (item) => {
+        const id = item.id;
         let params = {
             id: id,
             parentWorkId: workId,
@@ -113,20 +116,26 @@ const WorkChildAddmodal = (props) => {
             sprintId: sprintId,
             assigner: project?.master.id,
         }
-        createChildWorkItem(params)
+        createChildWorkItem(params, item)
     }
 
-    const createChildWorkItem = (value) => {
+    const createChildWorkItem = (value, item) => {
         /** 需要优化 0312 */
         addWorkChild(value).then((res) => {
             showSelectChild(false)
-            if (workShowType === "bodar") {
-                getWorkBoardList()
-            } else if (viewType === "tree") {
-                getWorkConditionPageTree()
-            } else if (viewType === "tile") {
-                getWorkConditionPage()
-            }
+            // if (workShowType === "bodar") {
+            //     getWorkBoardList()
+            // } else if (viewType === "tree") {
+            //     getWorkConditionPageTree()
+            // } else if (viewType === "tile") {
+            //     getWorkConditionPage()
+            // }
+            findWorkItemAndChidren({id: value.id}).then(res => {
+                if (res.code === 0) {
+                    const list = changeWorkItemParent(workList, workId, res.data)
+                    setWorkList([...list])
+                }
+            })
             let params = {};
             if (workType.code === "epic") {
                 params = {
@@ -146,7 +155,7 @@ const WorkChildAddmodal = (props) => {
         })
     }
 
-    
+
     // 搜索事项
     const searchUnselectWorkByStatus = (key, value) => {
         setCurrent(1)
@@ -188,103 +197,103 @@ const WorkChildAddmodal = (props) => {
         <>
             <div className="child-add" ref={childAdd}>
 
-                <div className="child-add-search">
-                    <InputSearch style={{ minWidth: "250px",flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"根据事项名称，或者id搜索"} />
-                    <SelectSimple name="workPriorityIds"
-                        onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}
-                        title={"事项优先级"} ismult={true}
-                    >
-                        {
-                            priorityList.map(item => {
-                                return <SelectItem
-                                    value={item.id}
-                                    label={item.name}
-                                    key={item.id}
-                                    imgUrl={`${base_url}/images/${item.iconUrl}`}
-                                />
-                            })
-                        }
-                    </SelectSimple>
-                    {
-                        workStatusList && workStatusList.length > 0 && <SelectSimple
-                            name="workStatus"
-                            onChange={(value) => searchUnselectWorkByStatus("workStatusIds", value)}
-                            title={"状态"}
-                            ismult={true}
+
+                <div className="child-add-model" >
+                    <div className="child-add-search">
+                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"根据事项名称，或者id搜索"} />
+                        <SelectSimple name="workPriorityIds"
+                            onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}
+                            title={"事项优先级"} ismult={true}
                         >
-                            <div className="select-group-title">未开始</div>
                             {
-                                workStatusList.map(item => {
-                                    if (item.id === "todo") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
-                                })
-                            }
-                            <div className="select-group-title">进行中</div>
-                            {
-                                workStatusList.map(item => {
-                                    if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
-                                })
-                            }
-
-
-                            <div className="select-group-title">已完成</div>
-                            {
-                                workStatusList.map(item => {
-                                    if (item.id === "done") {
-                                        return <SelectItem
-                                            value={item.id}
-                                            label={item.name}
-                                            key={item.id}
-                                            imgUrl={item.iconUrl}
-                                        />
-                                    } else {
-                                        return <div></div>
-                                    }
-
+                                priorityList.map(item => {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.name}
+                                        key={item.id}
+                                        imgUrl={`${base_url}/images/${item.iconUrl}`}
+                                    />
                                 })
                             }
                         </SelectSimple>
-                    }
-                    <div className="child-add-submit">
-                        <span onClick={() => showSelectChild(false)}>
-                            取消
-                        </span>
-                    </div>
-                </div>
-                <div className="child-add-model" >
+                        {
+                            workStatusList && workStatusList.length > 0 && <SelectSimple
+                                name="workStatus"
+                                onChange={(value) => searchUnselectWorkByStatus("workStatusIds", value)}
+                                title={"状态"}
+                                ismult={true}
+                            >
+                                <div className="select-group-title">未开始</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id === "todo") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
 
+                                    })
+                                }
+                                <div className="select-group-title">进行中</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
+
+                                    })
+                                }
+
+
+                                <div className="select-group-title">已完成</div>
+                                {
+                                    workStatusList.map(item => {
+                                        if (item.id === "done") {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                                imgUrl={item.iconUrl}
+                                            />
+                                        } else {
+                                            return <div></div>
+                                        }
+
+                                    })
+                                }
+                            </SelectSimple>
+                        }
+                        <div className="child-add-submit">
+                            <span onClick={() => showSelectChild(false)}>
+                                取消
+                            </span>
+                        </div>
+                    </div>
                     {
                         selectWorkChildList && selectWorkChildList.length > 0 ? <div className="child-add-table">
                             <div className="child-add-table-title">选择事项</div>
                             {
                                 selectWorkChildList && selectWorkChildList.map(item => {
-                                    return <div className="child-add-work-item" onClick={() => determineAdd(item.id)} key={item.id}>
+                                    return <div className="child-add-work-item" onClick={() => determineAdd(item)} key={item.id}>
                                         <div className="work-item-icon">
                                             {
                                                 item.workTypeSys?.iconUrl ?
                                                     <img
                                                         alt=""
                                                         className="svg-icon"
-                                                        src = {setImageUrl(item.workTypeSys?.iconUrl)}
+                                                        src={setImageUrl(item.workTypeSys?.iconUrl)}
                                                     />
                                                     :
                                                     <img
@@ -327,7 +336,7 @@ const WorkChildAddmodal = (props) => {
                                 <>
                                     {
                                         selectChildToTal > current ?
-                                            <div className="child-add-table-page" onClick={() => loadNextPage()}>{pageText}</div>
+                                            <div className="child-add-table-page loading-more" onClick={() => loadNextPage()}>{pageText}</div>
                                             :
                                             <div className="child-add-table-page">到底啦~</div>
                                     }

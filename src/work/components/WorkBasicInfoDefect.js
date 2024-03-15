@@ -299,17 +299,17 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                // if (!disableChange) {
-                //     setWorkInfo({ ...workInfo })
-                //     return
-                // } else {
-                   
-                // }
-                changedValues.parentWorkItem = {
-                    id: changedValues.parentWorkItem.value,
-                    title: changedValues.parentWorkItem.label
+                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                if (!disableChange) {
+                    setWorkInfo({ ...workInfo })
+                    return
+                } else {
+                    changedValues.parentWorkItem = {
+                        id: changedValues.parentWorkItem.value,
+                        title: changedValues.parentWorkItem.label
+                    }
                 }
+
             }
 
         }
@@ -368,7 +368,13 @@ const WorkBasicInfo = (props) => {
                         const list = changeWorkItemParent(workList, changedValues.parentWorkItem?.id, res)
                         setWorkList([...list])
                     })
-
+                    // if (workShowType === "bodar") {
+                    //     getWorkBoardList()
+                    // } else if (viewType === "tree") {
+                    //     getWorkConditionPageTree()
+                    // } else if (viewType === "tile") {
+                    //     getWorkConditionPage()
+                    // }
 
 
                 }
@@ -944,7 +950,7 @@ const WorkBasicInfo = (props) => {
                             </svg>
                         </div>
                     }
-                    
+
                 </div>
                 <div ref={exFormRef}>
                     {
