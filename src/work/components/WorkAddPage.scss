@@ -27,34 +27,16 @@
         flex-direction: column;
         height: 100%;
 
-        // .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
-        //     display: inline-block;
-        //     margin-right: 4px;
-        //     color: #ff4d4f;
-        //     font-size: 14px;
-        //     font-family: SimSun, sans-serif;
-        //     line-height: 1;
-        //     content: "*";
-        // }
-
-        // .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
-        //     content: ":";
-        //     position: relative;
-        //     top: -0.5px;
-        //     margin: 0 8px 0 2px;
-        //     color: #2B2B2B;
-        // }
-
         .work-add-page-title {
             font-size: var(--thoughtware-font-16);
             font-weight: var(--thoughtware-font-weight-bold);
-            padding: 10px 15px;
+            padding: var(--thoughtware-padding);
         }
 
         .work-add-page-form {
             overflow: auto;
-            padding: 0 15px;
-            min-height: calc(100% - 100px);
+            padding: 0 var(--thoughtware-padding);
+            min-height: calc(100% - 120px);
         }
 
         .work-add-form {
@@ -95,7 +77,7 @@
         .work-add-button {
             display: flex;
             gap: 10px;
-            padding: 10px 15px;
+            padding: 10px var(--thoughtware-padding);
             justify-content: flex-end;
         }
 
@@ -122,9 +104,6 @@
             margin-bottom: 0 !important;
         }
 
-        .ant-form-item {
-            margin: 0 0 14px;
-        }
 
         .ant-upload-drag {
             background: var(--thoughtware-gray-300);

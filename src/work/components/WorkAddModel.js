@@ -58,8 +58,8 @@ const WorkAddModel = (props) => {
             // title= {"添加事项"} 
             visible={showAddModel}
             // visible = {true}
+            width={627}
             className="work-addmodel"
-            width={970}
             destroyOnClose={true}
             onOk={handleOk}
             onCancel={handleCancel}

@@ -260,22 +260,19 @@ const WorkAddPage = (props) => {
                             layout="vertical"
                             labelAlign="right"
                             labelCol={{
-                                span: 2,
+                                span: 24,
                             }}
                             wrapperCol={{
-                                span: 12
+                                span: 20
                             }}
                             onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
                         >
                             <Form.Item
                                 label="标题"
                                 name="title"
-                                wrapperCol={{
-                                    span: 16,
-                                }}
                                 rules={[{ required: true, message: '请输入标题!' }]}
                             >
-                                <Input />
+                                <Input placeholder="事项标题"/>
                             </Form.Item>
                             {
                                 props.match.path === "/work/worklist/:statetype" &&

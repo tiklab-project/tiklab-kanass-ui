@@ -9,10 +9,12 @@
 .frame-header {
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
+    // box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     justify-content: space-between;
     position: relative;
     z-index: 3;
+    height: 48px;
 
     .frame-header-logo {
         height: var(--thoughtware-head-height);
@@ -40,6 +42,7 @@
         &-active {
             border-bottom: var(--thoughtware-blue) 2px solid;
             color: var(--thoughtware-blue);
+            font-weight: 600;
         }
 
         &-item {
