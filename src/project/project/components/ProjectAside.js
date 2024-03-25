@@ -32,15 +32,13 @@ const prorouter = [
         icon: "programconcern"
     }
 ]
-const Proaside = (props) => {
+const ProjectAside = (props) => {
     const {projectStore} = props;
     const {findProjectList,findJoinProjectList, findRecentProjectList} = projectStore
     const [showMenu, setShowMenu] = useState(true)
     const [selectMenu,setSelectMenu] = useState("1")
     const userId = getUser().userId
-    const hiddenMenu=()=> {
-        setShowMenu(!showMenu)
-    }
+
     // 
     const selectKey = (key)=> {
         // ProjectStore.searchproList(key)
@@ -93,4 +91,4 @@ const Proaside = (props) => {
         </Fragment>
     )
 }
-export default inject('projectStore')(observer(Proaside));
+export default inject('projectStore')(observer(ProjectAside));

@@ -34,13 +34,14 @@ const WorkTestCaseList = (props) => {
 
     // 
     const delectRepository = (id) => {
-        deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
-            if (data.code === 0) {
-                findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-                    setWorkTestCaseList([...data])
-                })
-            }
-        })
+        console.log(id)
+        // deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
+        //     if (data.code === 0) {
+        //         findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+        //             setWorkTestCaseList([...data])
+        //         })
+        //     }
+        // })
     }
 
     const columns = [

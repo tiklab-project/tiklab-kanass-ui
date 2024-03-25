@@ -529,7 +529,7 @@ export class WorkStore {
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
-            this.findWorkItemNumByWorkType()
+            // this.findWorkItemNumByWorkType()
         }
         return data;
     }
@@ -648,6 +648,14 @@ export class WorkStore {
         const params = new FormData()
         params.append("id", value)
         const data = await Service("/workItem/deleteWorkItem",params);
+        return data;
+    }
+
+    @action
+    deleteWorkItemAndChildren = async(value) => {
+        const params = new FormData()
+        params.append("id", value)
+        const data = await Service("/workItem/deleteWorkItemAndChildren",params);
         return data;
     }
 

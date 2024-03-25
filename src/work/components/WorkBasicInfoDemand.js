@@ -77,7 +77,7 @@ const WorkBasicInfo = (props) => {
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
-            if(workInfo.planBeginTime && workInfo.planEndTime){
+            if (workInfo.planBeginTime && workInfo.planEndTime) {
                 detailForm.setFieldsValue({
                     planTime: [moment(workInfo.planBeginTime, dateFormat), moment(workInfo.planEndTime, dateFormat)],
                 })
@@ -304,7 +304,7 @@ const WorkBasicInfo = (props) => {
                 //     setWorkInfo({ ...workInfo })
                 //     return
                 // } else {
-                    
+
                 // }
                 changedValues.parentWorkItem = {
                     id: changedValues.parentWorkItem.value,
@@ -373,7 +373,7 @@ const WorkBasicInfo = (props) => {
 
                 }
             }
-            if(res.code === 3001){
+            if (res.code === 3001) {
                 setWorkInfo({ ...workInfo });
                 message.warning(res.msg);
             }
@@ -816,12 +816,10 @@ const WorkBasicInfo = (props) => {
                                 validateStatus={validateStatus}
                             >
 
-                                <InputNumber min={1} max={100}
-                                    // value={workInfo?.percent ? workInfo?.percent : 0}
-
-                                    value={workInfo.percent}
-
+                                <InputNumber min={0} max={100}
                                     key="percent"
+                                    formatter={value => `${value}%`}
+                                    parser={value => value.replace('%', '')}
                                     bordered={fieldName === "percent" ? true : false}
                                     suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("percent")}
@@ -829,7 +827,6 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("percent")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                 />
-                                %
                             </Form.Item>
                         </Form>
                     </div>
@@ -940,39 +937,39 @@ const WorkBasicInfo = (props) => {
                     }
                 </div>
                 <div ref={exFormRef}>
-                {
-                    visableCustomForm ? <Form
-                        {...layoutExForm}
-                        initialValues={{ remember: true }}
-                        form={extDataForm}
-                        labelAlign="left"
-                        onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
-                        className="exdata"
-                        colon={false}
-                    >
-                        {
-                            formList && formList.map((item, index) => {
-                                return <Form.Item
-                                    label={item.name}
-                                    name={`System${item.code}`}
-                                    key={item.id}
-                                    className="exdata-item"
-                                >
-                                    <SwitchPreliminaryType
-                                        code={item.fieldType.code}
-                                        bordered={fieldName === `System${item.code}` ? true : false}
-                                        showArrow={fieldName === `System${item.code}` ? true : false}
-                                        onMouseEnter={() => changeStyle(`System${item.code}`)}
-                                        onMouseLeave={() => setFieldName("")}
-                                        data={item.selectItemList}
-                                        getPopupContainer={() => exFormRef.current}
-                                    />
-                                </Form.Item>
-                            })
-                        }
-                    </Form>
-                        : <></>
-                }
+                    {
+                        visableCustomForm ? <Form
+                            {...layoutExForm}
+                            initialValues={{ remember: true }}
+                            form={extDataForm}
+                            labelAlign="left"
+                            onValuesChange={(changedValues, allValues) => updateExtData(changedValues, allValues)}
+                            className="exdata"
+                            colon={false}
+                        >
+                            {
+                                formList && formList.map((item, index) => {
+                                    return <Form.Item
+                                        label={item.name}
+                                        name={`System${item.code}`}
+                                        key={item.id}
+                                        className="exdata-item"
+                                    >
+                                        <SwitchPreliminaryType
+                                            code={item.fieldType.code}
+                                            bordered={fieldName === `System${item.code}` ? true : false}
+                                            showArrow={fieldName === `System${item.code}` ? true : false}
+                                            onMouseEnter={() => changeStyle(`System${item.code}`)}
+                                            onMouseLeave={() => setFieldName("")}
+                                            data={item.selectItemList}
+                                            getPopupContainer={() => exFormRef.current}
+                                        />
+                                    </Form.Item>
+                                })
+                            }
+                        </Form>
+                            : <></>
+                    }
                 </div>
 
             </div>

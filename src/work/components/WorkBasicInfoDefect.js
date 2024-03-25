@@ -828,13 +828,10 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "percent" ? true : false}
                                 validateStatus={validateStatus}
                             >
-
-                                <InputNumber min={1} max={100}
-                                    // value={workInfo?.percent ? workInfo?.percent : 0}
-
-                                    value={workInfo.percent}
-
+                                <InputNumber min={0} max={100}
                                     key="percent"
+                                    formatter={value => `${value}%`}
+                                    parser={value => value.replace('%', '')}
                                     bordered={fieldName === "percent" ? true : false}
                                     suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("percent")}
@@ -842,7 +839,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("percent")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                 />
-                                %
+                                {/* % */}
                             </Form.Item>
                         </Form>
                     </div>

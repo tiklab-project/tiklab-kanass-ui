@@ -413,12 +413,7 @@ const HomeSurvey = (props) => {
                         <TabPane tab="已完成" key="2">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="todo-item"
-                                        key={item.id}
-                                        onClick={() => goTodoDetail(item.link)}
-                                    />
+                                    return <TodoListItem content = {item.data} key = {item.id}/>
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
@@ -427,12 +422,7 @@ const HomeSurvey = (props) => {
                         <TabPane tab="已逾期" key="3">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <div
-                                        dangerouslySetInnerHTML={{ __html: item.data }}
-                                        className="todo-item"
-                                        key={item.id}
-                                        onClick={() => goTodoDetail(item.link)}
-                                    />
+                                    return <TodoListItem content = {item.data} key = {item.id}/>
                                 })
                                 :
                                 <Empty image="/images/nodata.png" description="暂时没有待办~" />

@@ -23,7 +23,6 @@ const ProdeScrumAside = (props) => {
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
-    const [projectId, setProjectId] = useState(props.match.params.id); 
     // 菜单的形式，宽菜单，窄菜单
     const [isShowText, SetIsShowText] = useState(false)
     // 当前选中菜单key

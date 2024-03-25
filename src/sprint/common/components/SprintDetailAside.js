@@ -25,6 +25,7 @@ const SprintDetailAside = (props) => {
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;
+    const projectId = props.match.params.id;
 
     const [isShowText, SetIsShowText] = useState(false)
 
@@ -34,28 +35,28 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/survey`,
+            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/workTable`,
+            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/plan`,
+            url: `/${projectId}/sprintdetail/${sprintId}/plan`,
             key: "plan",
             encoded: "plan",
         },
         {
             title: "统计",
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/statistics/workItem`,
+            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -65,21 +66,21 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/survey`,
+            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/workTable`,
+            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "统计",
             icon: 'survey',
-            url: `/${project.id}/sprintdetail/${sprintId}/statistics/workItem`,
+            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -112,7 +113,7 @@ const SprintDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/projectDetail/${project.id}/sprint`)
+        props.history.push(`/projectDetail/${projectId}/sprint`)
     }
     const setButton = useRef(null)
     return (
@@ -182,7 +183,7 @@ const SprintDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={() => props.history.push(`/${project.id}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
+                    <div onClick={() => props.history.push(`/${projectId}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>
