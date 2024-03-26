@@ -22,8 +22,7 @@ const WorkChild = (props) => {
     const [addChild, showAddChild] = useState(false);
     const [workItemTitle, setWorkItemTitle] = useState()
 
-    const { getWorkConditionPageTree, workShowType, viewType, getWorkBoardList,
-        workId,workList, setWorkId, addWork,getWorkConditionPage, createRecent, demandTypeId, 
+    const { workId,workList, setWorkId, addWork, createRecent, demandTypeId, 
         selectVersionList, sprintList, priorityList, setWorkList, findWorkItemAndChidren } = workStore;
 
     const { getWorkChildList,deleWorkChild, findWorkTypeListByCode } = WorkChildStore;

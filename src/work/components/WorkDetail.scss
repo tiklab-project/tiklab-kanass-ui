@@ -24,18 +24,16 @@
     // width: 1000;
     .ant-drawer-body {
         padding: 0;
+        overflow: hidden;
     }
 
-    .work-detail::-webkit-scrollbar {
-        width: 0 !important;
-        height: 0 !important;
-    }
+    
 
     .work-detail {
         height: 100%;
-        overflow: auto;
-        -ms-overflow-style: none;
-        overflow: -moz-scrollbars-none;
+        // overflow: auto;
+        // -ms-overflow-style: none;
+        // overflow: -moz-scrollbars-none;
     }
 }
 
@@ -293,7 +291,12 @@
                 gap: 5px;
             }
         }
-
+        .delete-button-group {
+            display: flex;
+            padding: 20px 0;
+            justify-content: flex-end;
+            gap: 10px;
+        }
 
     }
 
@@ -303,11 +306,11 @@
         font-size: 13px;
     }
 
-    .work-detail-tab {
-        flex: 1;
-        height: calc(100% - 85px);
-        // overflow: auto;
-    }
+    // .work-detail-tab {
+    //     flex: 1;
+    //     height: calc(100% - 85px);
+    //     // overflow: auto;
+    // }
 }
 
 .work-flow-transition {

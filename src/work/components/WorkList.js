@@ -17,12 +17,12 @@ import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkDetail from "./WorkDetail";
 import { finWorkList } from "./WorkGetList";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import { removeNodeInTree } from "../../common/utils/treeDataAction";
+import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
 import { setWorkDeatilInList } from "./WorkSearch";
-
 const WorkList = (props) => {
     const projectId = props.match.params.id;
-    const {workId, setWorkShowType, workShowType, workList, setWorkId, setWorkList, deleteWorkItem} = WorkStore;
+    const { workId, setWorkShowType, workShowType, workList, setWorkId, setWorkList, deleteWorkItem,
+        totalPage, currentPage, searchCondition, setWorkIndex, deleteWorkItemAndChildren } = WorkStore;
     const path = props.match.path;
     const store = {
         workStore: WorkStore,
@@ -30,7 +30,7 @@ const WorkList = (props) => {
     };
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
-    
+
     useEffect(() => {
         setWorkShowType("list")
         const params = {
@@ -38,46 +38,80 @@ const WorkList = (props) => {
             sprintId: sprintId,
             versionId: versionId
         }
-        
+
         finWorkList(path, WorkStore, params);
         return;
     }, [projectId])
 
     useEffect(() => {
-        if(workId && workId.length > 0){
+        if (workId && workId.length > 0) {
             const pathname = props.match.url;
             props.history.push(`${pathname}/${workId}`)
         }
         return;
     }, [workId]);
 
-    const deleteWork = () => {
+    const deleteWork = (deleteWorkItem, removeTree) => {
         deleteWorkItem(workId).then(() => {
-            if (workShowType === "list") {
-                removeNodeInTree(null, workList, workId, setWorkId, setSessionStorage)
-                // setWorkList([...workList])
-                if (workList.length == 0) {
+            // 当第当前页被删完, 总页数大于当前页
+            if (workList.length === 0){
+                 // 当前页被删完, 总页数等于当前页， 往前移动一页
+                if(currentPage === totalPage && currentPage > 1) {
+                    const params = {
+                        pageParam: {
+                            pageSize: searchCondition.pageParam.pageSize,
+                            currentPage: currentPage - 1
+                        }
+                    }
+                    setWorkDeatilInList(WorkStore, params)
+                } else if (currentPage === totalPage && currentPage <= 1){
+                    // 当前页被删完, 总页数等于当前页，而且是第一页
+                    setWorkId(0)
+                    setWorkIndex(0)
+                } else if(currentPage < totalPage){
                     setWorkDeatilInList(WorkStore)
-                } else {
-                    setWorkList([...workList])
+                }
+            }else {
+                const node = removeTree(workList, null, workId);
+                if (node != null) {
+                    setWorkId(node.id)
+                    setSessionStorage("detailCrumbArray",
+                        [{ id: node.id, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
                 }
             }
+           
         })
     }
 
+    const delectCurrentWorkItem = () => {
+        deleteWork(deleteWorkItem, removeNodeInTreeAddChildren)
+    }
+
+    const delectWorkItemAndChildren = () => {
+        deleteWork(deleteWorkItemAndChildren, removeNodeInTree)
+    }
+
+    const rowSpan = {
+        sm: 24,
+        md: 24,
+        lg: { span: 24 },
+        xl: { span: "22", offset: "1" },
+        xxl: { span: "18", offset: "3" }
+    }
     return (
         <Provider {...store}>
             <div className="work-list">
                 <WorkAside
                     {...props}
                 />
-                <Row style={{ flex: 1, overflow: "auto" }}>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }} style={{ background: "#fff" }}>
-                        <div className="work-list-detail">
-                            <WorkDetail {...props} deleteWork = {deleteWork}></WorkDetail>
-                        </div>
-                    </Col>
-                </Row>
+                <WorkDetail 
+                    {...props} 
+                    deleteWork={deleteWork} 
+                    delectCurrentWorkItem={delectCurrentWorkItem} 
+                    delectWorkItemAndChildren={delectWorkItemAndChildren} 
+                    rowSpan={rowSpan}
+                ></WorkDetail>
+         
             </div>
         </Provider>
 

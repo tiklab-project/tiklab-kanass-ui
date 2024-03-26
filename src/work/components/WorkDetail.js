@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 14:26:52
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Select, InputNumber, Popconfirm, message, Modal } from "antd";
+import { Form, Space, Empty, Dropdown, Skeleton, Button as ButtonAntd, Select, InputNumber, Popconfirm, message, Modal, Col, Row } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
@@ -18,17 +18,26 @@ import { SwapRightOutlined } from '@ant-design/icons';
 import Button from "../../common/button/Button";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import { FlowChartLink } from "thoughtware-flow-ui";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { setWorkTitle } from "./WorkArrayChange";
 import { changeWorkItemList } from "./WorkGetList";
+import WorkDetailCrumb from "./WorkDetailCrumb";
+import WorkDetailTab from "./WorkDetailTab";
+
+const rowSpan = {
+    sm: 24,
+    md: 24,
+    lg: 24,
+    xl: 24,
+    xxl: 24
+}
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
 
-    const { workStore, setIsModalVisible, deleteWork } = props;
+    const { workStore, setIsModalVisible, delectCurrentWorkItem, delectWorkItemAndChildren, rowSpan } = props;
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
-        setWorkIndex, getWorkTypeList, getModuleList,findSprintList, getSelectUserList, 
-        findPriority, searchWorkById,findTransitionList, findWorkItemRelationModelCount, 
-        findSelectVersionList
+        setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
+        findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
+        findSelectVersionList, haveChildren
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -38,12 +47,13 @@ const WorkDetail = (props) => {
     const [workInfo, setWorkInfo] = useState();
     const [workStatus, setWorkStatus] = useState("nostatus")
     const [isFocus, setIsFocus] = useState();
-    const [isTableDetail, setIsTableDetail] = useState(false)
     const [infoLoading, setInfoLoading] = useState(false)
     const [transformList, setTransformList] = useState([])
     const [assigner, setAssigner] = useState()
     const workDetailTop = useRef();
     const [relationModalNum, setRelationModalNum] = useState();
+    const [tabValue, setTabValue] = useState(1);
+
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const getWorkDetail = (id) => {
@@ -53,7 +63,7 @@ const WorkDetail = (props) => {
             if (res) {
                 setWorkInfo(res)
                 // 获取选项列表
-                const projectId =  res.project.id
+                const projectId = res.project.id
                 getWorkTypeList({ projectId: projectId });
                 getModuleList(projectId)
                 findSprintList(projectId)
@@ -75,14 +85,7 @@ const WorkDetail = (props) => {
             }
         })
     }
-    const isDetail = () => {
-        let isView = false;
-        if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
-            || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
-            isView = true;
-        }
-        return isView;
-    }
+
     useEffect(() => {
         if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
             || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
@@ -111,38 +114,6 @@ const WorkDetail = (props) => {
         return null;
     }, [workId, workShowType])
 
-    // const deleteWork = () => {
-    //     deleteWorkItem(workId).then(() => {
-    //         if (workShowType === "table") {
-    //             setIsModalVisible(false)
-    //             removeTableTree(workList, workId)
-    //             //如果本页被删除完，重新请求接口
-    //             if (workList.length == 0) {
-    //                 if (viewType === "tree") {
-    //                     getWorkConditionPageTree()
-    //                 }
-    //                 if (viewType === "tile") {
-    //                     getWorkConditionPage()
-    //                 }
-    //             } else {
-    //                 setWorkList([...workList])
-    //             }
-
-    //         }
-    //         // if (workShowType === "bodar") {
-    //         //     getWorkBoardList()
-    //         // }
-    //         if (workShowType === "list") {
-    //             removeNodeInTree(workList, workId, setWorkId, setSessionStorage)
-    //             setWorkList([...workList])
-    //             if (workList.length == 0) {
-    //                 setWorkDeatilInList(workStore)
-    //             } else {
-    //                 setWorkList([...workList])
-    //             }
-    //         }
-    //     })
-    // }
 
     const changeStatus = (transition) => {
         // if (userId !== workInfo.assigner?.id) {
@@ -171,7 +142,7 @@ const WorkDetail = (props) => {
                                 setWorkInfo(res)
                                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-        
+
                                 const list = changeWorkItemList(workList, res)
                                 setWorkList([...list])
                                 // workList[workIndex - 1].workStatusNode = res.workStatusNode;
@@ -185,12 +156,12 @@ const WorkDetail = (props) => {
                 })
             }
         })
-       
+
     }
 
 
     const getTransitionList = (nodeId, flowId) => {
-        
+
         const params = {
             fromNodeId: nodeId,
             flowId: flowId,
@@ -281,18 +252,6 @@ const WorkDetail = (props) => {
         </div>
 
     );
-    const goCrumWork = (index, id) => {
-        const lastCrum = detailCrumbArray[detailCrumbArray.length - 1];
-        if (lastCrum.type === "flow") {
-            setShowFlow(false)
-        } else {
-            setWorkId(id)
-        }
-
-        const array = detailCrumbArray.slice(0, index + 1)
-        setSessionStorage("detailCrumbArray", array)
-        setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
-    }
 
     const changPage = (page) => {
         const workDetail = workList[page - 1]
@@ -301,186 +260,200 @@ const WorkDetail = (props) => {
         setSessionStorage("detailCrumbArray", [{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
-    const closeDrawer = () => {
-        setIsModalVisible(false)
-        setWorkId(0)
-    }
-    const [showFlow, setShowFlow] = useState(false);
-    const goWorkList = () => {
-        if (props.match.path === "/projectDetail/:id/work/:workId") {
-            props.history.push(`/projectDetail/${projectId}/workTable`)
-        }
-        if (props.match.path === "/:id/versiondetail/:version/work/:workId") {
-            props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
-        }
-        if (props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
-            props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
-        }
 
+    const [showFlow, setShowFlow] = useState(false);
+    const [deleteSelectModal, setDeleteSelectModal] = useState(false)
+
+    const closeDeleteSelectModal = () => {
+        setDeleteSelectModal(false)
+    }
+
+    const delectWorkItem = (value) => {
+        switch (value) {
+            case "ones":
+                delectCurrentWorkItem();
+                break;
+            case "all":
+                delectWorkItemAndChildren();
+                break
+            default:
+                break;
+        }
+        setDeleteSelectModal(false)
+    }
+
+    const getHaveChildren = () => {
+        haveChildren({id: workId}).then(res => {
+            if(res.code === 0){
+                if(res.data){
+                    setDeleteSelectModal(true)
+                }else {
+                    delectCurrentWorkItem();
+                }
+            }
+        })
     }
     return (
         <Skeleton loading={infoLoading} active>
             {
-                workInfo ? <div className="work-detail">
-                    {
-                        detailCrumbArray?.length > 0 &&
-                        <div className="work-detail-crumb-col">
-                            <div className="work-detail-crumb">
-
-                                {
-                                    isDetail() &&
-                                    <div className="work-detail-crumb-item" onClick={() => goWorkList()}>
-                                        <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-pageLeft"></use>
-                                        </svg>
-                                        事项 &nbsp;/ &nbsp;</div>
-                                }
-                                {
-                                    detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
-                                        let html;
-                                        if (!isTableDetail && index === 0) {
-                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                {
-                                                    item.type === "flow" ? <img
-                                                        src={item.iconUrl}
-                                                        alt=""
-                                                        className="img-icon-right"
+                workInfo ?
+                    <>
+                        {
+                            !showFlow ?
+                                <>
+                                    {workInfo &&
+                                        <div className="work-detail">
+                                            <Row >
+                                                <Col {...rowSpan} style={{ background: "#fff" }}>
+                                                    <WorkDetailCrumb
+                                                        detailCrumbArray={detailCrumbArray}
+                                                        setDetailCrumbArray={setDetailCrumbArray}
+                                                        setShowFlow={setShowFlow}
+                                                        setWorkId={setWorkId}
+                                                        setIsModalVisible={setIsModalVisible}
+                                                        {...props}
                                                     />
-                                                        :
-                                                        <img
-                                                            src={setImageUrl(item.iconUrl)}
-                                                            alt=""
-                                                            className="img-icon-right"
-                                                        />
-                                                }
+                                                    <div className="work-detail-top" ref={workDetailTop} >
+                                                        <div className="work-detail-top-name">
+                                                            <div className="work-item-title-top">
+                                                                <div
+                                                                    className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
+                                                                    onClick={() => focusTitleInput()}
 
-                                                <span className="work-detail-crumb-text">{item.id}</span>
-                                            </div>
-                                        } else {
-                                            html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                                <span style={{ padding: "0 10px" }}>/</span>
-                                                {
-                                                    item.type === "flow" ? <img
-                                                        src={item.iconUrl}
-                                                        alt=""
-                                                        className="img-icon-right"
+                                                                >
+                                                                    <div
+                                                                        contentEditable={true}
+                                                                        suppressContentEditableWarning
+                                                                        onBlur={() => updateByBlur(event, "blur")}
+                                                                        onKeyDown={() => updateNameByKey(event, workInfo.id)}
+                                                                        ref={inputRef}
+                                                                        className="work-item-title-left"
+                                                                    >
+                                                                        {workInfo?.title}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="work-detail-tab-botton">
+                                                                    <Dropdown
+                                                                        overlay={menu}
+                                                                        trigger={"click"}
+                                                                        getPopupContainer={() => workDetailTop.current}
+                                                                        onVisibleChange={(open) => console.log(open)}
+                                                                    >
+                                                                        <Button className="botton-background" style={{ marginRight: "10px" }}>
+                                                                            {workStatus}
+                                                                            <svg className="svg-icon" aria-hidden="true">
+                                                                                <use xlinkHref="#icon-downdrop"></use>
+                                                                            </svg>
+                                                                        </Button>
+                                                                    </Dropdown>
+                                                                    <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
+                                                                        <Popconfirm
+                                                                            title="确定删除事项?"
+                                                                            onConfirm={() => getHaveChildren()}
+                                                                            // onCancel={cancel}
+                                                                            okText="是"
+                                                                            cancelText="否"
+                                                                            getPopupContainer={() => workDetailTop.current}
+                                                                        >
+                                                                            <Button  >
+                                                                                <svg className="img-icon-right" aria-hidden="true">
+                                                                                    <use xlinkHref="#icon-delete"></use>
+                                                                                </svg>
+                                                                                删除
+                                                                            </Button>
+                                                                        </Popconfirm>
+                                                                    </PrivilegeProjectButton>
+                                                                    <div className="more">
+                                                                        <svg className="svg-icon" aria-hidden="true">
+                                                                            <use xlinkHref="#icon-more"></use>
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <WorkDetailTab
+                                                        workInfo={workInfo}
+                                                        relationModalNum={relationModalNum}
+                                                        setTabValue={setTabValue}
+                                                        tabValue={tabValue}
                                                     />
-                                                        :
-                                                        <img
+                                                </Col>
+                                            </Row>
+                                            <Row style={{ overflow: "auto", flex: 1 }}>
+                                                <Col {...rowSpan} style={{ background: "#fff" }}>
+                                                    <WorkDetailBottom
+                                                        workInfo={workInfo}
+                                                        setWorkInfo={setWorkInfo}
+                                                        getWorkDetail={getWorkDetail}
+                                                        workDeatilForm={workDeatilForm}
+                                                        relationModalNum={relationModalNum}
+                                                        detailForm={detailForm}
+                                                        getTransitionList={getTransitionList}
+                                                        setTabValue={setTabValue}
+                                                        tabValue={tabValue}
+                                                        {...props}
+                                                    />
+                                                </Col>
+                                            </Row>
 
-                                                            src={setImageUrl(item.iconUrl)}
-                                                            alt=""
-                                                            className="img-icon-right"
-                                                        />
-                                                }
-                                                <span className="work-detail-crumb-text">{item.id}</span>
-                                            </div>
-                                        }
-                                        return html
 
-                                    })
-                                }
-                            </div>
-                            {
-                                workShowType !== "list" && <div className="work-detail-close" onClick={() => closeDrawer()}>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-close"></use>
-                                    </svg>
-                                </div>
-                            }
-                        </div>
-
-                    }
-
-                    {
-                        !showFlow ? <>
-                            <div className="work-detail-top" ref={workDetailTop} >
-                                <div className="work-detail-top-name">
-                                    <div className="work-item-title-top">
-                                        <div
-                                            className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
-                                            onClick={() => focusTitleInput()}
-
-                                        >
-                                            <div
-                                                contentEditable={true}
-                                                suppressContentEditableWarning
-                                                onBlur={() => updateByBlur(event, "blur")}
-                                                onKeyDown={() => updateNameByKey(event, workInfo.id)}
-                                                ref={inputRef}
-                                                className="work-item-title-left"
-                                            >
-                                                {workInfo?.title}
-                                            </div>
                                         </div>
 
-                                        <div className="work-detail-tab-botton">
-                                            <Dropdown 
-                                                overlay={menu} 
-                                                trigger={"click"} 
-                                                getPopupContainer={() => workDetailTop.current} 
-                                                onVisibleChange = {(open) =>  console.log(open)}
-                                            >
-                                                <Button className="botton-background" style={{ marginRight: "10px" }}>
-                                                    {workStatus}
-                                                    <svg className="svg-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-downdrop"></use>
-                                                    </svg>
-                                                </Button>
-                                            </Dropdown>
-                                            <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
-                                                <Popconfirm
-                                                    title="确定删除事项?"
-                                                    onConfirm={() => deleteWork(workId)}
-                                                    // onCancel={cancel}
-                                                    okText="是"
-                                                    cancelText="否"
-                                                    getPopupContainer={() => workDetailTop.current}
-                                                >
-                                                    <Button  >
-                                                        <svg className="img-icon-right" aria-hidden="true">
-                                                            <use xlinkHref="#icon-delete"></use>
-                                                        </svg>
-                                                        删除
-                                                    </Button>
-                                                </Popconfirm>
-                                            </PrivilegeProjectButton>
-                                            <div className="more">
-                                                <svg className="svg-icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-more"></use>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    }
+                                </>
+                                :
+                                <>
+                                    <WorkDetailCrumb
+                                        detailCrumbArray={detailCrumbArray}
+                                        setDetailCrumbArray={setDetailCrumbArray}
+                                        setShowFlow={setShowFlow}
+                                        setWorkId={setWorkId}
+                                        setIsModalVisible={setIsModalVisible}
+                                        {...props}
+                                    />
+                                    <FlowChartLink flowId={workInfo.workType.flow.id} />
+                                </>
 
-                                </div>
-                            </div>
-                            <div className="work-detail-tab">
-                                {workInfo && <WorkDetailBottom
-                                    workInfo={workInfo}
-                                    setWorkInfo={setWorkInfo}
-                                    getWorkDetail={getWorkDetail}
-                                    workDeatilForm={workDeatilForm}
-                                    relationModalNum={relationModalNum}
-                                    detailForm={detailForm}
-                                    getTransitionList = {getTransitionList}
-                                    {...props}
-                                />}
-                            </div>
-                        </>
-                            :
-                            <FlowChartLink flowId={workInfo.workType.flow.id} />
-                    }
-
-                </div>
+                        }
+                    </>
                     :
                     <div style={{ marginTop: "200px" }}>
                         <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
                     </div>
 
             }
-        </Skeleton>
+            <Modal
+                visible={deleteSelectModal}
+                title="删除事项"
+                // onOk={handleOk}
+                onCancel={closeDeleteSelectModal}
+                getContainer={() => workDetailTop.current}
+                footer={null}
+            >
+                <div>
+                    选择删除当前事项还是当前事项和所有下级事项？
+                </div>
+                <div className="delete-button-group">
+                    <Button onClick={closeDeleteSelectModal}>
+                        取消
+                    </Button>
+                    <Button type="primary" onClick={() => delectWorkItem("ones")}>
+                        删除当前事项
+                    </Button>
+                    <Button type="primary" onClick={() => delectWorkItem("all")}>
+                        删除当前事项以及所有下级
+                    </Button>
+                </div>
+            </Modal>
+        </Skeleton >
 
     )
+};
+
+WorkDetail.defaultProps = {
+    rowSpan: rowSpan
 };
 export default inject("workStore")(observer(WorkDetail));

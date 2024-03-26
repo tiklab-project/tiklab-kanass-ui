@@ -8,9 +8,8 @@ import WorkStore from "../../../work/store/WorkStore";
 import SprintPlanStore from "../stores/SprintPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
-import { getUser } from "thoughtware-core-ui";
 import { useDebounce } from "../../../common/utils/debounce";
-import { removeTableTree } from "../../../common/utils/treeDataAction";
+import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -22,7 +21,8 @@ const SprintPlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItem } = WorkStore;
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, 
+        deleteWorkItem, workId, deleteWorkItemAndChildren } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
         findSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
         planTotal, noPlanTotal } = SprintPlanStore;
@@ -213,12 +213,12 @@ const SprintPlan = (props) => {
         return name;
     }
 
-    const deleteWork = (id) => {
-        deleteWorkItem(id).then(res => {
+    const deleteWork = (deleteWorkItem) => {
+        deleteWorkItem(workId).then(res => {
             if(res.code === 0){
                 setIsModalVisible(false)
                 if(listType === "noPlan"){
-                    removeTableTree(noPlanWorkList, id);
+                    removeNodeInTree(noPlanWorkList, null, workId);
                     if(noPlanWorkList.length <= 0){
                         getNoPlanWorkList(
                             {
@@ -229,8 +229,9 @@ const SprintPlan = (props) => {
                             }
                         )
                     }
+                    setNoPlanWorkList([...noPlanWorkList])
                 }else {
-                    removeTableTree(planWorkList, id);
+                    removeNodeInTree(planWorkList,null, workId);
                     if(planWorkList.length <= 0){
                         getWorkList(
                             {
@@ -241,11 +242,22 @@ const SprintPlan = (props) => {
                             }
                         )
                     }
+                    setPlanWorkList([...planWorkList])
                 }
             }
             
             
         })
+    }
+
+    const delectCurrentWorkItem = () => {
+        deleteWork(deleteWorkItem)
+        setIsModalVisible(false)
+    }
+
+    const delectWorkItemAndChildren = () => {
+        deleteWork(deleteWorkItemAndChildren)
+        setIsModalVisible(false)
     }
     return (<Provider {...store}>
         <div className="sprint-plan">
@@ -490,7 +502,8 @@ const SprintPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
-                deleteWork = {deleteWork}
+                delectCurrentWorkItem = {delectCurrentWorkItem}
+                delectWorkItemAndChildren = {delectWorkItemAndChildren}
                 {...props}
             />
         </div>

@@ -1,0 +1,29 @@
+.work-detail-crumb-col {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10 15px;
+    .work-detail-crumb {
+        display: flex;
+        line-height: 30px;
+        color: #999;
+
+        .work-detail-crumb-item {
+            display: inline-flex;
+            align-items: center;
+            // margin-right: 5px;
+            .work-detail-crumb-icon:hover{
+                color: var(--thoughtware-blue);
+                // text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+        .work-detail-crumb-item:hover {
+            cursor: pointer;
+        }
+
+    }
+    .work-detail-close:hover {
+        cursor: pointer;
+    }
+}

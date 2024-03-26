@@ -9,9 +9,7 @@ import moment from 'moment';
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
 import { SwitchPreliminaryType } from "thoughtware-form-ui";
-import "thoughtware-slate-ui/es/thoughtware-slate.css"
-import "./WorkBasicInfo.scss";
-import { getSessionStorage } from "../../common/utils/setSessionStorage";
+import "thoughtware-slate-ui/es/thoughtware-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
@@ -46,7 +44,7 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, sprintList, selectVersionList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, treeIndex, findChildrenLevel
+        userList, searchWorkById, workIndex, findChildrenLevel
     } = workStore;
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()

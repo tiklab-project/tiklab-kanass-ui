@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Space, Row, Col, Spin, Popconfirm } from 'antd';
+import { Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu } from 'antd';
 import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
 import UserIcon from "../../common/UserIcon/UserIcon";
@@ -12,14 +12,15 @@ import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
 import setImageUrl from "../../common/utils/setImageUrl";
-import { removeTableTree } from "../../common/utils/treeDataAction";
+import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 
 const WorkTable = (props) => {
 
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
-        createRecent, setWorkIndex, setQuickFilterValue, treeIndex, setTreeIndex, setWorkList, workShowType } = WorkStore;
+        deleteWorkItem, deleteWorkItemAndChildren, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
+        createRecent, setWorkIndex, setQuickFilterValue, setWorkList, haveChildren } = WorkStore;
 
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -32,6 +33,19 @@ const WorkTable = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+
+    const moreMenu = (record) => {
+        return <Menu onClick={() => selectWorkItem(record) }>
+            <Menu.Item key="delete">
+                <div>删除</div>
+            </Menu.Item>
+        </Menu>
+    };
+
+    const selectWorkItem = (record) => {
+        setWorkId(record.id)
+        setDeleteSelectModal(true)
+    }
 
     useEffect(() => {
         setWorkShowType("table")
@@ -49,7 +63,6 @@ const WorkTable = (props) => {
         return;
     }, [projectId])
 
-    // let [treeIndex, setTreeIndex] = useState([])
 
     const goProdetail = (record, index) => {
         const params = {
@@ -65,19 +78,6 @@ const WorkTable = (props) => {
         setWorkId(record.id)
         setWorkIndex(index + 1)
 
-        console.log(viewType)
-        if(viewType === "tile"){
-            setTreeIndex(index)
-        }
-
-        if(viewType === "tree"){
-            // 层级的索引
-            // treeIndex.length = 0;
-            setTreeIndex(null)
-            getWorkLevelIndex(record.treePath, record.id)
-        }
-       
-
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
 
         const pathname = props.match.url;
@@ -85,28 +85,7 @@ const WorkTable = (props) => {
         setIsModalVisible(true)
     }
 
-    const getWorkLevelIndex = (value, workId) => {
-        
-        let treePath = [];
-        console.log(treeIndex)
-        if (typeof (value) === "string" && value.length > 0) {
-            const hightLevel = value.split(";");
-            hightLevel.unshift(workId)
-            let hightLevelIndex = hightLevel.length - 2;
 
-            const getIndex = (data, hightLevelIndex) => {
-                const num = data.findIndex((item) => item.id === hightLevel[hightLevelIndex])
-                hightLevelIndex--;
-                treePath.push(num)
-                if (hightLevelIndex >= 0 && data[num].children)  {
-                    getIndex(data[num].children, hightLevelIndex);
-                }
-            }
-            getIndex(workList, hightLevelIndex);
-            console.log(treePath)
-            setTreeIndex(treePath)
-        }
-    }
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -331,7 +310,17 @@ const WorkTable = (props) => {
             width: "60",
             key: 'action',
             render: (text, record) => (
-                <DeleteModal deleteFunction = {deleteWork} id = {record.id}/>
+                // <DeleteModal deleteFunction={setDeleteSelectModal(false)} id={record.id} />
+                <Dropdown
+                    overlay={() => moreMenu(record)}
+                    placement="bottomLeft"
+                    trigger="click"
+                    getPopupContainer={workTable ? () => workTable.current : null}
+                >
+                    <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-more"></use>
+                    </svg>
+                </Dropdown>
             )
         }
     ];
@@ -494,7 +483,17 @@ const WorkTable = (props) => {
                 //         </svg>
                 //     </Popconfirm>
                 // </Space>
-                <DeleteModal deleteFunction = {deleteWork} id = {record.id}/>
+                // <DeleteModal deleteFunction={setDeleteSelectModal(false)} id={record.id} />
+                <Dropdown
+                    overlay={() => moreMenu()}
+                    placement="bottomLeft"
+                    trigger="click"
+                    getPopupContainer={workTable ? () => workTable.current : null}
+                >
+                    <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-more"></use>
+                    </svg>
+                </Dropdown>
             ),
         }
     ];
@@ -515,40 +514,72 @@ const WorkTable = (props) => {
         }
     }
 
-    // 删除事项
-    const deleteWork = (id) => {
-        deleteWorkItem(id).then(() => {
-            removeTableTree(workList, id)
-            if (workList.length == 0) {
-                if (viewType === "tree") {
-                    getWorkConditionPageTree()
-                }
-                if (viewType === "tile") {
-                    getWorkConditionPage()
+
+
+    const deleteWork = (deleteWorkItem, removeTree) => {
+        deleteWorkItem(workId).then(() => {
+            // 当第当前页被删完, 总页数大于当前页
+            if (workList.length === 0) {
+                // 当前页被删完, 总页数等于当前页， 往前移动一页
+                if (currentPage === totalPage && currentPage > 1) {
+                    const params = {
+                        pageParam: {
+                            pageSize: searchCondition.pageParam.pageSize,
+                            currentPage: currentPage - 1
+                        }
+                    }
+                    setWorkDeatilInList(WorkStore, params)
+                } else if (currentPage === totalPage && currentPage <= 1) {
+                    // 当前页被删完, 总页数等于当前页，而且是第一页
+                    setWorkId(0)
+                    setWorkIndex(0)
+                } else if (currentPage < totalPage) {
+                    setWorkDeatilInList(WorkStore)
                 }
             } else {
-                setWorkList([...workList])
+                const node = removeTree(workList, null, workId);
+                if (node != null) {
+                    setWorkId(node.id)
+                    setSessionStorage("detailCrumbArray",
+                        [{ id: node.id, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
+                }
+            }
+            setWorkList([...workList])
+
+        })
+
+    }
+
+    const delectCurrentWorkItem = () => {
+        deleteWork(deleteWorkItem, removeNodeInTreeAddChildren)
+        setIsModalVisible(false)
+    }
+
+    const delectWorkItemAndChildren = () => {
+        deleteWork(deleteWorkItemAndChildren, removeNodeInTree)
+        setIsModalVisible(false)
+    }
+    const [deleteSelectModal, setDeleteSelectModal] = useState(false)
+    const getHaveChildren = () => {
+        haveChildren({ id: workId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
+                    setDeleteSelectModal(true)
+                } else {
+                    delectCurrentWorkItem();
+                }
             }
         })
     }
-
-
-    const deleteWorkIndetail = (id) => {
-        if (workShowType === "table") {
-            setIsModalVisible(false)
-            deleteWork(id)
-
-        }
-    }
-
+    const workTable = useRef()
     return (
         <Provider {...store}>
             <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
                 <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
-                    <div className="work-table">
+                    <div className="work-table" >
                         <WorkTableHead />
                         <WorkTableFilter />
-                        <div className="work-table-content">
+                        <div className="work-table-content" ref={workTable}>
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
                                     columns={props.location.pathname === "/workTable" ? projectColums : workColumns}
@@ -590,8 +621,17 @@ const WorkTable = (props) => {
                         setIsModalVisible={setIsModalVisible}
                         modelRef={modelRef}
                         showPage={true}
-                        deleteWork = {deleteWorkIndetail}
+                        delectCurrentWorkItem={delectCurrentWorkItem}
+                        delectWorkItemAndChildren={delectWorkItemAndChildren}
                         {...props}
+                    />
+                    <WorkDeleteSelectModal
+                        deleteSelectModal={deleteSelectModal}
+                        setDeleteSelectModal={setDeleteSelectModal}
+                        getPopupContainer={workTable}
+                        delectCurrentWorkItem={delectCurrentWorkItem}
+                        delectWorkItemAndChildren={delectWorkItemAndChildren}
+                    // getHaveChildren={getHaveChildren}
                     />
                 </Col>
             </Row>

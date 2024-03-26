@@ -180,8 +180,8 @@ const WorkAside = (props) => {
                                         </div>
                                         <div className="work-aside-item-second" id={childItem.id}>{childItem.title}</div>
                                     </div>
-                                    <div className={`work-aside-status ${setStatuStyle(childItem.workStatusNode.id)}`}>
-                                        {childItem.workStatusNode.name}
+                                    <div className={`work-aside-status ${setStatuStyle(childItem.workStatusNode?.id)}`}>
+                                        {childItem.workStatusNode?.name}
                                     </div>
                                 </div>
                                 {
@@ -241,10 +241,9 @@ const WorkAside = (props) => {
                         </div>
                         <div className="work-aside-item-second" id={item.id}>{item.title}</div>
                     </div>
-                    <div className={`work-aside-status ${setStatuStyle(item.workStatusNode.id)}`}>
-                        {item.workStatusNode.name}
+                    <div className={`work-aside-status ${setStatuStyle(item.workStatusNode?.id)}`}>
+                        {item.workStatusNode?.name}
                     </div>
-
                 </div>
                 {
                     item.children && item.children.length > 0 && TreeSecondDom(item.children, index, item.id, deep + 1)
@@ -294,8 +293,6 @@ const WorkAside = (props) => {
                         </div>
                     </div>
                 </Spin>
-
-
 
                 {/* </div> */}
             </div>

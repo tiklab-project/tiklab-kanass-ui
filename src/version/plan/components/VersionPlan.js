@@ -7,7 +7,7 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import VersionPlanStore from "../stores/VersionPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
-import { getUser } from "thoughtware-core-ui";
+import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import setImageUrl from "../../../common/utils/setImageUrl";
 const VersionPlan = (props) => {
     const store = {
@@ -20,10 +20,11 @@ const VersionPlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType } = WorkStore;
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItemAndChildren, 
+        workId, deleteWorkItem } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
         setVersion, delVersion, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal, deleteWorkItem } = VersionPlanStore;
+        planTotal, noPlanTotal } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
     const [listType, setListType] = useState();
@@ -152,12 +153,13 @@ const VersionPlan = (props) => {
      * @param {事项id} id 
      * @param {*} index 
      */
-    const goWorkItem = (work, index) => {
+    const goWorkItem = (work, index, type) => {
         setWorkIndex(index)
         setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
         setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
+        setListType(type)
         const pathname = props.match.url;
         props.history.push(`${pathname}/${work.id}`)
     }
@@ -197,12 +199,12 @@ const VersionPlan = (props) => {
         return name;
     }
 
-    const deleteWork = (id) => {
-        deleteWorkItem(id).then(res => {
+    const deleteWork = (deleteWorkItem) => {
+        deleteWorkItem(workId).then(res => {
             if(res.code === 0){
                 setIsModalVisible(false)
                 if(listType === "noPlan"){
-                    removeTableTree(noPlanWorkList, id);
+                    removeNodeInTree(noPlanWorkList, null, workId);
                     if(noPlanWorkList.length <= 0){
                         getNoPlanWorkList(
                             {
@@ -213,8 +215,9 @@ const VersionPlan = (props) => {
                             }
                         )
                     }
+                    setNoPlanWorkList([...noPlanWorkList])
                 }else {
-                    removeTableTree(planWorkList, id);
+                    removeNodeInTree(planWorkList, null, workId);
                     if(planWorkList.length <= 0){
                         getWorkList(
                             {
@@ -225,11 +228,22 @@ const VersionPlan = (props) => {
                             }
                         )
                     }
+                    setPlanWorkList([...planWorkList])
                 }
             }
             
             
         })
+    }
+
+    const delectCurrentWorkItem = () => {
+        deleteWork(deleteWorkItem)
+        setIsModalVisible(false)
+    }
+
+    const delectWorkItemAndChildren = () => {
+        deleteWork(deleteWorkItemAndChildren)
+        setIsModalVisible(false)
     }
 
     return (<Provider {...store}>
@@ -311,7 +325,7 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
@@ -428,7 +442,7 @@ const VersionPlan = (props) => {
                                         onDragStart={() => moveStart(item.id, versionId)}
                                         key={item.id}
                                     >
-                                        <div className="work-item-left" onClick={() => goWorkItem(item, index)}>
+                                        <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
                                             <div className="work-item-icon">
                                                 {
                                                     item.workTypeSys?.iconUrl ?
@@ -477,7 +491,8 @@ const VersionPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
-                deleteWork = {deleteWork}
+                delectCurrentWorkItem = {delectCurrentWorkItem}
+                delectWorkItemAndChildren = {delectWorkItemAndChildren}
                 {...props}
             />
         </div>

@@ -19,7 +19,8 @@ const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, findTransitionList,
         setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList,
-        workBoardCurrentPage, setQuickFilterValue, workShowType, getWorkBoardList, deleteWorkItem } = WorkStore;
+        workBoardCurrentPage, setQuickFilterValue, workShowType, getWorkBoardList, deleteWorkItem,
+        deleteWorkItemAndChildren, workId } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -171,12 +172,22 @@ const WorkBodar = (props) => {
         findChangePageWorkBoardList(data)
     }
 
-    const deleteWork = () => {
+    const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(() => {
             if (workShowType === "bodar") {
                 getWorkBoardList()
             }
         })
+    }
+
+    const delectCurrentWorkItem = () => {
+        deleteWork(deleteWorkItem)
+        setIsModalVisible(false)
+    }
+
+    const delectWorkItemAndChildren = () => {
+        deleteWork(deleteWorkItemAndChildren)
+        setIsModalVisible(false)
     }
 
     const cancelDrag = () => {
@@ -350,7 +361,8 @@ const WorkBodar = (props) => {
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
                             showPage={true}
-                            deleteWork = {deleteWork}
+                            delectWorkItemAndChildren = {delectWorkItemAndChildren}
+                            delectCurrentWorkItem = {delectCurrentWorkItem}
                             {...props}
                         />
                     </div>

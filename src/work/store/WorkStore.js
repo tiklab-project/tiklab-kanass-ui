@@ -59,7 +59,6 @@ export class WorkStore {
     }
     @observable workId = "";
     @observable workIndex = "";
-    @observable treeIndex = [];
     
    
     // 当前事项的状态index 
@@ -99,10 +98,7 @@ export class WorkStore {
         this.archiveView = value
     }
 
-    @action 
-    setTreeIndex = (value) => {
-        this.treeIndex = value
-    }
+ 
 
     @action
     setDefaultCurrent = (value) => {
@@ -972,6 +968,14 @@ export class WorkStore {
         const params = new FormData();
         params.append("id", value.id)
         const data = await Service("/workItem/findWorkItemAndChidren", params)
+        return data;
+    }
+
+    @action
+    haveChildren = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/haveChildren", params)
         return data;
     }
 
