@@ -10,6 +10,34 @@
     .work-title {
         color: var(--thoughtware-blue);
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .work-name {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 300px;
+        }
+    }
+
+    .work-status {
+        padding: 2px 3px;
+        background: #e2e1e4;
+        border-radius: 4px;
+        font-size: 10px;
+        width: fit-content;
+        color: #2b333e;
+    }
+
+    .work-status-process {
+        background: #b0d5dfa1;
+        color: #132c33;
+    }
+
+    .work-status-done {
+        background: #dfecd5e3;
+        color: #5e5314;
     }
     .ant-table table {
         border-bottom: 0;
@@ -30,6 +58,11 @@
             // max-height: calc(100% - 100px);
             border-top: 1px solid #f0f0f0;
             border-bottom: 1px solid #f0f0f0;
+            .ant-table-tbody>tr>td {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
     }
 }

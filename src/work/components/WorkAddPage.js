@@ -30,7 +30,9 @@ const WorkAddPage = (props) => {
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
-    const [selectItem, setSelectItem] = useState()
+    const [selectItem, setSelectItem] = useState();
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         form.setFieldsValue({
             parentWorkItem: workId,
@@ -163,10 +165,12 @@ const WorkAddPage = (props) => {
 
                 return 0;
             })
+            setLoading(true)
             addWork(values).then((res) => {
                 setWorkId(res.data)
                 setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
+                    setLoading(false)
                     if (workShowType === "bodar") {
                         getWorkBoardList()
                         message.success({
@@ -482,7 +486,7 @@ const WorkAddPage = (props) => {
                     </div>
 
                     <div className="work-add-button">
-                        <Button type="primary" onClick={() => onFinish()}>创建</Button>
+                        <Button loading = {loading} type="primary" onClick={() => onFinish()}>创建</Button>
                         <Button onClick={() => handleCancel()}>取消</Button>
                     </div>
                 </div>

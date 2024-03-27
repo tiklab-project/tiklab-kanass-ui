@@ -167,13 +167,28 @@ const WorkChild = (props) => {
 
     }
 
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
     const columns = [
         {
             title: "标题",
             dataIndex: "title",
             key: "title",
-            render: (text, record) => <div className="work-name" >
-                <div className="work-title" onClick={() => goWorkItem(record)}>
+            ellipsis: true,
+            render: (text, record) =><div className="work-title" onClick={() => goWorkItem(record)}>
                     {
                         record.workTypeSys?.iconUrl ?
                             <img
@@ -189,9 +204,8 @@ const WorkChild = (props) => {
                                 className="svg-icon"
                             />
                     }
-                    {text}
+                    <div className="work-name">{text}</div>
                 </div>
-            </div>
         },
         {
             title: "事件类型",
@@ -204,21 +218,24 @@ const WorkChild = (props) => {
             title: "事项状态",
             dataIndex: ["workStatusNode", "name"],
             key: "workStatus",
-            width: "10%"
+            width: "10%",
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode?.id)}`}>
+                {text}
+            </div>
         },
-        {
-            title: "负责人",
-            dataIndex: ["assigner", "name"],
-            key: "assigner",
-            width: "10%"
-        },
+        // {
+        //     title: "负责人",
+        //     dataIndex: ["assigner", "name"],
+        //     key: "assigner",
+        //     width: "10%"
+        // },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            width: "5%",
+            width: "13%",
             render: (text, record) => (
-                <span onClick={() => delectChild(record.id)} className="span-botton">移除</span>
+                <span onClick={() => delectChild(record.id)} className="span-botton">解除父子关系</span>
             ),
         }
     ];

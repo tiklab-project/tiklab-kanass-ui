@@ -26,7 +26,7 @@ const layout = {
 
 const SprintAddModal = (props) => {
     const [form] = Form.useForm();
-    const { uselist, getUseList, sprintStore, sprintStateList, setVisible, visible, sprintId, setActiveTabs } = props;
+    const { uselist, getUseList, sprintStore, sprintStateList, setVisible, visible, sprintId, setActiveTabs, selectTabs } = props;
     const { searchSprint, addsprintlist, editSprint, findSprintList } = sprintStore;
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     // 项目id
@@ -86,7 +86,7 @@ const SprintAddModal = (props) => {
                 addsprintlist(data).then(res => {
                     if(res.code === 0){
                         setActiveTabs("all")
-                        findSprintList({ projectId: projectId, sprintStateId: null });
+                        selectTabs("all", 1);
                     }
                 })
             } else {

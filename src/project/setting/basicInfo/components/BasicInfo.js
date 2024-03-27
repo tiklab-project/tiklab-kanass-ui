@@ -84,6 +84,7 @@ const BasicInfo = props => {
                     desc: data.desc,
                     projectState: data.projectState,
                     master: data.master.id,
+                    projectLimits: data.projectLimits,
                     startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
                 })
             }
@@ -98,8 +99,10 @@ const BasicInfo = props => {
             desc: projectInfo.desc,
             projectState: projectInfo.projectState,
             master: projectInfo.master.id,
+            projectLimits: projectInfo.projectLimits,
             startTime: [moment(projectInfo.startTime, dateFormat), moment(projectInfo.endTime, dateFormat)]
         })
+        setDisabled(true);
     }
 
     const onFinish = () => {
@@ -113,11 +116,13 @@ const BasicInfo = props => {
                 projectType: {
                     id: values.projectType
                 },
+                projectLimits: values.projectLimits,
                 id: projectId,
                 iconUrl: iconUrl
             }
             updateProject(data).then(res => {
                 if(res.code === 0){
+                    setProjectInfo(data)
                     message.success("修改成功");
                     setDisabled(true);
                 }
@@ -139,6 +144,18 @@ const BasicInfo = props => {
             id: "3"
         }
     ]
+
+    const projectLimits = [
+        {
+            name: "公共项目",
+            id: "0"
+        },
+        {
+            name: "私密项目",
+            id: "1"
+        }
+    ]
+
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
@@ -217,14 +234,14 @@ const BasicInfo = props => {
                                     <div className="project-form-icon-content">
                                         <div>
                                             {
-                                                iconUrl ? <Fragment>
-                                                    <img src={setImageUrl(iconUrl)} alt="" width={60} height={60} />
-                                                </Fragment>
+                                                iconUrl ?
+                                                    <img src={setImageUrl(iconUrl)} alt="" style={{marginRight: "10px"}} width={50} height={50} />
 
                                                     :
                                                     <img
                                                         src={('images/project1.png')}
-                                                        alt="" width={60} height={60}
+                                                        style={{marginRight: "10px"}}
+                                                        alt="" width={50} height={50}
                                                     />
                                             }
                                             <span>项目图标，可点击更改按钮修改icon</span>
@@ -267,6 +284,21 @@ const BasicInfo = props => {
                                         >
                                             {
                                                 projectTypelist && projectTypelist.map((item, index) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="可见范围"
+                                        name="projectLimits"
+                                    >
+                                        <Select
+                                            placeholder="可见范围"
+                                            allowClear
+                                        >
+                                            {
+                                                projectLimits.map((item, index) => {
                                                     return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                                 })
                                             }

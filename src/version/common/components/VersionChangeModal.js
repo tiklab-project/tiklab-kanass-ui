@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import "./VersionChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
+import { Tooltip } from "antd";
 
 const VersionChangeModal = (props) => {
     const { isShowText, versionDetailStore } = props;
-    const { findVersionList,findVersion, versionList, version } = versionDetailStore;
+    const { findVersionList, findVersion, versionList, version } = versionDetailStore;
     const [showMenu, setShowMenu] = useState(false);
     const [selectVersion, setSelectVersion] = useState(false)
 
@@ -20,7 +21,7 @@ const VersionChangeModal = (props) => {
     }
     const [showVersionList, setShowVersionList] = useState()
     useEffect(() => {
-        findVersionList({projectId: projectId}).then(res => {
+        findVersionList({ projectId: projectId }).then(res => {
             if (res.code === 0) {
                 let list = res.data;
                 list = list.filter(item => item.id !== versionId)
@@ -33,7 +34,7 @@ const VersionChangeModal = (props) => {
             }
         });
         return;
-    },[versionId])
+    }, [versionId])
 
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
@@ -57,7 +58,7 @@ const VersionChangeModal = (props) => {
      */
     const selectVersionId = (id) => {
         // 切换选中项目，获取项目详情
-        findVersion({id: id}).then(data => {
+        findVersion({ id: id }).then(data => {
             if (data.code === 0) {
                 props.history.push(`/${projectId}/versiondetail/${id}/survey`)
                 localStorage.setItem("versionId", id);
@@ -80,8 +81,8 @@ const VersionChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="version-title title" onClick={showMoreMenu}>
-                        <img 
-                            src={('/images/version.png')} 
+                        <img
+                            src={('/images/version.png')}
                             className="icon-32"
                             alt=""
                         />
@@ -97,19 +98,22 @@ const VersionChangeModal = (props) => {
                             </svg>
                         </div>
                     </div>
-                    :
-                    <div className='version-title-icon' onClick={showMoreMenu} >
-                       <img 
-                            src={('/images/version.png')} 
-                            className="icon-32"
-                            alt=""
-                        />
-                        <div className={`version-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
-                            </svg>
-                        </div>
-                    </div>
+                        :
+                        <Tooltip placement="right" title={version?.name}>
+                            <div className='version-title-icon' onClick={showMoreMenu} >
+                                <img
+                                    src={('/images/version.png')}
+                                    className="icon-32"
+                                    alt=""
+                                />
+                                <div className={`version-toggleCollapsed`}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-down"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                        </Tooltip>
+
                 }
             </div>
 
@@ -133,20 +137,20 @@ const VersionChangeModal = (props) => {
                         <div className="change-version-name">{version?.name}</div>
                         <div className="change-version-state">{version?.versionState?.name}</div>
                     </div>
-                     <svg className="svg-icon" aria-hidden="true">
+                    <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-selected"></use>
                     </svg>
                 </div>
                 {
                     showVersionList && showVersionList.map((item) => {
-                        if(item.id !== versionId){
+                        if (item.id !== versionId) {
                             return <div className={`change-version-item ${item.id === selectVersion ? "change-version-selectName" : ""}`}
                                 onClick={() => selectVersionId(item.id)}
                                 key={item.id}
                                 onMouseOver={() => handleMouseOver(item.id)}
                                 onMouseOut={handleMouseOut}
                             >
-                                 <img
+                                <img
                                     className="icon-32"
                                     src={('images/version.png')}
                                     title={item.name}
@@ -158,7 +162,7 @@ const VersionChangeModal = (props) => {
                                 </div>
                             </div>
                         }
-                        
+
                     })
                 }
 

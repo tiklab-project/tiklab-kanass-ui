@@ -175,18 +175,6 @@ const VersionDetailAside = (props) => {
                             设置
                         </span>
                     </div>
-                    {/* <div className="version-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ?
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-leftcircle"></use>
-                                </svg>
-                                :
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div> */}
                 </div>
             </Sider>
         </Fragment>

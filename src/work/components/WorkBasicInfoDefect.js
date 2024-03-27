@@ -558,8 +558,7 @@ const WorkBasicInfo = (props) => {
      * 更新描述
      */
     const updataDesc = useDebounce((value) => {
-        setSlateValue(value);
-
+        setSlateValue();
         let data = {
             id: workId,
             desc: value,
@@ -567,6 +566,7 @@ const WorkBasicInfo = (props) => {
         }
         editWork(data).then(res => {
             if (res.code === 0) {
+                setSlateValue(value);
                 workInfo.desc = value
             }
         })

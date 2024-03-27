@@ -30,8 +30,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 50px;
-        line-height: 50px;
+        // height: 50px;
+        // line-height: 50px;
         gap: 20px;
         margin-bottom: 15px;
         .vertical-bar {
@@ -46,6 +46,16 @@
         .filter-search {
             width: 120px;
             border-radius: 4px;; 
+        }
+        .sprint-filter-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .select-content {
+                padding: 5px 10px;
+                background-color: var(--thoughtware-gray);
+                width: 100px;
+            }
         }
     }
     .sprint-botton {
@@ -84,6 +94,12 @@
         .sprint-status-done {
             background: #dfecd5e3;
             color: #5e5314;
+        }
+        .ant-pagination-simple .ant-pagination-simple-pager input {
+            user-select: none;
+            pointer-events: none;
+            padding: 0;
+            border: 0;
         }
     }
 }

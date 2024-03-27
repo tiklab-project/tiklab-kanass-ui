@@ -26,6 +26,14 @@ const WorkSort = (props) => {
             title: "类型"
         },
         {
+            value: "work_status_node_id",
+            title: "状态"
+        },
+        {
+            value: "work_priority_id",
+            title: "优先级"
+        },
+        {
             value: "assigner_id",
             title: "负责人"
         },
@@ -36,10 +44,6 @@ const WorkSort = (props) => {
         {
             value: "build_time",
             title: "创建时间"
-        },
-        {
-            value: "work_status_node_id",
-            title: "状态"
         }
     ]
 

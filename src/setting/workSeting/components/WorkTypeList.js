@@ -161,15 +161,6 @@ const WorkTypeList = (props) => {
                                 type="edit"
                                 id={record.id}
                                 grouper = "custom"
-                                // addWorkTypeList={addCustomWorkTypeList}
-                                // editWorkList={editWorkTypeList}
-                                // findWorkListById={findWorkTypeListById}
-                                // fromList={fromList}
-                                // getFormList={getFormList}
-                                // flowList={flowList}
-                                // getFlowList={getFlowList}
-                                // creatIcon={creatIcon}
-                                // findIconList={findIconList}
                             >
                                 编辑
                             </WorkTypeAddmodal>

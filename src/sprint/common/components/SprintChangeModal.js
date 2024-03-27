@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SprintChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
+import { Tooltip } from "antd";
 
 const SprintChangeModal = (props) => {
     const { isShowText, sprintDetailStore } = props;
@@ -98,25 +99,28 @@ const SprintChangeModal = (props) => {
                         </div>
                     </div>
                         :
-                        <div className='sprint-title-icon' onClick={showMoreMenu} >
-                            <img
-                                src={('/images/sprint.png')}
-                                className="icon-32"
-                                alt=""
-                            />
-                            <div className={`sprint-toggleCollapsed`}>
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-down"></use>
-                                </svg>
+                        <Tooltip placement="right" title={sprint?.sprintName}>
+                            <div className='sprint-title-icon' onClick={showMoreMenu} >
+                                <img
+                                    src={('/images/sprint.png')}
+                                    className="icon-32"
+                                    
+                                    alt=""
+                                />
+                                <div className={`sprint-toggleCollapsed`}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-down"></use>
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
+                        </Tooltip>
+
                 }
             </div>
 
             <div
                 className={`change-sprint-box ${showMenu ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
-                style={{}}
             >
                 <div className="change-sprint-head">切换迭代</div>
                 <div className={`change-sprint-item change-sprint-selectName`}
@@ -133,7 +137,7 @@ const SprintChangeModal = (props) => {
                         <div className="change-sprint-name">{sprint?.sprintName}</div>
                         <div className="change-sprint-state">{sprint?.sprintState?.name}</div>
                     </div>
-                     <svg className="svg-icon" aria-hidden="true">
+                    <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-selected"></use>
                     </svg>
                 </div>

@@ -9,7 +9,8 @@
 import React, { useEffect, useRef } from "react";
 
 const CoLScroll = (props) => {
-    const { timerOuter, timerCore, ganttOuter, ganttCore } = props;
+    const { timerOuter, timerCore, ganttOuter, ganttCore, isModalVisible } = props;
+    console.log(isModalVisible)
     // 滑块
     const colScrollRef = useRef();
     // 滚轴
@@ -27,8 +28,24 @@ const CoLScroll = (props) => {
 
         return;
     }, [timerCore.current.offsetHeight])
+
+    
     useEffect(() => {
-        const handleWheel = (e) => {
+
+       
+
+        window.addEventListener('wheel', handleWheel)
+        return () => {
+            window.removeEventListener('wheel', handleWheel)
+        }
+    }, [colScrollRef.current, isModalVisible])
+
+    const handleWheel = (e) => {
+        if (!timerOuter.current) {
+            return;
+        }
+        console.log(isModalVisible)
+        if (!isModalVisible) {
             const scrollSlider = colScrollRef.current;
             const boxScroll = boxColScrollRef.current
             const sliderTop = scrollSlider?.offsetTop;
@@ -56,12 +73,8 @@ const CoLScroll = (props) => {
 
             sliderChangeY(scrollSlider.offsetTop, boxScroll.offsetHeight - scrollSlider.offsetHeight);
         }
-
-        window.addEventListener('wheel', handleWheel)
-        return () => {
-            window.removeEventListener('wheel', handleWheel)
-        }
-    }, [colScrollRef.current])
+       
+    }
     /**
      * 纵向滚动轴的拖动
      */

@@ -244,7 +244,7 @@ const WorkTypeAddModal = (props) => {
                                 {
                                     iconList && iconList.map((item) => {
                                         return <div className={`work-type-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                            <img src={setImageUrl(item.iconUrl)} alt="" className="img-icon-right"/>
+                                            <img src={setImageUrl(item.iconUrl)} alt="" className="icon-40"/>
                                         </div>
                                     })
                                 }

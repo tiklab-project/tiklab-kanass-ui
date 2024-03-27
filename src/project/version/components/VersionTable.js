@@ -14,35 +14,40 @@ import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-// import InputSearch from "../../../common/input/InputSearch";
 import VersionStore from "../store/VersionStores";
 import InputSearch from '../../../common/input/InputSearch';
 import { getUser } from "thoughtware-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import { SelectSimple, SelectItem } from "../../../common/select";
 
 const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
     }
     const { versionList, setVersionList, getVersionList, deleVersion, createRecent,
-        createVersionFocus, deleteVersionFocus,
-        findFocusVersionList, userList, getUseList, searchCondition, total } = VersionStore;
+        createVersionFocus, deleteVersionFocus, userList, getUseList, searchCondition, 
+        total, findAllVersionState } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
     // tab的key
-    const [activeTabs, setActiveTabs] = useState("all")
+    const [activeTabs, setActiveTabs] = useState("all");
+    const [versionStateList, setVersionStateList] = useState([]);
     const userId = getUser().userId;
     // 初始化
     useEffect(() => {
-        findVersion({ projectId: projectId, versionState: null })
+        // findVersion({ projectId: projectId, versionState: null })
+        findAllVersionState().then(res => {
+            if(res.code === 0){
+                setVersionStateList(res.data)
+            }
+        })
+        selectTabs(activeTabs, 1)
         return;
     }, []);
 
     // 加载中
     const [loading, setLoading] = useState(false)
-    // 获取关注的迭代
-    const [focusVersionList, setFocusVersionList] = useState([])
     // 跳转到版本详情
     const goDetail = (id, name) => {
         const params = {
@@ -121,7 +126,7 @@ const VersionTable = (props) => {
     const deletVersionList = (id) => {
         deleVersion(id).then(res => {
             if (res.code === 0) {
-                selectTabs("all")
+                selectTabs(activeTabs, 1)
             }
         })
     }
@@ -162,7 +167,7 @@ const VersionTable = (props) => {
             align: "left",
             render: (text) => <span>{text ? text : "---"}</span>,
         },
-       
+
         {
             title: "事项",
             dataIndex: "workNumber",
@@ -193,7 +198,7 @@ const VersionTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <DeleteModal deleteFunction = {deletVersionList} id = {record.id}/>
+                    <DeleteModal deleteFunction={deletVersionList} id={record.id} />
 
                 </Space>
 
@@ -210,8 +215,6 @@ const VersionTable = (props) => {
         setLoading(true)
         getVersionList(value).then((res) => {
             setLoading(false)
-
-
         })
     }
 
@@ -235,20 +238,9 @@ const VersionTable = (props) => {
             icon: "all"
         },
         {
-            title: '进行中的',
-            key: 'pending',
-            icon: "project"
-        },
-        {
-            title: '未开始的',
-            key: 'creating',
-            icon: "programrencent"
-        },
-
-        {
-            title: '已完成的',
-            key: 'ending',
-            icon: "programjoin"
+            title: '我创建的',
+            key: 'build',
+            icon: "programconcern"
         },
         {
             title: '我关注的',
@@ -263,7 +255,6 @@ const VersionTable = (props) => {
      */
     const selectTabs = (key, page) => {
         setActiveTabs(key)
-        // setFilterType(key)
         const params = {
             projectId: projectId,
             pageParam: {
@@ -272,26 +263,32 @@ const VersionTable = (props) => {
             }
         }
         switch (key) {
-            case "pending":
-                getVersionList({ versionState: "111111", ...params });
-                break;
-            case "creating":
-                getVersionList({ versionState: "000000", ...params });
-                break;
-            case "ending":
-                getVersionList({ versionState: "222222", ...params });
-                break;
             case "all":
-                getVersionList({ versionState: null, ...params });
+                getVersionList({ followersId: null, builderId: null, ...params });
+                break;
+            case "build":
+                getVersionList({ builderId: userId, followersId: null, ...params });
                 break;
             case "focus":
-                findFocusVersionList({ master: userId, ...params });
+                getVersionList({ followersId: userId, builderId: null, ...params });
                 break;
-
             default:
                 break;
         }
     }
+
+    const selectVersionState = (value) => {
+        console.log(value)
+        const params = {
+            versionStates: value,
+            pageParam: {
+                pageSize: searchCondition.pageParam.pageSize,
+                currentPage: 1,
+            }
+        }
+        getVersionList(params);
+    }
+
     const changePage = (page, pageSize) => {
         selectTabs(activeTabs, page)
     }
@@ -308,10 +305,11 @@ const VersionTable = (props) => {
                                 name="添加版本"
                                 type="add"
                                 id="0"
-                                findVersion={findVersion}
+                                // findVersion={findVersion}
                                 getUseList={getUseList}
                                 userList={userList}
-                                setActiveTabs = {setActiveTabs}
+                                setActiveTabs={setActiveTabs}
+                                selectTabs = {selectTabs}
                                 {...props}
                             />
                         </Breadcumb>
@@ -329,12 +327,32 @@ const VersionTable = (props) => {
                                     })
                                 }
                             </div>
-                            <InputSearch
-                                placeholder="版本名称"
-                                allowClear
-                                style={{ width: 200 }}
-                                onChange={onSearch}
-                            />
+                            <div className="version-filter-right">
+                                <SelectSimple
+                                    name="versionState"
+                                    onChange={(value) => selectVersionState(value)}
+                                    title={"状态"}
+                                    ismult={true}
+                                    value={searchCondition?.versionState}
+                                >
+                                    {
+                                        versionStateList.map(item => {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                            />
+                                        })
+                                    }
+                                </SelectSimple>
+                                <InputSearch
+                                    placeholder="版本名称"
+                                    allowClear
+                                    style={{ width: 200 }}
+                                    onChange={onSearch}
+                                />
+                            </div>
+
                         </div>
 
                         <div className="project-version-contant">
@@ -343,7 +361,7 @@ const VersionTable = (props) => {
                                     columns={columns}
                                     dataSource={versionList}
                                     rowKey={(record) => record.id}
-                                    pagination={activeTabs !== "focus" ? {
+                                    pagination={{
                                         total: total,
                                         pageSize: searchCondition.pageParam.pageSize,
                                         current: searchCondition.pageParam.currentPage,
@@ -351,7 +369,7 @@ const VersionTable = (props) => {
                                         position: ["bottomCenter"],
                                         hideOnSinglePage: true,
                                         simple: true
-                                    } : false}
+                                    }}
                                     loading={loading}
                                     onSearch={onSearch}
                                 />

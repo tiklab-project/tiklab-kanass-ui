@@ -22,11 +22,15 @@
             border-top: 1px soild #f0f0f0;
             border-bottom: 1px soild #f0f0f0;
         }
+        .ant-form-item {
+            margin-bottom: 20px;
+        }
         .work-log-item-first {
             display: flex;
             align-items: center;
-            line-height: 30px;
+            line-height: 40px;
             justify-content: space-between;
+           
             .work-log-item-user {
                 display: flex;
                 align-items: center;

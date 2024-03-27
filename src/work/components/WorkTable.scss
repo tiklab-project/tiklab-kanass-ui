@@ -12,7 +12,7 @@
         .work-first-col {
             display: flex;
             align-items: center;
-
+            height: 50px;
         }
 
         .ant-table-thead {
@@ -91,22 +91,20 @@
             display: flex;
             align-items: center;
             margin-left: 5px;
-
+            gap: 5px;
             .work-key {
                 color: var(--thoughtware-gray-500);
-                line-height: 20px;
-                font-size: 12px;
             }
 
             .work-text {
                 cursor: pointer;
-
-                line-height: 25px;
-                height: 22px;
+                // line-height: 25px;
+                // height: 22px;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
                 width: 300px;
+                
             }
 
             .work-text:hover {

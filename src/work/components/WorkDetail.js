@@ -283,11 +283,11 @@ const WorkDetail = (props) => {
     }
 
     const getHaveChildren = () => {
-        haveChildren({id: workId}).then(res => {
-            if(res.code === 0){
-                if(res.data){
+        haveChildren({ id: workId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
                     setDeleteSelectModal(true)
-                }else {
+                } else {
                     delectCurrentWorkItem();
                 }
             }
@@ -311,6 +311,7 @@ const WorkDetail = (props) => {
                                                         setShowFlow={setShowFlow}
                                                         setWorkId={setWorkId}
                                                         setIsModalVisible={setIsModalVisible}
+                                                        workShowType = {workShowType}
                                                         {...props}
                                                     />
                                                     <div className="work-detail-top" ref={workDetailTop} >
@@ -405,24 +406,30 @@ const WorkDetail = (props) => {
                                     }
                                 </>
                                 :
-                                <>
-                                    <WorkDetailCrumb
-                                        detailCrumbArray={detailCrumbArray}
-                                        setDetailCrumbArray={setDetailCrumbArray}
-                                        setShowFlow={setShowFlow}
-                                        setWorkId={setWorkId}
-                                        setIsModalVisible={setIsModalVisible}
-                                        {...props}
-                                    />
-                                    <FlowChartLink flowId={workInfo.workType.flow.id} />
-                                </>
+                                <Row style={{ flex: 1 }}>
+                                    <Col {...rowSpan} style={{ background: "#fff" }}>
+                                        <WorkDetailCrumb
+                                            detailCrumbArray={detailCrumbArray}
+                                            setDetailCrumbArray={setDetailCrumbArray}
+                                            setShowFlow={setShowFlow}
+                                            setWorkId={setWorkId}
+                                            setIsModalVisible={setIsModalVisible}
+                                            {...props}
+                                        />
+                                        <FlowChartLink flowId={workInfo.workType.flow.id} />
+                                    </Col>
+                                </Row>
 
                         }
                     </>
                     :
-                    <div style={{ marginTop: "200px" }}>
-                        <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
-                    </div>
+                    <Row style={{ flex: 1 }}>
+                        <Col {...rowSpan} style={{ background: "#fff" }}>
+                            <div style={{ marginTop: "200px" }}>
+                                <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
+                            </div>
+                        </Col>
+                    </Row>
 
             }
             <Modal

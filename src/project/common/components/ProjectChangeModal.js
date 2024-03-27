@@ -140,7 +140,6 @@ const ProjectChangeModal = (props) => {
                         </div>
                     </div>
                         :
-
                         <Tooltip placement="right" title={project?.projectName}>
                             <div className='project-title-icon' onClick={showMoreMenu} >
                                 <img

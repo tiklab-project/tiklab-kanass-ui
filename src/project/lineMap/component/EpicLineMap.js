@@ -725,6 +725,7 @@ const EpicLineMap = (props) => {
                         timerOuter={timerColOuter}
                         ganttCore={ganttCore}
                         ganttOuter={ganttOuter}
+                        isModalVisible = {isModalVisible}
                     />
                 }
             </div>

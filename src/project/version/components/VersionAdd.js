@@ -15,8 +15,9 @@ import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import Button from "../../../common/button/Button";
 const { RangePicker } = DatePicker;
 const VersionAddmodal = (props) => {
-    const { versionStore, findVersion, userList, getUseList, setActiveTabs } = props;
-    const { editVersion, addVersion, searchVersionById, status, findAllVersionState, getVersionList, searchCondition } = versionStore;
+    const { versionStore, findVersion, userList, getUseList, setActiveTabs, selectTabs } = props;
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState, 
+        getVersionList, searchCondition } = versionStore;
     const [form] = Form.useForm();
     const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 弹窗显示
@@ -62,20 +63,12 @@ const VersionAddmodal = (props) => {
                     setVisible(false);
                 })
             } else {
-                addVersion(values).then(() => {
-                    findVersion({ projectId: projectId })
-                    setVisible(false);
-                    setActiveTabs("all")
-
-                    const params = {
-                        versionState: null,
-                        projectId: projectId,
-                        pageParam: {
-                            pageSize: searchCondition.pageParam.pageSize,
-                            currentPage: 1,
-                        }
+                addVersion(values).then((res) => {
+                    if(res.code === 0){
+                        setActiveTabs("all")
+                        selectTabs("all", 1)
                     }
-                    getVersionList(params)
+                    setVisible(false);
                     form.resetFields();
                 })
             }

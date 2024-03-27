@@ -209,21 +209,21 @@ const WorkTable = (props) => {
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="icon-32"
+                                className="img-icon-right"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="icon-32"
+                                className="img-icon-right"
                             />
                     }
                 </div>
-                <div>
+                {/* <div> */}
                     <div className="work-key">{record.id}</div>
                     <div className="work-text">{text}</div>
-                </div>
+                {/* </div> */}
             </div>
         },
         {

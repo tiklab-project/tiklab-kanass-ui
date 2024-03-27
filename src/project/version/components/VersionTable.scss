@@ -74,9 +74,19 @@
     .version-filter {
         display: flex;
         gap: 10px;
-        margin: 15px 0;
+        margin-bottom: 15px;
         align-items: center;
         justify-content: space-between;
+        .version-filter-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .select-content {
+                padding: 5px 10px;
+                background-color: var(--thoughtware-gray);
+                width: 100px;
+            }
+        }
     }
 
     .version-search {

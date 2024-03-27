@@ -1,6 +1,6 @@
 /*
  * @Descripttion: 迭代列表， 自定义列表
- * @version: 1.0.0
+ * @sprint: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
@@ -20,36 +20,44 @@ import SprintStore from "../store/SprintStore";
 import { Provider, observer } from "mobx-react";
 import { useDebounce } from "../../../common/utils/debounce";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import { SelectSimple, SelectItem } from "../../../common/select";
+
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
     }
     const projectId = props.match.params.id;
-    const { findAllSprintState, findSprintList, uselist, getUseList, sprintStateList,
-        sprintList, delesprintList, createSprintFocus, findSprintFocusList,
-        deleteSprintFocus, findFocusSprintList, setFilterType, createRecent
+    const { findAllSprintState, findSprintPage, uselist, getUseList,
+        sprintList,setSprintList, delesprintList, createSprintFocus, findSprintFocusList,
+        deleteSprintFocus, total, createRecent, sprintPageParams
     } = SprintStore;
 
     const project = JSON.parse(localStorage.getItem("project"));
     // 登录者id
     const userId = getUser().userId;
-    // 获取关注的迭代
-    const [focusSprintList, setFocusSprintList] = useState([])
     // tab的key
     const [activeTabs, setActiveTabs] = useState("all")
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
     // 操作类型， edit,add
-    const [type, setType] = useState()
+    const [type, setType] = useState();
+
     // 迭代id
-    const [sprintId, setSprintId] = useState()
+    const [sprintId, setSprintId] = useState();
+
+    const [sprintStateList, setsprintStateList] = useState([])
     /**
      * 获取关注的迭代, 获取项目的所有迭代，获取所有迭代状态
      */
     useEffect(() => {
-        getFocusSprint()
-        findSprintList({ projectId: projectId });
-        findAllSprintState();
+        // getFocusSprint()
+        // findSprintList({ projectId: projectId });
+        findAllSprintState().then(res => {
+            if(res.code === 0){
+                setsprintStateList(res.data)
+            }
+        });
+        selectTabs(activeTabs, 1)
         return;
     }, [])
 
@@ -75,7 +83,7 @@ const Sprint = (props) => {
      * @param {输入框的值} data 
      */
     const onSearch = useDebounce((data) => {
-        findSprintList({ sprintName: data })
+        findSprintPage({ sprintName: data })
     }, [500])
 
     /**
@@ -92,51 +100,12 @@ const Sprint = (props) => {
 
     }
 
-    /**
-     * 获取关注的迭代列表
-     */
-    const getFocusSprint = () => {
-        const params = {
-            masterId: userId,
-            projectId: projectId
-        }
-        findSprintFocusList(params).then(data => {
-            if (data.code === 0) {
-                let list = []
-                if (data.data.length > 0) {
-                    data.data.map(item => {
-                        list.push(item.sprintId)
-                    })
-                }
-                setFocusSprintList([...list])
-            }
-        })
-    }
 
     /**
-     * 添加关注的迭代
-     * @param {迭代id} sprintId 
-     */
-    const addFocusSprint = (sprintId) => {
-        const params = {
-            sprintId: sprintId,
-            masterId: userId,
-            projectId: projectId
-        }
-        createSprintFocus(params).then(data => {
-            if (data.code === 0) {
-
-                focusSprintList.push(sprintId)
-                setFocusSprintList([...focusSprintList])
-            }
-        })
-    }
-
-    /**
-     * 取消关注
-     * @param {迭代id} sprintId 
-     */
-    const deleteFocusSprint = (sprintId) => {
+    * 取消关注
+    * @param {迭代id} sprintId 
+    */
+    const deleteFocusSprint = (sprintId, index) => {
         const params = {
             sprintId: sprintId,
             masterId: userId,
@@ -144,14 +113,32 @@ const Sprint = (props) => {
         }
         deleteSprintFocus(params).then(data => {
             if (data.code === 0) {
-                const index = focusSprintList.indexOf(sprintId);
-                if (index > -1) {
-                    focusSprintList.splice(index, 1);
-                }
-                setFocusSprintList([...focusSprintList])
+                sprintList[index].focusIs = false
+                setSprintList([...sprintList])
             }
         })
     }
+
+
+    /**
+     * 添加关注的迭代
+     * @param {迭代id} sprintId 
+     */
+    const addFocusSprint = (sprintId, index) => {
+        const params = {
+            sprintId: sprintId,
+            masterId: userId,
+            projectId: projectId
+        }
+        createSprintFocus(params).then(data => {
+            if (data.code === 0) {
+                sprintList[index].focusIs = true
+                setSprintList([...sprintList])
+            }
+        })
+    }
+
+
 
     /**
      * tab 数组
@@ -163,20 +150,9 @@ const Sprint = (props) => {
             icon: "all"
         },
         {
-            title: '进行中的',
-            key: 'pending',
-            icon: "project"
-        },
-        {
-            title: '未开始的',
-            key: 'creating',
-            icon: "programrencent"
-        },
-
-        {
-            title: '已完成的',
-            key: 'ending',
-            icon: "programjoin"
+            title: '我创建的',
+            key: 'build',
+            icon: "programconcern"
         },
         {
             title: '我关注的',
@@ -189,26 +165,25 @@ const Sprint = (props) => {
      * tab 切换
      * @param {tab key} key 
      */
-    const selectTabs = (key) => {
+    const selectTabs = (key, page) => {
         setActiveTabs(key)
-        setFilterType(key)
+        const params = {
+            projectId: projectId,
+            pageParam: {
+                pageSize: sprintPageParams.pageParam.pageSize,
+                currentPage: page,
+            }
+        }
         switch (key) {
-            case "pending":
-                findSprintList({ projectId: projectId, sprintStateId: "111111" });
-                break;
-            case "creating":
-                findSprintList({ projectId: projectId, sprintStateId: "000000" });
-                break;
-            case "ending":
-                findSprintList({ projectId: projectId, sprintStateId: "222222" });
-                break;
             case "all":
-                findSprintList({ projectId: projectId, sprintStateId: null });
+                findSprintPage({ followersId: null, builderId: null, ...params });
+                break;
+            case "build":
+                findSprintPage({ builderId: userId, followersId: null, ...params });
                 break;
             case "focus":
-                findFocusSprintList({ projectId: projectId, master: userId });
+                findSprintPage({ followersId: userId, builderId: null, ...params });
                 break;
-
             default:
                 break;
         }
@@ -221,7 +196,7 @@ const Sprint = (props) => {
     const deleSprintList = (id) => {
         delesprintList(id).then(res => {
             if (res.code === 0) {
-                selectTabs("all")
+                selectTabs(activeTabs, 1)
             }
 
         })
@@ -246,13 +221,20 @@ const Sprint = (props) => {
         return name;
     }
 
+    const changePage = (page, pageSize) => {
+        selectTabs(activeTabs, page)
+    }
 
-    const deleteSprintById = (id) => {
-        delesprintList(id).then(res => {
-            if (res.code === 0) {
-                selectTabs("all")
+    const selectaSprintState = (value) => {
+        console.log(value)
+        const params = {
+            sprintStateIds: value,
+            pageParam: {
+                pageSize: sprintPageParams.pageParam.pageSize,
+                currentPage: 1,
             }
-        })
+        }
+        findSprintPage(params);
     }
 
     const columns = [
@@ -299,36 +281,26 @@ const Sprint = (props) => {
             title: "操作",
             key: "action",
             width: "100px",
-            render: (text, record) => (
+            render: (text, record, index) => (
                 <Space size="middle">
                     {
-                        focusSprintList.indexOf(record.id) !== -1 ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(record.id)}>
+                        record.focusIs ?
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusSprint(record.id, index)}>
                                 <use xlinkHref="#icon-view"></use>
                             </svg>
                             :
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusSprint(record.id)}>
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusSprint(record.id, index)}>
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
 
-                    {/* <Dropdown
-                        overlay={() => moreMenu(record.id)}
-                        placement="bottomLeft"
-                        trigger="click"
-                    >
-                        <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-more"></use>
-                        </svg>
-
-                    </Dropdown> */}
-
-                    <DeleteModal deleteFunction = {deleSprintList} id = {record.id}/>
+                    <DeleteModal deleteFunction={deleSprintList} id={record.id} />
                 </Space>
 
             ),
         },
     ];
+
     return (<Provider {...store}>
         <div className="project-sprint">
             <Row>
@@ -350,19 +322,39 @@ const Sprint = (props) => {
                                         return <div
                                             className={`sprint-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
                                             key={item.key}
-                                            onClick={() => selectTabs(item.key)}
+                                            onClick={() => selectTabs(item.key, 1)}
                                         >
                                             {item.title}
                                         </div>
                                     })
                                 }
                             </div>
-                            <InputSearch
-                                placeholder="迭代名称"
-                                allowClear
-                                style={{ width: 200 }}
-                                onChange={onSearch}
-                            />
+                            <div className="sprint-filter-right">
+                                <SelectSimple
+                                    name="sprintStateIds"
+                                    onChange={(value) => selectaSprintState(value)}
+                                    title={"状态"}
+                                    ismult={true}
+                                    value={sprintPageParams?.sprintStateIds}
+                                >
+                                    {
+                                        sprintStateList.map(item => {
+                                            return <SelectItem
+                                                value={item.id}
+                                                label={item.name}
+                                                key={item.id}
+                                            />
+                                        })
+                                    }
+                                </SelectSimple>
+                                <InputSearch
+                                    placeholder="迭代名称"
+                                    allowClear
+                                    style={{ width: 200 }}
+                                    onChange={onSearch}
+                                />
+                            </div>
+
                         </div>
                         <div className="project-sprint-contant">
                             <div className="sprint-box">
@@ -370,9 +362,17 @@ const Sprint = (props) => {
                                     columns={columns}
                                     dataSource={sprintList}
                                     rowKey={(record) => record.id}
-                                    pagination={false}
+                                    // pagination={false}
                                     onSearch={onSearch}
-                                    onChange={false}
+                                    pagination={{
+                                        total: total,
+                                        pageSize: sprintPageParams.pageParam.pageSize,
+                                        current: sprintPageParams.pageParam.currentPage,
+                                        onChange: changePage,
+                                        position: ["bottomCenter"],
+                                        hideOnSinglePage: true,
+                                        simple: true
+                                    }}
                                 />
                             </div>
                         </div>
@@ -389,6 +389,7 @@ const Sprint = (props) => {
                 setVisible={setVisible}
                 visible={visible}
                 setActiveTabs={setActiveTabs}
+                selectTabs = {selectTabs}
                 {...props}
             />
         </div>

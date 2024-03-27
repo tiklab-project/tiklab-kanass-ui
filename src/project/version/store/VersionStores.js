@@ -7,8 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import { observable, action } from "mobx";
-import { Service } from "../../../common/utils/requset"
-import { async } from "@antv/x6/lib/registry/marker/async";
+import { Service } from "../../../common/utils/requset";
 export class VersionStore {
     // 版本列表
     @observable versionList = [];

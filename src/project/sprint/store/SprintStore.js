@@ -14,6 +14,8 @@ export class SprintStore {
     @observable
     sprintList = [];
 
+    @observable
+    total = 1;
     // 搜索迭代的名字
     @observable
     searchSprintName = [];
@@ -34,7 +36,7 @@ export class SprintStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1
         }
     };
@@ -48,6 +50,11 @@ export class SprintStore {
     sprintStateList = []
     // 筛选状态
     @observable filterType = "pending"
+
+    @action
+    setSprintList = (value) => {
+        this.sprintList = value;
+    }
 
     /**
      * 设置筛选状态
@@ -78,7 +85,6 @@ export class SprintStore {
     @action
     findSprintList = async (value) => {
         Object.assign(this.sprintPageParams, { ...value })
-        console.log(this.sprintPageParams)
         const data = await Service("/sprint/findSprintList", this.sprintPageParams)
         if (data.code === 0) {
             this.sprintList = data.data;
@@ -86,6 +92,16 @@ export class SprintStore {
         return data.data;
     }
 
+    @action
+    findSprintPage = async (value) => {
+        Object.assign(this.sprintPageParams, { ...value })
+        const data = await Service("/sprint/findSprintPage", this.sprintPageParams)
+        if (data.code === 0) {
+            this.sprintList = data.data.dataList;
+            this.total = data.data.totalRecord;
+        }
+        return data;
+    }
     /**
      * 查找关注的迭代列表
      * @param {查询参数} value 
@@ -138,7 +154,6 @@ export class SprintStore {
      */
     @action
     searchSprint = async (values) => {
-
         const param = new FormData()
         param.append("id", values)
         const data = await Service("/sprint/findSprint", param)
@@ -197,9 +212,9 @@ export class SprintStore {
     @action
     findAllSprintState = async () => {
         const data = await Service("/sprintState/findAllSprintState")
-        if (data.code === 0) {
-            this.sprintStateList = data.data;
-        }
+        // if (data.code === 0) {
+        //     this.sprintStateList = data.data;
+        // }
         return data;
     }
 

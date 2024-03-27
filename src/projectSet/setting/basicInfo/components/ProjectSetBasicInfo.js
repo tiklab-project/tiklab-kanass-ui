@@ -82,6 +82,7 @@ const ProjectSetBasicInfo = props => {
                     name: data.name,
                     remark: data.remark,
                     master: data.master.id,
+                    projectSetLimits: data.projectSetLimits,
                     startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
                 })
             }
@@ -90,12 +91,15 @@ const ProjectSetBasicInfo = props => {
     };
 
     const cancel = () => {
+        console.log(projectSetInfo)
         form.setFieldsValue({
             name: projectSetInfo.name,
             remark: projectSetInfo.remark,
             master: projectSetInfo.master.id,
+            projectSetLimits: projectSetInfo.projectSetLimits,
             startTime: [moment(projectSetInfo.startTime, dateFormat), moment(projectSetInfo.endTime, dateFormat)]
         })
+        setDisabled(true)
     }
 
     const onFinish = () => {
@@ -105,11 +109,18 @@ const ProjectSetBasicInfo = props => {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),
                 endTime: time[1].format("YYYY-MM-DD"),
-                master: { id: values.master?.id },
+                master: { id: values.master },
+                projectSetLimits: values.projectSetLimits,
                 id: projectSetId
             }
 
-            updateProjectSet(data);
+            updateProjectSet(data).then(res => {
+                if(res.code === 0){
+                    setprojectSetInfo(data)
+                }
+                setDisabled(true)
+            })
+            
             // setVisible(false);
         })
     }
@@ -165,6 +176,17 @@ const ProjectSetBasicInfo = props => {
             </div>
         </div>
     );
+    
+    const projectSetLimits = [
+        {
+            name: "公共项目",
+            id: "0"
+        },
+        {
+            name: "私密项目",
+            id: "1"
+        }
+    ]
 
     return (
         <Row>
@@ -175,29 +197,6 @@ const ProjectSetBasicInfo = props => {
                     />
                     <Collapse expandIconPosition={"right"}>
                         <Panel header={projectSetInfoDesc()} key="1" >
-                                {/* <div className="projectSet-set-icon-block">
-                                    <div>
-                                        {
-                                            iconUrl ?
-                                                <img
-                                                    src={('/images/' + iconUrl)}
-                                                    alt="" width={60} height={60}
-                                                />
-                                                :
-                                                <img
-                                                    src={('images/project1.png')}
-                                                    alt="" width={60} height={60}
-                                                />
-                                        }
-                                        <span>项目集图标，可点击更改按钮修改icon</span>
-                                    </div>
-                                    <PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>
-                                        <div className="change-botton" onClick={() => setVisible(true)}>
-                                            更改图标
-                                        </div>
-                                    </PrivilegeProjectButton>
-
-                                </div> */}
                                 <Form
                                     {...layout}
                                     name="basic"
@@ -210,41 +209,17 @@ const ProjectSetBasicInfo = props => {
                                     labelAlign={"left"}
                                     onValuesChange={onFinish}
                                 >
-                                    {/* <div className="projectSet-set-icon">
-                                        <Form.Item
-                                            label="项目图标"
-                                            className="projectSet-form-icon"
-                                            {...layout}
-                                            labelAlign="left"
-                                        >
-                                            <div className="projectSet-form-icon-content">
-                                                <div>
-                                                    {
-                                                        iconUrl ? <Fragment>
-                                                            <img src={setImageUrl(iconUrl)} alt="" width={60} height={60} />
-                                                        </Fragment>
-
-                                                            :
-                                                            <img
-                                                                src={('images/project1.png')}
-                                                                alt="" width={60} height={60}
-                                                            />
-                                                    }
-                                                    <span>项目图标，可点击更改按钮修改icon</span>
-                                                </div>
-
-                                                <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectSetId}  {...props}>
-                                                    <div className="change-button" onClick={() => setVisible(true)}>
-                                                        更改图标
-                                                    </div>
-                                                </PrivilegeProjectButton>
-                                            </div>
-                                        </Form.Item>
-                                    </div> */}
+                                  
 
                                     <Form.Item
                                         label="项目集名称"
                                         name="name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: '请输入项目集名称',
+                                            }
+                                        ]}
                                     >
                                         <Input placeholder="项目集名称" />
                                     </Form.Item>
@@ -255,18 +230,36 @@ const ProjectSetBasicInfo = props => {
                                         name="master"
                                         rules={[
                                             {
-                                                required: false,
-                                                message: '请输入项目集编码',
+                                                required: true,
+                                                message: '请输入负责人',
                                             }
                                         ]}
                                     >
                                         <Select
                                             placeholder="负责人"
-                                            allowClear
                                         >
                                             {
                                                 uselist && uselist.map((item, index) => {
                                                     return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="可见范围"
+                                        name="projectSetLimits"
+                                        rules={[
+                                            {
+                                                required: true
+                                            }
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="可见范围"
+                                        >
+                                            {
+                                                projectSetLimits.map((item, index) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                                 })
                                             }
                                         </Select>

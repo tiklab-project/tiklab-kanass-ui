@@ -56,14 +56,29 @@ const WorkRelation = (props) => {
         createRecent(params)
     }
 
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
+
     const columns = [
         {
             title: "标题",
             dataIndex: ["workItem", "title"],
             key: "title",
-            width: 150,
-            render: (text, record) => <div className="work-name" >
-                <div className="work-title" onClick={() => goWorkItem(record.workItem) }>
+            ellipsis: true,
+            render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record.workItem) }>
                     {
                         record.workItem?.workTypeSys?.iconUrl ?
                             <img
@@ -78,36 +93,37 @@ const WorkRelation = (props) => {
                                 className="svg-icon"
                             />
                     }
-                    {text}
+                    <div className="work-name">{text}</div>
                 </div>
-            </div>
         },
         {
             title: "事件类型",
-            dataIndex: ["workItem", "workType", "name"],
+            dataIndex: ["workItem", "workTypeSys", "name"],
             key: "workType",
-            width: 150
-
+            width: "10%"
         },
         {
             title: "事项状态",
-            dataIndex: ["workItem", "workStatus", "name"],
+            dataIndex: ["workItem", "workStatusNode", "name"],
             key: "workStatus",
-            width: 150
+            width: "10%",
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workItem?.workStatusNode?.id)}`}>
+                {text}
+            </div>
         },
-        {
-            title: "负责人",
-            dataIndex: ["workItem", "assigner", "name"],
-            key: "assigner",
-            width: 150
-        },
+        // {
+        //     title: "负责人",
+        //     dataIndex: ["workItem", "assigner", "name"],
+        //     key: "assigner",
+        //     width: "10%"
+        // },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            width: "15%",
+            width: "10%",
             render: (text, record) => (
-                <span onClick={() => delectRelation(record.id)} className="span-botton" >删除</span>
+                <span onClick={() => delectRelation(record.id)} className="span-botton" >解除关联</span>
             ),
         }
     ];
