@@ -17,7 +17,7 @@ const WorkAddPage = (props) => {
     const { moduleList, selectSprintList, userList, findProjectList, projectList,
         getModuleList, findSelectSprintList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
-        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList, 
+        findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
         selectVersionList, findSelectVersionList
     } = workStore;
 
@@ -26,7 +26,8 @@ const WorkAddPage = (props) => {
     const versionId = props.match.params.version ? props.match.params.version : null;
     // 全局不一定存在
     const project = JSON.parse(localStorage.getItem("project"));
-    const projectType = project?.projectType?.type;
+    // console.log(project)
+    const [projectType, setProjectType] = useState(project ? project?.projectType?.type : null);
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
@@ -35,14 +36,35 @@ const WorkAddPage = (props) => {
 
     useEffect(() => {
         form.setFieldsValue({
-            parentWorkItem: workId,
-            project: projectId,
-            sprint: sprintId,
-            assigner: project?.master.id,
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
         getForm(workType.form.id)
+        getEachWorkType()
 
+
+        if (project) {
+            getProjectValue(project)
+        }
+        if (!projectId) {
+            findProjectList();
+        }
+        findPriority().then(res => {
+            if (res.code === 0) {
+                form.setFieldsValue({
+                    workPriority: priorityList[0]?.id
+                })
+            }
+        });
+        // getWorkTypeList({ projectId: projectId });
+
+        return;
+    }, [])
+
+    /**
+     * 
+     * @param {*} project 
+     */
+    const getEachWorkType = () => {
         switch (workType.workType.code) {
             case "demand":
             case "epic":
@@ -78,99 +100,107 @@ const WorkAddPage = (props) => {
             default:
                 break;
         }
-        if (projectId) {
+    }
 
-            getModuleList(projectId).then(res => {
-                if (res.code === 0) {
-                    form.setFieldsValue({
-                        module: moduleList[0]?.id
-                    })
-                }
-            })
-            if(projectType === "scrum"){
-                findSelectSprintList(projectId).then(res => {
-                    if (res.code === 0) {
-                        form.setFieldsValue({
-                            sprint: sprintId ? sprintId : res.data[0]?.id
-                        })
-                    }
-                })
-            }
-           
-            findSelectVersionList(projectId).then(res => {
-                if (res.code === 0) {
-                    if(res.data.length > 0) {
-                        form.setFieldsValue({
-                            projectVersion: versionId ? versionId : res.data[0]?.id
-                        })
-                    }
-                    
-                }
-            })
-            getSelectUserList(projectId);
-        }
-        if (!projectId) {
-            findProjectList();
-        }
-        findPriority().then(res => {
+    /**
+     * 在项目内添加事项或者选择项目之后， 设置表单初始化值
+     * @param {*} project 
+     */
+    const getProjectValue = (project) => {
+        const projectId = project.id;
+        const projectType = project.projectType.type;
+        setProjectType(projectType)
+        form.setFieldsValue({
+            parentWorkItem: workId,
+            project: projectId,
+            sprint: sprintId,
+            assigner: project?.master.id,
+            planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+        })
+        // 获取模块
+        getModuleList(projectId).then(res => {
             if (res.code === 0) {
                 form.setFieldsValue({
-                    workPriority: priorityList[0]?.id
+                    module: res.data[0]?.id
                 })
             }
-        });
-        getWorkTypeList({ projectId: projectId });
+        })
 
-        return;
-    }, [])
+        // 如果是敏捷试开发，则获取迭代列表
+        if (projectType === "scrum") {
+            findSelectSprintList(projectId).then(res => {
+                if (res.code === 0) {
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data[0]?.id
+                            })
+                        }else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+
+                }
+            })
+        }
+
+        // 获取版本
+        findSelectVersionList(projectId).then(res => {
+            if (res.code === 0) {
+                if (versionId) {
+                    form.setFieldsValue({
+                        projectVersion: versionId
+                    })
+                } else {
+                    if (res.data.length > 0) {
+                        form.setFieldsValue({
+                            projectVersion: res.data[0]?.id
+                        })
+                    } else {
+                        form.setFieldsValue({
+                            projectVersion: null
+                        })
+                    }
+                }
+
+
+            }
+        })
+        // 获取成员
+        getSelectUserList(projectId);
+    }
+
+
     // 获取自定义表单
     const getForm = (id) => {
         findFormConfig({ id: id })
     }
 
-    const selectProject = (option) => {
-        console.log(option)
-        getModuleList(option)
-        if(projectType === "scrum"){
-            findSelectSprintList(option)
-        }
-        
-        getSelectUserList(option);
+    const selectProject = (value, option) => {
+        getProjectValue(option.project)
     }
 
     const onFinish = () => {
         form.validateFields().then((values) => {
+            console.log(values)
             values.builder = getUser().userId;
-            values.project = values.project ? values.project : projectId;
-            if(projectType) {
-                values.sprint = values.sprint ? values.sprint : null;
-            }
-            
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
             values.planEndTime = values.planTime[1].format('YYYY-MM-DD 23:59:59')
             values.workType = workType.id;
             values.desc = slateValue;
-            values.extData = {}
-            if(versionId){
-                values.versionId = versionId
-            }
-            let keys = Object.keys(values)
-            keys = keys.map((item) => {
-                return item.slice(6)
-            })
-            formList && formList.map((item) => {
-                if (keys.indexOf(item.code) !== -1) {
-                    values.extData = Object.assign({ [`System${item.code}`]: values[`System${item.code}`] }, values.extData)
-                }
-
-                return 0;
-            })
+            values.project = projectId ? projectId : values.project;
             setLoading(true)
             addWork(values).then((res) => {
                 setWorkId(res.data)
                 setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
-                    setLoading(false)
+                   
                     if (workShowType === "bodar") {
                         getWorkBoardList()
                         message.success({
@@ -206,7 +236,7 @@ const WorkAddPage = (props) => {
                         },
                     });
                 }
-
+                setLoading(false)
             })
 
         })
@@ -241,7 +271,7 @@ const WorkAddPage = (props) => {
     }
 
     const [newWorkItem, setNewWorkItem] = useState();
-    
+
     const changeWorkItem = (changedValues) => {
         setNewWorkItem({ ...newWorkItem, ...changedValues })
         setIsEditStart(true)
@@ -276,10 +306,10 @@ const WorkAddPage = (props) => {
                                 name="title"
                                 rules={[{ required: true, message: '请输入标题!' }]}
                             >
-                                <Input placeholder="事项标题"/>
+                                <Input placeholder="事项标题" />
                             </Form.Item>
                             {
-                                props.match.path === "/work/worklist/:statetype" &&
+                                (props.match.path === "/workTable" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"
@@ -295,7 +325,7 @@ const WorkAddPage = (props) => {
                                     >
                                         {
                                             projectList && projectList.map((item) => {
-                                                return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                                return <Select.Option project={item} value={item.id} key={item.id}>{item.projectName}</Select.Option>
                                             })
                                         }
                                     </Select>
@@ -381,31 +411,31 @@ const WorkAddPage = (props) => {
                                 </Select>
                             </Form.Item>
                             {
-                                projectType === "scrum" &&  <Form.Item
-                                label="所属迭代"
-                                name="sprint"
-                                rules={[{ required: false, message: '请输入所属迭代!' }]}
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                            >
-                                <Select
-                                    placeholder="迭代"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectSprint"
+                                projectType === "scrum" && <Form.Item
+                                    label="所属迭代"
+                                    name="sprint"
+                                    rules={[{ required: false, message: '请输入所属迭代!' }]}
+                                    wrapperCol={{
+                                        span: 16,
+                                    }}
                                 >
-                                    {
-                                        selectSprintList && selectSprintList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
+                                    <Select
+                                        placeholder="迭代"
+                                        allowClear
+                                        className="work-select"
+                                        key="selectSprint"
+                                    >
+                                        {
+                                            selectSprintList && selectSprintList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
                             }
 
 
-                           
+
                             <Form.Item
                                 label="所属版本"
                                 name="projectVersion"
@@ -486,7 +516,7 @@ const WorkAddPage = (props) => {
                     </div>
 
                     <div className="work-add-button">
-                        <Button loading = {loading} type="primary" onClick={() => onFinish()}>创建</Button>
+                        <Button loading={loading} type="primary" onClick={() => onFinish()}>创建</Button>
                         <Button onClick={() => handleCancel()}>取消</Button>
                     </div>
                 </div>

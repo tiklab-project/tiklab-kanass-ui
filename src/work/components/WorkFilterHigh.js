@@ -14,7 +14,7 @@ const WorkFilterHigh = (props) => {
     const { workStore, labelHidden, setFiltetModal } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const project = JSON.parse(localStorage.getItem("project"));
-    const projectType = projectId ?  project.projectType?.type : "scrum";
+    const projectType = projectId ?  project?.projectType?.type : "scrum";
 
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;

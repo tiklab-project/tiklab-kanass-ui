@@ -220,10 +220,8 @@ const WorkTable = (props) => {
                             />
                     }
                 </div>
-                {/* <div> */}
-                    <div className="work-key">{record.id}</div>
-                    <div className="work-text">{text}</div>
-                {/* </div> */}
+                <div className="work-key">{record.id}</div>
+                <div className="work-text">{text}</div>
             </div>
         },
         {
@@ -337,25 +335,23 @@ const WorkTable = (props) => {
             render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
-                        record.workTypeSys.iconUrl ?
+                        record.workTypeSys?.iconUrl ?
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="icon-32"
+                                className="img-icon-right"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="icon-32"
+                                className="img-icon-right"
                             />
                     }
                 </div>
-                <div>
-                    <div className="work-key">{record.id}</div>
-                    <div className="work-text">{text}</div>
-                </div>
+                <div className="work-key">{record.id}</div>
+                <div className="work-text">{text}</div>
             </div>
         },
         {
@@ -545,9 +541,7 @@ const WorkTable = (props) => {
                 }
             }
             setWorkList([...workList])
-
         })
-
     }
 
     const delectCurrentWorkItem = () => {

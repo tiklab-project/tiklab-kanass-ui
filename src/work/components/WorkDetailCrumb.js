@@ -4,7 +4,7 @@ import { setSessionStorage, getSessionStorage } from "../../common/utils/setSess
 import "./WorkDetailCrumb.scss";
 
 const WorkDetailCrumb = (props) => {
-    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible } = props;
+    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId } = props;
     const isDetail = () => {
         let isView = false;
         if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"

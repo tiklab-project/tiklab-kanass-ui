@@ -716,8 +716,6 @@ export class WorkStore {
     //获取事项类型
     @action
     getWorkTypeList = async(value) => {
-
-
         const data = await Service("/workTypeDm/findWorkTypeDmList",value);
         if(data.code === 0){
             this.workTypeList = data.data;

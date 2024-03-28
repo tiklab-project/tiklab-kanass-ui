@@ -21,7 +21,7 @@ import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
 const SprintSurvey = (props) => {
     const { findSprint, findSprintBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, statWorkItemByBusStatus } = SprintSurveyStore;
+        findtodopage, todoTaskList, findWorkItemNumByQuickSearch } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -70,7 +70,7 @@ const SprintSurvey = (props) => {
             })
         })
 
-        statWorkItemByBusStatus(data).then(res => {
+        findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent ? percent.toFixed(2) : 0)

@@ -22,7 +22,7 @@ import VersionStartState from "./VersionStartState";
 import VersionEndState from "./VersionEndState";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, statWorkItemByBusStatus, userList, getUseList } = VersionSurveyStore;
+        findtodopage, todoTaskList, findWorkItemNumByQuickSearch, userList, getUseList } = VersionSurveyStore;
 
     const versionId = props.match.params.version;
     const [versionInfo, setVersionInfo] = useState();
@@ -37,7 +37,7 @@ const VersionSurvey = (props) => {
             versionId: versionId,
             projectId: projectId
         }
-        statWorkItemByBusStatus(data).then(res => {
+        findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent ? percent.toFixed(2) : 0)

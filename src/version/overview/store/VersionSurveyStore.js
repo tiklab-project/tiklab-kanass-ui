@@ -14,10 +14,10 @@ class VersionSurveyStore {
     @observable userList = []
 
     @action
-	statWorkItemByBusStatus = async(value) => {
+	findWorkItemNumByQuickSearch = async(value) => {
         const params = {
             projectIds: [value.projectId],
-            currentVersionId: value.versionId
+            versionId: value.versionId
         }
         const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;

@@ -87,9 +87,9 @@ const WorkTableHead = (props) => {
                         </div>
                     }
 
-                    <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
+                    {/* <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}> */}
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
-                    </PrivilegeProjectButton>
+                    {/* </PrivilegeProjectButton> */}
                     <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
                         <Button>
                             <svg className="svg-icon" aria-hidden="true">

@@ -22,10 +22,10 @@ class SprintSurveyStore {
     }
 
     @action
-	statWorkItemByBusStatus = async(value) => {
+	findWorkItemNumByQuickSearch = async(value) => {
         const params = {
             projectIds: [value.projectId],
-            currentSprintId: value.sprintId
+            sprintId: value.sprintId
         }
         const data = await Service("/workItem/findWorkItemNumByQuickSearch", params)
         return data;

@@ -49,6 +49,7 @@ const ProjectScrumDetail = (props) => {
         return () => {
             setSearchConditionNull()
             setTabValue({id: "all", type: "system"})
+            // localStorage.removeItem("project")
         }
     }, [projectId])
 
