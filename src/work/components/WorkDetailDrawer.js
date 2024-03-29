@@ -27,9 +27,9 @@ const WorkDetailDrawer = (props) => {
     }))
 
     useEffect(() => {
-        window.addEventListener("mousedown", closeModal, false);
+        window.addEventListener("mouseup", closeModal, false);
         return () => {
-            window.removeEventListener("mousedown", closeModal, false);
+            window.removeEventListener("mouseup", closeModal, false);
         }
 
     }, [isModalVisible])

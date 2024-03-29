@@ -34,9 +34,8 @@ class HomeStore {
     @observable
     opLogList = [];
 
-    @observable
-    opLogTotal = [];
 
+    @observable opLogTotal = 0;
     @observable opLogCondition = {
         pageParam: {
             pageSize: 10,
@@ -169,42 +168,6 @@ class HomeStore {
         return data;
     }
 
-    /**
-     * 获取动态列表
-     * @param {当前页数} value 
-     * @returns 
-     */
-    @action
-    findDynamicPage = async (value) => {
-        const params = {
-            orderParams: [{
-                name: "title",
-                orderType: "asc"
-            }],
-            pageParam: {
-                pageSize: 20,
-                currentPage: value.currentPage
-            }
-        }
-        const data = await Service("/dynamic/findDynamicPage", params)
-        if (data.code === 0) {
-            if (value.currentPage === 1) {
-                this.dynamicList = data.data.dataList
-            }
-            if (value.currentPage > 1) {
-                this.dynamicList.push(...data.data.dataList);
-            }
-
-            this.dynamicTotal = data.data.totalPage;
-            if (value.currentPage >= this.dynamicTotal) {
-                this.isDynamicReachBottom = false
-            } else {
-                this.isDynamicReachBottom = true
-            }
-
-        }
-        return data;
-    }
 
     /**
      * 创建最近点击的

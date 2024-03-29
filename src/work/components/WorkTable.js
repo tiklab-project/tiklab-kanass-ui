@@ -209,14 +209,14 @@ const WorkTable = (props) => {
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="img-icon-right"
+                                className="menu-icon"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="img-icon-right"
+                                className="menu-icon"
                             />
                     }
                 </div>
@@ -339,14 +339,14 @@ const WorkTable = (props) => {
                             <img
                                 src={setImageUrl(record.workTypeSys?.iconUrl)}
                                 alt=""
-                                className="img-icon-right"
+                                className="menu-icon"
 
                             />
                             :
                             <img
                                 src={'/images/workType2.png'}
                                 alt=""
-                                className="img-icon-right"
+                                className="menu-icon"
                             />
                     }
                 </div>

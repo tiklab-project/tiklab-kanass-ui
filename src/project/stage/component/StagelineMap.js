@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段路线图表格页面 
+ * @Descripttion: 路线图表格页面 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
@@ -9,58 +9,103 @@
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
-import "./stagelineMap.scss";
+import "./StagelineMap.scss";
+// import "./Epic.scss"
 import RowScroll from "./RowScroll";
-import ColScroll from "./ColScroll"
+import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
-import moment from 'moment';
-const LineMapStage = (props) => {
+import dayjs from 'dayjs';
+import { useDebounce } from "../../../common/utils/debounce";
+import { getUser } from "thoughtware-core-ui";
+import setImageUrl from "../../../common/utils/setImageUrl";
+
+const StageLinemap = (props) => {
     // 获取当前年月日
-    const { data, setShowStageAddModal, setAddChild, setParentId, updateStage } = props;
-    // 当前日期
+    const { data, archiveView, setGraph, graph, updateStage, setShowStageAddModal, setParentId, setAddChild } = props;
+
+
     const todayDate = new Date()
-    // 当前年份
     const currentYear = todayDate.getFullYear()
-    // 当前月份
-    const currentMonth = todayDate.getMonth()
-    // 当前日期
+    const currentMonth = todayDate.getMonth() + 1;
     const currentDay = todayDate.getDate()
-    // 日历
+    console.log(currentYear, currentMonth, currentDay)
+    const startDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
+    const endDate = dayjs().add(1, "year").format("YYYY-MM-DD");
+    console.log(startDate, dayjs().format("MM-DD"))
+    const firstDateMillisecond = Date.parse(startDate);
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
-    const [ganttWidth, setGanttWidth] = useState()
+    const [ganttWidth, setGanttWidth] = useState(0)
+    const tenant = getUser().tenant;
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
-    // 展开的子级的上级id
     const [expandedTree, setExpandedTree] = useState([])
-    // 项目id
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const modelRef = useRef()
+
+
+    const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
+    const unitLength = archiveView === "month" ? 10 : 24;
+    const project = JSON.parse(localStorage.getItem("project"));
+
     const projectId = props.match.params.id;
-    // 画布
-    const [graph, getGraph] = useState()
+
 
 
     useEffect(() => {
-        setdateArray(getDate())
+        if (data.length > 0) {
+            setGantt(setNode(data))
+        }
+        return
+    }, [data, expandedTree])
+
+    // useEffect(() => {
+    //     if (data.length > 0) {
+    //         setGantt(setNode(data))
+    //     }
+    // }, [currentPage])
+
+    // 切换视图
+    useEffect(() => {
+        // 画布参数
+        if (ganttCore?.current) {
+            setdateArray(getDate())
+            creatGraph()
+
+            setGantt(setNode(data))
+        }
+
+        return;
+    }, [archiveView])
+
+
+
+
+    const creatGraph = () => {
+        if (graph) {
+            graph.dispose()
+        }
         // 开始与结束日期，解析一个表示某个日期的字符串，
         // 并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数
-        let start = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`;
-        let end = `${currentYear + 1}.${currentMonth + 1}.${currentDay}`
-        start = Date.parse(start);
-        end = Date.parse(end);
+        // let start = `${currentYear - 1}.${currentMonth}.${currentDay}`;
+        // let end = `${currentYear + 1}.${currentMonth}.${currentDay}`;
+        let start = Date.parse(startDate);
+        let end = Date.parse(endDate);
 
         // 用开始日期与结束日期定义画布的宽度
         let graphWidth = Math.abs(start - end);
-        graphWidth = Math.floor(graphWidth / (3600 * 1000));
 
+
+        graphWidth = Math.floor(graphWidth / archiveBase) + unitLength
         setGanttWidth(graphWidth)
-        // 进入页面显示当前时间
 
-        // 画布参数
+
         const graph = new Graph({
             container: document.getElementById("stage"),
             width: graphWidth,
+            autoResize: true,
             grid: {
-                size: 24,
+                size: unitLength,
                 visible: false,
                 type: 'doubleMesh',
                 args: [
@@ -74,9 +119,6 @@ const LineMapStage = (props) => {
                         factor: 5,        // 主次网格线间隔
                     },
                 ],
-            },
-            interacting: {
-                nodeMovable: false
             },
             resizing: {
                 enabled: true
@@ -95,58 +137,61 @@ const LineMapStage = (props) => {
             }
         })
 
-        graph.on("node:change:position", ({ node, options }) => {
-            const nodeBox = node.getBBox();
-            const sprintId = node.id;
-            const startX = nodeBox.x;
-            const nodeWidth = nodeBox.width;
-            let params = { id: "", startTime: "", endTime: "" };
-            params.id = sprintId;
+        graph.on("node:change:position", ({ node }) => updateByChangeNodePosition({ node }))
+
+        graph.on("node:change:size", ({ node, options }) => updateByChangeNodeSize({ node, options }))
+
+        setGraph(graph)
+    }
+
+    const updateByChangeNodePosition = useDebounce(({ node, options }) => {
+
+        const nodeBox = node.getBBox();
+        const sprintId = node.id;
+        const startX = nodeBox.x;
+        const nodeWidth = nodeBox.width;
+        let params = { id: "", startTime: "", endTime: "" };
+        params.id = sprintId;
+        let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+        firstDate = Date.parse(firstDate);
+
+        let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+        endTime = moment(endTime).format('YYYY-MM-DD');
+        params.endTime = endTime;
+
+        let startTime = startX * (1000 * 3600) + firstDate;
+        startTime = moment(startTime).format('YYYY-MM-DD');
+        params.startTime = startTime;
+        updateStage(params)
+    }, [500])
+
+    const updateByChangeNodeSize = useDebounce(({ node, options }) => {
+        const nodeBox = node.getBBox();
+
+        const sprintId = node.id;
+        let params = { id: "", startTime: "", endTime: "" };
+        params.id = sprintId;
+
+        const direction = options.relativeDirection;
+        const startX = nodeBox.x;
+        const nodeWidth = nodeBox.width;
+        if (direction === "right") {
             let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
             firstDate = Date.parse(firstDate);
+            const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
+            let day = moment(dataTime).format('YYYY-MM-DD');
+            params.endTime = day;
+        }
+        if (direction === "left") {
+            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
+            firstDate = Date.parse(firstDate);
+            const dataTime = startX * (1000 * 3600) + firstDate;
+            let day = moment(dataTime).format('YYYY-MM-DD');
+            params.startTime = day;
+        }
+        updateStage(params)
 
-            let endTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
-            endTime = moment(endTime).format('YYYY-MM-DD');
-            params.endTime = endTime;
-
-            let startTime = startX * (1000 * 3600) + firstDate;
-            startTime = moment(startTime).format('YYYY-MM-DD');
-            params.startTime = startTime;
-            updateStage(params)
-        })
-
-        graph.on("node:change:size", ({ node, options }) => {
-            const nodeBox = node.getBBox();
-
-            const sprintId = node.id;
-            let params = { id: "", startTime: "", endTime: "" };
-            params.id = sprintId;
-
-            const direction = options.relativeDirection;
-            const startX = nodeBox.x;
-            const nodeWidth = nodeBox.width;
-            if (direction === "right") {
-                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-                firstDate = Date.parse(firstDate);
-                const dataTime = (startX + nodeWidth) * (1000 * 3600) + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
-                params.endTime = day;
-            }
-            if (direction === "left") {
-                let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-                firstDate = Date.parse(firstDate);
-                const dataTime = startX * (1000 * 3600) + firstDate;
-                let day = moment(dataTime).format('YYYY-MM-DD');
-                params.startTime = day;
-            }
-            updateStage(params)
-            
-        })
-
-        getGraph(graph)
-        return;
-    }, [])
-
+    }, [500])
 
     //渲染画布
     const setGarph = () => {
@@ -158,12 +203,22 @@ const LineMapStage = (props) => {
      * 路线渲染数据变化就从新渲染画布
      */
     const [scrollLeft, setScrollLeft] = useState()
+    const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
         if (ganttdata !== undefined) {
             document.getElementById("stage").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
+            const picBoxHeight = document.getElementById('table-pic').offsetHeight;
+            if (picBoxHeight < ganttdata.nodes.length * 50) {
+                setIsShowCol(true)
+                document.getElementById("stage").style.height = (ganttdata.nodes.length * 50 + 30);
+                document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50 + 30);
+            } else {
+                setIsShowCol(false)
+            }
             setGarph()
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * 24 : 365 * 24) : (isLeapYear(currentYear - 1) ? 366 * 24 : 365 * 24);
+        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
         setScrollLeft(scrollWidth)
 
         document.getElementById('table-pic').scrollTo({ left: scrollWidth });
@@ -171,81 +226,56 @@ const LineMapStage = (props) => {
         return
     }, [ganttdata])
 
-    /**
-     * 原始数据变化重新计算路线渲染数据
-     */
-    useEffect(() => {
-        if (data.length > 0) {
-            setGantt(setNode(data))
-        }
-        return
-    }, [data])
-
-    /**
-     * 树展开，重新设置图纸数据
-     */
-    useEffect(() => {
-        if (data.length > 0) {
-            setGantt(setNode(data))
-        }
-        return
-    }, [expandedTree])
-
-
     // 画布节点数据
     let ylength = 0;
 
-    /**
-     * 路线节点数据
-     * @param {*} data 
-     * @returns 
-     */
+    //路线节点数据
     const setNode = (data) => {
         let nodes = [];
         let edges = []
-        data.map((item) => {
+        data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
             let start = item?.startTime;
-            startPra = Date.parse(start);
+            startPra = Date.parse(start?.substring(0, 10));
 
             let end = item?.endTime;
-            endPra = Date.parse(end);
-
+            endPra = Date.parse(end?.substring(0, 10)) + 86400000;
             // 画布开始时间转化为毫秒
-            let firstDate = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`
-            firstDate = Date.parse(firstDate);
 
             // 每个事项的x轴
-            let xAxis = Math.abs(startPra - firstDate);
-            xAxis = Math.floor(xAxis / (3600 * 1000));
+            let xAxis = startPra - firstDateMillisecond;
+            xAxis = Math.floor(xAxis / archiveBase);
 
             // 每个事项的y轴
             let yAxis = ylength++ * 50 + 13;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
-            length = Math.floor(length / (3600 * 1000));
+            length = Math.floor(length / archiveBase);
 
             nodes.push(
                 {
                     id: item.id,
+                    index: index,
                     x: xAxis,
                     y: yAxis,
                     width: length,
                     height: 24,
+
                     attrs: {
                         body: {
-                            fill: 'var(--thoughtware-blue)', // 背景颜色
-                            stroke: 'var(--thoughtware-gray-400)',  // 边框颜色
+                            rx: 5,
+                            ry: 5,
+                            fill: setTimeAxisStyle(item.status).backgroundColor, // 背景颜色
+                            stroke: setTimeAxisStyle(item.status).backgroundColor,  // 边框颜色
                         },
-                    },
-                    translate: { x: xAxis }
+                    }
                 }
             )
 
             // 连接线的数据
-            if (item.preDependWorkItem && item.preDependWorkItem.id) {
+            if (item.preDependWorkItem && item.preDependWorkItem.id && havePreDependWorkItem(data, item.preDependWorkItem.id)) {
                 edges.push({
                     // String，必须，起始节点 id
                     source: item.id,
@@ -261,8 +291,8 @@ const LineMapStage = (props) => {
                     },
                 })
             }
-            
-            if (item.children && item.children.length > 0 && !isExpandedTree(item.id)) {
+
+            if (item.children && item.children.length > 0 && isExpandedTree(item.id)) {
                 let childrenData = setNode(item.children)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
@@ -271,9 +301,15 @@ const LineMapStage = (props) => {
             return nodes;
         })
         let item = { nodes: nodes, edges: edges }
+
         return item;
     }
-
+    /**
+     * 判断前置事项是否在当前列表中
+     */
+    const havePreDependWorkItem = (list, preWorkItemId) => {
+        return list.some(item => item.id === preWorkItemId)
+    }
     /**
      * 时间轴数据
      * @returns 
@@ -283,29 +319,46 @@ const LineMapStage = (props) => {
             {
                 year: currentYear - 1,
                 firstmonth: currentMonth,
-                lastmonth: 11,
+                lastmonth: 12,
             },
             {
                 year: currentYear,
-                firstmonth: 0,
-                lastmonth: 11
+                firstmonth: 1,
+                lastmonth: 12
             },
             {
                 year: currentYear + 1,
-                firstmonth: 0,
+                firstmonth: 1,
                 lastmonth: currentMonth
             }
         ]
         const array = []
         monthArray.map((item) => {
             for (let i = item.firstmonth; i <= item.lastmonth; i++) {
-                array.push({ month: `${item.year}年${i + 1}月`, day: getMonthCount(item.year, i) })
+                const year = item.year;
+                const month = i;
+                const days = getMonthCount(item.year, i);
+                // const date = `${year}-${month}-${day}`
+                array.push({ month: `${year}年${month}月`, day: days, week: getWeekDay(year, month, days) })
             }
             return array
         })
+        console.log("month", array)
         return array;
+
     }
 
+    const getWeekDay = (year, month, days) => {
+        const weeks = days.map(day => {
+            const dateArray = `${year}-${month}-${day}`;
+            const date = new Date(dateArray);
+            const weekNum = date.getDay();
+            const weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
+            const week = weekArray[weekNum];
+            return week;
+        })
+        return weeks;
+    }
 
     /**
      * 1.获得每个月的日期有多少，判断平年闰年[四年一闰，百年不闰，四百年再闰]
@@ -317,7 +370,7 @@ const LineMapStage = (props) => {
     };
 
     /**
-     * 2.获得每个月的日期有多少，month - [0-11]
+     * 2.获得每个月的日期有多少，month - [1-12]
      * @param {*} year 
      * @param {*} month 
      * @returns 
@@ -328,35 +381,32 @@ const LineMapStage = (props) => {
             31, 30, 31, 31,
             30, 31, 30, 31
         ];
-        let count = arr[month] || (isLeapYear(year) ? 29 : 28);
+        let count = arr[month - 1] || (isLeapYear(year) ? 29 : 28);
         if (currentMonth === month && year === currentYear - 1) {
-            return Array.from(new Array(count - currentDay + 1), (item, value) => value + currentDay);
+            // 如果今天是2024年2月29号
+            if (dayjs().format("MM-DD") === "02-29") {
+                return [28]
+            } else {
+                return Array.from(new Array(count - currentDay + 1), (item, value) => value + currentDay);
+            }
         } else if (currentMonth === month && year === currentYear + 1) {
-            return Array.from(new Array(currentDay), (item, value) => value + 1);
+            // 如果今天是2024年2月29号
+            if (dayjs().format("MM-DD") === "02-29") {
+                return Array.from(new Array(currentDay - 1), (item, value) => value + 1);
+            } else {
+                return Array.from(new Array(currentDay), (item, value) => value + 1);
+            }
         } else {
             return Array.from(new Array(count), (item, value) => value + 1);
         }
     };
 
-    const addChidStage = (id) => {
-        setShowStageAddModal(true)
-        setParentId(id)
-        setAddChild("child")
-    }
 
-    /**
-     * 判断树是否展开
-     * @param {上级的id} key 
-     * @returns 
-     */
+    // 树的展开与闭合
+
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
-
-    /**
-     * 树的展开与闭合
-     * @param {上级的id} key 
-     */
     const setOpenOrClose = (key) => {
         if (isExpandedTree(key)) {
             setExpandedTree(expandedTree.filter(item => item !== key))
@@ -365,57 +415,72 @@ const LineMapStage = (props) => {
         }
     }
 
-    /**
-     * 绘制表格
-     * @param {阶段数据} data 
-     * @param {上级id} fid 
-     * @param 层级 deep 
-     * @returns 
-     */
+    const goStageDetail = (item) => {
+        props.history.push(`/projectDetail/${projectId}/stageDetail/${item.id}`)
+
+    }
+
+    const addChidStage = (id) => {
+        setShowStageAddModal(true)
+        setParentId(id)
+        setAddChild("child")
+    }
+
+    const status = ["未开始", "进行中", "已发布"]
+    //绘制表格
     const tableTd = (data, fid, deep) => {
-        return (data && data.map((item) => {
+        return (data && data.length > 0 && data.map((item, index) => {
             return (
                 <Fragment key={item.id}>
-                    <ul className={isExpandedTree(fid) ? "table-hidden" : null}>
+                    <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
                         <li style={{ listStyleType: "none" }}>
-                            <div key={item.id} className="table-tr">
-                                <div className="table-td table-border stage-name" style={{ borderRight: "solid #d8d8dd 1px", paddingLeft: `${deep * 20 + 25}` }}>
-                                <div className="stage-name-left">
-                                        <div >
-                                            {
-                                                item.children && item.children.length > 0 &&
+                            <div key={item.id} className={`table-tr`}>
+                                <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
+                                    <div className="stage-name">
+                                        <div className="add-child-stage" onClick={() => addChidStage(item.id)}>
+                                            <svg className="add-icon" aria-hidden="true">
+                                                <use xlinkHref="#icon-add3"></use>
+                                            </svg>
+                                        </div>
+                                        {
+                                            item.children && item.children.length > 0 ?
                                                 <>
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                                <use xlinkHref="#icon-down"></use>
-                                                            </svg>
-                                                            :
-                                                            <svg className="botton-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                                <use xlinkHref="#icon-right"></use>
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workDown"></use>
+                                                            </svg> :
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
-                                            }
-                                        </div>
-                                        <div 
-                                            className="stage-name-left-name"
-                                            onClick={() => props.history.push(`/projectDetail/${projectId}/stageDetail/${item.id}`)}>
-                                            {item.stageName}
-                                        </div>
-                                    </div>
-                                    <div className="add-child-stage" onClick={() => addChidStage(item.id)}>
-                                        <svg className="add-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-add3"></use>
-                                        </svg>
+                                                :
+                                                <>
+                                                    <svg className="img-icon" aria-hidden="true">
+                                                        <use xlinkHref="#icon-point"></use>
+                                                    </svg>
+                                                </>
+                                        }
+                                        <div className="stage-text" onClick={() => goStageDetail(item)}>{item.stageName}</div>
                                     </div>
                                 </div>
-                                {/* <div className="table-td table-border">{item.startTime}</div>
-                                    <div className="table-td table-border">{item.endTime}</div> */}
+                                <div className={`table-td table-border table-td-status`}>
+                                    <span className={`work-status ${setStatuStyle(item.status)}`}>
+                                        {status[item.status]}
+                                    </span>
+                                </div>
+                                <div className={`table-td table-border table-td-assigner`}>
+                                    {item.master?.name}
+                                </div>
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
-                                item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                isExpandedTree(item.id) && <div>
+                                    {
+                                        item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                    }
+                                </div>
                             }
                         </li>
                     </ul>
@@ -440,90 +505,181 @@ const LineMapStage = (props) => {
     const timerColOuter = useRef();
     const timerColCore = useRef();
 
+    // 表格的状态样式
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "0":
+                name = "work-status-todo";
+                break;
+            case "1":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
 
+    // 时间轴的样式
+    const setTimeAxisStyle = (id) => {
+        let color = {
+            backgroundColor: "var(--thoughtware-blue)",
+            borderColor: "#fff"
+        };
+        switch (id) {
+            case "0":
+                color = {
+                    backgroundColor: "#e2e1e4",
+                    borderColor: "#e2e1e4"
+                }
+                break;
+            case "2":
+                color = {
+                    backgroundColor: "#dfecd5e3",
+                    borderColor: "#dfecd5e3"
+                }
+                break;
+            default:
+                color = {
+                    backgroundColor: "#b0d5dfa1",
+                    borderColor: "#b0d5dfa1"
+                }
+                break;
+        }
+        return color;
+    }
 
     return (
         <div className="stage-linemap">
-            <div className="linemap-time">
-                <div className="time-table">
-                    <div className="table-hearder">
-                        <div className="table-hearder-text table-border">
-                            标题
-                        </div>
-                        <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
-                            <div className="table-timer" >
-                                <div className="table-month" id="table-month" ref={timerCore}>
-                                    {
-                                        dateArray && dateArray.map((item, index) => {
-                                            return <div style={{ width: `${24 * item.day.length}px`, height: "25px" }} key={index} className="table-month-td">
-                                                {item.month}
-                                            </div>
-                                        })
-                                    }
-                                </div>
-                                <div className="table-date" id="table-date">
-                                    {
-                                        dateArray && dateArray.map((item, index) => {
-                                            return item.day.map((dayitem, dayindex) => {
-                                                return <div style={{ width: "24px", height: "25px" }} className="table-day" key={`${index}${dayindex}`}>
-                                                    {dayitem}
+            <div>
+                <div className="linemap-time">
+                    <div className="time-table">
+                        <div className="table-hearder">
+                            <div className="table-hearder-text table-border table-hearder-title">
+                                标题
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-status">
+                                状态
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-assigner">
+                                负责人
+                            </div>
+                            <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
+                                <div className="table-timer" >
+                                    <div className="table-month" id="table-month" ref={timerCore}>
+                                        {
+                                            dateArray && dateArray.map((item, index) => {
+                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
+                                                    {item.month}
                                                 </div>
                                             })
-
-                                        })
+                                        }
+                                    </div>
+                                    {
+                                        archiveView === "week" && <div className="table-date" id="table-date">
+                                            {
+                                                dateArray && dateArray.map((item, index) => {
+                                                    return item.day.map((dayitem, dayindex) => {
+                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
+                                                            className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                            key={`${index}${dayindex}`}
+                                                        >
+                                                            {dayitem}
+                                                        </div>
+                                                    })
+                                                })
+                                            }
+                                        </div>
                                     }
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="table-body " id="tale-body" ref={timerColOuter}>
-                        <div ref={timerColCore}>
-                            <li style={{ listStyleType: "none" }} id="table-content" >
+                        <div className="table-body " id="tale-body" ref={timerColOuter}>
+                            <div ref={timerColCore}>
+                                <li style={{ listStyleType: "none" }} id="table-content" >
+                                    {
+                                        tableTd(data, 0, 0)
+
+                                    }
+
+                                </li>
+                                <div className="table-pic" id="table-pic" ref={ganttOuter}>
+                                    <div id="stage" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                    <div className="table-date-background" id="table-date-background">
+                                        {
+                                            archiveView === "month" && dateArray && dateArray.map((item, index) => {
+                                                return <div
+                                                    style={{ width: `${unitLength * item.day.length}px` }}
+                                                    key={index}
+                                                    className="table-month"
+                                                />
+                                            })
+                                        }
+                                        {
+                                            archiveView === "week" && dateArray && dateArray.map((item, index) => {
+                                                return item.day.map((dayitem, dayindex) => {
+                                                    return <div style={{ width: unitLength, maxWidth: unitLength }}
+                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                        key={`${index}${dayindex}`}
+                                                    >
+                                                    </div>
+                                                })
+
+                                            })
+                                        }
+                                    </div>
+
+                                </div>
                                 {
-                                    tableTd(data, 0, 0)
-
+                                    data.length <= 0 && <div className="epci-empty">
+                                        没有阶段
+                                    </div>
                                 }
-                                <ul >
-                                    <li style={{ listStyleType: "none" }}>
-                                        <div key={0} className="table-tr">
-                                            <div className="table-td table-border" style={{ borderRight: "solid #d8d8dd 1px" }}>
-                                                <div className="add-stage-botton" onClick={() => setShowStageAddModal(true)}>
-                                                    + 添加阶段
-                                                </div>
+                                {/* {
+                                    totalPage > 0 && <>
+                                        {
+                                            <div className="stage-change-page" >
+                                                <div>{data.length}个, 共{total}个</div>
+                                                {
+                                                    currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage()}>点击加载</div>
+                                                        :
+                                                        <div style={{ paddingLeft: "10px" }}>已加载全部</div>
 
+                                                }
                                             </div>
-                                            {/* <div className="table-td table-border">{item.startTime}</div>
-                                                <div className="table-td table-border">{item.endTime}</div> */}
-                                            <div className="table-gatter table-border"></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                <div id="stage" ref={ganttCore} style={{ width: ganttWidth}} className="gantt-box" />
+                                        }
+                                    </>
+                                } */}
+
                             </div>
+
                         </div>
                     </div>
                 </div>
-            </div>
-            <RowScroll
-                timerCore={timerCore}
-                timerOuter={timerOuter}
-                ganttCore={ganttCore}
-                ganttOuter={ganttOuter}
-                ganttWidth={ganttWidth}
-                scrollLeft={scrollLeft}
-            />
-            {
-                data && data.length > 15 && <ColScroll
-                    timerCore={timerColCore}
-                    timerOuter={timerColOuter}
+                <RowScroll
+                    timerCore={timerCore}
+                    timerOuter={timerOuter}
                     ganttCore={ganttCore}
                     ganttOuter={ganttOuter}
+                    ganttWidth={ganttWidth}
+                    scrollLeft={scrollLeft}
                 />
-            }
+                {
+                    isShowCol && <ColScroll
+                        timerCore={timerColCore}
+                        timerOuter={timerColOuter}
+                        ganttCore={ganttCore}
+                        ganttOuter={ganttOuter}
+                        isModalVisible={isModalVisible}
+                    />
+                }
+            </div>
+
+
         </div>
     )
 }
 
-export default withRouter(observer(LineMapStage)); 
+export default withRouter(observer(StageLinemap)); 

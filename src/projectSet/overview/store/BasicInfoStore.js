@@ -32,22 +32,7 @@ export class BasicInfoStore {
         return data;
     }
 
-    @action
-    findDynamicPage = async(value)=> {
-        const params={
-            projectIds: value.projectIds ? value.projectIds : null,
-            orderParams: [{
-                name: "title",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: 1
-            }
-        }
-        const data = await Service("/dynamic/findDynamicPage", params)
-        return data;
-    }
+
 
     //获取关联项目
     @action

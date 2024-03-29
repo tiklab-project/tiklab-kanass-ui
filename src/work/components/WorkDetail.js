@@ -294,7 +294,7 @@ const WorkDetail = (props) => {
         })
     }
     return (
-        <Skeleton loading={infoLoading} active>
+        <>
             {
                 workInfo ?
                     <>
@@ -305,99 +305,127 @@ const WorkDetail = (props) => {
                                         <div className="work-detail">
                                             <Row >
                                                 <Col {...rowSpan} style={{ background: "#fff" }}>
-                                                    <WorkDetailCrumb
-                                                        detailCrumbArray={detailCrumbArray}
-                                                        setDetailCrumbArray={setDetailCrumbArray}
-                                                        setShowFlow={setShowFlow}
-                                                        setWorkId={setWorkId}
-                                                        setIsModalVisible={setIsModalVisible}
-                                                        workShowType = {workShowType}
-                                                        projectId = {projectId}
-                                                        {...props}
-                                                    />
-                                                    <div className="work-detail-top" ref={workDetailTop} >
-                                                        <div className="work-detail-top-name">
-                                                            <div className="work-item-title-top">
-                                                                <div
-                                                                    className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
-                                                                    onClick={() => focusTitleInput()}
-
-                                                                >
+                                                    <Skeleton loading={infoLoading} active>
+                                                        <WorkDetailCrumb
+                                                            detailCrumbArray={detailCrumbArray}
+                                                            setDetailCrumbArray={setDetailCrumbArray}
+                                                            setShowFlow={setShowFlow}
+                                                            setWorkId={setWorkId}
+                                                            setIsModalVisible={setIsModalVisible}
+                                                            workShowType={workShowType}
+                                                            projectId={projectId}
+                                                            {...props}
+                                                        />
+                                                        <div className="work-detail-top" ref={workDetailTop} >
+                                                            <div className="work-detail-top-name">
+                                                                <div className="work-item-title-top">
                                                                     <div
-                                                                        contentEditable={true}
-                                                                        suppressContentEditableWarning
-                                                                        onBlur={() => updateByBlur(event, "blur")}
-                                                                        onKeyDown={() => updateNameByKey(event, workInfo.id)}
-                                                                        ref={inputRef}
-                                                                        className="work-item-title-left"
-                                                                    >
-                                                                        {workInfo?.title}
-                                                                    </div>
-                                                                </div>
+                                                                        className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
+                                                                        onClick={() => focusTitleInput()}
 
-                                                                <div className="work-detail-tab-botton">
-                                                                    <Dropdown
-                                                                        overlay={menu}
-                                                                        trigger={"click"}
-                                                                        getPopupContainer={() => workDetailTop.current}
-                                                                        onVisibleChange={(open) => console.log(open)}
                                                                     >
-                                                                        <Button className="botton-background" style={{ marginRight: "10px" }}>
-                                                                            {workStatus}
-                                                                            <svg className="svg-icon" aria-hidden="true">
-                                                                                <use xlinkHref="#icon-downdrop"></use>
-                                                                            </svg>
-                                                                        </Button>
-                                                                    </Dropdown>
-                                                                    <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
-                                                                        <Popconfirm
-                                                                            title="确定删除事项?"
-                                                                            onConfirm={() => getHaveChildren()}
-                                                                            // onCancel={cancel}
-                                                                            okText="是"
-                                                                            cancelText="否"
-                                                                            getPopupContainer={() => workDetailTop.current}
+                                                                        <div
+                                                                            contentEditable={true}
+                                                                            suppressContentEditableWarning
+                                                                            onBlur={() => updateByBlur(event, "blur")}
+                                                                            onKeyDown={() => updateNameByKey(event, workInfo.id)}
+                                                                            ref={inputRef}
+                                                                            className="work-item-title-left"
                                                                         >
-                                                                            <Button  >
-                                                                                <svg className="img-icon-right" aria-hidden="true">
-                                                                                    <use xlinkHref="#icon-delete"></use>
+                                                                            {workInfo?.title}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="work-detail-tab-botton">
+                                                                        <Dropdown
+                                                                            overlay={menu}
+                                                                            trigger={"click"}
+                                                                            getPopupContainer={() => workDetailTop.current}
+                                                                            onVisibleChange={(open) => console.log(open)}
+                                                                        >
+                                                                            <Button className="botton-background" style={{ marginRight: "10px" }}>
+                                                                                {workStatus}
+                                                                                <svg className="svg-icon" aria-hidden="true">
+                                                                                    <use xlinkHref="#icon-downdrop"></use>
                                                                                 </svg>
-                                                                                删除
                                                                             </Button>
-                                                                        </Popconfirm>
-                                                                    </PrivilegeProjectButton>
-                                                                    <div className="more">
-                                                                        <svg className="svg-icon" aria-hidden="true">
-                                                                            <use xlinkHref="#icon-more"></use>
-                                                                        </svg>
+                                                                        </Dropdown>
+                                                                        <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
+                                                                            <Popconfirm
+                                                                                title="确定删除事项?"
+                                                                                onConfirm={() => getHaveChildren()}
+                                                                                // onCancel={cancel}
+                                                                                okText="是"
+                                                                                cancelText="否"
+                                                                                getPopupContainer={() => workDetailTop.current}
+                                                                            >
+                                                                                <Button  >
+                                                                                    <svg className="img-icon-right" aria-hidden="true">
+                                                                                        <use xlinkHref="#icon-delete"></use>
+                                                                                    </svg>
+                                                                                    删除
+                                                                                </Button>
+                                                                            </Popconfirm>
+                                                                        </PrivilegeProjectButton>
+                                                                        <div className="more">
+                                                                            <svg className="svg-icon" aria-hidden="true">
+                                                                                <use xlinkHref="#icon-more"></use>
+                                                                            </svg>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <WorkDetailTab
-                                                        workInfo={workInfo}
-                                                        relationModalNum={relationModalNum}
-                                                        setTabValue={setTabValue}
-                                                        tabValue={tabValue}
-                                                    />
+                                                        <WorkDetailTab
+                                                            workInfo={workInfo}
+                                                            relationModalNum={relationModalNum}
+                                                            setTabValue={setTabValue}
+                                                            tabValue={tabValue}
+                                                        />
+                                                         <Modal
+                                                            visible={deleteSelectModal}
+                                                            title="删除事项"
+                                                            // onOk={handleOk}
+                                                            onCancel={closeDeleteSelectModal}
+                                                            getContainer={() => workDetailTop.current}
+                                                            footer={null}
+                                                        >
+                                                            <div>
+                                                                选择删除当前事项还是当前事项和所有下级事项？
+                                                            </div>
+                                                            <div className="delete-button-group">
+                                                                <Button onClick={closeDeleteSelectModal}>
+                                                                    取消
+                                                                </Button>
+                                                                <Button type="primary" onClick={() => delectWorkItem("ones")}>
+                                                                    删除当前事项
+                                                                </Button>
+                                                                <Button type="primary" onClick={() => delectWorkItem("all")}>
+                                                                    删除当前事项以及所有下级
+                                                                </Button>
+                                                            </div>
+                                                        </Modal>
+                                                    </Skeleton>
                                                 </Col>
                                             </Row>
                                             <Row style={{ overflow: "auto", flex: 1 }}>
                                                 <Col {...rowSpan} style={{ background: "#fff" }}>
-                                                    <WorkDetailBottom
-                                                        workInfo={workInfo}
-                                                        setWorkInfo={setWorkInfo}
-                                                        getWorkDetail={getWorkDetail}
-                                                        workDeatilForm={workDeatilForm}
-                                                        relationModalNum={relationModalNum}
-                                                        detailForm={detailForm}
-                                                        getTransitionList={getTransitionList}
-                                                        setTabValue={setTabValue}
-                                                        tabValue={tabValue}
-                                                        {...props}
-                                                    />
+                                                    <Skeleton loading={infoLoading} active>
+                                                        <WorkDetailBottom
+                                                            workInfo={workInfo}
+                                                            setWorkInfo={setWorkInfo}
+                                                            getWorkDetail={getWorkDetail}
+                                                            workDeatilForm={workDeatilForm}
+                                                            relationModalNum={relationModalNum}
+                                                            detailForm={detailForm}
+                                                            getTransitionList={getTransitionList}
+                                                            setTabValue={setTabValue}
+                                                            tabValue={tabValue}
+                                                            {...props}
+                                                        />
+                                                       
+                                                    </Skeleton>
                                                 </Col>
                                             </Row>
 
@@ -407,8 +435,8 @@ const WorkDetail = (props) => {
                                     }
                                 </>
                                 :
-                                <Row style={{ flex: 1 }}>
-                                    <Col {...rowSpan} style={{ background: "#fff" }}>
+                                <Row style={{ flex: 1, height: "100%" }}>
+                                    <Col {...rowSpan} style={{ background: "#fff", height: "100%" }}>
                                         <WorkDetailCrumb
                                             detailCrumbArray={detailCrumbArray}
                                             setDetailCrumbArray={setDetailCrumbArray}
@@ -425,38 +453,19 @@ const WorkDetail = (props) => {
                     </>
                     :
                     <Row style={{ flex: 1 }}>
-                        <Col {...rowSpan} style={{ background: "#fff" }}>
-                            <div style={{ marginTop: "200px" }}>
-                                <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
-                            </div>
+                        <Col {...rowSpan} style={{ background: "#fff", }}>
+                            <Skeleton loading={infoLoading} active>
+                                <div style={{ marginTop: "200px" }}>
+                                    <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
+                                </div>
+                            </Skeleton>
                         </Col>
                     </Row>
 
             }
-            <Modal
-                visible={deleteSelectModal}
-                title="删除事项"
-                // onOk={handleOk}
-                onCancel={closeDeleteSelectModal}
-                getContainer={() => workDetailTop.current}
-                footer={null}
-            >
-                <div>
-                    选择删除当前事项还是当前事项和所有下级事项？
-                </div>
-                <div className="delete-button-group">
-                    <Button onClick={closeDeleteSelectModal}>
-                        取消
-                    </Button>
-                    <Button type="primary" onClick={() => delectWorkItem("ones")}>
-                        删除当前事项
-                    </Button>
-                    <Button type="primary" onClick={() => delectWorkItem("all")}>
-                        删除当前事项以及所有下级
-                    </Button>
-                </div>
-            </Modal>
-        </Skeleton >
+
+
+        </ >
 
     )
 };

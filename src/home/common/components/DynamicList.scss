@@ -5,16 +5,15 @@
 .dynamic-list-page {
     background: #fff;
     min-height: calc(100vh - 88px);
+    padding: var(--thoughtware-padding);
     .dynamic-list-top {
         // position: sticky;
         top: 0;
         z-index: 3;
         background: #fff;
-        padding: 15px 15px 0;
     }
 
     .dynamic-list {
-        padding: 0 15px 15px;
         .dynamic-item {
             margin-bottom: 10px;
 
@@ -53,7 +52,9 @@
         width: 100%;
         display: flex;
         gap: 20px;
-
-       
+    }
+    .dynamic-pagination {
+        text-align: center;
+        margin-top: 10px;
     }
 }

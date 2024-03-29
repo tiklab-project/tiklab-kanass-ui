@@ -11,13 +11,14 @@ import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
-import { Select, Row, Col, Empty } from "antd";
+import { Select, Row, Col, Empty, Pagination } from "antd";
 import "./DynamicList.scss";
 import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 
 const DynamicList = (props) => {
     const { homeStore } = props;
-    const { findLogpage, findProjectList, opLogList, setOpLogList, findProjectSetProjectList } = homeStore;
+    const { findLogpage, opLogCondition, opLogList,opLogTotal, setOpLogList, findProjectSetProjectList } = homeStore;
+    console.log(opLogTotal)
     const userId = getUser().userId;
     const [projectList, setProjectList] = useState()
     const [firstText, setFirstText] = useState();
@@ -67,11 +68,11 @@ const DynamicList = (props) => {
         }
 
         if (props.route.path === "/:id/sprintdetail/:sprint/dynamic") {
-            findLogpage({ ...params, data: { sprintId: sprintId, projectId: projectId }})
+            findLogpage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
             setFirstText("迭代概况")
         }
         if (props.route.path === "/:id/versiondetail/:version/dynamic") {
-            findLogpage({ ...params, data: { versionId: versionId, projectId: projectId }})
+            findLogpage({ ...params, data: { versionId: versionId, projectId: projectId } })
             setFirstText("版本概况")
         }
         return;
@@ -91,11 +92,21 @@ const DynamicList = (props) => {
 
     }
     const selectProject = (option) => {
-        findLogpage({data: { projectId: option }})
+        findLogpage({ data: { projectId: option } })
         // getModuleList(option)
         // getsprintlist(option)
         // getSelectUserList(option);
     }
+    const onPageChange = (page, pageSize) => {
+        const params = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: page
+            }
+
+        }
+        findLogpage(params)
+    };
 
     return (<Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} className="dynamic-col">
@@ -131,12 +142,25 @@ const DynamicList = (props) => {
                 <div className="dynamic-list">
                     {
                         opLogList && opLogList.length > 0 ? opLogList.map((item) => {
-                            return <DynamicItem content={item.data} type={item.actionType.id} {...props}/>
+                            return <DynamicItem content={item.data} type={item.actionType.id} {...props} />
                         })
                             :
                             <Empty image="/images/nodata.png" description="暂时没有动态~" />
                     }
                 </div>
+                {
+                    opLogList && opLogList.length > 0 && <div className="dynamic-pagination">
+                        <Pagination
+                            onChange={onPageChange}
+                            defaultCurrent={1}
+                            total={opLogTotal}
+                            current={opLogCondition.pageParam.currentPage}
+                            showSizeChanger={false}
+                            defaultPageSize={20}
+                            pageSize={20}
+                        />
+                    </div>
+                }
             </div>
         </Col>
     </Row>

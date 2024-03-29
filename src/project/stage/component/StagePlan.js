@@ -13,6 +13,7 @@ import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch"
 import "./StagePlan.scss"
+import setImageUrl from "../../../common/utils/setImageUrl";
 
 const StagePlan = (props) => {
     const { stageStore, stageId } = props;
@@ -220,7 +221,7 @@ const StagePlan = (props) => {
                                         {
                                             item.workTypeSys?.iconUrl ?
                                                 <img
-                                                    src={('images/' + item.workTypeSys?.iconUrl)}
+                                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
                                                     alt=""
                                                     className="img-icon-right"
                                                 />

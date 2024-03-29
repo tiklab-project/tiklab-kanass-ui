@@ -35,7 +35,7 @@ const HomeSurvey = (props) => {
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
-        findTodopage({status: 1, data: {},  pageParam: {
+        findTodopage({status: 1, assignUserId: userId, data: {},  pageParam: {
             pageSize: 10,
             currentPage: 1
         }}, )

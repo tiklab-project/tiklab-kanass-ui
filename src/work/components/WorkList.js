@@ -110,6 +110,7 @@ const WorkList = (props) => {
                     delectCurrentWorkItem={delectCurrentWorkItem} 
                     delectWorkItemAndChildren={delectWorkItemAndChildren} 
                     rowSpan={rowSpan}
+                    workShowType = {workShowType}
                 ></WorkDetail>
          
             </div>

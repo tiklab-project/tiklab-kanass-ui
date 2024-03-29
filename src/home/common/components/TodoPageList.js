@@ -38,6 +38,7 @@ const TodoList = (props) => {
         getSerchList()
         const params = {
             status: 1,
+            assignUserId: userId,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
@@ -65,7 +66,7 @@ const TodoList = (props) => {
                     if (list.length > 0) {
                         let todos = []
                         list.map(item => {
-                            findTodopage({data: {projectId: item.id} }, "projectSet").then(res => {
+                            findTodopage({assignUserId: userId, data: {projectId: item.id} }, "projectSet").then(res => {
                                 if (res.code === 0) {
                                     todos.push(...res.data.dataList)
                                     setTodoTaskList([...todos])

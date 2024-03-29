@@ -21,7 +21,7 @@ import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
-import { removeTableTree } from "../../../common/utils/treeDataAction";
+import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
@@ -88,7 +88,7 @@ const EpicLineMap = (props) => {
     // 删除事项
     const deleteWork = (id) => {
         deleteWorkItem(id).then(() => {
-            removeTableTree(workList, id)
+            removeNodeInTree(workList,null, id)
             setIsModalVisible(false)
             if (workList.length == 0) {
                 getWorkConditionPageTree()

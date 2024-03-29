@@ -32,7 +32,7 @@ const Stage = (props) => {
     const [showStageAddMoal, setShowStageAddModal] = useState(false);
     // 项目id
     const projectId = props.match.params.id;
-
+    const [graph, setGraph] = useState()
     /**
      * 获取阶段
      */
@@ -48,6 +48,22 @@ const Stage = (props) => {
         return;
     }, [])
 
+    const [archiveView, setArchiveView] = useState("week")
+    const changeMonth = () => {
+        setArchiveView("month");
+        graph.dispose()
+    }
+
+    const changePage = () => {
+        const values = {
+            pageParam: {
+                pageSize: 20,
+                currentPage: searchCondition?.pageParam?.currentPage + 1,
+            }
+        }
+        findStageList(values)
+    }
+
     /**
      * 根据标题搜索阶段
      * @param {标题} value 
@@ -58,7 +74,7 @@ const Stage = (props) => {
                 setStageList(res.data)
             }
         })
-    }  
+    }
 
     /**
      * x显示添加弹窗
@@ -70,7 +86,7 @@ const Stage = (props) => {
     }
     return (<Provider {...store}>
         <Row style={{ height: "100%" }}>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className="stage">
                     <Breadcumb
                         firstText="阶段"
@@ -83,17 +99,31 @@ const Stage = (props) => {
                                 style={{ width: 300 }}
                                 onChange={onSearch}
                             />
-                            <Button type="primary" onClick={() => addStage()}>
-                                添加阶段
-                            </Button>
+
+                            <div className="stage-action-right">
+                                <div className="stage-view">
+                                    <div className={`stage-view-item stage-view-week ${archiveView === "week" ? "stage-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                                    <div className={`stage-view-item stage-view-month ${archiveView === "month" ? "stage-view-select" : ""}`} onClick={() => changeMonth()}>月</div>
+                                </div>
+                                <Button type="primary" onClick={() => addStage()}>
+                                    添加阶段
+                                </Button>
+
+                            </div>
+
                         </div>
                         <div>
-                            <LineMapStage 
-                                data={stageList} 
-                                setShowStageAddModal={setShowStageAddModal} 
+                            <LineMapStage
+                                data={stageList}
+                                setShowStageAddModal={setShowStageAddModal}
                                 setParentId={setParentId}
-                                setAddChild={setAddChild} 
-                                updateStage = {updateStage}
+                                setAddChild={setAddChild}
+                                updateStage={updateStage}
+
+                                archiveView={archiveView}
+                                graph={graph}
+                                setGraph={setGraph}
+                                changePage={changePage}
                             />
                         </div>
                         <StageAddModal

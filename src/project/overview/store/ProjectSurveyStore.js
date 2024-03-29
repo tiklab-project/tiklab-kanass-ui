@@ -57,27 +57,7 @@ export class ProjectSurveyStore {
         return data;
     }
 
-    /**
-     * 获取项目的动态
-     * @param {项目id} projectId 
-     * @returns 
-     */
-    @action
-    findDynamicPage = async (projectId) => {
-        const params = {
-            projectId: projectId,
-            orderParams: [{
-                name: "title",
-                orderType: "asc"
-            }],
-            pageParam: {
-                pageSize: 4,
-                currentPage: 1
-            }
-        }
-        const data = await Service("/dynamic/findDynamicPage", params)
-        return data;
-    }
+
 
     /**
      * 项目燃尽图

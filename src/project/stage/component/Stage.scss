@@ -1,11 +1,48 @@
 .stage {
-    padding: 15px;
+    padding: var(--thoughtware-padding);
     .stage-action {
         display: flex;
         justify-content: space-between;
 
         padding: 15px 0;
-        
+        .stage-action-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .stage-view {
+            display: flex;
+            // border: 1px solid #f0f0f0;
+            align-items: center;
+            border-radius: 4px;
+            .stage-view-item {
+                padding: 0 15px;
+                height: 32px;
+                line-height: 32px;
+                cursor: pointer;
+            }
+            .stage-view-select {
+                color: #fff;
+                background-color: var(--thoughtware-blue);
+                border: 1px solid var(--thoughtware-blue);
+            }
+            .stage-view-week {
+                border: 1px solid #f0f0f0;
+                border-right: 0;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+
+            .stage-view-month {
+                border: 1px solid #f0f0f0;
+                border-left: 0;
+
+                
+
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+        }
     }
     .add-stage-botton {
         height: 40px;
@@ -18,39 +55,6 @@
     .add-stage-botton:hover {
         background-color: var(--thoughtware-gray-300);
     }
-    .stage-name {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        .stage-name-left {
-            display: flex;
-            align-items: center;
-        }
-        .stage-name-left-name:hover {
-            color: var(--thoughtware-blue);
-        }
-        .add-child-stage {
-            height: 18px;
-            width: 18px;
-            border-radius: 4px;
-            padding: 3px;
-            .add-icon {
-            
-                display: none;
-                width: 12px;
-                height: 12px;
-                
-            }
-        }
-        
-    }
-    .stage-name:hover .add-child-stage {
-        background-color: var(--thoughtware-gray-400);
-    }
-    .stage-name:hover .add-icon {
-        display: block;
-    }
+  
 }
 
