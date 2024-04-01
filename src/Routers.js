@@ -8,6 +8,9 @@ const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 const Login = AsyncComponent(() => import('./login/Login'))
 const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
+
+// 首页
+const SettingHome = AsyncComponent(() => import('./setting/home/components/SettingHome.js'))
 const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
 //组织中心
 const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
@@ -535,6 +538,12 @@ const Routers = [
                 component: Setting,
                 key: 'Setting',
                 routes: [
+                    {
+                        path: "/setting/home",
+                        component: SettingHome,
+                        row: true,
+                        exact: true  
+                    },
                     {
                         path: "/setting/organ",
                         component: OrgaContent,

@@ -9,7 +9,7 @@
 
 const setDevRouter= [
     {
-        title: "用户与部门",
+        title: "用户与权限",
         icon: 'systemuser',
         id: '/setting/organ',
         purviewCode: "orga",
@@ -19,6 +19,7 @@ const setDevRouter= [
                 title: "部门",
                 id: '/setting/organ',
                 purviewCode: "orga",
+                islink: true,
                 code: 1-1,
                 
             },
@@ -26,12 +27,14 @@ const setDevRouter= [
                 title: '用户',
                 id: '/setting/user',
                 purviewCode: "user",
+                islink: true,
                 code: 1-2,
             },
             {
                 title: '用户组',
                 id: '/setting/usergroup',
                 purviewCode: "user_group",
+                islink: true,
                 code: 1-3,
             },
             {
@@ -39,19 +42,21 @@ const setDevRouter= [
                 title: "用户目录",
                 id: '/setting/directory',
                 purviewCode: "user_dir",
+                islink: true,
                 code: 1-4,
+            },
+            {
+                title: '权限',
+                // icon: 'systempermissions',
+                id: "/setting/systemRole",
+                purviewCode: "SysPermission",
+                code: 2
             },
         ]
     },
+    
     {
-        title: '权限',
-        icon: 'systempermissions',
-        id: "/setting/systemRole",
-        purviewCode: "SysPermission",
-        code: 2
-    },
-    {
-        title: '事项管理',
+        title: '事项配置',
         icon: 'systemmanage',
         id: "/setting/workstatus",
         purviewCode: "SysWork",
@@ -333,7 +338,7 @@ const setDevRouter= [
 
 const setPrdRouter= [
     {
-        title: "用户与部门",
+        title: "用户与权限",
         icon: 'systemuser',
         id: '/setting/organ',
         purviewCode: "orga",
@@ -343,6 +348,7 @@ const setPrdRouter= [
                 title: "部门",
                 id: '/setting/organ',
                 purviewCode: "orga",
+                islink: true,
                 code: 1-1,
                 
             },
@@ -350,12 +356,14 @@ const setPrdRouter= [
                 title: '用户',
                 id: '/setting/user',
                 purviewCode: "user",
+                islink: true,
                 code: 1-2,
             },
             {
                 title: '用户组',
                 id: '/setting/usergroup',
                 purviewCode: "user_group",
+                islink: true,
                 code: 1-3,
             },
             {
@@ -363,19 +371,20 @@ const setPrdRouter= [
                 title: "用户目录",
                 id: '/setting/directory',
                 purviewCode: "user_dir",
+                islink: true,
                 code: 1-4,
+            },
+            {
+                title: '权限',
+                // icon: 'systempermissions',
+                id: "/setting/systemRole",
+                purviewCode: "SysPermission",
+                code: 2
             },
         ]
     },
     {
-        title: '权限',
-        icon: 'systempermissions',
-        id: "/setting/systemRole",
-        purviewCode: "SysPermission",
-        code: 2
-    },
-    {
-        title: '事项管理',
+        title: '事项配置',
         icon: 'systemmanage',
         id: "/setting/workstatus",
         purviewCode: "SysWork",

@@ -73,7 +73,7 @@ const SprintSurvey = (props) => {
         findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
-            setPercent(percent ? percent.toFixed(2) : 0)
+            setPercent(percent * 100 ? percent.toFixed(2) * 100 : 0)
         })
         findlogpage({ userId: masterId, sprintId: sprintId })
 

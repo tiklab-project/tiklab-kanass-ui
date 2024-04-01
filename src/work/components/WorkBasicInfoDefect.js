@@ -18,7 +18,6 @@ import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
-const { OptGroup } = Select;
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
     // const [detailForm] = Form.useForm();
@@ -209,22 +208,6 @@ const WorkBasicInfo = (props) => {
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD';
 
-    // 获取当前时间
-    const getNowFormatDate = () => {
-        var date = new Date();
-        var seperator1 = "-";
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-        }
-        var currentdate = year + seperator1 + month + seperator1 + strDate;
-        return currentdate;
-    }
 
 
     const [validateStatus, setValidateStatus] = useState("validating")
@@ -341,7 +324,6 @@ const WorkBasicInfo = (props) => {
     const update = (data, changedValues, changeKey) => {
         editWork(data).then(res => {
             if (res.code === 0) {
-                const oldParentId = workInfo.parentWorkItem?.id
                 setWorkInfo({ ...workInfo, ...changedValues })
                 getTransitionList(workInfo?.workStatusNode?.id, workInfo?.workType?.flow?.id)
                 //  更新列表数据
@@ -571,7 +553,7 @@ const WorkBasicInfo = (props) => {
             }
         })
     }, [500])
-    const [visableCustomForm, setVisableCustomForm] = useState(true);
+    const [visableCustomForm, setVisableCustomForm] = useState(false);
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
     }
@@ -940,7 +922,7 @@ const WorkBasicInfo = (props) => {
                     </Form>
                     {
                         formList && formList.length > 0 && <div className={`form-custom-open `} onClick={() => openCustomForm()}>
-                            <svg className={`svg-icon ${visableCustomForm ? "open" : "close"}`} aria-hidden="true">
+                            <svg className={`img-icon ${visableCustomForm ? "open" : "close"}`} aria-hidden="true">
                                 <use xlinkHref="#icon-caret-left"></use>
                             </svg>
                         </div>

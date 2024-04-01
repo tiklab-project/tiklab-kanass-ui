@@ -61,7 +61,7 @@ const WorkTable = (props) => {
         }
         finWorkList(path, WorkStore, params);
         return;
-    }, [projectId])
+    }, [projectId, sprintId, versionId])
 
 
     const goProdetail = (record, index) => {

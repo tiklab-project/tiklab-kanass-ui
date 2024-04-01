@@ -17,7 +17,7 @@
 
         // padding-top: 20px;
         .orga-aside-top {
-            height: calc(100vh - 90px);
+            height: calc(100vh - 48px);
             overflow: auto;
         }
 
@@ -55,11 +55,7 @@
             padding: 0;
         }
 
-        .orga-aside-second:hover {
-            background-color: var(--thoughtware-gray-400);
-        }
-
-        .orga-aside-first:hover {
+        .orga-aside-item:hover {
             background-color: var(--thoughtware-gray-400);
         }
 
