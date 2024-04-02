@@ -25,6 +25,7 @@ const WorkTable = (props) => {
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const stageId = props.match.params.stage ? props.match.params.stage : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
 
@@ -35,7 +36,7 @@ const WorkTable = (props) => {
     };
 
     const moreMenu = (record) => {
-        return <Menu onClick={() => selectWorkItem(record) }>
+        return <Menu onClick={() => selectWorkItem(record)}>
             <Menu.Item key="delete">
                 <div>删除</div>
             </Menu.Item>
@@ -57,11 +58,12 @@ const WorkTable = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            stageId: stageId,
             epicView: null
         }
         finWorkList(path, WorkStore, params);
         return;
-    }, [projectId, sprintId, versionId])
+    }, [projectId, sprintId, versionId, stageId])
 
 
     const goProdetail = (record, index) => {
@@ -103,7 +105,7 @@ const WorkTable = (props) => {
     }
 
     //  排序
-    const [sortArray, setSortArray] = useState(["title"]);
+    const [sortArray, setSortArray] = useState(["id"]);
     const sorterTable = (pagination, filters, sorter, extra) => {
 
         const setSortParams = (sorter) => {
@@ -121,8 +123,11 @@ const WorkTable = (props) => {
                 return
             }
             switch (field) {
-                case "title":
+                case "id":
                     sortType = "id";
+                    break;
+                case "title":
+                    sortType = "title";
                     break;
                 case "assignerId":
                     sortType = "assigner_id";
@@ -166,7 +171,7 @@ const WorkTable = (props) => {
                         name: "id",
                         orderType: "desc"
                     });
-                    sortArray.push("title");
+                    sortArray.push("id");
                 }
 
             } else {
@@ -195,14 +200,14 @@ const WorkTable = (props) => {
 
     const workColumns = [
         {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id',
+            className: `work-first-col ${sortArray.indexOf("id") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
                         record.workTypeSys?.iconUrl ?
@@ -221,7 +226,18 @@ const WorkTable = (props) => {
                     }
                 </div>
                 <div className="work-key">{record.id}</div>
-                <div className="work-text">{text}</div>
+            </div>
+        },
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => <div className="work-title" onClick={() => goProdetail(record, index)}>
+                {text}
             </div>
         },
         {
@@ -325,14 +341,14 @@ const WorkTable = (props) => {
 
     const projectColums = [
         {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id',
+            className: `work-first-col ${sortArray.indexOf("id") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-name work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
                         record.workTypeSys?.iconUrl ?
@@ -351,7 +367,18 @@ const WorkTable = (props) => {
                     }
                 </div>
                 <div className="work-key">{record.id}</div>
-                <div className="work-text">{text}</div>
+            </div>
+        },
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => <div className="work-title" onClick={() => goProdetail(record, index)}>
+                {text}
             </div>
         },
         {

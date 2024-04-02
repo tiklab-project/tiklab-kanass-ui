@@ -57,6 +57,7 @@ const StageAddModal = (props) => {
                 findStageList({ projectId: projectId, stageParentNull: true}).then(res => {
                     if(res.code === 0){
                         setStageList(res.data)
+                        form.resetFields();
                     }
                 })
                 setShowStageAddModal(false);

@@ -19,8 +19,8 @@ import Button from "../../../../common/button/Button";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 const ModuleList = (props) => {
     // 解析 moduleStore
-    const { modulelist, searchmodule, findModulePage, createModule, deleModule,
-        searchModuleById, editModuleById, setPageParam
+    const { moduleList, findModuleListTree, createModule, deleteModule,
+        editModuleById, setPageParam
     } = ModuleStore;
 
     const [type, setType] = useState("add")
@@ -50,7 +50,7 @@ const ModuleList = (props) => {
      */
     const findModule = (params) => {
         setLoading(true)
-        findModulePage(params).then(() => {
+        findModuleListTree(params).then(() => {
             setLoading(false)
         })
     }
@@ -70,13 +70,7 @@ const ModuleList = (props) => {
         // setPageParam({ current: 1, pageSize: 10 })
     };
 
-    /**
-     * 翻页
-     * @param {*} pagination 
-     */
-    const changePage = (pagination) => {
-        setPageParam(pagination)
-    }
+
     const showModal = (record, name) => {
         setVisible(true);
         setParent(record?.id)
@@ -96,18 +90,8 @@ const ModuleList = (props) => {
         {
             title: "模块名称",
             dataIndex: "moduleName",
-            key: "moduleName",
-            // render: (text, record) => (
-            //     <Link to={`/moduledetail/${record.id}`}>{text}</Link>
-            // ),
+            key: "moduleName"
         },
-        // {
-        //     title: "所属项目",
-        //     dataIndex: ["project", "projectName"],
-        //     key: "project.projectName",
-        //     width: "20%",
-        //     render: (text) => <span>{text}</span>,
-        // },
         {
             title: "描述",
             dataIndex: "desc",
@@ -128,14 +112,18 @@ const ModuleList = (props) => {
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    {/* <svg className="svg-icon" aria-hidden="true" onClick={() => deleModule(record.id, projectId)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-delete"></use>
-                    </svg> */}
-                    <DeleteModal deleteFunction = {deleModule} id = {record.id}/>
+                    <DeleteModal deleteFunction = {deleteModuleList} id = {record.id}/>
                 </Space>
             )
         }
     ];
+
+    const deleteModuleList = (id) => {
+        deleteModule(id).then(() => {
+            findModule({projectId: projectId})
+        })
+    }
+
     return (
         <Row>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -143,7 +131,6 @@ const ModuleList = (props) => {
                     <Breadcumb
                         firstText="模块"
                     >
-
                         <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
                             <Button type="primary" onClick={() => showModal(null, "添加模块")}>
                                 添加模块
@@ -164,16 +151,14 @@ const ModuleList = (props) => {
                                     />
                                 }
                             />
-
                         </div>
                         <div className="module-table-box">
                             <Table
                                 columns={columns}
-                                dataSource={modulelist}
+                                dataSource={moduleList}
                                 rowKey={(record) => record.id}
                                 loading={loading}
                                 onSearch={onSearch}
-                                // onChange={changePage}
                                 pagination={false}
                             />
                         </div>
@@ -189,7 +174,7 @@ const ModuleList = (props) => {
                     setVisible = {setVisible}
                     type = {type}
                     modalName = {modalName}
-                    modulelist = {modulelist}
+                    moduleList = {moduleList}
                 ></ModuleAddmodal>
             </Col>
         </Row>

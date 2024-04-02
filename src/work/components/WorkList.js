@@ -30,13 +30,15 @@ const WorkList = (props) => {
     };
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const stageId = props.match.params.stage ? props.match.params.stage : null;
 
     useEffect(() => {
         setWorkShowType("list")
         const params = {
             projectId: projectId,
             sprintId: sprintId,
-            versionId: versionId
+            versionId: versionId,
+            stageId: stageId
         }
 
         finWorkList(path, WorkStore, params);

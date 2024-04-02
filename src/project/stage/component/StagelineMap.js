@@ -416,7 +416,7 @@ const StageLinemap = (props) => {
     }
 
     const goStageDetail = (item) => {
-        props.history.push(`/projectDetail/${projectId}/stageDetail/${item.id}`)
+        props.history.push(`/${projectId}/stagedetail/${item.id}/survey`)
 
     }
 

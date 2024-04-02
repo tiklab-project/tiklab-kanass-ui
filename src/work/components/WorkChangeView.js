@@ -20,6 +20,7 @@ const WorkChangeView = (props) => {
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const stageId = props.match.params.stage ? props.match.params.stage : null;
     const path = props.match.path;
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
@@ -66,7 +67,6 @@ const WorkChangeView = (props) => {
             props.history.push(`/projectDetail/${projectId}/work${value}`)
         }
         if(path.indexOf("work") === 1){
-
             props.history.push(`/work${value}`)
         }
 
@@ -76,7 +76,9 @@ const WorkChangeView = (props) => {
         if(path.indexOf("versiondetail") > 1){
             props.history.push(`/${projectId}/versiondetail/${versionId}/work${value}`)
         }
-  
+        if(path.indexOf("stagedetail") > 1){
+            props.history.push(`/${projectId}/stagedetail/${stageId}/work${value}`)
+        }
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
     };

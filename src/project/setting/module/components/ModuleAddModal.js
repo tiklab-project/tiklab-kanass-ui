@@ -9,20 +9,15 @@
 
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, TreeSelect } from 'antd';
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { inject, observer } from "mobx-react";
-import Button from "../../../../common/button/Button";
 import ModuleStore from "../store/ModuleStore";
 import { withRouter } from "react-router";
 const { TreeNode } = TreeSelect;
 const ModuleAddModal = (props) => {
-    const { parent, type, visible, setVisible, modalName, id, modulelist } = props;
-    const { createModule, searchModuleById, editModuleById } = ModuleStore;
+    const { parent, type, visible, setVisible, modalName, id } = props;
+    const { createModule, searchModuleById, editModuleById, findModuleListTree, moduleList } = ModuleStore;
     // form ref
     const [form] = Form.useForm();
-    // const [parentId, setParentId] = useState(parent.id)
-
-    // 弹框显示
 
     // 项目id
     const projectId = props.match.params.id;
@@ -42,7 +37,6 @@ const ModuleAddModal = (props) => {
             if (type === "edit") {
                 searchModuleById(id).then((res) => {
                     if (res.code === 0) {
-
                         form.setFieldsValue({
                             moduleName: res.data.moduleName,
                             id: res.data.id,
@@ -74,11 +68,19 @@ const ModuleAddModal = (props) => {
                 }
             }
             if (props.type === "add") {
-                createModule(params)
+                createModule(params).then(res => {
+                    if(res.code === 0){
+                        findModuleListTree({ projectId: projectId })
+                    }
+                })
 
             } else {
                 params.id = props.id
-                editModuleById(params)
+                editModuleById(params).then(res => {
+                    if(res.code === 0){
+                        findModuleListTree({ projectId: projectId })
+                    }
+                })
             }
             setVisible(false);
             form.resetFields();
@@ -155,7 +157,7 @@ const ModuleAddModal = (props) => {
                             treeDefaultExpandAll
                         >   
                         {
-                            moduleTree(modulelist)
+                            moduleTree(moduleList)
                         }
                         </TreeSelect>
                     </Form.Item>

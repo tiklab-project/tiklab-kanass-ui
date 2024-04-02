@@ -128,7 +128,7 @@ const Sprintsurvey = AsyncComponent(() => import("./sprint/overview/components/S
 const SprintPlan = AsyncComponent(() => import("./sprint/plan/components/SprintPlan"))
 const SprintStatistics = AsyncComponent(() => import('./sprint/statistics/SprintStatistics'))
 const SprintBasicInfo = AsyncComponent(() => import("./sprint/setting/components/SprintBasicInfo"))
-// 迭代
+// 版本
 const VersionHome = AsyncComponent(() => import('./version/common/components/VersionLayout'))
 const Versionsurvey = AsyncComponent(() => import("./version/overview/components/VersionSurvey"))
 const VersionWorkItemPlan = AsyncComponent(() => import("./version/plan/components/VersionPlan"))
@@ -171,7 +171,10 @@ const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/Epic
 
 //阶段
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
-const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
+const StageHome = AsyncComponent(() => import("./stage/common/components/StageLayout"))
+const StageSurvey = AsyncComponent(() => import("./stage/overview/components/StageSurvey"))
+const StagePlan = AsyncComponent(() => import("./stage/plan/components/StagePlan"))
+const StageBasicInfo = AsyncComponent(() => import("./stage/setting/components/StageBasicInfo"))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
@@ -869,11 +872,11 @@ const Routers = [
                         component: Stage,
 
                     },
-                    {
-                        path: "/projectDetail/:id/stageDetail/:stageId",
-                        component: StageDetail,
+                    // {
+                    //     path: "/projectDetail/:id/stageDetail/:stageId",
+                    //     component: StageDetail,
 
-                    },
+                    // },
                     {
                         path: "/projectDetail/:id/sprint",
                         component: Sprint
@@ -1179,6 +1182,60 @@ const Routers = [
                     },
                 ]
             },
+            {
+                path: "/:id/stagedetail/:stage",
+                component: StageHome,
+                routes: [
+                    {
+                        path: "/:id/stagedetail/:stage/workItem",
+                        component: Work,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/work/:workId",
+                        component: WorkDetailPage,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workDetail",
+                        component: WorkTableDetail,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/survey",
+                        component: StageSurvey,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/plan",
+                        component: StagePlan,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/setting",
+                        component: StageBasicInfo,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/dynamic",
+                        component: Dynamic
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workList",
+                        component: WorkList,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workGantt",
+                        component: WorkGantt,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workTable",
+                        component: WorkTable,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workBodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/:id/stagedetail/:stage/workTodo",
+                        component: WorkTodoPage,
+                    },
+                ]
+            }
         ]
     },
     

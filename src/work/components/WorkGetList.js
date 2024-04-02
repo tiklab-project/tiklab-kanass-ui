@@ -18,6 +18,10 @@ const finWorkList = (router, workStore, params) => {
             type = "version"
 
         }
+        if (router.indexOf("/:id/stagedetail/:stage/work") > -1) {
+            type = "stage"
+
+        }
         goWorkItem(type, workStore, params)
     }
     setValue();
@@ -27,7 +31,7 @@ const finWorkList = (router, workStore, params) => {
 
 
 const goWorkItem = (type, workStore, params) => {
-    const { sprintId, versionId, projectId } = params;
+    const { sprintId, versionId, stageId, projectId } = params;
     const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
     let initValues = {
         ...searchCondition,
@@ -43,7 +47,9 @@ const goWorkItem = (type, workStore, params) => {
         case "version":
             initValues = { ...initValues, projectIds: [projectId], versionId: versionId };
             break;
-
+        case "stage":
+            initValues = { ...initValues, projectIds: [projectId], stageId: stageId };
+            break;
         case "project":
             initValues = { ...initValues, projectIds: [projectId] };
             break;
@@ -142,15 +148,15 @@ const deleteAndQueryDeepData = (originalArray, indexes) => {
 const changeWorkItemParent = (originalArray, newParentId, workItem) => {
     const deleteItem = deleteOldChildren(originalArray, workItem.id);
     console.log(deleteItem)
-    if(deleteItem){
+    if (deleteItem) {
         const newWorkItem = { ...workItem, children: deleteItem.children }
         // 更新下级的treepath
-        if(newWorkItem.children && newWorkItem.children.length > 0){
+        if (newWorkItem.children && newWorkItem.children.length > 0) {
             updateTreePath(newWorkItem)
         }
         console.log(newWorkItem)
         originalArray = addNewParentChildren(originalArray, newParentId, newWorkItem)
-    }else {
+    } else {
         originalArray = addNewParentChildren(originalArray, newParentId, workItem)
     }
 
@@ -160,7 +166,7 @@ const changeWorkItemParent = (originalArray, newParentId, workItem) => {
 
 const updateTreePath = (newWorkItem) => {
     const id = newWorkItem.id;
-    const treePath = id  + ";" + newWorkItem.treePath
+    const treePath = id + ";" + newWorkItem.treePath
     newWorkItem.children.map(item => {
         item.treePath = treePath;
     })
@@ -171,33 +177,33 @@ const deleteOldChildren = (originalArray, workItemId) => {
 
     // 递归删除函数
     function recursiveDelete(nodes, id) {
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
-        if (node.id === id) {
-          // 删除当前节点
-          nodes.splice(i, 1);
-          deletedNode = node;
-          return true; // 找到并删除了节点，退出循环
+        for (let i = 0; i < nodes.length; i++) {
+            const node = nodes[i];
+            if (node.id === id) {
+                // 删除当前节点
+                nodes.splice(i, 1);
+                deletedNode = node;
+                return true; // 找到并删除了节点，退出循环
+            }
+            if (node.children && node.children.length > 0) {
+                if (recursiveDelete(node.children, id)) {
+                    // 在子节点中找到了并删除了节点，退出循环
+                    return true;
+                }
+            }
         }
-        if (node.children && node.children.length > 0) {
-          if (recursiveDelete(node.children, id)) {
-            // 在子节点中找到了并删除了节点，退出循环
-            return true;
-          }
-        }
-      }
-      return false; // 没有找到匹配的节点
+        return false; // 没有找到匹配的节点
     }
-  
+
     // 遍历树的每个节点，查找匹配的节点并删除
     recursiveDelete(originalArray, workItemId);
-  
+
     // 返回被删除的节点
     return deletedNode;
 }
 
 const addNewParentChildren = (originalArray, newParentId, workItem) => {
-    if(newParentId && newParentId !== "nullstring"){
+    if (newParentId && newParentId !== "nullstring") {
         originalArray.map(item => {
             if (item.id === newParentId) {
                 if (item.children && item.children.length >= 0) {
@@ -212,10 +218,10 @@ const addNewParentChildren = (originalArray, newParentId, workItem) => {
             }
             return item
         })
-    }else {
+    } else {
         originalArray.unshift(workItem)
     }
-    
+
     return originalArray;
 
 }

@@ -201,7 +201,7 @@ const SprintSurvey = (props) => {
                                     <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={sprintInfo?.master.nickname} />
                                     <div className="item-content">
                                         <div className="item-top">{sprintInfo?.master?.nickname}</div>
-                                        <div className="item-bottom">项目负责人</div>
+                                        <div className="item-bottom">迭代负责人</div>
                                     </div>
                                 </div>
                                 <div className="sprint-work">

@@ -87,7 +87,7 @@
             color: #5e5314;
         }
 
-        .work-name {
+        .work-id {
             display: flex;
             align-items: center;
             margin-left: 5px;
@@ -95,22 +95,23 @@
             .work-key {
                 color: var(--thoughtware-gray-500);
             }
-
-            .work-text {
-                cursor: pointer;
-                // line-height: 25px;
-                // height: 22px;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: 300px;
-                
-            }
-
-            .work-text:hover {
+            .work-key:hover {
                 color: var(--thoughtware-blue);
                 text-decoration: underline;
+                cursor: pointer;
             }
+        }
+        .work-title {
+            cursor: pointer;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 300px;
+            
+        }
+        .work-title:hover {
+            color: var(--thoughtware-blue);
+            text-decoration: underline;
         }
     }
 }

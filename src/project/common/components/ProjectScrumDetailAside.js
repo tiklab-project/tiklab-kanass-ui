@@ -197,9 +197,7 @@ const ProdeScrumAside = (props) => {
         setMoreMenu(hiddenMenu)
         let data = [];
         hiddenMenu.map(item =>{
-            
             data.push(item.key)
-            
         })
         setMorePath([...data])
     };

@@ -11,7 +11,7 @@ import { Service } from "../../../../common/utils/requset"
 export class ModuleStore {
     // 模块列表
     @observable 
-    modulelist = [];
+    moduleList = [];
 
     // 查询模块的名称
     @observable 
@@ -30,7 +30,7 @@ export class ModuleStore {
 	getmodule = async() => {
         const data = await Service("/module/findAllModule")
         if(data.code=== 0){
-            this.modulelist = data.data;
+            this.moduleList = data.data;
         }
         return data;
     }
@@ -42,9 +42,9 @@ export class ModuleStore {
     @action
 	createModule = async(values) => {
         const data = await Service("/module/createModule", values)
-        if(data.code === 0){
-            this.findModulePage({projectId: values.project.id})
-        }
+        // if(data.code === 0){
+        //     this.findModuleListTree({projectId: values.project.id})
+        // }
         return data;
     }
 
@@ -54,13 +54,13 @@ export class ModuleStore {
      * @param {*} projectId 
      */
     @action
-	deleModule = async(moduleId) => {
+	deleteModule = async(moduleId) => {
         const param = new FormData()
         param.append("id", moduleId)
         const data = await Service("/module/deleteModule", param)
-		if(data.code=== 0){
-            this.findModulePage()
-        }
+		// if(data.code=== 0){
+        //     this.findModuleListTree()
+        // }
         return data;
     }
 
@@ -85,9 +85,9 @@ export class ModuleStore {
     @action
 	editModuleById = async(values) => {
         const data = await Service("/module/updateModule", values)
-        if(data.code===0){
-            this.findModulePage(values)
-        }
+        // if(data.code===0){
+        //     this.findModuleListTree(values)
+        // }
         return data;
     }
 
@@ -98,11 +98,11 @@ export class ModuleStore {
      * @returns 
      */
     @action
-	findModulePage = async(value) => {
+	findModuleListTree = async(value) => {
         // Object.assign(this.searchCondition, { ...value })
         const data = await Service("/module/findModuleListTree", value)
         if(data.code===0){
-            this.modulelist = data.data
+            this.moduleList = data.data
         }
         return data;
     }

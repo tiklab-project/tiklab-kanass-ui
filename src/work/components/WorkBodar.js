@@ -35,6 +35,8 @@ const WorkBodar = (props) => {
     const path = props.match.path;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const stageId = props.match.params.stage ? props.match.params.stage : null;
+
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
@@ -49,7 +51,8 @@ const WorkBodar = (props) => {
         const params = {
             projectId: projectId,
             sprintId: sprintId,
-            versionId: versionId
+            versionId: versionId,
+            stageId: stageId
         }
         finWorkList(path, WorkStore, params);
         return;

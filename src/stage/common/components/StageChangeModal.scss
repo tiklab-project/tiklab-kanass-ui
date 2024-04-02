@@ -1,0 +1,117 @@
+.change-stage {
+    position: relative;
+
+    .stage-title {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        color: #000;
+        font-weight: 600;
+        cursor: pointer;
+        .stage-text {
+            margin: 0 10px;
+
+            .type {
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+
+        span {
+            width: 100px;
+            height: 100%;
+            overflow: hidden;
+
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        .stage-aside-icon {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    .stage-title-icon {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 10px 22px;
+        cursor: pointer;
+        .stage-aside-icon {
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+    }
+
+    .title {
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+    .change-stage-botton {
+        height: 40px;
+        line-height: 40px;
+        width: 100%;
+        text-align: center;
+    }
+    .change-stage-box {
+        position: absolute;
+        top: 0;
+        z-index: 100;
+        width: 300px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+        .change-stage-head {
+            height: 40px;
+            line-height: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 0 20px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+    }
+    .change-stage-item {
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .change-stage-info {
+            line-height: 30px;
+            flex: 1;
+            .change-stage-state {
+                font-size: 12px;
+                color: var(--thoughtware-gray-500);
+            }
+        }
+    }
+
+    .change-stage-more {
+        padding: 0 20px;
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;
+        border-top: 1px solid #F0F0F0;
+        color: var(--thoughtware-blue);
+        font-size: 13px;
+    }
+    .change-stage-more:hover {
+        text-decoration: underline;
+    }
+
+    .change-stage-selectName {
+        background-color: var(--thoughtware-gray-400);
+    }
+   
+    .menu-show {
+        display: block;
+    }
+    .menu-hidden {
+        display: none;
+    }
+}
