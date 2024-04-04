@@ -7,11 +7,16 @@
  * @LastEditTime: 2022-04-11 10:41:38
  */
 import React from "react";
-import { ExcludeProductUser } from 'thoughtware-eam-ui';
-import { inject,observer } from "mobx-react";
+import { NotFound } from "thoughtware-privilege-ui"
+import { inject, observer } from "mobx-react";
 const VailProductUserPage = (props) => {
     return (
-        <ExcludeProductUser {...props}/>
+        <NotFound
+            {...props}
+            homePath={'/'}
+            // 404(页面找不到,默认)，noaccess(没有访问权限)
+            type={'404' || 'noaccess'}
+        />
     )
 }
 export default observer(VailProductUserPage);

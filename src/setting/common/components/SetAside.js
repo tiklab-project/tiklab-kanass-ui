@@ -10,10 +10,13 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
-import { PrivilegeButton } from "thoughtware-privilege-ui"
+import { PrivilegeButton } from "thoughtware-privilege-ui";
+import SettingHomeStore from "../../home/store/SettingHomeStore";
+import { observer } from 'mobx-react';
 const SetAside = (props) => {
+    const { setSelectKey,  selectKey} = SettingHomeStore;
     // 无子级菜单处理
-    const [selectKey, setSelectKey] = useState("/organ/organ");
+    // const [selectKey, setSelectKey] = useState("/organ/organ");
 
     const [router, setRouterMenu] = useState(setDevRouter);
     const authType =JSON.parse(localStorage.getItem("authConfig"))?.authType;
@@ -21,10 +24,9 @@ const SetAside = (props) => {
     const select = (data) => {
         const id = data.id;
        
-
         if (data.islink &&  !authType) {
-            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl;
-            window.location.href = authUrl;
+            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + id;
+            window.open(authUrl, '_blank');
         }else {
             props.history.push(id)
             setSelectKey(id)
@@ -150,4 +152,4 @@ const SetAside = (props) => {
         </Fragment>
     )
 }
-export default withRouter(SetAside);
+export default withRouter(observer(SetAside));

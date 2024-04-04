@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段路线图表格页面 
+ * @Descripttion: 计划路线图表格页面 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
@@ -368,7 +368,7 @@ const LineMapStage = (props) => {
 
     /**
      * 绘制表格
-     * @param {阶段数据} data 
+     * @param {计划数据} data 
      * @param {上级id} fid 
      * @param 层级 deep 
      * @returns 
@@ -489,7 +489,7 @@ const LineMapStage = (props) => {
                                         <div key={0} className="table-tr">
                                             <div className="table-td table-border" style={{ borderRight: "solid #d8d8dd 1px" }}>
                                                 <div className="add-stage-botton" onClick={() => setShowStageAddModal(true)}>
-                                                    + 添加阶段
+                                                    + 添加计划
                                                 </div>
 
                                             </div>

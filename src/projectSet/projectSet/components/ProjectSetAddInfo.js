@@ -51,7 +51,7 @@ const ProjectSetAddInfo = (props) => {
             {
                 type: 'array',
                 required: true,
-                message: 'Please select time!',
+                message: '请选择计划时间!',
             }
         ]
     };

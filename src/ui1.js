@@ -156,7 +156,7 @@ const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLog
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
-//阶段
+//计划
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 

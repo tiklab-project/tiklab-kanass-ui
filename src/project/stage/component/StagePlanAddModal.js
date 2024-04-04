@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段的事项关联弹窗
+ * @Descripttion: 计划的事项关联弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58

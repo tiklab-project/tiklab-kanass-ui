@@ -34,7 +34,7 @@ const Setting = (props) => {
                 {...props}
                 applicationRouters={router} // 菜单
                 outerPath={"/setting"} // 系统设置Layout路径
-                notFoundPath={""}  //找不到页面路径
+                notFoundPath={"/noaccess"}  //找不到页面路径
             >
                 <Layout className="orga">
                     <Sider width={200} className="site-layout-background">

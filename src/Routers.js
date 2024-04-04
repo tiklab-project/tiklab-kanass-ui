@@ -169,7 +169,7 @@ const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLog
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
-//阶段
+//计划
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageHome = AsyncComponent(() => import("./stage/common/components/StageLayout"))
 const StageSurvey = AsyncComponent(() => import("./stage/overview/components/StageSurvey"))
@@ -179,13 +179,13 @@ const StageBasicInfo = AsyncComponent(() => import("./stage/setting/components/S
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
-const Log = AsyncComponent(()=> import("./workLog/components/Log"))
-const LogAllList = AsyncComponent(()=> import("./project/workLog/components/LogContent.js"))
+const Log = AsyncComponent(() => import("./workLog/components/Log"))
+const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 // const LogUserList = AsyncComponent(()=> import("./workLog/logView/components/LogUserList"))
 
-const LogProjectUserStatistics =  AsyncComponent(()=> import("./workLog/statistics/LogProjectUserStatistics.js"))
-const LogProjectWorkItemStatistics = AsyncComponent(()=> import("./workLog/statistics/logProjectWorkItemStatistics.js"))
-const LogUserProjectStatistics = AsyncComponent(()=> import("./workLog/statistics/logUserProjectStatistics.js"))
+const LogProjectUserStatistics = AsyncComponent(() => import("./workLog/statistics/LogProjectUserStatistics.js"))
+const LogProjectWorkItemStatistics = AsyncComponent(() => import("./workLog/statistics/logProjectWorkItemStatistics.js"))
+const LogUserProjectStatistics = AsyncComponent(() => import("./workLog/statistics/logUserProjectStatistics.js"))
 const Routers = [
     {
         path: "/login",
@@ -198,6 +198,16 @@ const Routers = [
         component: VailProductUserPage,
     },
     {
+        exact: true,
+        path: '/404',
+        component: VailProductUserPage,
+    },
+    {
+        exact: true,
+        path: '/noaccess',
+        component: VailProductUserPage,
+    },
+    {
         path: "/logout",
         exact: true,
         component: ProjectLogOut,
@@ -205,7 +215,7 @@ const Routers = [
     {
         path: "/",
         component: () => <Redirect to="/home/survey" />,
-        
+
         exact: true,
     },
     {
@@ -218,19 +228,19 @@ const Routers = [
                 component: HomePage,
                 key: 'home',
                 routes: [
-                    {   
+                    {
                         path: "/home/survey",
                         exact: false,
                         component: HomeSurvey,
                         key: "ProjectSet"
-                        
+
                     },
-                    {   
+                    {
                         path: "/home/todoList",
                         exact: false,
                         component: WorkTodo,
                         key: "ProjectSet"
-                        
+
                     },
                     {
                         path: "/home/insight/list",
@@ -291,7 +301,7 @@ const Routers = [
                         component: StatisticsMore,
                         exact: true
                     }
-                    
+
                 ]
             },
             {
@@ -327,7 +337,7 @@ const Routers = [
                     }
                 ]
             },
-            
+
             {
                 path: "/project",
                 exact: true,
@@ -481,7 +491,7 @@ const Routers = [
                             }
                         ]
                     },
-                   
+
                 ]
             },
             {
@@ -497,11 +507,11 @@ const Routers = [
                 key: "Sprint"
             },
 
-        
+
             {
                 path: "/workTable",
                 component: WorkTable,
-                
+
             },
             {
                 path: "/worktTable/:workId",
@@ -525,7 +535,7 @@ const Routers = [
                 path: "/workList",
                 component: WorkList,
             },
-           
+
             {
                 path: "/workDetail/:workId",
                 component: WorkDetailPage,
@@ -545,10 +555,10 @@ const Routers = [
                         path: "/setting/home",
                         component: SettingHome,
                         row: true,
-                        exact: true  
+                        exact: true
                     },
                     {
-                        path: "/setting/organ",
+                        path: "/setting/orga",
                         component: OrgaContent,
                         row: true,
                         exact: true
@@ -560,13 +570,13 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/setting/directory",
+                        path: "/setting/dir",
                         component: ProjectDirectory,
                         row: true,
                         exact: true
                     },
                     {
-                        path: "/setting/usergroup",
+                        path: "/setting/userGroup",
                         component: ProjectUserGroup,
                         row: true,
                         exact: true
@@ -762,7 +772,7 @@ const Routers = [
                         row: true,
                         exact: true
                     },
-                    
+
                     {
                         path: "/setting/messageTemplate",
                         component: SystemMessageTemplate,
@@ -845,7 +855,7 @@ const Routers = [
                         component: LicenceVersion,
                         row: true,
                         exact: true
-                    },{
+                    }, {
                         path: "/setting/productAuth",
                         component: ProductAuth,
                         row: true,
@@ -915,7 +925,7 @@ const Routers = [
                         path: "/projectDetail/:id/versionDetail/:versionId",
                         component: VersionDetail,
                     },
-                   
+
                     {
                         path: "/projectDetail/:id/epic/:epicId",
                         component: EpicDetail,
@@ -924,15 +934,15 @@ const Routers = [
                     //     path: "/projectDetail/:id/work",
                     //     component: Work,
                     //     routes: [
-                          
-                            
+
+
                     //     ]
                     // },
                     {
                         path: "/projectDetail/:id/workTable",
                         component: WorkTable
                     },
-                    
+
                     {
                         path: "/projectDetail/:id/workBodar",
                         component: WorkBodar,
@@ -945,13 +955,13 @@ const Routers = [
                         path: "/projectDetail/:id/workGantt",
                         component: WorkGantt,
                     },
-                    
+
                     {
                         path: "/projectDetail/:id/work/:workId",
                         component: WorkDetailPage
                     },
-                   
-                    
+
+
                     {
                         path: "/projectDetail/:id/WorkDetail",
                         component: WorkTableDetail,
@@ -981,7 +991,7 @@ const Routers = [
                         path: "/projectDetail/:id/planWorkItem/:id",
                         component: PlanWorkItem,
                     },
-                   
+
                     {
                         path: "/projectDetail/:id/log",
                         component: ProjectLog,
@@ -1110,7 +1120,7 @@ const Routers = [
                     {
                         path: "/:id/sprintdetail/:sprint/workList",
                         component: WorkList,
-                        
+
                     },
                     {
                         path: "/:id/sprintdetail/:sprint/workGantt",
@@ -1119,7 +1129,7 @@ const Routers = [
                     {
                         path: "/:id/sprintdetail/:sprint/workTable",
                         component: WorkTable,
-                        
+
                     },
                     {
                         path: "/:id/sprintdetail/:sprint/workBodar",
@@ -1238,6 +1248,6 @@ const Routers = [
             }
         ]
     },
-    
+
 ]
 export default Routers;

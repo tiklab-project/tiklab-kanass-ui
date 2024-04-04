@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./SettingHome.scss";
 import { Row, Col } from "antd";
 import SettingHomeStore from "../store/SettingHomeStore"
+import { observer } from "mobx-react";
 
 const SettingHome = (props) => {
-    const { findOrgaNum } = SettingHomeStore;
+    const { findOrgaNum, setSelectKey,  selectKey} = SettingHomeStore;
     const [numList, setNumList] = useState({});
     const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
     useEffect(() => {
@@ -27,7 +28,7 @@ const SettingHome = (props) => {
                     title: '部门',
                     key: "orga",
                     islink: true,
-                    path: '/setting/organ'
+                    path: '/setting/orga'
 
                 },
                 {
@@ -40,17 +41,17 @@ const SettingHome = (props) => {
                     title: '用户组',
                     key: "userGroup",
                     islink: true,
-                    path: '/setting/usergroup'
+                    path: '/setting/userGroup'
                 },
                 {
                     title: '用户目录',
                     key: "userDir",
                     islink: true,
-                    path: '/setting/directory'
+                    path: '/setting/dir'
                 },
                 {
                     title: '权限',
-                    key: "privilage",
+                    key: "role",
                     path: '/setting/systemRole'
                 }
             ]
@@ -63,7 +64,7 @@ const SettingHome = (props) => {
             children: [
                 {
                     title: '权限',
-                    key: "privilage",
+                    key: "role",
                     path: '/setting/systemRole'
                 }
             ]
@@ -99,7 +100,7 @@ const SettingHome = (props) => {
                 },
                 {
                     title: '消息发送方式',
-                    key: "messageSendType",
+                    key: "sendType",
                     path: '/setting/messageSendType',
                 },
             ]
@@ -161,7 +162,7 @@ const SettingHome = (props) => {
         {
             title: '系统集成',
             key: "systemIntergrtion",
-            cloudShow: true,
+            cloudShow: false,
             eeShow: true,
             children: [
                 {
@@ -172,9 +173,23 @@ const SettingHome = (props) => {
                 },
                 {
                     title: '地址配置',
-                    key: "urlData",
+                    key: "systemUrl",
                     path: '/setting/urlData',
                 },
+            ]
+        },
+        {
+            title: '系统集成',
+            key: "systemIntergrtion",
+            cloudShow: true,
+            eeShow: false,
+            children: [
+                {
+                    title: 'JIRA',
+                    key: "jira",
+                    noShowNum: true,
+                    path: '/setting/loadData',
+                }
             ]
         },
         {
@@ -186,11 +201,12 @@ const SettingHome = (props) => {
                 {
                     title: '操作日志',
                     key: "logList",
+                    noShowNum: true,
                     path: '/setting/logList',
                 },
                 {
                     title: '备份与恢复',
-                    key: "backups",
+                    key: "lastBackups",
                     noShowNum: true,
                     path: '/setting/backups',
                 },
@@ -199,7 +215,7 @@ const SettingHome = (props) => {
         {
             title: '应用',
             key: "systemversion",
-            cloudShow: true,
+            cloudShow: false,
             eeShow: true,
             children: [
                 {
@@ -210,24 +226,35 @@ const SettingHome = (props) => {
                 },
                 {
                     title: '应用访问权限',
-                    key: "productAuth",
+                    key: "applyAuth",
                     path: '/setting/productAuth',
                 },
             ]
         }
     ]
 
+
     const goPage = (data) => {
-        props.history.push(data.path)
 
         if (data.islink && !authType) {
-            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl;
-            window.location.href = authUrl;
+            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.path;
+            window.open(authUrl, '_blank');
         } else {
             props.history.push(data.path)
+            
         }
+        setSelectKey(data.path)
     }
 
+    const setVersion = (version) => {
+        let data = "";
+        if(!version?.expired){
+            data = "企业版"
+        }else {
+            data = "社区版"
+        }
+        return data
+    }
 
     return (
         <Row className="setting-home-row">
@@ -239,20 +266,23 @@ const SettingHome = (props) => {
                                 return <div className="setting-home-block" key={item.key}>
                                     <div className="setting-home-block-title">{item.title}</div>
                                     <div className="setting-home-block-content">
-                                        {
+                                    {
                                             item.children.map(moduleItem => {
                                                 return <div className="setting-home-block-content-item" key={moduleItem.key} onClick={() => goPage(moduleItem)}>
-                                                    {
+                                                      {
                                                         moduleItem.noShowNum ?
                                                             <div className="module-num"></div>
                                                             :
-                                                            <div className="module-num">{numList[moduleItem.key] ? numList[moduleItem.key] : 0}</div>
-                                                    }
+                                                            <div className="module-num"> {numList[moduleItem.key] ? numList[moduleItem.key] : 0}</div>
 
+
+                                                    }
                                                     <div className="module-title">{moduleItem.title}</div>
+
+                                                    
                                                 </div>
                                             })
-                                        }
+                                        }   
                                     </div>
                                 </div>
                             }
@@ -267,10 +297,13 @@ const SettingHome = (props) => {
                                                         moduleItem.noShowNum ?
                                                             <div className="module-num"></div>
                                                             :
-                                                            <div className="module-num">{numList[moduleItem.key] ? numList[moduleItem.key] : 0}</div>
-                                                    }
+                                                            <div className="module-num"> {numList[moduleItem.key] ? numList[moduleItem.key] : 0}</div>
 
+
+                                                    }
                                                     <div className="module-title">{moduleItem.title}</div>
+
+                                                    
                                                 </div>
                                             })
                                         }
@@ -286,4 +319,4 @@ const SettingHome = (props) => {
 
     )
 }
-export default SettingHome;
+export default observer(SettingHome);

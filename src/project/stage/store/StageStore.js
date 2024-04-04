@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段的store
+ * @Descripttion: 计划的store
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
@@ -29,8 +29,8 @@ export class StageStore {
     };
 
     /**
-     * 创建阶段
-     * @param {阶段信息} param 
+     * 创建计划
+     * @param {计划信息} param 
      * @returns 
      */
     @action
@@ -60,7 +60,7 @@ export class StageStore {
     }
 
     /**
-     * 根据条件查找阶段列表
+     * 根据条件查找计划列表
      * @param {} value 
      * @returns 
      */
@@ -73,8 +73,8 @@ export class StageStore {
     }
 
     /**
-     * 根据id查找阶段信息
-     * @param {阶段id} value 
+     * 根据id查找计划信息
+     * @param {计划id} value 
      * @returns 
      */
     @action
@@ -88,7 +88,7 @@ export class StageStore {
     }
 
     /**
-     * 按照分页查找阶段
+     * 按照分页查找计划
      * @param {条件} value 
      * @returns 
      */
@@ -102,8 +102,8 @@ export class StageStore {
     }
 
     /**
-     * 创建事项阶段关联
-     * @param {事项id,阶段id} value 
+     * 创建事项计划关联
+     * @param {事项id,计划id} value 
      * @returns 
      */
     @action
@@ -115,7 +115,7 @@ export class StageStore {
     }
     
     /**
-     * 根据条件查找阶段的事项列表
+     * 根据条件查找计划的事项列表
      * @param {*} value 
      * @returns 
      */
@@ -128,7 +128,7 @@ export class StageStore {
     }
 
     /**
-     * 根据条件删除阶段事项关联
+     * 根据条件删除计划事项关联
      * @param {*} value 
      * @returns 
      */
@@ -141,8 +141,8 @@ export class StageStore {
     }
 
     /**
-     * 更新阶段信息
-     * @param {阶段信息} value 
+     * 更新计划信息
+     * @param {计划信息} value 
      * @returns 
      */
     @action
@@ -154,8 +154,8 @@ export class StageStore {
     }
 
     /**
-     * 删除阶段
-     * @param {阶段id} value 
+     * 删除计划
+     * @param {计划id} value 
      * @returns 
      */
     @action

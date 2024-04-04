@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段入口页面
+ * @Descripttion: 计划入口页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -22,7 +22,7 @@ const Stage = (props) => {
         stageStore: StageStore
     }
     const { findStageList, updateStage } = StageStore;
-    // 阶段的列表
+    // 计划的列表
     const [stageList, setStageList] = useState([])
     // 添加子级的上级id
     const [parent, setParentId] = useState();
@@ -34,7 +34,7 @@ const Stage = (props) => {
     const projectId = props.match.params.id;
     const [graph, setGraph] = useState()
     /**
-     * 获取阶段
+     * 获取计划
      */
     useEffect(() => {
         /**
@@ -65,7 +65,7 @@ const Stage = (props) => {
     }
 
     /**
-     * 根据标题搜索阶段
+     * 根据标题搜索计划
      * @param {标题} value 
      */
     const onSearch = (value) => {
@@ -89,12 +89,12 @@ const Stage = (props) => {
             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className="stage">
                     <Breadcumb
-                        firstText="阶段"
+                        firstText="计划"
                     ></Breadcumb>
                     <div className="stage-contant">
                         <div className="stage-action">
                             <InputSearch
-                                placeholder="阶段名字"
+                                placeholder="计划名字"
                                 allowClear
                                 style={{ width: 300 }}
                                 onChange={onSearch}
@@ -106,7 +106,7 @@ const Stage = (props) => {
                                     <div className={`stage-view-item stage-view-month ${archiveView === "month" ? "stage-view-select" : ""}`} onClick={() => changeMonth()}>月</div>
                                 </div>
                                 <Button type="primary" onClick={() => addStage()}>
-                                    添加阶段
+                                    添加计划
                                 </Button>
 
                             </div>

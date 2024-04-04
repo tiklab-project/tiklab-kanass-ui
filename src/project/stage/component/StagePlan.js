@@ -1,6 +1,6 @@
 
 /*
- * @Descripttion: 阶段的事项列表 
+ * @Descripttion: 计划的事项列表 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
@@ -18,11 +18,11 @@ import setImageUrl from "../../../common/utils/setImageUrl";
 const StagePlan = (props) => {
     const { stageStore, stageId } = props;
     const { findWorkItemListByStage, deleteStageWorkItem } = stageStore;
-    // 阶段的子级阶段
+    // 计划的子级计划
     const [stageChild, setStageChild] = useState()
-    // 阶段关联的事项ids
+    // 计划关联的事项ids
     let [stageWorkIds, setStageWorkIds] = useState()
-    // 已展开子级的阶段id集合
+    // 已展开子级的计划id集合
     const [expandedTree, setExpandedTree] = useState([])
 
     /**
@@ -47,7 +47,7 @@ const StagePlan = (props) => {
     }
 
     /**
-     * 阶段状态显示
+     * 计划状态显示
      * @param {*} value 
      * @returns 
      */
@@ -71,7 +71,7 @@ const StagePlan = (props) => {
     }
 
     /**
-     * 获取阶段关联的事项id集合
+     * 获取计划关联的事项id集合
      */
     useEffect(() => {
         findWorkItemListByStage({ stageId: stageId }).then(res => {
@@ -89,7 +89,7 @@ const StagePlan = (props) => {
 
 
     /**
-     * 删除阶段关联的事项
+     * 删除计划关联的事项
      * @param {事项id} id 
      */
     const deleteWorkItem = (id) => {
@@ -126,8 +126,8 @@ const StagePlan = (props) => {
     }
 
     /**
-     * 阶段列表
-     * @param {阶段列表} data 
+     * 计划列表
+     * @param {计划列表} data 
      * @param {上级id} fid 
      * @param {层级} level 
      * @returns 

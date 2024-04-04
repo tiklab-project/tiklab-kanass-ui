@@ -634,7 +634,7 @@ const StageLinemap = (props) => {
                                 </div>
                                 {
                                     data.length <= 0 && <div className="epci-empty">
-                                        没有阶段
+                                        没有计划
                                     </div>
                                 }
                                 {/* {

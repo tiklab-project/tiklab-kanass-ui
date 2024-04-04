@@ -1,6 +1,13 @@
-import { action } from "mobx";
+import { action, observable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class SettingHomeStore {
+    @observable
+    selectKey = "/setting/orga"
+    
+    @action
+    setSelectKey = (key) => {
+        this.selectKey = key;
+    }
     @action
     findOrgaNum = async () => {
         const data = await Service("/setting/findOrgaNum");

@@ -28,10 +28,18 @@
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
+                .module-title {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #888;
+                }
             }
             .setting-home-block-content-item:hover {
                 color: var(--thoughtware-blue);
                 cursor: pointer;
+                .module-title {
+                    color: var(--thoughtware-blue);
+                }
             }
         }
     }

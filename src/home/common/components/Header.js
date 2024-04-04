@@ -82,7 +82,7 @@ const Header = props => {
      * 跳转到系统设置
      */
     const goSet = () => {
-        props.history.push("/setting/organ")
+        props.history.push("/setting/home")
         sessionStorage.setItem("menuKey", "set")
     };
 

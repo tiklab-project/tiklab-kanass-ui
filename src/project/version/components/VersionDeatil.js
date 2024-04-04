@@ -90,7 +90,7 @@ const VersionDetail = (props) => {
     }
 
     /**
-     * 切换阶段
+     * 切换
      * @param {*} item 
      */
     const changeVersion = (item) => {

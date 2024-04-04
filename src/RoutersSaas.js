@@ -153,7 +153,7 @@ const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLog
 
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
-//阶段
+//计划
 const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
 const StageDetail = AsyncComponent(() => import("./project/stage/component/StageDeatil"))
 
@@ -451,7 +451,7 @@ const RoutersSaas = [
                 key: 'Setting',
                 routes: [
                     {
-                        path: "/setting/organ",
+                        path: "/setting/orga",
                         component: OrgaContent,
                         exact: true
                     },
@@ -461,12 +461,12 @@ const RoutersSaas = [
                         exact: true
                     },
                     {
-                        path: "/setting/directory",
+                        path: "/setting/dir",
                         component: ProjectDirectory,
                         exact: true
                     },
                     {
-                        path: "/setting/usergroup",
+                        path: "/setting/userGroup",
                         component: ProjectUserGroup,
                         exact: true
                     },

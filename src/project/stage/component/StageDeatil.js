@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 阶段详情
+ * @Descripttion: 计划详情
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
@@ -24,26 +24,26 @@ const StageDetail = (props) => {
     const { findStage, findStageList, updateStage, deleteStage } = StageStore;
     // 日期格式
     const dateFormat = 'YYYY-MM-DD';
-    // 阶段信息
+    // 计划信息
     const [stageInfo, setStageInfo] = useState()
-    // 阶段id
+    // 计划id
     const stageId = props.match.params.stageId;
     // 鼠标放置，添加背景色
     const [mouseActive, setMouseActive] = useState(false);
     // 修改的字段key
     const [fieldName, setFieldName] = useState("")
-    // 阶段切换下拉框
+    // 计划切换下拉框
     const modelRef = useRef();
     // 输入
     const inputRef = useRef()
     // 项目id
     const projectId = props.match.params.id;
-    // 阶段列表
+    // 计划列表
     const [stageList, setStageList] = useState([])
     // 标题是否是编辑模式
     const [editName, setEditName] = useState(false)
     /**
-     * 获取阶段详情，获取阶段列表用于切换
+     * 获取计划详情，获取计划列表用于切换
      */
     useEffect(() => {
         if (stageId !== "") {
@@ -69,7 +69,7 @@ const StageDetail = (props) => {
     }
     
     /**
-     * 监听鼠标点击关闭切换阶段弹窗
+     * 监听鼠标点击关闭切换计划弹窗
      */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
@@ -93,7 +93,7 @@ const StageDetail = (props) => {
     }
 
     /**
-     * 切换阶段
+     * 切换计划
      * @param {*} item 
      */
     const changeStage = (item) => {
@@ -182,7 +182,7 @@ const StageDetail = (props) => {
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-home"></use>
                                         </svg>
-                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/stage`)}>阶段</span>
+                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/stage`)}>计划</span>
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-right1"></use>
                                         </svg>
