@@ -236,10 +236,10 @@ const StageLinemap = (props) => {
         data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
-            let start = item?.startTime;
+            let start = item?.startTime || item?.planBeginTime;
             startPra = Date.parse(start?.substring(0, 10));
 
-            let end = item?.endTime;
+            let end = item?.endTime || item?.planEndTime;
             endPra = Date.parse(end?.substring(0, 10)) + 86400000;
             // 画布开始时间转化为毫秒
 
@@ -294,6 +294,13 @@ const StageLinemap = (props) => {
 
             if (item.children && item.children.length > 0 && isExpandedTree(item.id)) {
                 let childrenData = setNode(item.children)
+                nodes = nodes.concat(childrenData.nodes)
+                edges = edges.concat(childrenData.edges)
+                // setGanttHeight()
+            }
+
+            if (item.childrenWorkItem && item.childrenWorkItem.length > 0 && isExpandedTree(item.id)) {
+                let childrenData = setNode(item.childrenWorkItem)
                 nodes = nodes.concat(childrenData.nodes)
                 edges = edges.concat(childrenData.edges)
                 // setGanttHeight()
@@ -443,7 +450,7 @@ const StageLinemap = (props) => {
                                             </svg>
                                         </div>
                                         {
-                                            item.children && item.children.length > 0 ?
+                                            (item.children && item.children.length > 0 || item.childrenWorkItem?.length > 0) ?
                                                 <>
                                                     {
                                                         isExpandedTree(item.id) ?
@@ -456,12 +463,13 @@ const StageLinemap = (props) => {
                                                     }
                                                 </>
                                                 :
-                                                <>
-                                                    <svg className="img-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-point"></use>
-                                                    </svg>
-                                                </>
+                                                <div className="img-icon" aria-hidden="true" />
                                         }
+                                        <img
+                                            src={('/images/stage.png')}
+                                            className="img-icon"
+                                            alt=""
+                                        />
                                         <div className="stage-text" onClick={() => goStageDetail(item)}>{item.stageName}</div>
                                     </div>
                                 </div>
@@ -479,6 +487,75 @@ const StageLinemap = (props) => {
                                 isExpandedTree(item.id) && <div>
                                     {
                                         item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                    }
+                                    {
+                                        item.childrenWorkItem && item.childrenWorkItem.length > 0 && tableWorkTd(item.childrenWorkItem, item.id, deep + 1)
+                                    }
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </Fragment>
+            )
+        }
+        ))
+    }
+
+    const tableWorkTd = (data, fid, deep) => {
+        return (data && data.length > 0 && data.map((item, index) => {
+            return (
+                <Fragment key={item.id}>
+                    <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
+                        <li style={{ listStyleType: "none" }}>
+                            <div key={item.id} className={`table-tr`}>
+                                <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
+                                    <div className="stage-name">
+                                        <div className="stage-empty-icon" aria-hidden="true" />
+                                        {
+                                            item.children && item.children.length > 0 ?
+                                                <>
+
+                                                    {
+                                                        isExpandedTree(item.id) ?
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workDown"></use>
+                                                            </svg> :
+                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                                <use xlinkHref="#icon-workRight"></use>
+                                                            </svg>
+                                                    }
+                                                </>
+                                                :
+                                                <>
+                                                    <div className="img-icon" aria-hidden="true">
+
+                                                    </div>
+                                                </>
+                                        }
+                                        <img
+                                            src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                            alt=""
+                                            className="img-icon"
+                                        />
+                                        <span className="stage-key">{item.id}</span>
+                                        <div className="stage-text">{item.title}</div>
+                                    </div>
+                                </div>
+                                <div className={`table-td table-border table-td-status`}>
+                                    <span className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                        {item.workStatusNode.name}
+                                    </span>
+                                </div>
+                                <div className={`table-td table-border table-td-assigner`}>
+                                    {item.assigner?.name}
+                                </div>
+                                {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
+                                <div className="table-gatter table-border"></div>
+                            </div>
+                            {
+                                isExpandedTree(item.id) && <div>
+                                    {
+                                        item.children && item.children.length > 0 && tableWorkTd(item.children, item.id, deep + 1)
                                     }
                                 </div>
                             }

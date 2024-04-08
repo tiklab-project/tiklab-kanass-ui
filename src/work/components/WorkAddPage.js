@@ -15,7 +15,7 @@ const WorkAddPage = (props) => {
     const [form] = Form.useForm();
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel } = props;
     const { moduleList, selectSprintList, userList, findProjectList, projectList,
-        getModuleList, findSelectSprintList, getSelectUserList, addWork,
+        getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
         selectVersionList, findSelectVersionList
@@ -139,12 +139,24 @@ const WorkAddPage = (props) => {
                             form.setFieldsValue({
                                 sprint: res.data[0]?.id
                             })
-                        }else {
+                        } else {
                             form.setFieldsValue({
                                 sprint: null
                             })
                         }
                     }
+
+                }
+            })
+        }
+        
+        // 如果是瀑布式开发，获取计划
+        if (projectType === "nomal") {
+            findStageList({projectId: projectId}).then(res => {
+                if (res.code === 0) {
+                    form.setFieldsValue({
+                        stage: res.data[0]?.id
+                    })
 
                 }
             })
@@ -200,7 +212,7 @@ const WorkAddPage = (props) => {
                 setWorkId(res.data)
                 setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
-                   
+
                     if (workShowType === "bodar") {
                         getWorkBoardList()
                         message.success({
@@ -281,6 +293,12 @@ const WorkAddPage = (props) => {
         setSlateValue(value)
         setIsEditStart(true)
     }
+
+    const searchStage = (value) => {
+        console.log(value)
+        findStageList({projectId: projectId, stageName: value})
+    }
+
     return (
         <Fragment>
             <div className="work-add-page">
@@ -372,25 +390,31 @@ const WorkAddPage = (props) => {
                                     </Select>
                                 </Form.Item>
                             }
-
-                            {/* <Form.Item
-                            label="报告人"
-                            name="reporter"
-                            rules={[{ required: false, message: '请输入报告人!' }]}
-                        >
-                            <Select
-                                placeholder="报告人"
-                                className="work-select"
-                                key="selectWorkUser"
-                            >
-                                {
-                                    userList && userList.map((item) => {
-                                        return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item> */}
-
+                            {
+                                projectType === "nomal" && <Form.Item
+                                    label="所属计划"
+                                    name="stage"
+                                    rules={[{ required: true, message: '请输入所属计划!' }]}
+                                    wrapperCol={{
+                                        span: 16,
+                                    }}
+                                >
+                                    <Select
+                                        placeholder="计划"
+                                        allowClear
+                                        className="work-select"
+                                        key="selectSprint"
+                                        onSearch={searchStage}
+                                        showSearch
+                                    >
+                                        {
+                                            stageList && stageList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            }
 
                             <Form.Item
                                 label="优先级"

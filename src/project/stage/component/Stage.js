@@ -21,9 +21,7 @@ const Stage = (props) => {
     const store = {
         stageStore: StageStore
     }
-    const { findStageList, updateStage } = StageStore;
-    // 计划的列表
-    const [stageList, setStageList] = useState([])
+    const { findStageListTreePage, updateStage, stageList } = StageStore;
     // 添加子级的上级id
     const [parent, setParentId] = useState();
     // 添加类型 子级，顶级
@@ -40,11 +38,7 @@ const Stage = (props) => {
         /**
          * 获取第一级节点列表
          */
-        findStageList({ projectId: projectId, stageParentNull: true }).then(res => {
-            if (res.code === 0) {
-                setStageList(res.data)
-            }
-        })
+        findStageListTreePage({ projectId: projectId })
         return;
     }, [])
 
@@ -61,7 +55,7 @@ const Stage = (props) => {
                 currentPage: searchCondition?.pageParam?.currentPage + 1,
             }
         }
-        findStageList(values)
+        findStageListTreePage(values)
     }
 
     /**
@@ -69,11 +63,7 @@ const Stage = (props) => {
      * @param {标题} value 
      */
     const onSearch = (value) => {
-        findStageList({ projectId: projectId, stageName: value }).then(res => {
-            if (res.code === 0) {
-                setStageList(res.data)
-            }
-        })
+        findStageListTreePage({ stageName: value })
     }
 
     /**
@@ -129,7 +119,6 @@ const Stage = (props) => {
                         <StageAddModal
                             showStageAddMoal={showStageAddMoal}
                             setShowStageAddModal={setShowStageAddModal}
-                            setStageList={setStageList}
                             parent={parent}
                             addChild={addChild}
                         />

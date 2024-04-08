@@ -273,8 +273,13 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            gap: 5px;
             // justify-content: space-between;
             // padding: 0 20px;
+            .stage-empty-icon {
+                height: 21px;
+                width: 21px;
+            }
             .stage-name-left {
                 display: flex;
                 align-items: center;

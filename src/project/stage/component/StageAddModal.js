@@ -13,8 +13,8 @@ const { RangePicker } = DatePicker;
 import { withRouter } from "react-router";
 const { TextArea } = Input;
 const StageAddModal = (props) => {
-    const {showStageAddMoal, setShowStageAddModal,stageStore, setStageList, addChild, parent} = props;
-    const {createStage, uselist,getUseList, findStageList} = stageStore
+    const {showStageAddMoal, setShowStageAddModal,stageStore, addChild, parent} = props;
+    const {createStage, uselist,getUseList, findStageListTreePage} = stageStore
     const [form] = Form.useForm();
     // 项目id
     const projectId = props.match.params.id;
@@ -54,9 +54,8 @@ const StageAddModal = (props) => {
                 }
             }
             createStage(values).then(() => {
-                findStageList({ projectId: projectId, stageParentNull: true}).then(res => {
+                findStageListTreePage({ projectId: projectId}).then(res => {
                     if(res.code === 0){
-                        setStageList(res.data)
                         form.resetFields();
                     }
                 })

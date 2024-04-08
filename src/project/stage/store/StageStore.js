@@ -28,6 +28,20 @@ export class StageStore {
         }
     };
 
+    @observable
+    stageCondition = {
+        orderParams: [{
+            name: "startTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+        }
+    }
+
+    @observable
+    stageList = [];
     /**
      * 创建计划
      * @param {计划信息} param 
@@ -72,6 +86,15 @@ export class StageStore {
         }
     }
 
+    @action
+    findStageListTreePage= async(value) => {
+        Object.assign(this.stageCondition, value)
+        const data = await Service("/stage/findStageListTreePage", this.stageCondition)
+        if(data.code === 0){
+           this.stageList = data.data.dataList;
+        }
+        return data;
+    }
     /**
      * 根据id查找计划信息
      * @param {计划id} value 

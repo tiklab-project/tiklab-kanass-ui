@@ -19,6 +19,7 @@ export class WorkStore {
     @observable selectVersionList = [];
     @observable sprintList = [];
     @observable selectSprintList = [];
+    @observable stageList = [];
     @observable userList = [];
     @observable workAllList = [];
 
@@ -46,6 +47,14 @@ export class WorkStore {
             currentPage: 1,
         }
     };
+
+    // @observable stageParams = {
+    //     projectId: projectid,
+    //     orderParams: [{
+    //         name: "startTime",
+    //         orderType: "desc"
+    //     }]
+    // }
 
     @observable searchBorderChangepageCondition = {
         orderParams: [{
@@ -282,6 +291,23 @@ export class WorkStore {
         const data = await Service("/sprint/findSelectSprintList",params);
         if (data.code === 0) {
             this.selectSprintList = data.data;
+        }
+        return data;
+    }
+
+    @action
+    findStageList = async(value) => {
+        const stageParams = {
+            projectId: value.projectId,
+            stageName: value.stageName,
+            orderParams: [{
+                name: "startTime",
+                orderType: "desc"
+            }]
+        }
+        const data = await Service("/stage/findStageList", stageParams);
+        if (data.code === 0) {
+            this.stageList = data.data;
         }
         return data;
     }
@@ -571,6 +597,9 @@ export class WorkStore {
             },
             sprint: {
                 id: value.sprint || "nullstring"
+            },
+            stage: {
+                id: value.stage
             },
             assigner: {
                 id: value.assigner

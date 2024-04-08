@@ -215,7 +215,6 @@ const Routers = [
     {
         path: "/",
         component: () => <Redirect to="/home/survey" />,
-
         exact: true,
     },
     {
