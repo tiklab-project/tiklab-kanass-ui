@@ -103,6 +103,11 @@ export class WorkStore {
     @observable workBoardCurrentPage = [];
 
     @action
+    setTotal = (value) => {
+        this.total = value;
+    }
+    
+    @action
     setArchiveView = (value) => {
         this.archiveView = value
     }

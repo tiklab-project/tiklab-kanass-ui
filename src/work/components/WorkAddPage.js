@@ -8,17 +8,18 @@ import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "thoughtware-slate-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
+import {appendNodeInTree} from "../../project/stage/component/StageListTreeChange";
 
 const { RangePicker } = DatePicker;
 
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
-    const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel } = props;
+    const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel, stageTreeList } = props;
     const { moduleList, selectSprintList, userList, findProjectList, projectList,
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
-        selectVersionList, findSelectVersionList
+        selectVersionList, findSelectVersionList, workList, total, setTotal
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -33,6 +34,7 @@ const WorkAddPage = (props) => {
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
     const [selectItem, setSelectItem] = useState();
     const [loading, setLoading] = useState(false);
+    const path = props.match.path;
 
     useEffect(() => {
         form.setFieldsValue({
@@ -149,10 +151,10 @@ const WorkAddPage = (props) => {
                 }
             })
         }
-        
+
         // 如果是瀑布式开发，获取计划
         if (projectType === "nomal") {
-            findStageList({projectId: projectId}).then(res => {
+            findStageList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     form.setFieldsValue({
                         stage: res.data[0]?.id
@@ -212,21 +214,10 @@ const WorkAddPage = (props) => {
                 setWorkId(res.data)
                 setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
                 if (res.code === 0) {
-
-                    if (workShowType === "bodar") {
-                        getWorkBoardList()
-                        message.success({
-                            content: '添加成功',
-                            className: 'custom-class',
-                            style: {
-                                marginTop: '20vh',
-                            },
-                            duration: 1
-                        });
-                        setShowAddModel(false)
-                    } else {
+                    if (path === "/projectDetail/:id/stage") {
                         findWorkItemById(res.data).then(data => {
                             if (data.code === 0) {
+                                appendNodeInTree(stageTreeList, values.stage, data.data)
                                 message.success({
                                     content: '添加成功',
                                     className: 'custom-class',
@@ -235,10 +226,42 @@ const WorkAddPage = (props) => {
                                     },
                                     duration: 1
                                 });
-                                setShowAddModel(false)
                             }
                         })
+                        setShowAddModel(false)
+                    } else {
+                        if (workShowType === "bodar") {
+                            getWorkBoardList()
+                            message.success({
+                                content: '添加成功',
+                                className: 'custom-class',
+                                style: {
+                                    marginTop: '20vh',
+                                },
+                                duration: 1
+                            });
+                            setShowAddModel(false)
+                        } else {
+                            findWorkItemById(res.data).then(data => {
+                                if (data.code === 0) {
+                                    workList.unshift(data.data);
+                                    
+                                    setTotal(total + 1)
+                                    setShowAddModel(false)
+                                    message.success({
+                                        content: '添加成功',
+                                        className: 'custom-class',
+                                        style: {
+                                            marginTop: '20vh',
+                                        },
+                                        duration: 1
+                                    });
+                                    
+                                }
+                            })
+                        }
                     }
+
                 } else {
                     message.error({
                         content: '添加失败',
@@ -296,7 +319,7 @@ const WorkAddPage = (props) => {
 
     const searchStage = (value) => {
         console.log(value)
-        findStageList({projectId: projectId, stageName: value})
+        findStageList({ projectId: projectId, stageName: value })
     }
 
     return (

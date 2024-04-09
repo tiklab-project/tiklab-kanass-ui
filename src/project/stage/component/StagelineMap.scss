@@ -1,7 +1,7 @@
 
 .stage-linemap {
     height: calc(100% - 220px);
-
+    position: relative;
     .linemap-time {
         margin-top: 10px;
         position: relative;
@@ -81,6 +81,10 @@
     
                 .table-hearder-assigner {
                     width: 90px;
+                    // border-right: 1px solid var(--thoughtware-gray);
+                }
+                .table-hearder-action {
+                    width: 70px;
                     border-right: 1px solid var(--thoughtware-gray);
                 }
     
@@ -170,6 +174,16 @@
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
+                    
+                }
+
+                .table-td-action {
+                    width: 70px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0 15px;
+                    gap: 5px;
                     border-right: #f0f0f0 1px solid;
                 }
     
@@ -211,7 +225,7 @@
                 position: absolute;
                 top: 50px;
                 right: 0;
-                width: calc(100% - 450px);
+                width: calc(100% - 520px);
                 max-height: calc(100% - 50px);
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -277,8 +291,8 @@
             // justify-content: space-between;
             // padding: 0 20px;
             .stage-empty-icon {
-                height: 21px;
-                width: 21px;
+                height: 18px;
+                width: 18px;
             }
             .stage-name-left {
                 display: flex;
@@ -292,7 +306,6 @@
                 width: 18px;
                 border-radius: 4px;
                 padding: 3px;
-                margin-right: 5px;
                 .add-icon {
                 
                     display: none;
@@ -332,7 +345,7 @@
         margin-top: 20px;
 
         .scroll-box {
-            width: calc(100% - 450px);
+            width: calc(100% - 520px);
             height: 10px;
             background-color: #f5f5f5;
             border-radius: 4px;
@@ -355,11 +368,11 @@
         justify-content: flex-end;
         position: absolute;
         top: 50;
-        right: 0;
+        right: -15px;
+        height: calc(100% - 50px);
 
         .scroll-box {
             width: 10px;
-            height: calc(100vh - 270px);
             background-color: #f5f5f5;
             border-radius: 4px;
             position: relative;

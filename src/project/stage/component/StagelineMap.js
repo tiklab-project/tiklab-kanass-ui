@@ -18,20 +18,21 @@ import dayjs from 'dayjs';
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 
 const StageLinemap = (props) => {
     // 获取当前年月日
-    const { data, archiveView, setGraph, graph, updateStage, setShowStageAddModal, setParentId, setAddChild } = props;
+    const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
+        setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId, setDeleteSelectModal } = props;
 
+    const { createRecent, setWorkId, setWorkIndex } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth() + 1;
     const currentDay = todayDate.getDate()
-    console.log(currentYear, currentMonth, currentDay)
     const startDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
     const endDate = dayjs().add(1, "year").format("YYYY-MM-DD");
-    console.log(startDate, dayjs().format("MM-DD"))
     const firstDateMillisecond = Date.parse(startDate);
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
@@ -40,9 +41,6 @@ const StageLinemap = (props) => {
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
     const [expandedTree, setExpandedTree] = useState([])
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const modelRef = useRef()
-
 
     const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
     const unitLength = archiveView === "month" ? 10 : 24;
@@ -350,7 +348,6 @@ const StageLinemap = (props) => {
             }
             return array
         })
-        console.log("month", array)
         return array;
 
     }
@@ -433,6 +430,36 @@ const StageLinemap = (props) => {
         setAddChild("child")
     }
 
+    const showWorkItem = (record) => {
+        const params = {
+            name: record.title,
+            model: "workItem",
+            modelId: record.id,
+            project: { id: record.project.id },
+            projectType: { id: record.project.projectType.id },
+            iconUrl: record.workTypeSys?.iconUrl
+        }
+        createRecent(params)
+
+        setWorkId(record.id)
+        // setWorkIndex(index + 1)
+
+        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/${record.id}`)
+        setIsModalVisible(true)
+    }
+
+    const showEditStage = (stageId) => {
+        setStageId(stageId)
+        setShowStageEditModal(true)
+    }
+
+    const deleteStage = () =>{
+        
+    }
+
     const status = ["未开始", "进行中", "已发布"]
     //绘制表格
     const tableTd = (data, fid, deep) => {
@@ -470,7 +497,7 @@ const StageLinemap = (props) => {
                                             className="img-icon"
                                             alt=""
                                         />
-                                        <div className="stage-text" onClick={() => goStageDetail(item)}>{item.stageName}</div>
+                                        <div className="stage-text" onClick={() => showEditStage(item.id)}>{item.stageName}</div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -481,7 +508,17 @@ const StageLinemap = (props) => {
                                 <div className={`table-td table-border table-td-assigner`}>
                                     {item.master?.name}
                                 </div>
-                                <div className="table-gatter table-border"></div>
+                                <div className={`table-td table-border table-td-action`}>
+                                    <svg className="img-icon-right" aria-hidden="true">
+                                        <use xlinkHref="#icon-edit"></use>
+                                    </svg>
+                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteStage()}>
+                                        <use xlinkHref="#icon-delete"></use>
+                                    </svg>
+                                </div>
+                                <div className="table-gatter table-border">
+
+                                </div>
                             </div>
                             {
                                 isExpandedTree(item.id) && <div>
@@ -501,6 +538,10 @@ const StageLinemap = (props) => {
         ))
     }
 
+    const deleteWorkItem = (record) => {
+        setWorkId(record.id)
+        setDeleteSelectModal(true)
+    }
     const tableWorkTd = (data, fid, deep) => {
         return (data && data.length > 0 && data.map((item, index) => {
             return (
@@ -538,7 +579,7 @@ const StageLinemap = (props) => {
                                             className="img-icon"
                                         />
                                         <span className="stage-key">{item.id}</span>
-                                        <div className="stage-text">{item.title}</div>
+                                        <div className="stage-text" onClick={() => showWorkItem(item)}>{item.title}</div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -548,6 +589,14 @@ const StageLinemap = (props) => {
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
                                     {item.assigner?.name}
+                                </div>
+                                <div className={`table-td table-border table-td-action`}>
+                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item)}>
+                                        <use xlinkHref="#icon-edit"></use>
+                                    </svg>
+                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteWorkItem(item)}>
+                                        <use xlinkHref="#icon-delete"></use>
+                                    </svg>
                                 </div>
                                 {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>
@@ -642,6 +691,9 @@ const StageLinemap = (props) => {
                             </div>
                             <div className="table-hearder-text table-border table-hearder-assigner">
                                 负责人
+                            </div>
+                            <div className="table-hearder-text table-border table-hearder-action">
+                                操作
                             </div>
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
@@ -749,7 +801,7 @@ const StageLinemap = (props) => {
                         timerOuter={timerColOuter}
                         ganttCore={ganttCore}
                         ganttOuter={ganttOuter}
-                        isModalVisible={isModalVisible}
+                    // isModalVisible={isModalVisible}
                     />
                 }
             </div>
@@ -759,4 +811,5 @@ const StageLinemap = (props) => {
     )
 }
 
-export default withRouter(observer(StageLinemap)); 
+
+export default withRouter(inject("workStore")(observer(StageLinemap)));

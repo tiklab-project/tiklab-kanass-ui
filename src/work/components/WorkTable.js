@@ -15,6 +15,7 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
+import { setWorkDeatilInList } from "./WorkSearch";
 
 const WorkTable = (props) => {
 

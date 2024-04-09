@@ -11,15 +11,18 @@ import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 const { RangePicker } = DatePicker;
 import { withRouter } from "react-router";
-import { appendStageInTree } from "./StageListTreeChange";
+import { appendStageInTree, updateTree } from "./StageListTreeChange";
+import moment from "moment";
 const { TextArea } = Input;
-const StageAddModal = (props) => {
-    const {showStageAddMoal, setShowStageAddModal,stageStore, addChild, parentId} = props;
-    const {createStage, useList,getUseList, findStageListTreePage, stageList, findStage} = stageStore
+const StageEditModal = (props) => {
+    const { showStageEditModal, setShowStageEditModal, stageStore, stageId } = props;
+    const { updateStage, uselist, getUseList, stageList, findStage, findParentStageList, parentStageList } = stageStore
     const [form] = Form.useForm();
+    const dateFormat = 'YYYY-MM-DD';
     // 项目id
     const projectId = props.match.params.id;
-    
+    const [parentId, setParentId] = useState();
+
     const layout = {
         labelCol: {
             span: 6,
@@ -32,10 +35,31 @@ const StageAddModal = (props) => {
     /**
      * 获取项目成员
      */
-    useEffect(()=> {
-        getUseList({projectId: projectId});
+    useEffect(() => {
+        if(showStageEditModal){
+            getUseList({ projectId: projectId });
+            findStage({ id: stageId }).then(res => {
+                if (res.code === 0) {
+                    const data = res.data;
+                    setParentId(data.parentStage?.id)
+                    form.setFieldsValue({
+                        stageName: data.stageName,
+                        masterId: data.master.id,
+                        parentStageId: data.parentStage?.id,
+                        status: data.status,
+                        planTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)],
+                    })
+                }
+            })
+            findParentStageList({ id: stageId, projectId: projectId }).then(res => {
+                if (res.code === 0) {
+                    console.log(res.data)
+                }
+            })
+        }
+        
         return;
-    },[])
+    }, [showStageEditModal])
 
     /**
      * 提交添加计划
@@ -44,33 +68,35 @@ const StageAddModal = (props) => {
         form.validateFields().then((fieldsValue) => {
             const values = {
                 ...fieldsValue,
-                project: {id: projectId},
-                master: {id: fieldsValue.master},
-                startTime: fieldsValue.startTime[0].format('YYYY-MM-DD'),
-                endTime: fieldsValue.startTime[1].format('YYYY-MM-DD')
+                id: stageId,
+                parentStage: { id: fieldsValue.parentStageId ? fieldsValue.parentStageId : "nullstring"},
+                master: { id: fieldsValue.masterId },
+                startTime: fieldsValue.planTime[0].format('YYYY-MM-DD'),
+                endTime: fieldsValue.planTime[1].format('YYYY-MM-DD')
             };
-            if(addChild === "child"){
-                values.parentStage = {
-                    id: parentId
-                }
+            console.log(values);
+            console.log(parentId)
+            if(parentId === fieldsValue.parentStageId){
+                console.log("没修改上级")
+                values.isChangeParent = false;
+            }else {
+                values.isChangeParent = true;
             }
-            createStage(values).then((res) => {
+            updateStage(values).then(res => {
                 if(res.code === 0){
-                    findStage({id: res.data}).then(data => {
-                        if(data.code === 0){
-                            appendStageInTree(stageList, parentId, data.data)
-                            form.resetFields();
-                            setShowStageAddModal(false);
-                        }
-                    })
+                    // if(values.isChangeParent = true){
+                       
+                    // }
+                    updateTree(stageList, fieldsValue.parentStageId, stageId)
+                    setShowStageEditModal(false)
                 }
-                // findStageListTreePage({ projectId: projectId}).then(res => {
-                //     if(res.code === 0){
-                //         form.resetFields();
-                //     }
-                // })
-               
             })
+            // if(addChild === "child"){
+            //     values.parentStage = {
+            //         id: parentId
+            //     }
+            // }
+
         })
     }
 
@@ -79,7 +105,7 @@ const StageAddModal = (props) => {
      */
     const closeModal = () => {
         form.resetFields();
-        setShowStageAddModal(false);
+        setShowStageEditModal(false);
     }
 
     // 状态类型
@@ -101,8 +127,8 @@ const StageAddModal = (props) => {
     return (
         <div className="addmodel">
             <Modal
-                title={"添加计划"}
-                visible={showStageAddMoal}
+                title={"编辑计划"}
+                visible={showStageEditModal}
                 width={520}
                 onOk={submitVersion}
                 onCancel={closeModal}
@@ -118,7 +144,29 @@ const StageAddModal = (props) => {
                     }}
                     form={form}
                     layout="vertical"
+                    onFieldsChange = {(changedFields, allFields) => console.log(changedFields, allFields)}
                 >
+                    <Form.Item
+                        label="上级计划"
+                        name="parentStageId"
+                        rules={[
+                            {
+                                message: '请选择上级计划',
+                            },
+                        ]}
+                    >
+                        <Select
+                            placeholder="上级计划"
+                            allowClear
+                        >
+                            {
+                                parentStageList && parentStageList.map((item, index) => {
+                                    return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+
                     <Form.Item
                         label="计划名称"
                         name="stageName"
@@ -133,7 +181,7 @@ const StageAddModal = (props) => {
                     </Form.Item>
                     <Form.Item
                         label="负责人"
-                        name="master"
+                        name="masterId"
                         rules={[
                             {
                                 required: true,
@@ -144,9 +192,9 @@ const StageAddModal = (props) => {
                         <Select
                             placeholder="负责人"
                             allowClear
-                        >   
+                        >
                             {
-                                useList && useList.map((item,index)=> {
+                                uselist && uselist.map((item, index) => {
                                     return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user.name}</Select.Option>
                                 })
                             }
@@ -175,7 +223,7 @@ const StageAddModal = (props) => {
                     </Form.Item>
                     <Form.Item
                         label="开始结束时间"
-                        name="startTime"
+                        name="planTime"
                         rules={[
                             {
                                 required: true,
@@ -189,13 +237,13 @@ const StageAddModal = (props) => {
                         label="计划描述"
                         name="desc"
                         rules={[
-                        {
-                            required: false,
-                            message: '请输入计划描述',
-                        },
+                            {
+                                required: false,
+                                message: '请输入计划描述',
+                            },
                         ]}
                     >
-                        <TextArea rows={4}  maxLength={6} />
+                        <TextArea rows={4} maxLength={6} />
                     </Form.Item>
 
                 </Form>
@@ -203,4 +251,4 @@ const StageAddModal = (props) => {
         </div>
     );
 };
-export default withRouter(inject("stageStore")(observer(StageAddModal)));
+export default withRouter(inject("stageStore")(observer(StageEditModal)));

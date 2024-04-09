@@ -879,7 +879,6 @@ const Routers = [
                     {
                         path: "/projectDetail/:id/stage",
                         component: Stage,
-
                     },
                     // {
                     //     path: "/projectDetail/:id/stageDetail/:stageId",

@@ -11,7 +11,7 @@ import { Service } from "../../../common/utils/requset"
 export class StageStore {
     // 成员列表
     @observable 
-    uselist = [];
+    useList = [];
 
     @observable workTypeList = [];
     // 搜索参数
@@ -42,6 +42,22 @@ export class StageStore {
 
     @observable
     stageList = [];
+
+    @observable
+    parentStageList = [];
+
+    @observable
+    parentCondition = {
+        orderParams: [{
+            name: "startTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+        }
+    }
+    
     /**
      * 创建计划
      * @param {计划信息} param 
@@ -68,7 +84,7 @@ export class StageStore {
         }
         const data = await Service("/dmUser/findDmUserPage", params)
         if(data.code === 0){
-            this.uselist = data.data.dataList
+            this.useList = data.data.dataList
         }
         return data;
     }
@@ -191,13 +207,34 @@ export class StageStore {
         }
     }
 
+    // @action
+    // getWorkTypeList = async(value) => {
+    //     const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+    //     if(data.code === 0){
+    //         this.workTypeList = data.data;
+    //     }
+    //     return data.data;
+    // }
+
     @action
-    getWorkTypeList = async(value) => {
+    findWorkTypeDmList = async(value) => {
         const data = await Service("/workTypeDm/findWorkTypeDmList",value);
         if(data.code === 0){
             this.workTypeList = data.data;
         }
         return data.data;
+    }
+
+    @action
+    findParentStageList = async(value) => {
+        // const params = new FormData();
+        // params.append("id", value.id);
+        Object.assign(this.parentCondition,value)
+        const data = await Service("/stage/findParentStageList",this.parentCondition);
+        if(data.code === 0){
+            this.parentStageList = data.data.dataList;
+        }
+        return data;
     }
 
 }

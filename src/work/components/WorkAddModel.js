@@ -16,7 +16,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const WorkAddModel = (props) => {
 
-    const { workAddModel, workType, getWorkDetail, setChildWorkList, workTypeId } = props
+    const { workAddModel, workType, getWorkDetail, setChildWorkList, workTypeId, stageList } = props
     const workAddPageRef = useRef()
     const [showAddModel, setShowAddModel] = useState(false)
 
@@ -76,6 +76,7 @@ const WorkAddModel = (props) => {
                 setChildWorkList={setChildWorkList}
                 setShowAddModel={setShowAddModel}
                 handleCancel = {handleCancel}
+                stageTreeList = {stageList}
                 {...props}
                 workTypeId={workTypeId}
                 setIsEditStart={setIsEditStart}

@@ -5,7 +5,7 @@ import Button from "../../common/button/Button";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 const WorkCreatDropdown = (props) => {
-    const { workTypeList, buttonType, modelStyle } = props;
+    const { workTypeList, buttonType, modelStyle, stageList } = props;
     const modelRef = useRef()
     const [stateType, setState] = useState();
     const workAddModel = useRef()
@@ -79,7 +79,7 @@ const WorkCreatDropdown = (props) => {
                 }
 
             </div>
-            <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
+            <WorkAddModel workAddModel={workAddModel} workType={stateType} stageList = {stageList} {...props} />
         </div>
 
     )

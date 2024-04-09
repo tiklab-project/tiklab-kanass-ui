@@ -35,10 +35,8 @@ const EpicLineMap = (props) => {
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth() + 1;
     const currentDay = todayDate.getDate()
-    console.log(currentYear, currentMonth, currentDay)
     const startDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
     const endDate = dayjs().add(1, "year").format("YYYY-MM-DD");
-    console.log(startDate, dayjs().format("MM-DD"))
     const firstDateMillisecond = Date.parse(startDate);
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
@@ -384,7 +382,6 @@ const EpicLineMap = (props) => {
             }
             return array
         })
-        console.log("month", array)
         return array;
         
     }

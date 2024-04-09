@@ -31,9 +31,6 @@ const CoLScroll = (props) => {
 
     
     useEffect(() => {
-
-       
-
         window.addEventListener('wheel', handleWheel)
         return () => {
             window.removeEventListener('wheel', handleWheel)
