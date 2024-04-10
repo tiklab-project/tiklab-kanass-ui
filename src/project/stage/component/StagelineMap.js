@@ -19,11 +19,13 @@ import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
-        setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId, setDeleteSelectModal } = props;
+        setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId, 
+        setDeleteSelectModal, deleteStageList } = props;
 
     const { createRecent, setWorkId, setWorkIndex } = workStore;
 
@@ -430,7 +432,7 @@ const StageLinemap = (props) => {
         setAddChild("child")
     }
 
-    const showWorkItem = (record) => {
+    const showWorkItem = (record, index) => {
         const params = {
             name: record.title,
             model: "workItem",
@@ -442,7 +444,7 @@ const StageLinemap = (props) => {
         createRecent(params)
 
         setWorkId(record.id)
-        // setWorkIndex(index + 1)
+        setWorkIndex(index + 1)
 
         setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
 
@@ -456,9 +458,9 @@ const StageLinemap = (props) => {
         setShowStageEditModal(true)
     }
 
-    const deleteStage = () =>{
-        
-    }
+    
+
+
 
     const status = ["未开始", "进行中", "已发布"]
     //绘制表格
@@ -512,9 +514,10 @@ const StageLinemap = (props) => {
                                     <svg className="img-icon-right" aria-hidden="true">
                                         <use xlinkHref="#icon-edit"></use>
                                     </svg>
-                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteStage()}>
+                                    <DeleteModal deleteFunction = {deleteStageList} id = {item.id} content = {"确定删除当前计划以及所有下级计划和事项"} />
+                                    {/* <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteStage()}>
                                         <use xlinkHref="#icon-delete"></use>
-                                    </svg>
+                                    </svg> */}
                                 </div>
                                 <div className="table-gatter table-border">
 
@@ -579,7 +582,7 @@ const StageLinemap = (props) => {
                                             className="img-icon"
                                         />
                                         <span className="stage-key">{item.id}</span>
-                                        <div className="stage-text" onClick={() => showWorkItem(item)}>{item.title}</div>
+                                        <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -591,7 +594,7 @@ const StageLinemap = (props) => {
                                     {item.assigner?.name}
                                 </div>
                                 <div className={`table-td table-border table-td-action`}>
-                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item)}>
+                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item, index)}>
                                         <use xlinkHref="#icon-edit"></use>
                                     </svg>
                                     <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteWorkItem(item)}>

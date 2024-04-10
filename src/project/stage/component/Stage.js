@@ -28,7 +28,7 @@ const Stage = (props) => {
         stageStore: StageStore,
         workStore: WorkStore
     }
-    const { findStageListTreePage, updateStage, stageList, findWorkTypeDmList, workTypeList } = StageStore;
+    const { findStageListTreePage, updateStage, stageList, findWorkTypeDmList, workTypeList, deleteStage } = StageStore;
     const { deleteWorkItem, deleteWorkItemAndChildren, workId } = WorkStore;
     // 添加子级的上级id
     const [parentId, setParentId] = useState();
@@ -110,6 +110,15 @@ const Stage = (props) => {
         setIsModalVisible(false)
     }
 
+    const deleteStageList = (id) =>{
+        deleteStage({id:id}).then(res => {
+            if(res.code === 0){
+                removeNodeInTree(stageList, id)
+            }
+        })
+       
+    }
+
     return (<Provider {...store}>
         <Row style={{ height: "100%" }}>
             <Col sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -156,6 +165,7 @@ const Stage = (props) => {
                                 setShowStageEditModal={setShowStageEditModal}
                                 setStageId={setStageId}
                                 setDeleteSelectModal = {setDeleteSelectModal}
+                                deleteStageList = {deleteStageList}
                             />
                         </div>
                         <StageAddModal
@@ -186,8 +196,9 @@ const Stage = (props) => {
                             getPopupContainer={stageRef}
                             delectCurrentWorkItem={delectCurrentWorkItem}
                             delectWorkItemAndChildren={delectWorkItemAndChildren}
-                        // getHaveChildren={getHaveChildren}
                         />
+
+
                     </div>
                 </div>
             </Col>

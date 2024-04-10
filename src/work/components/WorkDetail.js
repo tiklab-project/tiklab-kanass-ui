@@ -37,7 +37,7 @@ const WorkDetail = (props) => {
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
-        findSelectVersionList, haveChildren
+        findSelectVersionList, haveChildren, findStageList, findFieldList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -70,6 +70,8 @@ const WorkDetail = (props) => {
                 getSelectUserList(projectId);
                 findSelectVersionList(projectId)
 
+                findStageList({ projectId: projectId })
+
                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
@@ -98,7 +100,11 @@ const WorkDetail = (props) => {
     useEffect(() => {
         setWorkInfo()
         if (workId && workId.length > 0) {
-
+            // findFieldList({ code: "workPriority" }).then(res => {
+            //     if (res.code === 0) {
+            //         setSelectItemList(res.data[0].selectItemList)
+            //     }
+            // })
             findPriority()
             getWorkDetail(workId)
 

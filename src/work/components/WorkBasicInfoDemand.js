@@ -9,13 +9,15 @@ import moment from 'moment';
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
 import { SwitchPreliminaryType } from "thoughtware-form-ui";
-import "thoughtware-slate-ui/es/thoughtware-slate.css";;
+import "thoughtware-slate-ui/es/thoughtware-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
 import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
+import StageStore from "../../project/stage/store/StageStore";
+import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -42,10 +44,11 @@ const WorkBasicInfo = (props) => {
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, sprintList, selectVersionList, priorityList, editWork,
+        attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList
     } = workStore;
+
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
@@ -53,10 +56,9 @@ const WorkBasicInfo = (props) => {
 
     const projectId = props.match.params.id;
     const projectType = workInfo?.project?.projectType.type;
-
+    
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
-
 
     const initForm = (workInfo) => {
         if (workInfo) {
@@ -69,9 +71,11 @@ const WorkBasicInfo = (props) => {
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
                 projectVersion: workInfo.projectVersion?.id,
+
                 planTakeupTime: workInfo.planTakeupTime || null,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
+                stage: workInfo.stage?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
@@ -134,7 +138,6 @@ const WorkBasicInfo = (props) => {
     const tenant = getUser().tenant;
     // 上传附件的信息
     const upload_url = env === "local" ? base_url : "";
-
     const filesParams = {
         name: 'uploadFile',
         multiple: true,
@@ -209,30 +212,12 @@ const WorkBasicInfo = (props) => {
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD';
 
-    // 获取当前时间
-    const getNowFormatDate = () => {
-        var date = new Date();
-        var seperator1 = "-";
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-        }
-        var currentdate = year + seperator1 + month + seperator1 + strDate;
-        return currentdate;
-    }
-
-
     const [validateStatus, setValidateStatus] = useState("validating")
     const [showValidateStatus, setShowValidateStatus] = useState(false)
 
     /**
- * 字段更新
- */
+     * 字段更新
+     */
     const updateSingle = async (changedValues) => {
         let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
@@ -268,6 +253,12 @@ const WorkBasicInfo = (props) => {
             }
         }
 
+        if (changeKey === "stage") {
+            changedValues.stage = {
+                id: changedValues.stage
+            }
+        }
+
         if (changeKey === "assigner") {
             changedValues.assigner = {
                 id: changedValues.assigner
@@ -297,17 +288,17 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                // if (!disableChange) {
-                //     setWorkInfo({ ...workInfo })
-                //     return
-                // } else {
-
-                // }
-                changedValues.parentWorkItem = {
-                    id: changedValues.parentWorkItem.value,
-                    title: changedValues.parentWorkItem.label
+                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                if (!disableChange) {
+                    setWorkInfo({ ...workInfo })
+                    return
+                } else {
+                    changedValues.parentWorkItem = {
+                        id: changedValues.parentWorkItem.value,
+                        title: changedValues.parentWorkItem.label
+                    }
                 }
+
             }
 
         }
@@ -341,15 +332,11 @@ const WorkBasicInfo = (props) => {
     const update = (data, changedValues, changeKey) => {
         editWork(data).then(res => {
             if (res.code === 0) {
-                const oldParentId = workInfo.parentWorkItem?.id
                 setWorkInfo({ ...workInfo, ...changedValues })
-
+                getTransitionList(workInfo?.workStatusNode?.id, workInfo?.workType?.flow?.id)
                 //  更新列表数据
-                if ((props.match.path.indexOf("/projectDetail/:id/work") > -1 ||
-                    props.match.path.indexOf("/work") > -1 ||
-                    props.match.path.indexof("/:id/sprintdetail/:sprint/work") > -1 ||
-                    props.match.path.indexof("/:id/versiondetail/:version/work") > -1) &&
-                    (changeKey === "assigner" || changeKey === "workPriority")
+
+                if (props.match.path.indexOf("/work") > -1 && (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
                     searchWorkById(workId).then((res) => {
                         if (res) {
@@ -367,13 +354,11 @@ const WorkBasicInfo = (props) => {
                         setWorkList([...list])
                     })
 
-
-
                 }
-            }
-            if (res.code === 3001) {
-                setWorkInfo({ ...workInfo });
-                message.warning(res.msg);
+
+                if(props.match.path === "/projectDetail/:id/stage" && changeKey === "stage"){
+                    updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
+                }
             }
         })
     }
@@ -389,29 +374,42 @@ const WorkBasicInfo = (props) => {
             const res = await searchWorkById(parentId);
             if (res) {
                 let currentLevel = 0;
-                if (res.treePath) {
-                    const parentArray = res.treePath.split(";");
-                    currentLevel = parentArray.length - 1;
-                }
-
-                const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
-                if (childrenLevelRes.code === 0) {
-                    if (childrenLevelRes.data === 2) {
-                        message.warning("事项限制为三级，所选事项不能作为父级");
-                        disableChange = false;
-                    } else if (childrenLevelRes.data === 1) {
-                        if (currentLevel === 0) {
-                            disableChange = true;
-                        } else {
-                            message.warning("事项限制为三级，所选事项不能作为父级");
+                // 判断选择事项的状态是否能添加为前置事项
+                if (disableChange) {
+                    if (res.workStatusCode === "DONE") {
+                        disableChange = true;
+                    } else {
+                        if (workInfo.workStatusCode !== "TODO") {
                             disableChange = false;
                         }
-                    } else if (childrenLevelRes.data === 0) {
-                        if (currentLevel < 2) {
-                            disableChange = true;
-                        } else {
+                    }
+                }
+
+                // 如果判断状态为可添加，根据层级判断是否可添加
+                if (disableChange) {
+                    if (res.treePath) {
+                        const parentArray = res.treePath.split(";");
+                        currentLevel = parentArray.length - 1;
+                    }
+                    const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
+                    if (childrenLevelRes.code === 0) {
+                        if (childrenLevelRes.data === 2) {
                             message.warning("事项限制为三级，所选事项不能作为父级");
                             disableChange = false;
+                        } else if (childrenLevelRes.data === 1) {
+                            if (currentLevel === 0) {
+                                disableChange = true;
+                            } else {
+                                message.warning("事项限制为三级，所选事项不能作为父级");
+                                disableChange = false;
+                            }
+                        } else if (childrenLevelRes.data === 0) {
+                            if (currentLevel < 2) {
+                                disableChange = true;
+                            } else {
+                                message.warning("事项限制为三级，所选事项不能作为父级");
+                                disableChange = false;
+                            }
                         }
                     }
                 }
@@ -423,7 +421,6 @@ const WorkBasicInfo = (props) => {
 
         return disableChange;
     };
-
 
 
     const updataPlanTime = (value) => {
@@ -544,8 +541,7 @@ const WorkBasicInfo = (props) => {
      * 更新描述
      */
     const updataDesc = useDebounce((value) => {
-        setSlateValue(null);
-
+        setSlateValue();
         let data = {
             id: workId,
             desc: value,
@@ -553,8 +549,8 @@ const WorkBasicInfo = (props) => {
         }
         editWork(data).then(res => {
             if (res.code === 0) {
-                workInfo.desc = value;
                 setSlateValue(value);
+                workInfo.desc = value
             }
         })
     }, [500])
@@ -635,21 +631,6 @@ const WorkBasicInfo = (props) => {
                                         priorityList && priorityList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>
                                                 <Space>
-                                                    {
-                                                        item.iconUrl ?
-                                                            <img
-                                                                src={('images/' + item.iconUrl)}
-                                                                alt=""
-                                                                className="img-icon-right"
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={('images/project1.png')}
-                                                                alt=""
-                                                                className="img-icon-right"
-                                                            />
-
-                                                    }
                                                     {item.name}
                                                 </Space>
                                             </Select.Option>
@@ -657,7 +638,6 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-
                             {
                                 projectType === "scrum" && <Form.Item
                                     label="所属迭代" name="sprint"
@@ -669,10 +649,39 @@ const WorkBasicInfo = (props) => {
                                         workId={workId}
                                         sprint={workInfo?.sprint}
                                         hoverFieldName={hoverFieldName}
-                                        setHoverFieldName={(value) => { setHoverFieldName(value) }}
-                                        workStatusCode={workInfo.workStatusCode}
+                                        setHoverFieldName={setHoverFieldName}
                                         workStore={workStore}
+                                        workStatusCode={workInfo.workStatusCode}
                                     />
+                                </Form.Item>
+                            }
+
+                            {
+                                projectType === "nomal" && <Form.Item
+                                    label="所属计划" name="stage"
+                                    hasFeedback={showValidateStatus === "stage" ? true : false}
+                                    validateStatus={validateStatus}
+                                >
+                                    <Select
+                                        placeholder="无"
+                                        className="work-select"
+                                        key="selectStage"
+                                        bordered={fieldName === "stage" ? true : false}
+                                        suffixIcon={fieldName === "stage" || hoverFieldName == "stage" ? <CaretDownOutlined /> : false}
+                                        onFocus={() => changeStyle("stage")}
+                                        onBlur={() => setFieldName("")}
+                                        onMouseEnter={() => setHoverFieldName("stage")}
+                                        onMouseLeave={() => setHoverFieldName("")}
+                                        getPopupContainer={() => formRef.current}
+                                    >
+                                        {
+                                            stageList && stageList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>
+                                                    {item.stageName}
+                                                </Select.Option>
+                                            })
+                                        }
+                                    </Select>
                                 </Form.Item>
                             }
 
@@ -775,7 +784,7 @@ const WorkBasicInfo = (props) => {
                                     workId={workId}
                                     version={workInfo?.projectVersion}
                                     hoverFieldName={hoverFieldName}
-                                    setHoverFieldName={(value) => { setHoverFieldName(value) }}
+                                    setHoverFieldName={setHoverFieldName}
                                     workStore={workStore}
                                     workStatusCode={workInfo.workStatusCode}
                                 />
@@ -814,7 +823,6 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "percent" ? true : false}
                                 validateStatus={validateStatus}
                             >
-
                                 <InputNumber min={0} max={100}
                                     key="percent"
                                     formatter={value => `${value}%`}
@@ -826,6 +834,7 @@ const WorkBasicInfo = (props) => {
                                     onMouseEnter={() => setHoverFieldName("percent")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                 />
+                                {/* % */}
                             </Form.Item>
                         </Form>
                     </div>
@@ -866,6 +875,7 @@ const WorkBasicInfo = (props) => {
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
                         >
+
                             <SelectSimple
                                 name="parentWorkItem"
                                 onSearchChange={(value) => searchParentByWord(value)}
@@ -873,9 +883,7 @@ const WorkBasicInfo = (props) => {
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
                                 onFocus={() => changeStyle("parentWorkItem")}
                                 onBlur={() => changeStyle("")}
-                                hoverFieldName={hoverFieldName}
-                                fieldName={fieldName}
-                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName === "parentWorkItem" ? true : false}
+                                suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
                             >
@@ -934,6 +942,7 @@ const WorkBasicInfo = (props) => {
                             </svg>
                         </div>
                     }
+
                 </div>
                 <div ref={exFormRef}>
                     {
@@ -971,6 +980,7 @@ const WorkBasicInfo = (props) => {
                     }
                 </div>
 
+
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -989,11 +999,10 @@ const WorkBasicInfo = (props) => {
                                     base_url={base_url}
                                     value={slateValue}
                                     minHeight={300}
-                                    // onChange={setSlateValue}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
                                 >
-                                    <div style={{ padding: "10px" }}>
+                                    <div className="work-detail-box-content" style={{ padding: "10px" }}>
                                         <EditorBigContent
                                             value={slateValue}
                                         />
@@ -1004,7 +1013,6 @@ const WorkBasicInfo = (props) => {
                             </div>
 
                             <div className="desc-botton">
-
                                 <Button onClick={() => cancel()}>取消</Button>
                                 <Button type="primary" onClick={() => editorDesc()}>确定</Button>
                             </div>
@@ -1030,6 +1038,7 @@ const WorkBasicInfo = (props) => {
                     附件:
                 </div>
             </div>
+
             <div className="work-detail-box work-attach-box">
 
                 <Fragment>

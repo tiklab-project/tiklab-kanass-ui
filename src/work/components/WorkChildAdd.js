@@ -8,7 +8,7 @@ import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../common/utils/setImageUrl";
 import { changeWorkItemParent } from "./WorkGetList";
 const WorkChildAddmodal = (props) => {
-    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId } = props;
+    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId, stageId } = props;
 
     const { workId, workShowType, findPriority, priorityList, getWorkStatus, workStatusList, 
         demandTypeId, findWorkItemAndChidren, workList, setWorkList } = workStore;
@@ -115,6 +115,9 @@ const WorkChildAddmodal = (props) => {
             builder: getUser().userId,
             sprintId: sprintId,
             assigner: project?.master.id,
+        }
+        if(stageId){
+            params.stage = stageId;
         }
         createChildWorkItem(params, item)
     }

@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown, Modal, Menu } from "antd";
 import "./deleteModal.scss"
 const DeleteModal = (props) => {
-    const {deleteFunction, id, getPopupContainer} = props;
+    const {deleteFunction, id, getPopupContainer, content} = props;
     const moreMenu = () => {
         return <Menu onClick={(value) => selectAction(value)}>
             <Menu.Item key="delete">
@@ -15,6 +15,7 @@ const DeleteModal = (props) => {
         if(value.key === "delete"){
             Modal.confirm({
                 title: '确定删除?',
+                content: content,
                 centered: true,
                 className: "delete-modal",
                 getContainer: getPopupContainer,

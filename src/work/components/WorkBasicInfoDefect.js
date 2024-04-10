@@ -16,6 +16,8 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
+import StageStore from "../../project/stage/store/StageStore";
+import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -44,8 +46,9 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList
     } = workStore;
+
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
@@ -53,7 +56,7 @@ const WorkBasicInfo = (props) => {
 
     const projectId = props.match.params.id;
     const projectType = workInfo?.project?.projectType.type;
-
+    
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
 
@@ -72,6 +75,7 @@ const WorkBasicInfo = (props) => {
                 planTakeupTime: workInfo.planTakeupTime || null,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
+                stage: workInfo.stage?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
                 eachType: workInfo.eachType
             })
@@ -103,6 +107,7 @@ const WorkBasicInfo = (props) => {
                 setSelectItemList(res.data[0].selectItemList)
             }
         })
+        
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
@@ -208,8 +213,6 @@ const WorkBasicInfo = (props) => {
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD';
 
-
-
     const [validateStatus, setValidateStatus] = useState("validating")
     const [showValidateStatus, setShowValidateStatus] = useState(false)
 
@@ -248,6 +251,12 @@ const WorkBasicInfo = (props) => {
             changedValues.sprint = {
                 id: changedValues.sprint,
                 sprintName: changedValues.sprintName
+            }
+        }
+
+        if (changeKey === "stage") {
+            changedValues.stage = {
+                id: changedValues.stage
             }
         }
 
@@ -327,11 +336,8 @@ const WorkBasicInfo = (props) => {
                 setWorkInfo({ ...workInfo, ...changedValues })
                 getTransitionList(workInfo?.workStatusNode?.id, workInfo?.workType?.flow?.id)
                 //  更新列表数据
-                if ((props.match.path.indexOf("/projectDetail/:id/work") > -1 ||
-                    props.match.path.indexOf("/work") > -1 ||
-                    props.match.path.indexof("/:id/sprintdetail/:sprint/work") > -1 ||
-                    props.match.path.indexof("/:id/versiondetail/:version/work") > -1) &&
-                    (changeKey === "assigner" || changeKey === "workPriority")
+
+                if (props.match.path.indexOf("/work") > -1 && (changeKey === "assigner" || changeKey === "workPriority")
                 ) {
                     searchWorkById(workId).then((res) => {
                         if (res) {
@@ -348,15 +354,11 @@ const WorkBasicInfo = (props) => {
                         const list = changeWorkItemParent(workList, changedValues.parentWorkItem?.id, res)
                         setWorkList([...list])
                     })
-                    // if (workShowType === "bodar") {
-                    //     getWorkBoardList()
-                    // } else if (viewType === "tree") {
-                    //     getWorkConditionPageTree()
-                    // } else if (viewType === "tile") {
-                    //     getWorkConditionPage()
-                    // }
 
+                }
 
+                if(props.match.path === "/projectDetail/:id/stage" && changeKey === "stage"){
+                    updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }
         })
@@ -436,7 +438,9 @@ const WorkBasicInfo = (props) => {
     /**
      * 万能表单字段更新
      */
-    const updateExtData = (changedValues) => {
+    const updateExtData = (changedValues, allValues) => {
+        console.log(changedValues, allValues)
+        return
         let extData = JSON.parse(workInfo.extData)
         let data = {
             extData: JSON.stringify({
@@ -630,21 +634,6 @@ const WorkBasicInfo = (props) => {
                                         priorityList && priorityList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>
                                                 <Space>
-                                                    {
-                                                        item.iconUrl ?
-                                                            <img
-                                                                src={('images/' + item.iconUrl)}
-                                                                alt=""
-                                                                className="img-icon-right"
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={('images/project1.png')}
-                                                                alt=""
-                                                                className="img-icon-right"
-                                                            />
-
-                                                    }
                                                     {item.name}
                                                 </Space>
                                             </Select.Option>
@@ -667,6 +656,35 @@ const WorkBasicInfo = (props) => {
                                         workStore={workStore}
                                         workStatusCode={workInfo.workStatusCode}
                                     />
+                                </Form.Item>
+                            }
+
+                            {
+                                projectType === "nomal" && <Form.Item
+                                    label="所属计划" name="stage"
+                                    hasFeedback={showValidateStatus === "stage" ? true : false}
+                                    validateStatus={validateStatus}
+                                >
+                                    <Select
+                                        placeholder="无"
+                                        className="work-select"
+                                        key="selectStage"
+                                        bordered={fieldName === "stage" ? true : false}
+                                        suffixIcon={fieldName === "stage" || hoverFieldName == "stage" ? <CaretDownOutlined /> : false}
+                                        onFocus={() => changeStyle("stage")}
+                                        onBlur={() => setFieldName("")}
+                                        onMouseEnter={() => setHoverFieldName("stage")}
+                                        onMouseLeave={() => setHoverFieldName("")}
+                                        getPopupContainer={() => formRef.current}
+                                    >
+                                        {
+                                            stageList && stageList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>
+                                                    {item.stageName}
+                                                </Select.Option>
+                                            })
+                                        }
+                                    </Select>
                                 </Form.Item>
                             }
 

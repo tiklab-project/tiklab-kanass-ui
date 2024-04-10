@@ -98,6 +98,9 @@ class WorkChildStore {
             parentWorkItem: {
                 id: value.parentWorkId || "nullstring"
             },
+            stage: {
+                id: value.stage
+            },
             sprint: {
                 id: value.sprintId
             },

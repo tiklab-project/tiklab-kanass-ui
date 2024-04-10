@@ -740,12 +740,13 @@ export class WorkStore {
     //获取优先级类型
     @action
     findPriority = async() => {
-        const data = await Service("/workPriority/findAllWorkPriority");
+        const data = await Service("/field/findFieldList", {code: "workPriority"});
         if(data.code === 0){
-            this.priorityList = data.data;
+            this.priorityList = data.data[0].selectItemList;
         }
         return data;
     }
+
 
     //获取事项类型
     @action

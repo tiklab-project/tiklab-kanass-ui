@@ -130,6 +130,8 @@ const WorkChild = (props) => {
 
         if(projectType === "scrum"){
             params.sprint = sprintList[0]?.id
+        }else {
+            params.stage = workInfo.stage.id
         }
 
         if(workTypeCode === "epic"){
@@ -270,6 +272,7 @@ const WorkChild = (props) => {
                         setChildWorkList = {setChildWorkList}
                         treePath = {treePath}
                         demandId = {demandId}
+                        stageId = {workInfo.stage?.id}
                     />
                 }
                 {

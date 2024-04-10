@@ -11,12 +11,12 @@ import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 const { RangePicker } = DatePicker;
 import { withRouter } from "react-router";
-import { appendStageInTree, updateTree } from "./StageListTreeChange";
+import { appendStageInTree, updateStageInfo, updateTree } from "./StageListTreeChange";
 import moment from "moment";
 const { TextArea } = Input;
 const StageEditModal = (props) => {
     const { showStageEditModal, setShowStageEditModal, stageStore, stageId } = props;
-    const { updateStage, uselist, getUseList, stageList, findStage, findParentStageList, parentStageList } = stageStore
+    const { updateStage, useList, getUseList, stageList, findStage, findParentStageList, parentStageList } = stageStore
     const [form] = Form.useForm();
     const dateFormat = 'YYYY-MM-DD';
     // 项目id
@@ -84,19 +84,15 @@ const StageEditModal = (props) => {
             }
             updateStage(values).then(res => {
                 if(res.code === 0){
-                    // if(values.isChangeParent = true){
-                       
-                    // }
-                    updateTree(stageList, fieldsValue.parentStageId, stageId)
+                    if(values.isChangeParent){
+                        updateTree(stageList, fieldsValue.parentStageId, stageId)
+                    }else {
+                        updateStageInfo(stageList, stageId,values)
+                    }
+                    
                     setShowStageEditModal(false)
                 }
             })
-            // if(addChild === "child"){
-            //     values.parentStage = {
-            //         id: parentId
-            //     }
-            // }
-
         })
     }
 
@@ -194,7 +190,7 @@ const StageEditModal = (props) => {
                             allowClear
                         >
                             {
-                                uselist && uselist.map((item, index) => {
+                                useList && useList.map((item, index) => {
                                     return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user.name}</Select.Option>
                                 })
                             }
