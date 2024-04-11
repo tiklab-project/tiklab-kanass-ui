@@ -1012,5 +1012,18 @@ export class WorkStore {
         return data;
     }
 
+    // 创建事项与表单选项的关联
+    @action
+    createSelectItemRelation = async(value) => {
+        const data = await Service("/selectItemRelation/createSelectItemRelation", value)
+        return data;
+    }
+
+    @action
+    createCheckboxSelectItemRelation = async(value) => {
+        const data = await Service("/selectItemRelation/createCheckboxSelectItemRelation", value)
+        return data;
+    }
+
 }
 export default new WorkStore();

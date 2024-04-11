@@ -10,6 +10,8 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { useDebounce } from "../../../common/utils/debounce";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
+import { Modal, message } from "antd";
+import Button from "../../../common/button/Button";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -21,15 +23,17 @@ const SprintPlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, 
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType,
         deleteWorkItem, workId, deleteWorkItemAndChildren } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
-        findSprintList, setSprint, delSprint, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal } = SprintPlanStore;
+        findSprintList, updateWorkItem, delSprint, noPlanSearchCondition, searchCondition,
+        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
+    const [endSprintId, setEndSprintId ] = useState();
     const [listType, setListType] = useState();
-
+    const [showModal, setShowModal] = useState(false);
+    const [actionType, setActionType] = useState("");
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -98,16 +102,31 @@ const SprintPlan = (props) => {
 
     const changeSprintPlan = (Sid) => {
         event.preventDefault();
+        setActionType("update")
+        setEndSprintId(Sid)
+        haveChildren({ id: moveWorkId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
+                    setShowModal(true)
+                } else {
+                    moveOneWorkItem(Sid)
+                }
+            }
+        })
+    }
+
+    const moveOneWorkItem = (Sid) => {
         let params = {
             startId: moveWorkId,
-            endId: sprintId
+            endId: sprintId,
+            updateField: "sprint",
         }
-        // 移动拖动的元素到所选择的放置目标节点
+        setEndSprintId(Sid)
         if (startSprintId !== Sid) {
             dragEvent.style.background = "";
             // dragEvent.parentNode.removeChild( dragEvent );
             // event.target.appendChild( dragEvent );
-            setSprint(params).then((res) => {
+            updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
                     const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
                     setNoPlanWorkList(newNoPlanWorkList)
@@ -118,15 +137,63 @@ const SprintPlan = (props) => {
                 }
             })
         }
+        setShowModal(false)
     }
 
+    const moveWorkItemList = (Sid) => {
+        let params = {
+            startId: moveWorkId,
+            endId: sprintId,
+            updateField: "sprints",
+        }
+        setEndSprintId(Sid)
+        if (startSprintId !== Sid) {
+            dragEvent.style.background = "";
+            // dragEvent.parentNode.removeChild( dragEvent );
+            // event.target.appendChild( dragEvent );
+            updateWorkItem(params).then((res) => {
+                if (res.code === 0) {
+                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
+                        if(res.code === 0){
+                            const ids = res.data;
+                            const newNoPlanWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setNoPlanWorkList(newNoPlanWorkList)
+        
+                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) >= -1})
+                            planWorkList.unshift(...addWorkList)
+                            setPlanWorkList(planWorkList)
+                        }
+                    })
+                   
+                }
+            })
+        }
+        setShowModal(false)
+    }
     const delSprintPlan = (Sid) => {
         event.preventDefault();
+        setActionType("delete")
+        setEndSprintId(Sid)
+        haveChildren({ id: moveWorkId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
+                    setShowModal(true)
+                } else {
+                    delSprintOnePlan(Sid)
+                }
+            }
+        })
+
+    }
+    const delSprintOnePlan = (Sid) => {
+        event.preventDefault();
         let params = {
-            startId: moveWorkId
+            startId: moveWorkId,
+            endId: "nullstring",
+            updateField: "sprint",
         }
         // 移动拖动的元素到所选择的放置目标节点
-        if (startSprintId && !Sid ) {
+        if (startSprintId && !Sid) {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
@@ -142,8 +209,57 @@ const SprintPlan = (props) => {
         }
     }
 
+    const delListSprintPlan = (Sid) => {
+        event.preventDefault();
+        let params = {
+            startId: moveWorkId,
+            endId: "nullstring",
+            updateField: "sprints",
+        }
+        // 移动拖动的元素到所选择的放置目标节点
+        if (startSprintId && !Sid) {
+            dragEvent.style.background = "";
+            delSprint(params).then((res) => {
+                if (res.code === 0) {
+                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
+                        if(res.code === 0){
+                            const ids = res.data;
+                            const newNoPlanWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setPlanWorkList(newNoPlanWorkList)
+        
+                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) >= 0 })
+                            noPlanWorkList.unshift(...addWorkList)
+                            setNoPlanWorkList(noPlanWorkList)
+                        }
+                    })
+                    
+                }
+
+            })
+        }
+        setShowModal(false)
+    }
+
+    const submitOne= () => {
+        if(actionType === "delete"){
+            delSprintOnePlan(endSprintId)
+        }
+        if(actionType === "update"){
+            moveOneWorkItem(endSprintId)
+        }
+    }
+
+    const submitList = () => {
+        if(actionType === "delete"){
+            delListSprintPlan(endSprintId)
+        }
+        if(actionType === "update"){
+            moveWorkItemList(endSprintId)
+        }
+    }
+
     const handleChange = useDebounce((field, value) => {
-        getNoPlanWorkList({ 
+        getNoPlanWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 20,
@@ -153,12 +269,12 @@ const SprintPlan = (props) => {
     }, [500])
 
     const findSprintWorkItem = useDebounce((field, value) => {
-        getWorkList({ 
+        getWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
-            } 
+            }
         })
     }, [500])
 
@@ -215,11 +331,11 @@ const SprintPlan = (props) => {
 
     const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setIsModalVisible(false)
-                if(listType === "noPlan"){
+                if (listType === "noPlan") {
                     removeNodeInTree(noPlanWorkList, null, workId);
-                    if(noPlanWorkList.length <= 0){
+                    if (noPlanWorkList.length <= 0) {
                         getNoPlanWorkList(
                             {
                                 pageParam: {
@@ -230,9 +346,9 @@ const SprintPlan = (props) => {
                         )
                     }
                     setNoPlanWorkList([...noPlanWorkList])
-                }else {
-                    removeNodeInTree(planWorkList,null, workId);
-                    if(planWorkList.length <= 0){
+                } else {
+                    removeNodeInTree(planWorkList, null, workId);
+                    if (planWorkList.length <= 0) {
                         getWorkList(
                             {
                                 pageParam: {
@@ -245,8 +361,8 @@ const SprintPlan = (props) => {
                     setPlanWorkList([...planWorkList])
                 }
             }
-            
-            
+
+
         })
     }
 
@@ -255,10 +371,6 @@ const SprintPlan = (props) => {
         setIsModalVisible(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren)
-        setIsModalVisible(false)
-    }
     return (<Provider {...store}>
         <div className="sprint-plan">
             <div className="sprint-plan-content">
@@ -468,7 +580,7 @@ const SprintPlan = (props) => {
                                                         <img
                                                             src={'/images/workType2.png'}
                                                             alt=""
-                                                            className="icon-32" 
+                                                            className="icon-32"
                                                         />
                                                 }
 
@@ -502,10 +614,31 @@ const SprintPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
-                delectCurrentWorkItem = {delectCurrentWorkItem}
-                delectWorkItemAndChildren = {delectWorkItemAndChildren}
+                delectCurrentWorkItem={delectCurrentWorkItem}
                 {...props}
             />
+
+            <Modal
+                visible={showModal}
+                title="是否移动下级"
+                onCancel={() => setShowModal(false)}
+                footer={[
+                    <div className="submit-botton">
+                        <Button key="back">
+                            取消
+                        </Button>
+                        <Button key="primary" type="primary" onClick = {() => submitList(endSprintId)}>
+                            是
+                        </Button>
+                        <Button type="primary" onClick = {() => submitOne(endSprintId)}>
+                            否
+                        </Button>
+                    </div>
+
+                ]}
+            >
+                是否移动下级
+            </Modal>
         </div>
     </Provider>
 

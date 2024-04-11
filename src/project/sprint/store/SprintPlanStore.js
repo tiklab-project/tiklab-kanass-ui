@@ -107,7 +107,7 @@ export class ProjectSprintPlanStore {
      * @returns 
      */
     @action
-	setSprint = async(value) => {
+	updateWorkItem = async(value) => {
         const params={
             id: value.startId,
             updateField: "sprint",

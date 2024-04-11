@@ -13,6 +13,7 @@ import "./SprintPage.scss"
 import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
+import { Empty } from "antd";
 const SprintPage = (props) => {
     const sprintLineRef = useRef();
     // 项目id
@@ -55,7 +56,7 @@ const SprintPage = (props) => {
                 </div>
                 <div>
                     {
-                        sprintRoadList && <SprintLineMap  
+                        sprintRoadList && sprintRoadList.length > 0 ? <SprintLineMap  
                         sprintLineRef = {sprintLineRef}
                         data={sprintRoadList} 
                         archiveView= {archiveView}
@@ -63,6 +64,8 @@ const SprintPage = (props) => {
                         setGraph = {setGraph}
                         setSprintList= {setSprintList}
                         />
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有迭代~" />
                     }
                 </div>
             </div>

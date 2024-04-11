@@ -91,24 +91,20 @@ const Stage = (props) => {
     }
 
     // 删除事项之后列表处理
-    const deleteWork = (deleteWorkItem, removeTree) => {
+    const deleteWork = (workId) => {
         deleteWorkItem(workId).then((res) => {
             if (res.code === 0) {
-                removeTree(stageList, workId)
+                removeNodeInTree(stageList, workId)
             }
         })
 
     }
 
     const delectCurrentWorkItem = () => {
-        deleteWork(deleteWorkItem, removeNodeInTreeAddChildren)
-        setIsModalVisible(false)
+        deleteWork(deleteWorkItem, removeNodeInTree)
+        // setIsModalVisible(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren, removeNodeInTree)
-        setIsModalVisible(false)
-    }
 
     const deleteStageList = (id) =>{
         deleteStage({id:id}).then(res => {
@@ -166,6 +162,7 @@ const Stage = (props) => {
                                 setStageId={setStageId}
                                 setDeleteSelectModal = {setDeleteSelectModal}
                                 deleteStageList = {deleteStageList}
+                                deleteWork = {deleteWork}
                             />
                         </div>
                         <StageAddModal
@@ -187,7 +184,6 @@ const Stage = (props) => {
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
                             delectCurrentWorkItem={delectCurrentWorkItem}
-                            delectWorkItemAndChildren={delectWorkItemAndChildren}
                             {...props}
                         />
                         <WorkDeleteSelectModal
@@ -195,7 +191,6 @@ const Stage = (props) => {
                             setDeleteSelectModal={setDeleteSelectModal}
                             getPopupContainer={stageRef}
                             delectCurrentWorkItem={delectCurrentWorkItem}
-                            delectWorkItemAndChildren={delectWorkItemAndChildren}
                         />
 
 

@@ -13,6 +13,7 @@ import "./VersionPage.scss"
 import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
+import { Empty } from "antd";
 const VersionPage = (props) => {
     const versionLineRef = useRef();
     // 项目id
@@ -62,13 +63,15 @@ const VersionPage = (props) => {
                 </div>
                 <div>
                     {
-                        versionRoadList && <VersionLineMap
+                        versionRoadList && versionRoadList.length > 0 ? <VersionLineMap
                             versionLineRef={versionLineRef}
                             data={versionRoadList}
                             archiveView={archiveView}
                             graph={graph}
                             setGraph={setGraph}
                         />
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有版本~" />
                     }
                 </div>
             </div>

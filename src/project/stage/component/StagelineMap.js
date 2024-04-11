@@ -20,14 +20,15 @@ import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModal";
 
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
-        setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId, 
-        setDeleteSelectModal, deleteStageList } = props;
+        setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId,
+        setDeleteSelectModal, deleteStageList, deleteWork } = props;
 
-    const { createRecent, setWorkId, setWorkIndex } = workStore;
+    const { createRecent, setWorkId, setWorkIndex, haveChildren } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -458,7 +459,7 @@ const StageLinemap = (props) => {
         setShowStageEditModal(true)
     }
 
-    
+
 
 
 
@@ -514,7 +515,7 @@ const StageLinemap = (props) => {
                                     <svg className="img-icon-right" aria-hidden="true">
                                         <use xlinkHref="#icon-edit"></use>
                                     </svg>
-                                    <DeleteModal deleteFunction = {deleteStageList} id = {item.id} content = {"确定删除当前计划以及所有下级计划和事项"} />
+                                    <DeleteModal deleteFunction={deleteStageList} id={item.id} content={"确定删除当前计划以及所有下级计划和事项"} />
                                     {/* <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteStage()}>
                                         <use xlinkHref="#icon-delete"></use>
                                     </svg> */}
@@ -597,9 +598,16 @@ const StageLinemap = (props) => {
                                     <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item, index)}>
                                         <use xlinkHref="#icon-edit"></use>
                                     </svg>
-                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteWorkItem(item)}>
+                                    <WorkDeleteSelectModal
+                                        // getPopupContainer={workDetailTop}
+                                        delectCurrentWorkItem={deleteWork}
+                                        haveChildren={haveChildren}
+                                        workId={item.id}
+                                        setWorkId={setWorkId}
+                                    />
+                                    {/* <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteWorkItem(item)}>
                                         <use xlinkHref="#icon-delete"></use>
-                                    </svg>
+                                    </svg> */}
                                 </div>
                                 {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>

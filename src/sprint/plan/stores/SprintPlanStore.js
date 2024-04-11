@@ -101,10 +101,10 @@ export class SprintPlanStore {
     }
 
     @action
-	setSprint = async(value) => {
+	updateWorkItem = async(value) => {
         const params={
             id: value.startId,
-            updateField: "sprint",
+            updateField: value.updateField,
             sprint: {
                 id: value.endId
             }
@@ -118,14 +118,30 @@ export class SprintPlanStore {
 	delSprint = async(value) => {
         const params={
             id: value.startId,
-            updateField: "sprint",
+            updateField: value.updateField,
             sprint: {
-                id: "nullstring"
+                id: value.endId
             }
         }
         const data = await Service("/workItem/updateWorkItem", params)
         return data;
 		
+    }
+
+    @action
+    haveChildren = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/haveChildren", params)
+        return data;
+    }
+
+    @action
+    findWorkItemAndChildrenIds = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findWorkItemAndChildrenIds", params)
+        return data;
     }
 }
 

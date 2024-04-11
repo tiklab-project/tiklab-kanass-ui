@@ -86,12 +86,9 @@ const WorkList = (props) => {
     }
 
     const delectCurrentWorkItem = () => {
-        deleteWork(deleteWorkItem, removeNodeInTreeAddChildren)
+        deleteWork(deleteWorkItem, removeNodeInTree)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren, removeNodeInTree)
-    }
 
     const rowSpan = {
         sm: 24,
@@ -110,7 +107,6 @@ const WorkList = (props) => {
                     {...props} 
                     deleteWork={deleteWork} 
                     delectCurrentWorkItem={delectCurrentWorkItem} 
-                    delectWorkItemAndChildren={delectWorkItemAndChildren} 
                     rowSpan={rowSpan}
                     workShowType = {workShowType}
                 ></WorkDetail>

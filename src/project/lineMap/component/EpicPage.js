@@ -17,6 +17,7 @@ import { observer, Provider } from "mobx-react";
 import EpicStore from '../store/EpicStore';
 import WorkStore from "../../../work/store/WorkStore";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
+import { Empty } from "antd";
 const EpicPage = (props) => {
     const store = {
         epicStore: EpicStore,
@@ -123,7 +124,7 @@ const EpicPage = (props) => {
                 </div>
                 <>
                     {
-                        workList && <EpicLineMap
+                        workList && workList.length > 0 ? <EpicLineMap
                             data={workList}
                             currentPage={currentPage}
                             totalPage={totalPage}
@@ -134,6 +135,8 @@ const EpicPage = (props) => {
                             changePage={changePage}
                             workTypeList={workTypeList}
                         />
+                        :
+                        <Empty image="/images/nodata.png" description="暂时没有需求~" />
                     }
                 </>
 

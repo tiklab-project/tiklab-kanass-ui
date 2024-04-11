@@ -258,10 +258,6 @@ const StagePlan = (props) => {
         setIsModalVisible(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren)
-        setIsModalVisible(false)
-    }
     return (<Provider {...store}>
         <div className="stage-plan">
             <div className="stage-plan-content">
@@ -506,7 +502,6 @@ const StagePlan = (props) => {
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
                 delectCurrentWorkItem = {delectCurrentWorkItem}
-                delectWorkItemAndChildren = {delectWorkItemAndChildren}
                 {...props}
             />
         </div>

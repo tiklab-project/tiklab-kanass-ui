@@ -241,10 +241,6 @@ const VersionPlan = (props) => {
         setIsModalVisible(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren)
-        setIsModalVisible(false)
-    }
 
     return (<Provider {...store}>
         <div className="version-plan">
@@ -492,7 +488,6 @@ const VersionPlan = (props) => {
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
                 delectCurrentWorkItem = {delectCurrentWorkItem}
-                delectWorkItemAndChildren = {delectWorkItemAndChildren}
                 {...props}
             />
         </div>

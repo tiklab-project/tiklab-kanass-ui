@@ -47,6 +47,7 @@ const WorkTable = (props) => {
     const selectWorkItem = (record) => {
         setWorkId(record.id)
         setDeleteSelectModal(true)
+        // getHaveChildren(record.id)
     }
 
     useEffect(() => {
@@ -326,16 +327,16 @@ const WorkTable = (props) => {
             key: 'action',
             render: (text, record) => (
                 // <DeleteModal deleteFunction={setDeleteSelectModal(false)} id={record.id} />
-                <Dropdown
-                    overlay={() => moreMenu(record)}
-                    placement="bottomLeft"
-                    trigger="click"
-                    getPopupContainer={workTable ? () => workTable.current : null}
-                >
-                    <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-more"></use>
-                    </svg>
-                </Dropdown>
+                <WorkDeleteSelectModal
+                    deleteSelectModal={deleteSelectModal}
+                    setDeleteSelectModal={setDeleteSelectModal}
+                    getPopupContainer={workTable}
+                    delectCurrentWorkItem={delectCurrentWorkItem}
+                    haveChildren={haveChildren}
+                    setWorkId = {setWorkId}
+                    workId={record.id}
+                // getHaveChildren={getHaveChildren}
+                />
             )
         }
     ];
@@ -494,30 +495,26 @@ const WorkTable = (props) => {
             width: "60",
             key: 'action',
             render: (text, record) => (
-                // <Space size="middle">
-                //     <Popconfirm
-                //         title="确定删除事项?"
-                //         onConfirm={() => deleteWork(record.id)}
-                //         // onCancel={cancel}
-                //         okText="是"
-                //         cancelText="否"
-                //     >
-                //         <svg className="cancel-svg" aria-hidden="true" style={{ cursor: "pointer" }}>
-                //             <use xlinkHref="#icon-delete"></use>
-                //         </svg>
-                //     </Popconfirm>
-                // </Space>
-                // <DeleteModal deleteFunction={setDeleteSelectModal(false)} id={record.id} />
-                <Dropdown
-                    overlay={() => moreMenu()}
-                    placement="bottomLeft"
-                    trigger="click"
-                    getPopupContainer={workTable ? () => workTable.current : null}
-                >
-                    <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-more"></use>
-                    </svg>
-                </Dropdown>
+                // <Dropdown
+                //     overlay={() => moreMenu()}
+                //     placement="bottomLeft"
+                //     trigger="click"
+                //     getPopupContainer={workTable ? () => workTable.current : null}
+                // >
+                //     <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
+                //         <use xlinkHref="#icon-more"></use>
+                //     </svg>
+                // </Dropdown>
+                <WorkDeleteSelectModal
+                    deleteSelectModal={deleteSelectModal}
+                    setDeleteSelectModal={setDeleteSelectModal}
+                    getPopupContainer={workTable}
+                    delectCurrentWorkItem={delectCurrentWorkItem}
+                    haveChildren={haveChildren}
+                    workId={record.id}
+                    setWorkId ={setWorkId}
+                // getHaveChildren={getHaveChildren}
+                />
             ),
         }
     ];
@@ -540,7 +537,7 @@ const WorkTable = (props) => {
 
 
 
-    const deleteWork = (deleteWorkItem, removeTree) => {
+    const deleteWork = (deleteWorkItem, removeTree, workId) => {
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
             if (workList.length === 0) {
@@ -572,27 +569,13 @@ const WorkTable = (props) => {
         })
     }
 
-    const delectCurrentWorkItem = () => {
-        deleteWork(deleteWorkItem, removeNodeInTreeAddChildren)
-        setIsModalVisible(false)
+    const delectCurrentWorkItem = (workId) => {
+        deleteWork(deleteWorkItem, removeNodeInTree, workId)
+        setDeleteSelectModal(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren, removeNodeInTree)
-        setIsModalVisible(false)
-    }
     const [deleteSelectModal, setDeleteSelectModal] = useState(false)
-    const getHaveChildren = () => {
-        haveChildren({ id: workId }).then(res => {
-            if (res.code === 0) {
-                if (res.data) {
-                    setDeleteSelectModal(true)
-                } else {
-                    delectCurrentWorkItem();
-                }
-            }
-        })
-    }
+
     const workTable = useRef()
     return (
         <Provider {...store}>
@@ -644,17 +627,9 @@ const WorkTable = (props) => {
                         modelRef={modelRef}
                         showPage={true}
                         delectCurrentWorkItem={delectCurrentWorkItem}
-                        delectWorkItemAndChildren={delectWorkItemAndChildren}
                         {...props}
                     />
-                    <WorkDeleteSelectModal
-                        deleteSelectModal={deleteSelectModal}
-                        setDeleteSelectModal={setDeleteSelectModal}
-                        getPopupContainer={workTable}
-                        delectCurrentWorkItem={delectCurrentWorkItem}
-                        delectWorkItemAndChildren={delectWorkItemAndChildren}
-                    // getHaveChildren={getHaveChildren}
-                    />
+
                 </Col>
             </Row>
         </Provider>

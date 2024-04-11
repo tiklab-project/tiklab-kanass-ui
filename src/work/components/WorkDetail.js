@@ -22,6 +22,7 @@ import { setWorkTitle } from "./WorkArrayChange";
 import { changeWorkItemList } from "./WorkGetList";
 import WorkDetailCrumb from "./WorkDetailCrumb";
 import WorkDetailTab from "./WorkDetailTab";
+import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 
 const rowSpan = {
     sm: 24,
@@ -269,7 +270,7 @@ const WorkDetail = (props) => {
 
     const [showFlow, setShowFlow] = useState(false);
     const [deleteSelectModal, setDeleteSelectModal] = useState(false)
-
+    const [isHaveChildren, setIsHaveChildren] = useState(false)
     const closeDeleteSelectModal = () => {
         setDeleteSelectModal(false)
     }
@@ -288,17 +289,7 @@ const WorkDetail = (props) => {
         setDeleteSelectModal(false)
     }
 
-    const getHaveChildren = () => {
-        haveChildren({ id: workId }).then(res => {
-            if (res.code === 0) {
-                if (res.data) {
-                    setDeleteSelectModal(true)
-                } else {
-                    delectCurrentWorkItem();
-                }
-            }
-        })
-    }
+
     return (
         <>
             {
@@ -356,7 +347,14 @@ const WorkDetail = (props) => {
                                                                                 </svg>
                                                                             </Button>
                                                                         </Dropdown>
-                                                                        <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
+                                                                        <WorkDeleteSelectModal
+                                                                            getPopupContainer={workDetailTop}
+                                                                            delectCurrentWorkItem={delectCurrentWorkItem}
+                                                                            haveChildren={haveChildren}
+                                                                            workId={workId}
+                                                                            setWorkId={setWorkId}
+                                                                        />
+                                                                        {/* <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
                                                                             <Popconfirm
                                                                                 title="确定删除事项?"
                                                                                 onConfirm={() => getHaveChildren()}
@@ -372,12 +370,12 @@ const WorkDetail = (props) => {
                                                                                     删除
                                                                                 </Button>
                                                                             </Popconfirm>
-                                                                        </PrivilegeProjectButton>
-                                                                        <div className="more">
+                                                                        </PrivilegeProjectButton> */}
+                                                                        {/* <div className="more">
                                                                             <svg className="svg-icon" aria-hidden="true">
                                                                                 <use xlinkHref="#icon-more"></use>
                                                                             </svg>
-                                                                        </div>
+                                                                        </div> */}
                                                                     </div>
                                                                 </div>
 
@@ -389,7 +387,7 @@ const WorkDetail = (props) => {
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
                                                         />
-                                                         <Modal
+                                                        {/* <Modal
                                                             visible={deleteSelectModal}
                                                             title="删除事项"
                                                             // onOk={handleOk}
@@ -411,7 +409,7 @@ const WorkDetail = (props) => {
                                                                     删除当前事项以及所有下级
                                                                 </Button>
                                                             </div>
-                                                        </Modal>
+                                                        </Modal> */}
                                                     </Skeleton>
                                                 </Col>
                                             </Row>
@@ -430,7 +428,7 @@ const WorkDetail = (props) => {
                                                             tabValue={tabValue}
                                                             {...props}
                                                         />
-                                                       
+
                                                     </Skeleton>
                                                 </Col>
                                             </Row>

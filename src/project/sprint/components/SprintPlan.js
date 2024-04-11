@@ -17,7 +17,7 @@ const SprintPlan = (props) => {
     const [dragEvent, setDragEvent] = useState();
     const projectId = props.match.params.id;
     const { getNoPlanWorkList, noPlanWorkList, getWorkList, planWorkList,
-        findSprintList, sprintList, setSprint, delSprint } = ProjectSprintPlanStore;
+        findSprintList, sprintList, updateWorkItem, delSprint } = ProjectSprintPlanStore;
     // 被移动事项的id
     const [startId, setStartId] = useState()
     // 被移动事项的初始迭代id
@@ -83,7 +83,7 @@ const SprintPlan = (props) => {
         // 移动拖动的元素到所选择的放置目标节点
         if (startSprintId !== id) {
             dragEvent.style.background = "";
-            setSprint(params).then((res) => {
+            updateWorkItem(params).then((res) => {
                 if (res === 0) {
                     getNoPlanWorkList({ projectId: projectId, sprintIdIsNull: true })
                     getWorkList({ projectId: projectId, sprintIdIsNull: false })

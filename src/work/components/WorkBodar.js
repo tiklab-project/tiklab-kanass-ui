@@ -188,10 +188,7 @@ const WorkBodar = (props) => {
         setIsModalVisible(false)
     }
 
-    const delectWorkItemAndChildren = () => {
-        deleteWork(deleteWorkItemAndChildren)
-        setIsModalVisible(false)
-    }
+
 
     const cancelDrag = () => {
         setIsSameFlowBox([])
@@ -364,7 +361,6 @@ const WorkBodar = (props) => {
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
                             showPage={true}
-                            delectWorkItemAndChildren = {delectWorkItemAndChildren}
                             delectCurrentWorkItem = {delectCurrentWorkItem}
                             {...props}
                         />

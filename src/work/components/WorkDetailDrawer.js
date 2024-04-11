@@ -15,7 +15,7 @@ import { observer, inject } from "mobx-react";
 const WorkDetailDrawer = (props) => {
     const detailRef = useRef()
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore, 
-        delectCurrentWorkItem, delectWorkItemAndChildren } = props;
+        delectCurrentWorkItem } = props;
     const { setWorkId, workShowType } = workStore;
     
     const showModal = () => {
@@ -94,7 +94,6 @@ const WorkDetailDrawer = (props) => {
                     // deleteWork = {deleteWork} 
                     setIsModalVisible={setIsModalVisible} 
                     delectCurrentWorkItem = {delectCurrentWorkItem}
-                    delectWorkItemAndChildren = {delectWorkItemAndChildren}
                 />
             </div>
         </Drawer>

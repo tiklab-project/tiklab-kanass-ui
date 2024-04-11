@@ -46,7 +46,6 @@ const WorkDetailPage = (props) => {
     return (<Provider {...store}>
         <WorkDetail
             delectCurrentWorkItem={deleteWork}
-            delectWorkItemAndChildren={deleteWork}
             detailRef={detailRef}
             showPage={true}
             rowSpan = {rowSpan}
