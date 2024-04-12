@@ -620,7 +620,8 @@ export class WorkStore {
             preDependWorkItem: {
                 id: value.predependworkitem || "nullstring"
             },
-            extData: JSON.stringify(value.extData)
+            extData: JSON.stringify(value.extData),
+            fieldId: value.fieldId
 
         }
         const data = await Service("/workItem/createWorkItem",params);

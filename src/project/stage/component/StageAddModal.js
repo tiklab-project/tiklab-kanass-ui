@@ -15,7 +15,7 @@ import { appendStageInTree } from "./StageListTreeChange";
 const { TextArea } = Input;
 const StageAddModal = (props) => {
     const {showStageAddMoal, setShowStageAddModal,stageStore, addChild, parentId} = props;
-    const {createStage, useList,getUseList, findStageListTreePage, stageList, findStage} = stageStore
+    const {createStage, useList,getUseList, findStageListTreePage, stageList,setStageList, findStage} = stageStore
     const [form] = Form.useForm();
     // 项目id
     const projectId = props.match.params.id;
@@ -59,6 +59,7 @@ const StageAddModal = (props) => {
                     findStage({id: res.data}).then(data => {
                         if(data.code === 0){
                             appendStageInTree(stageList, parentId, data.data)
+                            setStageList([...stageList])
                             form.resetFields();
                             setShowStageAddModal(false);
                         }

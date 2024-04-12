@@ -12,13 +12,13 @@ import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
 import moment from "moment";
 import "./LogProjectUserStatistics.scss";
 import statisticStore from "./store/StatisticStore";
-import { enableAxiosCE } from "thoughtware-core-ui";
+import { enableAxios } from "thoughtware-core-ui";
 // import enableAxiosCloud from "thoughtware-tenant-cloud-ui";
 import { observer } from "mobx-react";
 const { RangePicker } = DatePicker;
 
 
-// enableAxiosCE()
+// enableAxios()
 // enableAxiosCloud()
 const LogProjectUserStatistics = (props) => {
     const { findProjectList, findProjectUserLog, uploadProjectUserLogPdf } = statisticStore;

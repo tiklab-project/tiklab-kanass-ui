@@ -28,7 +28,7 @@ const Stage = (props) => {
         stageStore: StageStore,
         workStore: WorkStore
     }
-    const { findStageListTreePage, updateStage, stageList, findWorkTypeDmList, workTypeList, deleteStage } = StageStore;
+    const { findStageListTreePage, updateStage, stageList,setStageList, findWorkTypeDmList, workTypeList, deleteStage } = StageStore;
     const { deleteWorkItem, deleteWorkItemAndChildren, workId } = WorkStore;
     // 添加子级的上级id
     const [parentId, setParentId] = useState();
@@ -94,22 +94,21 @@ const Stage = (props) => {
     const deleteWork = (workId) => {
         deleteWorkItem(workId).then((res) => {
             if (res.code === 0) {
-                removeNodeInTree(stageList, workId)
+               removeNodeInTree(stageList, workId)
+               setStageList([...stageList])
             }
         })
+        setIsModalVisible(false)
 
     }
 
-    const delectCurrentWorkItem = () => {
-        deleteWork(deleteWorkItem, removeNodeInTree)
-        // setIsModalVisible(false)
-    }
 
 
     const deleteStageList = (id) =>{
         deleteStage({id:id}).then(res => {
             if(res.code === 0){
                 removeNodeInTree(stageList, id)
+                setStageList([...stageList])
             }
         })
        
@@ -183,15 +182,15 @@ const Stage = (props) => {
                             isModalVisible={isModalVisible}
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
-                            delectCurrentWorkItem={delectCurrentWorkItem}
+                            delectCurrentWorkItem={deleteWork}
                             {...props}
                         />
-                        <WorkDeleteSelectModal
+                        {/* <WorkDeleteSelectModal
                             deleteSelectModal={deleteSelectModal}
                             setDeleteSelectModal={setDeleteSelectModal}
                             getPopupContainer={stageRef}
                             delectCurrentWorkItem={delectCurrentWorkItem}
-                        />
+                        /> */}
 
 
                     </div>

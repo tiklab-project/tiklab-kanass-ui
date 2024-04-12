@@ -46,17 +46,18 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation, createCheckboxSelectItemRelation
     } = workStore;
 
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
-    const [selectItemList, setSelectItemList] = useState()
+    const [selectItemList, setSelectItemList] = useState();
+    const [eachTypeField, setEachTypeField] = useState();
 
     const projectId = props.match.params.id;
     const projectType = workInfo?.project?.projectType.type;
-    
+
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
 
@@ -77,7 +78,7 @@ const WorkBasicInfo = (props) => {
                 sprint: workInfo.sprint?.id,
                 stage: workInfo.stage?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
-                eachType: workInfo.eachType
+                eachType: (!workInfo.eachType || workInfo.eachType === "nullstring") ? null : workInfo.eachType
             })
             if (workInfo.planBeginTime && workInfo.planEndTime) {
                 detailForm.setFieldsValue({
@@ -105,6 +106,7 @@ const WorkBasicInfo = (props) => {
         findFieldList({ code: "taskType" }).then(res => {
             if (res.code === 0) {
                 setSelectItemList(res.data[0].selectItemList)
+                setEachTypeField(res.data[0])
             }
         })
         findWorkAttachList(workInfo.id)
@@ -319,6 +321,9 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.attachment
             }
         }
+        if(changeKey === "eachType"){
+            changedValues.fieldId = eachTypeField.id;
+        }
         let data = {
             ...changedValues,
             id: workId,
@@ -356,7 +361,7 @@ const WorkBasicInfo = (props) => {
 
                 }
 
-                if(props.match.path === "/projectDetail/:id/stage" && changeKey === "stage"){
+                if (props.match.path === "/projectDetail/:id/stage" && changeKey === "stage") {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }
@@ -437,7 +442,11 @@ const WorkBasicInfo = (props) => {
     /**
      * 万能表单字段更新
      */
-    const updateExtData = (changedValues) => {
+    const updateExtData = (changedValues, allValues) => {
+        console.log(changedValues, allValues, formList)
+
+        createSelectRelation(changedValues)
+
         let extData = JSON.parse(workInfo.extData)
         let data = {
             extData: JSON.stringify({
@@ -452,6 +461,45 @@ const WorkBasicInfo = (props) => {
             ...changedValues,
         })
         editWork(data)
+    }
+
+    const createSelectRelation = (changedValues) => {
+        //创建关联关系 
+        let fieldId = "";
+        let selectItemId = "";
+        const key = Object.keys(changedValues)[0];
+        const code = key.replace("System", '');
+        const formItem = formList.filter(item => item.code === code);
+        const fieldType = formItem[0]?.fieldType.code;
+        fieldId = formItem[0]?.id;
+        if (fieldType === "select" || fieldType === "radio" || fieldType === "checkbox") {
+            const selectItemList = formItem[0]?.selectItemList;
+            if (fieldType === "select" || fieldType === "radio") {
+                const select = selectItemList.filter(item => item.value === Object.values(changedValues)[0]);
+                selectItemId = select[0]?.id;
+                const params = {
+                    fieldId: fieldId,
+                    selectItemId: select[0]?.id,
+                    relationId: workId
+                }
+                createSelectItemRelation(params)
+            }
+            if (fieldType === "checkbox") {
+                console.log(Object.values(changedValues)[0])
+                const values = Object.values(changedValues)[0];
+                const select = selectItemList.filter(item => values.indexOf(item.value) !== -1);
+
+                const ids = select.map(item => item.id)
+                console.log(ids)
+                const params = {
+                    fieldId: fieldId,
+                    selectItemIds: ids,
+                    relationId: workId
+                }
+                createCheckboxSelectItemRelation(params)
+            }
+        }
+
     }
 
     const [hoverFieldName, setHoverFieldName] = useState("")
@@ -554,6 +602,15 @@ const WorkBasicInfo = (props) => {
             }
         })
     }, [500])
+
+
+    // 创建字段选择值与事项的关联关系
+
+
+    const onClear = (fieldId) => {
+        console.log(fieldId);
+    }
+
     const [visableCustomForm, setVisableCustomForm] = useState(false);
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
@@ -960,6 +1017,7 @@ const WorkBasicInfo = (props) => {
                                     return <Form.Item
                                         label={item.name}
                                         name={`System${item.code}`}
+                                        id={item.id}
                                         key={item.id}
                                         className="exdata-item"
                                     >
@@ -969,6 +1027,9 @@ const WorkBasicInfo = (props) => {
                                             showArrow={fieldName === `System${item.code}` ? true : false}
                                             onMouseEnter={() => changeStyle(`System${item.code}`)}
                                             onMouseLeave={() => setFieldName("")}
+                                            fieldId={item.id}
+                                            // onChange={onChange}
+                                            onClear={() => onClear(item.id)}
                                             data={item.selectItemList}
                                             getPopupContainer={() => exFormRef.current}
                                         />

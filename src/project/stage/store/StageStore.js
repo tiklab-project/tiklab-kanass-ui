@@ -58,6 +58,12 @@ export class StageStore {
         }
     }
     
+    @action
+    setStageList = (value) => {
+        this.stageList = value;
+    }
+    
+
     /**
      * 创建计划
      * @param {计划信息} param 

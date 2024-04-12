@@ -9,6 +9,7 @@ import VersionPlanStore from "../stores/VersionPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import { Button, Modal } from "antd";
 const VersionPlan = (props) => {
     const store = {
         versionPlanStore: VersionPlanStore,
@@ -20,15 +21,17 @@ const VersionPlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItemAndChildren, 
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItemAndChildren,
         workId, deleteWorkItem } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
-        setVersion, delVersion, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal } = VersionPlanStore;
+        updateWorkItem, delVersion, noPlanSearchCondition, searchCondition,
+        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
+    const [endVersionId, setEndVersionId ] = useState();
     const [listType, setListType] = useState();
-    
+    const [showModal, setShowModal] = useState(false);
+    const [actionType, setActionType] = useState("");
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -86,14 +89,31 @@ const VersionPlan = (props) => {
 
     const changeVersionPlan = (Sid) => {
         event.preventDefault();
+        setActionType("update")
+        setEndVersionId(Sid)
+        haveChildren({ id: moveWorkId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
+                    setShowModal(true)
+                } else {
+                    moveOneWorkItem(Sid)
+                }
+            }
+        })
+    }
+
+    const moveOneWorkItem = (Sid) => {
+        event.preventDefault();
         let params = {
             startId: moveWorkId,
-            endId: versionId
+            endId: versionId,
+            updateField: "projectVersion",
         }
+        setEndVersionId(Sid)
         // 移动拖动的元素到所选择的放置目标节点
         if (startVersionId !== Sid) {
             dragEvent.style.background = "";
-            setVersion(params).then((res) => {
+            updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
                     const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
                     setNoPlanWorkList(newNoPlanWorkList)
@@ -104,12 +124,60 @@ const VersionPlan = (props) => {
                 }
             })
         }
+        setShowModal(false)
+    }
+
+    const moveWorkItemList = (Sid) => {
+        let params = {
+            startId: moveWorkId,
+            endId: versionId,
+            updateField: "projectVersions",
+        }
+        setEndVersionId(Sid)
+        if (startVersionId !== Sid) {
+            dragEvent.style.background = "";
+            updateWorkItem(params).then((res) => {
+                if (res.code === 0) {
+                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
+                        if(res.code === 0){
+                            const ids = res.data;
+                            const newNoPlanWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setNoPlanWorkList(newNoPlanWorkList)
+        
+                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            planWorkList.unshift(...addWorkList)
+                            setPlanWorkList(planWorkList)
+                        }
+                    })
+                   
+                }
+            })
+        }
+        setShowModal(false)
     }
 
     const delVersionPlan = (Sid) => {
         event.preventDefault();
+        setActionType("delete")
+        setEndVersionId(Sid)
+        haveChildren({ id: moveWorkId }).then(res => {
+            if (res.code === 0) {
+                if (res.data) {
+                    setShowModal(true)
+                } else {
+                    delVersionOnePlan(Sid)
+                }
+            }
+        })
+
+    }
+
+    const delVersionOnePlan = (Sid) => {
+        event.preventDefault();
         let params = {
-            startId: moveWorkId
+            startId: moveWorkId,
+            endId: "nullstring",
+            updateField: "projectVersion",
         }
         // 移动拖动的元素到所选择的放置目标节点
         if (startVersionId && Sid !== startVersionId) {
@@ -126,8 +194,37 @@ const VersionPlan = (props) => {
 
             })
         }
+        setShowModal(false)
     }
 
+    const delListVersionPlan = (Sid) => {
+        event.preventDefault();
+        let params = {
+            startId: moveWorkId,
+            endId: "nullstring",
+            updateField: "projectVersions",
+        }
+        // 移动拖动的元素到所选择的放置目标节点
+        if (startVersionId && !Sid) {
+            dragEvent.style.background = "";
+            delVersion(params).then((res) => {
+                if (res.code === 0) {
+                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
+                        if(res.code === 0){
+                            const ids = res.data;
+                            const newNoPlanWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setPlanWorkList(newNoPlanWorkList)
+        
+                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            noPlanWorkList.unshift(...addWorkList)
+                            setNoPlanWorkList(noPlanWorkList)
+                        }
+                    })
+                }
+            })
+        }
+        setShowModal(false)
+    }
     const handleChange = (field, value) => {
         getNoPlanWorkList({
             [field]: value,
@@ -183,6 +280,25 @@ const VersionPlan = (props) => {
         }
         getWorkList(data)
     }
+
+    const submitOne= () => {
+        if(actionType === "delete"){
+            delVersionOnePlan(endVersionId)
+        }
+        if(actionType === "update"){
+            moveOneWorkItem(endVersionId)
+        }
+    }
+
+    const submitList = () => {
+        if(actionType === "delete"){
+            delListVersionPlan(endVersionId)
+        }
+        if(actionType === "update"){
+            moveWorkItemList(endVersionId)
+        }
+    }
+
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -201,11 +317,11 @@ const VersionPlan = (props) => {
 
     const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setIsModalVisible(false)
-                if(listType === "noPlan"){
+                if (listType === "noPlan") {
                     removeNodeInTree(noPlanWorkList, null, workId);
-                    if(noPlanWorkList.length <= 0){
+                    if (noPlanWorkList.length <= 0) {
                         getNoPlanWorkList(
                             {
                                 pageParam: {
@@ -216,9 +332,9 @@ const VersionPlan = (props) => {
                         )
                     }
                     setNoPlanWorkList([...noPlanWorkList])
-                }else {
+                } else {
                     removeNodeInTree(planWorkList, null, workId);
-                    if(planWorkList.length <= 0){
+                    if (planWorkList.length <= 0) {
                         getWorkList(
                             {
                                 pageParam: {
@@ -231,8 +347,6 @@ const VersionPlan = (props) => {
                     setPlanWorkList([...planWorkList])
                 }
             }
-            
-            
         })
     }
 
@@ -487,9 +601,31 @@ const VersionPlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
-                delectCurrentWorkItem = {delectCurrentWorkItem}
+                delectCurrentWorkItem={delectCurrentWorkItem}
                 {...props}
             />
+
+            <Modal
+                visible={showModal}
+                title="是否移动下级"
+                onCancel={() => setShowModal(false)}
+                footer={[
+                    <div className="submit-botton">
+                        <Button key="back" onClick={() => setShowModal(false)} >
+                            取消
+                        </Button>
+                        <Button key="primary" type="primary" onClick={() => submitList(endVersionId)}>
+                            是
+                        </Button>
+                        <Button type="primary" onClick={() => submitOne(endVersionId)}>
+                            否
+                        </Button>
+                    </div>
+
+                ]}
+            >
+                是否移动下级
+            </Modal>
         </div>
     </Provider>
 

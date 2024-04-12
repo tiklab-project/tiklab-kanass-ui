@@ -101,10 +101,10 @@ export class VersionPlanStore {
     }
 
     @action
-	setVersion = async(value) => {
+	updateWorkItem = async(value) => {
         const params={
             id: value.startId,
-            updateField: "projectVersion",
+            updateField: value.updateField,
             projectVersion: {
                 id: value.endId
             }
@@ -118,7 +118,7 @@ export class VersionPlanStore {
 	delVersion = async(value) => {
         const params={
             id: value.startId,
-            updateField: "projectVersion",
+            updateField: value.updateField,
             projectVersion: {
                 id: "nullstring"
             }
@@ -126,6 +126,22 @@ export class VersionPlanStore {
         const data = await Service("/workItem/updateWorkItem", params)
         return data;
 		
+    }
+
+    @action
+    haveChildren = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/haveChildren", params)
+        return data;
+    }
+
+    @action
+    findWorkItemAndChildrenIds = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findWorkItemAndChildrenIds", params)
+        return data;
     }
 }
 

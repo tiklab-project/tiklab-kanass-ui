@@ -82,7 +82,7 @@ const getPageTree = (workStore) => {
 
     getWorkConditionPageTree().then((res) => {
         if (res.code === 0) {
-            const list = res.data.dataList;
+            const list = res.data?.dataList;
             if (workShowType === "list") {
                 if (list.length > 0) {
                     setWorkIndex(1)

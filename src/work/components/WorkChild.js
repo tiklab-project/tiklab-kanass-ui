@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Row, Col } from 'antd';
+import { Input, Table, Row, Col, message } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
@@ -15,7 +15,7 @@ const WorkChild = (props) => {
         workChild: WorkChildStore
     }
     const { treePath, workStore,workType, projectId,type, workTypeCode, 
-        getTransitionList, workStatusNodeId, workInfo } = props;
+        getTransitionList, workStatusNodeId, workInfo, setTabValue } = props;
     
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
@@ -92,6 +92,7 @@ const WorkChild = (props) => {
 
 
     const goWorkItem = (record) => {
+        setTabValue(1)
         setWorkId(record.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
         newDetailCrumbArray.push({id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl })
@@ -131,7 +132,12 @@ const WorkChild = (props) => {
         if(projectType === "scrum"){
             params.sprint = sprintList[0]?.id
         }else {
-            params.stage = workInfo.stage.id
+            if(workInfo.stage){
+                params.stage = workInfo.stage.id
+            }else {
+                message.error("请给父事项添加规划计划")
+            }
+            
         }
 
         if(workTypeCode === "epic"){

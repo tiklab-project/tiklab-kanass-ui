@@ -69,6 +69,7 @@ const StatisticsAsicde = (props) => {
         if (versionInfo.expired === false || type === "workItem"  ) {
             url = `${url}/${type}`;
         } else {
+            // url = `${url}/${type}`;
             url = `${url}/advert`;
         }
 

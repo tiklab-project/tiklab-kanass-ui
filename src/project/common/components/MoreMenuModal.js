@@ -113,7 +113,7 @@ const MoreMenuModel = (props) => {
                     moreMenu && moreMenu.map((item,index) => {
                         return <div className={`project-menu-submenu ${path === item.key ? "project-menu-select" : ""}`}
                             key={index}
-                            onClick={() => selectMenu(item.url)}
+                            onClick={() => selectMenu(item.id)}
                         >
                             <svg className="menu-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-${item.icon}`}></use>

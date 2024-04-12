@@ -65,6 +65,7 @@ const removeNodeInTree = (tree, id) => {
             removeNodeInTree(node.childrenWorkItem, id);
         }
     }
+    return tree;
 }
 
 

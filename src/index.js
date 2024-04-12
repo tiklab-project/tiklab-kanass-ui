@@ -12,7 +12,7 @@ import { HashRouter } from "react-router-dom";
 import Routers from './Routers';
 import { Provider } from 'mobx-react';
 import { orgStores } from "thoughtware-user-ui/es/store";
-import { enableAxiosCE } from 'thoughtware-core-ui';
+import { enableAxios } from 'thoughtware-core-ui';
 import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -26,7 +26,7 @@ import "./assets/index";
 import resources from "./common/language/resources";
 import {useVersion} from "thoughtware-eam-ui/es/utils";
 import {privilegeStores} from "thoughtware-privilege-ui/es/store";
-enableAxiosCE()
+enableAxios()
 const Index = observer((props) => {
 
     const { i18n } = useTranslation();

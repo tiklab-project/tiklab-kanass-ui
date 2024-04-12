@@ -16,7 +16,7 @@ import statisticStore from "./store/StatisticStore";
 const { RangePicker } = DatePicker;
 
 
-// enableAxiosCE()
+// enableAxios()
 // enableAxiosCloud()
 const LogProjectWorkItemStatistics = (props) => {
     const { findProjectList, findProjectWorkItemLog, uploadProjectWorkLogPdf } = statisticStore;

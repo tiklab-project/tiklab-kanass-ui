@@ -145,8 +145,6 @@ const WorkDetail = (props) => {
                         searchWorkById(workId).then((res) => {
                             if (res) {
                                 detailForm.setFieldsValue({ assigner: res.assigner?.id })
-                                // workInfo.assigner = res.assigner;
-                                setWorkInfo(res)
                                 getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
 

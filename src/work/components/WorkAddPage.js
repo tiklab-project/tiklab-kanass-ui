@@ -209,6 +209,7 @@ const WorkAddPage = (props) => {
             values.workType = workType.id;
             values.desc = slateValue;
             values.project = projectId ? projectId : values.project;
+            values.fieldId = selectItem?.id;
             setLoading(true)
             addWork(values).then((res) => {
                 setWorkId(res.data)

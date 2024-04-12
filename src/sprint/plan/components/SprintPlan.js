@@ -71,14 +71,7 @@ const SprintPlan = (props) => {
         return
     }, [])
 
-    useEffect(() => {
-        if (noPlanWorkList && planWorkList) {
-            const length = noPlanWorkList.length > planWorkList.length ? noPlanWorkList.length * 90 + 90 : planWorkList.length * 90 + 90
 
-        }
-
-        return
-    }, [noPlanWorkList, planWorkList])
 
 
     const moveSprintPlanItem = () => {
@@ -124,8 +117,6 @@ const SprintPlan = (props) => {
         setEndSprintId(Sid)
         if (startSprintId !== Sid) {
             dragEvent.style.background = "";
-            // dragEvent.parentNode.removeChild( dragEvent );
-            // event.target.appendChild( dragEvent );
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
                     const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
@@ -149,8 +140,6 @@ const SprintPlan = (props) => {
         setEndSprintId(Sid)
         if (startSprintId !== Sid) {
             dragEvent.style.background = "";
-            // dragEvent.parentNode.removeChild( dragEvent );
-            // event.target.appendChild( dragEvent );
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
                     findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
@@ -159,7 +148,7 @@ const SprintPlan = (props) => {
                             const newNoPlanWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setNoPlanWorkList(newNoPlanWorkList)
         
-                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) >= -1})
+                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) > -1})
                             planWorkList.unshift(...addWorkList)
                             setPlanWorkList(planWorkList)
                         }
@@ -207,6 +196,7 @@ const SprintPlan = (props) => {
 
             })
         }
+        setShowModal(false)
     }
 
     const delListSprintPlan = (Sid) => {
@@ -227,7 +217,7 @@ const SprintPlan = (props) => {
                             const newNoPlanWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setPlanWorkList(newNoPlanWorkList)
         
-                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) >= 0 })
+                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) > -1})
                             noPlanWorkList.unshift(...addWorkList)
                             setNoPlanWorkList(noPlanWorkList)
                         }
@@ -624,7 +614,7 @@ const SprintPlan = (props) => {
                 onCancel={() => setShowModal(false)}
                 footer={[
                     <div className="submit-botton">
-                        <Button key="back">
+                        <Button key="back" onClick={() => setShowModal(false)}>
                             取消
                         </Button>
                         <Button key="primary" type="primary" onClick = {() => submitList(endSprintId)}>

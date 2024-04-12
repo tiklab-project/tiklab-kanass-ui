@@ -15,7 +15,7 @@ import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkDetailBottom.scss";
 
 const WorkDetailBottom = (props) => {
-    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, tabValue } = props;
+    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, tabValue, setTabValue } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType } = workStore;
@@ -135,6 +135,7 @@ const WorkDetailBottom = (props) => {
                             type={`子${workTypeText}`}
                             workStatusNodeId={workInfo?.workStatusNode?.id}
                             getTransitionList={getTransitionList}
+                            setTabValue = {setTabValue}
                             {...props}
                         />
                     </div>

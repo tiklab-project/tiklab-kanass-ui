@@ -52,7 +52,8 @@ const WorkBasicInfo = (props) => {
 
     const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
 
-    const [selectItemList, setSelectItemList] = useState()
+    const [selectItemList, setSelectItemList] = useState();
+    const [eachTypeField, setEachTypeField] = useState();
 
     const projectId = props.match.params.id;
     const projectType = workInfo?.project?.projectType.type;
@@ -77,7 +78,7 @@ const WorkBasicInfo = (props) => {
                 sprint: workInfo.sprint?.id,
                 stage: workInfo.stage?.id,
                 parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null,
-                eachType: workInfo.eachType
+                eachType: (!workInfo.eachType || workInfo.eachType === "nullstring") ? null : workInfo.eachType
             })
             if (workInfo.planBeginTime && workInfo.planEndTime) {
                 detailForm.setFieldsValue({
@@ -102,11 +103,6 @@ const WorkBasicInfo = (props) => {
 
     useEffect(() => {
         findFormConfig({ id: workInfo.workType.form.id })
-        findFieldList({ code: "bugType" }).then(res => {
-            if (res.code === 0) {
-                setSelectItemList(res.data[0].selectItemList)
-            }
-        })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workIndex !== "" && workInfo) {
@@ -479,11 +475,11 @@ const WorkBasicInfo = (props) => {
                 }
                 createSelectItemRelation(params)
             }
-            if(fieldType === "checkbox"){
+            if (fieldType === "checkbox") {
                 console.log(Object.values(changedValues)[0])
                 const values = Object.values(changedValues)[0];
                 const select = selectItemList.filter(item => values.indexOf(item.value) !== -1);
-                
+
                 const ids = select.map(item => item.id)
                 console.log(ids)
                 const params = {
@@ -628,8 +624,6 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
-
-
                             <Form.Item label="优先级" name="workPriority"
                                 hasFeedback={showValidateStatus === "workPriority" ? true : false}
                                 validateStatus={validateStatus}

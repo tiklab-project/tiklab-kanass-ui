@@ -28,7 +28,7 @@ const StageLinemap = (props) => {
         setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId,
         setDeleteSelectModal, deleteStageList, deleteWork } = props;
 
-    const { createRecent, setWorkId, setWorkIndex, haveChildren } = workStore;
+    const { createRecent, setWorkId, setWorkIndex, haveChildren, stageList } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -59,6 +59,13 @@ const StageLinemap = (props) => {
         }
         return
     }, [data, expandedTree])
+
+    useEffect(() => {
+        if (data.length > 0) {
+            setGantt(setNode(data))
+        }
+        return
+    }, [stageList])
 
     // useEffect(() => {
     //     if (data.length > 0) {
@@ -582,7 +589,7 @@ const StageLinemap = (props) => {
                                             alt=""
                                             className="img-icon"
                                         />
-                                        <span className="stage-key">{item.id}</span>
+                                        <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.id}</span>
                                         <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
                                     </div>
                                 </div>
@@ -599,15 +606,11 @@ const StageLinemap = (props) => {
                                         <use xlinkHref="#icon-edit"></use>
                                     </svg>
                                     <WorkDeleteSelectModal
-                                        // getPopupContainer={workDetailTop}
                                         delectCurrentWorkItem={deleteWork}
                                         haveChildren={haveChildren}
                                         workId={item.id}
                                         setWorkId={setWorkId}
                                     />
-                                    {/* <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteWorkItem(item)}>
-                                        <use xlinkHref="#icon-delete"></use>
-                                    </svg> */}
                                 </div>
                                 {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>
@@ -823,4 +826,4 @@ const StageLinemap = (props) => {
 }
 
 
-export default withRouter(inject("workStore")(observer(StageLinemap)));
+export default withRouter(inject("workStore", "stageStore")(observer(StageLinemap)));

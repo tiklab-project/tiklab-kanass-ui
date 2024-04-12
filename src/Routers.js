@@ -6,8 +6,12 @@ import { Redirect } from "react-router-dom";
 const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
 const Login = AsyncComponent(() => import('./login/Login'))
-const VailProductUserPage = AsyncComponent(() => import('./login/VaildProductUserPage'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
+
+const NoFoundPage = AsyncComponent(() => import('./login/NoFoundPage.js'));
+const NoAccessPage = AsyncComponent(() => import('./login/SystemNoAccessPage'));
+const ProjectNoAccessPage = AsyncComponent(() => import('./login/ProjectNoAccessPage'));
+const ExcludeProductUserContent = AsyncComponent(() => import('./login/ExcludeProductUserPage'))
 
 // 首页
 const SettingHome = AsyncComponent(() => import('./setting/home/components/SettingHome.js'))
@@ -195,17 +199,17 @@ const Routers = [
     {
         path: "/noAuth",
         exact: true,
-        component: VailProductUserPage,
+        component: ExcludeProductUserContent,
     },
     {
         exact: true,
         path: '/404',
-        component: VailProductUserPage,
+        component: NoFoundPage,
     },
     {
         exact: true,
         path: '/noaccess',
-        component: VailProductUserPage,
+        component: NoAccessPage,
     },
     {
         path: "/logout",
@@ -1009,6 +1013,11 @@ const Routers = [
                                 exact: true
                             }
                         ]
+                    },
+                    {   
+                        path: "/projectDetail/:id/noAccess",
+                        exact: true,
+                        component: ProjectNoAccessPage
                     },
                     {
                         path: "/projectDetail/:id/projectSetDetail",

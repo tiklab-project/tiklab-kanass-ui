@@ -20,6 +20,7 @@ import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Collapse } from 'antd';
 import { getUser } from "thoughtware-core-ui";
 import setImageUrl from "../../../../common/utils/setImageUrl";
+
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;

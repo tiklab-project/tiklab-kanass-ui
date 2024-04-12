@@ -26,15 +26,15 @@ const Setting = (props) => {
         }
         return
     }, [])
-    const commonRouter  = route.routes.filter(item => item.row === true)
-    const selfRouter  = route.routes.filter(item => item.row !== true)
+    const commonRouter = route.routes.filter(item => item.row === true)
+    const selfRouter = route.routes.filter(item => item.row !== true)
     return (
         <Fragment>
             <SystemNav
                 {...props}
-                applicationRouters={router} // 菜单
-                outerPath={"/setting"} // 系统设置Layout路径
-                notFoundPath={"/noaccess"}  //找不到页面路径
+                applicationRouters={router}
+                outerPath={"/setting"}
+                noAccessPath={"/noaccess"} //没有资源访问权限页面的路由参数
             >
                 <Layout className="orga">
                     <Sider width={200} className="site-layout-background">
@@ -43,9 +43,9 @@ const Setting = (props) => {
 
                     <Content
                         className="orga-background"
-                    >   
+                    >
                         {renderRoutes(commonRouter)}
-                        <Row style={{height: "calc(100vh - 49px)"}}>
+                        <Row style={{ height: "calc(100vh - 49px)" }}>
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                                 {renderRoutes(selfRouter)}
                             </Col>

@@ -28,76 +28,76 @@ const ProdeScrumAside = (props) => {
     // 当前选中菜单key
     const path = props.location.pathname.split("/")[3];
     // 路由
-    const scrumProrouter = (projectId) =>[
+    const scrumProrouter = (projectId) => [
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/projectDetail/${projectId}/survey`,
+            id: `/projectDetail/${projectId}/survey`,
             key: "survey",
-            encoded: "Survey",
+            encoded: "Survey"
         },
         {
             title: `${t('line_photo')}`,
             icon: 'line',
-            url: `/projectDetail/${projectId}/linemap`,
+            id: `/projectDetail/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/projectDetail/${projectId}/workTable`,
+            id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('sprint')}`,
             icon: 'sprint',
-            url: `/projectDetail/${projectId}/sprint`,
+            id: `/projectDetail/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
         },
-        
+
         {
             title: `${t('version')}`,
             icon: 'version',
-            url: `/projectDetail/${projectId}/version`,
+            id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
-       
+
         {
             title: "工时",
             icon: 'log',
-            url: `/projectDetail/${projectId}/log`,
+            id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            url: `/projectDetail/${projectId}/statistics/workItem`,
+            id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            url: `/projectDetail/${projectId}/milestone`,
+            id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "知识库",
             icon: 'sprint',
-            url: `/projectDetail/${projectId}/wiki`,
+            id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'sprint',
-            url: `/projectDetail/${projectId}/test`,
+            id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         }
@@ -107,72 +107,70 @@ const ProdeScrumAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/projectDetail/${projectId}/survey`,
+            id: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "计划",
             icon: 'survey',
-            url: `/projectDetail/${projectId}/stage`,
+            id: `/projectDetail/${projectId}/stage`,
             key: "stage",
             encoded: "stage",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            url: `/projectDetail/${projectId}/workTable`,
+            id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
-        
-        
         {
             title: `${t('version')}`,
             icon: 'version',
-            url: `/projectDetail/${projectId}/version`,
+            id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
         {
             title: "工时",
             icon: 'log',
-            url: `/projectDetail/${projectId}/log`,
+            id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            url: `/projectDetail/${projectId}/statistics/workItem`,
+            id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            url: `/projectDetail/${projectId}/milestone`,
+            id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "知识库",
             icon: 'sprint',
-            url: `/projectDetail/${projectId}/wiki`,
+            id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'sprint',
-            url: `/projectDetail/${projectId}/test`,
+            id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         },
-        
+
     ];
 
-    const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id)); 
+    const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id));
 
     const [projectRouter, setProjectRouter] = useState([]);
 
@@ -186,17 +184,17 @@ const ProdeScrumAside = (props) => {
 
         const menuHeight = documentHeight - 200;
         const menuNum = Math.floor(menuHeight / 60);
-        let num  = 0;
-        if(project?.projectType.type === "scrum"){
-            num= menuNum > 7 ? 7 : menuNum;
-        }else {
+        let num = 0;
+        if (project?.projectType.type === "scrum") {
+            num = menuNum > 7 ? 7 : menuNum;
+        } else {
             num = menuNum > 7 ? 7 : menuNum;
         }
         setProjectRouter(allProjectRouter.slice(0, num))
         const hiddenMenu = allProjectRouter.slice(num, allProjectRouter.length)
         setMoreMenu(hiddenMenu)
         let data = [];
-        hiddenMenu.map(item =>{
+        hiddenMenu.map(item => {
             data.push(item.key)
         })
         setMorePath([...data])
@@ -238,58 +236,60 @@ const ProdeScrumAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='project-detail-side'>
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
-                    <ProjectChangeModal  
-                        isShowText = {isShowText} 
-                        searchpro = {searchpro}
-                        project = {project}
+                    <ProjectChangeModal
+                        isShowText={isShowText}
+                        searchpro={searchpro}
+                        project={project}
                     />
-                    <div className="project-menu" ref = {projectMenu}>
-                        
+                    <div className="project-menu" ref={projectMenu}>
+
                         {
-                            projectRouter && projectRouter.map((item,index) =>  {return isShowText ? 
-                                <div className={`project-menu-submenu ${(path && path.indexOf(item.key) !== -1 )? "project-menu-select" : ""}`}
-                                    key={item.encoded}
-                                    onClick={() => selectMenu(item.url)}
-                                >
-                                    <svg className="menu-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.icon}`}></use>
-                                    </svg>
-                                    <span>
-                                        {item.title}
-                                    </span>
-                                </div> 
-                                :
-                                <div className={`project-menu-submenu-icon ${(path && path.indexOf(item.key) !== -1 ) ? "project-menu-select" : ""}`}
-                                    key={item.encoded}
-                                    onClick={() => selectMenu(item.url)}
-                                >
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.icon}`}></use>
-                                    </svg>
-                                    <span>
-                                        {item.title}
-                                    </span>
-                                </div>
-                                    
+                            projectRouter && projectRouter.map((item, index) => {
+                                return isShowText ?
+                                    <div className={`project-menu-submenu ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
+                                        key={item.encoded}
+                                        onClick={() => selectMenu(item.id)}
+                                    >
+                                        <svg className="menu-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-${item.icon}`}></use>
+                                        </svg>
+                                        <span>
+                                            {item.title}
+                                        </span>
+                                    </div>
+                                    :
+                                    <div className={`project-menu-submenu-icon ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
+                                        key={item.encoded}
+                                        onClick={() => selectMenu(item.id)}
+                                    >
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-${item.icon}`}></use>
+                                        </svg>
+                                        <span>
+                                            {item.title}
+                                        </span>
+                                    </div>
+
                             })
                         }
-                        {moreMenu && <MoreMenuModel isShowText = {isShowText} moreMenu = {moreMenu} morePath = {morePath}/>}
+                        {moreMenu && <MoreMenuModel isShowText={isShowText} moreMenu={moreMenu} morePath={morePath} />}
                     </div>
-                    <SetScrumMenu isShowText = {isShowText}/>
+
+                    <SetScrumMenu isShowText={isShowText} />
                     <div className="project-expend" onClick={toggleCollapsed} >
                         {
-                            isShowText ?<svg className="menu-icon" aria-hidden="true">
+                            isShowText ? <svg className="menu-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-leftcircle"></use>
                             </svg>
-                            :
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-rightcircle"></use>
-                            </svg>
+                                :
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-rightcircle"></use>
+                                </svg>
                         }
                     </div>
                 </div>
             </Sider>
-                    
+
         </Fragment>
     )
 
