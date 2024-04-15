@@ -30,6 +30,7 @@ const EndWorkItemTrend = (props) => {
     // 统计数据
     const [List, setList] = useState()
 
+    const [chart, setChart] = useState();
     useEffect(() => {
         /**
          * 查找所有项目列表
@@ -73,6 +74,13 @@ const EndWorkItemTrend = (props) => {
         return;
     }, [isEditor])
 
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
+
     /**
      * 处理统计数据
      */
@@ -97,6 +105,7 @@ const EndWorkItemTrend = (props) => {
                         return item.slice(0, 10)
                     })
                     let myChart = echarts.init(chartDom);
+                    setChart(myChart)
                     let option = {
                         // title: {
                         //     text: '新增完成事项趋势'

@@ -22,7 +22,6 @@ const WorkItemStatusSituation = (props) => {
     const [projectList, setProjectList] = useState([]);
     // 统计条件的表单
     const [form] = Form.useForm();
-
     // 事项类型
     const workItemType = [
         {

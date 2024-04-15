@@ -345,6 +345,27 @@
         }
     }
 
+    .stage-change-page {
+        text-align: center;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+        font-weight: 600;
+        background-color: #fff;
+        z-index: 10;
+        position: relative;
+        .change-page-button {
+            padding-left: 5px;
+            color: var(--thoughtware-blue);
+        }
+        .change-page-button:hover{
+            text-decoration: underline;
+        }
+    }
+
     .scroll-row {
         display: flex;
         justify-content: flex-end;

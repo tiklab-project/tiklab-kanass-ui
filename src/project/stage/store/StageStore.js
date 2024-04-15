@@ -10,12 +10,12 @@ import { observable, action, extendObservable } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class StageStore {
     // 成员列表
-    @observable 
+    @observable
     useList = [];
 
     @observable workTypeList = [];
     // 搜索参数
-    @observable 
+    @observable
     searchCondition = {
         orderParams: [{
             title: "标题",
@@ -35,13 +35,22 @@ export class StageStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1,
         }
     }
 
     @observable
     stageList = [];
+
+    @observable
+    totalPage = 0;
+
+    @observable
+    currentPage = 0;
+
+    @observable
+    totalRecord = 0;
 
     @observable
     parentStageList = [];
@@ -57,12 +66,12 @@ export class StageStore {
             currentPage: 1,
         }
     }
-    
+
     @action
     setStageList = (value) => {
         this.stageList = value;
     }
-    
+
 
     /**
      * 创建计划
@@ -70,7 +79,7 @@ export class StageStore {
      * @returns 
      */
     @action
-	createStage = async(param) => {
+    createStage = async (param) => {
         const data = await Service("/stage/createStage", param)
         return data;
     }
@@ -80,7 +89,7 @@ export class StageStore {
      * @param {项目id} value 
      */
     @action
-    getUseList = async(value) => {
+    getUseList = async (value) => {
         const params = {
             domainId: value.projectId,
             pageParam: {
@@ -89,7 +98,7 @@ export class StageStore {
             }
         }
         const data = await Service("/dmUser/findDmUserPage", params)
-        if(data.code === 0){
+        if (data.code === 0) {
             this.useList = data.data.dataList
         }
         return data;
@@ -101,19 +110,28 @@ export class StageStore {
      * @returns 
      */
     @action
-    findStageList = async(value) => {
+    findStageList = async (value) => {
         const data = await Service("/stage/findStageListTree", value)
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
 
     @action
-    findStageListTreePage= async(value) => {
+    findStageListTreePage = async (value) => {
         Object.assign(this.stageCondition, value)
         const data = await Service("/stage/findStageListTreePage", this.stageCondition)
-        if(data.code === 0){
-           this.stageList = data.data.dataList;
+        if (data.code === 0) {
+
+            const curentPage = this.stageCondition.pageParam.currentPage;
+            if (curentPage <= 1) {
+                this.stageList = data.data.dataList;
+            }else {
+                this.stageList = this.stageList.concat(data.data.dataList);
+            }
+            this.total = data.data.totalRecord;
+            this.currentPage = this.stageCondition.pageParam.currentPage;
+            this.totalPage = data.data.totalPage;
         }
         return data;
     }
@@ -123,11 +141,11 @@ export class StageStore {
      * @returns 
      */
     @action
-    findStage = async(value) => {
+    findStage = async (value) => {
         const params = new FormData();
         params.append("id", value.id);
         const data = await Service("/stage/findStage", params);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
@@ -138,10 +156,10 @@ export class StageStore {
      * @returns 
      */
     @action
-    findWorkItemPageTreeByQuery = async(value) => {
-        this.searchCondition = extendObservable(this.searchCondition,  { ...value })
+    findWorkItemPageTreeByQuery = async (value) => {
+        this.searchCondition = extendObservable(this.searchCondition, { ...value })
         const data = await Service("/workItem/findWorkItemListTree", this.searchCondition);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
@@ -152,22 +170,22 @@ export class StageStore {
      * @returns 
      */
     @action
-    createStageWorkItem = async(value) => {
+    createStageWorkItem = async (value) => {
         const data = await Service("/stageWorkItem/createStageWorkItem", value);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
-    
+
     /**
      * 根据条件查找计划的事项列表
      * @param {*} value 
      * @returns 
      */
     @action
-    findWorkItemListByStage = async(value) => {
+    findWorkItemListByStage = async (value) => {
         const data = await Service("/stageWorkItem/findStageChildWorkItemAndStage", value);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
@@ -178,9 +196,9 @@ export class StageStore {
      * @returns 
      */
     @action
-    deleteStageWorkItem = async(value) => {
+    deleteStageWorkItem = async (value) => {
         const data = await Service("/stageWorkItem/deleteStageWorkItemCondition", value);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
@@ -191,9 +209,9 @@ export class StageStore {
      * @returns 
      */
     @action
-    updateStage = async(value) => {
+    updateStage = async (value) => {
         const data = await Service("/stage/updateStage", value);
-        if(data.code === 0){
+        if (data.code === 0) {
             return data;
         }
     }
@@ -204,7 +222,7 @@ export class StageStore {
      * @returns 
      */
     @action
-    deleteStage = async(value) => {
+    deleteStage = async (value) => {
         const params = new FormData()
         params.append("id", value.id)
         const data = await Service("/stage/deleteStage", params);
@@ -221,21 +239,21 @@ export class StageStore {
     // }
 
     @action
-    findWorkTypeDmList = async(value) => {
-        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
-        if(data.code === 0){
+    findWorkTypeDmList = async (value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList", value);
+        if (data.code === 0) {
             this.workTypeList = data.data;
         }
         return data.data;
     }
 
     @action
-    findParentStageList = async(value) => {
+    findParentStageList = async (value) => {
         // const params = new FormData();
         // params.append("id", value.id);
-        Object.assign(this.parentCondition,value)
-        const data = await Service("/stage/findParentStageList",this.parentCondition);
-        if(data.code === 0){
+        Object.assign(this.parentCondition, value)
+        const data = await Service("/stage/findParentStageList", this.parentCondition);
+        if (data.code === 0) {
             this.parentStageList = data.data.dataList;
         }
         return data;

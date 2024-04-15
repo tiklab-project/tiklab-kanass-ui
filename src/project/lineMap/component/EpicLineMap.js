@@ -266,12 +266,13 @@ const EpicLineMap = (props) => {
     }, [ganttdata])
 
     // 画布节点数据
-    let ylength = 0;
+    
 
     //路线节点数据
     const setNode = (data) => {
         let nodes = [];
-        let edges = []
+        let edges = [];
+        let ylength = 0;
         data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;

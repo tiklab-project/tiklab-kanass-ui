@@ -25,6 +25,7 @@ const ProjectSetWorkItem = (props) => {
     const [projectSetList, setProjectSetList] = useState([])
     // 统计项目成员的列表
     const [projectWorkitem, setProjectWorkitem] = useState([])
+    const [chart, setChart] = useState(null)
 
     const [value, setValue] = useState()
     useEffect(() => {
@@ -49,6 +50,12 @@ const ProjectSetWorkItem = (props) => {
 
     }, [isEditor])
 
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
     /**
      * 处理统计数据
      */
@@ -82,6 +89,7 @@ const ProjectSetWorkItem = (props) => {
                         })
                     })
                     let myChart = echarts.init(chartDom);
+                    setChart(myChart)
                     let option = {
                         tooltip: {
                             trigger: 'axis',

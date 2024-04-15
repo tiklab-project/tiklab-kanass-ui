@@ -21,13 +21,12 @@ import setImageUrl from "../../../common/utils/setImageUrl";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModal";
-
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
         setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId,
-        setDeleteSelectModal, deleteStageList, deleteWork } = props;
-
+        setDeleteSelectModal, deleteStageList, deleteWork, stageStore, changePage } = props;
+    const {totalPage, currentPage, total} = stageStore;
     const { createRecent, setWorkId, setWorkIndex, haveChildren, stageList } = workStore;
 
     const todayDate = new Date()
@@ -691,6 +690,8 @@ const StageLinemap = (props) => {
         return color;
     }
 
+
+
     return (
         <div className="stage-linemap">
             <div>
@@ -773,15 +774,9 @@ const StageLinemap = (props) => {
                                             })
                                         }
                                     </div>
-
                                 </div>
                                 {
-                                    data.length <= 0 && <div className="epci-empty">
-                                        没有计划
-                                    </div>
-                                }
-                                {/* {
-                                    totalPage > 0 && <>
+                                    totalPage > 1 && <>
                                         {
                                             <div className="stage-change-page" >
                                                 <div>{data.length}个, 共{total}个</div>
@@ -794,10 +789,13 @@ const StageLinemap = (props) => {
                                             </div>
                                         }
                                     </>
-                                } */}
-
+                                }
+                                {
+                                    data.length <= 0 && <div className="epci-empty">
+                                        没有计划
+                                    </div>
+                                }
                             </div>
-
                         </div>
                     </div>
                 </div>

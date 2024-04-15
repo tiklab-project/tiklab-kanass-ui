@@ -25,6 +25,9 @@ const NewWorkItemTrend = (props) => {
     const [form] = Form.useForm();
     // 所有的项目列表
     const [projectList, setProjectList] = useState([]);
+    
+    const [chart, setChart] = useState(null)
+
 
     useEffect(() => {
         // 获取所有项目列表
@@ -89,6 +92,7 @@ const NewWorkItemTrend = (props) => {
                         return item.slice(0, 10)
                     })
                     let myChart = echarts.init(chartDom);
+                    setChart(myChart)
                     let option = {
                         // title: {
                         //     text: '新增事项趋势'
@@ -195,6 +199,13 @@ const NewWorkItemTrend = (props) => {
             title: "缺陷"
         }
     ]
+
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
 
     return (
         <Fragment>

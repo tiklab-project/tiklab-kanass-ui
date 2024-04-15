@@ -25,7 +25,7 @@ const ProjectSetMember = (props) => {
     const [projectSetList, setProjectSetList] = useState([])
     // 统计项目成员的列表
     const [projectUserList, setProjectUserList] = useState([])
-
+    const [chart, setChart] = useState(null)
     useEffect(() => {
         /**
          * 查找所有项目集并设置默认项目集
@@ -50,6 +50,12 @@ const ProjectSetMember = (props) => {
         
     },[isEditor])
 
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
     /**
      * 处理统计数据
      */
@@ -68,6 +74,7 @@ const ProjectSetMember = (props) => {
                         yAxisValue.push(item.count)
                     })
                     let myChart = echarts.init(chartDom);
+                    setChart(myChart)
                     let option = {
                         title: {
                             text: projectSet.name

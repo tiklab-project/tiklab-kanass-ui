@@ -263,10 +263,10 @@ const WorkTable = (props) => {
             },
             className: `${sortArray.indexOf("workPriority") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             render: (text, record) => <div className="work-info">
-                {/* <div className="work-info-img">
+                <div className="work-info-img">
                     {
                         record.workPriority?.iconUrl ? <img
-                            src={'/images/' + record.workPriority?.iconUrl}
+                            src={setImageUrl(record.workPriority?.iconUrl)}
                             alt=""
                             className="img-icon-right"
                         />
@@ -278,7 +278,7 @@ const WorkTable = (props) => {
                             />
                     }
 
-                </div> */}
+                </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
         },

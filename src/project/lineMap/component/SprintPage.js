@@ -22,7 +22,7 @@ const SprintPage = (props) => {
     }
     const projectId = props.match.params.id;
     const [sprintList, setSprintList] = useState([])
-    const { findSprintRoadMap, sprintRoadList} = LineMapStore;
+    const { findSprintRoadMap, sprintRoadList } = LineMapStore;
 
     const [graph, setGraph] = useState()
     /**
@@ -37,7 +37,7 @@ const SprintPage = (props) => {
 
     const [archiveView, setArchiveView] = useState("week")
     const changeMonth = () => {
-        setArchiveView("month"); 
+        setArchiveView("month");
         graph.dispose()
     }
     return (
@@ -46,26 +46,26 @@ const SprintPage = (props) => {
                 <div className="sprint-action">
                     <div onClick={() => sprintLineRef.current.goToday()} className="sprint-today">今天</div>
                     <div className="sprint-action-right">
-                    <div className="sprint-view">
-                        <div className={`sprint-view-item sprint-view-week ${archiveView === "week" ? "sprint-view-select": "" }`} onClick={() => setArchiveView("week")}>周</div>
-                        <div className={`sprint-view-item sprint-view-month ${archiveView === "month" ? "sprint-view-select": "" }`}  onClick={() => changeMonth() }>月</div>
-                    </div>   
-                    
+                        <div className="sprint-view">
+                            <div className={`sprint-view-item sprint-view-week ${archiveView === "week" ? "sprint-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                            <div className={`sprint-view-item sprint-view-month ${archiveView === "month" ? "sprint-view-select" : ""}`} onClick={() => changeMonth()}>月</div>
+                        </div>
+
                     </div>
-                    
+
                 </div>
                 <div>
                     {
-                        sprintRoadList && sprintRoadList.length > 0 ? <SprintLineMap  
-                        sprintLineRef = {sprintLineRef}
-                        data={sprintRoadList} 
-                        archiveView= {archiveView}
-                        graph = {graph}
-                        setGraph = {setGraph}
-                        setSprintList= {setSprintList}
+                        sprintRoadList && sprintRoadList.length > 0 ? <SprintLineMap
+                            sprintLineRef={sprintLineRef}
+                            data={sprintRoadList}
+                            archiveView={archiveView}
+                            graph={graph}
+                            setGraph={setGraph}
+                            setSprintList={setSprintList}
                         />
-                        :
-                        <Empty image="/images/nodata.png" description="暂时没有迭代~" />
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有迭代~" />
                     }
                 </div>
             </div>

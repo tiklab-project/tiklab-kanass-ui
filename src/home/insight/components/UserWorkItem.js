@@ -24,6 +24,8 @@ const UserWorkItem = (props) => {
     const [projectSetList, setProjectSetList] = useState([])
     // 所有项目的列表
     const [projectList, setProjectList] = useState([]);
+    const [chart, setChart] = useState(null)
+
     useEffect(() => {
          /**
          * 查找所有项目集并设置默认项目集
@@ -52,6 +54,13 @@ const UserWorkItem = (props) => {
         return;
     },[isEditor])
 
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
+    
     /**
      * 处理统计数据
      */
@@ -114,6 +123,7 @@ const UserWorkItem = (props) => {
                     },
                 )
                 let myChart = echarts.init(chartDom);
+                setChart(myChart)
                 let option = {
                     title: {
                         text: res.data.project.projectName

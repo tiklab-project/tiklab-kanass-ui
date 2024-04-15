@@ -6,7 +6,6 @@ import "./WorkDeleteSelectModal.scss"
 const WorkDeleteSelectModal = (props) => {
     const { getPopupContainer, delectCurrentWorkItem, setDeleteSelectModal, 
         deleteSelectModal, haveChildren, workId, setWorkId } = props;
-    console.log(workId)
     const [buttonText, setButtonText] = useState("删除")
     useEffect(()=> {
         if(deleteSelectModal){

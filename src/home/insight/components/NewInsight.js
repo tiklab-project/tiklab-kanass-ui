@@ -32,7 +32,7 @@ const NewInsight = (props) => {
     const [showReportList, setShowReportList] = useState(false);
     // 当前仪表盘在列表中的索引，用于设置添加仪表盘时的位置
     const [reportIndex, setReportIndex] = useState(1)
-
+    const [chart, setChart] = useState();
 
     useEffect(() => {
         getInsightById()
@@ -50,6 +50,7 @@ const NewInsight = (props) => {
                 if (res.data.data) {
                     const report = JSON.parse(res.data.data)
                     setReportList(report)
+                    console.log(report)
                     const index = report.lg.length + 1
                     setReportIndex(index)
                 } else {
@@ -103,6 +104,10 @@ const NewInsight = (props) => {
         setReportList({ lg: list })
     }
 
+    const onResizeStop = (layout, oldItem, newItem, placeholder, e, element) => {
+        console.log(oldItem, newItem)
+    }
+
     return (
         <Provider {...store}>
             <>
@@ -129,12 +134,18 @@ const NewInsight = (props) => {
                                             measureBeforeMount={true}
                                             breakpoints={{ lg: 1200 }}
                                             onLayoutChange={addLayout}
+                                            onResizeStop = {onResizeStop}
                                         >
                                             {
                                                 reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
                                                     return (<div key={item.i} data-grid={item}>
 
-                                                        <ReportItem isView={false} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
+                                                        <ReportItem 
+                                                            isView={false} 
+                                                            reportType={item.data.type} 
+                                                            index={index} key={index} 
+                                                            condition={item} 
+                                                            editInsight={item.data.isEdit} />
 
                                                     </div>)
                                                 })

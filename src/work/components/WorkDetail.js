@@ -352,28 +352,6 @@ const WorkDetail = (props) => {
                                                                             workId={workId}
                                                                             setWorkId={setWorkId}
                                                                         />
-                                                                        {/* <PrivilegeProjectButton code={'WorkDelete'} disabled={"hidden"} domainId={projectId}  {...props}>
-                                                                            <Popconfirm
-                                                                                title="确定删除事项?"
-                                                                                onConfirm={() => getHaveChildren()}
-                                                                                // onCancel={cancel}
-                                                                                okText="是"
-                                                                                cancelText="否"
-                                                                                getPopupContainer={() => workDetailTop.current}
-                                                                            >
-                                                                                <Button  >
-                                                                                    <svg className="img-icon-right" aria-hidden="true">
-                                                                                        <use xlinkHref="#icon-delete"></use>
-                                                                                    </svg>
-                                                                                    删除
-                                                                                </Button>
-                                                                            </Popconfirm>
-                                                                        </PrivilegeProjectButton> */}
-                                                                        {/* <div className="more">
-                                                                            <svg className="svg-icon" aria-hidden="true">
-                                                                                <use xlinkHref="#icon-more"></use>
-                                                                            </svg>
-                                                                        </div> */}
                                                                     </div>
                                                                 </div>
 
@@ -385,29 +363,7 @@ const WorkDetail = (props) => {
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
                                                         />
-                                                        {/* <Modal
-                                                            visible={deleteSelectModal}
-                                                            title="删除事项"
-                                                            // onOk={handleOk}
-                                                            onCancel={closeDeleteSelectModal}
-                                                            getContainer={() => workDetailTop.current}
-                                                            footer={null}
-                                                        >
-                                                            <div>
-                                                                选择删除当前事项还是当前事项和所有下级事项？
-                                                            </div>
-                                                            <div className="delete-button-group">
-                                                                <Button onClick={closeDeleteSelectModal}>
-                                                                    取消
-                                                                </Button>
-                                                                <Button type="primary" onClick={() => delectWorkItem("ones")}>
-                                                                    删除当前事项
-                                                                </Button>
-                                                                <Button type="primary" onClick={() => delectWorkItem("all")}>
-                                                                    删除当前事项以及所有下级
-                                                                </Button>
-                                                            </div>
-                                                        </Modal> */}
+                                                       
                                                     </Skeleton>
                                                 </Col>
                                             </Row>

@@ -28,7 +28,8 @@ const Stage = (props) => {
         stageStore: StageStore,
         workStore: WorkStore
     }
-    const { findStageListTreePage, updateStage, stageList,setStageList, findWorkTypeDmList, workTypeList, deleteStage } = StageStore;
+    const { findStageListTreePage, updateStage, stageList,setStageList, findWorkTypeDmList, workTypeList, 
+        deleteStage, stageCondition } = StageStore;
     const { deleteWorkItem, deleteWorkItemAndChildren, workId } = WorkStore;
     // 添加子级的上级id
     const [parentId, setParentId] = useState();
@@ -66,8 +67,8 @@ const Stage = (props) => {
     const changePage = () => {
         const values = {
             pageParam: {
-                pageSize: 20,
-                currentPage: searchCondition?.pageParam?.currentPage + 1,
+                pageSize: stageCondition?.pageParam?.pageSize,
+                currentPage: stageCondition?.pageParam?.currentPage + 1,
             }
         }
         findStageListTreePage(values)

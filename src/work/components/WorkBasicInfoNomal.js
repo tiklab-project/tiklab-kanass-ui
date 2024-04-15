@@ -645,6 +645,14 @@ const WorkBasicInfo = (props) => {
                                         priorityList && priorityList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>
                                                 <Space>
+                                                    {
+                                                        item.iconUrl && <img
+                                                            src={setImageUrl(item.iconUrl)}
+                                                            alt=""
+                                                            className="img-icon-right"
+                                                        />
+                                                    }
+
                                                     {item.name}
                                                 </Space>
                                             </Select.Option>

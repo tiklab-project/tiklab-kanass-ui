@@ -43,7 +43,7 @@ const SprintLineMap = (props) => {
 
     useEffect(() => {
         if (data.length > 0) {
-
+            console.log(setNode(data))
             setGantt(setNode(data))
         }
         return
@@ -54,7 +54,6 @@ const SprintLineMap = (props) => {
         if (ganttCore?.current) {
             setdateArray(getDate())
             creatGraph()
-
             setGantt(setNode(data))
         }
 
@@ -116,7 +115,6 @@ const SprintLineMap = (props) => {
         graph.on("node:change:position", ({ node, options }) => updateByChangeNodePosition({node}))
 
         graph.on("node:change:size", ({ node, options }) => updateByChangeNodeSize({ node, options }))
-
         setGraph(graph)
     }
 
@@ -215,12 +213,13 @@ const SprintLineMap = (props) => {
     }, [ganttdata])
 
     // 画布节点数据
-    let ylength = 0;
+    
 
     //路线节点数据
     const setNode = (data) => {
         let nodes = [];
-        let edges = []
+        let edges = [];
+        let ylength = 0;
         data.map((item, index) => {
             //每个事项的开始结束日期转化为毫秒
             let startPra, endPra;
@@ -232,14 +231,13 @@ const SprintLineMap = (props) => {
             if (startPra === endPra) {
                 endPra = 86400000 + endPra;
             }
-            
             // 每个事项的x轴
             let xAxis = Math.abs(startPra - firstDateMillisecond);
             xAxis = Math.floor(xAxis / archiveBase);
 
             // 每个事项的y轴
             let yAxis = ylength++ * 50 + 13;
-
+            console.log(ylength, item.sprintName)
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
             length = Math.floor(length / archiveBase);

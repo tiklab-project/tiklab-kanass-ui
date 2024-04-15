@@ -25,7 +25,7 @@ const WorkItemTrend = (props) => {
     const [form] = Form.useForm();
     // 所有的项目列表
     const [projectList, setProjectList] = useState([]);
-
+    const [chart, setChart] = useState(null)
 
     useEffect(() => {
         // 获取所有项目列表
@@ -68,6 +68,13 @@ const WorkItemTrend = (props) => {
 
     }, [isEditor])
 
+    useEffect(()=> {
+        if(chart){
+            chart.resize();
+        }
+        return null;
+    }, [condition.w])
+
     /**
      * 处理统计数据
      */
@@ -90,6 +97,7 @@ const WorkItemTrend = (props) => {
                     return item;
                 })
                 let myChart = echarts.init(chartDom);
+                setChart(myChart)
                 let option = {
                     tooltip: {
                         trigger: 'axis'
