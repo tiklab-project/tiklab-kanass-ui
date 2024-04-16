@@ -253,6 +253,7 @@ class HomeStore {
      */
     @action
     updateMessageDispatchItem = async (value) => {
+        value.bgroup = "kanass"
         const data = await Service("/message/messageItem/updateMessageItem", value)
         return data;
     }

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 import React, { useState, useRef } from 'react';
-import { Drawer, Tabs, Badge, Avatar, } from 'antd';
+import { Drawer, Tabs, Badge, Avatar, Empty, } from 'antd';
 import { observer, inject } from "mobx-react";
 import { MessageOutlined } from '@ant-design/icons';
 import "./MessageList.scss"
@@ -137,7 +137,7 @@ const MessageList = (props) => {
                         <Tabs.TabPane tab="未读" key="0">
                             <div className="message-box">
                                 {
-                                    messageList && messageList.length > 0 && messageList.map(item => {
+                                    (messageList && messageList.length > 0) ?  messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
                                             {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
@@ -155,6 +155,8 @@ const MessageList = (props) => {
                                             <div className={`message-status ${item.status === 0 ? "status-unread" : "status-read"}`}></div>
                                         </div>
                                     })
+                                    :
+                                    <Empty image="/images/nodata.png" description="没有新消息~" />
                                 }
                                 {
                                     messageTotal > 1 && 
@@ -167,7 +169,7 @@ const MessageList = (props) => {
                         <Tabs.TabPane tab="已读" key="1">
                             <div className="message-box">
                                 {
-                                    messageList && messageList.length > 0 && messageList.map(item => {
+                                    (messageList && messageList.length > 0)? messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
                                             {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
@@ -185,6 +187,8 @@ const MessageList = (props) => {
                                             <div className={`message-status ${item.status === 1 ? "status-read" : "status-unread"}`}></div>
                                         </div>
                                     })
+                                    :
+                                    <Empty image="/images/nodata.png" description="没有消息~" />
                                 }
                                 { messageTotal > 1 && 
                                     (isMessageReachBottom ? 
