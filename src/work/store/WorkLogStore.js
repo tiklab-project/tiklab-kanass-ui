@@ -41,22 +41,7 @@ export class WorkLogStore {
     //添加工时
     @action
     addWorkLog = async(value) => {
-        let params = {
-            workItem: {
-                id: value.workItem
-            },
-            user: value.user,
-            // worker: {
-            //     id: value.worker
-            // },
-            project: {
-                id: value.projectId
-            },
-            // workDate: value.workDate,
-            takeupTime: value.takeupTime,
-            workContent: value.workContent
-        }
-        const data = await Service("/workLog/createWorkLog", params)
+        const data = await Service("/workLog/createWorkLog", value)
         if(data.code === 0){
             this.getWorkLogList({workItemId:this.workId})
         }
@@ -112,6 +97,14 @@ export class WorkLogStore {
     @action
     setPlanTime = (value) => {
         this.PlanTime = value
+    }
+
+    @action
+    findWorkItemAndUsedTime = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findWorkItemAndUsedTime", params);
+        return data;
     }
 
 }

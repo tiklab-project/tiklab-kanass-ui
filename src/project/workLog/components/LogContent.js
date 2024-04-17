@@ -19,7 +19,6 @@ import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
 import moment from "moment";
 import LogStore from "../store/LogStore";
-import { Span } from "slate";
 const LogContent = (props) => {
     const store = {
         logStore: LogStore
@@ -180,7 +179,7 @@ const LogContent = (props) => {
                         firstText="工时"
                     >
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
-                            添加日志
+                            添加工时
                         </Button>
                         <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} changeTabs = {changeTabs} activeTab = {activeTab}/>
                     </Breadcumb>

@@ -23,5 +23,9 @@
     .projectset-user-content {
         width: 100%;
         height: calc(100% - 74px);
+        .projectset-user-warning {
+            font-weight: 600;
+            margin: 30% 20px
+        }
     }
 }

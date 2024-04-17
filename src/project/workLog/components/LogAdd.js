@@ -11,29 +11,41 @@ import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "thoughtware-core-ui";
+import "./LogAdd.scss"
 const { TextArea } = Input;
 
 const LogAdd = (props) => {
     const { showLogAdd, setShowLogAdd, logStore, changeTabs, activeTab } = props;
-    const { findWorkItemPage, addWorkLog, findJoinProjectList, projectList } = logStore;
+    const { findWorkItemPage, addWorkLog, findJoinProjectList, projectList, 
+        findWorkItemAndUsedTime, updateWorkItem } = logStore;
     const [addLog] = Form.useForm();
     // 搜索的事项列表
     const [workItemList, setWorkItemList] = useState([])
     // 用时
-    const [planTakeupTime, setPlanTakeupTime] = useState(0)
+    const [takeupTime, setTakeupTime] = useState(0)
     // 剩余时间
     const [surplusTime, setSurplusTime] = useState(0)
+    const [isCustomSurplusTime, setIsCustomSurplusTime] = useState(false)
     const [projectId, setProjectId] = useState(props.match.params.id)
     const path = props.location.pathname;
     // 搜索关键字
     const [value, setValue] = useState();
-
-    useEffect(()=> {
-        if(!projectId) {
+    const layout = {
+        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
+        wrapperCol: { lg: { span: 24 }, xxl: { span: 24 } },
+    };
+    useEffect(() => {
+        if (!projectId) {
             findJoinProjectList({})
+        }else {
+            findWorkItemPage({projectId: projectId}).then(res => {
+                if (res.code === 0) {
+                    setWorkItemList(res.data.dataList)
+                }
+            })
         }
         return;
-    },[])
+    }, [])
     /**
      * 添加日志
      */
@@ -55,6 +67,15 @@ const LogAdd = (props) => {
             addWorkLog(params).then(res => {
                 changeTabs(activeTab)
                 setShowLogAdd(false)
+            })
+
+            const workParams = {
+                id: fieldsValue.workItem,
+                surplusTime : fieldsValue.surplusTime,
+                updateField : "surplusTime"
+            }
+            updateWorkItem(workParams).then(res => {
+                console.log(res)
             })
         })
     }
@@ -87,28 +108,54 @@ const LogAdd = (props) => {
      * @param {*} option 
      */
     const changeSearchTitle = (newValue, option) => {
-        setPlanTakeupTime(option.planTakeupTime)
-        setSurplusTime(option.setSurplusTime)
         setValue(newValue);
+
+        findWorkItemAndUsedTime({ id: newValue }).then(res => {
+            if (res.code === 0) {
+                const info = res.data;
+                const workSurplusTime = info.surplusTime
+                const surplus = workSurplusTime - takeupTime;
+                setSurplusTime(workSurplusTime)
+                setIsCustomSurplusTime(false)
+                addLog.setFieldsValue({
+                    estimateTime: info.estimateTime,
+                    usedTime: info.usedTime,
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+            }
+        })
     };
     const changeProject = (value) => {
         setProjectId(value)
         findWorkItemPage({ projectId: value }).then(res => {
             if (res.code === 0) {
                 setWorkItemList(res.data.dataList)
-                if(res.data.dataList.length > 0){
-                  setValue(res.data.dataList[0].id);  
-                }else {
+                if (res.data.dataList.length > 0) {
+                    setValue(res.data.dataList[0].id);
+                } else {
                     setValue()
                 }
-                
+
             }
         })
     }
 
+    const changeTakeupTime = (value) => {
+        const time = value.target.value;
+        setTakeupTime(time)
+
+        if (!isCustomSurplusTime) {
+            const surplus = surplusTime - time;
+            addLog.setFieldsValue({
+                surplusTime: surplus < 0 ? 0 : surplus
+            })
+        }
+
+    }
+
     return (
         <Modal
-            title={"添加日志"}
+            title={"添加工时33"}
             visible={showLogAdd}
             onOk={creatLog}
             onCancel={closeModal}
@@ -121,7 +168,7 @@ const LogAdd = (props) => {
                 form={addLog}
                 preserve={false}
                 layout="vertical"
-
+                className="log-add"
             >
                 {
                     path === "/log/list" && <Form.Item
@@ -183,29 +230,69 @@ const LogAdd = (props) => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item
-                    label="剩余用时"
-                    name="surplusTime"
-                >
-                    <div style={{ display: "flex" }}>
-                        <div style={{ width: "40px" }}>{surplusTime ? surplusTime : 0}</div>
-                        <div style={{ width: "20px" }}>/</div>
-                        <div style={{ width: "40px" }}>{planTakeupTime ? planTakeupTime : 0}</div> 小时
-                    </div>
-                </Form.Item>
-                <Form.Item
-                    label="用时"
-                    name="takeupTime"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入用时',
-                        },
-                    ]}
+                <div className="log-add-time">
+                    <Form.Item
+                        label="预估用时"
+                        name="estimateTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
 
-                >
-                    <InputNumber suffix="/小时" style={{ width: '30%' }} />
-                </Form.Item>
+                    <Form.Item
+                        label="已用时"
+                        name="usedTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
+                </div>
+                <div className="log-add-time">
+                    <Form.Item
+                        label="登记用时"
+                        name="takeupTime"
+                        className="log-form-item"
+                        rules={[
+                            {
+                                required: true,
+                                message: '登记用时不能为空',
+                            },
+                        ]}
+
+                    >
+                        <Input
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            style={{ width: '100%' }}
+                            onBlur={(value) => changeTakeupTime(value)}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="剩余用时"
+                        name="surplusTime"
+                        className="log-form-item"
+                        rules={[
+                            {
+                                required: true,
+                                message: '剩余用时不能为空',
+                            },
+                        ]}
+
+                    >
+                        <Input
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            style={{ width: '100%' }}
+                            onChange={() => setIsCustomSurplusTime(true)}
+                        />
+                    </Form.Item>
+                </div>
+
                 <Form.Item
                     label="工作内容"
                     name="workContent"
@@ -216,7 +303,7 @@ const LogAdd = (props) => {
                         },
                     ]}
                 >
-                    <TextArea rows={4}/>
+                    <TextArea rows={4} />
                 </Form.Item>
             </Form>
         </Modal>

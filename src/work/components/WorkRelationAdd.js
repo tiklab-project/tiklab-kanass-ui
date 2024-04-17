@@ -222,7 +222,7 @@ const WorkRelationAddModal = (props) => {
                                                     {
                                                         item.workPriority?.iconUrl ?
                                                             <img
-                                                                src={'/images/' + item.workPriority?.iconUrl}
+                                                                src={setImageUrl(item.workPriority?.iconUrl)}
                                                                 alt=""
                                                                 className="svg-icon"
 

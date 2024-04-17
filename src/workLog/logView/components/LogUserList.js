@@ -121,7 +121,7 @@ const LogUserList = (props) => {
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcrumb firstText={"我的工时"}>
                     <Button type="primary" onClick={() => setShowLogAdd(true)}>
-                        添加日志
+                        添加工时
                     </Button>
                     <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} changeTabs={changeTabs}/>
                 </Breadcrumb>

@@ -173,7 +173,7 @@ const WorkDetailBottom = (props) => {
                 {
                     tabValue === 5 &&
                     <div className="tabs-tabpanel">
-                        <WorkLog surplusTime={workInfo.surplusTime} planTakeupTime={workInfo.planTakeupTime} {...props} />
+                        <WorkLog surplusTime={workInfo.surplusTime} workInfo={workInfo} planTakeupTime={workInfo.planTakeupTime} {...props} />
                     </div>
                 }
                 {

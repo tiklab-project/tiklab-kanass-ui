@@ -4,71 +4,68 @@ import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import { getUser } from 'thoughtware-core-ui';
 import "./WorkLogEdit.scss";
-import dayjs from "dayjs";
 import WorkLogStore from "../store/WorkLogStore";
 import Button from "../../common/button/Button";
 import { withRouter } from "react-router";
 const { TextArea } = Input;
 
 const WorkLogEdit = (props) => {
-    const {type, setVisible, visible, logId, layout} = props;
-    const { workStore } = props;
+    const { modalType, setVisible, visible, editLogId, layout, logInfo } = props;
+    console.log(modalType)
+    const { workStore, workInfo } = props;
     const { getWorkLogList, addWorkLog, editWorKLog, searchWorKLog,
-        versionTime } = WorkLogStore;
-    const { workId } = workStore;
+        versionTime, findWorkItemAndUsedTime } = WorkLogStore;
+    const { workId, editWork } = workStore;
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD HH:mm:ss';
-    const [date, setDate] = useState(dayjs().format(dateFormat))
-    const [modalTitle, setModalTitle] = useState("添加工时")
-    const [modalType, setModalType] = useState("add")
-    const [remainTime, setRemainTime] = useState(0)
-    const [userInfo, setUserInfo] = useState([])
-    const projectId = props.match.params.id ? props.match.params.id : null;
+   
+    // 用时
+    const [takeupTime, setTakeupTime] = useState(0)
+    // 剩余时间
+    const [surplusTime, setSurplusTime] = useState(0)
+    const [isCustomSurplusTime, setIsCustomSurplusTime] = useState(false)
+
+    // const projectId = props.match.params.id ? props.match.params.id : null;
     // 表格样式
-    const [AddLog] = Form.useForm();
+    const [addLog] = Form.useForm();
     const labelCol = {
         labelCol: { span: 3 },
-        wrapperCol: { span: 21 },
+        wrapperCol: { span: 24 },
     };
 
-   
-    useEffect(() => {
-        getGemianTime()
-        // setDate(getNowFormatDate())
-        return;
-    }, [workId])
 
     useEffect(() => {
-        if(visible && type === "edit"){
-            searchWorKLog(logId).then((res) => {
-                // setDate(res.workDate)
-                // setLogId(res.id)
-                AddLog.setFieldsValue(
-                    {
-                        workItem: res.workItem.id,
-                        workDate: moment(res.workDate, dateFormat),
-                        takeupTime: res.takeupTime,
-                        workContent: res.workContent,
-                        user: res.user.id,
-                        surplusTime: remainTime,
-                        versionTime: versionTime
-                    }
-                )
-            })
+        if(visible){
+            getGemianTime()
         }
         return;
     }, [visible])
 
 
+
     // 计算剩余时间
-    const getGemianTime = (page) => {
-        getWorkLogList({ workItemId: workId }, page).then((res) => {
-            let useTime = 0;
-            if (res.length > 0) {
-                res.map((item) => {
-                    useTime += parseInt(item.takeupTime)
+    const getGemianTime = () => {
+        findWorkItemAndUsedTime({ id: workId }).then(res => {
+            if (res.code === 0) {
+                const info = res.data;
+                const workSurplusTime = info.surplusTime
+                const surplus = workSurplusTime - takeupTime;
+                setSurplusTime(workSurplusTime)
+                setIsCustomSurplusTime(false)
+                addLog.setFieldsValue({
+                    estimateTime: info.estimateTime,
+                    usedTime: info.usedTime,
+                    surplusTime: surplus < 0 ? 0 : surplus
                 })
-                setRemainTime(parseInt(versionTime) - useTime)
+
+                console.log(logInfo)
+                if(modalType === "edit"){
+                    setTakeupTime(logInfo?.takeupTime)
+                    addLog.setFieldsValue({
+                        takeupTime: logInfo?.takeupTime,
+                        workContent: logInfo?.workContent
+                    })
+                }
             }
         })
     }
@@ -76,66 +73,131 @@ const WorkLogEdit = (props) => {
 
     // 弹窗添加编辑工时
     const creatLog = () => {
-        AddLog.validateFields().then(value => {
-            value.projectId = projectId
-            value.workItem = workId
-            value.user = {
-                id: getUser().userId
+        addLog.validateFields().then((fieldsValue) => {
+            const params = {
+                project: workInfo.project,
+                workItem: {
+                    id: workId
+                },
+                user: {
+                    id: getUser().userId
+                },
+                takeupTime: fieldsValue.takeupTime,
+                workContent: fieldsValue.workContent
             }
-            if (type === "creat") {
-                addWorkLog(value)
-                AddLog.resetFields()
-            } else {
-                value.id = logId;
-                editWorKLog(value).then(() => {
-                    getGemianTime()
-                })
-                AddLog.resetFields()
+            addWorkLog(params).then(res => {
+                setVisible(false)
+            })
+
+            const workParams = {
+                id: workId,
+                surplusTime : fieldsValue.surplusTime,
+                updateField : "surplusTime"
             }
-            setVisible(false);
-        });
+            editWork(workParams).then(res => {
+                console.log(res)
+            })
+        })
 
     };
 
+    const changeTakeupTime = (value) => {
+        const time = value.target.value;
+        // setTakeupTime(time)
 
+        if (!isCustomSurplusTime) {
+            
+            if(modalType === "edit"){
+                const surplus = surplusTime - (time - takeupTime);
+                addLog.setFieldsValue({
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+            }else {
+                const surplus = surplusTime - time;
+                addLog.setFieldsValue({
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+            }
+        }
 
+    }
 
     return (
         <div className="worklog-creat">
-            {/* <div className="worklog-creat-title">添加工时</div> */}
             <Form
-                {...labelCol}
                 name="basic"
-                form={AddLog}
+                form={addLog}
                 preserve={false}
                 layout={layout}
-                labelAlign = {"left"}
-                initialValues = {{
-                    takeupTime: 1
-                }}
+                labelAlign={"left"}
 
             >
-                <Form.Item
-                    label="用时"
-                    name="takeupTime"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入用时',
-                        },
-                    ]}
-                >
-                    <InputNumber
-                        defaultValue={1}
-                        style={{ width: '30%', marginRight: "10px" }}
-                        formatter={value => `${value}小时`}
-                        parser={value => value.replace('小时', '')}
-                        min={0}
-                    />
-                </Form.Item>
+                <div className="log-add-time">
+                    <Form.Item
+                        label="预估用时"
+                        name="estimateTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="已用时"
+                        name="usedTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
+                </div>
+                <div className="log-add-time">
+                    <Form.Item
+                        label="登记用时"
+                        name="takeupTime"
+                        className="log-form-item"
+                        rules={[
+                            {
+                                required: true,
+                                message: '登记用时不能为空',
+                            },
+                        ]}
+
+                    >
+                        <Input
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            style={{ width: '100%' }}
+                            onBlur={(value) => changeTakeupTime(value)}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="剩余用时"
+                        name="surplusTime"
+                        className="log-form-item"
+                        rules={[
+                            {
+                                required: true,
+                                message: '剩余用时不能为空',
+                            },
+                        ]}
+                    >
+                        <Input
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            style={{ width: '100%' }}
+                            onChange={() => setIsCustomSurplusTime(true)}
+                        />
+                    </Form.Item>
+                </div>
+
                 <Form.Item
                     label="工作内容"
                     name="workContent"
+                    {...labelCol}
                     rules={[
                         {
                             required: true,

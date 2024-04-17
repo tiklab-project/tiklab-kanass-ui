@@ -161,8 +161,20 @@ export class LogStore {
         const data = await Service("/workLog/updateWorkLog", value);
         return data;
     }
-    
-    
+
+    @action
+    findWorkItemAndUsedTime = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workItem/findWorkItemAndUsedTime", params);
+        return data;
+    }
+
+    @action
+    updateWorkItem = async(value) => {
+        const data = await Service("/workItem/updateWorkItem", value);
+        return data;
+    }
 }
 
 export default new LogStore();

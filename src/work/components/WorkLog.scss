@@ -30,18 +30,22 @@
             align-items: center;
             line-height: 40px;
             justify-content: space-between;
-           
+            .log-item-date {
+                font-size: 13px;
+                color: #999;
+            }
             .work-log-item-user {
                 display: flex;
                 align-items: center;
                 gap: 10px;
+             
             }
         }
         .work-log-item-second {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-left: 26px;
+            margin-left: 32px;
             .log-content {
                 line-height: 30px;
             }
@@ -50,7 +54,29 @@
             }
         }
     }
+    .work-log-item:nth-child(4n+1) {
+        .user-big-icon {
+            background-color: #cadbf3;
+        }
+    }
 
+    .work-log-item:nth-child(4n+2) {
+        .user-big-icon {
+            background-color: #deedd7;
+        }
+    }
+
+    .work-log-item:nth-child(4n+3) {
+        .user-big-icon {
+            background-color: #ffebee;
+        }
+    }
+
+    .work-log-item:nth-child(4n+4) {
+        .user-big-icon {
+            background-color: #e8eaf6;
+        }
+    }
     .ant-table table {
         border-bottom: 0;
     }
@@ -65,9 +91,45 @@
         padding: 15px 0;
         border-radius: 4px;
     }
-    .edit-box {
-        background: #fafafa;
-        padding: 0 10px 10px;
-        border-radius: 5px;
+    // .edit-box {
+    //     background: #fafafa;
+    //     padding: 0 10px 10px;
+    //     border-radius: 5px;
+    // }
+    .work-log-static {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        .log-static-item {
+            width: 80px;
+            .log-static-item-title {
+                height: 40px;
+                line-height: 40px;
+            }
+            .log-static-item-num {
+                font-size: 20px;
+                font-weight: 600;
+                height: 40px;
+                line-height: 40px;
+                .unit {
+                    font-size: 13px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .log-static-progress {
+            flex: 1;
+            .log-static-item-title {
+                height: 40px;
+                line-height: 40px;
+            }
+            .log-static-item-num {
+                height: 40px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+            }
+        }
     }
 }

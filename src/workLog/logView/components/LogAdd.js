@@ -28,12 +28,12 @@ const LogAdd = (props) => {
     // 搜索关键字
     const [value, setValue] = useState();
 
-    useEffect(()=> {
-        if(!projectId) {
+    useEffect(() => {
+        if (!projectId) {
             findJoinProjectList({})
         }
         return;
-    },[])
+    }, [])
     /**
      * 添加日志
      */
@@ -96,19 +96,19 @@ const LogAdd = (props) => {
         findWorkItemPage({ projectId: value }).then(res => {
             if (res.code === 0) {
                 setWorkItemList(res.data.dataList)
-                if(res.data.dataList.length > 0){
-                  setValue(res.data.dataList[0].id);  
-                }else {
+                if (res.data.dataList.length > 0) {
+                    setValue(res.data.dataList[0].id);
+                } else {
                     setValue()
                 }
-                
+
             }
         })
     }
 
     return (
         <Modal
-            title={"添加日志"}
+            title={"添加工时222"}
             visible={showLogAdd}
             onOk={creatLog}
             onCancel={closeModal}
@@ -182,6 +182,27 @@ const LogAdd = (props) => {
                         }
                     </Select>
                 </Form.Item>
+                <div>
+                    <Form.Item
+                        label="预估用时"
+                        name="surplusTime"
+                    >
+                        <InputNumber
+                            min={0}
+                            key="percent"
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="已用时"
+                        name="surplusTime"
+                    >
+                        <InputNumber
+                            min={0}
+                            key="percent"
+                        />
+                    </Form.Item>
+                </div>
 
                 <Form.Item
                     label="剩余用时"
@@ -216,7 +237,7 @@ const LogAdd = (props) => {
                         },
                     ]}
                 >
-                    <TextArea rows={4}/>
+                    <TextArea rows={4} />
                 </Form.Item>
             </Form>
         </Modal>

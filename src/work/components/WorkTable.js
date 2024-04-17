@@ -113,8 +113,8 @@ const WorkTable = (props) => {
         const setSortParams = (sorter) => {
             const field = sorter.columnKey;
             const order = sorter.order;
-            let isAsc = "";
-            let sortType = "";
+            let isAsc = "desc";
+            let sortType = "id";
             if (order === "ascend") {
                 isAsc = "asc"
             }
@@ -148,6 +148,9 @@ const WorkTable = (props) => {
                     break;
                 case "buildTime":
                     sortType = "build_time";
+                    break;
+                case "moduleId":
+                    sortType = "module_id";
                     break;
                 default:
                     break;
@@ -277,7 +280,6 @@ const WorkTable = (props) => {
                                 className="img-icon-right"
                             />
                     }
-
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
@@ -295,6 +297,7 @@ const WorkTable = (props) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
+
         {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
@@ -306,6 +309,18 @@ const WorkTable = (props) => {
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div className="work-info-text">{text}</div>
+            </div>
+        },
+        {
+            title: '模块',
+            dataIndex: ['module', 'moduleName'],
+            key: 'moduleId',
+            className: `${sortArray.indexOf("moduleId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-text">{text ? text : "无"}</div>
             </div>
         },
         {
@@ -333,7 +348,7 @@ const WorkTable = (props) => {
                     getPopupContainer={workTable}
                     delectCurrentWorkItem={delectCurrentWorkItem}
                     haveChildren={haveChildren}
-                    setWorkId = {setWorkId}
+                    setWorkId={setWorkId}
                     workId={record.id}
                 // getHaveChildren={getHaveChildren}
                 />
@@ -407,7 +422,7 @@ const WorkTable = (props) => {
                 <div className="work-info-img">
                     {
                         record.workPriority?.iconUrl ? <img
-                            src={'/images/' + record.workPriority?.iconUrl}
+                            src={setImageUrl(record.workPriority?.iconUrl)}
                             alt=""
                             className="img-icon-right"
                         />
@@ -418,7 +433,6 @@ const WorkTable = (props) => {
                                 className="img-icon-right"
                             />
                     }
-
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
@@ -436,6 +450,7 @@ const WorkTable = (props) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
+
         {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
@@ -447,6 +462,18 @@ const WorkTable = (props) => {
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
                 <div className="work-info-text">{text}</div>
+            </div>
+        },
+        {
+            title: '模块',
+            dataIndex: ['module', 'moduleName'],
+            key: 'moduleId',
+            className: `${sortArray.indexOf("moduleId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-text">{text ? text : "无"}</div>
             </div>
         },
         {
@@ -512,7 +539,7 @@ const WorkTable = (props) => {
                     delectCurrentWorkItem={delectCurrentWorkItem}
                     haveChildren={haveChildren}
                     workId={record.id}
-                    setWorkId ={setWorkId}
+                    setWorkId={setWorkId}
                 // getHaveChildren={getHaveChildren}
                 />
             ),
@@ -580,7 +607,7 @@ const WorkTable = (props) => {
     return (
         <Provider {...store}>
             <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
-                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                     <div className="work-table" >
                         <WorkTableHead />
                         <WorkTableFilter />
