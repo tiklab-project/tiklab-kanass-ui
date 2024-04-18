@@ -39,20 +39,24 @@ const ReportList = (props) => {
         let lastList = {};
         if(list.length > 0){
             lastList = list[list.length - 1];
-            if(lastList.x === 0){
-                if((12 - lastList.w) < item.minW){
-                    x = 0
-                }else { 
-                    x = lastList.w
-                }
+            // if(lastList.x === 0){
+                
+            // }else {
+
+            // }
+            if((12 - (lastList.w + lastList.x)) < item.minW){
+                x = 0
+                y =  lastList.y + lastList.h;
+            }else { 
+                x = lastList.w
+                y = lastList.y
             }
-            y =  lastList.y + lastList.h;
+            
         }else {
             x = 0
             y =  0
         }
         
-
         const report = {
             x: x, 
             y: y, 
@@ -60,7 +64,7 @@ const ReportList = (props) => {
             h: item.minH,
             minH: item.minH,
             minW: item.minW,
-            i: reportIndex.toString(), static: false,
+            i: (reportIndex + 1).toString(), static: false,
             data: {
                 type: item.type,
                 isEdit: false,

@@ -49,9 +49,10 @@ const NewInsight = (props) => {
             if (res.code === 0) {
                 if (res.data.data) {
                     const report = JSON.parse(res.data.data)
+                    console.log("view", report)
                     setReportList(report)
                     console.log(report)
-                    const index = report.lg.length + 1
+                    const index = report.lg.length
                     setReportIndex(index)
                 } else {
                     setReportList({ lg: [] })
@@ -93,6 +94,7 @@ const NewInsight = (props) => {
      * @param {模块数据列表} layouts 
      */
     const addLayout = (layout, layouts) => {
+        console.log(layout, layouts)
         const list = reportList.lg.map((item, index) => {
             const data = item.data;
             // 把新的仪表盘的位置信息添加到仪表盘报告列表中
@@ -127,14 +129,18 @@ const NewInsight = (props) => {
 
                                 <div className="new-insight-content">
                                     {
-                                        reportList && reportList.lg.length > 0 ? <ResponsiveGridLayout
+                                        console.log(reportList)
+                                    }
+                                    {
+                                        reportList && reportList.lg.length > 0 ? 
+                                        <ResponsiveGridLayout
                                             className="layout"
                                             layouts={reportList}
                                             rowHeight={30}
                                             measureBeforeMount={true}
                                             breakpoints={{ lg: 1200 }}
-                                            onLayoutChange={addLayout}
-                                            onResizeStop = {onResizeStop}
+                                            // onLayoutChange={addLayout}
+                                            // onResizeStop = {onResizeStop}
                                         >
                                             {
                                                 reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
@@ -143,7 +149,8 @@ const NewInsight = (props) => {
                                                         <ReportItem 
                                                             isView={false} 
                                                             reportType={item.data.type} 
-                                                            index={index} key={index} 
+                                                            index={index} 
+                                                            key={index} 
                                                             condition={item} 
                                                             editInsight={item.data.isEdit} />
 

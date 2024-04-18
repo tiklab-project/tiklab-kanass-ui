@@ -146,7 +146,7 @@ export class LogStore {
      * @returns 
      */
     @action
-    addWorkLog = async(value) => {
+    createWorkLog = async(value) => {
         const data = await Service("/workLog/createWorkLog", value);
         return data;
     }

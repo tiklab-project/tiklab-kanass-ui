@@ -24,9 +24,9 @@ const ProjectSetWorkItem = (props) => {
     // 项目集列表
     const [projectSetList, setProjectSetList] = useState([])
     // 统计项目成员的列表
-    const [projectWorkitem, setProjectWorkitem] = useState([])
+    const [project, setProjectWorkitem] = useState([])
     const [chart, setChart] = useState(null)
-
+    const [projectSet, setProjectSet] = useState({});
     const [value, setValue] = useState()
     useEffect(() => {
         /**
@@ -41,17 +41,22 @@ const ProjectSetWorkItem = (props) => {
      * 处于编辑状态时，初始化筛选表单
      */
     useEffect(() => {
+        console.log(isEditor)
         if (isEditor) {
             const params = { projectSetId: condition.data.data.projectSetId }
             statisticsProjectWorkItem(params)
-        }else {
-            form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
+        } else {
+            if (!projectSet) {
+                form.setFieldsValue({ projectSetId: null })
+            } else {
+                form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
+            }
         }
 
     }, [isEditor])
 
-    useEffect(()=> {
-        if(chart){
+    useEffect(() => {
+        if (chart) {
             chart.resize();
         }
         return null;
@@ -63,17 +68,23 @@ const ProjectSetWorkItem = (props) => {
         const chartDom = document.getElementById(`project-workitem-${index}`)
         statisticsProjectWorkItemCount(value).then(res => {
             if (res.code === 0) {
-                const projectList = res.data.project;
+                const project = res.data.project;
                 const types = res.data.types;
                 const series = []
                 const yAxisValue = []
-                setProjectWorkitem(projectList.project)
-                if (projectList.project.length > 0) {
-                    projectList.project.map((item, index) => {
+                const projectSet = res.data.projectSet;
+                setProjectSet(projectSet)
+                setProjectWorkitem(project)
+
+                if(!projectSet){
+                    form.setFieldsValue({ projectSetId: null })
+                }
+                if (projectSet && project) {
+                    project.project.map((item, index) => {
                         yAxisValue.push(item.projectName)
 
                     })
-                    projectList.countList.map((item, index) => {
+                    project.countList.map((item, index) => {
                         // yAxisValue.push(item.projectName)
                         series.push({
                             name: types[index],
@@ -116,6 +127,8 @@ const ProjectSetWorkItem = (props) => {
                     };
                     myChart.setOption(option);
                 }
+
+
 
             }
         })
@@ -166,8 +179,20 @@ const ProjectSetWorkItem = (props) => {
                 </div>
                 {
                     isEditor ? <div className="project-workitem-content" id={`project-workitem-${index}`}>
-                        {
+                        {/* {
                             projectWorkitem.length <= 0 && <Empty />
+                        } */}
+                        {
+                            !projectSet ?
+                                <div className="delete-warning">
+                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                                </div>
+                                :
+                                <>
+                                    {
+                                        !project && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                    }
+                                </>
                         }
                     </div>
                         :

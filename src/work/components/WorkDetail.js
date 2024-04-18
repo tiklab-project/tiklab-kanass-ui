@@ -34,7 +34,7 @@ const rowSpan = {
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
 
-    const { workStore, setIsModalVisible, delectCurrentWorkItem, delectWorkItemAndChildren, rowSpan } = props;
+    const { workStore, setIsModalVisible, delectCurrentWorkItem, delectWorkItemAndChildren, rowSpan, closeModal } = props;
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
@@ -380,6 +380,7 @@ const WorkDetail = (props) => {
                                                             getTransitionList={getTransitionList}
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
+                                                            closeModal = {closeModal}
                                                             {...props}
                                                         />
 

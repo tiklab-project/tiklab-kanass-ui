@@ -6,18 +6,20 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-18 09:46:31
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "thoughtware-core-ui";
+import LogStore from "../store/LogStore";
 import "./LogAdd.scss"
 const { TextArea } = Input;
 
 const LogAdd = (props) => {
-    const { showLogAdd, setShowLogAdd, logStore, changeTabs, activeTab } = props;
-    const { findWorkItemPage, addWorkLog, findJoinProjectList, projectList, 
-        findWorkItemAndUsedTime, updateWorkItem } = logStore;
+    const { showLogAdd, setShowLogAdd, getContainer, changeTabs, activeTab, closeModal,
+        workId, page, modalType, findWorkLogList, logInfo } = props;
+    const { findWorkItemPage, createWorkLog, findJoinProjectList, projectList,
+        findWorkItemAndUsedTime, updateWorkItem } = LogStore;
     const [addLog] = Form.useForm();
     // 搜索的事项列表
     const [workItemList, setWorkItemList] = useState([])
@@ -27,6 +29,7 @@ const LogAdd = (props) => {
     const [surplusTime, setSurplusTime] = useState(0)
     const [isCustomSurplusTime, setIsCustomSurplusTime] = useState(false)
     const [projectId, setProjectId] = useState(props.match.params.id)
+    const logAdd = useRef(null);
     const path = props.location.pathname;
     // 搜索关键字
     const [value, setValue] = useState();
@@ -35,17 +38,73 @@ const LogAdd = (props) => {
         wrapperCol: { lg: { span: 24 }, xxl: { span: 24 } },
     };
     useEffect(() => {
-        if (!projectId) {
-            findJoinProjectList({})
-        }else {
-            findWorkItemPage({projectId: projectId}).then(res => {
-                if (res.code === 0) {
-                    setWorkItemList(res.data.dataList)
+
+        // if (!projectId) {
+        //     findJoinProjectList({})
+        // } else {
+        //     findWorkItemPage({ projectId: projectId }).then(res => {
+        //         if (res.code === 0) {
+        //             setWorkItemList(res.data.dataList)
+        //         }
+        //     })
+        // }
+        console.log(showLogAdd)
+        if (showLogAdd) {
+
+            if (page === "workDetail") {
+                getGemianTime()
+                document.removeEventListener("mouseup", closeModal, false);
+            } else {
+                if (!projectId) {
+                    findJoinProjectList({})
+                }else {
+                    findWorkItemPage({ projectId: projectId }).then(res => {
+                        if (res.code === 0) {
+                            setWorkItemList(res.data.dataList)
+                        }
+                    })
                 }
-            })
+                
+            }
+
+
+        } else {
+            if (page === "workDetail") {
+                document.addEventListener("mouseup", closeModal, false);
+            }
+
         }
-        return;
-    }, [])
+
+    }, [showLogAdd])
+
+    const getGemianTime = () => {
+        findWorkItemAndUsedTime({ id: workId }).then(res => {
+            if (res.code === 0) {
+                const info = res.data;
+                setWorkItemList([info])
+                const workSurplusTime = info.surplusTime;
+                console.log(takeupTime)
+                const surplus = workSurplusTime - takeupTime;
+                setSurplusTime(workSurplusTime)
+                setIsCustomSurplusTime(false)
+                addLog.setFieldsValue({
+                    workItem: info.id,
+                    estimateTime: info.estimateTime,
+                    usedTime: info.usedTime,
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+
+                if (modalType === "edit") {
+                    setTakeupTime(logInfo?.takeupTime)
+                    addLog.setFieldsValue({
+                        takeupTime: logInfo?.takeupTime,
+                        workContent: logInfo?.workContent
+                    })
+                }
+            }
+        })
+    }
+
     /**
      * 添加日志
      */
@@ -64,27 +123,43 @@ const LogAdd = (props) => {
                 takeupTime: fieldsValue.takeupTime,
                 workContent: fieldsValue.workContent
             }
-            addWorkLog(params).then(res => {
-                changeTabs(activeTab)
-                setShowLogAdd(false)
+            createWorkLog(params).then(res => {
+                if(res.code === 0){
+                    const workParams = {
+                        id: fieldsValue.workItem,
+                        surplusTime: fieldsValue.surplusTime,
+                        updateField: "surplusTime"
+                    }
+                    updateWorkItem(workParams).then(data => {
+                        if(data.code === 0){
+                            setShowLogAdd(false)
+                            if (page === "projectLog") {
+                                findWorkLogList(activeTab)
+                            } else {
+                                findWorkLogList()
+                            }
+                        }
+                    })
+                   
+                }
+               
+
             })
 
-            const workParams = {
-                id: fieldsValue.workItem,
-                surplusTime : fieldsValue.surplusTime,
-                updateField : "surplusTime"
-            }
-            updateWorkItem(workParams).then(res => {
-                console.log(res)
-            })
+            
         })
     }
 
     /**
      * 关闭弹窗
      */
-    const closeModal = () => {
+    const closeLogModal = () => {
         setShowLogAdd(false)
+        setTakeupTime(0)
+        if (page === "workDetail") {
+            document.addEventListener("mouseup", closeModal, false);
+        }
+
     }
 
     /**
@@ -142,23 +217,31 @@ const LogAdd = (props) => {
 
     const changeTakeupTime = (value) => {
         const time = value.target.value;
-        setTakeupTime(time)
+        // setTakeupTime(time)
 
         if (!isCustomSurplusTime) {
-            const surplus = surplusTime - time;
-            addLog.setFieldsValue({
-                surplusTime: surplus < 0 ? 0 : surplus
-            })
+
+            if (modalType === "edit") {
+                const surplus = surplusTime - (time - takeupTime);
+                addLog.setFieldsValue({
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+            } else {
+                const surplus = surplusTime - time;
+                addLog.setFieldsValue({
+                    surplusTime: surplus < 0 ? 0 : surplus
+                })
+            }
         }
 
     }
 
     return (
         <Modal
-            title={"添加工时33"}
+            title={"添加工时666"}
             visible={showLogAdd}
             onOk={creatLog}
-            onCancel={closeModal}
+            onCancel={closeLogModal}
             destroyOnClose={true}
             closable={false}
         >
@@ -306,8 +389,9 @@ const LogAdd = (props) => {
                     <TextArea rows={4} />
                 </Form.Item>
             </Form>
+
         </Modal>
     )
 }
 
-export default withRouter(inject('logStore')(observer(LogAdd)));
+export default withRouter(observer(LogAdd));

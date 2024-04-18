@@ -119,7 +119,14 @@ const LogAllList = (props) => {
                     <Button type="primary" onClick={() => setShowLogAdd(true)}>
                         添加工时
                     </Button>
-                    <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} changeTabs={changeTabs} />
+                    <LogAdd 
+                        page = "log" 
+                        modalType = {"edit"}
+                        showLogAdd={showLogAdd} 
+                        setShowLogAdd={setShowLogAdd} 
+                        changeTabs={changeTabs} 
+                        findWorkLogList = {findWorkLogPage}
+                    />
                 </Breadcrumb>
                 <LogFilter dateValue={dateValue} setDateValue={setDateValue} />
                 <Table

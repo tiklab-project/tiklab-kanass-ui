@@ -36,6 +36,7 @@ export class InsightStore {
      */
     @action
     addReportList = (value) => {
+        console.log(value)
         this.reportList.lg.push(value)
     }
 

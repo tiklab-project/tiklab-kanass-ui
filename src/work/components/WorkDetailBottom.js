@@ -15,10 +15,11 @@ import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkDetailBottom.scss";
 
 const WorkDetailBottom = (props) => {
-    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, tabValue, setTabValue } = props;
+    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
+        tabValue, setTabValue, closeModal } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
-    const { workId, findDmWorkTypeByCode, viewType } = workStore;
+    const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
     // 富文本内容
 
     const [workTypeText, setWorkTypeText] = useState("事项")
@@ -173,7 +174,14 @@ const WorkDetailBottom = (props) => {
                 {
                     tabValue === 5 &&
                     <div className="tabs-tabpanel">
-                        <WorkLog surplusTime={workInfo.surplusTime} workInfo={workInfo} planTakeupTime={workInfo.planTakeupTime} {...props} />
+                        <WorkLog 
+                            closeModal = {closeModal} 
+                            surplusTime={workInfo.surplusTime} 
+                            workInfo={workInfo} 
+                            planTakeupTime={workInfo.planTakeupTime} 
+                            searchWorkById = {searchWorkById}
+                            {...props} 
+                        />
                     </div>
                 }
                 {

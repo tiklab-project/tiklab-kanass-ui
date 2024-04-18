@@ -6,34 +6,24 @@ export class WorkLogStore {
     @observable PlanTime = "";
     @observable workId = ""
 
-    @observable workLogPage = {
-        current: 1,
-        defaultCurrent: 1,
-        pageSize: "10",
-        total: "1"
+    @observable workLogCondition = {
+        orderParams: [{
+            name: "work_date",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }
     };
     //查找所有工时
     @action
-    getWorkLogList = async(value,page) => {
-        this.workId = value.workItemId;
-        if(page){
-            Object.assign(this.workLogPage, {...page})
-        }
-        let params = {
-            workItemId: value.workItemId,
-            orderParams: [{
-                name: "work_date",
-                orderType: "desc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: this.workLogPage.current
-            }
-        }
-        const data = await Service("/workLog/findWorkLogPage", params)
+    findWorkLogPage = async(value) => {
+        Object.assign(this.workLogCondition, value)
+        const data = await Service("/workLog/findWorkLogPage", this.workLogCondition)
         if(data.code=== 0){
             this.workLogList = data.data.dataList;
-            this.workLogPage.total = data.data.totalRecord
+            this.workLogCondition.total = data.data.totalRecord
         }
         return data;
     }
@@ -42,9 +32,9 @@ export class WorkLogStore {
     @action
     addWorkLog = async(value) => {
         const data = await Service("/workLog/createWorkLog", value)
-        if(data.code === 0){
-            this.getWorkLogList({workItemId:this.workId})
-        }
+        // if(data.code === 0){
+        //     this.findWorkLogPage({workItemId:this.workId})
+        // }
         return data;
 		
     }
@@ -56,7 +46,7 @@ export class WorkLogStore {
         param.append("id", value)
         const data = await Service("/workLog/deleteWorkLog", param)
         if(data.code === 0){
-            this.getWorkLogList({workItemId:this.workId})
+            this.findWorkLogPage({workItemId:this.workId})
         }
         return data;
     }

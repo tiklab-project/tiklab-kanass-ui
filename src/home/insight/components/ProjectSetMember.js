@@ -25,7 +25,7 @@ const ProjectSetMember = (props) => {
     const [projectSetList, setProjectSetList] = useState([])
     // 统计项目成员的列表
     const [projectUserList, setProjectUserList] = useState([])
-    const [projectSet, setProjectSet] = useState();
+    const [projectSet, setProjectSet] = useState({});
     const [chart, setChart] = useState(null)
     useEffect(() => {
         /**
@@ -46,12 +46,12 @@ const ProjectSetMember = (props) => {
             }
             statisticsProjectUser(value)
         } else {
-            if(!projectSet) {
+            if (!projectSet) {
                 form.setFieldsValue({ projectSetId: null })
-            }else {
+            } else {
                 form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
             }
-            
+
         }
 
     }, [isEditor])
@@ -118,8 +118,8 @@ const ProjectSetMember = (props) => {
                     };
                     myChart.setOption(option);
                 }
-                
-               
+
+
 
             }
         })
@@ -169,18 +169,18 @@ const ProjectSetMember = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="projectset-user-content" id={`project-user-${index}`}>
-
+                    isEditor ? 
+                    <div className="projectset-user-content" id={`project-user-${index}`}>
                         {
-                            !projectSet ? <div className="projectset-user-warning">
-                              <img src={('/images/warning.png')} alt="" width= "20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                            !projectSet ? <div className="delete-warning">
+                                <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
                             </div>
-                                :
-                                <>
-                                    {
-                                        projectUserList.length <= 0 && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
-                                    }
-                                </>
+                            :
+                            <>
+                                {
+                                    projectUserList.length <= 0 && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                }
+                            </>
                         }
                     </div>
                         :

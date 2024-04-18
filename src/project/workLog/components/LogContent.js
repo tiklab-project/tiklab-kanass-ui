@@ -181,7 +181,14 @@ const LogContent = (props) => {
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
                             添加工时
                         </Button>
-                        <LogAdd showLogAdd={showLogAdd} setShowLogAdd={setShowLogAdd} changeTabs = {changeTabs} activeTab = {activeTab}/>
+                        <LogAdd 
+                            page = "projectLog" 
+                            showLogAdd={showLogAdd} 
+                            setShowLogAdd={setShowLogAdd} 
+                            findWorkLogList = {changeTabs}
+                            modalType = {"add"}
+                            activeTab = {activeTab}
+                        />
                     </Breadcumb>
                     <div className="log-tab-filter">
                         <div className="log-tabs">

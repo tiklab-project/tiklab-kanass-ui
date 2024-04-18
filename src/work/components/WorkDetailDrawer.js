@@ -27,9 +27,9 @@ const WorkDetailDrawer = (props) => {
     }))
 
     useEffect(() => {
-        window.addEventListener("mouseup", closeModal, false);
+        document.addEventListener("mouseup", closeModal, false);
         return () => {
-            window.removeEventListener("mouseup", closeModal, false);
+            document.removeEventListener("mouseup", closeModal, false);
         }
 
     }, [isModalVisible])
@@ -79,10 +79,8 @@ const WorkDetailDrawer = (props) => {
         <Drawer
             placement="right"
             onClose={closeDrawer}
-            // title={"事项详情"}
             visible={isModalVisible}
             className={`${isModalVisible ? "work-table-detail" : ''} `}
-            // width={drawerWidth}
             closable={false}
             destroyOnClose={true}
             mask={false}
@@ -94,6 +92,7 @@ const WorkDetailDrawer = (props) => {
                     // deleteWork = {deleteWork} 
                     setIsModalVisible={setIsModalVisible} 
                     delectCurrentWorkItem = {delectCurrentWorkItem}
+                    closeModal = {closeModal}
                 />
             </div>
         </Drawer>

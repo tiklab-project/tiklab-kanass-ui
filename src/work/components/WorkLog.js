@@ -1,47 +1,63 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Modal, Table, Space, Popconfirm, Form, Input, Select, Row, Col, Empty, Progress } from 'antd';
+import { Empty, Progress } from 'antd';
 import { observer, inject } from "mobx-react";
-import moment from 'moment';
-import { getUser } from 'thoughtware-core-ui';
 import "./WorkLog.scss";
-import dayjs from "dayjs";
 import WorkLogStore from "../store/WorkLogStore";
 import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
-import WorkLogEdit from "./WorkLogEdit";
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import LogAdd from "../../project/workLog/components/LogAdd";
 
 const WorkLog = (props) => {
     const [visible, setVisible] = useState(false);
-    const { workStore, workInfo } = props;
-    const { getWorkLogList, workLogList, deleteWorKLog, } = WorkLogStore;
+    const { workStore, workInfo, closeModal, searchWorkById } = props;
+    const { findWorkLogPage, workLogList, deleteWorKLog } = WorkLogStore;
+    const [progressPercent, setProgressPercent] = useState(0)
+    const [overPercent, setOverPercent] = useState(0)
     const { workId } = workStore;
     const [editLogId, setEditLogId] = useState()
     const [modalType, setModalType] = useState()
     const [logInfo, setLogInfo] = useState();
     const logAction = useRef()
+    const [showLogAdd, setShowLogAdd] = useState(false)
 
     useEffect(() => {
-        getGemianTime()
+        findWorkLogList()
         return;
     }, [workId])
 
     // 计算剩余时间
-    const getGemianTime = (page) => {
-        getWorkLogList({ workItemId: workId }, page)
-        // .then((res) => {
-        //     let useTime = 0;
-        //     if (res.length > 0) {
-        //         res.map((item) => {
-        //             useTime += parseInt(item.takeupTime)
-        //         })
-        //         setRemainTime(parseInt(versionTime) - useTime)
-        //     }
-        // })
+    const getGemianTime = () => {
+        searchWorkById(workId).then(res => {
+            if(res){
+                const workInfo  = res;
+                const estimateTime = workInfo.estimateTime;
+                const surplusTime = workInfo.surplusTime;
+                const usedTime = workInfo.usedTime;
+                const overTime = usedTime - estimateTime;
+        
+                if (overTime > 0) {
+                    const overPress = overTime / (surplusTime + usedTime);
+                    setOverPercent((overPress * 100).toFixed(2))
+                    const uerPress = estimateTime / (surplusTime + usedTime);
+                    setProgressPercent((uerPress * 100).toFixed(2))
+                    console.log(overPress, uerPress)
+                } else {
+                    const uerPress = usedTime / estimateTime;
+                    setProgressPercent((uerPress * 100).toFixed(2))
+                }
+            }
+        })
+        
+    }
+
+    const findWorkLogList = () => {
+        findWorkLogPage({ workItemId: workId })
+        getGemianTime()
     }
 
     const showModal = () => {
-        setVisible(true);
+        setShowLogAdd(true);
         setEditLogId()
         setModalType("add")
     };
@@ -49,7 +65,7 @@ const WorkLog = (props) => {
     const workLog = useRef();
     const showEdit = (item) => {
         setEditLogId(item.id)
-        setVisible(true)
+        setShowLogAdd(true)
         setModalType("edit")
         setLogInfo(item)
     }
@@ -57,30 +73,13 @@ const WorkLog = (props) => {
         <Fragment>
 
             <div className="work-log" ref={workLog}>
+               
                 <div className="worklog-top" style={{ width: "100%", textAlign: "right" }}>
                     <div className="worklog-top-title">工时({workLogList.length})</div>
-                    {
-                        !visible && <Button onClick={showModal} type={"primary"}>
-                            添加工时
-                        </Button>
-                    }
-
+                    <Button onClick={showModal} type={"primary"}>
+                        添加工时
+                    </Button>
                 </div>
-                {
-                    visible &&
-                    <div style={{ marginBottom: "30px" }}>
-                        <WorkLogEdit
-                            setVisible={setVisible}
-                            workInfo={workInfo}
-                            visible={visible} 
-                            layout={"vertical"} 
-                            editLogId = {editLogId}
-                            modalType = {modalType}
-                            logInfo = {logInfo}
-                        />
-                    </div>
-                }
-
                 <div className="work-log-static">
                     <div className="log-static-item">
                         <div className="log-static-item-title">预估工时</div>
@@ -97,72 +96,83 @@ const WorkLog = (props) => {
                     <div className="log-static-progress">
                         <div className="log-static-item-title">进度</div>
                         <div className="log-static-item-num">
-                           <Progress percent={30} size="small" />
+                            <div className="log-percent">
+                                <div
+                                    className="log-percent-blue"
+                                    style={{
+                                        width: `${progressPercent}%`,
+                                        borderBottomRightRadius: overPercent <= 0 ? '6px' : '0px',
+                                        borderTopRightRadius: overPercent <= 0 ? '6px' : '0px'
+                                    }}
+                                ></div>
+                                <div
+                                    className="log-percent-red"
+                                    style={{
+                                        width: `${overPercent}%`,
+                                        borderBottomLeftRadius: progressPercent <= 0 ? '6px' : '0px',
+                                        borderTopLeftRadius: progressPercent <= 0 ? '6px' : '0px'
+                                    }}
+                                >
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                {
-                    !visible && <div className="work-log-list">
 
-                        {
-                            workLogList.length > 0 ? workLogList.map(item => {
-                                return <>
-                                    <div className="work-log-item">
-                                        <div style={{ flex: 1 }}>
-                                            <div className="work-log-item-first">
-                                                <div className="work-log-item-user">
-                                                    <UserIcon size="big">{item.user.nickname}</UserIcon>
-                                                    <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
-                                                </div>
-                                                <div className="log-item-date">{item.workDate}</div>
+                <div className="work-log-list">
 
+                    {
+                        workLogList.length > 0 ? workLogList.map(item => {
+                            return <>
+                                <div className="work-log-item" key={item.id}>
+                                    <div style={{ flex: 1 }}>
+                                        <div className="work-log-item-first">
+                                            <div className="work-log-item-user">
+                                                <UserIcon size="big">{item.user.nickname}</UserIcon>
+                                                <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
                                             </div>
-                                            {/* {
-                                                editLogId === item.id && visible ?
-                                                    <>
-                                                        <div style={{ marginLeft: "26px" }}>
-                                                            <WorkLogEdit
-                                                                setVisible={setVisible}
-                                                                visible={visible}
-                                                                type="edit"
-                                                                layout={"horizontal"}
-                                                                logId={item.id}
-                                                                workInfo={workInfo}
-                                                            />
-                                                        </div>
+                                            <div className="log-item-date">{item.workDate}</div>
 
-                                                    </>
-                                                    :
-                                                   
+                                        </div>
+                                        <div className="work-log-item-second">
+                                            <div className="log-content">{item.workContent}</div>
 
-                                            } */}
-                                            <div className="work-log-item-second">
-                                                <div className="log-content">{item.workContent}</div>
+                                            <div className="log-action" ref={logAction}>
+                                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
+                                                    onClick={() => showEdit(item)}>
+                                                    <use xlinkHref="#icon-edit"></use>
+                                                </svg>
+                                                <DeleteModal deleteFunction={deleteWorKLog} id={item.id} getPopupContainer={workLog.current} />
 
-                                                <div className="log-action" ref={logAction}>
-                                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }} 
-                                                        onClick={() => showEdit(item)}>
-                                                        <use xlinkHref="#icon-edit"></use>
-                                                    </svg>
-                                                    <DeleteModal deleteFunction={deleteWorKLog} id={item.id} getPopupContainer={workLog.current} />
-
-                                                </div>
                                             </div>
                                         </div>
-
                                     </div>
 
+                                </div>
 
-                                </>
 
-                            })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有工时记录~" />
-                        }
-                    </div>
-                }
+                            </>
 
+                        })
+                            :
+                            <Empty image="/images/nodata.png" description="暂时没有工时记录~" />
+                    }
+                </div>
+
+                <LogAdd
+                    page="workDetail"
+                    workId={workId}
+                    closeModal={closeModal}
+                    getContainer={workLog?.current}
+                    showLogAdd={showLogAdd}
+                    setShowLogAdd={setShowLogAdd}
+                    modalType={modalType}
+                    findWorkLogList={findWorkLogList}
+                    logInfo={logInfo}
+                />
             </div>
+
         </Fragment>
     );
 }

@@ -53,5 +53,4 @@ module.exports = {
     mobile_url,
     homes_url,
     kanass_url
-    
 }

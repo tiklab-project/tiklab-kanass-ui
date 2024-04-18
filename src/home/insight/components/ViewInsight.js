@@ -40,6 +40,7 @@ const ViewInsight = (props) => {
             if (res.code === 0) {
                 if (res.data.data) {
                     const list = JSON.parse(res.data.data);
+                    console.log("view", list)
                     list.lg.map(item => {
                         item.static = true;
                     })
@@ -78,10 +79,20 @@ const ViewInsight = (props) => {
                                         breakpoints={{ lg: 1200 }}
                                     >
                                         {
+                                            console.log(reportList)
+                                        }
+                                        {
                                             reportList && reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
                                                 return (<div key={item.i} data-grid={item}>
 
-                                                    <ReportItem isView={true} reportType={item.data.type} index={index} key={index} condition={item} editInsight={item.data.isEdit} />
+                                                    <ReportItem 
+                                                        isView={true} 
+                                                        reportType={item.data.type} 
+                                                        index={index} 
+                                                        key={index} 
+                                                        condition={item} 
+                                                        editInsight={item.data.isEdit} 
+                                                    />
 
                                                 </div>)
                                             })
