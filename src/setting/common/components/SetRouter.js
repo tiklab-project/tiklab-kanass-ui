@@ -107,7 +107,7 @@ const setDevRouter= [
             
             {
                 title: '字段类型',
-                id: '/setting/preliminaryType',
+                id: '/setting/fieldType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },
@@ -435,7 +435,7 @@ const setPrdRouter= [
             
             {
                 title: '字段类型',
-                id: '/setting/preliminaryType',
+                id: '/setting/fieldType',
                 purviewCode: "SysFieldType",
                 code: 6-1,
             },

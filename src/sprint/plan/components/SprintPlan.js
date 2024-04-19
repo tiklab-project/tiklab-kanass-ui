@@ -25,13 +25,12 @@ const SprintPlan = (props) => {
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType,
         deleteWorkItem, workId, deleteWorkItemAndChildren } = WorkStore;
-    const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
+    const { getNoPlanWorkList, noPlanSprintWorkList, setNoPlanSprintWorkList, getWorkList, planSprintWorkList, setPlanSprintWorkList,
         findSprintList, updateWorkItem, delSprint, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = SprintPlanStore;
+        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, listType, setListType } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
     const [endSprintId, setEndSprintId ] = useState();
-    const [listType, setListType] = useState();
     const [showModal, setShowModal] = useState(false);
     const [actionType, setActionType] = useState("");
     // 拖放效果
@@ -119,12 +118,12 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
-                    const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
-                    setNoPlanWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList = noPlanSprintWorkList.filter(item => { return item.id != moveWorkId })
+                    setNoPlanSprintWorkList(newNoPlanWorkList)
 
-                    const addWorkList = noPlanWorkList.filter(item => { return item.id == moveWorkId })
-                    planWorkList.unshift(...addWorkList)
-                    setPlanWorkList(planWorkList)
+                    const addWorkList = noPlanSprintWorkList.filter(item => { return item.id == moveWorkId })
+                    planSprintWorkList.unshift(...addWorkList)
+                    setPlanSprintWorkList(planSprintWorkList)
                 }
             })
         }
@@ -145,12 +144,12 @@ const SprintPlan = (props) => {
                     findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
                         if(res.code === 0){
                             const ids = res.data;
-                            const newNoPlanWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setNoPlanWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setNoPlanSprintWorkList(newNoPlanWorkList)
         
-                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) > -1})
-                            planWorkList.unshift(...addWorkList)
-                            setPlanWorkList(planWorkList)
+                            const addWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            planSprintWorkList.unshift(...addWorkList)
+                            setPlanSprintWorkList(planSprintWorkList)
                         }
                     })
                    
@@ -159,6 +158,7 @@ const SprintPlan = (props) => {
         }
         setShowModal(false)
     }
+    
     const delSprintPlan = (Sid) => {
         event.preventDefault();
         setActionType("delete")
@@ -186,12 +186,12 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
-                    const newNoPlanWorkList = planWorkList.filter(item => { return item.id != moveWorkId })
-                    setPlanWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList = planSprintWorkList.filter(item => { return item.id != moveWorkId })
+                    setPlanSprintWorkList(newNoPlanWorkList)
 
-                    const addWorkList = planWorkList.filter(item => { return item.id == moveWorkId })
-                    noPlanWorkList.unshift(...addWorkList)
-                    setNoPlanWorkList(noPlanWorkList)
+                    const addWorkList = planSprintWorkList.filter(item => { return item.id == moveWorkId })
+                    noPlanSprintWorkList.unshift(...addWorkList)
+                    setNoPlanSprintWorkList(noPlanSprintWorkList)
                 }
 
             })
@@ -214,12 +214,12 @@ const SprintPlan = (props) => {
                     findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
                         if(res.code === 0){
                             const ids = res.data;
-                            const newNoPlanWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setPlanWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setPlanSprintWorkList(newNoPlanWorkList)
         
-                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) > -1})
-                            noPlanWorkList.unshift(...addWorkList)
-                            setNoPlanWorkList(noPlanWorkList)
+                            const addWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            noPlanSprintWorkList.unshift(...addWorkList)
+                            setNoPlanSprintWorkList(noPlanSprintWorkList)
                         }
                     })
                     
@@ -324,8 +324,8 @@ const SprintPlan = (props) => {
             if (res.code === 0) {
                 setIsModalVisible(false)
                 if (listType === "noPlan") {
-                    removeNodeInTree(noPlanWorkList, null, workId);
-                    if (noPlanWorkList.length <= 0) {
+                    removeNodeInTree(noPlanSprintWorkList, null, workId);
+                    if (noPlanSprintWorkList.length <= 0) {
                         getNoPlanWorkList(
                             {
                                 pageParam: {
@@ -335,10 +335,10 @@ const SprintPlan = (props) => {
                             }
                         )
                     }
-                    setNoPlanWorkList([...noPlanWorkList])
+                    setNoPlanSprintWorkList([...noPlanSprintWorkList])
                 } else {
-                    removeNodeInTree(planWorkList, null, workId);
-                    if (planWorkList.length <= 0) {
+                    removeNodeInTree(planSprintWorkList, null, workId);
+                    if (planSprintWorkList.length <= 0) {
                         getWorkList(
                             {
                                 pageParam: {
@@ -348,7 +348,7 @@ const SprintPlan = (props) => {
                             }
                         )
                     }
-                    setPlanWorkList([...planWorkList])
+                    setPlanSprintWorkList([...planSprintWorkList])
                 }
             }
 
@@ -367,7 +367,6 @@ const SprintPlan = (props) => {
                 <div className="sprint-plan-box"
                     onDrop={() => delSprintPlan(null)}
                     onDragOver={dragover}
-                // style = {{height: boxLength}}
                 >
                     <div className="sprint-plan-box-top">
                         <div className="sprint-plan-title">待办规划事项</div>
@@ -431,7 +430,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                noPlanWorkList && noPlanWorkList.length > 0 && noPlanWorkList.map((item, index) => {
+                                noPlanSprintWorkList && noPlanSprintWorkList.length > 0 && noPlanSprintWorkList.map((item, index) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
@@ -463,9 +462,6 @@ const SprintPlan = (props) => {
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
-                                        {/* <div className="work-item-master">
-                                            <div className="work-item-id">{item.assigner?.nickname}</div>
-                                        </div> */}
                                         <div className={`work-item-status`}>
                                             <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
                                                 {item.workStatusNode.name}
@@ -548,7 +544,7 @@ const SprintPlan = (props) => {
                     <div className="sprint-plan-box-content">
                         <div className="sprint-plan-list">
                             {
-                                planWorkList && planWorkList.length > 0 && planWorkList.map((item, index) => {
+                                planSprintWorkList && planSprintWorkList.length > 0 && planSprintWorkList.map((item, index) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}

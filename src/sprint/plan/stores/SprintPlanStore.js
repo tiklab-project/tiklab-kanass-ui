@@ -1,8 +1,8 @@
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class SprintPlanStore {
-    @observable noPlanWorkList = [];
-    @observable planWorkList = [];
+    @observable noPlanSprintWorkList = [];
+    @observable planSprintWorkList = [];
     @observable sprintList = [];
     @observable searchCondition = {
         orderParams: [{
@@ -29,6 +29,12 @@ export class SprintPlanStore {
     @observable planCurrent = 0;
     @observable noPlanTotal = 0;
     @observable planTotal = 0;
+    @observable listType = null;
+
+    @action
+    setListType = (value) => {
+        this.listType = value;
+    }
 
     @action
     setNoPlanSearchCondition = (value) => {
@@ -36,8 +42,8 @@ export class SprintPlanStore {
     }
 
     @action
-    setNoPlanWorkList = (value) => {
-        this.noPlanWorkList = value;
+    setNoPlanSprintWorkList = (value) => {
+        this.noPlanSprintWorkList = value;
     }
 
     @action
@@ -46,9 +52,9 @@ export class SprintPlanStore {
         const data = await Service("/workItem/findConditionWorkItemPage", this.noPlanSearchCondition)
 		if(data.code=== 0){
             if(data.data.currentPage === 1){
-                this.noPlanWorkList = data.data.dataList;
+                this.noPlanSprintWorkList = data.data.dataList;
             }else {
-                this.noPlanWorkList.push(...data.data.dataList);
+                this.noPlanSprintWorkList.push(...data.data.dataList);
             }
             
             this.noPlanTotal = data.data.totalPage;
@@ -61,8 +67,8 @@ export class SprintPlanStore {
     }
 
     @action
-    setPlanWorkList = (value) => {
-        this.planWorkList = value;
+    setPlanSprintWorkList = (value) => {
+        this.planSprintWorkList = value;
     }
 
     @action
@@ -71,9 +77,9 @@ export class SprintPlanStore {
         const data = await Service("/workItem/findConditionWorkItemPage", this.searchCondition)
         if(data.code === 0){
             if(data.data.currentPage === 1){
-                this.planWorkList = data.data.dataList;
+                this.planSprintWorkList = data.data.dataList;
             }else {
-                this.planWorkList.push(...data.data.dataList);
+                this.planSprintWorkList.push(...data.data.dataList);
             }
             this.planTotal = data.data.totalPage;
         }

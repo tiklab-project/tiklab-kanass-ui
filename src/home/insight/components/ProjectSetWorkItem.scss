@@ -25,7 +25,12 @@
         height: calc(100% - 74px);
         .delete-warning {
             font-weight: 600;
-            margin: 30% 20px
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            height: 100%;
         }
     }
 }

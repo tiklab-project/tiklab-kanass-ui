@@ -19,7 +19,7 @@ const LogAdd = (props) => {
     const { showLogAdd, setShowLogAdd, getContainer, changeTabs, activeTab, closeModal,
         workId, page, modalType, findWorkLogList, logInfo } = props;
     const { findWorkItemPage, createWorkLog, findJoinProjectList, projectList,
-        findWorkItemAndUsedTime, updateWorkItem } = LogStore;
+        findWorkItemAndUsedTime, updateWorkItem, updateWorkLog } = LogStore;
     const [addLog] = Form.useForm();
     // 搜索的事项列表
     const [workItemList, setWorkItemList] = useState([])
@@ -38,16 +38,6 @@ const LogAdd = (props) => {
         wrapperCol: { lg: { span: 24 }, xxl: { span: 24 } },
     };
     useEffect(() => {
-
-        // if (!projectId) {
-        //     findJoinProjectList({})
-        // } else {
-        //     findWorkItemPage({ projectId: projectId }).then(res => {
-        //         if (res.code === 0) {
-        //             setWorkItemList(res.data.dataList)
-        //         }
-        //     })
-        // }
         console.log(showLogAdd)
         if (showLogAdd) {
 
@@ -123,28 +113,54 @@ const LogAdd = (props) => {
                 takeupTime: fieldsValue.takeupTime,
                 workContent: fieldsValue.workContent
             }
-            createWorkLog(params).then(res => {
-                if(res.code === 0){
-                    const workParams = {
-                        id: fieldsValue.workItem,
-                        surplusTime: fieldsValue.surplusTime,
-                        updateField: "surplusTime"
-                    }
-                    updateWorkItem(workParams).then(data => {
-                        if(data.code === 0){
-                            setShowLogAdd(false)
-                            if (page === "projectLog") {
-                                findWorkLogList(activeTab)
-                            } else {
-                                findWorkLogList()
-                            }
-                        }
-                    })
-                   
-                }
-               
 
-            })
+            if(modalType === "edit"){
+                params.id = logInfo.id;
+                updateWorkLog(params).then(res => {
+                    if(res.code === 0){
+                        const workParams = {
+                            id: fieldsValue.workItem,
+                            surplusTime: fieldsValue.surplusTime,
+                            updateField: "surplusTime"
+                        }
+                        updateWorkItem(workParams).then(data => {
+                            if(data.code === 0){
+                                setShowLogAdd(false)
+                                if (page === "projectLog") {
+                                    findWorkLogList(activeTab)
+                                } else {
+                                    findWorkLogList()
+                                }
+                            }
+                        })
+                       
+                    }
+                })
+            }else {
+                createWorkLog(params).then(res => {
+                    if(res.code === 0){
+                        const workParams = {
+                            id: fieldsValue.workItem,
+                            surplusTime: fieldsValue.surplusTime,
+                            updateField: "surplusTime"
+                        }
+                        updateWorkItem(workParams).then(data => {
+                            if(data.code === 0){
+                                setShowLogAdd(false)
+                                if (page === "projectLog") {
+                                    findWorkLogList(activeTab)
+                                } else {
+                                    findWorkLogList()
+                                }
+                            }
+                        })
+                       
+                    }
+                   
+    
+                })
+            }
+            
 
             
         })
@@ -217,10 +233,7 @@ const LogAdd = (props) => {
 
     const changeTakeupTime = (value) => {
         const time = value.target.value;
-        // setTakeupTime(time)
-
         if (!isCustomSurplusTime) {
-
             if (modalType === "edit") {
                 const surplus = surplusTime - (time - takeupTime);
                 addLog.setFieldsValue({

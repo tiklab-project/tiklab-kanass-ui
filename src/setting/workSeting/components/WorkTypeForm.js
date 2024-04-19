@@ -1,10 +1,10 @@
 import React,{useEffect, useState} from 'react';
-import {PreliminaryType} from "thoughtware-form-ui";
+import {FieldType} from "thoughtware-form-ui";
 
 const WorkTypeForm = props => {
 
     return(
-        <PreliminaryType 
+        <FieldType 
             {...props} 
             formId={props.match.params.id}
             breadcrumbProps={[

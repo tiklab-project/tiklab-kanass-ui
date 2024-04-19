@@ -1,19 +1,96 @@
 .log-detail-drawer {
+    .ant-drawer-body {
+        padding: 20px;
+    }
     .ant-drawer-content-wrapper {
         top: 48px;
+    }
+    .work-log-static {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+        .log-static-item {
+            flex: 1;
+            .log-static-item-title {
+                height: 40px;
+                line-height: 40px;
+            }
+            .log-static-item-num {
+                font-size: 20px;
+                font-weight: 600;
+                height: 40px;
+                line-height: 40px;
+                .unit {
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+            }
+        }
+        .log-static-progress {
+            flex: 1.5;
+            text-align: center;
+            .log-static-item-title {
+                height: 40px;
+                line-height: 40px;
+            }
+            .log-static-item-num {
+                height: 40px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+            }
+            .log-percent {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 6px;
+                width: 100%;
+                background: #ebeef5;
+                border-radius: 10px;
+                
+                .log-percent-blue {
+                    height: 6px;
+                    background-color: var(--thoughtware-blue);
+                    border-top-left-radius: 6px;
+                    border-bottom-left-radius: 6px;
+                }
+                .log-percent-red {
+                    height: 6px;
+                    background-color: #ff0000;
+                    border-top-right-radius: 6px;
+                    border-bottom-right-radius: 6px;
+                }
+            }
+        }
     }
 }
 .log-detail {
     .log-detail-item {
         line-height: 25px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         .log-detail-label {
-            width: 80px;
-            color: var(--thoughtware-gray-500);;
+            // width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--thoughtware-gray-500);
+            font-size: 12px;
+            font-weight: 600;
+            .log-edit {
+                cursor: pointer;
+            }
+
         }
         .log-detail-content {
             overflow-wrap: anywhere;
             flex: 1;
         }
+    }
+    .log-submit-botton {
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 }

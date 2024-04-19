@@ -10,6 +10,8 @@ import { setSessionStorage, getSessionStorage } from "../../common/utils/setSess
 import setImageUrl from "../../common/utils/setImageUrl";
 import dayjs from "dayjs";
 import { changeWorkItemParent } from "./WorkGetList";
+import SprintPlanStore from "../../sprint/plan/stores/SprintPlanStore";
+import VersionPlanStore from "../../version/plan/stores/VersionPlanStore";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
@@ -17,6 +19,8 @@ const WorkChild = (props) => {
     const { treePath, workStore,workType, projectId,type, workTypeCode, 
         getTransitionList, workStatusNodeId, workInfo, setTabValue } = props;
     
+    const {planSprintWorkList, setPlanSprintWorkList} = SprintPlanStore;
+    const {planVersionWorkList, setPlanVersionWorkList} = VersionPlanStore;
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);
@@ -32,6 +36,8 @@ const WorkChild = (props) => {
     const versionId = props.match.params.version ? props.match.params.version : null;
     const project = workInfo?.project;
     const projectType = project?.projectType.type;
+    const path = props.match?.path;
+    console.log(path)
     useEffect(() => {
         if(workTypeCode === "epic"){
             findWorkTypeListByCode().then(res => {
@@ -149,18 +155,21 @@ const WorkChild = (props) => {
                 findWorkChildList()
                 getTransitionList(workStatusNodeId, workType?.flow?.id)
                 findWorkItemAndChidren({id: res.data}).then(res => {
+                   
                     if (res.code === 0) {
-                        const list = changeWorkItemParent(workList, workId, res.data)
-                        setWorkList([...list])
+                        if(path === "/:id/sprintdetail/:sprint/plan"){
+                            planSprintWorkList.unshift(res.data)
+                            setPlanSprintWorkList(planSprintWorkList)
+                        }else if(path === "/:id/versiondetail/:version/plan"){
+                            planVersionWorkList.unshift(res.data)
+                            setPlanVersionWorkList(planVersionWorkList)
+                        }else {
+                            const list = changeWorkItemParent(workList, workId, res.data)
+                            setWorkList([...list])
+                        }
+                        
                     }
                 })
-                // if (workShowType === "bodar") {
-                //     getWorkBoardList()
-                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                //     getWorkConditionPageTree()
-                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                //     getWorkConditionPage()
-                // }
             }
         })
     }

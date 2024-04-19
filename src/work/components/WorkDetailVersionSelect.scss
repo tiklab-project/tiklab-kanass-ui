@@ -58,6 +58,7 @@
         .select-group-option-box {
             .select-group-option {
                 padding: 0 5px;
+                cursor: pointer;
             }
             .select-group-option:hover {
                 background-color: #f3f4f5;
@@ -83,4 +84,10 @@
             line-height: 30px;
         }
     }
+}
+.work-detail-version-submit-botton {
+    display: flex;
+    justify-content: right;
+    gap: 5px;
+    align-items: center;
 }

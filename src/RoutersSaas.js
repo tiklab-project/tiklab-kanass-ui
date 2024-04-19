@@ -546,7 +546,7 @@ const RoutersSaas = [
                         exact: true
                     },
                     {
-                        path: "/setting/preliminaryType",
+                        path: "/setting/fieldType",
                         component: ProjectProjectDirectory,
                         exact: true
                     },

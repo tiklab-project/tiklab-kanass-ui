@@ -65,7 +65,10 @@
     padding: 0;
 }
 .ant-table-tbody>tr.ant-table-row:hover>td {
-    background: #EDF0F5;
+    background: none;
+}
+.ant-table-tbody>tr.ant-table-row:hover {
+    background: #edf0f5;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -125,6 +128,11 @@
         padding: 0 24px;
     }
 }
+.ant-modal-confirm {
+    .ant-modal-body {
+        padding: 32px 32px 24px;
+    }
+} 
 .ant-form-item {
     margin: 0 0 20px;
 }

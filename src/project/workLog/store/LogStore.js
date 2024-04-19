@@ -175,6 +175,7 @@ export class LogStore {
         const data = await Service("/workItem/updateWorkItem", value);
         return data;
     }
+
 }
 
 export default new LogStore();

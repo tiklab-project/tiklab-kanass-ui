@@ -83,7 +83,7 @@ const ProjectSetDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='projectSet-detail-side'>
                 <div className={`projectSet-aside`}>
-                    <ProjectSetChangeModal isShowText={isShowText} />
+                    <ProjectSetChangeModal isShowText={isShowText} projectSetId = {projectSetId}/>
                     <ul className="projectSet-menu">
                         {
                             projectSetRouter && projectSetRouter.map((item, index) => {

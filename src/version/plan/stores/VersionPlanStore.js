@@ -1,8 +1,8 @@
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class VersionPlanStore {
-    @observable noPlanWorkList = [];
-    @observable planWorkList = [];
+    @observable noPlanVersionWorkList = [];
+    @observable planVersionWorkList = [];
     @observable versionList = [];
     @observable searchCondition = {
         orderParams: [{
@@ -36,19 +36,19 @@ export class VersionPlanStore {
     }
 
     @action
-    setNoPlanWorkList = (value) => {
-        this.noPlanWorkList = value;
+    setNoPlanVersionWorkList = (value) => {
+        this.noPlanVersionWorkList = value;
     }
 
     @action
-	getNoPlanWorkList = async(value) => {
+	getNoPlanVersionWorkList = async(value) => {
         this.setNoPlanSearchCondition(value)
         const data = await Service("/workItem/findConditionWorkItemPage", this.noPlanSearchCondition)
 		if(data.code=== 0){
             if(data.data.currentPage === 1){
-                this.noPlanWorkList = data.data.dataList;
+                this.noPlanVersionWorkList = data.data.dataList;
             }else {
-                this.noPlanWorkList.push(...data.data.dataList);
+                this.noPlanVersionWorkList.push(...data.data.dataList);
             }
             
             this.noPlanTotal = data.data.totalPage;
@@ -61,8 +61,8 @@ export class VersionPlanStore {
     }
 
     @action
-    setPlanWorkList = (value) => {
-        this.planWorkList = value;
+    setPlanVersionWorkList = (value) => {
+        this.planVersionWorkList = value;
     }
 
     @action
@@ -71,9 +71,9 @@ export class VersionPlanStore {
         const data = await Service("/workItem/findConditionWorkItemPage", this.searchCondition)
         if(data.code === 0){
             if(data.data.currentPage === 1){
-                this.planWorkList = data.data.dataList;
+                this.planVersionWorkList = data.data.dataList;
             }else {
-                this.planWorkList.push(...data.data.dataList);
+                this.planVersionWorkList.push(...data.data.dataList);
             }
             this.planTotal = data.data.totalPage;
         }

@@ -16,6 +16,7 @@ const WorkItemStatusSituation = (props) => {
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = insightStore;
     // 事项的各个状态的数据统计列表
     const [workItemStatusCount, setWorkItemStatusCount] = useState();
+    const [project, setProject] = useState()
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
     // 所有的项目列表
@@ -42,22 +43,23 @@ const WorkItemStatusSituation = (props) => {
         }
     ]
 
-     /**
-     * 处于编辑状态，初始化统计条件表单
-     */
+    /**
+    * 处于编辑状态，初始化统计条件表单
+    */
     useEffect(() => {
-       
+
         const data = condition.data.data
         const params = {
             projectId: data.projectId,
             workItemTypeCode: data.workItemTypeCode
         }
         if (isEditor) {
-            
+
             statisticsWorkItemStatusCount(params).then(res => {
                 setWorkItemStatusCount(res.data)
+                setProject(res.data.project)
             })
-        }else {
+        } else {
             findAllProject().then(res => {
                 setProjectList(res.data)
             })
@@ -112,28 +114,40 @@ const WorkItemStatusSituation = (props) => {
                 </div>
             </div>
             {
-                isEditor && workItemStatusCount ? <div className="workitem-situation-content">
-                    <div className="workitem-situation-content-item">
-                        <div>{workItemStatusCount.all} 个</div>
-                        <div>全部事项</div>
-                    </div>
-                    <div className="workitem-situation-content-item">
-                        <div>{workItemStatusCount.noEnd} 个</div>
-                        <div>已完成事项</div>
-                    </div>
-                    <div className="workitem-situation-content-item">
-                        <div>{workItemStatusCount.start} 个</div>
-                        <div>已开始事项</div>
-                    </div>
-                    <div className="workitem-situation-content-item">
-                        <div>{workItemStatusCount.todo} 个</div>
-                        <div>未开始事项</div>
-                    </div>
-                    <div className="workitem-situation-content-item">
-                        <div>{workItemStatusCount.overdue} 个</div>
-                        <div>已逾期事项</div>
-                    </div>
-                </div>
+                isEditor && workItemStatusCount ?
+                    <>
+                        {
+                            project ? <div className="workitem-situation-content">
+                                <div className="workitem-situation-content-item">
+                                    <div>{workItemStatusCount.all} 个</div>
+                                    <div>全部事项</div>
+                                </div>
+                                <div className="workitem-situation-content-item">
+                                    <div>{workItemStatusCount.noEnd} 个</div>
+                                    <div>已完成事项</div>
+                                </div>
+                                <div className="workitem-situation-content-item">
+                                    <div>{workItemStatusCount.start} 个</div>
+                                    <div>已开始事项</div>
+                                </div>
+                                <div className="workitem-situation-content-item">
+                                    <div>{workItemStatusCount.todo} 个</div>
+                                    <div>未开始事项</div>
+                                </div>
+                                <div className="workitem-situation-content-item">
+                                    <div>{workItemStatusCount.overdue} 个</div>
+                                    <div>已逾期事项</div>
+                                </div>
+                            </div>
+                                :
+                                <div className="delete-warning">
+                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                    项目不能被查看或者被删除，请修改配置或者删除
+                                </div>
+                        }
+
+                    </>
+
                     :
                     <Form
                         name="form"
@@ -142,7 +156,7 @@ const WorkItemStatusSituation = (props) => {
                         onFinish={editReport}
                         wrapperCol={{ span: 12 }}
                         labelCol={{ span: 6 }}
-                        layout = "vertical"
+                        layout="vertical"
                     >
                         <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
                             <Select

@@ -45,9 +45,9 @@ export class WorkLogStore {
         const param = new FormData()
         param.append("id", value)
         const data = await Service("/workLog/deleteWorkLog", param)
-        if(data.code === 0){
-            this.findWorkLogPage({workItemId:this.workId})
-        }
+        // if(data.code === 0){
+        //     this.findWorkLogPage({workItemId:this.workId})
+        // }
         return data;
     }
 

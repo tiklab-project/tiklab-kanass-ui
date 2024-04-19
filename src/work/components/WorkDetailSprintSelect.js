@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailSprintSelect.scss"
+import { Modal } from "antd";
+import Button from "../../common/button/Button";
 const WorkDetailSprintSelect = (props) => {
     const { selectList, sprint, setHoverFieldName, hoverFieldName, workId, workStore, workStatusCode } = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
-    const { findWorkSprintList, editWork } = workStore;
+    const { findWorkSprintList, editWork, haveChildren } = workStore;
     const dropdownRef = useRef()
     const [selectSprint, setSelectSprint] = useState(sprint);
     const [relationSprintList, setRelationSprintList] = useState()
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -53,34 +56,47 @@ const WorkDetailSprintSelect = (props) => {
         e.stopPropagation();
         setShowMoreDropdown(false)
         if(workStatusCode != "DONE"){
-            
             setShowDropdown(true)
         }else {
             return
         }
-        
     }
 
     const updateWork = (item) => {
         setSelectSprint(item)
-        const params = {
-            id: workId,
-            updateField: "sprint",
-            sprint: {
-                id: item ? item.id : "nullstring"
-            }
-        }
-        editWork(params).then(res => {
+        haveChildren({ id: workId }).then(res => {
             if (res.code === 0) {
-                // setWorkInfo({ ...workInfo, ...changedValues })
-                setSelectSprint(item)
+                if (res.data) {
+                    setShowModal(true)
+                } else {
+                    updateWorkItem("sprint")
+                }
+            }
+        })
+    }
+
+  
+
+    const updateWorkItem = (type) => {
+        let params = {
+            id: workId,
+            sprint: {
+                id: selectSprint ? selectSprint.id : "nullstring"
+            },
+            updateField: type,
+        }
+        editWork(params).then((res) => {
+            if (res.code === 0) {
+                // setSelectSprint(item)
                 getWorkSprintList()
                 setShowDropdown(false)
             }
+            setShowModal(false)
         })
-        // updateSingle(data)
     }
+
     return (
+        <>
         <div className="work-detail-sprint-select" ref={dropdownRef}>
             <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ? `} onClick={(e) => showSelect(e)}>
                 <div>
@@ -110,7 +126,11 @@ const WorkDetailSprintSelect = (props) => {
                             <div className="select-group-option-box">
                                 {
                                     selectList.filter(item => item.sprintState.id === "000000").map(item => {
-                                        return <div className="select-group-option" onClick={() => updateWork(item)} key = {item.id}>{item.sprintName}</div>
+                                        return <div 
+                                            className="select-group-option" 
+                                            onClick={() => updateWork(item)} 
+                                            key = {item.id}
+                                        >{item.sprintName}</div>
                                     })
                                 }
                             </div>
@@ -145,6 +165,31 @@ const WorkDetailSprintSelect = (props) => {
             }
 
         </div>
+
+        <Modal
+                visible={showModal}
+                title="是否移动下级"
+                onCancel={() => setShowModal(false)}
+                getContainer = {() => dropdownRef.current}
+                footer={[
+                    <div className="work-detail-sprint-submit-botton">
+                        <Button key="back" onClick={() => setShowModal(false)}>
+                            取消
+                        </Button>
+                        <Button key="primary" type="primary" onClick = {() => updateWorkItem("sprints")}>
+                            是
+                        </Button>
+                        <Button type="primary" onClick = {() => updateWorkItem("sprint")}>
+                            否
+                        </Button>
+                    </div>
+
+                ]}
+            >
+                是否移动下级
+            </Modal>
+        </>
+        
     )
 }
 

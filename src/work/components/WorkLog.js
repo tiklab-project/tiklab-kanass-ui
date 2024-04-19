@@ -10,8 +10,8 @@ import LogAdd from "../../project/workLog/components/LogAdd";
 
 const WorkLog = (props) => {
     const [visible, setVisible] = useState(false);
-    const { workStore, workInfo, closeModal, searchWorkById } = props;
-    const { findWorkLogPage, workLogList, deleteWorKLog } = WorkLogStore;
+    const { workStore, closeModal, workInfo, searchWorkById } = props;
+    const { findWorkLogPage, workLogList, deleteWorKLog, findWorkItemAndUsedTime } = WorkLogStore;
     const [progressPercent, setProgressPercent] = useState(0)
     const [overPercent, setOverPercent] = useState(0)
     const { workId } = workStore;
@@ -20,6 +20,7 @@ const WorkLog = (props) => {
     const [logInfo, setLogInfo] = useState();
     const logAction = useRef()
     const [showLogAdd, setShowLogAdd] = useState(false)
+    const [workItem, setWorkItem] = useState(workInfo)
 
     useEffect(() => {
         findWorkLogList()
@@ -28,9 +29,10 @@ const WorkLog = (props) => {
 
     // 计算剩余时间
     const getGemianTime = () => {
-        searchWorkById(workId).then(res => {
-            if(res){
-                const workInfo  = res;
+        findWorkItemAndUsedTime({id: workId}).then(res => {
+            if(res.code === 0){
+                const workInfo  = res.data;
+                setWorkItem(res.data)
                 const estimateTime = workInfo.estimateTime;
                 const surplusTime = workInfo.surplusTime;
                 const usedTime = workInfo.usedTime;
@@ -69,6 +71,12 @@ const WorkLog = (props) => {
         setModalType("edit")
         setLogInfo(item)
     }
+
+    const deleteLog = (id) => {
+        deleteWorKLog(id).then(res => {
+            findWorkLogList()
+        })
+    }
     return (
         <Fragment>
 
@@ -83,15 +91,15 @@ const WorkLog = (props) => {
                 <div className="work-log-static">
                     <div className="log-static-item">
                         <div className="log-static-item-title">预估工时</div>
-                        <div className="log-static-item-num">{workInfo.estimateTime} <span className="unit">小时</span></div>
+                        <div className="log-static-item-num">{workItem.estimateTime} <span className="unit">小时</span></div>
                     </div>
                     <div className="log-static-item">
                         <div className="log-static-item-title">已记录</div>
-                        <div className="log-static-item-num">{workInfo.usedTime} <span className="unit">小时</span></div>
+                        <div className="log-static-item-num">{workItem.usedTime} <span className="unit">小时</span></div>
                     </div>
                     <div className="log-static-item">
                         <div className="log-static-item-title">剩余工时</div>
-                        <div className="log-static-item-num">{workInfo.surplusTime} <span className="unit">小时</span></div>
+                        <div className="log-static-item-num">{workItem.surplusTime} <span className="unit">小时</span></div>
                     </div>
                     <div className="log-static-progress">
                         <div className="log-static-item-title">进度</div>
@@ -143,7 +151,7 @@ const WorkLog = (props) => {
                                                     onClick={() => showEdit(item)}>
                                                     <use xlinkHref="#icon-edit"></use>
                                                 </svg>
-                                                <DeleteModal deleteFunction={deleteWorKLog} id={item.id} getPopupContainer={workLog.current} />
+                                                <DeleteModal deleteFunction={deleteLog} id={item.id} getPopupContainer={workLog.current} />
 
                                             </div>
                                         </div>

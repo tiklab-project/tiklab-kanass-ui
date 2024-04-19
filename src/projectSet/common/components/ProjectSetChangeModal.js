@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
 
 const ProjectSetChangeModal = (props) => {
-    const { projectSetStore, isShowText } = props;
+    const { projectSetStore, isShowText, projectSetId } = props;
     const { findProjectSetSortRecentTime, findProjectSet, findJoinProjectSetList } = projectSetStore;
     const [projectSetAllList, setProjectSetAllList] = useState()
     const [allProjectSetList, setFindJoinProjectSetList] = useState([])
@@ -26,7 +26,7 @@ const ProjectSetChangeModal = (props) => {
     // 弹窗
     const modelRef = useRef()
     // 项目集信息
-    const projectSet = JSON.parse(localStorage.getItem("projectSet"));
+    const [projectSet, setProjectSet] = useState(JSON.parse(localStorage.getItem("projectSet")))
 
     /**
      * 监听鼠标点击事件，控制弹窗的显示与不显示
@@ -42,16 +42,21 @@ const ProjectSetChangeModal = (props) => {
      * 获取全部项目集，用于切换
      */
     useEffect(() => {
-        findJoinProjectSetList({}).then(res=> {
-            if(res.code === 0){
+        findJoinProjectSetList({}).then(res => {
+            if (res.code === 0) {
                 setFindJoinProjectSetList(res.data)
             }
         })
-        findProjectSetSortRecentTime({projectSetId: projectSet?.id}).then(res => {
-            if(res.code === 0){
+        findProjectSetSortRecentTime({ projectSetId: projectSet?.id }).then(res => {
+            if (res.code === 0) {
                 setProjectSetAllList(res.data)
             }
-            
+        })
+        findProjectSet(projectSetId).then(data => {
+            if (data.code === 0) {
+                setProjectSet(data.data)
+                localStorage.setItem("projectSet", JSON.stringify(data.data))
+            }
         })
         return
     }, [])
@@ -115,11 +120,11 @@ const ProjectSetChangeModal = (props) => {
             <div onClick={() => showDropDown()} ref={setButton}>
                 {
                     isShowText ? <div className="projectSet-change-title">
-                        <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
-                    
+                        <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
+
                         <div className={`projectSet-text `} >
                             <div>
-                                {projectSet.name}
+                                {projectSet?.name}
                             </div>
                         </div>
                         <div className={`projectSet-toggleCollapsed`}>
@@ -131,7 +136,7 @@ const ProjectSetChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={projectSet?.name}>
                             <div className="projectSet-change-icon">
-                                <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
+                                <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
                                 <svg className="svg-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-down"></use>
                                 </svg>
@@ -149,16 +154,16 @@ const ProjectSetChangeModal = (props) => {
                 <div className="change-projectSet-head">选择项目集</div>
                 <div className={`change-projectSet-item change-projectSet-selectItem`}
 
-                    key={projectSet.id}
+                    key={projectSet?.id}
 
                 >
-                    <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
+                    <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
                     <div className="projectSet-item-info">
                         <div className="projectSet-name">
-                            {projectSet.name}
+                            {projectSet?.name}
                         </div>
                         <div className="projectSet-type">
-                            {projectSet.master?.nickname}
+                            {projectSet?.master?.nickname}
                         </div>
                     </div>
                     <svg className="svg-icon" aria-hidden="true">
@@ -174,7 +179,7 @@ const ProjectSetChangeModal = (props) => {
                             onMouseOut={handleMouseOut}
 
                         >
-                           <div className={`projectSet-icon projectSet-color-${item.color}`}>{item.name?.slice(0, 1)}</div>
+                            <div className={`projectSet-icon projectSet-color-${item.color}`}>{item.name?.slice(0, 1)}</div>
                             <div className="projectSet-item-info">
                                 <div className="projectSet-name">
                                     {item.name}

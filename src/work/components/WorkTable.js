@@ -212,7 +212,7 @@ const WorkTable = (props) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id " onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
                     {
                         record.workTypeSys?.iconUrl ?

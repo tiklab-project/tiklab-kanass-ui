@@ -1,9 +1,9 @@
 import React from "react";
-import {Preliminary} from 'thoughtware-form-ui';
+import {Field} from 'thoughtware-form-ui';
 
 const ProjectPreliminaryList = (props) => {
     return (
-        <Preliminary isBase = {false} />
+        <Field isBase = {false} />
     )
 }
 export default ProjectPreliminaryList;

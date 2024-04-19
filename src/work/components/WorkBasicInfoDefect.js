@@ -448,7 +448,11 @@ const WorkBasicInfo = (props) => {
             id: workId,
             estimateTime: value
         }
-        editWork(data)
+        editWork(data).then(res => {
+            if(res.code === 0){
+                setWorkInfo({ ...workInfo, estimateTime: value })
+            }
+        })
         setFieldName("")
     }
 
@@ -459,7 +463,11 @@ const WorkBasicInfo = (props) => {
             id: workId,
             surplusTime: value
         }
-        editWork(data)
+        editWork(data).then(res => {
+            if(res.code === 0){
+                setWorkInfo({ ...workInfo, surplusTime: value })
+            }
+        })
         setFieldName("")
     }
     /**

@@ -114,7 +114,7 @@ const SettingHome = (props) => {
                 {
                     title: '字段类型',
                     key: "fieldType",
-                    path: '/setting/preliminaryType',
+                    path: '/setting/fieldType',
                 },
                 {
                     title: '字段',

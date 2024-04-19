@@ -674,7 +674,7 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/setting/preliminaryType",
+                        path: "/setting/fieldType",
                         component: ProjectProjectDirectory,
                         row: true,
                         exact: true

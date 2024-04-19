@@ -15,24 +15,26 @@ import * as echarts from 'echarts';
 
 const UserWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
-    const { statisticsUserWorkItemCount, findAllProjectSet,findAllProject, reportList} = insightStore;
+    const { statisticsUserWorkItemCount, findAllProjectSet, findAllProject, reportList } = insightStore;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
     // 统计条件的表单
     const [form] = Form.useForm();
     // 项目集列表
     const [projectSetList, setProjectSetList] = useState([])
+    const [userList, setUserList] = useState([])
+    const [project, setProject] = useState({})
     // 所有项目的列表
     const [projectList, setProjectList] = useState([]);
     const [chart, setChart] = useState(null)
 
     useEffect(() => {
-         /**
-         * 查找所有项目集并设置默认项目集
-         */
-         findAllProjectSet().then(res => {
-            setProjectSetList(res.data)
-        })
+        /**
+        * 查找所有项目集并设置默认项目集
+        */
+        // findAllProjectSet().then(res => {
+        //     setProjectSetList(res.data)
+        // })
 
         findAllProject().then(res => {
             setProjectList(res.data)
@@ -40,118 +42,128 @@ const UserWorkItem = (props) => {
         return;
     }, [])
 
-     /**
-     * 处于编辑状态时，初始化筛选表单
-     */
+    /**
+    * 处于编辑状态时，初始化筛选表单
+    */
+   //condition.data.data.projectId 
     useEffect(() => {
-        if(isEditor){
+        if (isEditor) {
             const params = { projectId: condition.data.data.projectId }
-            
             statisticsUserWorkItem(params)
-        }else {
-            form.setFieldsValue({projectId: condition.data.data.projectId})
+        } else {
+            if(!project){
+                form.setFieldsValue({ projectId: null })
+            }else {
+                form.setFieldsValue({ projectId: condition.data.data.projectId })
+            }
+            
         }
         return;
-    },[isEditor])
+    }, [isEditor])
 
-    useEffect(()=> {
-        if(chart){
+    useEffect(() => {
+        if (chart) {
             chart.resize();
         }
         return null;
     }, [condition.w])
-    
+
     /**
      * 处理统计数据
      */
-     const statisticsUserWorkItem = (data) => {
+    const statisticsUserWorkItem = (data) => {
         const chartDom = document.getElementById(`user-workitem-${index}`)
         statisticsUserWorkItemCount(data).then(res => {
             if (res.code === 0) {
                 const userList = res.data.userCount;
-                const types = ["demand", "task", "bug"];
-                const series = [];
-                const yAxisValue = [];
-                const seriesWorkItem = [];
-                const seriesDemand = [];
-                const seriesTask = [];
-                const seriesBug = [];
+                setUserList(userList)
+                const project = res.data.project;
+                setProject(project)
+                if (project) {
+                    const series = [];
+                    const yAxisValue = [];
+                    const seriesWorkItem = [];
+                    const seriesDemand = [];
+                    const seriesTask = [];
+                    const seriesBug = [];
 
-                userList.map((item, index) => {
-                    yAxisValue.push(item.user.nickname ? item.user.nickname : item.user.name)
-                    seriesWorkItem.push(item.workItemTypeCount.workItem)
-                    seriesDemand.push(item.workItemTypeCount.demand)
-                    seriesTask.push(item.workItemTypeCount.task)
-                    seriesBug.push(item.workItemTypeCount.bug)
-                })
-                series.push(
-                    {
-                        name: "demand",
-                        type: 'bar',
-                        stack: 'total',
-                        label: {
-                            show: true
+                    userList.map((item, index) => {
+                        yAxisValue.push(item.user.nickname ? item.user.nickname : item.user.name)
+                        seriesWorkItem.push(item.workItemTypeCount.workItem)
+                        seriesDemand.push(item.workItemTypeCount.demand)
+                        seriesTask.push(item.workItemTypeCount.task)
+                        seriesBug.push(item.workItemTypeCount.bug)
+                    })
+                    series.push(
+                        {
+                            name: "demand",
+                            type: 'bar',
+                            stack: 'total',
+                            label: {
+                                show: true
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: seriesDemand
                         },
-                        emphasis: {
-                            focus: 'series'
+                        {
+                            name: "task",
+                            type: 'bar',
+                            stack: 'total',
+                            label: {
+                                show: true
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: seriesTask
                         },
-                        data: seriesDemand
-                    },
-                    {
-                        name: "task",
-                        type: 'bar',
-                        stack: 'total',
-                        label: {
-                            show: true
+                        {
+                            name: "bug",
+                            type: 'bar',
+                            stack: 'total',
+                            label: {
+                                show: true
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: seriesBug
                         },
-                        emphasis: {
-                            focus: 'series'
+                    )
+                    let myChart = echarts.init(chartDom);
+                    setChart(myChart)
+                    let option = {
+                        title: {
+                            text: res.data.project.projectName
                         },
-                        data: seriesTask
-                    },
-                    {
-                        name: "bug",
-                        type: 'bar',
-                        stack: 'total',
-                        label: {
-                            show: true
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                // Use axis to trigger tooltip
+                                type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+                            }
                         },
-                        emphasis: {
-                            focus: 'series'
+                        legend: {},
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
                         },
-                        data: seriesBug
-                    },
-                )
-                let myChart = echarts.init(chartDom);
-                setChart(myChart)
-                let option = {
-                    title: {
-                        text: res.data.project.projectName
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            // Use axis to trigger tooltip
-                            type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-                        }
-                    },
-                    legend: {},
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'value'
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: yAxisValue
-                    },
-                    series: series
-                };
-                myChart.setOption(option);
+                        xAxis: {
+                            type: 'value'
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: yAxisValue
+                        },
+                        series: series
+                    };
+                    myChart.setOption(option);
+                }
+
             }
         })
     }
@@ -176,7 +188,7 @@ const UserWorkItem = (props) => {
 
     return (
         <Fragment>
-            <div className="user-workitem"  key = {condition.i} data-grid={condition}>
+            <div className="user-workitem" key={condition.i} data-grid={condition}>
                 <div className="user-workitem-top">
                     <div className="user-workitem-title">
                         <div>
@@ -200,37 +212,50 @@ const UserWorkItem = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="user-workitem-content" id={`user-workitem-${index}`} />
-                    :
-                    <Form
-                        name="form"
-                        form={form}
-                        initialValues={{ remember: true }}
-                        onFinish={editReport}
-                        wrapperCol={{ span: 12 }}
-                        labelCol={{ span: 6 }}
-                        layout = "vertical"
-                    >   
-                        <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
-                            <Select
-                                placeholder="请选择项目"
-                            >
+                    isEditor ? <div className="user-workitem-content" id={`user-workitem-${index}`} >
+                        {
+                            project ? <>
                                 {
-                                    projectList && projectList.map(item => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                    })
+                                    userList.length < 0 && <Empty image="/images/nodata.png" description="该项目中没有成员~" />
                                 }
-                            </Select>
-                        </Form.Item>
-                    
-                        <Form.Item
-                            wrapperCol={{ offset: 6, span: 8 }}
+                            </>
+                                :
+                                <div className="delete-warning">
+                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                    项目不能被查看或者被删除，请修改配置或者删除
+                                </div>
+                        }
+                    </div>
+                        :
+                        <Form
+                            name="form"
+                            form={form}
+                            initialValues={{ remember: true }}
+                            onFinish={editReport}
+                            wrapperCol={{ span: 12 }}
+                            labelCol={{ span: 6 }}
+                            layout="vertical"
                         >
-                            <Button type="primary" htmlType="submit">
-                                保存
-                            </Button>
-                        </Form.Item>
-                    </Form>
+                            <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
+                                <Select
+                                    placeholder="请选择项目"
+                                >
+                                    {
+                                        projectList && projectList.map(item => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item
+                                wrapperCol={{ offset: 6, span: 8 }}
+                            >
+                                <Button type="primary" htmlType="submit">
+                                    保存
+                                </Button>
+                            </Form.Item>
+                        </Form>
                 }
             </div>
 

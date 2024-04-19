@@ -1,10 +1,10 @@
 import React from "react";
-import { PreliminaryType } from 'thoughtware-form-ui';
+import { FieldType } from 'thoughtware-form-ui';
 
 const ProjectProjectDirectory = (props) => {
     return (
         <>
-            <PreliminaryType isBase={false} />
+            <FieldType isBase={false} />
         </>
 
     )

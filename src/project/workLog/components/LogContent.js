@@ -225,7 +225,13 @@ const LogContent = (props) => {
                         }}
                     />
 
-                    <LogDetail logId = {logId} listIndex = {listIndex} logDetailVisable = {logDetailVisable} setLogDetailVisable = {setLogDetailVisable}/>
+                    <LogDetail 
+                        logId = {logId} 
+                        listIndex = {listIndex} 
+                        logDetailVisable = {logDetailVisable} 
+                        setLogDetailVisable = {setLogDetailVisable}
+                        getList = {getList}
+                    />
                 </div>
             </Col>
         </Row>

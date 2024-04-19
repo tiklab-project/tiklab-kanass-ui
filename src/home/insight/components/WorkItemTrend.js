@@ -26,7 +26,7 @@ const WorkItemTrend = (props) => {
     // 所有的项目列表
     const [projectList, setProjectList] = useState([]);
     const [chart, setChart] = useState(null)
-
+    const [project, setProject] = useState({});
     useEffect(() => {
         // 获取所有项目列表
         findAllProject().then(res => {
@@ -58,7 +58,7 @@ const WorkItemTrend = (props) => {
                     dateRanger: data.startDate ? [moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')] : null,
                     cellTime: data.cellTime,
                     workItemTypeCode: data.workItemTypeCode,
-                    projectId: data.projectId
+                    projectId: project ? data.projectId : null
                 }
                 form.setFieldsValue(formData)
             }
@@ -68,8 +68,8 @@ const WorkItemTrend = (props) => {
 
     }, [isEditor])
 
-    useEffect(()=> {
-        if(chart){
+    useEffect(() => {
+        if (chart) {
             chart.resize();
         }
         return null;
@@ -84,55 +84,59 @@ const WorkItemTrend = (props) => {
         statisticsDayWorkItemCount(value).then(res => {
             if (res.code === 0) {
                 const data = res.data;
-                const xAxisData = data.date.map(item => {
-                    return item.slice(0, 10)
-                })
-                const yAxisNew = [];
-                const yAxisEnd = [];
-                const yAxisRemain = [];
-                data.conntList.map(item => {
-                    yAxisNew.push(item.new)
-                    yAxisEnd.push(item.end)
-                    yAxisRemain.push(item.remain)
-                    return item;
-                })
-                let myChart = echarts.init(chartDom);
-                setChart(myChart)
-                let option = {
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    legend: {
-                        data: ['New', 'End', 'Remain']
-                    },
+                const project = data.project;
+                setProject(project)
+                if (project) {
+                    const xAxisData = data.date.map(item => {
+                        return item.slice(0, 10)
+                    })
+                    const yAxisNew = [];
+                    const yAxisEnd = [];
+                    const yAxisRemain = [];
+                    data.conntList.map(item => {
+                        yAxisNew.push(item.new)
+                        yAxisEnd.push(item.end)
+                        yAxisRemain.push(item.remain)
+                        return item;
+                    })
+                    let myChart = echarts.init(chartDom);
+                    setChart(myChart)
+                    let option = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['New', 'End', 'Remain']
+                        },
 
-                    xAxis: {
-                        type: 'category',
-                        data: xAxisData
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
+                        xAxis: {
+                            type: 'category',
+                            data: xAxisData
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
 
-                    series: [
-                        {
-                            name: "New",
-                            data: yAxisNew,
-                            type: 'bar',
-                        },
-                        {
-                            name: "End",
-                            data: yAxisEnd,
-                            type: 'bar',
-                        },
-                        {
-                            name: "Remain",
-                            data: yAxisRemain,
-                            type: 'line',
-                        },
-                    ]
-                };
-                myChart.setOption(option);
+                        series: [
+                            {
+                                name: "New",
+                                data: yAxisNew,
+                                type: 'bar',
+                            },
+                            {
+                                name: "End",
+                                data: yAxisEnd,
+                                type: 'bar',
+                            },
+                            {
+                                name: "Remain",
+                                data: yAxisRemain,
+                                type: 'line',
+                            },
+                        ]
+                    };
+                    myChart.setOption(option);
+                }
             }
         })
     }
@@ -232,7 +236,14 @@ const WorkItemTrend = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? <div className="workitem-trend-content" id={`workitem-trend-${index}`} />
+                    isEditor ? <div className="workitem-trend-content" id={`workitem-trend-${index}`}>
+                        {
+                            !project && <div className="delete-warning">
+                                <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                项目不能被查看或者被删除，请修改配置或者删除
+                            </div>
+                        }
+                    </div>
                         :
                         <Form
                             name="form"

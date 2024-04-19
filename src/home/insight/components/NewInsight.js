@@ -139,8 +139,8 @@ const NewInsight = (props) => {
                                             rowHeight={30}
                                             measureBeforeMount={true}
                                             breakpoints={{ lg: 1200 }}
-                                            // onLayoutChange={addLayout}
-                                            // onResizeStop = {onResizeStop}
+                                            onLayoutChange={addLayout}
+                                            onResizeStop = {onResizeStop}
                                         >
                                             {
                                                 reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {

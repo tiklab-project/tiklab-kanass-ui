@@ -27,6 +27,7 @@ const EndWorkItemTrend = (props) => {
     const [form] = Form.useForm();
     // 所有项目的列表
     const [projectList, setProjectList] = useState([]);
+    const [projectCountList, setProjectCountList] = useState({})
     // 统计数据
     const [List, setList] = useState()
 
@@ -56,8 +57,6 @@ const EndWorkItemTrend = (props) => {
                 workItemTypeCode: data.workItemTypeCode,
                 projectId: data.projectId
             }
-
-            
             setStatisticsData(params)
         }else {
             if (data) {
@@ -65,7 +64,7 @@ const EndWorkItemTrend = (props) => {
                     dateRanger: data.startDate ? [moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')] : null,
                     cellTime: data.cellTime,
                     workItemTypeCode: data.workItemTypeCode,
-                    projectId: data.projectId
+                    projectId: projectCountList ? data.projectId : null
                 }
     
                 form.setFieldsValue(formData)
@@ -90,55 +89,59 @@ const EndWorkItemTrend = (props) => {
             if (res.code === 0) {
                 const list = res.data;
                 let seriesValue = []
-                setList(list.projectCountList)
-                if (list.projectCountList.length > 0) {
-                    const legendDate = list.projectCountList.map(item => {
-                        seriesValue.push({
-                            name: item.project.projectName,
-                            type: 'line',
-                            stack: 'Total',
-                            data: item.countList
+                const projectCountList = list.projectCountList
+                setProjectCountList(list.projectCountList)
+                if(projectCountList){
+                    if (list.projectCountList.length > 0) {
+                        const legendDate = list.projectCountList.map(item => {
+                            seriesValue.push({
+                                name: item.project.projectName,
+                                type: 'line',
+                                stack: 'Total',
+                                data: item.countList
+                            })
+                            return item.project.projectName
                         })
-                        return item.project.projectName
-                    })
-                    const axisValue = list.dateList.map(item => {
-                        return item.slice(0, 10)
-                    })
-                    let myChart = echarts.init(chartDom);
-                    setChart(myChart)
-                    let option = {
-                        // title: {
-                        //     text: '新增完成事项趋势'
-                        // },
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data: legendDate
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        toolbox: {
-                            feature: {
-                                saveAsImage: {}
-                            }
-                        },
-                        xAxis: {
-                            type: 'category',
-                            boundaryGap: false,
-                            data: axisValue
-                        },
-                        yAxis: {
-                            type: 'value'
-                        },
-                        series: seriesValue
-                    };
-                    myChart.setOption(option);
+                        const axisValue = list.dateList.map(item => {
+                            return item.slice(0, 10)
+                        })
+                        let myChart = echarts.init(chartDom);
+                        setChart(myChart)
+                        let option = {
+                            // title: {
+                            //     text: '新增完成事项趋势'
+                            // },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data: legendDate
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: axisValue
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: seriesValue
+                        };
+                        myChart.setOption(option);
+                    }
                 }
+                
             }
         })
     }
@@ -240,9 +243,15 @@ const EndWorkItemTrend = (props) => {
                 </div>
                 {
                     isEditor ? <div className="end-trend-content" id={`end-trend-${index}`} >
-                        {
+                        {/* {
                             List && List.length <=0 &&
                             <Empty />
+                        } */}
+                        {
+                            !projectCountList && <div className="delete-warning">
+                                <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                项目不能被查看或者被删除，请修改配置或者删除
+                            </div>
                         }
                     </div>
                         :

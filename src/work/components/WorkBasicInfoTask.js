@@ -50,7 +50,9 @@ const WorkBasicInfo = (props) => {
     } = workStore;
 
 
-    const [planTakeupTimeValue, setPlanTakeupTimeValue] = useState()
+    const [estimateTimeValue, setEstimateTimeValue] = useState(0)
+    const [surplusTimeValue, setSurplusTimeValue] = useState(0)
+
 
     const [selectItemList, setSelectItemList] = useState();
     const [eachTypeField, setEachTypeField] = useState();
@@ -73,7 +75,8 @@ const WorkBasicInfo = (props) => {
                 percent: workInfo.percent,
                 projectVersion: workInfo.projectVersion?.id,
 
-                planTakeupTime: workInfo.planTakeupTime || null,
+                estimateTime: workInfo.estimateTime || 0,
+                surplusTime: workInfo.surplusTime || 0,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,
                 sprint: workInfo.sprint?.id,
                 stage: workInfo.stage?.id,
@@ -85,8 +88,8 @@ const WorkBasicInfo = (props) => {
                     planTime: [moment(workInfo.planBeginTime, dateFormat), moment(workInfo.planEndTime, dateFormat)],
                 })
             }
-            setPlanTakeupTimeValue(workInfo.planTakeupTime)
-
+            setEstimateTimeValue(workInfo.estimateTime ? workInfo.estimateTime : 0)
+            setSurplusTimeValue(workInfo.surplusTime ? workInfo.surplusTime : 0)
 
             extDataForm.resetFields();
             if (workInfo.extData) {
@@ -221,6 +224,8 @@ const WorkBasicInfo = (props) => {
      * 字段更新
      */
     const updateSingle = async (changedValues) => {
+
+
         let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
@@ -283,6 +288,14 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.builder
             }
         }
+        if(changeKey === "estimateTime"){
+            setEstimateTimeValue(changedValues.estimateTime)
+        }
+
+        if(changeKey === "surplusTime"){
+            setSurplusTimeValue(changedValues.surplusTime)
+        }
+
         if (changeKey === "parentWorkItem") {
             // 判断选择事项是否能被设置为父级
             if (changedValues.parentWorkItem === "nullstring") {
@@ -321,7 +334,7 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.attachment
             }
         }
-        if(changeKey === "eachType"){
+        if (changeKey === "eachType") {
             changedValues.fieldId = eachTypeField.id;
         }
         let data = {
@@ -428,17 +441,35 @@ const WorkBasicInfo = (props) => {
     };
 
 
-    const updataPlanTime = (value) => {
-        setPlanTakeupTimeValue(value)
+    const updataEstimateTime= (value) => {
+        setEstimateTimeValue(value)
         const data = {
-            updateField: "planTakeupTime",
+            updateField: "estimateTime",
             id: workId,
-            planTakeupTime: value
+            estimateTime: value
         }
-        editWork(data)
+        editWork(data).then(res => {
+            if(res.code === 0){
+                setWorkInfo({ ...workInfo, estimateTime: value })
+            }
+        })
         setFieldName("")
     }
 
+    const updataSurplusTime= (value) => {
+        setSurplusTimeValue(value)
+        const data = {
+            updateField: "surplusTime",
+            id: workId,
+            surplusTime: value
+        }
+        editWork(data).then(res => {
+            if(res.code === 0){
+                setWorkInfo({ ...workInfo, surplusTime: value })
+            }
+        })
+        setFieldName("")
+    }
     /**
      * 万能表单字段更新
      */
@@ -795,29 +826,41 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="planTakeupTime" label="计划用时"
-                                hasFeedback={showValidateStatus === "planTakeupTime" ? true : false}
+                            <Form.Item name="estimateTime" label="预估工时"
+                                hasFeedback={showValidateStatus === "estimateTime" ? true : false}
                                 validateStatus={validateStatus}
                             >
                                 <InputNumber
                                     suffix="小时"
-                                    bordered={fieldName === "planTakeupTime" ? true : false}
-                                    suffixIcon={fieldName === "planTakeupTime" || hoverFieldName == "planTakeupTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("planTakeupTime")}
+                                    bordered={fieldName === "estimateTime" ? true : false}
+                                    suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("estimateTime")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("planTakeupTime")}
+                                    onMouseEnter={() => setHoverFieldName("estimateTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
-                                    onChange={(value) => updataPlanTime(value)}
-                                    value={planTakeupTimeValue}
+                                    onChange={(value) => updataEstimateTime(value)}
+                                    value={estimateTimeValue}
                                 />
                                 小时
                             </Form.Item>
-                            <Form.Item name="buildTime" label="创建时间"
-                                hasFeedback={showValidateStatus === "buildTime" ? true : false}
+                            <Form.Item name="surplusTime" label="剩余用时"
+                                hasFeedback={showValidateStatus === "surplusTime" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <div style={{ padding: "0 11px" }}>{workInfo.buildTime}</div>
+                                <InputNumber
+                                    suffix="小时"
+                                    bordered={fieldName === "surplusTime" ? true : false}
+                                    suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("surplusTime")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("surplusTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    onChange={(value) => updataSurplusTime(value)}
+                                    value={surplusTimeValue}
+                                />
+                                小时
                             </Form.Item>
+                           
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
@@ -900,6 +943,12 @@ const WorkBasicInfo = (props) => {
                                     onMouseLeave={() => setHoverFieldName("")}
                                 />
                                 {/* % */}
+                            </Form.Item>
+                            <Form.Item name="buildTime" label="创建时间"
+                                hasFeedback={showValidateStatus === "buildTime" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.buildTime}</div>
                             </Form.Item>
                         </Form>
                     </div>

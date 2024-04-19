@@ -23,7 +23,7 @@ const VersionPlan = (props) => {
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, deleteWorkItemAndChildren,
         workId, deleteWorkItem } = WorkStore;
-    const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
+    const { getNoPlanVersionWorkList, noPlanVersionWorkList, setNoPlanVersionWorkList, getWorkList, planVersionWorkList, setPlanVersionWorkList,
         updateWorkItem, delVersion, noPlanSearchCondition, searchCondition,
         planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
@@ -34,7 +34,7 @@ const VersionPlan = (props) => {
     const [actionType, setActionType] = useState("");
     // 拖放效果
     useEffect(() => {
-        getNoPlanWorkList(
+        getNoPlanVersionWorkList(
             {
                 projectId: projectId,
                 workStatusCodes: ["TODO", "PROGRESS"],
@@ -115,12 +115,12 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
-                    const newNoPlanWorkList = noPlanWorkList.filter(item => { return item.id != moveWorkId })
-                    setNoPlanWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList = noPlanVersionWorkList.filter(item => { return item.id != moveWorkId })
+                    setNoPlanVersionWorkList(newNoPlanWorkList)
 
-                    const addWorkList = noPlanWorkList.filter(item => { return item.id == moveWorkId })
-                    planWorkList.unshift(...addWorkList)
-                    setPlanWorkList(planWorkList)
+                    const addWorkList = noPlanVersionWorkList.filter(item => { return item.id == moveWorkId })
+                    planVersionWorkList.unshift(...addWorkList)
+                    setPlanVersionWorkList(planVersionWorkList)
                 }
             })
         }
@@ -141,12 +141,12 @@ const VersionPlan = (props) => {
                     findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
                         if(res.code === 0){
                             const ids = res.data;
-                            const newNoPlanWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setNoPlanWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setNoPlanVersionWorkList(newNoPlanWorkList)
         
-                            const addWorkList = noPlanWorkList.filter(item => { return ids.indexOf(item.id) > -1})
-                            planWorkList.unshift(...addWorkList)
-                            setPlanWorkList(planWorkList)
+                            const addWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            planVersionWorkList.unshift(...addWorkList)
+                            setPlanVersionWorkList(planVersionWorkList)
                         }
                     })
                    
@@ -184,12 +184,12 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             delVersion(params).then((res) => {
                 if (res.code === 0) {
-                    const newNoPlanWorkList = planWorkList.filter(item => { return item.id != moveWorkId })
-                    setPlanWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList = planVersionWorkList.filter(item => { return item.id != moveWorkId })
+                    setPlanVersionWorkList(newNoPlanWorkList)
 
-                    const addWorkList = planWorkList.filter(item => { return item.id == moveWorkId })
-                    noPlanWorkList.unshift(...addWorkList)
-                    setNoPlanWorkList(noPlanWorkList)
+                    const addWorkList = planVersionWorkList.filter(item => { return item.id == moveWorkId })
+                    noPlanVersionWorkList.unshift(...addWorkList)
+                    setNoPlanVersionWorkList(noPlanVersionWorkList)
                 }
 
             })
@@ -212,12 +212,12 @@ const VersionPlan = (props) => {
                     findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
                         if(res.code === 0){
                             const ids = res.data;
-                            const newNoPlanWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setPlanWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
+                            setPlanVersionWorkList(newNoPlanWorkList)
         
-                            const addWorkList = planWorkList.filter(item => { return ids.indexOf(item.id) > -1})
-                            noPlanWorkList.unshift(...addWorkList)
-                            setNoPlanWorkList(noPlanWorkList)
+                            const addWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+                            noPlanVersionWorkList.unshift(...addWorkList)
+                            setNoPlanVersionWorkList(noPlanVersionWorkList)
                         }
                     })
                 }
@@ -226,7 +226,7 @@ const VersionPlan = (props) => {
         setShowModal(false)
     }
     const handleChange = (field, value) => {
-        getNoPlanWorkList({
+        getNoPlanVersionWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 10,
@@ -268,7 +268,7 @@ const VersionPlan = (props) => {
                 currentPage: noPlanSearchCondition.pageParam.currentPage + 1
             }
         }
-        getNoPlanWorkList(data)
+        getNoPlanVersionWorkList(data)
     }
 
     const changePlanVersionPage = () => {
@@ -320,9 +320,9 @@ const VersionPlan = (props) => {
             if (res.code === 0) {
                 setIsModalVisible(false)
                 if (listType === "noPlan") {
-                    removeNodeInTree(noPlanWorkList, null, workId);
-                    if (noPlanWorkList.length <= 0) {
-                        getNoPlanWorkList(
+                    removeNodeInTree(noPlanVersionWorkList, null, workId);
+                    if (noPlanVersionWorkList.length <= 0) {
+                        getNoPlanVersionWorkList(
                             {
                                 pageParam: {
                                     pageSize: 20,
@@ -331,10 +331,10 @@ const VersionPlan = (props) => {
                             }
                         )
                     }
-                    setNoPlanWorkList([...noPlanWorkList])
+                    setNoPlanVersionWorkList([...noPlanVersionWorkList])
                 } else {
-                    removeNodeInTree(planWorkList, null, workId);
-                    if (planWorkList.length <= 0) {
+                    removeNodeInTree(planVersionWorkList, null, workId);
+                    if (planVersionWorkList.length <= 0) {
                         getWorkList(
                             {
                                 pageParam: {
@@ -344,7 +344,7 @@ const VersionPlan = (props) => {
                             }
                         )
                     }
-                    setPlanWorkList([...planWorkList])
+                    setPlanVersionWorkList([...planVersionWorkList])
                 }
             }
         })
@@ -427,7 +427,7 @@ const VersionPlan = (props) => {
                     <div className="version-plan-box-content">
                         <div className="version-plan-list">
                             {
-                                noPlanWorkList && noPlanWorkList.length > 0 && noPlanWorkList.map((item, index) => {
+                                noPlanVersionWorkList && noPlanVersionWorkList.length > 0 && noPlanVersionWorkList.map((item, index) => {
                                     return <div
                                         className="version-plan-item-box"
                                         onDrag={() => moveVersionPlanItem()}
@@ -544,7 +544,7 @@ const VersionPlan = (props) => {
                     <div className="version-plan-box-content">
                         <div className="version-plan-list">
                             {
-                                planWorkList && planWorkList.length > 0 && planWorkList.map((item, index) => {
+                                planVersionWorkList && planVersionWorkList.length > 0 && planVersionWorkList.map((item, index) => {
                                     return <div
                                         className="version-plan-item-box"
                                         onDrag={() => moveVersionPlanItem(item.id)}
