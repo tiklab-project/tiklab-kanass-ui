@@ -4,17 +4,14 @@ import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "thoughtware-core-ui";
 const WorkDocumentAddmodal = (props) => {
     const { workWikiStore, workStore, setWorkDocumentList, projectId, showSelectDocument, selectDocument } = props;
     const { workId } = workStore;
-    // const {searchpro} =  projectStore;
-    // const projectId = props.match.params.id;
+
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
         findProjectWikiRepositoryList, findUnRelationWorkDocumentList,
         findRepositoryUserList, userList } = workWikiStore;
 
-    // const {userList,getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
@@ -23,7 +20,6 @@ const WorkDocumentAddmodal = (props) => {
 
     useEffect(() => {
         if (selectDocument === true) {
-            // getSelectUserList(projectId)
             findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
@@ -40,7 +36,6 @@ const WorkDocumentAddmodal = (props) => {
                             }
                         })
                     }
-
                 }
             })
         }

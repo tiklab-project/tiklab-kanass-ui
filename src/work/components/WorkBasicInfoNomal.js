@@ -1072,7 +1072,7 @@ const WorkBasicInfo = (props) => {
                 <Fragment>
                     {
                         editorType ? <Fragment>
-                            <div style={{ border: " #f0f0f0 solid 1px" }}>
+                            <div style={{ border: " #f0f0f0 solid 1px", height: "400px" }}>
                                 <EditorBig
                                     ticket={ticket}
                                     tenant={tenant}
@@ -1119,7 +1119,7 @@ const WorkBasicInfo = (props) => {
                 </div>
             </div>
 
-            <div className="work-detail-box work-attach-box">
+            <div className=" work-attach-box">
 
                 <Fragment>
                     <div className="work-detail-upload">

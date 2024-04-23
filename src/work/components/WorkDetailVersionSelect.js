@@ -70,34 +70,17 @@ const WorkDetailVersionSelect = (props) => {
                 if (res.data) {
                     setShowModal(true)
                 } else {
-                    updateWorkItem("projectVersion")
+                    updateWorkItem("projectVersion", item.id)
                 }
             }
         })
-
-        // const params = {
-        //     id: workId,
-        //     updateField: "projectVersion",
-        //     projectVersion: {
-        //         id: item ? item.id : "nullstring"
-        //     }
-        // }
-        // editWork(params).then(res => {
-        //     if (res.code === 0) {
-        //         // setWorkInfo({ ...workInfo, ...changedValues })
-        //         setSelectVersion(item)
-        //         getWorkVersionList()
-        //         setShowDropdown(false)
-        //     }
-        // })
-        // updateSingle(data)
     }
 
-    const updateWorkItem = (type) => {
+    const updateWorkItem = (type, versionId) => {
         let params = {
             id: workId,
             projectVersion: {
-                id: selectVersion ? selectVersion.id : "nullstring"
+                id: versionId ? versionId : "nullstring"
             },
             updateField: type,
         }

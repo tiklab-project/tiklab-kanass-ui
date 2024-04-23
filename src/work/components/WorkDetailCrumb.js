@@ -52,7 +52,6 @@ const WorkDetailCrumb = (props) => {
                 detailCrumbArray?.length > 0 &&
                 <div className="work-detail-crumb-col">
                     <div className="work-detail-crumb">
-
                         {
                             isDetail() &&
                             <div className="work-detail-crumb-item" onClick={() => goWorkList()}>

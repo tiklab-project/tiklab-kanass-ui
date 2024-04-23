@@ -69,7 +69,7 @@ const WorkDetailSprintSelect = (props) => {
                 if (res.data) {
                     setShowModal(true)
                 } else {
-                    updateWorkItem("sprint")
+                    updateWorkItem("sprint", item?.id)
                 }
             }
         })
@@ -77,11 +77,11 @@ const WorkDetailSprintSelect = (props) => {
 
   
 
-    const updateWorkItem = (type) => {
+    const updateWorkItem = (type, sprintId) => {
         let params = {
             id: workId,
             sprint: {
-                id: selectSprint ? selectSprint.id : "nullstring"
+                id: sprintId ? sprintId : "nullstring"
             },
             updateField: type,
         }

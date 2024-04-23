@@ -251,7 +251,7 @@ const LogAdd = (props) => {
 
     return (
         <Modal
-            title={"添加工时666"}
+            title={"添加工时"}
             visible={showLogAdd}
             onOk={creatLog}
             onCancel={closeLogModal}

@@ -144,12 +144,12 @@
                 gap: 10px;
             }
 
-            .work-detail-box-content {
-                padding: 10px;
-                max-height: 600px;
-                overflow: auto;
-            }
-            .work-detail-box-content::-webkit-scrollbar {
+            // .edit-context-box {
+            //     padding: 10px;
+            //     max-height: 600px;
+            //     overflow: auto;
+            // }
+            .edit-context-box::-webkit-scrollbar {
                 width: 0;
             }
         }

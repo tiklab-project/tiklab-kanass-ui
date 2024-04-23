@@ -1110,7 +1110,7 @@ const WorkBasicInfo = (props) => {
                 <Fragment>
                     {
                         editorType ? <Fragment>
-                            <div style={{ border: " #f0f0f0 solid 1px" }}>
+                            <div style={{ border: " #f0f0f0 solid 1px", height: "400px" }}>
                                 <EditorBig
                                     ticket={ticket}
                                     tenant={tenant}

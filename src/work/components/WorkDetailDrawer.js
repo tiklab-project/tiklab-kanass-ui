@@ -50,8 +50,6 @@ const WorkDetailDrawer = (props) => {
         }
 
         if (!detailRef.current.contains(e.target) && detailRef.current !== e.target && !IsSelectclear && isModalVisible) {
-            console.log(props.location.pathname)
-
             let pathname = props.location.pathname; // props.location.pathname;
             if(workShowType === "gantt"){
                 props.history.replace(`${pathname}`)
