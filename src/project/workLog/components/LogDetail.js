@@ -89,7 +89,7 @@ const LogDetail = (props) => {
                     const usedTime = workInfo.usedTime;
                     const overTime = usedTime - estimateTime;
 
-                    if (overTime > 0) {
+                    if (overTime >= 0) {
                         const overPress = overTime / (surplusTime + usedTime);
                         setOverPercent((overPress * 100).toFixed(2))
                         const uerPress = estimateTime / (surplusTime + usedTime);

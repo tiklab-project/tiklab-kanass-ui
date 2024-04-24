@@ -163,6 +163,14 @@ export class LogStore {
     }
 
     @action
+    deleteWorkLog = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/workLog/deleteWorkLog", params);
+        return data;
+    }
+
+    @action
     findWorkItemAndUsedTime = async(value) => {
         const params = new FormData();
         params.append("id", value.id)

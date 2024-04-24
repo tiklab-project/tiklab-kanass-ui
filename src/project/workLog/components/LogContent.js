@@ -19,11 +19,12 @@ import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
 import moment from "moment";
 import LogStore from "../store/LogStore";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 const LogContent = (props) => {
     const store = {
         logStore: LogStore
     }
-    const { findWorkLogPage, logList, selectLogCondition, totalLog } = LogStore;
+    const { findWorkLogPage, logList, selectLogCondition, totalLog, deleteWorkLog } = LogStore;
     const [dateValue, setDateValue] = useState()
     // 显示日志添加弹窗显示
     const [showLogAdd, setShowLogAdd] = useState(false)
@@ -128,12 +129,33 @@ const LogContent = (props) => {
         {
             title: "用时",
             dataIndex: "takeupTime",
-            key: "endTime",
+            key: "takeupTime",
             align: "left",
             width: "7%"
         },
-        
+        {
+            title: "操作",
+            dataIndex: "action",
+            key: "action",
+            align: "left",
+            width: "7%",
+            render: (text, record, index) => (
+                <Space size="middle">
+                    <DeleteModal deleteFunction={deleteLogList} id={record.id} />
+                </Space>
+
+            ),
+        }
     ];
+
+    const deleteLogList = (id) => {
+        deleteWorkLog({id: id}).then(res => {
+            if(res.code === 0){
+                getList()
+            }
+            
+        })
+    }
 
     /**
      * 翻页

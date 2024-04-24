@@ -114,7 +114,7 @@ const WorkBasicInfo = (props) => {
         })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
-        if (workId !== "" && workIndex !== "" && workInfo) {
+        if (workId !== "" && workInfo) {
             initForm(workInfo)
         }
         setEditorType(false)

@@ -57,14 +57,6 @@ const WorkDetailBottom = (props) => {
         return
     }, [workInfo])
 
-
-
-
-
-
-
-
-
     const deatilType = () => {
         if (workInfo?.workTypeCode) {
             switch (workInfo?.workTypeCode) {

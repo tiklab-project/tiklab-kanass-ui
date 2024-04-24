@@ -123,10 +123,6 @@ const WorkDetail = (props) => {
 
 
     const changeStatus = (transition) => {
-        // if (userId !== workInfo.assigner?.id) {
-        //     message.error("没有权限")
-        //     return
-        // }
         Modal.confirm({
             title: "修改之后不能撤回，确认修改状态？",
             className: "edit-status-modal",
@@ -150,8 +146,6 @@ const WorkDetail = (props) => {
 
                                 const list = changeWorkItemList(workList, res)
                                 setWorkList([...list])
-                                // workList[workIndex - 1].workStatusNode = res.workStatusNode;
-                                // workList[workIndex - 1].workStatusCode = res.workStatusCode;
                             }
                         })
                     }
@@ -267,25 +261,6 @@ const WorkDetail = (props) => {
 
 
     const [showFlow, setShowFlow] = useState(false);
-    const [deleteSelectModal, setDeleteSelectModal] = useState(false)
-    const [isHaveChildren, setIsHaveChildren] = useState(false)
-    const closeDeleteSelectModal = () => {
-        setDeleteSelectModal(false)
-    }
-
-    const delectWorkItem = (value) => {
-        switch (value) {
-            case "ones":
-                delectCurrentWorkItem();
-                break;
-            case "all":
-                delectWorkItemAndChildren();
-                break
-            default:
-                break;
-        }
-        setDeleteSelectModal(false)
-    }
 
 
     return (

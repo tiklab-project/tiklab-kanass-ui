@@ -65,6 +65,7 @@ const WorkBasicInfo = (props) => {
 
     const initForm = (workInfo) => {
         if (workInfo) {
+            console.log(userList)
             detailForm.setFieldsValue({
                 assigner: workInfo.assigner?.id,
                 builder: workInfo.builder?.id,
@@ -114,7 +115,7 @@ const WorkBasicInfo = (props) => {
         })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
-        if (workId !== "" && workIndex !== "" && workInfo) {
+        if (workId !== "" && workInfo) {
             initForm(workInfo)
         }
         setEditorType(false)
