@@ -5,7 +5,7 @@ const MessageListItem = (props) => {
     const { content, status, type, updateMessageDispatchItem, id, item } = props;
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId,
-        projectId,projectSetId, oldValue, newValue, spintName, sprintId, projectName, projectSetName } = data;
+        projectId, projectSetId, oldValue, newValue, sprintName, sprintId, projectName, projectSetName } = data;
     const goMessageDetail = () => {
         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
         if (status === 0) {
@@ -22,7 +22,7 @@ const MessageListItem = (props) => {
     }
 
     const goSprintDetail = () => {
-        props.history.push(`/${projectId}/sprintdetail/${sprintId}/survey`);
+        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`);
         if (status === 0) {
             const value = {
                 id: id,
@@ -121,7 +121,34 @@ const MessageListItem = (props) => {
                             <div className="message-content">
                                 <div className="message-work-action">{createUser.nickname}创建了迭代</div>
                                 <div className="message-work-item">
-                                    <div className="message-work-title" onClick={() => goSprintDetail()}>{spintName}</div>
+                                    <div className="message-work-title" onClick={() => goSprintDetail()}>{sprintName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_SPRINTUPDATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{createUser.nickname}修改了迭代状态</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goSprintDetail()}>{sprintName}</div>
+                                    <div
+                                        className="message-work-oldvalue"
+                                    >
+                                        {oldValue}
+                                    </div>
+                                    ———
+                                    <div
+                                        className="message-work-newValue">
+                                        {newValue}
+                                    </div>
                                 </div>
 
                             </div>
