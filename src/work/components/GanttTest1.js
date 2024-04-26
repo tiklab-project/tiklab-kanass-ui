@@ -205,8 +205,7 @@ const Gantt = (props) => {
         setWorkIndex(index)
         setWorkId(workItem.id)
         setIsModalVisible(true)
-        sessionStorage.setItem("detailCrumbArray", JSON.stringify([{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }]));
-        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        sessionStorage.setItem("detailCrumbArray", JSON.stringify([{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }]));
         props.history.replace(`/projectDetail/${projectId}/workgantt/${workItem.id}`)
 
         setIsModalVisible(true)

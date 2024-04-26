@@ -25,7 +25,7 @@ class EpicStore {
 
     @observable searchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType: "desc"
         }],
         pageParam: {

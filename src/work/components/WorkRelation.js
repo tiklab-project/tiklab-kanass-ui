@@ -44,7 +44,7 @@ const WorkRelation = (props) => {
     const goWorkItem = (workItem) => {
         setWorkId(workItem.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray");
-        newDetailCrumbArray.push({id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl})
+        newDetailCrumbArray.push({id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl})
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: workItem.title,

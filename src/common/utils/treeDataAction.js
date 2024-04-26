@@ -78,16 +78,16 @@ const removeNodeChildren = (fNode, tree, id, setWorkId, setSessionStorage) => {
                 if (i !== tree.length) {
                     setWorkId(tree[i].id)
                     setSessionStorage("detailCrumbArray",
-                        [{ id: tree[i].id, title: tree[i].title, iconUrl: tree[i].workTypeSys.iconUrl }])
+                        [{ id: tree[i].id,code: tree[i].code,  title: tree[i].title, iconUrl: tree[i].workTypeSys.iconUrl }])
                 } else {
                     setWorkId(tree[i - 1].id)
                     setSessionStorage("detailCrumbArray",
-                        [{ id: tree[i - 1].id, title: tree[i - 1].title, iconUrl: tree[i - 1].workTypeSys.iconUrl }])
+                        [{ id: tree[i - 1].id, code: tree[i - 1].code, title: tree[i - 1].title, iconUrl: tree[i - 1].workTypeSys.iconUrl }])
                 }
             } else {
                 setWorkId(fNode.id)
                 setSessionStorage("detailCrumbArray",
-                    [{ id: fNode.id, title: fNode.title, iconUrl: fNode.workTypeSys.iconUrl }])
+                    [{ id: fNode.id, code: fNode.code, title: fNode.title, iconUrl: fNode.workTypeSys.iconUrl }])
             }
 
         } else {

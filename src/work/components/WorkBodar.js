@@ -157,7 +157,7 @@ const WorkBodar = (props) => {
         const pathname = props.match.url;;
         props.history.replace(`${pathname}/${workItem.id}`)
         setIsModalVisible(true)
-        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
 
 
 
@@ -261,7 +261,7 @@ const WorkBodar = (props) => {
                                                                                             className="menu-icon"
                                                                                         />
                                                                                 }
-                                                                                <span >{workItem.id}</span>
+                                                                                <span >{workItem.code}</span>
                                                                             </div>
                                                                             <div className="work-item-assigner"
                                                                                 onClick={() => showModal(workItem, workIndex, index)}
@@ -337,7 +337,7 @@ const WorkBodar = (props) => {
                                                                         {workItem.title}
                                                                     </div>
                                                                     <div>
-                                                                        <span >{workItem.id}</span>
+                                                                        <span >{workItem.code}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div className="work-item-id"

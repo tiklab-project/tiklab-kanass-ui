@@ -53,7 +53,7 @@ const WorkChild = (props) => {
     const findWorkChildList = () => {
         const params = {
             parentId: workId,
-            workTypeId: workType.id,
+            workTypeId: workType?.id,
             workTypeSysId: null,
             title: null,
             pageParam: {
@@ -101,7 +101,7 @@ const WorkChild = (props) => {
         setTabValue(1)
         setWorkId(record.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
-        newDetailCrumbArray.push({id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl })
+        newDetailCrumbArray.push({id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: record.title,
@@ -141,7 +141,8 @@ const WorkChild = (props) => {
             if(workInfo.stage){
                 params.stage = workInfo.stage.id
             }else {
-                message.error("请给父事项添加规划计划")
+                message.error("请给父事项规划计划");
+                return
             }
             
         }

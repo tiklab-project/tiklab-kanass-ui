@@ -226,6 +226,11 @@ const setDevRouter= [
                 code: 12-18,
             },
             {
+                title: '虚拟角色',
+                id: '/setting/virtual',
+                code: "virtual",
+            },
+            {
                 title: '项目类型',
                 id: '/setting/projectType',
                 purviewCode: "SysProjectType",

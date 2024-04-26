@@ -127,7 +127,7 @@ export class LogStore {
     findWorkItemPage = async(value) => {
         const params = {
             orderParams: [{
-                name: "id",
+                name: "code",
                 orderType: "asc"
             }],
             pageParam: {

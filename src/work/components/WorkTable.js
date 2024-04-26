@@ -82,7 +82,7 @@ const WorkTable = (props) => {
         setWorkId(record.id)
         setWorkIndex(index + 1)
 
-        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
 
         const pathname = props.match.url;
         props.history.push(`${pathname}/${record.id}`)
@@ -114,7 +114,7 @@ const WorkTable = (props) => {
             const field = sorter.columnKey;
             const order = sorter.order;
             let isAsc = "desc";
-            let sortType = "id";
+            let sortType = "code";
             if (order === "ascend") {
                 isAsc = "asc"
             }
@@ -125,8 +125,8 @@ const WorkTable = (props) => {
                 return
             }
             switch (field) {
-                case "id":
-                    sortType = "id";
+                case "code":
+                    sortType = "code";
                     break;
                 case "title":
                     sortType = "title";
@@ -173,7 +173,7 @@ const WorkTable = (props) => {
                     sortArray.push(sorter.columnKey);
                 } else {
                     orderParams.push({
-                        name: "id",
+                        name: "code",
                         orderType: "desc"
                     });
                     sortArray.push("id");
@@ -206,9 +206,9 @@ const WorkTable = (props) => {
     const workColumns = [
         {
             title: '序号',
-            dataIndex: 'id',
-            key: 'id',
-            className: `work-first-col ${sortArray.indexOf("id") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            dataIndex: 'code',
+            key: 'code',
+            className: `work-first-col ${sortArray.indexOf("code") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
             },
@@ -230,7 +230,7 @@ const WorkTable = (props) => {
                             />
                     }
                 </div>
-                <div className="work-key">{record.id}</div>
+                <div className="work-key">{record.code}</div>
             </div>
         },
         {
@@ -359,8 +359,8 @@ const WorkTable = (props) => {
     const projectColums = [
         {
             title: '序号',
-            dataIndex: 'id',
-            key: 'id',
+            dataIndex: 'code',
+            key: 'code',
             className: `work-first-col ${sortArray.indexOf("id") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
@@ -383,7 +383,7 @@ const WorkTable = (props) => {
                             />
                     }
                 </div>
-                <div className="work-key">{record.id}</div>
+                <div className="work-key">{record.code}</div>
             </div>
         },
         {
@@ -589,7 +589,7 @@ const WorkTable = (props) => {
                 if (node != null) {
                     setWorkId(node.id)
                     setSessionStorage("detailCrumbArray",
-                        [{ id: node.id, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
+                        [{ id: node.id, code: node.code, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
                 }
             }
             setWorkList([...workList])

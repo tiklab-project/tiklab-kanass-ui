@@ -21,6 +21,8 @@ const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/P
 const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
 const ProjectPreliminaryListSystem = AsyncComponent(() => import('./setting/form/ProjectPreliminaryListSystem'))
 const ProjectPreliminaryList = AsyncComponent(() => import('./setting/form/ProjectPreliminaryList'))
+const ProjectVirtualRoleList = AsyncComponent(() => import('./setting/user/ProjectVirtualRoleList'))
+
 const FormList = AsyncComponent(() => import('./setting/form/ProjectFormList'))
 const FormListSystem = AsyncComponent(() => import('./setting/form/ProjectFormListSystem'))
 const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/ProjectProjectFormList'))
@@ -867,6 +869,12 @@ const Routers = [
                     {
                         path: "/setting/backups",
                         component: Backups,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/virtual",
+                        component: ProjectVirtualRoleList,
                         row: true,
                         exact: true
                     }

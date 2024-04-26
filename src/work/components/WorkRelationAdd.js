@@ -214,7 +214,7 @@ const WorkRelationAddModal = (props) => {
                                                             />
                                                     }
                                                     <div>
-                                                        <div className="work-item-id">{item.id}</div>
+                                                        <div className="work-item-id">{item.code}</div>
                                                         <div className="work-item-title">{item.title} </div>
                                                     </div>
                                                 </div>

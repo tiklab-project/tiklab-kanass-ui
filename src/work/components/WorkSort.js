@@ -63,7 +63,7 @@ const WorkSort = (props) => {
         }
     }
 
-    let [sortArray, setSortArray] = useState([{name: "id", orderType: "desc"}]);
+    let [sortArray, setSortArray] = useState([{name: "code", orderType: "desc"}]);
     const upDownSort = (sortName, sortType) => {
         JSON.stringify(sortArray).indexOf()
         if(sortType === "cancel") {

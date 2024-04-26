@@ -278,7 +278,7 @@ const SprintPlan = (props) => {
         setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
-        setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: work.id, code: work.code, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
         const pathname = props.match.url;
         setListType(type)
         props.history.push(`${pathname}/${work.id}`)
@@ -458,7 +458,7 @@ const SprintPlan = (props) => {
 
                                             </div>
                                             <div className="work-item-info">
-                                                <div className="work-item-id">{item.id}</div>
+                                                <div className="work-item-id">{item.code}</div>
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
@@ -572,7 +572,7 @@ const SprintPlan = (props) => {
 
                                             </div>
                                             <div className="work-item-info">
-                                                <div className="work-item-id">{item.id}</div>
+                                                <div className="work-item-id">{item.code}</div>
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >

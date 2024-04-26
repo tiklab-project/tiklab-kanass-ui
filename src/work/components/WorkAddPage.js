@@ -8,7 +8,7 @@ import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "thoughtware-slate-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import {appendNodeInTree} from "../../project/stage/component/StageListTreeChange";
+import { appendNodeInTree } from "../../project/stage/component/StageListTreeChange";
 
 const { RangePicker } = DatePicker;
 
@@ -213,11 +213,13 @@ const WorkAddPage = (props) => {
             setLoading(true)
             addWork(values).then((res) => {
                 setWorkId(res.data)
-                setSessionStorage("detailCrumbArray", [{ id: res.data, title: values.title, iconUrl: workType.workType.iconUrl }])
+                // 有bug
                 if (res.code === 0) {
-                    if (path === "/projectDetail/:id/stage") {
-                        findWorkItemById(res.data).then(data => {
-                            if (data.code === 0) {
+                    findWorkItemById(res.data).then(data => {
+                        if (data.code === 0) {
+                            setSessionStorage("detailCrumbArray", [{ id: data.data.id, code: data.data.code, title: values.title, iconUrl: workType.workType.iconUrl }])
+                            setShowAddModel(false)
+                            if (path === "/projectDetail/:id/stage") {
                                 appendNodeInTree(stageTreeList, values.stage, data.data)
                                 message.success({
                                     content: '添加成功',
@@ -227,28 +229,10 @@ const WorkAddPage = (props) => {
                                     },
                                     duration: 1
                                 });
-                            }
-                        })
-                        setShowAddModel(false)
-                    } else {
-                        if (workShowType === "bodar") {
-                            getWorkBoardList()
-                            message.success({
-                                content: '添加成功',
-                                className: 'custom-class',
-                                style: {
-                                    marginTop: '20vh',
-                                },
-                                duration: 1
-                            });
-                            setShowAddModel(false)
-                        } else {
-                            findWorkItemById(res.data).then(data => {
-                                if (data.code === 0) {
-                                    workList.unshift(data.data);
-                                    
-                                    setTotal(total + 1)
-                                    setShowAddModel(false)
+
+                            } else {
+                                if (workShowType === "bodar") {
+                                    getWorkBoardList()
                                     message.success({
                                         content: '添加成功',
                                         className: 'custom-class',
@@ -257,11 +241,25 @@ const WorkAddPage = (props) => {
                                         },
                                         duration: 1
                                     });
-                                    
+                                } else {
+                                    workList.unshift(data.data);
+                                    setTotal(total + 1)
+                                    message.success({
+                                        content: '添加成功',
+                                        className: 'custom-class',
+                                        style: {
+                                            marginTop: '20vh',
+                                        },
+                                        duration: 1
+                                    });
                                 }
-                            })
+                            }
                         }
-                    }
+
+
+
+                    })
+
 
                 } else {
                     message.error({

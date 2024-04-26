@@ -6,7 +6,7 @@ export class VersionPlanStore {
     @observable versionList = [];
     @observable searchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType:"desc"
         }],
         pageParam: {
@@ -17,7 +17,7 @@ export class VersionPlanStore {
 
     @observable noPlanSearchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType:"desc"
         }],
         pageParam: {

@@ -234,21 +234,24 @@ const Search = (props) => {
      * @param {事项id} id 
      * @param {项目id} pid 
      */
+
+    // 有bug
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.modelId)
         props.history.push(`/projectDetail/${data.project.id}/work/${data.modelId}`)
-        setSessionStorage("detailCrumbArray", [{ id: data.modelId, title: data.name, iconUrl: data.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: data.modelId, code: data.code, title: data.name, iconUrl: data.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
 
     }
 
+    // 有bug
     const toSearchWorkItem = (data) => {
         updateRecent({ id: data.id })
         setWorkId(data.id)
         props.history.push(`/projectDetail/${data.project.id}/work/${data.id}`)
-        setSessionStorage("detailCrumbArray", [{ id: data.id, title: data.title, iconUrl: data.workTypeSys?.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: data.id, code: data.code, title: data.title, iconUrl: data.workTypeSys?.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
         setShow(false)
 

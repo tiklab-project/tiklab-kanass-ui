@@ -78,7 +78,7 @@ const WorkList = (props) => {
                 if (node != null) {
                     setWorkId(node.id)
                     setSessionStorage("detailCrumbArray",
-                        [{ id: node.id, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
+                        [{ id: node.id, code: node.code, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
                 }
             }
            

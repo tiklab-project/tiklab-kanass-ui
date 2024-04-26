@@ -79,7 +79,7 @@ const WorkDetailCrumb = (props) => {
                                                 />
                                         }
 
-                                        <span className="work-detail-crumb-text">{item.id}</span>
+                                        <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
                                 } else {
                                     html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
@@ -98,7 +98,7 @@ const WorkDetailCrumb = (props) => {
                                                     className="img-icon-right"
                                                 />
                                         }
-                                        <span className="work-detail-crumb-text">{item.id}</span>
+                                        <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
                                 }
                                 return html

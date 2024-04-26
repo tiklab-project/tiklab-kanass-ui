@@ -116,8 +116,8 @@ const HomeSurvey = (props) => {
         updateRecent({ id: item.id })
         const workItem = item.object;
         setWorkId(workItem.id)
-
-        setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
+        // 有bug
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
         props.history.push(`/projectDetail/${workItem.project.id}/work/${workItem.id}`)
         sessionStorage.setItem("menuKey", "project")
     }

@@ -175,7 +175,7 @@ const StagePlan = (props) => {
         setWorkId(work.id)
         setIsModalVisible(true)
         setWorkShowType("border")
-        setSessionStorage("detailCrumbArray", [{ id: work.id, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: work.id, code: work.code, title: work.title, iconUrl: work.workTypeSys.iconUrl }])
         const pathname = props.match.url;
         setListType(type)
         props.history.push(`${pathname}/${work.id}`)

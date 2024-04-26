@@ -453,7 +453,7 @@ const StageLinemap = (props) => {
         setWorkId(record.id)
         setWorkIndex(index + 1)
 
-        setSessionStorage("detailCrumbArray", [{ id: record.id, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
 
         const pathname = props.match.url;
         props.history.push(`${pathname}/${record.id}`)
@@ -588,7 +588,7 @@ const StageLinemap = (props) => {
                                             alt=""
                                             className="img-icon"
                                         />
-                                        <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.id}</span>
+                                        <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.code}</span>
                                         <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
                                     </div>
                                 </div>

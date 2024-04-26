@@ -61,6 +61,7 @@ const WorkDetail = (props) => {
         setInfoLoading(true)
         searchWorkById(id).then((res) => {
             setInfoLoading(false)
+            setTabValue(1)
             if (res) {
                 setWorkInfo(res)
                 // 获取选项列表
@@ -82,7 +83,7 @@ const WorkDetail = (props) => {
                     }
                 })
                 if (props.match.path === "/projectDetail/:id/work/:workId") {
-                    setSessionStorage("detailCrumbArray", [{ id: res.id, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                    setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
                 }
             }
@@ -234,7 +235,7 @@ const WorkDetail = (props) => {
     const viewFlow = () => {
         setShowFlow(true)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
-        newDetailCrumbArray.push({ id: "流程", iconUrl: "/images/flow.png", type: "flow" })
+        newDetailCrumbArray.push({ code: "流程", iconUrl: "/images/flow.png", type: "flow" })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }
@@ -256,7 +257,7 @@ const WorkDetail = (props) => {
         const workDetail = workList[page - 1]
         setWorkId(workDetail.id)
         setWorkIndex(page)
-        setSessionStorage("detailCrumbArray", [{ id: workDetail.id, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
+        setSessionStorage("detailCrumbArray", [{ id: workDetail.id, code: workDetail.code, title: workDetail.title, iconUrl: workDetail.workTypeSys.iconUrl }])
     }
 
 

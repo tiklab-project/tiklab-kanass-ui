@@ -298,7 +298,8 @@ const Survey = (props) => {
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
         setWorkId(item.modelId)
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, title: item.object.name, iconUrl: item.object.workTypeSys.iconUrl }])
+        // 有bug
+        setSessionStorage("detailCrumbArray", [{ id: item.modelId, code: item.code, title: item.object.name, iconUrl: item.object.workTypeSys.iconUrl }])
 
         props.history.push(`/projectDetail/${item.object.project.id}/work/${item.object.id}`)
     }

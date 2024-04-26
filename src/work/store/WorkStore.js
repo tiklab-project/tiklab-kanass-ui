@@ -39,7 +39,7 @@ export class WorkStore {
     @observable demandTypeId = ""
     @observable searchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType: "desc"
         }],
         pageParam: {
@@ -58,7 +58,7 @@ export class WorkStore {
 
     @observable searchBorderChangepageCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType: "desc"
         }],
         pageParam: {
@@ -425,7 +425,7 @@ export class WorkStore {
         function setValue() {
             that.searchCondition = {
                 orderParams: [{
-                    name: "id",
+                    name: "code",
                     orderType: "desc"
                 }],
                 pageParam: {
@@ -873,7 +873,7 @@ export class WorkStore {
             projectId: value.projectId,
             sprintId: value.sprintId,
             orderParams: [{
-                name: "id",
+                name: "code",
                 orderType: "desc"
             }],
             pageParam: {

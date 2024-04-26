@@ -454,9 +454,7 @@ const Gantt = (props) => {
         setWorkIndex(index)
         setWorkId(workItem.id)
         setIsModalVisible(true)
-        sessionStorage.setItem("detailCrumbArray", JSON.stringify([{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }]));
-        // setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        // props.history.replace(`/projectDetail/${projectId}/workgantt/${workItem.id}`)
+        sessionStorage.setItem("detailCrumbArray", JSON.stringify([{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }]));
         const pathname = props.match.url;
         props.history.replace(`${pathname}/${workItem.id}`)
         console.log(props)

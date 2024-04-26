@@ -6,7 +6,7 @@ export class SprintPlanStore {
     @observable sprintList = [];
     @observable searchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType:"desc"
         }],
         pageParam: {
@@ -17,7 +17,7 @@ export class SprintPlanStore {
 
     @observable noPlanSearchCondition = {
         orderParams: [{
-            name: "id",
+            name: "code",
             orderType:"desc"
         }],
         pageParam: {

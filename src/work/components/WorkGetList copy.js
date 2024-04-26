@@ -141,7 +141,7 @@ const getPageTree = (workStore) => {
                     setWorkIndex(1)
                     const workItem = list[0];
                     setWorkId(workItem.id)
-                    setSessionStorage("detailCrumbArray", [{ id: workItem.id, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])    
+                    setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])    
                 }else {
                     setWorkId(0)
                     setWorkIndex(0)
