@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -162,7 +162,8 @@ const WorkDocumentAddmodal = (props) => {
                                     value={item.id}
                                     label={item.kanassRepositoryName}
                                     key={item.id}
-                                    imgUrl={`${base_url}/images/${item.iconUrl}`}
+                                    // imgUrl={`${base_url}/images/${item.iconUrl}`}
+                                    imgUrl={`${base_url}/images/repository1.png`}
                                 />
                             })
                         }

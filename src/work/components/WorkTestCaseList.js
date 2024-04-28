@@ -128,7 +128,7 @@ const WorkTestCaseList = (props) => {
                 <div className="repository-top-title">关联用例({testCaseList.length})</div>
                 <div className="child-top-botton">
                     <Button onClick={() => { showSelectTestCase(true) }}>
-                        添加文档
+                        添加用例
                     </Button>
                 </div>
 

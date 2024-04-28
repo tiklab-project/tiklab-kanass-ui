@@ -14,6 +14,7 @@ const DomainMessageNoticeContent = props =>{
             {...props}
             domainId={projectId}  // 项目id
             bgroup={"kanass"} // 产品code
+            isBase = {true}
         />
     )
 

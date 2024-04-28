@@ -18,6 +18,7 @@ import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
 import StageStore from "../../project/stage/store/StageStore";
 import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import DeleteModal from "../../common/deleteModal/deleteModal";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -46,7 +47,8 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation, createCheckboxSelectItemRelation
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
+        createCheckboxSelectItemRelation, deleteWorkAttach
     } = workStore;
 
 
@@ -174,6 +176,11 @@ const WorkBasicInfo = (props) => {
             }
         }
     }
+    const deleteAttach = (id) => {
+        deleteWorkAttach(id).then(() => {
+            findWorkAttachList(workId)
+        })
+    }
 
     // 文件列表的
     const attachColums = [
@@ -209,7 +216,9 @@ const WorkBasicInfo = (props) => {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            render: text => <span style={{ color: "red" }}>删除</span>,
+            render: (text, record) => <Space size="middle">
+                <DeleteModal deleteFunction={deleteAttach} id={record.id} getPopupContainer={formRef.current} />
+            </Space>
         }
     ]
 
@@ -289,11 +298,11 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.builder
             }
         }
-        if(changeKey === "estimateTime"){
+        if (changeKey === "estimateTime") {
             setEstimateTimeValue(changedValues.estimateTime)
         }
 
-        if(changeKey === "surplusTime"){
+        if (changeKey === "surplusTime") {
             setSurplusTimeValue(changedValues.surplusTime)
         }
 
@@ -442,7 +451,7 @@ const WorkBasicInfo = (props) => {
     };
 
 
-    const updataEstimateTime= (value) => {
+    const updataEstimateTime = (value) => {
         setEstimateTimeValue(value)
         const data = {
             updateField: "estimateTime",
@@ -450,14 +459,14 @@ const WorkBasicInfo = (props) => {
             estimateTime: value
         }
         editWork(data).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setWorkInfo({ ...workInfo, estimateTime: value })
             }
         })
         setFieldName("")
     }
 
-    const updataSurplusTime= (value) => {
+    const updataSurplusTime = (value) => {
         setSurplusTimeValue(value)
         const data = {
             updateField: "surplusTime",
@@ -465,7 +474,7 @@ const WorkBasicInfo = (props) => {
             surplusTime: value
         }
         editWork(data).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setWorkInfo({ ...workInfo, surplusTime: value })
             }
         })
@@ -861,7 +870,7 @@ const WorkBasicInfo = (props) => {
                                 />
                                 小时
                             </Form.Item>
-                           
+
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
@@ -982,7 +991,7 @@ const WorkBasicInfo = (props) => {
                                 onMouseEnter={() => setHoverFieldName("planTime")}
                                 onMouseLeave={() => setHoverFieldName("")}
                                 getPopupContainer={() => formRef.current}
-                                showTime
+
                             />
                         </Form.Item>
                         <Form.Item

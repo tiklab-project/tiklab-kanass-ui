@@ -116,11 +116,11 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
 
                         <Breadcumb
-                            firstText="测试用例"
+                            firstText="测试用例库"
                         >
                             <div>
                                 <Button type="primary" onClick={() => showTestRepository()}>
-                                    添加测试用例仓库
+                                    添加测试用例库
                                 </Button>
                             </div>
                         </Breadcumb>

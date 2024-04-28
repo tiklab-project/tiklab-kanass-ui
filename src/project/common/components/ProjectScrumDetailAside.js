@@ -95,7 +95,7 @@ const ProdeScrumAside = (props) => {
             encoded: "wiki",
         },
         {
-            title: "测试用例",
+            title: "测试用例库",
             icon: 'sprint',
             id: `/projectDetail/${projectId}/test`,
             key: "test",

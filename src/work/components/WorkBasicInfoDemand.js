@@ -18,6 +18,7 @@ import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
 import StageStore from "../../project/stage/store/StageStore";
 import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import DeleteModal from "../../common/deleteModal/deleteModal";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 const WorkBasicInfo = (props) => {
@@ -46,7 +47,8 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation, createCheckboxSelectItemRelation
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation, 
+        createCheckboxSelectItemRelation, deleteWorkAttach
     } = workStore;
 
 
@@ -174,6 +176,12 @@ const WorkBasicInfo = (props) => {
         }
     }
 
+    const deleteAttach = (id) => {
+        deleteWorkAttach(id).then(() => {
+            findWorkAttachList(workId)
+        })
+    }
+
     // 文件列表的
     const attachColums = [
         {
@@ -208,7 +216,9 @@ const WorkBasicInfo = (props) => {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            render: text => <span style={{ color: "red" }}>删除</span>,
+            render: (text, record) =><Space size="middle">
+                <DeleteModal deleteFunction={deleteAttach} id={record.id} getPopupContainer = {formRef.current} />
+            </Space>
         }
     ]
 
@@ -981,7 +991,6 @@ const WorkBasicInfo = (props) => {
                                 onMouseEnter={() => setHoverFieldName("planTime")}
                                 onMouseLeave={() => setHoverFieldName("")}
                                 getPopupContainer={() => formRef.current}
-                                showTime
                             />
                         </Form.Item>
                         <Form.Item

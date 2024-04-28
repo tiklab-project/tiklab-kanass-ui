@@ -673,6 +673,14 @@ export class WorkStore {
         return data;        
     }
 
+    @action
+    deleteWorkAttach = async(value) => {
+        const params = new FormData();
+        params.append("id", value)
+        const data = await Service("/workAttach/deleteWorkAttach",params);
+        return data;        
+    }
+
     //删除事项
     @action
     deleteWorkItem = async(value) => {
