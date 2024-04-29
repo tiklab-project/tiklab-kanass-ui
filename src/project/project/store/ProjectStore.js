@@ -11,8 +11,8 @@ export class ProjectStore {
     
     @observable projectPageParams = {
         orderParams: [{
-            name: "projectName",
-            orderType: "asc"
+            name: "startTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 10,
@@ -37,6 +37,7 @@ export class ProjectStore {
 
     @action
     findJoinProjectList = async(value) => { 
+
         const data = await Service("/project/findJoinProjectList", value)
         if(data.code === 0){
             this.prolist = data.data;
@@ -45,8 +46,8 @@ export class ProjectStore {
     }
 
     @action
-    findMyAllProjectList = async() => { 
-        const data = await Service("/project/findJoinProjectList", {})
+    findMyAllProjectList = async(value) => { 
+        const data = await Service("/project/findJoinProjectList", value)
         if(data.code === 0){
             this.allProlist = data.data;
         }

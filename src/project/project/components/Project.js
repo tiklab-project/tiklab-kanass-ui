@@ -16,9 +16,14 @@ const Project = (props) => {
     const store = {
         projectStore: ProjectStore
     }
+
+    const orderParams = [{
+        name: "startTime",
+        orderType: "desc"
+    }]
     const { findMyAllProjectList, allProlist } = ProjectStore;
     useEffect(() => {
-        findMyAllProjectList();
+        findMyAllProjectList({orderParams: orderParams});
         return;
     }, [])
     return (

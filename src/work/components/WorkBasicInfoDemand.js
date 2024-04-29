@@ -47,7 +47,7 @@ const WorkBasicInfo = (props) => {
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation, 
+        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
         createCheckboxSelectItemRelation, deleteWorkAttach
     } = workStore;
 
@@ -67,6 +67,7 @@ const WorkBasicInfo = (props) => {
 
     const initForm = (workInfo) => {
         if (workInfo) {
+            console.log(userList)
             detailForm.setFieldsValue({
                 assigner: workInfo.assigner?.id,
                 builder: workInfo.builder?.id,
@@ -175,7 +176,6 @@ const WorkBasicInfo = (props) => {
             }
         }
     }
-
     const deleteAttach = (id) => {
         deleteWorkAttach(id).then(() => {
             findWorkAttachList(workId)
@@ -216,8 +216,8 @@ const WorkBasicInfo = (props) => {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            render: (text, record) =><Space size="middle">
-                <DeleteModal deleteFunction={deleteAttach} id={record.id} getPopupContainer = {formRef.current} />
+            render: (text, record) => <Space size="middle">
+                <DeleteModal deleteFunction={deleteAttach} id={record.id} getPopupContainer={formRef.current} />
             </Space>
         }
     ]
@@ -234,8 +234,6 @@ const WorkBasicInfo = (props) => {
      * 字段更新
      */
     const updateSingle = async (changedValues) => {
-
-
         let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
@@ -258,11 +256,13 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.module
             }
         }
+
         if (changeKey === "projectVersion") {
             changedValues.projectVersion = {
                 id: changedValues.projectVersion
             }
         }
+        
         if (changeKey === "sprint") {
             changedValues.sprint = {
                 id: changedValues.sprint,
@@ -287,22 +287,24 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.reporter
             }
         }
-
+        
         if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
             }
         }
+
         if (changeKey === "reporter") {
             changedValues.builder = {
                 id: changedValues.builder
             }
         }
-        if(changeKey === "estimateTime"){
+
+        if (changeKey === "estimateTime") {
             setEstimateTimeValue(changedValues.estimateTime)
         }
 
-        if(changeKey === "surplusTime"){
+        if (changeKey === "surplusTime") {
             setSurplusTimeValue(changedValues.surplusTime)
         }
 
@@ -313,19 +315,21 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                if (!disableChange) {
-                    setWorkInfo({ ...workInfo })
-                    return
-                } else {
-                    changedValues.parentWorkItem = {
-                        id: changedValues.parentWorkItem.value,
-                        title: changedValues.parentWorkItem.label
-                    }
+                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                // if (!disableChange) {
+                //     setWorkInfo({ ...workInfo })
+                //     return
+                // } else {
+                //     changedValues.parentWorkItem = {
+                //         id: changedValues.parentWorkItem.value,
+                //         title: changedValues.parentWorkItem.label
+                //     }
+                // }
+                changedValues.parentWorkItem = {
+                    id: changedValues.parentWorkItem.value,
+                    title: changedValues.parentWorkItem.label
                 }
-
             }
-
         }
 
         if (changeKey === "preDependWorkItem") {
@@ -387,6 +391,21 @@ const WorkBasicInfo = (props) => {
                 if (props.match.path === "/projectDetail/:id/stage" && changeKey === "stage") {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
+            }
+            if(res.code === 3001){
+                message.info(res.msg)
+                if(changeKey === "parentWorkItem"){
+                    detailForm.setFieldsValue({
+                        parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null
+                    })
+                }
+
+                if(changeKey === "preDependWorkItem"){
+                    detailForm.setFieldsValue({
+                        preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null
+                    })
+                }
+                
             }
         })
     }
@@ -451,7 +470,7 @@ const WorkBasicInfo = (props) => {
     };
 
 
-    const updataEstimateTime= (value) => {
+    const updataEstimateTime = (value) => {
         setEstimateTimeValue(value)
         const data = {
             updateField: "estimateTime",
@@ -459,14 +478,14 @@ const WorkBasicInfo = (props) => {
             estimateTime: value
         }
         editWork(data).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setWorkInfo({ ...workInfo, estimateTime: value })
             }
         })
         setFieldName("")
     }
 
-    const updataSurplusTime= (value) => {
+    const updataSurplusTime = (value) => {
         setSurplusTimeValue(value)
         const data = {
             updateField: "surplusTime",
@@ -474,7 +493,7 @@ const WorkBasicInfo = (props) => {
             surplusTime: value
         }
         editWork(data).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setWorkInfo({ ...workInfo, surplusTime: value })
             }
         })
@@ -870,7 +889,7 @@ const WorkBasicInfo = (props) => {
                                 />
                                 小时
                             </Form.Item>
-                           
+
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
@@ -991,6 +1010,7 @@ const WorkBasicInfo = (props) => {
                                 onMouseEnter={() => setHoverFieldName("planTime")}
                                 onMouseLeave={() => setHoverFieldName("")}
                                 getPopupContainer={() => formRef.current}
+
                             />
                         </Form.Item>
                         <Form.Item
@@ -998,7 +1018,6 @@ const WorkBasicInfo = (props) => {
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
                         >
-
                             <SelectSimple
                                 name="parentWorkItem"
                                 onSearchChange={(value) => searchParentByWord(value)}
@@ -1106,8 +1125,6 @@ const WorkBasicInfo = (props) => {
                             : <></>
                     }
                 </div>
-
-
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

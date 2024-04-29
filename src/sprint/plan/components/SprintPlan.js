@@ -18,8 +18,8 @@ const SprintPlan = (props) => {
         workStore: WorkStore
     }
     const [dragEvent, setDragEvent] = useState()
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
-    const sprintId = localStorage.getItem("sprintId")
+    const sprintId = props.match.params.sprint;
+    const projectId = props.match.params.id;
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,

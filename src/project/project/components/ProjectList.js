@@ -10,6 +10,7 @@ import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import "./projectList.scss";
+import { useDebounce } from "../../../common/utils/debounce";
 const { Option } = Select;
 
 const ProjectList = (props) => {
@@ -24,9 +25,12 @@ const ProjectList = (props) => {
     const [recentProjectList, setRecentProjectList] = useState()
     const [recentLoading, setRecentLoading] = useState(false);
     const tenant = getUser().tenant;
-
+    const orderParams = [{
+        name: "startTime",
+        orderType: "desc"
+    }]
     useEffect(() => {
-        findJoinProjectList({})
+        findJoinProjectList({orderParams: orderParams})
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)
@@ -48,11 +52,6 @@ const ProjectList = (props) => {
             key: '1',
             icon: "project"
         },
-        // {
-        //     title: '我最近浏览的',
-        //     key: '2',
-        //     icon: "programrencent"
-        // },
         {
             title: '我收藏的',
             key: '3',
@@ -94,24 +93,21 @@ const ProjectList = (props) => {
         createRecent(params)
         props.history.push({ pathname: `/projectDetail/${project.id}/projectSetDetail/basicInfo` })
     }
-    const onSearch = value => {
+    const onSearch = useDebounce(value => {
         switch (activeTabs) {
             case "1":
-                findJoinProjectList({ projectName: value, creator: null })
-                break;
-            case "2":
-                findRecentProjectList({ projectName: value })
+                findJoinProjectList({ projectName: value, orderParams: orderParams})
                 break;
             case "3":
-                findProjectList({ master: userId, projectName: value })
+                findFocusProjectList({ master: userId, projectName: value })
                 break;
             case "4":
-                findJoinProjectList({ creator: userId, projectName: value });
+                findProjectList({ creator: userId, projectName: value });
                 break
             default:
                 break;
         }
-    };
+    }, [500]) ;
 
     const handleTableChange = (pagination) => {
         findProjectList({ current: pagination.current })
@@ -121,10 +117,7 @@ const ProjectList = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectList({ creator: null })
-                break;
-            case "2":
-                findRecentProjectList()
+                findJoinProjectList({orderParams: orderParams})
                 break;
             case "3":
                 findFocusProjectList({ master: userId })

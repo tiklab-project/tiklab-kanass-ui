@@ -234,8 +234,6 @@ const WorkBasicInfo = (props) => {
      * 字段更新
      */
     const updateSingle = async (changedValues) => {
-
-
         let changeKey = Object.keys(changedValues)[0];
         if (!Object.values(changedValues)[0]) {
             changedValues[Object.keys(changedValues)[0]] = "nullstring"
@@ -258,11 +256,13 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.module
             }
         }
+
         if (changeKey === "projectVersion") {
             changedValues.projectVersion = {
                 id: changedValues.projectVersion
             }
         }
+        
         if (changeKey === "sprint") {
             changedValues.sprint = {
                 id: changedValues.sprint,
@@ -287,17 +287,19 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.reporter
             }
         }
-
+        
         if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
             }
         }
+
         if (changeKey === "reporter") {
             changedValues.builder = {
                 id: changedValues.builder
             }
         }
+
         if (changeKey === "estimateTime") {
             setEstimateTimeValue(changedValues.estimateTime)
         }
@@ -313,19 +315,21 @@ const WorkBasicInfo = (props) => {
                     id: "nullstring"
                 }
             } else {
-                const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
-                if (!disableChange) {
-                    setWorkInfo({ ...workInfo })
-                    return
-                } else {
-                    changedValues.parentWorkItem = {
-                        id: changedValues.parentWorkItem.value,
-                        title: changedValues.parentWorkItem.label
-                    }
+                // const disableChange = await determineUpdate(changedValues.parentWorkItem.value)
+                // if (!disableChange) {
+                //     setWorkInfo({ ...workInfo })
+                //     return
+                // } else {
+                //     changedValues.parentWorkItem = {
+                //         id: changedValues.parentWorkItem.value,
+                //         title: changedValues.parentWorkItem.label
+                //     }
+                // }
+                changedValues.parentWorkItem = {
+                    id: changedValues.parentWorkItem.value,
+                    title: changedValues.parentWorkItem.label
                 }
-
             }
-
         }
 
         if (changeKey === "preDependWorkItem") {
@@ -387,6 +391,21 @@ const WorkBasicInfo = (props) => {
                 if (props.match.path === "/projectDetail/:id/stage" && changeKey === "stage") {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
+            }
+            if(res.code === 3001){
+                message.info(res.msg)
+                if(changeKey === "parentWorkItem"){
+                    detailForm.setFieldsValue({
+                        parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null
+                    })
+                }
+
+                if(changeKey === "preDependWorkItem"){
+                    detailForm.setFieldsValue({
+                        preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null
+                    })
+                }
+                
             }
         })
     }
@@ -999,7 +1018,6 @@ const WorkBasicInfo = (props) => {
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
                             validateStatus={validateStatus}
                         >
-
                             <SelectSimple
                                 name="parentWorkItem"
                                 onSearchChange={(value) => searchParentByWord(value)}
@@ -1107,8 +1125,6 @@ const WorkBasicInfo = (props) => {
                             : <></>
                     }
                 </div>
-
-
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

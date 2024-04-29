@@ -16,7 +16,7 @@ import Button from "../../../common/button/Button";
 const { RangePicker } = DatePicker;
 const VersionAddmodal = (props) => {
     const { versionStore, findVersion, userList, getUseList, setActiveTabs, selectTabs } = props;
-    const { editVersion, addVersion, searchVersionById, status, findAllVersionState, 
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState,
         getVersionList, searchCondition } = versionStore;
     const [form] = Form.useForm();
     const dateFormat = "YYYY-MM-DD HH:mm:ss";
@@ -64,7 +64,7 @@ const VersionAddmodal = (props) => {
                 })
             } else {
                 addVersion(values).then((res) => {
-                    if(res.code === 0){
+                    if (res.code === 0) {
                         setActiveTabs("all")
                         selectTabs("all", 1)
                     }
@@ -116,17 +116,13 @@ const VersionAddmodal = (props) => {
         <>
             <div className="addmodel">
                 {props.type !== "edit" ?
-                    <PrivilegeProjectButton code={'VersionAdd'} domainId={projectId}  {...props}>
-                        <Button onClick={showModal} type="primary" >
-                            添加版本
-                        </Button>
-                    </PrivilegeProjectButton>
+                    <Button onClick={showModal} type="primary" >
+                        添加版本
+                    </Button>
                     :
-                    <PrivilegeProjectButton code={'VersionEdit'} domainId={projectId}  {...props}>
-                        <svg className="svg-icon" aria-hidden="true" onClick={showModal} style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-edit"></use>
-                        </svg>
-                    </PrivilegeProjectButton>
+                    <svg className="svg-icon" aria-hidden="true" onClick={showModal} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-edit"></use>
+                    </svg>
 
                 }
                 <Modal

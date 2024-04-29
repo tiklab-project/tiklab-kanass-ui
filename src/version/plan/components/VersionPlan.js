@@ -16,7 +16,7 @@ const VersionPlan = (props) => {
         workStore: WorkStore
     }
     const [dragEvent, setDragEvent] = useState()
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
+    const projectId = props.match.params.id;
     const versionId = props.match.params.version ? props.match.params.version : null;
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);

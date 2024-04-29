@@ -343,20 +343,14 @@ const WorkChildAddmodal = (props) => {
                                     }
                                 </>
                             }
-
                         </div>
                             :
                             <div className="child-add-table">
                                 <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             </div>
                     }
-
-
                 </div>
-
             </div>
-
-
         </>
     );
 };

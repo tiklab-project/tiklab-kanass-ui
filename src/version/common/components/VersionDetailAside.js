@@ -23,7 +23,7 @@ const VersionDetailAside = (props) => {
     //语言包
     const { t, i18n } = useTranslation();
     // 当前选中路由
-    const project = JSON.parse(localStorage.getItem("project"));
+    const projectId = props.match.params.id;
     const versionId = props.match.params.version;
     const setButton = useRef();
     const [isShowText, SetIsShowText] = useState(false)
@@ -48,21 +48,21 @@ const VersionDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${project.id}/versiondetail/${versionId}/survey`,
+            url: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${project.id}/versiondetail/${versionId}/workTable`,
+            url: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
             icon: 'survey',
-            url: `/${project.id}/versiondetail/${versionId}/plan`,
+            url: `/${projectId}/versiondetail/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
         }
@@ -72,14 +72,14 @@ const VersionDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${project.id}/versiondetail/${versionId}/survey`,
+            url: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${project.id}/versiondetail/${versionId}/workTable`,
+            url: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         }
@@ -96,7 +96,7 @@ const VersionDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/projectDetail/${project.id}/version`)
+        props.history.push(`/projectDetail/${projectId}/version`)
     }
 
     return (
@@ -167,7 +167,7 @@ const VersionDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={()=> props.history.push(`/${project.id}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
+                    <div onClick={()=> props.history.push(`/${projectId}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>
