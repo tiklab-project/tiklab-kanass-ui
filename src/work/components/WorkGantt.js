@@ -10,7 +10,7 @@ import "./WorkGantt.scss";
 import { finWorkList } from "./WorkGetList";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
-import Gantt from "./GanttTest"
+// import Gantt from "./GanttTest"
 import { withRouter } from "react-router";
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailDrawer from "./WorkDetailDrawer";

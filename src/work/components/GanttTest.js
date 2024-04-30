@@ -593,7 +593,7 @@ const Gantt = (props) => {
             <div>
                 {
                     workList && workList.length > 0 ?
-                        <div className="work-time">
+                        <div className="work-gantt-time">
                             <div className="time-table">
                                 <div className="table-hearder">
                                     <div className="table-hearder-text table-border table-hearder-title">

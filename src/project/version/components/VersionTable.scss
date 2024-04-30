@@ -1,7 +1,14 @@
 .project-version {
-    height: calc(100vh - 55px);
-    padding: var(--thoughtware-padding);
-
+    // height: calc(100vh - 55px);
+    // padding: var(--thoughtware-padding);
+    .ant-row {
+        overflow: auto;
+    }
+    .project-version-list {
+        background-color: #fff;
+        height: calc(100vh - 60px);
+        padding: var(--thoughtware-padding);
+    }
     .version-name {
         cursor: pointer;
     }
@@ -18,7 +25,6 @@
 
         .version-tab {
             font-size: var(--thoughtware-font-13);
-            ;
             cursor: pointer;
             height: 50px;
             line-height: 50px;
