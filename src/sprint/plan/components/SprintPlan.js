@@ -526,6 +526,7 @@ const SprintPlan = (props) => {
                                 title={"状态"}
                                 ismult={true}
                                 value={searchCondition?.workStatusIds}
+                                positionType = "right"
                             >
                                 {
                                     workStatusList.map(item => {

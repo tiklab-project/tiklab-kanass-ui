@@ -17,6 +17,7 @@ import * as echarts from 'echarts';
 const ProjectSetMember = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsProjectUserCount, findAllProjectSet, reportList } = insightStore;
+    const isEdit = condition.data.isEdit;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
     // 统计条件的表单
@@ -153,11 +154,13 @@ const ProjectSetMember = (props) => {
                         </div>
                         {
                             !isView && <div className="report-action">
-                                <div onClick={() => setIsEditor(!isEditor)}
-                                    className="report-action-edit"
-                                >
-                                    {isEditor ? "编辑" : "取消"}
-                                </div>
+                                {
+                                    isEdit && <div onClick={() => setIsEditor(!isEditor)}
+                                        className="report-action-edit"
+                                    >
+                                        {isEditor ? "编辑" : "取消"}
+                                    </div>
+                                }
                                 <div
                                     onClick={() => deleteReport()}
                                     className="report-action-delete"
@@ -169,20 +172,20 @@ const ProjectSetMember = (props) => {
                     </div>
                 </div>
                 {
-                    isEditor ? 
-                    <div className="projectset-user-content" id={`project-user-${index}`}>
-                        {
-                            !projectSet ? <div className="delete-warning">
-                                <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
-                            </div>
-                            :
-                            <>
-                                {
-                                    projectUserList.length <= 0 && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
-                                }
-                            </>
-                        }
-                    </div>
+                    isEditor ?
+                        <div className="projectset-user-content" id={`project-user-${index}`}>
+                            {
+                                !projectSet ? <div className="delete-warning">
+                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                                </div>
+                                    :
+                                    <>
+                                        {
+                                            projectUserList.length <= 0 && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                        }
+                                    </>
+                            }
+                        </div>
                         :
                         <Form
                             name="form"

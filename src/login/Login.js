@@ -20,6 +20,7 @@ const ProjectLogin = (props) => {
             loginGoRouter={'/home/survey'}
             vaildUserAuthRouter = {'/noAuth'}
             title = {'项目管理'}
+            bgroup={'kanass'}
         />
     )
 }

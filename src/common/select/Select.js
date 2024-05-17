@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import "./Select.scss";
 const SelectSimple = (props) => {
     const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
-        ismult, title, children, value, className, simpleClassName, suffixIcon, hoverFieldName, fieldName } = props;
+        ismult, title, children, value, className, simpleClassName, suffixIcon, 
+        hoverFieldName, fieldName, positionType } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
     const [searchValue, setSearchValue] = useState();
@@ -151,7 +152,7 @@ const SelectSimple = (props) => {
 
         </div>
         {
-            showDropDown ? <div className="select-dropdown" ref={dropDown}>
+            showDropDown ? <div className={`select-dropdown ${positionType === "right"? "select-dropdown-right": "select-dropdown-left"}`} ref={dropDown}>
                 {
                     onSearchChange && <div className="select-search-box">
                         <input className="select-search-input" ref={inputRef} placeholder="搜索" onChange={(value) => searchInput(value)} />

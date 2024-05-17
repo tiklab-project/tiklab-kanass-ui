@@ -14,8 +14,8 @@ const WorkSort = (props) => {
 
     const attribute = [
         {
-            value: "id",
-            title: "事项ID"
+            value: "code",
+            title: "事项Code"
         },
         {
             value: "title",
@@ -65,7 +65,7 @@ const WorkSort = (props) => {
 
     let [sortArray, setSortArray] = useState([{name: "code", orderType: "desc"}]);
     const upDownSort = (sortName, sortType) => {
-        JSON.stringify(sortArray).indexOf()
+        // JSON.stringify(sortArray).indexOf()
         if(sortType === "cancel") {
             sortArray = sortArray.filter((item) => {
                 return !(item.name === sortName);
@@ -93,6 +93,7 @@ const WorkSort = (props) => {
             
         }
         setSortArray([...sortArray])
+        console.log(sortArray)
         sorter(sortArray)
     }
 

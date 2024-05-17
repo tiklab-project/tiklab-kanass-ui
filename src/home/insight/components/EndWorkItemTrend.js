@@ -19,6 +19,8 @@ const { RangePicker } = DatePicker;
 
 const EndWorkItemTrend = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
+    const isEdit = condition.data.isEdit;
+    console.log(condition.data.isEdit, "EndWorkItemTrend")
     const { statisticsEndWorkItemCount, findAllProject, reportList } = insightStore;
 
     // 仪表盘是否处于编辑模块
@@ -47,8 +49,8 @@ const EndWorkItemTrend = (props) => {
      * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
-        const data  =condition.data.data;
-        
+        const data = condition.data.data;
+
         if (isEditor) {
             const params = {
                 startDate: data.startDate,
@@ -58,7 +60,7 @@ const EndWorkItemTrend = (props) => {
                 projectId: data.projectId
             }
             setStatisticsData(params)
-        }else {
+        } else {
             if (data) {
                 const formData = {
                     dateRanger: data.startDate ? [moment(data.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data.endDate, 'YYYY-MM-DD HH:mm:ss')] : null,
@@ -66,15 +68,15 @@ const EndWorkItemTrend = (props) => {
                     workItemTypeCode: data.workItemTypeCode,
                     projectId: projectCountList ? data.projectId : null
                 }
-    
+
                 form.setFieldsValue(formData)
             }
         }
         return;
     }, [isEditor])
 
-    useEffect(()=> {
-        if(chart){
+    useEffect(() => {
+        if (chart) {
             chart.resize();
         }
         return null;
@@ -91,7 +93,7 @@ const EndWorkItemTrend = (props) => {
                 let seriesValue = []
                 const projectCountList = list.projectCountList
                 setProjectCountList(list.projectCountList)
-                if(projectCountList){
+                if (projectCountList) {
                     if (list.projectCountList.length > 0) {
                         const legendDate = list.projectCountList.map(item => {
                             seriesValue.push({
@@ -141,7 +143,7 @@ const EndWorkItemTrend = (props) => {
                         myChart.setOption(option);
                     }
                 }
-                
+
             }
         })
     }
@@ -189,7 +191,7 @@ const EndWorkItemTrend = (props) => {
             value: "year",
             title: "年"
         }
-    ]   
+    ]
 
     // 统计的事项类型
     const workItemType = [
@@ -217,7 +219,7 @@ const EndWorkItemTrend = (props) => {
     }
     return (
         <Fragment>
-            <div className="end-trend"  key = {condition.i} data-grid= {condition}>
+            <div className="end-trend" key={condition.i} data-grid={condition}>
                 <div className="end-trend-top">
                     <div className="end-trend-title">
                         <div>
@@ -225,11 +227,14 @@ const EndWorkItemTrend = (props) => {
                         </div>
                         {
                             !isView && <div className="report-action">
-                                <div onClick={() => setIsEditor(!isEditor)}
-                                    className="report-action-edit"
-                                >
-                                    {isEditor ? "编辑" : "取消"}
-                                </div>
+                                {
+                                    isEdit && <div onClick={() => setIsEditor(!isEditor)}
+                                        className="report-action-edit"
+                                    >
+                                        {isEditor ? "编辑" : "取消"}
+                                    </div>
+                                }
+
                                 <div
                                     onClick={() => deleteReport()}
                                     className="report-action-delete"
@@ -262,7 +267,7 @@ const EndWorkItemTrend = (props) => {
                             onFinish={editReport}
                             wrapperCol={{ span: 12 }}
                             labelCol={{ span: 6 }}
-                            layout = "vertical"
+                            layout="vertical"
                         >
                             <Form.Item name="projectId" label="项目" rules={[{ required: true }]}>
                                 <Select

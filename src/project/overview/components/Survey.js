@@ -213,87 +213,6 @@ const Survey = (props) => {
         return name;
     }
 
-    const recentItem = (item) => {
-        let element;
-        switch (item.model) {
-            case "workItem":
-                element = <div className="work-item" key={item.id}>
-                    <div className="work-icon">
-                        {
-                            item.iconUrl ?
-                                <img
-                                    alt=""
-                                    className="list-img"
-                                    src={setImageUrl(item.iconUrl)}
-                                />
-                                :
-                                <img
-                                    src={('/images/workType1.png')}
-                                    alt=""
-                                    className="list-img"
-                                />
-
-                        }
-                    </div>
-                    <div className="work-content">
-                        <div className="content-name" onClick={() => goWorkItem(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-            case "version":
-                element = <div className="version-item" key={item.id}>
-                    <div className="version-icon">
-                        {
-                            item.iconUrl ?
-                                <img
-                                    src={('/images/' + item.iconUrl)}
-                                    alt=""
-                                    className="list-img"
-                                />
-                                :
-                                <img
-                                    src={('/images/version.png')}
-                                    alt=""
-                                    className="list-img"
-                                />
-
-                        }
-                    </div>
-                    <div className="version-content">
-                        <div className="content-name" onClick={() => goVersion(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-            case "sprint":
-                element = <div className="sprint-item" key={item.id}>
-                    <div className="sprint-icon">
-                        <img
-                            src={('/images/sprint.png')}
-                            alt=""
-                            className="list-img"
-                        />
-                    </div>
-                    <div className="sprint-content">
-                        <div className="content-name" onClick={() => goSprint(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-        }
-        return element;
-    }
-
 
     const goWorkItem = (item) => {
         updateRecent({ id: item.id })
@@ -412,7 +331,7 @@ const Survey = (props) => {
                                     </svg>
                                     <div className="item-content">
                                         <div className="item-top">{project?.startTime} ~ {project?.endTime}</div>
-                                        <div className="item-bottom">项目周期状态</div>
+                                        <div className="item-bottom">项目状态</div>
                                     </div>
                                 </div>
 

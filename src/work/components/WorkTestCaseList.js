@@ -55,15 +55,21 @@ const WorkTestCaseList = (props) => {
             ),
         },
         {
-            title: "用例库",
+            title: "目录",
             dataIndex: "testCaseName",
             key: "testCaseName",
             width: 150
         },
         {
+            title: "仓库",
+            dataIndex: ["repository", "name"],
+            key: "repository",
+            width: 150
+        },
+        {
             title: "作者",
             dataIndex: "createUser",
-            key: "assigner",
+            key: "createUser",
             width: 150
         },
         {

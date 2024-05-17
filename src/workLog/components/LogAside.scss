@@ -36,6 +36,13 @@
 
     .orga-aside-li {
         line-height: 40px;
+        cursor: pointer;
+    }
+    .orga-aside-second{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20;
     }
 
     .orga-aside-ul {

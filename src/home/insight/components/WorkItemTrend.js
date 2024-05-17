@@ -19,6 +19,7 @@ const { RangePicker } = DatePicker;
 const WorkItemTrend = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsDayWorkItemCount, findAllProject, reportList } = insightStore;
+    const isEdit = condition.data.isEdit;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
     // 统计条件的表单
@@ -220,11 +221,13 @@ const WorkItemTrend = (props) => {
                         </div>
                         {
                             !isView && <div className="report-action">
-                                <div onClick={() => setIsEditor(!isEditor)}
-                                    className="report-action-edit"
-                                >
-                                    {isEditor ? "编辑" : "取消"}
-                                </div>
+                                {
+                                    isEdit && <div onClick={() => setIsEditor(!isEditor)}
+                                        className="report-action-edit"
+                                    >
+                                        {isEditor ? "编辑" : "取消"}
+                                    </div>
+                                }
                                 <div
                                     onClick={() => deleteReport()}
                                     className="report-action-delete"

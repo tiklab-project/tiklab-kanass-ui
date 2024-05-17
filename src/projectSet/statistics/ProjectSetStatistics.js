@@ -32,4 +32,4 @@ const ProjectSetStatistics = (props) => {
     )
 
 }
-export default withRouter(ProjectSetStatistics);  
+export default withRouter(ProjectSetStatistics);

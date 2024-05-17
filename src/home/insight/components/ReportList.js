@@ -177,7 +177,6 @@ const ReportList = (props) => {
             closable={false}
             style={{
                 top: "50px",
-
             }}
         >
 

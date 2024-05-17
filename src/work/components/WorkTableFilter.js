@@ -20,9 +20,8 @@ const WorkTableFilter = (props) => {
     const { projectList, searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
         workShowType, viewType, findProjectList, getSelectUserList,
-        getWorkTypeList, getWorkStatus, userList } = workStore;
+        getWorkTypeList, getWorkStatus, userList, getWorkBoardList } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
-    
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
@@ -74,23 +73,35 @@ const WorkTableFilter = (props) => {
     }
 
 
-    const sorter = (sortType, isAsc) => {
-        const orderParams = [];
-        orderParams.push({
-            name: sortType,
-            orderType: isAsc
-        })
+    const sorter = (orderParams) => {
+        // orderParams.push({
+        //     name: sortType,
+        //     orderType: isAsc
+        // })
+        // searchCondition.orderParams = orderParams;
+        // searchCondition.pageParam = {
+        //     pageSize: 20,
+        //     currentPage: 1
+        // }
         searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {
             pageSize: 20,
             currentPage: 1
         }
-        if (viewType === "tree") {
-            getWorkConditionPageTree()
+
+        if(workShowType === "gantt"){
+            if (viewType === "tree") {
+                getWorkConditionPageTree()
+            }
+            if (viewType === "tile") {
+                getWorkConditionPage()
+            }
         }
-        if (viewType === "tile") {
-            getWorkConditionPage()
+        
+        if(workShowType === "bodar"){
+            getWorkBoardList(searchCondition)
         }
+       
     }
 
     return (
@@ -98,7 +109,7 @@ const WorkTableFilter = (props) => {
             <WorkTypeTab />
             <div className="work-table-filter">
                 {
-                    props.match.path == "/workTable" &&
+                    (props.match.path === "/workTable" || props.match.path === "/workBodar" || props.match.path ==="/workGantt") &&
                     <SelectSimple 
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
@@ -214,7 +225,7 @@ const WorkTableFilter = (props) => {
                     </div>
                 </div>
                 {
-                    workShowType === "bodar" && <WorkSort sorter={sorter} />
+                    (workShowType === "bodar" || workShowType === "gantt") && <WorkSort sorter={sorter} />
                 }
                 
             </div>

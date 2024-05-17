@@ -14,6 +14,7 @@ import { Form, Select, Button } from 'antd';
 const WorkItemStatusSituation = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = insightStore;
+    const isEdit = condition.data.isEdit;
     // 事项的各个状态的数据统计列表
     const [workItemStatusCount, setWorkItemStatusCount] = useState();
     const [project, setProject] = useState()
@@ -98,11 +99,13 @@ const WorkItemStatusSituation = (props) => {
                     </div>
                     {
                         !isView && <div className="report-action">
-                            <div onClick={() => setIsEditor(!isEditor)}
-                                className="report-action-edit"
-                            >
-                                {isEditor ? "编辑" : "取消"}
-                            </div>
+                            {
+                                isEdit && <div onClick={() => setIsEditor(!isEditor)}
+                                    className="report-action-edit"
+                                >
+                                    {isEditor ? "编辑" : "取消"}
+                                </div>
+                            }
                             <div
                                 onClick={() => deleteReport()}
                                 className="report-action-delete"

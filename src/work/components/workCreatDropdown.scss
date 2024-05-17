@@ -32,12 +32,17 @@
     }
     .work-type-item {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
         height: 40px;
         line-height: 40px;
         padding: 0 15px;
         cursor: pointer;
+        .work-type-item-name {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
     }
     .work-type-item:hover {
         background-color: var(--thoughtware-gray-400);

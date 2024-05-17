@@ -15,6 +15,7 @@ const { Option } = Select;
 const ProjectOperateTable = (props) => {
     const { insightStore, index, condition, editInsight, isView } = props;
     const { statisticsProjectOperateList, findAllProjectSet, setProjectSetId, reportList } = insightStore;
+    const isEdit = condition.data.isEdit;
     // 项目进展列表
     const [projectOperateList, setProjectOPerteList] = useState([])
     // 项目集列表
@@ -92,11 +93,13 @@ const ProjectOperateTable = (props) => {
                         </div>
                         {
                             !isView && <div className="report-action">
-                                <div onClick={() => setIsEditor(!isEditor)}
-                                    className="report-action-edit"
-                                >
-                                    {isEditor ? "编辑" : "取消"}
-                                </div>
+                                {
+                                    isEdit && <div onClick={() => setIsEditor(!isEditor)}
+                                        className="report-action-edit"
+                                    >
+                                        {isEditor ? "编辑" : "取消"}
+                                    </div>
+                                }
                                 <div
                                     onClick={() => deleteReport()}
                                     className="report-action-delete"

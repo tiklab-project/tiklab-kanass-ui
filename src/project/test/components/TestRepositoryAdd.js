@@ -70,8 +70,8 @@ const TestRepositoryAdd = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: "userName",
-            key: "master",
+            dataIndex: "user",
+            key: "user",
             align: "left",
             width: "20%",
         }

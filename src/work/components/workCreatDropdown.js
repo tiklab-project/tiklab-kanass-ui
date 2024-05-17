@@ -65,14 +65,14 @@ const WorkCreatDropdown = (props) => {
                             onClick={() => selectAddType(item)}
                             key={item.id}
                         >
-                            <div>
+                            {/* <div> */}
                                 <img
                                     src = {setImageUrl(item.workType?.iconUrl)}
                                     alt=""
                                     className="img-icon-right"
                                 />
-                                添加{item.workType.name}
-                            </div>
+                                <div className="work-type-item-name">添加{item.workType.name}</div>
+                            {/* </div> */}
                         </div>
 
                     })

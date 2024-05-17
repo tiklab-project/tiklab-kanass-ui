@@ -11,6 +11,7 @@ import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { useSelector } from "thoughtware-plugin-core-ui";
 import { getVersionInfo } from "thoughtware-core-ui";
+import StatisticsFree from './StatisticsFree';
 const StatisticsAsicde = (props) => {
     const { workReportList, logReportList, workKey, logKey } = props;
     const pluginStore = useSelector(state => state.pluginStore);
@@ -21,8 +22,7 @@ const StatisticsAsicde = (props) => {
     const projectSetId = props.match.params.projectSetId;
     const sprintId = props.match.params.sprint;
     const [logMenuList, setLogMenuList] = useState(logReportList)
-
-    
+    const [statisticsFreeVisable, setStatisticsFreeVisable] = useState(false);
     // 选中的菜单
     const [selectRouter, setSelectRouter] = useState("workItem")
     // 已展开子级的计划id集合
@@ -66,15 +66,17 @@ const StatisticsAsicde = (props) => {
         if (props.match.path === "/projectSetdetail/:projectSetId/statistics") {
             url = `/projectSetdetail/${projectSetId}/statistics`;
         }
-        if (versionInfo.expired === false || type === "workItem"  ) {
+        if (versionInfo.expired === false || type === "workItem") {
             url = `${url}/${type}`;
+            setSelectRouter(type)
+            props.history.push(url);
         } else {
             // url = `${url}/${type}`;
-            url = `${url}/advert`;
+            // url = `${url}/advert`;
+            setStatisticsFreeVisable(true)
         }
 
-        setSelectRouter(type)
-        props.history.push(url);
+        
     }
 
     return (
@@ -179,6 +181,10 @@ const StatisticsAsicde = (props) => {
                     </Fragment>
 
                 }
+                <StatisticsFree
+                    statisticsFreeVisable={statisticsFreeVisable}
+                    setStatisticsFreeVisable={setStatisticsFreeVisable}
+                />
             </Fragment>
 
 

@@ -2,26 +2,29 @@ import React, { useEffect, useState, useRef } from "react";
 import "./WorkChangeView.scss";
 import { Radio, Popconfirm } from 'antd';
 import Button from "../../common/button/Button";
-import { useSelector } from "thoughtware-plugin-core-ui";
+
 import { withRouter } from "react-router";
-import { getVersionInfo } from "thoughtware-core-ui"
+
 import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 import { observer, inject } from "mobx-react";
+import { getVersionInfo } from "thoughtware-core-ui";
+import { useSelector } from "thoughtware-plugin-core-ui";
+import WorkGanttFree from "./WorkGanttFree";
 
 const WorkChangeView = (props) => {
-    const {  buttonType, workStore } = props;
-    const {getWorkConditionPage,getWorkConditionPageTree,viewType, workShowType, setWorkShowType, 
-        setViewType, setWorkId, setWorkIndex} = workStore
+    const { buttonType, workStore } = props;
+    const { getWorkConditionPage, getWorkConditionPageTree, viewType, workShowType, setWorkShowType,
+        setViewType, setWorkId, setWorkIndex } = workStore
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
-    const gantte = useRef()
-    const pluginStore = useSelector(state => state.pluginStore);
     const versionInfo = getVersionInfo();
+    const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const stageId = props.match.params.stage ? props.match.params.stage : null;
     const path = props.match.path;
+    const [workGanttFreeVisable, setWorkGanttFreeVisable] = useState(false);
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
         return () => {
@@ -56,28 +59,39 @@ const WorkChangeView = (props) => {
         }
     ]
 
-    const goPlugin = () => {
-        window.open(`${homes_url}/account/subscribe/subscribeList`)
+    const ganttViewList = {
+        value: "gantt",
+        path: "Gantt",
+        title: "甘特图"
     }
-    const changeWorkView = (value) => {
-        if(value === workShowType) return;
-        setWorkShowType(value)
-        setWorkId()
-        if(path.indexOf("projectDetail") > -1){
-            props.history.push(`/projectDetail/${projectId}/work${value}`)
+
+
+    const changeWorkView = (item) => {
+        if (item.value === workShowType) return;
+        if (item.value === "gantt") {
+            if (versionInfo.expired === true) {
+                setWorkGanttFreeVisable(true);
+                return
+            }
+            
         }
-        if(path.indexOf("work") === 1){
-            props.history.push(`/work${value}`)
+        setWorkShowType(item.value)
+        setWorkId()
+        if (path.indexOf("projectDetail") > -1) {
+            props.history.push(`/projectDetail/${projectId}/work${item.path}`)
+        }
+        if (path.indexOf("work") === 1) {
+            props.history.push(`/work${item.path}`)
         }
 
-        if(path.indexOf("sprintdetail") > 1){
-            props.history.push(`/${projectId}/sprintdetail/${sprintId}/work${value}`)
+        if (path.indexOf("sprintdetail") > 1) {
+            props.history.push(`/${projectId}/sprintdetail/${sprintId}/work${item.path}`)
         }
-        if(path.indexOf("versiondetail") > 1){
-            props.history.push(`/${projectId}/versiondetail/${versionId}/work${value}`)
+        if (path.indexOf("versiondetail") > 1) {
+            props.history.push(`/${projectId}/versiondetail/${versionId}/work${item.path}`)
         }
-        if(path.indexOf("stagedetail") > 1){
-            props.history.push(`/${projectId}/stagedetail/${stageId}/work${value}`)
+        if (path.indexOf("stagedetail") > 1) {
+            props.history.push(`/${projectId}/stagedetail/${stageId}/work${item.path}`)
         }
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
@@ -93,7 +107,7 @@ const WorkChangeView = (props) => {
                     getPageList();
                 } else if (workShowType === "table") {
                     getWorkConditionPage();
-                }else if (workShowType === "gantt") {
+                } else if (workShowType === "gantt") {
                     const values = {
                         pageParam: {
                             pageSize: 20,
@@ -125,7 +139,7 @@ const WorkChangeView = (props) => {
     }
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 const list = res.data.dataList;
                 if (list.length > 0) {
                     setWorkIndex(1)
@@ -139,7 +153,7 @@ const WorkChangeView = (props) => {
     }
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 const list = res.data.dataList;
                 if (list.length > 0) {
                     setWorkIndex(1)
@@ -173,49 +187,65 @@ const WorkChangeView = (props) => {
                 <div>
                     {
                         viewList.map(item => {
-                            return <div
-                                key={item.value}
-                                className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(item.value)}>
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref={`#icon-${item.value}`}></use>
-                                </svg>
-                                {item.title}
+                            return <div>
+                                <div
+                                    key={item.value}
+                                    className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}
+                                    onClick={() => changeWorkView(item)}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-${item.value}`}></use>
+                                    </svg>
+                                    {item.title}
 
+
+                                </div>
                             </div>
+
                         })
                     }
-                   
-                    {
-                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <div
-                            className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
-                            onClick={() => changeWorkView("gantt")}>
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-gantt`}></use>
+                    {/* <div
+                        className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
+                        onClick={() => changeWorkView(ganttViewList)}
+                    >
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref={`#icon-gantt`}></use>
+                        </svg>
+                        甘特图
+                        {
+                            versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref={`#icon-member`}></use>
                             </svg>
-                            甘特图
-                        </div>
-                            :
-                            <Popconfirm
-                                ref={gantte}
-                                title="企业版功能，是否升级企业版？"
-                                placement="left"
-                                onConfirm={(e) => goPlugin(e)}
-                                getPopupContainer={() => treeDropDown.current}
-                            >
-                                <div className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}>
-                                    <div className="dropdown-item">
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-gantt`}></use>
-                                        </svg>
-                                        甘特图
+                        }
+                    </div> */}
 
-                                    </div>
+                    {
+                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ?
+                            <div
+                                className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
+                                onClick={() => changeWorkView(ganttViewList)}
+                            >
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref={`#icon-gantt`}></use>
+                                </svg>
+                                甘特图
+                            </div>
+                            :
+                            <div
+                                className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
+                                onClick={() => changeWorkView(ganttViewList)}
+                            >
+                                <div className="dropdown-item">
                                     <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-ques`}></use>
+                                        <use xlinkHref={`#icon-gantt`}></use>
                                     </svg>
+                                    甘特图
                                 </div>
-                            </Popconfirm>
+                                {
+                                    versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-member`}></use>
+                                    </svg>
+                                }
+                            </div>
                     }
 
                 </div>
@@ -234,6 +264,10 @@ const WorkChangeView = (props) => {
                 :
                 <></>
         }
+        <WorkGanttFree
+            workGanttFreeVisable={workGanttFreeVisable}
+            setWorkGanttFreeVisable={setWorkGanttFreeVisable}
+        />
     </div>
 }
 export default withRouter(inject("workStore")(observer(WorkChangeView)));

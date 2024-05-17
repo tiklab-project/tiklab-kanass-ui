@@ -457,7 +457,6 @@ const Gantt = (props) => {
         sessionStorage.setItem("detailCrumbArray", JSON.stringify([{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }]));
         const pathname = props.match.url;
         props.history.replace(`${pathname}/${workItem.id}`)
-        console.log(props)
         setIsModalVisible(true)
 
     }

@@ -519,7 +519,7 @@ const Routers = [
 
             },
             {
-                path: "/worktTable/:workId",
+                path: "/workTable/:workId",
                 component: WorkTable,
                 exact: true
             },

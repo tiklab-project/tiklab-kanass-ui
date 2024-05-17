@@ -61,15 +61,21 @@ const WorkTestCaseAddmodal = (props) => {
             width: 150
         },
         {
-            title: "用例库",
+            title: "目录",
             dataIndex: "testCategoryName",
-            key: "workStatus",
+            key: "testCategoryName",
+            width: 150
+        },
+        {
+            title: "用例库",
+            dataIndex: ["repository", "name"],
+            key: "repository",
             width: 150
         },
         {
             title: "作者",
             dataIndex: "createUser",
-            key: "assigner",
+            key: "createUser",
             width: 150
         }
     ];

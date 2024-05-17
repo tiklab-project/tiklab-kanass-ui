@@ -1,12 +1,13 @@
 
 import React from "react";
-import { observer, inject } from "mobx-react";
 import Button from "../../common/button/Button";
 import "./StatisticsMore.scss";
 
 const StatisticsMore = (props) => {
     const goPlugin = () => {
-        window.open('https://thoughtware.cn/download/kanass/ee')
+        window.open('https://thoughtware.cn/account/subscribe')
+        
+       // https://work.thoughtware.cn/#/enterprise/application
     }
     return (
         <div className="statistics-advert" onClick={() => goPlugin()}>

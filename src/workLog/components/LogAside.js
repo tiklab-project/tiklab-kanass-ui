@@ -11,22 +11,25 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import "./LogAside.scss";
 import { getVersionInfo } from "thoughtware-core-ui";
+import LogStatisticsFree from './LogStatisticsFree';
 const SetAside = (props) => {
     // 无子级菜单处理
     const path = props.location.pathname;
     const [selectKey, setSelectKey] = useState(path);
     const versionInfo = getVersionInfo();
+    const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
     const select = (data) => {
-
-        setSelectKey(data.path)
         if (data.type === "statistics") {
             if (versionInfo.expired === false) {
                 props.history.push(data.path)
+                setSelectKey(data.path)
             } else {
-                props.history.push("/log/advert")
+                // props.history.push("/log/advert")
+                setLogStatisticsFreeVisable(true)
             }
-        }else {
+        } else {
             props.history.push(data.path)
+            setSelectKey(data.path)
         }
 
     }
@@ -38,18 +41,6 @@ const SetAside = (props) => {
             path: "/log/list",
             key: "log",
             icon: "statistics-work"
-            // children: [
-            //     {
-            //         title: "全部工时",
-            //         path: "/log/list",
-            //         key: "logList"
-            //     },
-            //     {
-            //         title: "我的工时",
-            //         path: "/log/userList",
-            //         key: "userList"
-            //     },
-            // ]
         },
         {
             title: '工时统计',
@@ -84,7 +75,7 @@ const SetAside = (props) => {
     const renderMenu = (data, deep, index) => {
         return (
             <li
-                style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
+                style={{  paddingLeft: `${deep * 20 + 20}` }}
                 className={`orga-aside-li orga-aside-second ${data.path === selectKey ? "orga-aside-select" : ""}`}
                 onClick={() => select(data)}
                 key={data.key}
@@ -98,6 +89,11 @@ const SetAside = (props) => {
 
                     <span>{data.title}</span>
                 </span>
+                {
+                    versionInfo.expired === true && data.type === "statistics" && <svg className="img-icon" aria-hidden="true" >
+                        <use xlinkHref="#icon-member"></use>
+                    </svg>
+                }
 
             </li>
 
@@ -170,7 +166,10 @@ const SetAside = (props) => {
                     }
                 </ul>
             </div>
-
+            <LogStatisticsFree
+                logStatisticsFreeVisable={logStatisticsFreeVisable}
+                setLogStatisticsFreeVisable={setLogStatisticsFreeVisable}
+            />
         </Fragment>
     )
 }
