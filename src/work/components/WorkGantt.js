@@ -19,7 +19,7 @@ import { useSelector } from "thoughtware-plugin-core-ui";
 import { getVersionInfo } from "thoughtware-core-ui"
 
 const WorkGantt = (props) => {
-    const { match, history, location } = props;
+    const { Gantt } = props;
     const { workList, editWork, setWorkShowType, setQuickFilterValue, archiveView } = WorkStore;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -71,37 +71,37 @@ const WorkGantt = (props) => {
             </Row>
             <div>
                 {
-                    pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ? <>
+                    Gantt && versionInfo.expired === false ? <>
                         {
                             workList && workList.length > 0 ?
-                                <RemoteComponent
-                                    point="work-gantt"
-                                    isModalType={true}
-                                    extraProps={{
-                                        workList: workList,
-                                        editWork: editWork,
-                                        setImageUrl: setImageUrl,
-                                        projectId: projectId,
-                                        workStore: WorkStore,
-                                        WorkDetailDrawer: WorkDetailDrawer,
-                                        useDebounce: useDebounce,
-                                        archiveView: archiveView,
-                                        match: match,
-                                        location: location,
-                                        history: history
-                                    }}
-                                />
-                                // <Gantt 
-                                //     workList={workList} 
-                                //     editWork={editWork} 
-                                //     setImageUrl = {setImageUrl} 
-                                //     projectId = {projectId}
-                                //     workStore = {WorkStore}
-                                //     WorkDetailDrawer = {WorkDetailDrawer}
-                                //     useDebounce = {useDebounce}
-                                //     archiveView = {archiveView}
-                                //     {...props}
+                                // <RemoteComponent
+                                //     point="work-gantt"
+                                //     isModalType={true}
+                                //     extraProps={{
+                                //         workList: workList,
+                                //         editWork: editWork,
+                                //         setImageUrl: setImageUrl,
+                                //         projectId: projectId,
+                                //         workStore: WorkStore,
+                                //         WorkDetailDrawer: WorkDetailDrawer,
+                                //         useDebounce: useDebounce,
+                                //         archiveView: archiveView,
+                                //         match: match,
+                                //         location: location,
+                                //         history: history
+                                //     }}
                                 // />
+                                <Gantt 
+                                    workList={workList} 
+                                    editWork={editWork} 
+                                    setImageUrl = {setImageUrl} 
+                                    projectId = {projectId}
+                                    workStore = {WorkStore}
+                                    WorkDetailDrawer = {WorkDetailDrawer}
+                                    useDebounce = {useDebounce}
+                                    archiveView = {archiveView}
+                                    {...props}
+                                />
                                 :
                                 <div style={{ marginTop: "50px" }}>
                                     <Empty image="/images/nodata.png" description="暂时没有事项~" />

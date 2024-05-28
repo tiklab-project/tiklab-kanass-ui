@@ -219,7 +219,7 @@ const WorkChangeView = (props) => {
                     </div> */}
 
                     {
-                        pluginStore.filter(item => item.point === "work-gantt").length > 0 && versionInfo.expired === false ?
+                        versionInfo.expired === false ?
                             <div
                                 className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
                                 onClick={() => changeWorkView(ganttViewList)}
