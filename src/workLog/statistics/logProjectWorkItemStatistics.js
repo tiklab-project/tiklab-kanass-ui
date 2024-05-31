@@ -25,9 +25,6 @@ const LogProjectWorkItemStatistics = (props) => {
     const sprintId = props?.match.params?.sprint;
     const projectSetId = props?.match.params?.projectSetId;
 
-    // const projectId = props?.extraProps?.match.params?.id;
-    // const sprintId = props?.extraProps?.match.params?.sprint;
-    // const projectSetId = props?.extraProps?.match.params?.projectSetId;
     // 定义时间格式
     const dateFormat = 'YYYY/MM/DD';
 

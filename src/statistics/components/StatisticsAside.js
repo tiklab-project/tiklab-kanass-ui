@@ -9,12 +9,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
-import { useSelector } from "thoughtware-plugin-core-ui";
 import { getVersionInfo } from "thoughtware-core-ui";
 import StatisticsFree from './StatisticsFree';
 const StatisticsAsicde = (props) => {
-    const { workReportList, logReportList, workKey, logKey } = props;
-    const pluginStore = useSelector(state => state.pluginStore);
+    const { workReportList, logReportList} = props;
     const versionInfo = getVersionInfo();
     const [workMenuList, setWorkMenuList] = useState(workReportList)
     // 项目id
@@ -76,7 +74,6 @@ const StatisticsAsicde = (props) => {
             setStatisticsFreeVisable(true)
         }
 
-        
     }
 
     return (

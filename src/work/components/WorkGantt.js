@@ -4,7 +4,6 @@ import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { observer, Provider } from "mobx-react";
 import { Row, Col, Button } from 'antd';
-import { RemoteComponent } from "thoughtware-plugin-core-ui";
 import { Empty } from "antd";
 import "./WorkGantt.scss";
 import { finWorkList } from "./WorkGetList";
@@ -15,7 +14,6 @@ import { withRouter } from "react-router";
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
-import { useSelector } from "thoughtware-plugin-core-ui";
 import { getVersionInfo } from "thoughtware-core-ui"
 
 const WorkGantt = (props) => {
@@ -25,7 +23,6 @@ const WorkGantt = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const path = props.match.path;
-    const pluginStore = useSelector(state => state.pluginStore);
     const versionInfo = getVersionInfo();
 
     const store = {
@@ -74,23 +71,6 @@ const WorkGantt = (props) => {
                     Gantt && versionInfo.expired === false ? <>
                         {
                             workList && workList.length > 0 ?
-                                // <RemoteComponent
-                                //     point="work-gantt"
-                                //     isModalType={true}
-                                //     extraProps={{
-                                //         workList: workList,
-                                //         editWork: editWork,
-                                //         setImageUrl: setImageUrl,
-                                //         projectId: projectId,
-                                //         workStore: WorkStore,
-                                //         WorkDetailDrawer: WorkDetailDrawer,
-                                //         useDebounce: useDebounce,
-                                //         archiveView: archiveView,
-                                //         match: match,
-                                //         location: location,
-                                //         history: history
-                                //     }}
-                                // />
                                 <Gantt 
                                     workList={workList} 
                                     editWork={editWork} 
@@ -111,7 +91,7 @@ const WorkGantt = (props) => {
                     </>
                         :
                         <div style={{ marginTop: "50px" }}>
-                            <Empty image="/images/nodata.png" description="付费插件请去购买~">
+                            <Empty image="/images/nodata.png" description="付费功能请去购买~">
                                 <Button type="primary" size={"middle"} onClick={() => goBuy()}>
                                     立即购买
                                 </Button>

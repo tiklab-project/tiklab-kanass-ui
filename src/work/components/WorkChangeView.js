@@ -8,7 +8,6 @@ import { withRouter } from "react-router";
 import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 import { observer, inject } from "mobx-react";
 import { getVersionInfo } from "thoughtware-core-ui";
-import { useSelector } from "thoughtware-plugin-core-ui";
 import WorkGanttFree from "./WorkGanttFree";
 
 const WorkChangeView = (props) => {
@@ -18,7 +17,6 @@ const WorkChangeView = (props) => {
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const versionInfo = getVersionInfo();
-    const pluginStore = useSelector(state => state.pluginStore);
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;

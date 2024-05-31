@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect, Fragment } from "react";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Menu, Dropdown, Popconfirm, message } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
-import { useSelector } from "thoughtware-plugin-core-ui";
 import "./WorkTableHead.scss";
 import WorkAddModel from "./WorkAddModel";
 import WorkChangeView from "./WorkChangeView";
@@ -13,13 +11,11 @@ import WorkCreatDropdown from "./workCreatDropdown";
 
 const WorkTableHead = (props) => {
     const { workStore } = props;
-    const [isModalVisible, setIsModalVisible] = useState(false);
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, searchCondition,
         getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView } = workStore;
     const [stateType, setState] = useState();
     const projectId = props.match.params.id ? props.match.params.id : null;
-    const pluginStore = useSelector(state => state.pluginStore);
     const workAddModel = useRef()
 
     const [showViewDropDown, setShowViewDropDown] = useState(false);

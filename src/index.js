@@ -21,11 +21,10 @@ import './common/language/i18n'
 import "./index.scss"
 
 import { observer } from "mobx-react"
-import { pluginLoader, PluginProvider } from "thoughtware-plugin-core-ui";
 import "./assets/index";
 import resources from "./common/language/resources";
-import {useVersion} from "thoughtware-eam-ui/es/utils";
-import {privilegeStores} from "thoughtware-privilege-ui/es/store";
+import { useVersion } from "thoughtware-eam-ui/es/utils";
+import { privilegeStores } from "thoughtware-privilege-ui/es/store";
 enableAxios()
 const Index = observer((props) => {
 
@@ -38,39 +37,25 @@ const Index = observer((props) => {
         }
         return;
     }, [])
-    
+
     const allStore = {
         ...privilegeStores,
         ...orgStores
     }
-    
 
-    const [pluginData, setPluginData] = useState({
-        routes: Routers,
-        pluginStore: [],
-        languageStore: []
-    });
 
-    useEffect(() => {
-        pluginLoader(Routers, resources,i18n, fetchMethod).then(res => {
-            setPluginData(res)
-            setVisable(false)
-        })
-        return;
-    }, []);
+
 
     return (
-        <PluginProvider store={pluginData}>
-            <Provider {...allStore}>
-                <ConfigProvider locale={zhCN}>
-                    <HashRouter>
-                        {
-                            renderRoutes(pluginData?.routes)
-                        }
-                    </HashRouter>
-                </ConfigProvider>
-            </Provider>
-        </PluginProvider>
+        <Provider {...allStore}>
+            <ConfigProvider locale={zhCN}>
+                <HashRouter>
+                    {
+                        renderRoutes(Routers)
+                    }
+                </HashRouter>
+            </ConfigProvider>
+        </Provider>
     )
 });
 

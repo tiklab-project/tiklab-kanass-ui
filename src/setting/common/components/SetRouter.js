@@ -147,13 +147,6 @@ const setDevRouter= [
         ]
     },
     {
-        title: "插件",
-        icon: 'systemplugin',
-        id: '/setting/plugin',
-        purviewCode: "SysPlugin",
-        code: 8,
-    },
-    {
         title: "系统集成",
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
@@ -478,13 +471,6 @@ const setPrdRouter= [
                 code: 7-2
             }
         ]
-    },
-    {
-        title: "插件",
-        icon: 'systemplugin',
-        id: '/setting/plugin',
-        purviewCode: "SysPlugin",
-        code: 8,
     },
     {
         title: "系统集成",

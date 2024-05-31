@@ -42,7 +42,6 @@
      'react-i18next':'reactI18next',
      "thoughtware-core-ui":"thoughtwareCoreUi",
      "@ant-design/icons":"icons",
-     "thoughtware-plugin-ui":"thoughtwarePluginUi",
      "thoughtware-form-ui":"thoughtwareFormUi",
      "thoughtware-privilege-ui":"thoughtwarePrivilegeUi",
      "thoughtware-user-ui":"thoughtwareUserUi",

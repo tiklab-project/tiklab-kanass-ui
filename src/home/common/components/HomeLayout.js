@@ -11,8 +11,6 @@ import React from 'react';
 import { renderRoutes } from "react-router-config";
 import Header from "./Header";
 import "./HomeLayout.scss";
-import { UserVerify } from 'thoughtware-eam-ui';
-import { connect } from 'thoughtware-plugin-core-ui';
 
 import { Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
@@ -36,11 +34,4 @@ const Layout = (props) => {
     )
 }
 
-
-const HomeLayout = UserVerify(Layout, '/noAuth')
-function mapStateToProps(state) {
-    return {
-        pluginStore: state.pluginStore
-    }
-}
-export default connect(mapStateToProps)(HomeLayout);
+export default Layout;

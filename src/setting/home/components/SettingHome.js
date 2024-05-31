@@ -147,19 +147,6 @@ const SettingHome = (props) => {
             ]
         },
         {
-            title: '插件',
-            key: "plugin",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '插件',
-                    key: "plugin",
-                    path: '/setting/plugin',
-                },
-            ]
-        },
-        {
             title: '系统集成',
             key: "systemIntergrtion",
             cloudShow: false,

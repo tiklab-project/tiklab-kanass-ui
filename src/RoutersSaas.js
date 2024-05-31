@@ -41,7 +41,6 @@ const workPriority = AsyncComponent(() => import('./setting/workSeting/component
 const WorkTypeFlow = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeFlow'))
 const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeForm'))
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
-const ProjectPlugin = AsyncComponent(() => import('./setting/plugins/ProjectPlugin'))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -684,11 +683,6 @@ const RoutersSaas = [
                     {
                         path: "/setting/urlData",
                         component: UrlData,
-                        exact: true
-                    },
-                    {
-                        path: "/setting/plugin",
-                        component: ProjectPlugin,
                         exact: true
                     },
                     {

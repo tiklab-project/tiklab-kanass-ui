@@ -232,7 +232,7 @@ const LogDetail = (props) => {
                         </div>
                         <div className="log-detail-item">
                             <div className="log-detail-label">登记人</div>
-                            <div className="log-detail-content">{logDetail?.user?.name}</div>
+                            <div className="log-detail-content">{logDetail?.user?.nickname}</div>
                         </div>
                         <div className="log-detail-item">
                             <div className="log-detail-label">登记时间</div>

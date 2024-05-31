@@ -26,9 +26,6 @@ const LogUserProjectStatistics = (props) => {
     const [workLog, setworkLog] = useState()
     const [headerDay, setHeaderDay] = useState()
     const [workItemManhour, setWorkItemManhour] = useState()
-    // const projectId = props?.extraProps?.match.params?.id;
-    // const sprintId = props?.extraProps?.match.params?.sprint;
-    // const projectSetId = props?.extraProps?.match.params?.projectSetId;
 
     const projectId = props?.match.params?.id;
     const sprintId = props?.match.params?.sprint;

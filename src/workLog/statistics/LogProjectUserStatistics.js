@@ -25,9 +25,6 @@ const LogProjectUserStatistics = (props) => {
     const [form] = Form.useForm();
     // 定义时间格式
     const dateFormat = 'YYYY/MM/DD';
-    // const projectId = props?.extraProps?.match.params?.id;
-    // const sprintId = props?.extraProps?.match.params?.sprint;
-    // const projectSetId = props?.extraProps?.match.params?.projectSetId;
     const projectId = props?.match.params?.id;
     const sprintId = props?.match.params?.sprint;
     const projectSetId = props?.match.params?.projectSetId;
@@ -237,7 +234,7 @@ const LogProjectUserStatistics = (props) => {
                                         projectItem.projectListLogList.length > 0 && projectItem.projectListLogList.map(userItem => {
                                             return (
                                                 <div className="logtable-contant-statistic-item" key={userItem?.user?.id}>
-                                                    <div className="logtable-contant-user">{userItem?.user?.name}</div>
+                                                    <div className="logtable-contant-user">{userItem?.user?.nickname}</div>
                                                     <div className="logtable-contant-takeuptime">
                                                         {
                                                             userItem.statisticsList && userItem.statisticsList.length > 0 && userItem.statisticsList.map((statisticItem, index) => {

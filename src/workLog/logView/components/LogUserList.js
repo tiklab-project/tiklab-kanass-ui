@@ -80,7 +80,7 @@ const LogUserList = (props) => {
         },
         {
             title: "负责人",
-            dataIndex: ["user", "name"],
+            dataIndex: ["user", "nickname"],
             key: "user",
             align: "left",
             width: "10%"
