@@ -27,7 +27,7 @@ const CoLScroll = (props) => {
         }
 
         return;
-    }, [timerCore.current.offsetHeight])
+    }, [timerCore?.current?.offsetHeight])
 
     
     useEffect(() => {
