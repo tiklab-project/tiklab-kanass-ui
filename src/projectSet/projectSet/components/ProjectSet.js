@@ -19,10 +19,10 @@ const ProjectSet = (props) => {
     const store = {
         projectSetStore: ProjectSetStore
     }
-    const { findJoinProjectSetList, allProjectSetList } = ProjectSetStore;
+    const { findAllProjectSet, allProjectSetList } = ProjectSetStore;
     //初始化获取项目列表
     useEffect(() => {
-        findJoinProjectSetList({})
+        findAllProjectSet({})
         return;
     }, [])
 

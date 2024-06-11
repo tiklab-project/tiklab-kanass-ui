@@ -16,6 +16,7 @@ import InputSearch from "../../../common/input/InputSearch";
 import { withRouter } from 'react-router';
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 import setImageUrl from '../../../common/utils/setImageUrl';
+import DeleteModal from '../../../common/deleteModal/deleteModal';
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -160,11 +161,13 @@ const ProjectSetProjectList = (props) => {
             width: "5%",
             render: (text, record) => (
                 <Space size="middle">
-                    <span className="span-botton  delete" onClick={() => deleProjectSet(record.id)}>
+                    {/* <span className="span-botton  delete" onClick={() => deleProjectSet(record.id)}>
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
-                    </span>
+                    </span> */}
+                     <DeleteModal deleteFunction={deleProjectSet} id={record.id} />
+
                 </Space>
             )
         }

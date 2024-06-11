@@ -90,7 +90,7 @@ const VersionTable = (props) => {
     */
     const deleteFocusVersion = (versionId, index) => {
         const params = {
-            version: { id: versionId },
+            versionId: versionId,
             masterId: userId,
             projectId: projectId
         }

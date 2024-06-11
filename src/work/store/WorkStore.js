@@ -952,7 +952,8 @@ export class WorkStore {
             method: "post",
             data: this.searchCondition,
             headers: {
-                ticket: getUser().ticket
+                ticket: getUser().ticket,
+                tenant: getUser().tenant
             },
             responseType: "blob"
         })

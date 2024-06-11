@@ -93,9 +93,9 @@ export class ProjectSetStore {
         const param = new FormData()
         param.append("id", values)
         const data = await Service("/projectSet/deleteProjectSet", param);
-        if(data.code === 0){
-            this.getProjectSetlist()
-        }
+        // if(data.code === 0){
+        //     this.getProjectSetlist()
+        // }
         return data;
     }
 
@@ -177,8 +177,8 @@ export class ProjectSetStore {
      * 查找所有项目集
      * @returns 
      */
-    findAllProjectSet = async() => {
-        const data = await Service("/projectSet/findAllProjectSet");
+    findAllProjectSet = async(value) => {
+        const data = await Service("/projectSet/findJoinProjectSetList", value);
         if(data.code === 0){
             this.projectSetList = data.data;
             this.allProjectSetList = data.data
@@ -191,7 +191,6 @@ export class ProjectSetStore {
         const data = await Service("/projectSet/findJoinProjectSetList", value);
         if(data.code === 0){
             this.projectSetList = data.data;
-            this.allProjectSetList = data.data
         }
         return data;
     }

@@ -76,7 +76,7 @@ const ProjectSetAddInfo = (props) => {
                 if (res.code === 0) {
                     message.success('添加成功');
                     props.history.goBack()
-                    findAllProjectSet()
+                    findAllProjectSet({})
                     
                     // props.history.push(`/projectSetdetail/${res.data}/survey`)
                 }

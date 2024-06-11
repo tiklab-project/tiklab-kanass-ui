@@ -15,7 +15,7 @@ import * as echarts from 'echarts';
 
 const UserWorkItem = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
-    const { statisticsUserWorkItemCount, findAllProjectSet, findAllProject, reportList } = insightStore;
+    const { statisticsUserWorkItemCount, findAllProject, reportList } = insightStore;
     const isEdit = condition.data.isEdit;
     // 是否编辑视图
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
@@ -33,9 +33,7 @@ const UserWorkItem = (props) => {
         /**
         * 查找所有项目集并设置默认项目集
         */
-        // findAllProjectSet().then(res => {
-        //     setProjectSetList(res.data)
-        // })
+        
 
         findAllProject().then(res => {
             setProjectList(res.data)

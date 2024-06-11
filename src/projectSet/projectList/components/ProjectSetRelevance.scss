@@ -12,9 +12,13 @@
             padding: 10px;
         }
         .projectSet-box-right {
-            .title {
+            &-title {
                 display: flex;
                 justify-content: space-between;
+            }
+            .project-clear:hover {
+                cursor: pointer;
+                color: var(--thoughtware-blue);
             }
         }
         .checkbox {

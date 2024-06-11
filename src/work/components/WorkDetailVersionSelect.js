@@ -70,7 +70,7 @@ const WorkDetailVersionSelect = (props) => {
                 if (res.data) {
                     setShowModal(true)
                 } else {
-                    updateWorkItem("projectVersion", item.id)
+                    updateWorkItem("projectVersion", item?.id)
                 }
             }
         })

@@ -109,12 +109,6 @@ const WorkBasicInfo = (props) => {
 
     useEffect(() => {
         findFormConfig({ id: workInfo.workType.form.id })
-        findFieldList({ code: "defectType" }).then(res => {
-            if (res.code === 0) {
-                setSelectItemList(res.data[0].selectItemList)
-                setEachTypeField(res.data[0])
-            }
-        })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workInfo) {
@@ -262,7 +256,7 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.projectVersion
             }
         }
-        
+
         if (changeKey === "sprint") {
             changedValues.sprint = {
                 id: changedValues.sprint,
@@ -287,7 +281,7 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.reporter
             }
         }
-        
+
         if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
@@ -392,20 +386,20 @@ const WorkBasicInfo = (props) => {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }
-            if(res.code === 3001){
+            if (res.code === 3001) {
                 message.info(res.msg)
-                if(changeKey === "parentWorkItem"){
+                if (changeKey === "parentWorkItem") {
                     detailForm.setFieldsValue({
                         parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null
                     })
                 }
 
-                if(changeKey === "preDependWorkItem"){
+                if (changeKey === "preDependWorkItem") {
                     detailForm.setFieldsValue({
                         preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null
                     })
                 }
-                
+
             }
         })
     }
@@ -855,6 +849,27 @@ const WorkBasicInfo = (props) => {
                                 />
                                 小时
                             </Form.Item>
+                            <Form.Item
+                                name="planTime" label="计划日期"
+                                // wrapperCol={{ span: 16 }}
+                                hasFeedback={showValidateStatus === "planTime" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <RangePicker
+                                    locale={locale}
+                                    format={dateFormat}
+                                    allowClear={false}
+                                    className="work-select"
+                                    bordered={fieldName === "planTime" ? true : false}
+                                    suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("planTime")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => setHoverFieldName("planTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer={() => formRef.current}
+
+                                />
+                            </Form.Item>
 
                         </Form>
                     </div>
@@ -958,27 +973,7 @@ const WorkBasicInfo = (props) => {
                         labelAlign="left"
                         colon={false}
                     >
-                        <Form.Item
-                            name="planTime" label="计划日期"
-                            // wrapperCol={{ span: 16 }}
-                            hasFeedback={showValidateStatus === "planTime" ? true : false}
-                            validateStatus={validateStatus}
-                        >
-                            <RangePicker
-                                locale={locale}
-                                format={dateFormat}
-                                allowClear={false}
-                                className="work-select"
-                                bordered={fieldName === "planTime" ? true : false}
-                                suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
-                                onFocus={() => changeStyle("planTime")}
-                                onBlur={() => setFieldName("")}
-                                onMouseEnter={() => setHoverFieldName("planTime")}
-                                onMouseLeave={() => setHoverFieldName("")}
-                                getPopupContainer={() => formRef.current}
 
-                            />
-                        </Form.Item>
                         <Form.Item
                             name="parentWorkItem" label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}

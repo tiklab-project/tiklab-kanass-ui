@@ -50,6 +50,7 @@ const ProjectSetRelevance = (props) => {
             if (data.code === 0) {
                 findProjectList(projectSetId)
                 setVisible(false)
+                setCheckedList([])
             }
         })
     }
@@ -86,13 +87,20 @@ const ProjectSetRelevance = (props) => {
 
     const onCheckAllChange = e => {
         const noSelect = document.getElementsByName("noSelectProject")
-        for (var i = 0; i < noSelectProject.length; i++) {
+        if(e.target.checked === true){
+            setCheckedList(noRelatedProjects)
+        } else {
+            setCheckedList([])
+        }
+        console.log(noSelect)
+        console.log(noRelatedProjects)
+        for (var i = 0; i < noRelatedProjects.length; i++) {
             noSelect[i].checked = e.target.checked;
-            if (e.target.checked === true) {
-                setCheckedList(noRelatedProjects)
-            } else {
-                setCheckedList([])
-            }
+            // if (e.target.checked === true) {
+            //     setCheckedList(noRelatedProjects)
+            // } else {
+            //     setCheckedList([])
+            // }
         }
     };
 
@@ -162,12 +170,11 @@ const ProjectSetRelevance = (props) => {
                     }
                 </div>
                 <div className="projectSet-box-right">
-                    <div className="title">
+                    <div className="projectSet-box-right-title">
                         <span>已选项目</span> 
-                        <span>清空</span>
+                        <span className="project-clear">清空</span>
                     </div>
                     <Divider />
-
                     {
                         checkedList && checkedList.map((item,) => {
                             return (

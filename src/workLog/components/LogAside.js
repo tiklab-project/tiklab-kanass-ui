@@ -156,7 +156,7 @@ const SetAside = (props) => {
 
     return (
         <Fragment>
-            <div className="orga-aside">
+            <div className="log-orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
                     {
                         logMenuList && logMenuList.map((firstItem, index) => {
