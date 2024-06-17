@@ -1,7 +1,7 @@
 import React from "react";
-
-import "./button.scss"
+import "./button.scss";
 import { Spin } from "antd";
+
 const Button = (props) => {
 	const { buttonText, children, onClick, type, style, loading } = props;
 

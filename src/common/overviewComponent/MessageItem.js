@@ -2,12 +2,12 @@ import React from "react";
 import "./MessageItem.scss"
 import { withRouter } from "react-router";
 const MessageListItem = (props) => {
-    const { content, status, type, updateMessageDispatchItem, id, item } = props;
+    const { content, status, type, updateMessageDispatchItem, id, item, currenTab, setUnReadMessage, findMessageDispatchItemPage } = props;
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId,
         projectId, projectSetId, oldValue, newValue, sprintName, sprintId, projectName, projectSetName } = data;
-    const goMessageDetail = () => {
-        props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+
+    const updateMessage = () => {
         if (status === 0) {
             const value = {
                 id: id,
@@ -15,40 +15,54 @@ const MessageListItem = (props) => {
             }
             updateMessageDispatchItem(value).then(res => {
                 if (res.code === 0) {
-                    item.status === 1
+                    
+                    if(item.status === 0){
+                        item.status === 1
+                        findMessageDispatchItemPage({ page: 1, status: "0" }).then(res => {
+                            if(res.code === 0) {
+                                setUnReadMessage(res.data.totalRecord)
+                            }
+                        })
+                    }
                 }
             })
         }
+    }
+    const goMessageDetail = () => {
+        props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        updateMessage()
     }
 
     const goSprintDetail = () => {
         props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`);
-        if (status === 0) {
-            const value = {
-                id: id,
-                status: "1"
-            }
-            updateMessageDispatchItem(value).then(res => {
-                if (res.code === 0) {
-                    item.status === 1
-                }
-            })
-        }
+        // if (status === 0) {
+        //     const value = {
+        //         id: id,
+        //         status: "1"
+        //     }
+        //     updateMessageDispatchItem(value).then(res => {
+        //         if (res.code === 0) {
+        //             item.status === 1
+        //         }
+        //     })
+        // }
+        updateMessage()
     }
 
     const goProjectDetail = () => {
         props.history.push(`/projectDetail/${projectId}/workTable`);
-        if (status === 0) {
-            const value = {
-                id: id,
-                status: "1"
-            }
-            updateMessageDispatchItem(value).then(res => {
-                if (res.code === 0) {
-                    item.status === 1
-                }
-            })
-        }
+        // if (status === 0) {
+        //     const value = {
+        //         id: id,
+        //         status: "1"
+        //     }
+        //     updateMessageDispatchItem(value).then(res => {
+        //         if (res.code === 0) {
+        //             item.status === 1
+        //         }
+        //     })
+        // }
+        updateMessage()
     }
 
     const goProjectSetDetail = () => {

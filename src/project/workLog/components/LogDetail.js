@@ -94,7 +94,6 @@ const LogDetail = (props) => {
                         setOverPercent((overPress * 100).toFixed(2))
                         const uerPress = estimateTime / (surplusTime + usedTime);
                         setProgressPercent((uerPress * 100).toFixed(2))
-                        console.log(overPress, uerPress)
                     } else {
                         const uerPress = usedTime / estimateTime;
                         setProgressPercent((uerPress * 100).toFixed(2))

@@ -151,6 +151,9 @@ const MessageList = (props) => {
                                                 status = {item.status}
                                                 item = {item}
                                                 updateMessageDispatchItem = {updateMessageDispatchItem}
+                                                currenTab = {currenTab}
+                                                setUnReadMessage = {setUnReadMessage}
+                                                findMessageDispatchItemPage = {findMessageDispatchItemPage}
                                             />
                                             <div className={`message-status ${item.status === 0 ? "status-unread" : "status-read"}`}></div>
                                         </div>
@@ -183,6 +186,10 @@ const MessageList = (props) => {
                                                 type = {item.messageType.id} 
                                                 status = {item.status}
                                                 updateMessageDispatchItem = {updateMessageDispatchItem}
+                                                item = {item}
+                                                currenTab = {currenTab}
+                                                setUnReadMessage = {setUnReadMessage}
+                                                findMessageDispatchItemPage = {findMessageDispatchItemPage}
                                             />
                                             <div className={`message-status ${item.status === 1 ? "status-read" : "status-unread"}`}></div>
                                         </div>
