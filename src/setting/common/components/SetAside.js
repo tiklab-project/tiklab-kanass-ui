@@ -48,7 +48,7 @@ const SetAside = (props) => {
 
     const renderMenu = (data, deep, index) => {
         return (
-            <PrivilegeButton code={data.purviewCode}>
+            <PrivilegeButton code={data.purviewCode} key = {data.code}>
                 <li
                     style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                     className={`orga-aside-item ${data.id === selectKey ? "orga-aside-select" : ""}`}
@@ -98,7 +98,7 @@ const SetAside = (props) => {
     const renderSubMenu = (item, deep, index) => {
 
         return (
-            <PrivilegeButton code={item.purviewCode}>
+            <PrivilegeButton code={item.purviewCode} key = {item.code}>
                 <li key={item.code} title={item.title} className="orga-aside-li">
                     <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.id)}>
 

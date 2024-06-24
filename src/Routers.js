@@ -13,31 +13,7 @@ const NoAccessPage = AsyncComponent(() => import('./login/SystemNoAccessPage'));
 const ProjectNoAccessPage = AsyncComponent(() => import('./login/ProjectNoAccessPage'));
 const ExcludeProductUserContent = AsyncComponent(() => import('./login/ExcludeProductUserPage'))
 
-// 首页
-const SettingHome = AsyncComponent(() => import('./setting/home/components/SettingHome.js'))
-const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
-//组织中心
-const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
-const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
-const ProjectPreliminaryListSystem = AsyncComponent(() => import('./setting/form/ProjectPreliminaryListSystem'))
-const ProjectPreliminaryList = AsyncComponent(() => import('./setting/form/ProjectPreliminaryList'))
-const ProjectVirtualRoleList = AsyncComponent(() => import('./setting/user/ProjectVirtualRoleList'))
 
-const FormList = AsyncComponent(() => import('./setting/form/ProjectFormList'))
-const FormListSystem = AsyncComponent(() => import('./setting/form/ProjectFormListSystem'))
-const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/ProjectProjectFormList'))
-const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
-const ProjectFormDetailSystem = AsyncComponent(() => import('./setting/form/ProjectFormDetailSystem'))
-// const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
-const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
-const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
-
-const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
-const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))
-const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
-const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
-const FlowBusinessRoleList = AsyncComponent(() => import('./setting/flow/components/FlowBusinessRoleList'))
-// 状态组件
 
 // 消息
 const SystemMessageSendType = AsyncComponent(() => import('./setting/message/SystemMessageSendType.js'))
@@ -55,6 +31,9 @@ const workPriority = AsyncComponent(() => import('./setting/workSeting/component
 const WorkTypeFlow = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeFlow'))
 const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeForm'))
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
+const WorkPrivilege = AsyncComponent(() => import("./setting/workSeting/components/WorkPrivilege.js"))
+const WorkRoleFunction = AsyncComponent(() => import("./setting/workSeting/components/WorkRoleFunction.js"))
+const WorkFunctionList = AsyncComponent(() => import("./setting/workSeting/components/WorkFunctionList.js"))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -161,7 +140,34 @@ const InsightList = AsyncComponent(() => import('./home/insight/components/Insig
 const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
 const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
 // const ViewInsight1 = AsyncComponent(() => import("./home/insight/components/ViewInsight1.js"))
-//工时
+
+// 首页
+const SettingHome = AsyncComponent(() => import('./setting/home/components/SettingHome.js'))
+const ProjectNotFound = AsyncComponent(() => import("./setting/common/components/ProjectNotFond"))
+//组织中心
+const ProjectProjectDirectorySys = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeListSys'))
+const ProjectProjectDirectory = AsyncComponent(() => import('./setting/form/ProjectPreliminaryTypeList'))
+const ProjectPreliminaryListSystem = AsyncComponent(() => import('./setting/form/ProjectPreliminaryListSystem'))
+const ProjectPreliminaryList = AsyncComponent(() => import('./setting/form/ProjectPreliminaryList'))
+const ProjectVirtualRoleList = AsyncComponent(() => import('./setting/user/ProjectVirtualRoleList'))
+
+const FormList = AsyncComponent(() => import('./setting/form/ProjectFormList'))
+const FormListSystem = AsyncComponent(() => import('./setting/form/ProjectFormListSystem'))
+const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/ProjectProjectFormList'))
+const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
+const ProjectFormDetailSystem = AsyncComponent(() => import('./setting/form/ProjectFormDetailSystem'))
+// const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
+const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
+const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
+
+const ProjectFlowStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectFlowStatusList'))
+const FlowDetailView = AsyncComponent(() => import('./setting/flow/components/FlowDetailView'))
+const FlowDetailDesign = AsyncComponent(() => import('./setting/flow/components/FlowDetailDesign'))
+const ProjectNodeStatusList = AsyncComponent(() => import('./setting/flow/components/ProjectNodeStatusList'))
+const FlowBusinessRoleList = AsyncComponent(() => import('./setting/flow/components/FlowBusinessRoleList'))
+// 状态组件
+
+//日志
 const TaskListContent = AsyncComponent(() => import('./setting/todo/TaskList.js'))
 const TodoTempListContent = AsyncComponent(() => import('./setting/todo/TodoTempList'))
 const MyTodoTaskContent = AsyncComponent(() => import('./setting/todo/MyTodoTask'))
@@ -186,11 +192,7 @@ const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(() => import("./workLog/components/Log"))
 const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
-// const LogUserList = AsyncComponent(()=> import("./workLog/logView/components/LogUserList"))
 
-const LogProjectUserStatistics = AsyncComponent(() => import("./workLog/statistics/LogProjectUserStatistics.js"))
-const LogProjectWorkItemStatistics = AsyncComponent(() => import("./workLog/statistics/logProjectWorkItemStatistics.js"))
-const LogUserProjectStatistics = AsyncComponent(() => import("./workLog/statistics/logUserProjectStatistics.js"))
 const Routers = [
     {
         path: "/login",
@@ -612,6 +614,21 @@ const Routers = [
                     {
                         path: "/setting/worktype",
                         component: WorkTypeList,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workPrivilege",
+                        component: WorkPrivilege,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workRoleFunction/:roleId",
+                        component: WorkRoleFunction,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workFunctionList",
+                        component: WorkFunctionList,
                         exact: true
                     },
                     {

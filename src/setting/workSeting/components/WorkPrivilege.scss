@@ -1,0 +1,12 @@
+.work-privilege {
+    padding: var(--thoughtware-padding);
+    .ant-tabs-nav:before {
+        border-bottom: 0;
+    }
+    .role-table-name {
+        cursor: pointer;
+    }
+    .role-table-name:hover {
+        color: var(--thoughtware-blue);
+    }
+}
