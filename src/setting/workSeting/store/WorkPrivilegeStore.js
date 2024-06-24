@@ -27,6 +27,13 @@ export class WorkPrivilege {
         const data = await Service("/vRole/findVRolePage", this.vroleCondition)
         return data;
     }
+
+    @action
+    findWorkFunctionList = async (params) => {
+        const data = await Service("/workFunction/findWorkFunctionList", this.vroleCondition)
+        return data;
+    }
+
 }
 
 export default new WorkPrivilege();
