@@ -57,7 +57,6 @@ const WorkPriority = (props) => {
             newList[index + 1] = newItem
             setWorkPriorityList(newList)
         }
-
     }
 
     const [loading, setLoading] = useState(false)

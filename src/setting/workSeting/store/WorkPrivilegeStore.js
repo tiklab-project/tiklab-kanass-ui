@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset";
 
-export class WorkPrivilege {
+export class WorkPrivilegeStore {
     @observable roleCondition = {
         pageParam: {
             pageSize: 20,
@@ -27,13 +27,50 @@ export class WorkPrivilege {
         const data = await Service("/vRole/findVRolePage", this.vroleCondition)
         return data;
     }
-
+    
     @action
-    findWorkFunctionList = async (params) => {
-        const data = await Service("/workFunction/findWorkFunctionList", this.vroleCondition)
+    createWorkFunction = async(params) => {
+        const data = await Service("/workFunction/createWorkFunction", params)
         return data;
     }
 
+    @action
+    findWorkFunctionList = async (params) => {
+        const data = await Service("/workFunction/findWorkFunctionList", params)
+        return data;
+    }
+
+    @action
+    findWorkFunctionTreeList = async(params) => {
+        const data = await Service("/workFunction/findWorkFunctionTreeList", params)
+        return data;
+    }
+
+    @action
+    findWorkPrivilegeList = async(params) => {
+        const data = await Service("/workPrivilege/findWorkPrivilegeList", params)
+        return data;
+    }
+
+    @action
+    createWorkPrivilege = async(params) => {
+        const data = await Service("/workPrivilege/createWorkPrivilege", params)
+        return data;
+    }
+
+    @action
+    findWorkPrivilege = async(value) => {
+        const param = new FormData()
+        param.append("id", value.id)
+        const data = await Service("/workPrivilege/findWorkPrivilege", param)
+        return data;
+    }
+
+    @action
+    updateWorkRoleAllFunction= async(params) => {
+        const data = await Service("/workRoleFunction/updateWorkRoleAllFunction", params)
+        return data;
+    }
 }
 
-export default new WorkPrivilege();
+export default new WorkPrivilegeStore();

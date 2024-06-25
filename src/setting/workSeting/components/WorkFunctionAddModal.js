@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Form, Input, Radio, Select } from 'antd';
 import Button from "../../../common/button/Button";
+import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 const { Option } = Select;
 
 const layout = {
@@ -39,8 +40,11 @@ const WorkFunctionAddModal = (props) => {
         }
     ]
     const [iconUrl, setIconUrl] = useState("")
+
+    const { findWorkFunctionList, createWorkFunction } = WorkPrivilegeStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
+    const [firstWorkFunctionList, setFirstWorkFunctionList] = useState()
 
     const showModal = () => {
         setVisible(true);
@@ -48,7 +52,19 @@ const WorkFunctionAddModal = (props) => {
 
     const onFinish = () => {
         form.validateFields().then((values) => {
-            setVisible(false);
+            console.log(values)
+            const params = {
+                name: values.name,
+                code: values.code,
+                parentId: values.parentId
+            }
+            createWorkFunction(params).then(res => {
+                if (res.code === 0) {
+                    setVisible(false);
+                    form.resetFields()
+                }
+            })
+            // setVisible(false);
         })
     };
 
@@ -61,13 +77,16 @@ const WorkFunctionAddModal = (props) => {
         setVisible(false);
     };
 
-    useEffect(()=> {
-        findWorkFunctionList().then(res => {
-            if(res.code === 0){
-                
-            }
-        })
-    }, [])
+    useEffect(() => {
+        if(visible){
+            findWorkFunctionList({ parentIdIsNull: true }).then(res => {
+                if (res.code === 0) {
+                    setFirstWorkFunctionList(res.data)
+                }
+            })
+        }
+        
+    }, [visible])
     return (
         <>
             <Fragment>
@@ -123,7 +142,7 @@ const WorkFunctionAddModal = (props) => {
                             name="parentId"
                             rules={[
                                 {
-                                    required: true,
+                                    required: false,
                                     message: '请输入分组',
                                 },
                             ]}
@@ -132,8 +151,13 @@ const WorkFunctionAddModal = (props) => {
                                 placeholder="系统"
                                 allowClear
                             >
-                                <Select.Option value="system">系统</Select.Option>
-                                <Select.Option value="custom">自定义</Select.Option>
+                                {
+                                    firstWorkFunctionList && firstWorkFunctionList.map(item => {
+                                        return (
+                                            <Select.Option value = {item.id}>{item.name}</Select.Option>
+                                        )
+                                    })
+                                }
                             </Select>
                         </Form.Item>
 

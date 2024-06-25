@@ -238,9 +238,14 @@ const setDevRouter= [
             },
             {
                 title: '事项权限',
-                id: '/setting/workPrivilege',
-                code: "workPrivilege",
+                id: '/setting/workPrivilegeList',
+                code: "workPrivilegeList",
             },
+            // {
+            //     title: '事项权限',
+            //     id: '/setting/workPrivilege',
+            //     code: "workPrivilege",
+            // },
             {
                 title: '系统功能',
                 id: '/setting/systemFeature',
