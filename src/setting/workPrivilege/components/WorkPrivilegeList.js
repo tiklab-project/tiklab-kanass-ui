@@ -5,8 +5,10 @@ import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 import { Table } from "antd";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkPrivilegeAddModal from "./WorkPrivilegeAddModal";
+import { withRouter } from "react-router";
 
 const WorkPrivilegeList = (props) => {
+    const projectId = props.match.params.id;
     const { findWorkPrivilegeList } = WorkPrivilegeStore;
     const [workPrivilegeList, setWorkPrivilegeList] = useState()
 
@@ -16,7 +18,7 @@ const WorkPrivilegeList = (props) => {
     }, [])
 
     const getList = () => {
-        findWorkPrivilegeList({}).then(res => {
+        findWorkPrivilegeList({projectId: projectId}).then(res => {
             if (res.code === 0) {
                 setWorkPrivilegeList(res.data)
             }
@@ -24,7 +26,12 @@ const WorkPrivilegeList = (props) => {
     }
 
     const goRoleList = (id) => {
-        props.history.push(`/setting/workPrivilegeRoleList/${id}`)
+        if(projectId){
+            props.history.push(`/projectDetail/${projectId}/projectSetDetail/projectPrivilegeRoleList/${id}`)
+        }else {
+            props.history.push(`/setting/workPrivilegeRoleList/${id}`)
+        }
+        
     }
 
     const columns = [
@@ -56,4 +63,4 @@ const WorkPrivilegeList = (props) => {
     )
 }
 
-export default observer(WorkPrivilegeList);
+export default withRouter(observer(WorkPrivilegeList));

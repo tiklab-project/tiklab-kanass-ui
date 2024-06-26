@@ -18,7 +18,14 @@ export class WorkPrivilegeStore {
 
     @action
     findRolePageAndRoleUserNumber = async (params) => {
+        Object.assign(this.roleCondition, params)
         const data = await Service("/role/findRolePageAndRoleUserNumber", this.roleCondition)
+        return data;
+    }
+
+    @action
+    findDmRolePageByNumber = async (params) => {
+        const data = await Service("/dmRole/findDmRolePageByNumber", params)
         return data;
     }
 
@@ -69,6 +76,50 @@ export class WorkPrivilegeStore {
     @action
     updateWorkRoleAllFunction= async(params) => {
         const data = await Service("/workRoleFunction/updateWorkRoleAllFunction", params)
+        return data;
+    }
+
+    @action
+    findWorkType = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/workType/findWorkType", params)
+        return data;
+    }
+
+    @action
+    findFormFieldList = async(value) => {
+        
+        const data = await Service("/formField/findFormFieldList", value)
+        return data;
+    }
+    @action
+    findRoleUserList = async(value) => {
+        const params = new FormData();
+        params.append("roleId", value.id);
+        const data = await Service("/role/count/findRoleUserList", params)
+        return data;
+    }
+
+    @action
+    findWorkRoleFunctionList = async(value) => {
+        const data = await Service("/workRoleFunction/findWorkRoleFunctionList", value)
+        return data;
+    }
+
+    @action
+    findRole = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/role/findRole", params)
+        return data;
+    }
+
+    @action
+    findVRole = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/vRole/findVRole", params)
         return data;
     }
 }

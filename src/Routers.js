@@ -31,11 +31,13 @@ const workPriority = AsyncComponent(() => import('./setting/workSeting/component
 const WorkTypeFlow = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeFlow'))
 const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/components/WorkTypeForm'))
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
-const WorkPrivilege = AsyncComponent(() => import("./setting/workSeting/components/WorkPrivilegeList.js"))
-const WorkRoleFunction = AsyncComponent(() => import("./setting/workSeting/components/WorkRoleFunction.js"))
-const WorkFunctionList = AsyncComponent(() => import("./setting/workSeting/components/WorkFunctionList.js"))
-const WorkPrivilegeList = AsyncComponent(() => import("./setting/workSeting/components/WorkPrivilegeList.js"))
-const WorkPrivilegeRoleList = AsyncComponent(() => import("./setting/workSeting/components/WorkPrivilegeRoleList.js"))
+
+// 事项权限
+const WorkPrivilege = AsyncComponent(() => import("./setting/workPrivilege/components/WorkPrivilegeList.js"))
+const WorkRoleFunction = AsyncComponent(() => import("./setting/workPrivilege/components/WorkRoleFunction.js"))
+const WorkFunctionList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkFunctionList.js"))
+const WorkPrivilegeList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkPrivilegeList.js"))
+const WorkPrivilegeRoleList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkRoleList.js"))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -69,6 +71,10 @@ const ProjectFlowDetailDesign = AsyncComponent(() => import("./project/setting/p
 
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
+
+const ProjectPrivilege = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectPrivilege.js"))
+const ProjectPrivilegeRoleList = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectPrivilegeRoleList.js"))
+const ProjectRoleFunction = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectRoleFunction.js"))
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
@@ -624,7 +630,7 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/setting/workRoleFunction/:roleId",
+                        path: "/setting/workRoleFunction/:privilegeId/:roleType/:roleId",
                         component: WorkRoleFunction,
                         exact: true
                     },
@@ -1087,6 +1093,7 @@ const Routers = [
                                 path: "/projectDetail/:id/projectSetDetail/ProjectFormDetail/:formId",
                                 component: ProjectFormDetail,
                             },
+                           
                             {
                                 path: "/projectDetail/:id/projectSetDetail/projectFlowDetail/:flowId",
                                 component: ProjectFlowDetailDesign,
@@ -1095,7 +1102,19 @@ const Routers = [
                             {
                                 path: "/projectDetail/:id/projectSetDetail/messagenotice",
                                 component: DomainMessageNoticeContent,
-                            }
+                            },
+                            {
+                                path: "/projectDetail/:id/projectSetDetail/projectPrivilege",
+                                component: ProjectPrivilege,
+                            },
+                            {
+                                path: "/projectDetail/:id/projectSetDetail/projectPrivilegeRoleList/:privilegeId",
+                                component: ProjectPrivilegeRoleList,
+                            },
+                            {
+                                path: "/projectDetail/:id/projectSetDetail/:privilegeId/:roleType/:roleId",
+                                component: ProjectRoleFunction,
+                            },
                         ]
                     },
                 ]

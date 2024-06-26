@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider} from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { Table } from 'antd';
 import "./WorkFunctionList.scss"
 import Breadcrumb from '../../../common/breadcrumb/Breadcrumb';
@@ -21,17 +21,17 @@ const columns = [
 
 const WorkFunctionList = () => {
     const [dataSource, setDataSource] = useState([]);
-    const {findWorkFunctionTreeList} = WorkPrivilegeStore;
+    const { findWorkFunctionTreeList } = WorkPrivilegeStore;
 
 
-    useEffect(()=> {
+    useEffect(() => {
         findWorkFunctionTreeList({}).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setDataSource(res.data)
             }
         })
     }, [])
-    const moveRow = useCallback(()=> {})
+    const moveRow = useCallback(() => { })
     const onExpand = (expanded, record) => {
         // setExpandedData({
         //     ...expandedData,
@@ -45,33 +45,31 @@ const WorkFunctionList = () => {
                 firstText="事项功能"
             >
                 <Button type="primary">
-                    {/* 添加功能 */}
                     <WorkFunctionAddModal />
                 </Button>
             </Breadcrumb>
             <DndProvider backend={HTML5Backend}>
-                    <Table
-                        rowKey="id"
-
-                        dataSource={dataSource}
-                        columns={columns}
-                        tableLayout="fixed"
-                        pagination={false}
-                        components={{
-                            body: {
-                                row: DraggableFeatureBodyRow,
-                            },
-                        }}
-                        onRow={(record, index) => ({
-                            record,  // 当前数据
-                            data: dataSource,    // 完整数据
-                            index:index,   // 当前数据索引
-                            moveRow  // 移动后修改数据的方法
-                        })}
-                        expandable = {{
-                            onExpand:onExpand
-                        }}
-                    />
+                <Table
+                    rowKey="id"
+                    dataSource={dataSource}
+                    columns={columns}
+                    tableLayout="fixed"
+                    pagination={false}
+                    components={{
+                        body: {
+                            row: DraggableFeatureBodyRow,
+                        },
+                    }}
+                    onRow={(record, index) => ({
+                        record,  // 当前数据
+                        data: dataSource,    // 完整数据
+                        index: index,   // 当前数据索引
+                        moveRow  // 移动后修改数据的方法
+                    })}
+                    expandable={{
+                        onExpand: onExpand
+                    }}
+                />
             </DndProvider>
         </div>
 

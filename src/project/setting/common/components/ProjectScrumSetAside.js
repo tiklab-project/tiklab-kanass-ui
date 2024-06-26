@@ -61,13 +61,18 @@ const ProjectScrumSetAside = (props) => {
             icon: 'survey',
             id: `/projectDetail/${projectId}/projectSetDetail/module`,
             encoded: "Module"
-        }
-        ,
+        },
         {
             title: `消息通知方案`,
             icon: 'survey',
             id: `/projectDetail/${projectId}/projectSetDetail/messagenotice`,
             encoded: "messagenotice"
+        },
+        {
+            title: `事项权限`,
+            icon: 'projectPrivilege',
+            id: `/projectDetail/${projectId}/projectSetDetail/projectPrivilege`,
+            encoded: "projectPrivilege"
         }
     ];
     // 当前选中路由

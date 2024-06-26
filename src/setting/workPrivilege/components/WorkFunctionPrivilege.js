@@ -7,8 +7,8 @@ import WorkPrivilegeStore from '../store/WorkPrivilegeStore';
 const CheckboxGroup = Checkbox.Group;
 
 const WorkFunctionPrivilege = props => {
-    const {roleId, roleType, privilegeId} = props;
-    const {findWorkFunctionTreeList, updateWorkRoleAllFunction} = WorkPrivilegeStore;
+    const {roleId, roleType, privilegeId, projectId} = props;
+    const {findWorkFunctionTreeList, updateWorkRoleAllFunction, findWorkRoleFunctionList} = WorkPrivilegeStore;
     const [workFunctionList, setWorkFunctionList] = useState()
     
     const [isEdit, setIsEdit] = useState(false);
@@ -100,19 +100,16 @@ const WorkFunctionPrivilege = props => {
             roleType: roleType,
             privilegeId: privilegeId,
             functionList: checkList,
-            type: "system"
+            functionType: "function",
+            type: "system",
+            projectId: projectId
         }
         updateWorkRoleAllFunction(params).then(res => {
             if(res.code === 0){
                 console.log(res.data)
             }
         })
-        console.log(checkList)
     }
-
-
-
-   
 
     const columns = [
         {
@@ -154,16 +151,22 @@ const WorkFunctionPrivilege = props => {
         findWorkFunctionTreeList({}).then(res => {
             if(res.code === 0){
                 setWorkFunctionList(res.data)
-                const list = handleWorkFunctionList(res.data)
-                setCheckBoxData(list)
-                console.log(list)
+                findWorkRoleFunctionList({roleId: roleId, functionType: "function", privilegeId: privilegeId}).then(data => {
+                    if(data.code === 0){
+                        const functionList = data.data;
+                        setCheckList(functionList.map(item => item.functionId))
+                        const list = handleWorkFunctionList(res.data, data.data)
+                        setCheckBoxData(list)
+                    }
+                })
             }
         })
     }, [])
 
-    const handleWorkFunctionList = (data) => {
+    const handleWorkFunctionList = (functionList, roleFunctionList) => {
         let list = [];
-        data.map(item => {
+        functionList.map(item => {
+            
             const params = {
                 value: item.id,
                 label: item.name,
@@ -172,9 +175,20 @@ const WorkFunctionPrivilege = props => {
                 checkedList: [],
                 checked: false,
             }
+            const cheackRoleFunctionList = roleFunctionList.filter(roleFunction => roleFunction.functionId === item.id )
+            if(cheackRoleFunctionList.length > 0){
+                params.checked = true
+            }
             if(item.children?.length > 0){
-               const list1 =  handleWorkFunctionList(item.children)
+               const list1 =  handleWorkFunctionList(item.children, roleFunctionList)
                params.childrenData = list1;
+               if(list1.length > 0){
+                    const list2 = list1.map(item => item.value)
+                    const childrenRoleFunction = roleFunctionList.filter(item => list2.indexOf(item.functionId) > -1);
+                    console.log(childrenRoleFunction)
+                    params.checkedList = childrenRoleFunction.map(item => item.functionId)
+               }
+               
             }
             list.push(params)
         })
@@ -183,11 +197,6 @@ const WorkFunctionPrivilege = props => {
 
     return (
         <div className="work-function-privilege">
-            {/* <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-                Check all
-            </Checkbox>
-            <Divider />
-            <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} /> */}
             {
                 isEdit ?
                     <div className="work-function-promisse" >
