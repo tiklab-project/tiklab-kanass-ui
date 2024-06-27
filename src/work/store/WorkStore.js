@@ -1035,5 +1035,11 @@ export class WorkStore {
         return data;
     }
 
+    @action
+    findUserWorkFunction = async(value) => {
+        const data = await Service("/workRoleFunction/findUserWorkFunction", value)
+        return data;
+    }
+
 }
 export default new WorkStore();

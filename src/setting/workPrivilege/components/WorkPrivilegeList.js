@@ -18,7 +18,11 @@ const WorkPrivilegeList = (props) => {
     }, [])
 
     const getList = () => {
-        findWorkPrivilegeList({projectId: projectId}).then(res => {
+        const params = {
+            projectId: projectId,
+            scope: projectId ? "2" : "1"
+        }
+        findWorkPrivilegeList(params).then(res => {
             if (res.code === 0) {
                 setWorkPrivilegeList(res.data)
             }
