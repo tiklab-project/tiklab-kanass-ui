@@ -38,7 +38,7 @@ const WorkDetail = (props) => {
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
-        findSelectVersionList, haveChildren, findStageList, findFieldList
+        findSelectVersionList, haveChildren, findStageList, findStateNodeUserFieldList, permissionFieldList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -57,6 +57,7 @@ const WorkDetail = (props) => {
 
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+
     const getWorkDetail = (id) => {
         setInfoLoading(true)
         searchWorkById(id).then((res) => {
@@ -82,6 +83,15 @@ const WorkDetail = (props) => {
                         setRelationModalNum(res.data)
                     }
                 })
+
+                // 获取字段权限
+                // 获取表单字段权限
+                const data = {
+                    workId: workId,
+                    userId: userId
+                }
+                findStateNodeUserFieldList(data)
+
                 if (props.match.path === "/projectDetail/:id/work/:workId") {
                     setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
@@ -149,6 +159,11 @@ const WorkDetail = (props) => {
                                 setWorkList([...list])
                             }
                         })
+                        const data = {
+                            workId: workId,
+                            userId: userId
+                        }
+                        findStateNodeUserFieldList(data)
                     }
                     if (res.code === 40000) {
                         message.error(res.msg)
@@ -228,8 +243,11 @@ const WorkDetail = (props) => {
     }
 
     const focusTitleInput = () => {
-        inputRef.current.focus()
-        setIsFocus(true)
+        if(isPermissionField("title")){
+            inputRef.current.focus()
+            setIsFocus(true)
+        }
+        
     }
 
     const viewFlow = () => {
@@ -262,7 +280,10 @@ const WorkDetail = (props) => {
 
 
     const [showFlow, setShowFlow] = useState(false);
-
+    const isPermissionField = (code) => {
+        const isEdit = permissionFieldList.indexOf(code) > -1 ? true : false;
+        return isEdit;
+    }
 
     return (
         <>
@@ -296,7 +317,7 @@ const WorkDetail = (props) => {
 
                                                                     >
                                                                         <div
-                                                                            contentEditable={true}
+                                                                            contentEditable={isPermissionField("title")}
                                                                             suppressContentEditableWarning
                                                                             onBlur={() => updateByBlur(event, "blur")}
                                                                             onKeyDown={() => updateNameByKey(event, workInfo.id)}
@@ -339,7 +360,7 @@ const WorkDetail = (props) => {
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
                                                         />
-                                                       
+
                                                     </Skeleton>
                                                 </Col>
                                             </Row>
@@ -356,7 +377,7 @@ const WorkDetail = (props) => {
                                                             getTransitionList={getTransitionList}
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
-                                                            closeModal = {closeModal}
+                                                            closeModal={closeModal}
                                                             {...props}
                                                         />
 

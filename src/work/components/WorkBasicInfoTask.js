@@ -7,7 +7,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
+import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
 import { SwitchPreliminaryType } from "thoughtware-form-ui";
 import "thoughtware-slate-ui/es/thoughtware-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
@@ -15,14 +15,16 @@ import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
-import { changeWorkItemList, changeWorkItemParent } from "./WorkGetList";
+import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
 import StageStore from "../../project/stage/store/StageStore";
-import { updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
+
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
+    // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const exFormRef = useRef();
@@ -47,7 +49,7 @@ const WorkBasicInfo = (props) => {
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
-        createCheckboxSelectItemRelation, deleteWorkAttach
+        createCheckboxSelectItemRelation, deleteWorkAttach, findStateNodeUserFieldList, findFlow, permissionFieldList
     } = workStore;
 
 
@@ -63,6 +65,8 @@ const WorkBasicInfo = (props) => {
 
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
+
+    const userId = getUser().userId;
 
     const initForm = (workInfo) => {
         if (workInfo) {
@@ -107,7 +111,15 @@ const WorkBasicInfo = (props) => {
     }
 
     useEffect(() => {
-        findFormConfig({ id: workInfo.workType.form.id })
+        // 查找flow关联的form
+        const flowId = workInfo.workType.flow.id
+        findFlow({ id: flowId }).then(res => {
+            if (res.code === 0) {
+                console.log(res.data)
+                findFormConfig({ id: res.data.form.id })
+            }
+        })
+
         findFieldList({ code: "taskType" }).then(res => {
             if (res.code === 0) {
                 setSelectItemList(res.data[0].selectItemList)
@@ -137,7 +149,9 @@ const WorkBasicInfo = (props) => {
                 setPreWorkList(res.data.dataList);
             }
         })
-        return
+
+
+        return null;
     }, [workInfo])
 
 
@@ -261,7 +275,7 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.projectVersion
             }
         }
-        
+
         if (changeKey === "sprint") {
             changedValues.sprint = {
                 id: changedValues.sprint,
@@ -286,7 +300,7 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.reporter
             }
         }
-        
+
         if (changeKey === "builder") {
             changedValues.builder = {
                 id: changedValues.builder
@@ -391,20 +405,20 @@ const WorkBasicInfo = (props) => {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }
-            if(res.code === 3001){
+            if (res.code === 3001) {
                 message.info(res.msg)
-                if(changeKey === "parentWorkItem"){
+                if (changeKey === "parentWorkItem") {
                     detailForm.setFieldsValue({
                         parentWorkItem: workInfo.parentWorkItem ? { value: workInfo.parentWorkItem?.id, label: workInfo.parentWorkItem?.title } : null
                     })
                 }
 
-                if(changeKey === "preDependWorkItem"){
+                if (changeKey === "preDependWorkItem") {
                     detailForm.setFieldsValue({
                         preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null
                     })
                 }
-                
+
             }
         })
     }
@@ -563,7 +577,12 @@ const WorkBasicInfo = (props) => {
 
     const [hoverFieldName, setHoverFieldName] = useState("")
     const [fieldName, setFieldName] = useState("")
-    const changeStyle = (value) => {
+    const changeStyle = (value, fieldCode) => {
+        // console.log("点击")
+        // console.log()
+        if (!isPermissionField(fieldCode)) {
+            return;
+        }
         setFieldName(value)
     }
 
@@ -674,6 +693,26 @@ const WorkBasicInfo = (props) => {
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
     }
+
+    const isPermissionField = (code) => {
+        return permissionFieldList.indexOf(code) > -1 ? false : true
+    }
+
+    const onMouseEnter = (code) => {
+        if (!isPermissionField(code)) {
+            setHoverFieldName(code)
+        }
+
+    }
+
+    const switchEditorDesc = () => {
+        console.log(isPermissionField("desc"))
+        if(!isPermissionField("desc")){
+            setEditorType(true)
+        }
+        
+    }
+
     return (
         <div className="work-info">
             {contextHolder}
@@ -702,12 +741,13 @@ const WorkBasicInfo = (props) => {
                                     key="selectEachType"
                                     bordered={fieldName === "eachType" ? true : false}
                                     suffixIcon={fieldName === "eachType" || hoverFieldName == "eachType" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("eachType")}
+                                    onFocus={() => changeStyle("eachType", "taskType")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("workPriority")}
+                                    onMouseEnter={() => onMouseEnter("taskType")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                     getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("taskType")}
                                 >
                                     {
                                         selectItemList && selectItemList.map((item) => {
@@ -736,12 +776,13 @@ const WorkBasicInfo = (props) => {
                                     key="selectWorkPriority"
                                     bordered={fieldName === "workPriority" ? true : false}
                                     suffixIcon={fieldName === "workPriority" || hoverFieldName == "workPriority" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("workPriority")}
+                                    onFocus={() => changeStyle("workPriority", "workPriority")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("workPriority")}
+                                    onMouseEnter={() => onMouseEnter("workPriority")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                     getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("workPriority")}
                                 >
                                     {
                                         priorityList && priorityList.map((item) => {
@@ -776,6 +817,7 @@ const WorkBasicInfo = (props) => {
                                         setHoverFieldName={setHoverFieldName}
                                         workStore={workStore}
                                         workStatusCode={workInfo.workStatusCode}
+                                        disabled={isPermissionField("sprint")}
                                     />
                                 </Form.Item>
                             }
@@ -792,11 +834,12 @@ const WorkBasicInfo = (props) => {
                                         key="selectStage"
                                         bordered={fieldName === "stage" ? true : false}
                                         suffixIcon={fieldName === "stage" || hoverFieldName == "stage" ? <CaretDownOutlined /> : false}
-                                        onFocus={() => changeStyle("stage")}
+                                        onFocus={() => changeStyle("stage", "stage")}
                                         onBlur={() => setFieldName("")}
-                                        onMouseEnter={() => setHoverFieldName("stage")}
+                                        onMouseEnter={() => onMouseEnter("stage")}
                                         onMouseLeave={() => setHoverFieldName("")}
                                         getPopupContainer={() => formRef.current}
+                                        disabled={() => isPermissionField("stage")}
                                     >
                                         {
                                             stageList && stageList.map((item) => {
@@ -817,11 +860,12 @@ const WorkBasicInfo = (props) => {
                                     key="selectAssigner"
                                     bordered={fieldName === "assigner" ? true : false}
                                     suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("assigner")}
+                                    onFocus={() => changeStyle("assigner", "assigner")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("assigner")}
+                                    onMouseEnter={() => onMouseEnter("assigner")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("assigner")}
                                 >
                                     {
                                         userList && userList.map((item) => {
@@ -840,12 +884,13 @@ const WorkBasicInfo = (props) => {
                                     key="selectWorkUser"
                                     bordered={fieldName === "reporter" ? true : false}
                                     suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("reporter")}
+                                    onFocus={() => changeStyle("reporter", "reporter")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("reporter")}
+                                    onMouseEnter={() => onMouseEnter("reporter")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                     getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("reporter")}
                                 >
                                     {
                                         userList && userList.map((item) => {
@@ -862,12 +907,13 @@ const WorkBasicInfo = (props) => {
                                     suffix="小时"
                                     bordered={fieldName === "estimateTime" ? true : false}
                                     suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("estimateTime")}
+                                    onFocus={() => changeStyle("estimateTime", "estimateTime")}
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("estimateTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     onChange={(value) => updataEstimateTime(value)}
                                     value={estimateTimeValue}
+                                    disabled={isPermissionField("estimateTime")}
                                 />
                                 小时
                             </Form.Item>
@@ -879,16 +925,36 @@ const WorkBasicInfo = (props) => {
                                     suffix="小时"
                                     bordered={fieldName === "surplusTime" ? true : false}
                                     suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("surplusTime")}
+                                    onFocus={() => changeStyle("surplusTime", "surplusTime")}
                                     onBlur={() => setFieldName("")}
                                     onMouseEnter={() => setHoverFieldName("surplusTime")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     onChange={(value) => updataSurplusTime(value)}
                                     value={surplusTimeValue}
+                                    disabled={isPermissionField("surplusTime")}
                                 />
                                 小时
                             </Form.Item>
-
+                            <Form.Item
+                                name="planTime" label="计划日期"
+                                hasFeedback={showValidateStatus === "planTime" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <RangePicker
+                                    locale={locale}
+                                    format={dateFormat}
+                                    allowClear={false}
+                                    className="work-select"
+                                    bordered={fieldName === "planTime" ? true : false}
+                                    suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("planTime", "planTime")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => onMouseEnter("planTime")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("planTime")}
+                                />
+                            </Form.Item>
                         </Form>
                     </div>
                     <div className="right" ref={formRef}>
@@ -900,6 +966,12 @@ const WorkBasicInfo = (props) => {
                             labelAlign="left"
                             colon={false}
                         >
+                            {/* <Form.Item label="所属项目" name="project"
+                                hasFeedback={showValidateStatus === "project" ? true : false}
+                                validateStatus={validateStatus}
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.project?.projectName}</div>
+                            </Form.Item> */}
 
                             <Form.Item label="事项类型" name="workType"
                                 hasFeedback={showValidateStatus === "workType" ? true : false}
@@ -912,7 +984,7 @@ const WorkBasicInfo = (props) => {
                                 <div style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
                             </Form.Item>
                             <Form.Item label="所属版本" name="projectVersion"
-                                hasFeedback={showValidateStatus === "module" ? true : false}
+                                hasFeedback={showValidateStatus === "projectVersion" ? true : false}
                                 validateStatus={validateStatus}
                             >
                                 <WorkDetailVersionSelect
@@ -923,6 +995,7 @@ const WorkBasicInfo = (props) => {
                                     setHoverFieldName={setHoverFieldName}
                                     workStore={workStore}
                                     workStatusCode={workInfo.workStatusCode}
+                                    disabled={isPermissionField("projectVersion")}
                                 />
                             </Form.Item>
                             <Form.Item label="所属模块" name="module"
@@ -935,12 +1008,13 @@ const WorkBasicInfo = (props) => {
                                     key="selectModule"
                                     bordered={fieldName === "module" ? true : false}
                                     suffixIcon={fieldName === "module" || hoverFieldName == "module" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("module")}
+                                    onFocus={() => changeStyle("module", "module")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("module")}
+                                    onMouseEnter={() => onMouseEnter("module")}
                                     onMouseLeave={() => setHoverFieldName("")}
                                     allowClear
                                     getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("module")}
                                 >
                                     {
                                         moduleList && moduleList.map((item) => {
@@ -965,10 +1039,11 @@ const WorkBasicInfo = (props) => {
                                     parser={value => value.replace('%', '')}
                                     bordered={fieldName === "percent" ? true : false}
                                     suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("percent")}
+                                    onFocus={() => changeStyle("percent", "percent")}
                                     onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => setHoverFieldName("percent")}
+                                    onMouseEnter={() => onMouseEnter("percent")}
                                     onMouseLeave={() => setHoverFieldName("")}
+                                    disabled={isPermissionField("percent")}
                                 />
                                 {/* % */}
                             </Form.Item>
@@ -991,27 +1066,7 @@ const WorkBasicInfo = (props) => {
                         labelAlign="left"
                         colon={false}
                     >
-                        <Form.Item
-                            name="planTime" label="计划日期"
-                            // wrapperCol={{ span: 16 }}
-                            hasFeedback={showValidateStatus === "planTime" ? true : false}
-                            validateStatus={validateStatus}
-                        >
-                            <RangePicker
-                                locale={locale}
-                                format={dateFormat}
-                                allowClear={false}
-                                className="work-select"
-                                bordered={fieldName === "planTime" ? true : false}
-                                suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
-                                onFocus={() => changeStyle("planTime")}
-                                onBlur={() => setFieldName("")}
-                                onMouseEnter={() => setHoverFieldName("planTime")}
-                                onMouseLeave={() => setHoverFieldName("")}
-                                getPopupContainer={() => formRef.current}
 
-                            />
-                        </Form.Item>
                         <Form.Item
                             name="parentWorkItem" label="上级事项"
                             hasFeedback={showValidateStatus === "parentWorkItem" ? true : false}
@@ -1022,11 +1077,12 @@ const WorkBasicInfo = (props) => {
                                 onSearchChange={(value) => searchParentByWord(value)}
                                 title={"无"}
                                 simpleClassName={fieldName === "parentWorkItem" ? "select-focused" : ""}
-                                onFocus={() => changeStyle("parentWorkItem")}
-                                onBlur={() => changeStyle("")}
+                                onFocus={() => changeStyle("parentWorkItem", "parentWorkItem")}
+                                onBlur={() => setFieldName("")}
                                 suffixIcon={fieldName === "parentWorkItem" || hoverFieldName == "parentWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("parentWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
+                                disabled={isPermissionField("parentWorkItem")}
                             >
                                 {
                                     parentList && parentList.length > 0 ? parentList.map(item => {
@@ -1038,7 +1094,7 @@ const WorkBasicInfo = (props) => {
                                         />
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有查到~" />
+                                        <Empty image="/images/nodata.png" description="没有可选事项~" />
                                 }
                             </SelectSimple>
                         </Form.Item>
@@ -1052,11 +1108,12 @@ const WorkBasicInfo = (props) => {
                                 onSearchChange={(value) => searchPerByWord(value)}
                                 title={"无"}
                                 simpleClassName={fieldName === "preDependWorkItem" ? "select-focused" : ""}
-                                onFocus={() => changeStyle("preDependWorkItem")}
-                                onBlur={() => changeStyle("")}
+                                onFocus={() => changeStyle("preDependWorkItem", "preDependWorkItem")}
+                                onBlur={() => setFieldName("")}
                                 suffixIcon={fieldName === "preDependWorkItem" || hoverFieldName == "preDependWorkItem" ? true : false}
                                 onMouseEnter={() => setHoverFieldName("preDependWorkItem")}
                                 onMouseLeave={() => setHoverFieldName("")}
+                                disabled={isPermissionField("preDependWorkItem")}
                             >
                                 {
                                     preWorkList && preWorkList.length > 0 ? preWorkList.map(item => {
@@ -1070,7 +1127,7 @@ const WorkBasicInfo = (props) => {
                                         </SelectItem>
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有查到~" />
+                                        <Empty image="/images/nodata.png" description="没有可选事项~" />
                                 }
                             </SelectSimple>
 
@@ -1109,13 +1166,14 @@ const WorkBasicInfo = (props) => {
                                             code={item.fieldType.code}
                                             bordered={fieldName === `System${item.code}` ? true : false}
                                             showArrow={fieldName === `System${item.code}` ? true : false}
-                                            onMouseEnter={() => changeStyle(`System${item.code}`)}
+                                            onMouseEnter={() => onMouseEnter(`System${item.code}`)}
                                             onMouseLeave={() => setFieldName("")}
                                             fieldId={item.id}
                                             // onChange={onChange}
                                             onClear={() => onClear(item.id)}
                                             data={item.selectItemList}
                                             getPopupContainer={() => exFormRef.current}
+                                            disabled={isPermissionField(item.code)}
                                         />
                                     </Form.Item>
                                 })
@@ -1161,7 +1219,7 @@ const WorkBasicInfo = (props) => {
                             </div>
                         </Fragment>
                             :
-                            <div onClick={() => { setEditorType(true) }} className="desc-preview">
+                            <div onClick={() => switchEditorDesc() } className="desc-preview">
                                 {
                                     slateValue && <PreviewEditor
                                         value={slateValue}

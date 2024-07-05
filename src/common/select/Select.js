@@ -3,7 +3,7 @@ import "./Select.scss";
 const SelectSimple = (props) => {
     const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
         ismult, title, children, value, className, simpleClassName, suffixIcon, 
-        hoverFieldName, fieldName, positionType } = props;
+        hoverFieldName, fieldName, positionType, disabled = false } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
     const [searchValue, setSearchValue] = useState();
@@ -79,11 +79,13 @@ const SelectSimple = (props) => {
     }
 
     const showShowDrop = () => {
-        console.log( hoverFieldName, fieldName)
-        setShowDropDown(true);
-        if (onFocus) {
-            onFocus();
+        if(!disabled){
+            setShowDropDown(true);
+            if (onFocus) {
+                onFocus();
+            }
         }
+        
 
     }
 
@@ -107,7 +109,7 @@ const SelectSimple = (props) => {
         onChange(null)
     }
     return <div className={`select-view ${simpleClassName ? simpleClassName : ""}`}>
-        <div className="select-content"
+        <div className={`select-content ${disabled ? "select-content-disabled" : ""}`}
             onMouseEnter={() => onMouseEnter && onMouseEnter()}
             onMouseLeave={() => onMouseLeave && onMouseLeave()}
             onClick={() => showShowDrop()} 
@@ -127,7 +129,7 @@ const SelectSimple = (props) => {
                     ismult && selectLength > 0 && <div className="select-number">{selectLength}</div>
                 }
                 {
-                    suffixIcon && <>
+                    suffixIcon && !disabled && <>
                         {
                             !ismult && selectData ? <div>
                                 <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
@@ -141,15 +143,8 @@ const SelectSimple = (props) => {
                                 </svg>
                         }
                     </>
-
-
                 }
-                  {/* <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
-                                    <use xlinkHref="#icon-cancel"></use>
-                                </svg> */}
-
             </div>
-
         </div>
         {
             showDropDown ? <div className={`select-dropdown ${positionType === "right"? "select-dropdown-right": "select-dropdown-left"}`} ref={dropDown}>
@@ -181,8 +176,8 @@ const SelectSimple = (props) => {
                 }
 
             </div>
-                :
-                <></>
+            :
+            <></>
         }
 
 

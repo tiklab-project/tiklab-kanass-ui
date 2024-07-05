@@ -28,7 +28,9 @@
             align-items: center;
         }
     }
-
+    .select-content-disabled {
+        cursor: not-allowed;
+    }
 
     .select-icon {
         width: 20px;
@@ -105,6 +107,9 @@
                 margin-left: 20px;
                 cursor: pointer;
             }
+        }
+        .ant-empty {
+            padding-bottom: 10px;
         }
     }
     .select-dropdown-left {

@@ -32,7 +32,9 @@
     .select-input:hover {
         background-color: #f7f8fa;
     }
-
+    .select-input-disabled {
+        cursor: not-allowed;
+    }
     .select-input-focus {
         border: 1px solid #40a9ff;
         outline: 0;

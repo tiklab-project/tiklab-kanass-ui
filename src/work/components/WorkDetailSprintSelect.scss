@@ -29,6 +29,9 @@
             }
         }
     }
+    .select-input-disabled {
+        cursor: not-allowed;
+    }
     .select-input:hover {
         background-color: #f7f8fa;
     }

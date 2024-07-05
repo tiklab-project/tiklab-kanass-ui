@@ -130,7 +130,43 @@
             .ant-checkbox-group {
                 padding-left: 11px;
             }
-
+            .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+                color: #2b2b2b;
+            }
+            .ant-picker-input>input[disabled] {
+                color: #2b2b2b;
+            }
+            .ant-input-number-disabled {
+                background-color: transparent;
+            }
+            .ant-input-number-disabled {
+                color: #2b2b2b;
+            }
+            .ant-radio-group {
+                padding: 0 11px;
+            }
+            .ant-input:focus {
+                border: none;
+                box-shadow: none;
+                background-color: #F7F8FA;
+            }
+            .ant-input:hover {
+                border: none;
+                box-shadow: none;
+                background-color: #F7F8FA;
+            }
+            .ant-radio-disabled+span {
+                color: #2b2b2b;
+            }
+            .ant-checkbox-disabled+span {
+                color: #2b2b2b;
+            }
+            .ant-switch {
+                margin: 0 11px;
+            }
+            .ant-input[disabled] {
+                color: #2b2b2b;
+            }
             .work-detail-upload {
                 height: 80px;
             }

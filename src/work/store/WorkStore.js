@@ -101,6 +101,7 @@ export class WorkStore {
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
     @observable workBoardCurrentPage = [];
+    @observable permissionFieldList = [];
 
     @action
     setTotal = (value) => {
@@ -1041,5 +1042,24 @@ export class WorkStore {
         return data;
     }
 
+    @action
+    findStateNodeUserFieldList = async(value) => {
+        const params = new FormData();
+        params.append("userId", value.userId)
+        params.append("workId", value.workId)
+        const data = await Service("/stateNodeUserField/findStateNodeUserFieldList", params)
+        if(data.code === 0){
+            this.permissionFieldList = data.data;
+        }
+        return data;
+    }
+
+    @action
+    findFlow = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id)
+        const data = await Service("/flow/findFlow", params)
+        return data;
+    }
 }
 export default new WorkStore();

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailVersionSelect.scss"
-import { Modal } from "antd";
+import { Empty, Modal } from "antd";
 import Button from "../../common/button/Button";
 const WorkDetailVersionSelect = (props) => {
-    const { selectList, version, setHoverFieldName, hoverFieldName, workId, workStore, workStatusCode } = props;
+    const { selectList, version, workId, workStore, workStatusCode, disabled = false } = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
 
@@ -55,10 +55,8 @@ const WorkDetailVersionSelect = (props) => {
     const showSelect = (e) => {
         e.stopPropagation();
         setShowMoreDropdown(false)
-        if (workStatusCode != "DONE") {
+        if (!disabled) {
             setShowDropdown(true)
-        } else {
-            return
         }
 
     }
@@ -96,7 +94,7 @@ const WorkDetailVersionSelect = (props) => {
     return (
         <>
             <div className="work-detail-version-select" ref={dropdownRef}>
-                <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ? `} onClick={(e) => showSelect(e)}>
+                <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ${disabled ? "select-input-disabled" : ""} `} onClick={(e) => showSelect(e)}>
                     <div>{selectVersion?.name ? selectVersion?.name : "无"}
 
                     </div>
@@ -116,42 +114,52 @@ const WorkDetailVersionSelect = (props) => {
                     }
                 </div>
                 {
-                    showDropdown && <div className="select-dropdown">
+                    showDropdown &&
+                    <>
                         {
-                            selectList.filter(item => item.versionState.id === "000000").length > 0 &&
-                            <div className="select-group">
-                                <div className="select-group-title">未开始</div>
-                                <div className="select-group-option-box">
-                                    {
-                                        selectList.filter(item => item.versionState.id === "000000").map(item => {
-                                            return <div 
-                                                className="select-group-option" 
-                                                onClick={() => updateWork(item)}
-                                                key={item.id}
-                                            >{item.name}</div>
-                                        })
-                                    }
-                                </div>
+                            selectList.length > 0 ? <div className="select-dropdown">
+                                {
+                                    selectList.filter(item => item.versionState.id === "000000").length > 0 &&
+                                    <div className="select-group">
+                                        <div className="select-group-title">未开始</div>
+                                        <div className="select-group-option-box">
+                                            {
+                                                selectList.filter(item => item.versionState.id === "000000").map(item => {
+                                                    return <div
+                                                        className="select-group-option"
+                                                        onClick={() => updateWork(item)}
+                                                        key={item.id}
+                                                    >{item.name}</div>
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    selectList.filter(item => item.versionState.id === "111111").length > 0 &&
+                                    <div className="select-group">
+                                        <div className="select-group-title">进行中</div>
+                                        <div className="select-group-option-box">
+                                            {
+                                                selectList.filter(item => item.versionState.id === "111111").map(item => {
+                                                    return <div
+                                                        className="select-group-option"
+                                                        onClick={() => updateWork(item)}
+                                                        key={item.id}
+                                                    >{item.name}</div>
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        }
-                        {
-                            selectList.filter(item => item.versionState.id === "111111").length > 0 &&
-                            <div className="select-group">
-                                <div className="select-group-title">进行中</div>
-                                <div className="select-group-option-box">
-                                    {
-                                        selectList.filter(item => item.versionState.id === "111111").map(item => {
-                                            return <div 
-                                                className="select-group-option" 
-                                                onClick={() => updateWork(item)}
-                                                key={item.id}
-                                            >{item.name}</div>
-                                        })
-                                    }
+                                :
+                                <div className="select-dropdown">
+                                    <Empty image="/images/nodata.png" description="暂时没有迭代~" />
                                 </div>
-                            </div>
                         }
-                    </div>
+                    </>
+
                 }
                 {
                     showMoreDropdown && relationVersionList && relationVersionList.length > 0 && <div className="more-dropdown">
