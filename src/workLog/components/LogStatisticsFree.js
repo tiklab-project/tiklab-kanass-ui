@@ -57,9 +57,11 @@ const LogStatisticsFree = (props) => {
                 <div className="statistics-desc-box">
                     {
                         list.map(item => {
-                            return <div className={`statistics-desc-item ${item.id === activeImage ? 'statistics-desc-active-item' : ''}`}
+                            return <div 
+                                className={`statistics-desc-item ${item.id === activeImage ? 'statistics-desc-active-item' : ''}`}
                                 onClick={() => changeImage(item.imgUrl, item.id)}
                                 onMouseEnter={() => changeImage(item.imgUrl, item.id)}
+                                key={item.id}
                             >
                                 <svg className="icon-14" aria-hidden="true">
                                     <use xlinkHref="#icon-radio"></use>

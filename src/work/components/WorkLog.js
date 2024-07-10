@@ -8,6 +8,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import LogAdd from "../../project/workLog/components/LogAdd";
 
+
 const WorkLog = (props) => {
     const [visible, setVisible] = useState(false);
     const { workStore, closeModal, workInfo, searchWorkById } = props;

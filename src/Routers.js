@@ -3,6 +3,16 @@ import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
 // import WorkGantt from "./work/components/WorkGantt";
 
+
+const Index = AsyncComponent(() => import('./home/common/components/Layout'))
+// const Index = AsyncComponent(() => import('./home/localHeader'))
+const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
+const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
+const WorkAll = AsyncComponent(() => import('./work/components/Work'))
+const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
+const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
+const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageList"))
+
 const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
 const Login = AsyncComponent(() => import('./login/Login'))
@@ -52,14 +62,6 @@ const ProjectDirectory = AsyncComponent(() => import("./setting/user/ProjectDire
 const ProjectUserGroup = AsyncComponent(() => import("./setting/user/ProjectUserGroup"))
 const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/ProjectSystemUserGroup"))
 
-const Index = AsyncComponent(() => import('./home/common/components/HomeLayout'))
-// const Index = AsyncComponent(() => import('./home/localHeader'))
-const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
-const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
-const WorkAll = AsyncComponent(() => import('./work/components/Work'))
-const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
-const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
-const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageList"))
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
 const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))

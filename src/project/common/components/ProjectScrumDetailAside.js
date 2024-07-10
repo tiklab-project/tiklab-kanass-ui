@@ -232,6 +232,10 @@ const ProdeScrumAside = (props) => {
         SetIsShowText(!isShowText)
     }
 
+    const backProject = () => {
+        props.history.push(`/project`)
+    }
+
     return (
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='project-detail-side'>
@@ -242,7 +246,32 @@ const ProdeScrumAside = (props) => {
                         project={project}
                     />
                     <div className="project-menu" ref={projectMenu}>
-
+                        <div className="project-back-project">
+                            {
+                                isShowText ?
+                                    <div className={`project-menu-submenu`}
+                                        onClick={() => backProject()}
+                                    >
+                                        <svg className="menu-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-backproject"></use>
+                                        </svg>
+                                        <span>
+                                            返回首页
+                                        </span>
+                                    </div>
+                                    :
+                                    <div className={`project-menu-submenu-icon`}
+                                        onClick={() => backProject()}
+                                    >
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-backproject"></use>
+                                        </svg>
+                                        <span>
+                                        返回首页
+                                        </span>
+                                    </div>
+                            }
+                        </div>
                         {
                             projectRouter && projectRouter.map((item, index) => {
                                 return isShowText ?

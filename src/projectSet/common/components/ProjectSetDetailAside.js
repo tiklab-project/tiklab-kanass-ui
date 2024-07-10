@@ -77,7 +77,9 @@ const ProjectSetDetailAside = (props) => {
     const toggleCollapsed = () => {
         SetIsShowText(!isShowText)
     }
-
+    const backProject = () => {
+        props.history.push(`/projectSetList`)
+    }
 
     return (
         <Fragment>
@@ -85,6 +87,32 @@ const ProjectSetDetailAside = (props) => {
                 <div className={`projectSet-aside`}>
                     <ProjectSetChangeModal isShowText={isShowText} projectSetId = {projectSetId}/>
                     <ul className="projectSet-menu">
+                    <div className="projectSet-back-project">
+                            {
+                                isShowText ?
+                                    <div className={`projectSet-menu-submenu`}
+                                        onClick={() => backProject()}
+                                    >
+                                        <svg className="menu-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-backproject"></use>
+                                        </svg>
+                                        <span>
+                                            返回首页
+                                        </span>
+                                    </div>
+                                    :
+                                    <div className={`projectSet-menu-submenu-icon`}
+                                        onClick={() => backProject()}
+                                    >
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-backproject"></use>
+                                        </svg>
+                                        <span>
+                                        返回首页
+                                        </span>
+                                    </div>
+                            }
+                        </div>
                         {
                             projectSetRouter && projectSetRouter.map((item, index) => {
                                 return isShowText ?

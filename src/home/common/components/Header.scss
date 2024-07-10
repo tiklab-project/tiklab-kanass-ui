@@ -15,15 +15,24 @@
     position: relative;
     z-index: 3;
     height: 48px;
-
-    .frame-header-logo {
-        height: var(--thoughtware-head-height);
-        margin-right: 20px;
-        margin-left: 10px;
+    padding: 0 20px 0 0;
+    .frame-left {
         display: flex;
         align-items: center;
+        .frame-applink {
+            width: 80px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+    .frame-menu-logo {
+        height: var(--thoughtware-head-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
         .logo-img {
-            height: 24px;
+            height: 25px;
         }
 
         .logo-text {
@@ -33,133 +42,16 @@
         }
 
     }
-
-    .frame-header-link {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-
-        &-active {
-            border-bottom: var(--thoughtware-blue) 2px solid;
-            color: var(--thoughtware-blue);
-            font-weight: 600;
-        }
-
-        &-item {
-            cursor: pointer;
-            overflow: hidden;
-            height: 48px;
-            line-height: 48px;
-            flex-shrink: 0;
-
-            span {
-                padding: 5px;
-            }
-
-        }
-
-        &-item:hover {
-            span {
-
-                background: #E1EDFF;
-                border-radius: 3px;
-                color: var(--thoughtware-blue);
-            }
-
-        }
-    }
-
-    .frame-header-left {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height: 100%;
-        padding-left: 22px;
-    }
-
     &-right {
         display: flex;
         flex-direction: row;
         align-items: center;
         height: 100%;
         justify-content: flex-end;
-
-        &-search-wrap {
-            position: relative;
-            margin-right: 20px;
-        }
-
-        &-text {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
-            // height: 100%;
-            padding-right: 10px;
-            gap: 20px;
-            // a {
-            //     padding: 0 10px;
-            // }
-
-            .badge {
-                position: relative;
-
-                .dot {
-                    width: 7px;
-                    height: 7px;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: -5px;
-                    right: 3px;
-                    background: #ff8989;
-                }
-            }
-
-            .messageNum {
-                font-size: 25px;
-                color: var(--thoughtware-blue);
-            }
-
-        }
+        gap: 10px;
 
 
 
 
-    }
-
-    &-icon {
-        position: relative;
-        text-align: center;
-
-        .ant-avatar {
-            width: 22px;
-            height: 22px;
-        }
-    }
-
-
-    &-set:hover,
-    &-message:hover {
-        background-color: #D2E0FD;
-        border-radius: 30px;
-
-    }
-
-
-    &-set:hover::before,
-    &-message:hover::before {
-        border: 5px solid transparent;
-        transform: translateX(-50%) translateY(-5px);
-        content: "";
-        margin-top: 3px;
-        border-bottom-color: #21242a;
-        position: absolute;
-        z-index: 10;
-        top: 100%;
-        left: 50%;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s, transform 0.3s;
-        opacity: 1;
     }
 }

@@ -5,14 +5,12 @@
     position: relative;
     z-index: 0;
     padding: 0 20px 20px;
-
+    background: var(--thoughtware-gray-600);
     .home-tab {
         display: flex;
         gap: 20px;
         position: sticky;
-        background: var(--thoughtware-gray-600);
         padding: 20px 0 15px 0;
-
         .home-tab-item {
             cursor: pointer;
             background-color: #fff;

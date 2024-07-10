@@ -9,7 +9,7 @@ const MilestoneTimeline = (props) => {
 
                 if (index % 2 === 1) {
                     return (
-                        <div className="milestone-timeline-item odd">
+                        <div className="milestone-timeline-item odd" key = {item.id}>
                             <div className="timeline-item-svg timeline-item-top">
                                 <svg className="milestone-icon" aria-hidden="true">
                                     <use xlinkHref={`#icon-milestone${index % 5 + 1}`}></use>

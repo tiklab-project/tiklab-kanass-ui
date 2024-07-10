@@ -93,6 +93,10 @@
                     list-style-type:none;
                     cursor: pointer;
                     flex: 1;
+                    .projectSet-back-project {
+                        margin-bottom: 10px;
+                        border-bottom: 1px solid #d7d7d7;
+                    }
                     .projectSet-menu-submenu {
                         height: 40px;
                         display: flex;

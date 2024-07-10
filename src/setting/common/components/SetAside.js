@@ -101,12 +101,11 @@ const SetAside = (props) => {
             <PrivilegeButton code={item.purviewCode} key = {item.code}>
                 <li key={item.code} title={item.title} className="orga-aside-li">
                     <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.id)}>
-
                         {
                             item.icon && <span to={item.id} className="orga-aside-item-left">
-                                <svg className="img-icon-right" aria-hidden="true">
+                                {/* <svg className="img-icon-right" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.icon}`}></use>
-                                </svg>
+                                </svg> */}
                                 <span className="orga-aside-title">{item.title}</span>
                             </span>
                         }
@@ -140,6 +139,7 @@ const SetAside = (props) => {
         <Fragment>
             <div className="orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
+                    <div className="orga-aside-name">设置</div>
                     {
                         router && router.map((firstItem, index) => {
                             return firstItem.children && firstItem.children.length > 0 ?

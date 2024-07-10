@@ -1,5 +1,6 @@
 .project-prodetail {
     height: calc(100vh - 48px);
+
     .prodetail-row {
         height: calc(100vh - var(--thoughtware-head-height));
     }
@@ -43,6 +44,7 @@
                 .setting {
                     border-top: 1px solid #f0f2f5;
                     cursor: pointer;
+
                     span {
                         margin: 0 10px 0 10px;
                     }
@@ -56,6 +58,11 @@
                     list-style-type: none;
                     cursor: pointer;
                     flex: 1;
+
+                    .project-back-project {
+                        margin-bottom: 10px;
+                        border-bottom: 1px solid #d7d7d7;
+                    }
 
                     .project-menu-submenu {
                         height: 40px;
@@ -151,6 +158,7 @@
     .prodetail-content {
         height: 100%;
         background: #fff;
+
         .prodetail-content-col {
             background: #fff;
             height: 100%;

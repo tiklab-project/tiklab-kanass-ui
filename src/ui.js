@@ -1,7 +1,8 @@
 
 import Routers from "./Routers";
 import Header from "./home/common/components/Header";
-import Layout from "./home/common/components/HomeLayout";
+import FirstMenu from "./home/common/components/FirstMenu";
+import Layout from "./home/common/components/Layout";
 import HomeStore from "./home/common/store/HomeStore";
 import WorkGantt from "./work/components/WorkGantt";
 export {
@@ -9,5 +10,6 @@ export {
     Header, 
     HomeStore,
     WorkGantt,
-    Layout
+    Layout,
+    FirstMenu
 }

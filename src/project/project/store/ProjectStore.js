@@ -37,7 +37,6 @@ export class ProjectStore {
 
     @action
     findJoinProjectList = async(value) => { 
-
         const data = await Service("/project/findJoinProjectList", value)
         if(data.code === 0){
             this.prolist = data.data;

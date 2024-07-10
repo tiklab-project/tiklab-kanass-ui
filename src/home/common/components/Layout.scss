@@ -1,0 +1,20 @@
+/**
+* @name: header
+* @author: mahai
+* @date: 2021-09-01 16:52
+* @description：header
+* @update: 2021-09-01 16:52
+*/
+
+.layout {
+    overflow: hidden;
+    height: 100vh;
+    .layout-content {
+        display: flex;
+        .layout-page {
+            flex: 1;
+            height: calc(100vh - var(--thoughtware-head-height));
+        }
+    }
+
+}
