@@ -14,13 +14,15 @@ import "./Layout.scss";
 
 import { Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
-import { AppLink, HelpLink, AvatarLink } from 'thoughtware-licence-ui';
+import { AppLink, AvatarLink} from 'thoughtware-licence-ui';
 import FirstMenu from './FirstMenu';
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore
     }
-    const showFirstMenu = ["home", "project", "projectSetList", "workTable", "setting", "log"]
+    const showFirstMenu = ["home", "project", "projectSetList", "workTable", "setting", "log", "projectAdd", "projectSetAdd",
+        "workList", "workBodar", "workGantt"
+    ]
     const route = props.route.routes;
     const pathname = props.location.pathname.split("/")[1];
 
@@ -28,7 +30,7 @@ const Layout = (props) => {
     return (
         <Provider {...store}>
             <div className="layout">
-                <Header {...props} />
+                <Header AppLink = {AppLink} AvatarLink = {AvatarLink} {...props} />
                 <div className="layout-content">
                     {
                         showFirstMenu.indexOf(pathname) > -1 && <FirstMenu AppLink={AppLink} {...props} />

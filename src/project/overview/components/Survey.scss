@@ -2,7 +2,11 @@
     width: 0 !important;
     height: 0 !important;
 }
-
+.project-survey-row {
+    background-color: var(--thoughtware-gray-800);
+    height: 100%;
+    overflow: auto;
+}
 .project-survey {
     padding: var(--thoughtware-padding);
 

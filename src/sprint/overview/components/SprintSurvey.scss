@@ -2,7 +2,11 @@
     width: 0 !important;
     height: 0 !important;
 }
-
+.sprint-survey-row {
+    height: "100%";
+    background: var(--thoughtware-gray-800);
+    overflow: auto;
+}
 .sprint-survey {
     // height: calc(100vh - 48px);
     // overflow: auto;

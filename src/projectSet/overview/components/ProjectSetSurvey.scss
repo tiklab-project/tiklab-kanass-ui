@@ -1,9 +1,8 @@
 .projectSet-survey {
     height: calc(100vh - var(--thoughtware-head-height));
     padding: var(--thoughtware-padding);
-    ;
     overflow: auto;
-    background-color: var(--thoughtware-gray-600);
+    background-color: var(--thoughtware-gray-800);
 
     .more {
         color: var(--thoughtware-blue);

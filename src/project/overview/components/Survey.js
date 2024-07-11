@@ -239,7 +239,7 @@ const Survey = (props) => {
     }
 
     return (
-        <Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
+        <Row className="project-survey-row">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="project-survey">
                     <div className="upper-box">

@@ -11,6 +11,7 @@
         &-active {
             color: var(--thoughtware-blue);
             background-color: var(--thoughtware-gray-400);
+            border-left: 3px solid var(--thoughtware-blue);
         }
 
         &-item {

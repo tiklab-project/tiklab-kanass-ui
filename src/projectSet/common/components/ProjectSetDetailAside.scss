@@ -2,7 +2,7 @@
 
     .projectSet-detail-side {
         background-color: var(--thoughtware-gray);
-        border: 1px solid #f0f0f0;
+        border-right: 1px solid #f0f0f0;
         .projectSet-icon {
             width: 20px;
             height: 20px;
@@ -129,7 +129,7 @@
 
                     .projectSet-menu-select {
                         background-color: var(--thoughtware-gray-400);
-                        border-left: 2px solid var(--thoughtware-blue);
+                        border-left: 3px solid var(--thoughtware-blue);
                     }
                 }
                 .hidden-menu {

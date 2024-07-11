@@ -2,7 +2,11 @@
     width: 0 !important;
     height: 0 !important;
 }
-
+.version-survey-row {
+    height: "100%";
+    background: var(--thoughtware-gray-800);
+    overflow: auto;
+}
 .version-survey {
     padding: var(--thoughtware-padding);
 

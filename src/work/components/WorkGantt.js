@@ -53,7 +53,7 @@ const WorkGantt = (props) => {
     }
 
     return (<Provider {...store}>
-        <>
+        <div>
             <Row style={{ background: "#fff" }}>
                 <Col
                     className="work-col"
@@ -101,7 +101,7 @@ const WorkGantt = (props) => {
                 }
 
             </div>
-        </>
+        </div>
 
     </Provider>
 
