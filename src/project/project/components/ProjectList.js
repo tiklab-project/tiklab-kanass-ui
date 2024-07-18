@@ -30,6 +30,7 @@ const ProjectList = (props) => {
         orderType: "desc"
     }]
     useEffect(() => {
+        setActiveTabs("1")
         findJoinProjectList({orderParams: orderParams})
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {

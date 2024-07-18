@@ -116,7 +116,7 @@ const MessageList = (props) => {
             <div className="frame-header-message" data-title-bottom="消息提示" onClick={() => setOpen(true)}>
                 <Badge count={unReadMessage} size="small">
                     <Avatar
-                        size="small" style={{fontSize: "25px" }} icon={<MessageOutlined style={{ color: "#2b2b2b" }} />} />
+                        size="small" style={{fontSize: "20px" }} icon={<MessageOutlined style={{ color: "#2b2b2b" }} />} />
                 </Badge>
             </div>
             <Drawer

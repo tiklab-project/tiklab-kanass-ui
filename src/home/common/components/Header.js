@@ -9,16 +9,17 @@
 import React, { useState, useEffect } from 'react';
 import { Space } from "antd";
 import { withRouter } from 'react-router';
-import { getUser } from 'thoughtware-core-ui';
+import { getUser, getVersionInfo } from 'thoughtware-core-ui';
 import { observer, inject } from "mobx-react";
 import Search from "../../search/components/Search";
 import MessageList from "./MessageList";
 import logo from "../../../assets/images/logo.png";
-
 import "./Header.scss";
-const Header = props => {
-    const { systemRoleStore, AppLink, AvatarLink } = props;
+import ProjectFeature from '../../../setting/version/ProjectFeature';
 
+const Header = props => {
+    const { systemRoleStore, AppLink, AvatarLink, HelpLink } = props;
+    
     // 登录者的信息
     const user = getUser();
 
@@ -47,6 +48,8 @@ const Header = props => {
             </div>
             <div className={'frame-header-right'}>
                 <MessageList />
+                <HelpLink />
+                <ProjectFeature />
                 <AvatarLink {...props} />
             </div>
         </div>

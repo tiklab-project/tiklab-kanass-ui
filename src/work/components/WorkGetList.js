@@ -25,13 +25,11 @@ const finWorkList = (router, workStore, params) => {
         goWorkItem(type, workStore, params)
     }
     setValue();
-
-
 }
 
 
 const goWorkItem = (type, workStore, params) => {
-    const { sprintId, versionId, stageId, projectId } = params;
+    const { sprintId, versionId, stageId, projectId, quickFilter } = params;
     const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
     let initValues = {
         ...searchCondition,
@@ -42,19 +40,19 @@ const goWorkItem = (type, workStore, params) => {
     }
     switch (type) {
         case "sprint":
-            initValues = { ...initValues, projectIds: [projectId], sprintId: sprintId };
+            initValues = { ...initValues, projectIds: [projectId], quickFilter: quickFilter, sprintId: sprintId };
             break;
         case "version":
-            initValues = { ...initValues, projectIds: [projectId], versionId: versionId };
+            initValues = { ...initValues, projectIds: [projectId], quickFilter: quickFilter, versionId: versionId };
             break;
         case "stage":
-            initValues = { ...initValues, projectIds: [projectId], stageId: stageId };
+            initValues = { ...initValues, projectIds: [projectId], quickFilter: quickFilter, stageId: stageId };
             break;
         case "project":
-            initValues = { ...initValues, projectIds: [projectId] };
+            initValues = { ...initValues, projectIds: [projectId], quickFilter: quickFilter };
             break;
         case "system":
-            initValues = { ...initValues, projectIds: [] };
+            initValues = { ...initValues, projectIds: [], quickFilter: quickFilter };
             break;
         default:
             break;

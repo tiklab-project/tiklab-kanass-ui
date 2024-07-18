@@ -44,10 +44,10 @@ const WorkBodar = (props) => {
     const projectId = props.match.params.id;
     useEffect(() => {
         setWorkShowType("bodar")
-        setQuickFilterValue({
-            value: "pending",
-            label: "我的待办"
-        })
+        // setQuickFilterValue({
+        //     value: "pending",
+        //     label: "我的待办"
+        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,

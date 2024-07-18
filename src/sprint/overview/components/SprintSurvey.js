@@ -206,7 +206,7 @@ const SprintSurvey = (props) => {
                                 </div>
                                 <div className="sprint-work">
                                     <div className="sprint-item" onClick={() => goWorkItemList("all")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
@@ -215,7 +215,7 @@ const SprintSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="sprint-item" onClick={() => goWorkItemList("pending")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-progress"></use>
                                         </svg>
                                         <div className="item-content">
@@ -224,7 +224,7 @@ const SprintSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="sprint-item" onClick={() => goWorkItemList("ending")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
@@ -233,7 +233,7 @@ const SprintSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="sprint-item" onClick={() => goWorkItemList("overdue")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-overdue"></use>
                                         </svg>
                                         <div className="item-content">
@@ -245,7 +245,7 @@ const SprintSurvey = (props) => {
 
 
                                 <div className="sprint-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
@@ -255,7 +255,7 @@ const SprintSurvey = (props) => {
                                 </div>
 
                                 <div className="sprint-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
@@ -265,7 +265,7 @@ const SprintSurvey = (props) => {
                                 </div>
 
                                 <div className="sprint-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
@@ -275,7 +275,7 @@ const SprintSurvey = (props) => {
                                 </div>
 
                                 <div className="sprint-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>
                                     <div className="item-content">

@@ -219,7 +219,7 @@ const VersionSurvey = (props) => {
                                 </div>
                                 <div className="version-work">
                                     <div className="version-item" onClick={() => goWorkItemList("all")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-allwork"></use>
                                         </svg>
                                         <div className="item-content">
@@ -228,7 +228,7 @@ const VersionSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="version-item" onClick={() => goWorkItemList("pending")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-nostart"></use>
                                         </svg>
                                         <div className="item-content">
@@ -237,7 +237,7 @@ const VersionSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="version-item" onClick={() => goWorkItemList("ending")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-endwork"></use>
                                         </svg>
                                         <div className="item-content">
@@ -246,7 +246,7 @@ const VersionSurvey = (props) => {
                                         </div>
                                     </div>
                                     <div className="version-item" onClick={() => goWorkItemList("overdue")}>
-                                        <svg className="status-img" aria-hidden="true">
+                                        <svg className="list-img" aria-hidden="true">
                                             <use xlinkHref="#icon-overdue"></use>
                                         </svg>
                                         <div className="item-content">
@@ -258,7 +258,7 @@ const VersionSurvey = (props) => {
 
 
                                 <div className="version-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
@@ -268,7 +268,7 @@ const VersionSurvey = (props) => {
                                 </div>
 
                                 <div className="version-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
@@ -278,7 +278,7 @@ const VersionSurvey = (props) => {
                                 </div>
 
                                 <div className="version-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
@@ -287,7 +287,7 @@ const VersionSurvey = (props) => {
                                     </div>
                                 </div>
                                 <div className="version-item">
-                                    <svg className="status-img" aria-hidden="true">
+                                    <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>
                                     <div className="item-content">

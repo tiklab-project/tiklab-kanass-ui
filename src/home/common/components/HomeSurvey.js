@@ -16,13 +16,16 @@ import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage"
 import setImageUrl from '../../../common/utils/setImageUrl';
 import TodoListItem from '../../../common/overviewComponent/TodoListItem';
+import WorkItemTrend from './WorkItemTrend';
+import ProjectStatusNum from './ProjectStatusNum';
+import WorkItemSurvey from './WorkItemSurvey';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
         findTodopage, setActiveKey, findRecentPage, recentList,
-        updateRecent, overdueTaskList, endTaskList, todoTaskList
+        updateRecent, statisticsWorkItemByStatus, endTaskList, todoTaskList
     } = homeStore;
     const tenant = getUser().tenant;
     const { setWorkId, searchWorkById } = WorkStore;
@@ -31,18 +34,21 @@ const HomeSurvey = (props) => {
     //最近查看的项目列表
     const [recentProjectList, setRecentProjectList] = useState();
     const [recentLoading, setRecentLoading] = useState(false);
-    const [todoTask, setTodoTaskList] = useState([])
+    
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
-        findTodopage({status: 1, assignUserId: userId, data: {},  pageParam: {
-            pageSize: 10,
-            currentPage: 1
-        }}, )
+        findTodopage({
+            status: 1, assignUserId: userId, data: {}, pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        },)
 
         findRecentPage(userId).then(res => {
             console.log(res)
         })
+
         return;
     }, [])
 
@@ -271,10 +277,12 @@ const HomeSurvey = (props) => {
     }
 
     const getTodoList = (value) => {
-        findTodopage({ userId: userId,status: value, pageParam: {
-            pageSize: 10,
-            currentPage: 1
-        }}, )
+        findTodopage({
+            userId: userId, status: value, pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        },)
     }
     return (
         <div className="home-content">
@@ -288,7 +296,6 @@ const HomeSurvey = (props) => {
                     <div className="home-project">
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
-
                                 return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
                                     <div className="item-title">
                                         {
@@ -328,66 +335,20 @@ const HomeSurvey = (props) => {
 
                                     </div>
                                 </div>
-
-
                             })
                                 :
                                 <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
                         }
                     </div>
                 </Spin>
-
-
             </div>
 
-            <div className="recent-click">
-                <div className="recent-click-title">
-                    <span className="name">常用事项</span>
-                </div>
-                <div className="recent-click-list">
-                    {
-                        recentList && recentList.length > 0 ? recentList.map(item => {
-                            return <div className="work-item" key={item.id}>
-                                <div className="work-left">
-                                    <div className="work-icon">
-                                        {
-                                            item.object.workTypeSys.iconUrl ?
-                                                <img
-                                                    src={setImageUrl(item.object.workTypeSys.iconUrl)}
-                                                    alt=""
-                                                    className="icon-32"
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/workType1.png')}
-                                                    alt=""
-                                                    className="icon-32"
-                                                />
-
-                                        }
-                                    </div>
-                                    <div className="work-content">
-                                        <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                        <div className="content-type">{item.object.project.projectName}</div>
-                                    </div>
-                                </div>
-                                {/* <div className="work-project">{item.object.project.projectName}</div> */}
-                                <div style={{ width: "100px" }}>
-                                    <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
-                                        {item.object.workStatusNode.name}
-                                    </div>
-                                </div>
-
-                                <div className="work-time">
-                                    {item.recentTime}
-                                </div>
-                            </div>
-                        })
-                            :
-                            <Empty image="/images/nodata.png" description="暂时没有~" />
-                    }
-                </div>
+            <div className="statistics-box">
+                <ProjectStatusNum />
+                <WorkItemTrend />
             </div>
+
+            <WorkItemSurvey />
             <div className="todo-work">
                 <div className="todo-work-top">
                     <span className="name">待办事项</span>
@@ -404,7 +365,7 @@ const HomeSurvey = (props) => {
                         <TabPane tab="进行中" key="1">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content = {item.data} key = {item.id}/>
+                                    return <TodoListItem content={item.data} key={item.id} />
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
@@ -413,7 +374,7 @@ const HomeSurvey = (props) => {
                         <TabPane tab="已完成" key="2">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content = {item.data} key = {item.id}/>
+                                    return <TodoListItem content={item.data} key={item.id} />
                                 })
                                     :
                                     <Empty image="/images/nodata.png" description="暂时没有待办~" />
@@ -422,10 +383,10 @@ const HomeSurvey = (props) => {
                         <TabPane tab="已逾期" key="3">
                             {
                                 todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content = {item.data} key = {item.id}/>
+                                    return <TodoListItem content={item.data} key={item.id} />
                                 })
-                                :
-                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                    :
+                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
                             }
                         </TabPane>
                     </Tabs>

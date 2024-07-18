@@ -31,10 +31,10 @@ const WorkGantt = (props) => {
     };
     useEffect(() => {
         setWorkShowType("gantt")
-        setQuickFilterValue({
-            value: "pending",
-            label: "我的待办"
-        })
+        // setQuickFilterValue({
+        //     value: "pending",
+        //     label: "我的待办"
+        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,

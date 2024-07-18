@@ -11,8 +11,7 @@ const WorkFilterQuick = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue} = workStore;
-
-
+    
     const userId = getUser().userId;
 
     const quickFilterList = [
@@ -57,7 +56,6 @@ const WorkFilterQuick = (props) => {
     }
 
     const selectMenu = (value) => {
-        
         setQuickFilterValue(value)
         if (!value) {
             getAllWorkItem();

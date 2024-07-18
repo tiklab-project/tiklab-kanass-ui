@@ -185,7 +185,7 @@ const WorkChangeView = (props) => {
                 <div>
                     {
                         viewList.map(item => {
-                            return <div>
+                            return <div key = {item.value}>
                                 <div
                                     key={item.value}
                                     className={`dropdown-item ${item.value === workShowType ? "view-type-select" : ""}`}

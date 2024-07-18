@@ -94,7 +94,7 @@ const WorkItemTrend = (props) => {
                     const yAxisNew = [];
                     const yAxisEnd = [];
                     const yAxisRemain = [];
-                    data.conntList.map(item => {
+                    data.countList.map(item => {
                         yAxisNew.push(item.new)
                         yAxisEnd.push(item.end)
                         yAxisRemain.push(item.remain)

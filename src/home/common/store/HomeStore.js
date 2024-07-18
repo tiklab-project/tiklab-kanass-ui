@@ -369,7 +369,29 @@ class HomeStore {
         return data;
     }
 
+    @action
+    statisticsDayAllWorkItemCount = async() => {
+        const data = await Service("/projectInsightReport/statisticsDayAllWorkItemCount")
+        return data;
+    }
 
+    @action
+    statisticsAllNewWorkItemTend = async() => {
+        const data = await Service("/projectInsightReport/statisticsAllNewWorkItemTend")
+        return data;
+    }
+
+    @action
+    statisticsProjectByStatus = async() => {
+        const data = await Service("/projectInsightReport/statisticsProjectByStatus")
+        return data;
+    }
+
+    @action
+    statisticsWorkItemByStatus = async() => {
+        const data = await Service("/projectInsightReport/statisticsWorkItemByStatus")
+        return data;
+    }
 }
 
 

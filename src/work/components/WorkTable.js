@@ -52,10 +52,10 @@ const WorkTable = (props) => {
 
     useEffect(() => {
         setWorkShowType("table")
-        setQuickFilterValue({
-            value: "all",
-            label: "全部"
-        })
+        // setQuickFilterValue({
+        //     value: "all",
+        //     label: "全部"
+        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,

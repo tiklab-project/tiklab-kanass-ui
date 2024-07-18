@@ -2,12 +2,13 @@ import React from "react";
 import "./FirstMenu.scss";
 
 import { withRouter } from "react-router";
-import { HelpLink } from "thoughtware-licence-ui";
+
 
 const FirstMenu = (props) => {
     const { AppLink } = props;
+    
+    const menuKey = sessionStorage.getItem("menuKey");
     console.log(sessionStorage.getItem("menuKey"))
-    const menuKey = (sessionStorage.getItem("menuKey") && props.location.pathname !== "/home") ? sessionStorage.getItem("menuKey") : "home";
     /**
          * 点击菜单跳转
          * @param {菜单信息} item 
@@ -103,11 +104,8 @@ const FirstMenu = (props) => {
 
     return (
         <div className="first-menu">
-
             {renderRouter()}
-
             <div className="first-menu-bottom">
-                <HelpLink />
                 <div className="first-set" onClick={() => goSet()} data-title-right="设置">
                     <svg aria-hidden="true" className="svg-icon">
                         <use xlinkHref="#icon-iconsetsys"></use>
