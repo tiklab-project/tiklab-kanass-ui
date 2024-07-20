@@ -30,7 +30,13 @@ const WorkDocumentAddmodal = (props) => {
                         })
                         findRepositoryUserList(res.data[0].id)
                         setRepositoryallIdList(list)
-                        findUnRelationWorkDocumentList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
+                        findUnRelationWorkDocumentList({
+                            workItemId: workId, 
+                            repositoryIds: list, 
+                            name: "", 
+                            repositoryId: null, 
+                            projectId: projectId
+                        }).then((data) => {
                             if (data.code === 0) {
                                 setDocumentList(data.data.dataList)
                             }
@@ -124,7 +130,12 @@ const WorkDocumentAddmodal = (props) => {
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
                 // createWorkItemDocument({id: selectedRowKeys[i],workitemId:workId })
-                workItemDocument.push({ documentId: selectedRow[i].id, workItemId: workId, repositoryId: selectedRow[i].kanassRepositoryId })
+                workItemDocument.push({ 
+                    documentId: selectedRow[i].id, 
+                    workItem: {id: workId}, 
+                    repositoryId: selectedRow[i].kanassRepositoryId,
+                    projectId: projectId
+                })
             }
             createWorkItemDocument(workItemDocument).then((data) => {
                 if (data.code === 0) {
@@ -140,7 +151,7 @@ const WorkDocumentAddmodal = (props) => {
     }
     //没有选择用户提升
     const info = () => {
-        message.info('请选择事项');
+        message.info('请选择文档');
     };
     const documentAdd = useRef()
     return (
@@ -163,7 +174,7 @@ const WorkDocumentAddmodal = (props) => {
                                     label={item.kanassRepositoryName}
                                     key={item.id}
                                     // imgUrl={`${base_url}/images/${item.iconUrl}`}
-                                    imgUrl={`${base_url}/images/repository1.png`}
+                                    imgUrl={`/images/repository1.png`}
                                 />
                             })
                         }

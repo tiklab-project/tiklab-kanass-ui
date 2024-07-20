@@ -91,7 +91,7 @@ export class WorkTestStore {
 
     @action
     deleteWorkTestCaseRele = async(param) => {
-        const data = await Service("/workTestCase/deleteWorkTestCaseRele", param)
+        const data = await Service("/workTestCase/deleteWorkTestCaseList", param)
         return data;
     }
 

@@ -4,12 +4,10 @@ import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import { getUser } from "thoughtware-core-ui";
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
     const { workId } = workStore;
     // const {searchpro} =  projectStore;
-    // const projectId = props.match.params.id;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
         findProjectTestRepositoryList, findUnRelationWorkTestCaseList,
         findTestOnRepositoryUserList, unRelationWorkCondition } = workTestStore;
@@ -150,7 +148,12 @@ const WorkTestCaseAddmodal = (props) => {
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
                 // createWorkTestCase({id: selectedRowKeys[i],workitemId:workId })
-                workItemTestCase.push({ testCaseId: selectedRow[i].id, workItemId: workId, repositoryId: selectedRow[i].kanassRepositoryId })
+                workItemTestCase.push({ 
+                    testCaseId: selectedRow[i].id, 
+                    workItemId: workId, 
+                    repositoryId: selectedRow[i].kanassRepositoryId,
+                    projectId: projectId
+                })
             }
             createWorkTestCase(workItemTestCase).then((data) => {
                 if (data.code === 0) {
@@ -178,7 +181,7 @@ const WorkTestCaseAddmodal = (props) => {
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
-                        title={"测试用例库"}
+                        title={"用例库"}
                         suffixIcon = {true}
                         value = {repositoryValue}
                     >

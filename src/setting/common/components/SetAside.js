@@ -23,9 +23,8 @@ const SetAside = (props) => {
     // const env = localStorage.getItem("authType").authType;
     const select = (data) => {
         const id = data.id;
-       
-        if (data.islink &&  !authType) {
-            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + id;
+        if (data.islink && !authType) {
+            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.easId;
             window.open(authUrl, '_blank');
         }else {
             props.history.push(id)

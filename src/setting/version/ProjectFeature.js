@@ -510,10 +510,18 @@ const ProjectFeature = props => {
         )
 
     }
-
+    const showVersion = () => {
+        let name = "社区版"
+        if(version !== 'cloud'){
+            name =  versionInfo.expired === true ? "社区版" : "企业版"
+        }else {
+            name =  versionInfo.expired === true ? "免费版" : "专业版"
+        }
+        return name;
+    }
     return (
         <>
-            <div data-title-bottom={versionInfo.expired === true ? "社区版" : "企业版"}>
+            <div className="project-feature-icon" data-title-bottom={showVersion()}>
                 {
                     versionInfo.expired === true ?
                         <svg className="img-25" aria-hidden="true" onClick={() => setVisible(true)}>
@@ -534,6 +542,7 @@ const ProjectFeature = props => {
                 visible={visible}
                 onOk={onOk}
                 onCancel={onCancel}
+                wrapClassName = 'version-comparison'
             >
                 <div className='application-feature-modal'>
                     {featureHtml(version !== 'cloud' ? 'ce' : 'cloud-free')}

@@ -91,3 +91,26 @@
         }
     }
 }
+.project-feature-icon {
+    cursor: pointer;
+}
+.version-comparison {
+    display: flex;
+    align-items: center;
+    .ant-modal {
+        top: 0;
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    }
+    .ant-modal-header {
+        border: 0;
+    }
+    .ant-modal-body {
+        padding: 0 24px;
+        height: calc(100% - 108px);
+        overflow: auto;
+    }
+    .ant-modal-footer {
+        border: 0;
+    }
+}

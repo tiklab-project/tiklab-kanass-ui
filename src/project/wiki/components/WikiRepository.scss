@@ -1,6 +1,40 @@
 .wiki-repository {
     .wiki-repository-list {
-        padding: 15px;
+        padding: var(--thoughtware-padding);
+        .wiki-repository-list-top {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wiki-repository-tab {
+            display: flex;
+            gap: 20px;
+            position: sticky;
+            padding-bottom: 15px;
+            .wiki-repository-tab-item {
+                cursor: pointer;
+                background-color: var(--thoughtware-gray-600);
+                height: 32px;
+                width: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+    
+            }
+    
+            .wiki-repository-tab-select {
+                font-weight: var(--thoughtware-font-weight-bold);
+                color: var(--thoughtware-blue);
+                background-color: var(--thoughtware-gray-400);
+            }
+        }
+    }
+    .document-title {
+        display: flex;
+        align-items: center;
+    }
+    .document-title:hover {
+        color: var(--thoughtware-blue);
     }
     .repository-delete {
         color: var(--thoughtware-blue);

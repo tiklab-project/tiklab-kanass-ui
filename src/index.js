@@ -24,11 +24,12 @@ import { useVersion } from "thoughtware-eam-ui/es/utils";
 import { privilegeStores } from "thoughtware-privilege-ui/es/store";
 enableAxios()
 const Index = observer((props) => {
-
+    console.log(window.location.search)
+    console.log(window.location.hash)
     useVersion()
     useEffect(() => {
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|ios|iPad|Android|Mobile|BlackBerry|IEMobile |MQQBrowser|JUC|Fennec|woSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-            window.location.href = `${mobile_url}${window.location.search}${window.location.hash}`;// 手机
+            window.location.href = `${mobile_url}#/index/home`;// 手机
         }
         return;
     }, [])

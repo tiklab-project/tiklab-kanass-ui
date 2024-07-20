@@ -1,7 +1,19 @@
 import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class WikiRepositoryStore {
+    @observable documentCondition = {
+        orderParams: [{
+            name: "id",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+            totalPage: 1
+        }
+    }
 
+    @observable documentList = [];
     @action
     findAllRepository = async(params) => {
         const data = await Service("/wikirepository/findAllRepository", params)
@@ -20,6 +32,16 @@ export class WikiRepositoryStore {
         return data;
     }
 
+    @action
+    findWorkItemDocumentPage = async(value) => {
+        Object.assign(this.documentCondition, value)
+        const data = await Service("/workItemDocument/findWorkItemDocumentPage", this.documentCondition)
+        if(data.code === 0){
+            this.documentList = data.data.dataList;
+            this.documentCondition.pageParam.totalPage = data.data.totalPage;
+        }
+        return data;
+    }
     
     @action
     findUnProjectWikiRepository = async(params) => {
@@ -38,6 +60,7 @@ export class WikiRepositoryStore {
         return data;
     }
 
+    @action
     findSystemUrl = async(params) => {
         const data = await Service("/systemUrl/findSystemUrlList", params)
         let urlData;
@@ -45,6 +68,15 @@ export class WikiRepositoryStore {
             urlData = data.data[0]
         }
         return urlData;
+    }
+
+    @action
+    deleteWorkItemDocument = async(params) => {
+        const value = new FormData();
+        value.append("id", params.id)
+        const data = await Service("/workItemDocument/deleteWorkItemDocument", value)
+
+        return data;
     }
 }
 

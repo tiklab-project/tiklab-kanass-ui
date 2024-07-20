@@ -16,6 +16,7 @@ import MessageList from "./MessageList";
 import logo from "../../../assets/images/logo.png";
 import "./Header.scss";
 import ProjectFeature from '../../../setting/version/ProjectFeature';
+import {productImg,productWhiteImg} from "thoughtware-core-ui";
 
 const Header = props => {
     const { systemRoleStore, AppLink, AvatarLink, HelpLink } = props;
@@ -38,7 +39,7 @@ const Header = props => {
                 </div>
 
                 <div className='frame-menu-logo' onClick={() => props.history.push("/home/survey")}>
-                    <img src={logo} alt={'logo'} className="logo-img" />
+                    <img src={productWhiteImg.kanass} alt={'logo'} className="logo-img" />
                     <div className='logo-text'>Kanass</div>
                 </div>
             </div>

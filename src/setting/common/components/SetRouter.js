@@ -17,6 +17,7 @@ const setDevRouter= [
             {
                 title: "部门",
                 id: '/setting/orga',
+                easId: '/user/orga',
                 purviewCode: "orga",
                 islink: true,
                 code: "orga",
@@ -25,6 +26,7 @@ const setDevRouter= [
             {
                 title: '用户',
                 id: '/setting/user',
+                easId: '/user/user',
                 purviewCode: "user",
                 islink: true,
                 code: "user",
@@ -32,6 +34,7 @@ const setDevRouter= [
             {
                 title: '用户组',
                 id: '/setting/userGroup',
+                easId: '/user/userGroup',
                 purviewCode: "user_group",
                 islink: true,
                 code: "userGroup",
@@ -40,6 +43,7 @@ const setDevRouter= [
         
                 title: "用户目录",
                 id: '/setting/dir',
+                easId: '/user/dir',
                 purviewCode: "user_dir",
                 islink: true,
                 code: "dir",
@@ -343,6 +347,7 @@ const setPrdRouter= [
             {
                 title: "部门",
                 id: '/setting/orga',
+                easId: '/user/orga',
                 purviewCode: "orga",
                 islink: true,
                 code: "orga",
@@ -351,6 +356,7 @@ const setPrdRouter= [
             {
                 title: '用户',
                 id: '/setting/user',
+                easId: '/user/user',
                 purviewCode: "user",
                 islink: true,
                 code: "user",
@@ -358,6 +364,7 @@ const setPrdRouter= [
             {
                 title: '用户组',
                 id: '/setting/userGroup',
+                easId: '/user/userGroup',
                 purviewCode: "user_group",
                 islink: true,
                 code: "userGroup",
@@ -366,6 +373,7 @@ const setPrdRouter= [
         
                 title: "用户目录",
                 id: '/setting/dir',
+                easId: '/user/dir',
                 purviewCode: "user_dir",
                 islink: true,
                 code: "dir",

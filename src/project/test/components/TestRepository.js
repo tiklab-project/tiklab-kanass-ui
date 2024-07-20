@@ -14,26 +14,29 @@ import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
 import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
-import {applyJump} from "thoughtware-core-ui";
+import { applyJump } from "thoughtware-core-ui";
 import TestRepositoryStore from "../store/TestRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import PaginationCommon from "../../../common/page/Page";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
     }
-    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl } = TestRepositoryStore;
+    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl,
+        testCaseList, testCaseCondition, findWorkTestCasePage, deleteWorkTestCase } = TestRepositoryStore;
 
     const projectId = props.match.params.id;
     const [testAddvisible, setTestAddvisible] = useState()
     const [projectTestList, setProjectTestList] = useState()
+    const [activeKey, setActiveKey] = useState("testCase");
 
     const delteRepository = (id) => {
-        deleteProjectTestRepositoryByCondition({repositoryId:id, projectId: projectId }).then(data => {
-            if(data.code === 0){
+        deleteProjectTestRepositoryByCondition({ repositoryId: id, projectId: projectId }).then(data => {
+            if (data.code === 0) {
                 message.info('删除成功');
                 findProjectTestRepositoryList({ projectId: projectId }).then(res => {
-                    if(res.code === 0){
-                       setProjectTestList(res.data) 
+                    if (res.code === 0) {
+                        setProjectTestList(res.data)
                     }
                 })
             }
@@ -41,9 +44,8 @@ const TestRepository = (props) => {
     }
 
     const goRepository = (data) => {
-        findSystemUrl({name: "teston"}).then(res=> {
+        findSystemUrl({ name: "teston" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            // window.open(`${testUrl}/#/repository/detail/${data.id}`)
             applyJump(`${testUrl}/#/repository/detail/${data.id}`)
         })
     }
@@ -54,19 +56,20 @@ const TestRepository = (props) => {
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
+
             render: (text, record) => <div className="repository-title" onClick={() => goRepository(record)}>
                 {
                     record.iconUrl ?
                         <img
                             src={(record.iconUrl)}
                             alt=""
-                            className="icon-32"
+                            className="icon-30"
                         />
                         :
                         <img
                             src={('images/repository1.png')}
                             alt=""
-                            className="icon-32"
+                            className="icon-30"
                         />
                 }
                 <span className="repository-name">{text}</span>
@@ -84,23 +87,109 @@ const TestRepository = (props) => {
             key: 'action',
             width: "10%",
             render: (text, record) => (
-              <Space size="small">
+                <Space size="small">
                     {/* <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span> */}
-                    <DeleteModal deleteFunction = {delteRepository} id = {record.id} getPopupContainer = {testRepository.current}/>
-              </Space>
+                    <DeleteModal deleteFunction={delteRepository} id={record.id} getPopupContainer={testRepository.current} />
+                </Space>
             ),
-          },
+        },
     ];
 
+    const changePage = (currentPage) => {
+        const value = {
+            pageParam: {
 
+                ...testCaseCondition.pageParam,
+                currentPage: currentPage
+            }
+
+        }
+        findWorkTestCasePage(value).then(res => {
+            if (res.code === 0) {
+                console.log(res.data)
+            }
+
+        })
+        console.log(currentPage)
+    }
+
+    const delectTestCase = (id) => {
+        deleteWorkTestCase({ id: id }).then(res => {
+            if (res.code === 0) {
+                findWorkTestCasePage({ projectId: projectId })
+            }
+        })
+    }
+
+    const goCaseDetail = (data) => {
+        findSystemUrl({ name: "teston" }).then(res => {
+            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
+            applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
+        })
+    }
+    const testCaseColumns = [
+        {
+            title: "标题",
+            dataIndex: ["projectTestCase", "testCaseName"],
+            key: "name",
+            width: "20%",
+            render: (text, record) => (
+                <div className="testcase-title">
+                    <div>
+                        <svg className="icon-32" aria-hidden="true">
+                            <use xlinkHref="#icon-testcase"></use>
+                        </svg>
+                    </div>
+
+
+                    <span onClick={() => goCaseDetail(record.projectTestCase)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                </div>
+
+            ),
+        },
+        {
+            title: "目录",
+            dataIndex: ["projectTestCase", "testCategoryName"],
+            key: "testCaseName",
+            width: 150
+        },
+        {
+            title: "仓库",
+            dataIndex: ["projectTestCase", "repository", "name"],
+            key: "repository",
+            width: 150
+        },
+        {
+            title: "作者",
+            dataIndex: ["projectTestCase", "createUser"],
+            key: "createUser",
+            width: 150
+        },
+        {
+            title: "关联事项",
+            dataIndex: ["workItem", "title"],
+            key: "workItem",
+            width: 150
+        },
+        {
+            title: '操作',
+            dataIndex: 'action',
+            key: 'action',
+            width: "10%",
+            render: (text, record) => (
+                <DeleteModal deleteFunction={delectTestCase} id={record.id} getPopupContainer={testRepository.current} />
+            ),
+        }
+    ];
     // 初始化
     useEffect(() => {
         findProjectTestRepositoryList({ projectId: projectId }).then(res => {
-            if(res.code === 0){
-               setProjectTestList(res.data) 
+            if (res.code === 0) {
+                setProjectTestList(res.data)
             }
-            
+
         })
+        findWorkTestCasePage({ projectId: projectId })
         return;
     }, []);
 
@@ -110,40 +199,73 @@ const TestRepository = (props) => {
     }
     const testRepository = useRef(null)
     return (<Provider {...store}>
-          <div className="test-repository" ref = {testRepository}>
+        <div className="test-repository" ref={testRepository}>
             <Row >
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="test-repository-list">
+                        <div className="test-repository-list-top">
+                            <div className="test-repository-tab">
+                                <div
+                                    className={`test-repository-tab-item ${activeKey === "testCase" ? "test-repository-tab-select" : ""}`}
+                                    key={1}
+                                    onClick={() => setActiveKey("testCase")}
+                                >
+                                    用例
+                                </div>
+                                <div
+                                    className={`test-repository-tab-item ${activeKey === "repository" ? "test-repository-tab-select" : ""}`}
+                                    key={2}
+                                    onClick={() => setActiveKey("repository")}
+                                >用例库</div>
 
-                        <Breadcumb
-                            firstText="测试用例库"
-                        >
-                            <div>
-                                <Button type="primary" onClick={() => showTestRepository()}>
-                                    添加测试用例库
-                                </Button>
                             </div>
-                        </Breadcumb>
+                            {
+                                activeKey === "repository" && <Button type="primary" onClick={() => showTestRepository()}>
+                                    添加用例库
+                                </Button>
+                            }
 
-                        <Table
-                            columns={columns}
-                            dataSource={projectTestList}
-                            rowKey={(record) => record.id}
-                            pagination={false}
-                            onChange={false}
-                        />
-                        <TestRepositoryAdd 
-                            projectId = {projectId} 
-                            testAddvisible={testAddvisible} 
-                            setTestAddvisible={setTestAddvisible} 
-                            setProjectTestList = {setProjectTestList}
-                        />
+                        </div>
+                        {
+                            activeKey === "repository" && <>
+                                <Table
+                                    columns={columns}
+                                    dataSource={projectTestList}
+                                    rowKey={(record) => record.id}
+                                    pagination={false}
+                                    onChange={false}
+                                />
+                                <TestRepositoryAdd
+                                    projectId={projectId}
+                                    testAddvisible={testAddvisible}
+                                    setTestAddvisible={setTestAddvisible}
+                                    setProjectTestList={setProjectTestList}
+                                />
+                            </>
+                        }
+                        {
+                            activeKey === "testCase" && <div>
+                                <Table
+                                    columns={testCaseColumns}
+                                    dataSource={testCaseList}
+                                    rowKey={(record) => record.id}
+                                    pagination={false}
+                                    onChange={false}
+                                />
+                                <PaginationCommon
+                                    currentPage={testCaseCondition.pageParam.currentPage}
+                                    changePage={(currentPage) => changePage(currentPage)}
+                                    totalPage={testCaseCondition.pageParam.totalPage}
+                                />
+                            </div>
+                        }
+
                     </div>
                 </Col>
             </Row>
         </div>
     </Provider>
-      
+
 
     );
 };

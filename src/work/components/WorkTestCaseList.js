@@ -35,13 +35,13 @@ const WorkTestCaseList = (props) => {
     // 
     const delectRepository = (id) => {
         console.log(id)
-        // deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
-        //     if (data.code === 0) {
-        //         findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-        //             setWorkTestCaseList([...data])
-        //         })
-        //     }
-        // })
+        deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
+            if (data.code === 0) {
+                findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+                    setWorkTestCaseList([...data])
+                })
+            }
+        })
     }
 
     const columns = [
@@ -51,7 +51,13 @@ const WorkTestCaseList = (props) => {
             key: "name",
             width: 150,
             render: (text, record) => (
-                <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                <div className="testcase-title">
+                    <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-testcase"></use>
+                    </svg>
+                    <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+        
+                </div>
             ),
         },
         {

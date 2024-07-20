@@ -95,7 +95,7 @@ const ProdeScrumAside = (props) => {
             encoded: "wiki",
         },
         {
-            title: "测试用例库",
+            title: "测试用例",
             icon: 'sprint',
             id: `/projectDetail/${projectId}/test`,
             key: "test",
@@ -182,7 +182,7 @@ const ProdeScrumAside = (props) => {
         // 通过事件对象获取浏览器窗口的高度
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
 
-        const menuHeight = documentHeight - 200;
+        const menuHeight = documentHeight - 250;
         const menuNum = Math.floor(menuHeight / 60);
         let num = 0;
         if (project?.projectType.type === "scrum") {

@@ -2,10 +2,44 @@
     .test-repository-list {
         padding: var(--thoughtware-padding);
     }
+    .test-repository-list-top {
+        display: flex;
+        justify-content: space-between;
+    }
+    .test-repository-tab {
+        display: flex;
+        gap: 20px;
+        position: sticky;
+        padding-bottom: 15px;
+        .test-repository-tab-item {
+            cursor: pointer;
+            background-color: var(--thoughtware-gray-600);
+            height: 32px;
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
 
+        }
+
+        .test-repository-tab-select {
+            font-weight: var(--thoughtware-font-weight-bold);
+            color: var(--thoughtware-blue);
+            background-color: var(--thoughtware-gray-400);
+        }
+    }
     .repository-title {
         
         cursor: pointer;
+    }
+    .testcase-title {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .testcase-title:hover {
+        color: var(--thoughtware-blue);
     }
     .repository-name:hover {
         color: var(--thoughtware-blue);

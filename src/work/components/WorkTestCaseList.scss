@@ -19,6 +19,14 @@
         background: #fff;
         padding: 15px;
         border-radius: 4px;
+        .testcase-title {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .testcase-title:hover {
+            color: var(--thoughtware-blue);
+        }
     }
     .testcase-content {
         background: #fff;

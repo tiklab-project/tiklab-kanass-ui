@@ -44,7 +44,7 @@ const WorkDocumentList = (props) => {
     }
     const goWikiDetail = (data) => {
         if (data.exist) {
-            findSystemUrl({ name: "kanass" }).then(res => {
+            findSystemUrl({ name: "sward" }).then(res => {
                 const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
                 applyJump(`${kanassUrl}/#/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
             })
@@ -60,7 +60,21 @@ const WorkDocumentList = (props) => {
             key: "name",
             width: 150,
             render: (text, record) => (
+                <div className="document-title">
+
+                {
+                    record.documentType !== "markdown" && <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-file"></use>
+                    </svg>
+                }
+                {
+                    record.documentType === "markdown" && <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-minmap"></use>
+                    </svg>
+                }
                 <span onClick={() => goWikiDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+            </div>
+                
                 
             ),
         },
