@@ -33,19 +33,22 @@ const searchWorkList = (workStore, values) => {
     }
 }
 
-const setWorkDeatilInList = (workStore, value) => {
+const setWorkDeatilInList = (workStore, value, isRefresh) => {
     const { viewType, getWorkConditionPageTree, getWorkConditionPage, setWorkId, setWorkIndex} = workStore;
     if (viewType === "tree") {
         getWorkConditionPageTree(value).then(res => {
             if(res.code === 0 ){
                 const list = res.data.dataList;
-                if(list.length > 0){
-                    setWorkId(list[0].id)
-                    setWorkIndex(1)
-                }else {
-                    setWorkId(0)
-                    setWorkIndex(0)
+                if(!isRefresh){
+                    if(list.length > 0){
+                        setWorkId(list[0].id)
+                        setWorkIndex(1)
+                    }else {
+                        setWorkId(0)
+                        setWorkIndex(0)
+                    }
                 }
+                
                 
             }
         })
@@ -54,14 +57,15 @@ const setWorkDeatilInList = (workStore, value) => {
         getWorkConditionPage(value).then(res => {
             if(res.code === 0 ){
                 const list = res.data.dataList;
-                if(list.length > 0){
-                    setWorkId(list[0].id)
-                    setWorkIndex(1)
-                }else {
-                    setWorkId(0)
-                    setWorkIndex(0)
+                if(!isRefresh){
+                    if(list.length > 0){
+                        setWorkId(list[0].id)
+                        setWorkIndex(1)
+                    }else {
+                        setWorkId(0)
+                        setWorkIndex(0)
+                    }
                 }
-                
             }
         })
     }

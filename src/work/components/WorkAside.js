@@ -14,7 +14,7 @@ const WorkAside = (props) => {
     const workAsideList = useRef()
     const { workStore } = props;
     const { tableLoading, setWorkId, workId, setWorkIndex, workList, currentPage, totalPage,
-        searchCondition } = workStore;
+        searchCondition, total } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
 
 
@@ -210,14 +210,14 @@ const WorkAside = (props) => {
                         {
                             item.children && item.children.length > 0 ?
                                 (isExpandedTree(item.id) ?
-                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                         <use xlinkHref="#icon-workDown"></use>
                                     </svg> :
-                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                         <use xlinkHref="#icon-workRight"></use>
                                     </svg>
                                 ) :
-                                <div className="svg-icon" />
+                                <div className="icon-10" />
                         }
                     </div>
                     {
@@ -273,6 +273,16 @@ const WorkAside = (props) => {
         setWorkAside(scrollTop)
     }
 
+    const refresh = () => {
+        const values = {
+            pageParam: {
+                pageSize: searchCondition.pageParam.pageSize,
+                currentPage: searchCondition.pageParam.currentPage,
+            }
+        }
+        setWorkDeatilInList(workStore, values, true)
+    }
+
     return (
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
             <WorkListHead />
@@ -296,25 +306,32 @@ const WorkAside = (props) => {
 
                 {/* </div> */}
             </div>
-            <div className="work-aside-bottom" >
-                <div className="page-button" onClick={() => changePage(currentPage - 1)}>
-                    <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+            <div className="work-aside-page">
+                <div className="work-aside-page-total">
+                    共{total}条
                 </div>
+                <div className="work-aside-bottom" >
+                    <div className="page-button" onClick={() => changePage(currentPage - 1)}>
+                        <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+                    </div>
 
-                <span>
-                    {currentPage}
-                </span>
-                <span>
-                    &nbsp; / &nbsp;
-                </span>
-                <span>
-                    {totalPage}
-                </span>
-                <div className="page-button" onClick={() => changePage(currentPage + 1)}>
-                    <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                    <span>
+                        {currentPage}
+                    </span>
+                    <span>
+                        &nbsp; / &nbsp;
+                    </span>
+                    <span>
+                        {totalPage}
+                    </span>
+                    <div className="page-button" onClick={() => changePage(currentPage + 1)}>
+                        <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                    </div>
+
                 </div>
-
+                <div className="work-aside-page-ref" onClick={()=> refresh()} >刷新</div>
             </div>
+
         </div>
     )
 }

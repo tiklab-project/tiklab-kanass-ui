@@ -5,7 +5,7 @@ const DynamicListItem = (props) => {
     const { content, model, type, key } = props;
     const data = JSON.parse(content)
     const { createUserIcon, master, workItemTitle, receiveTime, createTime, 
-        workItemId, projectId, oldValue, newValue, projectName } = data;
+        workItemId, projectId, oldValue, newValue, projectName, creatTime } = data;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const path = props.match.path;
@@ -55,7 +55,7 @@ const DynamicListItem = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div>{createTime} </div>
+                        <div>{creatTime} </div>
                     </div>
                 )
                 break;

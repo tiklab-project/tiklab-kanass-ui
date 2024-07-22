@@ -3,8 +3,7 @@
     height: 0 !important;
 }
 .version-survey-row {
-    height: "100%";
-    background: var(--thoughtware-gray-800);
+    height: 100%;
     overflow: auto;
 }
 .version-survey {
@@ -51,11 +50,11 @@
         margin-bottom: 15px;
         .version-info-box {
             padding: var(--thoughtware-padding);
-            background-color: #fff;
+            background-color: var(--thoughtware-gray-600);
             border-radius: 4px;
             flex: 1;
             height: 510px;
-
+            
             .version-info-title {
                 display: flex;
                 align-items: center;
@@ -144,6 +143,7 @@
             background-color: #fff;
             border-radius: 4px;
             height: 510px;
+            background-color: var(--thoughtware-gray-600);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);
@@ -204,8 +204,6 @@
     //     }
     // }
     .dynamic-box {
-        background-color: #fff;
-        padding: var(--thoughtware-padding);
         .dynamic-item {
             margin-bottom: 10px;
             cursor: pointer;

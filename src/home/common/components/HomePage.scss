@@ -1,19 +1,17 @@
 .home {
     height: calc(100vh - var(--thoughtware-head-height));
     overflow: auto;
-    // background: var(--thoughtware-gray-600);
     position: relative;
     z-index: 0;
-    padding: 0 20px 20px;
-    background: var(--thoughtware-gray-800);
+    padding: var(--thoughtware-padding);
+    background-color: #fff;
     .home-tab {
         display: flex;
         gap: 20px;
         position: sticky;
-        padding: 20px 0 15px 0;
         .home-tab-item {
             cursor: pointer;
-            background-color: #fff;
+            background-color: var(--thoughtware-gray-600);
             height: 32px;
             width: 80px;
             display: flex;
@@ -26,7 +24,7 @@
         .home-tab-select {
             font-weight: var(--thoughtware-font-weight-bold);
             color: var(--thoughtware-blue);
-            background-color: var(--thoughtware-gray-200);
+            background-color: var(--thoughtware-gray-400);
         }
     }
 
@@ -62,12 +60,12 @@
         overflow: hidden;
         background-color: #fff;
         border-radius: 4px;
-        padding: var(--thoughtware-padding);
         height: fit-content;
-
+        margin-top: 20px;
         .home-project {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
             margin-top: 10px;
             overflow: hidden;
@@ -82,7 +80,7 @@
             }
 
             .project-item {
-                max-width: 240px;
+                max-width: 250px;
                 min-width: 204px;
                 flex: 1;
                 padding: 12px;
@@ -99,7 +97,6 @@
                     font-weight: var(--thoughtware-font-weight-bold);
                     display: inline-flex;
                     align-items: center;
-                    font-size: 16px;
 
                     .item-name {
                         text-overflow: ellipsis;
@@ -157,8 +154,7 @@
 
     .todo-work {
         margin: 0 auto;
-        margin-top: 15px;
-        padding: var(--thoughtware-padding);
+        margin-top: 20px;
         background-color: #fff;
         border-radius: 4px;
         flex: 1;
@@ -184,7 +180,6 @@
         }
 
         &-list {
-            margin-top: 10px;
 
             .todo-item {
                 margin-bottom: 10px;
@@ -196,168 +191,12 @@
         }
     }
 
-    // .recent-click {
-    //     margin: 0 auto;
-    //     margin-top: 15px;
-    //     padding: var(--thoughtware-padding);
-    //     background-color: #fff;
-    //     border-radius: 4px;
-    //     flex: 1;
-    //     margin-bottom: 15px;
 
-    //     &-title {
-    //         width: 100%;
-    //         font-weight: var(--thoughtware-font-weight-bold);
-    //         display: flex;
-    //         align-items: center;
-    //         justify-content: space-between;
-
-    //         // border-bottom: 1px solid #f0f0f0;
-    //         .more:hover {
-    //             text-decoration: underline;
-    //         }
-
-    //         .more {
-    //             color: var(--thoughtware-blue);
-    //             margin-left: 10px;
-    //             cursor: pointer;
-    //             display: flex;
-    //             align-items: center;
-    //         }
-    //     }
-
-    //     &-list {
-    //         margin-top: 10px;
-    //     }
-
-    //     .project-item {
-    //         display: flex;
-    //         align-items: center;
-
-    //         .project-item-content {
-    //             .content-name:hover {
-    //                 cursor: pointer;
-    //                 color: var(--thoughtware-blue);
-    //             }
-
-    //             .content-type {
-    //                 font-size: 12px;
-    //                 color: var(--thoughtware-gray-500);
-    //             }
-    //         }
-
-    //     }
-
-    //     .work-item {
-    //         display: flex;
-    //         align-items: center;
-    //         margin-bottom: 10px;
-    //         gap: 20px;
-
-    //         .work-left {
-    //             display: flex;
-    //             align-items: center;
-    //             gap: 5px;
-    //             flex: 1;
-    //             flex-shrink: 1;
-    //             min-width: 0;
-
-    //             .work-content {
-    //                 flex-shrink: 1;
-    //                 min-width: 0;
-
-    //                 .content-name:hover {
-    //                     cursor: pointer;
-    //                     color: var(--thoughtware-blue);
-    //                 }
-
-    //                 .content-name {
-    //                     text-overflow: ellipsis;
-    //                     white-space: nowrap;
-    //                     overflow: hidden;
-    //                 }
-
-    //                 .content-type {
-    //                     font-size: 13px;
-    //                     color: var(--thoughtware-gray-500);
-    //                 }
-    //             }
-    //         }
-
-    //         .work-project {
-    //             width: 150px;
-    //             font-size: 12px;
-    //             text-overflow: ellipsis;
-    //             white-space: nowrap;
-    //             overflow: hidden;
-    //         }
-
-    //         .work-status {
-    //             padding: 2px 3px;
-    //             background: #e2e1e4;
-    //             border-radius: 4px;
-    //             font-size: 10px;
-    //             width: fit-content;
-    //             color: #2b333e;
-    //         }
-
-    //         .work-status-process {
-    //             background: #b0d5dfa1;
-    //             color: #132c33;
-    //         }
-
-    //         .work-status-done {
-    //             background: #dfecd5e3;
-    //             color: #5e5314;
-    //         }
-
-    //         .work-time {
-    //             text-align: right;
-    //         }
-    //     }
-
-    //     .version-item {
-    //         display: flex;
-    //         align-items: center;
-    //         margin-bottom: 10px;
-
-    //         .version-content {
-    //             .content-name:hover {
-    //                 cursor: pointer;
-    //                 color: var(--thoughtware-blue);
-    //             }
-
-    //             .content-type {
-    //                 font-size: 12px;
-    //                 color: var(--thoughtware-gray-500);
-    //             }
-    //         }
-    //     }
-
-    //     .sprint-item {
-    //         display: flex;
-    //         align-items: center;
-    //         margin-bottom: 10px;
-
-    //         .sprint-content {
-    //             .content-name:hover {
-    //                 cursor: pointer;
-    //                 color: var(--thoughtware-blue);
-    //             }
-
-    //             .content-type {
-    //                 font-size: 12px;
-    //                 color: var(--thoughtware-gray-500);
-    //             }
-    //         }
-    //     }
-
-    // }
     .statistics-box {
         display: flex;
         width: 100%;
         gap: 10px;
-        margin-top: 15px;
+        margin-top: 20px;
     }
    
 }

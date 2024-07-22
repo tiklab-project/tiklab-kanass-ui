@@ -4,7 +4,6 @@
 }
 .sprint-survey-row {
     height: "100%";
-    background: var(--thoughtware-gray-800);
     overflow: auto;
 }
 .sprint-survey {
@@ -54,7 +53,7 @@
 
         .sprint-info-box {
             padding: var(--thoughtware-padding);
-            background-color: #fff;
+            background-color: var(--thoughtware-gray-600);
             border-radius: 4px;
             flex: 1;
             height: 510px;
@@ -146,7 +145,7 @@
             background-color: #fff;
             border-radius: 4px;
             height: 510px;
-
+            background-color: var(--thoughtware-gray-600);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);

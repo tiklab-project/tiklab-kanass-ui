@@ -1,7 +1,6 @@
 .todo-box {
     background-color: #fff;
-    padding: var(--thoughtware-padding);
-    margin-bottom: 15px;
+    margin-top: 25px;
     .todo-box-title {
         width: 100%;
         height: 30px;
@@ -23,6 +22,6 @@
         }
     }
     .todo-list {
-        margin-top: 15px;
+        margin-top: 10px;
     }
 }

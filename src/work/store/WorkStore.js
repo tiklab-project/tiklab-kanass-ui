@@ -445,6 +445,7 @@ export class WorkStore {
      */
     @action
     getWorkConditionPageTree = async(value) => {
+
         this.tableLoading = true;
         this.setSearchCondition(value)
         let data = [];

@@ -45,9 +45,10 @@ const Header = props => {
             </div>
 
             <div className='frame-header-search-wrap'>
-                <Search />
+                
             </div>
             <div className={'frame-header-right'}>
+                <Search />
                 <MessageList />
                 <HelpLink />
                 <ProjectFeature />

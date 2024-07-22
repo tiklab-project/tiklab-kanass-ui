@@ -33,6 +33,7 @@ const Search = (props) => {
     const [keyboards, setKeyboards] = useState();
     // 查找结果的弹窗是否显示
     const [show, setShow] = useState(false)
+    const [showLong, setShowLong] = useState(false)
     // 登录者id
     // const userId = getUser().userId;
     const tenant = getUser().tenant;
@@ -42,64 +43,64 @@ const Search = (props) => {
     const userId = getUser().userId;
 
     useEffect(() => {
-        function keyBordar(e){
+        function keyBordar(e) {
             if (e.code === 'ArrowDown') {
-                if( keyboardIndex.modal === "project" && keyboardIndex.index + 1 < projectList.length ){
+                if (keyboardIndex.modal === "project" && keyboardIndex.index + 1 < projectList.length) {
                     setKeyboardIndex(keyboardIndex => ({ modal: keyboardIndex.modal, index: keyboardIndex.index + 1 }))
                     // setKeyboards(keyBordars => keyBordars + 1)
                 }
-                if( keyboardIndex.modal === "project" && keyboardIndex.index + 1 === projectList.length ){
+                if (keyboardIndex.modal === "project" && keyboardIndex.index + 1 === projectList.length) {
                     setKeyboardIndex({ modal: "workItem", index: 0 })
                 }
-                if( keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 < workItemList.length ){
+                if (keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 < workItemList.length) {
                     setKeyboardIndex({ modal: "workItem", index: keyboardIndex.index + 1 })
-                } 
-                
-                if( keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 === workItemList.length ){
+                }
+
+                if (keyboardIndex.modal === "workItem" && keyboardIndex.index + 1 === workItemList.length) {
                     setKeyboardIndex({ modal: "project", index: 0 })
-                }  
+                }
             }
             if (e.code === 'ArrowUp') {
-                if( keyboardIndex.modal === "project" && keyboardIndex.index > 0 ){
+                if (keyboardIndex.modal === "project" && keyboardIndex.index > 0) {
                     setKeyboardIndex({ modal: "project", index: keyboardIndex.index - 1 })
                 }
-                if( keyboardIndex.modal === "project" && keyboardIndex.index === 0 ){
+                if (keyboardIndex.modal === "project" && keyboardIndex.index === 0) {
                     setKeyboardIndex({ modal: "workItem", index: workItemList.length - 1 })
                 }
-                if( keyboardIndex.modal === "workItem" && keyboardIndex.index > 0 ){
+                if (keyboardIndex.modal === "workItem" && keyboardIndex.index > 0) {
                     setKeyboardIndex({ modal: "workItem", index: keyboardIndex.index - 1 })
-                } 
-                
-                if( keyboardIndex.modal === "workItem" && keyboardIndex.index === 0 ){
+                }
+
+                if (keyboardIndex.modal === "workItem" && keyboardIndex.index === 0) {
                     setKeyboardIndex({ modal: "project", index: projectList.length - 1 })
-                } 
+                }
             }
-            if(e.keyCode === 13){
-                if(isSeach){
-                    if(keyboardIndex.modal === "workItem"){
+            if (e.keyCode === 13) {
+                if (isSeach) {
+                    if (keyboardIndex.modal === "workItem") {
                         toSearchWorkItem(workItemList[keyboardIndex.index])
-                        
+
                     }
-    
-                    if(keyboardIndex.modal === "project"){
+
+                    if (keyboardIndex.modal === "project") {
                         toSearchProject(projectList[keyboardIndex.index])
                     }
-                }else {
-                    if(keyboardIndex.modal === "workItem"){
+                } else {
+                    if (keyboardIndex.modal === "workItem") {
                         toWorkItem(workItemList[keyboardIndex.index])
-                        
+
                     }
-    
-                    if(keyboardIndex.modal === "project"){
+
+                    if (keyboardIndex.modal === "project") {
                         toProject(projectList[keyboardIndex.index])
                     }
                 }
-               
+
             }
         }
-        
+
         window.addEventListener("keydown", keyBordar);
-        if(!show){
+        if (!show) {
             window.removeEventListener("keydown", keyBordar);
         }
         return () => {
@@ -107,11 +108,11 @@ const Search = (props) => {
         };
     }, [keyboardIndex, show])
 
-   
+
 
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
-        
+
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
@@ -289,20 +290,31 @@ const Search = (props) => {
         <Fragment>
             <div className="search"
                 tabIndex="-1"
-
+                onMouseEnter={() => setShowLong(true)}
+                onMouseLeave={() => { setShowLong(false); setShow(false) }}
                 ref={dropDown}
-            // onBlur={hiddenBox}
             >
-                <div className={`search-box ${(show === true) ? "search-long-box" : "search-short-box"}`} >
-                    <SearchOutlined />
+                <div className={`search-box ${!showLong ? "short-box" : "long-box"}`} >
                     <input
-                        className="search-input"
+                        className={`search-box-input ${showLong ? "show-input" : "hidden-input"}`}
                         onChange={changeValue}
                         onFocus={showBox}
                         ref={inputRef}
                         placeholder="搜索项目、事项"
+
                     />
+                    {
+                        !showLong ? <svg className="img-25" aria-hidden="true">
+                            <use xlinkHref="#icon-searchtop" ></use>
+                        </svg>
+                            :
+                            <svg className="img-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-searchtop" ></use>
+                            </svg>
+                    }
+
                 </div>
+
                 <div className={`show-box ${show === true ? null : "hidden-box"}`}>
                     {
                         isSeach ? <>
@@ -317,7 +329,7 @@ const Search = (props) => {
                                                         <div className="item-one" onClick={() => toSearchProject(item)}>
                                                             <img
                                                                 alt=""
-                                                                src = {setImageUrl(item.iconUrl)}
+                                                                src={setImageUrl(item.iconUrl)}
                                                             />
                                                             <span>{item.projectName}</span>
                                                             <div className="item-desc">
@@ -341,7 +353,7 @@ const Search = (props) => {
                                                         <div className="item-one" onClick={() => toSearchWorkItem(item)}>
                                                             <img
                                                                 alt=""
-                                                                src = {setImageUrl(item.workTypeSys?.iconUrl)}
+                                                                src={setImageUrl(item.workTypeSys?.iconUrl)}
                                                             />
                                                             <span>{item.title}</span>
                                                             <div className="item-desc">
@@ -373,7 +385,7 @@ const Search = (props) => {
                                                             <div className="item-one" onClick={() => toProject(item)}>
                                                                 <img
                                                                     alt=""
-                                                                    src = {setImageUrl(item.iconUrl)}
+                                                                    src={setImageUrl(item.iconUrl)}
                                                                 />
                                                                 <span>{item.name}</span>
                                                                 <div className="item-desc">
@@ -401,7 +413,7 @@ const Search = (props) => {
                                                         <div className="item-one" onClick={() => toWorkItem(item)}>
                                                             <img
                                                                 alt=""
-                                                                src = {setImageUrl(item.iconUrl)}
+                                                                src={setImageUrl(item.iconUrl)}
                                                             />
                                                             <span>{item.name}</span>
                                                             <div className="item-desc">

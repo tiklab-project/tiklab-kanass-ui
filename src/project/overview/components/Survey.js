@@ -396,7 +396,7 @@ const Survey = (props) => {
                                             </div>
                                             <div className="work-content">
                                                 <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                                <div className="content-type">{item.object.id}</div>
+                                                <div className="content-type">{item.object.code}</div>
                                             </div>
                                         </div>
                                         <div style={{width: "100px"}}>

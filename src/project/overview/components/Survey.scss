@@ -3,7 +3,7 @@
     height: 0 !important;
 }
 .project-survey-row {
-    background-color: var(--thoughtware-gray-800);
+    // background-color: var(--thoughtware-gray-800);
     height: 100%;
     overflow: auto;
 }
@@ -16,22 +16,19 @@
         justify-content: space-between;
         font-size: 16px;
         font-weight: var(--thoughtware-font-weight-bold);
-        // height: 30px;
-        // line-height: 30px;
         margin-bottom: 10px;
-        // border-bottom: 1px solid #f0f0f0;
     }
 
     .upper-box {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 15px;
+        // margin-bottom: 15px;
         gap: 20px;
         .project-box {
             padding: var(--thoughtware-padding);
             background-color: #fff;
             border-radius: 4px;
-            // width: 500px;
+            background-color: var(--thoughtware-gray-600);
             flex: 1;
             .project-container {
                 .thoughtware-profile .ant-avatar {
@@ -85,7 +82,7 @@
             padding: var(--thoughtware-padding);
             background-color: #fff;
             border-radius: 4px;
-
+            background-color: var(--thoughtware-gray-600);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);
@@ -95,53 +92,14 @@
     }
 
 
-    // .dynamic-box {
-    //     background-color: #fff;
-    //     border-radius: 4px;
-    //     padding-bottom: 20px;
-    //     padding: var(--thoughtware-padding);
- 
-    //     .dynamic-list {
-    //         .dynamic-item {
-    //             margin-bottom: 10px;
-    //             .dynamic-work-title:hover {
-    //                 color: var(--thoughtware-blue);
-    //             }
-    //         }
-    //         .dynamic-item:nth-child(4n+1) {
-    //             .dynamic-user-icon {
-    //                 background-color: #cadbf3;
-    //             }
-    //         }
-
-    //         .dynamic-item:nth-child(4n+2){
-    //             .dynamic-user-icon {
-    //                 background-color: #deedd7;
-    //             }
-    //         }
-
-    //         .dynamic-item:nth-child(4n+3) {
-    //             .dynamic-user-icon {
-    //                 background-color: #ffebee;
-    //             }
-    //         }
-
-    //         .dynamic-item:nth-child(4n+4){
-    //             .dynamic-user-icon {
-    //                 background-color: #e8eaf6;
-    //             }
-    //         }
-    //     }
-    // }
 
     .milestone-box {
         background-color: #fff;
         border-radius: 4px;
-        padding: var(--thoughtware-padding);
-
+        margin-top: 20px;
         &-timeline {
             padding: var(--thoughtware-padding);
-
+            background-color: var(--thoughtware-gray-600);
             .timeline-item {
                 text-align: center;
                 color: var(--thoughtware-blue);
@@ -175,13 +133,10 @@
 
     .recent-click {
         margin: 0 auto;
-        margin-top: 15px;
-        padding: var(--thoughtware-padding);
+        margin-top: 25px;
         background-color: #fff;
         border-radius: 4px;
-        padding-bottom: 20px;
         flex: 1;
-        margin-bottom: 15px;
 
         &-title {
             width: 100%;
@@ -191,7 +146,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             .more:hover {
                 text-decoration: underline;
             }

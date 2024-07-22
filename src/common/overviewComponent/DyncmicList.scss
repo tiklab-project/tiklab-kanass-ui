@@ -1,18 +1,14 @@
 .dynamic-box {
     background-color: #fff;
     border-radius: 4px;
-    padding-bottom: 20px;
-    padding: var(--thoughtware-padding);
+    margin-top: 25px;
     .box-title {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 16px;
         font-weight: var(--thoughtware-font-weight-bold);
-        // height: 30px;
-        // line-height: 30px;
         margin-bottom: 10px;
-        // border-bottom: 1px solid #f0f0f0;
     }
     .dynamic-list {
         .dynamic-item {

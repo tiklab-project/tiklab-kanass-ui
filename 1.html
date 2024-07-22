@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+        .box {
+            position: relative;
+            /* 设置为相对定位或绝对定位，以便transform能起作用 */
+            left: 0;
+            /* 初始位置 */
+            transition: left 0.5s ease-in-out;
+            /* 设置过渡效果 */
+            background-color: #f0f0f0;
+            width: 100px;
+            /* 示例宽度 */
+            height: 100px;
+            /* 示例高度 */
+            line-height: 100px;
+            /* 文本垂直居中 */
+            text-align: center;
+            /* 文本水平居中 */
+        }
+
+        .box.move-left {
+            left: -100px;
+            /* 向左移动100px */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">这是一个盒子</div>
+    <button onclick="moveBoxLeft()">向左移动</button>
+    <script>
+        function moveBoxLeft() {
+            var box = document.querySelector('.box');
+            box.classList.add('move-left'); // 添加.move-left类以触发过渡效果
+        }
+    </script>
+</body>
+
+</html>
