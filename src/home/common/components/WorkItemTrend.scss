@@ -1,13 +1,9 @@
 .home-workitem-trend {
     border-radius: 4px;
-    background-color: #fff;
+    background-color: var(--thoughtware-gray-600);
     flex: 1;
+    padding: var(--thoughtware-padding);
     &-top {
-        height: 40px;
-        line-height: 40px;
-        font-weight: var(--thoughtware-font-weight-bold);
-        display: flex;
-        margin-bottom: 10px;
         .home-workitem-trend-title {
             display: flex;
             justify-content: space-between;
@@ -18,9 +14,7 @@
     .home-workitem-trend-content {
         width: 100%;
         height: 500px;
-        background-color: var(--thoughtware-gray-600);
         border-radius: 4px;
-        padding-top: 15px;
         .delete-warning {
             font-weight: 600;
             text-align: center;

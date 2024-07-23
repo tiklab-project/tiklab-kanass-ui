@@ -149,14 +149,14 @@ const WorkAside = (props) => {
                                         {
                                             childItem.children && childItem.children.length > 0 ?
                                                 (isExpandedTree(childItem.id) ?
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(childItem.id)}>
+                                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(childItem.id)}>
                                                         <use xlinkHref="#icon-workDown"></use>
                                                     </svg> :
-                                                    <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(childItem.id)}>
+                                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(childItem.id)}>
                                                         <use xlinkHref="#icon-workRight"></use>
                                                     </svg>
                                                 ) :
-                                                <div className="svg-icon">
+                                                <div className="icon-10">
                                                 </div>
                                         }
                                     </div>
@@ -329,7 +329,11 @@ const WorkAside = (props) => {
                     </div>
 
                 </div>
-                <div className="work-aside-page-ref" onClick={()=> refresh()} >刷新</div>
+                <div className="work-aside-page-ref" onClick={() => refresh()} >
+                    <svg className="svg-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-refresh"></use>
+                    </svg>
+                </div>
             </div>
 
         </div>

@@ -24,17 +24,15 @@ const { TabPane } = Tabs;
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
-        findTodopage, setActiveKey, findRecentPage, recentList,
-        updateRecent, statisticsWorkItemByStatus, endTaskList, todoTaskList
+        findTodopage, setActiveKey, findRecentPage, updateRecent, todoTaskList
     } = homeStore;
-    const tenant = getUser().tenant;
     const { setWorkId, searchWorkById } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
     const [recentProjectList, setRecentProjectList] = useState();
     const [recentLoading, setRecentLoading] = useState(false);
-    
+
     useEffect(() => {
         getRecentProject()
         // 获取待办列表
@@ -344,8 +342,14 @@ const HomeSurvey = (props) => {
             </div>
 
             <div className="statistics-box">
+                <div className="statistics-box-title">
+                    统计
+                </div>
+                <div className="statistics-content">
                 <ProjectStatusNum />
                 <WorkItemTrend />
+                </div>
+               
             </div>
 
             <WorkItemSurvey />

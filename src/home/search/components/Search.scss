@@ -1,16 +1,18 @@
 .search {
     .short-box {
         width: 25px;
+        height: 25px;
         transition: width 0.3s;
     }
     .long-box {
         width: 375px;
+        height: 30px;
         transition: width 0.3s;
         border: 2px solid #dddd;
         padding-right: 10px;
     }
     .search-box {
-        height: 25px;
+        
         background: #fff;
         display: flex;
         border-radius: 25px;

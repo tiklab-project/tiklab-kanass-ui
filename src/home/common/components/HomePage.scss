@@ -34,8 +34,6 @@
 
     .title {
         width: 100%;
-        // height: 40px;
-        // line-height: 40px;
         border-radius: 4px;
         display: inline-flex;
         justify-content: space-between;
@@ -65,7 +63,6 @@
         .home-project {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             flex-wrap: wrap;
             margin-top: 10px;
             overflow: hidden;
@@ -80,7 +77,7 @@
             }
 
             .project-item {
-                max-width: 250px;
+                max-width: 260px;
                 min-width: 204px;
                 flex: 1;
                 padding: 12px;
@@ -191,12 +188,20 @@
         }
     }
 
-
     .statistics-box {
-        display: flex;
-        width: 100%;
-        gap: 10px;
         margin-top: 20px;
+        .statistics-box-title {
+            height: 40px;
+            line-height: 40px;
+            font-weight: 600;
+        }
+        .statistics-content {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+        }
     }
+
+    
    
 }

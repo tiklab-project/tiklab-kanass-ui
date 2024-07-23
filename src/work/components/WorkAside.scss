@@ -151,13 +151,16 @@
         justify-content: space-between;
         padding: 5px 10px;
         background: var(--thoughtware-gray-600);
+        
         .work-aside-page-total {
             font-size: 12px;
             cursor: pointer;
+            color: #666;
         }
         .work-aside-page-ref {
             font-size: 12px;
             cursor: pointer;
+            color: #666;
         }
     }
     .work-aside-bottom {

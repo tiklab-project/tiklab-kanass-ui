@@ -128,7 +128,7 @@ const ProjectSetProjectList = (props) => {
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-            width: "20%",
+            width: "25%",
             render: (text, record) => (
                 <>
                     {record.startTime} - {record.endTime}

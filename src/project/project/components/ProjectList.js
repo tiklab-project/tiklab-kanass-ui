@@ -31,7 +31,7 @@ const ProjectList = (props) => {
     }]
     useEffect(() => {
         setActiveTabs("1")
-        findJoinProjectList({orderParams: orderParams})
+        findJoinProjectList({ orderParams: orderParams })
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)
@@ -97,7 +97,7 @@ const ProjectList = (props) => {
     const onSearch = useDebounce(value => {
         switch (activeTabs) {
             case "1":
-                findJoinProjectList({ projectName: value, orderParams: orderParams})
+                findJoinProjectList({ projectName: value, orderParams: orderParams })
                 break;
             case "3":
                 findFocusProjectList({ master: userId, projectName: value })
@@ -108,7 +108,7 @@ const ProjectList = (props) => {
             default:
                 break;
         }
-    }, [500]) ;
+    }, [500]);
 
     const handleTableChange = (pagination) => {
         findProjectList({ current: pagination.current })
@@ -118,7 +118,7 @@ const ProjectList = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectList({orderParams: orderParams})
+                findJoinProjectList({ orderParams: orderParams })
                 break;
             case "3":
                 findFocusProjectList({ master: userId })
@@ -271,9 +271,9 @@ const ProjectList = (props) => {
     const setWorkNum = (num) => {
         let showNum;
         const isMax = Math.floor(num / 1000);
-        if(isMax >= 1){
+        if (isMax >= 1) {
             showNum = `${isMax}k+`
-        }else {
+        } else {
             showNum = num;
         }
         return showNum;
@@ -286,10 +286,8 @@ const ProjectList = (props) => {
                 <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
             </Breadcumb>
             <div className="project-recent-box">
-                <div className="title">
-                    <div>
-                        常用项目
-                    </div>
+                <div className="project-recent-box-title">
+                    常用项目
                 </div>
                 <Spin spinning={recentLoading} delay={500} >
                     <div className="home-project">

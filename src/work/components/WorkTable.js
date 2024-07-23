@@ -15,9 +15,29 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import { setWorkDeatilInList } from "./WorkSearch";
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import {getColumn, getWorkColumn} from "./WorkTableColumn";
+const getScreenType = () => {
+    const width = window.innerWidth;
 
+    if (width >= 1600) {
+        return 'xxl';
+    } else if (width < 1600 && width >= 1200) {
+        return 'xl';
+    } else if (width < 1200 && width >= 992){
+        return 'lg';
+    } else if (width < 992 && width >= 768){
+        return 'md';
+    } else if (width < 768 && width >= 576){
+        return 'sm';
+    } else if (width < 576){
+        return 'xs';
+    } 
+}
 const WorkTable = (props) => {
-
+    const screenSize = useBreakpoint();
+    const screenCode = getScreenType();
+    console.log(screenSize)
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, deleteWorkItemAndChildren, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, setWorkList, haveChildren } = WorkStore;
@@ -28,12 +48,13 @@ const WorkTable = (props) => {
     const stageId = props.match.params.stage ? props.match.params.stage : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
-
+    const [projectColums, setProjectColums] = useState([])
     const path = props.match.path;
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+   
 
     const moreMenu = (record) => {
         return <Menu onClick={() => selectWorkItem(record)}>
@@ -88,22 +109,24 @@ const WorkTable = (props) => {
         setIsModalVisible(true)
     }
 
-
-    const setStatuStyle = (id) => {
-        let name;
-        switch (id) {
-            case "todo":
-                name = "work-status-todo";
-                break;
-            case "done":
-                name = "work-status-done";
-                break;
-            default:
-                name = "work-status-process";
-                break;
-        }
-        return name;
+    const actionColumn = {
+        title: '操作',
+        width: "60",
+        key: 'action',
+        render: (text, record) => (
+            <WorkDeleteSelectModal
+                deleteSelectModal={deleteSelectModal}
+                setDeleteSelectModal={setDeleteSelectModal}
+                getPopupContainer={workTable}
+                delectCurrentWorkItem={delectCurrentWorkItem}
+                haveChildren={haveChildren}
+                workId={record.id}
+                setWorkId={setWorkId}
+            />
+        ),
     }
+
+
 
     //  排序
     const [sortArray, setSortArray] = useState(["id"]);
@@ -202,348 +225,20 @@ const WorkTable = (props) => {
     }
 
 
-    const workColumns = [
-        {
-            title: '序号',
-            dataIndex: 'code',
-            key: 'code',
-            className: `work-first-col ${sortArray.indexOf("code") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record, index) => <div className="work-id " onClick={() => goProdetail(record, index)}>
-                <div className="work-icon">
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(record.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="menu-icon"
-
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="menu-icon"
-                            />
-                    }
-                </div>
-                <div className="work-key">{record.code}</div>
-            </div>
-        },
-        {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record, index) => <div className="work-title" onClick={() => goProdetail(record, index)}>
-                {text}
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
-            </div>
-        },
-        {
-            title: '优先级',
-            dataIndex: ['workPriority', 'name'],
-            key: 'workPriority',
-            sorter: {
-                multiple: 1
-            },
-            className: `${sortArray.indexOf("workPriority") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={setImageUrl(record.workPriority?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
-                </div>
-                <div className="work-info-text">{text || "暂无设置"}</div>
-            </div>
-        },
-        {
-            title: '负责人',
-            dataIndex: ['assigner', 'nickname'],
-            key: 'assignerId',
-            className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text">{text}</div>
-            </div>
-        },
-
-        {
-            title: '创建人',
-            dataIndex: ['builder', 'nickname'],
-            key: 'builderId',
-            sorter: {
-                multiple: 1
-            },
-            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text">{text}</div>
-            </div>
-        },
-        {
-            title: '模块',
-            dataIndex: ['module', 'moduleName'],
-            key: 'moduleId',
-            className: `${sortArray.indexOf("moduleId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-text">{text ? text : "无"}</div>
-            </div>
-        },
-        {
-            title: '创建时间',
-            dataIndex: "buildTime",
-            key: 'buildTime',
-            sorter: {
-                multiple: 1
-            },
-            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            render: (text, record) => <div className="work-info-text">
-                {text.slice(0, 10)}
-            </div>
-        },
-
-        {
-            title: '操作',
-            width: "60",
-            key: 'action',
-            render: (text, record) => (
-                // <DeleteModal deleteFunction={setDeleteSelectModal(false)} id={record.id} />
-                <WorkDeleteSelectModal
-                    deleteSelectModal={deleteSelectModal}
-                    setDeleteSelectModal={setDeleteSelectModal}
-                    getPopupContainer={workTable}
-                    delectCurrentWorkItem={delectCurrentWorkItem}
-                    haveChildren={haveChildren}
-                    setWorkId={setWorkId}
-                    workId={record.id}
-                // getHaveChildren={getHaveChildren}
-                />
-            )
+    useEffect(()=> {
+        console.log(screenSize)
+        
+        if(props.location.pathname === "/workTable" ){
+            const column = getColumn(screenCode, goProdetail, sortArray,actionColumn)
+            setProjectColums(column)
+        }else {
+            const column = getWorkColumn(screenCode, goProdetail, sortArray,actionColumn)
+            setProjectColums(column)
         }
-    ];
+    }, [screenSize])
 
-    const projectColums = [
-        {
-            title: '序号',
-            dataIndex: 'code',
-            key: 'code',
-            className: `work-first-col ${sortArray.indexOf("id") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
-                <div className="work-icon">
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(record.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="menu-icon"
-
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="menu-icon"
-                            />
-                    }
-                </div>
-                <div className="work-key">{record.code}</div>
-            </div>
-        },
-        {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record, index) => <div className="work-title" onClick={() => goProdetail(record, index)}>
-                {text}
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 2
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
-            </div>
-        },
-        {
-            title: '优先级',
-            dataIndex: ['workPriority', 'name'],
-            key: 'workPriority',
-            className: `${sortArray.indexOf("workPriority") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 3
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={setImageUrl(record.workPriority?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
-                </div>
-                <div className="work-info-text">{text || "暂无设置"}</div>
-            </div>
-        },
-        {
-            title: '负责人',
-            dataIndex: ['assigner', 'nickname'],
-            key: 'assignerId',
-            className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 4
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text">{text}</div>
-            </div>
-        },
-
-        {
-            title: '创建人',
-            dataIndex: ['builder', 'nickname'],
-            key: 'builderId',
-            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 5
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text">{text}</div>
-            </div>
-        },
-        {
-            title: '模块',
-            dataIndex: ['module', 'moduleName'],
-            key: 'moduleId',
-            className: `${sortArray.indexOf("moduleId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 1
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-text">{text ? text : "无"}</div>
-            </div>
-        },
-        {
-            title: '创建时间',
-            dataIndex: "buildTime",
-            key: 'buildTime',
-            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 6
-            },
-            render: (text, record) => <div className="work-info-text">
-                {text.slice(0, 10)}
-            </div>
-        },
-        {
-            title: '项目',
-            dataIndex: ['project', 'projectName'],
-            key: 'project',
-            className: `${sortArray.indexOf("project") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 7
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    {
-                        record.project.iconUrl ? <img
-                            src={setImageUrl(record.project?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/project3.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
-
-                </div>
-                <div className="work-info-text">{text}</div>
-            </div>
-        },
-
-        {
-            title: '操作',
-            width: "60",
-            key: 'action',
-            render: (text, record) => (
-                // <Dropdown
-                //     overlay={() => moreMenu()}
-                //     placement="bottomLeft"
-                //     trigger="click"
-                //     getPopupContainer={workTable ? () => workTable.current : null}
-                // >
-                //     <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }}>
-                //         <use xlinkHref="#icon-more"></use>
-                //     </svg>
-                // </Dropdown>
-                <WorkDeleteSelectModal
-                    deleteSelectModal={deleteSelectModal}
-                    setDeleteSelectModal={setDeleteSelectModal}
-                    getPopupContainer={workTable}
-                    delectCurrentWorkItem={delectCurrentWorkItem}
-                    haveChildren={haveChildren}
-                    workId={record.id}
-                    setWorkId={setWorkId}
-                // getHaveChildren={getHaveChildren}
-                />
-            ),
-        }
-    ];
+   
+        
 
     // 改变页数
     const changePage = (page, pageSize) => {
@@ -606,14 +301,14 @@ const WorkTable = (props) => {
     return (
         <Provider {...store}>
             <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
-                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                    <div className="work-table" >
+                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
+                    <div className={`work-table ${["sm", "md", "lg"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
                         <WorkTableHead />
                         <WorkTableFilter />
                         <div className="work-table-content" ref={workTable}>
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
-                                    columns={props.location.pathname === "/workTable" ? projectColums : workColumns}
+                                    columns={projectColums}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
@@ -629,15 +324,15 @@ const WorkTable = (props) => {
                                     expandable={{
                                         expandIcon: ({ expanded, onExpand, record }) => (
                                             record.children && record.children.length > 0 ? expanded ?
-                                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
                                                     <use xlinkHref="#icon-workDown"></use>
                                                 </svg> :
-                                                <svg className="svg-icon" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
                                                     <use xlinkHref="#icon-workRight"></use>
                                                 </svg>
                                                 :
                                                 <>
-                                                    <div className="svg-icon">
+                                                    <div className="icon-10">
 
                                                     </div>
                                                 </>

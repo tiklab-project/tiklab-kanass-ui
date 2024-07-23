@@ -490,16 +490,16 @@ const StageLinemap = (props) => {
                                                 <>
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workDown"></use>
                                                             </svg> :
-                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
                                                 :
-                                                <div className="img-icon" aria-hidden="true" />
+                                                <div className="icon-12" aria-hidden="true" />
                                         }
                                         <img
                                             src={('/images/stage.png')}

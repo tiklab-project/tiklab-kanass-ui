@@ -110,7 +110,7 @@ const WorkTypeTab = (props) => {
                 onClick={() => selectType("all")} key={"all"}
             >
                 全部
-                <span style={{fontSize: "12px"}}>{setWorkNum(eveWorkTypeNum.all)}</span>
+                <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum.all)}</span>
                 {/* <span>({setWorkNum(1009)})</span> */}
             </div>
             {
@@ -121,7 +121,7 @@ const WorkTypeTab = (props) => {
                         onClick={() => selectType(item.workType)}
                     >   
                         {item.workType.name}
-                        <span style={{fontSize: "12px"}}>{setWorkNum(eveWorkTypeNum[item.workType.code])}</span>
+                        <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum[item.workType.code])}</span>
                     </div>
                 })
             }

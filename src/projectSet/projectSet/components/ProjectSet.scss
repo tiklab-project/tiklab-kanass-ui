@@ -15,7 +15,6 @@
                 width: 32px;
                 height: 32px;
                 border-radius: 5px;
-                color: #fff;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -45,8 +44,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 50px;
-        line-height: 50px;
+        height: 40px;
+        line-height: 40px;
         gap: 20px;
 
         .vertical-bar {
@@ -93,7 +92,7 @@
                 margin-top: 10px;
                 overflow: hidden;
                 gap: 10px;
-                padding-bottom: 10px;
+                margin-bottom: 20px;
                 height: 104px;
 
                 .projectSet-item:hover {
@@ -103,7 +102,7 @@
                 }
 
                 .projectSet-item {
-                    max-width: 240px;
+                    max-width: 260px;
                     min-width: 224px;
                     flex: 1;
                     padding: 12px;
@@ -125,7 +124,6 @@
                             width: 32px;
                             height: 32px;
                             border-radius: 5px;
-                            color: #fff;
                             display: flex;
                             justify-content: center;
                             align-items: center;
@@ -199,15 +197,15 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        height: 50px;
-        line-height: 50px;
+        height: 40px;
+        line-height: 40px;
         gap: 10px;
 
         .projectSet-tab {
             font-size: var(--thoughtware-font-13);
             cursor: pointer;
-            height: 50px;
-            line-height: 50px;
+            height: 40px;
+            line-height: 40px;
         }
 
         .active-tabs {

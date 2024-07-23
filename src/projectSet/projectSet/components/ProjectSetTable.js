@@ -202,10 +202,8 @@ const ProjectSetTable = (props) => {
                     </Button>
                 </Breadcumb>
                 <div className="projectSet-recent-box">
-                    <div className="title">
-                        <div>
-                            常用项目集
-                        </div>
+                    <div className="projectSet-recent-box-title">
+                        常用项目集
                     </div>
                     <div className="recent-projectSet">
                         {
@@ -268,7 +266,7 @@ const ProjectSetTable = (props) => {
                             rowKey={record => record.id}
                             pagination={false}
                             onChange={pageDowm}
-                            className = "projectSet-table-item"
+                            className="projectSet-table-item"
                         />
                     </div>
 

@@ -1,9 +1,12 @@
 // .work-list-col {
 //     padding: var(--thoughtware-padding);
 // }
-.work-table {
+.work-table-small {
     padding: var(--thoughtware-padding);
-
+}
+.work-table {
+    padding-top: var(--thoughtware-padding);
+    padding-bottom: var(--thoughtware-padding);
     .work-table-content {
         padding-top: var(--thoughtware-padding);
         .ant-pagination {
@@ -15,7 +18,9 @@
             height: 50px;
             width: 200px;
         }
-
+        .ant-table-cell {
+            white-space: nowrap;
+        }
         .ant-table-thead {
             .work-first-col {
                 display: table-cell;
@@ -27,7 +32,8 @@
                     visibility: visible;
                 }
             }
-
+            
+            
             .hidden-sort-icon {
                 .ant-table-column-sorter-full {
                     visibility: hidden;
