@@ -19,6 +19,7 @@ import TodoListItem from '../../../common/overviewComponent/TodoListItem';
 import WorkItemTrend from './WorkItemTrend';
 import ProjectStatusNum from './ProjectStatusNum';
 import WorkItemSurvey from './WorkItemSurvey';
+import TodoStatistics from './TodoStatistics';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -126,143 +127,8 @@ const HomeSurvey = (props) => {
         sessionStorage.setItem("menuKey", "project")
     }
 
-    const goVersion = (item) => {
-        updateRecent({ id: item.id })
-        props.history.push(`/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
-        sessionStorage.setItem("menuKey", "project")
-    }
 
-    const goSprint = (item) => {
-        updateRecent({ id: item.id })
-        props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
-        sessionStorage.setItem("menuKey", "project")
-    }
 
-    const setStatuStyle = (id) => {
-        let name;
-        switch (id) {
-            case "todo":
-                name = "work-status-todo";
-                break;
-            case "done":
-                name = "work-status-done";
-                break;
-            default:
-                name = "work-status-process";
-                break;
-        }
-        return name;
-    }
-
-    const recentItem = (item) => {
-        let element;
-        switch (item.model) {
-            case "project":
-                element = <div className="project-item" key={item.id}>
-
-                    <div className="project-item-icon">
-                        {
-                            item?.project?.iconUrl ?
-                                <img
-                                    src={setImageUrl(item.project.iconUrl)}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                                :
-                                <img
-                                    src={('/images/project1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-
-                        }
-                    </div>
-                    <div className="project-item-content">
-                        <div className="content-name" onClick={() => goProject(item)}>{item.name}</div>
-                        <div className="content-type">项目</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-            case "workItem":
-                element = <div className="work-item" key={item.id}>
-                    <div className="work-icon">
-                        {
-                            item.iconUrl ?
-                                <img
-                                    src={setImageUrl(item.iconUrl)}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                                :
-                                <img
-                                    src={('/images/workType1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-
-                        }
-                    </div>
-                    <div className="work-content">
-                        <div className="content-name" onClick={() => goWorkItem(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-            case "version":
-                element = <div className="version-item" key={item.id}>
-                    <div className="version-icon">
-                        {
-                            item.iconUrl ?
-                                <img
-                                    src={('/images/' + item.iconUrl)}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                                :
-                                <img
-                                    src={('/images/version.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-
-                        }
-                    </div>
-                    <div className="version-content">
-                        <div className="content-name" onClick={() => goVersion(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-            case "sprint":
-                element = <div className="sprint-item" key={item.id}>
-                    <div className="sprint-icon">
-                        <img
-                            src={('/images/sprint.png')}
-                            alt=""
-                            className="icon-32"
-                        />
-                    </div>
-                    <div className="sprint-content">
-                        <div className="content-name" onClick={() => goSprint(item)}>{item.name}</div>
-                        <div className="content-type">{item.project.projectName}</div>
-                    </div>
-                    <div className="item-time">
-                        {item.recentTime}
-                    </div>
-                </div>
-                break;
-        }
-        return element;
-    }
     const setWorkNum = (num) => {
         let showNum;
         const isMax = Math.floor(num / 1000);
@@ -275,12 +141,30 @@ const HomeSurvey = (props) => {
     }
 
     const getTodoList = (value) => {
-        findTodopage({
-            userId: userId, status: value, pageParam: {
-                pageSize: 10,
-                currentPage: 1
+        if (value === "3") {
+            const params = {
+                assignUserId: userId,
+                status: 1,
+                isExpire: 2,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
             }
-        },)
+            findTodopage(params, null)
+        } else {
+            findTodopage({
+                assignUserId: userId,
+                status: value,
+                isExpire: 0,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
+            }, null)
+
+        }
+
     }
     return (
         <div className="home-content">
@@ -346,14 +230,17 @@ const HomeSurvey = (props) => {
                     统计
                 </div>
                 <div className="statistics-content">
-                <ProjectStatusNum />
-                <WorkItemTrend />
+                    <ProjectStatusNum />
+                    <WorkItemTrend />
                 </div>
-               
-            </div>
 
-            <WorkItemSurvey />
-            <div className="todo-work">
+            </div>
+            <div className="statictics-work">
+                <WorkItemSurvey />
+                <TodoStatistics isHome = {true} />
+            </div>
+                        
+            {/* <div className="todo-work">
                 <div className="todo-work-top">
                     <span className="name">待办事项</span>
                     <div>
@@ -395,7 +282,7 @@ const HomeSurvey = (props) => {
                         </TabPane>
                     </Tabs>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

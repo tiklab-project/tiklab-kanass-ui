@@ -8,7 +8,6 @@
  */
 
 import React, { useEffect, useState } from "react";
-import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Empty, Select, Row, Col, Pagination } from "antd";
 import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
@@ -18,14 +17,12 @@ import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 const TodoList = (props) => {
     const { homeStore } = props;
-    const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,findSprintList, findProjectSetList,
-        findProjectSetProjectList, todoTotal, todoCondition } = homeStore;
+    const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,
+        findProjectSetProjectList, todoTotal, todoCondition, todoActiveKey, setTodoActiveKey } = homeStore;
     //登录者id
     const userId = getUser().userId;
     // 项目列表
     const [projectList, setProjectList] = useState();
-    // 迭代列表
-    const [sprintList, setSprintList] = useState();
     const [sprintValue, setSprintValue] = useState()
     // 面包屑第一个标题
     const [firstText, setFirstText] = useState();
@@ -36,7 +33,7 @@ const TodoList = (props) => {
     // const [todoTaskList, setTodoTaskList] = useState([])
     useEffect(() => {
         getSerchList()
-        const params = {
+        let params = {
             status: 1,
             assignUserId: userId,
             pageParam: {
@@ -45,6 +42,21 @@ const TodoList = (props) => {
             },
             data: null
         }
+        if (todoActiveKey === 3) {
+            params = {
+                ...params,
+                status: 1,
+                isExpire: 2,
+            }
+        } else {
+            params = {
+                ...params,
+                status: todoActiveKey,
+                isExpire: 0
+            }
+        }
+
+        
         // 根据不同的url 设置不同的面包屑
         if (props.route?.path === "/projectDetail/:id/workTodo") {
             const projectId = props.match.params.id;
@@ -91,6 +103,33 @@ const TodoList = (props) => {
         return;
     }, [])
 
+    const getTodoList = (value) => {
+        setTodoActiveKey(value)
+        if (value === 3) {
+            const params = {
+                assignUserId: userId,
+                status: 1,
+                isExpire: 2,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
+            }
+            findTodopage(params, null)
+        } else {
+            findTodopage({
+                assignUserId: userId,
+                status: value,
+                isExpire: 0,
+                pageParam: {
+                    pageSize: 10,
+                    currentPage: 1
+                }
+            }, null)
+
+        }
+
+    }
     /**
      * 获取搜索参数的列表
      */
@@ -123,10 +162,6 @@ const TodoList = (props) => {
         searchTodo("projectId", value)
     }
 
-    const changeSprint = (value) => {
-        setSprintValue(value)
-        searchTodo("sprintId", value)
-    }
 
     /**
      * 筛选待办事项
@@ -172,15 +207,18 @@ const TodoList = (props) => {
         }
         findTodopage(params)
     };
-    const getTodoList = (value) => {
-        setActiveKey(value)
-        findTodopage({status: value, pageParam: {
-                pageSize: 20,
-                currentPage: 1
-            }
-        },)
-    }
-    const [activeKey, setActiveKey] = useState(1)
+    // const getTodoList = (value) => {
+    //     setTodoActiveKey(value)
+    //     findTodopage({status: value, pageParam: {
+    //             pageSize: 20,
+    //             currentPage: 1
+    //         }
+    //     },)
+    // }
+
+
+   
+
     return (<div className="todo-list-page">
         {
             path !== "/home/todoList" && <Breadcrumb
@@ -192,9 +230,9 @@ const TodoList = (props) => {
 
         <div className="todo-list-top">
             <div className="todo-tab">
-                <div className={`todo-tab-item ${activeKey === 1 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(1)}>进行中</div>
-                <div className={`todo-tab-item ${activeKey === 2 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(2)}>完成</div>
-                <div className={`todo-tab-item ${activeKey === 3 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(3)}>逾期</div>
+                <div className={`todo-tab-item ${todoActiveKey === 1 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(1)}>进行中</div>
+                <div className={`todo-tab-item ${todoActiveKey === 2 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(2)}>完成</div>
+                <div className={`todo-tab-item ${todoActiveKey === 3 ? 'todo-tab-select' : ''}`} onClick={() => getTodoList(3)}>逾期</div>
             </div>
             <div className="todo-filter">
                 {

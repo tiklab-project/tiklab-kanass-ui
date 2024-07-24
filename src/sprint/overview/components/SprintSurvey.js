@@ -19,6 +19,7 @@ import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
+import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const SprintSurvey = (props) => {
     const { findSprint, findSprintBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, findWorkItemNumByQuickSearch } = SprintSurveyStore;
@@ -49,7 +50,7 @@ const SprintSurvey = (props) => {
                     let Yaxis = [];
                     if (res.data.dataList.length > 0) {
                         res.data.dataList.map((item, index) => {
-                            timerXaixs.push(item.recordTime);
+                            timerXaixs.push(item.recordTime.slice(0, 10));
                             workCountYaixs.push(item.remainWorkitemCount);
                             Yaxis.push(item.totalWorkitemCount * (7 - index) / 7);
                             return;
@@ -293,7 +294,8 @@ const SprintSurvey = (props) => {
                         </div>
                     </div>
 
-                    <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"sprint"} />
+                    {/* <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"sprint"} /> */}
+                    <TodoStatistics />
 
                     <DynamicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>

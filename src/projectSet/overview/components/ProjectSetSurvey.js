@@ -16,6 +16,7 @@ import BasicInfoStore from "../store/BasicInfoStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import setImageUrl from "../../../common/utils/setImageUrl";
+import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const ProjectSetSurvey = props => {
 
     const { findlogpage, findtodopage, findProjectList, createRecent } = BasicInfoStore;
@@ -166,8 +167,8 @@ const ProjectSetSurvey = props => {
                             </div>
                         </div>
                     </div>
-                    <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"projectSet"} />
-
+                    {/* <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"projectSet"} /> */}
+                    <TodoStatistics />
                     <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
             </Col>

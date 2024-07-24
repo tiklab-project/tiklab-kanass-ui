@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 // import WorkGantt from "./work/components/WorkGantt";
 
 
-const Index = AsyncComponent(() => import('./home/common/components/Layout'))
+const Index = AsyncComponent(() => import('./home/common/components/LayoutCe'))
 // const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))

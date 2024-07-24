@@ -184,5 +184,13 @@ export class ProjectSurveyStore {
         const data = await Service("/recent/updateRecent", value)
         return data;
     }
+
+    @action
+    statisticsProjectTodoWorkByStatus = async (value) => {
+        const params = new FormData();
+        params.append("projectId", value.projectId)
+        const data = await Service("/projectInsightReport/statisticsProjectTodoWorkByStatus", params)
+        return data;
+    }
 }
 export default new ProjectSurveyStore();

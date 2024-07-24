@@ -9,11 +9,10 @@ import { setWorkDeatilInList } from '../../../work/components/WorkSearch';
 
 const WorkItemSurvey = (props) => {
     const { statisticsWorkItemByStatus } = HomeStore;
-    const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue } = WorkStore;
+    const { setSearchCondition, findStateNodeList, setQuickFilterValue } = WorkStore;
     const [workItemCount, setWorkItemCount] = useState({});
 
     useEffect(() => {
-
         statisticsWorkItemByStatus().then(res => {
             if (res.code === 0) {
                 setWorkItemCount(res.data)
@@ -42,7 +41,6 @@ const WorkItemSurvey = (props) => {
     }
 
     const selectMenu = (value) => {
-
         switch (value) {
             case "pending":
                 getPendingWorkItem();
@@ -145,32 +143,60 @@ const WorkItemSurvey = (props) => {
         setWorkDeatilInList(WorkStore, initValues)
         sessionStorage.setItem("menuKey", "work")
         props.history.push("/workTable")
-        
+
     }
 
-
+    const data = [
+        {
+            id: "remain",
+            name: "未完成",
+            icon: "allwork",
+            code: "pending"
+        },
+        {
+            id: "progress",
+            name: "进行中",
+            icon: "progress",
+            code: "progress"
+        },
+        {
+            id: "todo",
+            name: "未开始",
+            icon: "endwork",
+            code: "todo"
+        },
+        {
+            id: "overdue",
+            name: "逾期",
+            icon: "overdue",
+            code: "overdue"
+        }
+    ]
     return (
         <div className="statistics-workitem">
             <div className="statistics-workitem-title">
                 事项概况
             </div>
             <div className="statistics-workitem-content">
-                <div className="statistics-workitem-box" onClick={() => selectMenu("pending")}>
-                    <div>{workItemCount.remain}</div>
-                    <div>未完成</div>
-                </div>
-                <div className="statistics-workitem-box" onClick={() => selectMenu("progress")}>
-                    <div>{workItemCount.progress}</div>
-                    <div>进行中</div>
-                </div>
-                <div className="statistics-workitem-box" onClick={() => selectMenu("todo")}>
-                    <div>{workItemCount.todo}</div>
-                    <div>未开始</div>
-                </div>
-                <div className="statistics-workitem-box" onClick={() => selectMenu("overdue")}>
-                    <div>{workItemCount.overdue}</div>
-                    <div>逾期</div>
-                </div>
+                {
+                    data.map(item => {
+                        return <div 
+                            id = {item.id}
+                            className="statistics-workitem-box" 
+                            onClick={() => selectMenu(item.icon)}
+                        >
+                            <svg className="icon-40" aria-hidden="true">
+                                <use xlinkHref={`#icon-${item.icon}`}></use>
+                            </svg>
+                            <div className="statistics-workitem-box-right">
+                                <div className="statistics-workitem-box-num">{workItemCount[item.id]}</div>
+                                <div className="statistics-workitem-box-name">{item.name}</div>
+                            </div>
+
+                        </div>
+                    })
+                }
+
             </div>
 
         </div>

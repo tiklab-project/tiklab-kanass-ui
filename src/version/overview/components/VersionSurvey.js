@@ -20,6 +20,7 @@ import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import VersionStartState from "./VersionStartState";
 import VersionEndState from "./VersionEndState";
+import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, findWorkItemNumByQuickSearch, userList, getUseList } = VersionSurveyStore;
@@ -52,7 +53,7 @@ const VersionSurvey = (props) => {
                     let Yaxis = [];
                     if (res.data.dataList.length > 0) {
                         res.data.dataList.map((item, index) => {
-                            timerXaixs.push(item.recordTime);
+                            timerXaixs.push(item.recordTime.slice(0, 10));
                             workCountYaixs.push(item.remainWorkitemCount);
                             Yaxis.push(item.totalWorkitemCount * (7 - index) / 7);
                             return;
@@ -304,7 +305,8 @@ const VersionSurvey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"version"}/>
+                    <TodoStatistics />
+                    {/* <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"version"}/> */}
                     <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>

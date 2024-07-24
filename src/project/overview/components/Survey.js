@@ -21,6 +21,8 @@ import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import DyncmicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
+import ProjectTodoStatistics from "./ProjectTodoStatistics";
+import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
@@ -93,7 +95,7 @@ const Survey = (props) => {
                     let Yaxis = [];
                     if (res.data.dataList.length > 0) {
                         res.data.dataList.map((item, index) => {
-                            timerXaixs.push(item.recordTime);
+                            timerXaixs.push(item.recordTime.slice(0, 10));
                             workCountYaixs.push(item.remainWorkitemCount);
                             Yaxis.push(item.totalWorkitemCount * (7 - index) / 7);
                             return;
@@ -357,7 +359,6 @@ const Survey = (props) => {
                         <div className="box-title">
                             里程碑
                         </div>
-
                         <div className="milestone-box-timeline">
                             {
                                 milestoneList?.length > 0 ?
@@ -368,57 +369,9 @@ const Survey = (props) => {
 
                         </div>
                     </div>
-                    <div className="recent-click">
-                        <div className="box-title">
-                            <span className="name">常用事项</span>
-                        </div>
-                        <div className="recent-click-list">
-                            {
-                                recentList && recentList.length > 0 ? recentList.map(item => {
-                                    return <div className="work-item" key={item.object.id}>
-                                        <div className="work-left">
-                                            <div className="work-icon">
-                                                {
-                                                    item.object.workTypeSys.iconUrl ?
-                                                        <img
-                                                            src={setImageUrl(item.object.workTypeSys.iconUrl)}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={('/images/workType1.png')}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-
-                                                }
-                                            </div>
-                                            <div className="work-content">
-                                                <div className="content-name" onClick={() => goWorkItem(item)}>{item.object.title}</div>
-                                                <div className="content-type">{item.object.code}</div>
-                                            </div>
-                                        </div>
-                                        <div style={{width: "100px"}}>
-                                            <div className={`work-status ${setStatuStyle(item.object.workStatusNode.id)}`}>
-                                                {item.object.workStatusNode.name}
-                                            </div>
-                                        </div>
-
-                                        <div className="work-time">
-                                            {item.recentTime}
-                                        </div>
-                                    </div>
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有点击过事项~" />
-                            }
-                        </div>
-                    </div>
-                    <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/>
+                   <TodoStatistics />
+                    {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}
                     <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
-                    
-
                 </div>
             </Col>
         </Row>

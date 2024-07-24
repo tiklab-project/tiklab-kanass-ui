@@ -1,19 +1,18 @@
-.statistics-workitem {
+.project-statistics-todotask {
     margin-top: 20px;
-    flex: 1;
-    .statistics-workitem-title {
+    .statistics-todotask-title {
         width: 100%;
         font-weight: var(--thoughtware-font-weight-bold);
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-    .statistics-workitem-content {
+    .statistics-todotask-content {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap;
-        .statistics-workitem-box {
+        gap: 10px;
+        .statistics-todotask-box {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -26,33 +25,19 @@
             padding: var(--thoughtware-padding);
             background-color: var(--thoughtware-gray-600);
             gap: 10px;
-            // .statistics-workitem-box-num {
-            //     font-size: 16px;
-            //     font-weight: 600;
-            // }
-            // .statistics-workitem-box-name {
-            //     color: #666;
-            // }
-            // .statistics-workitem-box-num:hover {
-            //     color: var(--thoughtware-blue);
-            // }
-            // .statistics-workitem-box-name:hover {
-            //     color: var(--thoughtware-blue);
-            // }
-            .statistics-workitem-box-num {
+            .statistics-todotask-box-num {
                 font-size: 16px;
                 font-weight: 600;
             }
-            .statistics-workitem-box-name {
+            .statistics-todotask-box-name {
                 color: #666;
             }
         }
-
-        .statistics-workitem-box:hover {
-            .statistics-workitem-box-num {
+        .statistics-todotask-box:hover {
+            .statistics-todotask-box-num {
                 color: var(--thoughtware-blue);
             }
-            .statistics-workitem-box-name {
+            .statistics-todotask-box-name {
                 color: var(--thoughtware-blue);
             }
             

@@ -56,6 +56,9 @@ class HomeStore {
     // 当天被激活的tab
     @observable
     activeKey = "1";
+
+    @observable
+    todoActiveKey = 1;
     // 待办的条件分页
     @observable todoTotal = 0;
     @observable todoCondition = {
@@ -114,6 +117,10 @@ class HomeStore {
         this.activeKey = value
     }
 
+    @action
+    setTodoActiveKey = (value) => {
+        this.todoActiveKey = value
+    }
 
     /**
      * 获取当前登陆者最近点击的项目
@@ -298,6 +305,7 @@ class HomeStore {
     findTodopage = async (value, type) => {
         this.todoTaskList = [];
         this.setTodoCondition(value)
+        
         const data = await Service("/todo/findtodopage", this.todoCondition);
         if (data.code === 0) {
             const list = data.data.dataList;
@@ -390,6 +398,12 @@ class HomeStore {
     @action
     statisticsWorkItemByStatus = async() => {
         const data = await Service("/projectInsightReport/statisticsWorkItemByStatus")
+        return data;
+    }
+
+    @action
+    statisticsTodoWorkByStatus = async(params) => {
+        const data = await Service("/projectInsightReport/statisticsTodoWorkByStatus", params)
         return data;
     }
 }

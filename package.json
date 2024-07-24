@@ -224,6 +224,7 @@
         "thoughtware-privilege-ui": "^1.0.2",
         "thoughtware-security-ui": "^1.0.2",
         "thoughtware-slate-ui": "^1.0.2",
+        "thoughtware-user-extension-ui": "^1.0.0",
         "thoughtware-user-ui": "^1.0.2"
     }
 }
