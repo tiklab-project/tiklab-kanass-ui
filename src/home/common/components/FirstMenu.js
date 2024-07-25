@@ -98,7 +98,7 @@ const FirstMenu = (props) => {
     * 跳转到系统设置
     */
     const goSet = () => {
-        props.history.push("/setting/home")
+        props.history.push("/setting/version")
         sessionStorage.setItem("menuKey", "set")
     };
 

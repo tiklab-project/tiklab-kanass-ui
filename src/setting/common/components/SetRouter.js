@@ -12,6 +12,7 @@ const setDevRouter= [
         title: "用户与权限",
         icon: 'systemuser',
         purviewCode: "orga",
+        id: '/setting/orga',
         code: "userPrivilege",
         children: [
             {
@@ -342,6 +343,7 @@ const setPrdRouter= [
         title: "用户与权限",
         icon: 'systemuser',
         purviewCode: "orga",
+        id: '/setting/orga',
         code: "userPrivilege",
         children: [
             {

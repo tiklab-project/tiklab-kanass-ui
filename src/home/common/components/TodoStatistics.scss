@@ -15,10 +15,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap;
+        gap: 10px;
         
         .statistics-home-todotask-box {
-            width: calc(50% - 5px);
+            flex: 1
         }
         .statistics-project-todotask-box {
             flex: 1;

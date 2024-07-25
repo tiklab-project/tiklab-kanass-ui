@@ -15,12 +15,16 @@ import * as echarts from 'echarts';
 
 const ProjectStatusNum = (props) => {
     const { statisticsProjectByStatus } = HomeStore;
-    
+    const [projectStatistics, setProjectStatistics] = useState({})
     /**
      * 处于编辑状态，初始化统计条件表单
      */
     useEffect(() => {
-        setStatisticsData()
+        statisticsProjectByStatus().then(res => {
+            if (res.code === 0) {
+                setProjectStatistics(res.data)
+            }
+        })
         return;
     }, [])
 
@@ -47,7 +51,7 @@ const ProjectStatusNum = (props) => {
                     },
                 );
 
-               
+
                 xData.push("进行中")
                 yData.push({
                     value: data.progress,
@@ -93,15 +97,65 @@ const ProjectStatusNum = (props) => {
         })
     }
 
+    const data = [
+        {
+            id: "total",
+            name: "全部",
+            icon: "allwork",
+            code: "total",
+            color: "#59ADF8"
+        },
+        {
+            id: "progress",
+            name: "进行中",
+            icon: "progress",
+            code: "progress",
+            color: "#52C41A"
+        },
+        {
+            id: "noend",
+            name: "未结束",
+            icon: "endwork",
+            code: "noend",
+            color: "#FF9552"
+        },
+        {
+            id: "overdue",
+            name: "逾期",
+            icon: "overdue",
+            code: "overdue",
+            color: "#F76E5C"
+        }
+    ]
+
     return (
         <Fragment>
-            <div className="home-new-work-trend">
-                <div className="home-new-work-trend-top">
-                    <div className="home-new-work-trend-title">
+            <div className="project-status-num">
+                <div className="project-status-num-top">
+                    <div className="project-status-num-title">
                         项目统计
                     </div>
                 </div>
-                <div className="home-new-work-trend-content" id={`new-work-trend`} />
+                {/* <div className="project-status-num-content" id={`new-work-trend`} /> */}
+                <div className="project-status-num-content">
+                    {
+                        data && data.map(item => {
+                            return <div
+                                id={item.id}
+                                className="project-status-num-content-box"
+                                onClick={() => selectMenu(item.icon)}
+                            >
+                              
+                                <div className="project-status-num-content-box-right">
+                                    <div className="project-status-num-content-box-num" style={{color: item.color}}>{projectStatistics[item.id]}</div>
+                                    <div className="project-status-num-content-box-name">{item.name}</div>
+                                </div>
+
+                            </div>
+                        })
+                    }
+
+                </div>
             </div>
         </Fragment >
 

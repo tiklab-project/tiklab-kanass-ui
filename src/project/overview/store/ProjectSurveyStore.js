@@ -10,6 +10,7 @@ import { action, observable } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class ProjectSurveyStore {
     @observable recentList = [];
+    @observable logList = [];
     /**
      * 获取不同事项状态的统计
      * @param {项目id} projectId 
@@ -153,6 +154,35 @@ export class ProjectSurveyStore {
 
         }
         const data = await Service("/oplog/findlogpage", params)
+        if(data.code === 0){
+            const dataList = data.data.dataList;
+            let list = []
+            if(value.currentPage === 1) {
+                this.logList = []
+            }
+            if(dataList.length > 0){
+                dataList.map(item => {
+                    const date = item.createTime.slice(0, 10);
+                    const time = item.createTime.slice(11, 15);
+                    const list1 = this.logList.filter(dateItem => dateItem.date === date)
+                    if(list1.length > 0){
+                        this.logList.map(dateItem => {
+                            if(dateItem.date === date){
+                                dateItem.children.push(item)
+                            }
+                            return dateItem;
+                        })
+                    }else {
+                        this.logList.push({
+                            date: date,
+                            children: [item]
+                        })
+                    }
+                })
+            }
+            console.log(this.logList)
+        }
+        
         return data;
     }
 

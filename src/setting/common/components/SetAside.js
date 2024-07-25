@@ -14,24 +14,24 @@ import { PrivilegeButton } from "thoughtware-privilege-ui";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
 import { observer } from 'mobx-react';
 const SetAside = (props) => {
-    const { setSelectKey,  selectKey} = SettingHomeStore;
+    const { setSelectKey, selectKey } = SettingHomeStore;
     // 无子级菜单处理
     // const [selectKey, setSelectKey] = useState("/organ/organ");
 
     const [router, setRouterMenu] = useState(setDevRouter);
-    const authType =JSON.parse(localStorage.getItem("authConfig"))?.authType;
+    const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
     // const env = localStorage.getItem("authType").authType;
     const select = (data) => {
         const id = data.id;
         if (data.islink && !authType) {
-            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.easId;
+            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.id;
             window.open(authUrl, '_blank');
-        }else {
+        } else {
             props.history.push(id)
             setSelectKey(id)
         }
     }
-    
+
 
     useEffect(() => {
         if (env === "local") {
@@ -47,9 +47,9 @@ const SetAside = (props) => {
 
     const renderMenu = (data, deep, index) => {
         return (
-            <PrivilegeButton code={data.purviewCode} key = {data.code}>
+            <PrivilegeButton code={data.purviewCode} key={data.code}>
                 <li
-                    style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
+                    style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 28}` }}
                     className={`orga-aside-item ${data.id === selectKey ? "orga-aside-select" : ""}`}
                     onClick={() => select(data)}
                     key={data.code}
@@ -65,13 +65,13 @@ const SetAside = (props) => {
 
                     </span>
                     {
-                        (data.islink && !authType )&& <div className="orga-aside-item-icon">
+                        (data.islink && !authType) && <div className="orga-aside-item-icon">
                             <svg className="img-icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-outside`}></use>
                             </svg>
                         </div>
                     }
-                    
+
 
                 </li>
             </PrivilegeButton>
@@ -80,7 +80,7 @@ const SetAside = (props) => {
     }
 
     // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState(["/organ/organ"])
+    const [expandedTree, setExpandedTree] = useState(["/setting/version"])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
@@ -92,19 +92,22 @@ const SetAside = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
+        console.log(expandedTree)
     }
 
     const renderSubMenu = (item, deep, index) => {
-
         return (
-            <PrivilegeButton code={item.purviewCode} key = {item.code}>
+            <PrivilegeButton code={item.purviewCode} key={item.code}>
                 <li key={item.code} title={item.title} className="orga-aside-li">
-                    <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.id)}>
+                    <div className="orga-aside-item orga-aside-first"
+                        style={{ paddingLeft: `${deep * 20 + 28}` }}
+                        onClick={() => setOpenOrClose(item.id)}
+                    >
                         {
                             item.icon && <span to={item.id} className="orga-aside-item-left">
-                                {/* <svg className="img-icon-right" aria-hidden="true">
+                                <svg className="img-icon-right" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.icon}`}></use>
-                                </svg> */}
+                                </svg>
                                 <span className="orga-aside-title">{item.title}</span>
                             </span>
                         }
@@ -133,12 +136,20 @@ const SetAside = (props) => {
 
         )
     }
-
+    const backProject = () => {
+        props.history.push(`/home/survey`)
+        sessionStorage.setItem("menuKey", "home")
+    }
     return (
         <Fragment>
             <div className="orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
-                    <div className="orga-aside-name">设置</div>
+                    <div className="orga-aside-name">
+                        <svg className="svg-icon" aria-hidden="true" onClick={() => backProject()}>
+                            <use xlinkHref="#icon-backproject"></use>
+                        </svg>
+                        设置
+                    </div>
                     {
                         router && router.map((firstItem, index) => {
                             return firstItem.children && firstItem.children.length > 0 ?

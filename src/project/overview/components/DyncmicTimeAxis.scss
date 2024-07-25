@@ -1,0 +1,123 @@
+.dyncmic-timeaxis {
+    margin-top: 20px;
+
+    .dyncmic-timeaxis-title {
+        height: 40px;
+        line-height: 40px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dyncmic-timeaxis-content {
+        margin-top: 15px;
+        .dyncmic-timeaxis-box {
+            
+            .dyncmic-timeaxis-date {
+                margin-left: 10px;
+                padding: 0 10px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 5px;
+                position: relative;
+                font-size: 16px;
+                width: fit-content;
+                background-color: var(--thoughtware-gray-400);
+                .dyncmic-timeaxis-date-content {
+                    position: relative;
+                }
+                .dyncmic-timeaxis-date-content::before {
+                    content: "";
+                    display: inline-block;
+                    position: absolute;
+                    border-radius: 50%;
+                    background: #dadfe6;
+                    width: 7px;
+                    height: 7px;
+                    top: 12px;
+                    left: -23px;
+                }
+            }
+            .dyncmic-timeaxis-date::before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 15px;
+                left: -10px;
+                width: 0;
+                height: calc(50% + 40px);
+                border-left: 1px solid #dadfe6;
+            }
+            .dyncmic-timeaxis-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 10px 20px;
+                position: relative;
+
+                .dyncmic-timeaxis-item-time {
+                    position: relative;
+                }
+
+                .dyncmic-timeaxis-item-time::before {
+                    content: "";
+                    display: inline-block;
+                    position: absolute;
+                    border-radius: 50%;
+                    background: #dadfe6;
+                    width: 7px;
+                    height: 7px;
+                    top: 6px;
+                    left: -23px;
+                }
+            }
+
+            .dyncmic-showtimeaxis-item::before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 40px;
+                left: 0;
+                width: 0;
+                height: 100%;
+                border-left: 1px solid #dadfe6;
+            }
+        }
+    }
+
+    .dynamic-user-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 32px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .dyncmic-timeaxis-item:nth-child(4n+1) {
+        .dynamic-user-icon {
+            background-color: #cadbf3;
+        }
+    }
+
+    .dyncmic-timeaxis-item:nth-child(4n+2) {
+        .dynamic-user-icon {
+            background-color: #deedd7;
+        }
+    }
+
+    .dyncmic-timeaxis-item:nth-child(4n+3) {
+        .dynamic-user-icon {
+            background-color: #ffebee;
+        }
+    }
+
+    .dyncmic-timeaxis-item:nth-child(4n+4) {
+        .dynamic-user-icon {
+            background-color: #e8eaf6;
+        }
+    }
+}

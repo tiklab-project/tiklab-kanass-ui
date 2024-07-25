@@ -2,7 +2,7 @@ import { action, observable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class SettingHomeStore {
     @observable
-    selectKey = "/setting/orga"
+    selectKey = "/setting/version"
     
     @action
     setSelectKey = (key) => {

@@ -1,9 +1,9 @@
 .statistics-workitem {
-    margin-top: 20px;
+    padding: var(--thoughtware-padding);
     flex: 1;
+    background-color: var(--thoughtware-gray-600);
     .statistics-workitem-title {
         width: 100%;
-        font-weight: var(--thoughtware-font-weight-bold);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -24,7 +24,7 @@
             cursor: pointer;
             width: calc(50% - 5px);
             padding: var(--thoughtware-padding);
-            background-color: var(--thoughtware-gray-600);
+            
             gap: 10px;
             // .statistics-workitem-box-num {
             //     font-size: 16px;

@@ -170,6 +170,18 @@ const WorkItemSurvey = (props) => {
             name: "逾期",
             icon: "overdue",
             code: "overdue"
+        },
+        {
+            id: "todo",
+            name: "未开始",
+            icon: "endwork",
+            code: "todo"
+        },
+        {
+            id: "overdue",
+            name: "逾期",
+            icon: "overdue",
+            code: "overdue"
         }
     ]
     return (

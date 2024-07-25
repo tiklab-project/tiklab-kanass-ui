@@ -1,29 +1,49 @@
-.home-new-work-trend {
+.project-status-num {
     border-radius: 4px;
-    background-color: var(--thoughtware-gray-600);
+    margin-top: 20px;
     flex: 1;
-    padding: var(--thoughtware-padding);
-    .home-new-work-trend-top {
-        .home-new-work-trend-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+    .project-status-num-top {
+        .project-status-num-title {
+            font-weight: 600;
         }
     }
-    .home-new-work-trend-content {
-        width: 100%;
-        height: 500px;
-        
-        border-radius: 4px;
-        .delete-warning {
-            font-weight: 600;
-            text-align: center;
+
+    .project-status-num-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        .project-status-num-content-box {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            height: 100%;
+            height: 100px;
+            border-radius: 4px;
+            margin-top: 10px;
+            line-height: 35px;
+            cursor: pointer;
+            flex: 1;
+            padding: var(--thoughtware-padding);
+            background-color: var(--thoughtware-gray-600);
+            gap: 10px;
+            text-align: center;
+            .project-status-num-content-box-num {
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .project-status-num-content-box-name {
+                color: #666;
+            }
+        }
+
+        .project-status-num-content-box:hover {
+            .project-status-num-content-box-num {
+                color: var(--thoughtware-blue);
+            }
+            .project-status-num-content-box-name {
+                color: var(--thoughtware-blue);
+            }
+            
         }
     }
 }

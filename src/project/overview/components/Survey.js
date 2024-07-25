@@ -23,10 +23,11 @@ import DyncmicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import ProjectTodoStatistics from "./ProjectTodoStatistics";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
+import DyncmicTimeAxis from "./DyncmicTimeAxis";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
-        findRecentPage, recentList, updateRecent } = ProjectSurveyStore;
+        findRecentPage, recentList, updateRecent, logList } = ProjectSurveyStore;
     const { setWorkId } = Workstore;
     //当前用户名字
     const masterName = getUser().name;
@@ -39,7 +40,7 @@ const Survey = (props) => {
     // 待办列表
     const [todoList, setTodoList] = useState([]);
     // 日志列表
-    const [logList, setLogList] = useState([]);
+    // const [logList, setLogList] = useState([]);
     // 里程碑列表
     const [milestoneList, setMilestoneList] = useState();
     // 进度
@@ -60,11 +61,7 @@ const Survey = (props) => {
         })
 
         // 获取日志列表
-        findlogpage({ projectId: projectId, currentPage: 1 }).then(res => {
-            if (res.code === 0) {
-                setLogList(res.data.dataList)
-            }
-        })
+        findlogpage({ projectId: projectId, currentPage: 1 })
 
         // 获取待办列表
         findtodopage({ projectId: projectId, currentPage: 1, userId: userId }).then(res => {
@@ -370,8 +367,9 @@ const Survey = (props) => {
                         </div>
                     </div>
                    <TodoStatistics />
+                   <DyncmicTimeAxis logList = {logList} />
                     {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}
-                    <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} />
+                    {/* <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} /> */}
                 </div>
             </Col>
         </Row>

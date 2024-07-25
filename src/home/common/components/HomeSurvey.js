@@ -224,65 +224,20 @@ const HomeSurvey = (props) => {
                     </div>
                 </Spin>
             </div>
-
+            <ProjectStatusNum />
             <div className="statistics-box">
                 <div className="statistics-box-title">
-                    统计
+                    事项统计
                 </div>
                 <div className="statistics-content">
-                    <ProjectStatusNum />
+                    {/* <ProjectStatusNum /> */}
+                    <WorkItemSurvey />
                     <WorkItemTrend />
                 </div>
 
             </div>
-            <div className="statictics-work">
-                <WorkItemSurvey />
-                <TodoStatistics isHome = {true} />
-            </div>
+            <TodoStatistics isHome = {true} />
                         
-            {/* <div className="todo-work">
-                <div className="todo-work-top">
-                    <span className="name">待办事项</span>
-                    <div>
-                        <span className="more" onClick={() => goTodoWorkItemList()}>
-                            <svg aria-hidden="true" className="svg-icon">
-                                <use xlinkHref="#icon-rightjump"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div className="todo-work-list">
-                    <Tabs defaultActiveKey="1" onChange={(value) => getTodoList(value)}>
-                        <TabPane tab="进行中" key="1">
-                            {
-                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content={item.data} key={item.id} />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </TabPane>
-                        <TabPane tab="已完成" key="2">
-                            {
-                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content={item.data} key={item.id} />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </TabPane>
-                        <TabPane tab="已逾期" key="3">
-                            {
-                                todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                                    return <TodoListItem content={item.data} key={item.id} />
-                                })
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
-                            }
-                        </TabPane>
-                    </Tabs>
-                </div>
-            </div> */}
         </div>
     );
 }
