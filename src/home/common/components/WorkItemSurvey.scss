@@ -8,54 +8,58 @@
         align-items: center;
         justify-content: space-between;
     }
-    .statistics-workitem-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        .statistics-workitem-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-            border-radius: 4px;
-            margin-top: 10px;
-            line-height: 35px;
-            cursor: pointer;
-            width: calc(50% - 5px);
-            padding: var(--thoughtware-padding);
-            
-            gap: 10px;
-            // .statistics-workitem-box-num {
-            //     font-size: 16px;
-            //     font-weight: 600;
-            // }
-            // .statistics-workitem-box-name {
-            //     color: #666;
-            // }
-            // .statistics-workitem-box-num:hover {
-            //     color: var(--thoughtware-blue);
-            // }
-            // .statistics-workitem-box-name:hover {
-            //     color: var(--thoughtware-blue);
-            // }
-            .statistics-workitem-box-num {
-                font-size: 16px;
-                font-weight: 600;
-            }
-            .statistics-workitem-box-name {
-                color: #666;
-            }
-        }
-
-        .statistics-workitem-box:hover {
-            .statistics-workitem-box-num {
-                color: var(--thoughtware-blue);
-            }
-            .statistics-workitem-box-name {
-                color: var(--thoughtware-blue);
-            }
-            
-        }
+    .statistics-workitem-chart {
+        height: 500px;
+        width: 100%;
     }
+    // .statistics-workitem-content {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     flex-wrap: wrap;
+    //     .statistics-workitem-box {
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         height: 100px;
+    //         border-radius: 4px;
+    //         margin-top: 10px;
+    //         line-height: 35px;
+    //         cursor: pointer;
+    //         width: calc(50% - 5px);
+    //         padding: var(--thoughtware-padding);
+            
+    //         gap: 10px;
+    //         // .statistics-workitem-box-num {
+    //         //     font-size: 16px;
+    //         //     font-weight: 600;
+    //         // }
+    //         // .statistics-workitem-box-name {
+    //         //     color: #666;
+    //         // }
+    //         // .statistics-workitem-box-num:hover {
+    //         //     color: var(--thoughtware-blue);
+    //         // }
+    //         // .statistics-workitem-box-name:hover {
+    //         //     color: var(--thoughtware-blue);
+    //         // }
+    //         .statistics-workitem-box-num {
+    //             font-size: 16px;
+    //             font-weight: 600;
+    //         }
+    //         .statistics-workitem-box-name {
+    //             color: #666;
+    //         }
+    //     }
+
+    //     .statistics-workitem-box:hover {
+    //         .statistics-workitem-box-num {
+    //             color: var(--thoughtware-blue);
+    //         }
+    //         .statistics-workitem-box-name {
+    //             color: var(--thoughtware-blue);
+    //         }
+            
+    //     }
+    // }
 }

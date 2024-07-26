@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import HomeStore from '../store/HomeStore';
 import WorkStore from '../../../work/store/WorkStore';
 import { setWorkDeatilInList } from '../../../work/components/WorkSearch';
-
+import * as echarts from 'echarts';
 
 const WorkItemSurvey = (props) => {
     const { statisticsWorkItemByStatus } = HomeStore;
@@ -13,14 +13,79 @@ const WorkItemSurvey = (props) => {
     const [workItemCount, setWorkItemCount] = useState({});
 
     useEffect(() => {
-        statisticsWorkItemByStatus().then(res => {
-            if (res.code === 0) {
-                setWorkItemCount(res.data)
-            }
-        })
+        initWorkChart()
 
         return;
     }, [])
+
+    const initWorkChart = () => {
+        const chartDom = document.getElementById(`statistics-workitem-chart`)
+        statisticsWorkItemByStatus().then(res => {
+            if (res.code === 0) {
+                let myChart = echarts.init(chartDom);
+                const data = res.data;
+                const xData = [];
+                const yData = [];
+                xData.push("未完成");
+                yData.push(
+                    {
+                        value: data.remain,
+                        itemStyle: {
+                            color: '#5470C6'
+                        }
+                    },
+                );
+
+
+                xData.push("进行中")
+                yData.push({
+                    value: data.progress,
+                    itemStyle: {
+                        color: '#91CC75'
+                    }
+                });
+
+                xData.push("未开始")
+                yData.push({
+                    value: data.todo,
+                    itemStyle: {
+                        color: '#FAC858'
+                    }
+                });
+
+                xData.push("逾期")
+                yData.push({
+                    value: data.overdue,
+                    itemStyle: {
+                        color: '#EE6666'
+                    }
+                })
+
+                const option = {
+                    xAxis: {
+                        type: 'category',
+                        data: xData
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            data: yData,
+                            type: 'bar'
+                        }
+                    ]
+                };
+
+                myChart.setOption(option);
+                myChart.on('click', function (params) {
+                    // 控制台打印数据的名称
+                    console.log(params);
+                    selectMenu(params.dataIndex)
+                });
+            }
+        })
+    }
 
     const getStateNodeList = async (value) => {
         const stateNodeList = []
@@ -40,18 +105,18 @@ const WorkItemSurvey = (props) => {
         return newStateNodeList;
     }
 
-    const selectMenu = (value) => {
-        switch (value) {
-            case "pending":
+    const selectMenu = (dataIndex) => {
+        switch (dataIndex) {
+            case 0:
                 getPendingWorkItem();
                 break;
-            case "todo":
-                getTodoWorkItem();
-                break;
-            case "progress":
+            case 1:
                 getProgressWorkItem();
                 break;
-            case "overdue":
+            case 2:
+                getTodoWorkItem();
+                break;
+            case 3:
                 getOverdueWorkItem();
                 break;
             default:
@@ -189,7 +254,7 @@ const WorkItemSurvey = (props) => {
             <div className="statistics-workitem-title">
                 事项概况
             </div>
-            <div className="statistics-workitem-content">
+            {/* <div className="statistics-workitem-content">
                 {
                     data.map(item => {
                         return <div 
@@ -209,8 +274,8 @@ const WorkItemSurvey = (props) => {
                     })
                 }
 
-            </div>
-
+            </div> */}
+            <div id="statistics-workitem-chart" className="statistics-workitem-chart"></div>
         </div>
     )
 }
