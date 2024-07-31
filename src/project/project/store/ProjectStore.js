@@ -1,28 +1,36 @@
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 export class ProjectStore {
-    @observable prolist = [];
+    @observable projectList = [];
     @observable projectTypelist = [];
     @observable uselist = [];
     @observable project = [];
     @observable allProlist = [];
     @observable projectName = "";
-    @observable activeTabs = "1"
-    
+    @observable activeTabs = "1";
+    @observable projectQuickFilter = "total";
+
+
     @observable projectPageParams = {
         orderParams: [{
             name: "startTime",
             orderType: "desc"
-        }],
-        pageParam: {
-            pageSize: 10,
-            currentPage: 1
-        }
+        }]
     };
 
     @action
+    setProjectPageParams = (value) => {
+        Object.assign(this.projectPageParams, value)
+    }
+
+    @action
     setActiveTabs = (value) => {
-        this.activeTabs = value
+        this.activeTabs = value;
+    }
+
+    @action
+    setProjectQuickFilter = (value) => {
+        this.projectQuickFilter = value;
     }
 
     @action
@@ -30,18 +38,19 @@ export class ProjectStore {
         Object.assign(this.projectPageParams, { ...value })
         const data = await Service("/project/findProjectList", this.projectPageParams)
         if(data.code === 0){
-            this.prolist = data.data;
+            this.projectList = data.data;
         }
         return data;
     }
 
     @action
-    findJoinProjectList = async(value) => { 
-        const data = await Service("/project/findJoinProjectList", value)
+    findJoinProjectList = async(value) => {
+        Object.assign(this.projectPageParams, value)
+        const data = await Service("/project/findJoinProjectList", this.projectPageParams)
         if(data.code === 0){
-            this.prolist = data.data;
+            this.projectList = data.data;
         }
-        return data
+        return data;
     }
 
     @action
@@ -69,7 +78,7 @@ export class ProjectStore {
         
         const data = await Service("/project/findRecentProjectList", params)
         if(data.code === 0){
-            this.prolist = data.data;
+            this.projectList = data.data;
         }
         return data
     }
@@ -127,7 +136,7 @@ export class ProjectStore {
         param.append("id", values)
         const data = await Service("/project/findProject", values)
         if(data.code === 0){
-            this.prolist = [data.data];
+            this.projectList = [data.data];
         }
         return data;
     }
@@ -202,14 +211,14 @@ export class ProjectStore {
         return data;
     }
 
-    @action
-    findFocusProjectList = async (value) => {
-        const data = await Service("/project/findFocusProjectList", value)
-        if(data.code === 0){
-            this.prolist = data.data;
-        }
-        return data;
-    }
+    // @action
+    // findFocusProjectList = async (value) => {
+    //     const data = await Service("/project/findFocusProjectList", value)
+    //     if(data.code === 0){
+    //         this.projectList = data.data;
+    //     }
+    //     return data;
+    // }
 
 
     @action

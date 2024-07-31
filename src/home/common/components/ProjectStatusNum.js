@@ -11,10 +11,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./ProjectStatusNum.scss";
 import HomeStore from "../store/HomeStore";
-import * as echarts from 'echarts';
+import ProjectStore from "../../../project/project/store/ProjectStore";
+import { withRouter } from "react-router";
 
 const ProjectStatusNum = (props) => {
     const { statisticsProjectByStatus } = HomeStore;
+    const { setProjectPageParams, setProjectQuickFilter } = ProjectStore
     const [projectStatistics, setProjectStatistics] = useState({})
     /**
      * 处于编辑状态，初始化统计条件表单
@@ -29,104 +31,78 @@ const ProjectStatusNum = (props) => {
     }, [])
 
 
-    /**
-     * 处理统计数据
-     */
-    const setStatisticsData = (value) => {
-        const chartDom = document.getElementById(`new-work-trend`)
-
-        statisticsProjectByStatus().then(res => {
-            if (res.code === 0) {
-                let myChart = echarts.init(chartDom);
-                const data = res.data;
-                const xData = [];
-                const yData = [];
-                xData.push("全部");
-                yData.push(
-                    {
-                        value: data.total,
-                        itemStyle: {
-                            color: '#5470C6'
-                        }
-                    },
-                );
-
-
-                xData.push("进行中")
-                yData.push({
-                    value: data.progress,
-                    itemStyle: {
-                        color: '#91CC75'
-                    }
-                });
-
-                xData.push("未完成")
-                yData.push({
-                    value: data.noend,
-                    itemStyle: {
-                        color: '#FAC858'
-                    }
-                });
-
-                xData.push("逾期")
-                yData.push({
-                    value: data.overdue,
-                    itemStyle: {
-                        color: '#EE6666'
-                    }
-                })
-
-                const option = {
-                    xAxis: {
-                        type: 'category',
-                        data: xData
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [
-                        {
-                            data: yData,
-                            type: 'bar'
-                        }
-                    ]
-                };
-
-                myChart.setOption(option);
-            }
-        })
-    }
 
     const data = [
         {
-            id: "total",
-            name: "全部",
+            value: "total",
+            label: "全部",
             icon: "allwork",
             code: "total",
             color: "#59ADF8"
         },
         {
-            id: "progress",
-            name: "进行中",
+            value: "progress",
+            label: "进行中",
             icon: "progress",
             code: "progress",
             color: "#52C41A"
         },
         {
-            id: "noend",
-            name: "未结束",
+            value: "noend",
+            label: "未结束",
             icon: "endwork",
             code: "noend",
             color: "#FF9552"
         },
         {
-            id: "overdue",
-            name: "逾期",
+            value: "overdue",
+            label: "逾期",
             icon: "overdue",
             code: "overdue",
             color: "#F76E5C"
         }
     ]
+
+    const selectMenu = (item) => {
+        const value = item.value;
+        let params = {}
+        setProjectQuickFilter(item)
+        switch (value) {
+            case "total":
+                    params = {
+                        projectStates: null,
+                        overdue: false
+                    }
+                    setProjectPageParams(params);
+                    break;
+            case "progress":
+                params = {
+                    projectStates: ["2"],
+                    overdue: false
+                }
+                setProjectPageParams(params);
+                break;
+            case "noend":
+                params = {
+                    projectStates: ["1", "2"],
+                    overdue: false
+                }
+                setProjectPageParams(params);
+                break;
+            case "overdue":
+                params = {
+                    projectStates: ["1", "2"],
+                    overdue: true
+                }
+                setProjectPageParams(params);
+                break;
+            default:
+                break;
+        }
+        props.history.push("/project")
+        sessionStorage.setItem("menuKey", "project")
+    }
+
 
     return (
         <Fragment>
@@ -141,14 +117,14 @@ const ProjectStatusNum = (props) => {
                     {
                         data && data.map(item => {
                             return <div
-                                id={item.id}
+                                id={item.value}
                                 className="project-status-num-content-box"
-                                onClick={() => selectMenu(item.icon)}
+                                onClick={() => selectMenu(item)}
                             >
-                              
+
                                 <div className="project-status-num-content-box-right">
-                                    <div className="project-status-num-content-box-num" style={{color: item.color}}>{projectStatistics[item.id]}</div>
-                                    <div className="project-status-num-content-box-name">{item.name}</div>
+                                    <div className="project-status-num-content-box-num" style={{ color: item.color }}>{projectStatistics[item.value]}</div>
+                                    <div className="project-status-num-content-box-name">{item.label}</div>
                                 </div>
 
                             </div>
@@ -162,4 +138,4 @@ const ProjectStatusNum = (props) => {
     )
 }
 
-export default observer(ProjectStatusNum);
+export default withRouter(observer(ProjectStatusNum));

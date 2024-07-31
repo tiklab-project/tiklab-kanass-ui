@@ -5,7 +5,13 @@ import "./inputSearch.scss";
 const InputSearch = (props) => {
     const {onChange, placeholder,style} = props;
     const handleChange = (value) => {
-        onChange(value.target.value)
+        const data = value.target.value
+        if(data && data.length > 0){
+            onChange(data)
+        }else {
+            onChange(null)
+        }
+        
     }
     return (
         <div className="search-input" style={style}>

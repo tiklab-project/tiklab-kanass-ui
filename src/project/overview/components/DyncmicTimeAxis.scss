@@ -12,6 +12,7 @@
 
     .dyncmic-timeaxis-content {
         margin-top: 15px;
+        padding: 0 6px;
         .dyncmic-timeaxis-box {
             
             .dyncmic-timeaxis-date {
@@ -32,11 +33,12 @@
                     display: inline-block;
                     position: absolute;
                     border-radius: 50%;
-                    background: #dadfe6;
-                    width: 7px;
-                    height: 7px;
-                    top: 12px;
-                    left: -23px;
+                    background: #fff;
+                    width: 11px;
+                    height: 11px;
+                    top: 11px;
+                    left: -25px;
+                    border: 3px solid var(--thoughtware-blue);
                 }
             }
             .dyncmic-timeaxis-date::before {

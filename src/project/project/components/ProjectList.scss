@@ -124,6 +124,11 @@
             width: 150px;
             border-radius: 4px;; 
         }
+        .project-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     }
     .project-tabs {
         display: flex;

@@ -11,13 +11,12 @@ import Button from "../../../common/button/Button";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import "./projectList.scss";
 import { useDebounce } from "../../../common/utils/debounce";
-const { Option } = Select;
+import ProjectFilterQuick from "./ProjectFilterQuick";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
-    const { findProjectList, prolist, findProjectSortRecentTime, createRecent, findRecentProjectList,
-        findJoinProjectList, createProjectFocus, findProjectFocusList,
-        deleteProjectFocusByQuery, findFocusProjectList, activeTabs, setActiveTabs
+    const { projectList, findProjectSortRecentTime, createRecent, findJoinProjectList, createProjectFocus, findProjectFocusList,
+        deleteProjectFocusByQuery, activeTabs, setActiveTabs
     } = projectStore;
 
     const userId = getUser().userId;
@@ -25,13 +24,10 @@ const ProjectList = (props) => {
     const [recentProjectList, setRecentProjectList] = useState()
     const [recentLoading, setRecentLoading] = useState(false);
     const tenant = getUser().tenant;
-    const orderParams = [{
-        name: "startTime",
-        orderType: "desc"
-    }]
+
     useEffect(() => {
         setActiveTabs("1")
-        findJoinProjectList({ orderParams: orderParams })
+        findJoinProjectList({focusUser: null, creator: null, projectName: null})
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)
@@ -97,34 +93,32 @@ const ProjectList = (props) => {
     const onSearch = useDebounce(value => {
         switch (activeTabs) {
             case "1":
-                findJoinProjectList({ projectName: value, orderParams: orderParams })
+                findJoinProjectList({ focusUser: null, creator: null, projectName: value })
                 break;
             case "3":
-                findFocusProjectList({ master: userId, projectName: value })
+                findJoinProjectList({ focusUser: userId, creator: null, projectName: value })
                 break;
             case "4":
-                findProjectList({ creator: userId, projectName: value });
+                findJoinProjectList({ focusUser: null, creator: userId, projectName: value });
                 break
             default:
                 break;
         }
     }, [500]);
 
-    const handleTableChange = (pagination) => {
-        findProjectList({ current: pagination.current })
-    };
+
 
     const selectTabs = (key) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectList({ orderParams: orderParams })
+                findJoinProjectList({focusUser: null, creator: null, projectName: null })
                 break;
             case "3":
-                findFocusProjectList({ master: userId })
+                findJoinProjectList({ focusUser: userId,  creator: null, projectName: null })
                 break;
             case "4":
-                findProjectList({ creator: userId });
+                findJoinProjectList({ focusUser: null, creator: userId, projectName: null});
                 break
             default:
                 break;
@@ -357,16 +351,20 @@ const ProjectList = (props) => {
                             })
                         }
                     </div>
-                    <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目名称"} />
+                    <div className="project-search">
+                        <ProjectFilterQuick />
+                        <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目名称"} />
+
+                    </div>
                 </div>
             </div>
 
             <div className="project-table-box">
                 <Table
                     columns={columns}
-                    dataSource={prolist}
+                    dataSource={projectList}
                     rowKey={record => record.id}
-                    onChange={handleTableChange}
+                    // onChange={handleTableChange}
                     pagination={false}
                     bordered={false}
                 />
