@@ -1206,7 +1206,7 @@ const WorkBasicInfo = (props) => {
                     <div className="work-detail-upload">
                         <Dragger className="work-detail-upload" {...filesParams}>
                             <p className="ant-upload-drag-icon">
-                                <svg className="big-icon" aria-hidden="true">
+                                <svg className="icon-20" aria-hidden="true">
                                     <use xlinkHref="#icon-uploadImg"></use>
                                 </svg>上传附件
                             </p>

@@ -13,9 +13,11 @@ import "../components/Orga.scss"
 import { renderRoutes } from "react-router-config";
 import { SystemNav } from "thoughtware-privilege-ui";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
-import HeaderCe from "../../../home/common/components/HeaderCe"
+import { getUser } from 'thoughtware-core-ui';
+import { inject, observer } from 'mobx-react';
 const { Sider, Content } = Layout;
 const Setting = (props) => {
+    const { systemRoleStore } = props;
     const route = props.route;
     const [router, setRouterMenu] = useState(setDevRouter);
     useEffect(() => {
@@ -26,6 +28,15 @@ const Setting = (props) => {
             setRouterMenu(setPrdRouter)
         }
         return
+    }, [])
+
+    const user = getUser();
+
+    useEffect(() => {
+        if (user && user.userId) {
+            systemRoleStore.getSystemPermissions(user.userId, "kanass")
+        }
+        return;
     }, [])
     const commonRouter = route.routes.filter(item => item.row === true)
     const selfRouter = route.routes.filter(item => item.row !== true)
@@ -45,10 +56,6 @@ const Setting = (props) => {
                     <Content
                         className="orga-background"
                     >
-                        <HeaderCe />
-                        {/* <div  style={{ height: "calc(100vh - 49px)" }}>
-                        {renderRoutes(commonRouter)}
-                        </div> */}
                         {renderRoutes(commonRouter)}
                         <Row style={{ height: "calc(100vh - 49px)" }}>
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -64,4 +71,4 @@ const Setting = (props) => {
     )
 }
 
-export default Setting;
+export default inject("systemRoleStore")(observer(Setting));

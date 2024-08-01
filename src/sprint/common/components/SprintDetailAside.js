@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import SprintChangeModal from "./SprintChangeModal";
 import "./sprintDetailAside.scss";
 import Logo from "../../../home/common/components/Logo";
+import MenuUser from "../../../common/menuUser/MenuUser";
 const { Sider } = Layout;
 
 const SprintDetailAside = (props) => {
@@ -60,6 +61,13 @@ const SprintDetailAside = (props) => {
             url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
+        },
+        {
+            title: "设置",
+            icon: 'set',
+            url: `/${projectId}/sprintdetail/${sprintId}/setting`,
+            key: "setting",
+            encoded: "setting",
         }
     ];
 
@@ -121,7 +129,7 @@ const SprintDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='sprint-detail-side'>
                 <div className={`sprint-aside-content ${isShowText ? "" : "sprint-icon"}`}>
-                    <Logo />
+                    <Logo isShowText = {isShowText} />
                     <SprintChangeModal
                         isShowText={isShowText}
                         sprint={sprint}
@@ -185,26 +193,27 @@ const SprintDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={() => props.history.push(`/${projectId}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
+                    {/* <div onClick={() => props.history.push(`/${projectId}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
                         <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-set"></use>
                         </svg>
                         <span>
                             设置
                         </span>
-                    </div>
-                    {/* <div className="sprint-expend" onClick={toggleCollapsed} >
+                    </div> */}
+                    <MenuUser isShowText = {isShowText}/>
+                    <div className="sprint-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ?
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="sprint-expend-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-leftcircle"></use>
                                 </svg>
                                 :
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="sprint-expend-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-rightcircle"></use>
                                 </svg>
                         }
-                    </div> */}
+                    </div>
                 </div>
             </Sider>
         </Fragment>

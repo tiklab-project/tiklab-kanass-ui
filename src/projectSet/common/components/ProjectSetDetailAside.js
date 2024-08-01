@@ -14,6 +14,7 @@ import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import "./ProjectSetDetailAside.scss";
 import ProjectSetSetButton from "./ProjectSetSettingButton";
+import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
 import { getUser } from "thoughtware-core-ui";
 import Logo from '../../../home/common/components/Logo';
@@ -46,6 +47,13 @@ const ProjectSetDetailAside = (props) => {
             icon: 'project',
             key: `/projectSetdetail/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
+        }
+        ,
+        {
+            title: `设置`,
+            icon: 'set',
+            key: `/projectSetdetail/${projectSetId}/projectSetset/basicInfo`,
+            encoded: "setting",
         }
     ];
 
@@ -143,18 +151,19 @@ const ProjectSetDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <ProjectSetSetButton isShowText={isShowText} />
+                    {/* <ProjectSetSetButton isShowText={isShowText} /> */}
+                    <MenuUser isShowText={isShowText} />
                     <div className="projectSet-expend" onClick={toggleCollapsed} >
                         {/* {
                             isShowText ? <i className="iconfont iconzuo-yuan right" title="收回"></i> :
                                 <i className="iconfont iconyou-yuan right" title="展开"></i>
                         } */}
                         {
-                            isShowText ? <svg className="menu-icon" aria-hidden="true">
+                            isShowText ? <svg className="projectSet-expend-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-leftcircle"></use>
                             </svg>
                                 :
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="projectSet-expend-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-rightcircle"></use>
                                 </svg>
                         }

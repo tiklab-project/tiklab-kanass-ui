@@ -3,10 +3,11 @@
     // padding: var(--thoughtware-padding);
     .ant-row {
         overflow: auto;
+        height: 100%;
     }
     .project-version-list {
         background-color: #fff;
-        height: calc(100vh - 60px);
+        height: 100%;
         padding: var(--thoughtware-padding);
     }
     .version-name {

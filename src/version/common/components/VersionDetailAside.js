@@ -105,7 +105,7 @@ const VersionDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='version-detail-side'>
                 <div className={`version-aside-content ${isShowText ? "" : "version-icon"}`}>
-                    <Logo />
+                    <Logo isShowText = {isShowText} />
                     <VersionChangeModal
                         isShowText={isShowText}
                         version={version}
@@ -170,13 +170,18 @@ const VersionDetailAside = (props) => {
                             })
                         }
                     </ul>
-                    <div onClick={()=> props.history.push(`/${projectId}/versionDetail/${versionId}/setting`)}  ref={setButton} className="version-set-icon setting">
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-set"></use>
-                        </svg>
-                        <span>
-                            设置
-                        </span>
+                    <MenuUser isShowText = {isShowText}/>
+                    <div className="version-expend" onClick={toggleCollapsed} >
+                        {
+                            isShowText ?
+                                <svg className="version-expend-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-leftcircle"></use>
+                                </svg>
+                                :
+                                <svg className="version-expend-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-rightcircle"></use>
+                                </svg>
+                        }
                     </div>
                 </div>
             </Sider>

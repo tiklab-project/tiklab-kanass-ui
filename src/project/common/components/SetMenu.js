@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./setMenu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
+import { AvatarLink } from "thoughtware-licence-ui";
 
 const SetScrumMenu = (props) => {
     const { isShowText} = props;
@@ -28,22 +29,21 @@ const SetScrumMenu = (props) => {
     return (
         <div className="project-setting">
             {
-                isShowText ? <div onClick={() => goProjectSetting()} ref={setButton} className="project-setting-title setting">
-                    <svg className="svg-icon" aria-hidden="true">
-                        <use xlinkHref="#icon-set"></use>
-                    </svg>
+                isShowText ? <div  ref={setButton} className="project-setting-title setting">
+                    <AvatarLink {...props} />
                     <span>
-                        设置
+                        个人中心
                     </span>
                 </div>
                 :
-                <div onClick={() => goProjectSetting()} ref={setButton} className = "project-setting-icon setting">
-                    <svg className="svg-icon" aria-hidden="true">
+                <div ref={setButton} className = "project-setting-icon setting">
+                    {/* <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
-                    </svg>
-                    <span>
+                    </svg> */}
+                    <AvatarLink {...props} />
+                    {/* <span>
                         设置
-                    </span>
+                    </span> */}
                 </div>
             }
         </div>

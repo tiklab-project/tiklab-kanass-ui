@@ -169,7 +169,7 @@ const WorkChangeView = (props) => {
         {
             buttonType === "button" ?
                 <Button onClick={() => setShowViewDropDown(true)}>
-                    <svg className="big-icon" aria-hidden="true">
+                    <svg className="icon-20" aria-hidden="true">
                         <use xlinkHref={`#icon-${workShowType}`}></use>
                     </svg>
                 </Button>

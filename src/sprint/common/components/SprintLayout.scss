@@ -1,7 +1,9 @@
 .sprint-detail {
     height: 100vh;
+    overflow: hidden;
     .sprint-detail-content {
         background: #fff;
+        height: 100%;
     }
     .sprint-aside-more {
         text-align: center;

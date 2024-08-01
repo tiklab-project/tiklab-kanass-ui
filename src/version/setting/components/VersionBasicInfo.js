@@ -175,7 +175,7 @@ const VersionBasicInfo = props => {
         </div>
     );
     return (
-        <Row>
+        <Row className="version-basicinfo">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="version-set-basicinfo">
                     <Breadcumb

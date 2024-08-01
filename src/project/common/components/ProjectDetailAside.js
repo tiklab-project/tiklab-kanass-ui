@@ -12,7 +12,7 @@ import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import { useTranslation } from 'react-i18next';
-import SetScrumMenu from "./SetMenu";
+import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectChangeModal from "./ProjectChangeModal";
 import MoreMenuModel from "./MoreMenuModal";
 import Logo from '../../../home/common/components/Logo';
@@ -90,18 +90,25 @@ const ProjectDetailAside = (props) => {
         },
         {
             title: "知识库",
-            icon: 'sprint',
+            icon: 'repository',
             id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
-            icon: 'sprint',
+            icon: 'test',
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
-        }
+        },
+        {
+            title: "设置",
+            icon: 'set',
+            id: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
+            key: "setting",
+            encoded: "setting",
+        },
     ];
 
     const normalProrouter = (projectId) => [
@@ -156,18 +163,25 @@ const ProjectDetailAside = (props) => {
         },
         {
             title: "知识库",
-            icon: 'sprint',
+            icon: 'repository',
             id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
-            icon: 'sprint',
+            icon: 'test',
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
         },
+        {
+            title: "设置",
+            icon: 'set',
+            id: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
+            key: "setting",
+            encoded: "setting",
+        }
 
     ];
 
@@ -239,7 +253,7 @@ const ProjectDetailAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='project-detail-side'>
+            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="75" width="200" className='project-detail-side'>
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
                     <Logo isShowText = {isShowText}/>
                     <ProjectChangeModal
@@ -306,14 +320,14 @@ const ProjectDetailAside = (props) => {
                         {moreMenu && <MoreMenuModel isShowText={isShowText} moreMenu={moreMenu} morePath={morePath} />}
                     </div>
 
-                    <SetScrumMenu isShowText={isShowText} />
+                    <MenuUser isShowText={isShowText} />
                     <div className="project-expend" onClick={toggleCollapsed} >
                         {
-                            isShowText ? <svg className="menu-icon" aria-hidden="true">
+                            isShowText ? <svg className="project-expend-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-leftcircle"></use>
                             </svg>
                                 :
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="project-expend-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-rightcircle"></use>
                                 </svg>
                         }

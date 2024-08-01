@@ -1,0 +1,31 @@
+.first-menu-bottom-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 15px;
+    .user-icon {
+        width: 20px;
+        height: 20px;
+        // background-color: var(--thoughtware-blue);
+        cursor: pointer;
+    }
+}
+.first-menu-bottom-text {
+    
+    .first-menu-bottom-item {
+        height: 40px;
+        display: flex;
+        line-height: 40px;
+        width: 100%;
+        align-items: center;
+        padding: 0 20px;
+        cursor: pointer;
+        gap: 10px;
+        .user-icon {
+            width: 20px;
+            height: 20px;
+            // background-color: var(--thoughtware-blue);
+        }
+    }
+}

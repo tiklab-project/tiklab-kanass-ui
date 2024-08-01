@@ -1,49 +1,14 @@
-.search {
-    .short-box {
-        width: 25px;
-        height: 25px;
-        transition: width 0.3s;
-    }
-    .long-box {
-        width: 375px;
-        height: 30px;
-        transition: width 0.3s;
-        border: 2px solid #dddd;
-        padding-right: 10px;
-    }
-    .search-box {
-        
-        background: #fff;
-        display: flex;
-        border-radius: 25px;
-        
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        .search-box-input {
-            border: none;
-            height: 100%;
-            outline: none;
-            color: #000;
-            border-radius: 25px;
-            padding: 0 10px;
-        }
-        .show-input {
-            width: 350px;
-        }
-        .hidden-input {
-            width: 0;
-            height: 0;
-            display: none;
-        }
-    }
-
-
+.search-text {
+    height: 40px;
+    display: flex;
+    line-height: 40px;
+    width: 100%;
+    align-items: center;
+    padding-left: 20px;
+    cursor: pointer;
+    gap: 10px;
 }
 
-.hidden-box {
-    display: none;
-}
 
 .show-box {
     width: 375px;

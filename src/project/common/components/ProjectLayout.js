@@ -15,7 +15,6 @@ import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
-import HeaderCe from "../../../home/common/components/HeaderCe";
 
 const ProjectLayout = (props) => {
     const store = {
@@ -70,7 +69,6 @@ const ProjectLayout = (props) => {
                         {...props}
                     />
                     <Layout className="prodetail-content">
-                        <HeaderCe  isShowText = {isShowText} SetIsShowText = {SetIsShowText}/>
                         <Row justify="start" className="prodetail-row">
                             <Col xs={{ span: 24 }} lg={{ span: 24 }}>
                                 {renderRoutes(route.routes)}

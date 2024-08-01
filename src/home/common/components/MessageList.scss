@@ -1,15 +1,45 @@
-.frame-header-message{
+.message-box {
+    width: 100%;
+}
+.message-icon{
+    text-align: center;
     .ant-avatar-sm {
         background: transparent;
-        font-size: 23px;
+        font-size: 20px;
         display: flex;
         align-items: center;
         width: fit-content;
     }
+    .ant-badge-multiple-words {
+        padding: 0 3px;
+        font-size: 9px;
+    }
+}
+.message-text {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    line-height: 40px;
+    width: 100%;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+    gap: 10px;
+    .message-text-name {
+        flex: 1;
+    }
+    .message-text-count {
+        background: #ff4d4f;
+        height: 14px;
+        line-height: 14px;
+        border-radius: 7px;
+        font-size: 10px;
+        padding: 0 3px;
+        color: #ffff;
+    }
 }
 
-.frame-header-drawer {
-    top: var(--thoughtware-head-height);
+.message-drawer {
     .ant-drawer-header {
         padding: 9px 20px;
         border-bottom: 0
@@ -25,7 +55,7 @@
         }
     }
     .message-box {
-        height: calc(100vh - 170px);
+        height: calc(100vh - 95px);
         overflow: auto;
         padding: 0 20px;
         .message-list {
@@ -106,4 +136,11 @@
         }
         
     }
+}
+.message-drawer-expend {
+    left: 200px;
+}
+
+.message-drawer-inpend {
+    left: 75px;
 }

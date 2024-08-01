@@ -263,7 +263,7 @@ const ProjectSetProjectList = (props) => {
         findProjectList({ projectName: value })
     }
     return <Provider {...store}>
-        <Row>
+        <Row className="projectset-project">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSetDetail">
 

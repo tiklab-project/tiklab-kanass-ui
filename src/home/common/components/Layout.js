@@ -16,7 +16,6 @@ import { Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
 import { AppLink, AvatarLink, HelpLink } from 'thoughtware-licence-ui';
 import FirstMenu from './FirstMenu';
-import HeaderCe from './HeaderCe';
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore

@@ -44,7 +44,7 @@ const WorkCreatDropdown = (props) => {
         <div className="work-creat">
             {
                 buttonType === "svg" ? <div onClick={() => setShowModal(true)} className={`work-button-icon ${showModal ? 'work-button-active' : ''}`}>
-                    <svg className="big-icon" aria-hidden="true">
+                    <svg className="icon-20" aria-hidden="true">
                         <use xlinkHref="#icon-add2"></use>
                     </svg>
                 </div>

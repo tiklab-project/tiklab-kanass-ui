@@ -1,6 +1,7 @@
 .project-milestone {
-    height: calc(100vh - 55px);
-    padding: var(--thoughtware-padding);;
+    padding: var(--thoughtware-padding);
+    overflow: auto;
+    height: 100%;
     .search {
         width: 200px;
         margin-top: 20px;

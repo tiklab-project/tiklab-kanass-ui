@@ -1,0 +1,36 @@
+.theme-change {
+    position: relative;
+    .theme-change-text {
+        height: 40px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding-left: 20px;
+        cursor: pointer;
+        gap: 10px;
+    }
+    .theme-change-box {
+        position: absolute;
+        width: 150px;
+        display: block;
+        box-shadow: 0 4px 8px -2px rgba(9, 30, 66, .25), 0 0 1px rgba(9, 30, 66, .31);
+        background: #fff;
+        z-index: 2;
+        left: 25px;
+        top: -75px;
+        color: #2B2B2B;
+        .theme-change-item {
+            height: 40px;
+            line-height: 40px;
+            width: 100%;
+            padding: 0 20px;
+        }
+        .theme-change-item:hover {
+            cursor: pointer;
+            background-color: var(--thoughtware-gray-400);
+        }
+    }
+    .hidden-box {
+        display: none;
+    }
+}

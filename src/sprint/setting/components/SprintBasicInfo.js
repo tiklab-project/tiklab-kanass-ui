@@ -179,7 +179,7 @@ const SprintBasicInfo = props => {
         </div>
     );
     return (
-        <Row>
+        <Row className="sprint-basicinfo">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="sprint-set-basicinfo">
                     <Breadcumb

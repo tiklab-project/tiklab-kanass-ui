@@ -14,7 +14,6 @@ import { renderRoutes } from "react-router-config";
 import SprintDetailAside from "./SprintDetailAside";
 import SprintDetailStore from "../store/SprintDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
-import HeaderCe from "../../../home/common/components/HeaderCe";
 import { getUser } from "thoughtware-core-ui";
 
 const Sprintdetail = (props) => {
@@ -44,7 +43,6 @@ const Sprintdetail = (props) => {
         <Layout className="sprint-detail">
             <SprintDetailAside />
             <Layout className="sprint-detail-content">
-                <HeaderCe />
                 {renderRoutes(route.routes)}
             </Layout>
         </Layout>

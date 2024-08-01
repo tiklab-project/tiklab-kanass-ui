@@ -153,6 +153,9 @@ const SetAside = (props) => {
                         设置
                     </div>
                     {
+                        console.log(router)
+                    }
+                    {
                         router && router.map((firstItem, index) => {
                             return firstItem.children && firstItem.children.length > 0 ?
                                 renderSubMenu(firstItem, 0, index) : renderMenu(firstItem, 0, index)

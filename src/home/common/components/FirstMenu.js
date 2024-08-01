@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./FirstMenu.scss";
-
+import { Layout } from "antd";
 import { withRouter } from "react-router";
-import { productImg, productWhiteImg } from "thoughtware-core-ui";
 import Logo from "./Logo";
-
+import FirstMenuButtom from "./FirstMenuButtom";
+import useLocalStorageListener from "../../../common/utils/useLocalStorageListener";
+const { Sider } = Layout;
 const FirstMenu = (props) => {
-    const { AppLink } = props;
-
+    const [isShowText, setIsShowText] = useState(false)
     const menuKey = sessionStorage.getItem("menuKey");
-    console.log(sessionStorage.getItem("menuKey"))
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray"); 
+    console.log(theme)
+    const [themeClass, setThemeClass] = useState("first-sider-gray")
+
+    useEffect(()=> {
+        getThemeClass(theme)
+        return null;
+    }, [])
     /**
          * 点击菜单跳转
          * @param {菜单信息} item 
@@ -25,36 +32,42 @@ const FirstMenu = (props) => {
             to: '/index/home/survey',
             title: '首页',
             key: 'home',
-            icon: "home-grey",
-            actionIcon: "home-blue"
+            icon: theme === "gray" ? "home-gray" : "home-white",
+            actionIcon: theme === "gray" ? "home-blue" :  "home-white"
         },
         {
             to: '/index/project',
             title: '项目',
             key: 'project',
-            icon: "project-grey",
-            actionIcon: "project-blue"
+            icon: theme === "gray" ? "project-gray" : "project-white",
+            actionIcon: theme === "gray" ? "project-blue" :  "project-white"
         },
         {
             to: '/index/projectSetList',
             title: '项目集',
             key: 'projectSet',
-            icon: "projectset-grey",
-            actionIcon: "projectset-blue"
+            icon: theme === "gray" ? "projectset-gray" : "projectset-white",
+            actionIcon: theme === "gray" ? "projectset-blue" :  "projectset-white"
         },
         {
             to: '/index/workTable',
             title: '事项',
             key: 'work',
-            icon: "work-grey",
-            actionIcon: "work-blue"
+            icon: theme === "gray" ? "work-gray" : "work-white",
+            actionIcon: theme === "gray" ? "work-blue" :  "work-white"
         },
         {
             to: '/index/log/list',
             title: '工时',
             key: 'log',
-            icon: "log-grey",
-            actionIcon: "log-blue"
+            icon: theme === "gray" ? "log-gray" : "log-white",
+            actionIcon: theme === "gray" ? "log-blue" :  "log-white"
+        },
+        {
+            to: '/setting/version',
+            title: '设置',
+            key: 'log',
+            icon: theme === "gray" ? "iconsetsys" : "set-white",
         }
     ]
 
@@ -69,25 +82,52 @@ const FirstMenu = (props) => {
                 <div className={'first-menu-link'}>
                     {
                         routers.map(item => {
-                            return <div key={item.key}
-                                onClick={() => changeCurrentLink(item)}
-                                className={`first-menu-link-item ${menuKey === item.key ? 'first-menu-link-active' : null}`}
-                            >
+                            return <>
                                 {
-                                    menuKey === item.key ? <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.actionIcon}`}></use>
-                                    </svg>
+                                    isShowText ? <div key={item.key}
+                                        onClick={() => changeCurrentLink(item)}
+                                        className={`first-menu-text-item ${menuKey === item.key ? 'first-menu-link-active' : null}`}
+                                    >
+                                        {
+                                            menuKey === item.key ? <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref={`#icon-${item.actionIcon}`}></use>
+                                            </svg>
+                                                :
+                                                <svg className="svg-icon" aria-hidden="true">
+                                                    <use xlinkHref={`#icon-${item.icon}`}></use>
+                                                </svg>
+                                        }
+
+                                        <span>
+                                            {item.title}
+                                        </span>
+
+                                    </div>
                                         :
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
+                                        <div key={item.key}
+                                            onClick={() => changeCurrentLink(item)}
+                                            className={`first-menu-link-item ${menuKey === item.key ? 'first-menu-link-active' : null}`}
+                                        >
+                                            {
+                                                menuKey === item.key ? <svg className="svg-icon" aria-hidden="true">
+                                                    <use xlinkHref={`#icon-${item.actionIcon}`}></use>
+                                                </svg>
+                                                    :
+                                                    <svg className="svg-icon" aria-hidden="true">
+                                                        <use xlinkHref={`#icon-${item.icon}`}></use>
+                                                    </svg>
+                                            }
+
+                                            <span>
+                                                {item.title}
+                                            </span>
+
+                                        </div>
                                 }
 
-                                <span>
-                                    {item.title}
-                                </span>
+                            </>
 
-                            </div>
+
                         })
                     }
                 </div>
@@ -102,23 +142,70 @@ const FirstMenu = (props) => {
         props.history.push("/setting/version")
         sessionStorage.setItem("menuKey", "set")
     };
+    const toggleCollapsed = () => {
+        setIsShowText(!isShowText)
+    }
+
+    const getThemeClass = (theme) => {
+        let name = "gray"
+        switch (theme) {
+            case "darkblue":
+                name = "first-sider-darkblue";
+                break;
+            case "gray":
+                name = "first-sider-gray";
+                break;
+            case "blue":
+                name = "first-sider-blue";
+                break;
+            default:
+                name = "first-sider-gray";
+                break;
+
+        }
+        setThemeClass(name)
+        setTheme(theme)
+        return name;
+    }
+
+    useLocalStorageListener("theme", (updatedTraceInfo) => {
+        console.log("data最新值：",updatedTraceInfo)
+        getThemeClass(updatedTraceInfo)
+    })
 
     return (
-        <div className="first-menu">
-            <div>
-                <Logo />
-                {renderRouter()}
-            </div>
+        <>
+            <Sider
+                className={`first-sider ${themeClass}`}
+                trigger={null}
+                collapsible
+                collapsed={!isShowText}
+                collapsedWidth="75"
+                width="200"
+            >
+                <div className="first-menu">
+                    <div className="first-menu-top">
+                        <Logo theme = {theme} isShowText={isShowText} />
+                        {renderRouter()}
+                    </div>
 
-            <div className="first-menu-bottom">
-                <div className="first-set" onClick={() => goSet()} data-title-right="设置">
-                    <svg aria-hidden="true" className="svg-icon">
-                        <use xlinkHref="#icon-iconsetsys"></use>
-                    </svg>
+                    <FirstMenuButtom isShowText={isShowText} theme = {theme}/>
+                    <div className="first-menu-expend" onClick={toggleCollapsed} >
+                        {
+                            isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-leftcircle"></use>
+                            </svg>
+                            :
+                            <svg className="first-menu-expend-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-rightcircle"></use>
+                            </svg>
+                        }
+                    </div>
                 </div>
-            </div>
+            </Sider>
 
-        </div>
+        </>
+
     )
 }
 export default withRouter(FirstMenu);

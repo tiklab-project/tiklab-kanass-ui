@@ -10,7 +10,7 @@
 import React, { Fragment, useEffect, useRef, useState, useCallback } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss";
-import { Empty } from "antd";
+import { Empty, Modal } from "antd";
 import { observer, inject } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import SearchStore from "../store/Search";
@@ -21,8 +21,10 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import setImageUrl from "../../../common/utils/setImageUrl";
 
 const Search = (props) => {
+    const { isShowText } = props;
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray";
     const { getSearchSore, setKeyWord, findRecentList,
-        updateRecent, findWorkItemByKeyWorks, findProjectList } = SearchStore;
+        updateRecent, findWorkItemByKeyWorks, findProjectList, } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
     const { setWorkId } = WorkStore;
@@ -288,33 +290,29 @@ const Search = (props) => {
 
     return (
         <Fragment>
-            <div className="search"
-                tabIndex="-1"
-                onMouseEnter={() => setShowLong(true)}
-                onMouseLeave={() => { setShowLong(false); setShow(false) }}
-                ref={dropDown}
-            >
-                <div className={`search-box ${!showLong ? "short-box" : "long-box"}`} >
-                    <input
-                        className={`search-box-input ${showLong ? "show-input" : "hidden-input"}`}
-                        onChange={changeValue}
-                        onFocus={showBox}
-                        ref={inputRef}
-                        placeholder="搜索项目、事项"
-
-                    />
-                    {
-                        !showLong ? <svg className="img-25" aria-hidden="true">
-                            <use xlinkHref="#icon-searchtop" ></use>
+            {
+                isShowText ?
+                    <div className="search-text">
+                        <svg className="icon-20" aria-hidden="true">
+                            <use xlinkHref={`${theme === "gray" ? "#icon-searchtop": "#icon-searchtop-white"}`} ></use>
                         </svg>
-                            :
-                            <svg className="img-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-searchtop" ></use>
-                            </svg>
-                    }
+                        <div>搜索</div>
+                    </div>
 
-                </div>
+                    :
 
+                    <svg className="icon-20" aria-hidden="true">
+                        <use xlinkHref={`${theme === "gray" ? "#icon-searchtop": "#icon-searchtop-white"}`} ></use>
+                    </svg>
+            }
+            <Modal
+                title={"搜索"}
+                visible={false}
+                cancelText="取消"
+                okText="确定"
+                closable={false}
+                width={800}
+            >
                 <div className={`show-box ${show === true ? null : "hidden-box"}`}>
                     {
                         isSeach ? <>
@@ -433,7 +431,8 @@ const Search = (props) => {
                     }
 
                 </div>
-            </div>
+            </Modal>
+
         </Fragment>
     )
 }

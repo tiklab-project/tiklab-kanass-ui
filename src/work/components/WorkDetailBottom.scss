@@ -189,7 +189,9 @@
                 width: 0;
             }
         }
-
+        .work-detail-box:last-child {
+            margin-bottom: 0;
+        }
         .desc-preview {
             padding: 10px;
             background-color: var(--thoughtware-gray-600);

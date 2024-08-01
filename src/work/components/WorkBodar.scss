@@ -3,8 +3,8 @@
 }
 
 .work-bodar-content {
-    height: calc(100% - 120px);
-    background: #f7f7f7;
+    height: calc(100% - 129px);
+    background: var(--thoughtware-gray-600);
     // overflow: auto;
     .work-bodar-flex {
         width: 100%;
@@ -40,7 +40,7 @@
                     line-height: 40px;
                     position: sticky;
                     text-align: center;
-                    background: #f7f7f7;
+                    background: var(--thoughtware-gray-600);
                     top: 0;
                     z-index: 2;
                     padding: 15px 0;

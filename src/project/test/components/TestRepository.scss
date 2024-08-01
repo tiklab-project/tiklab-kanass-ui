@@ -1,4 +1,6 @@
 .test-repository {
+    height: 100%;
+    overflow: auto;
     .test-repository-list {
         padding: var(--thoughtware-padding);
     }

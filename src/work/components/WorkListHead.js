@@ -72,7 +72,7 @@ const WorkListHead = (props) => {
                         <WorkCreatDropdown workTypeList = {workTypeList} buttonType = "svg" {...props} />
                     </PrivilegeProjectButton>
                     {/* <div style={{ positon: "relative" }} className="worklist-button-icon">
-                        <svg className="big-icon" aria-hidden="true">
+                        <svg className="icon-20" aria-hidden="true">
                             <use xlinkHref="#icon-more"></use>
                         </svg>
                     </div> */}

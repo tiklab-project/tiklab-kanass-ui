@@ -1,4 +1,6 @@
 .wiki-repository {
+    height: 100%;
+    overflow: auto;
     .wiki-repository-list {
         padding: var(--thoughtware-padding);
         .wiki-repository-list-top {

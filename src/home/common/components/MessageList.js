@@ -17,7 +17,8 @@ import MessageItem from '../../../common/overviewComponent/MessageItem';
 
 
 const MessageList = (props) => {
-    const { homeStore } = props;
+    const { homeStore, isShowText, theme } = props;
+    // const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray";
     const { findMessageDispatchItemPage, messageTotal, messageList, isMessageReachBottom, updateMessageDispatchItem } = homeStore;
     // 当前的tab的key
     const [currenTab, setCurrentTab] = useState("0")
@@ -38,24 +39,24 @@ const MessageList = (props) => {
             findMessageDispatchItemPage({ page: 1, status: currenTab })
         }
         findMessageDispatchItemPage({ page: 1, status: "0" }).then(res => {
-            if(res.code === 0) {
+            if (res.code === 0) {
                 setUnReadMessage(res.data.totalRecord)
             }
         })
         return;
     }, [open])
 
-     /**
-     * 挂载监听点击事件
-     */
+    /**
+    * 挂载监听点击事件
+    */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
             window.removeEventListener("mousedown", closeModal, false);
         }
-        
-    },[])
-    
+
+    }, [])
+
     /**
      * 点击抽屉之外的地方关闭抽屉
      * @param {抽屉dom} e 
@@ -102,7 +103,7 @@ const MessageList = (props) => {
      * @param {跳转地址} link 
      * @param {改变消息为已读} id 
      */
-    const goToMessage = (link,id) => {
+    const goToMessage = (link, id) => {
         const value = {
             id: id,
             status: "1"
@@ -110,69 +111,85 @@ const MessageList = (props) => {
         updateMessageDispatchItem(value)
         window.location.href = link
     }
-    
+
     return (
-        <div ref = {messageRef}>
-            <div className="frame-header-message" data-title-bottom="消息提示" onClick={() => setOpen(true)}>
-                <Badge count={unReadMessage} size="small">
-                    <Avatar
-                        size="small" style={{fontSize: "25px" }} icon={<MessageOutlined style={{ color: "#2b2b2b" }} />} />
-                </Badge>
-            </div>
+        <div className="message-box" ref={messageRef}>
+            {
+                isShowText ?
+                    <div className="message-text" onClick={() => setOpen(true)}>
+                        <svg className="icon-20" aria-hidden="true">
+                            <use xlinkHref={`${theme === "gray" ? "#icon-message": "#icon-message-white"}`} ></use>
+                        </svg>
+                        <div className="message-text-name">消息</div>
+                        <div className="message-text-count">
+                            {unReadMessage}
+                        </div>
+                    </div>
+                    :
+                    <div className="message-icon" data-title-bottom="消息提示" onClick={() => setOpen(true)}>
+                        <Badge count={unReadMessage} size="small">
+                            <Avatar
+                                size="small" style={{ fontSize: "20px" }} icon={ <svg className="icon-20" aria-hidden="true">
+                                    <use xlinkHref={`${theme === "gray" ? "#icon-message": "#icon-message-white"}`} ></use>
+                                </svg>} />
+                        </Badge>
+                    </div>
+            }
+
             <Drawer
                 title="消息"
-                placement={"right"}
+                placement={"left"}
                 closable={true}
                 onClose={onClose}
                 visible={open}
                 key={"left"}
-                className="frame-header-drawer"
+                className={`message-drawer ${isShowText ? "message-drawer-expend" : "message-drawer-inpend"} `}
                 mask={false}
                 destroyOnClose={true}
                 width={450}
-                getContainer = {false}
+                getContainer={false}
             >
                 <div className="message-content">
-                    <Tabs onChange={changTab} size = "small" activeKey = {currenTab}>
+                    <Tabs onChange={changTab} size="small" activeKey={currenTab}>
                         <Tabs.TabPane tab="未读" key="0">
                             <div className="message-box">
                                 {
-                                    (messageList && messageList.length > 0) ?  messageList.map(item => {
+                                    (messageList && messageList.length > 0) ? messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
                                             {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                                 onClick = {() => goToMessage(item.link,item.id)}
                                                 style={{flex: 1,width: "314px"}}
                                             /> */}
-                                            <MessageItem 
-                                                id = {item.id} 
-                                                content = {item.data} 
-                                                type = {item.messageType.id} 
-                                                status = {item.status}
-                                                item = {item}
-                                                updateMessageDispatchItem = {updateMessageDispatchItem}
-                                                currenTab = {currenTab}
-                                                setUnReadMessage = {setUnReadMessage}
-                                                findMessageDispatchItemPage = {findMessageDispatchItemPage}
+                                            <MessageItem
+                                                id={item.id}
+                                                content={item.data}
+                                                type={item.messageType.id}
+                                                status={item.status}
+                                                item={item}
+                                                updateMessageDispatchItem={updateMessageDispatchItem}
+                                                currenTab={currenTab}
+                                                setUnReadMessage={setUnReadMessage}
+                                                findMessageDispatchItemPage={findMessageDispatchItemPage}
                                             />
                                             <div className={`message-status ${item.status === 0 ? "status-unread" : "status-read"}`}></div>
                                         </div>
                                     })
-                                    :
-                                    <Empty image="/images/nodata.png" description="没有新消息~" />
+                                        :
+                                        <Empty image="/images/nodata.png" description="没有新消息~" />
                                 }
                                 {
-                                    messageTotal > 1 && 
-                                        (isMessageReachBottom ? 
-                                            <div className="message-list-bottom" onClick={() => changePage()}>点击加载更多</div> : <div className="message-list-bottom">第{currentPage}页/总{messageTotal}页</div>)
+                                    messageTotal > 1 &&
+                                    (isMessageReachBottom ?
+                                        <div className="message-list-bottom" onClick={() => changePage()}>点击加载更多</div> : <div className="message-list-bottom">第{currentPage}页/总{messageTotal}页</div>)
                                 }
-                                
+
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="已读" key="1">
                             <div className="message-box">
                                 {
-                                    (messageList && messageList.length > 0)? messageList.map(item => {
+                                    (messageList && messageList.length > 0) ? messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
                                             {/* <div
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
@@ -180,25 +197,25 @@ const MessageList = (props) => {
                                                 style={{flex: 1, width: "314px"}}
                                                 onClick = {() => goToMessage(item.link,item.id)}
                                             /> */}
-                                            <MessageItem 
-                                                id = {item.id} 
-                                                content = {item.data} 
-                                                type = {item.messageType.id} 
-                                                status = {item.status}
-                                                updateMessageDispatchItem = {updateMessageDispatchItem}
-                                                item = {item}
-                                                currenTab = {currenTab}
-                                                setUnReadMessage = {setUnReadMessage}
-                                                findMessageDispatchItemPage = {findMessageDispatchItemPage}
+                                            <MessageItem
+                                                id={item.id}
+                                                content={item.data}
+                                                type={item.messageType.id}
+                                                status={item.status}
+                                                updateMessageDispatchItem={updateMessageDispatchItem}
+                                                item={item}
+                                                currenTab={currenTab}
+                                                setUnReadMessage={setUnReadMessage}
+                                                findMessageDispatchItemPage={findMessageDispatchItemPage}
                                             />
                                             <div className={`message-status ${item.status === 1 ? "status-read" : "status-unread"}`}></div>
                                         </div>
                                     })
-                                    :
-                                    <Empty image="/images/nodata.png" description="没有消息~" />
+                                        :
+                                        <Empty image="/images/nodata.png" description="没有消息~" />
                                 }
-                                { messageTotal > 1 && 
-                                    (isMessageReachBottom ? 
+                                {messageTotal > 1 &&
+                                    (isMessageReachBottom ?
                                         <div className="message-list-bottom" onClick={() => changePage()}>点击加载更多</div> : <div className="message-list-bottom">第{currentPage}页/总{messageTotal}页</div>)}
                             </div>
                         </Tabs.TabPane>
