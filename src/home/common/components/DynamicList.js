@@ -14,10 +14,11 @@ import { getUser } from "thoughtware-core-ui";
 import { Select, Row, Col, Empty, Pagination } from "antd";
 import "./DynamicList.scss";
 import DynamicItem from "../../../common/overviewComponent/DynamicItem";
-
+import HomeStore from "../store/HomeStore";
+import DyncmicTimeAxis from "../../../project/overview/components/DyncmicTimeAxis";
 const DynamicList = (props) => {
     const { homeStore } = props;
-    const { findLogpage, opLogCondition, opLogList,opLogTotal, setOpLogList, findProjectSetProjectList } = homeStore;
+    const { findLogpage, opLogCondition, logList,opLogTotal, setOpLogList, findProjectSetProjectList } = HomeStore;
     console.log(opLogTotal)
     const userId = getUser().userId;
     const [projectList, setProjectList] = useState()
@@ -140,16 +141,17 @@ const DynamicList = (props) => {
                 </div>
 
                 <div className="dynamic-list">
-                    {
-                        opLogList && opLogList.length > 0 ? opLogList.map((item) => {
+                    {/* {
+                        logList && logList.length > 0 ? logList.map((item) => {
                             return <DynamicItem content={item.data} type={item.actionType.id} {...props} />
                         })
                             :
                             <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                    }
+                    } */}
+                    <DyncmicTimeAxis logList = {logList} />
                 </div>
                 {
-                    opLogList && opLogList.length > 0 && <div className="dynamic-pagination">
+                    logList && logList.length > 0 && <div className="dynamic-pagination">
                         <Pagination
                             onChange={onPageChange}
                             defaultCurrent={1}
@@ -167,4 +169,4 @@ const DynamicList = (props) => {
 
     )
 }
-export default inject('homeStore')(observer(DynamicList));
+export default observer(DynamicList);

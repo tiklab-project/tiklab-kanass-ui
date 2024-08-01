@@ -8,14 +8,16 @@
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Empty } from 'antd';
-import ProdeScrumAside from "./ProjectScrumDetailAside";
+import ProdeAside from "./ProjectDetailAside";
 import "./ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
-const ProjectScrumDetail = (props) => {
+import HeaderCe from "../../../home/common/components/HeaderCe";
+
+const ProjectLayout = (props) => {
     const store = {
         projectStore: ProjectStore
     }
@@ -27,7 +29,7 @@ const ProjectScrumDetail = (props) => {
     const projectId = props.match.params.id;
     // 项目详情
     const [project, setProject] = useState();
-
+    const [isShowText, SetIsShowText] = useState(false)
     useEffect(() => {
         /**
          * 从信息页面跳入项目详情页面时，获取项目id
@@ -59,13 +61,16 @@ const ProjectScrumDetail = (props) => {
             {
                 project ? <Layout className="project-prodetail">
 
-                    <ProdeScrumAside
+                    <ProdeAside
                         projectName={"项目1"}
                         project={project}
                         searchpro={searchpro}
+                        isShowText = {isShowText} 
+                        SetIsShowText = {SetIsShowText}
                         {...props}
                     />
                     <Layout className="prodetail-content">
+                        <HeaderCe  isShowText = {isShowText} SetIsShowText = {SetIsShowText}/>
                         <Row justify="start" className="prodetail-row">
                             <Col xs={{ span: 24 }} lg={{ span: 24 }}>
                                 {renderRoutes(route.routes)}
@@ -85,4 +90,4 @@ const ProjectScrumDetail = (props) => {
     )
 
 }
-export default inject("systemRoleStore")(observer(ProjectScrumDetail));
+export default inject("systemRoleStore")(observer(ProjectLayout));

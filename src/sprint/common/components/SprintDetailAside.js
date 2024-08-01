@@ -14,7 +14,8 @@ import { Layout, Button } from "antd";
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import SprintChangeModal from "./SprintChangeModal";
-import "./sprintDetailAside.scss"
+import "./sprintDetailAside.scss";
+import Logo from "../../../home/common/components/Logo";
 const { Sider } = Layout;
 
 const SprintDetailAside = (props) => {
@@ -120,6 +121,7 @@ const SprintDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='sprint-detail-side'>
                 <div className={`sprint-aside-content ${isShowText ? "" : "sprint-icon"}`}>
+                    <Logo />
                     <SprintChangeModal
                         isShowText={isShowText}
                         sprint={sprint}

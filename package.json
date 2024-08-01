@@ -219,6 +219,7 @@
         "thoughtware-eam-ui": "^1.0.2",
         "thoughtware-flow-ui": "^1.0.2",
         "thoughtware-form-ui": "^1.0.2",
+        "thoughtware-licence-cloud-ui": "^1.0.0",
         "thoughtware-licence-ui": "^1.0.2",
         "thoughtware-message-ui": "^1.0.3",
         "thoughtware-privilege-ui": "^1.0.2",

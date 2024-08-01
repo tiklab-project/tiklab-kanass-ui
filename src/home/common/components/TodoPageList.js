@@ -221,7 +221,7 @@ const TodoList = (props) => {
 
     return (<div className="todo-list-page">
         {
-            path !== "/home/todoList" && <Breadcrumb
+            path !== "/index/home/todoList" && <Breadcrumb
                 {...props}
                 firstText={firstText}
                 secondText="待办事项"
@@ -236,7 +236,7 @@ const TodoList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   (path === "/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
+                   (path === "/index/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear

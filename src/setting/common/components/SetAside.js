@@ -12,6 +12,7 @@ import { withRouter } from "react-router-dom";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
 import { PrivilegeButton } from "thoughtware-privilege-ui";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
+import Logo from "../../../home/common/components/Logo"
 import { observer } from 'mobx-react';
 const SetAside = (props) => {
     const { setSelectKey, selectKey } = SettingHomeStore;
@@ -49,7 +50,7 @@ const SetAside = (props) => {
         return (
             <PrivilegeButton code={data.purviewCode} key={data.code}>
                 <li
-                    style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 28}` }}
+                    style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                     className={`orga-aside-item ${data.id === selectKey ? "orga-aside-select" : ""}`}
                     onClick={() => select(data)}
                     key={data.code}
@@ -100,7 +101,7 @@ const SetAside = (props) => {
             <PrivilegeButton code={item.purviewCode} key={item.code}>
                 <li key={item.code} title={item.title} className="orga-aside-li">
                     <div className="orga-aside-item orga-aside-first"
-                        style={{ paddingLeft: `${deep * 20 + 28}` }}
+                        style={{ paddingLeft: `${deep * 20 + 20}` }}
                         onClick={() => setOpenOrClose(item.id)}
                     >
                         {
@@ -137,13 +138,14 @@ const SetAside = (props) => {
         )
     }
     const backProject = () => {
-        props.history.push(`/home/survey`)
+        props.history.push(`/index/home/survey`)
         sessionStorage.setItem("menuKey", "home")
     }
     return (
         <Fragment>
             <div className="orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
+                    <Logo isShowText = {true} />
                     <div className="orga-aside-name">
                         <svg className="svg-icon" aria-hidden="true" onClick={() => backProject()}>
                             <use xlinkHref="#icon-backproject"></use>

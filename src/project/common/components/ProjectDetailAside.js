@@ -12,19 +12,20 @@ import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import { useTranslation } from 'react-i18next';
-import SetScrumMenu from "./SetScrumMenu";
+import SetScrumMenu from "./SetMenu";
 import ProjectChangeModal from "./ProjectChangeModal";
 import MoreMenuModel from "./MoreMenuModal";
+import Logo from '../../../home/common/components/Logo';
 const { Sider } = Layout;
 
-const ProdeScrumAside = (props) => {
-    const { searchpro, project } = props;
+const ProjectDetailAside = (props) => {
+    const { searchpro, project, isShowText, SetIsShowText } = props;
     const projectMenu = useRef();
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
     // 菜单的形式，宽菜单，窄菜单
-    const [isShowText, SetIsShowText] = useState(false)
+    
     // 当前选中菜单key
     const path = props.location.pathname.split("/")[3];
     // 路由
@@ -233,13 +234,14 @@ const ProdeScrumAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/project`)
+        props.history.push(`/index/project`)
     }
 
     return (
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='project-detail-side'>
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
+                    <Logo isShowText = {isShowText}/>
                     <ProjectChangeModal
                         isShowText={isShowText}
                         searchpro={searchpro}
@@ -267,7 +269,7 @@ const ProdeScrumAside = (props) => {
                                             <use xlinkHref="#icon-backproject"></use>
                                         </svg>
                                         <span>
-                                        返回首页
+                                            返回首页
                                         </span>
                                     </div>
                             }
@@ -323,4 +325,4 @@ const ProdeScrumAside = (props) => {
     )
 
 }
-export default withRouter(ProdeScrumAside);
+export default withRouter(ProjectDetailAside);

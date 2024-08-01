@@ -126,7 +126,7 @@ const ProjectChangeModal = (props) => {
                         />
 
                         <div className={`project-text `} >
-                            <div>
+                            <div className='name'>
                                 {project?.projectName}
                             </div>
                             <div className='type'>
@@ -223,7 +223,7 @@ const ProjectChangeModal = (props) => {
                     })
                 }
                 {
-                    allProlist.length > 6 && <div className="change-project-more" onClick={() => props.history.push("/project")}>查看更多</div>
+                    allProlist.length > 6 && <div className="change-project-more" onClick={() => props.history.push("/index/project")}>查看更多</div>
                 }
             </div>
         </div >

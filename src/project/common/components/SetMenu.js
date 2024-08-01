@@ -26,9 +26,9 @@ const SetScrumMenu = (props) => {
     }
 
     return (
-        <div className="menu-model">
+        <div className="project-setting">
             {
-                isShowText ? <div onClick={() => goProjectSetting()} ref={setButton} className="project-set-title setting">
+                isShowText ? <div onClick={() => goProjectSetting()} ref={setButton} className="project-setting-title setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>
@@ -37,7 +37,7 @@ const SetScrumMenu = (props) => {
                     </span>
                 </div>
                 :
-                <div onClick={() => goProjectSetting()} ref={setButton} className = "project-set-icon setting">
+                <div onClick={() => goProjectSetting()} ref={setButton} className = "project-setting-icon setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>

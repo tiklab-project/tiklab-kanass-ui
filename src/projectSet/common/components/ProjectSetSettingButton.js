@@ -27,9 +27,9 @@ const ProjectSetSettingButton = (props) => {
    
 
     return (
-        <div className="menu-model">
+        <div className="project-set-setting">
             {
-                isShowText ? <div onClick={() => goProjectSetSet()} ref={setButton} className="project-title setting">
+                isShowText ? <div onClick={() => goProjectSetSetting()} ref={setButton} className="project-set-setting-title setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>
@@ -38,7 +38,7 @@ const ProjectSetSettingButton = (props) => {
                     </span>
                 </div>
                 :
-                <div onClick={() => goProjectSetSetting()} ref={setButton} className = "project-set-icon setting">
+                <div onClick={() => goProjectSetSetting()} ref={setButton} className = "project-set-setting-icon setting">
                     <svg className="svg-icon" aria-hidden="true">
                         <use xlinkHref="#icon-set"></use>
                     </svg>

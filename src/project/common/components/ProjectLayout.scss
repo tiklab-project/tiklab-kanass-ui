@@ -1,6 +1,6 @@
 .project-prodetail {
-    height: calc(100vh - 48px);
-
+    height: 100vh;
+    overflow: hidden;
     .prodetail-row {
         height: calc(100vh - var(--thoughtware-head-height));
     }
@@ -11,7 +11,7 @@
 
         .ant-layout-sider-children {
             .project-aside {
-                height: calc(100vh - var(--thoughtware-head-height));
+                height: 100vh;
                 display: flex;
                 flex-direction: column;
                 background: var(--thoughtware-gray-600);
@@ -21,39 +21,9 @@
                     margin: 0;
                 }
 
-                .project-set-icon {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    padding: 10px 0;
-                }
+                
 
-                .project-set-title {
-                    border-top: 1px solid #f0f2f5;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 40px;
-                    margin-bottom: 10px;
-                }
-
-                .setting:hover {
-                    background-color: var(--thoughtware-gray-400);
-                }
-
-                .setting {
-                    border-top: 1px solid #f0f2f5;
-                    cursor: pointer;
-
-                    span {
-                        margin: 0 10px 0 10px;
-                    }
-
-                    .icon {
-                        margin-left: 10px;
-                    }
-                }
-
+               
                 .project-menu {
                     list-style-type: none;
                     cursor: pointer;
@@ -173,18 +143,18 @@
 }
 
 
-.expend>.ant-table-cell {
-    padding-left: 0;
-    padding-right: 0;
+// .expend>.ant-table-cell {
+//     padding-left: 0;
+//     padding-right: 0;
 
-    .ant-table {
-        margin-right: 0 !important;
-    }
+//     .ant-table {
+//         margin-right: 0 !important;
+//     }
 
-}
+// }
 
-.expend {
-    .ant-table {
-        margin: -16px -16px -16px 0 !important;
-    }
-}
+// .expend {
+//     .ant-table {
+//         margin: -16px -16px -16px 0 !important;
+//     }
+// }

@@ -20,28 +20,12 @@
         display: flex;
         align-items: center;
         .frame-applink {
-            width: 80px;
+            padding-left: 10px;
             display: flex;
             justify-content: center;
         }
     }
-    .frame-menu-logo {
-        height: var(--thoughtware-head-height);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        .logo-img {
-            height: 25px;
-        }
-
-        .logo-text {
-            margin-left: 10px;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-    }
+   
     &-right {
         display: flex;
         flex-direction: row;

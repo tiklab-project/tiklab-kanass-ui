@@ -16,13 +16,13 @@ import "./ProjectSetDetailAside.scss";
 import ProjectSetSetButton from "./ProjectSetSettingButton";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
 import { getUser } from "thoughtware-core-ui";
+import Logo from '../../../home/common/components/Logo';
 
 const { Sider } = Layout;
 
 const ProjectSetDetailAside = (props) => {
-    const { systemRoleStore } = props;
-    // 切换宽菜单与窄菜单的参数
-    const [isShowText, SetIsShowText] = useState(false)
+    const { systemRoleStore, isShowText, SetIsShowText } = props;
+
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
     // 项目集id
@@ -78,13 +78,14 @@ const ProjectSetDetailAside = (props) => {
         SetIsShowText(!isShowText)
     }
     const backProject = () => {
-        props.history.push(`/projectSetList`)
+        props.history.push(`/index/projectSetList`)
     }
 
     return (
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='projectSet-detail-side'>
                 <div className={`projectSet-aside`}>
+                    <Logo isShowText = {isShowText}/>
                     <ProjectSetChangeModal isShowText={isShowText} projectSetId = {projectSetId}/>
                     <ul className="projectSet-menu">
                     <div className="projectSet-back-project">

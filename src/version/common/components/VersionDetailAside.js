@@ -14,7 +14,9 @@ import { Layout, Button } from "antd";
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import VersionChangeModal from "./VersionChangeModal";
-import "./versionDetailAside.scss"
+import "./versionDetailAside.scss";
+import Logo from "../../../home/common/components/Logo";
+
 const { Sider } = Layout;
 
 const VersionDetailAside = (props) => {
@@ -103,6 +105,7 @@ const VersionDetailAside = (props) => {
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='version-detail-side'>
                 <div className={`version-aside-content ${isShowText ? "" : "version-icon"}`}>
+                    <Logo />
                     <VersionChangeModal
                         isShowText={isShowText}
                         version={version}

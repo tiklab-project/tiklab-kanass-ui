@@ -1,88 +1,27 @@
-.menu-model {
-    position: relative;
-    .project-title {
-        cursor: pointer;
+.project-setting {
+    border-top: 1px solid #f0f2f5;
+    .project-setting-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
     }
-    .menu-model-botton {
+
+    .project-setting-title {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
         height: 40px;
-        line-height: 40px;
-        width: 100%;
-        text-align: center;
-    }
-    .menu-model-box {
-        position: absolute;
-        bottom: 32px;
-        z-index: 100;
-        width: 200px;
-        border-radius: 4px;
-        background: #fff;
-        box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
-        .menu-box-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .menu-block {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 10px;
-        }
-        .menu-block-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-direction: column;
-            border-radius: 4px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 10px;
-            border: 1px solid var(--thoughtware-gray-200);
-            min-width: 80px;
-            &-icon {
-                width: 15px;
-                height: 15px;
-            }
-        }
-    }
-    .menu-model-menu-submenu:first-of-type {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
     }
 
-    .menu-model-menu-submenu:last-child {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
+   
 
-    .menu-model-menu {
-        list-style-type: none;
-        cursor: pointer;
-        flex: 1;
-        &-submenu:hover {
-            background-color: var(--thoughtware-gray-400);
-        }
-        &-submenu {
-            height: 40px;
-            display: flex;
-            line-height: 40px;
-            width: 100%;
-            align-items: center;
-            padding-left: 20px;
-        }
-        
-        &-select {
-            background-color: var(--thoughtware-gray-400);
-            border-left: 3px solid var(--thoughtware-gray-400);
-        }
-    }
-    .menu-show {
-        display: block;
-    }
-    .menu-hidden {
-        display: none;
-    }
+   
+}
+.project-setting:hover {
+    background-color: var(--thoughtware-gray-400);
+}
+
+.project-setting {
+    cursor: pointer;
 }

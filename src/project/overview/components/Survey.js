@@ -234,7 +234,7 @@ const Survey = (props) => {
     }
 
     const goToListPage = () => {
-        props.history.push(`/projectDetail/${projectId}/workTodo`) 
+        props.history.push(`/projectDetail/${projectId}/workTodo`)
     }
 
     return (
@@ -366,8 +366,19 @@ const Survey = (props) => {
 
                         </div>
                     </div>
-                   <TodoStatistics />
-                   <DyncmicTimeAxis logList = {logList} />
+                    <TodoStatistics />
+                    <div className="log-box">
+                        <div className="log-box-title">
+                            <div className="name">最新动态</div>
+                            <div className="more" onClick={() => goDynamicList()}>
+                                <svg aria-hidden="true" className="svg-icon">
+                                    <use xlinkHref="#icon-rightjump"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <DyncmicTimeAxis logList={logList} />
+                    </div>
+                    
                     {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}
                     {/* <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} /> */}
                 </div>

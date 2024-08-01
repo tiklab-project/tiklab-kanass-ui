@@ -14,6 +14,8 @@ import { renderRoutes } from "react-router-config";
 import VersionDetailAside from "./VersionDetailAside";
 import VersionDetailStore from "../store/VersionDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
+import HeaderCe from "../../../home/common/components/HeaderCe";
+
 const Versiondetail = (props) => {
     const store = {
         versionDetailStore: VersionDetailStore
@@ -33,6 +35,7 @@ const Versiondetail = (props) => {
         <Layout className="version-detail">
             <VersionDetailAside />
             <Layout className="version-detail-content">
+                <HeaderCe />
                 {renderRoutes(route.routes)}
             </Layout>
         </Layout>

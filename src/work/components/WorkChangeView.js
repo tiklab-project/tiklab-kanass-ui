@@ -75,11 +75,12 @@ const WorkChangeView = (props) => {
         }
         setWorkShowType(item.value)
         setWorkId()
+        
         if (path.indexOf("projectDetail") > -1) {
             props.history.push(`/projectDetail/${projectId}/work${item.path}`)
         }
-        if (path.indexOf("work") === 1) {
-            props.history.push(`/work${item.path}`)
+        if (path.indexOf("index") === 1) {
+            props.history.push(`/index/work${item.path}`)
         }
 
         if (path.indexOf("sprintdetail") > 1) {

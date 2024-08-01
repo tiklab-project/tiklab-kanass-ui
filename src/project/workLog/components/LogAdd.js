@@ -267,7 +267,7 @@ const LogAdd = (props) => {
                 className="log-add"
             >
                 {
-                    path === "/log/list" && <Form.Item
+                    path === "/index/log/list" && <Form.Item
                         label="项目"
                         name="project"
                         rules={[

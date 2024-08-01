@@ -9,13 +9,11 @@
 .layout {
     overflow: hidden;
     height: 100vh;
-    .layout-content {
-        display: flex;
-        .layout-page {
-            flex: 1;
-            height: calc(100vh - var(--thoughtware-head-height));
-            overflow: hidden;
-        }
+    display: flex;
+    .layout-right {
+        flex: 1;
+        overflow: hidden;
+        height: 100vh;
     }
 
 }

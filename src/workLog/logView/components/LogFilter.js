@@ -32,7 +32,7 @@ const LogFilter = (props) => {
      */
     const changeData = (dateValue) => {
         setDateValue(dateValue)
-        if (path === "/log/list") {
+        if (path === "/index/log/list") {
             const values = {
                 projectId: projectId,
                 'startTime': dateValue[0].format('YYYY-MM-DD'),
@@ -41,7 +41,7 @@ const LogFilter = (props) => {
             }
             findWorkLogPage(values)
         }
-        if (path === "/log/userList") {
+        if (path === "/index/log/userList") {
             const values = {
                 worker: userId,
                 projectId: projectId,

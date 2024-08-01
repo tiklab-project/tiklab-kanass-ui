@@ -56,39 +56,7 @@
                     border-bottom: 1px solid #f0f2f5;
                 }
                 
-                .project-title {
-                    display: flex;
-                    padding: 10px 20px;
-                    align-items: center;
-                    justify-content: center;
-                    padding-top: 10px;
-                    border-top: 1px solid var(--thoughtware-gray-200);
-                }
-                .project-title:hover {
-                    background-color: var(--thoughtware-gray-400);
-                }
-
-                .project-set-icon {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    padding-top: 10px;
-                    border-top: 1px solid var(--thoughtware-gray-200);
-                    cursor: pointer;
-                    span {
-                        font-size: 12px;
-                    }
-                }
-                .project-set-icon:hover {
-                    background-color: var(--thoughtware-gray-400);
-                }
-                .setting {
-                    
-                    .icon {
-                        margin-left: 10px;
-                    }
-                }
-                
+               
                 .projectSet-menu {
                     list-style-type:none;
                     cursor: pointer;

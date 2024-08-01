@@ -32,7 +32,7 @@ class HomeStore {
     dynamicList = [];
     // 日志列表
     @observable
-    opLogList = [];
+    logList = [];
 
 
     @observable opLogTotal = 0;
@@ -98,7 +98,7 @@ class HomeStore {
 
     @action
     setOpLogList = (value) => {
-        this.opLogList = value
+        this.logList = value
     }
 
     @action
@@ -286,12 +286,32 @@ class HomeStore {
     findLogpage = async (value, type) => {
         this.setOpLogCondition(value)
         const data = await Service("/oplog/findlogpage", this.opLogCondition);
-        if (data.code === 0) {
-            const list = data.data.dataList
-            if (type !== "projectSet") {
-                this.opLogList = list;
-                this.opLogTotal = data.data.totalRecord;
+        if(data.code === 0){
+            const dataList = data.data.dataList;
+            let list = []
+            if(value.currentPage === 1) {
+                this.logList = []
             }
+            if(dataList.length > 0){
+                dataList.map(item => {
+                    const date = item.createTime.slice(0, 10);
+                    const list1 = this.logList.filter(dateItem => dateItem.date === date)
+                    if(list1.length > 0){
+                        this.logList.map(dateItem => {
+                            if(dateItem.date === date){
+                                dateItem.children.push(item)
+                            }
+                            return dateItem;
+                        })
+                    }else {
+                        this.logList.push({
+                            date: date,
+                            children: [item]
+                        })
+                    }
+                })
+            }
+            console.log(this.logList)
         }
         return data;
     }

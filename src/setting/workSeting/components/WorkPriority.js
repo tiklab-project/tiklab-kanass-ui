@@ -167,5 +167,5 @@ const WorkPriority = (props) => {
     </Provider>
 
     );
-};
+}
 export default observer(WorkPriority);

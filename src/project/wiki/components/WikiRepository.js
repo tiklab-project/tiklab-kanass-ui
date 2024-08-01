@@ -64,8 +64,8 @@ const WikiRepository = (props) => {
 
         findSystemUrl({ name: "kanass" }).then(res => {
             const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            // window.open(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
-            applyJump(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
+            // window.open(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
+            applyJump(`${kanassUrl}/#/index/repositorydetail/${data.id}/survey`)
         })
     }
     // 列表的列
@@ -114,7 +114,7 @@ const WikiRepository = (props) => {
         if (data.exist) {
             findSystemUrl({ name: "sward" }).then(res => {
                 const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
-                applyJump(`${kanassUrl}/#/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
+                applyJump(`${kanassUrl}/#/index/repositorydetail/${data.kanassRepositoryId}/doc/${data.id}`);
             })
         } else {
             return

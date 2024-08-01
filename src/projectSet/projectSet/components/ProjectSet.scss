@@ -1,289 +1,185 @@
 .projectSet {
     overflow: auto;
-    height: calc(100vh - var(--thoughtware-head-height));
-
-    .projectSet-search-tab {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .projectSet-table-box {
-        margin-top: 15px;
-        .projectSet-table-item {
-            .projectSet-table-icon {
-                width: 32px;
-                height: 32px;
-                border-radius: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-right: 5px;
-            }
-            .projectSet-color-1 {
-                background-color: #cadbf3;
-            }
-            .projectSet-color-2 {
-                background-color: #deedd7;
-            }
-            .projectSet-color-3 {
-                background-color: #ffebee;
-            }
-            .projectSet-color-4 {
-                background-color: #e8eaf6;
-            }
-        }
-
-        .projectSet-action-icon {
-            cursor: pointer;
-        }
-    }
-
-
-    .projectSet-filter {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 40px;
-        line-height: 40px;
-        gap: 20px;
-
-        .vertical-bar {
-            width: 1px;
-            height: 15px;
-            background-color: #d7d7d7;
-            margin: 0 10px;
-        }
-
-        .active-tabs {
-            font-weight: var(--thoughtware-font-weight-bold);
-            color: #000;
-            border-bottom: 2px solid var(--thoughtware-blue);
-        }
-
-        .filter-search {
-            width: 120px;
-            border-radius: 4px;
-            ;
-        }
-    }
-
-    .projectSet-list {
-        padding: var(--thoughtware-padding);
-        height: calc(100vh - var(--thoughtware-head-height));
-        background-color: #fff;
-
-        .projectSet-top-breadcrumb {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .projectSet-recent-box {
-            overflow: hidden;
-            background-color: #fff;
-            border-radius: 4px;
-            margin-top: 15px;
-
-            .recent-projectSet {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                margin-top: 10px;
-                overflow: hidden;
-                gap: 10px;
-                margin-bottom: 20px;
-                height: 104px;
-
-                .projectSet-item:hover {
-                    border-radius: 4px 4px 0 0;
-                    border-bottom: 2px solid var(--thoughtware-blue);
-                    transition: 500;
-                }
-
-                .projectSet-item {
-                    max-width: 260px;
-                    min-width: 224px;
-                    flex: 1;
-                    padding: 12px;
-                    box-sizing: content-box;
-                    flex-shrink: 0;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    background-color: var(--thoughtware-gray-600);
-                    box-sizing: border-box;
-                    border-bottom: 2px solid var(--thoughtware-gray-600);
-
-                    .item-title {
-                        margin-bottom: 10px;
-                        
-                        display: inline-flex;
-                        align-items: center;
-                        
-                        .item-icon {
-                            width: 32px;
-                            height: 32px;
-                            border-radius: 5px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            margin-right: 5px;
-                        }
-                        .projectSet-color-1 {
-                            background-color: #cadbf3;
-                        }
-                        .projectSet-color-2 {
-                            background-color: #deedd7;
-                        }
-                        .projectSet-color-3 {
-                            background-color: #ffebee;
-                        }
-                        .projectSet-color-4 {
-                            background-color: #e8eaf6;
-                        }
-                        .item-name {
-                            font-size: 16px;
-                            text-overflow: ellipsis;
-                            font-weight: var(--thoughtware-font-weight-bold);
-                            white-space: nowrap;
-                            overflow: hidden;
-                            max-width: 140px;
-                        }
-
-                    }
-
-                    .item-info {
-                        display: flex;
-                        gap: 10px;
-                    }
-
-                    .info-master,
-                    .info-project {
-                        font-size: 12px;
-                        display: inline-flex;
-                        width: 100%;
-                        justify-content: space-between;
-                        height: 30px;
-                        line-height: 30px;
-                        gap: 5px;
-
-                        .info-label {
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            width: 60px;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            overflow: hidden;
-                        }
-
-                        .info-value {
-                            width: 50;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            overflow: hidden;
-                        }
-                    }
-                }
-               
-                .ant-empty {
-                    width: 100%;
-                }
-            }
-        }
-    }
-
-    .projectSet-tabs {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 40px;
-        line-height: 40px;
-        gap: 10px;
-
-        .projectSet-tab {
-            font-size: var(--thoughtware-font-13);
-            cursor: pointer;
-            height: 40px;
-            line-height: 40px;
-        }
-
-        .active-tabs {
-            color: #000;
-            border-bottom: 2px solid var(--thoughtware-blue);
-        }
-    }
+    height: 100vh;
 
     .projectSet-content {
-        .ant-layout-sider {
-            background-color: #fff;
+        height: 100%;
+        .projectSet-list {
+            padding: var(--thoughtware-padding);
             height: 100%;
-            border-right: 1px solid #f0f0f0;
-
-            .projectSet-aside {
-                height: 100%;
-                background: var(--thoughtware-gray-600);
-
-                .projectSet-title {
-                    height: 40px;
+            background-color: #fff;
+    
+          
+    
+            .projectSet-recent-box {
+                overflow: hidden;
+                background-color: #fff;
+                border-radius: 4px;
+                margin-top: 15px;
+    
+                .recent-projectSet {
                     display: flex;
-                    line-height: 40px;
-                    width: 100%;
-                    justify-content: space-between;
                     align-items: center;
-                    padding: 0 20px;
-                    font-weight: var(--thoughtware-font-weight-bold);
-                    color: #000;
-                    border-bottom: 1px solid #f0f2f5;
-                }
-
-                .projectSet-menu {
-                    list-style-type: none;
-                    padding: 0px;
-
-                    .icon {
-                        margin-right: 10px;
+                    flex-wrap: wrap;
+                    margin-top: 10px;
+                    overflow: hidden;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                    height: 104px;
+    
+                    .projectSet-item:hover {
+                        border-radius: 4px 4px 0 0;
+                        border-bottom: 2px solid var(--thoughtware-blue);
+                        transition: 500;
                     }
-
-                    li:hover {
-                        background-color: #EDF0F5;
-                    }
-
-                    .projectSet-menu-submenu {
-                        height: 40px;
-                        display: flex;
-                        line-height: 40px;
-                        padding-left: 40px;
-                        width: 100%;
+    
+                    .projectSet-item {
+                        max-width: 260px;
+                        min-width: 224px;
+                        flex: 1;
+                        padding: 12px;
+                        box-sizing: content-box;
+                        flex-shrink: 0;
+                        border-radius: 4px;
                         cursor: pointer;
+                        background-color: var(--thoughtware-gray-600);
+                        box-sizing: border-box;
+                        border-bottom: 2px solid var(--thoughtware-gray-600);
+    
+                        .item-title {
+                            margin-bottom: 10px;
+                            
+                            display: inline-flex;
+                            align-items: center;
+                            
+                            .item-icon {
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 5px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                margin-right: 5px;
+                            }
+                            .projectSet-color-1 {
+                                background-color: #cadbf3;
+                            }
+                            .projectSet-color-2 {
+                                background-color: #deedd7;
+                            }
+                            .projectSet-color-3 {
+                                background-color: #ffebee;
+                            }
+                            .projectSet-color-4 {
+                                background-color: #e8eaf6;
+                            }
+                            .item-name {
+                                font-size: 16px;
+                                text-overflow: ellipsis;
+                                font-weight: var(--thoughtware-font-weight-bold);
+                                white-space: nowrap;
+                                overflow: hidden;
+                                max-width: 140px;
+                            }
+    
+                        }
+    
+                        .item-info {
+                            display: flex;
+                            gap: 10px;
+                        }
+    
+                        .info-master,
+                        .info-project {
+                            font-size: 12px;
+                            display: inline-flex;
+                            width: 100%;
+                            justify-content: space-between;
+                            height: 30px;
+                            line-height: 30px;
+                            gap: 5px;
+    
+                            .info-label {
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                width: 60px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                            }
+    
+                            .info-value {
+                                width: 50;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                            }
+                        }
+                    }
+                   
+                    .ant-empty {
+                        width: 100%;
+                    }
+                }
+            }
+            .projectSet-search-tab {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .projectSet-tabs {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    height: 40px;
+                    line-height: 40px;
+                    gap: 10px;
+            
+                    .projectSet-tab {
+                        font-size: var(--thoughtware-font-13);
+                        cursor: pointer;
+                        height: 40px;
+                        line-height: 40px;
+                    }
+            
+                    .active-tabs {
+                        color: #000;
+                        border-bottom: 2px solid var(--thoughtware-blue);
+                    }
+                }
+            
+            }
+            .projectSet-table-box {
+                margin-top: 15px;
+                .projectSet-table-item {
+                    .projectSet-table-icon {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: center;
                         align-items: center;
+                        margin-right: 5px;
                     }
-
-                    .projectSet-menu-select {
-                        background-color: var(--thoughtware-gray-400);
-                        border-left: 3px solid var(--thoughtware-gray-400);
+                    .projectSet-color-1 {
+                        background-color: #cadbf3;
+                    }
+                    .projectSet-color-2 {
+                        background-color: #deedd7;
+                    }
+                    .projectSet-color-3 {
+                        background-color: #ffebee;
+                    }
+                    .projectSet-color-4 {
+                        background-color: #e8eaf6;
                     }
                 }
-
-                .hidden-menu {
-                    display: none;
+        
+                .projectSet-action-icon {
+                    cursor: pointer;
                 }
             }
-        }
-
-        .projectSet-table {
-            background: #fff;
-
-            .ant-row {
-                height: 100%;
-
-                .ant-col {
-                    height: 100%;
-                    background-color: #fff;
-                    padding: 20px 20px;
-                }
-            }
-
+        
         }
     }
 

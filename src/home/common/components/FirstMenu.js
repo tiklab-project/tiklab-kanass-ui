@@ -2,11 +2,12 @@ import React from "react";
 import "./FirstMenu.scss";
 
 import { withRouter } from "react-router";
-
+import { productImg, productWhiteImg } from "thoughtware-core-ui";
+import Logo from "./Logo";
 
 const FirstMenu = (props) => {
     const { AppLink } = props;
-    
+
     const menuKey = sessionStorage.getItem("menuKey");
     console.log(sessionStorage.getItem("menuKey"))
     /**
@@ -21,35 +22,35 @@ const FirstMenu = (props) => {
     // 系统顶部菜单
     const routers = [
         {
-            to: '/home/survey',
+            to: '/index/home/survey',
             title: '首页',
             key: 'home',
             icon: "home-grey",
             actionIcon: "home-blue"
         },
         {
-            to: '/project',
+            to: '/index/project',
             title: '项目',
             key: 'project',
             icon: "project-grey",
             actionIcon: "project-blue"
         },
         {
-            to: '/projectSetList',
+            to: '/index/projectSetList',
             title: '项目集',
             key: 'projectSet',
             icon: "projectset-grey",
             actionIcon: "projectset-blue"
         },
         {
-            to: '/workTable',
+            to: '/index/workTable',
             title: '事项',
             key: 'work',
             icon: "work-grey",
             actionIcon: "work-blue"
         },
         {
-            to: '/log/list',
+            to: '/index/log/list',
             title: '工时',
             key: 'log',
             icon: "log-grey",
@@ -104,7 +105,11 @@ const FirstMenu = (props) => {
 
     return (
         <div className="first-menu">
-            {renderRouter()}
+            <div>
+                <Logo />
+                {renderRouter()}
+            </div>
+
             <div className="first-menu-bottom">
                 <div className="first-set" onClick={() => goSet()} data-title-right="设置">
                     <svg aria-hidden="true" className="svg-icon">

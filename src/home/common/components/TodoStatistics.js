@@ -82,8 +82,8 @@ const TodoStatistics = (props) => {
         
         setActiveKey("todoList")
         setTodoActiveKey(tabNum)
-        if(path === "/home/survey"){
-            props.history.push(`/home/todoList`)
+        if(path === "/index/home/survey"){
+            props.history.push(`/index/home/todoList`)
         }
         if (path === "/projectDetail/:id/survey") {
             props.history.push(`/projectDetail/${projectId}/workTodo`)
@@ -111,6 +111,7 @@ const TodoStatistics = (props) => {
                             id = {item.id}
                             className={`statistics-todotask-box ${isHome ? "statistics-home-todotask-box" : "statistics-project-todotask-box"}` }
                             onClick={() => goTodoTaskPage(item.tab)}
+                            key = {item.id}
                         >
                             <svg className="icon-40" aria-hidden="true">
                                 <use xlinkHref={`#icon-${item.icon}`}></use>
@@ -129,4 +130,4 @@ const TodoStatistics = (props) => {
         </div>
     )
 }
-export default withRouter(inject("homeStore")(observer(TodoStatistics)));
+export default withRouter(observer(TodoStatistics));

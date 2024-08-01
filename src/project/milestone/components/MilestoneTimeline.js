@@ -29,7 +29,7 @@ const MilestoneTimeline = (props) => {
                 }
                 if (index % 2 === 0) {
                     return (
-                        <div className="milestone-timeline-item even">
+                        <div className="milestone-timeline-item even" key = {item.id}>
                             <div className="timeline-item-top">
                                 <div className="timeline-item-date">{item.milestoneTime}</div>
                                 <div className="timeline-item-name">{item.name}</div>

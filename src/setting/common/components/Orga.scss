@@ -1,9 +1,10 @@
 .orga {
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
 
     .orga-background {
         background-color: #fff;
-        height: calc(100vh - var(--thoughtware-head-height));
+        height: 100%;
     }
 
     .orga-col {
@@ -20,7 +21,7 @@
             align-items: center;
             height: 40px;
             line-height: 40px;
-            padding: 0 28px;
+            padding: 0 20px;
             border-bottom: 1px solid #f0f0f0;
             font-weight: 600;
             gap: 5px;
@@ -37,7 +38,7 @@
 
         // padding-top: 20px;
         .orga-aside-top {
-            height: calc(100vh - 48px);
+            height: 100vh;
             overflow: auto;
         }
 

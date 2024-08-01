@@ -14,7 +14,7 @@ import "./Layout.scss";
 
 import { Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
-import { AppLink, AvatarLink, HelpLink} from 'thoughtware-licence-ui';
+import { AppLink, AvatarLink, HelpLink } from 'thoughtware-licence-ui';
 import FirstMenu from './FirstMenu';
 import HeaderCe from './HeaderCe';
 const Layout = (props) => {
@@ -22,7 +22,7 @@ const Layout = (props) => {
         homeStore: HomeStore
     }
     const showFirstMenu = ["home", "project", "projectSetList", "workTable", "log", "projectAdd", "projectSetAdd",
-        "workList", "workBodar", "workGantt"
+        "workList", "workBodar", "workGantt", "index"
     ]
     const route = props.route.routes;
     const pathname = props.location.pathname.split("/")[1];
@@ -31,15 +31,10 @@ const Layout = (props) => {
     return (
         <Provider {...store}>
             <div className="layout">
-                
-                <div className="layout-content">
-                    {
-                        showFirstMenu.indexOf(pathname) > -1 && <FirstMenu AppLink={AppLink} {...props} />
-                    }
-                    <div className="layout-page">
-                        <HeaderCe />
-                        {renderRoutes(route)}
-                    </div>
+                <FirstMenu AppLink={AppLink} {...props} />
+                <div className="layout-right">
+                    
+                    {renderRoutes(route)}
                 </div>
 
             </div>

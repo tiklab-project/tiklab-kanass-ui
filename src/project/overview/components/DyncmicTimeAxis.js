@@ -68,14 +68,7 @@ const DyncmicTimeAxis = (props) => {
 
     return <div className="dyncmic-timeaxis">
         {/* <div className="dyncmic-timeaxis-title">最近动态</div> */}
-        <div className="dyncmic-timeaxis-title">
-            <div className="name">最新动态</div>
-            <div className="more">
-                <svg aria-hidden="true" className="svg-icon">
-                    <use xlinkHref="#icon-rightjump"></use>
-                </svg>
-            </div>
-        </div>
+        
         <div className="dyncmic-timeaxis-content">
             {
                 logList.map((item, index) => {
@@ -92,13 +85,9 @@ const DyncmicTimeAxis = (props) => {
 
                                     <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
                                     <div className="dyncmic-timeaxis-item-name">
-                                        <div className="dynamic-user-icon">A</div>
+                                        <div className="dynamic-user-icon">{dyncmicItem.user.nickname?.charAt(0)}</div>
+                                        
                                     </div>
-                                    {/* <div 
-                                        className={`dyncmic-timeaxis-item-content `}>
-                                        <div className="dyncmic-timeaxis-item-name">{dyncmicItem.name}</div>
-                                        <div className="dyncmic-timeaxis-item-desc">{dyncmicItem.desc}</div>
-                                    </div> */}
                                     <DyncmicItem content={dyncmicItem.data} type={dyncmicItem.actionType.id} key={dyncmicItem.id} />
                                     <svg className="img-25" aria-hidden="true">
                                         <use xlinkHref={`#icon-${getIconName(dyncmicItem.actionType.id)}`}></use>

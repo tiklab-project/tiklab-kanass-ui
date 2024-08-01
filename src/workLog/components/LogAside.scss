@@ -1,10 +1,16 @@
-.log-orga-aside {
+.log-aside {
     height: 100%;
     background-color: var(--thoughtware-gray-600);
-
+    .log-aside-name {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 600;
+    }
     // padding-top: 20px;
-    .orga-aside-top {
-        height: calc(100vh - 90px);
+    .log-aside-content {
+        height: calc(100% - 40px);
         overflow: auto;
     }
 
@@ -14,11 +20,11 @@
 
     }
 
-    .orga-aside-hidden {
+    .log-aside-hidden {
         display: none;
     }
 
-    .orga-aside-item {
+    .log-aside-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -29,36 +35,35 @@
 
     }
 
-    .orga-aside-item-left {
+    .log-aside-item-left {
         display: inline-flex;
         align-items: center;
     }
 
-    .orga-aside-li {
+    .log-aside-li {
         line-height: 40px;
         cursor: pointer;
     }
-    .orga-aside-second{
+    .log-aside-second{
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-right: 20;
     }
 
-    .orga-aside-ul {
+    .log-aside-ul {
         padding: 0;
     }
 
-    .orga-aside-second:hover {
+    .log-aside-second:hover {
         background-color: var(--thoughtware-gray-400);
     }
 
-    .orga-aside-first:hover {
+    .log-aside-first:hover {
         background-color: var(--thoughtware-gray-400);
     }
 
-    .orga-aside-select {
+    .log-aside-select {
         background-color: var(--thoughtware-gray-400);
-        border-left: 3px solid var(--thoughtware-gray-400);
     }
 }

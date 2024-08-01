@@ -38,32 +38,32 @@ const SetAside = (props) => {
     const logMenuList = [
         {
             title: '工时查看',
-            path: "/log/list",
+            path: "/index/log/list",
             key: "log",
             icon: "statistics-work"
         },
         {
             title: '工时统计',
-            path: "/log/projectStatistic",
+            path: "/index/log/projectStatistic",
             key: "statistics",
             type: "statistics",
             icon: "statistics-work",
             children: [
                 {
                     title: "项目成员统计",
-                    path: "/log/projectuser",
+                    path: "/index/log/projectuser",
                     key: "projectStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志事项统计",
-                    path: "/log/projectwork",
+                    path: "/index/log/projectwork",
                     key: "workStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志项目统计",
-                    path: "/log/userproject",
+                    path: "/index/log/userproject",
                     key: "userProject",
                     type: "statistics"
                 }
@@ -76,11 +76,11 @@ const SetAside = (props) => {
         return (
             <li
                 style={{  paddingLeft: `${deep * 20 + 20}` }}
-                className={`orga-aside-li orga-aside-second ${data.path === selectKey ? "orga-aside-select" : ""}`}
+                className={`log-aside-li log-aside-second ${data.path === selectKey ? "log-aside-select" : ""}`}
                 onClick={() => select(data)}
                 key={data.key}
             >
-                <span className="orga-aside-item-left">
+                <span className="log-aside-item-left">
                     {
                         data.icon && <svg className="img-icon-right" aria-hidden="true">
                             <use xlinkHref={`#icon-${data.icon}`}></use>
@@ -118,18 +118,18 @@ const SetAside = (props) => {
     const renderSubMenu = (item, deep, index) => {
 
         return (
-            <li key={item.key} title={item.title} className="orga-aside-li">
-                <div className="orga-aside-item orga-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.key)}>
-                    <span to={item.path} className="orga-aside-item-left">
+            <li key={item.key} title={item.title} className="log-aside-li">
+                <div className="log-aside-item log-aside-first" style={{ paddingLeft: `${deep * 20 + 20}` }} onClick={() => setOpenOrClose(item.key)}>
+                    <span to={item.path} className="log-aside-item-left">
                         {
                             item.icon && <svg className="img-icon-right" aria-hidden="true">
                                 <use xlinkHref={`#icon-${item.icon}`}></use>
                             </svg>
                         }
 
-                        <span className="orga-aside-title">{item.title}</span>
+                        <span className="log-aside-title">{item.title}</span>
                     </span>
-                    <div className="orga-aside-item-icon">
+                    <div className="log-aside-item-icon">
                         {
                             item.children ?
                                 (isExpandedTree(item.key) ?
@@ -140,7 +140,7 @@ const SetAside = (props) => {
                     </div>
                 </div>
 
-                <ul title={item.title} className={`orga-aside-ul ${isExpandedTree(item.key) ? null : 'orga-aside-hidden'}`}>
+                <ul title={item.title} className={`log-aside-ul ${isExpandedTree(item.key) ? null : 'log-aside-hidden'}`}>
                     {
                         item.children && item.children.map(item => {
                             const deepnew = deep + 1
@@ -156,8 +156,11 @@ const SetAside = (props) => {
 
     return (
         <Fragment>
-            <div className="log-orga-aside">
-                <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
+            <div className="log-aside">
+                <div className="log-aside-name">
+                    工时
+                </div>
+                <ul style={{ padding: 0 }} key="0" className="log-aside-content">
                     {
                         logMenuList && logMenuList.map((firstItem, index) => {
                             return firstItem.children && firstItem.children.length > 0 ?

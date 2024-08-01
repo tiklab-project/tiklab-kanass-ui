@@ -169,7 +169,7 @@ const BasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push("/project")
+                    props.history.push("/index/project")
                 }
             })
             

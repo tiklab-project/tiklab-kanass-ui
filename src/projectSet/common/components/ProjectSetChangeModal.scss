@@ -7,7 +7,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 5px;
     }
     .projectSet-color-1 {
         background-color: #cadbf3;
@@ -24,14 +23,14 @@
     .projectSet-change-title {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 10px 20px;
         color: #000;
         font-weight: 600;
         cursor: pointer;
-       
+        gap: 10px;
         .projectSet-text {
-            margin: 0 10px;
-
+            flex: 1;
             .type {
                 font-size: 12px;
                 font-weight: 500;
@@ -58,6 +57,7 @@
         padding: 10px 0 10px 20px;
         display: flex;
         align-items: center;
+        gap: 5px;
         .projectSet-aside-icon {
             width: 15px;
             height: 15px;

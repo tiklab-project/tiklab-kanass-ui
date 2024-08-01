@@ -277,7 +277,7 @@ const ProjectList = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
+                <Button type="primary" onClick={() => props.history.push("/index/projectAdd")} buttonText={"添加项目"} />
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="project-recent-box-title">

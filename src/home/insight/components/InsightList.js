@@ -58,7 +58,7 @@ const InsightList = (props) => {
 
 
     const goEditInsight = (id) => {
-        props.history.push(`/home/insight/newInsight/${id}`)
+        props.history.push(`/index/home/newInsight/${id}`)
     }
 
     const delInsight = (id) => {
@@ -99,7 +99,7 @@ const InsightList = (props) => {
             modelId: record.id
         }
         createRecent(params)
-        props.history.push(`/home/insight/viewInsight/${record.id}`)
+        props.history.push(`/index/home/viewInsight/${record.id}`)
     }
 
     const selectTabs = (key) => {

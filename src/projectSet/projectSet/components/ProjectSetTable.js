@@ -198,7 +198,7 @@ const ProjectSetTable = (props) => {
                 <Breadcumb firstText="项目集">
                     <Button
                         style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
+                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
                     </Button>
                 </Breadcumb>
                 <div className="projectSet-recent-box">
