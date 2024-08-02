@@ -1,11 +1,12 @@
 .kanass-logo {
-    padding: 23px var(--thoughtware-padding);
+    padding: 15px var(--thoughtware-padding);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     .logo-img {
-        height: 25px;
+        height: 32px;
+        width: 32px;
     }
 }
 .kanass-logo-text {
@@ -15,7 +16,8 @@
     cursor: pointer;
     padding-left: 20px;
     .logo-img {
-        height: 25px;
+        height: 32px;
+        width: 32px;
     }
 
     .logo-text {

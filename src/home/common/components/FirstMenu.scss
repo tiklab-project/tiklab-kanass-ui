@@ -26,7 +26,6 @@
             .first-menu-expend-icon {
                 width: 10px;
                 height: 50px;
-
             }
             
         }
@@ -50,8 +49,10 @@
             width: 100%;
             align-items: center;
             flex-direction: column;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             padding: 5px 0;
+            width: 75px;
+            font-size: 12px;
             cursor: pointer;
         }
 
@@ -60,8 +61,8 @@
         }
 
         .svg-icon {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
         }
     }
 
@@ -78,7 +79,7 @@
 }
 
 .first-sider-blue {
-    background-color: var(--thoughtware-blue);
+    background-color: #2f5eb1;
     color: #fff;
     .first-menu-link-item:hover {
         background-color: #7ec1ff;
@@ -92,6 +93,9 @@
     .user-icon {
         background-color: #fff;
         color: #2B2B2B;
+    }
+    .first-menu-text-item:hover {
+        background-color: #7ec1ff;
     }
 }
     
@@ -108,25 +112,64 @@
             background-color: var(--thoughtware-gray-400);
         }
     }
+    .first-menu-text-item:hover {
+        background-color: var(--thoughtware-gray-400);
+    }
     .user-icon {
         background-color: var(--thoughtware-blue);
         color: #ffffff;
     }
 }
-.first-sider-darkblue {
-    background-color: #494A4E;
+.first-sider-black {
+    background-color: #131d30;
     color: #fff;
     .first-menu-link-item:hover {
-        background-color: #7ec1ff;
+        background-color: var(--thoughtware-blue);
     }
     .first-menu-link-active {
         color: #fff;
-        background-color: #7ec1ff;
+        background-color: var(--thoughtware-blue);
         border-left: 0
         // border-left: 3px solid var(--thoughtware-blue);
+    }
+    .first-menu-text-item:hover {
+        background-color: var(--thoughtware-blue);
     }
     .user-icon {
         background-color: #ffffff;
         color: #2B2B2B;
+    }
+}
+.menu-box-right-border{
+    width: 15px;
+    position: absolute;
+    top: 0;
+    right: -5px;
+    height: 100%;
+
+    .menu-box-isexpanded{
+        color: #5e5e5e;
+        position: absolute;
+        top: 80%;
+        right: -3px;
+        transform: translateY(-50%);
+        background: #ebebeb;
+        border-radius: 5px;
+        padding: 10px 0;
+        cursor: pointer;
+        border: 1px solid #d4dde8;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s, right 0.3s;
+        z-index: 100;
+    }
+    .first-menu-expend-icon {
+        width: 10px;
+        height: 50px;
+    }
+    &:hover .menu-box-isexpanded {
+        right: -3px;
+        opacity: 1;
+        visibility: visible;
     }
 }

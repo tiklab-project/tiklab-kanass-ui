@@ -19,8 +19,8 @@
 }
 
 .work-table-detail {
-    top: var(--thoughtware-head-height) !important;
-    height: calc(100vh - 48px) !important;
+    top: 0;
+    height: 100vh;
     // width: 1000;
     .ant-drawer-body {
         padding: 0;

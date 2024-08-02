@@ -22,7 +22,7 @@ import setImageUrl from "../../../common/utils/setImageUrl";
 
 const Search = (props) => {
     const { isShowText } = props;
-    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray";
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
     const { getSearchSore, setKeyWord, findRecentList,
         updateRecent, findWorkItemByKeyWorks, findProjectList, } = SearchStore;
     // 最近查看的项目列表
@@ -292,18 +292,20 @@ const Search = (props) => {
         <Fragment>
             {
                 isShowText ?
-                    <div className="search-text">
-                        <svg className="icon-20" aria-hidden="true">
-                            <use xlinkHref={`${theme === "gray" ? "#icon-searchtop": "#icon-searchtop-white"}`} ></use>
+                    <div className="search-text first-menu-text-item">
+                        <svg className="icon-15" aria-hidden="true">
+                            <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
                         </svg>
                         <div>搜索</div>
                     </div>
 
                     :
+                    <div className="first-menu-link-item" data-title-right="搜索">
+                        <svg className="icon-15" aria-hidden="true">
+                            <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
+                        </svg>
+                    </div>
 
-                    <svg className="icon-20" aria-hidden="true">
-                        <use xlinkHref={`${theme === "gray" ? "#icon-searchtop": "#icon-searchtop-white"}`} ></use>
-                    </svg>
             }
             <Modal
                 title={"搜索"}

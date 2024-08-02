@@ -17,6 +17,7 @@ import SprintChangeModal from "./SprintChangeModal";
 import "./sprintDetailAside.scss";
 import Logo from "../../../home/common/components/Logo";
 import MenuUser from "../../../common/menuUser/MenuUser";
+import ProjectAside from '../../../common/projectAside/ProjectAside';
 const { Sider } = Layout;
 
 const SprintDetailAside = (props) => {
@@ -37,37 +38,34 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            whiteIcon: "survey-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            icon: 'workitem',
+            whiteIcon: "workitem-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
-            icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/plan`,
+            icon: 'plan-gray',
+            whiteIcon: "plan-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/plan`,
             key: "plan",
             encoded: "plan",
         },
         {
             title: "统计",
-            icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            icon: 'statisticslog',
+            whiteIcon: "statistics-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
-        },
-        {
-            title: "设置",
-            icon: 'set',
-            url: `/${projectId}/sprintdetail/${sprintId}/setting`,
-            key: "setting",
-            encoded: "setting",
         }
     ];
 
@@ -75,21 +73,24 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            whiteIcon: "survey-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            icon: 'workitem',
+            whiteIcon: "workitem-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "统计",
-            icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            icon: 'statisticslog',
+            whiteIcon: "statistics-white",
+            id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -127,95 +128,15 @@ const SprintDetailAside = (props) => {
     const setButton = useRef(null)
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="200" className='sprint-detail-side'>
-                <div className={`sprint-aside-content ${isShowText ? "" : "sprint-icon"}`}>
-                    <Logo isShowText = {isShowText} />
-                    <SprintChangeModal
-                        isShowText={isShowText}
-                        sprint={sprint}
-                    />
-
-                    <ul className="sprint-menu">
-                        <div className="sprint-back-project">
-                            {
-                                isShowText ?
-                                    <div className={`sprint-menu-submenu`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回项目
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`sprint-menu-submenu-icon`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回项目
-                                        </span>
-                                    </div>
-                            }
-
-                        </div>
-                        {
-                            sprintRouter && sprintRouter.map((item, index) => {
-                                return isShowText ?
-                                    <div className={`sprint-menu-submenu ${path.indexOf(item.key) !== -1 ? "sprint-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.url)}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`sprint-menu-submenu-icon ${path.indexOf(item.key) !== -1 ? "sprint-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.url)}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-
-                            })
-                        }
-                    </ul>
-                    {/* <div onClick={() => props.history.push(`/${projectId}/sprintdetail/${sprintId}/setting`)} ref={setButton} className="sprint-set-icon setting">
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-set"></use>
-                        </svg>
-                        <span>
-                            设置
-                        </span>
-                    </div> */}
-                    <MenuUser isShowText = {isShowText}/>
-                    <div className="sprint-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ?
-                                <svg className="sprint-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-leftcircle"></use>
-                                </svg>
-                                :
-                                <svg className="sprint-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div>
-                </div>
-            </Sider>
+            <ProjectAside
+                isShowText={isShowText}
+                SetIsShowText={SetIsShowText}
+                ChangeModal={SprintChangeModal}
+                initRouters={sprintRouter}
+                path={path}
+                setUrl = {`/${projectId}/sprintdetail/${sprintId}/setting`}
+                backUrl = {`/projectDetail/${projectId}/sprint`}
+            />
         </Fragment>
     )
 

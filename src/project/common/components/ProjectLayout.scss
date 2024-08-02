@@ -5,118 +5,12 @@
         height: 100%;
     }
 
-    .project-detail-side {
-        // background-color: var(--thoughtware-gray-600);
-        border-right: 1px solid #f0f0f0;
 
-        .ant-layout-sider-children {
-            .project-aside {
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                background: var(--thoughtware-gray-600);
-
-                ul {
-                    padding: 0;
-                    margin: 0;
-                }
-
-                
-
-               
-                .project-menu {
-                    list-style-type: none;
-                    cursor: pointer;
-                    flex: 1;
-
-                    .project-back-project {
-                        margin-bottom: 10px;
-                        border-bottom: 1px solid #d7d7d7;
-                    }
-
-                    .project-menu-submenu {
-                        height: 40px;
-                        display: flex;
-                        line-height: 40px;
-                        width: 100%;
-                        align-items: center;
-                        padding-left: 20px;
-                        cursor: pointer;
-
-                        i {
-                            margin-right: 10px;
-                        }
-                    }
-
-                    .project-menu-submenu-icon {
-                        display: flex;
-                        width: 100%;
-                        align-items: center;
-                        flex-direction: column;
-                        margin-bottom: 10px;
-                        padding: 5px 0;
-                        cursor: pointer;
-
-                        .project-aside-icon {
-                            width: 15px;
-                            height: 15px;
-                        }
-                    }
-
-                    .project-menu-submenu-icon:hover {
-                        background-color: var(--thoughtware-gray-400);
-                    }
-
-                    .project-menu-submenu:hover {
-                        background-color: var(--thoughtware-gray-300);
-                    }
-
-                    .project-menu-select {
-                        background-color: var(--thoughtware-gray-400);
-                        border-left: 3px solid var(--thoughtware-blue);
-                    }
-                }
-
-                .hidden-menu {
-                    display: none;
-                }
-
-                .project-expend {
-                    position: absolute;
-                    right: -5px;
-                    width: 10px;
-                    height: 50px;
-                    border-radius: 20px;
-                    top: 50%;
-                    line-height: 20px;
-                    display: none;
-                    z-index: 2;
-                    background: var(--thoughtware-gray-400);
-                    .project-expend-icon {
-                        width: 10px;
-                        height: 50px;
-        
-                    }
-                }
-            }
-        }
-
-        .ant-layout-sider-children:hover {
-            .project-expend {
-                display: block;
-            }
-        }
-
-        .project-notext {
-            display: none;
-        }
-    }
-
-    .project-aside-more {
-        text-align: center;
-        height: 40px;
-        line-height: 40px;
-    }
+    // .project-aside-more {
+    //     text-align: center;
+    //     height: 40px;
+    //     line-height: 40px;
+    // }
 
     .prodetail-content {
         height: 100%;
@@ -135,19 +29,3 @@
     padding: 20% 0;
 }
 
-
-// .expend>.ant-table-cell {
-//     padding-left: 0;
-//     padding-right: 0;
-
-//     .ant-table {
-//         margin-right: 0 !important;
-//     }
-
-// }
-
-// .expend {
-//     .ant-table {
-//         margin: -16px -16px -16px 0 !important;
-//     }
-// }

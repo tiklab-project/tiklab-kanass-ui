@@ -1,0 +1,187 @@
+.project-detail-side {
+    // background-color: var(--thoughtware-gray-600);
+    border-right: 1px solid #f0f0f0;
+
+    .project-aside {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        // background: var(--thoughtware-gray-600);
+
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        .project-menu {
+            list-style-type: none;
+            cursor: pointer;
+            flex: 1;
+
+            .project-back-project {
+                margin-bottom: 10px;
+                border-bottom: 1px solid #d7d7d7;
+            }
+
+            .project-menu-submenu {
+                height: 40px;
+                display: flex;
+                line-height: 40px;
+                width: 100%;
+                align-items: center;
+                padding-left: 15px;
+                cursor: pointer;
+                gap: 11px;
+                i {
+                    margin-right: 10px;
+                }
+            }
+
+            .project-menu-submenu-icon {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                flex-direction: column;
+                margin-bottom: 10px;
+                padding: 5px 0;
+                cursor: pointer;
+
+                .project-aside-icon {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+
+          
+        }
+
+        .hidden-menu {
+            display: none;
+        }
+
+        .project-expend {
+            position: absolute;
+            right: -5px;
+            width: 10px;
+            height: 50px;
+            border-radius: 20px;
+            top: 50%;
+            line-height: 20px;
+            display: none;
+            z-index: 2;
+            background: var(--thoughtware-gray-400);
+            .project-expend-icon {
+                width: 10px;
+                height: 50px;
+
+            }
+        }
+    }
+
+    .project-aside:hover {
+        .project-expend {
+            display: block;
+        }
+    }
+}
+.project-sider-blue {
+    background-color: #2f5eb1;
+    color: #fff;
+
+    .project-menu-submenu-icon:hover {
+        background-color: #7ec1ff;
+    }
+
+    .project-menu-submenu:hover {
+        background-color: #7ec1ff;
+    }
+
+    .project-menu-select {
+        color: #fff;
+        background-color: #7ec1ff;
+        border-left: 0;
+    }
+    .project-text  {
+        color: #fff;
+        .type {
+            color: #fff;
+        }
+    }
+}
+    
+.project-sider-gray {
+    background-color: var(--thoughtware-gray-600);
+    .project-menu-submenu-icon:hover {
+        background-color: var(--thoughtware-gray-400);
+    }
+
+    .project-menu-submenu:hover {
+        background-color: var(--thoughtware-gray-400);
+    }
+
+    .project-menu-select {
+        background-color: var(--thoughtware-gray-400);
+        border-left: 3px solid var(--thoughtware-blue);
+    }
+    .project-text  {
+        .type {
+            color: #666;
+        }
+    }
+}
+.project-sider-black {
+    background-color: #131d30;
+    color: #fff;
+    .project-menu-submenu-icon:hover {
+        background-color: var(--thoughtware-blue);
+    }
+
+    .project-menu-submenu:hover {
+        background-color:  var(--thoughtware-blue);
+    }
+
+    .project-menu-select {
+        background-color:  var(--thoughtware-blue);
+        border-left: 0;
+    }
+    .project-text  {
+        color: #fff;
+        .type {
+            color: #fff;
+        }
+    }
+}
+
+.menu-box-right-border{
+    width: 15px;
+    position: absolute;
+    top: 0;
+    right: -5px;
+    height: 100%;
+
+    .menu-box-isexpanded{
+        color: #5e5e5e;
+        position: absolute;
+        top: 80%;
+        right: -3px;
+        transform: translateY(-50%);
+        background: #ebebeb;
+        border-radius: 5px;
+        padding: 10px 0;
+        cursor: pointer;
+        border: 1px solid #d4dde8;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s, right 0.3s;
+        z-index: 100;
+    }
+    .first-menu-expend-icon {
+        width: 10px;
+        height: 50px;
+    }
+    &:hover .menu-box-isexpanded {
+        right: -3px;
+        opacity: 1;
+        visibility: visible;
+    }
+}

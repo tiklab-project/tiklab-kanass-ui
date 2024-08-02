@@ -18,7 +18,7 @@ import MessageItem from '../../../common/overviewComponent/MessageItem';
 
 const MessageList = (props) => {
     const { homeStore, isShowText, theme } = props;
-    // const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray";
+    // const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
     const { findMessageDispatchItemPage, messageTotal, messageList, isMessageReachBottom, updateMessageDispatchItem } = homeStore;
     // 当前的tab的key
     const [currenTab, setCurrentTab] = useState("0")
@@ -116,9 +116,9 @@ const MessageList = (props) => {
         <div className="message-box" ref={messageRef}>
             {
                 isShowText ?
-                    <div className="message-text" onClick={() => setOpen(true)}>
-                        <svg className="icon-20" aria-hidden="true">
-                            <use xlinkHref={`${theme === "gray" ? "#icon-message": "#icon-message-white"}`} ></use>
+                    <div className="message-text first-menu-text-item" onClick={() => setOpen(true)}>
+                        <svg className="icon-15" aria-hidden="true">
+                            <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
                         </svg>
                         <div className="message-text-name">消息</div>
                         <div className="message-text-count">
@@ -126,13 +126,16 @@ const MessageList = (props) => {
                         </div>
                     </div>
                     :
-                    <div className="message-icon" data-title-bottom="消息提示" onClick={() => setOpen(true)}>
-                        <Badge count={unReadMessage} size="small">
+                    <div className="message-icon first-menu-link-item" data-title-right="消息" onClick={() => setOpen(true)}>
+                        {/* <Badge count={unReadMessage} size="small">
                             <Avatar
-                                size="small" style={{ fontSize: "20px" }} icon={ <svg className="icon-20" aria-hidden="true">
-                                    <use xlinkHref={`${theme === "gray" ? "#icon-message": "#icon-message-white"}`} ></use>
+                                size="small" style={{ fontSize: "20px" }} icon={ <svg className="icon-15" aria-hidden="true">
+                                    <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
                                 </svg>} />
-                        </Badge>
+                        </Badge> */}
+                        <svg className="icon-15" aria-hidden="true">
+                            <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
+                        </svg>
                     </div>
             }
 

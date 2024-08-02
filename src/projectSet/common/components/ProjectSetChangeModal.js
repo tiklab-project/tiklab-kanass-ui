@@ -13,10 +13,11 @@ import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
 
 const ProjectSetChangeModal = (props) => {
-    const { projectSetStore, isShowText, projectSetId } = props;
+    const { projectSetStore, isShowText, theme } = props;
     const { findProjectSetSortRecentTime, findProjectSet, findJoinProjectSetList } = projectSetStore;
     const [projectSetAllList, setProjectSetAllList] = useState()
     const [allProjectSetList, setFindJoinProjectSetList] = useState([])
+    const projectSetId = props.match.params.projectSetId;
     // 点击显示弹窗按钮
     const setButton = useRef()
     // 弹窗的显示与不显示控制参数
@@ -129,7 +130,7 @@ const ProjectSetChangeModal = (props) => {
                         </div>
                         <div className={`projectSet-toggleCollapsed`}>
                             <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
+                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
                     </div>
@@ -138,7 +139,7 @@ const ProjectSetChangeModal = (props) => {
                             <div className="projectSet-change-icon">
                                 <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
                                 <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-down"></use>
+                                    <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                 </svg>
                             </div>
                         </Tooltip>

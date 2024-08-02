@@ -132,15 +132,6 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        // new HappyPack({
-        //     id: 'js',
-        //     loaders: [{
-        //         loader: 'babel-loader',
-        //         options: {
-        //             babelrc: true, cacheDirectory: true
-        //         }
-        //     }]    
-        // }),
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
@@ -161,7 +152,6 @@ module.exports = {
             chunkFilename: 'css/[id].[contenthash].css',
             ignoreOrder: true
         }),
-        new CssMinimizerPlugin(),
-
+        new CssMinimizerPlugin()
     ]
 };

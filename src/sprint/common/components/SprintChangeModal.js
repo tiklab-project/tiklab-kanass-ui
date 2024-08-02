@@ -5,7 +5,7 @@ import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
 
 const SprintChangeModal = (props) => {
-    const { isShowText, sprintDetailStore } = props;
+    const { isShowText, sprintDetailStore, theme } = props;
     const { findSprintList, findSprint, sprintList, sprint } = sprintDetailStore;
     const [showMenu, setShowMenu] = useState(false);
     const [selectSprint, setSelectSprint] = useState(false)
@@ -83,7 +83,7 @@ const SprintChangeModal = (props) => {
                     isShowText ? <div className="sprint-title title" onClick={showMoreMenu}>
                         <img
                             src={('/images/sprint.png')}
-                            className="icon-32"
+                            className="img-32"
                             alt=""
                         />
 
@@ -94,7 +94,7 @@ const SprintChangeModal = (props) => {
                         </div>
                         <div className={`sprint-toggleCollapsed`}>
                             <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
+                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
                     </div>
@@ -103,13 +103,12 @@ const SprintChangeModal = (props) => {
                             <div className='sprint-title-icon' onClick={showMoreMenu} >
                                 <img
                                     src={('/images/sprint.png')}
-                                    className="icon-32"
-                                    
+                                    className="img-32"
                                     alt=""
                                 />
                                 <div className={`sprint-toggleCollapsed`}>
                                     <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-down"></use>
+                                        <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                     </svg>
                                 </div>
                             </div>

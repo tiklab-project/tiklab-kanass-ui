@@ -2,13 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding-bottom: 15px;
-    .user-icon {
-        width: 20px;
-        height: 20px;
-        // background-color: var(--thoughtware-blue);
-        cursor: pointer;
+    padding-bottom: 10px;
+    .first-menu-link-item {
+        padding: 5px;
+        margin-bottom: 0;
     }
 }
 .first-menu-bottom-text {
@@ -21,11 +18,5 @@
         align-items: center;
         padding: 0 20px;
         cursor: pointer;
-        gap: 10px;
-        .user-icon {
-            width: 20px;
-            height: 20px;
-            // background-color: var(--thoughtware-blue);
-        }
     }
 }

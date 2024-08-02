@@ -9,30 +9,26 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "./setMenu.scss";
-import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { AvatarLink } from "thoughtware-licence-ui";
 
 const SetMenu = (props) => {
-    const { isShowText } = props;
+    const { isShowText, setUrl, theme } = props;
     const setButton = useRef()
-    const { t } = useTranslation();
-    const projectId = props.match.params.id;
 
     /**
     * 跳转到项目设置页面
     */
     const goProjectSetting = () => {
-        props.history.push(`/projectDetail/${projectId}/projectSetDetail/basicInfo`)
+        props.history.push(setUrl)
     }
 
     return (
         <div className="project-setting" onClick={() => goProjectSetting()}>
             {
                 isShowText ? <div ref={setButton} className="project-setting-title setting">
-                     <svg className="icon-18" aria-hidden="true">
-                            <use xlinkHref="#icon-set"></use>
-                        </svg>
+                    <svg className="icon-18" aria-hidden="true">
+                        <use xlinkHref={`${theme === "default" ? "#icon-set" : "#icon-set-white"}`}></use>
+                    </svg>
                     <span>
                         设置
                     </span>
@@ -40,7 +36,7 @@ const SetMenu = (props) => {
                     :
                     <div ref={setButton} className="project-setting-icon setting">
                         <svg className="icon-18" aria-hidden="true">
-                            <use xlinkHref="#icon-set"></use>
+                            <use xlinkHref={`${theme === "default" ? "#icon-set" : "#icon-set-white"}`}></use>
                         </svg>
                         <span>
                             设置

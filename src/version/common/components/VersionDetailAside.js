@@ -15,7 +15,7 @@ import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import VersionChangeModal from "./VersionChangeModal";
 import "./versionDetailAside.scss";
-import Logo from "../../../home/common/components/Logo";
+import ProjectAside from '../../../common/projectAside/ProjectAside';
 
 const { Sider } = Layout;
 
@@ -50,21 +50,24 @@ const VersionDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/survey`,
+            whiteIcon: "survey-white",
+            id: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/workTable`,
+            icon: 'workitem',
+            whiteIcon: "workitem-white",
+            id: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
-            icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/plan`,
+            icon: 'plan-gray',
+            whiteIcon: "plan-white",
+            id: `/${projectId}/versiondetail/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
         }
@@ -74,17 +77,19 @@ const VersionDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/survey`,
+            whiteIcon: "survey-white",
+            id: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/workTable`,
+            icon: 'workitem',
+            whiteIcon: "workitem-white",
+            id: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
-        }
+        },
     ]
 
     //点击左侧菜单
@@ -103,88 +108,15 @@ const VersionDetailAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='version-detail-side'>
-                <div className={`version-aside-content ${isShowText ? "" : "version-icon"}`}>
-                    <Logo isShowText = {isShowText} />
-                    <VersionChangeModal
-                        isShowText={isShowText}
-                        version={version}
-                    />
-
-
-                    <ul className="version-menu">
-                        <div className= "version-back-project">
-                            {
-                                isShowText ?
-                                    <div className={`version-menu-submenu`}
-                                        onClick = {() => backProject()}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回项目
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`version-menu-submenu-icon`}
-                                        onClick = {() => backProject()}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回项目
-                                        </span>
-                                    </div>
-                            }
-
-                        </div>
-                        {
-                            versionRouter && versionRouter.map((item, index) => {
-                                return isShowText ?
-                                    <div className={`version-menu-submenu ${path.indexOf(item.key) !== -1 ? "version-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.url)}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`version-menu-submenu-icon ${path.indexOf(item.key) !== -1 ? "version-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.url)}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-
-                            })
-                        }
-                    </ul>
-                    <MenuUser isShowText = {isShowText}/>
-                    <div className="version-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ?
-                                <svg className="version-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-leftcircle"></use>
-                                </svg>
-                                :
-                                <svg className="version-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div>
-                </div>
-            </Sider>
+            <ProjectAside
+                isShowText={isShowText}
+                SetIsShowText={SetIsShowText}
+                ChangeModal={VersionChangeModal}
+                initRouters={versionRouter}
+                path={path}
+                setUrl = {`/${projectId}/versiondetail/${versionId}/setting`}
+                backUrl = {`/projectDetail/${projectId}/version`}
+            />
         </Fragment>
     )
 

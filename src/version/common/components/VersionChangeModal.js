@@ -5,8 +5,9 @@ import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
 
 const VersionChangeModal = (props) => {
-    const { isShowText, versionDetailStore } = props;
+    const { isShowText, versionDetailStore, theme } = props;
     const { findVersionList, findVersion, versionList, version } = versionDetailStore;
+    console.log(version)
     const [showMenu, setShowMenu] = useState(false);
     const [selectVersion, setSelectVersion] = useState(false)
 
@@ -78,23 +79,23 @@ const VersionChangeModal = (props) => {
 
     return (
         <div className="change-version">
-            <div ref={setButton}>
+            <div className="" ref={setButton}>
                 {
                     isShowText ? <div className="version-title title" onClick={showMoreMenu}>
                         <img
                             src={('/images/version.png')}
-                            className="icon-32"
+                            className="img-32"
                             alt=""
                         />
 
                         <div className={`version-text `} >
                             <div>
-                                {version?.versionName}
+                                {version?.name}
                             </div>
                         </div>
                         <div className={`version-toggleCollapsed`}>
                             <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
+                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
                     </div>
@@ -103,12 +104,12 @@ const VersionChangeModal = (props) => {
                             <div className='version-title-icon' onClick={showMoreMenu} >
                                 <img
                                     src={('/images/version.png')}
-                                    className="icon-32"
+                                    className="img-32"
                                     alt=""
                                 />
                                 <div className={`version-toggleCollapsed`}>
                                     <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-down"></use>
+                                        <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                     </svg>
                                 </div>
                             </div>

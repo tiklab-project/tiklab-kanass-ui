@@ -1,16 +1,15 @@
-.change-sprint {
+.more-menu {
     position: relative;
-
-    .sprint-title {
+    .project-title {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 5px;
-        padding: 15px 15px;
+        padding: 10px 15px;
+        color: #000;
         font-weight: 600;
         cursor: pointer;
-        .sprint-text {
-            flex: 1;
+        .project-text {
+            margin: 0 10px;
+
             .type {
                 font-size: 12px;
                 font-weight: 500;
@@ -27,45 +26,42 @@
             }
         }
 
-        .sprint-aside-icon {
+        .project-aside-icon {
             width: 15px;
             height: 15px;
         }
     }
 
-    .sprint-title-icon {
+    .project-title-icon {
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 10px 21px;
-        cursor: pointer;
-        .sprint-aside-icon {
+        padding: 10px 22px;
+        .project-aside-icon {
             width: 15px;
             height: 15px;
-            cursor: pointer;
         }
     }
 
+    .title {
+        border-bottom: 1px solid #f0f2f5;
+    }
 
-    .change-sprint-botton {
+    .more-menu-botton {
         height: 40px;
         line-height: 40px;
         width: 100%;
         text-align: center;
     }
-    .change-sprint-box {
+    .more-menu-box {
         position: absolute;
-        top: 0;
+        bottom: 0;
         z-index: 100;
-        width: 300px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        width: 200px;
         border-radius: 4px;
         background: #fff;
-        color: #000;
         box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
-        .change-sprint-head {
+        .more-menu-head {
             height: 40px;
             line-height: 40px;
             font-weight: 500;
@@ -73,36 +69,17 @@
             padding: 0 20px;
             border-bottom: 1px solid #F0F0F0;
         }
-    }
-    .change-sprint-item {
-        padding: 0 20px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        .change-sprint-info {
-            line-height: 30px;
-            flex: 1;
-            .change-sprint-state {
-                font-size: 12px;
-                color: var(--thoughtware-gray-500);
-            }
+        .project-menu-submenu  {
+            color: #000;
         }
     }
-
-    .change-sprint-more {
-        padding: 0 20px;
+    .more-menu-name {
         height: 40px;
         line-height: 40px;
-        cursor: pointer;
-        border-top: 1px solid #F0F0F0;
-        color: var(--thoughtware-blue);
-        font-size: 13px;
-    }
-    .change-sprint-more:hover {
-        text-decoration: underline;
+        padding-left: 20px;
     }
 
-    .change-sprint-selectName {
+    .more-menu-selectName {
         background-color: var(--thoughtware-gray-400);
     }
    

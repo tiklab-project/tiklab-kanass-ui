@@ -4,12 +4,13 @@ export class ProjectStore {
     @observable projectList = [];
     @observable projectTypelist = [];
     @observable uselist = [];
-    @observable project = [];
+    @observable project = null;
     @observable allProlist = [];
     @observable projectName = "";
     @observable activeTabs = "1";
     @observable projectQuickFilter = "total";
 
+     
 
     @observable projectPageParams = {
         orderParams: [{
@@ -17,6 +18,10 @@ export class ProjectStore {
             orderType: "desc"
         }]
     };
+    @action
+    setProject = (value) => {
+        this.project = value
+    }
 
     @action
     setProjectPageParams = (value) => {

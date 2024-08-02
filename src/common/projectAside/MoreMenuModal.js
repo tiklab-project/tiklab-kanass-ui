@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 
 const MoreMenuModel = (props) => {
-    const { isShowText, moreMenu, morePath } = props;
+    const { isShowText, moreMenu, morePath, theme } = props;
+    const projectId = props.match.params.id;
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[3];
@@ -36,6 +37,18 @@ const MoreMenuModel = (props) => {
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
+    /**
+     * 更多菜单数组
+     */
+    // const moreMenu = [
+    //     {
+    //         title: `${t('statistic')}`,
+    //         icon: 'statisticslog',
+    //         url: `/projectDetail/${projectId}/statistics/workItem`,
+    //         key: "statistics",
+    //         encoded: "Statistic",
+    //     }
+    // ]
 
     /**
      * 监听菜单的弹窗的显示与不显示
@@ -78,7 +91,7 @@ const MoreMenuModel = (props) => {
                     ref={setButton}
                 >
                     <svg className="icon-18" aria-hidden="true">
-                        <use xlinkHref={`#icon-more`}></use>
+                        <use xlinkHref={`${theme === "default" ? "#icon-more" : "#icon-more-white"}`}></use>
                     </svg>
                     <span>
                         更多
@@ -87,7 +100,7 @@ const MoreMenuModel = (props) => {
                     :
                     <div ref={setButton} className={`project-menu-submenu-icon ${morePath.indexOf(path) !== -1 ? "project-menu-select" : ""}`} onClick={() => showMoreMenu()}>
                         <svg aria-hidden="true" style={{width: "28px", height: "28px"}}>
-                            <use xlinkHref={`#icon-more`}></use>
+                            <use xlinkHref={`${theme === "default" ? "#icon-more" : "#icon-more-white"}`}></use>
                         </svg>
                     </div>
             }

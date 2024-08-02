@@ -1,16 +1,18 @@
 .change-project {
     position: relative;
-
+    color: #000;
     .project-title {
         display: flex;
         align-items: center;
-        padding: 10px 15px;
-        color: #000;
+        justify-content: space-between;
+        gap: 5px;
+        padding: 15px 15px;
+        // color: #000;
         font-weight: 600;
         cursor: pointer;
         .project-text {
-            margin: 0 10px;
             min-width: 0;
+            flex: 1;
             .name {
                 height: 40px;
                 line-height: 40px;
@@ -21,7 +23,7 @@
             .type {
                 font-size: 12px;
                 font-weight: normal;
-                color: #666;
+                
             }
         }
 
@@ -45,7 +47,7 @@
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 10px 22px;
+        padding: 15px 21px;
         cursor: pointer;
         .project-aside-icon {
             width: 15px;
@@ -53,9 +55,6 @@
         }
     }
 
-    .title {
-        // border-bottom: 1px solid #f0f2f5;
-    }
 
     .change-project-box {
         position: absolute;

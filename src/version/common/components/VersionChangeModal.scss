@@ -4,13 +4,13 @@
     .version-title {
         display: flex;
         align-items: center;
-        padding: 10px 15px;
-        color: #000;
+        justify-content: space-between;
+        padding: 15px 15px;
         font-weight: 600;
         cursor: pointer;
+        gap: 5px;
         .version-text {
-            margin: 0 10px;
-
+            flex: 1;
             .type {
                 font-size: 12px;
                 font-weight: 500;
@@ -38,7 +38,7 @@
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 10px 22px;
+        padding: 15px 0 15px 21px;
         cursor: pointer;
         .version-aside-icon {
             width: 15px;
@@ -46,9 +46,6 @@
         }
     }
 
-    .title {
-        border-bottom: 1px solid #f0f2f5;
-    }
 
     .change-version-botton {
         height: 40px;
@@ -66,6 +63,7 @@
         overflow: hidden;
         border-radius: 4px;
         background: #fff;
+        color: #000;
         box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
         .change-version-head {
             height: 40px;

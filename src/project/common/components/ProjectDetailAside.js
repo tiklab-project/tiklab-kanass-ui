@@ -13,19 +13,20 @@ import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import { useTranslation } from 'react-i18next';
 import MenuUser from "../../../common/menuUser/MenuUser";
+import SetMenu from "./SetMenu";
 import ProjectChangeModal from "./ProjectChangeModal";
 import MoreMenuModel from "./MoreMenuModal";
 import Logo from '../../../home/common/components/Logo';
+import ProjectAside from '../../../common/projectAside/ProjectAside';
 const { Sider } = Layout;
 
 const ProjectDetailAside = (props) => {
-    const { searchpro, project, isShowText, SetIsShowText } = props;
-    const projectMenu = useRef();
+    const { project, isShowText, SetIsShowText,  } = props;
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
     // 菜单的形式，宽菜单，窄菜单
-    
+
     // 当前选中菜单key
     const path = props.location.pathname.split("/")[3];
     // 路由
@@ -33,6 +34,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
+            whiteIcon: "survey-white",
             id: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey"
@@ -40,6 +42,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('line_photo')}`,
             icon: 'line',
+            whiteIcon: "line-white",
             id: `/projectDetail/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
@@ -47,6 +50,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
+            whiteIcon: "workitem-white",
             id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
@@ -54,6 +58,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('sprint')}`,
             icon: 'sprint',
+            whiteIcon: "sprint-white",
             id: `/projectDetail/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
@@ -62,6 +67,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('version')}`,
             icon: 'version',
+            whiteIcon: "version-white",
             id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
@@ -70,6 +76,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "工时",
             icon: 'log',
+            whiteIcon: "project-log-white",
             id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
@@ -77,6 +84,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
+            whiteIcon: "statistics-white",
             id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
@@ -84,6 +92,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
+            whiteIcon: 'milestone-white',
             id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
@@ -91,6 +100,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "知识库",
             icon: 'repository',
+            whiteIcon: "survey-white",
             id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
@@ -98,17 +108,11 @@ const ProjectDetailAside = (props) => {
         {
             title: "测试用例",
             icon: 'test',
+            whiteIcon: "survey-white",
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
-        },
-        {
-            title: "设置",
-            icon: 'set',
-            id: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
-            key: "setting",
-            encoded: "setting",
-        },
+        }
     ];
 
     const normalProrouter = (projectId) => [
@@ -174,166 +178,32 @@ const ProjectDetailAside = (props) => {
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
-        },
-        {
-            title: "设置",
-            icon: 'set',
-            id: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
-            key: "setting",
-            encoded: "setting",
         }
 
     ];
 
     const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id));
 
-    const [projectRouter, setProjectRouter] = useState([]);
 
-    const [moreMenu, setMoreMenu] = useState()
-
-    const [morePath, setMorePath] = useState()
-
-    const resizeUpdate = (e) => {
-        // 通过事件对象获取浏览器窗口的高度
-        const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
-
-        const menuHeight = documentHeight - 250;
-        const menuNum = Math.floor(menuHeight / 60);
-        let num = 0;
-        if (project?.projectType.type === "scrum") {
-            num = menuNum > 7 ? 7 : menuNum;
-        } else {
-            num = menuNum > 7 ? 7 : menuNum;
-        }
-        setProjectRouter(allProjectRouter.slice(0, num))
-        const hiddenMenu = allProjectRouter.slice(num, allProjectRouter.length)
-        setMoreMenu(hiddenMenu)
-        let data = [];
-        hiddenMenu.map(item => {
-            data.push(item.key)
-        })
-        setMorePath([...data])
-    };
-
-    useEffect(() => {
-        resizeUpdate(document.getElementById("root"))
-        window.addEventListener("resize", resizeUpdate);
-        return () => {
-            // 组件销毁时移除监听事件
-            window.removeEventListener('resize', resizeUpdate);
-        }
-
-    }, [allProjectRouter])
 
     useEffect(() => {
         setAllProjectRouter(project?.projectType.type === "scrum" ? scrumProrouter(project.id) : normalProrouter(project.id))
 
         return;
     }, [project])
-    /**
-     * 点击左侧菜单
-     * @param {*} key 
-     */
-    const selectMenu = (key) => {
-        // setSelectKey(key)
-        props.history.push(key)
 
-    }
-
-    /**
-     * 点击折叠或展开菜单
-     */
-    const toggleCollapsed = () => {
-        SetIsShowText(!isShowText)
-    }
-
-    const backProject = () => {
-        props.history.push(`/index/project`)
-    }
 
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="75" width="200" className='project-detail-side'>
-                <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
-                    <Logo isShowText = {isShowText}/>
-                    <ProjectChangeModal
-                        isShowText={isShowText}
-                        searchpro={searchpro}
-                        project={project}
-                    />
-                    <div className="project-menu" ref={projectMenu}>
-                        <div className="project-back-project">
-                            {
-                                isShowText ?
-                                    <div className={`project-menu-submenu`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回首页
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`project-menu-submenu-icon`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回首页
-                                        </span>
-                                    </div>
-                            }
-                        </div>
-                        {
-                            projectRouter && projectRouter.map((item, index) => {
-                                return isShowText ?
-                                    <div className={`project-menu-submenu ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
-                                        key={item.encoded}
-                                        onClick={() => selectMenu(item.id)}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`project-menu-submenu-icon ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
-                                        key={item.encoded}
-                                        onClick={() => selectMenu(item.id)}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-
-                            })
-                        }
-                        {moreMenu && <MoreMenuModel isShowText={isShowText} moreMenu={moreMenu} morePath={morePath} />}
-                    </div>
-
-                    <MenuUser isShowText={isShowText} />
-                    <div className="project-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ? <svg className="project-expend-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-leftcircle"></use>
-                            </svg>
-                                :
-                                <svg className="project-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div>
-                </div>
-            </Sider>
+            <ProjectAside
+                isShowText={isShowText}
+                SetIsShowText={SetIsShowText}
+                ChangeModal={ProjectChangeModal}
+                initRouters={allProjectRouter}
+                path={path}
+                setUrl = {`/projectDetail/${project.id}/projectSetDetail/basicInfo`}
+                backUrl = {`/index/project`}
+            />
 
         </Fragment>
     )

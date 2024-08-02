@@ -141,13 +141,6 @@ const DynamicList = (props) => {
                 </div>
 
                 <div className="dynamic-list">
-                    {/* {
-                        logList && logList.length > 0 ? logList.map((item) => {
-                            return <DynamicItem content={item.data} type={item.actionType.id} {...props} />
-                        })
-                            :
-                            <Empty image="/images/nodata.png" description="暂时没有动态~" />
-                    } */}
                     <DyncmicTimeAxis logList = {logList} />
                 </div>
                 {

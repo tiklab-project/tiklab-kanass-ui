@@ -15,8 +15,8 @@ import { observer, inject } from "mobx-react";
 import setImageUrl from "../../../common/utils/setImageUrl";
 import { Tooltip } from "antd";
 const ProjectChangeModal = (props) => {
-    const { isShowText, searchpro, project, projectStore } = props;
-    const { findMyAllProjectList,allProlist, findProjectSortRecentTime, createRecent } = projectStore;
+    const { isShowText, projectStore, theme } = props;
+    const { findMyAllProjectList,allProlist, findProjectSortRecentTime, project, createRecent, searchpro } = projectStore;
     const [changeProjectList, setChangeProjectList] = useState([]);
     //  是否显示弹窗
     const [showMenu, setShowMenu] = useState(false);
@@ -121,10 +121,9 @@ const ProjectChangeModal = (props) => {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
                         <img
                             src={setImageUrl(project?.iconUrl)}
-                            className="icon-40"
+                            className="icon-32"
                             alt=""
                         />
-
                         <div className={`project-text `} >
                             <div className='name'>
                                 {project?.projectName}
@@ -135,30 +134,27 @@ const ProjectChangeModal = (props) => {
                         </div>
                         <div className={`project-toggleCollapsed`}>
                             <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-down"></use>
+                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
                     </div>
-                        :
-                        <Tooltip placement="right" title={project?.projectName}>
-                            <div className='project-title-icon' onClick={showMoreMenu} >
-                                <img
-                                    src={setImageUrl(project?.iconUrl)}
-                                    title={project?.projectName}
-                                    // alt={project?.projectName}
-                                    className="icon-32"
-                                    style={{ marginRight: "0px" }}
-                                />
-                                <div className={`project-toggleCollapsed`}>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-down"></use>
-                                    </svg>
-                                </div>
+                    :
+                    <Tooltip placement="right" title={project?.projectName}>
+                        <div className='project-title-icon' onClick={showMoreMenu} >
+                            <img
+                                src={setImageUrl(project?.iconUrl)}
+                                title={project?.projectName}
+                                // alt={project?.projectName}
+                                className="icon-32"
+                                style={{ marginRight: "0px" }}
+                            />
+                            <div className={`project-toggleCollapsed`}>
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
+                                </svg>
                             </div>
-                        </Tooltip>
-
-
-
+                        </div>
+                    </Tooltip>
                 }
             </div>
 
@@ -176,7 +172,7 @@ const ProjectChangeModal = (props) => {
                 >
                     <img
                         src={setImageUrl(project.iconUrl)}
-                        className="icon-32"
+                        className="icon-24"
                         title={project.projectName}
                         alt=""
                     />
@@ -192,7 +188,6 @@ const ProjectChangeModal = (props) => {
                         <use xlinkHref="#icon-selected"></use>
                     </svg>
                 </div>
-
                 {
                     changeProjectList && changeProjectList.map((item) => {
                         if (item.id !== project?.id) {
@@ -204,7 +199,7 @@ const ProjectChangeModal = (props) => {
                             >
                                 <img
                                     src={setImageUrl(item.iconUrl)}
-                                    className="icon-32"
+                                    className="icon-24"
                                     title={item.projectName}
                                     alt=""
                                 />
@@ -219,7 +214,6 @@ const ProjectChangeModal = (props) => {
 
                             </div>
                         }
-
                     })
                 }
                 {

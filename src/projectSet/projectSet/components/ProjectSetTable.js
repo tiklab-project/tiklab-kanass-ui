@@ -48,7 +48,6 @@ const ProjectSetTable = (props) => {
             modelId: record.id
         }
         createRecent(params)
-
         localStorage.setItem("projectSet", JSON.stringify(record))
         props.history.push(`/projectSetdetail/${record.id}/survey`)
     }

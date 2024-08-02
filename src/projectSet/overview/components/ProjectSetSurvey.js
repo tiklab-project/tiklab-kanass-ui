@@ -95,20 +95,20 @@ const ProjectSetSurvey = props => {
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
                             <div className="projectSet-info">
-                                <div className={`projectSet-icon projectSet-color-${projectSet.color}`}>{projectSet.name?.slice(0, 1)}</div>
+                                <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
                                 <div className="projectSet-info-content">
                                     <div className="projectSet-info-content-item box-title">
-                                        {projectSet.name}
+                                        {projectSet?.name}
                                     </div>
                                     <div className="projectSet-info-content-item">
-                                        {projectSet.master?.name} 创建于 {projectSet.startTime}
+                                        {projectSet?.master?.name} 创建于 {projectSet?.startTime}
                                     </div>
                                 </div>
                             </div>
                             <div className="projectSet-infobottom">
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">可见范围</div>
-                                    <div className="projectSet-info-result">{projectSet.projectSetLimits === 0 ? "所有人可见" : "成员可见"} </div>
+                                    <div className="projectSet-info-result">{projectSet?.projectSetLimits === 0 ? "所有人可见" : "成员可见"} </div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">项目数量</div>
@@ -116,11 +116,11 @@ const ProjectSetSurvey = props => {
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">计划开始日期</div>
-                                    <div className="projectSet-info-result">{projectSet.startTime}</div>
+                                    <div className="projectSet-info-result">{projectSet?.startTime}</div>
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">计划结束时间</div>
-                                    <div className="projectSet-info-result">{projectSet.endTime}</div>
+                                    <div className="projectSet-info-result">{projectSet?.endTime}</div>
                                 </div>
                             </div>
                         </div>

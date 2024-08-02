@@ -18,6 +18,7 @@ import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
 import { getUser } from "thoughtware-core-ui";
 import Logo from '../../../home/common/components/Logo';
+import ProjectAside from '../../../common/projectAside/ProjectAside';
 
 const { Sider } = Layout;
 
@@ -26,6 +27,8 @@ const ProjectSetDetailAside = (props) => {
 
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
+    const path = props.location.pathname.split("/")[3];
+    console.log(props.location.pathname.split("/"), path)
     // 项目集id
     const projectSetId = props.match.params.projectSetId;
     // 路由
@@ -33,27 +36,26 @@ const ProjectSetDetailAside = (props) => {
         {
             title: `概览`,
             icon: 'survey',
-            key: `/projectSetdetail/${projectSetId}/survey`,
+            whiteIcon: "survey-white",
+            key: "survey",
+            id: `/projectSetdetail/${projectSetId}/survey`,
             encoded: "Survey",
         },
         {
             title: `项目`,
-            icon: 'project',
-            key: `/projectSetdetail/${projectSetId}/projectSetProjectList`,
+            icon: 'project-gray',
+            key: "projectSetProjectList",
+            whiteIcon: "project-white",
+            id: `/projectSetdetail/${projectSetId}/projectSetProjectList`,
             encoded: "Pannel",
         },
         {
             title: `统计`,
-            icon: 'project',
-            key: `/projectSetdetail/${projectSetId}/statistics/workItem`,
+            icon: 'statisticslog',
+            key: "statistics",
+            whiteIcon: "statistics-white",
+            id: `/projectSetdetail/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
-        }
-        ,
-        {
-            title: `设置`,
-            icon: 'set',
-            key: `/projectSetdetail/${projectSetId}/projectSetset/basicInfo`,
-            encoded: "setting",
         }
     ];
 
@@ -62,7 +64,7 @@ const ProjectSetDetailAside = (props) => {
      */
     useEffect(() => {
         // 初次进入激活导航菜单
-        setSelectKey(props.location.pathname)
+        // setSelectKey(props.location.pathname)
         // 获取项目集权限
         systemRoleStore.getInitProjectPermissions(getUser().userId, projectSetId)
         return
@@ -91,85 +93,15 @@ const ProjectSetDetailAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="80" width="180" className='projectSet-detail-side'>
-                <div className={`projectSet-aside`}>
-                    <Logo isShowText = {isShowText}/>
-                    <ProjectSetChangeModal isShowText={isShowText} projectSetId = {projectSetId}/>
-                    <ul className="projectSet-menu">
-                    <div className="projectSet-back-project">
-                            {
-                                isShowText ?
-                                    <div className={`projectSet-menu-submenu`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="menu-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                            返回首页
-                                        </span>
-                                    </div>
-                                    :
-                                    <div className={`projectSet-menu-submenu-icon`}
-                                        onClick={() => backProject()}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-backproject"></use>
-                                        </svg>
-                                        <span>
-                                        返回首页
-                                        </span>
-                                    </div>
-                            }
-                        </div>
-                        {
-                            projectSetRouter && projectSetRouter.map((item, index) => {
-                                return isShowText ?
-                                    <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.key)}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div> :
-                                    <div className={`projectSet-menu-submenu-icon ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
-                                        key={index}
-                                        onClick={() => selectMenu(item.key)}
-                                    >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <span>
-                                            {item.title}
-                                        </span>
-                                    </div>
-
-                            })
-                        }
-                    </ul>
-                    {/* <ProjectSetSetButton isShowText={isShowText} /> */}
-                    <MenuUser isShowText={isShowText} />
-                    <div className="projectSet-expend" onClick={toggleCollapsed} >
-                        {/* {
-                            isShowText ? <i className="iconfont iconzuo-yuan right" title="收回"></i> :
-                                <i className="iconfont iconyou-yuan right" title="展开"></i>
-                        } */}
-                        {
-                            isShowText ? <svg className="projectSet-expend-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-leftcircle"></use>
-                            </svg>
-                                :
-                                <svg className="projectSet-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div>
-                </div>
-            </Sider>
+            <ProjectAside
+                isShowText={isShowText}
+                SetIsShowText={SetIsShowText}
+                ChangeModal={ProjectSetChangeModal}
+                initRouters={projectSetRouter}
+                path={path}
+                setUrl={`/projectSetdetail/${projectSetId}/projectSetset/basicInfo`}
+                backUrl={`/index/projectSetList`}
+            />
 
         </Fragment>
     )

@@ -22,12 +22,10 @@ const ProjectLayout = (props) => {
     }
     const { route, systemRoleStore } = props;
 
-    const { searchpro, findProjectList } = ProjectStore;
+    const { searchpro, findProjectList, project, setProject } = ProjectStore;
     const { setSearchConditionNull, setTabValue } = WorkStore;
     // 项目id
     const projectId = props.match.params.id;
-    // 项目详情
-    const [project, setProject] = useState();
     const [isShowText, SetIsShowText] = useState(false)
     useEffect(() => {
         /**

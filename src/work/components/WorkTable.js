@@ -37,7 +37,6 @@ const getScreenType = () => {
 const WorkTable = (props) => {
     const screenSize = useBreakpoint();
     const screenCode = getScreenType();
-    console.log(screenSize)
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, deleteWorkItemAndChildren, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setQuickFilterValue, setWorkList, haveChildren } = WorkStore;
@@ -226,7 +225,6 @@ const WorkTable = (props) => {
 
 
     useEffect(()=> {
-        console.log(screenSize)
         
         if(props.location.pathname === "/workTable" ){
             const column = getColumn(screenCode, goProdetail, sortArray,actionColumn)

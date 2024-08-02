@@ -9,11 +9,10 @@ const { Sider } = Layout;
 const FirstMenu = (props) => {
     const [isShowText, setIsShowText] = useState(false)
     const menuKey = sessionStorage.getItem("menuKey");
-    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray"); 
-    console.log(theme)
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [themeClass, setThemeClass] = useState("first-sider-gray")
 
-    useEffect(()=> {
+    useEffect(() => {
         getThemeClass(theme)
         return null;
     }, [])
@@ -32,42 +31,42 @@ const FirstMenu = (props) => {
             to: '/index/home/survey',
             title: '首页',
             key: 'home',
-            icon: theme === "gray" ? "home-gray" : "home-white",
-            actionIcon: theme === "gray" ? "home-blue" :  "home-white"
+            icon: theme === "default" ? "home-gray" : "home-white",
+            actionIcon: theme === "default" ? "home-blue" : "home-white"
         },
         {
             to: '/index/project',
             title: '项目',
             key: 'project',
-            icon: theme === "gray" ? "project-gray" : "project-white",
-            actionIcon: theme === "gray" ? "project-blue" :  "project-white"
+            icon: theme === "default" ? "project-gray" : "project-white",
+            actionIcon: theme === "default" ? "project-blue" : "project-white"
         },
         {
             to: '/index/projectSetList',
             title: '项目集',
             key: 'projectSet',
-            icon: theme === "gray" ? "projectset-gray" : "projectset-white",
-            actionIcon: theme === "gray" ? "projectset-blue" :  "projectset-white"
+            icon: theme === "default" ? "projectset-gray" : "projectset-white",
+            actionIcon: theme === "default" ? "projectset-blue" : "projectset-white"
         },
         {
             to: '/index/workTable',
             title: '事项',
             key: 'work',
-            icon: theme === "gray" ? "work-gray" : "work-white",
-            actionIcon: theme === "gray" ? "work-blue" :  "work-white"
+            icon: theme === "default" ? "work-gray" : "work-white",
+            actionIcon: theme === "default" ? "work-blue" : "work-white"
         },
         {
             to: '/index/log/list',
             title: '工时',
             key: 'log',
-            icon: theme === "gray" ? "log-gray" : "log-white",
-            actionIcon: theme === "gray" ? "log-blue" :  "log-white"
+            icon: theme === "default" ? "log-gray" : "log-white",
+            actionIcon: theme === "default" ? "log-blue" : "log-white"
         },
         {
             to: '/setting/version',
             title: '设置',
-            key: 'log',
-            icon: theme === "gray" ? "iconsetsys" : "set-white",
+            key: 'setting',
+            icon: theme === "default" ? "iconsetsys" : "set-white",
         }
     ]
 
@@ -147,12 +146,12 @@ const FirstMenu = (props) => {
     }
 
     const getThemeClass = (theme) => {
-        let name = "gray"
+        let name = "default"
         switch (theme) {
-            case "darkblue":
-                name = "first-sider-darkblue";
+            case "black":
+                name = "first-sider-black";
                 break;
-            case "gray":
+            case "default":
                 name = "first-sider-gray";
                 break;
             case "blue":
@@ -169,9 +168,14 @@ const FirstMenu = (props) => {
     }
 
     useLocalStorageListener("theme", (updatedTraceInfo) => {
-        console.log("data最新值：",updatedTraceInfo)
+        console.log("data最新值：", updatedTraceInfo)
         getThemeClass(updatedTraceInfo)
     })
+
+    const changeTheme = (color) => {
+        console.log(color)
+        localStorage.setItem("theme", color)
+    }
 
     return (
         <>
@@ -185,22 +189,25 @@ const FirstMenu = (props) => {
             >
                 <div className="first-menu">
                     <div className="first-menu-top">
-                        <Logo theme = {theme} isShowText={isShowText} />
+                        <Logo theme={theme} isShowText={isShowText} />
                         {renderRouter()}
                     </div>
 
-                    <FirstMenuButtom isShowText={isShowText} theme = {theme}/>
-                    <div className="first-menu-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-leftcircle"></use>
-                            </svg>
-                            :
-                            <svg className="first-menu-expend-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-rightcircle"></use>
-                            </svg>
-                        }
+                    <FirstMenuButtom isShowText={isShowText} theme={theme} changeTheme={changeTheme} />
+                    <div className={"menu-box-right-border"}>
+                        <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
+                            {
+                                isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-leftcircle"></use>
+                                </svg>
+                                    :
+                                    <svg className="first-menu-expend-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-rightcircle"></use>
+                                    </svg>
+                            }
+                        </div>
                     </div>
+
                 </div>
             </Sider>
 
