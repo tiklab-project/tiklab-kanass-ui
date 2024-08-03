@@ -33,14 +33,12 @@ const Search = (props) => {
 
     const [keyboardIndex, setKeyboardIndex] = useState({ modal: "project", index: 0 });
     const [keyboards, setKeyboards] = useState();
-    // 查找结果的弹窗是否显示
-    const [show, setShow] = useState(false)
-    const [showLong, setShowLong] = useState(false)
+    const [searchModal, setSearchModal] = useState(false);
     // 登录者id
     // const userId = getUser().userId;
     const tenant = getUser().tenant;
     // 搜索下拉框ref
-    const dropDown = useRef();
+    const searchBox = useRef();
     const inputRef = useRef();
     const userId = getUser().userId;
 
@@ -102,32 +100,15 @@ const Search = (props) => {
         }
 
         window.addEventListener("keydown", keyBordar);
-        if (!show) {
+        if (!searchModal) {
             window.removeEventListener("keydown", keyBordar);
         }
         return () => {
             window.removeEventListener("keydown", keyBordar);
         };
-    }, [keyboardIndex, show])
+    }, [keyboardIndex, searchModal])
 
 
-
-    useEffect(() => {
-        window.addEventListener("mousedown", closeModal, false);
-
-        return () => {
-            window.removeEventListener("mousedown", closeModal, false);
-        }
-    }, [show])
-
-    const closeModal = (e) => {
-        if (!dropDown.current) {
-            return;
-        }
-        if (!dropDown.current.contains(e.target) && dropDown.current !== e.target) {
-            setShow(false)
-        }
-    }
 
     const findRecent = () => {
         let projectListLength = 0;
@@ -158,6 +139,24 @@ const Search = (props) => {
 
     }
 
+    // const showBox = () => {
+    //     const keyWord = inputRef.current.value;
+    //     if (keyWord) {
+    //         searchByKeyWork(keyWord)
+    //         setIsSeach(true)
+    //     } else {
+    //         findRecent()
+    //         setIsSeach(false)
+    //     }
+    //     setShow(true)
+    // }
+    useEffect(()=> {
+        if(searchModal){
+            findRecent()
+        }
+        return null;
+    }, [searchModal])
+
     const searchByKeyWork = (value) => {
         let projectListLength = 0;
         findProjectList({ projectName: value }).then(res => {
@@ -185,17 +184,6 @@ const Search = (props) => {
     }
 
 
-
-    /**
-     * 改变查找关键字时候，重新搜索
-     * @param {查找关键字} value 
-     */
-    const changeValue = (value) => {
-        setShow(true)
-        search(value.target.value)
-
-    }
-
     // 防抖
     const search = useDebounce((value) => {
         if (value) {
@@ -206,7 +194,6 @@ const Search = (props) => {
             setIsSeach(false)
         }
 
-        setShow(true)
     }, 500)
     /**
      * 跳转到项目详情
@@ -219,7 +206,6 @@ const Search = (props) => {
         // location.reload();
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
-        setShow(false)
 
     }
 
@@ -229,8 +215,6 @@ const Search = (props) => {
         props.history.replace(`/projectDetail/${data.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
-        setShow(false)
-
     }
     /**
      * 跳转到事项详情
@@ -245,7 +229,6 @@ const Search = (props) => {
         props.history.push(`/projectDetail/${data.project.id}/work/${data.modelId}`)
         setSessionStorage("detailCrumbArray", [{ id: data.modelId, code: data.code, title: data.name, iconUrl: data.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
-        setShow(false)
 
     }
 
@@ -256,43 +239,20 @@ const Search = (props) => {
         props.history.push(`/projectDetail/${data.project.id}/work/${data.id}`)
         setSessionStorage("detailCrumbArray", [{ id: data.id, code: data.code, title: data.title, iconUrl: data.workTypeSys?.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
-        setShow(false)
 
     }
-    /**
-     * 点击回车跳转到结果页面
-     * @param {键盘值} value 
-     */
-    // const submit = (value) => {
-    //     if (value.keyCode === 13) {
-    //         getSearchSore(value.target.value)
-    //         setKeyWord(value.target.value)
-    //         props.history.push(`/searchResult`)
-    //         setShow(false)
-    //     }
-    // }
 
 
-    /**
-     * 显示结果弹窗
-     */
-    const showBox = () => {
-        const keyWord = inputRef.current.value;
-        if (keyWord) {
-            searchByKeyWork(keyWord)
-            setIsSeach(true)
-        } else {
-            findRecent()
-            setIsSeach(false)
-        }
-        setShow(true)
+
+    const changeValue = (value) => {
+        search(value.target.value)
+
     }
-
     return (
-        <Fragment>
+        <div>
             {
                 isShowText ?
-                    <div className="search-text first-menu-text-item">
+                    <div className="search-text first-menu-text-item" onClick={() => setSearchModal(true)}>
                         <svg className="icon-15" aria-hidden="true">
                             <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
                         </svg>
@@ -300,96 +260,62 @@ const Search = (props) => {
                     </div>
 
                     :
-                    <div className="first-menu-link-item" data-title-right="搜索">
+                    <div className="first-menu-link-item" data-title-right="搜索" onClick={() => setSearchModal(true)}>
                         <svg className="icon-15" aria-hidden="true">
                             <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
                         </svg>
                     </div>
 
             }
-            <Modal
-                title={"搜索"}
-                visible={false}
-                cancelText="取消"
-                okText="确定"
-                closable={false}
-                width={800}
-            >
-                <div className={`show-box ${show === true ? null : "hidden-box"}`}>
-                    {
-                        isSeach ? <>
-                            {
-                                (projectList?.length !== 0 || workItemList?.length !== 0) ? <Fragment>
-                                    {
-                                        projectList.length > 0 && <div className="sort-box">
-                                            <div className="sort-title">项目</div>
-                                            {
-                                                projectList.map((item, index) => {
-                                                    return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id} >
-                                                        <div className="item-one" onClick={() => toSearchProject(item)}>
-                                                            <img
-                                                                alt=""
-                                                                src={setImageUrl(item.iconUrl)}
-                                                            />
-                                                            <span>{item.projectName}</span>
-                                                            <div className="item-desc">
-                                                                {item.projectType?.name}
-                                                            </div>
-                                                        </div>
+            <div ref={searchBox}>
+                <Modal
+                    visible={searchModal}
+                    cancelText="取消"
+                    onOk={() => setSearchModal(false)}
+                    onCancel={() => setSearchModal(false)}
+                    okText="确定"
+                    width={800}
+                    footer={null}
+                    className="search-modal"
+                    getContainer={() => searchBox.current}
+                    closable={false}
+                >
+                    <div className={`show-box `}>
+                        <div className="search-input-box">
 
+                            <svg className="icon-20" aria-hidden="true">
+                                <use xlinkHref="#icon-searchtop" ></use>
+                            </svg>
+                            <input
+                                className={`search-input`}
+                                onChange={changeValue}
+                                // onFocus={showBox}
+                                // ref={inputRef}
+                                placeholder="搜索事项，项目"
 
-                                                    </div>
-                                                })
-                                            }
-                                        </div>
-                                    }
-
-                                    {
-                                        workItemList.length > 0 && <div className="sort-box">
-                                            <div className="sort-title">事项</div>
-                                            {
-                                                workItemList.map((item, index) => {
-                                                    return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                        <div className="item-one" onClick={() => toSearchWorkItem(item)}>
-                                                            <img
-                                                                alt=""
-                                                                src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                                            />
-                                                            <span>{item.title}</span>
-                                                            <div className="item-desc">
-                                                                {item.project?.projectName}
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                })
-                                            }
-                                        </div>
-                                    }
-
-                                </Fragment>
-                                    :
-                                    <Empty image="/images/nodata.png" description="暂时没有数据~" />
-                            }
-                        </>
-                            :
-                            <Fragment>
-                                <div className="sort-box">
-                                    <div className="sort-title">最近查看项目</div>
-                                    {
-                                        projectList.length > 0 ?
-                                            <>
+                            />
+                            <svg className="svg-icon close-icon" aria-hidden="true" onClick={() => setSearchModal(false)}>
+                                <use xlinkHref="#icon-close"></use>
+                            </svg>
+                        </div>
+                        {
+                            isSeach ? <div className="search-result-box">
+                                {
+                                    (projectList?.length !== 0 || workItemList?.length !== 0) ? <Fragment>
+                                        {
+                                            projectList.length > 0 && <div className="sort-box">
+                                                <div className="sort-title">项目</div>
                                                 {
                                                     projectList.map((item, index) => {
-                                                        return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                            <div className="item-one" onClick={() => toProject(item)}>
+                                                        return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id} >
+                                                            <div className="item-one" onClick={() => toSearchProject(item)}>
                                                                 <img
                                                                     alt=""
                                                                     src={setImageUrl(item.iconUrl)}
                                                                 />
-                                                                <span>{item.name}</span>
+                                                                <span>{item.projectName}</span>
                                                                 <div className="item-desc">
-                                                                    {item.recentTime}
+                                                                    {item.projectType?.name}
                                                                 </div>
                                                             </div>
 
@@ -397,45 +323,103 @@ const Search = (props) => {
                                                         </div>
                                                     })
                                                 }
-                                            </>
+                                            </div>
+                                        }
 
-                                            :
-                                            <Empty image="/images/nodata.png" description="暂时没有数据~" />
-                                    }
-                                </div>
-                                <div className="sort-box">
-                                    <div className="sort-title">最近查看事项</div>
-                                    {
-                                        workItemList.length > 0 ? <>
-                                            {
-                                                workItemList.map((item, index) => {
-                                                    return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                        <div className="item-one" onClick={() => toWorkItem(item)}>
-                                                            <img
-                                                                alt=""
-                                                                src={setImageUrl(item.iconUrl)}
-                                                            />
-                                                            <span>{item.name}</span>
-                                                            <div className="item-desc">
-                                                                {item.project?.projectName}
+                                        {
+                                            workItemList.length > 0 && <div className="sort-box">
+                                                <div className="sort-title">事项</div>
+                                                {
+                                                    workItemList.map((item, index) => {
+                                                        return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
+                                                            <div className="item-one" onClick={() => toSearchWorkItem(item)}>
+                                                                <img
+                                                                    alt=""
+                                                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                                                />
+                                                                <span>{item.title}</span>
+                                                                <div className="item-desc">
+                                                                    {item.project?.projectName}
+                                                                </div>
                                                             </div>
+
                                                         </div>
+                                                    })
+                                                }
+                                            </div>
+                                        }
 
-                                                    </div>
-                                                })
-                                            }
-                                        </>
-                                            :
-                                            <Empty image="/images/nodata.png" description="暂时没有数据~" />
-                                    }
+                                    </Fragment>
+                                        :
+                                        <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                }
+                            </div>
+                                :
+                                <div className="search-result-box">
+                                    <div className="sort-box">
+                                        <div className="sort-title">最近查看项目</div>
+                                        {
+                                            projectList.length > 0 ?
+                                                <>
+                                                    {
+                                                        projectList.map((item, index) => {
+                                                            return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
+                                                                <div className="item-one" onClick={() => toProject(item)}>
+                                                                    <img
+                                                                        alt=""
+                                                                        src={setImageUrl(item.iconUrl)}
+                                                                    />
+                                                                    <span>{item.name}</span>
+                                                                    <div className="item-desc">
+                                                                        {item.recentTime}
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        })
+                                                    }
+                                                </>
+
+                                                :
+                                                <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                        }
+                                    </div>
+                                    <div className="sort-box">
+                                        <div className="sort-title">最近查看事项</div>
+                                        {
+                                            workItemList.length > 0 ? <>
+                                                {
+                                                    workItemList.map((item, index) => {
+                                                        return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
+                                                            <div className="item-one" onClick={() => toWorkItem(item)}>
+                                                                <img
+                                                                    alt=""
+                                                                    src={setImageUrl(item.iconUrl)}
+                                                                />
+                                                                <span>{item.name}</span>
+                                                                <div className="item-desc">
+                                                                    {item.project?.projectName}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    })
+                                                }
+                                            </>
+                                                :
+                                                <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                        }
+                                    </div>
                                 </div>
-                            </Fragment>
-                    }
+                        }
 
-                </div>
-            </Modal>
+                    </div>
+                </Modal>
+            </div>
 
-        </Fragment>
+
+        </div>
     )
 }
 export default withRouter(inject("homeStore")(observer(Search)));

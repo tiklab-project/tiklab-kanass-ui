@@ -1,13 +1,10 @@
 .dyncmic-timeaxis {
-    // margin-top: 20px;
-
-    
-
+    padding-left: 5px;
     .dyncmic-timeaxis-content {
         margin-top: 15px;
         padding: 0 6px;
         .dyncmic-timeaxis-box {
-            
+            margin-top: 20px;
             .dyncmic-timeaxis-date {
                 margin-left: 10px;
                 padding: 0 10px;
@@ -51,11 +48,11 @@
                 padding: 10px 20px;
                 position: relative;
 
-                .dyncmic-timeaxis-item-time {
+                .dyncmic-timeaxis-item-name {
                     position: relative;
                 }
 
-                .dyncmic-timeaxis-item-time::before {
+                .dyncmic-timeaxis-item-name::before {
                     content: "";
                     display: inline-block;
                     position: absolute;
@@ -63,7 +60,7 @@
                     background: #dadfe6;
                     width: 7px;
                     height: 7px;
-                    top: 6px;
+                    top: 16px;
                     left: -23px;
                 }
             }

@@ -2,6 +2,8 @@ import React from "react";
 import "./DyncmicList.scss";
 import { Empty } from "antd";
 import DyncmicItem from "./DynamicItem"
+import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
+import { observer } from "mobx-react";
 const DyncmicList = (props) => {
     const {logList, goDynamicList, goOpLogDetail} = props;
     return (
@@ -17,9 +19,7 @@ const DyncmicList = (props) => {
         </div>
         <div className="dynamic-list">
             {
-                logList.length > 0 ? logList.map(item => {
-                    return <DyncmicItem content = {item.data} type = {item.actionType.id} key = {item.id}/>
-                })
+                logList.length > 0 ?  <DyncmicTimeAxis logList={logList} />
                     :
                     <Empty image="/images/nodata.png" description="暂时没有动态~" />
             }
@@ -28,4 +28,4 @@ const DyncmicList = (props) => {
     )
 }
 
-export default DyncmicList;
+export default observer(DyncmicList);

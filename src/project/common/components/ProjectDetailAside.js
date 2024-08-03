@@ -119,13 +119,15 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
+            whiteIcon: "survey-white",
             id: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "计划",
-            icon: 'survey',
+            icon: 'plan-gray',
+            whiteIcon: "plan-white",
             id: `/projectDetail/${projectId}/stage`,
             key: "stage",
             encoded: "stage",
@@ -133,6 +135,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
+            whiteIcon: "workitem-white",
             id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
@@ -140,6 +143,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('version')}`,
             icon: 'version',
+            whiteIcon: "version-white",
             id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
@@ -147,6 +151,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "工时",
             icon: 'log',
+            whiteIcon: "project-log-white",
             id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
@@ -154,6 +159,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
+            whiteIcon: "statistics-white",
             id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
@@ -161,6 +167,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
+            whiteIcon: 'milestone-white',
             id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",

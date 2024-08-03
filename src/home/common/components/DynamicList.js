@@ -16,9 +16,10 @@ import "./DynamicList.scss";
 import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 import HomeStore from "../store/HomeStore";
 import DyncmicTimeAxis from "../../../project/overview/components/DyncmicTimeAxis";
+import PaginationCommon from "../../../common/page/Page";
 const DynamicList = (props) => {
     const { homeStore } = props;
-    const { findLogpage, opLogCondition, logList,opLogTotal, setOpLogList, findProjectSetProjectList } = HomeStore;
+    const { findLogpage, opLogCondition, logList, opLogTotal, setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
     console.log(opLogTotal)
     const userId = getUser().userId;
     const [projectList, setProjectList] = useState()
@@ -32,7 +33,7 @@ const DynamicList = (props) => {
         const params = {
             status: 1,
             pageParam: {
-                pageSize: 20,
+                ...opLogCondition.pageParam,
                 currentPage: 1
             },
             data: null
@@ -48,24 +49,7 @@ const DynamicList = (props) => {
             setFirstText("项目集概况")
             const projectSetId = props.match.params.projectSetId;
             setOpLogList([]);
-            findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
-                if (res.code === 0) {
-                    const list = res.data;
-                    if (list.length > 0) {
-                        let opLogs = []
-                        list.map(item => {
-                            findLogpage({ data: { projectId: item.id } }, "projectSet").then(res => {
-                                if (res.code === 0) {
-                                    opLogs.push(...res.data.dataList)
-                                    setOpLogList([...opLogs])
-                                }
-                            })
-                        })
-                    } else {
-                        setOpLogList([])
-                    }
-                }
-            })
+            findProjectSetLogpage({ ...params, data: { projectSetId: projectSetId } })
         }
 
         if (props.route.path === "/:id/sprintdetail/:sprint/dynamic") {
@@ -101,7 +85,7 @@ const DynamicList = (props) => {
     const onPageChange = (page, pageSize) => {
         const params = {
             pageParam: {
-                pageSize: 20,
+                ...opLogCondition.pageParam,
                 currentPage: page
             }
 
@@ -141,9 +125,12 @@ const DynamicList = (props) => {
                 </div>
 
                 <div className="dynamic-list">
-                    <DyncmicTimeAxis logList = {logList} />
+                    {
+                        logList && logList.length > 0 ?  <DyncmicTimeAxis logList={logList} /> :   <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                    }
+                    
                 </div>
-                {
+                {/* {
                     logList && logList.length > 0 && <div className="dynamic-pagination">
                         <Pagination
                             onChange={onPageChange}
@@ -155,7 +142,14 @@ const DynamicList = (props) => {
                             pageSize={20}
                         />
                     </div>
-                }
+                } */}
+                <PaginationCommon
+                    currentPage={opLogCondition.pageParam.currentPage}
+                    changePage={(currentPage) => onPageChange(currentPage)}
+                    totalPage={opLogCondition.pageParam.totalPage}
+                    total={opLogCondition.pageParam.total}
+                    showRefer={false}
+                />
             </div>
         </Col>
     </Row>

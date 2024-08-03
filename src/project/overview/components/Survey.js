@@ -376,9 +376,11 @@ const Survey = (props) => {
                                 </svg>
                             </div>
                         </div>
-                        <DyncmicTimeAxis logList={logList} />
+                        {
+                            logList && logList.length > 0 ? <DyncmicTimeAxis logList={logList} /> : <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                        }
                     </div>
-                    
+
                     {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}
                     {/* <DyncmicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail} /> */}
                 </div>

@@ -38,9 +38,6 @@ const SetMenu = (props) => {
                         <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`${theme === "default" ? "#icon-set" : "#icon-set-white"}`}></use>
                         </svg>
-                        <span>
-                            设置
-                        </span>
                     </div>
             }
         </div>

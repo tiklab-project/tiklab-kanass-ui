@@ -129,7 +129,7 @@ const ProjectSetChangeModal = (props) => {
                             </div>
                         </div>
                         <div className={`projectSet-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
+                            <svg className="icon-15" aria-hidden="true">
                                 <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
@@ -138,7 +138,7 @@ const ProjectSetChangeModal = (props) => {
                         <Tooltip placement="right" title={projectSet?.name}>
                             <div className="projectSet-change-icon">
                                 <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                 </svg>
                             </div>

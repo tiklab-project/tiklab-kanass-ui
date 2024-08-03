@@ -4,12 +4,15 @@
     align-items: center;
     padding-bottom: 10px;
     .first-menu-link-item {
-        padding: 5px;
+        padding: 6px;
         margin-bottom: 0;
+    }
+    .user-icon {
+        width: 20px;
+        height: 20px;
     }
 }
 .first-menu-bottom-text {
-    
     .first-menu-bottom-item {
         height: 40px;
         display: flex;
@@ -18,5 +21,10 @@
         align-items: center;
         padding: 0 20px;
         cursor: pointer;
+    }
+
+    .user-icon {
+        width: 20px;
+        height: 20px;
     }
 }

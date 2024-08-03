@@ -133,7 +133,7 @@ const ProjectChangeModal = (props) => {
                             </div>
                         </div>
                         <div className={`project-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
+                            <svg className="icon-15" aria-hidden="true">
                                 <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
@@ -149,7 +149,7 @@ const ProjectChangeModal = (props) => {
                                 style={{ marginRight: "0px" }}
                             />
                             <div className={`project-toggleCollapsed`}>
-                                <svg className="svg-icon" aria-hidden="true">
+                                <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                 </svg>
                             </div>

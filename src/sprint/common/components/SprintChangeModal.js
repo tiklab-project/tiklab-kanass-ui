@@ -93,7 +93,7 @@ const SprintChangeModal = (props) => {
                             </div>
                         </div>
                         <div className={`sprint-toggleCollapsed`}>
-                            <svg className="svg-icon" aria-hidden="true">
+                            <svg className="icon-15" aria-hidden="true">
                                 <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                             </svg>
                         </div>
@@ -107,7 +107,7 @@ const SprintChangeModal = (props) => {
                                     alt=""
                                 />
                                 <div className={`sprint-toggleCollapsed`}>
-                                    <svg className="svg-icon" aria-hidden="true">
+                                    <svg className="icon-15" aria-hidden="true">
                                         <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                     </svg>
                                 </div>

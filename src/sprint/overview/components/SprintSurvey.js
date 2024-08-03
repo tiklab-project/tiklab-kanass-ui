@@ -21,8 +21,8 @@ import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const SprintSurvey = (props) => {
-    const { findSprint, findSprintBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, findWorkItemNumByQuickSearch } = SprintSurveyStore;
+    const { findSprint, findSprintBurnDowmChartPage, opLogList, 
+        findLogpage, logList, todoTaskList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -76,7 +76,7 @@ const SprintSurvey = (props) => {
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent * 100 ? percent.toFixed(2) * 100 : 0)
         })
-        findlogpage({ userId: masterId, sprintId: sprintId })
+        findLogpage({data: { sprintId: sprintId }})
 
         findtodopage({ userId: masterId, sprintId: sprintId, status: 1, pageSize: 10 })
 
@@ -297,7 +297,7 @@ const SprintSurvey = (props) => {
                     {/* <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"sprint"} /> */}
                     <TodoStatistics />
 
-                    <DynamicList logList={opLogList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
+                    <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
                 <SprintStartState
                     visible={startStateVisable}

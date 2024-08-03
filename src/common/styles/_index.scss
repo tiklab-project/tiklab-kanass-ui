@@ -36,11 +36,11 @@
     margin-top: 14px;
 }
 .ant-table-tbody>tr>td {
-    border-bottom: 0;
-    padding: 8px;
+    border-bottom: 0 !important;
+    padding: 8px !important;
 }
 .ant-table-thead>tr>th {
-    background: #fff; 
+    background: #fff !important;
     font-weight: 600;
     padding: 8px;
     color: #666;
@@ -65,10 +65,10 @@
     padding: 0;
 }
 .ant-table-tbody>tr.ant-table-row:hover>td {
-    background: none;
+    background: none !important;
 }
 .ant-table-tbody>tr.ant-table-row:hover {
-    background: #edf0f5;
+    background: #edf0f5 !important;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {

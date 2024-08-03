@@ -19,38 +19,13 @@ import setImageUrl from "../../../common/utils/setImageUrl";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const ProjectSetSurvey = props => {
 
-    const { findlogpage, findtodopage, findProjectList, createRecent } = BasicInfoStore;
+    const { logList, findProjectSetLogpage, createRecent } = BasicInfoStore;
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     const [todoTaskList, setTodoTaskList] = useState([])
-    const [logList, setLogList] = useState([])
     useEffect(() => {
-        findProjectList({ projectSetId: projectSetId }).then(res => {
-            if (res.code === 0) {
-                const list = res.data;
-                let ids = []
-                let todo = []
-                if (list.length > 0) {
-                    list.map(item => {
-                        ids.push(item.id)
-                        findtodopage({ projectId: item.id }).then(res => {
-                            if (res.code === 0) {
-                                todoTaskList.push(...res.data.dataList)
-                                setTodoTaskList([...todoTaskList])
-                            }
-                        })
-                        findlogpage({ projectId: item.id }).then(res => {
-                            if (res.code === 0) {
-                                logList.push(...res.data.dataList)
-                                setLogList([...logList])
-                            }
-                        })
-                    })
-                    setProcessProjectList(list.filter(item => item.projectState === "2"))
-                }
-            }
-        })
+        findProjectSetLogpage({ projectSetId: projectSetId })
 
         return;
     }, [])

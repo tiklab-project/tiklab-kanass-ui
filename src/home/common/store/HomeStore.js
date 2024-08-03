@@ -38,8 +38,10 @@ class HomeStore {
     @observable opLogTotal = 0;
     @observable opLogCondition = {
         pageParam: {
-            pageSize: 10,
-            currentPage: 1
+            pageSize: 20,
+            currentPage: 1,
+            totalPage: 1,
+            total: 1
         },
         bgroup: "kanass",
         data: {}
@@ -283,27 +285,26 @@ class HomeStore {
     * @returns 
     */
     @action
-    findLogpage = async (value, type) => {
+    findLogpage = async (value) => {
         this.setOpLogCondition(value)
         const data = await Service("/oplog/findlogpage", this.opLogCondition);
-        if(data.code === 0){
+        if (data.code === 0) {
             const dataList = data.data.dataList;
-            let list = []
-            if(value.currentPage === 1) {
-                this.logList = []
-            }
-            if(dataList.length > 0){
+            this.opLogCondition.pageParam.totalPage = data.data.totalPage;
+            this.opLogCondition.pageParam.total = data.data.totalRecord;
+            this.logList = []
+            if (dataList.length > 0) {
                 dataList.map(item => {
                     const date = item.createTime.slice(0, 10);
                     const list1 = this.logList.filter(dateItem => dateItem.date === date)
-                    if(list1.length > 0){
+                    if (list1.length > 0) {
                         this.logList.map(dateItem => {
-                            if(dateItem.date === date){
+                            if (dateItem.date === date) {
                                 dateItem.children.push(item)
                             }
                             return dateItem;
                         })
-                    }else {
+                    } else {
                         this.logList.push({
                             date: date,
                             children: [item]
@@ -316,6 +317,58 @@ class HomeStore {
         return data;
     }
 
+    // @action
+    // findProjectSetLogpage = async (value) => {
+
+    //     const project = await Service("/projectSet/findProjectList", value);
+    //     if (project.code === 0) {
+    //         const list = project.data;
+
+    //         const getAllLogList = async (list, value) => {
+    //             let dataList = [];
+    //             // await list.map(async item => {
+
+    //             // })
+    //             for (let i = 0; i < list.length; i++) {
+    //                 const params = { ...value, data: { ...this.opLogCondition.data, projectId: item.id } }
+    //                 this.setOpLogCondition(params)
+
+    //                 const data = await Service("/oplog/findlogpage", this.opLogCondition);
+    //                 if (data.code === 0) {
+    //                     dataList.push(...data.data.dataList)
+    //                 }
+    //             }
+    //             return dataList;
+    //         }
+    //         const dataList = await getAllLogList(value, list)
+    //         this.logList = [];
+    //         dataList.sort(function (a, b) { return a.createTime - b.createTime; });
+    //         if (dataList.length > 0) {
+    //             dataList.map(item => {
+    //                 const date = item.createTime.slice(0, 10);
+    //                 const list1 = this.logList.filter(dateItem => dateItem.date === date)
+    //                 if (list1.length > 0) {
+    //                     this.logList.map(dateItem => {
+    //                         if (dateItem.date === date) {
+    //                             dateItem.children.push(item)
+    //                         }
+    //                         return dateItem;
+    //                     })
+    //                 } else {
+    //                     this.logList.push({
+    //                         date: date,
+    //                         children: [item]
+    //                     })
+    //                 }
+    //             })
+    //         }
+
+    //     }
+    //     console.log(this.logList)
+
+    // }
+
+
     /**
      *成员id, 项目id
      * @param {待办} value 
@@ -325,7 +378,7 @@ class HomeStore {
     findTodopage = async (value, type) => {
         this.todoTaskList = [];
         this.setTodoCondition(value)
-        
+
         const data = await Service("/todo/findtodopage", this.todoCondition);
         if (data.code === 0) {
             const list = data.data.dataList;
@@ -337,6 +390,56 @@ class HomeStore {
         }
         return data;
     }
+
+    @action
+    findProjectSetLogpage = async (value) => {
+        const project = await Service("/projectSet/findProjectList", value);
+        if (project.code === 0) {
+            const list = project.data;
+
+            const getAllLogList = async (list, value) => {
+                let dataList = [];
+                for (let i = 0; i < list.length; i++) {
+                    const params = { ...value, data: { ...this.opLogCondition.data, projectId: list[i].id } };
+                    this.setOpLogCondition(params);
+
+                    try {
+                        const data = await Service("/oplog/findlogpage", this.opLogCondition);
+                        if (data.code === 0) {
+                            dataList.push(...data.data.dataList);
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching logs for project ${list[i].id}:`, error);
+                    }
+                }
+                return dataList;
+            };
+
+            const dataList = await getAllLogList(list, value);
+            this.logList = [];
+
+            // Sort the dataList after fetching all log data
+            dataList.sort((a, b) => a.createTime - b.createTime);
+
+            // Process the sorted dataList
+            if (dataList.length > 0) {
+                dataList.forEach(item => {
+                    const date = item.createTime.slice(0, 10);
+                    const existingDateItem = this.logList.find(dateItem => dateItem.date === date);
+                    if (existingDateItem) {
+                        existingDateItem.children.push(item);
+                    } else {
+                        this.logList.push({
+                            date: date,
+                            children: [item]
+                        });
+                    }
+                });
+            }
+        }
+        console.log(this.logList)
+    }
+
 
     /**
      * 获取全部项目列表
@@ -398,31 +501,31 @@ class HomeStore {
     }
 
     @action
-    statisticsDayAllWorkItemCount = async() => {
+    statisticsDayAllWorkItemCount = async () => {
         const data = await Service("/projectInsightReport/statisticsDayAllWorkItemCount")
         return data;
     }
 
     @action
-    statisticsAllNewWorkItemTend = async() => {
+    statisticsAllNewWorkItemTend = async () => {
         const data = await Service("/projectInsightReport/statisticsAllNewWorkItemTend")
         return data;
     }
 
     @action
-    statisticsProjectByStatus = async() => {
+    statisticsProjectByStatus = async () => {
         const data = await Service("/projectInsightReport/statisticsProjectByStatus")
         return data;
     }
 
     @action
-    statisticsWorkItemByStatus = async() => {
+    statisticsWorkItemByStatus = async () => {
         const data = await Service("/projectInsightReport/statisticsWorkItemByStatus")
         return data;
     }
 
     @action
-    statisticsTodoWorkByStatus = async(params) => {
+    statisticsTodoWorkByStatus = async (params) => {
         const data = await Service("/projectInsightReport/statisticsTodoWorkByStatus", params)
         return data;
     }

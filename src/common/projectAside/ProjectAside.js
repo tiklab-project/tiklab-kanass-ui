@@ -18,8 +18,8 @@ const { Sider } = Layout;
 
 const ProjectAside = (props) => {
     const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl } = props;
-
-
+    const isInProject = props.location.pathname.split("/")[2] ;
+    console.log(isInProject)
     const [projectRouter, setProjectRouter] = useState([]);
 
     const [moreMenu, setMoreMenu] = useState()
@@ -141,10 +141,10 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                     >
                                         <svg className="icon-18" aria-hidden="true">
-                                            <use xlinkHref={`${theme === "default" ? "#icon-backproject" : "#icon-backproject-white"}`}></use>
+                                            <use xlinkHref={`${theme === "default" ? "#icon-home-gray" : "#icon-home-white"}`}></use>
                                         </svg>
                                         <span>
-                                            返回首页
+                                            {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
                                         </span>
                                     </div>
                                     :
@@ -152,10 +152,10 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                     >
                                         <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`${theme === "default" ? "#icon-backproject" : "#icon-backproject-white"}`}></use>
+                                            <use xlinkHref={`${theme === "default" ? "#icon-home-gray" : "#icon-home-white"}`}></use>
                                         </svg>
                                         <span>
-                                            返回首页
+                                        {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
                                         </span>
                                     </div>
                             }

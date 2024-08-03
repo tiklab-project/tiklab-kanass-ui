@@ -1,16 +1,11 @@
-.dynamic-col {
-    padding: var(--thoughtware-padding);
-}
+
 
 .dynamic-list-page {
-    background: #fff;
-    min-height: calc(100vh - 88px);
     padding: var(--thoughtware-padding);
     .dynamic-list-top {
         // position: sticky;
         top: 0;
         z-index: 3;
-        background: #fff;
     }
 
     .dynamic-list {

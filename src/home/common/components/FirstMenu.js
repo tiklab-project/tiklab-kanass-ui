@@ -63,7 +63,7 @@ const FirstMenu = (props) => {
             actionIcon: theme === "default" ? "log-blue" : "log-white"
         },
         {
-            to: '/setting/version',
+            to: '/setting/logList',
             title: '设置',
             key: 'setting',
             icon: theme === "default" ? "iconsetsys" : "set-white",

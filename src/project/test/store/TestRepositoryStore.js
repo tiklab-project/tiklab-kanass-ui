@@ -10,7 +10,8 @@ export class TestRepositoryStore {
         pageParam: {
             pageSize: 20,
             currentPage: 1,
-            totalPage: 1
+            totalPage: 1,
+            total: 1
         }
     }
 
@@ -67,6 +68,7 @@ export class TestRepositoryStore {
         if(data.code === 0){
             this.testCaseList = data.data.dataList;
             this.testCaseCondition.pageParam.totalPage = data.data.totalPage;
+            this.testCaseCondition.pageParam.total = data.data.totalRecord;
         }
         return data;
     }

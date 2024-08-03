@@ -6,12 +6,25 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-04 09:00:09
  */
-import { observable, action } from "mobx";
+import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 class VersionSurveyStore {
     @observable opLogList = [];
     @observable todoTaskList = [];
     @observable userList = []
+    @observable opLogCondition = {
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+            totalPage: 1,
+            total: 1
+        },
+        bgroup: "kanass",
+        data: {}
+    }
+
+    @observable
+    logList = [];
 
     @action
 	findWorkItemNumByQuickSearch = async(value) => {
@@ -127,6 +140,43 @@ class VersionSurveyStore {
         const data = await Service("/projectVersion/findSelectVersionList", values)
         return data;
     }
-      
+
+    @action
+    setOpLogCondition = (value) => {
+        this.opLogCondition = extendObservable(this.opLogCondition, { ...value })
+    }
+
+    @action
+    findLogpage = async (value) => {
+        this.setOpLogCondition(value)
+        const data = await Service("/oplog/findlogpage", this.opLogCondition);
+        if (data.code === 0) {
+            const dataList = data.data.dataList;
+            this.opLogCondition.pageParam.totalPage = data.data.totalPage;
+            this.opLogCondition.pageParam.total = data.data.totalRecord;
+            this.logList = []
+            if (dataList.length > 0) {
+                dataList.map(item => {
+                    const date = item.createTime.slice(0, 10);
+                    const list1 = this.logList.filter(dateItem => dateItem.date === date)
+                    if (list1.length > 0) {
+                        this.logList.map(dateItem => {
+                            if (dateItem.date === date) {
+                                dateItem.children.push(item)
+                            }
+                            return dateItem;
+                        })
+                    } else {
+                        this.logList.push({
+                            date: date,
+                            children: [item]
+                        })
+                    }
+                })
+            }
+            console.log(this.logList)
+        }
+        return data;
+    }
 }
 export default new VersionSurveyStore();

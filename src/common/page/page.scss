@@ -1,8 +1,13 @@
 .pagination-box{
-    width: 100%;
-    text-align: center;
-    padding-top: 10px;
-    height: 47px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    height: 40px;
+    line-height: 40px;
+    .pagination-box-center {
+        gap: 5px;
+    }
     .pagination-box-ban{
         cursor:not-allowed;
         color: var(--thoughtware-gray-500);
@@ -15,5 +20,8 @@
     }
     .pagination-box-current{
         color: var(--thoughtware-blue);
+    }
+    .pagination-box-ref {
+        cursor: pointer;
     }
 }

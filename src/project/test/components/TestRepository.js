@@ -256,6 +256,8 @@ const TestRepository = (props) => {
                                     currentPage={testCaseCondition.pageParam.currentPage}
                                     changePage={(currentPage) => changePage(currentPage)}
                                     totalPage={testCaseCondition.pageParam.totalPage}
+                                    total = {testCaseCondition.pageParam.total}
+                                    showRefer = {false}
                                 />
                             </div>
                         }

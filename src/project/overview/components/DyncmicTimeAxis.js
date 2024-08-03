@@ -1,70 +1,9 @@
 import React, { Children } from "react";
 import "./DyncmicTimeAxis.scss";
 import DyncmicItem from "../../../common/overviewComponent/DynamicItem"
+import { observer } from "mobx-react";
 const DyncmicTimeAxis = (props) => {
     const { logList } = props;
-    const data = [
-        {
-            date: "07.27",
-            children: [
-                {
-                    time: "14:59",
-                    name: "管理员添加了事项",
-                    desc: "项目中涉及到删除的都是在点击后直接删除，没有提示删除信息"
-                },
-                {
-                    time: "14:59",
-                    name: "darth更新了史诗#52-6的状态",
-                    desc: "处理中"
-                },
-                {
-                    time: "14:59",
-                    name: "管理员添加了事项",
-                    desc: "项目中涉及到删除的都是在点击后直接删除，没有提示删除信息"
-                },
-            ]
-        },
-        {
-            date: "07.26",
-            children: [
-                {
-                    time: "14:59",
-                    name: "darth更新了史诗#52-6的状态",
-                    desc: "处理中"
-                },
-                {
-                    time: "14:59",
-                    name: "管理员添加了事项",
-                    desc: "项目中涉及到删除的都是在点击后直接删除，没有提示删除信息"
-                },
-                {
-                    time: "14:59",
-                    name: "darth更新了史诗#52-6的状态",
-                    desc: "处理中"
-                }
-            ]
-        }
-    ]
-
-    const getIconName = (type) => {
-        let name = ""
-        switch (type) {
-            case "KANASS_LOGTYPE_WORKUPDATEMASTER":
-                name = "dynamic-update";
-                break;
-            case "KANASS_LOGTYPE_WORKITEMADD":
-                name = "dynamic-add";
-                break;
-            case "KANASS_LOGTYPE_PROJECTADD":
-                name = "dynamic-add";
-                break;
-            case "KANASS_LOGTYPE_WORKUPDATESTATUS":
-                name = "dynamic-update";
-                break;
-
-        }
-        return name;
-    }
 
     return <div className="dyncmic-timeaxis">
         {/* <div className="dyncmic-timeaxis-title">最近动态</div> */}
@@ -85,15 +24,13 @@ const DyncmicTimeAxis = (props) => {
                                     key = {dyncmicItem.id}
                                 >
 
-                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
+                                    
                                     <div className="dyncmic-timeaxis-item-name">
                                         <div className="dynamic-user-icon">{dyncmicItem.user.nickname?.charAt(0)}</div>
 
                                     </div>
                                     <DyncmicItem content={dyncmicItem.data} type={dyncmicItem.actionType.id} key={dyncmicItem.id} />
-                                    <svg className="img-25" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${getIconName(dyncmicItem.actionType.id)}`}></use>
-                                    </svg>
+                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
                                 </div>
                             })
                         }
@@ -105,4 +42,4 @@ const DyncmicTimeAxis = (props) => {
     </div>
 }
 
-export default DyncmicTimeAxis;
+export default observer(DyncmicTimeAxis);

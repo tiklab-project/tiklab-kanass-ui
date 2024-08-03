@@ -23,7 +23,7 @@ import VersionEndState from "./VersionEndState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage, opLogList, findlogpage,
-        findtodopage, todoTaskList, findWorkItemNumByQuickSearch, userList, getUseList } = VersionSurveyStore;
+        findtodopage, todoTaskList, findWorkItemNumByQuickSearch, userList, getUseList, logList, findLogpage } = VersionSurveyStore;
 
     const versionId = props.match.params.version;
     const [versionInfo, setVersionInfo] = useState();
@@ -76,7 +76,7 @@ const VersionSurvey = (props) => {
         // 燃尽图
         getUseList(projectId)
 
-        findlogpage({ userId: masterId, versionId: versionId })
+        findLogpage({ versionId: versionId })
 
         findtodopage({ userId: masterId, versionId: versionId })
 
@@ -307,7 +307,7 @@ const VersionSurvey = (props) => {
                     </div>
                     <TodoStatistics />
                     {/* <TodoListBox todoTaskList = {todoTaskList} goToListPage = {goToListPage} model = {"version"}/> */}
-                    <DynamicList logList = {opLogList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
+                    <DynamicList logList = {logList} goDynamicList = {goDynamicList} goOpLogDetail = {goOpLogDetail}/>
 
                 </div>
                 <VersionStartState

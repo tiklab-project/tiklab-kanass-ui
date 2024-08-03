@@ -9,7 +9,6 @@
 import React, { useState, useRef } from 'react';
 import { Drawer, Tabs, Badge, Avatar, Empty, } from 'antd';
 import { observer, inject } from "mobx-react";
-import { MessageOutlined } from '@ant-design/icons';
 import "./MessageList.scss"
 import { withRouter } from 'react-router';
 import { useEffect } from 'react';
@@ -30,7 +29,7 @@ const MessageList = (props) => {
     const [open, setOpen] = useState(false);
     // 消息的ref 
     const messageRef = useRef()
-
+    const messageDrawerRef = useRef()
     /**
      * 获取消息列表
      */
@@ -118,7 +117,7 @@ const MessageList = (props) => {
                 isShowText ?
                     <div className="message-text first-menu-text-item" onClick={() => setOpen(true)}>
                         <svg className="icon-15" aria-hidden="true">
-                            <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
+                            <use xlinkHref={`${theme === "default" ? "#icon-message" : "#icon-message-white"}`} ></use>
                         </svg>
                         <div className="message-text-name">消息</div>
                         <div className="message-text-count">
@@ -134,11 +133,10 @@ const MessageList = (props) => {
                                 </svg>} />
                         </Badge> */}
                         <svg className="icon-15" aria-hidden="true">
-                            <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
+                            <use xlinkHref={`${theme === "default" ? "#icon-message" : "#icon-message-white"}`} ></use>
                         </svg>
                     </div>
             }
-
             <Drawer
                 title="消息"
                 placement={"left"}
@@ -150,7 +148,6 @@ const MessageList = (props) => {
                 mask={false}
                 destroyOnClose={true}
                 width={450}
-                getContainer={false}
             >
                 <div className="message-content">
                     <Tabs onChange={changTab} size="small" activeKey={currenTab}>
@@ -225,6 +222,8 @@ const MessageList = (props) => {
                     </Tabs>
                 </div>
             </Drawer>
+
+
         </div>
     );
 };

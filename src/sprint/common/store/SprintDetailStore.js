@@ -31,6 +31,9 @@ export class SprintDetailStore {
         }
         return data;
     }
+
+    
+
     
 }
 export default new SprintDetailStore()

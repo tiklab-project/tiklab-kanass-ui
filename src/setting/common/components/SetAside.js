@@ -153,16 +153,16 @@ const SetAside = (props) => {
         <Fragment>
             <div className="orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
-                    <Logo isShowText = {true} theme = {"default"}/>
+                    {/* <Logo isShowText = {true} theme = {"default"}/> */}
                     <div className="orga-aside-name">
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => backProject()}>
-                            <use xlinkHref="#icon-backproject"></use>
-                        </svg>
                         设置
                     </div>
-                    {
-                        console.log(router)
-                    }
+                    <div className="orga-aside-back" onClick={() => backProject()}>
+                        <svg className="svg-icon" aria-hidden="true" >
+                            <use xlinkHref="#icon-home-gray"></use>
+                        </svg>
+                        返回首页
+                    </div>
                     {
                         router && router.map((firstItem, index) => {
                             return firstItem.children && firstItem.children.length > 0 ?

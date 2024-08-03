@@ -17,24 +17,29 @@
         background-color: var(--thoughtware-gray-600);
 
         .orga-aside-name {
+            font-weight: 600;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            
+
+        }
+
+        .orga-aside-back:hover {
+            background-color: var(--thoughtware-gray-400);
+        }
+
+        .orga-aside-back {
             display: flex;
             align-items: center;
             height: 40px;
             line-height: 40px;
             padding: 0 20px;
             border-bottom: 1px solid #f0f0f0;
-            font-weight: 600;
             gap: 5px;
-            .svg-icon {
-                cursor: pointer;
-            }
+            cursor: pointer;
         }
-        .orga-aside-back {
-            display: flex;
-            align-items: center;
-            font-weight: normal;
-           
-        }
+        
 
         // padding-top: 20px;
         .orga-aside-top {
