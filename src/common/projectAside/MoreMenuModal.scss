@@ -72,6 +72,20 @@
         .project-menu-submenu  {
             color: #000;
         }
+
+        .project-menu-submenu-icon:hover {
+            background-color: var(--thoughtware-gray-400);
+        }
+    
+        .project-menu-submenu:hover {
+            background-color: var(--thoughtware-gray-400);
+        }
+    
+        .project-menu-select {
+            background-color: var(--thoughtware-gray-400);
+            border-left: 3px solid var(--thoughtware-blue);
+        }
+
     }
     .more-menu-name {
         height: 40px;

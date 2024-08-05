@@ -159,7 +159,7 @@ const SetAside = (props) => {
                     </div>
                     <div className="orga-aside-back" onClick={() => backProject()}>
                         <svg className="svg-icon" aria-hidden="true" >
-                            <use xlinkHref="#icon-home-gray"></use>
+                            <use xlinkHref="#icon-home-default"></use>
                         </svg>
                         返回首页
                     </div>

@@ -254,7 +254,7 @@ const Search = (props) => {
                 isShowText ?
                     <div className="search-text first-menu-text-item" onClick={() => setSearchModal(true)}>
                         <svg className="icon-15" aria-hidden="true">
-                            <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
+                            <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>
                         <div>搜索</div>
                     </div>
@@ -262,7 +262,7 @@ const Search = (props) => {
                     :
                     <div className="first-menu-link-item" data-title-right="搜索" onClick={() => setSearchModal(true)}>
                         <svg className="icon-15" aria-hidden="true">
-                            <use xlinkHref={`${theme === "default" ? "#icon-searchtop" : "#icon-searchtop-white"}`} ></use>
+                            <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>
                     </div>
 

@@ -3,8 +3,10 @@
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    padding: 10px 10px;
     gap: 6px;
+    background: #fff;
+    margin: 0 10px 10px 10px;
+    padding-right: 10px;
     .select-content {
         padding: 5px;
         background: #edf0f5;
@@ -59,7 +61,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 2px solid #f0f0f0;
+        background-color: #fff;
+        border: 0;
         height: 32px;
         line-height: 32px;
         border-radius: 4px;

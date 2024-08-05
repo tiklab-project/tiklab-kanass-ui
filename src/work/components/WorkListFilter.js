@@ -40,6 +40,7 @@ const WorkListFilter = (props) => {
         searchWorkList(workStore, values)
     };
 
+
     const sorter = (orderParams) => {
         searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {
@@ -54,21 +55,19 @@ const WorkListFilter = (props) => {
         }
 
     }
-
-    
     
 
     return (
         <div>
             {
                 !showSearch ? <div className={`worklist-filter ${showWorkListFilter ? "show-worklist-filter" : "hidden-worklist-filter"}`} >
-                    <div className="worklist-search-large" ref= {workListSearch}>
-                        <div className="search-input">
+                    <div className="worklist-search-large"  ref= {workListSearch}>
+                        <div className="search-input" >
                             <svg className="search-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-search"></use>
                             </svg>
                             <Input bordered={false} allowClear
-                                placeholder="事项标题、ID"
+                                placeholder="搜索标题、ID"
                                 className="workList-search-input"
                                 key={"search"}
                                 value={searchCondition.keyWord}
@@ -86,7 +85,7 @@ const WorkListFilter = (props) => {
                                 <use xlinkHref="#icon-search"></use>
                             </svg>
                             <Input bordered={false} allowClear
-                                placeholder="事项标题、ID"
+                                placeholder="搜索标题、ID"
                                 className="workList-search-input"
                                 key={"search"}
                                 value={searchCondition.keyWord}

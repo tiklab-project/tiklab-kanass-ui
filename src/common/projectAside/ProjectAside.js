@@ -141,7 +141,7 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                     >
                                         <svg className="icon-18" aria-hidden="true">
-                                            <use xlinkHref={`${theme === "default" ? "#icon-home-gray" : "#icon-home-white"}`}></use>
+                                            <use xlinkHref={`#icon-home-${theme}`}></use>
                                         </svg>
                                         <span>
                                             {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
@@ -152,7 +152,7 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                     >
                                         <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`${theme === "default" ? "#icon-home-gray" : "#icon-home-white"}`}></use>
+                                            <use xlinkHref={`#icon-home-${theme}`}></use>
                                         </svg>
                                         <span>
                                         {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
@@ -168,7 +168,7 @@ const ProjectAside = (props) => {
                                         onClick={() => selectMenu(item.id)}
                                     >
                                         <svg className="icon-18" aria-hidden="true">
-                                            <use xlinkHref={setIcon(item)}></use>
+                                            <use xlinkHref={`#icon-${item.icon}`}></use>
                                         </svg>
                                         <span>
                                             {item.title}
@@ -180,7 +180,7 @@ const ProjectAside = (props) => {
                                         onClick={() => selectMenu(item.id)}
                                     >
                                         <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={setIcon(item)}></use>
+                                            <use xlinkHref={`#icon-${item.icon}`}></use>
                                         </svg>
                                         <span>
                                             {item.title}

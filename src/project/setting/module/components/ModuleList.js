@@ -17,6 +17,7 @@ import { observer } from "mobx-react";
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import Button from "../../../../common/button/Button";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
+import InputSearch from "../../../../common/input/InputSearch";
 const ModuleList = (props) => {
     // 解析 moduleStore
     const { moduleList, findModuleListTree, createModule, deleteModule,
@@ -139,7 +140,7 @@ const ModuleList = (props) => {
                     </Breadcumb>
                     <div className="project-module-contant">
                         <div className="search-add">
-                            <Input
+                            {/* <Input
                                 className="module-search"
                                 placeholder="请输入名字"
                                 onChange={(value) => onSearch(value)}
@@ -150,7 +151,8 @@ const ModuleList = (props) => {
                                         }}
                                     />
                                 }
-                            />
+                            /> */}
+                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"模块名称"} />
                         </div>
                         <div className="module-table-box">
                             <Table

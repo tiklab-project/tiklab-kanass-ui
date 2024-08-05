@@ -25,48 +25,67 @@ const FirstMenu = (props) => {
         props.history.push(item.to)
         sessionStorage.setItem("menuKey", item.key)
     }
+
+    const setActiveIcon = (type) => {
+        let activeIcon = type + theme + "-active"
+        switch (theme) {
+            case "default":
+                activeIcon = type + theme + "-active";
+                break;
+            case "blue":
+                activeIcon = type + theme;
+                break;
+            case "black":
+                activeIcon = type + "blue";
+                break;
+            default:
+                activeIcon = type + theme + "-active";
+                break;
+        }
+        return activeIcon;
+    }
     // 系统顶部菜单
     const routers = [
         {
             to: '/index/home/survey',
             title: '首页',
             key: 'home',
-            icon: theme === "default" ? "home-gray" : "home-white",
-            actionIcon: theme === "default" ? "home-blue" : "home-white"
+            icon: 'home-' + theme,
+            actionIcon: setActiveIcon("home-")
         },
         {
             to: '/index/project',
             title: '项目',
             key: 'project',
-            icon: theme === "default" ? "project-gray" : "project-white",
-            actionIcon: theme === "default" ? "project-blue" : "project-white"
+            icon: 'project-' + theme,
+            actionIcon: setActiveIcon("project-")
         },
         {
             to: '/index/projectSetList',
             title: '项目集',
             key: 'projectSet',
-            icon: theme === "default" ? "projectset-gray" : "projectset-white",
-            actionIcon: theme === "default" ? "projectset-blue" : "projectset-white"
+            icon: 'projectset-' + theme,
+            actionIcon: setActiveIcon("projectset-")
         },
         {
             to: '/index/workTable',
             title: '事项',
             key: 'work',
-            icon: theme === "default" ? "work-gray" : "work-white",
-            actionIcon: theme === "default" ? "work-blue" : "work-white"
+            icon: 'work-' + theme,
+            actionIcon: setActiveIcon("work-")
         },
         {
             to: '/index/log/list',
             title: '工时',
             key: 'log',
-            icon: theme === "default" ? "log-gray" : "log-white",
-            actionIcon: theme === "default" ? "log-blue" : "log-white"
+            icon: 'log-' + theme,
+            actionIcon: setActiveIcon("log-")
         },
         {
             to: '/setting/logList',
             title: '设置',
-            key: 'setting',
-            icon: theme === "default" ? "iconsetsys" : "set-white",
+            icon: 'set-' + theme,
+            actionIcon: setActiveIcon("set-")
         }
     ]
 

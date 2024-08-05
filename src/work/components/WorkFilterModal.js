@@ -35,6 +35,7 @@ const WorkFilterModal = (props) => {
     const showModal = () => {
         if(workShowType === "list"){
             // setHeightFilter(workListSearch.current.clientWidth + 50);
+            console.log(workListSearch.current.clientWidth, "list")
             setListStyle({
                 left: workListSearch.current.clientWidth + 45,
                 top: "0px"

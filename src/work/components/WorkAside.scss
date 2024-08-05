@@ -1,7 +1,7 @@
 .work-aside {
     width: 300px;
     border-right: 1px solid var(--thoughtware-gray-200);
-
+    background-color: var(--thoughtware-gray-600);
     ul {
         padding: 0
     }
@@ -81,7 +81,9 @@
             padding: 10px;
             margin: 0 10px;
             border-radius: 5px;
-
+            .work-aside-item-icon {
+                margin-right: 5px;
+            }
             .work-aside-item-name {
                 flex: 1;
                 overflow: hidden;

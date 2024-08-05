@@ -24,7 +24,7 @@ const SprintDetailAside = (props) => {
     const { sprintDetailStore } = props;
     const { findSprint, sprint, sprintRouter, setSprintRouter } = sprintDetailStore;
     //语言包
-
+    const theme = localStorage.getItem("theme")
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;
@@ -37,32 +37,32 @@ const SprintDetailAside = (props) => {
     const allRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
-            icon: 'plan-gray',
-            whiteIcon: "plan-white",
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
             id: `/${projectId}/sprintdetail/${sprintId}/plan`,
             key: "plan",
             encoded: "plan",
         },
         {
             title: "统计",
-            icon: 'statisticslog',
-            whiteIcon: "statistics-white",
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
             id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
@@ -72,24 +72,24 @@ const SprintDetailAside = (props) => {
     const doneRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/${projectId}/sprintdetail/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "统计",
-            icon: 'statisticslog',
-            whiteIcon: "statistics-white",
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
             id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",

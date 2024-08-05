@@ -220,20 +220,23 @@ const WorkAside = (props) => {
                                 <div className="icon-10" />
                         }
                     </div>
-                    {
-                        item.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="icon-32"
-                            />
-                            :
-                            <img
-                                src={('images/workType1.png')}
-                                alt=""
-                                className="icon-32"
-                            />
-                    }
+                    <div style={{height: "44px", marginRight: "5px"}}>
+                        {
+                            item.workTypeSys?.iconUrl ?
+                                <img
+                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                    alt=""
+                                    className="icon-22"
+                                />
+                                :
+                                <img
+                                    src={('images/workType1.png')}
+                                    alt=""
+                                    className="icon-22"
+                                />
+                        }
+                    </div>
+
 
                     <div className="work-aside-item-name">
                         <div className="work-aside-item-first">
@@ -287,9 +290,7 @@ const WorkAside = (props) => {
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
             <WorkListHead />
             <div className="work-aside-option">
-                <div className="work-aside-search">
-                    <WorkListFilter showWorkListFilter={showWorkListFilter} />
-                </div>
+                
                 <Spin spinning={tableLoading} delay={500}>
                     <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >

@@ -22,6 +22,7 @@ const { Sider } = Layout;
 
 const ProjectDetailAside = (props) => {
     const { project, isShowText, SetIsShowText,  } = props;
+    const theme = localStorage.getItem("theme")
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id
@@ -33,32 +34,32 @@ const ProjectDetailAside = (props) => {
     const scrumProrouter = (projectId) => [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/projectDetail/${projectId}/survey`,
             key: "survey",
             encoded: "Survey"
         },
         {
             title: `${t('line_photo')}`,
-            icon: 'line',
-            whiteIcon: "line-white",
+            icon: 'line-' + theme,
+            defaultIcon: "line-default",
             id: `/projectDetail/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
         },
         {
             title: `${t('work')}`,
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('sprint')}`,
-            icon: 'sprint',
-            whiteIcon: "sprint-white",
+            icon: 'sprint-' + theme,
+            defaultIcon: "sprint-default",
             id: `/projectDetail/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
@@ -66,8 +67,8 @@ const ProjectDetailAside = (props) => {
 
         {
             title: `${t('version')}`,
-            icon: 'version',
-            whiteIcon: "version-white",
+            icon: 'version-' + theme,
+            defaultIcon: "version-default",
             id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
@@ -75,24 +76,24 @@ const ProjectDetailAside = (props) => {
 
         {
             title: "工时",
-            icon: 'log',
-            whiteIcon: "project-log-white",
+            icon: 'log-' + theme,
+            defaultIcon: "log-default",
             id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
-            icon: 'statisticslog',
-            whiteIcon: "statistics-white",
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
             id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
-            icon: 'milestone',
-            whiteIcon: 'milestone-white',
+            icon: 'milestone-' + theme,
+            defaultIcon: "milestone-default",
             id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
@@ -100,7 +101,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "知识库",
             icon: 'repository',
-            whiteIcon: "survey-white",
+            defaultIcon: "repository",
             id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
@@ -108,7 +109,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "测试用例",
             icon: 'test',
-            whiteIcon: "survey-white",
+            defaultIcon: "test",
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",
@@ -118,56 +119,58 @@ const ProjectDetailAside = (props) => {
     const normalProrouter = (projectId) => [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/projectDetail/${projectId}/survey`,
             key: "survey",
-            encoded: "Survey",
+            encoded: "Survey"
         },
         {
             title: "计划",
-            icon: 'plan-gray',
-            whiteIcon: "plan-white",
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
             id: `/projectDetail/${projectId}/stage`,
             key: "stage",
             encoded: "stage",
         },
         {
             title: `${t('work')}`,
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/projectDetail/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
+
         {
             title: `${t('version')}`,
-            icon: 'version',
-            whiteIcon: "version-white",
+            icon: 'version-' + theme,
+            defaultIcon: "version-default",
             id: `/projectDetail/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
+
         {
             title: "工时",
-            icon: 'log',
-            whiteIcon: "project-log-white",
+            icon: 'log-' + theme,
+            defaultIcon: "log-default",
             id: `/projectDetail/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
-            icon: 'statisticslog',
-            whiteIcon: "statistics-white",
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
             id: `/projectDetail/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
-            icon: 'milestone',
-            whiteIcon: 'milestone-white',
+            icon: 'milestone-' + theme,
+            defaultIcon: "milestone-default",
             id: `/projectDetail/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
@@ -175,6 +178,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "知识库",
             icon: 'repository',
+            defaultIcon: "repository",
             id: `/projectDetail/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
@@ -182,6 +186,7 @@ const ProjectDetailAside = (props) => {
         {
             title: "测试用例",
             icon: 'test',
+            defaultIcon: "test",
             id: `/projectDetail/${projectId}/test`,
             key: "test",
             encoded: "test",

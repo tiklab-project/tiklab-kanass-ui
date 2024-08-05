@@ -1,10 +1,11 @@
 .work-quick-filter {
+    flex: 1;
     .select-view {
         height: 32px;
     }
     .select-content {
         padding: 5px 10px;
-        background-color: var(--thoughtware-gray);
-        width: 100px;
+        background-color: var(--thoughtware-gray-400);
+        width: 100%;
     }
 }

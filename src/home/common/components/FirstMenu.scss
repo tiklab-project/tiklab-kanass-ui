@@ -1,6 +1,6 @@
 .first-sider {
     width: 75px;
-    background-color: var(--thoughtware-gray-600);
+    background-color: #f0f3fa;
     border-right: 1px solid #f0f0f0;
     position: relative;
     z-index: 1001;
@@ -80,7 +80,7 @@
         align-items: center;
         padding-left: 20px;
         cursor: pointer;
-        gap: 10px;
+        gap: 7px;
     }
 }
 
@@ -105,13 +105,12 @@
 }
     
 .first-sider-gray {
-    background-color: var(--thoughtware-gray-600);
+    background-color: #f0f3fa;
     .first-menu-link {
         &-active {
             color: var(--thoughtware-blue);
             background-color: var(--thoughtware-gray-400);
             border-left: 3px solid var(--thoughtware-blue);
-            width: calc(100% - 1px);
         }
 
         &-item:hover {

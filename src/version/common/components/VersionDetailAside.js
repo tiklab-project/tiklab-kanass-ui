@@ -23,6 +23,7 @@ const VersionDetailAside = (props) => {
     const { versionDetailStore } = props;
     const { findVersion, version, setVersionRouter, versionRouter } = versionDetailStore;
     //语言包
+    const theme = localStorage.getItem("theme")
     const { t, i18n } = useTranslation();
     // 当前选中路由
     const projectId = props.match.params.id;
@@ -49,24 +50,24 @@ const VersionDetailAside = (props) => {
     const allRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "规划",
-            icon: 'plan-gray',
-            whiteIcon: "plan-white",
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
             id: `/${projectId}/versiondetail/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
@@ -76,16 +77,16 @@ const VersionDetailAside = (props) => {
     const doneRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             id: `/${projectId}/versiondetail/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'workitem',
-            whiteIcon: "workitem-white",
+            icon: 'work-' + theme,
+            defaultIcon: "work-default",
             id: `/${projectId}/versiondetail/${versionId}/workTable`,
             key: "work",
             encoded: "work",

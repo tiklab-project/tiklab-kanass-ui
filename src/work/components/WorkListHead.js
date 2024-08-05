@@ -11,11 +11,14 @@ import WorkFilterMaster from "./WorkFilterMaster";
 import WorkFilterProject from "./WorkFilterProject";
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import WorkCreatDropdown from "./workCreatDropdown";
+import WorkSort from "./WorkSort";
+import WorkFilterModal from "./WorkFilterModal";
+import WorkListFilter from "./WorkListFilter";
 
 const WorkListHead = (props) => {
-    const { workStore } = props;
+    const { workStore, } = props;
     const { getWorkConditionPageTree, getWorkConditionPage, setWorkShowType, setViewType,
-        workShowType, viewType, workTypeList, setWorkIndex, setWorkId,
+        workShowType, viewType, workTypeList, setWorkIndex, setWorkId, searchCondition,
         getWorkBoardList, setWorkBreadCrumbText, getWorkStatus,
         getSelectUserList } = workStore;
     const projectId = props.match.params.id ? props.match.params.id : null
@@ -35,7 +38,7 @@ const WorkListHead = (props) => {
         return;
     }, [])
 
-   
+
 
     useEffect(() => {
         setWorkBreadCrumbText("全部事项")
@@ -58,7 +61,8 @@ const WorkListHead = (props) => {
         }
     }
 
-    
+
+
 
 
     return (
@@ -69,7 +73,7 @@ const WorkListHead = (props) => {
                 </div>
                 <div className="worklist-head-right">
                     <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
-                        <WorkCreatDropdown workTypeList = {workTypeList} buttonType = "svg" {...props} />
+                        <WorkCreatDropdown workTypeList={workTypeList} buttonType="svg" {...props} />
                     </PrivilegeProjectButton>
                     {/* <div style={{ positon: "relative" }} className="worklist-button-icon">
                         <svg className="icon-20" aria-hidden="true">
@@ -86,16 +90,20 @@ const WorkListHead = (props) => {
                     />
                 </div>
             </div>
+            <div className="work-aside-search">
+                <WorkListFilter showWorkListFilter={true} />
+            </div>
             <div className="worklist-head-second">
                 <WorkFilterType />
                 <WorkFilterQuick />
+                {/* 
                 {
                     props.match.path == "/workList" && <WorkFilterProject />
                 }
-                
+
                 {
                     props.match.path != "/workList" && <WorkFilterMaster />
-                }
+                } */}
             </div>
         </div>
     )

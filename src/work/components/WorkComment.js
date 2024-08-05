@@ -130,7 +130,7 @@ const WorkComment = (props) => {
     return (<>
         <div className="work-comment" ref = {workComment}>
             <div className="work-comment-box">
-                <svg className="menu-icon" aria-hidden="true">
+                <svg className="icon-32" aria-hidden="true">
                     <use xlinkHref="#icon-icontouxiang1"></use>
                 </svg>
                 <div className={`comment-botton ${isInput ? "comment-botton-hidden" : null}`} onClick={() => changeInput()}>请输入评论...</div>

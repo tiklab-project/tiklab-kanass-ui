@@ -48,12 +48,7 @@ const WorkFilterType = (props) => {
             }
             setTabValue(tabData)
         }else {
-            setTabValue({
-                id: "all", 
-                type: "system",
-                value: null,
-                label: null
-            })
+            setTabValue()
         }
         search({
             workTypeId: value? value.value : null,

@@ -91,7 +91,7 @@ const MoreMenuModel = (props) => {
                     ref={setButton}
                 >
                     <svg className="icon-18" aria-hidden="true">
-                        <use xlinkHref={`${theme === "default" ? "#icon-more" : "#icon-more-white"}`}></use>
+                        <use xlinkHref={`#icon-more-${theme}`}></use>
                     </svg>
                     <span>
                         更多
@@ -100,7 +100,7 @@ const MoreMenuModel = (props) => {
                     :
                     <div ref={setButton} className={`project-menu-submenu-icon ${morePath.indexOf(path) !== -1 ? "project-menu-select" : ""}`} onClick={() => showMoreMenu()}>
                         <svg aria-hidden="true" style={{width: "28px", height: "28px"}}>
-                            <use xlinkHref={`${theme === "default" ? "#icon-more" : "#icon-more-white"}`}></use>
+                            <use xlinkHref={`#icon-more-${theme}`}></use>
                         </svg>
                     </div>
             }
@@ -116,7 +116,7 @@ const MoreMenuModel = (props) => {
                             onClick={() => selectMenu(item.id)}
                         >
                             <svg className="icon-18" aria-hidden="true">
-                                <use xlinkHref={`#icon-${item.icon}`}></use>
+                                <use xlinkHref={`#icon-${item.defaultIcon}`}></use>
                             </svg>
                             <span>
                                 {item.title}

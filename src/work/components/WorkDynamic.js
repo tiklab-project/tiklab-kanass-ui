@@ -13,27 +13,20 @@ import { Empty } from 'antd';
 import "./WorkDynamic.scss";
 import WorkDynamicStore from '../store/WorkDynamicStore';
 import DynamicListItem from "../../common/overviewComponent/DynamicItem"
+import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
 const WorkDynamic = (props) => {
     const { workStore } = props;
-    const { findlogpage } = WorkDynamicStore;
+    const { findLogpage, logList } = WorkDynamicStore;
     const { workId } = workStore;
     const [list, setList] = useState([])
     useEffect(() => {
-        findlogpage({ workItemId: workId }).then(data => {
-            if (data.code === 0) {
-                setList(data.data.dataList)
-            }
-
-        })
-        return;
+        findLogpage({data: { workItemId: workId }})
     }, [workId])
 
     return <>
         <div className="work-dynamic">
             {
-                list && list.length > 0 ? list.map(item => {
-                    return <DynamicListItem content = {item.data} type = {item.actionType.id} />
-                }) :
+                logList && logList.length > 0 ? <DyncmicTimeAxis logList = {logList} /> :
                     <Empty />
             }
         </div>

@@ -24,7 +24,7 @@ const { Sider } = Layout;
 
 const ProjectSetDetailAside = (props) => {
     const { systemRoleStore, isShowText, SetIsShowText } = props;
-
+    const theme = localStorage.getItem("theme")
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
     const path = props.location.pathname.split("/")[3];
@@ -35,25 +35,25 @@ const ProjectSetDetailAside = (props) => {
     const projectSetRouter = [
         {
             title: `概览`,
-            icon: 'survey',
-            whiteIcon: "survey-white",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
             key: "survey",
             id: `/projectSetdetail/${projectSetId}/survey`,
             encoded: "Survey",
         },
         {
             title: `项目`,
-            icon: 'project-gray',
-            key: "projectSetProjectList",
-            whiteIcon: "project-white",
+            icon: 'project-' + theme,
+            defaultIcon: "project-default",
+            key: "project",
             id: `/projectSetdetail/${projectSetId}/projectSetProjectList`,
             encoded: "Pannel",
         },
         {
             title: `统计`,
-            icon: 'statisticslog',
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
             key: "statistics",
-            whiteIcon: "statistics-white",
             id: `/projectSetdetail/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
         }
