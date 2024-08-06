@@ -219,7 +219,7 @@ const WorkTableFilter = (props) => {
                             className="workList-search-input"
                             key={"search"}
                             onChange={(value) => inputChange("keyWord", value.target.value)}
-                            placeholder="事项标题、ID"
+                            placeholder="搜索标题、ID"
                             value={inputValue}
                         />
                     </div>

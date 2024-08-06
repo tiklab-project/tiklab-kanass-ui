@@ -894,7 +894,7 @@ const WorkBasicInfo = (props) => {
                                 >
                                     {
                                         userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.id}><Space>{item.user.nickname}</Space></Select.Option>
+                                            return <Select.Option value={item.user?.id} key={item.id}><Space>{item.user?.nickname}</Space></Select.Option>
                                         })
                                     }
                                 </Select>

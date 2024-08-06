@@ -284,7 +284,7 @@ const Search = (props) => {
                         <div className="search-input-box">
 
                             <svg className="icon-20" aria-hidden="true">
-                                <use xlinkHref="#icon-searchtop" ></use>
+                                <use xlinkHref="#icon-search-default" ></use>
                             </svg>
                             <input
                                 className={`search-input`}

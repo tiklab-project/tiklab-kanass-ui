@@ -4,9 +4,10 @@
     align-items: center;
     font-size: 12px;
     gap: 6px;
-    background: #fff;
     margin: 0 10px 10px 10px;
     padding-right: 10px;
+    background: #F1F5FC;
+    border-radius: 5px;
     .select-content {
         padding: 5px;
         background: #edf0f5;
@@ -61,7 +62,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #fff;
+        background-color: #F1F5FC;
         border: 0;
         height: 32px;
         line-height: 32px;

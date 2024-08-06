@@ -23,14 +23,14 @@ const DyncmicTimeAxis = (props) => {
                                     className={`dyncmic-timeaxis-item ${index === logList.length - 1 && dyncmicIndex === item.children.length - 1 ? "" : "dyncmic-showtimeaxis-item"}`}
                                     key = {dyncmicItem.id}
                                 >
-
+                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
                                     
                                     <div className="dyncmic-timeaxis-item-name">
                                         <div className="dynamic-user-icon">{dyncmicItem.user.nickname?.charAt(0)}</div>
 
                                     </div>
                                     <DyncmicItem content={dyncmicItem.data} type={dyncmicItem.actionType.id} key={dyncmicItem.id} />
-                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
+                                    
                                 </div>
                             })
                         }

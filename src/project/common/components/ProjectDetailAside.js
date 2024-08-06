@@ -22,7 +22,7 @@ const { Sider } = Layout;
 
 const ProjectDetailAside = (props) => {
     const { project, isShowText, SetIsShowText,  } = props;
-    const theme = localStorage.getItem("theme")
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     //语言包
     const { t, i18n } = useTranslation();
     // 项目id

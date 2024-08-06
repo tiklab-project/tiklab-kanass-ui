@@ -49,11 +49,11 @@
                 padding: 10px 0 10px 20px;
                 position: relative;
 
-                .dyncmic-timeaxis-item-name {
+                .dyncmic-timeaxis-item-time {
                     position: relative;
                 }
 
-                .dyncmic-timeaxis-item-name::before {
+                .dyncmic-timeaxis-item-time::before {
                     content: "";
                     display: inline-block;
                     position: absolute;
@@ -61,7 +61,7 @@
                     background: #dadfe6;
                     width: 7px;
                     height: 7px;
-                    top: 16px;
+                    top: 7px;
                     left: -23px;
                 }
             }

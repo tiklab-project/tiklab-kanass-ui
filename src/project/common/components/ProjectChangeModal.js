@@ -121,7 +121,7 @@ const ProjectChangeModal = (props) => {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
                         <img
                             src={setImageUrl(project?.iconUrl)}
-                            className="icon-32"
+                            className="icon-24"
                             alt=""
                         />
                         <div className={`project-text `} >

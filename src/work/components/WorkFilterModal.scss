@@ -30,7 +30,7 @@
 
     .filter-modal {
         width: 420px;
-        height: calc(100vh - 48px);
+        height: 100vh;
         background-color: #fff;
         position: absolute;
         z-index: 3;
@@ -40,7 +40,6 @@
 
     .filter-modal-title {
         line-height: 32px;
-        text-align: center;
         font-size: 15px;
         padding: 5px 15px;
         font-weight: var(--thoughtware-font-weight-bold);
@@ -49,14 +48,27 @@
         margin-bottom: 10px;
         align-items: center;
         border-bottom: 1px solid #f7f7f7;
+        // .filter-modal-title-right {
+        //     font-weight: normal;
+        //     display: flex;
+        //     align-items: center;
+        //     gap: 10px;
+        // }
     }
-
-    .workitem-filter-height-botton {
+    .workitem-filter-height-buttom {
         display: flex;
         gap: 10px;
-        justify-content: flex-end;
+        justify-content: space-between;
         padding: 10px 15px 10px;
+        .workitem-filter-height-botton {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            // padding: 10px 15px 10px;
+        }
     }
+
+    
 
     .height-filter {
         padding-top: 10px;

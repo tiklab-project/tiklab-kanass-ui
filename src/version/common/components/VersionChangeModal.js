@@ -84,7 +84,7 @@ const VersionChangeModal = (props) => {
                     isShowText ? <div className="version-title title" onClick={showMoreMenu}>
                         <img
                             src={('/images/version.png')}
-                            className="img-32"
+                            className="icon-24"
                             alt=""
                         />
 

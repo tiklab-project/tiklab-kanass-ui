@@ -9,7 +9,7 @@
     .work-aside-option {
         border-radius: 4px;
         // position: relative;
-        height: calc(100vh - 107px);
+        height: calc(100vh - 160px);
         overflow: auto;
         // overflow-y: auto;
         width: 100%;
@@ -83,6 +83,8 @@
             border-radius: 5px;
             .work-aside-item-icon {
                 margin-right: 5px;
+                height: 44px;
+                padding-top: 5px;
             }
             .work-aside-item-name {
                 flex: 1;
@@ -133,12 +135,12 @@
         }
 
         .work-aside-item:hover {
-            background-color: var(--thoughtware-gray-300);
+            background-color: var(--thoughtware-gray-410);
             color: var(--thoughtware-blue);
         }
 
         .work-aside-select {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--thoughtware-gray-410);
         }
 
         .work-aside-hidden {

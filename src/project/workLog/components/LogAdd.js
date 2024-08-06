@@ -332,7 +332,7 @@ const LogAdd = (props) => {
                         name="estimateTime"
                         className="log-form-item"
                     >
-                        <Input min={0} disabled={true} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
+                        <Input min={0} disabled={true} placeholder = {0} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
                     </Form.Item>
 
                     <Form.Item
@@ -340,7 +340,7 @@ const LogAdd = (props) => {
                         name="usedTime"
                         className="log-form-item"
                     >
-                        <Input min={0} disabled={true} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
+                        <Input min={0} disabled={true} placeholder = {0} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
                     </Form.Item>
                 </div>
                 <div className="log-add-time">
@@ -361,6 +361,7 @@ const LogAdd = (props) => {
                             type="number"
                             key="surplusTime"
                             suffix="小时"
+                            placeholder = {0}
                             style={{ width: '100%' }}
                             onBlur={(value) => changeTakeupTime(value)}
                         />
@@ -384,6 +385,7 @@ const LogAdd = (props) => {
                             key="surplusTime"
                             suffix="小时"
                             style={{ width: '100%' }}
+                            placeholder = {0}
                             onChange={() => setIsCustomSurplusTime(true)}
                         />
                     </Form.Item>
@@ -399,7 +401,7 @@ const LogAdd = (props) => {
                         },
                     ]}
                 >
-                    <TextArea rows={4} />
+                    <TextArea rows={4} placeholder = "工作内容" />
                 </Form.Item>
             </Form>
 

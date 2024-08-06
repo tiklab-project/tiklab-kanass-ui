@@ -262,7 +262,7 @@ const ProjectAddInfo = (props) => {
                             },
                         ]}
                     >
-                        <TextArea rows={3} />
+                        <TextArea rows={3} placeholder = "项目描述" />
                     </Form.Item>
                     <Form.Item
                         label="图标"

@@ -24,7 +24,7 @@ const SprintDetailAside = (props) => {
     const { sprintDetailStore } = props;
     const { findSprint, sprint, sprintRouter, setSprintRouter } = sprintDetailStore;
     //语言包
-    const theme = localStorage.getItem("theme")
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;

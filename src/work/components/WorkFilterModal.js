@@ -1,19 +1,19 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Modal } from 'antd';
+import { Modal, Select } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { observer, inject } from "mobx-react";
 import "./WorkAsideFilter.scss";
 import WorkFilterHigh from "./WorkFilterHigh";
 import "./WorkFilterModal.scss";
 const WorkFilterModal = (props) => {
-    const {style, workListSearch, workStore } = props;
-    const {workShowType} = workStore;
+    const { style, workListSearch, workStore } = props;
+    const { workShowType } = workStore;
     const filterDropDownRef = useRef();
     const layout = "horizontal"
-  
+    const heightFilterTop = useRef()
 
     const [filterModal, setFiltetModal] = useState()
-
+    
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -33,7 +33,7 @@ const WorkFilterModal = (props) => {
     const [listStyle, setListStyle] = useState()
 
     const showModal = () => {
-        if(workShowType === "list"){
+        if (workShowType === "list") {
             // setHeightFilter(workListSearch.current.clientWidth + 50);
             console.log(workListSearch.current.clientWidth, "list")
             setListStyle({
@@ -41,14 +41,14 @@ const WorkFilterModal = (props) => {
                 top: "0px"
             })
         }
-        if(workShowType === "table"){
+        if (workShowType === "table") {
             // setHeightFilter(workListSearch.current.clientWidth + 50);
             setListStyle({
                 right: "265px",
                 top: 0
             })
         }
-        if(workShowType === "bodar" || workShowType === "gantt"){
+        if (workShowType === "bodar" || workShowType === "gantt") {
             setListStyle({
                 right: "300px",
                 top: 0
@@ -57,6 +57,8 @@ const WorkFilterModal = (props) => {
         setFiltetModal(true)
     }
     
+
+
     return (
         <div className="worklist-filter-modal">
             <div className={`worklist-filter-item  ${filterModal ? 'worklist-filter-active' : ''}`} onClick={() => showModal()}>
@@ -73,16 +75,17 @@ const WorkFilterModal = (props) => {
                 footer={null}
                 style={listStyle}
             >
-                <div className="filter-modal-title">
+                <div className="filter-modal-title" ref = {heightFilterTop}>
                     <div>筛选</div>
                     <div onClick={() => setFiltetModal(false)}><CloseOutlined /></div>
+                    
                 </div>
-                <WorkFilterHigh 
-                    labelHidden={false} 
-                    layout={layout} 
-                    filterModal = {filterModal}
-                    setFiltetModal = {setFiltetModal}
-                    {...props} 
+                <WorkFilterHigh
+                    labelHidden={false}
+                    layout={layout}
+                    filterModal={filterModal}
+                    setFiltetModal={setFiltetModal}
+                    {...props}
                 />
             </div>
 

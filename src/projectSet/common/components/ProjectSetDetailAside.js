@@ -24,7 +24,7 @@ const { Sider } = Layout;
 
 const ProjectSetDetailAside = (props) => {
     const { systemRoleStore, isShowText, SetIsShowText } = props;
-    const theme = localStorage.getItem("theme")
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
     const path = props.location.pathname.split("/")[3];

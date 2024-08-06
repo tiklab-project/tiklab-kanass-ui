@@ -19,7 +19,6 @@ const { Sider } = Layout;
 const ProjectAside = (props) => {
     const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl } = props;
     const isInProject = props.location.pathname.split("/")[2] ;
-    console.log(isInProject)
     const [projectRouter, setProjectRouter] = useState([]);
 
     const [moreMenu, setMoreMenu] = useState()

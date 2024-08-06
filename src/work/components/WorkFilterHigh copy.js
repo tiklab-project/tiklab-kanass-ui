@@ -7,7 +7,6 @@ import { withRouter } from "react-router";
 import WorkFilterQuick from "./WorkFilterQuick"
 import { finWorkList } from "./WorkGetList"
 import { searchWorkList } from "./WorkSearch";
-import WorkFilterHighItem from "./WorkFilterHighItem";
 const { RangePicker } = DatePicker;
 const WorkFilterHigh = (props) => {
     // 查找表单
@@ -177,12 +176,15 @@ const WorkFilterHigh = (props) => {
         setMoreFilterValue(value)
     }
     const selectArray = [
-
+        { value: 'assigner', label: '负责人' },
+        { value: 'creater', label: '创建人' },
         { value: 'createdDate', label: '创建日期' },
         { value: 'updateDate', label: '更新日期' },
         { value: 'planStartDate', label: '计划开始日期' },
         { value: 'planEndDate', label: '计划结束日期' },
         { value: 'workPriorityIds', label: '优先级' },
+        { value: 'currentSprintIds', label: '所属迭代' },
+        { value: 'currentVersionIds', label: '所属版本' },
         { value: 'moduleIds', label: '所属模块' },
     ]
     return (
@@ -259,7 +261,40 @@ const WorkFilterHigh = (props) => {
                         }
                     </Select>
                 </Form.Item>
+                {
+                    isShow("createdDate") && <Form.Item name="createdDate" label={labelHidden ? null : "创建日期"} rules={[{ required: false }]} >
+                        <RangePicker getPopupContainer={() => heightFilter.current} />
+                    </Form.Item>
+                }
 
+                <Form.Item name="updateDate" label={labelHidden ? null : "更新日期"} rules={[{ required: false }]} >
+                    <RangePicker getPopupContainer={() => heightFilter.current} />
+                </Form.Item>
+                <Form.Item name="planStartDate" label={labelHidden ? null : "计划开始日期"} rules={[{ required: false }]} >
+                    <RangePicker getPopupContainer={() => heightFilter.current} />
+                </Form.Item>
+
+                <Form.Item name="planEndDate" label={labelHidden ? null : "计划结束日期"} rules={[{ required: false }]} >
+                    <RangePicker getPopupContainer={() => heightFilter.current} />
+                </Form.Item>
+
+                <Form.Item name="workPriorityIds" label={labelHidden ? null : "优先级"} rules={[{ required: false }]} >
+                    <Select
+                        mode="multiple"
+                        placeholder="优先级"
+                        className="work-select"
+                        key="status"
+                        maxTagCount={1}
+                        getPopupContainer={() => heightFilter.current}
+                    // bordered={false}
+                    >
+                        {
+                            priorityList && priorityList.map((item) => {
+                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                            })
+                        }
+                    </Select>
+                </Form.Item>
                 {
                     (projectType === "scrum" && !sprintId) &&
                     <Form.Item name="currentSprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
@@ -303,56 +338,42 @@ const WorkFilterHigh = (props) => {
                         </Select>
                     </Form.Item>
                 }
-                {
-                    moreFilterValue.map(item => {
-                        return (
-                            <WorkFilterHighItem
-                                labelHidden={labelHidden}
-                                priorityList={priorityList}
-                                moduleList={moduleList}
-                                heightFilter={heightFilter}
-                                filterKey={item}
-                            />
-                        )
-                    })
-                }
 
 
-                {/* <Form.Item name="moduleIds" label={labelHidden ? null : "添加条件"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
+                <Form.Item name="moduleIds" label={labelHidden ? null : "所属模块"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"
-                        className="filter-modal-title-select"
-                        value={moreFilterValue}
-                        onChange={(value) => addFilter(value)}
+                        placeholder="所属模块"
+                        className="work-select"
+                        key="assigner"
+                        maxTagCount={1}
                         getPopupContainer={() => heightFilter.current}
-                        maxTagCount={0}
-                        style={{ width: "120" }}
-                        placeholder="添加条件"
-                        options={selectArray}
-                    />
-                </Form.Item> */}
+                    >
+                        {
+                            moduleList && moduleList.map((item) => {
+                                return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
+                            })
+                        }
+                    </Select>
+                </Form.Item>
 
             </Form>
 
-
-            <div className="workitem-filter-height-buttom">
-                <Select
-                    mode="multiple"
-                    className="filter-modal-title-select"
-                    value={moreFilterValue}
-                    onChange={(value) => addFilter(value)}
-                    getPopupContainer={() => heightFilter.current}
-                    maxTagCount={0}
-                    style={{ width: "120" }}
-                    placeholder="添加条件"
-                    options={selectArray}
-                />
-                <div className="workitem-filter-height-botton">
-                    <Button onClick={() => resetFilter()}>重置</Button>
-                    <Button onClick={() => setFiltetModal(false)}>取消</Button>
-                    <Button type="primary" onClick={() => setFiltetModal(false)}>确定</Button>
-                </div>
-
+            <Select
+                mode="multiple"
+                className="filter-modal-title-select"
+                value={moreFilterValue}
+                onChange={(value) => addFilter(value)}
+                getPopupContainer={() => heightFilter.current}
+                maxTagCount={0}
+                style={{ width: "120" }}
+                placeholder="添加条件"
+                options={selectArray}
+            />
+            <div className="workitem-filter-height-botton">
+                <Button onClick={() => resetFilter()}>重置</Button>
+                <Button onClick={() => setFiltetModal(false)}>取消</Button>
+                <Button type="primary" onClick={() => setFiltetModal(false)}>确定</Button>
             </div>
         </div>
 

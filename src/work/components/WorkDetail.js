@@ -92,10 +92,11 @@ const WorkDetail = (props) => {
                 }
                 findStateNodeUserFieldList(data)
 
-                if (props.match.path === "/projectDetail/:id/work/:workId") {
-                    setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
-                    setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
-                }
+                // if (props.match.path === "/projectDetail/:id/work/:workId") {
+
+                // }
+                setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
             }
         })
     }
@@ -243,11 +244,11 @@ const WorkDetail = (props) => {
     }
 
     const focusTitleInput = () => {
-        if(isPermissionField("title")){
+        if (isPermissionField("title")) {
             inputRef.current.focus()
             setIsFocus(true)
         }
-        
+
     }
 
     const viewFlow = () => {

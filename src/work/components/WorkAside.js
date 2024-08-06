@@ -160,20 +160,23 @@ const WorkAside = (props) => {
                                                 </div>
                                         }
                                     </div>
+                                    <div style={{height: "44px", marginRight: "5px"}}>
                                     {
                                         childItem.workTypeSys?.iconUrl ?
                                             <img
                                                 src={setImageUrl(childItem.workTypeSys.iconUrl)}
                                                 alt=""
-                                                className="icon-32"
+                                                className="icon-22"
                                             />
                                             :
                                             <img
                                                 src={('images/workType1.png')}
                                                 alt=""
-                                                className="icon-32"
+                                                className="icon-22"
                                             />
                                     }
+                                    </div>
+                                   
                                     <div className="work-aside-item-name">
                                         <div className="work-aside-item-first">
                                             <span>{childItem.id}</span>
@@ -205,7 +208,7 @@ const WorkAside = (props) => {
                     className={`work-aside-item work-aside-child ${item.id === workId ? "work-aside-select" : ""}`}
                     onClick={(event) => changeWorkChilden(item, index)}
                 >
-                    {/* {Spans(num)} */}
+
                     <div className="work-aside-item-icon">
                         {
                             item.children && item.children.length > 0 ?

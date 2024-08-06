@@ -23,7 +23,7 @@ const VersionDetailAside = (props) => {
     const { versionDetailStore } = props;
     const { findVersion, version, setVersionRouter, versionRouter } = versionDetailStore;
     //语言包
-    const theme = localStorage.getItem("theme")
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     const { t, i18n } = useTranslation();
     // 当前选中路由
     const projectId = props.match.params.id;

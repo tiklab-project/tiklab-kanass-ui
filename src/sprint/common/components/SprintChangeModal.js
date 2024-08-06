@@ -83,7 +83,7 @@ const SprintChangeModal = (props) => {
                     isShowText ? <div className="sprint-title title" onClick={showMoreMenu}>
                         <img
                             src={('/images/sprint.png')}
-                            className="img-32"
+                            className="icon-24"
                             alt=""
                         />
 

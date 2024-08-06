@@ -27,7 +27,7 @@ const SetMenu = (props) => {
             {
                 isShowText ? <div ref={setButton} className="project-setting-title setting">
                     <svg className="icon-18" aria-hidden="true">
-                        <use xlinkHref={`${theme === "default" ? "#icon-set" : "#icon-set-white"}`}></use>
+                        <use xlinkHref={`#icon-set-${theme}`}></use>
                     </svg>
                     <span>
                         设置
@@ -36,7 +36,7 @@ const SetMenu = (props) => {
                     :
                     <div ref={setButton} className="project-setting-icon setting">
                         <svg className="icon-18" aria-hidden="true">
-                            <use xlinkHref={`${theme === "default" ? "#icon-set" : "#icon-set-white"}`}></use>
+                            <use xlinkHref={`#icon-set-${theme}`}></use>
                         </svg>
                     </div>
             }
