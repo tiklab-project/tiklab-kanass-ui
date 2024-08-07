@@ -5,16 +5,16 @@ import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { changeWorkItemParent } from "./WorkGetList";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId, stageId } = props;
 
-    const { workId, workShowType, findPriority, priorityList, getWorkStatus, workStatusList, 
+    const { workId, workShowType, findPriority, priorityList, getWorkStatus, workStatusList,
         demandTypeId, findWorkItemAndChidren, workList, setWorkList } = workStore;
 
-    const { addWorkChild, findSelectWorkItemList, getWorkChildList, selectChildToTal, 
-        selectWorkChildList, findChildrenLevel, getWorkBoardList,  } = workChild;
+    const { addWorkChild, findSelectWorkItemList, getWorkChildList, selectChildToTal,
+        selectWorkChildList, findChildrenLevel, getWorkBoardList, } = workChild;
     const tenant = getUser().tenant;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
@@ -116,7 +116,7 @@ const WorkChildAddmodal = (props) => {
             sprintId: sprintId,
             assigner: project?.master.id,
         }
-        if(stageId){
+        if (stageId) {
             params.stage = stageId;
         }
         createChildWorkItem(params, item)
@@ -133,7 +133,7 @@ const WorkChildAddmodal = (props) => {
             // } else if (viewType === "tile") {
             //     getWorkConditionPage()
             // }
-            findWorkItemAndChidren({id: value.id}).then(res => {
+            findWorkItemAndChidren({ id: value.id }).then(res => {
                 if (res.code === 0) {
                     const list = changeWorkItemParent(workList, workId, res.data)
                     setWorkList([...list])
@@ -289,20 +289,11 @@ const WorkChildAddmodal = (props) => {
                                 selectWorkChildList && selectWorkChildList.map(item => {
                                     return <div className="child-add-work-item" onClick={() => determineAdd(item)} key={item.id}>
                                         <div className="work-item-icon">
-                                            {
-                                                item.workTypeSys?.iconUrl ?
-                                                    <img
-                                                        alt=""
-                                                        className="svg-icon"
-                                                        src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                                    />
-                                                    :
-                                                    <img
-                                                        src={'/images/workType2.png'}
-                                                        alt=""
-                                                        className="svg-icon"
-                                                    />
-                                            }
+                                            <ImgComponent
+                                                alt=""
+                                                className="svg-icon"
+                                                src={item.workTypeSys?.iconUrl}
+                                            />
                                             <div>
                                                 <div className="work-item-id">{item.code}</div>
                                                 <div className="work-item-title">{item.title} </div>
@@ -310,21 +301,13 @@ const WorkChildAddmodal = (props) => {
 
                                         </div>
                                         <div className="work-item-right">
-                                            {
-                                                item.workPriority?.iconUrl ?
-                                                    <img
-                                                        src={setImageUrl(item.workPriority?.iconUrl)}
-                                                        alt=""
-                                                        className="svg-icon"
+                                            <ImgComponent
+                                                src={item.workPriority?.iconUrl}
+                                                isRemote = {true}
+                                                alt=""
+                                                className="svg-icon"
 
-                                                    />
-                                                    :
-                                                    <img
-                                                        src={'/images/proivilege1.png'}
-                                                        alt=""
-                                                        className="svg-icon"
-                                                    />
-                                            }
+                                            />
                                             <div className="work-item-icon">
                                                 {item.workStatus?.name}
                                             </div>

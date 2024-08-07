@@ -18,7 +18,7 @@ import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';
 import { withRouter } from "react-router";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
-import setImageUrl from "../../../common/utils/setImageUrl";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const Search = (props) => {
     const { isShowText } = props;
@@ -112,6 +112,8 @@ const Search = (props) => {
 
     const findRecent = () => {
         let projectListLength = 0;
+        setProjectList([])
+        setWorkItemList([])
         findRecentList({ model: "project", masterId: userId }).then(res => {
             if (res.code === 0) {
                 projectListLength = res.data.length
@@ -150,8 +152,8 @@ const Search = (props) => {
     //     }
     //     setShow(true)
     // }
-    useEffect(()=> {
-        if(searchModal){
+    useEffect(() => {
+        if (searchModal) {
             findRecent()
         }
         return null;
@@ -159,6 +161,8 @@ const Search = (props) => {
 
     const searchByKeyWork = (value) => {
         let projectListLength = 0;
+        setProjectList([])
+        setWorkItemList([])
         findProjectList({ projectName: value }).then(res => {
             if (res.code === 0) {
                 projectListLength = res.data.length;
@@ -309,9 +313,10 @@ const Search = (props) => {
                                                     projectList.map((item, index) => {
                                                         return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id} >
                                                             <div className="item-one" onClick={() => toSearchProject(item)}>
-                                                                <img
+
+                                                                <ImgComponent
+                                                                    src={item.iconUrl}
                                                                     alt=""
-                                                                    src={setImageUrl(item.iconUrl)}
                                                                 />
                                                                 <span>{item.projectName}</span>
                                                                 <div className="item-desc">
@@ -333,9 +338,10 @@ const Search = (props) => {
                                                     workItemList.map((item, index) => {
                                                         return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
                                                             <div className="item-one" onClick={() => toSearchWorkItem(item)}>
-                                                                <img
+
+                                                                <ImgComponent
+                                                                    src={item.workTypeSys?.iconUrl}
                                                                     alt=""
-                                                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
                                                                 />
                                                                 <span>{item.title}</span>
                                                                 <div className="item-desc">
@@ -364,12 +370,13 @@ const Search = (props) => {
                                                     {
                                                         projectList.map((item, index) => {
                                                             return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                                <div className="item-one" onClick={() => toProject(item)}>
-                                                                    <img
+                                                                <div className="item-one" onClick={() => toProject(item.object)}>
+
+                                                                    <ImgComponent
+                                                                        src={item.object?.iconUrl}
                                                                         alt=""
-                                                                        src={setImageUrl(item.iconUrl)}
                                                                     />
-                                                                    <span>{item.name}</span>
+                                                                    <span>{item.object?.projectName}</span>
                                                                     <div className="item-desc">
                                                                         {item.recentTime}
                                                                     </div>
@@ -392,14 +399,14 @@ const Search = (props) => {
                                                 {
                                                     workItemList.map((item, index) => {
                                                         return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                            <div className="item-one" onClick={() => toWorkItem(item)}>
-                                                                <img
+                                                            <div className="item-one" onClick={() => toWorkItem(item.object)}>
+                                                                <ImgComponent
+                                                                    src={item.object?.workTypeSys.iconUrl}
                                                                     alt=""
-                                                                    src={setImageUrl(item.iconUrl)}
                                                                 />
-                                                                <span>{item.name}</span>
+                                                                <span>{item.object?.title}</span>
                                                                 <div className="item-desc">
-                                                                    {item.project?.projectName}
+                                                                    {item.object?.project?.projectName}
                                                                 </div>
                                                             </div>
 

@@ -5,9 +5,9 @@ import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Spin } from 'antd';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import setImageUrl from '../../common/utils/setImageUrl';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { setWorkDeatilInList } from './WorkSearch';
+import ImgComponent from '../../common/imgComponent/ImgComponent';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -160,26 +160,17 @@ const WorkAside = (props) => {
                                                 </div>
                                         }
                                     </div>
-                                    <div style={{height: "44px", marginRight: "5px"}}>
-                                    {
-                                        childItem.workTypeSys?.iconUrl ?
-                                            <img
-                                                src={setImageUrl(childItem.workTypeSys.iconUrl)}
-                                                alt=""
-                                                className="icon-22"
-                                            />
-                                            :
-                                            <img
-                                                src={('images/workType1.png')}
-                                                alt=""
-                                                className="icon-22"
-                                            />
-                                    }
+                                    <div style={{ height: "44px", marginRight: "5px" }}>
+                                        <ImgComponent
+                                            src={childItem.workTypeSys?.iconUrl}
+                                            alt=""
+                                            className="icon-22"
+                                        />
                                     </div>
-                                   
+
                                     <div className="work-aside-item-name">
                                         <div className="work-aside-item-first">
-                                            <span>{childItem.id}</span>
+                                            <span>{childItem.code}</span>
                                         </div>
                                         <div className="work-aside-item-second" id={childItem.id}>{childItem.title}</div>
                                     </div>
@@ -223,21 +214,12 @@ const WorkAside = (props) => {
                                 <div className="icon-10" />
                         }
                     </div>
-                    <div style={{height: "44px", marginRight: "5px"}}>
-                        {
-                            item.workTypeSys?.iconUrl ?
-                                <img
-                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                    alt=""
-                                    className="icon-22"
-                                />
-                                :
-                                <img
-                                    src={('images/workType1.png')}
-                                    alt=""
-                                    className="icon-22"
-                                />
-                        }
+                    <div style={{ height: "44px", marginRight: "5px" }}>
+                        <ImgComponent
+                            src={item.workTypeSys?.iconUrl}
+                            alt=""
+                            className="icon-22"
+                        />
                     </div>
 
 
@@ -293,7 +275,7 @@ const WorkAside = (props) => {
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
             <WorkListHead />
             <div className="work-aside-option">
-                
+
                 <Spin spinning={tableLoading} delay={500}>
                     <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >

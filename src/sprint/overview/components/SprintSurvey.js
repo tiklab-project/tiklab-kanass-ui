@@ -20,6 +20,7 @@ import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const SprintSurvey = (props) => {
     const { findSprint, findSprintBurnDowmChartPage, opLogList, 
         findLogpage, logList, todoTaskList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
@@ -185,11 +186,7 @@ const SprintSurvey = (props) => {
                         <div className="sprint-info-box">
                             <div className="sprint-info-top">
                                 <div className="sprint-info-title">
-                                    <img
-                                        src={('/images/project1.png')}
-                                        alt=""
-                                        className="list-img"
-                                    />
+                                    <ColorIcon name={sprintInfo?.sprintName} className="icon-24" color={sprintInfo?.color} />
                                     {sprintInfo && sprintInfo.sprintName}
                                 </div>
                                 {

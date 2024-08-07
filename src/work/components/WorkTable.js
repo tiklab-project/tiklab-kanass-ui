@@ -11,7 +11,6 @@ import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import { setWorkDeatilInList } from "./WorkSearch";

@@ -118,6 +118,10 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                     }
+                    .work-item-title:hover {
+                        cursor: pointer;
+                        color: var(--thoughtware-blue);
+                    }
                 }
                 .work-item-master {
                     flex-shrink: 0;

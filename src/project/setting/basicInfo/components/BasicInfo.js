@@ -19,7 +19,7 @@ import ProjectIconChange from "./ProjectIconChange"
 import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Collapse } from 'antd';
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../../common/utils/setImageUrl";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 
 const { Panel } = Collapse;
 
@@ -122,7 +122,7 @@ const BasicInfo = props => {
                 iconUrl: iconUrl
             }
             updateProject(data).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     setProjectInfo(data)
                     message.success("修改成功");
                     setDisabled(true);
@@ -172,7 +172,7 @@ const BasicInfo = props => {
                     props.history.push("/index/project")
                 }
             })
-            
+
         })
 
     };
@@ -234,17 +234,12 @@ const BasicInfo = props => {
                                 >
                                     <div className="project-form-icon-content">
                                         <div>
-                                            {
-                                                iconUrl ?
-                                                    <img src={setImageUrl(iconUrl)} alt="" style={{marginRight: "10px"}} width={50} height={50} />
+                                            <ImgComponent 
+                                                src={iconUrl} 
+                                                alt="" 
+                                                style={{ marginRight: "10px", width: "50px", height: "50px" }}
+                                            />
 
-                                                    :
-                                                    <img
-                                                        src={('images/project1.png')}
-                                                        style={{marginRight: "10px"}}
-                                                        alt="" width={50} height={50}
-                                                    />
-                                            }
                                             <span>项目图标，可点击更改按钮修改icon</span>
                                         </div>
 
@@ -266,7 +261,7 @@ const BasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    // onValuesChange={onFinish}
+                                // onValuesChange={onFinish}
                                 >
                                     <Form.Item
                                         label="项目名称"
@@ -379,17 +374,17 @@ const BasicInfo = props => {
 
                 </div>
                 <div className="project-delete-confirm">
-                    <Modal 
-                        title="确定删除" 
-                        getContainer = {false} 
-                        visible={isModalVisible} 
-                        closable={false} 
-                        onOk={handleOk} 
-                        onCancel={handleCancel} 
-                        okText={"确定"} 
+                    <Modal
+                        title="确定删除"
+                        getContainer={false}
+                        visible={isModalVisible}
+                        closable={false}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                        okText={"确定"}
                         cancelText={"取消"}
-                        okType = "danger"
-                        okButtonProps={{type: "primary"}}
+                        okType="danger"
+                        okButtonProps={{ type: "primary" }}
                     >
                         <Alert message=" 此项目及其事务、组件、附件和版本将被永久删除" type="error" showIcon />
 

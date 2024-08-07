@@ -51,15 +51,10 @@
                             
                             display: inline-flex;
                             align-items: center;
-                            
+                            gap: 5px;
                             .item-icon {
                                 width: 32px;
                                 height: 32px;
-                                border-radius: 5px;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                margin-right: 5px;
                             }
                             .projectSet-color-1 {
                                 background-color: #cadbf3;
@@ -155,23 +150,6 @@
                     .projectSet-table-icon {
                         width: 32px;
                         height: 32px;
-                        border-radius: 5px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin-right: 5px;
-                    }
-                    .projectSet-color-1 {
-                        background-color: #cadbf3;
-                    }
-                    .projectSet-color-2 {
-                        background-color: #deedd7;
-                    }
-                    .projectSet-color-3 {
-                        background-color: #ffebee;
-                    }
-                    .projectSet-color-4 {
-                        background-color: #e8eaf6;
                     }
                 }
         

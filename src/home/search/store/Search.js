@@ -130,9 +130,22 @@ export class SearchStore{
         return data;
     }
 
+    // @action
+	// findRecentList = async(value) => {
+    //     const data = await Service("/recent/findRecentList", value)
+    //     return data;
+    // }
+
     @action
-	findRecentList = async(value) => {
-        const data = await Service("/recent/findRecentList", value)
+    findRecentList = async (value) => {
+        const params = {
+            orderParams: [{
+                name: "recentTime",
+                orderType: "desc"
+            }],
+            ...value
+        }
+        const data = await Service("/recent/findRecentListToModel", params)
         return data;
     }
 

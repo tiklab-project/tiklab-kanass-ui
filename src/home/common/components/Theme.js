@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Theme.scss"
-import useLocalStorageListener from "../../../common/utils/useLocalStorageListener";
+import "./Theme.scss";
 const Theme = (props) => {
     const {isShowText, theme} = props;
     const themeDrop = useRef();

@@ -5,8 +5,8 @@ import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -89,20 +89,11 @@ const WorkTypeList = (props) => {
             render: (text, record) => (
                 <div className="work-type-name" >
                     <div className="work-type-icon">
-                        {
-                            record.iconUrl ? <img
-                                src={setImageUrl(record.iconUrl)}
-                                alt=""
-                                className="icon-32"
-                            />
-
-                                :
-                                <img
-                                    src={('images/workType1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                        }
+                        <ImgComponent
+                            src={record.iconUrl}
+                            alt=""
+                            className="icon-32"
+                        />
                     </div>
                     <div className="work-type-text">{text}</div>
                 </div>
@@ -138,7 +129,7 @@ const WorkTypeList = (props) => {
             width: '20%',
             render: (text, record) => (
                 <Space size="middle">
-                   
+
                     <svg
                         className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer" }}
@@ -160,7 +151,7 @@ const WorkTypeList = (props) => {
                                 name="编辑"
                                 type="edit"
                                 id={record.id}
-                                grouper = "custom"
+                                grouper="custom"
                             >
                                 编辑
                             </WorkTypeAddmodal>
@@ -183,7 +174,7 @@ const WorkTypeList = (props) => {
                     <WorkTypeAddmodal
                         name="添加事件类型"
                         type="add"
-                        grouper = "custom"
+                        grouper="custom"
                         // addWorkTypeList={addCustomWorkTypeList}
                         // fromList={fromList}
                         // getFormList={getFormList}

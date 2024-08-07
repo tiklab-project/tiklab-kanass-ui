@@ -6,13 +6,13 @@ import WorkRelationAddmodal from "./WorkRelationAdd";
 import Button from "../../common/button/Button";
 import WorkRelationStore from "../store/WorkRelationStore";
 import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
-import setImageUrl from "../../common/utils/setImageUrl";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
     }
     const { workStore } = props;
-    const { workId, setWorkId, createRecent  } = workStore;
+    const { workId, setWorkId, createRecent } = workStore;
     const { selectWorkRelationList, getSelectWorkRelationList,
         addWorkRelation, searchAllWorkRelation, deleWorkRelation } = WorkRelationStore;
     const [selectIds, setSelectIds] = useState();
@@ -44,14 +44,14 @@ const WorkRelation = (props) => {
     const goWorkItem = (workItem) => {
         setWorkId(workItem.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray");
-        newDetailCrumbArray.push({id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl})
+        newDetailCrumbArray.push({ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: workItem.title,
             model: "workItem",
             modelId: workItem.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
         }
         createRecent(params)
     }
@@ -78,23 +78,14 @@ const WorkRelation = (props) => {
             dataIndex: ["workItem", "title"],
             key: "title",
             ellipsis: true,
-            render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record.workItem) }>
-                    {
-                        record.workItem?.workTypeSys?.iconUrl ?
-                            <img
-                                alt=""
-                                className="svg-icon"
-                                src = {setImageUrl(record.workItem?.workTypeSys?.iconUrl)}
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="svg-icon"
-                            />
-                    }
-                    <div className="work-name">{text}</div>
-                </div>
+            render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record.workItem)}>
+                <ImgComponent
+                    alt=""
+                    className="svg-icon"
+                    src={record.workItem?.workTypeSys?.iconUrl}
+                />
+                <div className="work-name">{text}</div>
+            </div>
         },
         {
             title: "事件类型",
@@ -161,7 +152,7 @@ const WorkRelation = (props) => {
             </div>
         </div>
     </Provider>
-        
+
     )
 }
 export default inject("workStore")(observer(WorkRelation));

@@ -15,9 +15,9 @@ import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectWorkTypeStore from "../store/ProjectWorkTypeStore";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../../common/utils/setImageUrl";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import "./WorkType.scss";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 
 const WorkType = (props) => {
     const store = {
@@ -115,20 +115,11 @@ const WorkType = (props) => {
             render: (text, record) => (
                 <div className="work-type-name" >
                     <div className="work-type-icon">
-                        {
-                            record.workType.iconUrl ?
-                                <img
-                                    src = {setImageUrl(record.workType.iconUrl)}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                                :
-                                <img
-                                    src={('images/workType1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                        }
+                        <ImgComponent
+                            src={record.workType?.iconUrl}
+                            alt=""
+                            className="icon-32"
+                        />
                     </div>
                     <div className="work-type-text">{text}</div>
                 </div>
@@ -158,7 +149,7 @@ const WorkType = (props) => {
             width: '10%',
             render: (text, record) => (
                 <Space size="middle">
-                   
+
                     <svg
                         className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer" }}
@@ -182,7 +173,7 @@ const WorkType = (props) => {
                             >
                                 编辑
                             </WorkTypeEditmodal>
-                            <DeleteModal deleteFunction = {deleWorkType} id = {record.id}/>
+                            <DeleteModal deleteFunction={deleWorkType} id={record.id} />
                         </>
                     }
                 </Space>

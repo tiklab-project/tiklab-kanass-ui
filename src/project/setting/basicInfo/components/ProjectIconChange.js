@@ -3,8 +3,8 @@ import { Modal, Form, Upload, message } from 'antd';
 import { withRouter } from "react-router";
 import UploadIcon1 from "../../../../assets/images/uploadIcon.png";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
-import {getUser} from "thoughtware-core-ui"
-import setImageUrl from "../../../../common/utils/setImageUrl";
+import {getUser} from "thoughtware-core-ui";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 const ProjectIconChange = (props) => {
 
     const [form] = Form.useForm();
@@ -122,16 +122,16 @@ const ProjectIconChange = (props) => {
                                         className={`project-icon ${item.iconUrl === projectIconUrl ? "icon-select" : null}`} 
                                         key={item.id} onClick={() => { setProjectIconUrl(item.iconUrl) }}
                                     >
-                                        <img src={setImageUrl(item.iconUrl)} alt="" className="icon-40"/>
+                                        <ImgComponent src={item.iconUrl} alt="" className="icon-40"/>
                                     </div>
                                 })
                             }
 
-                            <Upload {...upLoadIcon}>
+                            {/* <Upload {...upLoadIcon}>
                                 <div className="project-icon">
-                                    <img src={UploadIcon1} alt="" className="list-img"/>
+                                    <ImgComponent src={UploadIcon1} alt="" className="list-img"/>
                                 </div>
-                            </Upload>
+                            </Upload> */}
                         </div>
                     </Form.Item>
                 </Form>

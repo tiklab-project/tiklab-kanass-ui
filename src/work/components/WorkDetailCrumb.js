@@ -1,7 +1,7 @@
 import React from "react";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import "./WorkDetailCrumb.scss";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 const WorkDetailCrumb = (props) => {
     const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId } = props;
@@ -65,39 +65,23 @@ const WorkDetailCrumb = (props) => {
                                 let html;
                                 if (index === 0) {
                                     html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
-                                        {
-                                            item.type === "flow" ? <img
-                                                src={item.iconUrl}
-                                                alt=""
-                                                className="img-icon-right"
-                                            />
-                                                :
-                                                <img
-                                                    src={setImageUrl(item.iconUrl)}
-                                                    alt=""
-                                                    className="img-icon-right"
-                                                />
-                                        }
+                                        <ImgComponent
+                                            src={item.iconUrl}
+                                            alt=""
+                                            className="img-icon-right"
+                                        />
 
                                         <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
                                 } else {
                                     html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                         <span style={{ padding: "0 10px" }}>/</span>
-                                        {
-                                            item.type === "flow" ? <img
-                                                src={item.iconUrl}
-                                                alt=""
-                                                className="img-icon-right"
-                                            />
-                                                :
-                                                <img
+                                        <ImgComponent
 
-                                                    src={setImageUrl(item.iconUrl)}
+                                                    src={item.iconUrl}
                                                     alt=""
                                                     className="img-icon-right"
                                                 />
-                                        }
                                         <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
                                 }

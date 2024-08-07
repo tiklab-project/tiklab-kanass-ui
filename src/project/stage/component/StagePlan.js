@@ -12,8 +12,8 @@ import StagePlanAddmodal from "./StagePlanAddModal";
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import InputSearch from "../../../common/input/InputSearch"
-import "./StagePlan.scss"
-import setImageUrl from "../../../common/utils/setImageUrl";
+import "./StagePlan.scss";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const StagePlan = (props) => {
     const { stageStore, stageId } = props;
@@ -118,7 +118,7 @@ const StagePlan = (props) => {
      * @param {标题} value 
      */
     const onSearch = (value) => {
-        findWorkItemListByStage({stageId: stageId, workItemName: value }).then(res => {
+        findWorkItemListByStage({ stageId: stageId, workItemName: value }).then(res => {
             if (res.code === 0) {
                 setStageChild(res.data)
             }
@@ -218,20 +218,11 @@ const StagePlan = (props) => {
                                                 :
                                                 <div style={{ width: "18px", height: "18px" }}></div>
                                         }
-                                        {
-                                            item.workTypeSys?.iconUrl ?
-                                                <img
-                                                    src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                                    alt=""
-                                                    className="img-icon-right"
-                                                />
-                                                :
-                                                <img
-                                                    src={('images/workType1.png')}
-                                                    alt=""
-                                                    className="img-icon-right"
-                                                />
-                                        }
+                                        <ImgComponent
+                                            src={item.workTypeSys?.iconUrl}
+                                            alt=""
+                                            className="img-icon-right"
+                                        />
                                         <div className="workitemName">{item.title}</div>
                                     </div>
 
@@ -264,7 +255,7 @@ const StagePlan = (props) => {
                     type="add"
                     stageId={stageId}
                     stageWorkIds={stageWorkIds}
-                    setStageWorkIds = {setStageWorkIds}
+                    setStageWorkIds={setStageWorkIds}
                     setStageChild={setStageChild}
                     {...props}
                 />

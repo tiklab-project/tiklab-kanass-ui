@@ -11,7 +11,6 @@ import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 // import Gantt from "./GanttTest"
 import { withRouter } from "react-router";
-import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
 import { getVersionInfo } from "thoughtware-core-ui"
@@ -74,7 +73,6 @@ const WorkGantt = (props) => {
                                 <Gantt 
                                     workList={workList} 
                                     editWork={editWork} 
-                                    setImageUrl = {setImageUrl} 
                                     projectId = {projectId}
                                     workStore = {WorkStore}
                                     WorkDetailDrawer = {WorkDetailDrawer}

@@ -115,6 +115,7 @@ const VersionDetailAside = (props) => {
                 ChangeModal={VersionChangeModal}
                 initRouters={versionRouter}
                 path={path}
+                backName = {"返回项目"}
                 setUrl = {`/${projectId}/versiondetail/${versionId}/setting`}
                 backUrl = {`/projectDetail/${projectId}/version`}
             />

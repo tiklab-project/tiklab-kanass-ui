@@ -3,7 +3,7 @@ import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../common/utils/setImageUrl";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle, stageList } = props;
     const modelRef = useRef()
@@ -66,8 +66,8 @@ const WorkCreatDropdown = (props) => {
                             key={item.id}
                         >
                             {/* <div> */}
-                                <img
-                                    src = {setImageUrl(item.workType?.iconUrl)}
+                                <ImgComponent
+                                    src = {item.workType?.iconUrl}
                                     alt=""
                                     className="img-icon-right"
                                 />

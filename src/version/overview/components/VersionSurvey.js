@@ -17,7 +17,7 @@ import moment from 'moment';
 import VersionSurveyStore from "../store/VersionSurveyStore";
 import WorkStore from "../../../work/store/WorkStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
-import TodoListBox from "../../../common/overviewComponent/TodoListBox";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import VersionStartState from "./VersionStartState";
 import VersionEndState from "./VersionEndState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
@@ -199,11 +199,7 @@ const VersionSurvey = (props) => {
                             </div> */}
                              <div className="version-info-top">
                                 <div className="version-info-title">
-                                    <img
-                                        src={('/images/project1.png')}
-                                        alt=""
-                                        className="list-img"
-                                    />
+                                    <ColorIcon name = {versionInfo?.name} className = "list-img" color = {versionInfo?.color}/>
                                     {versionInfo && versionInfo.name}
                                 </div>
                                 {

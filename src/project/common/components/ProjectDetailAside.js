@@ -212,6 +212,7 @@ const ProjectDetailAside = (props) => {
                 SetIsShowText={SetIsShowText}
                 ChangeModal={ProjectChangeModal}
                 initRouters={allProjectRouter}
+                backName = {"返回首页"}
                 path={path}
                 setUrl = {`/projectDetail/${project.id}/projectSetDetail/basicInfo`}
                 backUrl = {`/index/project`}

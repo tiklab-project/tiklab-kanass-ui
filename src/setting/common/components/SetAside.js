@@ -14,12 +14,11 @@ import { PrivilegeButton } from "thoughtware-privilege-ui";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
 import Logo from "../../../home/common/components/Logo"
 import { observer } from 'mobx-react';
-import useLocalStorageListener from '../../../common/utils/useLocalStorageListener';
 const SetAside = (props) => {
     const { setSelectKey, selectKey } = SettingHomeStore;
     // 无子级菜单处理
     // const [selectKey, setSelectKey] = useState("/organ/organ");
-    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
+    const theme = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     
     const [router, setRouterMenu] = useState(setDevRouter);
     const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
@@ -144,10 +143,7 @@ const SetAside = (props) => {
         sessionStorage.setItem("menuKey", "home")
     }
 
-    useLocalStorageListener("theme", (updatedTraceInfo) => {
-        console.log("data最新值：", updatedTraceInfo)
-        setTheme(updatedTraceInfo)
-    })
+
 
     return (
         <Fragment>

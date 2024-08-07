@@ -11,12 +11,11 @@ import { observer } from "mobx-react";
 import { Empty, Row, Col } from "antd";
 import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
-import { getUser } from 'thoughtware-core-ui';
 import BasicInfoStore from "../store/BasicInfoStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
-import TodoListBox from "../../../common/overviewComponent/TodoListBox";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ColorIcon from "../../../common/colorIcon/colorIcon";
 const ProjectSetSurvey = props => {
 
     const { logList, findProjectSetLogpage, createRecent } = BasicInfoStore;
@@ -70,7 +69,7 @@ const ProjectSetSurvey = props => {
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
                             <div className="projectSet-info">
-                                <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
+                                <ColorIcon color = {projectSet.color} name = {projectSet.name} className = "projectSet-icon"/>
                                 <div className="projectSet-info-content">
                                     <div className="projectSet-info-content-item box-title">
                                         {projectSet?.name}
@@ -115,8 +114,8 @@ const ProjectSetSurvey = props => {
                                         >
                                             <div className="projectSet-process-project-left">
                                                 <div>
-                                                    <img
-                                                        src={setImageUrl(item.iconUrl)}
+                                                    <ImgComponent
+                                                        src={item.iconUrl}
                                                         className="icon-32"
                                                         title={item.projectName}
                                                         alt=""

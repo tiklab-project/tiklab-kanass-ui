@@ -15,8 +15,8 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import { withRouter } from 'react-router';
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
-import setImageUrl from '../../../common/utils/setImageUrl';
 import DeleteModal from '../../../common/deleteModal/deleteModal';
+import ImgComponent from '../../../common/imgComponent/ImgComponent';
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -65,20 +65,11 @@ const ProjectSetProjectList = (props) => {
             align: "left",
             render: (text, record) => <div className="project-name" onClick={() => goProdetail(record)} >
                 <div className="project-icon">
-                    {
-                        record.iconUrl ?
-                            <img
-                                src={setImageUrl(record.iconUrl)}
-                                alt=""
-                                className="icon-32"
-                            />
-                            :
-                            <img
-                                src={('/images/project1.png')}
-                                alt=""
-                                className="icon-32"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.iconUrl}
+                        alt=""
+                        className="img-32"
+                    />
 
                 </div>
                 <div>
@@ -166,7 +157,7 @@ const ProjectSetProjectList = (props) => {
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
                     </span> */}
-                     <DeleteModal deleteFunction={deleProjectSet} id={record.id} />
+                    <DeleteModal deleteFunction={deleProjectSet} id={record.id} />
 
                 </Space>
             )

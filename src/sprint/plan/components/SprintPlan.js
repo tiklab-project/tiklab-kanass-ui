@@ -7,11 +7,11 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import SprintPlanStore from "../stores/SprintPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { useDebounce } from "../../../common/utils/debounce";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import { Modal, message } from "antd";
 import Button from "../../../common/button/Button";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -30,7 +30,7 @@ const SprintPlan = (props) => {
         planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, listType, setListType } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
-    const [endSprintId, setEndSprintId ] = useState();
+    const [endSprintId, setEndSprintId] = useState();
     const [showModal, setShowModal] = useState(false);
     const [actionType, setActionType] = useState("");
     // 拖放效果
@@ -141,24 +141,24 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
-                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
-                        if(res.code === 0){
+                    findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
+                        if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setNoPlanSprintWorkList(newNoPlanWorkList)
-        
-                            const addWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+
+                            const addWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             planSprintWorkList.unshift(...addWorkList)
                             setPlanSprintWorkList(planSprintWorkList)
                         }
                     })
-                   
+
                 }
             })
         }
         setShowModal(false)
     }
-    
+
     const delSprintPlan = (Sid) => {
         event.preventDefault();
         setActionType("delete")
@@ -211,18 +211,18 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
-                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
-                        if(res.code === 0){
+                    findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
+                        if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setPlanSprintWorkList(newNoPlanWorkList)
-        
-                            const addWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+
+                            const addWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             noPlanSprintWorkList.unshift(...addWorkList)
                             setNoPlanSprintWorkList(noPlanSprintWorkList)
                         }
                     })
-                    
+
                 }
 
             })
@@ -230,20 +230,20 @@ const SprintPlan = (props) => {
         setShowModal(false)
     }
 
-    const submitOne= () => {
-        if(actionType === "delete"){
+    const submitOne = () => {
+        if (actionType === "delete") {
             delSprintOnePlan(endSprintId)
         }
-        if(actionType === "update"){
+        if (actionType === "update") {
             moveOneWorkItem(endSprintId)
         }
     }
 
     const submitList = () => {
-        if(actionType === "delete"){
+        if (actionType === "delete") {
             delListSprintPlan(endSprintId)
         }
-        if(actionType === "update"){
+        if (actionType === "update") {
             moveWorkItemList(endSprintId)
         }
     }
@@ -384,7 +384,7 @@ const SprintPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                            imgUrl={item.workType?.iconUrl}
                                         />
                                     })
                                 }
@@ -440,21 +440,12 @@ const SprintPlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                }
+                                                />
 
                                             </div>
                                             <div className="work-item-info">
@@ -497,7 +488,7 @@ const SprintPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={item.workType?.iconUrl}
                                         />
                                     })
                                 }
@@ -526,7 +517,7 @@ const SprintPlan = (props) => {
                                 title={"状态"}
                                 ismult={true}
                                 value={searchCondition?.workStatusIds}
-                                positionType = "right"
+                                positionType="right"
                             >
                                 {
                                     workStatusList.map(item => {
@@ -555,21 +546,12 @@ const SprintPlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                }
+                                                />
 
                                             </div>
                                             <div className="work-item-info">
@@ -614,10 +596,10 @@ const SprintPlan = (props) => {
                         <Button key="back" onClick={() => setShowModal(false)}>
                             取消
                         </Button>
-                        <Button key="primary" type="primary" onClick = {() => submitList(endSprintId)}>
+                        <Button key="primary" type="primary" onClick={() => submitList(endSprintId)}>
                             是
                         </Button>
-                        <Button type="primary" onClick = {() => submitOne(endSprintId)}>
+                        <Button type="primary" onClick={() => submitOne(endSprintId)}>
                             否
                         </Button>
                     </div>

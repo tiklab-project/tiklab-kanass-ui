@@ -12,8 +12,8 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./ProjectChangeModal.scss";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { Tooltip } from "antd";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const ProjectChangeModal = (props) => {
     const { isShowText, projectStore, theme } = props;
     const { findMyAllProjectList,allProlist, findProjectSortRecentTime, project, createRecent, searchpro } = projectStore;
@@ -119,8 +119,8 @@ const ProjectChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
-                        <img
-                            src={setImageUrl(project?.iconUrl)}
+                        <ImgComponent
+                            src={project?.iconUrl}
                             className="icon-24"
                             alt=""
                         />
@@ -141,12 +141,11 @@ const ProjectChangeModal = (props) => {
                     :
                     <Tooltip placement="right" title={project?.projectName}>
                         <div className='project-title-icon' onClick={showMoreMenu} >
-                            <img
-                                src={setImageUrl(project?.iconUrl)}
+                            <ImgComponent
+                                src={project?.iconUrl}
                                 title={project?.projectName}
                                 // alt={project?.projectName}
-                                className="icon-32"
-                                style={{ marginRight: "0px" }}
+                                className="img-32"
                             />
                             <div className={`project-toggleCollapsed`}>
                                 <svg className="icon-15" aria-hidden="true">
@@ -170,8 +169,8 @@ const ProjectChangeModal = (props) => {
                     onMouseOver={() => handleMouseOver(project.id)}
                     onMouseOut={handleMouseOut}
                 >
-                    <img
-                        src={setImageUrl(project.iconUrl)}
+                    <ImgComponent
+                        src={project.iconUrl}
                         className="icon-24"
                         title={project.projectName}
                         alt=""
@@ -197,8 +196,8 @@ const ProjectChangeModal = (props) => {
                                 onMouseOver={() => handleMouseOver(item.id)}
                                 onMouseOut={handleMouseOut}
                             >
-                                <img
-                                    src={setImageUrl(item.iconUrl)}
+                                <ImgComponent
+                                    src={item.iconUrl}
                                     className="icon-24"
                                     title={item.projectName}
                                     alt=""

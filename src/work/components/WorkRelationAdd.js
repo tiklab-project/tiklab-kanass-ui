@@ -5,7 +5,7 @@ import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../common/utils/setImageUrl";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
     const tenant = getUser().tenant;
@@ -199,41 +199,24 @@ const WorkRelationAddModal = (props) => {
                                         workRelationList && workRelationList.map(item => {
                                             return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>
                                                 <div className="work-item-icon">
-                                                    {
-                                                        item.workTypeSys?.iconUrl ?
-                                                            <img
-                                                                alt=""
-                                                                className="svg-icon"
-                                                                src={setImageUrl(item.workTypeSys?.iconUrl)}
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={'/images/workType2.png'}
-                                                                alt=""
-                                                                className="svg-icon"
-                                                            />
-                                                    }
+                                                    <ImgComponent
+                                                        alt=""
+                                                        className="svg-icon"
+                                                        src={item.workTypeSys?.iconUrl}
+                                                    />
                                                     <div>
                                                         <div className="work-item-id">{item.code}</div>
                                                         <div className="work-item-title">{item.title} </div>
                                                     </div>
                                                 </div>
                                                 <div className="work-item-right">
-                                                    {
-                                                        item.workPriority?.iconUrl ?
-                                                            <img
-                                                                src={setImageUrl(item.workPriority?.iconUrl)}
-                                                                alt=""
-                                                                className="svg-icon"
 
-                                                            />
-                                                            :
-                                                            <img
-                                                                src={'/images/proivilege1.png'}
-                                                                alt=""
-                                                                className="svg-icon"
-                                                            />
-                                                    }
+
+                                                    <ImgComponent
+                                                        alt=""
+                                                        className="svg-icon"
+                                                        src={item.workPriority?.iconUrl}
+                                                    />
                                                     <div className="work-item-icon">
                                                         {item.workStatus?.name}
                                                     </div>

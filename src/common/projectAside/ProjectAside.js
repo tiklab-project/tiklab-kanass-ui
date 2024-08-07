@@ -13,12 +13,11 @@ import { Layout } from "antd";
 import SetMenu from "./SetMenu";
 import MoreMenuModel from "./MoreMenuModal";
 import "./ProjectAside.scss"
-import useLocalStorageListener from '../utils/useLocalStorageListener';
 const { Sider } = Layout;
 
 const ProjectAside = (props) => {
-    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl } = props;
-    const isInProject = props.location.pathname.split("/")[2] ;
+    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl, backName } = props;
+    const isInProject = props.location.pathname.split("/")[2];
     const [projectRouter, setProjectRouter] = useState([]);
 
     const [moreMenu, setMoreMenu] = useState()
@@ -79,10 +78,6 @@ const ProjectAside = (props) => {
         props.history.push(backUrl)
     }
 
-    useLocalStorageListener("theme", (updatedTraceInfo) => {
-        console.log("data最新值：", updatedTraceInfo)
-        getThemeClass(updatedTraceInfo)
-    })
 
     const getThemeClass = (theme) => {
         let name = "default"
@@ -131,7 +126,7 @@ const ProjectAside = (props) => {
                 className={`project-detail-side ${themeClass}`}
             >
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>
-                    <ChangeModal isShowText={isShowText} theme = {theme}/>
+                    <ChangeModal isShowText={isShowText} theme={theme} />
                     <div className="project-menu" >
                         <div className="project-back-project">
                             {
@@ -143,7 +138,7 @@ const ProjectAside = (props) => {
                                             <use xlinkHref={`#icon-home-${theme}`}></use>
                                         </svg>
                                         <span>
-                                            {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
+                                            {backName}
                                         </span>
                                     </div>
                                     :
@@ -154,7 +149,7 @@ const ProjectAside = (props) => {
                                             <use xlinkHref={`#icon-home-${theme}`}></use>
                                         </svg>
                                         <span>
-                                        {isInProject === "projectDetail" ? "返回首页" : "返回项目"}
+                                            {backName}
                                         </span>
                                     </div>
                             }
@@ -193,7 +188,7 @@ const ProjectAside = (props) => {
                         />}
                     </div>
 
-                    <SetMenu isShowText={isShowText} setUrl={setUrl} theme = {theme}/>
+                    <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
                     {/* <div className="project-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ? <svg className="project-expend-icon" aria-hidden="true">

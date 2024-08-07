@@ -5,7 +5,7 @@ import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../common/utils/setImageUrl";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const WorkTypeSystem = (props) => {
     const store = {
@@ -89,22 +89,11 @@ const WorkTypeSystem = (props) => {
             render: (text, record) => (
                 <div className="work-type-name" >
                     <div className="work-type-icon">
-                        {
-                            record.iconUrl ? <Fragment>
-                                <img
-                                    src={setImageUrl(record.iconUrl)}
+                            <ImgComponent
+                                    src={record.iconUrl}
                                     alt=""
                                     className="icon-32"
                                 />
-                            </Fragment>
-
-                                :
-                                <img
-                                    src={('images/workType1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                        }
                     </div>
                     <div className="work-type-text">{text}</div>
                 </div>

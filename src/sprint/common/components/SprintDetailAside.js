@@ -133,6 +133,7 @@ const SprintDetailAside = (props) => {
                 SetIsShowText={SetIsShowText}
                 ChangeModal={SprintChangeModal}
                 initRouters={sprintRouter}
+                backName = {"返回项目"}
                 path={path}
                 setUrl = {`/${projectId}/sprintdetail/${sprintId}/setting`}
                 backUrl = {`/projectDetail/${projectId}/sprint`}

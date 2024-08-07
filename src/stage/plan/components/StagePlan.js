@@ -7,9 +7,9 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import StagePlanStore from "../stores/StagePlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { useDebounce } from "../../../common/utils/debounce";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const StagePlan = (props) => {
     const store = {
         stagePlanStore: StagePlanStore,
@@ -21,7 +21,7 @@ const StagePlan = (props) => {
     // 显示事项详情
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
-        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType, 
+        userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType,
         deleteWorkItem, workId, deleteWorkItemAndChildren } = WorkStore;
     const { getNoPlanWorkList, noPlanWorkList, setNoPlanWorkList, getWorkList, planWorkList, setPlanWorkList,
         findStageList, createStageWorkItem, deleteStageWorkItemCondition, noPlanSearchCondition, searchCondition,
@@ -100,7 +100,7 @@ const StagePlan = (props) => {
         event.preventDefault();
         let params = {
             workItem: {
-                id:moveWorkId
+                id: moveWorkId
             },
             stageId: stageId
         }
@@ -129,7 +129,7 @@ const StagePlan = (props) => {
             stageId: stageId
         }
         // 移动拖动的元素到所选择的放置目标节点
-        if (startStageId && !Sid ) {
+        if (startStageId && !Sid) {
             dragEvent.style.background = "";
             deleteStageWorkItemCondition(params).then((res) => {
                 if (res.code === 0) {
@@ -146,7 +146,7 @@ const StagePlan = (props) => {
     }
 
     const handleChange = useDebounce((field, value) => {
-        getNoPlanWorkList({ 
+        getNoPlanWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 20,
@@ -156,12 +156,12 @@ const StagePlan = (props) => {
     }, [500])
 
     const findStageWorkItem = useDebounce((field, value) => {
-        getWorkList({ 
+        getWorkList({
             [field]: value,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1
-            } 
+            }
         })
     }, [500])
 
@@ -218,11 +218,11 @@ const StagePlan = (props) => {
 
     const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setIsModalVisible(false)
-                if(listType === "noPlan"){
+                if (listType === "noPlan") {
                     removeNodeInTree(noPlanWorkList, null, workId);
-                    if(noPlanWorkList.length <= 0){
+                    if (noPlanWorkList.length <= 0) {
                         getNoPlanWorkList(
                             {
                                 pageParam: {
@@ -233,9 +233,9 @@ const StagePlan = (props) => {
                         )
                     }
                     setNoPlanWorkList([...noPlanWorkList])
-                }else {
-                    removeNodeInTree(planWorkList,null, workId);
-                    if(planWorkList.length <= 0){
+                } else {
+                    removeNodeInTree(planWorkList, null, workId);
+                    if (planWorkList.length <= 0) {
                         getWorkList(
                             {
                                 pageParam: {
@@ -248,8 +248,8 @@ const StagePlan = (props) => {
                     setPlanWorkList([...planWorkList])
                 }
             }
-            
-            
+
+
         })
     }
 
@@ -282,7 +282,7 @@ const StagePlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                            imgUrl={item.workType.iconUrl}
                                         />
                                     })
                                 }
@@ -338,21 +338,12 @@ const StagePlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                }
+                                                />
 
                                             </div>
                                             <div className="work-item-info">
@@ -398,7 +389,7 @@ const StagePlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={item.workType?.iconUrl}
                                         />
                                     })
                                 }
@@ -455,22 +446,12 @@ const StagePlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32" 
-                                                        />
-                                                }
-
+                                                />
                                             </div>
                                             <div className="work-item-info">
                                                 <div className="work-item-id">{item.id}</div>
@@ -501,7 +482,7 @@ const StagePlan = (props) => {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 showPage={false}
-                delectCurrentWorkItem = {delectCurrentWorkItem}
+                delectCurrentWorkItem={delectCurrentWorkItem}
                 {...props}
             />
         </div>

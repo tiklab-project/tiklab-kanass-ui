@@ -14,12 +14,11 @@ import { Empty, Tabs, Spin } from 'antd';
 import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage"
-import setImageUrl from '../../../common/utils/setImageUrl';
-import TodoListItem from '../../../common/overviewComponent/TodoListItem';
 import WorkItemTrend from './WorkItemTrend';
 import ProjectStatusNum from './ProjectStatusNum';
 import WorkItemSurvey from './WorkItemSurvey';
 import TodoStatistics from './TodoStatistics';
+import ImgComponent from '../../../common/imgComponent/ImgComponent';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -180,21 +179,11 @@ const HomeSurvey = (props) => {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
                                 return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
                                     <div className="item-title">
-                                        {
-                                            item.iconUrl ?
-                                                <img
-                                                    alt=""
-                                                    className="icon-32"
-                                                    src={setImageUrl(item.iconUrl)}
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/project1.png')}
-                                                    alt=""
-                                                    className="icon-32"
-                                                />
-
-                                        }
+                                        <ImgComponent
+                                            src={item.iconUrl}
+                                            alt=""
+                                            className="icon-32"
+                                        />
                                         <span className="item-name">{item.projectName}</span>
                                     </div>
                                     <div className="item-work">
@@ -236,8 +225,8 @@ const HomeSurvey = (props) => {
                 </div>
 
             </div>
-            <TodoStatistics isHome = {true} />
-                        
+            <TodoStatistics isHome={true} />
+
         </div>
     );
 }

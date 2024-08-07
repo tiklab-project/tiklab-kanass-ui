@@ -98,6 +98,7 @@ const ProjectSetDetailAside = (props) => {
                 SetIsShowText={SetIsShowText}
                 ChangeModal={ProjectSetChangeModal}
                 initRouters={projectSetRouter}
+                backName = {"返回首页"}
                 path={path}
                 setUrl={`/projectSetdetail/${projectSetId}/projectSetset/basicInfo`}
                 backUrl={`/index/projectSetList`}

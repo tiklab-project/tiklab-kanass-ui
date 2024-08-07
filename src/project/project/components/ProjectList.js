@@ -8,10 +8,10 @@ import { useState } from "react";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import "./projectList.scss";
 import { useDebounce } from "../../../common/utils/debounce";
 import ProjectFilterQuick from "./ProjectFilterQuick";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -27,7 +27,7 @@ const ProjectList = (props) => {
 
     useEffect(() => {
         setActiveTabs("1")
-        findJoinProjectList({focusUser: null, creator: null, projectName: null})
+        findJoinProjectList({ focusUser: null, creator: null, projectName: null })
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)
@@ -112,13 +112,13 @@ const ProjectList = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectList({focusUser: null, creator: null, projectName: null })
+                findJoinProjectList({ focusUser: null, creator: null, projectName: null })
                 break;
             case "3":
-                findJoinProjectList({ focusUser: userId,  creator: null, projectName: null })
+                findJoinProjectList({ focusUser: userId, creator: null, projectName: null })
                 break;
             case "4":
-                findJoinProjectList({ focusUser: null, creator: userId, projectName: null});
+                findJoinProjectList({ focusUser: null, creator: userId, projectName: null });
                 break
             default:
                 break;
@@ -170,21 +170,11 @@ const ProjectList = (props) => {
             render: (text, record) =>
                 <div className="project-name" onClick={() => goProdetail(record)} >
                     <div className="project-icon">
-                        {
-                            record.iconUrl ?
-                                <img
-                                    alt=""
-                                    className="icon-32"
-                                    src={setImageUrl(record.iconUrl)}
-                                />
-                                :
-                                <img
-                                    src={('/images/project1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                        }
-
+                        <ImgComponent
+                            src={record.iconUrl}
+                            alt=""
+                            className="icon-32"
+                        />
                     </div>
                     <div>
                         <div className="project-key">{record.projectKey}</div>
@@ -290,21 +280,11 @@ const ProjectList = (props) => {
 
                                 return <div className="project-item" key={item.id} onClick={() => goProdetail(item)}>
                                     <div className="item-title">
-                                        {
-                                            item.iconUrl ?
-                                                <img
-                                                    alt=""
-                                                    className="icon-32"
-                                                    src={setImageUrl(item.iconUrl)}
-                                                />
-                                                :
-                                                <img
-                                                    src={('/images/project1.png')}
-                                                    alt=""
-                                                    className="icon-32"
-                                                />
-
-                                        }
+                                        <ImgComponent
+                                            src={item.iconUrl}
+                                            alt=""
+                                            className="icon-32"
+                                        />
                                         <span className="item-name">{item.projectName}</span>
                                     </div>
                                     <div className="item-work">

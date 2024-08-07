@@ -6,7 +6,7 @@ import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";
 import {inject, observer} from "mobx-react";
 import { withRouter } from "react-router";
-import setImageUrl from "../../../common/utils/setImageUrl";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const layout = {
     labelCol: {
         span: 6,
@@ -244,16 +244,16 @@ const WorkTypeAddModal = (props) => {
                                 {
                                     iconList && iconList.map((item) => {
                                         return <div className={`work-type-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                            <img src={setImageUrl(item.iconUrl)} alt="" className="icon-40"/>
+                                            <ImgComponent src={item.iconUrl} alt="" className="icon-40"/>
                                         </div>
                                     })
                                 }
 
-                                <Upload {...upLoadIcon}>
+                                {/* <Upload {...upLoadIcon}>
                                     <div className="work-type-icon">
                                         <img src={UploadIcon1} alt="" className="img-icon-right"/>
                                     </div>
-                                </Upload>
+                                </Upload> */}
                             </div>
                         </Form.Item>
                     </Form>

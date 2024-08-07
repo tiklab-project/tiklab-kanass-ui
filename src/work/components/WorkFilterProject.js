@@ -3,7 +3,6 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterProject.scss";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { searchWorkList } from "./WorkSearch";
 
 const WorkFilterProject = (props) => {
@@ -56,7 +55,7 @@ const WorkFilterProject = (props) => {
                         value={item.id}
                         label={item.projectName}
                         key={item.id}
-                        imgUrl={setImageUrl(item.iconUrl)}
+                        imgUrl={item.iconUrl}
                     />
                 })
             }

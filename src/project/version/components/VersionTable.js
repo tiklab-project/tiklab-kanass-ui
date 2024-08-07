@@ -19,7 +19,7 @@ import InputSearch from '../../../common/input/InputSearch';
 import { getUser } from "thoughtware-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
-
+import ColorIcon from "../../../common/colorIcon/ColorIcon"
 const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
@@ -140,11 +140,7 @@ const VersionTable = (props) => {
             width: "25%",
             render: (text, record) => (
                 <div className="version-master" onClick={() => goDetail(record.id, text)}>
-                    <img
-                        src={'/images/version.png'}
-                        alt=""
-                        className="icon-32"
-                    />
+                    <ColorIcon name = {text} className = "icon-32" color = {record.color}/>
                     <span className="version-name" >{text}</span>
                 </div>
 

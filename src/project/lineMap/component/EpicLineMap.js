@@ -20,8 +20,8 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
@@ -506,8 +506,8 @@ const EpicLineMap = (props) => {
                                                     </svg>
                                                 </>
                                         }
-                                        <img
-                                            src = {setImageUrl(item.workTypeSys?.iconUrl)}
+                                        <ImgComponent
+                                            src = {item.workTypeSys?.iconUrl}
                                             alt=""
                                             className="img-25"
                                         />

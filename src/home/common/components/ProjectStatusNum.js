@@ -118,6 +118,7 @@ const ProjectStatusNum = (props) => {
                         data && data.map(item => {
                             return <div
                                 id={item.value}
+                                key = {item.value}
                                 className="project-status-num-content-box"
                                 onClick={() => selectMenu(item)}
                             >

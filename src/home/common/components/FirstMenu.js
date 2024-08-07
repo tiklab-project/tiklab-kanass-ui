@@ -4,7 +4,6 @@ import { Layout } from "antd";
 import { withRouter } from "react-router";
 import Logo from "./Logo";
 import FirstMenuButtom from "./FirstMenuButtom";
-import useLocalStorageListener from "../../../common/utils/useLocalStorageListener";
 const { Sider } = Layout;
 const FirstMenu = (props) => {
     const [isShowText, setIsShowText] = useState(false)
@@ -186,15 +185,14 @@ const FirstMenu = (props) => {
         return name;
     }
 
-    useLocalStorageListener("theme", (updatedTraceInfo) => {
-        console.log("data最新值：", updatedTraceInfo)
-        getThemeClass(updatedTraceInfo)
-    })
+
 
     const changeTheme = (color) => {
         console.log(color)
         localStorage.setItem("theme", color)
+        getThemeClass(color)
     }
+
 
     return (
         <>
@@ -212,7 +210,7 @@ const FirstMenu = (props) => {
                         {renderRouter()}
                     </div>
 
-                    <FirstMenuButtom isShowText={isShowText} theme={theme} changeTheme={changeTheme} />
+                    <FirstMenuButtom isShowText={isShowText} theme={theme} changeTheme={changeTheme} {...props}/>
                     <div className={"menu-box-right-border"}>
                         <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
                             {

@@ -7,11 +7,11 @@ import Button from "../../common/button/Button";
 import WorkChildStore from "../store/WorkChildStore";
 import { getUser } from "thoughtware-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-import setImageUrl from "../../common/utils/setImageUrl";
 import dayjs from "dayjs";
 import { changeWorkItemParent } from "./WorkGetList";
 import SprintPlanStore from "../../sprint/plan/stores/SprintPlanStore";
 import VersionPlanStore from "../../version/plan/stores/VersionPlanStore";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
@@ -207,21 +207,12 @@ const WorkChild = (props) => {
             key: "title",
             ellipsis: true,
             render: (text, record) =><div className="work-title" onClick={() => goWorkItem(record)}>
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
+                    <ImgComponent
                                 alt=""
                                 className="svg-icon"
-                                src = {setImageUrl(record.workTypeSys?.iconUrl)}
+                                src = {record.workTypeSys?.iconUrl}
 
                             />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="svg-icon"
-                            />
-                    }
                     <div className="work-name">{text}</div>
                 </div>
         },

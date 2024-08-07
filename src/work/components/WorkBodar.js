@@ -12,7 +12,7 @@ import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { Select, Row, Col } from "antd";
 import { finWorkList } from "./WorkGetList"
-import setImageUrl from '../../common/utils/setImageUrl';
+import ImgComponent from '../../common/imgComponent/ImgComponent';
 
 
 const WorkBodar = (props) => {
@@ -64,7 +64,7 @@ const WorkBodar = (props) => {
         // dragEvent.style.background = "#d0e5f2";
     }
 
-    const findStatusList = (workId,stateId, flowId) => {
+    const findStatusList = (workId, stateId, flowId) => {
         let params = {
             domainId: workId,
             fromNodeId: stateId,
@@ -223,8 +223,8 @@ const WorkBodar = (props) => {
                                             </div>
                                             {
                                                 isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
-                                                    <div 
-                                                        className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`} 
+                                                    <div
+                                                        className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`}
                                                         onDrop={() => changeStatus(item.state.id, index, item)}
                                                     >
                                                     </div>
@@ -246,21 +246,12 @@ const WorkBodar = (props) => {
 
                                                                         <div className="work-item-bottom">
                                                                             <div>
-                                                                                {
-                                                                                    workItem.workTypeSys?.iconUrl ?
-                                                                                        <img
-                                                                                            src={setImageUrl(workItem.workTypeSys?.iconUrl)}
-                                                                                            alt=""
-                                                                                            className="menu-icon"
+                                                                                <ImgComponent
+                                                                                    src={workItem.workTypeSys?.iconUrl}
+                                                                                    alt=""
+                                                                                    className="menu-icon"
 
-                                                                                        />
-                                                                                        :
-                                                                                        <img
-                                                                                            src={'/images/workType2.png'}
-                                                                                            alt=""
-                                                                                            className="menu-icon"
-                                                                                        />
-                                                                                }
+                                                                                />
                                                                                 <span >{workItem.code}</span>
                                                                             </div>
                                                                             <div className="work-item-assigner"
@@ -276,8 +267,8 @@ const WorkBodar = (props) => {
                                                                 })
                                                             }
                                                             {
-                                                                workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 && 
-                                                                workBoardCurrentPage[index] < item.workItemList.totalPage && 
+                                                                workBoardCurrentPage.length > 0 && item.workItemList.totalPage > 1 &&
+                                                                workBoardCurrentPage[index] < item.workItemList.totalPage &&
                                                                 <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
                                                             }
                                                         </div>
@@ -319,21 +310,12 @@ const WorkBodar = (props) => {
                                                             >
                                                                 <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
                                                                     <div className="work-item-title-left" >
-                                                                        {
-                                                                            workItem.workTypeSys.iconUrl ?
-                                                                                <img
-                                                                                    src={setImageUrl(workItem.workTypeSys?.iconUrl)}
+                                                                    <ImgComponent
+                                                                                    src={workItem.workTypeSys?.iconUrl}
                                                                                     alt=""
                                                                                     className="svg-icon"
 
                                                                                 />
-                                                                                :
-                                                                                <img
-                                                                                    src={'/images/workType2.png'}
-                                                                                    alt=""
-                                                                                    className="svg-icon"
-                                                                                />
-                                                                        }
                                                                         {workItem.title}
                                                                     </div>
                                                                     <div>
@@ -361,7 +343,7 @@ const WorkBodar = (props) => {
                             setIsModalVisible={setIsModalVisible}
                             modelRef={modelRef}
                             showPage={true}
-                            delectCurrentWorkItem = {delectCurrentWorkItem}
+                            delectCurrentWorkItem={delectCurrentWorkItem}
                             {...props}
                         />
                     </div>

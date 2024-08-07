@@ -15,7 +15,7 @@ import WorkAddModel from "../../../work/components/WorkAddModel";
 import "./Plan.scss"
 import PlanAddmodal from "./PlanAddModal";
 import { getUser } from 'thoughtware-core-ui';
-import setImageUrl from "../../../common/utils/setImageUrl";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const PlanTable = (props) => {
     const { planStore,planWorkItemStore } = props
@@ -225,10 +225,10 @@ const PlanTable = (props) => {
                                                     </svg>
                                                     ) : ""
                                             }
-                                            <img 
+                                            <ImgComponent 
                                                 className="img-icon-right"
                                                 alt="" 
-                                                src={setImageUrl(childItem.workType.iconUrl)}
+                                                src={childItem.workType.iconUrl}
                                             />
                                             {childItem.title}
                                         </div>

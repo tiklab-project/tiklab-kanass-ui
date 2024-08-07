@@ -15,11 +15,12 @@ import { useEffect } from "react"
 function useLocalStorageListener(localStorageKey, callback) {
     useEffect(() => {
         const originalSetItem = localStorage.setItem
-        localStorage.setItem = function (key, newValue) {
+        localStorage.setItem =  (key, newValue) =>{
             const setItemEvent = new CustomEvent("setItemEvent", {
                 detail: { key, newValue },
             })
             window.dispatchEvent(setItemEvent)
+            document.dispatchEvent(setItemEvent)
             originalSetItem.apply(this, [key, newValue])
         }
 
@@ -32,13 +33,21 @@ function useLocalStorageListener(localStorageKey, callback) {
             }
         }
 
-        window.addEventListener("setItemEvent", handleSetItemEvent)
+        const handleStorageEvent = (event) => {
+            if (event.key === localStorageKey) {
+                callback(event.newValue);
+            }
+        };
 
+        window.addEventListener("setItemEvent", handleSetItemEvent)
+        document.addEventListener("setItemEvent", handleStorageEvent);
         return () => {
             window.removeEventListener("setItemEvent", handleSetItemEvent)
+            document.addEventListener("setItemEvent", handleStorageEvent);
             localStorage.setItem = originalSetItem
         }
     }, [localStorageKey, callback])
 }
+
 
 export default useLocalStorageListener

@@ -15,6 +15,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";
+import ColorIcon from '../../../common/colorIcon/colorIcon';
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -98,7 +99,7 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "30%",
             render: (text, record) => <Space onClick={() => goProjectSetDetail(record)} className="span-botton">
-                <div className={`projectSet-table-icon projectSet-color-${record.color}`}>{record.name.slice(0, 1)}</div>
+                <ColorIcon color = {record.color} name = {record.name} className = "projectSet-table-icon"/>
                 {text}
             </Space>,
         },
@@ -210,7 +211,7 @@ const ProjectSetTable = (props) => {
 
                                 return <div className="projectSet-item" key={item.id} onClick={() => goProjectSetDetail(item)}>
                                     <div className="item-title">
-                                        <div className={`item-icon projectSet-color-${item.color}`}>{item.name.slice(0, 1)}</div>
+                                        <ColorIcon color = {item.color} name = {item.name} className = "item-icon"/>
                                         <span className="item-name">{item.name}</span>
                                     </div>
                                     <div className="item-info">

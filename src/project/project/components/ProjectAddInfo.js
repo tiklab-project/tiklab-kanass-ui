@@ -10,7 +10,6 @@ import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";
 import { useDebounce } from "../../../common/utils/debounce";
-import setImageUrl from "../../../common/utils/setImageUrl";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -276,16 +275,16 @@ const ProjectAddInfo = (props) => {
                                         <img 
                                             alt="" 
                                             className="img-icon" 
-                                            src = {setImageUrl(item.iconUrl)}
+                                            src={(`/images/${item.iconUrl}`)}
                                         />
                                     </div>
                                 })
                             }
-                            <Upload {...upLoadIcon}>
+                            {/* <Upload {...upLoadIcon}>
                                 <div className="project-icon">
                                     <img src={UploadIcon1} alt="" className="list-img"/>
                                 </div>
-                            </Upload>
+                            </Upload> */}
                         </div>
                     </Form.Item>
                     <div className="project-add-submit">

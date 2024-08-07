@@ -19,6 +19,7 @@ import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from
 import StageStore from "../../project/stage/store/StageStore";
 import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
@@ -701,10 +702,10 @@ const WorkBasicInfo = (props) => {
 
     const switchEditorDesc = () => {
         console.log(isPermissionField("desc"))
-        if(!isPermissionField("desc")){
+        if (!isPermissionField("desc")) {
             setEditorType(true)
         }
-        
+
     }
 
     return (
@@ -725,7 +726,7 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
-                            
+
                             <Form.Item label="优先级" name="workPriority"
                                 hasFeedback={showValidateStatus === "workPriority" ? true : false}
                                 validateStatus={validateStatus}
@@ -748,13 +749,12 @@ const WorkBasicInfo = (props) => {
                                         priorityList && priorityList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>
                                                 <Space>
-                                                    {
-                                                        item.iconUrl && <img
-                                                            src={setImageUrl(item.iconUrl)}
-                                                            alt=""
-                                                            className="img-icon-right"
-                                                        />
-                                                    }
+                                                    <ImgComponent
+                                                        src={item.iconUrl}
+                                                        alt=""
+                                                        isRemote = {true}
+                                                        className="img-icon-right"
+                                                    />
 
                                                     {item.name}
                                                 </Space>
@@ -1050,7 +1050,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
+                                            imgUrl={item.workTypeSys?.iconUrl}
                                         />
                                     })
                                         :
@@ -1081,7 +1081,7 @@ const WorkBasicInfo = (props) => {
                                             value={item.id}
                                             label={item.title}
                                             key={item.id}
-                                            imgUrl={setImageUrl(item.workTypeSys?.iconUrl)}
+                                            imgUrl={item.workTypeSys?.iconUrl}
                                         >
                                             <div>事项</div>
                                         </SelectItem>
@@ -1179,7 +1179,7 @@ const WorkBasicInfo = (props) => {
                             </div>
                         </Fragment>
                             :
-                            <div onClick={() => switchEditorDesc() } className="desc-preview">
+                            <div onClick={() => switchEditorDesc()} className="desc-preview">
                                 {
                                     slateValue && <PreviewEditor
                                         value={slateValue}

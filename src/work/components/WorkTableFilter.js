@@ -7,7 +7,6 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import WorkFilterModal from "./WorkFilterModal";
 import WorkSort from "./WorkSort";
 import { useDebounce } from "../../common/utils/debounce";
-import setImageUrl from "../../common/utils/setImageUrl";
 import { searchWorkList } from "./WorkSearch";
 import WorkTypeTab from "./WorkTypeTab";
 import WorkFilterQuick from "./WorkFilterQuick";
@@ -121,7 +120,7 @@ const WorkTableFilter = (props) => {
                                     value={item.id}
                                     label={item.projectName}
                                     key={item.id}
-                                    imgUrl = {setImageUrl(item.iconUrl)}
+                                    imgUrl = {item.iconUrl}
                                 />
                             })
                         }

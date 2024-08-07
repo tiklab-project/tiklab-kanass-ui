@@ -15,12 +15,12 @@ import RowScroll from "./RowScroll";
 import ColScroll from "./ColScroll"
 import { withRouter } from "react-router";
 import dayjs from 'dayjs';
-import { useDebounce } from "../../common/utils/debounce";
 import { Empty } from "antd";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 const Gantt = (props) => {
     // 获取当前年月日
-    const { workStore, WorkDetailDrawer, setImageUrl, projectId, sprintId, versionId,
+    const { workStore, WorkDetailDrawer,  projectId, sprintId, versionId,
         useDebounce, archiveView, finWorkList } = props;
     const { workList, setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total,
         setQuickFilterValue, setWorkShowType } = workStore;
@@ -491,8 +491,8 @@ const Gantt = (props) => {
                                                     </svg>
                                                 </>
                                         }
-                                        <img
-                                            src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                        <ImgComponent
+                                            src={item.workTypeSys?.iconUrl}
                                             alt=""
                                             className="img-icon"
                                         />

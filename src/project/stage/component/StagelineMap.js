@@ -17,10 +17,11 @@ import { withRouter } from "react-router";
 import dayjs from 'dayjs';
 import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModal";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
@@ -501,11 +502,12 @@ const StageLinemap = (props) => {
                                                 :
                                                 <div className="icon-12" aria-hidden="true" />
                                         }
-                                        <img
+                                        {/* <img
                                             src={('/images/stage.png')}
                                             className="img-icon"
                                             alt=""
-                                        />
+                                        /> */}
+                                        <ColorIcon className="stage-icon" name = {item.stageName} color = {item.color} />
                                         <div className="stage-text" onClick={() => showEditStage(item.id)}>{item.stageName}</div>
                                     </div>
                                 </div>
@@ -583,8 +585,8 @@ const StageLinemap = (props) => {
                                                     </div>
                                                 </>
                                         }
-                                        <img
-                                            src={setImageUrl(item.workTypeSys?.iconUrl)}
+                                        <ImgComponent
+                                            src={item.workTypeSys?.iconUrl}
                                             alt=""
                                             className="img-icon"
                                         />

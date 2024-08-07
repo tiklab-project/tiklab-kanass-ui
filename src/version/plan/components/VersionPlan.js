@@ -8,8 +8,8 @@ import WorkStore from "../../../work/store/WorkStore";
 import VersionPlanStore from "../stores/VersionPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
-import setImageUrl from "../../../common/utils/setImageUrl";
 import { Button, Modal } from "antd";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const VersionPlan = (props) => {
     const store = {
         versionPlanStore: VersionPlanStore,
@@ -28,7 +28,7 @@ const VersionPlan = (props) => {
         planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
-    const [endVersionId, setEndVersionId ] = useState();
+    const [endVersionId, setEndVersionId] = useState();
     const [listType, setListType] = useState();
     const [showModal, setShowModal] = useState(false);
     const [actionType, setActionType] = useState("");
@@ -138,18 +138,18 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
-                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
-                        if(res.code === 0){
+                    findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
+                        if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setNoPlanVersionWorkList(newNoPlanWorkList)
-        
-                            const addWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+
+                            const addWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             planVersionWorkList.unshift(...addWorkList)
                             setPlanVersionWorkList(planVersionWorkList)
                         }
                     })
-                   
+
                 }
             })
         }
@@ -209,13 +209,13 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             delVersion(params).then((res) => {
                 if (res.code === 0) {
-                    findWorkItemAndChildrenIds({id: moveWorkId}).then(res => {
-                        if(res.code === 0){
+                    findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
+                        if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
                             setPlanVersionWorkList(newNoPlanWorkList)
-        
-                            const addWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1})
+
+                            const addWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             noPlanVersionWorkList.unshift(...addWorkList)
                             setNoPlanVersionWorkList(noPlanVersionWorkList)
                         }
@@ -281,20 +281,20 @@ const VersionPlan = (props) => {
         getWorkList(data)
     }
 
-    const submitOne= () => {
-        if(actionType === "delete"){
+    const submitOne = () => {
+        if (actionType === "delete") {
             delVersionOnePlan(endVersionId)
         }
-        if(actionType === "update"){
+        if (actionType === "update") {
             moveOneWorkItem(endVersionId)
         }
     }
 
     const submitList = () => {
-        if(actionType === "delete"){
+        if (actionType === "delete") {
             delListVersionPlan(endVersionId)
         }
-        if(actionType === "update"){
+        if (actionType === "update") {
             moveWorkItemList(endVersionId)
         }
     }
@@ -379,7 +379,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={item.workType?.iconUrl}
                                         />
                                     })
                                 }
@@ -437,21 +437,12 @@ const VersionPlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                }
+                                                />
 
                                             </div>
                                             <div className="work-item-info">
@@ -497,7 +488,7 @@ const VersionPlan = (props) => {
                                             value={item.workType.id}
                                             label={item.workType.name}
                                             key={item.workType.id}
-                                            imgUrl={setImageUrl(item.workType?.iconUrl)}
+                                            imgUrl={item.workType?.iconUrl}
                                         />
                                     })
                                 }
@@ -526,7 +517,7 @@ const VersionPlan = (props) => {
                                 title={"状态"}
                                 ismult={true}
                                 value={searchCondition?.workStatusIds}
-                                positionType = "right"
+                                positionType="right"
                             >
                                 {
                                     workStatusList.map(item => {
@@ -555,21 +546,12 @@ const VersionPlan = (props) => {
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
                                             <div className="work-item-icon">
-                                                {
-                                                    item.workTypeSys?.iconUrl ?
-                                                        <img
-                                                            alt=""
-                                                            className="icon-32"
-                                                            src={setImageUrl(item.workTypeSys.iconUrl)}
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="icon-32"
+                                                    src={item.workTypeSys.iconUrl}
 
-                                                        />
-                                                        :
-                                                        <img
-                                                            src={'/images/workType2.png'}
-                                                            alt=""
-                                                            className="icon-32"
-                                                        />
-                                                }
+                                                />
 
                                             </div>
                                             <div className="work-item-info">

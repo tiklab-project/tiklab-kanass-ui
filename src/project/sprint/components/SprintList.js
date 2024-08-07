@@ -21,7 +21,7 @@ import { Provider, observer } from "mobx-react";
 import { useDebounce } from "../../../common/utils/debounce";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
-
+import ColorIcon from "../../../common/colorIcon/ColorIcon"
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -245,11 +245,12 @@ const Sprint = (props) => {
             width: "25%",
             render: (text, record) => (
                 <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
-                    <img
+                    {/* <img
                         src={'/images/sprint.png'}
                         alt=""
                         className="icon-32"
-                    />
+                    /> */}
+                    <ColorIcon name = {text} className = "icon-32" color = {record.color}/>
                     <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
                 </div>
             ),

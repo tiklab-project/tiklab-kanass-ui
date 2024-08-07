@@ -11,6 +11,7 @@ import "./ProjectSetChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
+import ColorIcon from "../../../common/colorIcon/colorIcon";
 
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText, theme } = props;
@@ -121,8 +122,7 @@ const ProjectSetChangeModal = (props) => {
             <div onClick={() => showDropDown()} ref={setButton}>
                 {
                     isShowText ? <div className="projectSet-change-title">
-                        <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
-
+                        <ColorIcon color={projectSet.color} name={projectSet.name} className="projectSet-icon" />
                         <div className={`projectSet-text `} >
                             <div>
                                 {projectSet?.name}
@@ -137,7 +137,7 @@ const ProjectSetChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={projectSet?.name}>
                             <div className="projectSet-change-icon">
-                                <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
+                                <ColorIcon color={projectSet.color} name={projectSet.name} className="projectSet-icon" />
                                 <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                 </svg>
@@ -158,7 +158,7 @@ const ProjectSetChangeModal = (props) => {
                     key={projectSet?.id}
 
                 >
-                    <div className={`projectSet-icon projectSet-color-${projectSet?.color}`}>{projectSet?.name?.slice(0, 1)}</div>
+                    <ColorIcon color={projectSet.color} name={projectSet.name} className="projectSet-icon" />
                     <div className="projectSet-item-info">
                         <div className="projectSet-name">
                             {projectSet?.name}

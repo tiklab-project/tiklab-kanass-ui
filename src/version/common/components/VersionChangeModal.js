@@ -3,6 +3,7 @@ import "./VersionChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const VersionChangeModal = (props) => {
     const { isShowText, versionDetailStore, theme } = props;
@@ -82,12 +83,7 @@ const VersionChangeModal = (props) => {
             <div className="" ref={setButton}>
                 {
                     isShowText ? <div className="version-title title" onClick={showMoreMenu}>
-                        <img
-                            src={('/images/version.png')}
-                            className="icon-24"
-                            alt=""
-                        />
-
+                        <ColorIcon name={version?.name} className="icon-24" color={version?.color} />
                         <div className={`version-text `} >
                             <div>
                                 {version?.name}
@@ -102,11 +98,8 @@ const VersionChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={version?.name}>
                             <div className='version-title-icon' onClick={showMoreMenu} >
-                                <img
-                                    src={('/images/version.png')}
-                                    className="img-32"
-                                    alt=""
-                                />
+                                
+                                <ColorIcon name={version?.name} className="img-32" color={version?.color} />
                                 <div className={`version-toggleCollapsed`}>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
@@ -128,12 +121,7 @@ const VersionChangeModal = (props) => {
                     key={versionId}
 
                 >
-                    <img
-                        className="icon-32"
-                        src={('images/version.png')}
-                        title={version?.name}
-                        alt=""
-                    />
+                    <ColorIcon name={version?.name} className="icon-32" color={version?.color} />
                     <div className="change-version-info">
                         <div className="change-version-name">{version?.name}</div>
                         <div className="change-version-state">{version?.versionState?.name}</div>

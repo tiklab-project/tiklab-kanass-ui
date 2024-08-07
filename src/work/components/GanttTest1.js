@@ -6,8 +6,9 @@ import RowScroll from "./RowScroll";
 import ColScroll from "./ColScroll";
 import dayjs from 'dayjs';
 import moment from "moment";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const Gantt = (props) => {
-    const { workList, editWork, setImageUrl, archiveView, projectId, workStore,WorkDetailDrawer } = props;
+    const { workList, editWork, archiveView, projectId, workStore,WorkDetailDrawer } = props;
     const {createRecent, setWorkIndex, setWorkId, } = workStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -455,8 +456,8 @@ const Gantt = (props) => {
                                                     </svg>
                                                 </>
                                         }
-                                        <img
-                                            src = {setImageUrl(item.workTypeSys?.iconUrl)}
+                                         <ImgComponent
+                                            src = {item.workTypeSys?.iconUrl}
                                             alt=""
                                             className="img-icon"
                                         />

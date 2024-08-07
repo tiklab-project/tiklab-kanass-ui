@@ -127,7 +127,7 @@ const Stage = (props) => {
                             <InputSearch
                                 placeholder="计划名字"
                                 allowClear
-                                style={{ width: 300 }}
+                                style={{ width: 190 }}
                                 onChange={onSearch}
                             />
 

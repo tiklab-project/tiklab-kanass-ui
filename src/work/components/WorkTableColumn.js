@@ -1,6 +1,6 @@
 import React from "react";
-import setImageUrl from "../../common/utils/setImageUrl";
 import UserIcon from "../../common/UserIcon/UserIcon";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 
 
@@ -32,21 +32,12 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(record.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="menu-icon"
-    
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="menu-icon"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workTypeSys?.iconUrl}
+                        alt=""
+                        className="menu-icon"
+
+                    />
                 </div>
                 <div className="work-key">{record.code}</div>
             </div>
@@ -75,7 +66,7 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
                 {text}
             </div>
         },
-       
+
         {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
@@ -86,19 +77,12 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={setImageUrl(record.workPriority?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workPriority?.iconUrl}
+                        alt=""
+                        isRemote = {true}
+                        className="img-icon-right"
+                    />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
@@ -116,7 +100,7 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-    
+
         {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
@@ -164,26 +148,18 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    {
-                        record.project.iconUrl ? <img
-                            src={setImageUrl(record.project?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/project3.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
-    
+                    <ImgComponent
+                        src={record.project?.iconUrl}
+                        alt=""
+                        className="img-icon-right"
+                    />
+
                 </div>
                 <div className="work-info-text">{text}</div>
             </div>
         },
         actionColumn
-        
+
     ];
 }
 
@@ -199,21 +175,12 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(record.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="menu-icon"
-    
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="menu-icon"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workTypeSys?.iconUrl}
+                        alt=""
+                        className="menu-icon"
+
+                    />
                 </div>
                 <div className="work-key">{record.code}</div>
             </div>
@@ -242,7 +209,7 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
                 {text}
             </div>
         },
-       
+
         {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
@@ -253,19 +220,12 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={setImageUrl(record.workPriority?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workPriority?.iconUrl}
+                        isRemote = {true}
+                        alt=""
+                        className="img-icon-right"
+                    />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
@@ -283,7 +243,7 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-    
+
         {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
@@ -321,9 +281,9 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
                 {text.slice(0, 10)}
             </div>
         },
-    
+
         actionColumn
-        
+
     ];
 }
 
@@ -339,21 +299,12 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
                 <div className="work-icon">
-                    {
-                        record.workTypeSys?.iconUrl ?
-                            <img
-                                src={setImageUrl(record.workTypeSys?.iconUrl)}
-                                alt=""
-                                className="menu-icon"
-    
-                            />
-                            :
-                            <img
-                                src={'/images/workType2.png'}
-                                alt=""
-                                className="menu-icon"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workTypeSys?.iconUrl}
+                        alt=""
+                        className="menu-icon"
+
+                    />
                 </div>
                 <div className="work-key">{record.code}</div>
             </div>
@@ -382,7 +333,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
                 {text}
             </div>
         },
-       
+
         {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
@@ -393,19 +344,12 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    {
-                        record.workPriority?.iconUrl ? <img
-                            src={setImageUrl(record.workPriority?.iconUrl)}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                            :
-                            <img
-                                src={'/images/proivilege1.png'}
-                                alt=""
-                                className="img-icon-right"
-                            />
-                    }
+                    <ImgComponent
+                        src={record.workPriority?.iconUrl}
+                        isRemote = {true}
+                        alt=""
+                        className="img-icon-right"
+                    />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
@@ -423,7 +367,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-    
+
         {
             title: '创建人',
             dataIndex: ['builder', 'nickname'],
@@ -437,7 +381,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-text">{text}</div>
             </div>
         },
-       
+
         {
             title: '创建时间',
             dataIndex: "buildTime",
@@ -455,23 +399,22 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
 }
 
 const getColumn = (screenSize, goProdetail, sortArray, actionColumn) => {
-    if(screenSize === "xxl"){
+    if (screenSize === "xxl") {
         return xxlColumn(goProdetail, sortArray, actionColumn);
-    }else {
+    } else {
         return lgColumn(goProdetail, sortArray, actionColumn)
     }
 }
 
 const getWorkColumn = (screenSize, goProdetail, sortArray, actionColumn) => {
-    if(screenSize === "xxl"){
+    if (screenSize === "xxl") {
         return xxlWorkColumn(goProdetail, sortArray, actionColumn);
-    }else {
+    } else {
         return lgColumn(goProdetail, sortArray, actionColumn)
     }
 }
 
 
-export {getColumn, getWorkColumn};
+export { getColumn, getWorkColumn };
 
-    
- 
+

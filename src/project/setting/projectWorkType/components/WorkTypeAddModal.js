@@ -14,12 +14,12 @@ import Button from "../../../../common/button/Button";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "thoughtware-core-ui";
-import setImageUrl from "../../../../common/utils/setImageUrl";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 
 
 const WorkTypeAddModal = (props) => {
     const [form] = Form.useForm();
-    const { workAllTypeList, projectWorkTypeStore,findWorkTypeDmList } = props;
+    const { workAllTypeList, projectWorkTypeStore, findWorkTypeDmList } = props;
     const { findSelectWorkTypeDmList, workSelectTypeList, createWorkTypeDm } = projectWorkTypeStore;
     // 弹窗的显示参数
     const [visible, setVisible] = useState(false);
@@ -56,8 +56,8 @@ const WorkTypeAddModal = (props) => {
                 form: item.form
             }
             createWorkTypeDm(data).then(res => {
-                if (res.code === 0 && selectWorkType.length === index +1) {
-                    findWorkTypeDmList({projectId: projectId})
+                if (res.code === 0 && selectWorkType.length === index + 1) {
+                    findWorkTypeDmList({ projectId: projectId })
                     setVisible(false)
                 }
             })
@@ -84,20 +84,11 @@ const WorkTypeAddModal = (props) => {
             render: (text, record) => (
                 <div className="work-type-name" >
                     <div className="work-type-icon">
-                        {
-                            record.iconUrl ?
-                                <img 
-                                    src = {setImageUrl(record.iconUrl)}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                                :
-                                <img
-                                    src={('images/workType1.png')}
-                                    alt=""
-                                    className="icon-32"
-                                />
-                        }
+                        <ImgComponent
+                            src={record.iconUrl}
+                            alt=""
+                            className="icon-32"
+                        />
                     </div>
                     <div className="work-type-text">{text}</div>
                 </div>
@@ -130,7 +121,7 @@ const WorkTypeAddModal = (props) => {
         onChange: (selectedRowKeys, selectedRows) => {
             setSelelctWorkType(selectedRows)
         },
-        onSelect: (record, selected, selectedRows, nativeEvent ) => {
+        onSelect: (record, selected, selectedRows, nativeEvent) => {
             console.log(record, selected, selectedRows, nativeEvent)
         }
     };

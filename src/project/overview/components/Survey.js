@@ -18,12 +18,9 @@ import ProjectSurveyStore from "../store/ProjectSurveyStore";
 import Workstore from "../../../work/store/WorkStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
-import setImageUrl from "../../../common/utils/setImageUrl";
-import DyncmicList from "../../../common/overviewComponent/DynamicList";
-import TodoListBox from "../../../common/overviewComponent/TodoListBox";
-import ProjectTodoStatistics from "./ProjectTodoStatistics";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import DyncmicTimeAxis from "./DyncmicTimeAxis";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
@@ -245,21 +242,11 @@ const Survey = (props) => {
                         <div className="project-box">
                             <div className="box-title">
                                 <span>
-                                    {
-                                        project?.iconUrl ?
-                                            <img
-                                                alt=""
-                                                className="list-img"
-                                                src={setImageUrl(project.iconUrl)}
-                                            />
-                                            :
-                                            <img
-                                                src={('/images/project1.png')}
-                                                alt=""
-                                                className="list-img"
-                                            />
-
-                                    }
+                                    <ImgComponent
+                                        alt=""
+                                        className="list-img"
+                                        src={project?.iconUrl}
+                                    />
                                     {project && project.projectName}
                                 </span>
                             </div>
