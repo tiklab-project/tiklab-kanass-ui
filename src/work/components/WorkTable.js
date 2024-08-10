@@ -305,6 +305,9 @@ const WorkTable = (props) => {
                         <div className="work-table-content" ref={workTable}>
                             <Spin spinning={tableLoading} delay={500} >
                                 <Table
+                                    scroll = {{
+                                        x: "100%"
+                                    }}
                                     columns={projectColums}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
@@ -329,9 +332,9 @@ const WorkTable = (props) => {
                                                 </svg>
                                                 :
                                                 <>
-                                                    <div className="icon-10">
+                                                    <svg className="icon-10">
 
-                                                    </div>
+                                                    </svg>
                                                 </>
                                         )
                                     }}
