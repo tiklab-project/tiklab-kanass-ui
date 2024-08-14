@@ -51,12 +51,12 @@ const ProjectSetTable = (props) => {
         }
         createRecent(params)
         localStorage.setItem("projectSet", JSON.stringify(record))
-        props.history.push(`/projectSetdetail/${record.id}/survey`)
+        props.history.push(`/projectSet/${record.id}/survey`)
     }
 
     const goToProjectSetSet = (record) => {
         localStorage.setItem("projectSet", JSON.stringify(record))
-        props.history.push(`/projectSetdetail/${record.id}/projectSetset/basicInfo`)
+        props.history.push(`/projectSet/${record.id}/set/basicInfo`)
     }
 
     const onSearch = (value) => {
@@ -199,7 +199,7 @@ const ProjectSetTable = (props) => {
                 <Breadcumb firstText="项目集">
                     <Button
                         style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/index/projectSetAdd")} buttonText={name} >
+                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
                     </Button>
                 </Breadcumb>
                 <div className="projectSet-recent-box">

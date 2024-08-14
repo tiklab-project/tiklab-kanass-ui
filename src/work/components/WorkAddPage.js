@@ -219,7 +219,7 @@ const WorkAddPage = (props) => {
                         if (data.code === 0) {
                             setSessionStorage("detailCrumbArray", [{ id: data.data.id, code: data.data.code, title: values.title, iconUrl: workType.workType.iconUrl }])
                             setShowAddModel(false)
-                            if (path === "/projectDetail/:id/stage") {
+                            if (path === "/project/:id/stage") {
                                 appendNodeInTree(stageTreeList, values.stage, data.data)
                                 message.success({
                                     content: '添加成功',

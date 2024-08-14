@@ -80,10 +80,10 @@ const PlanWorkItem = (props) => {
             <Breadcrumb>
                 <Breadcrumb.Item>项目管理</Breadcrumb.Item>
                 <Breadcrumb.Item>
-                    <a href="/#/projectDetail/plan">版本管理</a>
+                    <a href="/#/project/plan">版本管理</a>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                    <a href="/#/projectDetail/planPlan">规划事项</a>
+                    <a href="/#/project/planPlan">规划事项</a>
                 </Breadcrumb.Item>
             </Breadcrumb>
             <Divider />

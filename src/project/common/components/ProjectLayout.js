@@ -8,7 +8,7 @@
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Empty } from 'antd';
-import ProdeAside from "./ProjectDetailAside";
+import ProdeAside from "./projectDetailAside";
 import "./ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";

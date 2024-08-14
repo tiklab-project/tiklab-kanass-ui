@@ -112,8 +112,8 @@ const WorkChild = (props) => {
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
-        if(props.match.path === "/projectDetail/:id/workDetail/:workId"){
-            props.history.push(`/projectDetail/${project.id}/workDetail/${record.id}`)
+        if(props.match.path === "/project/:id/workDetail/:workId"){
+            props.history.push(`/project/${project.id}/workDetail/${record.id}`)
         }
         
     }
@@ -158,10 +158,10 @@ const WorkChild = (props) => {
                 findWorkItemAndChidren({id: res.data}).then(res => {
                    
                     if (res.code === 0) {
-                        if(path === "/:id/sprintdetail/:sprint/plan"){
+                        if(path === "/:id/sprint/:sprint/plan"){
                             planSprintWorkList.unshift(res.data)
                             setPlanSprintWorkList(planSprintWorkList)
-                        }else if(path === "/:id/versiondetail/:version/plan"){
+                        }else if(path === "/:id/version/:version/plan"){
                             planVersionWorkList.unshift(res.data)
                             setPlanVersionWorkList(planVersionWorkList)
                         }else {

@@ -17,7 +17,7 @@ const ProjectLogin = (props) => {
         <Login 
             {...props}
             logoImg={logo}
-            loginGoRouter={'/index/home/survey'}
+            loginGoRouter={'/home/survey'}
             vaildUserAuthRouter = {'/noAuth'}
             title = {'项目管理'}
             bgroup={'kanass'}

@@ -139,7 +139,7 @@ const SetAside = (props) => {
         )
     }
     const backProject = () => {
-        props.history.push(`/index/home/survey`)
+        props.history.push(`/home/survey`)
         sessionStorage.setItem("menuKey", "home")
     }
 

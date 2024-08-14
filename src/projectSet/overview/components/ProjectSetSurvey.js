@@ -32,7 +32,7 @@ const ProjectSetSurvey = props => {
 
 
     const goProcessProject = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/dynamic`)
+        props.history.push(`/projectSet/${projectSetId}/dynamic`)
     }
 
     const goProdetail = (project) => {
@@ -47,7 +47,7 @@ const ProjectSetSurvey = props => {
         }
         createRecent(params)
 
-        props.history.push(`/projectDetail/${project.id}/workTable`)
+        props.history.push(`/project/${project.id}/workTable`)
     };
 
     const goOpLogDetail = (url) => {
@@ -57,11 +57,11 @@ const ProjectSetSurvey = props => {
         window.location.href = url
     }
     const goDynamicList = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/dynamic`)
+        props.history.push(`/projectSet/${projectSetId}/dynamic`)
 
     }
     const goToListPage = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/workTodo`)
+        props.history.push(`/projectSet/${projectSetId}/workTodo`)
     }
     return (
         <Row className="projectSet-survey">

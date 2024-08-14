@@ -25,21 +25,21 @@ const SprintEndState = props => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            url: `/${projectId}/sprint/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            url: `/${projectId}/sprint/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
         {
             title: "统计",
             icon: 'survey',
-            url: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            url: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }

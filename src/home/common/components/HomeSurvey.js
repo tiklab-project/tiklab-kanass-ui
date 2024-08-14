@@ -80,7 +80,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        props.history.push(`/projectDetail/${project.id}/workTable`)
+        props.history.push(`/project/${project.id}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
@@ -112,7 +112,7 @@ const HomeSurvey = (props) => {
 
     const goProject = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/projectDetail/${item.modelId}/workTable`)
+        props.history.push(`/project/${item.modelId}/workTable`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     }
@@ -123,7 +123,7 @@ const HomeSurvey = (props) => {
         setWorkId(workItem.id)
         // 有bug
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
-        props.history.push(`/projectDetail/${workItem.project.id}/work/${workItem.id}`)
+        props.history.push(`/project/${workItem.project.id}/work/${workItem.id}`)
         sessionStorage.setItem("menuKey", "project")
     }
 

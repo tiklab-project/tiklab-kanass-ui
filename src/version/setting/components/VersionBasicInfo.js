@@ -127,7 +127,7 @@ const VersionBasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push(`/projectDetail/${projectId}/version`)
+                    props.history.push(`/project/${projectId}/version`)
                 }
             })
             

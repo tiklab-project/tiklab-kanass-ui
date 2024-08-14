@@ -52,7 +52,7 @@ const VersionDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/${projectId}/versiondetail/${versionId}/survey`,
+            id: `/${projectId}/version/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
@@ -60,7 +60,7 @@ const VersionDetailAside = (props) => {
             title: "事项",
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/${projectId}/versiondetail/${versionId}/workTable`,
+            id: `/${projectId}/version/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
@@ -68,7 +68,7 @@ const VersionDetailAside = (props) => {
             title: "规划",
             icon: 'plan-' + theme,
             defaultIcon: "plan-default",
-            id: `/${projectId}/versiondetail/${versionId}/plan`,
+            id: `/${projectId}/version/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
         }
@@ -79,7 +79,7 @@ const VersionDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/${projectId}/versiondetail/${versionId}/survey`,
+            id: `/${projectId}/version/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
@@ -87,7 +87,7 @@ const VersionDetailAside = (props) => {
             title: "事项",
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/${projectId}/versiondetail/${versionId}/workTable`,
+            id: `/${projectId}/version/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         },
@@ -104,7 +104,7 @@ const VersionDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/projectDetail/${projectId}/version`)
+        props.history.push(`/project/${projectId}/version`)
     }
 
     return (
@@ -116,8 +116,8 @@ const VersionDetailAside = (props) => {
                 initRouters={versionRouter}
                 path={path}
                 backName = {"返回项目"}
-                setUrl = {`/${projectId}/versiondetail/${versionId}/setting`}
-                backUrl = {`/projectDetail/${projectId}/version`}
+                setUrl = {`/${projectId}/version/${versionId}/setting`}
+                backUrl = {`/project/${projectId}/version`}
             />
         </Fragment>
     )

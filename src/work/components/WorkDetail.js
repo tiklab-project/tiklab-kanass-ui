@@ -93,7 +93,7 @@ const WorkDetail = (props) => {
                 }
                 findStateNodeUserFieldList(data)
 
-                // if (props.match.path === "/projectDetail/:id/work/:workId") {
+                // if (props.match.path === "/project/:id/work/:workId") {
 
                 // }
                 setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
@@ -103,8 +103,8 @@ const WorkDetail = (props) => {
     }
 
     useEffect(() => {
-        if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
-            || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
+        if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
+            || props.match.path === "/:id/sprint/:sprint/work/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
         }

@@ -99,7 +99,7 @@ const ProjectStatusNum = (props) => {
             default:
                 break;
         }
-        props.history.push("/index/project")
+        props.history.push("/project")
         sessionStorage.setItem("menuKey", "project")
     }
 

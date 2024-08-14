@@ -397,7 +397,7 @@ const WorkBasicInfo = (props) => {
 
                 }
 
-                if (props.match.path === "/projectDetail/:id/stage" && changeKey === "stage") {
+                if (props.match.path === "/project/:id/stage" && changeKey === "stage") {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }

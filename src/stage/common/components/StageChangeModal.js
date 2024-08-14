@@ -171,7 +171,7 @@ const StageChangeModal = (props) => {
                 }
                 {
                     stageList.length > 6 &&
-                    <div className="change-stage-more" onClick={() => props.history.push(`/projectDetail/${projectId}/stage`)}>查看更多</div>
+                    <div className="change-stage-more" onClick={() => props.history.push(`/project/${projectId}/stage`)}>查看更多</div>
                 }
             </div>
         </div>

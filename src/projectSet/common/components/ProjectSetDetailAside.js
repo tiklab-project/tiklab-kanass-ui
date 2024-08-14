@@ -38,7 +38,7 @@ const ProjectSetDetailAside = (props) => {
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
             key: "survey",
-            id: `/projectSetdetail/${projectSetId}/survey`,
+            id: `/projectSet/${projectSetId}/survey`,
             encoded: "Survey",
         },
         {
@@ -46,7 +46,7 @@ const ProjectSetDetailAside = (props) => {
             icon: 'project-' + theme,
             defaultIcon: "project-default",
             key: "project",
-            id: `/projectSetdetail/${projectSetId}/projectSetProjectList`,
+            id: `/projectSet/${projectSetId}/project`,
             encoded: "Pannel",
         },
         {
@@ -54,7 +54,7 @@ const ProjectSetDetailAside = (props) => {
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",
             key: "statistics",
-            id: `/projectSetdetail/${projectSetId}/statistics/workItem`,
+            id: `/projectSet/${projectSetId}/statistics/workItem`,
             encoded: "Statistics",
         }
     ];
@@ -71,25 +71,8 @@ const ProjectSetDetailAside = (props) => {
     }, [projectSetId, props.location.pathname])
 
 
-    /**
-     * 点击左侧菜单
-     * @param {*} key 
-     */
-    const selectMenu = (key) => {
-        setSelectKey(key)
-        props.history.push(key)
 
-    }
 
-    /**
-     * 点击折叠或展开菜单
-     */
-    const toggleCollapsed = () => {
-        SetIsShowText(!isShowText)
-    }
-    const backProject = () => {
-        props.history.push(`/index/projectSetList`)
-    }
 
     return (
         <Fragment>
@@ -100,8 +83,8 @@ const ProjectSetDetailAside = (props) => {
                 initRouters={projectSetRouter}
                 backName = {"返回首页"}
                 path={path}
-                setUrl={`/projectSetdetail/${projectSetId}/projectSetset/basicInfo`}
-                backUrl={`/index/projectSetList`}
+                setUrl={`/projectSet/${projectSetId}/set/basicInfo`}
+                backUrl={`/projectSet`}
             />
 
         </Fragment>

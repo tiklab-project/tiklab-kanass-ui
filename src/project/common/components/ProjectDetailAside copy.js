@@ -34,28 +34,28 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/survey`,
+            id: `/project/${projectId}/survey`,
             key: "survey",
             encoded: "Survey"
         },
         {
             title: `${t('line_photo')}`,
             icon: 'line',
-            id: `/projectDetail/${projectId}/linemap`,
+            id: `/project/${projectId}/linemap`,
             key: "linemap",
             encoded: "Pannel",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            id: `/projectDetail/${projectId}/workTable`,
+            id: `/project/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('sprint')}`,
             icon: 'sprint',
-            id: `/projectDetail/${projectId}/sprint`,
+            id: `/project/${projectId}/sprint`,
             key: "sprint",
             encoded: "Sprint",
         },
@@ -63,7 +63,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('version')}`,
             icon: 'version',
-            id: `/projectDetail/${projectId}/version`,
+            id: `/project/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
@@ -71,35 +71,35 @@ const ProjectDetailAside = (props) => {
         {
             title: "工时",
             icon: 'log',
-            id: `/projectDetail/${projectId}/log`,
+            id: `/project/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            id: `/projectDetail/${projectId}/statistics/workItem`,
+            id: `/project/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            id: `/projectDetail/${projectId}/milestone`,
+            id: `/project/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "知识库",
             icon: 'repository',
-            id: `/projectDetail/${projectId}/wiki`,
+            id: `/project/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'test',
-            id: `/projectDetail/${projectId}/test`,
+            id: `/project/${projectId}/test`,
             key: "test",
             encoded: "test",
         }
@@ -109,63 +109,63 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/survey`,
+            id: `/project/${projectId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "计划",
             icon: 'survey',
-            id: `/projectDetail/${projectId}/stage`,
+            id: `/project/${projectId}/stage`,
             key: "stage",
             encoded: "stage",
         },
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            id: `/projectDetail/${projectId}/workTable`,
+            id: `/project/${projectId}/workTable`,
             key: "work",
             encoded: "Work",
         },
         {
             title: `${t('version')}`,
             icon: 'version',
-            id: `/projectDetail/${projectId}/version`,
+            id: `/project/${projectId}/version`,
             key: "version",
             encoded: "Version",
         },
         {
             title: "工时",
             icon: 'log',
-            id: `/projectDetail/${projectId}/log`,
+            id: `/project/${projectId}/log`,
             key: "log",
             encoded: "log",
         },
         {
             title: `${t('statistic')}`,
             icon: 'statisticslog',
-            id: `/projectDetail/${projectId}/statistics/workItem`,
+            id: `/project/${projectId}/statistics/workItem`,
             key: "statistics",
             encoded: "Statistic",
         },
         {
             title: `${t('milestone')}`,
             icon: 'milestone',
-            id: `/projectDetail/${projectId}/milestone`,
+            id: `/project/${projectId}/milestone`,
             key: "milestone",
             encoded: "Milestone",
         },
         {
             title: "知识库",
             icon: 'repository',
-            id: `/projectDetail/${projectId}/wiki`,
+            id: `/project/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
         },
         {
             title: "测试用例",
             icon: 'test',
-            id: `/projectDetail/${projectId}/test`,
+            id: `/project/${projectId}/test`,
             key: "test",
             encoded: "test",
         }
@@ -235,7 +235,7 @@ const ProjectDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/index/project`)
+        props.history.push(`/project`)
     }
 
     return (

@@ -20,7 +20,7 @@ const ProjectProjectFlowList = (props) => {
     const [router, setRouter] = useState();
 
     useEffect(() => {
-        setRouter(`/projectDetail/${projectId}/projectSetDetail/projectFlowDetail`);
+        setRouter(`/project/${projectId}/set/projectFlowDetail`);
 
         getUserList({ projectId: projectId })
         return

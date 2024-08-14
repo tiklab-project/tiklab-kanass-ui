@@ -46,35 +46,35 @@ const FirstMenu = (props) => {
     // 系统顶部菜单
     const routers = [
         {
-            to: '/index/home/survey',
+            to: '/home/survey',
             title: '首页',
             key: 'home',
             icon: 'home-' + theme,
             actionIcon: setActiveIcon("home-")
         },
         {
-            to: '/index/project',
+            to: '/project',
             title: '项目',
             key: 'project',
             icon: 'project-' + theme,
             actionIcon: setActiveIcon("project-")
         },
         {
-            to: '/index/projectSetList',
+            to: '/projectSet',
             title: '项目集',
             key: 'projectSet',
             icon: 'projectset-' + theme,
             actionIcon: setActiveIcon("projectset-")
         },
         {
-            to: '/index/workTable',
+            to: '/workTable',
             title: '事项',
             key: 'work',
             icon: 'work-' + theme,
             actionIcon: setActiveIcon("work-")
         },
         {
-            to: '/index/log/list',
+            to: '/log/list',
             title: '工时',
             key: 'log',
             icon: 'log-' + theme,

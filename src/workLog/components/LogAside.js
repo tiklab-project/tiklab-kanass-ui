@@ -38,32 +38,32 @@ const SetAside = (props) => {
     const logMenuList = [
         {
             title: '工时查看',
-            path: "/index/log/list",
+            path: "/log/list",
             key: "log",
             icon: "statistics-work"
         },
         {
             title: '工时统计',
-            path: "/index/log/projectStatistic",
+            path: "/log/projectStatistic",
             key: "statistics",
             type: "statistics",
             icon: "statistics-work",
             children: [
                 {
                     title: "项目成员统计",
-                    path: "/index/log/projectuser",
+                    path: "/log/projectuser",
                     key: "projectStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志事项统计",
-                    path: "/index/log/projectwork",
+                    path: "/log/projectwork",
                     key: "workStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志项目统计",
-                    path: "/index/log/userproject",
+                    path: "/log/userproject",
                     key: "userProject",
                     type: "statistics"
                 }

@@ -29,12 +29,12 @@ const MessageListItem = (props) => {
         }
     }
     const goMessageDetail = () => {
-        props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        props.history.push(`/project/${projectId}/work/${workItemId}`);
         updateMessage()
     }
 
     const goSprintDetail = () => {
-        props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`);
+        props.history.push(`/${projectId}/sprint/${sprintId}/workTable`);
         // if (status === 0) {
         //     const value = {
         //         id: id,
@@ -50,7 +50,7 @@ const MessageListItem = (props) => {
     }
 
     const goProjectDetail = () => {
-        props.history.push(`/projectDetail/${projectId}/workTable`);
+        props.history.push(`/project/${projectId}/workTable`);
         // if (status === 0) {
         //     const value = {
         //         id: id,
@@ -66,7 +66,7 @@ const MessageListItem = (props) => {
     }
 
     const goProjectSetDetail = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/projectSetProjectList`);
+        props.history.push(`/projectSet/${projectSetId}/project`);
         if (status === 0) {
             const value = {
                 id: id,

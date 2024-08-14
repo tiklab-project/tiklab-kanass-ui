@@ -59,7 +59,7 @@ const TodoList = (props) => {
 
         
         // 根据不同的url 设置不同的面包屑
-        if (props.route?.path === "/projectDetail/:id/workTodo") {
+        if (props.route?.path === "/project/:id/workTodo") {
             const projectId = props.match.params.id;
             setFirstText("项目概况")
             findTodopage({ ...params, data: { projectId: projectId } })
@@ -69,7 +69,7 @@ const TodoList = (props) => {
             findTodopage(params)
         }
 
-        if (props.route?.path === "/projectSetdetail/:projectSetId/workTodo") {
+        if (props.route?.path === "/projectSet/:projectSetId/workTodo") {
             setFirstText("项目集概况")
             const projectSetId = props.match.params.projectSetId;
             setTodoTaskList([])
@@ -93,11 +93,11 @@ const TodoList = (props) => {
             })
         }
 
-        if (props.route?.path === "/:id/sprintdetail/:sprint/workTodo") {
+        if (props.route?.path === "/:id/sprint/:sprint/workTodo") {
             setFirstText("迭代概况")
             findTodopage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
         }
-        if (props.route?.path === "/:id/versiondetail/:version/workTodo") {
+        if (props.route?.path === "/:id/version/:version/workTodo") {
             setFirstText("版本概况")
             findTodopage({ ...params, data: { versionId: versionId, projectId: projectId }})
         }
@@ -142,7 +142,7 @@ const TodoList = (props) => {
                 }
             })
         }
-        if(path === "/projectSetdetail/:projectSetId/workTodo"){
+        if(path === "/projectSet/:projectSetId/workTodo"){
             const projectSetId = props.match.params.projectSetId;
             findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
                 if (res.code === 0) {
@@ -222,7 +222,7 @@ const TodoList = (props) => {
 
     return (<div className="todo-list-page">
         {
-            path !== "/index/home/todoList" && <Breadcrumb
+            path !== "/home/todoList" && <Breadcrumb
                 {...props}
                 firstText={firstText}
                 secondText="待办事项"
@@ -237,7 +237,7 @@ const TodoList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   (path === "/index/home/todoList" || path === "/projectSetdetail/:projectSetId/workTodo") &&
+                   (path === "/home/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear

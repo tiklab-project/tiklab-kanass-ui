@@ -8,7 +8,7 @@
  */
 import React, { useImperativeHandle, useState, useRef, useEffect } from "react";
 import { Modal, message } from 'antd';
-// import "../../common/components/projectDetail.scss";
+// import "../../common/components/project.scss";
 import WorkAddPage from "./WorkAddPage";
 import "./WorkAddModel.scss"
 import { observer, inject } from "mobx-react";

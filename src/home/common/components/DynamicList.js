@@ -39,25 +39,25 @@ const DynamicList = (props) => {
             },
             data: null
         }
-        if (props.route.path === "/projectDetail/:id/dynamic") {
+        if (props.route.path === "/project/:id/dynamic") {
             setFirstText("项目概况")
             const projectId = props.match.params.id;
             findLogpage({ ...params, data: { projectId: projectId } })
 
         }
 
-        if (props.route.path === "/projectSetdetail/:projectSetId/dynamic") {
+        if (props.route.path === "/projectSet/:projectSetId/dynamic") {
             setFirstText("项目集概况")
             const projectSetId = props.match.params.projectSetId;
             setOpLogList([]);
             findProjectSetLogpage({ ...params, data: { projectSetId: projectSetId } })
         }
 
-        if (props.route.path === "/:id/sprintdetail/:sprint/dynamic") {
+        if (props.route.path === "/:id/sprint/:sprint/dynamic") {
             findLogpage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
             setFirstText("迭代概况")
         }
-        if (props.route.path === "/:id/versiondetail/:version/dynamic") {
+        if (props.route.path === "/:id/version/:version/dynamic") {
             findLogpage({ ...params, data: { versionId: versionId, projectId: projectId } })
             setFirstText("版本概况")
         }
@@ -67,7 +67,7 @@ const DynamicList = (props) => {
          * 获取搜索参数的列表
          */
     const getSerchList = () => {
-        if (path === "/projectSetdetail/:projectSetId/dynamic") {
+        if (path === "/projectSet/:projectSetId/dynamic") {
             const projectSetId = props.match.params.projectSetId;
             findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
                 if (res.code === 0) {
@@ -104,7 +104,7 @@ const DynamicList = (props) => {
                         secondText="最新动态"
                     />
                     {
-                        (path === "/projectSetdetail/:projectSetId/dynamic") &&
+                        (path === "/projectSet/:projectSetId/dynamic") &&
                         <div className="dynamic-filter">
 
                             <Select

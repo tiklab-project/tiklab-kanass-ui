@@ -25,14 +25,14 @@ const VersionEndState = props => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/survey`,
+            url: `/${projectId}/version/${versionId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${projectId}/versiondetail/${versionId}/workTable`,
+            url: `/${projectId}/version/${versionId}/workTable`,
             key: "work",
             encoded: "work",
         }

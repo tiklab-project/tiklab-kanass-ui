@@ -20,7 +20,7 @@ const ProjectSetSettingButton = (props) => {
     const projectSetId = props.match.params.projectSetId;
     // 
     const goProjectSetSetting = () => {
-        props.history.push(`/projectSetdetail/${projectSetId}/projectSetset/basicInfo`)
+        props.history.push(`/projectSet/${projectSetId}/set/basicInfo`)
     }
 
 

@@ -7,22 +7,22 @@ const WorkDetailCrumb = (props) => {
     const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId } = props;
     const isDetail = () => {
         let isView = false;
-        if (props.match.path === "/projectDetail/:id/work/:workId" || props.match.path === "/:id/versiondetail/:version/work/:workId"
-            || props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
+        if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
+            || props.match.path === "/:id/sprint/:sprint/work/:workId") {
             isView = true;
         }
         return isView;
     }
 
     const goWorkList = () => {
-        if (props.match.path === "/projectDetail/:id/work/:workId") {
-            props.history.push(`/projectDetail/${projectId}/workTable`)
+        if (props.match.path === "/project/:id/work/:workId") {
+            props.history.push(`/project/${projectId}/workTable`)
         }
-        if (props.match.path === "/:id/versiondetail/:version/work/:workId") {
-            props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
+        if (props.match.path === "/:id/version/:version/work/:workId") {
+            props.history.push(`/${projectId}/version/${versionId}/workTable`)
         }
-        if (props.match.path === "/:id/sprintdetail/:sprint/work/:workId") {
-            props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTable`)
+        if (props.match.path === "/:id/sprint/:sprint/work/:workId") {
+            props.history.push(`/${projectId}/sprint/${sprintId}/workTable`)
         }
 
     }

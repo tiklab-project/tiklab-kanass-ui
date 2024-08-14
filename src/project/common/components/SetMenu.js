@@ -23,7 +23,7 @@ const SetMenu = (props) => {
     * 跳转到项目设置页面
     */
     const goProjectSetting = () => {
-        props.history.push(`/projectDetail/${projectId}/projectSetDetail/basicInfo`)
+        props.history.push(`/project/${projectId}/set/basicInfo`)
     }
 
     return (

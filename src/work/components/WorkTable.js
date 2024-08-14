@@ -304,9 +304,7 @@ const WorkTable = (props) => {
                         <WorkTableFilter />
                         <div className="work-table-content" ref={workTable}>
                             <Spin spinning={tableLoading} delay={500} >
-                                {
-                                    console.log(workList)
-                                }
+
                                 <Table
                                     scroll = {{
                                         x: "100%"

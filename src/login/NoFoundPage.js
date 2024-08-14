@@ -12,7 +12,7 @@ const NoFoundPage = (props) => {
     return (
         <NotFound
             {...props}
-            homePath={'/index/home/survey'}  //传返回的页面路由参数
+            homePath={'/home/survey'}  //传返回的页面路由参数
         />
     )
 }

@@ -173,7 +173,7 @@ const Survey = (props) => {
     * 跳转到动态列表
     */
     const goDynamicList = () => {
-        props.history.push(`/projectDetail/${projectId}/dynamic`)
+        props.history.push(`/project/${projectId}/dynamic`)
     }
 
     /**
@@ -190,7 +190,7 @@ const Survey = (props) => {
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        props.history.push(`/projectDetail/${projectId}/workTable`)
+        props.history.push(`/project/${projectId}/workTable`)
     }
 
 
@@ -217,22 +217,22 @@ const Survey = (props) => {
         // 有bug
         setSessionStorage("detailCrumbArray", [{ id: item.modelId, code: item.code, title: item.object.name, iconUrl: item.object.workTypeSys.iconUrl }])
 
-        props.history.push(`/projectDetail/${item.object.project.id}/work/${item.object.id}`)
+        props.history.push(`/project/${item.object.project.id}/work/${item.object.id}`)
     }
 
     const goVersion = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/projectDetail/${item.project.id}/versionDetail/${item.modelId}`)
+        props.history.push(`/project/${item.project.id}/version/${item.modelId}`)
 
     }
 
     const goSprint = (item) => {
         updateRecent({ id: item.id })
-        props.history.push(`/${item.project.id}/sprintdetail/${item.modelId}/survey`)
+        props.history.push(`/${item.project.id}/sprint/${item.modelId}/survey`)
     }
 
     const goToListPage = () => {
-        props.history.push(`/projectDetail/${projectId}/workTodo`)
+        props.history.push(`/project/${projectId}/workTodo`)
     }
 
     return (

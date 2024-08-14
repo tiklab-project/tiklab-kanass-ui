@@ -24,24 +24,24 @@ const ProjectSetSettingDetailAside = (props) => {
         {
             title: "项目集信息",
             icon: 'survey',
-            key: `/projectSetdetail/${projectSetId}/projectSetset/basicInfo`,
+            key: `/projectSet/${projectSetId}/set/basicInfo`,
             encoded: "Survey",
         },
         {
             title: `${t('user')}`,
             icon: 'survey',
-            key: `/projectSetdetail/${projectSetId}/projectSetset/user`,
+            key: `/projectSet/${projectSetId}/set/user`,
             encoded: "DominRole",
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
-            key: `/projectSetdetail/${projectSetId}/projectSetset/dominRole`,
+            key: `/projectSet/${projectSetId}/set/dominRole`,
             encoded: "User",
         }
     ];
     // 当前选中路由
-    const [selectKey, setSelectKey] = useState(`/projectScrumDetail/${projectSetId}/projectSetDetail/basicInfo`);
+    const [selectKey, setSelectKey] = useState(`/projectScrumDetail/${projectSetId}/set/basicInfo`);
 
     // 菜单是否折叠
     const [isShowText, SetIsShowText] = useState(true)

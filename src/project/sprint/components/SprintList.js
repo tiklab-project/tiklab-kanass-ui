@@ -74,7 +74,7 @@ const Sprint = (props) => {
             projectType: { id: project.projectType.id },
         }
         createRecent(params)
-        props.history.push({ pathname: `/${projectId}/sprintdetail/${id}/workTable` })
+        props.history.push({ pathname: `/${projectId}/sprint/${id}/workTable` })
         localStorage.setItem("sprintId", id);
     }
 

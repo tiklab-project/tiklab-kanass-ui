@@ -56,7 +56,7 @@ const ProjectTodoStatistics = (props) => {
 
     const goTodoTaskPage = (tabNum) => {
         // props.history.push(`/home/todoList`)
-        props.history.push(`/projectDetail/${projectId}/workTodo`) 
+        props.history.push(`/project/${projectId}/workTodo`) 
         // setActiveKey("todoList")
         setTodoActiveKey(tabNum)
     }

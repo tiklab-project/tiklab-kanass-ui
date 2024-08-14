@@ -31,7 +31,7 @@ const WorkPrivilegeList = (props) => {
 
     const goRoleList = (id) => {
         if(projectId){
-            props.history.push(`/projectDetail/${projectId}/projectSetDetail/projectPrivilegeRoleList/${id}`)
+            props.history.push(`/project/${projectId}/set/projectPrivilegeRoleList/${id}`)
         }else {
             props.history.push(`/setting/workPrivilegeRoleList/${id}`)
         }

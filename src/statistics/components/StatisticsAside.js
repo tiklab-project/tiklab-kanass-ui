@@ -55,14 +55,14 @@ const StatisticsAsicde = (props) => {
      */
     const selectKey = (type) => {
         let url = '';
-        if (props.match.path === "/:id/sprintdetail/:sprint/statistics") {
-            url = `/${projectId}/sprintdetail/${sprintId}/statistics`;
+        if (props.match.path === "/:id/sprint/:sprint/statistics") {
+            url = `/${projectId}/sprint/${sprintId}/statistics`;
         }
-        if (props.match.path === "/projectDetail/:id/statistics") {
-            url = `/projectDetail/${projectId}/statistics`;
+        if (props.match.path === "/project/:id/statistics") {
+            url = `/project/${projectId}/statistics`;
         }
-        if (props.match.path === "/projectSetdetail/:projectSetId/statistics") {
-            url = `/projectSetdetail/${projectSetId}/statistics`;
+        if (props.match.path === "/projectSet/:projectSetId/statistics") {
+            url = `/projectSet/${projectSetId}/statistics`;
         }
         if (versionInfo.expired === false || type === "workItem") {
             url = `${url}/${type}`;

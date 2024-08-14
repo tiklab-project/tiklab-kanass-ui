@@ -97,7 +97,7 @@ const StageDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/projectDetail/${projectId}/stage`)
+        props.history.push(`/project/${projectId}/stage`)
     }
     const setButton = useRef(null)
     return (

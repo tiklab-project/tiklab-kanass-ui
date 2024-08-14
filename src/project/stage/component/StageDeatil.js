@@ -97,7 +97,7 @@ const StageDetail = (props) => {
      * @param {*} item 
      */
     const changeStage = (item) => {
-        props.history.push(`/projectDetail/${projectId}/stageDetail/${item.id}`)
+        props.history.push(`/project/${projectId}/stageDetail/${item.id}`)
         setMouseActive(false)
     }
 
@@ -117,7 +117,7 @@ const StageDetail = (props) => {
     const deleStage = () => {
         deleteStage({ id: stageId }).then(res => {
             if (res.code === 0) {
-                props.history.push(`/projectDetail/${projectId}/stage`)
+                props.history.push(`/project/${projectId}/stage`)
             }
         })
     }
@@ -182,7 +182,7 @@ const StageDetail = (props) => {
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-home"></use>
                                         </svg>
-                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/stage`)}>计划</span>
+                                        <span className="stage-breadcrumb-first" onClick={() => props.history.push(`/project/${projectId}/stage`)}>计划</span>
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-right1"></use>
                                         </svg>

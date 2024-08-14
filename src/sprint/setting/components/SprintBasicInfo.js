@@ -133,7 +133,7 @@ const SprintBasicInfo = props => {
                 if (response.code === 0) {
                     message.success('删除成功');
                     setIsModalVisible(false);
-                    props.history.push(`/projectDetail/${projectId}/sprint`)
+                    props.history.push(`/project/${projectId}/sprint`)
                 }
             })
 

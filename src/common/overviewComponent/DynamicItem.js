@@ -12,32 +12,32 @@ const DynamicListItem = (props) => {
     const goDynamicDetail = () => {
         // switch (model) {
         //     case "sprint":
-        //         props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);
+        //         props.history.push(`/${projectId}/sprint/${sprintId}/work/${workItemId}`);
         //         break;
         //     case "version":
-        //         props.history.push(`/${projectId}/versiondetail/${versionId}/work/${workItemId}`);
+        //         props.history.push(`/${projectId}/version/${versionId}/work/${workItemId}`);
         //         break;
         //     case "projectSet":
-        //         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        //         props.history.push(`/project/${projectId}/work/${workItemId}`);
         //         break;
         //     default:
-        //         props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        //         props.history.push(`/project/${projectId}/work/${workItemId}`);
         //         break;
         // }
         if (path.indexOf("sprintdetail") > -1) {
-            props.history.push(`/${projectId}/sprintdetail/${sprintId}/work/${workItemId}`);
+            props.history.push(`/${projectId}/sprint/${sprintId}/work/${workItemId}`);
         }
         if (path.indexOf("home") > -1) {
-            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+            props.history.push(`/project/${projectId}/work/${workItemId}`);
         }
-        if (path.indexOf("projectDetail") > -1) {
-            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        if (path.indexOf("project") > -1) {
+            props.history.push(`/project/${projectId}/work/${workItemId}`);
         }
-        if (path.indexOf("versiondetail") > -1) {
-            props.history.push(`/${projectId}/versiondetail/${versionId}/work/${workItemId}`);
+        if (path.indexOf("version") > -1) {
+            props.history.push(`/${projectId}/version/${versionId}/work/${workItemId}`);
         }
-        if (path.indexOf("projectSetdetail") > -1) {
-            props.history.push(`/projectDetail/${projectId}/work/${workItemId}`);
+        if (path.indexOf("projectSet") > -1) {
+            props.history.push(`/project/${projectId}/work/${workItemId}`);
         }
     }
     const setDom = () => {

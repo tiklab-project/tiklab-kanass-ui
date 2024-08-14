@@ -134,10 +134,10 @@ const WorkTestCaseAddmodal = (props) => {
     const goTestRepository = () => {
         // searchpro(projectId).then(res => {
         //     if(res.code === 0){
-        //         props.history.push(`/projectDetail/${projectId}/test`)
+        //         props.history.push(`/project/${projectId}/test`)
         //     }
         // })
-        props.history.push(`/projectDetail/${projectId}/test`)
+        props.history.push(`/project/${projectId}/test`)
     }
 
     const changePage = (pagination) => {

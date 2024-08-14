@@ -15,6 +15,7 @@ import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
 import { getVersionInfo } from "thoughtware-core-ui"
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import setImageUrl from "../../common/utils/setImageUrl";
 
 const WorkGantt = (props) => {
     const { Gantt } = props;
@@ -79,6 +80,7 @@ const WorkGantt = (props) => {
                                     WorkDetailDrawer = {WorkDetailDrawer}
                                     useDebounce = {useDebounce}
                                     archiveView = {archiveView}
+                                    setImageUrl = {setImageUrl}
                                     {...props}
                                 />
                                 :

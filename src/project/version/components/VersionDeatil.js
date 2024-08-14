@@ -94,7 +94,7 @@ const VersionDetail = (props) => {
      * @param {*} item 
      */
     const changeVersion = (item) => {
-        props.history.push(`/projectDetail/${projectId}/versionDetail/${item.id}`)
+        props.history.push(`/project/${projectId}/version/${item.id}`)
         setMouseActive(false)
     }
 
@@ -163,7 +163,7 @@ const VersionDetail = (props) => {
                         planInfo && <Fragment>
                             <div className="version-top">
                                 <div className="version-breadcrumb">
-                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/projectDetail/${projectId}/version`)}>版本</span>
+                                    <span className="version-breadcrumb-first" onClick={() => props.history.push(`/project/${projectId}/version`)}>版本</span>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref="#icon-right1"></use>
                                     </svg>

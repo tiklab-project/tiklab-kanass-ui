@@ -61,7 +61,7 @@ const SprintChangeModal = (props) => {
         // 切换选中项目，获取项目详情
         findSprint({ id: id }).then(data => {
             if (data.code === 0) {
-                props.history.push(`/${projectId}/sprintdetail/${id}/workTable`)
+                props.history.push(`/${projectId}/sprint/${id}/workTable`)
                 localStorage.setItem("sprintId", id);
                 setShowMenu(false)
             }
@@ -152,7 +152,7 @@ const SprintChangeModal = (props) => {
                 }
                 {
                     sprintList.length > 6 &&
-                    <div className="change-sprint-more" onClick={() => props.history.push(`/projectDetail/${projectId}/sprint`)}>查看更多</div>
+                    <div className="change-sprint-more" onClick={() => props.history.push(`/project/${projectId}/sprint`)}>查看更多</div>
                 }
             </div>
         </div>

@@ -96,7 +96,7 @@ const WorkType = (props) => {
      * @param {流程id} id 
      */
     const goFlow = (id) => {
-        props.history.push(`/projectDetail/${projectId}/projectSetDetail/projectFlowDetail/${id}`)
+        props.history.push(`/project/${projectId}/set/projectFlowDetail/${id}`)
     }
 
     /**
@@ -104,7 +104,7 @@ const WorkType = (props) => {
      * @param {表单id} id 
      */
     const goForm = (id) => {
-        props.history.push(`/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail/${id}`)
+        props.history.push(`/project/${projectId}/set/ProjectFormDetail/${id}`)
     }
 
     const columns = [

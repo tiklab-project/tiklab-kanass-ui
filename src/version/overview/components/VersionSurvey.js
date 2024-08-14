@@ -127,7 +127,7 @@ const VersionSurvey = (props) => {
     * 跳转到动态列表
     */
     const goDynamicList = () => {
-        props.history.push(`/${projectId}/versiondetail/${versionId}/dynamic`)
+        props.history.push(`/${projectId}/version/${versionId}/dynamic`)
         
     }
 
@@ -140,10 +140,10 @@ const VersionSurvey = (props) => {
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        props.history.push(`/${projectId}/versiondetail/${versionId}/workTable`)
+        props.history.push(`/${projectId}/version/${versionId}/workTable`)
     }
     const goToListPage = () => {
-        props.history.push(`/${projectId}/versiondetail/${versionId}/workTodo`) 
+        props.history.push(`/${projectId}/version/${versionId}/workTodo`) 
     }
 
 

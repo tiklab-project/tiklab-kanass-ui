@@ -44,7 +44,7 @@ const MoreMenuModel = (props) => {
     //     {
     //         title: `${t('statistic')}`,
     //         icon: 'statisticslog',
-    //         url: `/projectDetail/${projectId}/statistics/workItem`,
+    //         url: `/project/${projectId}/statistics/workItem`,
     //         key: "statistics",
     //         encoded: "Statistic",
     //     }

@@ -16,7 +16,7 @@ const ProjectFormList = (props) => {
     const projectId = props.match.params.id;
     const [router, setRouter] = useState()
     useEffect(() => {
-        setRouter(`/projectDetail/${projectId}/projectSetDetail/ProjectFormDetail`)
+        setRouter(`/project/${projectId}/set/ProjectFormDetail`)
         return
     }, [])
 

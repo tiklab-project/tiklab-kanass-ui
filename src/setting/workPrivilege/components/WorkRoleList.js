@@ -95,7 +95,7 @@ const WorkRoleList = (props) => {
 
     const goRoleFunction = (id, type) => {
         if(projectId){
-            props.history.push(`/projectDetail/${projectId}/projectSetDetail/${privilegeId}/${type}/${id}`)
+            props.history.push(`/project/${projectId}/set/${privilegeId}/${type}/${id}`)
         }else {
             props.history.push(`/setting/workRoleFunction/${privilegeId}/${type}/${id}`)
         }

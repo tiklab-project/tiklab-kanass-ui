@@ -6,15 +6,15 @@ const finWorkList = (router, workStore, params) => {
             type = "system"
 
         }
-        if (router.indexOf("/projectDetail/:id/work") > -1) {
+        if (router.indexOf("/project/:id/work") > -1) {
             type = "project"
 
         }
-        if (router.indexOf("/:id/sprintdetail/:sprint/work") > -1) {
+        if (router.indexOf("/:id/sprint/:sprint/work") > -1) {
             type = "sprint"
 
         }
-        if (router.indexOf("/:id/versiondetail/:version/work") > -1) {
+        if (router.indexOf("/:id/version/:version/work") > -1) {
             type = "version"
 
         }

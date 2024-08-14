@@ -23,54 +23,54 @@ const ProjectScrumSetAside = (props) => {
         {
             title: `${t('projectInfo')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/basicInfo`,
+            id: `/project/${projectId}/set/basicInfo`,
             encoded: "Survey",
         },
         {
             title: "事项类型",
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/projectWorkType`,
+            id: `/project/${projectId}/set/projectWorkType`,
             encoded: "WorkType",
         },
         {
             title: `${t('user')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/user`,
+            id: `/project/${projectId}/set/user`,
             encoded: "User",
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/projectDomainRole`,
+            id: `/project/${projectId}/set/projectDomainRole`,
             encoded: "Privilege",
         },
         {
             title: "流程",
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/projectFlow`,
+            id: `/project/${projectId}/set/projectFlow`,
             encoded: "WorkFlow",
         },
         {
             title: "表单",
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/projectForm`,
+            id: `/project/${projectId}/set/projectForm`,
             encoded: "WorkForm",
         },
         {
             title: `${t('module')}`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/module`,
+            id: `/project/${projectId}/set/module`,
             encoded: "Module"
         },
         {
             title: `消息通知方案`,
             icon: 'survey',
-            id: `/projectDetail/${projectId}/projectSetDetail/messagenotice`,
+            id: `/project/${projectId}/set/messagenotice`,
             encoded: "messagenotice"
         }
     ];
     // 当前选中路由
-    const [selectKey, setSelectKey] = useState(`/projectDetail/${projectId}/projectSetDetail/basicInfo`);
+    const [selectKey, setSelectKey] = useState(`/project/${projectId}/set/basicInfo`);
 
     // 菜单是否折叠
     const [isShowText, SetIsShowText] = useState(true)
@@ -105,8 +105,8 @@ const ProjectScrumSetAside = (props) => {
                         {...props}
                         domainId={projectId}
                         projectRouters={prorouter}
-                        outerPath={`/projectDetail/${projectId}/projectSetDetail/basicInfo`} // 系统设置Layout路径
-                        noAccessPath={`/projectDetail/${projectId}/noAccess`}  //找不到页面路径
+                        outerPath={`/project/${projectId}/set/basicInfo`} // 系统设置Layout路径
+                        noAccessPath={`/project/${projectId}/noAccess`}  //找不到页面路径
                     >
                         <ul className="project-menu">
 

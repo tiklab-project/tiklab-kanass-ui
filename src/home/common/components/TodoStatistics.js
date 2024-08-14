@@ -17,23 +17,23 @@ const TodoStatistics = (props) => {
 
     useEffect(()=> {
         let params = {}
-        if (path === "/projectDetail/:id/survey") {
+        if (path === "/project/:id/survey") {
             params = {
                 projectId: projectId
             }
         }
-        if (path === "/projectSetdetail/:projectSetId/survey") {
+        if (path === "/projectSet/:projectSetId/survey") {
             params = {
                 projectSetId: projectSetId
             }
         }
 
-        if (path === "/:id/sprintdetail/:sprint/survey") {
+        if (path === "/:id/sprint/:sprint/survey") {
             params = {
                 sprintId: sprintId
             }
         }
-        if (path === "/:id/versiondetail/:version/survey") {
+        if (path === "/:id/version/:version/survey") {
             params = {
                 versionId: versionId
             }
@@ -82,21 +82,21 @@ const TodoStatistics = (props) => {
         
         setActiveKey("todoList")
         setTodoActiveKey(tabNum)
-        if(path === "/index/home/survey"){
-            props.history.push(`/index/home/todoList`)
+        if(path === "/home/survey"){
+            props.history.push(`/home/todoList`)
         }
-        if (path === "/projectDetail/:id/survey") {
-            props.history.push(`/projectDetail/${projectId}/workTodo`)
+        if (path === "/project/:id/survey") {
+            props.history.push(`/project/${projectId}/workTodo`)
         }
-        if (path === "/projectSetdetail/:projectSetId/survey") {
-            props.history.push(`/projectSetdetail/${projectSetId}/workTodo`)
+        if (path === "/projectSet/:projectSetId/survey") {
+            props.history.push(`/projectSet/${projectSetId}/workTodo`)
         }
 
-        if (path === "/:id/sprintdetail/:sprint/survey") {
-            props.history.push(`/${projectId}/sprintdetail/${sprintId}/workTodo`)
+        if (path === "/:id/sprint/:sprint/survey") {
+            props.history.push(`/${projectId}/sprint/${sprintId}/workTodo`)
         }
-        if (path === "/:id/versiondetail/:version/survey") {
-            props.history.push(`/${projectId}/versiondetail/${versionId}/workTodo`)
+        if (path === "/:id/version/:version/survey") {
+            props.history.push(`/${projectId}/version/${versionId}/workTodo`)
         }
     }
     return (

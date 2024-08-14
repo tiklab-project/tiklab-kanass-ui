@@ -39,7 +39,7 @@ const SprintDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            id: `/${projectId}/sprint/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
@@ -47,7 +47,7 @@ const SprintDetailAside = (props) => {
             title: "事项",
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            id: `/${projectId}/sprint/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
@@ -55,7 +55,7 @@ const SprintDetailAside = (props) => {
             title: "规划",
             icon: 'plan-' + theme,
             defaultIcon: "plan-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/plan`,
+            id: `/${projectId}/sprint/${sprintId}/plan`,
             key: "plan",
             encoded: "plan",
         },
@@ -63,7 +63,7 @@ const SprintDetailAside = (props) => {
             title: "统计",
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            id: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -74,7 +74,7 @@ const SprintDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/survey`,
+            id: `/${projectId}/sprint/${sprintId}/survey`,
             key: "survey",
             encoded: "Survey",
         },
@@ -82,7 +82,7 @@ const SprintDetailAside = (props) => {
             title: "事项",
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/workTable`,
+            id: `/${projectId}/sprint/${sprintId}/workTable`,
             key: "work",
             encoded: "work",
         },
@@ -90,7 +90,7 @@ const SprintDetailAside = (props) => {
             title: "统计",
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",
-            id: `/${projectId}/sprintdetail/${sprintId}/statistics/workItem`,
+            id: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
@@ -123,7 +123,7 @@ const SprintDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push(`/projectDetail/${projectId}/sprint`)
+        props.history.push(`/project/${projectId}/sprint`)
     }
     const setButton = useRef(null)
     return (
@@ -135,8 +135,8 @@ const SprintDetailAside = (props) => {
                 initRouters={sprintRouter}
                 backName = {"返回项目"}
                 path={path}
-                setUrl = {`/${projectId}/sprintdetail/${sprintId}/setting`}
-                backUrl = {`/projectDetail/${projectId}/sprint`}
+                setUrl = {`/${projectId}/sprint/${sprintId}/setting`}
+                backUrl = {`/project/${projectId}/sprint`}
             />
         </Fragment>
     )

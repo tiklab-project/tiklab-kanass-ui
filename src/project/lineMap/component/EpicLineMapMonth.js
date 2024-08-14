@@ -346,7 +346,7 @@ const EpicLineMap = (props) => {
     }
 
     const goEpicDetail = (item) => {
-        props.history.push(`/projectDetail/${projectId}/epic/${item.id}`)
+        props.history.push(`/project/${projectId}/epic/${item.id}`)
 
     }
     //绘制表格
