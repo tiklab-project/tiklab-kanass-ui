@@ -17,6 +17,7 @@ import { withRouter } from "react-router";
 import dayjs from 'dayjs';
 import { Empty } from "antd";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const Gantt = (props) => {
     // 获取当前年月日
@@ -714,7 +715,7 @@ const Gantt = (props) => {
                         </div>
                         :
                         <div style={{ marginTop: "50px" }}>
-                            <Empty image="/images/nodata.png" description="暂时没有事项~" />
+                            <ProjectEmpty description="暂时没有事项~" />
                         </div>
                 }
             </div>

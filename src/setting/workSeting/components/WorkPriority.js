@@ -6,6 +6,7 @@ import "./WorkPriority.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const WorkPriority = (props) => {
     const store = {
         workSetingStore: WorkSetingStore
@@ -68,8 +69,8 @@ const WorkPriority = (props) => {
             render: (text, record) => (
                 <div className="work-priority-name" >
                     <div className="work-type-icon">
-                        <img
-                            src={(`/images/${record.iconUrl}`)}
+                        <ImgComponent
+                            src={record.iconUrl}
                             alt=""
                             className="icon-32"
                         />

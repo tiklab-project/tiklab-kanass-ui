@@ -40,8 +40,6 @@
     }
 
     .first-menu-link {
-       
-
         &-item {
             display: flex;
             width: 100%;
@@ -96,8 +94,8 @@
         border-left: 3px solid #ffffff !important;
     }
     .user-icon {
-        background-color: #fff;
-        color: #2B2B2B;
+        background-color: #8e9bed;
+        color: #fff;
     }
     .first-menu-text-item:hover {
         background-color: #557AC0;
@@ -141,8 +139,8 @@
         background-color: #414A5A;
     }
     .user-icon {
-        background-color: #ffffff;
-        color: #2B2B2B;
+        background-color: var(--thoughtware-blue);
+        color: #fff;
     }
 }
 .menu-box-right-border{

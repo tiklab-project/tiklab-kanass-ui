@@ -19,6 +19,7 @@ import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import StageEndState from "./StageEndState";
 import StageStartState from "./StageStartState";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const StageSurvey = (props) => {
     const { findStage, findStageBurnDowmChartPage, opLogList, findlogpage,
         findtodopage, todoTaskList, findWorkItemNumByQuickSearch } = StageSurveyStore;
@@ -185,8 +186,8 @@ const StageSurvey = (props) => {
                         <div className="stage-info-box">
                             <div className="stage-info-top">
                                 <div className="stage-info-title">
-                                    <img
-                                        src={('/images/project1.png')}
+                                    <ImgComponent
+                                        src={"project1.png"}
                                         alt=""
                                         className="list-img"
                                     />

@@ -189,14 +189,6 @@ const VersionSurvey = (props) => {
                 <div className="version-survey">
                     <div className="version-survey-top">
                         <div className="version-info-box">
-                            {/* <div className="version-info-title">
-                                <img
-                                    src={('/images/version.png')}
-                                    alt=""
-                                    className="list-img"
-                                />
-                                {versionInfo && versionInfo.name}
-                            </div> */}
                              <div className="version-info-top">
                                 <div className="version-info-title">
                                     <ColorIcon name = {versionInfo?.name} className = "list-img" color = {versionInfo?.color}/>

@@ -16,6 +16,7 @@ import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ColorIcon from "../../../common/colorIcon/colorIcon";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const ProjectSetSurvey = props => {
 
     const { logList, findProjectSetLogpage, createRecent } = BasicInfoStore;
@@ -136,7 +137,7 @@ const ProjectSetSurvey = props => {
                                         </div>
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                                        <ProjectEmpty description="暂时没有动态~" />
                                 }
                             </div>
                         </div>

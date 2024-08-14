@@ -16,6 +16,7 @@ import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";
 import ColorIcon from '../../../common/colorIcon/colorIcon';
+import ProjectEmpty from '../../../common/component/ProjectEmpty';
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -238,7 +239,7 @@ const ProjectSetTable = (props) => {
 
                             })
                                 :
-                                <Empty image="/images/nodata.png" description="暂时没有点击过项目集~" />
+                                <ProjectEmpty description="暂时没有点击过项目集~" />
                         }
                     </div>
                 </div>

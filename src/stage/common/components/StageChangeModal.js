@@ -3,6 +3,7 @@ import "./StageChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const StageChangeModal = (props) => {
     const { isShowText, stageDetailStore } = props;
@@ -83,8 +84,8 @@ const StageChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="stage-title title" onClick={showMoreMenu}>
-                        <img
-                            src={('/images/stage.png')}
+                        <ImgComponent
+                            src={('stage.png')}
                             className="icon-32"
                             alt=""
                         />
@@ -103,8 +104,8 @@ const StageChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={stage?.stageName}>
                             <div className='stage-title-icon' onClick={showMoreMenu} >
-                                <img
-                                    src={('/images/stage.png')}
+                                <ImgComponent
+                                    src={stage.png}
                                     className="icon-32"
                                     
                                     alt=""

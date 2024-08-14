@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Upload, message } from 'antd';
 import { withRouter } from "react-router";
-import UploadIcon1 from "../../../../assets/images/uploadIcon.png";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
 import {getUser} from "thoughtware-core-ui";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";

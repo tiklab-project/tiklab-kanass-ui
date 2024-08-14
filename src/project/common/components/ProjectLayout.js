@@ -15,6 +15,7 @@ import { observer, inject, Provider } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const ProjectLayout = (props) => {
     const store = {
@@ -76,7 +77,7 @@ const ProjectLayout = (props) => {
                 </Layout>
                 :
                 <div className="project-empty">
-                    <Empty image="/images/nodata.png" description="没有该项目或者项目被删除" />
+                    <ProjectEmpty description="没有该项目或者项目被删除" />
                 </div>
                 
             }

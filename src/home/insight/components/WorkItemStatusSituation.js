@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./WorkItemStatusSituation.scss";
 import { Form, Select, Button } from 'antd';
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const WorkItemStatusSituation = (props) => {
     const { insightStore, index, editInsight, isView, condition } = props;
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = insightStore;
@@ -144,7 +145,7 @@ const WorkItemStatusSituation = (props) => {
                             </div>
                                 :
                                 <div className="delete-warning">
-                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                    <ImgComponent src={"warning.png"} alt="" width="20px" height="20px" />
                                     项目不能被查看或者被删除，请修改配置或者删除
                                 </div>
                         }

@@ -15,6 +15,7 @@ import statisticStore from "./store/StatisticStore";
 import { enableAxios } from "thoughtware-core-ui";
 // import enableAxiosCloud from "thoughtware-tenant-cloud-ui";
 import { observer } from "mobx-react";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const { RangePicker } = DatePicker;
 
 
@@ -255,7 +256,7 @@ const LogProjectUserStatistics = (props) => {
 
                 </div>
                     :
-                    <Empty />
+                    <ProjectEmpty description="暂时没有记录~" />
             }
         </div>
     )

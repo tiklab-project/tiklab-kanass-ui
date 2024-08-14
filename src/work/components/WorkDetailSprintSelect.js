@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailSprintSelect.scss"
 import { Empty, Modal } from "antd";
 import Button from "../../common/button/Button";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkDetailSprintSelect = (props) => {
     const { selectList, sprint, workId, workStore, workStatusCode, disabled = false } = props;
     const [showDropdown, setShowDropdown] = useState(false);
@@ -156,7 +157,7 @@ const WorkDetailSprintSelect = (props) => {
                             </div>
                             :
                             <div className="select-dropdown">
-                                <Empty image="/images/nodata.png" description="暂时没有迭代~" />
+                                <ProjectEmpty description="暂时没有迭代~" />
                             </div>
                         }
                     </>

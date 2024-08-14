@@ -19,6 +19,7 @@ import WorkStore from '../../../work/store/WorkStore';
 import { withRouter } from "react-router";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Search = (props) => {
     const { isShowText } = props;
@@ -357,7 +358,7 @@ const Search = (props) => {
 
                                     </Fragment>
                                         :
-                                        <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                        <ProjectEmpty description="暂时没有数据~" />
                                 }
                             </div>
                                 :
@@ -389,7 +390,7 @@ const Search = (props) => {
                                                 </>
 
                                                 :
-                                                <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                                <ProjectEmpty description="暂时没有数据~" />
                                         }
                                     </div>
                                     <div className="sort-box">
@@ -415,7 +416,7 @@ const Search = (props) => {
                                                 }
                                             </>
                                                 :
-                                                <Empty image="/images/nodata.png" description="暂时没有数据~" />
+                                                <ProjectEmpty description="暂时没有数据~" />
                                         }
                                     </div>
                                 </div>

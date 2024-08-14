@@ -3,6 +3,7 @@ import "./SettingHome.scss";
 import { Row, Col } from "antd";
 import SettingHomeStore from "../store/SettingHomeStore"
 import { observer } from "mobx-react";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const SettingHome = (props) => {
     const { findOrgaNum, setSelectKey, selectKey } = SettingHomeStore;
@@ -302,7 +303,7 @@ const SettingHome = (props) => {
                                             <div className="module-desc">{item.desc}</div>
                                         </div>
 
-                                        <img className="module-img" src={(`/images/${item.icon}.png`)} alt="" width="180px" height="180px" />
+                                        <ImgComponent className="module-img" src={`${item.icon}.png`} alt="" width="180px" height="180px" />
 
                                     </div>
                                 })

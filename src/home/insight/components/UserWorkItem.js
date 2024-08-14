@@ -11,6 +11,8 @@ import { inject, observer } from "mobx-react";
 import { Form, Select, Button } from 'antd';
 import "./userWorkItem.scss";
 import * as echarts from 'echarts';
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 
 const UserWorkItem = (props) => {
@@ -217,12 +219,12 @@ const UserWorkItem = (props) => {
                         {
                             project ? <>
                                 {
-                                    userList.length < 0 && <Empty image="/images/nodata.png" description="该项目中没有成员~" />
+                                    userList.length < 0 && <ProjectEmpty description="该项目中没有成员~" />
                                 }
                             </>
                                 :
                                 <div className="delete-warning">
-                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                    <ImgComponent src={"warning.png"} alt="" width="20px" height="20px" />
                                     项目不能被查看或者被删除，请修改配置或者删除
                                 </div>
                         }

@@ -1,6 +1,7 @@
 import React, { Fragment,useState } from "react";
 import { Modal, Form,Input,Radio,Select } from 'antd';
 import Button  from "../../../common/button/Button";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const { Option } = Select;
 
 const layout = {
@@ -227,7 +228,7 @@ const WorkPriorityAddModal = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div className={`project-priority-add-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
                                        
-                                        {item.iconUrl && <img src={('/images/' + item.iconUrl)} alt="" className="icon-32"/>}
+                                        {item.iconUrl && <ImgComponent src={item.iconUrl} alt="" className="icon-32"/>}
                                     </div>
                                 })
                             }

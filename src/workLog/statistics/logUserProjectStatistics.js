@@ -250,7 +250,7 @@ const LogUserProjectStatistics = (props) => {
 
                 </div>
                     :
-                    <Empty />
+                    <ProjectEmpty description="暂时记录~" />
             }
 
         </div>

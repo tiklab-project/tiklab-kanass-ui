@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form, Input, Upload, Select, message } from 'antd';
 import Button from "../../../common/button/Button";
 import "./ProjectType.scss"
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const { Option } = Select;
 
 const layout = {
@@ -158,7 +159,7 @@ const ProjectTypeAddModal = (props) => {
                             {
                                 iconList && iconList.map((item) => {
                                     return <div className={`project-type-add-icon ${item.iconUrl === iconUrl ? "icon-select" : null}`} key={item.id} onClick={() => { setIconUrl(item.iconUrl) }}>
-                                        <img src={('/images/' + item.iconUrl)} alt="" className="img-icon-right" />
+                                        <ImgComponent src={item.iconUrl} alt="" className="img-icon-right" />
                                     </div>
                                 })
                             }

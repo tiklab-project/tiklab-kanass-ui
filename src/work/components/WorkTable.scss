@@ -9,6 +9,9 @@
     padding-bottom: var(--thoughtware-padding);
     .work-table-content {
         padding-top: var(--thoughtware-padding);
+        .ant-table-measure-row {
+            display: none;
+        }
         .ant-pagination {
             margin: 16px 0 0;
         }

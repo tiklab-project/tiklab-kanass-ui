@@ -21,6 +21,7 @@ import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import DyncmicTimeAxis from "./DyncmicTimeAxis";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
         findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
@@ -348,7 +349,7 @@ const Survey = (props) => {
                                 milestoneList?.length > 0 ?
                                     <MilestoneTimeline milestonelist={milestoneList} />
                                     :
-                                    <Empty image="/images/nodata.png" description="暂时没有里程碑~" />
+                                    <ProjectEmpty description="暂时没有里程碑~" />
                             }
 
                         </div>
@@ -364,7 +365,7 @@ const Survey = (props) => {
                             </div>
                         </div>
                         {
-                            logList && logList.length > 0 ? <DyncmicTimeAxis logList={logList} /> : <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                            logList && logList.length > 0 ? <DyncmicTimeAxis logList={logList} /> : <ProjectEmpty description="暂时没有动态~" />
                         }
                     </div>
 

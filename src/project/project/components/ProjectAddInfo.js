@@ -1,7 +1,6 @@
 import React, { Fragment,useEffect } from "react";
 import {  Form, Input, DatePicker, message, Upload } from 'antd';
 import locale from 'antd/es/date-picker/locale/zh_CN';
-import UploadIcon1 from "../../../assets/images/uploadIcon.png";
 import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
 import { useState } from "react";
@@ -10,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";
 import { useDebounce } from "../../../common/utils/debounce";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -180,7 +180,7 @@ const ProjectAddInfo = (props) => {
                 <div className="project-type-content">
                     <div className="project-type-box">
                         <div>
-                            <img src={`/images/${workType.iconUrl}`} alt="" className="type-icon" />
+                            <ImgComponent src={`${workType.iconUrl}`} alt="" className="type-icon" />
                         </div>
                         <div className="type-info">
                             <div className="type-name">{workType.name}</div>
@@ -272,10 +272,10 @@ const ProjectAddInfo = (props) => {
                                 iconList && iconList.map((item) => {
                                     return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
 
-                                        <img 
+                                        <ImgComponent 
                                             alt="" 
                                             className="img-icon" 
-                                            src={(`/images/${item.iconUrl}`)}
+                                            src={(`${item.iconUrl}`)}
                                         />
                                     </div>
                                 })

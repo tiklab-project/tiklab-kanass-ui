@@ -4,6 +4,7 @@ import { Empty } from "antd";
 import DyncmicItem from "./DynamicItem"
 import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
 import { observer } from "mobx-react";
+import ProjectEmpty from "../component/ProjectEmpty";
 const DyncmicList = (props) => {
     const {logList, goDynamicList, goOpLogDetail} = props;
     return (
@@ -21,7 +22,7 @@ const DyncmicList = (props) => {
             {
                 logList.length > 0 ?  <DyncmicTimeAxis logList={logList} />
                     :
-                    <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                    <ProjectEmpty description="暂时没有动态~" />
             }
         </div>
     </div>

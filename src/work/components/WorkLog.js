@@ -7,6 +7,7 @@ import Button from "../../common/button/Button";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import LogAdd from "../../project/workLog/components/LogAdd";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 
 const WorkLog = (props) => {
@@ -164,7 +165,7 @@ const WorkLog = (props) => {
 
                         })
                             :
-                            <Empty image="/images/nodata.png" description="暂时没有工时记录~" />
+                            <ProjectEmpty description="暂时没有工时记录~" />
                     }
                 </div>
 

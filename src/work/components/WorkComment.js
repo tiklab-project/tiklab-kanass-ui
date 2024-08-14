@@ -13,6 +13,7 @@ import { getUser } from 'thoughtware-core-ui';
 import { observer } from "mobx-react";
 import moment from 'moment';
 import WorkCommentStore from "../store/WorkCommentStore";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const { TextArea } = Input;
 
 const WorkComment = (props) => {
@@ -203,7 +204,7 @@ const WorkComment = (props) => {
                                     onChange={(page, pageSize) => changePage(page, pageSize)}
                                 />
                             </div>
-                        </Fragment> : <Empty />
+                        </Fragment> : <ProjectEmpty description = {"暂无评论"} />
                 }
             </div>
         </div>

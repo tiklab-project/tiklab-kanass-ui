@@ -7,6 +7,7 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "thoughtware-core-ui";
 import { changeWorkItemParent } from "./WorkGetList";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId, stageId } = props;
 
@@ -212,7 +213,7 @@ const WorkChildAddmodal = (props) => {
                                         value={item.id}
                                         label={item.name}
                                         key={item.id}
-                                        imgUrl={`${base_url}/images/${item.iconUrl}`}
+                                        imgUrl={item.iconUrl}
                                     />
                                 })
                             }
@@ -329,7 +330,7 @@ const WorkChildAddmodal = (props) => {
                         </div>
                             :
                             <div className="child-add-table">
-                                <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                <ProjectEmpty description="暂时没有可添加事项~" />
                             </div>
                     }
                 </div>

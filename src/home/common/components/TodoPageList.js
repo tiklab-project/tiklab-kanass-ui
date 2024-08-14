@@ -15,6 +15,7 @@ import { withRouter } from "react-router";
 import "./TodoPageList.scss"
 import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const TodoList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,
@@ -265,7 +266,7 @@ const TodoList = (props) => {
 
                 })
                     :
-                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                    <ProjectEmpty description="暂时没有待办~" />
             }
         </div>
         {

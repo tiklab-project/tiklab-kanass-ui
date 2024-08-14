@@ -17,6 +17,7 @@ import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 import HomeStore from "../store/HomeStore";
 import DyncmicTimeAxis from "../../../project/overview/components/DyncmicTimeAxis";
 import PaginationCommon from "../../../common/page/Page";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const DynamicList = (props) => {
     const { homeStore } = props;
     const { findLogpage, opLogCondition, logList, opLogTotal, setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
@@ -126,7 +127,8 @@ const DynamicList = (props) => {
 
                 <div className="dynamic-list">
                     {
-                        logList && logList.length > 0 ?  <DyncmicTimeAxis logList={logList} /> :   <Empty image="/images/nodata.png" description="暂时没有动态~" />
+                        logList && logList.length > 0 ?  <DyncmicTimeAxis logList={logList} /> :   
+                        <ProjectEmpty description="暂时没有动态~" />
                     }
                     
                 </div>

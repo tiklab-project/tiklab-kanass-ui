@@ -12,6 +12,8 @@ import { inject, observer } from "mobx-react";
 import { Form, Select, Button, Empty } from 'antd';
 import "./ProjectSetMember.scss";
 import * as echarts from 'echarts';
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 
 const ProjectSetMember = (props) => {
@@ -176,12 +178,13 @@ const ProjectSetMember = (props) => {
                         <div className="projectset-user-content" id={`project-user-${index}`}>
                             {
                                 !projectSet ? <div className="delete-warning">
-                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                                    <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
                                 </div>
                                     :
                                     <>
                                         {
-                                            projectUserList.length <= 0 && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                            projectUserList.length <= 0 && 
+                                            <ProjectEmpty description="项目集中没有项目~" />
                                         }
                                     </>
                             }

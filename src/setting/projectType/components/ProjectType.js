@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import "./ProjectType.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectTypeStore from "../store/ProjectTypeStore";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 
 const ProjectType = () => {
@@ -51,21 +52,11 @@ const ProjectType = () => {
             render: (text, record) => (
                 <div className="project-type-name">
                     <div className="project-type-icon">
-                        {
-                            record.iconUrl
-                                ?
-                                <img
-                                    src={('/images/' + record.iconUrl)}
-                                    alt=""
-                                    className="img-icon-right"
-                                />
-                                :
-                                <img
-                                    src={('/images/projectType1.png')}
-                                    alt=""
-                                    className="img-icon-right"
-                                />
-                        }
+                        <ImgComponent
+                            src={record.iconUrl}
+                            alt=""
+                            className="img-icon-right"
+                        />
 
                     </div>
                     <div>{text}</div>
@@ -112,31 +103,31 @@ const ProjectType = () => {
     return (
         // <Row>
         //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <div className="project-type">
-                    <Breadcumb
-                        firstText="项目类型"
-                    >
-                        <ProjectTypeAddmodal
-                            name="添加项目类型"
-                            typename="类型"
-                            type="add"
-                            addProjectList={addProjectTypeList}
-                            getProjectTypeList={getProjectTypeList}
-                        />
-                    </Breadcumb>
-                    <div style={{ padding: "20px 0" }}>
-                        {
-                            projectTypelist.length > 0 && <Table
-                                columns={columns}
-                                rowKey={(record) => record.id}
-                                loading={loading}
-                                dataSource={projectTypelist}
-                                onChange={onChange}
-                                pagination={false}
-                            />
-                        }
-                    </div>
-                </div>
+        <div className="project-type">
+            <Breadcumb
+                firstText="项目类型"
+            >
+                <ProjectTypeAddmodal
+                    name="添加项目类型"
+                    typename="类型"
+                    type="add"
+                    addProjectList={addProjectTypeList}
+                    getProjectTypeList={getProjectTypeList}
+                />
+            </Breadcumb>
+            <div style={{ padding: "20px 0" }}>
+                {
+                    projectTypelist.length > 0 && <Table
+                        columns={columns}
+                        rowKey={(record) => record.id}
+                        loading={loading}
+                        dataSource={projectTypelist}
+                        onChange={onChange}
+                        pagination={false}
+                    />
+                }
+            </div>
+        </div>
         //     </Col>
         // </Row>
     );

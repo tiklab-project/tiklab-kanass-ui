@@ -18,6 +18,7 @@ import EpicStore from '../store/EpicStore';
 import WorkStore from "../../../work/store/WorkStore";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { Empty } from "antd";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const EpicPage = (props) => {
     const store = {
         epicStore: EpicStore,
@@ -136,7 +137,7 @@ const EpicPage = (props) => {
                             workTypeList={workTypeList}
                         />
                         :
-                        <Empty image="/images/nodata.png" description="暂时没有需求~" />
+                        <ProjectEmpty description="暂时没有需求~" />
                     }
                 </>
 

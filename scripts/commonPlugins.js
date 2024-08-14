@@ -49,7 +49,7 @@ const commonPlugins = [
         limit: 0,
         fileName: '[name][extname]',
         destDir: 'es/src/assets/images',
-        publicPath: '/images/'
+        publicPath: '/kanass/images/'
     }),
     // copy({
     //     targets: [

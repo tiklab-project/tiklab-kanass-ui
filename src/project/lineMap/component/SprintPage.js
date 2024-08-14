@@ -14,6 +14,7 @@ import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
 import { Empty } from "antd";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const SprintPage = (props) => {
     const sprintLineRef = useRef();
     // 项目id
@@ -65,7 +66,7 @@ const SprintPage = (props) => {
                             setSprintList={setSprintList}
                         />
                             :
-                            <Empty image="/images/nodata.png" description="暂时没有迭代~" />
+                            <ProjectEmpty description="暂时没有迭代~" />
                     }
                 </div>
             </div>

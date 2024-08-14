@@ -77,11 +77,10 @@ const WorkDetailCrumb = (props) => {
                                     html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                         <span style={{ padding: "0 10px" }}>/</span>
                                         <ImgComponent
-
-                                                    src={item.iconUrl}
-                                                    alt=""
-                                                    className="img-icon-right"
-                                                />
+                                            src={item.iconUrl}
+                                            alt=""
+                                            className="img-icon-right"
+                                        />
                                         <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
                                 }

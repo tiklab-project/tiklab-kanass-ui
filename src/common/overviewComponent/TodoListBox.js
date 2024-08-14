@@ -2,6 +2,7 @@ import React from "react";
 import TodoListItem from "./TodoListItem";
 import "./TodoListBox.scss";
 import { Empty } from "antd";
+import ProjectEmpty from "../component/ProjectEmpty";
 const TodoListBox = (props) => {
     const { todoTaskList, goToListPage } = props;
     return (
@@ -21,7 +22,7 @@ const TodoListBox = (props) => {
                         return <TodoListItem content={item.data} key={item.id} />
                     })
                         :
-                        <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                        <ProjectEmpty description="暂时没有待办~" />
                 }
             </div>
         </div>

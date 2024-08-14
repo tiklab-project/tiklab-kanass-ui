@@ -10,6 +10,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Progress, Pagination, Empty, Select, Form, Button } from 'antd';
 import "./ProjectOperateTable.scss";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 const { Option } = Select;
 
 const ProjectOperateTable = (props) => {
@@ -190,12 +192,12 @@ const ProjectOperateTable = (props) => {
                                         </div> */}
                                             </Fragment>
                                             :
-                                            <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                            <ProjectEmpty description="项目集中没有项目~" />
                                     }
                                 </>
                                     :
                                     <div className="delete-warning">
-                                        <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  
+                                        <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />  
                                         项目集不能被查看或者被删除，请修改配置或者删除
                                     </div>
                             }

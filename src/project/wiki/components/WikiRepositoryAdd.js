@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Form, Table, Radio, Select } from 'antd';
 import { observer, inject } from "mobx-react";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const WikiRepositoryAdd = (props) => {
     const [form] = Form.useForm();
@@ -51,14 +52,14 @@ const WikiRepositoryAdd = (props) => {
             render: (text, record) => <div className="repository-title">
                 {
                     record.iconUrl ?
-                        <img
-                            src={('/images/' + record.iconUrl)}
+                        <ImgComponent
+                            src={record.iconUrl}
                             alt=""
                             className="img-icon-right"
                         />
                         :
-                        <img
-                            src={('images/repository1.png')}
+                        <ImgComponent
+                            src={('repository1.png')}
                             alt=""
                             className="img-icon-right"
                         />

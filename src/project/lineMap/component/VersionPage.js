@@ -14,6 +14,7 @@ import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
 import { Empty } from "antd";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const VersionPage = (props) => {
     const versionLineRef = useRef();
     // 项目id
@@ -71,7 +72,7 @@ const VersionPage = (props) => {
                             setGraph={setGraph}
                         />
                         :
-                        <Empty image="/images/nodata.png" description="暂时没有版本~" />
+                        <ProjectEmpty description="暂时没有版本~" />
                     }
                 </div>
             </div>

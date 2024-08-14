@@ -12,6 +12,7 @@ import "./projectList.scss";
 import { useDebounce } from "../../../common/utils/debounce";
 import ProjectFilterQuick from "./ProjectFilterQuick";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -311,7 +312,7 @@ const ProjectList = (props) => {
 
                             })
                                 :
-                                <Empty image="/images/nodata.png" description="暂时没有点击过项目~" />
+                                <ProjectEmpty description="暂时没有点击过项目~" />
                         }
                     </div>
                 </Spin>
@@ -334,7 +335,6 @@ const ProjectList = (props) => {
                     <div className="project-search">
                         <ProjectFilterQuick />
                         <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目名称"} />
-
                     </div>
                 </div>
             </div>

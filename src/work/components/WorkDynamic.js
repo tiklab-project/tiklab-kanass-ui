@@ -14,6 +14,7 @@ import "./WorkDynamic.scss";
 import WorkDynamicStore from '../store/WorkDynamicStore';
 import DynamicListItem from "../../common/overviewComponent/DynamicItem"
 import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkDynamic = (props) => {
     const { workStore } = props;
     const { findLogpage, logList } = WorkDynamicStore;
@@ -27,7 +28,7 @@ const WorkDynamic = (props) => {
         <div className="work-dynamic">
             {
                 logList && logList.length > 0 ? <DyncmicTimeAxis logList = {logList} /> :
-                    <Empty />
+                    <ProjectEmpty description = {"暂无动态"} />
             }
         </div>
 

@@ -12,7 +12,6 @@ import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
 import { withRouter } from "react-router";
-import ProjectSetStore from "../store/ProjectSetStore";
 const ProjectSetGide = (props) => {
     const [name, setName] = useState("添加项目集")
 

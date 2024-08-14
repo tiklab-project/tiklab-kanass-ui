@@ -245,11 +245,7 @@ const Sprint = (props) => {
             width: "25%",
             render: (text, record) => (
                 <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
-                    {/* <img
-                        src={'/images/sprint.png'}
-                        alt=""
-                        className="icon-32"
-                    /> */}
+                    
                     <ColorIcon name = {text} className = "icon-32" color = {record.color}/>
                     <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
                 </div>

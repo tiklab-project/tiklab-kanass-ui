@@ -12,6 +12,7 @@ import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
 import moment from "moment";
 import "./logProjectWorkItemStatistics.scss";
 import statisticStore from "./store/StatisticStore";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const { RangePicker } = DatePicker;
 
@@ -262,7 +263,7 @@ const LogProjectWorkItemStatistics = (props) => {
                     }
                 </div>
                     :
-                    <Empty />
+                    <ProjectEmpty description="暂时没有事项~" />
             }
 
         </div>

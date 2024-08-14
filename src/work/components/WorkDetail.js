@@ -23,6 +23,7 @@ import { changeWorkItemList } from "./WorkGetList";
 import WorkDetailCrumb from "./WorkDetailCrumb";
 import WorkDetailTab from "./WorkDetailTab";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const rowSpan = {
     sm: 24,
@@ -254,7 +255,7 @@ const WorkDetail = (props) => {
     const viewFlow = () => {
         setShowFlow(true)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
-        newDetailCrumbArray.push({ code: "流程", iconUrl: "/images/flow.png", type: "flow" })
+        newDetailCrumbArray.push({ code: "流程", iconUrl: "flow.png", type: "flow" })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }
@@ -413,7 +414,7 @@ const WorkDetail = (props) => {
                         <Col {...rowSpan} style={{ background: "#fff", }}>
                             <Skeleton loading={infoLoading} active>
                                 <div style={{ marginTop: "200px" }}>
-                                    <Empty image="/images/nodata.png" description="事项不存在或者已被删除~" />
+                                    <ProjectEmpty description="事项不存在或者已被删除~" />
                                 </div>
                             </Skeleton>
                         </Col>

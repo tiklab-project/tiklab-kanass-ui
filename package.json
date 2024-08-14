@@ -73,6 +73,8 @@
         "thoughtware-security-ui": ">=^1.0.2",
         "thoughtware-slate-ui": ">=^1.0.1",
         "thoughtware-privilege-ui": "^1.0.2",
+        "thoughtware-user-extension-ui": "^1.0.0",
+        "thoughtware-licence-cloud-ui": "^1.0.0",
         "slate": "0.100.0",
         "slate-history": "0.100.0",
         "slate-react": "0.100.0"

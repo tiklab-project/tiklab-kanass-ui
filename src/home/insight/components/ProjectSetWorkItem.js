@@ -12,6 +12,8 @@ import { inject, observer } from "mobx-react";
 import { Form, Select, Button, Empty } from 'antd';
 import "./ProjectSetWorkItem.scss";
 import * as echarts from 'echarts';
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 
 const ProjectSetWorkItem = (props) => {
@@ -183,18 +185,16 @@ const ProjectSetWorkItem = (props) => {
                 </div>
                 {
                     isEditor ? <div className="project-workitem-content" id={`project-workitem-${index}`}>
-                        {/* {
-                            projectWorkitem.length <= 0 && <Empty />
-                        } */}
+
                         {
                             !projectSet ?
                                 <div className="delete-warning">
-                                    <img src={('/images/warning.png')} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                                    <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
                                 </div>
                                 :
                                 <>
                                     {
-                                        !project && <Empty image="/images/nodata.png" description="项目集中没有项目~" />
+                                        !project && <ProjectEmpty description="项目集中没有项目~" />
                                     }
                                 </>
                         }

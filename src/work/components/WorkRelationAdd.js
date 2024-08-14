@@ -6,6 +6,7 @@ import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "thoughtware-core-ui";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
     const tenant = getUser().tenant;
@@ -239,7 +240,7 @@ const WorkRelationAddModal = (props) => {
                                 </div>
                                 :
                                 <div className="relation-add-table">
-                                    <Empty image="/images/nodata.png" description="暂时没有待办~" />
+                                    <ProjectEmpty description="暂时没有可关联事项~" />
                                 </div>
                         }
                     </div>

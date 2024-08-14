@@ -7,9 +7,10 @@ import setImageUrl from "../utils/setImageUrl";
 
 const ImgComponent = (props) => {
     const {src, alt, className, title, style, isRemote} = props;
+    const url =  version === "cloud" ? `/kanass/images/${src}` : `/kanass/images/${src}`
     return (
         <img
-            src={isRemote ? setImageUrl(src) : (`/images/${src}`)}
+            src={isRemote ? setImageUrl(src) : url}
             alt={alt}
             className={className}
             title = {title}

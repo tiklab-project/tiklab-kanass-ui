@@ -19,6 +19,7 @@ import ProjectStatusNum from './ProjectStatusNum';
 import WorkItemSurvey from './WorkItemSurvey';
 import TodoStatistics from './TodoStatistics';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
+import ProjectEmpty from '../../../common/component/ProjectEmpty';
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -176,7 +177,8 @@ const HomeSurvey = (props) => {
 
                     <div className="home-project">
                         {
-                            recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
+                            recentProjectList && recentProjectList.length > 0 ? 
+                            recentProjectList.map((item, index) => {
                                 return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
                                     <div className="item-title">
                                         <ImgComponent
@@ -208,7 +210,7 @@ const HomeSurvey = (props) => {
                                 </div>
                             })
                                 :
-                                <Empty image="/images/nodata.png" description="暂时没有可用项目~" />
+                                <ProjectEmpty description="暂时没有项目~" />
                         }
                     </div>
                 </Spin>
@@ -219,7 +221,6 @@ const HomeSurvey = (props) => {
                     事项统计
                 </div>
                 <div className="statistics-content">
-                    {/* <ProjectStatusNum /> */}
                     <WorkItemSurvey />
                     <WorkItemTrend />
                 </div>

@@ -173,8 +173,7 @@ const WorkDocumentAddmodal = (props) => {
                                     value={item.id}
                                     label={item.kanassRepositoryName}
                                     key={item.id}
-                                    // imgUrl={`${base_url}/images/${item.iconUrl}`}
-                                    imgUrl={`/images/repository1.png`}
+                                    imgUrl={"repository1.png"}
                                 />
                             })
                         }

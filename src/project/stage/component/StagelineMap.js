@@ -502,11 +502,7 @@ const StageLinemap = (props) => {
                                                 :
                                                 <div className="icon-12" aria-hidden="true" />
                                         }
-                                        {/* <img
-                                            src={('/images/stage.png')}
-                                            className="img-icon"
-                                            alt=""
-                                        /> */}
+                                       
                                         <ColorIcon className="stage-icon" name = {item.stageName} color = {item.color} />
                                         <div className="stage-text" onClick={() => showEditStage(item.id)}>{item.stageName}</div>
                                     </div>

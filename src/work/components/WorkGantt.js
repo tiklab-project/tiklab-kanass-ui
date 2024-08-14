@@ -14,6 +14,7 @@ import { withRouter } from "react-router";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
 import { getVersionInfo } from "thoughtware-core-ui"
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const WorkGantt = (props) => {
     const { Gantt } = props;
@@ -82,18 +83,18 @@ const WorkGantt = (props) => {
                                 />
                                 :
                                 <div style={{ marginTop: "50px" }}>
-                                    <Empty image="/images/nodata.png" description="暂时没有事项~" />
+                                    <ProjectEmpty description="暂时没有事项~" />
                                 </div>
 
                         }
                     </>
                         :
                         <div style={{ marginTop: "50px" }}>
-                            <Empty image="/images/nodata.png" description="付费功能请去购买~">
+                            <ProjectEmpty description="付费功能请去购买~">
                                 <Button type="primary" size={"middle"} onClick={() => goBuy()}>
                                     立即购买
                                 </Button>
-                            </Empty>
+                            </ProjectEmpty>
 
                         </div>
                 }

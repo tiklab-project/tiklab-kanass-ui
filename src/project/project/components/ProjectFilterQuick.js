@@ -55,7 +55,7 @@ const ProjectFilterQuick = (props) => {
                         projectStates: ["2"],
                         overdue: false
                     }
-                    setProjectPageParams(params);
+                    // setProjectPageParams(params);
                     break;
                 case "noend":
                     params = {

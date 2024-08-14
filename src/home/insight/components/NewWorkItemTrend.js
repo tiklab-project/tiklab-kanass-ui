@@ -13,6 +13,7 @@ import { Form, Select, Button, DatePicker } from 'antd';
 import "./NewWorkItemTrend.scss";
 import * as echarts from 'echarts';
 import moment from "moment";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const { RangePicker } = DatePicker;
 
@@ -245,7 +246,7 @@ const NewWorkItemTrend = (props) => {
                     isEditor ? <div className="new-trend-content" id={`new-trend-${index}`}>
                         {
                             !projectCountList && <div className="delete-warning">
-                                <img src={('/images/warning.png')} alt="" width="20px" height="20px" />
+                                <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />
                                 项目不能被查看或者被删除，请修改配置或者删除
                             </div>
 

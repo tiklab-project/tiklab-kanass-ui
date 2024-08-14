@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Select, Upload, message, } from 'antd';
-import UploadIcon1 from "../../../assets/images/uploadIcon.png"
 import "./workType.scss"
 import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";

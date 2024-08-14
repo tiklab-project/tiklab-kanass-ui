@@ -73,15 +73,6 @@ const WorkTableFilter = (props) => {
 
 
     const sorter = (orderParams) => {
-        // orderParams.push({
-        //     name: sortType,
-        //     orderType: isAsc
-        // })
-        // searchCondition.orderParams = orderParams;
-        // searchCondition.pageParam = {
-        //     pageSize: 20,
-        //     currentPage: 1
-        // }
         searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {
             pageSize: 20,

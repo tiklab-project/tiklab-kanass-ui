@@ -20,6 +20,7 @@ import StageStore from "../../project/stage/store/StageStore";
 import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import ProjectEmpty from "../../common/component/ProjectEmpty";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
@@ -1094,7 +1095,7 @@ const WorkBasicInfo = (props) => {
                                         />
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有可选事项~" />
+                                        <ProjectEmpty description="没有可选事项~" />
                                 }
                             </SelectSimple>
                         </Form.Item>
@@ -1127,7 +1128,7 @@ const WorkBasicInfo = (props) => {
                                         </SelectItem>
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有可选事项~" />
+                                        <ProjectEmpty description="没有可选事项~" />
                                 }
                             </SelectSimple>
 

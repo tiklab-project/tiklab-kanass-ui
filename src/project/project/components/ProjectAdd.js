@@ -6,6 +6,7 @@ import "./ProjectAdd.scss";
 import ProjectAddInfo from "./ProjectAddInfo";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectStore from "../store/ProjectStore";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
@@ -70,7 +71,7 @@ const ProjectAdd = (props) => {
                     projectTypelist && projectTypelist.map(item => {
                         return <div key={item.id} className={`add-model ${workType === item.id ? "add-model-select" : ""}`} onClick={() => selectProjectType(item)}>
                             <div className="type-icon">
-                                <img src={`/images/${item.iconUrl}`} alt="" className="project-type-icon" />
+                                <ImgComponent src={`${item.iconUrl}`} alt="" className="project-type-icon" />
                             </div>
                             <div className="type-info">
                                 <div className="type-name">{item.name}</div>

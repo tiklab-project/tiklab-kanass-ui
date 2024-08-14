@@ -13,6 +13,7 @@ import "./MessageList.scss"
 import { withRouter } from 'react-router';
 import { useEffect } from 'react';
 import MessageItem from '../../../common/overviewComponent/MessageItem';
+import ProjectEmpty from '../../../common/component/ProjectEmpty';
 
 
 const MessageList = (props) => {
@@ -176,7 +177,7 @@ const MessageList = (props) => {
                                         </div>
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有新消息~" />
+                                        <ProjectEmpty description="没有新消息~" />
                                 }
                                 {
                                     messageTotal > 1 &&
@@ -212,7 +213,7 @@ const MessageList = (props) => {
                                         </div>
                                     })
                                         :
-                                        <Empty image="/images/nodata.png" description="没有消息~" />
+                                        <ProjectEmpty description="没有消息~" />
                                 }
                                 {messageTotal > 1 &&
                                     (isMessageReachBottom ?
