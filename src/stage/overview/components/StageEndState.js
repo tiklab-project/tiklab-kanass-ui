@@ -25,14 +25,14 @@ const StageEndState = props => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/stagedetail/${stageId}/survey`,
+            url: `/${projectId}/stagedetail/${stageId}/overview`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${projectId}/stagedetail/${stageId}/workTable`,
+            url: `/${projectId}/stagedetail/${stageId}/workitem`,
             key: "work",
             encoded: "work",
         },

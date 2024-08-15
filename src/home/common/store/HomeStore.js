@@ -57,7 +57,7 @@ class HomeStore {
     overdueTaskList = [];
     // 当天被激活的tab
     @observable
-    activeKey = "1";
+    activeKey = "overview";
 
     @observable
     todoActiveKey = 1;

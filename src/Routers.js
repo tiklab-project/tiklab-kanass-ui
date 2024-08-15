@@ -231,7 +231,7 @@ const Routers = [
     },
     {
         path: "/",
-        component: () => <Redirect to="/home/survey" />,
+        component: () => <Redirect to="/index/overview" />,
         exact: true,
     },
     {
@@ -588,7 +588,7 @@ const Routers = [
         component: ProjectDetail,
         routes: [
             {
-                path: "/project/:id/survey",
+                path: "/project/:id/overview",
                 component: Survey,
             },
             {
@@ -643,14 +643,6 @@ const Routers = [
                 path: "/project/:id/epic/:epicId",
                 component: EpicDetail,
             },
-            // {
-            //     path: "/project/:id/work",
-            //     component: Work,
-            //     routes: [
-
-
-            //     ]
-            // },
             {
                 path: "/project/:id/workTable",
                 component: WorkTable
@@ -659,6 +651,10 @@ const Routers = [
             {
                 path: "/project/:id/workBodar",
                 component: WorkBodar,
+            },
+            {
+                path: "/project/:id/workitem",
+                component: Work,
             },
             {
                 path: "/project/:id/workList",
@@ -829,7 +825,7 @@ const Routers = [
                 ]
             },
             {
-                path: "/projectSet/:projectSetId/survey",
+                path: "/projectSet/:projectSetId/overview",
                 exact: false,
                 component: ProjectSetSurvey,
                 key: "ProjectSetSurvey"
@@ -918,7 +914,7 @@ const Routers = [
                 component: WorkTableDetail,
             },
             {
-                path: "/:id/sprint/:sprint/survey",
+                path: "/:id/sprint/:sprint/overview",
                 component: Sprintsurvey,
             },
             {
@@ -940,10 +936,14 @@ const Routers = [
                 component: WorkTodoPage
             },
             {
+                path: "/:id/sprint/:sprint/workitem",
+                component: Work,
+            },
+            {
                 path: "/:id/sprint/:sprint/workList",
                 component: WorkList,
-
             },
+            
             {
                 path: "/:id/sprint/:sprint/workGantt",
                 component: WorkGantt,
@@ -977,7 +977,7 @@ const Routers = [
                 component: WorkTableDetail,
             },
             {
-                path: "/:id/version/:version/survey",
+                path: "/:id/version/:version/overview",
                 component: Versionsurvey,
             },
             {
@@ -991,6 +991,10 @@ const Routers = [
             {
                 path: "/:id/version/:version/dynamic",
                 component: Dynamic
+            },
+            {
+                path: "/:id/version/:version/workitem",
+                component: Work,
             },
             {
                 path: "/:id/version/:version/workList",
@@ -1031,7 +1035,7 @@ const Routers = [
                 component: WorkTableDetail,
             },
             {
-                path: "/:id/stagedetail/:stage/survey",
+                path: "/:id/stagedetail/:stage/overview",
                 component: StageSurvey,
             },
             {
@@ -1073,39 +1077,39 @@ const Routers = [
         path: "/",
         routes: [
             {
-                path: "/home",
+                path: "/index",
                 exact: false,
                 component: HomePage,
                 key: 'home',
                 routes: [
                     {
-                        path: "/home/survey",
+                        path: "/index/overview",
                         exact: false,
                         component: HomeSurvey,
                         key: "ProjectSet"
 
                     },
                     {
-                        path: "/home/todoList",
+                        path: "/index/todoList",
                         exact: false,
                         component: WorkTodo,
                         key: "ProjectSet"
 
                     },
                     {
-                        path: "/home/insightlist",
+                        path: "/index/insightlist",
                         exact: false,
                         component: InsightList,
                         key: "InsightList"
                     },
                     {
-                        path: "/home/newInsight/:id",
+                        path: "/index/newInsight/:id",
                         exact: false,
                         component: NewInsight,
                         key: "NewInsight"
                     },
                     {
-                        path: "/home/viewInsight/:id",
+                        path: "/index/viewInsight/:id",
                         exact: false,
                         component: ViewInsight,
                         key: "ViewInsight"
@@ -1208,8 +1212,11 @@ const Routers = [
                 component: Sprint,
                 key: "Sprint"
             },
+            {
+                path: "/workitem",
+                component: Work,
 
-
+            },
             {
                 path: "/workTable",
                 component: WorkTable,

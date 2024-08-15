@@ -64,8 +64,8 @@ const WikiRepository = (props) => {
 
         findSystemUrl({ name: "kanass" }).then(res => {
             const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
-            // window.open(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
-            applyJump(`${kanassUrl}/#/repositorydetail/${data.id}/survey`)
+            // window.open(`${kanassUrl}/#/repositorydetail/${data.id}/overview`)
+            applyJump(`${kanassUrl}/#/repositorydetail/${data.id}/overview`)
         })
     }
     // 列表的列

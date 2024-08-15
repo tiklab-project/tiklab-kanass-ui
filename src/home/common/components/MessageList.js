@@ -49,13 +49,13 @@ const MessageList = (props) => {
     /**
     * 挂载监听点击事件
     */
-    useEffect(() => {
-        window.addEventListener("mousedown", closeModal, false);
-        return () => {
-            window.removeEventListener("mousedown", closeModal, false);
-        }
+    // useEffect(() => {
+    //     window.addEventListener("mousedown", closeModal, false);
+    //     return () => {
+    //         window.removeEventListener("mousedown", closeModal, false);
+    //     }
 
-    }, [])
+    // }, [])
 
     /**
      * 点击抽屉之外的地方关闭抽屉
@@ -146,9 +146,10 @@ const MessageList = (props) => {
                 visible={open}
                 key={"left"}
                 className={`message-drawer ${isShowText ? "message-drawer-expend" : "message-drawer-inpend"} `}
-                mask={false}
+                mask={true}
                 destroyOnClose={true}
                 width={450}
+                // getContainer = {()=> messageRef.current}
             >
                 <div className="message-content">
                     <Tabs onChange={changTab} size="small" activeKey={currenTab}>

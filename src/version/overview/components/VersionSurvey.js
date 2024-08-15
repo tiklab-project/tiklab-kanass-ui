@@ -131,20 +131,15 @@ const VersionSurvey = (props) => {
         
     }
 
-    const goTodoDetail = (url) => {
-        window.location.href = url
-    }
 
     /**
      * 点击跳转到工作列表
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        props.history.push(`/${projectId}/version/${versionId}/workTable`)
+        props.history.push(`/${projectId}/version/${versionId}/workitem`)
     }
-    const goToListPage = () => {
-        props.history.push(`/${projectId}/version/${versionId}/workTodo`) 
-    }
+
 
 
     const stateButton = (state) => {

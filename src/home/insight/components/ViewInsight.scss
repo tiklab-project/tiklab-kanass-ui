@@ -7,8 +7,8 @@
 
 .view-insight {
     justify-content: space-between;
-    height: 100%;
-    padding: var(--thoughtware-padding);
+    height: calc(100% - 32px);
+    padding-top: 10px;
     // background-color: #fff;
 
     .project-breadcrumb-icon {

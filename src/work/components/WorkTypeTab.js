@@ -106,7 +106,7 @@ const WorkTypeTab = (props) => {
     return (
         <div className="worktype-tabs">
             <div 
-                className={`tabs-bar ${tabValue.id === "all" ? "tabs-bar-select" : ""}`} 
+                className={`tabs-bar ${tabValue?.id === "all" ? "tabs-bar-select" : ""}`} 
                 onClick={() => selectType("all")} key={"all"}
             >
                 全部
@@ -117,7 +117,7 @@ const WorkTypeTab = (props) => {
                 workSystem && workSystem.map(item => {
                     return <div 
                         key={item.id} 
-                        className={`tabs-bar ${tabValue.id === item.workType.id ? "tabs-bar-select" : ""}`} 
+                        className={`tabs-bar ${tabValue?.id === item.workType.id ? "tabs-bar-select" : ""}`} 
                         onClick={() => selectType(item.workType)}
                     >   
                         {item.workType.name}
@@ -128,7 +128,7 @@ const WorkTypeTab = (props) => {
             {
                 workCustom && workCustom.length === 1 && <div className="tabs-more">
                     <div className="tabs-more-button" onClick={() => selectCustomType(moreTabValue)}>
-                        <div className={`tabs-bar ${tabValue.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
+                        <div className={`tabs-bar ${tabValue?.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
                     </div>
                 </div>
             }
@@ -144,7 +144,7 @@ const WorkTypeTab = (props) => {
                     <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
                         {
                             workCustom.map(item => {
-                                return <div key={item.id} className={`tabs-dropdown-item ${tabValue.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name}</div>
+                                return <div key={item.id} className={`tabs-dropdown-item ${tabValue?.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name}</div>
                             })
                         }
                     </div>

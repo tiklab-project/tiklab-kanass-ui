@@ -36,8 +36,8 @@ const ProjectDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/project/${projectId}/survey`,
-            key: "survey",
+            id: `/project/${projectId}/overview`,
+            key: "overview",
             encoded: "Survey"
         },
         {
@@ -52,7 +52,7 @@ const ProjectDetailAside = (props) => {
             title: `${t('work')}`,
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/project/${projectId}/workTable`,
+            id: `/project/${projectId}/workitem`,
             key: "work",
             encoded: "Work",
         },
@@ -121,8 +121,8 @@ const ProjectDetailAside = (props) => {
             title: `${t('survey')}`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            id: `/project/${projectId}/survey`,
-            key: "survey",
+            id: `/project/${projectId}/overview`,
+            key: "overview",
             encoded: "Survey"
         },
         {
@@ -137,7 +137,7 @@ const ProjectDetailAside = (props) => {
             title: `${t('work')}`,
             icon: 'work-' + theme,
             defaultIcon: "work-default",
-            id: `/project/${projectId}/workTable`,
+            id: `/project/${projectId}/workitem`,
             key: "work",
             encoded: "Work",
         },

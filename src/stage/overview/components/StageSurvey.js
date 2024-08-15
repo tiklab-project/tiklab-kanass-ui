@@ -129,7 +129,7 @@ const StageSurvey = (props) => {
          * @param {tab key} index 
          */
     const goWorkItemList = (value) => {
-        props.history.push(`/${projectId}/stagedetail/${stageId}/workTable`)
+        props.history.push(`/${projectId}/stagedetail/${stageId}/workitem`)
     }
     const goDynamicList = () => {
         props.history.push(`/${projectId}/stagedetail/${stageId}/dynamic`)

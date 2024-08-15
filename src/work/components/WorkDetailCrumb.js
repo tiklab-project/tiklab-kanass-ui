@@ -4,7 +4,9 @@ import "./WorkDetailCrumb.scss";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 const WorkDetailCrumb = (props) => {
-    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId } = props;
+    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId,
+        versionId, sprintId
+     } = props;
     const isDetail = () => {
         let isView = false;
         if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
@@ -16,13 +18,13 @@ const WorkDetailCrumb = (props) => {
 
     const goWorkList = () => {
         if (props.match.path === "/project/:id/work/:workId") {
-            props.history.push(`/project/${projectId}/workTable`)
+            props.history.push(`/project/${projectId}/workitem`)
         }
         if (props.match.path === "/:id/version/:version/work/:workId") {
-            props.history.push(`/${projectId}/version/${versionId}/workTable`)
+            props.history.push(`/${projectId}/version/${versionId}/workitem`)
         }
         if (props.match.path === "/:id/sprint/:sprint/work/:workId") {
-            props.history.push(`/${projectId}/sprint/${sprintId}/workTable`)
+            props.history.push(`/${projectId}/sprint/${sprintId}/workitem`)
         }
 
     }

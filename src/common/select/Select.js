@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import "./Select.scss";
 const SelectSimple = (props) => {
     const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
-        ismult, title, children, value, className, simpleClassName, suffixIcon, 
+        ismult, title, children, value, className, simpleClassName, suffixIcon,
         hoverFieldName, fieldName, positionType, disabled = false } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
@@ -79,13 +79,13 @@ const SelectSimple = (props) => {
     }
 
     const showShowDrop = () => {
-        if(!disabled){
+        if (!disabled) {
             setShowDropDown(true);
             if (onFocus) {
                 onFocus();
             }
         }
-        
+
 
     }
 
@@ -112,7 +112,7 @@ const SelectSimple = (props) => {
         <div className={`select-content ${disabled ? "select-content-disabled" : ""}`}
             onMouseEnter={() => onMouseEnter && onMouseEnter()}
             onMouseLeave={() => onMouseLeave && onMouseLeave()}
-            onClick={() => showShowDrop()} 
+            onClick={() => showShowDrop()}
         >
             {
                 ismult ?
@@ -131,7 +131,7 @@ const SelectSimple = (props) => {
                 {
                     suffixIcon && !disabled && <>
                         {
-                            !ismult && selectData ? <div>
+                            !ismult && ( selectData ? <div>
                                 <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>
                                     <use xlinkHref="#icon-cancel"></use>
                                 </svg>
@@ -140,14 +140,19 @@ const SelectSimple = (props) => {
                                 :
                                 <svg className="svg-icon" aria-hidden="true" >
                                     <use xlinkHref={`#icon-downdrop`}></use>
-                                </svg>
+                                </svg>)
+                        }
+                        {
+                            ismult && <svg className="svg-icon" aria-hidden="true" >
+                                <use xlinkHref={`#icon-downdrop`}></use>
+                            </svg>
                         }
                     </>
                 }
             </div>
         </div>
         {
-            showDropDown ? <div className={`select-dropdown ${positionType === "right"? "select-dropdown-right": "select-dropdown-left"}`} ref={dropDown}>
+            showDropDown ? <div className={`select-dropdown ${positionType === "right" ? "select-dropdown-right" : "select-dropdown-left"}`} ref={dropDown}>
                 {
                     onSearchChange && <div className="select-search-box">
                         <input className="select-search-input" ref={inputRef} placeholder="搜索" onChange={(value) => searchInput(value)} />
@@ -176,8 +181,8 @@ const SelectSimple = (props) => {
                 }
 
             </div>
-            :
-            <></>
+                :
+                <></>
         }
 
 

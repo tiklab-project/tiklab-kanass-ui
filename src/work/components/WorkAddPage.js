@@ -349,7 +349,7 @@ const WorkAddPage = (props) => {
                                 <Input placeholder="事项标题" />
                             </Form.Item>
                             {
-                                (props.match.path === "/workTable" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
+                                (props.match.path === "/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"

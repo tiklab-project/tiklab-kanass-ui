@@ -16,7 +16,7 @@ import "./TodoPageList.scss"
 import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
-const TodoList = (props) => {
+const TodoPageList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,
         findProjectSetProjectList, todoTotal, todoCondition, todoActiveKey, setTodoActiveKey } = homeStore;
@@ -64,7 +64,7 @@ const TodoList = (props) => {
             setFirstText("项目概况")
             findTodopage({ ...params, data: { projectId: projectId } })
         }
-        if (path === "/home/todoList") {
+        if (path === "/index/todoList") {
             setFirstText("首页")
             findTodopage(params)
         }
@@ -135,7 +135,7 @@ const TodoList = (props) => {
      * 获取搜索参数的列表
      */
     const getSerchList = () => {
-        if(path === "/home/todoList") {
+        if(path === "/index/todoList") {
             findProjectList().then(res => {
                 if (res.code === 0) {
                     setProjectList(res.data)
@@ -222,7 +222,7 @@ const TodoList = (props) => {
 
     return (<div className="todo-list-page">
         {
-            path !== "/home/todoList" && <Breadcrumb
+            path !== "/index/todoList" && <Breadcrumb
                 {...props}
                 firstText={firstText}
                 secondText="待办事项"
@@ -237,7 +237,7 @@ const TodoList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   (path === "/home/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
+                   (path === "/index/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear
@@ -287,4 +287,4 @@ const TodoList = (props) => {
 
     )
 }
-export default withRouter(inject('homeStore')(observer(TodoList)));
+export default withRouter(inject('homeStore')(observer(TodoPageList)));

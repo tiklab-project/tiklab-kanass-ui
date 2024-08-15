@@ -26,7 +26,7 @@ const ProjectSetDetailAside = (props) => {
     const { systemRoleStore, isShowText, SetIsShowText } = props;
     const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     // 当前选中路由
-    const [selectKey, setSelectKey] = useState(`/prodetail/survey`);
+    const [selectKey, setSelectKey] = useState(`/prodetail/overview`);
     const path = props.location.pathname.split("/")[3];
     console.log(props.location.pathname.split("/"), path)
     // 项目集id
@@ -37,8 +37,8 @@ const ProjectSetDetailAside = (props) => {
             title: `概览`,
             icon: 'survey-' + theme,
             defaultIcon: "survey-default",
-            key: "survey",
-            id: `/projectSet/${projectSetId}/survey`,
+            key: "overview",
+            id: `/projectSet/${projectSetId}/overview`,
             encoded: "Survey",
         },
         {

@@ -130,15 +130,13 @@ const SprintSurvey = (props) => {
          * @param {tab key} index 
          */
     const goWorkItemList = (value) => {
-        props.history.push(`/${projectId}/sprint/${sprintId}/workTable`)
+        props.history.push(`/${projectId}/sprint/${sprintId}/workitem`)
     }
     const goDynamicList = () => {
         props.history.push(`/${projectId}/sprint/${sprintId}/dynamic`)
 
     }
-    const goToListPage = () => {
-        props.history.push(`/${projectId}/sprint/${sprintId}/workTodo`)
-    }
+  
 
 
 

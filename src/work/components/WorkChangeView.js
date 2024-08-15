@@ -76,17 +76,17 @@ const WorkChangeView = (props) => {
         setWorkShowType(item.value)
         setWorkId()
         
-        if (path.indexOf("project") > -1) {
-            props.history.push(`/project/${projectId}/work${item.path}`)
-        }else if (path.indexOf("sprint") > 1) {
-            props.history.push(`/${projectId}/sprint/${sprintId}/work${item.path}`)
-        }else if (path.indexOf("version") > 1) {
-            props.history.push(`/${projectId}/version/${versionId}/work${item.path}`)
-        }else if (path.indexOf("stagedetail") > 1) {
-            props.history.push(`/${projectId}/stagedetail/${stageId}/work${item.path}`)
-        }else {
-            props.history.push(`/work${item.path}`)
-        }
+        // if (path.indexOf("project") > -1) {
+        //     props.history.push(`/project/${projectId}/work${item.path}`)
+        // }else if (path.indexOf("sprint") > 1) {
+        //     props.history.push(`/${projectId}/sprint/${sprintId}/work${item.path}`)
+        // }else if (path.indexOf("version") > 1) {
+        //     props.history.push(`/${projectId}/version/${versionId}/work${item.path}`)
+        // }else if (path.indexOf("stagedetail") > 1) {
+        //     props.history.push(`/${projectId}/stagedetail/${stageId}/work${item.path}`)
+        // }else {
+        //     props.history.push(`/work${item.path}`)
+        // }
 
         
         

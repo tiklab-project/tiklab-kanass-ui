@@ -37,14 +37,14 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/survey`,
+            url: `/${projectId}/sprint/${sprintId}/overview`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/workTable`,
+            url: `/${projectId}/sprint/${sprintId}/workitem`,
             key: "work",
             encoded: "work",
         },
@@ -75,14 +75,14 @@ const SprintDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/survey`,
+            url: `/${projectId}/sprint/${sprintId}/overview`,
             key: "survey",
             encoded: "Survey",
         },
         {
             title: "事项",
             icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/workTable`,
+            url: `/${projectId}/sprint/${sprintId}/workitem`,
             key: "work",
             encoded: "work",
         },

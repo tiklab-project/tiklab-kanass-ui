@@ -2,6 +2,8 @@ import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset";
 
 export class InsightStore {
+    @observable
+    insightView = "list"
     // 项目集id
     @observable 
     projectSetId = "";
@@ -20,6 +22,10 @@ export class InsightStore {
     @observable
     insightList = []
     
+    @action
+    setInsightView = (value) => {
+        this.insightView = value;
+    }
     
     /**
      * 设置仪表盘详情的报表列表

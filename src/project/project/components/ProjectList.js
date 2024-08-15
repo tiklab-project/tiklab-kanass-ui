@@ -76,7 +76,7 @@ const ProjectList = (props) => {
         }
         createRecent(params)
 
-        props.history.push({ pathname: `/project/${project.id}/workTable` })
+        props.history.push({ pathname: `/project/${project.id}/workitem` })
 
     };
 

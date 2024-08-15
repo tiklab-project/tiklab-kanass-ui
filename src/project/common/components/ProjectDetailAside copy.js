@@ -34,7 +34,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            id: `/project/${projectId}/survey`,
+            id: `/project/${projectId}/overview`,
             key: "survey",
             encoded: "Survey"
         },
@@ -48,7 +48,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            id: `/project/${projectId}/workTable`,
+            id: `/project/${projectId}/workitem`,
             key: "work",
             encoded: "Work",
         },
@@ -109,7 +109,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('survey')}`,
             icon: 'survey',
-            id: `/project/${projectId}/survey`,
+            id: `/project/${projectId}/overview`,
             key: "survey",
             encoded: "Survey",
         },
@@ -123,7 +123,7 @@ const ProjectDetailAside = (props) => {
         {
             title: `${t('work')}`,
             icon: 'workitem',
-            id: `/project/${projectId}/workTable`,
+            id: `/project/${projectId}/workitem`,
             key: "work",
             encoded: "Work",
         },

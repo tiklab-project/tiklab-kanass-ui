@@ -308,6 +308,8 @@ const WorkDetail = (props) => {
                                                             setIsModalVisible={setIsModalVisible}
                                                             workShowType={workShowType}
                                                             projectId={projectId}
+                                                            sprintId = {sprintId}
+                                                            versionId = {versionId}
                                                             {...props}
                                                         />
                                                         <div className="work-detail-top" ref={workDetailTop} >

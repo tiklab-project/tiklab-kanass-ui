@@ -79,7 +79,7 @@ const WorkTableFilter = (props) => {
             currentPage: 1
         }
 
-        if(workShowType === "gantt"){
+        if (workShowType === "gantt") {
             if (viewType === "tree") {
                 getWorkConditionPageTree()
             }
@@ -87,23 +87,39 @@ const WorkTableFilter = (props) => {
                 getWorkConditionPage()
             }
         }
-        
-        if(workShowType === "bodar"){
+
+        if (workShowType === "bodar") {
             getWorkBoardList(searchCondition)
         }
-       
+
     }
 
     return (
         <div className="work-table-second">
             <WorkTypeTab />
             <div className="work-table-filter">
+                <div className="worklist-table-search">
+                    <div className="search-input">
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-search"></use>
+                        </svg>
+                        <Input bordered={false} allowClear
+                            className="workList-search-input"
+                            key={"search"}
+                            onChange={(value) => inputChange("keyWord", value.target.value)}
+                            placeholder="搜索标题、ID"
+                            value={inputValue}
+                        />
+                    </div>
+                </div>
                 {
-                    (props.match.path === "/workTable" || props.match.path === "/workBodar" || props.match.path ==="/workGantt") &&
-                    <SelectSimple 
+                    (props.match.path === "/workitem") &&
+                    <SelectSimple
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
-                        title={"项目"} ismult={true}
+                        title={"项目"} 
+                        ismult={true}
+                        suffixIcon = {true}
                     >
                         {
                             projectList.map(item => {
@@ -111,22 +127,23 @@ const WorkTableFilter = (props) => {
                                     value={item.id}
                                     label={item.projectName}
                                     key={item.id}
-                                    imgUrl = {item.iconUrl}
+                                    imgUrl={item.iconUrl}
                                 />
                             })
                         }
                     </SelectSimple>
                 }
                 <WorkFilterQuick />
-               
+
                 {
-                    workStatusList && workStatusList.length > 0 && 
+                    workStatusList && workStatusList.length > 0 &&
                     <SelectSimple
                         name="workStatus"
                         onChange={(value) => stateChange("workStatusIds", value)}
                         title={"状态"}
                         ismult={"true"}
                         value={searchCondition?.workStatusIds}
+                        suffixIcon = {true}
                     >
                         <div className="select-group-title">未开始</div>
                         {
@@ -186,6 +203,8 @@ const WorkTableFilter = (props) => {
                     title={"负责人"}
                     ismult={true}
                     value={searchCondition?.assignerIds}
+                    suffixIcon = {true}
+                    positionType = "right"
                 >
                     {
                         userList.map(item => {
@@ -200,24 +219,11 @@ const WorkTableFilter = (props) => {
                 </SelectSimple>
                 <WorkFilterModal layout={"horizontal"} {...props} />
 
-                <div className="worklist-table-search">
-                    <div className="search-input">
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-search"></use>
-                        </svg>
-                        <Input bordered={false} allowClear
-                            className="workList-search-input"
-                            key={"search"}
-                            onChange={(value) => inputChange("keyWord", value.target.value)}
-                            placeholder="搜索标题、ID"
-                            value={inputValue}
-                        />
-                    </div>
-                </div>
+
                 {
                     (workShowType === "bodar" || workShowType === "gantt") && <WorkSort sorter={sorter} />
                 }
-                
+
             </div>
         </div>
 

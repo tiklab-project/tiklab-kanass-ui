@@ -44,13 +44,13 @@ const WorkFilterModal = (props) => {
         if (workShowType === "table") {
             // setHeightFilter(workListSearch.current.clientWidth + 50);
             setListStyle({
-                right: "265px",
+                right: "30px",
                 top: 0
             })
         }
         if (workShowType === "bodar" || workShowType === "gantt") {
             setListStyle({
-                right: "300px",
+                right: "80px",
                 top: 0
             })
         }

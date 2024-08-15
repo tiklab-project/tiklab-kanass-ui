@@ -47,7 +47,7 @@ const ProjectSetSurvey = props => {
         }
         createRecent(params)
 
-        props.history.push(`/project/${project.id}/workTable`)
+        props.history.push(`/project/${project.id}/workitem`)
     };
 
     const goOpLogDetail = (url) => {

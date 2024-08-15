@@ -207,7 +207,7 @@ const WorkItemSurvey = (props) => {
     const getWorkList = (initValues) => {
         setWorkDeatilInList(WorkStore, initValues)
         sessionStorage.setItem("menuKey", "work")
-        props.history.push("/workTable")
+        props.history.push("/workitem")
 
     }
 

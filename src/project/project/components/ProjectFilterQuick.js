@@ -24,10 +24,10 @@ const ProjectFilterQuick = (props) => {
             value: "noend",
             label: "未结束"
         },
-        {
-            value: "creat",
-            label: "我创建的"
-        },
+        // {
+        //     value: "creat",
+        //     label: "我创建的"
+        // },
         {
             value: "overdue",
             label: "已逾期"

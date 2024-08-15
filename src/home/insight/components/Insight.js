@@ -10,14 +10,26 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
-import "./Insight.scss"
+import "./Insight.scss";
+import InsightStore from '../store/InsightStore';
+import InsightList from './InsightList';
+import ViewInsight from './ViewInsight';
+import NewInsight from './NewInsight';
+
 const Insight = (props) => {
     const { route } = props;
-  
+    const { setInsightView, insightView } = InsightStore;
     return (
-        
         <>
-         {renderRoutes(route.routes)}
+            {
+                insightView === "list" && <InsightList />
+            }
+            {
+                insightView === "view" && <ViewInsight />
+            }
+            {
+                insightView === "new" && <NewInsight />
+            }
         </>
     );
 }

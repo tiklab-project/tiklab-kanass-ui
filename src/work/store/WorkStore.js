@@ -29,7 +29,7 @@ export class WorkStore {
     @observable workInfo = [];
     @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
-    @observable quickFilterValue = {value: "all", label: "全部"};
+    @observable quickFilterValue = null;
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -45,6 +45,7 @@ export class WorkStore {
         pageParam: {
             pageSize: 20,
             currentPage: 1,
+            total: 1
         }
     };
 
@@ -80,7 +81,7 @@ export class WorkStore {
     @observable attachList = []
 
     // 事项的视图类型
-    @observable workShowType = "table"
+    @observable workShowType = localStorage.getItem("view") ? localStorage.getItem("view") : "table";
     @observable archiveView = "week"
 
     // 事项的视图类型
@@ -163,6 +164,7 @@ export class WorkStore {
 
     @action
     setWorkShowType = (value) => {
+        localStorage.setItem("view", this.workShowType)
         this.workShowType = value
     }
 

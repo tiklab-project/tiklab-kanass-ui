@@ -38,10 +38,7 @@ const Index = observer((props) => {
         ...privilegeStores,
         ...orgStores
     }
-
-
-
-
+    
     return (
         <Provider {...allStore}>
             <ConfigProvider locale={zhCN}>

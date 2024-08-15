@@ -20,9 +20,7 @@ const Layout = (props) => {
     const store = {
         homeStore: HomeStore
     }
-    const showFirstMenu = ["home", "project", "projectSetList", "workTable", "log", "projectAdd", "projectSetAdd",
-        "workList", "workBodar", "workGantt", "index"
-    ]
+
     const route = props.route.routes;
     const pathname = props.location.pathname.split("/")[1];
     console.log(pathname)

@@ -61,7 +61,7 @@ const StageChangeModal = (props) => {
         // 切换选中项目，获取项目详情
         findStage({ id: id }).then(data => {
             if (data.code === 0) {
-                props.history.push(`/${projectId}/stagedetail/${id}/workTable`)
+                props.history.push(`/${projectId}/stagedetail/${id}/workitem`)
                 localStorage.setItem("stageId", id);
                 setShowMenu(false)
             }

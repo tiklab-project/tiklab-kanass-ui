@@ -71,7 +71,7 @@ const SearchResult = (props) => {
 
     const toProject = async(id) => {
         localStorage.setItem("projectId",id)
-        await props.history.push("/prodetail/survey")
+        await props.history.push("/prodetail/overview")
         setShow("hidden")
         // location.reload();
 

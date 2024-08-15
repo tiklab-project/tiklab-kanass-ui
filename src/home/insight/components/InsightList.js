@@ -29,7 +29,8 @@ const InsightList = (props) => {
         insightStore: InsightStore
     }
     const { findInsightList, deleteInsight, createRecent, findRecentInsightList, insightList,
-        focusInsightList, findInsightFocusList, createInsightFocus, deleteInsightFocusByQuery, findFocusInsightList } = InsightStore;
+        focusInsightList, findInsightFocusList, createInsightFocus, deleteInsightFocusByQuery, 
+        findFocusInsightList, setInsightView } = InsightStore;
     const [visible, setVisible] = useState(false);
     const [activeTabs, setActiveTabs] = useState("1")
 
@@ -58,7 +59,7 @@ const InsightList = (props) => {
 
 
     const goEditInsight = (id) => {
-        props.history.push(`/home/newInsight/${id}`)
+        props.history.push(`/index/newInsight/${id}`)
     }
 
     const delInsight = (id) => {
@@ -99,7 +100,8 @@ const InsightList = (props) => {
             modelId: record.id
         }
         createRecent(params)
-        props.history.push(`/home/viewInsight/${record.id}`)
+        setInsightView("view")
+        // props.history.push(`/index/viewInsight/${record.id}`)
     }
 
     const selectTabs = (key) => {

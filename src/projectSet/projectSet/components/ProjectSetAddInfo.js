@@ -78,7 +78,7 @@ const ProjectSetAddInfo = (props) => {
                     props.history.goBack()
                     findAllProjectSet({})
                     
-                    // props.history.push(`/projectSet/${res.data}/survey`)
+                    // props.history.push(`/projectSet/${res.data}/overview`)
                 }
             })
         })

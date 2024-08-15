@@ -51,7 +51,7 @@ const ProjectSetTable = (props) => {
         }
         createRecent(params)
         localStorage.setItem("projectSet", JSON.stringify(record))
-        props.history.push(`/projectSet/${record.id}/survey`)
+        props.history.push(`/projectSet/${record.id}/overview`)
     }
 
     const goToProjectSetSet = (record) => {

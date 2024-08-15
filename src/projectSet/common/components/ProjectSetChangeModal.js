@@ -93,7 +93,7 @@ const ProjectSetChangeModal = (props) => {
         // 切换选中项目，获取项目详情
         findProjectSet(record.id).then(data => {
             if (data.code === 0) {
-                props.history.push(`/projectSet/${record.id}/survey`);
+                props.history.push(`/projectSet/${record.id}/overview`);
                 localStorage.setItem("projectSet", JSON.stringify(record))
                 location.reload();
                 setShowMenu(false)

@@ -5,6 +5,7 @@ import FirstMenu from "./home/common/components/FirstMenu";
 import Layout from "./home/common/components/Layout";
 import HomeStore from "./home/common/store/HomeStore";
 import WorkGantt from "./work/components/WorkGantt";
+import Work from "./work/components/Work";
 import Logo from "./home/common/components/Logo";
 import HeaderCe from "./home/common/components/HeaderCe";
 export {
@@ -15,5 +16,6 @@ export {
     Layout,
     FirstMenu,
     Logo,
-    HeaderCe
+    HeaderCe,
+    Work
 }

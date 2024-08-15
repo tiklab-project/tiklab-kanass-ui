@@ -62,7 +62,7 @@ const VersionChangeModal = (props) => {
         // 切换选中项目，获取项目详情
         findVersion({ id: id }).then(data => {
             if (data.code === 0) {
-                props.history.push(`/${projectId}/version/${id}/workTable`)
+                props.history.push(`/${projectId}/version/${id}/workitem`)
                 localStorage.setItem("versionId", id);
                 setShowMenu(false)
             }

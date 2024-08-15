@@ -54,7 +54,7 @@
                 }
                 .work-border-box-list {
                     height: calc(100% - 72px);
-                    overflow: auto;
+                    overflow-x: hidden;
                     // width: fit-content;
                     .change-page {
                         display: flex;

@@ -225,7 +225,7 @@ const WorkTable = (props) => {
 
     useEffect(()=> {
         
-        if(props.location.pathname === "/workTable" ){
+        if(props.location.pathname === "/workitem" ){
             const column = getColumn(screenCode, goProdetail, sortArray,actionColumn)
             setProjectColums(column)
         }else {
@@ -319,7 +319,8 @@ const WorkTable = (props) => {
                                         pageSize: searchCondition.pageParam.pageSize,
                                         current: searchCondition.pageParam.currentPage,
                                         onChange: changePage,
-                                        position: ["bottomCenter"]
+                                        position: ["bottomCenter"],
+                                        showTotal: () => `共${total}条`
                                     }}
                                     onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
                                     expandable={{

@@ -76,7 +76,7 @@ const ProjectChangeModal = (props) => {
 
             if (data.code === 0) {
                 localStorage.setItem("project", JSON.stringify(data.data));
-                props.history.push(`/project/${id}/workTable`)
+                props.history.push(`/project/${id}/workitem`)
                 localStorage.setItem("projectId", id);
 
                 // 创建最近访问的信息

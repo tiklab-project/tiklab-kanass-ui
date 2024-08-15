@@ -51,19 +51,19 @@ const SetAside = (props) => {
             children: [
                 {
                     title: "项目成员统计",
-                    path: "/log/projectuser",
+                    path: "/log/statistic/projectuser",
                     key: "projectStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志事项统计",
-                    path: "/log/projectwork",
+                    path: "/log/statistic/projectwork",
                     key: "workStatistic",
                     type: "statistics"
                 },
                 {
                     title: "日志项目统计",
-                    path: "/log/userproject",
+                    path: "/log/statistic/userproject",
                     key: "userProject",
                     type: "statistics"
                 }

@@ -10,8 +10,8 @@ const WorkFilterType = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { searchCondition, findWorkTypeDmList, tabValue, setTabValue,} = workStore;
-
-    const [workTypeList, setWorkTypeList] = useState([]);
+    const [selectWorkType, setSelectWorkType] = useState();
+    const [workTypeList, setWorkTypeList] = useState();
 
     useEffect(() => {
         findWorkTypeDmList({ projectId: projectId }).then(res => {
@@ -19,7 +19,12 @@ const WorkFilterType = (props) => {
                 setWorkTypeList(res.data)
             }
         })
-
+        if(tabValue?.id === "all"){
+            setSelectWorkType()
+        }else {
+            setSelectWorkType(tabValue)
+        }
+        
         // findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
         //     if (res.code === 0) {
         //         // setWorkCustom(res.data)
@@ -39,7 +44,7 @@ const WorkFilterType = (props) => {
    
 
     const selectType = (value, option) => {
-        setTabValue(value)
+        
         if(value){
             const tabData = {
                 id: value.value,
@@ -47,8 +52,15 @@ const WorkFilterType = (props) => {
                 ...value
             }
             setTabValue(tabData)
+            setSelectWorkType({ id: value.value, label: value.label })
         }else {
-            setTabValue()
+            setTabValue({
+                id: "all", 
+                type: "system",
+                value: null,
+                label: null
+            })
+            setSelectWorkType()
         }
         search({
             workTypeId: value? value.value : null,
@@ -69,7 +81,7 @@ const WorkFilterType = (props) => {
             onChange={(value, option) => selectType(value, option)}
             title={"类型"}
             ismult={false}
-            value={tabValue}
+            value={selectWorkType}
             suffixIcon = {true}
         >
             {

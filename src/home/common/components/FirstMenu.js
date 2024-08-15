@@ -46,7 +46,7 @@ const FirstMenu = (props) => {
     // 系统顶部菜单
     const routers = [
         {
-            to: '/home/survey',
+            to: '/index/overview',
             title: '首页',
             key: 'home',
             icon: 'home-' + theme,
@@ -67,7 +67,7 @@ const FirstMenu = (props) => {
             actionIcon: setActiveIcon("projectset-")
         },
         {
-            to: '/workTable',
+            to: '/workitem',
             title: '事项',
             key: 'work',
             icon: 'work-' + theme,

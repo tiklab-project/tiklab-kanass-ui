@@ -34,7 +34,8 @@ const MessageListItem = (props) => {
     }
 
     const goSprintDetail = () => {
-        props.history.push(`/${projectId}/sprint/${sprintId}/workTable`);
+        debugger
+        props.history.push(`/${projectId}/sprint/${sprintId}/workitem`);
         // if (status === 0) {
         //     const value = {
         //         id: id,
@@ -50,7 +51,7 @@ const MessageListItem = (props) => {
     }
 
     const goProjectDetail = () => {
-        props.history.push(`/project/${projectId}/workTable`);
+        props.history.push(`/project/${projectId}/workitem`);
         // if (status === 0) {
         //     const value = {
         //         id: id,

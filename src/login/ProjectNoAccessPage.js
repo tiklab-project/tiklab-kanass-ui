@@ -13,7 +13,7 @@ const ProjectNoAccessPage = props =>{
     return (
         <NoAccess
             {...props}
-            homePath={projectId ? `/project/${projectId}/set/projectDomainRole` : '/home/survey'} //传返回的页面路由参数
+            homePath={projectId ? `/project/${projectId}/set/projectDomainRole` : '/index/overview'} //传返回的页面路由参数
         />
     )
 }

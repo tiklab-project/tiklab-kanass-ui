@@ -80,7 +80,7 @@ const HomeSurvey = (props) => {
 
         // 创建最近访问的信息
         createRecent(params)
-        props.history.push(`/project/${project.id}/workTable`)
+        props.history.push(`/project/${project.id}/workitem`)
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
     };
@@ -89,43 +89,11 @@ const HomeSurvey = (props) => {
      * 跳转到待办列表
      */
     const goTodoWorkItemList = () => {
-        props.history.push(`/home/todoList`)
+        props.history.push(`/index/todoList`)
         setActiveKey("todoList")
     }
 
-    /**
-     * 跳转到待办详情
-     * @param {跳转地址} url 
-     */
-    const goTodoDetail = (url) => {
-        const workItemId = url.split("/")[6];
-        searchWorkById(workItemId).then((res) => {
-            if (res) {
-                setWorkId(workItemId)
 
-                window.location.href = url
-                sessionStorage.setItem("menuKey", "work")
-            }
-        })
-
-    }
-
-    const goProject = (item) => {
-        updateRecent({ id: item.id })
-        props.history.push(`/project/${item.modelId}/workTable`)
-        // 存储用于被点击菜单的回显
-        sessionStorage.setItem("menuKey", "project")
-    }
-
-    const goWorkItem = (item) => {
-        updateRecent({ id: item.id })
-        const workItem = item.object;
-        setWorkId(workItem.id)
-        // 有bug
-        setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.name, iconUrl: workItem.workTypeSys.iconUrl }])
-        props.history.push(`/project/${workItem.project.id}/work/${workItem.id}`)
-        sessionStorage.setItem("menuKey", "project")
-    }
 
 
 
@@ -140,32 +108,6 @@ const HomeSurvey = (props) => {
         return showNum;
     }
 
-    const getTodoList = (value) => {
-        if (value === "3") {
-            const params = {
-                assignUserId: userId,
-                status: 1,
-                isExpire: 2,
-                pageParam: {
-                    pageSize: 10,
-                    currentPage: 1
-                }
-            }
-            findTodopage(params, null)
-        } else {
-            findTodopage({
-                assignUserId: userId,
-                status: value,
-                isExpire: 0,
-                pageParam: {
-                    pageSize: 10,
-                    currentPage: 1
-                }
-            }, null)
-
-        }
-
-    }
     return (
         <div className="home-content">
             <div className="recent-project">

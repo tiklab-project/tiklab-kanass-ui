@@ -176,64 +176,16 @@ const Survey = (props) => {
         props.history.push(`/project/${projectId}/dynamic`)
     }
 
-    /**
-     * 跳转到动态所属事项
-     * @param {*} url 
-     */
-    const goOpLogDetail = (url) => {
-        window.location.href = url
-    }
-
 
     /**
      * 点击跳转到工作列表
      * @param {tab key} index 
      */
     const goWorkItemList = (value) => {
-        props.history.push(`/project/${projectId}/workTable`)
+        props.history.push(`/project/${projectId}/workitem`)
     }
 
 
-    const setStatuStyle = (id) => {
-        let name;
-        switch (id) {
-            case "todo":
-                name = "work-status-todo";
-                break;
-            case "done":
-                name = "work-status-done";
-                break;
-            default:
-                name = "work-status-process";
-                break;
-        }
-        return name;
-    }
-
-
-    const goWorkItem = (item) => {
-        updateRecent({ id: item.id })
-        setWorkId(item.modelId)
-        // 有bug
-        setSessionStorage("detailCrumbArray", [{ id: item.modelId, code: item.code, title: item.object.name, iconUrl: item.object.workTypeSys.iconUrl }])
-
-        props.history.push(`/project/${item.object.project.id}/work/${item.object.id}`)
-    }
-
-    const goVersion = (item) => {
-        updateRecent({ id: item.id })
-        props.history.push(`/project/${item.project.id}/version/${item.modelId}`)
-
-    }
-
-    const goSprint = (item) => {
-        updateRecent({ id: item.id })
-        props.history.push(`/${item.project.id}/sprint/${item.modelId}/survey`)
-    }
-
-    const goToListPage = () => {
-        props.history.push(`/project/${projectId}/workTodo`)
-    }
 
     return (
         <Row className="project-survey-row">

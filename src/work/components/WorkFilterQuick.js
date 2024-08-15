@@ -15,10 +15,10 @@ const WorkFilterQuick = (props) => {
     const userId = getUser().userId;
 
     const quickFilterList = [
-        {
-            value: "all",
-            label: "全部"
-        },
+        // {
+        //     value: "all",
+        //     label: "全部"
+        // },
         {
             value: "pending",
             label: "我的待办"

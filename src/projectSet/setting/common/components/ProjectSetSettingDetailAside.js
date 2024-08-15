@@ -66,7 +66,7 @@ const ProjectSetSettingDetailAside = (props) => {
     }
 
     const backProject = () => {
-        props.history.push("/prodetail/survey")
+        props.history.push("/prodetail/overview")
     }
 
 
