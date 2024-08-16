@@ -216,6 +216,7 @@ const WorkFunctionPrivilege = props => {
                     columns={columns}
                     dataSource={checkBoxData}
                     rowKey={r => r.value}
+                    scroll={{x: "100%"}}
                 />
             </div>
         </div>

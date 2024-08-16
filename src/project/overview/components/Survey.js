@@ -274,7 +274,7 @@ const Survey = (props) => {
                                     </div>
                                 </div>
 
-                                <div className="project-item">
+                                <div className="project-item project-progress">
                                     <svg className="list-img" aria-hidden="true">
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>

@@ -203,7 +203,7 @@ const WorkType = (props) => {
                             rowKey={(record) => record.id}
                             dataSource={workAllTypeList}
                             pagination={false}
-
+                            scroll={{x: "100%"}}
                         />
                     </div>
                 </div>

@@ -57,7 +57,7 @@ const Setting = (props) => {
                         className="orga-background"
                     >
                         {renderRoutes(commonRouter)}
-                        <Row style={{ height: "calc(100vh - 49px)" }}>
+                        <Row style={{ height: "calc(100% - 49px)" }}>
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                                 {renderRoutes(selfRouter)}
                             </Col>

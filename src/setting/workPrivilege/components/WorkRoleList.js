@@ -124,7 +124,7 @@ const WorkRoleList = (props) => {
                 firstText={privilege?.name}
                 secondText = "角色"
             />
-            <Table columns={roleColumns} dataSource={roleList} rowKey={record => record.id} />
+            <Table columns={roleColumns} dataSource={roleList} rowKey={record => record.id} scroll={{x: "100%"}}/>
         </div>
     )
 }

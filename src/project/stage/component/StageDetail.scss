@@ -1,5 +1,5 @@
 .stage-detail {
-    height: calc(100vh - var(--thoughtware-head-height));
+    height: calc(100% - var(--thoughtware-head-height));
     background-color: #fff;
     .stage-detail-top {
         display: flex;

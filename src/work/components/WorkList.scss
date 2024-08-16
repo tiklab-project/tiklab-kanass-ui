@@ -8,7 +8,14 @@
     // }
     .work-list-detail {
         width: 100%;
-        height: 100%;
+        // height: 100%;
+        overflow: auto;
+        .work-detail {
+            min-width: 1000px;
+            .ant-form-item-label {
+                min-width: 100px;
+            }
+        }
     }
 }
 .work-list::-webkit-scrollbar { 

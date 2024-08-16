@@ -13,6 +13,7 @@ const FirstMenu = (props) => {
 
     useEffect(() => {
         getThemeClass(theme)
+        sessionStorage.setItem("menuKey", "home");
         return null;
     }, [])
     /**
@@ -43,6 +44,7 @@ const FirstMenu = (props) => {
         }
         return activeIcon;
     }
+
     // 系统顶部菜单
     const routers = [
         {

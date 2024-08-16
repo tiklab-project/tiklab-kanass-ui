@@ -15,7 +15,7 @@
             justify-content: space-between;
             height: 50px;
             line-height: 50px;
-            
+            white-space: nowrap;
             .sprint-tab {
                 font-size: var(--thoughtware-font-13);;
                 cursor: pointer;
@@ -40,6 +40,7 @@
             // line-height: 50px;
             gap: 20px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
             .vertical-bar {
                 width: 1px;
                 height: 15px;

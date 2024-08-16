@@ -248,6 +248,7 @@ const StatisticsWork = (props) => {
                     rowKey={(record) => record.statisticalId}
                     className="statistics-work-table"
                     pagination={false}
+                    scroll={{x: "100%"}}
                 />
                 <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
                

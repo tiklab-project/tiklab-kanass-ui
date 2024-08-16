@@ -1,6 +1,6 @@
 
 .projectSet-set {
-    height: calc(100vh - var(--thoughtware-head-height));
+    height: calc(100% - var(--thoughtware-head-height));
     .ant-row {
         overflow: auto;
     }

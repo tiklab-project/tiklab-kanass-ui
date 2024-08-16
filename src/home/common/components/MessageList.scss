@@ -1,13 +1,18 @@
-.message-box {
-    width: 100%;
+// .message-box {
+//     width: 100%;
 
-    .message-drawer-box {
-        position: absolute;
-        top: 0;
-        left: 75px;
+//     .message-drawer-box {
+//         position: absolute;
+//         top: 0;
+//         left: 75px;
+//     }
+// }
+.message-tab {
+    height: 100%;
+    .ant-tabs-content {
+        height: 100%;
     }
 }
-
 .message-icon {
     text-align: center;
 
@@ -73,11 +78,11 @@
         }
     }
 
-    .message-box {
-        height: calc(100vh - 95px);
+    .message-tab-box {
+        height: calc(100% - 10px);
         overflow: auto;
         padding: 0 20px;
-
+       
         .message-list {
             display: flex;
             align-items: center;

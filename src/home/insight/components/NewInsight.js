@@ -134,7 +134,7 @@ const NewInsight = (props) => {
                                     {
                                         reportList && reportList.lg.length > 0 ? 
                                         <ResponsiveGridLayout
-                                            className="layout"
+                                            className="new-insight-layout"
                                             layouts={reportList}
                                             rowHeight={30}
                                             measureBeforeMount={true}

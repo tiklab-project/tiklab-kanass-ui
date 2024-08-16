@@ -124,6 +124,7 @@ const ProjectType = () => {
                         dataSource={projectTypelist}
                         onChange={onChange}
                         pagination={false}
+                        scroll={{x: "100%"}}
                     />
                 }
             </div>

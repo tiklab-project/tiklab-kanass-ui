@@ -35,13 +35,13 @@
             padding: var(--thoughtware-padding);
             background-color: var(--thoughtware-gray-600);
             width: calc(50% - 10px);
-
+            overflow: hidden;
             .projectSet-info {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding-bottom: 20px;
-                gap: 10px;
+                column-gap: 10px;
                 .projectSet-icon {
                     width: 32px;
                     height: 32px;
@@ -79,15 +79,18 @@
             }
 
             .projectSet-info-item {
-                width: 50%;
                 display: flex;
                 height: 40px;
                 line-height: 40px;
                 font-size: 13px;
-
+                flex: 1;
                 .projectSet-info-title {
                     width: 100px;
                     color: #999;
+                    white-space: nowrap;
+                }
+                .projectSet-info-result {
+                    white-space: nowrap;
                 }
             }
         }

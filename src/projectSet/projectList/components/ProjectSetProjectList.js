@@ -287,6 +287,9 @@ const ProjectSetProjectList = (props) => {
                                 dataSource={projectRelevance}
                                 rowKey={record => record.id}
                                 pagination={false}
+                                scroll={{
+                                    x: "100%"
+                                }}
                             />
                         </div>
                     </div>

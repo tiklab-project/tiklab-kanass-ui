@@ -8,12 +8,12 @@
 
 .layout {
     overflow: hidden;
-    height: 100vh;
+    height: 100%;
     display: flex;
     .layout-right {
         flex: 1;
         overflow: hidden;
-        height: 100vh;
+        height: 100%;
     }
 
 }

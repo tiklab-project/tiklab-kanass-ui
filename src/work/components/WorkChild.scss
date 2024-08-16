@@ -84,6 +84,7 @@
         background: #fff;
         border-radius: 4px;
         position: relative;
+        height: calc(100% - 30px);
         .ant-table {
             overflow: auto;
             // max-height: calc(100% - 100px);

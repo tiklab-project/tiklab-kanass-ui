@@ -193,6 +193,7 @@ const WorkTypeList = (props) => {
                     loading={loading}
                     dataSource={workAllTypeList}
                     pagination={false}
+                    scroll={{x: "100%"}}
                 />
             </div>
         </div>

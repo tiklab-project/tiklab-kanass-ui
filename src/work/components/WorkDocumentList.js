@@ -135,6 +135,7 @@ const WorkDocumentList = (props) => {
                     dataSource={workDocumentList}
                     rowKey={record => record.id}
                     pagination={false}
+                    scroll={{x: "100%"}}
                 />
             </div>
 

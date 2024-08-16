@@ -28,7 +28,7 @@ const Sprint = (props) => {
     }
     const projectId = props.match.params.id;
     const { findAllSprintState, findSprintPage, uselist, getUseList,
-        sprintList,setSprintList, delesprintList, createSprintFocus, findSprintFocusList,
+        sprintList, setSprintList, delesprintList, createSprintFocus, findSprintFocusList,
         deleteSprintFocus, total, createRecent, sprintPageParams
     } = SprintStore;
 
@@ -53,7 +53,7 @@ const Sprint = (props) => {
         // getFocusSprint()
         // findSprintList({ projectId: projectId });
         findAllSprintState().then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setsprintStateList(res.data)
             }
         });
@@ -245,8 +245,8 @@ const Sprint = (props) => {
             width: "25%",
             render: (text, record) => (
                 <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
-                    
-                    <ColorIcon name = {text} className = "icon-32" color = {record.color}/>
+
+                    <ColorIcon name={text} className="icon-32" color={record.color} />
                     <span className="sprint-name" onClick={() => goSprintDetail(record.id, text)}>{text}</span>
                 </div>
             ),
@@ -327,6 +327,12 @@ const Sprint = (props) => {
                                 }
                             </div>
                             <div className="sprint-filter-right">
+                                <InputSearch
+                                    placeholder="迭代名称"
+                                    allowClear
+                                    style={{ width: 200 }}
+                                    onChange={onSearch}
+                                />
                                 <SelectSimple
                                     name="sprintStateIds"
                                     onChange={(value) => selectaSprintState(value)}
@@ -344,12 +350,7 @@ const Sprint = (props) => {
                                         })
                                     }
                                 </SelectSimple>
-                                <InputSearch
-                                    placeholder="迭代名称"
-                                    allowClear
-                                    style={{ width: 200 }}
-                                    onChange={onSearch}
-                                />
+
                             </div>
 
                         </div>
@@ -361,6 +362,7 @@ const Sprint = (props) => {
                                     rowKey={(record) => record.id}
                                     // pagination={false}
                                     onSearch={onSearch}
+                                    scroll={{x: "100%"}}
                                     pagination={{
                                         total: total,
                                         pageSize: sprintPageParams.pageParam.pageSize,
@@ -386,7 +388,7 @@ const Sprint = (props) => {
                 setVisible={setVisible}
                 visible={visible}
                 setActiveTabs={setActiveTabs}
-                selectTabs = {selectTabs}
+                selectTabs={selectTabs}
                 {...props}
             />
         </div>

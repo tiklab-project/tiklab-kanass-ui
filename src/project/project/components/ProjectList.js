@@ -333,8 +333,8 @@ const ProjectList = (props) => {
                         }
                     </div>
                     <div className="project-search">
-                        <ProjectFilterQuick />
                         <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目名称"} />
+                        <ProjectFilterQuick />
                     </div>
                 </div>
             </div>
@@ -347,6 +347,9 @@ const ProjectList = (props) => {
                     // onChange={handleTableChange}
                     pagination={false}
                     bordered={false}
+                    scroll={{
+                        x: "100%"
+                    }}
                 />
             </div>
         </Fragment>

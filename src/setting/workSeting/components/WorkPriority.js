@@ -162,6 +162,7 @@ const WorkPriority = (props) => {
                     loading={loading}
                     dataSource={workPrioritylist}
                     pagination={false}
+                    scroll={{x: "100%"}}
                 />
             </div>
         </div>

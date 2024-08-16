@@ -56,9 +56,9 @@ const WorkList = (props) => {
     const deleteWork = (deleteWorkItem, removeTree) => {
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
-            if (workList.length === 0){
-                 // 当前页被删完, 总页数等于当前页， 往前移动一页
-                if(currentPage === totalPage && currentPage > 1) {
+            if (workList.length === 0) {
+                // 当前页被删完, 总页数等于当前页， 往前移动一页
+                if (currentPage === totalPage && currentPage > 1) {
                     const params = {
                         pageParam: {
                             pageSize: searchCondition.pageParam.pageSize,
@@ -66,14 +66,14 @@ const WorkList = (props) => {
                         }
                     }
                     setWorkDeatilInList(WorkStore, params)
-                } else if (currentPage === totalPage && currentPage <= 1){
+                } else if (currentPage === totalPage && currentPage <= 1) {
                     // 当前页被删完, 总页数等于当前页，而且是第一页
                     setWorkId(0)
                     setWorkIndex(0)
-                } else if(currentPage < totalPage){
+                } else if (currentPage < totalPage) {
                     setWorkDeatilInList(WorkStore)
                 }
-            }else {
+            } else {
                 const node = removeTree(workList, null, workId);
                 if (node != null) {
                     setWorkId(node.id)
@@ -81,7 +81,7 @@ const WorkList = (props) => {
                         [{ id: node.id, code: node.code, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
                 }
             }
-           
+
         })
     }
 
@@ -103,14 +103,17 @@ const WorkList = (props) => {
                 <WorkAside
                     {...props}
                 />
-                <WorkDetail 
-                    {...props} 
-                    deleteWork={deleteWork} 
-                    delectCurrentWorkItem={delectCurrentWorkItem} 
-                    rowSpan={rowSpan}
-                    workShowType = {workShowType}
-                ></WorkDetail>
-         
+                <div className="work-list-detail">
+                    <WorkDetail
+                        {...props}
+                        deleteWork={deleteWork}
+                        delectCurrentWorkItem={delectCurrentWorkItem}
+                        rowSpan={rowSpan}
+                        workShowType={workShowType}
+                    ></WorkDetail>
+                </div>
+
+
             </div>
         </Provider>
 

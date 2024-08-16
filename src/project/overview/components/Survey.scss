@@ -30,6 +30,8 @@
             border-radius: 4px;
             background-color: var(--thoughtware-gray-600);
             flex: 1;
+            flex-shrink: 0;
+            height: 500px;
             .project-container {
                 .thoughtware-profile .ant-avatar {
                     width: 24px !important;
@@ -55,22 +57,31 @@
                             font-size: 12px;
                         }
 
-                        .item-progress {
-                            width: 300px;
-                            display: flex;
-                            align-items: center;
-                        }
+                       
                     }
                 }
-
+                .project-progress {
+                    width: 100%;
+                    .item-content {
+                        width: calc(100% - 30px);
+                    }
+                    .item-progress {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
                 .status-item {
                     cursor: pointer;
+                    width: 100px;
                 }
 
                 .project-work {
                     display: flex;
                     justify-content: space-between;
-                    gap: 20px;
+                    flex-shrink: 0;
+                    flex-wrap: wrap;
+                    gap: 10px;
                 }
 
             }
@@ -79,6 +90,7 @@
         .burn-down-box {
             // width: calc(100% - 515px);
             flex: 1;
+            flex-shrink: 0;
             height: 500px;
             padding: var(--thoughtware-padding);
             background-color: #fff;

@@ -179,7 +179,7 @@ const StagePlanAddModal = (props) => {
                     okText="确定"
                     cancelText="取消"
                     pagination ={false}
-                    
+                    scroll={{x: "100%"}}
                 />
 
             </Modal>

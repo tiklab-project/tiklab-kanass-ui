@@ -84,6 +84,7 @@ const WorkRoleFunction = (props) => {
                             columns={columns}
                             dataSource={roleList}
                             rowKey={r => r.id}
+                            scroll={{x: "100%"}}
                         />
                     </Tabs.TabPane>
                 }

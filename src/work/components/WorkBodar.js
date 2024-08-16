@@ -197,7 +197,7 @@ const WorkBodar = (props) => {
     }
     return (
         <Provider {...store}>
-            <Fragment>
+            <div className="work-bordar">
                 <Row style={{ background: "#fff" }}>
                     <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                         <div className="work-bodar-filter" style={{ background: "#fff" }}>
@@ -349,7 +349,7 @@ const WorkBodar = (props) => {
                     </div>
                 </div>
 
-            </Fragment>
+            </div>
 
         </Provider>
 

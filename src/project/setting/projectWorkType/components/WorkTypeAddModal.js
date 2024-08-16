@@ -149,6 +149,7 @@ const WorkTypeAddModal = (props) => {
                         rowKey={(record) => record.id}
                         dataSource={workSelectTypeList}
                         pagination={false}
+                        scroll={{x: "100%"}}
                     />
                 </Modal>
             </div>

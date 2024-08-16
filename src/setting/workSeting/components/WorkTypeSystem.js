@@ -229,6 +229,7 @@ const WorkTypeSystem = (props) => {
                             loading={loading}
                             dataSource={workSystemTypeList}
                             pagination={false}
+                            scroll={{x: "100%"}}
                         />
                     </div>
                 </div>

@@ -25,7 +25,7 @@ const VersionTable = (props) => {
         versionStore: VersionStore
     }
     const { versionList, setVersionList, getVersionList, deleVersion, createRecent,
-        createVersionFocus, deleteVersionFocus, userList, getUseList, searchCondition, 
+        createVersionFocus, deleteVersionFocus, userList, getUseList, searchCondition,
         total, findAllVersionState } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
@@ -38,7 +38,7 @@ const VersionTable = (props) => {
     useEffect(() => {
         // findVersion({ projectId: projectId, versionState: null })
         findAllVersionState().then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 setVersionStateList(res.data)
             }
         })
@@ -140,7 +140,7 @@ const VersionTable = (props) => {
             width: "25%",
             render: (text, record) => (
                 <div className="version-master" onClick={() => goDetail(record.id, text)}>
-                    <ColorIcon name = {text} className = "icon-32" color = {record.color}/>
+                    <ColorIcon name={text} className="icon-32" color={record.color} />
                     <span className="version-name" >{text}</span>
                 </div>
 
@@ -305,7 +305,7 @@ const VersionTable = (props) => {
                                 getUseList={getUseList}
                                 userList={userList}
                                 setActiveTabs={setActiveTabs}
-                                selectTabs = {selectTabs}
+                                selectTabs={selectTabs}
                                 {...props}
                             />
                         </Breadcumb>
@@ -324,6 +324,12 @@ const VersionTable = (props) => {
                                 }
                             </div>
                             <div className="version-filter-right">
+                                <InputSearch
+                                    placeholder="版本名称"
+                                    allowClear
+                                    style={{ width: 200 }}
+                                    onChange={onSearch}
+                                />
                                 <SelectSimple
                                     name="versionState"
                                     onChange={(value) => selectVersionState(value)}
@@ -341,12 +347,7 @@ const VersionTable = (props) => {
                                         })
                                     }
                                 </SelectSimple>
-                                <InputSearch
-                                    placeholder="版本名称"
-                                    allowClear
-                                    style={{ width: 200 }}
-                                    onChange={onSearch}
-                                />
+
                             </div>
 
                         </div>
@@ -368,6 +369,7 @@ const VersionTable = (props) => {
                                     }}
                                     loading={loading}
                                     onSearch={onSearch}
+                                    scroll={{x: "100%"}}
                                 />
                             </div>
                         </div>

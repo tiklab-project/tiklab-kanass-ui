@@ -268,6 +268,10 @@ const ProjectSetTable = (props) => {
                             pagination={false}
                             onChange={pageDowm}
                             className="projectSet-table-item"
+                            scroll={{
+                                x: "100%"
+                            }}
+                            
                         />
                     </div>
 

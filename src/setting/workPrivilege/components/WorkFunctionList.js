@@ -69,6 +69,7 @@ const WorkFunctionList = () => {
                     expandable={{
                         onExpand: onExpand
                     }}
+                    scroll={{x: "100%"}}
                 />
             </DndProvider>
         </div>

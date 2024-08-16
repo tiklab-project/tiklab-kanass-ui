@@ -1,26 +1,44 @@
-// @media (max-width: 768px) {
-//     .work-table-detail {
-//         width: calc(100vw - 450px) !important;
-//     }
-// }
-
-/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
-@media (max-width: 1600px) {
+@media screen and (max-width: 768px) and (min-width: 0px){
+    /*媒体查询是用来设置样式的 当实际的屏幕大小满足条件时就执行样式 */
     .work-table-detail {
-        width: calc(100vw - 460px) !important;
+        width: calc(100% - 150px) !important;
     }
 }
+
+// /* w  768~992    blue */
+@media screen and (min-width: 768px) and (max-width: 992px){
+    .work-table-detail {
+        width: calc(100% - 200px) !important;
+    }
+}
+// /*  w  992~1200  pink*/
+@media screen and (min-width: 992px) and (max-width: 1200px){
+    .work-table-detail {
+        width: calc(100% - 200px) !important;
+    }
+}
+// /*W  >1200:     purple*/
+@media screen and (min-width: 1200px) and (max-width: 1600px) {
+    .work-table-detail {
+        width: calc(100% - 300px) !important;
+    }
+}
+
 
 /* 在分辨率大于 1024px 时应用的样式 */
 @media (min-width: 1600px) {
     .work-table-detail {
-        width: calc(80vw - 460px) !important;
+        width: calc(100% - 460px) !important;
     }
 }
 
+.work-detail-drawer {
+    overflow: auto;
+    height: 100%;
+}
 .work-table-detail {
     top: 0;
-    height: 100vh;
+    height: 100%;
     // width: 1000;
     .ant-drawer-body {
         padding: 0;
@@ -31,6 +49,10 @@
 
     .work-detail {
         height: 100%;
+        min-width: 1000px;
+        .ant-form-item-label {
+            min-width: 100px;
+        }
         // overflow: auto;
         // -ms-overflow-style: none;
         // overflow: -moz-scrollbars-none;

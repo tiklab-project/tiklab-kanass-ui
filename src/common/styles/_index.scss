@@ -165,7 +165,12 @@
     display: none;
     content: "";
 }
-
+.ant-table-cell {
+    white-space: nowrap;
+}
+.ant-table-measure-row {
+    display: none !important;
+}
 shadow-view {
     opacity: 1 !important;
 }

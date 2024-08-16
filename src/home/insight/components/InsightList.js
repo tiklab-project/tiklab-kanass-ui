@@ -101,7 +101,7 @@ const InsightList = (props) => {
         }
         createRecent(params)
         setInsightView("view")
-        // props.history.push(`/index/viewInsight/${record.id}`)
+        props.history.push(`/index/viewInsight/${record.id}`)
     }
 
     const selectTabs = (key) => {
@@ -262,6 +262,7 @@ const InsightList = (props) => {
                             dataSource={insightList}
                             rowKey={record => record.id}
                             // onChange={handleTableChange}
+                            scroll={{x: "100%"}}
                             pagination={false}
                         />
                     </div>

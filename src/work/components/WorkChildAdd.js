@@ -214,6 +214,7 @@ const WorkChildAddmodal = (props) => {
                                         label={item.name}
                                         key={item.id}
                                         imgUrl={item.iconUrl}
+                                        isRemote = {true}
                                     />
                                 })
                             }

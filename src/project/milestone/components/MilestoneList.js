@@ -136,6 +136,7 @@ const MilestoneList = (props) => {
                                     loading={loading}
                                     onSearch={onSearch}
                                     onChange={pageTurning}
+                                    scroll={{x: "100%"}}
                                 />
                             </div>
                         </div>

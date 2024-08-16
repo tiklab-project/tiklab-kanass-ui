@@ -83,7 +83,7 @@ const WorkDetailDrawer = (props) => {
             destroyOnClose={true}
             mask={false}
         >
-            <div ref={detailRef}>
+            <div className="work-detail-drawer" ref={detailRef}>
                 <WorkDetail 
                     {...props} 
                     showPage={showPage} 

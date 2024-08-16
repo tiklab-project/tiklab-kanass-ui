@@ -1,5 +1,5 @@
 .project-version {
-    // height: calc(100vh - 55px);
+    // height: calc(100% - 55px);
     // padding: var(--thoughtware-padding);
     .ant-row {
         overflow: auto;
@@ -30,6 +30,7 @@
             height: 50px;
             line-height: 50px;
             margin-right: 20px;
+            white-space: nowrap;
         }
 
         .version-tab:last-child {
@@ -84,6 +85,7 @@
         margin-bottom: 15px;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
         .version-filter-right {
             display: flex;
             align-items: center;

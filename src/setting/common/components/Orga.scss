@@ -1,5 +1,5 @@
 .orga {
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
 
     .orga-background {
@@ -15,7 +15,7 @@
     .orga-aside {
         height: 100%;
         background-color: var(--thoughtware-gray-600);
-
+        overflow: auto;
         .orga-aside-name {
             font-weight: 600;
             height: 40px;
@@ -42,7 +42,6 @@
 
         // padding-top: 20px;
         .orga-aside-top {
-            height: 100vh;
             overflow: auto;
         }
 

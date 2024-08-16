@@ -152,9 +152,9 @@ const MessageList = (props) => {
                 // getContainer = {()=> messageRef.current}
             >
                 <div className="message-content">
-                    <Tabs onChange={changTab} size="small" activeKey={currenTab}>
+                    <Tabs className="message-tab" onChange={changTab} size="small" activeKey={currenTab}>
                         <Tabs.TabPane tab="未读" key="0">
-                            <div className="message-box">
+                            <div className="message-tab-box">
                                 {
                                     (messageList && messageList.length > 0) ? messageList.map(item => {
                                         return <div className="message-list" key={item.id} >
@@ -189,7 +189,7 @@ const MessageList = (props) => {
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="已读" key="1">
-                            <div className="message-box">
+                            <div className="message-tab-box">
                                 {
                                     (messageList && messageList.length > 0) ? messageList.map(item => {
                                         return <div className="message-list" key={item.id} >

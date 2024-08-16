@@ -4,7 +4,7 @@
 
     .ant-layout-sider-children {
         .stage-aside-content {
-            height: calc(100vh - var(--thoughtware-head-height));
+            height: calc(100% - var(--thoughtware-head-height));
             display: flex;
             flex-direction: column;
             background: var(--thoughtware-gray-600);

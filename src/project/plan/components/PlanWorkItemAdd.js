@@ -155,6 +155,7 @@ const  PlanWorkItemAddmodal = (props) => {
                     cancelText="取消"
                     onChange={pageTurn}
                     pagination={{ ...searchSelectCondition, position: ["bottomCenter"] }}
+                    scroll={{x: "100%"}}
                 />
 
             </Modal>

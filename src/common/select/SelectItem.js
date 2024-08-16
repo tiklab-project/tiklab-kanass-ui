@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 import ImgComponent from "../imgComponent/ImgComponent";
 const SelectItem = (props) => {
-    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children } = props;
+    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children, isRemote } = props;
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -61,7 +61,7 @@ const SelectItem = (props) => {
                     />
 
             }
-            {imgUrl && <ImgComponent className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />}
+            {imgUrl && <ImgComponent isRemote = {isRemote} className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />}
                     <div className="select-item-text">{label}</div>
 
         </div>

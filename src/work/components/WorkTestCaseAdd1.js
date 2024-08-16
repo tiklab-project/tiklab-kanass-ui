@@ -216,6 +216,7 @@ const WorkTestCaseAddmodal = (props) => {
                                         current: unRelationWorkCondition.pageParam.currentPage,
                                         onChange: changePage
                                     }}
+                                    scroll={{x: "100%"}}
                                 />
                             </Fragment>
                             :

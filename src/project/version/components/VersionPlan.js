@@ -183,6 +183,7 @@ const VersionPlan = (props) => {
                     position: ["bottomCenter"]
                 }}
                 onChange = {(pagination) => pageDown(pagination)}
+                scroll={{x: "100%"}}
             />
             <WorkDetailDrawer
                 isModalVisible={isModalVisible}

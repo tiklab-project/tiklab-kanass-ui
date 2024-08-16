@@ -1,5 +1,5 @@
 .project-prodetail {
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
     .prodetail-row {
         height: 100%;
@@ -24,7 +24,7 @@
 }
 
 .project-empty {
-    height: calc(100vh - 48px);
+    height: calc(100% - 48px);
     background: #fff;
     padding: 20% 0;
 }

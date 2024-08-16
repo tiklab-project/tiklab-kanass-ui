@@ -165,6 +165,7 @@ const WorkTestCaseList = (props) => {
                     dataSource={testCaseList}
                     rowKey={record => record.id}
                     pagination={false}
+                    scroll={{x: "100%"}}
                 />
             </div>
         </div>

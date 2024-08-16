@@ -106,6 +106,7 @@ const PlanWorkItem = (props) => {
                 dataSource={planWorkItemList}
                 rowKey={record => record.id}
                 pagination = {false}
+                scroll={{x: "100%"}}
             />
 
         </div>

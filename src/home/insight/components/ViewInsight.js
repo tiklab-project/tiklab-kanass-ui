@@ -72,7 +72,7 @@ const ViewInsight = (props) => {
                             {
                                 reportList && reportList.lg && reportList.lg.length > 0 ?
                                     <ResponsiveGridLayout
-                                        className="layout"
+                                        className="view-insight-layout"
                                         layouts={reportList}
                                         rowHeight={30}
                                         measureBeforeMount={true}

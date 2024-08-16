@@ -1220,6 +1220,7 @@ const WorkBasicInfo = (props) => {
                                     pagination={false}
                                     bordered={true}
                                     rowKey={(record) => record.id}
+                                    scroll={{x: "100%"}}
                                 />
                             </Fragment>
                         )

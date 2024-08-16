@@ -99,7 +99,7 @@
     align-items: center;
     .ant-modal {
         top: 0;
-    height: calc(100vh - 50px);
+    height: calc(100% - 50px);
     overflow: hidden;
     }
     .ant-modal-header {

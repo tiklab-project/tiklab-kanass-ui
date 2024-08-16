@@ -162,7 +162,9 @@ const ModuleList = (props) => {
                                 loading={loading}
                                 onSearch={onSearch}
                                 pagination={false}
+                                scroll={{x: "100%"}}
                             />
+                            
                         </div>
                     </div>
                 </div>

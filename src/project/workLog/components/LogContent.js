@@ -8,7 +8,7 @@
  */
 import React, { useEffect } from "react";
 import { observer, Provider } from "mobx-react";
-import { Table,Row, Col, Space } from 'antd';
+import { Table, Row, Col, Space } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./LogContent.scss"
 import { getUser } from "thoughtware-core-ui";
@@ -33,19 +33,19 @@ const LogContent = (props) => {
     // 登录者id
     const userId = getUser().userId;
     // 点击的日志的索引，用于详情修改，列表回显
-    const [listIndex, setListIndex]= useState()
+    const [listIndex, setListIndex] = useState()
     // 日志详情弹窗显示参数
     const [logDetailVisable, setLogDetailVisable] = useState(false);
     // 点击显示详情的日志id
     const [logId, setLogId] = useState()
     const projectId = props.match.params.id;
 
-     /**
-     * 获取项目列表
-     */
-     useEffect(() => {
+    /**
+    * 获取项目列表
+    */
+    useEffect(() => {
         getList()
-       
+
         return;
     }, [])
 
@@ -103,7 +103,7 @@ const LogContent = (props) => {
             width: "50%",
             ellipsis: true,
             render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="worklog-content">
-                    {text}
+                {text}
             </div>,
         },
         {
@@ -124,7 +124,11 @@ const LogContent = (props) => {
             title: "记录日期",
             dataIndex: "workDate",
             key: "workDate",
-            align: "left"
+            align: "left",
+            width: "20%",
+            render: (text, record, index) => <div>
+                {text?.slice(0, 10)}
+            </div>,
         },
         {
             title: "用时",
@@ -133,27 +137,27 @@ const LogContent = (props) => {
             align: "left",
             width: "7%"
         },
-        {
-            title: "操作",
-            dataIndex: "action",
-            key: "action",
-            align: "left",
-            width: "7%",
-            render: (text, record, index) => (
-                <Space size="middle">
-                    <DeleteModal deleteFunction={deleteLogList} id={record.id} />
-                </Space>
+        // {
+        //     title: "操作",
+        //     dataIndex: "action",
+        //     key: "action",
+        //     align: "left",
+        //     width: "7%",
+        //     render: (text, record, index) => (
+        //         <Space size="middle">
+        //             <DeleteModal deleteFunction={deleteLogList} id={record.id} />
+        //         </Space>
 
-            ),
-        }
+        //     ),
+        // }
     ];
 
     const deleteLogList = (id) => {
-        deleteWorkLog({id: id}).then(res => {
-            if(res.code === 0){
+        deleteWorkLog({ id: id }).then(res => {
+            if (res.code === 0) {
                 getList()
             }
-            
+
         })
     }
 
@@ -163,7 +167,7 @@ const LogContent = (props) => {
      */
     const changePage = (pagination) => {
         if (activeTab === "allLog") {
-            findWorkLogPage({ worker: null, projectId: projectId, pageParam: { currentPage: pagination.current, pageSize: pagination.pageSize} })
+            findWorkLogPage({ worker: null, projectId: projectId, pageParam: { currentPage: pagination.current, pageSize: pagination.pageSize } })
         }
         if (activeTab === "myLog") {
             findWorkLogPage({ worker: userId, projectId: projectId, pageParam: { currentPage: pagination.current, pageSize: pagination.pageSize } })
@@ -179,8 +183,8 @@ const LogContent = (props) => {
         setActiveTab(value)
         const params = {
             projectId: projectId,
-            pageParam: { 
-                currentPage: 1, 
+            pageParam: {
+                currentPage: 1,
                 pageSize: 30
             }
         }
@@ -193,7 +197,7 @@ const LogContent = (props) => {
     }
 
     return (<Provider {...store}>
-        <Row style={{ height: "100%",background: "#fff", overflow: "auto" }}>
+        <Row style={{ height: "100%", background: "#fff", overflow: "auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "20", offset: "2" }}>
                 <div style={{ padding: "20px" }} className="workItem-log">
                     <Breadcumb
@@ -203,13 +207,13 @@ const LogContent = (props) => {
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
                             添加工时
                         </Button>
-                        <LogAdd 
-                            page = "projectLog" 
-                            showLogAdd={showLogAdd} 
-                            setShowLogAdd={setShowLogAdd} 
-                            findWorkLogList = {changeTabs}
-                            modalType = {"add"}
-                            activeTab = {activeTab}
+                        <LogAdd
+                            page="projectLog"
+                            showLogAdd={showLogAdd}
+                            setShowLogAdd={setShowLogAdd}
+                            findWorkLogList={changeTabs}
+                            modalType={"add"}
+                            activeTab={activeTab}
                         />
                     </Breadcumb>
                     <div className="log-tab-filter">
@@ -230,7 +234,7 @@ const LogContent = (props) => {
                             </div>
 
                         </div>
-                        <LogFilter type={activeTab} dateValue = {dateValue} setDateValue = {setDateValue}/>
+                        <LogFilter type={activeTab} dateValue={dateValue} setDateValue={setDateValue} />
                     </div>
                     <Table
                         className="log-table"
@@ -238,6 +242,9 @@ const LogContent = (props) => {
                         dataSource={logList}
                         rowKey={(record) => record.id}
                         onChange={changePage}
+                        scroll={{
+                            x: "100%"
+                        }}
                         pagination={{
                             // onChange: changePage,
                             total: totalLog,
@@ -247,18 +254,18 @@ const LogContent = (props) => {
                         }}
                     />
 
-                    <LogDetail 
-                        logId = {logId} 
-                        listIndex = {listIndex} 
-                        logDetailVisable = {logDetailVisable} 
-                        setLogDetailVisable = {setLogDetailVisable}
-                        getList = {getList}
+                    <LogDetail
+                        logId={logId}
+                        listIndex={listIndex}
+                        logDetailVisable={logDetailVisable}
+                        setLogDetailVisable={setLogDetailVisable}
+                        getList={getList}
                     />
                 </div>
             </Col>
         </Row>
     </Provider>
-        
+
     )
 }
 export default observer(LogContent);

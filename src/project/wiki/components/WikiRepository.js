@@ -251,6 +251,7 @@ const WikiRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
+                                    scroll={{x: "100%"}}
                                 />
                                 <PaginationCommon
                                     currentPage={documentCondition.pageParam.currentPage}
@@ -267,6 +268,7 @@ const WikiRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
+                                    scroll={{x: "100%"}}
                                 />
                                 <WikiRepositoryAdd
                                     projectId={projectId}

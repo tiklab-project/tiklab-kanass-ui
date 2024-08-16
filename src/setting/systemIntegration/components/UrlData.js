@@ -101,7 +101,7 @@ const UrlData = (props) => {
                                 </Button>
                             </div>
                         </Breadcumb>
-                        <Table columns={columns} dataSource={urlDataList} />
+                        <Table columns={columns} dataSource={urlDataList} scroll={{x: "100%"}} />
                     </div>
                 {/* </Col>
             </Row> */}

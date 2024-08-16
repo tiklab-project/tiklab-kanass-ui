@@ -140,6 +140,7 @@ const LogAllList = (props) => {
                         position: ["bottomCenter"],
                         ...selectLogCondition.pageParam
                     }}
+                    scroll={{x: "100%"}}
                 />
 
                 <LogDetail logId={logId} listIndex={listIndex} logDetailVisable={logDetailVisable} setLogDetailVisable={setLogDetailVisable} />

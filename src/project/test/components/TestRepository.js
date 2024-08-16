@@ -234,6 +234,7 @@ const TestRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
+                                    scroll={{x: "100%"}}
                                 />
                                 <TestRepositoryAdd
                                     projectId={projectId}
@@ -251,6 +252,7 @@ const TestRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
+                                    scroll={{x: "100%"}}
                                 />
                                 <PaginationCommon
                                     currentPage={testCaseCondition.pageParam.currentPage}

@@ -305,6 +305,7 @@ const WorkChild = (props) => {
                     rowKey={record => record.id}
                     pagination={false}
                     showHeader={false}
+                    scroll={{x: "100%"}}
                 />
             </div>
         </div>

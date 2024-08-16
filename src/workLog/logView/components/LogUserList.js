@@ -133,6 +133,9 @@ const LogUserList = (props) => {
                     dataSource={logList}
                     rowKey={(record) => record.id}
                     onChange={changePage}
+                    scroll={{
+                        x: "100%"
+                    }}
                     pagination={{
                         onChange: changePage,
                         position: ["bottomCenter"],

@@ -31,18 +31,19 @@ const WorkBasicInfo = (props) => {
     const formRef = useRef();
     const exFormRef = useRef();
     const layoutExForm = {
-        labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
-        wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
+        labelCol: { xs:{ span: 4 },sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
+        wrapperCol: { xs:{ span: 20 },sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 },xl: { span: 20 }, xxl: { span: 22 } },
+
     };
 
     const layout = {
-        labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
-        wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
+        labelCol: { xs:{ span: 8 },sm: { span: 8 }, md: { span: 8 }, lg: { span: 8 }, xl: { span: 8 }, xxl: { span: 5 } },
+        wrapperCol: { xs:{ span: 16 },sm: { span: 16 }, md: { span: 16 }, lg: { span: 16 },xl: { span: 16 }, xxl: { span: 19 } },
     };
 
     const layoutBottom = {
-        labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
-        wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
+        labelCol: { xs:{ span: 4 },sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
+        wrapperCol: { xs:{ span: 20 },sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 },xl: { span: 20 }, xxl: { span: 22 } },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -1260,6 +1261,7 @@ const WorkBasicInfo = (props) => {
                                     pagination={false}
                                     bordered={true}
                                     rowKey={(record) => record.id}
+                                    scroll={{x: "100%"}}
                                 />
                             </Fragment>
                         )

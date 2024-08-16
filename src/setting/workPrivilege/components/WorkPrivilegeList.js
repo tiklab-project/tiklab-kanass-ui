@@ -61,7 +61,7 @@ const WorkPrivilegeList = (props) => {
                 <WorkPrivilegeAddModal getList = {getList} />
             </Breadcrumb>
             <div className="work-privilege-list">
-                <Table columns={columns} dataSource={workPrivilegeList} rowKey={record => record.id} />
+                <Table columns={columns} dataSource={workPrivilegeList} rowKey={record => record.id} scroll={{x: "100%"}} />
             </div>
         </div>
     )
