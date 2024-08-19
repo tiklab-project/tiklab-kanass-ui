@@ -152,7 +152,7 @@ const ModuleList = (props) => {
                                     />
                                 }
                             /> */}
-                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"模块名称"} />
+                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"搜索模块"} />
                         </div>
                         <div className="module-table-box">
                             <Table

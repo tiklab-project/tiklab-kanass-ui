@@ -74,6 +74,7 @@ const ProjectStatusNum = (props) => {
                         overdue: false
                     }
                     setProjectPageParams(params);
+                    setProjectQuickFilter(null)
                     break;
             case "progress":
                 params = {

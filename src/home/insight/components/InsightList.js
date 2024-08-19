@@ -249,7 +249,7 @@ const InsightList = (props) => {
 
                         <div className="search-add">
 
-                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"仪表盘名字"} />
+                            <InputSearch onChange={(value) => onSearch(value)} placeholder={"搜索仪表盘"} />
                             <Button type="primary" onClick={() => addPanel()}>
                                 添加仪表盘
                             </Button>

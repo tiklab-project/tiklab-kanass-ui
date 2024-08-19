@@ -215,6 +215,8 @@ const WorkFilterHigh = (props) => {
                                 key="assignerIds"
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
+                                
+                                showArrow = {true}
                             >
                                 {
                                     userList && userList.map((item) => {
@@ -231,6 +233,7 @@ const WorkFilterHigh = (props) => {
                                 key="workStatusIds"
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
+                                showArrow = {true}
                             >
                                 {
                                     workStatusList && workStatusList.map((item) => {
@@ -251,6 +254,7 @@ const WorkFilterHigh = (props) => {
                         key="builderIds"
                         maxTagCount={1}
                         getPopupContainer={() => heightFilter.current}
+                        showArrow = {true}
                     >
                         {
                             userList && userList.map((item) => {
@@ -270,6 +274,7 @@ const WorkFilterHigh = (props) => {
                             key="sprint"
                             maxTagCount={1}
                             getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
                         >
                             {
                                 sprintList && sprintList.map((item) => {
@@ -294,6 +299,7 @@ const WorkFilterHigh = (props) => {
                             key="version"
                             maxTagCount={1}
                             getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
                         >
                             {
                                 versionList && versionList.map((item) => {

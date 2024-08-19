@@ -333,7 +333,7 @@ const ProjectList = (props) => {
                         }
                     </div>
                     <div className="project-search">
-                        <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目名称"} />
+                        <InputSearch onChange={(value) => onSearch(value)} placeholder={"搜索项目"} />
                         <ProjectFilterQuick />
                     </div>
                 </div>

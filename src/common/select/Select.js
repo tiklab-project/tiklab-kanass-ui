@@ -129,7 +129,7 @@ const SelectSimple = (props) => {
                     ismult && selectLength > 0 && <div className="select-number">{selectLength}</div>
                 }
                 {
-                    suffixIcon && !disabled && <>
+                    !disabled && <>
                         {
                             !ismult && ( selectData ? <div>
                                 <svg className="cancel-svg" aria-hidden="true" onClick={(e) => clearValue(e)}>

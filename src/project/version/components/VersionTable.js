@@ -325,7 +325,7 @@ const VersionTable = (props) => {
                             </div>
                             <div className="version-filter-right">
                                 <InputSearch
-                                    placeholder="版本名称"
+                                    placeholder="搜索版本"
                                     allowClear
                                     style={{ width: 200 }}
                                     onChange={onSearch}

@@ -37,7 +37,7 @@ const WorkFilterHighItem = (props) => {
                         key="status"
                         maxTagCount={1}
                         getPopupContainer={() => heightFilter.current}
-                    // bordered={false}
+                        showArrow = {true}
                     >
                         {
                             priorityList && priorityList.map((item) => {
@@ -57,6 +57,7 @@ const WorkFilterHighItem = (props) => {
                             key="assigner"
                             maxTagCount={1}
                             getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
                         >
                             {
                                 moduleList && moduleList.map((item) => {

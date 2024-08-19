@@ -16,7 +16,7 @@ import { useDebounce } from "../../common/utils/debounce";
 import { getVersionInfo } from "thoughtware-core-ui"
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import setImageUrl from "../../common/utils/setImageUrl";
-
+import {applySubscription} from "thoughtware-core-ui"
 const WorkGantt = (props) => {
     const { Gantt } = props;
     const { workList, editWork, setWorkShowType, setQuickFilterValue, archiveView } = WorkStore;
@@ -46,11 +46,7 @@ const WorkGantt = (props) => {
     }, [projectId])
 
     const goBuy = () => {
-        if(version === "cloud"){
-            window.open("https://work.thoughtware.cn/#/enterprise/application/kanass")
-        }else {
-            window.open("https://thoughtware.cn/account/subscribe/apply/kanass")
-        }
+        applySubscription("kanass")
     }
 
     return (<Provider {...store}>

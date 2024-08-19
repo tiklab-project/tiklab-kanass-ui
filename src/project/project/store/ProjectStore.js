@@ -8,7 +8,7 @@ export class ProjectStore {
     @observable allProlist = [];
     @observable projectName = "";
     @observable activeTabs = "1";
-    @observable projectQuickFilter = "total";
+    @observable projectQuickFilter = null;
 
      
 

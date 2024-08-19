@@ -530,7 +530,7 @@ const Routers = [
                 exact: true
             },
             {
-                path: "/setting/logList",
+                path: "/setting/log",
                 component: LogList,
                 row: true,
                 exact: true

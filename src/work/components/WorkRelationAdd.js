@@ -109,7 +109,7 @@ const WorkRelationAddModal = (props) => {
 
                 <div className="relation-add-model" >
                     <div className="relation-add-search">
-                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"根据事项名称，或者id搜索"} />
+                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"搜索事项"} />
                         <SelectSimple name="workTypeIds"
                             onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
                             title={"事项类型"} ismult={true}

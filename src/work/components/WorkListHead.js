@@ -93,18 +93,7 @@ const WorkListHead = (props) => {
             <div className="work-aside-search">
                 <WorkListFilter showWorkListFilter={true} />
             </div>
-            <div className="worklist-head-second">
-                <WorkFilterType />
-                <WorkFilterQuick />
-                {/* 
-                {
-                    props.match.path == "/workList" && <WorkFilterProject />
-                }
-
-                {
-                    props.match.path != "/workList" && <WorkFilterMaster />
-                } */}
-            </div>
+            
         </div>
     )
 }

@@ -202,7 +202,7 @@ const WorkChildAddmodal = (props) => {
             <div className="child-add" ref={childAdd}>
                 <div className="child-add-model" >
                     <div className="child-add-search">
-                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"根据事项名称，或者id搜索"} />
+                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"搜索事项名称，id"} />
                         <SelectSimple name="workPriorityIds"
                             onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}
                             title={"事项优先级"} ismult={true}

@@ -269,7 +269,7 @@ const StagePlan = (props) => {
                     <div className="stage-plan-box-top">
                         <div className="stage-plan-title">待办规划事项</div>
                         <div className="stage-plan-filter">
-                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
@@ -376,7 +376,7 @@ const StagePlan = (props) => {
                     <div className="stage-plan-box-top">
                         <div className="stage-plan-title">迭代下事项</div>
                         <div className="stage-plan-filter">
-                            <InputSearch onChange={(value) => findStageWorkItem("keyWord", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => findStageWorkItem("keyWord", value)} placeholder={"搜索事项"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => findStageWorkItem("workTypeIds", value)}
                                 title={"类型"}

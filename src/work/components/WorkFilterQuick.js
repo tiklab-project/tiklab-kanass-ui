@@ -181,6 +181,7 @@ const WorkFilterQuick = (props) => {
             ismult={false}
             value={quickFilterValue}
             suffixIcon={true}
+            positionType = {"right"}
         >
             {
                 quickFilterList.map(item => {

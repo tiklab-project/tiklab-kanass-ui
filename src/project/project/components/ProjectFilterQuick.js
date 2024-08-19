@@ -12,10 +12,10 @@ const ProjectFilterQuick = (props) => {
     const userId = getUser().userId;
 
     const quickFilterList = [
-        {
-            value: "total",
-            label: "全部"
-        },
+        // {
+        //     value: "total",
+        //     label: "全部"
+        // },
         {
             value: "progress",
             label: "进行中"

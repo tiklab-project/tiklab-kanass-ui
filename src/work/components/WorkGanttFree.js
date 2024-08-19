@@ -4,15 +4,12 @@ import {  Modal, Button } from 'antd';
 import "./WorkGanttFree.scss";
 import gantt from "../../assets/images/gantt.jpg";
 // import Button from "../../common/button/Button";
+import {applySubscription} from "thoughtware-core-ui"
 const WorkGanttFree = (props) => {
     const { workGanttFreeVisable, setWorkGanttFreeVisable } = props;
 
     const goBuy = () => {
-        if(version === "cloud"){
-            window.open("https://work.thoughtware.cn/#/enterprise/application/kanass")
-        }else {
-            window.open("https://thoughtware.cn/account/subscribe/apply/kanass")
-        }
+        applySubscription("kanass")
     }
     return <Modal
         // title="甘特图"

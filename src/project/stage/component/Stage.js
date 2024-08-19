@@ -125,7 +125,7 @@ const Stage = (props) => {
                     <div className="stage-contant" >
                         <div className="stage-action">
                             <InputSearch
-                                placeholder="计划名字"
+                                placeholder="搜索计划"
                                 allowClear
                                 style={{ width: 190 }}
                                 onChange={onSearch}

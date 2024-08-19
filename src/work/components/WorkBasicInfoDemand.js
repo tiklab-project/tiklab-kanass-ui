@@ -7,7 +7,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
+import { DocumentEditor, PreviewEditor, EditorBig } from "thoughtware-slate-ui";
 import { SwitchPreliminaryType } from "thoughtware-form-ui";
 import "thoughtware-slate-ui/es/thoughtware-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
@@ -1194,23 +1194,15 @@ const WorkBasicInfo = (props) => {
                     {
                         editorType ? <Fragment>
                             <div style={{ border: " #f0f0f0 solid 1px", height: "400px" }}>
-                                <EditorBig
+                            <DocumentEditor
+                                    value={slateValue}
                                     ticket={ticket}
                                     tenant={tenant}
                                     base_url={base_url}
-                                    value={slateValue}
                                     minHeight={300}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
-                                >
-                                    <div className="work-detail-box-content" style={{ padding: "10px" }}>
-                                        <EditorBigContent
-                                            value={slateValue}
-                                        />
-                                    </div>
-
-
-                                </EditorBig>
+                                />
                             </div>
 
                             <div className="desc-botton">

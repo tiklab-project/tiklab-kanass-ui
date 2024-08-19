@@ -366,7 +366,7 @@ const VersionPlan = (props) => {
                     <div className="version-plan-box-top">
                         <div className="version-plan-title">待办规划事项</div>
                         <div className="version-plan-filter">
-                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => handleChange("workTypeIds", value)}
                                 title={"类型"}
@@ -475,7 +475,7 @@ const VersionPlan = (props) => {
                     <div className="version-plan-box-top">
                         <div className="version-plan-title">版本下事项</div>
                         <div className="version-plan-filter">
-                            <InputSearch onChange={(value) => findVersionWorkItem("keyWord", value)} placeholder={"搜索事项名称"} />
+                            <InputSearch onChange={(value) => findVersionWorkItem("keyWord", value)} placeholder={"搜索事项"} />
                             <SelectSimple name="workTypeIds"
                                 onChange={(value) => findVersionWorkItem("workTypeIds", value)}
                                 title={"类型"}

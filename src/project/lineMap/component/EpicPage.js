@@ -108,9 +108,8 @@ const EpicPage = (props) => {
             <div className="epic">
                 <div className="epic-action">
                     <InputSearch
-                        placeholder="需求集名字"
+                        placeholder="搜索需求集"
                         allowClear
-                        style={{ width: 300 }}
                         onChange={onSearch}
                     />
                     <div className="epic-action-right">

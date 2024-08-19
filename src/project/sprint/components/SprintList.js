@@ -328,7 +328,7 @@ const Sprint = (props) => {
                             </div>
                             <div className="sprint-filter-right">
                                 <InputSearch
-                                    placeholder="迭代名称"
+                                    placeholder="搜索迭代"
                                     allowClear
                                     style={{ width: 200 }}
                                     onChange={onSearch}
@@ -339,6 +339,7 @@ const Sprint = (props) => {
                                     title={"状态"}
                                     ismult={true}
                                     value={sprintPageParams?.sprintStateIds}
+                                    suffixIcon = {true}
                                 >
                                     {
                                         sprintStateList.map(item => {

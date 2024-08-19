@@ -257,7 +257,7 @@ const ProjectSetTable = (props) => {
                             })
                         }
                     </div>
-                    <InputSearch onChange={(value) => onSearch(value)} placeholder={"项目集名称"} />
+                    <InputSearch onChange={(value) => onSearch(value)} placeholder={"搜索项目集"} />
                 </div>
                 <div>
                     <div className="projectSet-table-box">

@@ -41,7 +41,7 @@ const Plan = (props) => {
                         <div style={{ padding: "20px 0" }}>
                             <div className="plan-search">
                                 <InputSearch
-                                    placeholder="版本名称"
+                                    placeholder="搜索版本"
                                     allowClear
                                     style={{ width: 300 }}
                                     onChange={onSearch}

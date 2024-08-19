@@ -7,15 +7,23 @@ import FirstMenuButtom from "./FirstMenuButtom";
 const { Sider } = Layout;
 const FirstMenu = (props) => {
     const [isShowText, setIsShowText] = useState(false)
-    const menuKey = sessionStorage.getItem("menuKey");
+
+    const path = props.location.pathname.split("/")[1];
+    const [menuKey, setMenuKey] = useState(path);
+
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [themeClass, setThemeClass] = useState("first-sider-gray")
 
     useEffect(() => {
         getThemeClass(theme)
-        sessionStorage.setItem("menuKey", "home");
         return null;
     }, [])
+
+    useEffect(()=> {
+        setMenuKey(path)
+        return null;
+    }, [path])
+
     /**
          * 点击菜单跳转
          * @param {菜单信息} item 
@@ -50,7 +58,7 @@ const FirstMenu = (props) => {
         {
             to: '/index/overview',
             title: '首页',
-            key: 'home',
+            key: 'index',
             icon: 'home-' + theme,
             actionIcon: setActiveIcon("home-")
         },
@@ -71,7 +79,7 @@ const FirstMenu = (props) => {
         {
             to: '/workitem',
             title: '事项',
-            key: 'work',
+            key: 'workitem',
             icon: 'work-' + theme,
             actionIcon: setActiveIcon("work-")
         },
@@ -83,7 +91,7 @@ const FirstMenu = (props) => {
             actionIcon: setActiveIcon("log-")
         },
         {
-            to: '/setting/logList',
+            to: version === "cloud" ?  '/setting/log' : '/setting/version',
             title: '设置',
             icon: 'set-' + theme,
             actionIcon: setActiveIcon("set-")

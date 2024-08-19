@@ -260,7 +260,7 @@ const EpicPlan = (props) => {
             </div>
             <div className="search-add">
                 <InputSearch
-                    placeholder="需求名称"
+                    placeholder="搜索需求"
                     allowClear
                     style={{ width: 300 }}
                     onChange={onSearch}

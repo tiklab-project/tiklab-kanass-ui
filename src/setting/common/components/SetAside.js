@@ -82,7 +82,7 @@ const SetAside = (props) => {
     }
 
     // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState(["/setting/version"])
+    const [expandedTree, setExpandedTree] = useState([])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)

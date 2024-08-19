@@ -133,7 +133,7 @@ const StatisticsAsicde = (props) => {
                         <div className='statistics-type-title' onClick={() => setOpenOrClose("log")}>
                             <div className="statistics-type-title-left">
                                 <svg className="menu-icon" aria-hidden="true" >
-                                    <use xlinkHref="#icon-statistics-work"></use>
+                                    <use xlinkHref="#icon-statistics-log"></use>
                                 </svg>
 
                                 日志统计

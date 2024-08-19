@@ -5,16 +5,13 @@ import "./LogStatisticsFree.scss";
 import logprojectuser from "../../assets/images/logprojectuser.jpg";
 import logprojectwork from "../../assets/images/logprojectwork.jpg";
 import loguserproject from "../../assets/images/loguserproject.jpg";
+import {applySubscription} from "thoughtware-core-ui"
 const LogStatisticsFree = (props) => {
     const { logStatisticsFreeVisable, setLogStatisticsFreeVisable } = props;
     const [imgUrl, setImgUrl] = useState(logprojectuser);
     const [activeImage, setActiveImage] = useState("bulidend");
     const goBuy = () => {
-        if (version === "cloud") {
-            window.open("https://work.thoughtware.cn/#/enterprise/application/kanass")
-        } else {
-            window.open("https://thoughtware.cn/account/subscribe/apply/kanass")
-        }
+        applySubscription("kanass")
     }
     const list = [
         {

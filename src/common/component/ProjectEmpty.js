@@ -5,7 +5,7 @@ import { Empty } from "antd";
 const ProjectEmpty = (props) => {
     const {description, children} = props;
 
-    return <Empty image={nodata} description={description}>
+    return <Empty description={description}>
         {children}
     </Empty>
 }

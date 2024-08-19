@@ -177,7 +177,7 @@ const setDevRouter= [
         children: [
             {
                 title: '操作日志',
-                id: '/setting/logList',
+                id: '/setting/log',
                 // purviewCode: "SysLogList",
                 code: "logList",
             }, 
@@ -508,7 +508,7 @@ const setPrdRouter= [
         children: [
             {
                 title: '操作日志',
-                id: '/setting/logList',
+                id: '/setting/log',
                 // purviewCode: "SysLogList",
                 code: "logList",
             }, 

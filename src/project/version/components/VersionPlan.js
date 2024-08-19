@@ -164,7 +164,7 @@ const VersionPlan = (props) => {
             </div>
             <div className="search-add">
                 <InputSearch
-                    placeholder="事项名称"
+                    placeholder="搜索事项"
                     allowClear
                     style={{ width: 300 }}
                     onChange={onSearch}

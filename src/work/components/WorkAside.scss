@@ -9,11 +9,18 @@
     .work-aside-option {
         border-radius: 4px;
         // position: relative;
-        height: calc(100% - 160px);
+        height: calc(100% - 120px);
         overflow: auto;
         // overflow-y: auto;
         width: 100%;
-
+        .worklist-head-second {
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
         .work-aside-top {
             padding: 10px;
             display: flex;

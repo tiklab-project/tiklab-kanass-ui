@@ -177,7 +177,7 @@ const WorkTestCaseAddmodal = (props) => {
             <div className="testCase-add" ref={testCaseAdd}>
 
                 <div className="testCase-add-search">
-                    <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"用例名称"} />
+                    <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索用例"} />
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}

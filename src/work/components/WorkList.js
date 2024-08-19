@@ -91,9 +91,10 @@ const WorkList = (props) => {
 
 
     const rowSpan = {
-        sm: 24,
-        md: 24,
-        lg: { span: 24 },
+        xs: { span: "22", offset: "1" },
+        sm: { span: "22", offset: "1" },
+        md: { span: "22", offset: "1" },
+        lg: {span: "22", offset: "1" },
         xl: { span: "22", offset: "1" },
         xxl: { span: "18", offset: "3" }
     }

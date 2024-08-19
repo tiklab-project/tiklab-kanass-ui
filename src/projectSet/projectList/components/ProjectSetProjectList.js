@@ -273,7 +273,7 @@ const ProjectSetProjectList = (props) => {
                                 }
                             </Select> */}
                                 <InputSearch
-                                    placeholder="项目名称"
+                                    placeholder="搜索项目"
                                     allowClear
                                     style={{ width: 190 }}
                                     onChange={onSearch}

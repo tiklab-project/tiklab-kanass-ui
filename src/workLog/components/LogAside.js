@@ -40,14 +40,14 @@ const SetAside = (props) => {
             title: '工时查看',
             path: "/log/list",
             key: "log",
-            icon: "statistics-work"
+            icon: "log-view"
         },
         {
             title: '工时统计',
             path: "/log/projectStatistic",
             key: "statistics",
             type: "statistics",
-            icon: "statistics-work",
+            icon: "log-statistics",
             children: [
                 {
                     title: "项目成员统计",

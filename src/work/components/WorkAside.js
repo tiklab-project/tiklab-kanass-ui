@@ -8,6 +8,8 @@ import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { setWorkDeatilInList } from './WorkSearch';
 import ImgComponent from '../../common/imgComponent/ImgComponent';
+import WorkFilterType from './WorkFilterType';
+import WorkFilterQuick from './WorkFilterQuick';
 const WorkAside = (props) => {
     // 选择事务
     const workAside = useRef()
@@ -275,7 +277,10 @@ const WorkAside = (props) => {
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
             <WorkListHead />
             <div className="work-aside-option">
-
+                <div className="worklist-head-second">
+                    <WorkFilterType />
+                    <WorkFilterQuick />
+                </div>
                 <Spin spinning={tableLoading} delay={500}>
                     <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >

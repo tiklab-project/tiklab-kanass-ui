@@ -7,7 +7,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "thoughtware-slate-ui";
+import { DocumentEditor, PreviewEditor, EditorBig } from "thoughtware-slate-ui";
 import { SwitchPreliminaryType } from "thoughtware-form-ui";
 import "thoughtware-slate-ui/es/thoughtware-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
@@ -31,19 +31,19 @@ const WorkBasicInfo = (props) => {
     const formRef = useRef();
     const exFormRef = useRef();
     const layoutExForm = {
-        labelCol: { xs:{ span: 4 },sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
-        wrapperCol: { xs:{ span: 20 },sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 },xl: { span: 20 }, xxl: { span: 22 } },
+        labelCol: { xs: { span: 4 }, sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
+        wrapperCol: { xs: { span: 20 }, sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 }, xl: { span: 20 }, xxl: { span: 22 } },
 
     };
 
     const layout = {
-        labelCol: { xs:{ span: 8 },sm: { span: 8 }, md: { span: 8 }, lg: { span: 8 }, xl: { span: 8 }, xxl: { span: 5 } },
-        wrapperCol: { xs:{ span: 16 },sm: { span: 16 }, md: { span: 16 }, lg: { span: 16 },xl: { span: 16 }, xxl: { span: 19 } },
+        labelCol: { xs: { span: 8 }, sm: { span: 8 }, md: { span: 8 }, lg: { span: 8 }, xl: { span: 8 }, xxl: { span: 5 } },
+        wrapperCol: { xs: { span: 16 }, sm: { span: 16 }, md: { span: 16 }, lg: { span: 16 }, xl: { span: 16 }, xxl: { span: 19 } },
     };
 
     const layoutBottom = {
-        labelCol: { xs:{ span: 4 },sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
-        wrapperCol: { xs:{ span: 20 },sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 },xl: { span: 20 }, xxl: { span: 22 } },
+        labelCol: { xs: { span: 4 }, sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
+        wrapperCol: { xs: { span: 20 }, sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 }, xl: { span: 20 }, xxl: { span: 22 } },
     };
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -793,7 +793,7 @@ const WorkBasicInfo = (props) => {
                                                     <ImgComponent
                                                         src={item.iconUrl}
                                                         alt=""
-                                                        isRemote = {true}
+                                                        isRemote={true}
                                                         className="img-icon-right"
                                                     />
 
@@ -1195,23 +1195,16 @@ const WorkBasicInfo = (props) => {
                     {
                         editorType ? <Fragment>
                             <div style={{ border: " #f0f0f0 solid 1px", height: "400px" }}>
-                                <EditorBig
+
+                                <DocumentEditor
+                                    value={slateValue}
                                     ticket={ticket}
                                     tenant={tenant}
                                     base_url={base_url}
-                                    value={slateValue}
                                     minHeight={300}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
-                                >
-                                    <div className="work-detail-box-content" style={{ padding: "10px" }}>
-                                        <EditorBigContent
-                                            value={slateValue}
-                                        />
-                                    </div>
-
-
-                                </EditorBig>
+                                />
                             </div>
 
                             <div className="desc-botton">
@@ -1261,7 +1254,7 @@ const WorkBasicInfo = (props) => {
                                     pagination={false}
                                     bordered={true}
                                     rowKey={(record) => record.id}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                 />
                             </Fragment>
                         )

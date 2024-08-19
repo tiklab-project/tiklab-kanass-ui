@@ -1194,23 +1194,16 @@ const WorkBasicInfo = (props) => {
                     {
                         editorType ? <Fragment>
                             <div style={{ border: " #f0f0f0 solid 1px", height: "400px" }}>
-                                <EditorBig
+
+                                 <DocumentEditor
+                                    value={slateValue}
                                     ticket={ticket}
                                     tenant={tenant}
                                     base_url={base_url}
-                                    value={slateValue}
                                     minHeight={300}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
-                                >
-                                    <div className="work-detail-box-content" style={{ padding: "10px" }}>
-                                        <EditorBigContent
-                                            value={slateValue}
-                                        />
-                                    </div>
-
-
-                                </EditorBig>
+                                />
                             </div>
 
                             <div className="desc-botton">
