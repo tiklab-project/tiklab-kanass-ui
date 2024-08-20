@@ -11,7 +11,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, DatePicker } from 'antd';
 import "./NewWorkItemTrend.scss";
-import * as echarts from 'echarts';
+import echarts from "../../../common/echarts/echarts"
 import moment from "moment";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 

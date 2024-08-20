@@ -11,7 +11,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./WorkItemTrend.scss";
 import HomeStore from "../store/HomeStore";
-import * as echarts from 'echarts';
+import echarts from "../../../common/echarts/echarts"
 
 const WorkItemTrend = (props) => {
     const { statisticsDayAllWorkItemCount } = HomeStore;

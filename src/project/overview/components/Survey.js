@@ -24,7 +24,7 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject,
-        findProjectBurnDowmChartPage, findMilestoneList, findlogpage, findtodopage,
+        findProjectBurnDowmChartPage, findMilestoneList, findLogPageByTime, findtodopage,
         findRecentPage, recentList, updateRecent, logList } = ProjectSurveyStore;
     const { setWorkId } = Workstore;
     //当前用户名字
@@ -59,7 +59,7 @@ const Survey = (props) => {
         })
 
         // 获取日志列表
-        findlogpage({ projectId: projectId, currentPage: 1 })
+        findLogPageByTime({data:{projectId: projectId}, pageParam: {currentPage: 1} })
 
         // 获取待办列表
         findtodopage({ projectId: projectId, currentPage: 1, userId: userId }).then(res => {

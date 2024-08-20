@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-10-09 15:25:16
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Table } from 'antd';
+import { Empty, Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkTestCaseList.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
@@ -135,9 +135,9 @@ const WorkTestCaseList = (props) => {
 
     const workTestCase = useRef(null)
     return (<Provider {...store}>
-        <div className="work-repository" ref = {workTestCase}>
-            <div className="repository-top">
-                <div className="repository-top-title">关联用例({testCaseList.length})</div>
+        <div className="work-testcase" ref = {workTestCase}>
+            <div className="testcase-top">
+                <div className="testcase-top-title">共{testCaseList.length}个</div>
                 <div className="child-top-botton">
                     <Button onClick={() => { showSelectTestCase(true) }}>
                         添加用例
@@ -159,14 +159,19 @@ const WorkTestCaseList = (props) => {
                         getSelectUserList={getSelectUserList}
                     />
                 }
-                <Table
-                    className="repository-table"
+                {
+                    testCaseList?.length > 0 ? <Table
+                    className="testcase-table"
                     columns={columns}
                     dataSource={testCaseList}
                     rowKey={record => record.id}
                     pagination={false}
                     scroll={{x: "100%"}}
                 />
+                :
+                <Empty description = "暂无关联用例" />
+                }
+                
             </div>
         </div>
     </Provider>

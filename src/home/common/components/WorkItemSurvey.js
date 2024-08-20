@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import HomeStore from '../store/HomeStore';
 import WorkStore from '../../../work/store/WorkStore';
 import { setWorkDeatilInList } from '../../../work/components/WorkSearch';
-import * as echarts from 'echarts';
+import echarts from "../../../common/echarts/echarts"
 
 const WorkItemSurvey = (props) => {
     const { statisticsWorkItemByStatus } = HomeStore;

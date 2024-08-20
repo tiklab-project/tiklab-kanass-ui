@@ -11,6 +11,18 @@ import { Service } from "../../../common/utils/requset"
 export class ProjectSurveyStore {
     @observable recentList = [];
     @observable logList = [];
+
+    @observable opLogTimeCondition = {
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+            totalPage: 1,
+            total: 1
+        },
+        bgroup: "kanass",
+        data: {}
+    }
+
     /**
      * 获取不同事项状态的统计
      * @param {项目id} projectId 
@@ -184,6 +196,15 @@ export class ProjectSurveyStore {
         }
         
         return data;
+    }
+
+    @action
+    findLogPageByTime = async (value) => {
+        Object.assign(this.opLogTimeCondition, value)
+        const data = await Service("/oplog/findLogPageByTime", this.opLogTimeCondition);
+        if (data.code === 0) {
+            this.logList = data.data.dataList;
+        }
     }
 
     @action

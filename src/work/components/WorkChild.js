@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Row, Col, message } from 'antd';
+import { Input, Table, Row, Col, message, Empty } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
@@ -16,20 +16,20 @@ const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
     }
-    const { treePath, workStore,workType, projectId,type, workTypeCode, 
+    const { treePath, workStore, workType, projectId, type, workTypeCode,
         getTransitionList, workStatusNodeId, workInfo, setTabValue } = props;
-    
-    const {planSprintWorkList, setPlanSprintWorkList} = SprintPlanStore;
-    const {planVersionWorkList, setPlanVersionWorkList} = VersionPlanStore;
+
+    const { planSprintWorkList, setPlanSprintWorkList } = SprintPlanStore;
+    const { planVersionWorkList, setPlanVersionWorkList } = VersionPlanStore;
     const [selectIds, setSelectIds] = useState();
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);
     const [workItemTitle, setWorkItemTitle] = useState()
 
-    const { workId,workList, setWorkId, addWork, createRecent, demandTypeId, 
+    const { workId, workList, setWorkId, addWork, createRecent, demandtestcaseId,
         selectVersionList, sprintList, priorityList, setWorkList, findWorkItemAndChidren } = workStore;
 
-    const { getWorkChildList,deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
+    const { getWorkChildList, deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     const [demandId, setDemand] = useState();
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -39,12 +39,12 @@ const WorkChild = (props) => {
     const path = props.match?.path;
     console.log(path)
     useEffect(() => {
-        if(workTypeCode === "epic"){
+        if (workTypeCode === "epic") {
             findWorkTypeListByCode().then(res => {
                 setDemand(res.data)
                 findWorkChildList()
             })
-        }else {
+        } else {
             findWorkChildList()
         }
         return;
@@ -61,7 +61,7 @@ const WorkChild = (props) => {
                 pageSize: 20
             }
         }
-        if(workTypeCode === "epic"){
+        if (workTypeCode === "epic") {
             params.workTypeId = null;
             params.workTypeSysId = demandId;
         }
@@ -86,7 +86,7 @@ const WorkChild = (props) => {
                 // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
                 //     getWorkConditionPage()
                 // }
-                findWorkItemAndChidren({id: id}).then(res => {
+                findWorkItemAndChidren({ id: id }).then(res => {
                     if (res.code === 0) {
                         const list = changeWorkItemParent(workList, null, res.data)
                         setWorkList([...list])
@@ -101,27 +101,27 @@ const WorkChild = (props) => {
         setTabValue(1)
         setWorkId(record.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
-        newDetailCrumbArray.push({id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl })
+        newDetailCrumbArray.push({ id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         const params = {
             name: record.title,
             model: "workItem",
             modelId: record.id,
-            project: {id: project.id},
-            projectType: {id: project.projectType.id},
+            project: { id: project.id },
+            projectType: { id: project.projectType.id },
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
-        if(props.match.path === "/project/:id/workDetail/:workId"){
+        if (props.match.path === "/project/:id/workDetail/:workId") {
             props.history.push(`/project/${project.id}/workDetail/${record.id}`)
         }
-        
+
     }
 
 
     const createChildWorkItem = () => {
         const params = {
-            title: workItemTitle, 
+            title: workItemTitle,
             parentWorkItem: workId,
             project: projectId,
             builder: getUser().userId,
@@ -135,40 +135,40 @@ const WorkChild = (props) => {
             planEndTime: dayjs().format("YYYY-MM-DD 23:59:59")
         }
 
-        if(projectType === "scrum"){
+        if (projectType === "scrum") {
             params.sprint = sprintList[0]?.id
-        }else {
-            if(workInfo.stage){
+        } else {
+            if (workInfo.stage) {
                 params.stage = workInfo.stage.id
-            }else {
+            } else {
                 message.error("请给父事项规划计划");
                 return
             }
-            
+
         }
 
-        if(workTypeCode === "epic"){
+        if (workTypeCode === "epic") {
             params.workType = demandTypeId
         }
         addWork(params).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 showAddChild(false)
                 findWorkChildList()
                 getTransitionList(workStatusNodeId, workType?.flow?.id)
-                findWorkItemAndChidren({id: res.data}).then(res => {
-                   
+                findWorkItemAndChidren({ id: res.data }).then(res => {
+
                     if (res.code === 0) {
-                        if(path === "/:id/sprint/:sprint/plan"){
+                        if (path === "/:id/sprint/:sprint/plan") {
                             planSprintWorkList.unshift(res.data)
                             setPlanSprintWorkList(planSprintWorkList)
-                        }else if(path === "/:id/version/:version/plan"){
+                        } else if (path === "/:id/version/:version/plan") {
                             planVersionWorkList.unshift(res.data)
                             setPlanVersionWorkList(planVersionWorkList)
-                        }else {
+                        } else {
                             const list = changeWorkItemParent(workList, workId, res.data)
                             setWorkList([...list])
                         }
-                        
+
                     }
                 })
             }
@@ -206,15 +206,15 @@ const WorkChild = (props) => {
             dataIndex: "title",
             key: "title",
             ellipsis: true,
-            render: (text, record) =><div className="work-title" onClick={() => goWorkItem(record)}>
-                    <ImgComponent
-                                alt=""
-                                className="svg-icon"
-                                src = {record.workTypeSys?.iconUrl}
+            render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record)}>
+                <ImgComponent
+                    alt=""
+                    className="svg-icon"
+                    src={record.workTypeSys?.iconUrl}
 
-                            />
-                    <div className="work-name">{text}</div>
-                </div>
+                />
+                <div className="work-name">{text}</div>
+            </div>
         },
         {
             title: "事件类型",
@@ -253,14 +253,14 @@ const WorkChild = (props) => {
     return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
-                <div className="child-top-title">{type}({childWorkList?.length})</div>
+                <div className="child-top-title">共{childWorkList?.length}条</div>
                 {
                     !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">
-                        <Button onClick={() => {showAddChild(true);showSelectChild(false)} }>
+                        <Button onClick={() => { showAddChild(true); showSelectChild(false) }}>
                             添加{type}
                         </Button>
-                        <Button onClick={() => {showAddChild(false);showSelectChild(true)}}>
+                        <Button onClick={() => { showAddChild(false); showSelectChild(true) }}>
                             关联{type}
                         </Button>
                     </div>
@@ -275,22 +275,22 @@ const WorkChild = (props) => {
                         selectIds={selectIds}
                         selectChild={selectChild}
                         showSelectChild={showSelectChild}
-                        getWorkChildList = {getWorkChildList}
-                        setChildWorkList = {setChildWorkList}
-                        treePath = {treePath}
-                        demandId = {demandId}
-                        stageId = {workInfo.stage?.id}
+                        getWorkChildList={getWorkChildList}
+                        setChildWorkList={setChildWorkList}
+                        treePath={treePath}
+                        demandId={demandId}
+                        stageId={workInfo.stage?.id}
                     />
                 }
                 {
-                    addChild &&  <div className="child-create-input">
-                        <Input 
-                            placeholder="输入事项名称" 
-                            onChange={(value) => setWorkItemTitle(value.target.value)} 
+                    addChild && <div className="child-create-input">
+                        <Input
+                            placeholder="输入事项名称"
+                            onChange={(value) => setWorkItemTitle(value.target.value)}
                             onKeyDown={(event) => updateNameByKey(event)}
                         />
                         <div className="child-create-submit">
-                            <div className="create-submit" onClick={() =>  createChildWorkItem()}>
+                            <div className="create-submit" onClick={() => createChildWorkItem()}>
                                 确定
                             </div>
                             <div className="create-cancel" onClick={() => showAddChild(false)}>
@@ -299,18 +299,23 @@ const WorkChild = (props) => {
                         </div>
                     </div>
                 }
-                <Table
-                    columns={columns}
-                    dataSource={childWorkList}
-                    rowKey={record => record.id}
-                    pagination={false}
-                    showHeader={false}
-                    scroll={{x: "100%"}}
-                />
+                {
+                    childWorkList?.length > 0 ? <Table
+                        columns={columns}
+                        dataSource={childWorkList}
+                        rowKey={record => record.id}
+                        pagination={false}
+                        showHeader={false}
+                        scroll={{ x: "100%" }}
+                    />
+                        :
+                        <Empty description={`暂无${type}`} />
+                }
+
             </div>
         </div>
     </Provider>
-        
+
     )
 }
 export default inject("workStore")(observer(WorkChild));

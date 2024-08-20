@@ -84,7 +84,7 @@ const WorkLog = (props) => {
             <div className="work-log" ref={workLog}>
                
                 <div className="worklog-top" style={{ width: "100%", textAlign: "right" }}>
-                    <div className="worklog-top-title">工时({workLogList.length})</div>
+                    <div className="worklog-top-title">共{workLogList.length}条</div>
                     <Button onClick={showModal} type={"primary"}>
                         添加工时
                     </Button>

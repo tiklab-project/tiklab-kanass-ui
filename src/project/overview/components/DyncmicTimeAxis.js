@@ -11,19 +11,19 @@ const DyncmicTimeAxis = (props) => {
         <div className="dyncmic-timeaxis-content">
             {
                 logList.map((item, index) => {
-                    return <div key={item.date} className="dyncmic-timeaxis-box">
+                    return <div key={item.time} className="dyncmic-timeaxis-box">
                         <div className="dyncmic-timeaxis-date">
                             <div className="dyncmic-timeaxis-date-content">
-                                {item.date}
+                                {item.time}
                             </div>
                         </div>
                         {
-                            item.children.map((dyncmicItem, dyncmicIndex) => {
+                            item.loggingList.map((dyncmicItem, dyncmicIndex) => {
                                 return <div
-                                    className={`dyncmic-timeaxis-item ${index === logList.length - 1 && dyncmicIndex === item.children.length - 1 ? "" : "dyncmic-showtimeaxis-item"}`}
+                                    className={`dyncmic-timeaxis-item ${index === logList.length - 1 && dyncmicIndex === item.loggingList.length - 1 ? "" : "dyncmic-showtimeaxis-item"}`}
                                     key = {dyncmicItem.id}
                                 >
-                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
+                                    <div className="dyncmic-timeaxis-item-time">{dyncmicItem?.createTime.slice(10, 16)}</div>
                                     
                                     <div className="dyncmic-timeaxis-item-name">
                                         <div className="dynamic-user-icon">{dyncmicItem.user.nickname?.charAt(0)}</div>

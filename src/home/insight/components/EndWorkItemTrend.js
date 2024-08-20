@@ -10,7 +10,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, DatePicker, Empty } from 'antd';
-import * as echarts from 'echarts';
+import echarts from "../../../common/echarts/echarts"
 import "./EndWorkItemTrend.scss";
 import moment from "moment";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";

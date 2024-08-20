@@ -154,7 +154,7 @@ const WorkComment = (props) => {
                 {
                     totalRecord && totalRecord > 0 ?
                         <Fragment>
-                            <div className="title">评论({totalRecord})</div>
+                            <div className="title">共{totalRecord}条</div>
                             <div className="work-comment-list">
                                 {
                                     commentList && commentList.length > 0 && commentList.map(item => {

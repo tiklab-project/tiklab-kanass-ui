@@ -11,9 +11,21 @@ import {Service} from "../../common/utils/requset";
 export class WorkDynamicStore {
     @observable dynamicList = [];
     @observable logList = [];
+    @observable logTimeList = [];
     @observable opLogCondition = {
         pageParam: {
             pageSize: 20,
+            currentPage: 1,
+            totalPage: 1,
+            total: 1
+        },
+        bgroup: "kanass",
+        data: {}
+    }
+
+    @observable opLogTimeCondition = {
+        pageParam: {
+            pageSize: 10,
             currentPage: 1,
             totalPage: 1,
             total: 1
@@ -59,6 +71,18 @@ export class WorkDynamicStore {
         }
         return data;
     }
+
+    @action
+    findLogPageByTime = async (value) => {
+        Object.assign(this.opLogTimeCondition, value)
+        const data = await Service("/oplog/findLogPageByTime", this.opLogTimeCondition);
+        if (data.code === 0) {
+            this.logTimeList = data.data.dataList;
+            this.opLogTimeCondition.pageParam.total = data.data.totalRecord;
+            this.opLogTimeCondition.pageParam.totalPage = data.data.totalPage;
+        }
+    }
 }
+
 
 export default new WorkDynamicStore();

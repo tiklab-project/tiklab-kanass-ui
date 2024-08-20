@@ -23,7 +23,7 @@ import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const SprintSurvey = (props) => {
     const { findSprint, findSprintBurnDowmChartPage, opLogList, 
-        findLogpage, logList, todoTaskList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
+        findLogPageByTime, logList, todoTaskList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -77,7 +77,7 @@ const SprintSurvey = (props) => {
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent * 100 ? percent.toFixed(2) * 100 : 0)
         })
-        findLogpage({data: { sprintId: sprintId }})
+        findLogPageByTime({data: { sprintId: sprintId }})
 
         findtodopage({ userId: masterId, sprintId: sprintId, status: 1, pageSize: 10 })
 

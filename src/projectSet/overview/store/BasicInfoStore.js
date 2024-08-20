@@ -78,6 +78,7 @@ export class BasicInfoStore {
         this.opLogCondition = extendObservable(this.opLogCondition, { ...value })
     }
 
+
     @action
     findProjectSetLogpage = async (value) => {
         const project = await Service("/projectSet/findProjectList", value);
@@ -91,10 +92,23 @@ export class BasicInfoStore {
                     this.setOpLogCondition(params);
 
                     try {
-                        const data = await Service("/oplog/findlogpage", this.opLogCondition);
-                        if (data.code === 0) {
-                            dataList.push(...data.data.dataList);
+                        const data = await Service("/oplog/findLogPageByTime", this.opLogCondition);
+                        if (data.code === 0 && data.data.dataList.length > 0) {
+                            if(dataList.length === 0){
+                                dataList.push(...data.data.dataList);
+                            }else {
+                                data.data.dataList.forEach(item => {
+                                    const existingDateItem = dataList.find(dateItem => dateItem.time === item.time);
+                                    if(existingDateItem){
+                                        existingDateItem.loggingList.push(...item.loggingList);
+                                        existingDateItem.loggingList.sort((a, b) => a.createTime - b.createTime);
+                                    }
+                                    
+                                })
+                               
+                            }
                         }
+                        dataList.sort((a, b) => a.time - b.time);
                     } catch (error) {
                         console.error(`Error fetching logs for project ${list[i].id}:`, error);
                     }
@@ -103,30 +117,14 @@ export class BasicInfoStore {
             };
 
             const dataList = await getAllLogList(list, value);
-            this.logList = [];
+            this.logList = dataList;
 
-            // Sort the dataList after fetching all log data
-            dataList.sort((a, b) => a.createTime - b.createTime);
-
-            // Process the sorted dataList
-            if (dataList.length > 0) {
-                dataList.forEach(item => {
-                    const date = item.createTime.slice(0, 10);
-                    const existingDateItem = this.logList.find(dateItem => dateItem.date === date);
-                    if (existingDateItem) {
-                        existingDateItem.children.push(item);
-                    } else {
-                        this.logList.push({
-                            date: date,
-                            children: [item]
-                        });
-                    }
-                });
-            }
+           
         }
         console.log(this.logList)
     }
-
+    
+   
     
     @action
     findtodopage = async(value)=> {

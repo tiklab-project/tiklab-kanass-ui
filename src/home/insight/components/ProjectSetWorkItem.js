@@ -11,7 +11,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Select, Button, Empty } from 'antd';
 import "./ProjectSetWorkItem.scss";
-import * as echarts from 'echarts';
+import echarts from "../../../common/echarts/echarts"
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 

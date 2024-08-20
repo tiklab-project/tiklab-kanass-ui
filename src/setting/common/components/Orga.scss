@@ -14,7 +14,7 @@
 
     .orga-aside {
         height: 100%;
-        background-color: var(--thoughtware-gray-600);
+        background-color: #f0f3fa;
         overflow: auto;
         .orga-aside-name {
             font-weight: 600;
@@ -34,7 +34,7 @@
             height: 40px;
             line-height: 40px;
             padding: 0 20px;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #d7d7d7;
             gap: 5px;
             cursor: pointer;
         }

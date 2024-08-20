@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Row, Col } from 'antd';
+import { Input, Table, Row, Col, Empty } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
@@ -122,7 +122,7 @@ const WorkRelation = (props) => {
     return (<Provider {...store}>
         <div className="work-relation">
             <div className="relation-top">
-                <div className="relation-top-title">关联事项({selectWorkRelationList.length})</div>
+                <div className="relation-top-title">共{selectWorkRelationList.length}条</div>
                 {
                     !addRelation &&
                     <Button onClick={() => showAddRelation(true)}>
@@ -142,14 +142,19 @@ const WorkRelation = (props) => {
                         showAddRelation={showAddRelation}
                     />
                 }
-                <Table
-                    columns={columns}
-                    dataSource={selectWorkRelationList}
-                    rowKey={record => record.id}
-                    pagination={false}
-                    showHeader={false}
-                    scroll={{x: "100%"}}
-                />
+                {
+                    selectWorkRelationList?.length > 0 ? <Table
+                        columns={columns}
+                        dataSource={selectWorkRelationList}
+                        rowKey={record => record.id}
+                        pagination={false}
+                        showHeader={false}
+                        scroll={{ x: "100%" }}
+                    />
+                        :
+                        <Empty description="暂无关联事项" />
+                }
+
             </div>
         </div>
     </Provider>

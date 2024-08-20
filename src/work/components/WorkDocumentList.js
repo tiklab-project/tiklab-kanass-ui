@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-10-09 15:25:16
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Table } from 'antd';
+import { Empty, Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkDocumentList.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
@@ -62,20 +62,20 @@ const WorkDocumentList = (props) => {
             render: (text, record) => (
                 <div className="document-title">
 
-                {
-                    record.documentType !== "markdown" && <svg className="menu-icon" aria-hidden="true">
-                        <use xlinkHref="#icon-file"></use>
-                    </svg>
-                }
-                {
-                    record.documentType === "markdown" && <svg className="menu-icon" aria-hidden="true">
-                        <use xlinkHref="#icon-minmap"></use>
-                    </svg>
-                }
-                <span onClick={() => goWikiDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
-            </div>
-                
-                
+                    {
+                        record.documentType !== "markdown" && <svg className="menu-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-file"></use>
+                        </svg>
+                    }
+                    {
+                        record.documentType === "markdown" && <svg className="menu-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-minmap"></use>
+                        </svg>
+                    }
+                    <span onClick={() => goWikiDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                </div>
+
+
             ),
         },
         {
@@ -97,16 +97,16 @@ const WorkDocumentList = (props) => {
             width: "15%",
             render: (text, record) => (
                 // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
-                <DeleteModal deleteFunction = {delectRepository} id = {record.id} getPopupContainer = {workDocument.current}/>
+                <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workDocument.current} />
             ),
         }
     ];
 
     const workDocument = useRef(null)
     return (<Provider {...store}>
-        <div className="work-repository" ref = {workDocument}>
+        <div className="work-repository" ref={workDocument}>
             <div className="repository-top">
-                <div className="repository-top-title">关联文档({workDocumentList.length})</div>
+                <div className="repository-top-title">共{workDocumentList.length}个</div>
                 <div className="child-top-botton">
                     <Button onClick={() => { showSelectDocument(true) }}>
                         添加文档
@@ -126,17 +126,23 @@ const WorkDocumentList = (props) => {
                         projectId={projectId}
                         showSelectDocument={showSelectDocument}
                         selectDocument={selectDocument}
-                        getSelectUserList = {getSelectUserList}
+                        getSelectUserList={getSelectUserList}
                     />
                 }
-                <Table
-                    className="repository-table"
-                    columns={columns}
-                    dataSource={workDocumentList}
-                    rowKey={record => record.id}
-                    pagination={false}
-                    scroll={{x: "100%"}}
-                />
+                {
+                    workDocumentList?.length > 0 ?
+                        <Table
+                            className="repository-table"
+                            columns={columns}
+                            dataSource={workDocumentList}
+                            rowKey={record => record.id}
+                            pagination={false}
+                            scroll={{ x: "100%" }}
+                        />
+                        :
+                        <Empty description="暂无关联文档" />
+                }
+
             </div>
 
         </div>

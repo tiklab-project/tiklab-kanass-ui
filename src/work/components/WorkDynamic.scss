@@ -1,12 +1,32 @@
 .work-dynamic {
     background: #fff;
     border-radius: 4px;
-    .workitem-dynamic-title {
-        height: 40px;
-        line-height: 40px;
-        font-size: 13px;
-        font-weight: var(--thoughtware-font-weight-bold);
+    .work-dynamic-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        line-height: 32px;
+        .work-dynamic-title {
+            font-size: 14px;
+        }
+        .ant-picker {
+            background-color: var(--thoughtware-gray);
+            border: 0;
+            
+        }
+        .ant-picker:hover {
+            background-color: var(--thoughtware-gray-400);
+            border: 0;
+        }
+        .ant-picker-clear {
+            background-color: var(--thoughtware-gray-400);
+        }
+        .ant-picker-focused {
+            box-shadow: none;
+        }
     }
+    
     .todo-item {
         margin-bottom: 10px;
     }

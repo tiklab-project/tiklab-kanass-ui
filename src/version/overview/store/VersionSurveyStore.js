@@ -178,5 +178,14 @@ class VersionSurveyStore {
         }
         return data;
     }
+
+    @action
+    findLogPageByTime = async (value) => {
+        Object.assign(this.opLogCondition, value)
+        const data = await Service("/oplog/findLogPageByTime", this.opLogCondition);
+        if (data.code === 0) {
+            this.logList = data.data.dataList;
+        }
+    }
 }
 export default new VersionSurveyStore();

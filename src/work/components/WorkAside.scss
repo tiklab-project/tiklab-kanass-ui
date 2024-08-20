@@ -1,7 +1,7 @@
 .work-aside {
     width: 300px;
     border-right: 1px solid var(--thoughtware-gray-200);
-    background-color: var(--thoughtware-gray-600);
+    background-color: var(--thoughtware-gray-610);
     ul {
         padding: 0
     }
@@ -13,6 +13,8 @@
         overflow: auto;
         // overflow-y: auto;
         width: 100%;
+        background-color: #fff;
+        padding-top: 10px;
         .worklist-head-second {
             padding: 0 10px;
             display: flex;
@@ -142,12 +144,12 @@
         }
 
         .work-aside-item:hover {
-            background-color: var(--thoughtware-gray-410);
+            background-color: var(--thoughtware-gray-610);
             color: var(--thoughtware-blue);
         }
 
         .work-aside-select {
-            background-color: var(--thoughtware-gray-410);
+            background-color: var(--thoughtware-gray-610);
         }
 
         .work-aside-hidden {

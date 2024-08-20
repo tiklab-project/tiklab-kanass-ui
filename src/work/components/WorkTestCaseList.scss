@@ -1,21 +1,20 @@
-.work-repository {
-    .repository-top {
+.work-testcase {
+    .testcase-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
     }
 
-    .repository-top-title {
-        font-size: 16px;
-        font-weight: var(--thoughtware-font-weight-bold);
+    .testcase-top-title {
+        font-size: 14px;
     }
 
     .ant-table table {
         border-bottom: 0;
     }
 
-    .repository-table {
+    .testcase-table {
         background: #fff;
         padding: 15px;
         border-radius: 4px;

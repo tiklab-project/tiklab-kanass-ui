@@ -20,7 +20,7 @@ import PaginationCommon from "../../../common/page/Page";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const DynamicList = (props) => {
     const { homeStore } = props;
-    const { findLogpage, opLogCondition, logList, opLogTotal, setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
+    const { findLogPageByTime, opLogCondition, logList, opLogTotal, setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
     console.log(opLogTotal)
     const userId = getUser().userId;
     const [projectList, setProjectList] = useState()
@@ -42,7 +42,7 @@ const DynamicList = (props) => {
         if (props.route.path === "/project/:id/dynamic") {
             setFirstText("项目概况")
             const projectId = props.match.params.id;
-            findLogpage({ ...params, data: { projectId: projectId } })
+            findLogPageByTime({ ...params, data: { projectId: projectId } })
 
         }
 
@@ -54,11 +54,11 @@ const DynamicList = (props) => {
         }
 
         if (props.route.path === "/:id/sprint/:sprint/dynamic") {
-            findLogpage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
+            findLogPageByTime({ ...params, data: { sprintId: sprintId, projectId: projectId } })
             setFirstText("迭代概况")
         }
         if (props.route.path === "/:id/version/:version/dynamic") {
-            findLogpage({ ...params, data: { versionId: versionId, projectId: projectId } })
+            findLogPageByTime({ ...params, data: { versionId: versionId, projectId: projectId } })
             setFirstText("版本概况")
         }
         return;
@@ -78,7 +78,7 @@ const DynamicList = (props) => {
 
     }
     const selectProject = (option) => {
-        findLogpage({ data: { projectId: option } })
+        findLogPageByTime({ data: { projectId: option } })
         // getModuleList(option)
         // getsprintlist(option)
         // getSelectUserList(option);
@@ -91,7 +91,7 @@ const DynamicList = (props) => {
             }
 
         }
-        findLogpage(params)
+        findLogPageByTime(params)
     };
 
     return (<Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
