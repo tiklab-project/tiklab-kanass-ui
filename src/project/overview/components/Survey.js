@@ -13,7 +13,7 @@ import { getUser } from 'thoughtware-core-ui';
 import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"
-import { Row, Col, Empty, Progress } from "antd";
+import { Row, Col, Empty, Progress, Spin } from "antd";
 import ProjectSurveyStore from "../store/ProjectSurveyStore";
 import Workstore from "../../../work/store/WorkStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
@@ -37,6 +37,7 @@ const Survey = (props) => {
     const [project, setProject] = useState();
     // 待办列表
     const [todoList, setTodoList] = useState([]);
+    const [loading, setLoading] = useState(true)
     // 日志列表
     // const [logList, setLogList] = useState([]);
     // 里程碑列表
@@ -59,13 +60,15 @@ const Survey = (props) => {
         })
 
         // 获取日志列表
-        findLogPageByTime({data:{projectId: projectId}, pageParam: {currentPage: 1} })
+        findLogPageByTime({ data: { projectId: projectId }, pageParam: { currentPage: 1 } })
 
         // 获取待办列表
+        setLoading(true)
         findtodopage({ projectId: projectId, currentPage: 1, userId: userId }).then(res => {
             if (res.code === 0) {
                 setTodoList(res.data.dataList)
             }
+            setLoading(false)
         })
 
         // 获取里程碑列表
@@ -316,9 +319,18 @@ const Survey = (props) => {
                                 </svg>
                             </div>
                         </div>
-                        {
-                            logList && logList.length > 0 ? <DyncmicTimeAxis logList={logList} /> : <ProjectEmpty description="暂时没有动态~" />
-                        }
+                        <Spin spinning={loading} tip="加载中..." >
+                            {
+                                logList && logList.length > 0 ? <DyncmicTimeAxis logList={logList} /> :
+                                    <>
+                                        {
+                                            !loading && <ProjectEmpty description="暂时没有动态~" />
+                                        }
+                                    </>
+
+                            }
+                        </Spin>
+
                     </div>
 
                     {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}

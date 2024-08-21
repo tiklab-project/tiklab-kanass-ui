@@ -8,6 +8,7 @@ import UserIcon from "../../../common/UserIcon/UserIcon"
 import "./FirstMenuButtom.scss"
 import { getUser } from "thoughtware-core-ui";
 import Theme from "./Theme";
+import SetingMenu from "./SetingMenu";
 const FirstMenuButtom = (props) => {
     const { isShowText, SetIsShowText, theme, changeTheme } = props;
     const nickname = getUser().nickname;
@@ -18,7 +19,7 @@ const FirstMenuButtom = (props) => {
                     {
                         isShowText ?
                             <div className="first-menu-bottom-text ">
-                                <Search isShowText={isShowText} theme={theme} />
+                                <SetingMenu isShowText={isShowText} theme={theme} />
                                 <MessageList isShowText={isShowText} theme={theme} />
                                 <HelpLinkCloud
                                     bgroup={"kanass"}
@@ -59,7 +60,7 @@ const FirstMenuButtom = (props) => {
 
                             :
                             <div className="first-menu-bottom-icon">
-                                <Search isShowText={isShowText} theme={theme} />
+                                <SetingMenu isShowText={isShowText} theme={theme} />
                                 <MessageList isShowText={isShowText} theme={theme} />
                                 <HelpLinkCloud
                                     bgroup={"kanass"}
@@ -100,7 +101,7 @@ const FirstMenuButtom = (props) => {
                     {
                         isShowText ?
                             <div className="first-menu-bottom-text ">
-                                <Search isShowText={isShowText} theme={theme} />
+                                <SetingMenu isShowText={isShowText} theme={theme} />
                                 <MessageList isShowText={isShowText} theme={theme} />
                                 <HelpLink
                                     bgroup={"kanass"}
@@ -141,7 +142,7 @@ const FirstMenuButtom = (props) => {
 
                             :
                             <div className="first-menu-bottom-icon">
-                                <Search isShowText={isShowText} theme={theme} />
+                                <SetingMenu isShowText={isShowText} theme={theme} />
                                 <MessageList isShowText={isShowText} theme={theme} />
                                 <HelpLink
                                     bgroup={"kanass"}

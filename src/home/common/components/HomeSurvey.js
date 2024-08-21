@@ -25,9 +25,8 @@ const { TabPane } = Tabs;
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
-        findTodopage, setActiveKey, findRecentPage, updateRecent, todoTaskList
+        findTodopage, setActiveKey, findRecentPage
     } = homeStore;
-    const { setWorkId, searchWorkById } = WorkStore;
     // 登录者id
     const userId = getUser().userId;
     //最近查看的项目列表
@@ -115,44 +114,50 @@ const HomeSurvey = (props) => {
                     <div className="name">常用项目</div>
                 </div>
 
-                <Spin spinning={recentLoading} delay={500} >
+                <Spin spinning={recentLoading} tip = "加载中..." >
 
                     <div className="home-project">
                         {
-                            recentProjectList && recentProjectList.length > 0 ? 
-                            recentProjectList.map((item, index) => {
-                                return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
-                                    <div className="item-title">
-                                        <ImgComponent
-                                            src={item.iconUrl}
-                                            alt=""
-                                            className="icon-32"
-                                        />
-                                        <span className="item-name">{item.projectName}</span>
-                                    </div>
-                                    <div className="item-work">
-                                        <div className="process-work">
-                                            <span className="work-label" style={{ color: "#999" }}>
-                                                待办事项
-                                            </span>
-                                            <span>
-                                                {setWorkNum(item.processWorkItemNumber)}
-                                            </span>
+                            recentProjectList && recentProjectList.length > 0 ?
+                                recentProjectList.map((item, index) => {
+                                    return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
+                                        <div className="item-title">
+                                            <ImgComponent
+                                                src={item.iconUrl}
+                                                alt=""
+                                                className="icon-32"
+                                            />
+                                            <span className="item-name">{item.projectName}</span>
                                         </div>
-                                        <div className="end-work">
-                                            <span className="work-label" style={{ color: "#999" }}>
-                                                已完成事项
-                                            </span>
-                                            <span>
-                                                {setWorkNum(item.endWorkItemNumber)}
-                                            </span>
-                                        </div>
+                                        <div className="item-work">
+                                            <div className="process-work">
+                                                <span className="work-label" style={{ color: "#999" }}>
+                                                    待办事项
+                                                </span>
+                                                <span>
+                                                    {setWorkNum(item.processWorkItemNumber)}
+                                                </span>
+                                            </div>
+                                            <div className="end-work">
+                                                <span className="work-label" style={{ color: "#999" }}>
+                                                    已完成事项
+                                                </span>
+                                                <span>
+                                                    {setWorkNum(item.endWorkItemNumber)}
+                                                </span>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                </div>
-                            })
+                                })
                                 :
-                                <ProjectEmpty description="暂时没有项目~" />
+                                <>
+                                    {
+                                        !recentLoading && <ProjectEmpty description="暂时没有项目~" />
+                                    }
+                                </>
+
+
                         }
                     </div>
                 </Spin>

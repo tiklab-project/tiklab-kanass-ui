@@ -47,6 +47,7 @@ const WorkTable = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
     const [projectColums, setProjectColums] = useState([])
+    const [loading, setLoading] = useState(true)
     const path = props.match.path;
     const store = {
         workStore: WorkStore,
@@ -68,7 +69,7 @@ const WorkTable = (props) => {
         // getHaveChildren(record.id)
     }
 
-    useEffect(() => {
+    useEffect(async() => {
         setWorkShowType("table")
         // setQuickFilterValue({
         //     value: "all",
@@ -81,7 +82,8 @@ const WorkTable = (props) => {
             stageId: stageId,
             epicView: null
         }
-        finWorkList(path, WorkStore, params);
+        await finWorkList(path, WorkStore, params);
+        setLoading(false)
         return;
     }, [projectId, sprintId, versionId, stageId])
 
@@ -245,11 +247,16 @@ const WorkTable = (props) => {
                 currentPage: page,
             }
         }
+        setLoading(true)
         if (viewType === "tree") {
-            getWorkConditionPageTree(values)
+            getWorkConditionPageTree(values).then(res=> {
+                setLoading(false)
+            })
         }
         if (viewType === "tile") {
-            getWorkConditionPage(values)
+            getWorkConditionPage(values).then(res=> {
+                setLoading(false)
+            })
         }
     }
 
@@ -303,7 +310,7 @@ const WorkTable = (props) => {
                         <WorkTableHead />
                         <WorkTableFilter />
                         <div className="work-table-content" ref={workTable}>
-                            <Spin spinning={tableLoading} delay={500} >
+                            <Spin spinning={tableLoading} tip="加载中">
 
                                 <Table
                                     scroll = {{
@@ -313,6 +320,7 @@ const WorkTable = (props) => {
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
+                                    loading = {loading}
                                     rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
                                     pagination={{
                                         total: total,

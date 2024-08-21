@@ -44,6 +44,9 @@
         overflow: auto;
     }
     .sort-box {
+        .search-spin {
+            min-height: 100px;
+        }
         .sort-title {
             color: #202d407a;
             font-size: 12px;

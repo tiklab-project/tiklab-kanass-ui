@@ -6,8 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-11 13:36:22
  */
-import React, { Fragment, useEffect } from 'react';
-import { Layout, Row, Col } from 'antd';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Layout, Row, Col, Spin } from 'antd';
 import ProjectList from "./ProjectList";
 import ProjectGide from "./ProjectGide"
 import { observer, Provider } from "mobx-react";
@@ -16,29 +16,40 @@ const Project = (props) => {
     const store = {
         projectStore: ProjectStore
     }
-
+    const [loading, setLoading] = useState(true)
     const orderParams = [{
         name: "startTime",
         orderType: "desc"
     }]
     const { findMyAllProjectList, allProlist } = ProjectStore;
     useEffect(() => {
-        findMyAllProjectList({orderParams: orderParams});
+        setLoading(true)
+        findMyAllProjectList({ orderParams: orderParams }).then(res => {
+            setLoading(false)
+        })
         return;
     }, [])
     return (
         <Provider {...store}>
             <div className="project">
-                <Layout className="project-content">
-                    <Row>
-                        <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                            {
-                                allProlist && allProlist.length > 0 ?
-                                    <ProjectList /> : <ProjectGide />
-                            }
-                        </Col>
-                    </Row>
-                </Layout>
+                <Spin spinning={loading} tip="加载中..." >
+                    <Layout className="project-content">
+                        <Row>
+                            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                                {
+                                    allProlist && allProlist.length > 0 ?
+                                        <ProjectList /> :
+                                        <>
+                                            {
+                                                !loading && <ProjectGide />
+                                            }
+                                        </>
+                                }
+                            </Col>
+                        </Row>
+                    </Layout>
+                </Spin>
+
             </div>
         </Provider>
 

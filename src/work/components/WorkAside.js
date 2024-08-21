@@ -3,7 +3,7 @@ import { observer, inject } from "mobx-react";
 import WorkListHead from "./WorkListHead";
 import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { setWorkDeatilInList } from './WorkSearch';
@@ -281,14 +281,16 @@ const WorkAside = (props) => {
                     <WorkFilterType />
                     <WorkFilterQuick />
                 </div>
-                <Spin spinning={tableLoading} delay={500}>
+                <Spin spinning={tableLoading} tip="加载中">
                     <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >
                             <div className="work-aside-ul">
                                 {
-                                    workList && workList.map((item, index) => {
+                                    workList && workList.length > 0 ? workList.map((item, index) => {
                                         return TreeDom(item, index, 0)
                                     })
+                                    :
+                                    <Empty description = "暂无事项"/>
                                 }
                             </div>
                         </div>

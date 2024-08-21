@@ -11,6 +11,7 @@
 .work-bodar-content {
     background: var(--thoughtware-gray-600);
     overflow: auto;
+   
     .work-bodar-flex {
         width: 100%;
         height: 100%;
@@ -34,7 +35,7 @@
                 border: 2px var(--thoughtware-blue) dashed;
             }
             .work-bodar-box {
-                min-height: 100px;
+                min-height: 210px;
                 border-radius: 4px;
                 // width: fit-content;
                 // height: fit-content;
@@ -117,4 +118,11 @@
             padding: 20px;
         }
     }
+}
+.work-bodar-content-spin {
+    display: flex;
+    width: 100%;
+    min-height: 150px;
+    align-items: center;
+    justify-content: space-around;
 }

@@ -10,7 +10,7 @@
 import React, { Fragment, useEffect, useRef, useState, useCallback } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss";
-import { Empty, Modal } from "antd";
+import { Empty, Modal, Spin } from "antd";
 import { observer, inject } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import SearchStore from "../store/Search";
@@ -33,7 +33,6 @@ const Search = (props) => {
     const [isSeach, setIsSeach] = useState(false);
 
     const [keyboardIndex, setKeyboardIndex] = useState({ modal: "project", index: 0 });
-    const [keyboards, setKeyboards] = useState();
     const [searchModal, setSearchModal] = useState(false);
     // 登录者id
     // const userId = getUser().userId;
@@ -42,6 +41,8 @@ const Search = (props) => {
     const searchBox = useRef();
     const inputRef = useRef();
     const userId = getUser().userId;
+    const [recentWorkLoading, setRecentWorkLoading] = useState(true)
+    const [recentProjectLoading, setRecentProjectLoading] = useState(true)
 
     useEffect(() => {
         function keyBordar(e) {
@@ -115,6 +116,8 @@ const Search = (props) => {
         let projectListLength = 0;
         setProjectList([])
         setWorkItemList([])
+        setRecentWorkLoading(true)
+        setRecentProjectLoading(true)
         findRecentList({ model: "project", masterId: userId }).then(res => {
             if (res.code === 0) {
                 projectListLength = res.data.length
@@ -126,6 +129,7 @@ const Search = (props) => {
                 if (projectListLength > 0) {
                     setKeyboardIndex({ modal: "project", index: 0 })
                 }
+                setRecentProjectLoading(false)
             }
         })
         findRecentList({ model: "workItem", masterId: userId }).then(res => {
@@ -137,6 +141,7 @@ const Search = (props) => {
             // if (projectListLength <= 0 && res.data.length > 0) {
             //     setKeyboardIndex({ modal: "workItem", index: 0 })
             // }
+            setRecentWorkLoading(false)
         })
 
 
@@ -258,17 +263,18 @@ const Search = (props) => {
             {
                 isShowText ?
                     <div className="search-text first-menu-text-item" onClick={() => setSearchModal(true)}>
-                        <svg className="icon-15" aria-hidden="true">
+                        <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>
                         <div>搜索</div>
                     </div>
 
                     :
-                    <div className="first-menu-link-item" data-title-right="搜索" onClick={() => setSearchModal(true)}>
-                        <svg className="icon-15" aria-hidden="true">
+                    <div className="first-menu-link-item" onClick={() => setSearchModal(true)}>
+                        <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>
+                        <div>搜索</div>
                     </div>
 
             }
@@ -365,59 +371,76 @@ const Search = (props) => {
                                 <div className="search-result-box">
                                     <div className="sort-box">
                                         <div className="sort-title">最近查看项目</div>
-                                        {
-                                            projectList.length > 0 ?
-                                                <>
-                                                    {
-                                                        projectList.map((item, index) => {
-                                                            return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                                <div className="item-one" onClick={() => toProject(item.object)}>
+                                        <Spin wrapperClassName = "search-spin" spinning={recentProjectLoading} tip="加载中..." >
+                                            {
+                                                projectList.length > 0 ?
+                                                    <>
+                                                        {
+                                                            projectList.map((item, index) => {
+                                                                return <div className={`item-box ${(keyboardIndex.modal === "project" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
+                                                                    <div className="item-one" onClick={() => toProject(item.object)}>
 
+                                                                        <ImgComponent
+                                                                            src={item.object?.iconUrl}
+                                                                            alt=""
+                                                                        />
+                                                                        <span>{item.object?.projectName}</span>
+                                                                        <div className="item-desc">
+                                                                            {item.recentTime}
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            })
+                                                        }
+                                                    </>
+
+                                                    :
+                                                    <>
+                                                        {
+                                                            !recentProjectLoading && <ProjectEmpty description="暂时没有数据~" />
+                                                        }
+                                                    </>
+
+                                            }
+                                        </Spin>
+
+                                    </div>
+                                    <div className="sort-box">
+                                        <div className="sort-title">最近查看事项</div>
+                                        <Spin wrapperClassName = "search-spin" spinning={recentWorkLoading} tip="加载中..." >
+
+                                            {
+                                                workItemList.length > 0 ? <>
+                                                    {
+                                                        workItemList.map((item, index) => {
+                                                            return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
+                                                                <div className="item-one" onClick={() => toWorkItem(item.object)}>
                                                                     <ImgComponent
-                                                                        src={item.object?.iconUrl}
+                                                                        src={item.object?.workTypeSys.iconUrl}
                                                                         alt=""
                                                                     />
-                                                                    <span>{item.object?.projectName}</span>
+                                                                    <span>{item.object?.title}</span>
                                                                     <div className="item-desc">
-                                                                        {item.recentTime}
+                                                                        {item.object?.project?.projectName}
                                                                     </div>
                                                                 </div>
-
 
                                                             </div>
                                                         })
                                                     }
                                                 </>
+                                                    :
+                                                    <>
+                                                        {
+                                                            !recentWorkLoading && <ProjectEmpty description="暂时没有数据~" />
+                                                        }
+                                                    </>
 
-                                                :
-                                                <ProjectEmpty description="暂时没有数据~" />
-                                        }
-                                    </div>
-                                    <div className="sort-box">
-                                        <div className="sort-title">最近查看事项</div>
-                                        {
-                                            workItemList.length > 0 ? <>
-                                                {
-                                                    workItemList.map((item, index) => {
-                                                        return <div className={`item-box ${(keyboardIndex.modal === "workItem" && keyboardIndex.index === index) ? "keyboard-select" : ""}`} key={item.id}>
-                                                            <div className="item-one" onClick={() => toWorkItem(item.object)}>
-                                                                <ImgComponent
-                                                                    src={item.object?.workTypeSys.iconUrl}
-                                                                    alt=""
-                                                                />
-                                                                <span>{item.object?.title}</span>
-                                                                <div className="item-desc">
-                                                                    {item.object?.project?.projectName}
-                                                                </div>
-                                                            </div>
+                                            }
+                                        </Spin>
 
-                                                        </div>
-                                                    })
-                                                }
-                                            </>
-                                                :
-                                                <ProjectEmpty description="暂时没有数据~" />
-                                        }
                                     </div>
                                 </div>
                         }

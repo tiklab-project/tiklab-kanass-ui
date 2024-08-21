@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import { withRouter } from "react-router";
 import Logo from "./Logo";
 import FirstMenuButtom from "./FirstMenuButtom";
+import Search from "../../search/components/Search";
 const { Sider } = Layout;
 const FirstMenu = (props) => {
     const [isShowText, setIsShowText] = useState(false)
@@ -29,9 +30,14 @@ const FirstMenu = (props) => {
          * @param {菜单信息} item 
          */
     const changeCurrentLink = item => {
-        localStorage.removeItem("sprintId")
-        props.history.push(item.to)
-        sessionStorage.setItem("menuKey", item.key)
+        if(item.key !== "search"){
+            localStorage.removeItem("sprintId")
+            props.history.push(item.to)
+            sessionStorage.setItem("menuKey", item.key)
+        }else {
+            
+        }
+        
     }
 
     const setActiveIcon = (type) => {
@@ -90,12 +96,7 @@ const FirstMenu = (props) => {
             icon: 'log-' + theme,
             actionIcon: setActiveIcon("log-")
         },
-        {
-            to: version === "cloud" ?  '/setting/log' : '/setting/version',
-            title: '设置',
-            icon: 'set-' + theme,
-            actionIcon: setActiveIcon("set-")
-        }
+
     ]
 
 
@@ -157,6 +158,7 @@ const FirstMenu = (props) => {
 
                         })
                     }
+                    <Search isShowText={isShowText} theme={theme} />
                 </div>
             )
         }

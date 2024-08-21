@@ -12,11 +12,7 @@ import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import { useTranslation } from 'react-i18next';
-import MenuUser from "../../../common/menuUser/MenuUser";
-import SetMenu from "./SetMenu";
 import ProjectChangeModal from "./ProjectChangeModal";
-import MoreMenuModel from "./MoreMenuModal";
-import Logo from '../../../home/common/components/Logo';
 import ProjectAside from '../../../common/projectAside/ProjectAside';
 const { Sider } = Layout;
 

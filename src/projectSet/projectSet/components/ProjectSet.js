@@ -6,8 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-01-15 16:19:22
  */
-import React, { Fragment, useEffect,useState } from 'react';
-import { Layout, Row, Col } from 'antd';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Layout, Row, Col, Spin } from 'antd';
 import ProjectSetContent from "./ProjectSetTable"
 import ProjectSetGide from "./ProjectSetGide"
 import "../components/ProjectSet.scss";
@@ -19,24 +19,39 @@ const ProjectSet = (props) => {
     const store = {
         projectSetStore: ProjectSetStore
     }
+    const [loading, setLoading] = useState(true)
+
     const { findAllProjectSet, allProjectSetList } = ProjectSetStore;
     //初始化获取项目列表
     useEffect(() => {
-        findAllProjectSet({})
+        setLoading(true)
+        findAllProjectSet({}).then(res => {
+            setLoading(false)
+        })
         return;
     }, [])
 
     return (<Provider {...store}>
         <div className="projectSet">
-            <Layout className="projectSet-content">
-                {
-                    allProjectSetList && allProjectSetList.length > 0 ?
-                        <ProjectSetContent />:<ProjectSetGide />
-                }
-            </Layout>
+            <Spin spinning={loading} tip="加载中..." >
+
+                <Layout className="projectSet-content">
+                    {
+                        allProjectSetList && allProjectSetList.length > 0 ?
+                            <ProjectSetContent /> :
+                            <>
+                                {
+                                    !loading && <ProjectSetGide />
+                                }
+                            </>
+
+                    }
+                </Layout>
+            </Spin>
+
         </div>
     </Provider>
-        
+
 
     )
 }

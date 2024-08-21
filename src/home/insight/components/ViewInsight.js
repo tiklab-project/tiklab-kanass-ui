@@ -12,7 +12,7 @@ import { Provider, observer } from "mobx-react";
 import "./ViewInsight.scss";
 import ReportItem from "./ReportItem"
 import { withRouter } from "react-router";
-import { Col, Empty, Row } from "antd";
+import { Col, Empty, Row, Spin } from "antd";
 import "../../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../../node_modules/react-resizable/css/styles.css"
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -30,12 +30,14 @@ const ViewInsight = (props) => {
     const [insightDetail, setInsightDetail] = useState()
     // 仪表盘报告列表
     const [reportList, setReportList] = useState()
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         /**
         * 获取仪表盘的详情
         */
         const params = new FormData();
         params.append("id", props.match.params.id)
+        setLoading(true)
         findInsight(params).then(res => {
             if (res.code === 0) {
                 if (res.data.data) {
@@ -48,7 +50,9 @@ const ViewInsight = (props) => {
 
                 }
                 setInsightDetail(res.data)
+
             }
+            setLoading(false)
         })
         return;
     }, [])
@@ -69,7 +73,8 @@ const ViewInsight = (props) => {
                             <Button onClick={() => goEditInsight()} type="primary">编辑</Button>
                         </Breadcumb>
                         <div className="view-insight-content">
-                            {
+                        <Spin spinning={loading} tip="加载中..." >
+                        {
                                 reportList && reportList.lg && reportList.lg.length > 0 ?
                                     <ResponsiveGridLayout
                                         className="view-insight-layout"
@@ -78,9 +83,6 @@ const ViewInsight = (props) => {
                                         measureBeforeMount={true}
                                         breakpoints={{ lg: 1200 }}
                                     >
-                                        {
-                                            console.log(reportList)
-                                        }
                                         {
                                             reportList && reportList.lg && reportList.lg.length > 0 && reportList.lg.map((item, index) => {
                                                 return (<div key={item.i} data-grid={item}>
@@ -101,10 +103,10 @@ const ViewInsight = (props) => {
                                     </ResponsiveGridLayout>
                                     :
                                     <Empty
-                                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
+                                        // image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                                        // imageStyle={{
+                                        //     height: 60,
+                                        // }}
                                         description={
                                             <span>
                                                 暂无报表，请编辑
@@ -118,6 +120,8 @@ const ViewInsight = (props) => {
                                         </div>
                                     </Empty>
                             }
+                        </Spin>
+                           
 
                         </div>
                     </div>

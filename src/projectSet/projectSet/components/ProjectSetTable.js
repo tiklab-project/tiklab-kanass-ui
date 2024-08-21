@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-02-10 10:35:43
  */
 import React, { useEffect, useState, Fragment } from 'react';
-import { Table, Space, Row, Col, Empty } from 'antd';
+import { Table, Space, Row, Col, Empty, Spin } from 'antd';
 import "./ProjectSet.scss";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
@@ -25,7 +25,7 @@ const ProjectSetTable = (props) => {
         findFocusProjectSetList, findJoinProjectSetList, createRecent } = projectSetStore;
 
     const [name, setName] = useState("添加项目集")
-
+    const [recentLoading, setRecentLoading] = useState(true);
     const [activeTabs, setActiveTabs] = useState("1")
     const [focusProjectSetList, setFocusProjectSetList] = useState([])
     const [recentProjectSetList, setRecentProjectSetList] = useState([])
@@ -33,9 +33,11 @@ const ProjectSetTable = (props) => {
 
     useEffect(() => {
         // findRecentProjectSetList({})
+        setRecentLoading(true)
         findRecentProjectSetList({}).then(res => {
             if (res.code === 0) {
                 setRecentProjectSetList(res.data)
+                setRecentLoading(false)
             }
         })
         getUseList()
@@ -100,7 +102,7 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "30%",
             render: (text, record) => <Space onClick={() => goProjectSetDetail(record)} className="span-botton">
-                <ColorIcon color = {record.color} name = {record.name} className = "projectSet-table-icon"/>
+                <ColorIcon color={record.color} name={record.name} className="projectSet-table-icon" />
                 {text}
             </Space>,
         },
@@ -206,42 +208,51 @@ const ProjectSetTable = (props) => {
                     <div className="projectSet-recent-box-title">
                         常用项目集
                     </div>
-                    <div className="recent-projectSet">
-                        {
-                            recentProjectSetList && recentProjectSetList.length > 0 ? recentProjectSetList.map((item, index) => {
+                    <Spin spinning={recentLoading} tip="加载中..." >
+                        <div className="recent-projectSet">
+                            {
+                                recentProjectSetList && recentProjectSetList.length > 0 ? recentProjectSetList.map((item, index) => {
 
-                                return <div className="projectSet-item" key={item.id} onClick={() => goProjectSetDetail(item)}>
-                                    <div className="item-title">
-                                        <ColorIcon color = {item.color} name = {item.name} className = "item-icon"/>
-                                        <span className="item-name">{item.name}</span>
-                                    </div>
-                                    <div className="item-info">
-                                        <div className="info-master">
-                                            <span className="info-label" style={{ color: "#999" }}>
-                                                负责人
-                                            </span>
-                                            <span className="info-value">
-                                                {item.master?.nickname}
-                                            </span>
+                                    return <div className="projectSet-item" key={item.id} onClick={() => goProjectSetDetail(item)}>
+                                        <div className="item-title">
+                                            <ColorIcon color={item.color} name={item.name} className="item-icon" />
+                                            <span className="item-name">{item.name}</span>
                                         </div>
-                                        <div className="info-project">
-                                            <span className="info-label" style={{ color: "#999" }}>
-                                                关联项目
-                                            </span>
-                                            <span className="info-value">
-                                                {item.projectNumber}
-                                            </span>
+                                        <div className="item-info">
+                                            <div className="info-master">
+                                                <span className="info-label" style={{ color: "#999" }}>
+                                                    负责人
+                                                </span>
+                                                <span className="info-value">
+                                                    {item.master?.nickname}
+                                                </span>
+                                            </div>
+                                            <div className="info-project">
+                                                <span className="info-label" style={{ color: "#999" }}>
+                                                    关联项目
+                                                </span>
+                                                <span className="info-value">
+                                                    {item.projectNumber}
+                                                </span>
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
 
 
-                            })
-                                :
-                                <ProjectEmpty description="暂时没有点击过项目集~" />
-                        }
-                    </div>
+                                })
+                                    :
+                                    <>
+                                    {
+                                        !recentLoading && <ProjectEmpty description="暂时没有点击过项目集~" />
+                                    }
+                                    </>
+                                    
+                            }
+                        </div>
+
+                    </Spin>
+
                 </div>
                 <div className="projectSet-search-tab">
                     <div className="projectSet-tabs">
@@ -271,7 +282,7 @@ const ProjectSetTable = (props) => {
                             scroll={{
                                 x: "100%"
                             }}
-                            
+
                         />
                     </div>
 

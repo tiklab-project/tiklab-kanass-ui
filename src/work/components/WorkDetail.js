@@ -49,7 +49,7 @@ const WorkDetail = (props) => {
     const [workInfo, setWorkInfo] = useState();
     const [workStatus, setWorkStatus] = useState("nostatus")
     const [isFocus, setIsFocus] = useState();
-    const [infoLoading, setInfoLoading] = useState(false)
+    const [infoLoading, setInfoLoading] = useState(true)
     const [transformList, setTransformList] = useState([])
     const [assigner, setAssigner] = useState()
     const workDetailTop = useRef();
@@ -125,6 +125,7 @@ const WorkDetail = (props) => {
         }
         if (workId === 0) {
             setWorkInfo(null)
+            setInfoLoading(false)
         }
         return
     }, [workId]);

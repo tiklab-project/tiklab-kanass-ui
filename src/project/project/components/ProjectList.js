@@ -23,7 +23,7 @@ const ProjectList = (props) => {
     const userId = getUser().userId;
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
-    const [recentLoading, setRecentLoading] = useState(false);
+    const [recentLoading, setRecentLoading] = useState(true);
     const tenant = getUser().tenant;
 
     useEffect(() => {
@@ -274,7 +274,7 @@ const ProjectList = (props) => {
                 <div className="project-recent-box-title">
                     常用项目
                 </div>
-                <Spin spinning={recentLoading} delay={500} >
+                <Spin spinning={recentLoading} tip="加载中..." >
                     <div className="home-project">
                         {
                             recentProjectList && recentProjectList.length > 0 ? recentProjectList.map((item, index) => {
@@ -312,7 +312,12 @@ const ProjectList = (props) => {
 
                             })
                                 :
-                                <ProjectEmpty description="暂时没有点击过项目~" />
+                                <>
+                                    {
+                                        !recentLoading && <ProjectEmpty description="暂时没有点击过项目~" />
+                                    }
+                                </>
+
                         }
                     </div>
                 </Spin>

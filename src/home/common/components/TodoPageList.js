@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Empty, Select, Row, Col, Pagination } from "antd";
+import { Empty, Select, Row, Col, Pagination, Spin } from "antd";
 import { inject, observer } from "mobx-react";
 import { getUser } from "thoughtware-core-ui";
 import { withRouter } from "react-router";
@@ -16,15 +16,17 @@ import "./TodoPageList.scss"
 import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import PaginationCommon from "../../../common/page/Page";
 const TodoPageList = (props) => {
     const { homeStore } = props;
-    const { findTodopage, todoTaskList,setTodoTaskList, findProjectList,
+    const { findTodopage, todoTaskList, setTodoTaskList, findProjectList,
         findProjectSetProjectList, todoTotal, todoCondition, todoActiveKey, setTodoActiveKey } = homeStore;
     //登录者id
     const userId = getUser().userId;
     // 项目列表
     const [projectList, setProjectList] = useState();
-    const [sprintValue, setSprintValue] = useState()
+    const [sprintValue, setSprintValue] = useState();
+    const [loading, setLoading] = useState(true)
     // 面包屑第一个标题
     const [firstText, setFirstText] = useState();
     const projectId = props.match.params.id;
@@ -57,16 +59,20 @@ const TodoPageList = (props) => {
             }
         }
 
-        
+        setLoading(true)
         // 根据不同的url 设置不同的面包屑
         if (props.route?.path === "/project/:id/workTodo") {
             const projectId = props.match.params.id;
             setFirstText("项目概况")
-            findTodopage({ ...params, data: { projectId: projectId } })
+            findTodopage({ ...params, data: { projectId: projectId } }).then(res => {
+                setLoading(false)
+            })
         }
         if (path === "/index/todoList") {
             setFirstText("首页")
-            findTodopage(params)
+            findTodopage(params).then(res => {
+                setLoading(false)
+            })
         }
 
         if (props.route?.path === "/projectSet/:projectSetId/workTodo") {
@@ -79,27 +85,33 @@ const TodoPageList = (props) => {
                     if (list.length > 0) {
                         let todos = []
                         list.map(item => {
-                            findTodopage({assignUserId: userId, data: {projectId: item.id} }, "projectSet").then(res => {
+                            findTodopage({ assignUserId: userId, data: { projectId: item.id } }, "projectSet").then(res => {
                                 if (res.code === 0) {
                                     todos.push(...res.data.dataList)
                                     setTodoTaskList([...todos])
                                 }
                             })
                         })
-                    }else {
+                       
+                    } else {
                         setTodoTaskList([])
                     }
                 }
+                setLoading(false)
             })
         }
 
         if (props.route?.path === "/:id/sprint/:sprint/workTodo") {
             setFirstText("迭代概况")
-            findTodopage({ ...params, data: { sprintId: sprintId, projectId: projectId } })
+            findTodopage({ ...params, data: { sprintId: sprintId, projectId: projectId } }).then(res => {
+                setLoading(false)
+            })
         }
         if (props.route?.path === "/:id/version/:version/workTodo") {
             setFirstText("版本概况")
-            findTodopage({ ...params, data: { versionId: versionId, projectId: projectId }})
+            findTodopage({ ...params, data: { versionId: versionId, projectId: projectId } }).then(res => {
+                setLoading(false)
+            })
         }
         return;
     }, [])
@@ -135,14 +147,14 @@ const TodoPageList = (props) => {
      * 获取搜索参数的列表
      */
     const getSerchList = () => {
-        if(path === "/index/todoList") {
+        if (path === "/index/todoList") {
             findProjectList().then(res => {
                 if (res.code === 0) {
                     setProjectList(res.data)
                 }
             })
         }
-        if(path === "/projectSet/:projectSetId/workTodo"){
+        if (path === "/projectSet/:projectSetId/workTodo") {
             const projectSetId = props.match.params.projectSetId;
             findProjectSetProjectList({ projectSetId: projectSetId }).then(res => {
                 if (res.code === 0) {
@@ -150,7 +162,7 @@ const TodoPageList = (props) => {
                 }
             })
         }
-       
+
     }
 
     const changeProject = (value) => {
@@ -218,7 +230,7 @@ const TodoPageList = (props) => {
     // }
 
 
-   
+
 
     return (<div className="todo-list-page">
         {
@@ -237,7 +249,7 @@ const TodoPageList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                   (path === "/index/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
+                    (path === "/index/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear
@@ -256,29 +268,33 @@ const TodoPageList = (props) => {
 
             </div>
         </div>
+        <Spin spinning={loading} tip="加载中..." >
+            <div className="todo-list">
+                {
+                    todoTaskList && todoTaskList.length > 0 ? todoTaskList.map((item) => {
+                        return <>
+                            <TodoListItem content={item.data} goTodoDetail={() => goTodoDetail(item.workItemId)} key={item.id} />
+                        </>
 
-        <div className="todo-list">
-            {
-                todoTaskList && todoTaskList.length > 0 ? todoTaskList.map((item) => {
-                    return <>
-                        <TodoListItem content={item.data} goTodoDetail={() => goTodoDetail(item.workItemId)} key={item.id}/>
-                    </>
-
-                })
-                    :
-                    <ProjectEmpty description="暂时没有待办~" />
-            }
-        </div>
+                    })
+                        :
+                        <>
+                            {
+                                loading && <ProjectEmpty description="暂时没有待办~" />
+                            }
+                        </>
+                }
+            </div>
+        </Spin>
         {
             todoTaskList && todoTaskList.length > 0 && <div className="todo-pagination">
-                <Pagination
-                    onChange={onPageChange}
-                    defaultCurrent={1}
-                    total={todoTotal}
-                    current={todoCondition.pageParam.currentPage}
-                    showSizeChanger={false}
-                    defaultPageSize={20}
-                    pageSize={20}
+
+                <PaginationCommon
+                    currentPage={todoCondition.pageParam.currentPage}
+                    changePage={(currentPage) => onPageChange(currentPage)}
+                    totalPage={todoCondition.pageParam.totalPage}
+                    total={todoCondition.pageParam.total}
+                    showRefer={false}
                 />
             </div>
         }

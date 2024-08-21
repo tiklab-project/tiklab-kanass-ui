@@ -11,7 +11,6 @@ import WorkAside from "./WorkAside";
 import { withRouter } from "react-router";
 import { Provider, observer } from "mobx-react";
 import "./WorkList.scss";
-import { Row, Col } from "antd";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkDetail from "./WorkDetail";

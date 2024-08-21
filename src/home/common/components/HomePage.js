@@ -12,10 +12,6 @@ import "../components/HomePage.scss";
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
-import InsightList from '../../insight/components/InsightList';
-import HomeSurvey from './HomeSurvey';
-import TodoPageList from './TodoPageList';
-import Insight from '../../insight/components/Insight';
 const Home = (props) => {
     const { route, insightStore, homeStore } = props;
     const { activeKey, setActiveKey, findInsightList } = homeStore;
