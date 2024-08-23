@@ -81,7 +81,7 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
                     <ImgComponent
                         src={record.workPriority?.iconUrl}
                         alt=""
-                        isRemote={true}
+                        // isRemote={true}
                         className="img-icon-right"
                     />
                 </div>
@@ -223,7 +223,7 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-img">
                     <ImgComponent
                         src={record.workPriority?.iconUrl}
-                        isRemote={true}
+                        // isRemote={true}
                         alt=""
                         className="img-icon-right"
                     />
@@ -347,7 +347,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
                 <div className="work-info-img">
                     <ImgComponent
                         src={record.workPriority?.iconUrl}
-                        isRemote={true}
+                        // isRemote={true}
                         alt=""
                         className="img-icon-right"
                     />

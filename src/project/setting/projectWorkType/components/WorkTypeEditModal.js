@@ -111,7 +111,7 @@ const WorkTypeEditModal = (props) => {
                         >
                             <Input />
                         </Form.Item> */}
-                        <Form.Item
+                        {/* <Form.Item
                             label="表单配置"
                             name="form"
                             rules={[
@@ -133,7 +133,7 @@ const WorkTypeEditModal = (props) => {
                             </Select>
 
                         </Form.Item>
-                        {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/setting/form")}>没有自定义表单，点击添加</div>}
+                        {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/setting/form")}>没有自定义表单，点击添加</div>} */}
                         <Form.Item
                             label="流程配置"
                             name="flow"

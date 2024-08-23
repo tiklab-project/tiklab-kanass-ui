@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu } from 'antd';
 import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
-import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { withRouter } from "react-router";
@@ -37,8 +36,8 @@ const WorkTable = (props) => {
     const screenSize = useBreakpoint();
     const screenCode = getScreenType();
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
-        deleteWorkItem, deleteWorkItemAndChildren, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
-        createRecent, setWorkIndex, setQuickFilterValue, setWorkList, haveChildren } = WorkStore;
+        deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
+        createRecent, setWorkIndex, setWorkList, haveChildren } = WorkStore;
 
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -54,7 +53,6 @@ const WorkTable = (props) => {
         workCalendarStore: WorkCalendarStore
     };
    
-
     const moreMenu = (record) => {
         return <Menu onClick={() => selectWorkItem(record)}>
             <Menu.Item key="delete">

@@ -173,29 +173,6 @@ const WorkTypeAddModal = (props) => {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="表单配置"
-                            name="form"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请选择表单配置',
-                                },
-                            ]}
-                        >   
-                            <Select
-                                placeholder="默认"
-                                allowClear
-                            >
-                                {
-                                    fromList && fromList.map((item) => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                            
-                        </Form.Item>
-                        {fromList && fromList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/setting/form")}>没有自定义表单，点击添加</div>}
-                        <Form.Item
                             label="流程配置"
                             name="flow"
                             rules={[

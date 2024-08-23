@@ -792,7 +792,6 @@ const WorkBasicInfo = (props) => {
                                                     <ImgComponent
                                                         src={item.iconUrl}
                                                         alt=""
-                                                        isRemote = {true}
                                                         className="img-icon-right"
                                                     />
 
