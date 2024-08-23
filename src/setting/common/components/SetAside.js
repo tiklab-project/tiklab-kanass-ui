@@ -59,7 +59,7 @@ const SetAside = (props) => {
                 >
                     <span className="orga-aside-item-left">
                         {
-                            data.icon && <svg className="img-icon-right" aria-hidden="true">
+                            data.icon && <svg className="icon-15" aria-hidden="true">
                                 <use xlinkHref={`#icon-${data.icon}`}></use>
                             </svg>
                         }
@@ -94,7 +94,6 @@ const SetAside = (props) => {
         } else {
             setExpandedTree(expandedTree.concat(key))
         }
-        console.log(expandedTree)
     }
 
     const renderSubMenu = (item, deep, index) => {
@@ -107,7 +106,7 @@ const SetAside = (props) => {
                     >
                         {
                             item.icon && <span to={item.id} className="orga-aside-item-left">
-                                <svg className="img-icon-right" aria-hidden="true">
+                                <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.icon}`}></use>
                                 </svg>
                                 <span className="orga-aside-title">{item.title}</span>
@@ -154,7 +153,7 @@ const SetAside = (props) => {
                         设置
                     </div>
                     <div className="orga-aside-back" onClick={() => backProject()}>
-                        <svg className="svg-icon" aria-hidden="true" >
+                        <svg className="icon-15" aria-hidden="true" >
                             <use xlinkHref="#icon-home-default"></use>
                         </svg>
                         返回首页

@@ -32,6 +32,7 @@
                 padding-left: 15px;
                 cursor: pointer;
                 gap: 8px;
+                border-left: 3px solid transparent;
                 i {
                     margin-right: 10px;
                 }
@@ -45,7 +46,7 @@
                 margin-bottom: 10px;
                 padding: 5px 0;
                 cursor: pointer;
-
+                border-left: 3px solid transparent;
                 .project-aside-icon {
                     width: 15px;
                     height: 15px;
@@ -99,7 +100,7 @@
     .project-menu-select {
         color: #fff;
         background-color: #557ac0;
-        border-left: 3px solid #fff;
+        border-left: 3px solid #fff !important;
     }
     .project-text  {
         color: #fff;
@@ -126,7 +127,7 @@
 
     .project-menu-select {
         background-color: var(--thoughtware-gray-400);
-        border-left: 3px solid var(--thoughtware-blue);
+        border-left: 3px solid var(--thoughtware-blue) !important;
     }
 
     .project-setting:hover {
@@ -151,7 +152,7 @@
 
     .project-menu-select {
         background-color:  #414a5a;
-        border-left: 3px solid #fff;
+        border-left: 3px solid #fff !important;
     }
     .project-text  {
         color: #fff;

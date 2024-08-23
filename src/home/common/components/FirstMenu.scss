@@ -47,16 +47,17 @@
             flex-direction: column;
             margin-bottom: 5px;
             padding: 5px 0;
-            width: 75px;
+            // width: 75px;
             font-size: 14px;
             cursor: pointer;
+            border-left: 3px solid transparent;
         }
 
         &-active {
             color: var(--thoughtware-blue);
             background-color: var(--thoughtware-gray-400);
-            border-left: 3px solid var(--thoughtware-blue);
-            width: 74px;
+            border-left: 3px solid var(--thoughtware-blue) !important;
+            // width: 74px;
         }
 
         &-item:hover {
@@ -79,6 +80,7 @@
         padding-left: 20px;
         cursor: pointer;
         gap: 7px;
+        border-left: 3px solid transparent;
     }
 }
 
@@ -133,7 +135,7 @@
     .first-menu-link-active {
         color: #fff;
         background-color: #414A5A;
-        border-left: 3px solid #fff;
+        border-left: 3px solid #fff !important;
     }
     .first-menu-text-item:hover {
         background-color: #414A5A;
