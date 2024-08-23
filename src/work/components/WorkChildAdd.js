@@ -305,7 +305,6 @@ const WorkChildAddmodal = (props) => {
                                         <div className="work-item-right">
                                             <ImgComponent
                                                 src={item.workPriority?.iconUrl}
-                                                isRemote = {true}
                                                 alt=""
                                                 className="svg-icon"
 
