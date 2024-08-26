@@ -137,6 +137,7 @@ const SprintDetailAside = (props) => {
                 path={path}
                 setUrl = {`/${projectId}/sprint/${sprintId}/setting`}
                 backUrl = {`/project/${projectId}/sprint`}
+                iconName = "back"
             />
         </Fragment>
     )

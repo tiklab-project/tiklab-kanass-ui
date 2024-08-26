@@ -99,12 +99,12 @@ const SprintChangeModal = (props) => {
                         <Tooltip placement="right" title={sprint?.sprintName}>
                             <div className='sprint-title-icon' onClick={showMoreMenu} >
 
-                                <ColorIcon name={sprint?.sprintName} className="icon-32" color={sprint.color} />
-                                <div className={`sprint-toggleCollapsed`}>
+                                <ColorIcon name={sprint?.sprintName} className="img-32" color={sprint.color} />
+                                {/* <div className={`sprint-toggleCollapsed`}>
                                     <svg className="icon-15" aria-hidden="true">
                                         <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                     </svg>
-                                </div>
+                                </div> */}
                             </div>
                         </Tooltip>
 

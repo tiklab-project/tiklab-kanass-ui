@@ -118,6 +118,7 @@ const VersionDetailAside = (props) => {
                 backName = {"返回项目"}
                 setUrl = {`/${projectId}/version/${versionId}/setting`}
                 backUrl = {`/project/${projectId}/version`}
+                iconName = "back"
             />
         </Fragment>
     )

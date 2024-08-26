@@ -147,11 +147,11 @@ const ProjectChangeModal = (props) => {
                                 // alt={project?.projectName}
                                 className="img-32"
                             />
-                            <div className={`project-toggleCollapsed`}>
+                            {/* <div className={`project-toggleCollapsed`}>
                                 <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                 </svg>
-                            </div>
+                            </div> */}
                         </div>
                     </Tooltip>
                 }

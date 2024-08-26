@@ -100,11 +100,11 @@ const VersionChangeModal = (props) => {
                             <div className='version-title-icon' onClick={showMoreMenu} >
                                 
                                 <ColorIcon name={version?.name} className="img-32" color={version?.color} />
-                                <div className={`version-toggleCollapsed`}>
+                                {/* <div className={`version-toggleCollapsed`}>
                                     <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
                                     </svg>
-                                </div>
+                                </div> */}
                             </div>
                         </Tooltip>
 

@@ -165,7 +165,7 @@ const ReportList = (props) => {
             title="添加报表"
             visible={showReportList}
             onCancel={() => setShowReportList(false)}
-            width={1200}
+            width={"70vw"}
             footer={null}
             closable={false}
             style={{

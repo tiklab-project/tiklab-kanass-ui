@@ -138,9 +138,9 @@ const ProjectSetChangeModal = (props) => {
                         <Tooltip placement="right" title={projectSet?.name}>
                             <div className="projectSet-change-icon">
                                 <ColorIcon color={projectSet.color} name={projectSet.name} className="projectSet-icon" />
-                                <svg className="icon-15" aria-hidden="true">
+                                {/* <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
-                                </svg>
+                                </svg> */}
                             </div>
                         </Tooltip>
 

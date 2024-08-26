@@ -6,7 +6,7 @@
     gap: 6px;
     margin: 0 10px 10px 10px;
     padding-right: 10px;
-    background: #ffffff;
+    background: var(--thoughtware-gray-610);
     border-radius: 5px;
     .select-content {
         padding: 5px;
@@ -62,7 +62,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #ffffff;
+        background-color: var(--thoughtware-gray-610);
         border: 0;
         height: 32px;
         line-height: 32px;

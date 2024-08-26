@@ -212,6 +212,7 @@ const ProjectDetailAside = (props) => {
                 path={path}
                 setUrl = {`/project/${project.id}/set/basicInfo`}
                 backUrl = {`/project`}
+                iconName = "home"
             />
 
         </Fragment>

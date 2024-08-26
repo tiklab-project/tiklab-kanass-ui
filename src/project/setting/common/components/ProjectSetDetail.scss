@@ -8,7 +8,7 @@
         background-color: #fff;
     }
     .ant-layout-sider {
-        background-color: var(--thoughtware-gray-600);
+        background: var(--thoughtware-gray-600);
         .ant-layout-sider-children {
             position: fixed;
             width: 200px;
@@ -17,7 +17,7 @@
                     padding: 0;
                     margin: 0;
                 }
-                background: var(--thoughtware-gray-600);
+                //
                 .project-title {
                     height: 40px;
                     display: flex;
@@ -45,7 +45,6 @@
                 
                 .project-menu {
                     list-style-type:none;
-                    height: 85vh;
                     cursor: pointer;
                     .project-menu-submenu {
                         height: 40px;

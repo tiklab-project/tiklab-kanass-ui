@@ -85,6 +85,7 @@ const ProjectSetDetailAside = (props) => {
                 path={path}
                 setUrl={`/projectSet/${projectSetId}/set/basicInfo`}
                 backUrl={`/projectSet`}
+                iconName = "home"
             />
 
         </Fragment>

@@ -64,7 +64,8 @@ const ReportList = (props) => {
             h: item.minH,
             minH: item.minH,
             minW: item.minW,
-            i: (reportIndex + 1).toString(), static: false,
+            i: reportIndex.toString(), 
+            static: false,
             data: {
                 type: item.type,
                 isEdit: false,
@@ -172,12 +173,10 @@ const ReportList = (props) => {
             title="添加报表"
             visible={showReportList}
             onCancel={() => setShowReportList(false)}
-            width={1200}
+            width={"70vw"}
             footer={null}
             closable={false}
-            style={{
-                top: "50px",
-            }}
+            className="report-add-modal"
         >
 
             <Tabs defaultActiveKey="1">

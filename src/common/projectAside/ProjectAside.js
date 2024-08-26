@@ -16,7 +16,7 @@ import "./ProjectAside.scss"
 const { Sider } = Layout;
 
 const ProjectAside = (props) => {
-    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl, backName } = props;
+    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl, backName, iconName } = props;
     const isInProject = props.location.pathname.split("/")[2];
     const [projectRouter, setProjectRouter] = useState([]);
 
@@ -135,7 +135,7 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                     >
                                         <svg className="icon-18" aria-hidden="true">
-                                            <use xlinkHref={`#icon-home-${theme}`}></use>
+                                            <use xlinkHref={`#icon-${iconName}-${theme}`}></use>
                                         </svg>
                                         <span>
                                             {backName}
@@ -144,13 +144,11 @@ const ProjectAside = (props) => {
                                     :
                                     <div className={`project-menu-submenu-icon`}
                                         onClick={() => backProject()}
+                                        data-title-right={backName}
                                     >
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref={`#icon-home-${theme}`}></use>
+                                        <svg className="icon-24" aria-hidden="true">
+                                            <use xlinkHref={`#icon-${iconName}-${theme}`}></use>
                                         </svg>
-                                        <span>
-                                            {backName}
-                                        </span>
                                     </div>
                             }
                         </div>

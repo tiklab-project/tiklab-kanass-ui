@@ -40,7 +40,6 @@
         padding: 0;
         margin: 0;
     }
-    background: var(--thoughtware-gray-600);
     .projectSet-title {
         height: 40px;
         display: flex;
@@ -59,7 +58,7 @@
         }
     }
     .title {
-        border-bottom: 1px solid #f0f2f5;
+        border-bottom: 1px solid #eaeaea;
     }
 
     .setting {

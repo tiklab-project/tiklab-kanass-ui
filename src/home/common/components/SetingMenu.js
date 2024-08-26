@@ -5,9 +5,9 @@ const SetingMenu = (props) => {
     const {isShowText, theme} = props;
     const goSet = () => {
         if(version === "cloud"){
-            props.history.push('/setting/log')
+            props.history.push('/setting/home')
         }else {
-            props.history.push('/setting/version')
+            props.history.push('/setting/home')
         }
     }
     return (

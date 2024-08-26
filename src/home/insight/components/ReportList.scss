@@ -1,9 +1,9 @@
 .report-list {
     padding: 0px 10px;
-    height: 400px;
+    height: 525px;
     overflow: auto;
     display: grid;
-    justify-content: space-between;
+    // justify-content: space-between;
     grid-template-columns: repeat(auto-fill, 300px);
     grid-gap: 0 20px;
     .report-list-title {
@@ -43,5 +43,13 @@
             background: var(--thoughtware-blue);
             border-radius: 8px;
         }
+    }
+}
+.report-add-modal {
+    .ant-tabs-nav {
+        padding: 0 20px;
+    }
+    .ant-modal-body {
+        padding: 0 !important;
     }
 }

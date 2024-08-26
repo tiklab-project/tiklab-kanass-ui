@@ -1,0 +1,171 @@
+.setting-home-row {
+    height: calc(100% - 49px);
+    overflow: auto;
+    padding: var(--thoughtware-padding);
+}
+
+.setting-first {
+    .setting-user {
+        padding: var(--thoughtware-padding);
+        background: var(--thoughtware-gray-600);
+        border-radius: 4px;
+
+        .setting-user-title {
+            font-weight: 600;
+            font-size: 15px;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+
+    .setting-user-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+
+        .setting-user-item:first-child {
+            grid-column-start: span 2;
+        }
+
+        .setting-user-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 5px;
+            text-align: center;
+            grid-auto-flow: row dense;
+            cursor: pointer;
+        }
+
+        .setting-user-item:hover {
+
+            .module-title,
+            .module-desc {
+                color: var(--thoughtware-blue);
+            }
+        }
+
+        .module-title {
+            font-weight: 600;
+            text-overflow: ellipsis;
+            line-height: 40px;
+            color: #4D5050;
+        }
+
+        .module-desc {
+            height: 60px;
+            line-height: 30px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 12px;
+            color: #666;
+        }
+    }
+
+    .setting-work-box {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+
+        .setting-work-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--thoughtware-gray-600);
+            border-radius: 10px;
+            grid-auto-flow: row dense;
+
+            .module-left {
+                padding-left: 20px;
+            }
+
+            .module-title {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 40px;
+                color: #4D5050;
+            }
+
+            .module-img {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+
+            .module-desc {
+                height: 30px;
+                line-height: 30px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: 12px;
+                color: #666;
+            }
+        }
+    }
+
+    .setting-message-box {
+        display: flex;
+        margin-top: 15px;
+        height: 150px;
+        align-items: center;
+        background: #fafbfc;
+        padding: 20px;
+        border-radius: 4px;
+
+        .setting-message-left {
+            flex: 1;
+            .module-title {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 40px;
+                color: #4D5050;
+            }
+
+            .module-img {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+
+            .module-desc {
+                height: 30px;
+                line-height: 30px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: 12px;
+                color: #666;
+            }
+        }
+
+        .setting-message-right {
+            display: flex;
+            justify-content: center;
+            padding: var(--thoughtware-padding);
+            flex: 1;
+            gap: 10px;
+
+            .setting-message-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-radius: 10px;
+                grid-auto-flow: row dense;
+                flex-direction: column;
+                width: 40%;
+                .module-left {
+                    padding-left: 20px;
+                }
+
+                .module-title {
+                    font-size: 13px;
+                    font-weight: 600;
+                    line-height: 40px;
+                    color: #4D5050;
+                }
+            }
+        }
+
+
+    }
+}

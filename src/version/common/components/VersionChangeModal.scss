@@ -38,7 +38,8 @@
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 15px 0 15px 21px;
+        justify-content: center;
+        padding: 15px 0;
         cursor: pointer;
         .version-aside-icon {
             width: 15px;

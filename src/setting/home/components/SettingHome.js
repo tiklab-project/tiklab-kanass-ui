@@ -1,341 +1,269 @@
-import React, { useEffect, useState } from "react";
+import React, {useState,useEffect} from "react";
+import {Row,Col} from "antd";
+import SettingHomeStore from "../store/SettingHomeStore";
+import {applyJump, disableFunction, applySubscription, getUser} from "thoughtware-core-ui";
+import versionStore from "thoughtware-licence-ui/es/version/VersionStore";
+// import overviewStore from "../../../pipeline/overview/store/OverviewStore";
+import vipLight from '../../../assets/images/vip-one.png';
+import vipDark from '../../../assets/images/vip-two.png';
 import "./SettingHome.scss";
-import { Row, Col } from "antd";
-import SettingHomeStore from "../store/SettingHomeStore"
-import { observer } from "mobx-react";
-import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import moment from "moment";
+import {
+    ApartmentOutlined,
+    UserOutlined,
+    MessageOutlined,
+    GroupOutlined,
+    ScheduleOutlined,
+    InsertRowBelowOutlined,
+    ConsoleSqlOutlined,
+    VerifiedOutlined,
+    ToolOutlined,
+    AlertOutlined,
+    CloudOutlined,
+    NodeIndexOutlined,
+    HourglassOutlined,
+    InboxOutlined,
+    ShoppingOutlined,
+    RightOutlined,
+    MacCommandOutlined,
+    MergeCellsOutlined,
+    FileProtectOutlined,
+    HistoryOutlined,
+    LaptopOutlined, DesktopOutlined,
+} from "@ant-design/icons"
 
-const SettingHome = (props) => {
-    const { findOrgaNum, setSelectKey, selectKey } = SettingHomeStore;
-    const [numList, setNumList] = useState({});
-    const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
-    useEffect(() => {
-        findOrgaNum().then(res => {
-            if (res.code === 0) {
-                console.log(res.data)
-                setNumList(res.data)
+const SettingHome = props => {
+
+    const {findOrgaNum, findlogpage} = SettingHomeStore;
+    const {findUseLicence} = versionStore;
+    // const {findlogpage} = overviewStore;
+
+    //系统设置统计数据
+    const [count,setCount] = useState({});
+    //当前版本
+    const [licence,setLicence] = useState(null);
+    //操作日志
+    const [log,setLog] = useState(null);
+
+    useEffect(()=>{
+        findOrgaNum().then(res=>{
+            if(res.code===0){
+                setCount(res.data)
             }
         })
-    }, [])
-
-    const list = {
-        user: {
-            title: '用户与权限',
-            key: "user",
-            cloudShow: false,
-            eeShow: true,
-            children: [
-                {
-                    title: '部门',
-                    desc: "管理公司的部门以及部门的用户",
-                    key: "orga",
-                    islink: true,
-                    path: '/setting/orga',
-                    icon: "set-orga"
-
-                },
-                {
-                    title: '用户',
-                    key: "user",
-                    desc: "管理所有用户、设置用户的个人信息",
-                    islink: true,
-                    path: '/setting/user',
-                    icon: "set-user"
-                },
-                {
-                    title: '用户组',
-                    key: "userGroup",
-                    desc: "以分组的形式管理用户，便于组织",
-                    islink: true,
-                    path: '/setting/userGroup',
-                    icon: "set-usergroup"
-                },
-                {
-                    title: '用户目录',
-                    key: "userDir",
-                    desc: "用于同步内部目录、LDAP、企业微信等目录的用户",
-                    islink: true,
-                    path: '/setting/dir',
-                    icon: "set-userdir"
-                },
-                {
-                    title: '权限',
-                    key: "role",
-                    desc: "管理各个用户的权限，保证数据安全",
-                    path: '/setting/systemRole',
-                    icon: "set-privilege"
+        if(version==='cloud'){
+            findlogpage({
+                pageParam: {pageSize: 1, currentPage: 1},
+                userId:getUser().userId
+            }).then(res=>{
+                if(res.code===0){
+                    setLog(res.data)
                 }
-            ]
-        },
-        userSaas: {
-            title: '权限',
-            key: "user",
-            cloudShow: true,
-            eeShow: false,
-            children: [
-                {
-                    title: '权限',
-                    key: "role",
-                    path: '/setting/systemRole'
-                }
-            ]
-        },
-        workItem: {
-            title: '事项配置',
-            key: "workItem",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '事项类型',
-                    desc: "管理事项类型，可自定义",
-                    key: "workType",
-                    icon: "set-worktype",
-                    path: '/setting/worktype',
-                },
-                {
-                    title: '事项优先级',
-                    desc: "管理事项优先级，可自定义",
-                    key: "workPriority",
-                    icon: "set-privil",
-                    path: '/setting/workpriority',
-                }
-            ]
-        },
-        message: {
-            title: '消息',
-            key: "message",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '消息通知方案',
-                    key: "messageNotice",
-                    icon: "set-message",
-                    path: '/setting/messageNotice',
-                },
-                {
-                    title: '消息发送方式',
-                    key: "sendType",
-                    icon: "set-messtem",
-                    path: '/setting/messageSendType',
-                },
-            ]
-        },
-        form: {
-            title: '表单',
-            key: "form",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '字段类型',
-                    key: "fieldType",
-                    path: '/setting/fieldType',
-                },
-                {
-                    title: '字段',
-                    key: "field",
-                    path: '/setting/preliminary',
-                },
-                {
-                    title: '表单',
-                    key: "form",
-                    path: '/setting/form',
-                },
-                {
-                    title: '流程',
-                    key: "flow",
-                    path: '/setting/systemFlow',
-                },
-                {
-                    title: '节点',
-                    key: "stateNode",
-                    path: '/setting/nodestatus',
-                }
-            ]
-        },
-        flow: {
-            title: '流程',
-            key: "flow",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '流程',
-                    key: "flow",
-                    path: '/setting/systemFlow',
-                },
-                {
-                    title: '节点',
-                    key: "stateNode",
-                    path: '/setting/nodestatus',
-                }
-            ]
-        },
-        system: {
-            title: '系统集成',
-            key: "systemIntergrtion",
-            cloudShow: false,
-            eeShow: true,
-            children: [
-                {
-                    title: 'JIRA',
-                    key: "jira",
-                    noShowNum: true,
-                    path: '/setting/loadData',
-                },
-                {
-                    title: '地址配置',
-                    key: "systemUrl",
-                    path: '/setting/urlData',
-                },
-            ]
-        },
-        system: {
-            title: '系统集成',
-            key: "systemIntergrtion",
-            cloudShow: true,
-            eeShow: false,
-            children: [
-                {
-                    title: 'JIRA',
-                    key: "jira",
-                    noShowNum: true,
-                    path: '/setting/loadData',
-                }
-            ]
-        },
-        security: {
-            title: '安全',
-            key: "security",
-            cloudShow: true,
-            eeShow: true,
-            children: [
-                {
-                    title: '操作日志',
-                    key: "logList",
-                    noShowNum: true,
-                    path: '/setting/log',
-                },
-                {
-                    title: '备份与恢复',
-                    key: "lastBackups",
-                    noShowNum: true,
-                    path: '/setting/backups',
-                },
-            ]
-        },
-        version: {
-            title: '应用',
-            key: "systemversion",
-            cloudShow: false,
-            eeShow: true,
-            children: [
-                {
-                    title: '版本与许可证',
-                    key: "version",
-                    noShowNum: true,
-                    path: '/setting/version',
-                },
-                {
-                    title: '应用访问权限',
-                    key: "applyAuth",
-                    path: '/setting/productAuth',
-                },
-            ]
-        }
-    }
-
-
-    const goPage = (data) => {
-
-        if (data.islink && !authType) {
-            const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.path;
-            window.open(authUrl, '_blank');
+            })
         } else {
-            props.history.push(data.path)
-
+            findUseLicence().then(res=>{
+                if(res.code===0){
+                    setLicence(res.data)
+                }
+            })
         }
-        setSelectKey(data.path)
+    },[])
+
+    /**
+     * 路由跳转
+     */
+    const li = ['orga','user','userGroup','dir'];
+    const goPath = path => {
+        const authConfig = JSON.parse(localStorage.getItem("authConfig"))
+        if(!authConfig.authType){
+            const isAuth = li.some(item => item===path)
+            if(isAuth){
+                return applyJump(`${authConfig.authServiceUrl}/#/user/${path}`)
+            }
+        }
+        props.history.push(`/setting/${path}`)
     }
 
-    const setVersion = (version) => {
-        let data = "";
-        if (!version?.expired) {
-            data = "企业版"
-        } else {
-            data = "社区版"
-        }
-        return data
-    }
 
-    return (
-        <Row className="setting-home-row">
-            <Col xl={{ span: 18, offset: 3 }} lg={{ span: 18, offset: 3 }} md={{ span: 20, offset: 2 }}>
-                <div className="setting-first">
-                    <div className="setting-user">
-                        {/* <div className="setting-user-title">
-                            用户
-                        </div> */}
-                        <div className="setting-user-box">
-                            {
-                                list.user.children.map(item => {
-                                    return <div className="setting-user-item" key={item.key} onClick={() => goPage(item)}>
-                                        <svg className="icon-40" aria-hidden="true">
-                                            <use xlinkHref={`#icon-${item.icon}`}></use>
-                                        </svg>
-                                        <div className="module-title">{item.title} : {numList[item.key] ? numList[item.key] : 0}</div>
-                                        <div className="module-desc">{item.desc}</div>
-
-                                    </div>
-                                })
-                            }
+    const commonBox = (
+        <>
+            <div className='home-message-box'>
+                <div className='home-title'>消息</div>
+                <div className='home-message'>
+                    <div className='home-message-item' onClick={()=>goPath('messageNotice')}>
+                        <div className='home-icon'><MessageOutlined/></div>
+                        <div className='home-label'>消息通知方案</div>
+                        <div className='home-info'>
+                            {count?.messageNotice || 0}
                         </div>
                     </div>
-                    <div className="setting-work">
-                        <div className="setting-work-box">
-                            {
-                                list.workItem.children.map(item => {
-                                    return <div className="setting-work-item" key={item.key} onClick={() => goPage(item)}>
-                                        <div className="module-left">
-                                            <div className="module-title">{item.title}: {numList[item.key] ? numList[item.key] : 0}</div>
-                                            <div className="module-desc">{item.desc}</div>
-                                        </div>
-
-                                        <ImgComponent className="module-img" src={`${item.icon}.png`} alt="" width="180px" height="180px" />
-
-                                    </div>
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div className="setting-message">
-                        <div className="setting-message-box">
-                            <div className="setting-message-left">
-                                <div className="module-title">消息</div>
-                                <div className="module-desc">消息模块管理消息的通知，消息模版的设置，可根据自己需求设置</div>
-                            </div>
-                            <div className="setting-message-right">
-                                {
-                                    list.message.children.map(item => {
-                                        return <div className="setting-message-item" key={item.key} onClick={() => goPage(item)}>
-                                            <svg className="icon-40" aria-hidden="true">
-                                                <use xlinkHref={`#icon-${item.icon}`}></use>
-                                            </svg>
-                                            <div className="module-title">{item.title} : {numList[item.key] ? numList[item.key] : 0}</div>
-                                        </div>
-                                    })
-                                }
-                            </div>
-
+                    <div className='home-message-item' onClick={()=>goPath('messageSendType')}>
+                        <div className='home-icon'><AlertOutlined /></div>
+                        <div className='home-label'>消息发送方式</div>
+                        <div className='home-info'>
+                            {count?.sendType || 0}
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className='home-config-box'>
+                <div className='home-title'>项目配置</div>
+                <div className='home-config'>
+                    <div className='home-config-item' onClick={()=>goPath('worktype')}>
+                        <div className='home-icon'><ShoppingOutlined /></div>
+                        <div className='home-label'>事项类型</div>
+                        <div className='home-info'>{count?.workType || 0}</div>
+                    </div>
+                    <div className='home-config-item' onClick={()=>goPath('form')}>
+                        <div className='home-icon'><InsertRowBelowOutlined /></div>
+                        <div className='home-label'>表单</div>
+                        <div className='home-info'>{count?.form || 0}</div>
+                    </div>
+                    <div className='home-config-item' onClick={()=>goPath('preliminary')}>
+                        <div className='home-icon'><InboxOutlined /></div>
+                        <div className='home-label'>字段</div>
+                        <div className='home-info'>{count?.field || 0}</div>
+                    </div>
+                    <div className='home-config-item' onClick={()=>goPath('systemFlow')}>
+                        <div className='home-icon'><NodeIndexOutlined /></div>
+                        <div className='home-label'>流程</div>
+                        <div className='home-info'>{count?.flow || 0}</div>
+                    </div>
+                    <div className='home-config-item' onClick={()=>goPath('nodestatus')}>
+                        <div className='home-icon'><HourglassOutlined /></div>
+                        <div className='home-label'>状态</div>
+                        <div className='home-info'>{count?.flow || 0}</div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
 
+    return (
+        <Row className='setting-home'>
+            <Col
+                xs={{ span: "24" }}
+                sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "18" , offset: "3" }}
+                xl={{ span: "14", offset: "5" }}
+                xxl={{ span: "14", offset: "5" }}
+            >
+                <div className='setting-home-limited'>
+                    {
+                        version ==='cloud' ?
+                            <>
+                                <div className='home-chunk-box'>
+                                    {commonBox}
+                                    <div className='home-security-box'>
+                                        <div className='home-title'>安全</div>
+                                        <div className='home-security'>
+                                            <div className='home-security-item' onClick={()=>goPath('backups')}>
+                                                <div className='home-icon'><HistoryOutlined /></div>
+                                                <div className='home-label'>上次备份时间</div>
+                                                <div className='home-info'>{count?.lastBackups && moment(count.lastBackups).format('YYYY-MM-DD') || '无'}</div>
+                                            </div>
+                                            <div className='home-security-item' onClick={()=>goPath('log')}>
+                                                <div className='home-icon'><LaptopOutlined /></div>
+                                                <div className='home-label'>操作日志</div>
+                                                <div className='home-info'>{log?.totalRecord || '0'}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='home-quick-box'>
+                                    <div className='home-quick home-chunk-box'>
+                                        <div className='home-quick-item' onClick={()=>goPath('urlData')}>
+                                            <div className='home-icon'><MacCommandOutlined /></div>
+                                            <div className='home-quick-item-title'>服务集成</div>
+                                            <div><RightOutlined /></div>
+                                        </div>
+                                        <div className='home-quick-item' onClick={()=>goPath('loadData')}>
+                                            <div className='home-icon'><MergeCellsOutlined/></div>
+                                            <div className='home-quick-item-title'>jira集成</div>
+                                            <div><RightOutlined /></div>
+                                        </div>
+                                        <div className='home-quick-item' onClick={()=>goPath('systemRole')}>
+                                            <div className='home-icon'> <FileProtectOutlined /></div>
+                                            <div className='home-quick-item-title'>权限</div>
+                                            <div><RightOutlined /></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            <>
+                                <div className='home-licence-box'>
+                                    <div className='home-licence'>
+                                        <div className='home-licence-item'>
+                                            <div className='home-licence-item-level'>
+                                                <div className='licence-level-img'>
+                                                    <img src={count?.version ? vipDark:vipLight} alt={''}/>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        <span className='licence-level-info'>{disableFunction() ? '社区版' : '企业版'}</span>
+                                                        {licence?.issuedTime &&
+                                                            <span className='licence-level-issuedTime'>
+                                                                {moment(licence.issuedTime).format('YYYY-MM-DD HH:mm:ss')}到期
+                                                            </span>}
+                                                    </div>
+                                                    <div className='licence-level-applyAuth'>
+                                                        <span className='licence-level-applyAuth-title'>授权人数：</span>
+                                                        <span className='licence-level-info'>
+                                                            {count?.applyAuthNumber || 0 } / {count?.version ? "不限制" : licence?.userNum > 0 ? licence.userNum+'人' : "不限制"}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='home-licence-sub' onClick={()=>applySubscription('kanass')}>
+                                            {count?.version ? '订阅' : '续订'}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='home-chunk-box'>
+                                    <div className='home-user-box'>
+                                        <div className='home-title'>用户与权限</div>
+                                        <div className='home-user'>
+                                            <div className='home-user-item' onClick={()=>goPath('user')}>
+                                                <div className='home-icon'><UserOutlined/></div>
+                                                <div className='home-label'>用户</div>
+                                                <div className='home-info'>
+                                                    {count?.user || 0}
+                                                </div>
+                                            </div>
+                                            <div className='home-user-item' onClick={()=>goPath('orga')}>
+                                                <div className='home-icon'><ApartmentOutlined /></div>
+                                                <div className='home-label'>部门</div>
+                                                <div className='home-info'>
+                                                    {count?.orga || 0}
+                                                </div>
+                                            </div>
+                                            <div className='home-user-item' onClick={()=>goPath('userGroup')}>
+                                                <div className='home-icon'><GroupOutlined /></div>
+                                                <div className='home-label'>用户组</div>
+                                                <div className='home-info'>
+                                                    {count?.userGroup || 0}
+                                                </div>
+                                            </div>
+                                            <div className='home-user-item' onClick={()=>goPath('systemRole')}>
+                                                <div className='home-icon'><ScheduleOutlined /></div>
+                                                <div className='home-label'>权限</div>
+                                                <div className='home-info'>
+                                                    {count?.role || 0}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {commonBox}
+                                </div>
+                            </>
+                    }
+                </div>
             </Col>
         </Row>
-
     )
-}
-export default observer(SettingHome);
+};
+
+export default SettingHome;
