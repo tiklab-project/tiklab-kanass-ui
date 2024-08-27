@@ -8,6 +8,8 @@ import WorkGantt from "./work/components/WorkGantt";
 import Work from "./work/components/Work";
 import Logo from "./home/common/components/Logo";
 import HeaderCe from "./home/common/components/HeaderCe";
+import SettingHome from "./setting/home/components/SettingHome";
+import SettingHomeStore from "./setting/home/store/SettingHomeStore";
 export {
     Routers,
     Header, 
@@ -17,5 +19,7 @@ export {
     FirstMenu,
     Logo,
     HeaderCe,
-    Work
+    Work,
+    SettingHome,
+    SettingHomeStore
 }

@@ -16,6 +16,14 @@ const setDevRouter= [
         code: "userPrivilege",
         children: [
             {
+                title: '用户',
+                id: '/setting/user',
+                easId: '/user/user',
+                purviewCode: "user",
+                islink: true,
+                code: "user",
+            },
+            {
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
@@ -24,14 +32,7 @@ const setDevRouter= [
                 code: "orga",
                 
             },
-            {
-                title: '用户',
-                id: '/setting/user',
-                easId: '/user/user',
-                purviewCode: "user",
-                islink: true,
-                code: "user",
-            },
+           
             {
                 title: '用户组',
                 id: '/setting/userGroup',
@@ -60,25 +61,11 @@ const setDevRouter= [
     },
     
     {
-        title: '事项配置',
+        title: '事项类型',
         icon: 'systemmanage',
-        id: "/setting/workstatus",
-        purviewCode: "SysWork",
-        code: "work",
-        children: [
-            {
-                title: '事项类型',
-                id: '/setting/worktype',
-                purviewCode: "SysWorkType",
-                code: "worktype",
-            },
-            {
-                title: '事项优先级',
-                id: '/setting/workpriority',
-                purviewCode: "SysWorkPriority",
-                code: "workpriority",
-            },
-        ]
+        id: "/setting/worktype",
+        purviewCode: "SysWorkType",
+        code: "worktype",
     },
     {
         title: "消息",
@@ -104,7 +91,7 @@ const setDevRouter= [
     {
         title: '表单',
         icon: 'systemform',
-        id: "/setting/preliminary",
+        id: "/setting/form",
         purviewCode: "SysForm",
         code: "SysForm",
         children: [
@@ -347,6 +334,14 @@ const setPrdRouter= [
         code: "userPrivilege",
         children: [
             {
+                title: '用户',
+                id: '/setting/user',
+                easId: '/user/user',
+                purviewCode: "user",
+                islink: true,
+                code: "user",
+            },
+            {
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
@@ -355,14 +350,7 @@ const setPrdRouter= [
                 code: "orga",
                 
             },
-            {
-                title: '用户',
-                id: '/setting/user',
-                easId: '/user/user',
-                purviewCode: "user",
-                islink: true,
-                code: "user",
-            },
+           
             {
                 title: '用户组',
                 id: '/setting/userGroup',
@@ -391,25 +379,11 @@ const setPrdRouter= [
     },
     
     {
-        title: '事项配置',
+        title: '事项类型',
         icon: 'systemmanage',
-        id: "/setting/workstatus",
-        purviewCode: "SysWork",
-        code: "work",
-        children: [
-            {
-                title: '事项类型',
-                id: '/setting/worktype',
-                purviewCode: "SysWorkType",
-                code: "worktype",
-            },
-            {
-                title: '事项优先级',
-                id: '/setting/workpriority',
-                purviewCode: "SysWorkPriority",
-                code: "workpriority",
-            },
-        ]
+        id: "/setting/worktype",
+        purviewCode: "SysWorkType",
+        code: "worktype",
     },
     {
         title: "消息",
@@ -435,7 +409,7 @@ const setPrdRouter= [
     {
         title: '表单',
         icon: 'systemform',
-        id: "/setting/preliminary",
+        id: "/setting/form",
         purviewCode: "SysForm",
         code: "form",
         children: [

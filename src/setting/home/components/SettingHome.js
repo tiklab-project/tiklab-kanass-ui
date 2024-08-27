@@ -1,9 +1,8 @@
-import React, {useState,useEffect} from "react";
-import {Row,Col} from "antd";
+import React, { useState, useEffect } from "react";
+import { Row, Col } from "antd";
 import SettingHomeStore from "../store/SettingHomeStore";
-import {applyJump, disableFunction, applySubscription, getUser} from "thoughtware-core-ui";
+import { applyJump, disableFunction, applySubscription, getUser, getVersionInfo } from "thoughtware-core-ui";
 import versionStore from "thoughtware-licence-ui/es/version/VersionStore";
-// import overviewStore from "../../../pipeline/overview/store/OverviewStore";
 import vipLight from '../../../assets/images/vip-one.png';
 import vipDark from '../../../assets/images/vip-two.png';
 import "./SettingHome.scss";
@@ -15,6 +14,7 @@ import {
     GroupOutlined,
     ScheduleOutlined,
     InsertRowBelowOutlined,
+    IdcardOutlined,
     ConsoleSqlOutlined,
     VerifiedOutlined,
     ToolOutlined,
@@ -29,115 +29,191 @@ import {
     MergeCellsOutlined,
     FileProtectOutlined,
     HistoryOutlined,
-    LaptopOutlined, DesktopOutlined,
-} from "@ant-design/icons"
+    LaptopOutlined, DeleteOutlined,
+} from "@ant-design/icons";
 
 const SettingHome = props => {
-
-    const {findOrgaNum, findlogpage} = SettingHomeStore;
-    const {findUseLicence} = versionStore;
-    // const {findlogpage} = overviewStore;
-
+    const { cloudVersion } = props;
+    const { findOrgaNum, findlogpage, selectKey, setSelectKey, setExpandedTree, expandedTree } = SettingHomeStore;
+    const { findUseLicence } = versionStore;
+    const versionInfo = getVersionInfo();
+    const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
     //系统设置统计数据
-    const [count,setCount] = useState({});
+    const [count, setCount] = useState({});
     //当前版本
-    const [licence,setLicence] = useState(null);
+    const [licence, setLicence] = useState(null);
     //操作日志
-    const [log,setLog] = useState(null);
+    const [log, setLog] = useState(null);
 
-    useEffect(()=>{
-        findOrgaNum().then(res=>{
-            if(res.code===0){
+    const isExpandedTree = (key) => {
+        return expandedTree.some(item => item === key)
+    }
+
+    const setOpenOrClose = key => {
+        if (!isExpandedTree(key)) {
+            setExpandedTree(expandedTree.concat(key))
+        }
+    }
+
+    const select = (data) => {
+        const id = data.id;
+        if (version === "cloud") {
+            if (data.islink) {
+                window.open(workUrl + "#" + data.id, '_blank');
+            } else {
+                props.history.push(id);
+                setSelectKey(id);
+                setOpenOrClose(data.parentUrl)
+            }
+        } else {
+            if (data.islink && !authType) {
+                const authUrl = JSON.parse(localStorage.getItem("authConfig"))?.authServiceUrl + "#" + data.id;
+                window.open(authUrl, '_blank');
+            } else {
+                props.history.push(id)
+                setSelectKey(id)
+
+            }
+            setOpenOrClose(data.parentUrl)
+        }
+
+
+    }
+
+    const array = [
+        {
+            title: "用户与权限",
+            id: 1,
+            children: [
+                {
+                    title: '用户',
+                    id: version === "cloud" ? '/enterprise/user' : '/setting/user',
+                    parentUrl: '/setting/orga',
+                    icon: <UserOutlined />,
+                    islink: true,
+                    num: count?.orga || 0
+                },
+                {
+                    title: "部门",
+                    id: version === "cloud" ? '/enterprise/orga' : '/setting/orga',
+                    islink: true,
+                    parentUrl: '/setting/orga',
+                    icon: <ApartmentOutlined />,
+                    num: count?.user
+                },
+
+                {
+                    title: '用户组',
+                    id: version === "cloud" ? '/enterprise/userGroup' : '/setting/userGroup',
+                    parentUrl: '/setting/orga',
+                    islink: true,
+                    icon: <GroupOutlined />,
+                    num: count?.userGroup || 0
+                },
+                {
+
+                    title: "用户目录",
+                    id: version === "cloud" ? '/enterprise/dir' : '/setting/dir',
+                    parentUrl: '/setting/orga',
+                    islink: true,
+                    icon: <IdcardOutlined />,
+                    num: count?.userDir || 0
+                },
+                {
+                    title: '权限',
+                    id: "/setting/systemRole",
+                    parentUrl: '/setting/orga',
+                    icon: <ScheduleOutlined />,
+                    num: count?.role || 0
+                }
+            ]
+        },
+        {
+            title: "消息",
+            id: 2,
+            children: [
+                {
+                    title: "消息通知方案",
+                    id: '/setting/messageNotice',
+                    parentUrl: '/setting/messageNotice',
+                    icon: <svg className="icon-15" aria-hidden="true">
+                        <use xlinkHref={`#icon-systemmessage`}></use>
+                    </svg>,
+                    num: count?.messageNotice || 0
+                },
+                {
+                    title: '消息发送方式',
+                    id: '/setting/messageSendType',
+                    parentUrl: '/setting/messageNotice',
+                    icon: <AlertOutlined />,
+                    num: count?.sendType || 0
+                }
+            ]
+        },
+        {
+            title: "表单与流程",
+            id: 3,
+            children: [
+                {
+                    title: "表单",
+                    id: '/setting/form',
+                    parentUrl: '/setting/form',
+                    icon: <InsertRowBelowOutlined />,
+                    num: count?.form || '无'
+                },
+                {
+                    title: '字段',
+                    id: '/setting/preliminary',
+                    parentUrl: '/setting/form',
+                    icon: <InboxOutlined />,
+                    num: count?.form || '0'
+                },
+                {
+                    title: '流程',
+                    id: '/setting/systemFlow',
+                    icon: <NodeIndexOutlined />,
+                    parentUrl: '/setting/systemFlow',
+                    num: count?.archived || 0
+                },
+                {
+                    title: '状态',
+                    id: '/setting/nodestatus',
+                    icon: <HourglassOutlined />,
+                    parentUrl: '/setting/systemFlow',
+                    num: count?.nodestatus || 0
+                },
+            ]
+        },
+    ]
+    useEffect(() => {
+        findOrgaNum().then(res => {
+            if (res.code === 0) {
                 setCount(res.data)
             }
         })
-        if(version==='cloud'){
+        if (version === 'cloud') {
             findlogpage({
-                pageParam: {pageSize: 1, currentPage: 1},
-                userId:getUser().userId
-            }).then(res=>{
-                if(res.code===0){
+                pageParam: { pageSize: 1, currentPage: 1 },
+                userId: getUser().userId
+            }).then(res => {
+                if (res.code === 0) {
                     setLog(res.data)
                 }
             })
         } else {
-            findUseLicence().then(res=>{
-                if(res.code===0){
+            findUseLicence().then(res => {
+                if (res.code === 0) {
                     setLicence(res.data)
                 }
             })
         }
-    },[])
+    }, [])
 
-    /**
-     * 路由跳转
-     */
-    const li = ['orga','user','userGroup','dir'];
-    const goPath = path => {
-        const authConfig = JSON.parse(localStorage.getItem("authConfig"))
-        if(!authConfig.authType){
-            const isAuth = li.some(item => item===path)
-            if(isAuth){
-                return applyJump(`${authConfig.authServiceUrl}/#/user/${path}`)
-            }
-        }
-        props.history.push(`/setting/${path}`)
+    const goAuth = () => {
+        setOpenOrClose("/setting/version")
+        setSelectKey("/setting/version");
+        props.history.push(`/setting/productAuth`)
     }
-
-
-    const commonBox = (
-        <>
-            <div className='home-message-box'>
-                <div className='home-title'>消息</div>
-                <div className='home-message'>
-                    <div className='home-message-item' onClick={()=>goPath('messageNotice')}>
-                        <div className='home-icon'><MessageOutlined/></div>
-                        <div className='home-label'>消息通知方案</div>
-                        <div className='home-info'>
-                            {count?.messageNotice || 0}
-                        </div>
-                    </div>
-                    <div className='home-message-item' onClick={()=>goPath('messageSendType')}>
-                        <div className='home-icon'><AlertOutlined /></div>
-                        <div className='home-label'>消息发送方式</div>
-                        <div className='home-info'>
-                            {count?.sendType || 0}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className='home-config-box'>
-                <div className='home-title'>项目配置</div>
-                <div className='home-config'>
-                    <div className='home-config-item' onClick={()=>goPath('worktype')}>
-                        <div className='home-icon'><ShoppingOutlined /></div>
-                        <div className='home-label'>事项类型</div>
-                        <div className='home-info'>{count?.workType || 0}</div>
-                    </div>
-                    <div className='home-config-item' onClick={()=>goPath('form')}>
-                        <div className='home-icon'><InsertRowBelowOutlined /></div>
-                        <div className='home-label'>表单</div>
-                        <div className='home-info'>{count?.form || 0}</div>
-                    </div>
-                    <div className='home-config-item' onClick={()=>goPath('preliminary')}>
-                        <div className='home-icon'><InboxOutlined /></div>
-                        <div className='home-label'>字段</div>
-                        <div className='home-info'>{count?.field || 0}</div>
-                    </div>
-                    <div className='home-config-item' onClick={()=>goPath('systemFlow')}>
-                        <div className='home-icon'><NodeIndexOutlined /></div>
-                        <div className='home-label'>流程</div>
-                        <div className='home-info'>{count?.flow || 0}</div>
-                    </div>
-                    <div className='home-config-item' onClick={()=>goPath('nodestatus')}>
-                        <div className='home-icon'><HourglassOutlined /></div>
-                        <div className='home-label'>状态</div>
-                        <div className='home-info'>{count?.flow || 0}</div>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
 
     return (
         <Row className='setting-home'>
@@ -145,52 +221,50 @@ const SettingHome = props => {
                 xs={{ span: "24" }}
                 sm={{ span: "24" }}
                 md={{ span: "24" }}
-                lg={{ span: "18" , offset: "3" }}
+                lg={{ span: "18", offset: "3" }}
                 xl={{ span: "14", offset: "5" }}
                 xxl={{ span: "14", offset: "5" }}
             >
                 <div className='setting-home-limited'>
                     {
-                        version ==='cloud' ?
-                            <>
-                                <div className='home-chunk-box'>
-                                    {commonBox}
-                                    <div className='home-security-box'>
-                                        <div className='home-title'>安全</div>
-                                        <div className='home-security'>
-                                            <div className='home-security-item' onClick={()=>goPath('backups')}>
-                                                <div className='home-icon'><HistoryOutlined /></div>
-                                                <div className='home-label'>上次备份时间</div>
-                                                <div className='home-info'>{count?.lastBackups && moment(count.lastBackups).format('YYYY-MM-DD') || '无'}</div>
+                        version === "cloud" ? <>
+                            <div className='home-licence-box'>
+                                {cloudVersion}
+                            </div>
+                            <div className='home-chunk-box'>
+                                {
+                                    array.map((item, index) => {
+                                        return (
+                                            <div className='home-user-box' key={index}>
+                                                <div className='home-title'>{item.title}</div>
+                                                <div className='home-user'>
+                                                    {
+                                                        item.children.map(childrenItem => {
+                                                            return <div className='home-user-item' onClick={() => select(childrenItem)}>
+                                                                <div className='home-icon'>
+                                                                    {childrenItem.icon}
+                                                                </div>
+                                                                <div className='home-label'>
+                                                                    {childrenItem.title}
+                                                                    {
+                                                                        childrenItem.iseEnhance && versionInfo.expired === true && <svg className="img-icon-16" aria-hidden="true" >
+                                                                            <use xlinkHref="#icon-member"></use>
+                                                                        </svg>
+                                                                    }
+                                                                </div>
+                                                                <div className='home-info'>
+                                                                    {childrenItem.num}
+                                                                </div>
+                                                            </div>
+                                                        })
+                                                    }
+                                                </div>
                                             </div>
-                                            <div className='home-security-item' onClick={()=>goPath('log')}>
-                                                <div className='home-icon'><LaptopOutlined /></div>
-                                                <div className='home-label'>操作日志</div>
-                                                <div className='home-info'>{log?.totalRecord || '0'}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='home-quick-box'>
-                                    <div className='home-quick home-chunk-box'>
-                                        <div className='home-quick-item' onClick={()=>goPath('urlData')}>
-                                            <div className='home-icon'><MacCommandOutlined /></div>
-                                            <div className='home-quick-item-title'>服务集成</div>
-                                            <div><RightOutlined /></div>
-                                        </div>
-                                        <div className='home-quick-item' onClick={()=>goPath('loadData')}>
-                                            <div className='home-icon'><MergeCellsOutlined/></div>
-                                            <div className='home-quick-item-title'>jira集成</div>
-                                            <div><RightOutlined /></div>
-                                        </div>
-                                        <div className='home-quick-item' onClick={()=>goPath('systemRole')}>
-                                            <div className='home-icon'> <FileProtectOutlined /></div>
-                                            <div className='home-quick-item-title'>权限</div>
-                                            <div><RightOutlined /></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </>
                             :
                             <>
                                 <div className='home-licence-box'>
@@ -198,7 +272,7 @@ const SettingHome = props => {
                                         <div className='home-licence-item'>
                                             <div className='home-licence-item-level'>
                                                 <div className='licence-level-img'>
-                                                    <img src={count?.version ? vipDark:vipLight} alt={''}/>
+                                                    <img src={count?.version ? vipDark : vipLight} alt={''} />
                                                 </div>
                                                 <div>
                                                     <div>
@@ -210,53 +284,50 @@ const SettingHome = props => {
                                                     </div>
                                                     <div className='licence-level-applyAuth'>
                                                         <span className='licence-level-applyAuth-title'>授权人数：</span>
-                                                        <span className='licence-level-info'>
-                                                            {count?.applyAuthNumber || 0 } / {count?.version ? "不限制" : licence?.userNum > 0 ? licence.userNum+'人' : "不限制"}
+                                                        <span className='licence-level-info licence-level-click' onClick={()=> goAuth()}>
+                                                            {count?.applyAuthNumber || 0} / {count?.version ? "不限制" : licence?.userNum > 0 ? licence.userNum + '人' : "不限制"}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='home-licence-sub' onClick={()=>applySubscription('kanass')}>
+                                        <div className='home-licence-sub' onClick={() => applySubscription('kanass')}>
                                             {count?.version ? '订阅' : '续订'}
                                         </div>
                                     </div>
                                 </div>
                                 <div className='home-chunk-box'>
-                                    <div className='home-user-box'>
-                                        <div className='home-title'>用户与权限</div>
-                                        <div className='home-user'>
-                                            <div className='home-user-item' onClick={()=>goPath('user')}>
-                                                <div className='home-icon'><UserOutlined/></div>
-                                                <div className='home-label'>用户</div>
-                                                <div className='home-info'>
-                                                    {count?.user || 0}
+                                    {
+                                        array.map((item, index) => {
+                                            return (
+                                                <div className='home-user-box' key={index}>
+                                                    <div className='home-title'>{item.title}</div>
+                                                    <div className='home-user'>
+                                                        {
+                                                            item.children.map(childrenItem => {
+                                                                return <div className='home-user-item' onClick={() => select(childrenItem)}>
+                                                                    <div className='home-icon'>
+                                                                        {childrenItem.icon}
+                                                                    </div>
+                                                                    <div className='home-label'>
+                                                                        {childrenItem.title}
+                                                                        {
+                                                                            childrenItem.iseEnhance && versionInfo.expired === true && <svg className="img-icon-16" aria-hidden="true" >
+                                                                                <use xlinkHref="#icon-member"></use>
+                                                                            </svg>
+                                                                        }
+                                                                    </div>
+                                                                    <div className='home-info'>
+                                                                        {childrenItem.num}
+                                                                    </div>
+                                                                </div>
+                                                            })
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className='home-user-item' onClick={()=>goPath('orga')}>
-                                                <div className='home-icon'><ApartmentOutlined /></div>
-                                                <div className='home-label'>部门</div>
-                                                <div className='home-info'>
-                                                    {count?.orga || 0}
-                                                </div>
-                                            </div>
-                                            <div className='home-user-item' onClick={()=>goPath('userGroup')}>
-                                                <div className='home-icon'><GroupOutlined /></div>
-                                                <div className='home-label'>用户组</div>
-                                                <div className='home-info'>
-                                                    {count?.userGroup || 0}
-                                                </div>
-                                            </div>
-                                            <div className='home-user-item' onClick={()=>goPath('systemRole')}>
-                                                <div className='home-icon'><ScheduleOutlined /></div>
-                                                <div className='home-label'>权限</div>
-                                                <div className='home-info'>
-                                                    {count?.role || 0}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {commonBox}
+                                            )
+                                        })
+                                    }
                                 </div>
                             </>
                     }

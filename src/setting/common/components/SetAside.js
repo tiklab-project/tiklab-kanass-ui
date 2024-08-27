@@ -15,11 +15,11 @@ import SettingHomeStore from "../../home/store/SettingHomeStore";
 import Logo from "../../../home/common/components/Logo"
 import { observer } from 'mobx-react';
 const SetAside = (props) => {
-    const { setSelectKey, selectKey } = SettingHomeStore;
+    const { setSelectKey, selectKey,  setExpandedTree, expandedTree } = SettingHomeStore;
     // 无子级菜单处理
     // const [selectKey, setSelectKey] = useState("/organ/organ");
     const theme = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
-    
+   
     const [router, setRouterMenu] = useState(setDevRouter);
     const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
     // const env = localStorage.getItem("authType").authType;
@@ -80,9 +80,6 @@ const SetAside = (props) => {
 
         )
     }
-
-    // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState([])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
@@ -149,7 +146,7 @@ const SetAside = (props) => {
             <div className="orga-aside">
                 <ul style={{ padding: 0 }} key="0" className="orga-aside-top">
                     {/* <Logo isShowText = {true} theme = {"default"}/> */}
-                    <div className="orga-aside-name">
+                    <div className="orga-aside-name" onClick={() => props.history.push("/setting/home")}>
                         设置
                     </div>
                     <div className="orga-aside-back" onClick={() => backProject()}>

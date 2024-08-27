@@ -36,7 +36,7 @@ const mobile_url = JSON.stringify('http://192.168.10.22:3010/')
 const homes_url = JSON.stringify("http://192.168.10.22")
 const kanass_url =JSON.stringify("http://192.168.10.25:3004")
 // const eas_url = JSON.stringify("http://eas.test.thoughtware.net")
-
+const workUrl = JSON.stringify("https://work.cloud.thoughtware.cn")
 module.exports = {
     base_url,
     userProduction,
@@ -52,5 +52,6 @@ module.exports = {
     // acc_url,
     mobile_url,
     homes_url,
-    kanass_url
+    kanass_url,
+    workUrl
 }
