@@ -273,7 +273,7 @@ const Survey = (props) => {
                                     </svg>
                                     <div className="item-content">
                                         <div className="item-top">{project?.startTime} ~ {project?.endTime}</div>
-                                        <div className="item-bottom">项目状态</div>
+                                        <div className="item-bottom">计划时间</div>
                                     </div>
                                 </div>
 

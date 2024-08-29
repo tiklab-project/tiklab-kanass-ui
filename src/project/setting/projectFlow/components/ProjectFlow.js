@@ -23,10 +23,15 @@ const ProjectProjectFlowList = (props) => {
         setRouter(`/project/${projectId}/set/projectFlowDetail`);
 
         getUserList({ projectId: projectId })
-        return
+        return null;
     }, [])
+
+    const goForm = (id) => {
+        props.history.push(`/project/${projectId}/set/ProjectFormDetail/${id}`)
+    }
+
     return (
-        <ProjectFlow domainId={projectId} viewRouter={router} designRouter={router} {...props} />
+        <ProjectFlow goForm = {goForm} domainId={projectId} viewRouter={router} designRouter={router} {...props} />
 
     )
 }
