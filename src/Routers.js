@@ -902,7 +902,7 @@ const Routers = [
                 ]
             },
             {
-                path: "/:id/sprint/:sprint/workItem",
+                path: "/:id/sprint/:sprint/workitem",
                 component: Work,
             },
             {
@@ -936,10 +936,6 @@ const Routers = [
                 component: WorkTodoPage
             },
             {
-                path: "/:id/sprint/:sprint/workitem",
-                component: Work,
-            },
-            {
                 path: "/:id/sprint/:sprint/workList",
                 component: WorkList,
             },
@@ -964,10 +960,6 @@ const Routers = [
         path: "/:id/version/:version",
         component: VersionHome,
         routes: [
-            {
-                path: "/:id/version/:version/workItem",
-                component: Work,
-            },
             {
                 path: "/:id/version/:version/work/:workId",
                 component: WorkDetailPage,

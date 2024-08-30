@@ -45,6 +45,12 @@ export class SettingHomeStore {
         }
         return data;
     }
+
+    @action
+    findOrgaNum = async () => {
+        const data = await Service("/setting/findOrgaNum");
+        return data;
+    }
 }
 
 export default new SettingHomeStore();

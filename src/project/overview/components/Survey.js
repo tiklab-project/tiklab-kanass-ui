@@ -327,10 +327,8 @@ const Survey = (props) => {
                                             !loading && <ProjectEmpty description="暂时没有动态~" />
                                         }
                                     </>
-
                             }
                         </Spin>
-
                     </div>
 
                     {/* <TodoListBox todoTaskList = {todoList} goToListPage = {goToListPage} model = {"project"}/> */}
