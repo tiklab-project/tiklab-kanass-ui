@@ -6,22 +6,26 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2021-11-09 10:02:15
  */
-import React,{Fragment} from "react";
+import React, { Fragment } from "react";
 import GideImge from "../../../assets/images/projectGide.png";
 import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react"
 import { withRouter } from "react-router";
-const ProjectGide =(props) => {
+import { PrivilegeButton } from "thoughtware-privilege-ui";
+const ProjectGide = (props) => {
     const { projectStore } = props;
     return (
         <div className="project-gide">
             <div>
-                <img src = {GideImge}/>
+                <img src={GideImge} />
             </div>
-            <div className= "gide-right">
+            <div className="gide-right">
                 <div>您还没有项目，请先</div>
-                <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} >
-                </Button>
+                <PrivilegeButton code={'ProjectAdd'}  {...props}>
+                    <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} >
+                    </Button>
+                </PrivilegeButton>
+
             </div>
         </div>
     )

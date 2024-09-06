@@ -60,7 +60,7 @@ const LoadData = (props) => {
             if(info.event){
                 clearInterval(timer) 
                 setLoading(true)
-                timer = setInterval(() => getJiraInputSchedule(), 2000)
+                // timer = setInterval(() => getJiraInputSchedule(), 2000)
                 setTimerS(timer)
             }
             if(info.file.status === "done"){
@@ -72,7 +72,6 @@ const LoadData = (props) => {
                 }else{
                     message.error("导入失败")
                 }
-                
             }
 
         },

@@ -3,9 +3,11 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 10px;
+    width: 75px;
     .first-menu-link-item {
         padding: 6px;
         margin-bottom: 0;
+        width: 75px;
     }
     .user-icon {
         width: 24px;
@@ -26,5 +28,11 @@
     .user-icon {
         width: 24px;
         height: 24px;
+    }
+    
+}
+.thoughtware_licence_modal{
+    .ant-modal-body {
+        padding: 0 15px 15px !important;
     }
 }

@@ -78,7 +78,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            border-radius: 5px;
+            gap: 10px;
             margin-bottom: 5px;
             .project-item-info {
                 line-height: 30px;
@@ -94,6 +94,7 @@
         }
         .change-project-selectItem {
             background-color: var(--thoughtware-gray-400);
+            
         }
        
         .menu-show {

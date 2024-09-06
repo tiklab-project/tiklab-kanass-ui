@@ -13,33 +13,37 @@ import { Layout, Button } from "antd";
 
 import { useTranslation } from 'react-i18next';
 import "./ProjectSetSettingDetailAside.scss"
+import { PrivilegeProjectButton } from 'thoughtware-privilege-ui';
 const { Sider } = Layout;
 
 const ProjectSetSettingDetailAside = (props) => {
+    const {prorouter} = props;
     //语言包
     const { t } = useTranslation();
     const projectSetId = JSON.parse(localStorage.getItem("projectSet")).id;
     // 路由
-    const prorouter = [
-        {
-            title: "项目集信息",
-            icon: 'survey',
-            key: `/projectSet/${projectSetId}/set/basicInfo`,
-            encoded: "Survey",
-        },
-        {
-            title: `${t('user')}`,
-            icon: 'survey',
-            key: `/projectSet/${projectSetId}/set/user`,
-            encoded: "DominRole",
-        },
-        {
-            title: `${t('privilege')}`,
-            icon: 'survey',
-            key: `/projectSet/${projectSetId}/set/dominRole`,
-            encoded: "User",
-        }
-    ];
+    // const prorouter = [
+    //     {
+    //         title: "项目集信息",
+    //         icon: 'survey',
+    //         key: `/projectSet/${projectSetId}/set/basicInfo`,
+    //         encoded: "Survey",
+    //     },
+    //     {
+    //         title: `${t('user')}`,
+    //         icon: 'survey',
+    //         key: `/projectSet/${projectSetId}/set/user`,
+    //         encoded: "DominRole",
+    //         purviewCode: "ProjectSetUser",
+    //     },
+    //     {
+    //         title: `${t('privilege')}`,
+    //         icon: 'survey',
+    //         key: `/projectSet/${projectSetId}/set/dominRole`,
+    //         encoded: "User",
+    //         purviewCode: "ProjectSetPrivilege",
+    //     }
+    // ];
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/projectScrumDetail/${projectSetId}/set/basicInfo`);
 
@@ -83,18 +87,21 @@ const ProjectSetSettingDetailAside = (props) => {
                     </div>
                     <ul className="projectSet-menu">
                         {
-                            prorouter && prorouter.map(Item => {
-                                return <div className={`projectSet-menu-submenu ${Item.key === selectKey ? "projectSet-menu-select" : ""}`}
-                                    key={Item.key}
-                                    onClick={() => selectKeyFun(Item.key)}
-                                >
-                                    {/* <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${Item.icon}`}></use>
+                            prorouter && prorouter.map(item => {
+                                return <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>
+                                    <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
+                                        key={item.key}
+                                        onClick={() => selectKeyFun(item.id)}
+                                    >
+                                        {/* <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-${item.icon}`}></use>
                                     </svg> */}
-                                    <span className={`${isShowText ? "" : "projectSet-notext"}`}>
-                                        {Item.title}
-                                    </span>
-                                </div>
+                                        <span className={`${isShowText ? "" : "projectSet-notext"}`}>
+                                            {item.title}
+                                        </span>
+                                    </div>
+                                </PrivilegeProjectButton>
+
                             })
                         }
                     </ul>

@@ -146,7 +146,7 @@ const ProjectAside = (props) => {
                                         onClick={() => backProject()}
                                         data-title-right={backName}
                                     >
-                                        <svg className={iconName === "home" ? "img-32" : "icon-29"} aria-hidden="true">
+                                        <svg className={iconName === "backhome" ? "icon-24" : "icon-29"} aria-hidden="true">
                                             <use xlinkHref={`#icon-${iconName}-${theme}`}></use>
                                         </svg>
                                     </div>

@@ -22,6 +22,7 @@ import { useDebounce } from "../../../common/utils/debounce";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -290,8 +291,10 @@ const Sprint = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
+                    <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
+                        <DeleteModal deleteFunction={deleSprintList} id={record.id} />
+                    </PrivilegeProjectButton>
 
-                    <DeleteModal deleteFunction={deleSprintList} id={record.id} />
                 </Space>
 
             ),
@@ -307,9 +310,12 @@ const Sprint = (props) => {
                             firstText="迭代"
                         >
                             <div className="sprint-botton">
-                                <Button type="primary" className="sprint-botton-add" onClick={() => showModal("add")}>
-                                    添加迭代
-                                </Button>
+                                <PrivilegeProjectButton code={'SpintAdd'} domainId={projectId}  {...props}>
+                                    <Button type="primary" className="sprint-botton-add" onClick={() => showModal("add")}>
+                                        添加迭代
+                                    </Button>
+                                </PrivilegeProjectButton>
+
                             </div>
                         </Breadcumb>
                         <div className="sprint-filter">
@@ -339,7 +345,7 @@ const Sprint = (props) => {
                                     title={"状态"}
                                     ismult={true}
                                     value={sprintPageParams?.sprintStateIds}
-                                    suffixIcon = {true}
+                                    suffixIcon={true}
                                 >
                                     {
                                         sprintStateList.map(item => {
@@ -363,7 +369,7 @@ const Sprint = (props) => {
                                     rowKey={(record) => record.id}
                                     // pagination={false}
                                     onSearch={onSearch}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                     pagination={{
                                         total: total,
                                         pageSize: sprintPageParams.pageParam.pageSize,

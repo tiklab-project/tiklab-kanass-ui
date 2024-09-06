@@ -183,6 +183,7 @@ const VersionTable = (props) => {
             key: "action",
             width: "100px",
             render: (text, record, index) => (
+
                 <Space size="middle">
                     {
                         record.focusIs ?
@@ -194,9 +195,13 @@ const VersionTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <DeleteModal deleteFunction={deletVersionList} id={record.id} />
+                    <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
+                        <DeleteModal deleteFunction={deletVersionList} id={record.id} />
+                    </PrivilegeProjectButton>
+
 
                 </Space>
+
 
             ),
         },
@@ -297,17 +302,20 @@ const VersionTable = (props) => {
                         <Breadcumb
                             firstText="版本"
                         >
-                            <VersionAddmodal
-                                name="添加版本"
-                                type="add"
-                                id="0"
-                                // findVersion={findVersion}
-                                getUseList={getUseList}
-                                userList={userList}
-                                setActiveTabs={setActiveTabs}
-                                selectTabs={selectTabs}
-                                {...props}
-                            />
+                            <PrivilegeProjectButton code={'ProjectVersionAdd'} domainId={projectId}  {...props}>
+                                <VersionAddmodal
+                                    name="添加版本"
+                                    type="add"
+                                    id="0"
+                                    // findVersion={findVersion}
+                                    getUseList={getUseList}
+                                    userList={userList}
+                                    setActiveTabs={setActiveTabs}
+                                    selectTabs={selectTabs}
+                                    {...props}
+                                />
+                            </PrivilegeProjectButton>
+
                         </Breadcumb>
                         <div className="version-filter">
                             <div className="version-tabs">
@@ -369,7 +377,7 @@ const VersionTable = (props) => {
                                     }}
                                     loading={loading}
                                     onSearch={onSearch}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                 />
                             </div>
                         </div>

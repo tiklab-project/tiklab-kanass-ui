@@ -781,6 +781,12 @@ const Routers = [
                         path: "/project/:id/set/:privilegeId/:roleType/:roleId",
                         component: ProjectRoleFunction,
                     },
+                    {
+                        exact: false,
+                        path: "/project/:id/set/noaccess",
+                        component: NoAccessPage,
+                        key: "ProjectSetNoaccess"
+                    },
                 ]
             },
          
@@ -821,7 +827,13 @@ const Routers = [
                         exact: false,
                         component: ProjectSetUser,
                         key: "ProjectSetUser"
-                    }
+                    },
+                    {
+                        exact: false,
+                        path: "/projectSet/:projectSetId/set/noaccess",
+                        component: NoAccessPage,
+                        key: "ProjectSetNoaccess"
+                    },
                 ]
             },
             {

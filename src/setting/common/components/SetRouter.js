@@ -11,7 +11,7 @@ const setDevRouter= [
     {
         title: "用户与权限",
         icon: 'systemuser',
-        purviewCode: "orga",
+        purviewCode: "SysUserPrivilege",
         id: '/setting/orga',
         code: "userPrivilege",
         children: [
@@ -19,7 +19,7 @@ const setDevRouter= [
                 title: '用户',
                 id: '/setting/user',
                 easId: '/user/user',
-                purviewCode: "user",
+                purviewCode: "SysUser",
                 islink: true,
                 code: "user",
             },
@@ -27,17 +27,16 @@ const setDevRouter= [
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
-                purviewCode: "orga",
+                purviewCode: "SysOrga",
                 islink: true,
                 code: "orga",
                 
             },
-           
             {
                 title: '用户组',
                 id: '/setting/userGroup',
                 easId: '/user/userGroup',
-                purviewCode: "user_group",
+                purviewCode: "SysUsergroup",
                 islink: true,
                 code: "userGroup",
             },
@@ -46,7 +45,7 @@ const setDevRouter= [
                 title: "用户目录",
                 id: '/setting/dir',
                 easId: '/user/dir',
-                purviewCode: "user_dir",
+                purviewCode: "SysDir",
                 islink: true,
                 code: "dir",
             },
@@ -105,7 +104,7 @@ const setDevRouter= [
             {
                 title: '字段',
                 id: '/setting/preliminary',
-                purviewCode: "SysFieldType",
+                purviewCode: "SysField",
                 code: "preliminary",
             },
             {
@@ -142,16 +141,19 @@ const setDevRouter= [
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
+        purviewCode: "SysIntergrtion",
         children: [
             {
                 title: 'JIRA',
                 id: '/setting/loadData',
                 code: "loadData",
+                purviewCode: "SysJira"
             },
             {
                 title: '地址配置',
                 id: '/setting/urlData',
                 code: "urlData",
+                purviewCode: "SysUrlData"
             }
         ]
     },
@@ -159,19 +161,20 @@ const setDevRouter= [
         title: "安全",
         icon: 'systemlog',
         id: '/setting/log',
-        // purviewCode: "SysLog",
+        purviewCode: "SysSecure",
         code: "log",
         children: [
             {
                 title: '操作日志',
                 id: '/setting/log',
-                // purviewCode: "SysLogList",
+                purviewCode: "SysLog",
                 code: "logList",
             }, 
             {
                 title: "备份与恢复",
                 id: '/setting/backups',
-                code: "backups"
+                code: "backups",
+                purviewCode: "SysBackups"
             },
         ]
     }, 
@@ -179,19 +182,19 @@ const setDevRouter= [
         title: "应用",
         icon: 'systemversion',
         id: '/setting/version',
-        // purviewCode: "version",
+        purviewCode: "SysApplication",
         code: "application",
         children: [
             {
                 title: "版本与许可证",
                 id: '/setting/version',
-                // purviewCode: "version",
+                purviewCode: "SysVersion",
                 code: "version",
             },
             {
                 title: "应用访问权限",
                 id: '/setting/productAuth',
-                // purviewCode: "version",
+                purviewCode: "SysProductAuth",
                 code: "productAuth",
             },
         ]
@@ -329,7 +332,7 @@ const setPrdRouter= [
     {
         title: "用户与权限",
         icon: 'systemuser',
-        purviewCode: "orga",
+        purviewCode: "SysUserPrivilege",
         id: '/setting/orga',
         code: "userPrivilege",
         children: [
@@ -337,7 +340,7 @@ const setPrdRouter= [
                 title: '用户',
                 id: '/setting/user',
                 easId: '/user/user',
-                purviewCode: "user",
+                purviewCode: "SysUser",
                 islink: true,
                 code: "user",
             },
@@ -345,17 +348,16 @@ const setPrdRouter= [
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
-                purviewCode: "orga",
+                purviewCode: "SysOrga",
                 islink: true,
                 code: "orga",
                 
             },
-           
             {
                 title: '用户组',
                 id: '/setting/userGroup',
                 easId: '/user/userGroup',
-                purviewCode: "user_group",
+                purviewCode: "SysUsergroup",
                 islink: true,
                 code: "userGroup",
             },
@@ -364,7 +366,7 @@ const setPrdRouter= [
                 title: "用户目录",
                 id: '/setting/dir',
                 easId: '/user/dir',
-                purviewCode: "user_dir",
+                purviewCode: "SysDir",
                 islink: true,
                 code: "dir",
             },
@@ -411,7 +413,7 @@ const setPrdRouter= [
         icon: 'systemform',
         id: "/setting/form",
         purviewCode: "SysForm",
-        code: "form",
+        code: "SysForm",
         children: [
             
             {
@@ -423,7 +425,7 @@ const setPrdRouter= [
             {
                 title: '字段',
                 id: '/setting/preliminary',
-                purviewCode: "SysFieldType",
+                purviewCode: "SysField",
                 code: "preliminary",
             },
             {
@@ -460,16 +462,19 @@ const setPrdRouter= [
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
+        purviewCode: "SysIntergrtion",
         children: [
             {
                 title: 'JIRA',
                 id: '/setting/loadData',
                 code: "loadData",
+                purviewCode: "SysJira"
             },
             {
                 title: '地址配置',
                 id: '/setting/urlData',
                 code: "urlData",
+                purviewCode: "SysUrlData"
             }
         ]
     },
@@ -477,19 +482,20 @@ const setPrdRouter= [
         title: "安全",
         icon: 'systemlog',
         id: '/setting/log',
-        // purviewCode: "SysLog",
+        purviewCode: "SysSecure",
         code: "log",
         children: [
             {
                 title: '操作日志',
                 id: '/setting/log',
-                // purviewCode: "SysLogList",
+                purviewCode: "SysLog",
                 code: "logList",
             }, 
             {
                 title: "备份与恢复",
                 id: '/setting/backups',
-                code: "backups"
+                code: "backups",
+                purviewCode: "SysBackups"
             },
         ]
     }, 
@@ -497,19 +503,19 @@ const setPrdRouter= [
         title: "应用",
         icon: 'systemversion',
         id: '/setting/version',
-        // purviewCode: "version",
+        purviewCode: "SysApplication",
         code: "application",
         children: [
             {
                 title: "版本与许可证",
                 id: '/setting/version',
-                // purviewCode: "version",
+                purviewCode: "SysVersion",
                 code: "version",
             },
             {
                 title: "应用访问权限",
                 id: '/setting/productAuth',
-                // purviewCode: "version",
+                purviewCode: "SysProductAuth",
                 code: "productAuth",
             },
         ]

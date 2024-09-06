@@ -20,6 +20,7 @@ import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 import { Collapse } from 'antd';
 import { getUser } from "thoughtware-core-ui";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
+import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
 
 const { Panel } = Collapse;
 
@@ -46,6 +47,7 @@ const BasicInfo = props => {
     const [confirmForm] = Form.useForm();
     const projectId = props.match.params.id;
     const { projectStore } = props;
+    const {findDmUserList} = ProjectBasicInfoStore;
     const { deleproList, updateProject, searchpro, projectTypelist,
         getProjectTypeList, getUseList, uselist } = projectStore;
     const [disable, setDisabled] = useState(true);
@@ -53,6 +55,8 @@ const BasicInfo = props => {
     const [visible, setVisible] = useState(false);
     const [projectInfo, setProjectInfo] = useState();
     const tenant = getUser().tenant;
+    const [activeKey, setActiveKey] = useState("1");
+    const [dmUser, setDmUser] = useState([])
     // 周期
     const rangeConfig = {
         rules: [
@@ -69,7 +73,11 @@ const BasicInfo = props => {
 
         info()
         getProjectTypeList()
-        getUseList()
+        findDmUserList({domainId : projectId}).then(res=> {
+            if(res.code === 0){
+                setDmUser(res.data)
+            }
+        })
         return;
     }, [])
     const info = () => {
@@ -221,9 +229,10 @@ const BasicInfo = props => {
                 <div className="project-set-basicinfo">
                     <Breadcumb
                         firstText="项目信息"
+
                     />
 
-                    <Collapse expandIconPosition={"right"}>
+                    <Collapse defaultActiveKey = {"1"} expandIconPosition={"right"}>
                         <Panel header={projectInfoDesc()} key="1" >
                             <div className="project-set-icon">
                                 <Form.Item
@@ -234,9 +243,9 @@ const BasicInfo = props => {
                                 >
                                     <div className="project-form-icon-content">
                                         <div>
-                                            <ImgComponent 
-                                                src={iconUrl} 
-                                                alt="" 
+                                            <ImgComponent
+                                                src={iconUrl}
+                                                alt=""
                                                 style={{ marginRight: "10px", width: "50px", height: "50px" }}
                                             />
 
@@ -331,8 +340,8 @@ const BasicInfo = props => {
                                             allowClear
                                         >
                                             {
-                                                uselist && uselist.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
+                                                dmUser && dmUser.map((item, index) => {
+                                                    return <Select.Option value={item.user.id} key={item.user.id}>{item.user.nickname ? item.user.nickname : item.user.name}</Select.Option>
                                                 })
                                             }
                                         </Select>
@@ -346,14 +355,17 @@ const BasicInfo = props => {
                                     >
                                         <Input placeholder="项目描述" />
                                     </Form.Item>
-                                    <Form.Item {...formTailLayout} >
-                                        <Button onClick={() => cancel()}>
-                                            取消
-                                        </Button>
-                                        <Button htmlType="submit" type="primary" disabled={disable}>
-                                            保存
-                                        </Button>
-                                    </Form.Item>
+                                    <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
+                                        <Form.Item {...formTailLayout} >
+                                            <Button onClick={() => cancel()}>
+                                                取消
+                                            </Button>
+                                            <Button htmlType="submit" type="primary" disabled={disable}>
+                                                保存
+                                            </Button>
+                                        </Form.Item>
+                                    </PrivilegeProjectButton>
+
                                 </Form>
                             </div>
                         </Panel>

@@ -115,12 +115,12 @@ const ProjectSetBasicInfo = props => {
             }
 
             updateProjectSet(data).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     setprojectSetInfo(data)
                 }
                 setDisabled(true)
             })
-            
+
             // setVisible(false);
         })
     }
@@ -176,7 +176,7 @@ const ProjectSetBasicInfo = props => {
             </div>
         </div>
     );
-    
+
     const projectSetLimits = [
         {
             name: "公共项目",
@@ -195,84 +195,85 @@ const ProjectSetBasicInfo = props => {
                     <Breadcumb
                         firstText="项目集信息"
                     />
-                    <Collapse expandIconPosition={"right"}>
+                    <Collapse defaultActiveKey={"1"} expandIconPosition={"right"}>
                         <Panel header={projectSetInfoDesc()} key="1" >
-                                <Form
-                                    {...layout}
-                                    name="basic"
-                                    initialValues={{
-                                        remember: true,
-                                    }}
-                                    form={form}
-                                    onFinish={onFinish}
-                                    onFieldsChange={() => setDisabled(false)}
-                                    labelAlign={"left"}
-                                    onValuesChange={onFinish}
+                            <Form
+                                {...layout}
+                                name="basic"
+                                initialValues={{
+                                    remember: true,
+                                }}
+                                form={form}
+                                onFinish={onFinish}
+                                onFieldsChange={() => setDisabled(false)}
+                                labelAlign={"left"}
+                                onValuesChange={onFinish}
+                            >
+
+
+                                <Form.Item
+                                    label="项目集名称"
+                                    name="name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: '请输入项目集名称',
+                                        }
+                                    ]}
                                 >
-                                  
-
-                                    <Form.Item
-                                        label="项目集名称"
-                                        name="name"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: '请输入项目集名称',
-                                            }
-                                        ]}
-                                    >
-                                        <Input placeholder="项目集名称" />
-                                    </Form.Item>
+                                    <Input placeholder="项目集名称" />
+                                </Form.Item>
 
 
-                                    <Form.Item
-                                        label="负责人"
-                                        name="master"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: '请输入负责人',
-                                            }
-                                        ]}
+                                <Form.Item
+                                    label="负责人"
+                                    name="master"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: '请输入负责人',
+                                        }
+                                    ]}
+                                >
+                                    <Select
+                                        placeholder="负责人"
                                     >
-                                        <Select
-                                            placeholder="负责人"
-                                        >
-                                            {
-                                                uselist && uselist.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
-                                                })
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="可见范围"
-                                        name="projectSetLimits"
-                                        rules={[
-                                            {
-                                                required: true
-                                            }
-                                        ]}
+                                        {
+                                            uselist && uselist.map((item, index) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label="可见范围"
+                                    name="projectSetLimits"
+                                    rules={[
+                                        {
+                                            required: true
+                                        }
+                                    ]}
+                                >
+                                    <Select
+                                        placeholder="可见范围"
                                     >
-                                        <Select
-                                            placeholder="可见范围"
-                                        >
-                                            {
-                                                projectSetLimits.map((item, index) => {
-                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                                })
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="项目集描述"
-                                        name="remark"
-                                    >
-                                        <Input placeholder="项目集描述" />
-                                    </Form.Item>
+                                        {
+                                            projectSetLimits.map((item, index) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
+                                    <RangePicker locale={locale} />
+                                </Form.Item>
+                                <Form.Item
+                                    label="项目集描述"
+                                    name="remark"
+                                >
+                                    <Input placeholder="项目集描述" />
+                                </Form.Item>
+                                <PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>
                                     <Form.Item {...formTailLayout} >
                                         <Button onClick={() => cancel()}>
                                             取消
@@ -281,7 +282,9 @@ const ProjectSetBasicInfo = props => {
                                             保存
                                         </Button>
                                     </Form.Item>
-                                </Form>
+                                </PrivilegeProjectButton>
+
+                            </Form>
 
                         </Panel>
                         <Panel header={projectSetDelete()} key="2" >
@@ -291,9 +294,12 @@ const ProjectSetBasicInfo = props => {
 
                                         <span>此项目集将被永久删除。</span>
                                     </div>
-                                    <div className="change-button  delete-button" onClick={() => showModal()}>
-                                        删除项目集
-                                    </div>
+                                    <PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>
+                                        <div className="change-button  delete-button" onClick={() => showModal()}>
+                                            删除项目集
+                                        </div>
+                                    </PrivilegeProjectButton>
+
 
                                 </div>
                             </div>

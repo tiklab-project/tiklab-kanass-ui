@@ -200,7 +200,7 @@ const StageBasicInfo = props => {
                         firstText="计划信息"
                     />
 
-                    <Collapse expandIconPosition={"right"}>
+                    <Collapse defaultActiveKey = {"1"} expandIconPosition={"right"}>
                         <Panel header={stageInfoDesc()} key="1" >
                             <div className="stage-set-icon">
                                 <Form

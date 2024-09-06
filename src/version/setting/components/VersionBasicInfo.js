@@ -19,6 +19,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Collapse } from 'antd';
 import VersionBasicStore from "../store/VersionBasicStore";
 import VersionChangeModal from "./VersionChangeModal";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -104,7 +105,7 @@ const VersionBasicInfo = props => {
                     id: versionId
                 }
                 updateVersion(data).then(res => {
-                    if(res.code === 0){
+                    if (res.code === 0) {
                         message.success("修改成功");
                         setVersionInfo(data);
                         setDisabled(true);
@@ -112,7 +113,7 @@ const VersionBasicInfo = props => {
                 });
             })
         }
-        
+
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -130,7 +131,7 @@ const VersionBasicInfo = props => {
                     props.history.push(`/project/${projectId}/version`)
                 }
             })
-            
+
         })
 
     };
@@ -139,7 +140,7 @@ const VersionBasicInfo = props => {
         setIsModalVisible(false);
     };
     const [isChangeState, setIsChangeState] = useState(false)
-    
+
 
     const versionInfoDesc = () => (
         <div>
@@ -182,7 +183,7 @@ const VersionBasicInfo = props => {
                         firstText="版本信息"
                     />
 
-                    <Collapse expandIconPosition={"right"}>
+                    <Collapse defaultActiveKey = {"1"} expandIconPosition={"right"}>
                         <Panel header={versionInfoDesc()} key="1" >
                             <div className="version-set-icon">
                                 <Form
@@ -195,7 +196,7 @@ const VersionBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
-                                    // onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
+                                // onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
                                 >
                                     <Form.Item
                                         label="版本名称"
@@ -226,16 +227,19 @@ const VersionBasicInfo = props => {
                                         </Select>
                                     </Form.Item>
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} showTime/>
+                                        <RangePicker locale={locale} showTime />
                                     </Form.Item>
-                                    <Form.Item {...formTailLayout} >
-                                        <Button onClick={() => cancel()}>
-                                            取消
-                                        </Button>
-                                        <Button htmlType="submit" type="primary" disabled={disable}>
-                                            保存
-                                        </Button>
-                                    </Form.Item>
+                                    <PrivilegeProjectButton code={'ProjectVersionEdit'} domainId={projectId}  {...props}>
+                                        <Form.Item {...formTailLayout} >
+                                            <Button onClick={() => cancel()}>
+                                                取消
+                                            </Button>
+                                            <Button htmlType="submit" type="primary" disabled={disable}>
+                                                保存
+                                            </Button>
+                                        </Form.Item>
+                                    </PrivilegeProjectButton>
+
                                 </Form>
                             </div>
                         </Panel>
@@ -244,39 +248,41 @@ const VersionBasicInfo = props => {
                                 <div className="version-set-icon-block">
                                     删除版本，包含版本与事项的关联关系
                                 </div>
+                                <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
+                                    <div className="change-button delete-button" onClick={() => showModal()}>
+                                        删除版本
+                                    </div>
+                                </PrivilegeProjectButton>
 
-                                <div className="change-button delete-button" onClick={() => showModal()}>
-                                    删除版本
-                                </div>
                             </div>
                         </Panel>
                     </Collapse>
 
                 </div>
                 <div className="version-delete-confirm">
-                    <Modal 
-                        title="确定删除" 
-                        getContainer = {false} 
-                        visible={isModalVisible} 
-                        closable={false} 
-                        onOk={handleOk} 
-                        onCancel={handleCancel} 
-                        okText={"确定"} 
+                    <Modal
+                        title="确定删除"
+                        getContainer={false}
+                        visible={isModalVisible}
+                        closable={false}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                        okText={"确定"}
                         cancelText={"取消"}
                         okType="danger"
-                        okButtonProps={{type: "primary"}}
+                        okButtonProps={{ type: "primary" }}
                     >
                         删除版本，包含版本与事项的关联关系
                     </Modal>
                 </div>
-                <VersionChangeModal 
+                <VersionChangeModal
                     visible={versionChangeVisable}
                     projectId={projectId}
                     versionId={versionId}
                     VersionBasicStore={VersionBasicStore}
                     setVisible={setVersionChangeVisable}
-                    setVersionInfo = {setVersionInfo}
-                    setDisabled = {setDisabled}
+                    setVersionInfo={setVersionInfo}
+                    setDisabled={setDisabled}
                     form={form}
                 />
             </Col>

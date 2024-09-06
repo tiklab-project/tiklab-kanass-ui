@@ -7,6 +7,7 @@ const SystemRoleWrap = props => {
     return (
             <SystemRole
                 {...props}
+                isBase = {true}
                 bgroup={'kanass'}
             />
     )

@@ -136,6 +136,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
             title: 'Kanass',
+            favicon: "./src/assets/images/kanass.png",
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
             filename: 'index.html',

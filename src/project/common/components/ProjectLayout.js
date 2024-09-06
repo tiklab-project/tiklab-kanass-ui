@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-12 15:19:17
  */
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Empty } from 'antd';
+import { Layout, Row, Col, Empty, Spin } from 'antd';
 import ProdeAside from "./ProjectDetailAside";
 import "./ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
@@ -22,7 +22,7 @@ const ProjectLayout = (props) => {
         projectStore: ProjectStore
     }
     const { route, systemRoleStore } = props;
-
+    const [loading, setLoading] = useState(true)
     const { searchpro, findProjectList, project, setProject } = ProjectStore;
     const { setSearchConditionNull, setTabValue } = WorkStore;
     // 项目id
@@ -32,7 +32,9 @@ const ProjectLayout = (props) => {
         /**
          * 从信息页面跳入项目详情页面时，获取项目id
          */
+        setLoading(true)
         searchpro(projectId).then(res => {
+            setLoading(false)
             if (res.code === 0) {
                 localStorage.setItem("project", JSON.stringify(res.data));
                 setProject(res.data)
@@ -56,6 +58,7 @@ const ProjectLayout = (props) => {
 
     return (
         <Provider {...store}>
+            <Spin spinning={loading} tip="加载中..." >
             {
                 project ? <Layout className="project-prodetail">
 
@@ -81,6 +84,8 @@ const ProjectLayout = (props) => {
                 </div>
                 
             }
+            </Spin>
+           
 
         </Provider>
 

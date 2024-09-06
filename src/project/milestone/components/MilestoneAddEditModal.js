@@ -126,7 +126,8 @@ const MilestoneAddEditModal = (props) => {
                         <Button type="primary" onClick={showModal}>
                             添加里程碑
                         </Button>
-                    </PrivilegeProjectButton> :
+                    </PrivilegeProjectButton> 
+                    :
                     <PrivilegeProjectButton code={'MilestoneEdit'} disabled={"hidden"} domainId={projectId}  {...props}>
                         <svg className="svg-icon" aria-hidden="true"
                             onClick={() => showModal()}

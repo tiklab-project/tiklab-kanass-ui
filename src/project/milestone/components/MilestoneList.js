@@ -69,7 +69,10 @@ const MilestoneList = (props) => {
                         id={record.id}
                         {...props}
                     />
-                    <DeleteModal deleteFunction = {deleMilestone} id = {record.id}/>
+                    <PrivilegeProjectButton code={'MilestoneDele'} disabled={"hidden"} domainId={projectId}  {...props}>
+                        <DeleteModal deleteFunction={deleMilestone} id={record.id} />
+                    </PrivilegeProjectButton>
+
                 </Space>
             ),
         },
@@ -109,7 +112,7 @@ const MilestoneList = (props) => {
         setPageParam(pagination)
     }
 
-    return ( <Provider {...store}>
+    return (<Provider {...store}>
         <div className="project-milestone">
             <Row >
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -124,7 +127,7 @@ const MilestoneList = (props) => {
                                 {...props}
                             />
                         </Breadcumb>
-                        <MilestoneTimeline milestonelist = {milestonelist}/>
+                        <MilestoneTimeline milestonelist={milestonelist} />
                         <div className="project-milestone-contant">
 
                             <div className="milestone-table-box">
@@ -136,7 +139,7 @@ const MilestoneList = (props) => {
                                     loading={loading}
                                     onSearch={onSearch}
                                     onChange={pageTurning}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                 />
                             </div>
                         </div>
@@ -145,7 +148,7 @@ const MilestoneList = (props) => {
             </Row>
         </div>
     </Provider>
-        
+
 
     );
 };

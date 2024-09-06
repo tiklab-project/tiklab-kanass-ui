@@ -12,6 +12,7 @@ import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
 import { withRouter } from "react-router";
+import { PrivilegeButton } from "thoughtware-privilege-ui";
 const ProjectSetGide = (props) => {
     const [name, setName] = useState("添加项目集")
 
@@ -22,11 +23,19 @@ const ProjectSetGide = (props) => {
                 <img src={GideImge} />
             </div>
             <div className="gide-right">
-                <div>您还没有项目集合，请先</div>
-                <Button
-                    style={{ width: "fit-content" }}
-                    type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
-                </Button>
+                <div>
+                    您还没有项目集合
+                    <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                        <span>，请先</span>
+                    </PrivilegeButton>
+                </div>
+                <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                    <Button
+                        style={{ width: "fit-content" }}
+                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
+                    </Button>
+                </PrivilegeButton>
+
             </div>
 
         </div>

@@ -13,6 +13,12 @@ export class ProjectBasicInfoStore {
         const data = await Service("/icon/findIconList", params)
         return data;
     }
+
+    @action
+    findDmUserList = async (params) => {
+        const data = await Service("/dmUser/findDmUserList", params)
+        return data;
+    }
 }
 
 export default new ProjectBasicInfoStore();

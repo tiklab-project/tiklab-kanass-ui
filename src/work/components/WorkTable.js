@@ -14,7 +14,8 @@ import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/util
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import { setWorkDeatilInList } from "./WorkSearch";
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import {getColumn, getWorkColumn} from "./WorkTableColumn";
+import { getColumn, getWorkColumn } from "./WorkTableColumn";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 const getScreenType = () => {
     const width = window.innerWidth;
 
@@ -22,15 +23,15 @@ const getScreenType = () => {
         return 'xxl';
     } else if (width < 1600 && width >= 1200) {
         return 'xl';
-    } else if (width < 1200 && width >= 992){
+    } else if (width < 1200 && width >= 992) {
         return 'lg';
-    } else if (width < 992 && width >= 768){
+    } else if (width < 992 && width >= 768) {
         return 'md';
-    } else if (width < 768 && width >= 576){
+    } else if (width < 768 && width >= 576) {
         return 'sm';
-    } else if (width < 576){
+    } else if (width < 576) {
         return 'xs';
-    } 
+    }
 }
 const WorkTable = (props) => {
     const screenSize = useBreakpoint();
@@ -52,7 +53,7 @@ const WorkTable = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
-   
+
     const moreMenu = (record) => {
         return <Menu onClick={() => selectWorkItem(record)}>
             <Menu.Item key="delete">
@@ -67,7 +68,7 @@ const WorkTable = (props) => {
         // getHaveChildren(record.id)
     }
 
-    useEffect(async() => {
+    useEffect(async () => {
         setWorkShowType("table")
         // setQuickFilterValue({
         //     value: "all",
@@ -112,15 +113,18 @@ const WorkTable = (props) => {
         width: "60",
         key: 'action',
         render: (text, record) => (
-            <WorkDeleteSelectModal
-                deleteSelectModal={deleteSelectModal}
-                setDeleteSelectModal={setDeleteSelectModal}
-                getPopupContainer={workTable}
-                delectCurrentWorkItem={delectCurrentWorkItem}
-                haveChildren={haveChildren}
-                workId={record.id}
-                setWorkId={setWorkId}
-            />
+            <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
+                <WorkDeleteSelectModal
+                    deleteSelectModal={deleteSelectModal}
+                    setDeleteSelectModal={setDeleteSelectModal}
+                    getPopupContainer={workTable}
+                    delectCurrentWorkItem={delectCurrentWorkItem}
+                    haveChildren={haveChildren}
+                    workId={record.id}
+                    setWorkId={setWorkId}
+                />
+            </PrivilegeProjectButton>
+
         ),
     }
 
@@ -223,19 +227,19 @@ const WorkTable = (props) => {
     }
 
 
-    useEffect(()=> {
-        
-        if(props.location.pathname === "/workitem" ){
-            const column = getColumn(screenCode, goProdetail, sortArray,actionColumn)
+    useEffect(() => {
+
+        if (props.location.pathname === "/workitem") {
+            const column = getColumn(screenCode, goProdetail, sortArray, actionColumn)
             setProjectColums(column)
-        }else {
-            const column = getWorkColumn(screenCode, goProdetail, sortArray,actionColumn)
+        } else {
+            const column = getWorkColumn(screenCode, goProdetail, sortArray, actionColumn)
             setProjectColums(column)
         }
     }, [screenSize])
 
-   
-        
+
+
 
     // 改变页数
     const changePage = (page, pageSize) => {
@@ -247,12 +251,12 @@ const WorkTable = (props) => {
         }
         setLoading(true)
         if (viewType === "tree") {
-            getWorkConditionPageTree(values).then(res=> {
+            getWorkConditionPageTree(values).then(res => {
                 setLoading(false)
             })
         }
         if (viewType === "tile") {
-            getWorkConditionPage(values).then(res=> {
+            getWorkConditionPage(values).then(res => {
                 setLoading(false)
             })
         }
@@ -311,14 +315,14 @@ const WorkTable = (props) => {
                             <Spin spinning={tableLoading} tip="加载中">
 
                                 <Table
-                                    scroll = {{
+                                    scroll={{
                                         x: "100%"
                                     }}
                                     columns={projectColums}
                                     dataSource={workList}
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
-                                    loading = {loading}
+                                    loading={loading}
                                     rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
                                     pagination={{
                                         total: total,

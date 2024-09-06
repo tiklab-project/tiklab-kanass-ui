@@ -10,6 +10,7 @@ const SystemFeatureList = props => {
         // <div className="test">
             <SystemFeature
                 bgroup={'kanass'}
+                isBase = {true}
                 {...props}
             />
         // </div>

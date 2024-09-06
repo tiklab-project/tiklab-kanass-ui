@@ -13,6 +13,7 @@ import { useDebounce } from "../../../common/utils/debounce";
 import ProjectFilterQuick from "./ProjectFilterQuick";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import { PrivilegeButton } from "thoughtware-privilege-ui";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -268,7 +269,10 @@ const ProjectList = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
+                <PrivilegeButton code={'ProjectAdd'}  {...props}>
+                    <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
+                </PrivilegeButton>
+
             </Breadcumb>
             <div className="project-recent-box">
                 <div className="project-recent-box-title">

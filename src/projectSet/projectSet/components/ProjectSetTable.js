@@ -17,6 +17,7 @@ import { getUser } from 'thoughtware-core-ui';
 import Button from "../../../common/button/Button";
 import ColorIcon from '../../../common/colorIcon/colorIcon';
 import ProjectEmpty from '../../../common/component/ProjectEmpty';
+import { PrivilegeButton } from 'thoughtware-privilege-ui';
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -199,10 +200,13 @@ const ProjectSetTable = (props) => {
         <Row>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcumb firstText="项目集">
-                    <Button
-                        style={{ width: "fit-content" }}
-                        type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
-                    </Button>
+                    <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                        <Button
+                            style={{ width: "fit-content" }}
+                            type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
+                        </Button>
+                    </PrivilegeButton>
+
                 </Breadcumb>
                 <div className="projectSet-recent-box">
                     <div className="projectSet-recent-box-title">
@@ -243,11 +247,11 @@ const ProjectSetTable = (props) => {
                                 })
                                     :
                                     <>
-                                    {
-                                        !recentLoading && <ProjectEmpty description="暂时没有点击过项目集~" />
-                                    }
+                                        {
+                                            !recentLoading && <ProjectEmpty description="暂时没有点击过项目集~" />
+                                        }
                                     </>
-                                    
+
                             }
                         </div>
 

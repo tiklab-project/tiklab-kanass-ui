@@ -7,6 +7,7 @@ import WorkAddModel from "./WorkAddModel";
 import WorkChangeView from "./WorkChangeView";
 import Button from "../../common/button/Button";
 import WorkCreatDropdown from "./workCreatDropdown";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 
 
 const WorkTableHead = (props) => {
@@ -83,9 +84,9 @@ const WorkTableHead = (props) => {
                         </div>
                     }
 
-                    {/* <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}> */}
+                    <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
-                    {/* </PrivilegeProjectButton> */}
+                    </PrivilegeProjectButton>
                     <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
                         <Button>
                             <svg className="svg-icon" aria-hidden="true">

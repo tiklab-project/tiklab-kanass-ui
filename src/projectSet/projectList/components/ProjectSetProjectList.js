@@ -17,6 +17,7 @@ import { withRouter } from 'react-router';
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 import DeleteModal from '../../../common/deleteModal/deleteModal';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
+import { PrivilegeProjectButton } from 'thoughtware-privilege-ui';
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -257,10 +258,11 @@ const ProjectSetProjectList = (props) => {
         <Row className="projectset-project">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSetDetail">
-
-
                     <Breadcumb firstText="项目">
-                        <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
+                        <PrivilegeProjectButton code={'RelationProject'} domainId={projectSetId}  {...props}>
+                            <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
+                        </PrivilegeProjectButton>
+
                     </Breadcumb>
                     <div>
                         <div className="search-add">

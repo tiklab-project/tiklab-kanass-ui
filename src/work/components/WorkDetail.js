@@ -299,7 +299,7 @@ const WorkDetail = (props) => {
                                     {workInfo &&
                                         <div className="work-detail">
                                             <Row >
-                                                <Col {...rowSpan} style={{ background: "#fff", width: "100%"}}>
+                                                <Col {...rowSpan} style={{ background: "#fff", width: "100%" }}>
                                                     <Skeleton loading={infoLoading} active>
                                                         <WorkDetailCrumb
                                                             detailCrumbArray={detailCrumbArray}
@@ -309,8 +309,8 @@ const WorkDetail = (props) => {
                                                             setIsModalVisible={setIsModalVisible}
                                                             workShowType={workShowType}
                                                             projectId={projectId}
-                                                            sprintId = {sprintId}
-                                                            versionId = {versionId}
+                                                            sprintId={sprintId}
+                                                            versionId={versionId}
                                                             {...props}
                                                         />
                                                         <div className="work-detail-top" ref={workDetailTop} >
@@ -347,13 +347,16 @@ const WorkDetail = (props) => {
                                                                                 </svg>
                                                                             </Button>
                                                                         </Dropdown>
-                                                                        <WorkDeleteSelectModal
-                                                                            getPopupContainer={workDetailTop}
-                                                                            delectCurrentWorkItem={delectCurrentWorkItem}
-                                                                            haveChildren={haveChildren}
-                                                                            workId={workId}
-                                                                            setWorkId={setWorkId}
-                                                                        />
+                                                                        <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
+                                                                            <WorkDeleteSelectModal
+                                                                                getPopupContainer={workDetailTop}
+                                                                                delectCurrentWorkItem={delectCurrentWorkItem}
+                                                                                haveChildren={haveChildren}
+                                                                                workId={workId}
+                                                                                setWorkId={setWorkId}
+                                                                            />
+                                                                        </PrivilegeProjectButton>
+
                                                                     </div>
                                                                 </div>
 
@@ -396,7 +399,7 @@ const WorkDetail = (props) => {
                                     }
                                 </>
                                 :
-                                <Row  style={{ flex: 1, height: "100%" }}>
+                                <Row style={{ flex: 1, height: "100%" }}>
                                     <Col {...rowSpan} style={{ background: "#fff", height: "100%" }}>
                                         <WorkDetailCrumb
                                             detailCrumbArray={detailCrumbArray}

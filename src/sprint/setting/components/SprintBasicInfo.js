@@ -19,6 +19,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Collapse } from 'antd';
 import SprintBasicStore from "../store/SprintBasicStore";
 import SprintChangeModal from "../../overview/components/SprintEndState";
+import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;
@@ -186,7 +187,7 @@ const SprintBasicInfo = props => {
                         firstText="迭代信息"
                     />
 
-                    <Collapse expandIconPosition={"right"}>
+                    <Collapse defaultActiveKey = {"1"} expandIconPosition={"right"}>
                         <Panel header={sprintInfoDesc()} key="1" >
                             <div className="sprint-set-icon">
                                 <Form
@@ -206,7 +207,7 @@ const SprintBasicInfo = props => {
                                     >
                                         <Input placeholder="迭代名称" />
                                     </Form.Item>
-                                  
+
 
                                     <Form.Item
                                         label="负责人"
@@ -238,14 +239,17 @@ const SprintBasicInfo = props => {
                                     >
                                         <Input placeholder="迭代描述" />
                                     </Form.Item>
-                                    <Form.Item {...formTailLayout} >
-                                        <Button onClick={() => cancel()}>
-                                            取消
-                                        </Button>
-                                        <Button htmlType="submit" type="primary" disabled={disable}>
-                                            保存
-                                        </Button>
-                                    </Form.Item>
+                                    <PrivilegeProjectButton code={'SprintEdit'} domainId={projectId}  {...props}>
+                                        <Form.Item {...formTailLayout} >
+                                            <Button onClick={() => cancel()}>
+                                                取消
+                                            </Button>
+                                            <Button htmlType="submit" type="primary" disabled={disable}>
+                                                保存
+                                            </Button>
+                                        </Form.Item>
+                                    </PrivilegeProjectButton>
+
                                 </Form>
                             </div>
                         </Panel>
@@ -254,10 +258,12 @@ const SprintBasicInfo = props => {
                                 <div className="sprint-set-icon-block">
                                     删除迭代，包含迭代与事项的关联关系
                                 </div>
+                                <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
+                                    <div className="change-button delete-button" onClick={() => showModal()}>
+                                        删除迭代
+                                    </div>
+                                </PrivilegeProjectButton>
 
-                                <div className="change-button delete-button" onClick={() => showModal()}>
-                                    删除迭代
-                                </div>
                             </div>
                         </Panel>
                     </Collapse>

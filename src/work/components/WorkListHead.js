@@ -72,7 +72,7 @@ const WorkListHead = (props) => {
                     事项
                 </div>
                 <div className="worklist-head-right">
-                    <PrivilegeProjectButton code={'WorkAdd'} domainId={projectId}  {...props}>
+                    <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList} buttonType="svg" {...props} />
                     </PrivilegeProjectButton>
                     {/* <div style={{ positon: "relative" }} className="worklist-button-icon">
