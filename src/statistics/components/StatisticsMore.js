@@ -5,9 +5,9 @@ import "./StatisticsMore.scss";
 
 const StatisticsMore = (props) => {
     const goPlugin = () => {
-        window.open('https://thoughtware.cn/account/subscribe')
+        window.open('https://tiklab.net/account/subscribe')
         
-       // https://work.thoughtware.cn/#/enterprise/application
+       // https://work.tiklab.net/#/enterprise/application
     }
     return (
         <div className="statistics-advert" onClick={() => goPlugin()}>

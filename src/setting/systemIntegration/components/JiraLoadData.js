@@ -22,10 +22,10 @@ const LoadData = (props) => {
     const [loading, setLoading] = useState(false)
     let [timer, setTimerS] = useState()
     // let timer;
-    useEffect(()=> {
+    useEffect(() => {
         return () => clearInterval(timer)
     }
-    , [])
+        , [])
 
     const getJiraInputSchedule = () => {
         findJiraInputSchedule().then(res => {
@@ -36,6 +36,17 @@ const LoadData = (props) => {
                 if (res.data.total && res.data.currentNum) {
                     const rr = res.data.currentNum * 100 / res.data.total;
                     setPercent(rr);
+                    
+                }
+                if (res.data.status === 1) {
+                    clearInterval(timer);
+                    setLoading(false)
+                    message.success("导入成功")
+                } 
+                if(res.data.status === 2){
+                    clearInterval(timer);
+                    setLoading(false)
+                    message.error("导入失败")
                 }
                 // setPercent(3 / 10);
                 setCurrentSchedule(currentSchedule)
@@ -51,27 +62,22 @@ const LoadData = (props) => {
             tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null
         },
         progress: {
-            strokeWidth: 0, 
+            strokeWidth: 0,
             showInfo: false
         },
         showUploadList: false,
         maxCount: 1,
         onChange(info) {
-            if(info.event){
-                clearInterval(timer) 
+            if (info.event) {
+                clearInterval(timer)
                 setLoading(true)
-                // timer = setInterval(() => getJiraInputSchedule(), 2000)
+                timer = setInterval(() => getJiraInputSchedule(), 2000)
                 setTimerS(timer)
             }
-            if(info.file.status === "done"){
-                clearInterval(timer) 
-                setLoading(false)
+            if (info.file.status === "done") {
+                
                 setTimerS(null)
-                if(info.file.response.code === 0){
-                   message.success("导入成功")
-                }else{
-                    message.error("导入失败")
-                }
+               
             }
 
         },
@@ -80,27 +86,30 @@ const LoadData = (props) => {
     return (
         // <Row >
         //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <div className="load">
-                    <Breadcumb
-                        firstText="jira集成"
-                    />
-                    <div className="load-jira">
-                        <div>从本地文件导入Jira数据</div>
-                        <div className="load-box">
-                            上传Jira zip包：
-                            <Upload {...uploadProps}>
-                                <Button icon={<UploadOutlined />}>导入jira数据</Button>
-                            </Upload>
-                        </div>
-                        {
-                            loading && <div className="load-precess">
-                                <Progress percent={percent} showInfo={false} />
-                                <div className="load-precess-text"> 当前解析项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
-                            </div>
-                        }
-
-                    </div>
+        <div className="load">
+            <Breadcumb
+                firstText="jira集成"
+            />
+            <div className="load-jira">
+                <div>从本地文件导入Jira数据</div>
+                <div className="load-box">
+                    上传Jira zip包：
+                    <Upload {...uploadProps}>
+                        <Button icon={<UploadOutlined />}>导入jira数据</Button>
+                    </Upload>
                 </div>
+                {
+                    loading && <div className="load-precess">
+                        <Progress percent={percent} showInfo={false} />
+                        <div className="load-precess-text"> 当前解析项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
+                    </div>
+                }
+
+               
+
+
+            </div>
+        </div>
         //     </Col>
         // </Row>
     )

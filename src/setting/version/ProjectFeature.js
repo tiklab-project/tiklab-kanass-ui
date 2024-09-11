@@ -423,9 +423,9 @@ const ProjectFeature = props => {
 
     const onOk = () => {
         if (featureType === 'ee') {
-            window.open(`https://thoughtware.cn/account/subscribe/apply/eas`)
+            window.open(`https://tiklab.net/account/subscribe/apply/eas`)
         } else {
-            window.open(`https://work.thoughtware.cn/#/enterprise/application/eas`)
+            window.open(`https://work.tiklab.net/#/enterprise/application/eas`)
         }
         onCancel()
     }
