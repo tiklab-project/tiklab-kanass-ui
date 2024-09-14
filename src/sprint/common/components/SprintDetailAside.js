@@ -45,8 +45,8 @@ const SprintDetailAside = (props) => {
         },
         {
             title: "事项",
-            icon: 'work-' + theme,
-            defaultIcon: "work-default",
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
             id: `/${projectId}/sprint/${sprintId}/workitem`,
             key: "work",
             encoded: "work",

@@ -58,8 +58,8 @@ const VersionDetailAside = (props) => {
         },
         {
             title: "事项",
-            icon: 'work-' + theme,
-            defaultIcon: "work-default",
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
             id: `/${projectId}/version/${versionId}/workitem`,
             key: "work",
             encoded: "work",

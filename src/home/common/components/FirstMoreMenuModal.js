@@ -126,7 +126,7 @@ const FirstMoreMenuModal = (props) => {
                             className={`first-menu-text-item ${path === item.key ? 'first-menu-link-active' : null}`}
                         >
                              <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.key}-default`}></use>
+                                        <use xlinkHref={`#icon-${item.key.toLowerCase()}-default`}></use>
                                     </svg>
 
                             <span>
