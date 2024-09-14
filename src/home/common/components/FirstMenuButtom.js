@@ -25,7 +25,7 @@ const FirstMenuButtom = (props) => {
                                     bgroup={"kanass"}
                                     iconComponent={
                                         <div className="first-menu-text-item">
-                                            <svg className="icon-15" aria-hidden="true">
+                                            <svg className="icon-18" aria-hidden="true">
                                                 <use xlinkHref={`#icon-help-${theme}`} ></use>
                                             </svg>
                                             <div>帮助</div>
@@ -37,7 +37,7 @@ const FirstMenuButtom = (props) => {
                                     translateX={isShowText ? 200 : 75}
                                     iconComponent={
                                         <div className="first-menu-text-item">
-                                            <svg className="icon-15" aria-hidden="true">
+                                            <svg className="icon-18" aria-hidden="true">
                                                 <use xlinkHref={`#icon-application-${theme}`} ></use>
                                             </svg>
                                             <div>切换应用</div>
@@ -66,7 +66,7 @@ const FirstMenuButtom = (props) => {
                                     bgroup={"kanass"}
                                     iconComponent={
                                         <div className="first-menu-link-item" data-title-right="帮助">
-                                            <svg className="icon-15 " aria-hidden="true">
+                                            <svg className="icon-18 " aria-hidden="true">
                                                 <use xlinkHref={`#icon-help-${theme}`}></use>
                                             </svg>
                                         </div>
@@ -77,7 +77,7 @@ const FirstMenuButtom = (props) => {
                                     translateX={isShowText ? 200 : 75}
                                     iconComponent={
                                         <div className="first-menu-link-item" data-title-right="应用导航">
-                                            <svg className="icon-15" aria-hidden="true">
+                                            <svg className="icon-18" aria-hidden="true">
                                                 <use xlinkHref={`#icon-application-${theme}`} ></use>
                                             </svg>
                                         </div>
