@@ -46,8 +46,8 @@ const ProjectDetailAside = (props) => {
         },
         {
             title: `${t('work')}`,
-            icon: 'work-' + theme,
-            defaultIcon: "work-default",
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
             id: `/project/${projectId}/workitem`,
             key: "work",
             encoded: "Work",

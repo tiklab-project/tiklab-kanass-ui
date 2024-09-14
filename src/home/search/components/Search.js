@@ -22,8 +22,8 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Search = (props) => {
-    const { isShowText } = props;
-    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
+    const { isShowText, theme, setShowMenu, showMenu } = props;
+    // const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
     const { getSearchSore, setKeyWord, findRecentList,
         updateRecent, findWorkItemByKeyWorks, findProjectList, } = SearchStore;
     // 最近查看的项目列表
@@ -258,11 +258,16 @@ const Search = (props) => {
         search(value.target.value)
 
     }
+
+    const showSearchModal = () => {
+        setSearchModal(true)
+        
+    }
     return (
         <div>
             {
                 isShowText ?
-                    <div className="search-text first-menu-text-item" onClick={() => setSearchModal(true)}>
+                    <div className="search-text first-menu-text-item" onClick={() => showSearchModal()}>
                         <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>
@@ -270,7 +275,7 @@ const Search = (props) => {
                     </div>
 
                     :
-                    <div className="first-menu-link-item" onClick={() => setSearchModal(true)}>
+                    <div className="first-menu-link-item" onClick={() => showSearchModal()}>
                         <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-search-${theme}`} ></use>
                         </svg>

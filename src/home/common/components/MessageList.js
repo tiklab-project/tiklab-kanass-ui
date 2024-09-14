@@ -117,7 +117,7 @@ const MessageList = (props) => {
             {
                 isShowText ?
                     <div className="message-text first-menu-text-item" onClick={() => setOpen(true)}>
-                        <svg className="icon-15" aria-hidden="true">
+                        <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-message-${theme}`} ></use>
                         </svg>
                         <div className="message-text-name">消息</div>
@@ -133,7 +133,7 @@ const MessageList = (props) => {
                                     <use xlinkHref={`${theme === "default" ? "#icon-message": "#icon-message-white"}`} ></use>
                                 </svg>} />
                         </Badge> */}
-                        <svg className="icon-15" aria-hidden="true">
+                        <svg className="icon-18" aria-hidden="true">
                             <use  xlinkHref={`#icon-message-${theme}`}></use>
                         </svg>
                     </div>

@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import Logo from "./Logo";
 import FirstMenuButtom from "./FirstMenuButtom";
 import Search from "../../search/components/Search";
-import FirstMoreMenuModal from "./FirstMoreMenuModal";
 const { Sider } = Layout;
 const FirstMenu = (props) => {
     const [isShowText, setIsShowText] = useState(false)
@@ -16,10 +15,6 @@ const FirstMenu = (props) => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [themeClass, setThemeClass] = useState("first-sider-gray")
 
-    const [firstMenu, setFirstMenu] = useState(routers)
-    const [moreMenu, setMoreMenu] = useState()
-    const [menuNum, setMenuNum] = useState(6)
-    const [morePath, setMorePath] = useState("/index")
     useEffect(() => {
         getThemeClass(theme)
         return null;
@@ -30,42 +25,6 @@ const FirstMenu = (props) => {
         return null;
     }, [path])
 
-    const resizeUpdate = (e) => {
-        if(!isShowText){
-            const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
-            console.log(documentHeight)
-            const menuHeight = documentHeight - 160;
-            const menuNum = Math.floor(menuHeight / 86);
-            let num = 0;
-            num = menuNum > 6 ? 6 : menuNum;
-            setMenuNum(num)
-            setFirstMenu(routers.slice(0, num))
-            const hiddenMenu = routers.slice(num, routers.length)
-    
-            setMoreMenu(hiddenMenu)
-            let data = [];
-            hiddenMenu.map(item => {
-                data.push(item.key)
-            }) 
-            setMorePath([...data])
-        }else {
-            setFirstMenu(routers)
-        }
-        
-    };
-
-    useEffect(() => {
-        
-        resizeUpdate(document.getElementById("root"))
-        window.addEventListener("resize", resizeUpdate);
-        
-        
-        return () => {
-            // 组件销毁时移除监听事件
-            window.removeEventListener('resize', resizeUpdate);
-        }
-
-    }, [theme])
     /**
          * 点击菜单跳转
          * @param {菜单信息} item 
@@ -75,7 +34,10 @@ const FirstMenu = (props) => {
             localStorage.removeItem("sprintId")
             props.history.push(item.to)
             sessionStorage.setItem("menuKey", item.key)
+        }else {
+            
         }
+        
     }
 
     const setActiveIcon = (type) => {
@@ -104,35 +66,35 @@ const FirstMenu = (props) => {
             title: '首页',
             key: 'index',
             icon: 'home-' + theme,
-            actionIcon: 'home-' + theme + "-active",
+            actionIcon: setActiveIcon("home-")
         },
         {
             to: '/project',
             title: '项目',
             key: 'project',
             icon: 'project-' + theme,
-            actionIcon: 'project-' + theme + "-active",
+            actionIcon: setActiveIcon("project-")
         },
         {
             to: '/projectSet',
             title: '项目集',
             key: 'projectSet',
             icon: 'projectset-' + theme,
-            actionIcon: 'projectset-' + theme + "-active",
+            actionIcon: setActiveIcon("projectset-")
         },
         {
             to: '/workitem',
             title: '事项',
             key: 'workitem',
-            icon: 'workitem-' + theme,
-            actionIcon: 'workitem-' + theme + "-active",
+            icon: 'work-' + theme,
+            actionIcon: setActiveIcon("work-")
         },
         {
             to: '/log/list',
             title: '工时',
             key: 'log',
             icon: 'log-' + theme,
-            actionIcon: 'log-' + theme + "-active",
+            actionIcon: setActiveIcon("log-")
         },
 
     ]
@@ -143,11 +105,11 @@ const FirstMenu = (props) => {
      * @returns 
      */
     const renderRouter = () => {
-        if (firstMenu) {
+        if (routers) {
             return (
                 <div className={'first-menu-link'}>
                     {
-                        firstMenu.map(item => {
+                        routers.map(item => {
                             return <>
                                 {
                                     isShowText ? <div key={item.key}
@@ -196,16 +158,7 @@ const FirstMenu = (props) => {
 
                         })
                     }
-                    {
-                        menuNum === 6 && <Search isShowText={isShowText} theme={theme} />
-                    }
-                    {
-                        menuNum < 6 && <FirstMoreMenuModal
-                            isShowText={isShowText} moreMenu={moreMenu} theme={theme} morePath = {morePath}
-                        />
-                    }
-                    
-                    
+                    <Search isShowText={isShowText} theme={theme} />
                 </div>
             )
         }
