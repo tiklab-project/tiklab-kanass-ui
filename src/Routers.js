@@ -16,6 +16,7 @@ const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageL
 const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
 const Login = AsyncComponent(() => import('./login/Login'))
+const LoginRpwContent = AsyncComponent(() => import('./login/LoginRpwContent'))
 const ProjectLogOut = AsyncComponent(() => import('./login/Logout'))
 
 const NoFoundPage = AsyncComponent(() => import('./login/NoFoundPage.js'));
@@ -208,6 +209,11 @@ const Routers = [
         path: "/login",
         exact: true,
         component: Login,
+    },
+    {
+        component: LoginRpwContent,
+        exact:true,
+        path: '/loginRpw'
     },
     {
         path: "/noAuth",

@@ -40,7 +40,7 @@ const WorkAddPage = (props) => {
         form.setFieldsValue({
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
-        getForm(workType.form.id)
+        getForm(workType.workType.form.id)
         getEachWorkType()
 
 

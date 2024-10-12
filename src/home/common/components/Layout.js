@@ -6,25 +6,32 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 16:14:15
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { renderRoutes } from "react-router-config";
 import Header from "./Header";
 import "./Layout.scss";
 
-import { Provider } from 'mobx-react';
+import { inject, observer, Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
 import { AppLink, AvatarLink, HelpLink } from 'thoughtware-licence-ui';
 import FirstMenu from './FirstMenu';
+import { getUser } from 'thoughtware-core-ui';
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore
     }
-
+    const {systemRoleStore} = props;
     const route = props.route.routes;
     const pathname = props.location.pathname.split("/")[1];
     console.log(pathname)
-
+    const user = getUser();
+    useEffect(() => {
+        if (user && user.userId) {
+            systemRoleStore.getSystemPermissions(user.userId, "kanass")
+        }
+        return;
+    }, [])
     return (
         <Provider {...store}>
             <div className="layout">
@@ -39,5 +46,4 @@ const Layout = (props) => {
 
     )
 }
-
-export default Layout;
+export default inject("systemRoleStore")(observer(Layout));

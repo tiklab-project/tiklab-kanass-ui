@@ -32,7 +32,7 @@ const Project = (props) => {
     return (
         <Provider {...store}>
             <div className="project">
-                <Spin spinning={loading} tip="加载中..." >
+                {/* <Spin spinning={loading} tip="加载中..." > */}
                     <Layout className="project-content">
                         <Row>
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -48,7 +48,7 @@ const Project = (props) => {
                             </Col>
                         </Row>
                     </Layout>
-                </Spin>
+                {/* </Spin> */}
 
             </div>
         </Provider>

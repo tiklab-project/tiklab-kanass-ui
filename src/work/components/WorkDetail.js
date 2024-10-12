@@ -96,8 +96,8 @@ const WorkDetail = (props) => {
                 // if (props.match.path === "/project/:id/work/:workId") {
 
                 // }
-                setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
-                setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+                // setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                // setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
             }
         })
     }
