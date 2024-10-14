@@ -2,7 +2,7 @@
  * 初始进入事项页面
  */
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 const finWorkList = (router, workStore, params) => {
     const setValue = () => {
         let type = "";

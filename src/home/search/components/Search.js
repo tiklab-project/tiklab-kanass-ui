@@ -12,7 +12,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss";
 import { Empty, Modal, Spin } from "antd";
 import { observer, inject } from "mobx-react";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";
 import { useDebounce } from "../../../common/utils/debounce"
 import WorkStore from '../../../work/store/WorkStore';

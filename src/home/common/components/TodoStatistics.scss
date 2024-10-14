@@ -3,7 +3,7 @@
     flex: 1;
     .statistics-todotask-title {
         width: 100%;
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -32,8 +32,8 @@
             margin-top: 10px;
             line-height: 35px;
             cursor: pointer;
-            padding: var(--thoughtware-padding);
-            background-color: var(--thoughtware-gray-600);
+            padding: var(--tiklab-padding);
+            background-color: var(--tiklab-gray-600);
             gap: 10px;
             .statistics-todotask-box-num {
                 font-size: 16px;
@@ -45,10 +45,10 @@
         }
         .statistics-todotask-box:hover {
             .statistics-todotask-box-num {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .statistics-todotask-box-name {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             
         }

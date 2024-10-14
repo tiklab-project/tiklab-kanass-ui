@@ -10,7 +10,7 @@
 import React, { useEffect, useState } from "react";
 import { Empty, Select, Row, Col, Pagination, Spin } from "antd";
 import { inject, observer } from "mobx-react";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
 import "./TodoPageList.scss"
 import TodoListItem from "../../../common/overviewComponent/TodoListItem";

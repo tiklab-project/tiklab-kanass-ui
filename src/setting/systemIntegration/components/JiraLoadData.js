@@ -11,7 +11,7 @@ import { Upload, message, Button, Row, Col, Progress } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import "./JiraLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import { observer } from "mobx-react";
 import UrlDataStore from "../store/UrlDataStore"
 const LoadData = (props) => {

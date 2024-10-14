@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from "react";
 import "../components/Survey.scss"
 import { observer, inject } from "mobx-react";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts"

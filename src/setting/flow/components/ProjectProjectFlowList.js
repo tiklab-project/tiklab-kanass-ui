@@ -1,5 +1,5 @@
 import React from "react";
-import {ProjectFlowList} from 'thoughtware-flow-ui';
+import {ProjectFlowList} from 'tiklab-flow-ui';
 
 const ProjectProjectFlowList = (props) => {
     return (

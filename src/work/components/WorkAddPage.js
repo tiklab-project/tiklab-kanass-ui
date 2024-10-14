@@ -3,10 +3,10 @@ import { Form, Input, Select, DatePicker, message } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import moment from 'moment';
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor } from "thoughtware-slate-ui";
+import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { appendNodeInTree } from "../../project/stage/component/StageListTreeChange";
 

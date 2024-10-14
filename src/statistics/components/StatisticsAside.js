@@ -9,7 +9,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
-import { getVersionInfo } from "thoughtware-core-ui";
+import { getVersionInfo } from "tiklab-core-ui";
 import StatisticsFree from './StatisticsFree';
 const StatisticsAsicde = (props) => {
     const { workReportList, logReportList} = props;

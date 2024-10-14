@@ -1,13 +1,13 @@
 .stage-detail-side {
-    background-color: var(--thoughtware-gray);
+    background-color: var(--tiklab-gray);
     border-right: 1px solid #f0f0f0;
 
     .ant-layout-sider-children {
         .stage-aside-content {
-            height: calc(100% - var(--thoughtware-head-height));
+            height: calc(100% - var(--tiklab-head-height));
             display: flex;
             flex-direction: column;
-            background: var(--thoughtware-gray-600);
+            background: var(--tiklab-gray-600);
 
             ul {
                 padding: 0;
@@ -31,7 +31,7 @@
             }
 
             .setting:hover {
-                background-color: var(--thoughtware-gray-400);
+                background-color: var(--tiklab-gray-400);
             }
 
             .setting {
@@ -84,16 +84,16 @@
                 }
 
                 .stage-menu-submenu-icon:hover {
-                    background-color: var(--thoughtware-gray-400);
+                    background-color: var(--tiklab-gray-400);
                 }
 
                 .stage-menu-submenu:hover {
-                    background-color: var(--thoughtware-gray-300);
+                    background-color: var(--tiklab-gray-300);
                 }
 
                 .stage-menu-select {
-                    background-color: var(--thoughtware-gray-400);
-                    border-left: 3px solid var(--thoughtware-blue);
+                    background-color: var(--tiklab-gray-400);
+                    border-left: 3px solid var(--tiklab-blue);
                 }
             }
 
@@ -122,7 +122,7 @@
                 }
 
                 .right:hover {
-                    color: var(--thoughtware-blue);
+                    color: var(--tiklab-blue);
                 }
             }
         }

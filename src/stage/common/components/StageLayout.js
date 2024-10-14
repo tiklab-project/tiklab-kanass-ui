@@ -14,7 +14,7 @@ import { renderRoutes } from "react-router-config";
 import StageDetailAside from "./StageDetailAside";
 import StageDetailStore from "../store/StageDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const Stagedetail = (props) => {
     const { route, systemRoleStore } = props;

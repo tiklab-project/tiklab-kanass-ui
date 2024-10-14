@@ -64,7 +64,7 @@
 
         .desc-preview {
             border-radius: 4px;
-            background: var(--thoughtware-gray-600);
+            background: var(--tiklab-gray-600);
         }
 
         .work-detail-box {
@@ -103,7 +103,7 @@
 
             .ant-upload-drag {
                 border: 0;
-                background-color: var(--thoughtware-gray-600);
+                background-color: var(--tiklab-gray-600);
             }
 
             .ant-avatar {
@@ -119,7 +119,7 @@
             }
 
             .ant-form-item-label>label {
-                color: var(--thoughtware-gray-500);
+                color: var(--tiklab-gray-500);
                 font-size: 13px;
                 font-weight: normal;
             }
@@ -194,7 +194,7 @@
         }
         .desc-preview {
             padding: 10px;
-            background-color: var(--thoughtware-gray-600);
+            background-color: var(--tiklab-gray-600);
         }
     }
 }

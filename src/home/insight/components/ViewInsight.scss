@@ -22,7 +22,7 @@
 
         .insight-head-title {
             font-size: 16px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             height: 40px;
             line-height: 40px;
             display: inline-flex;
@@ -46,7 +46,7 @@
             }
 
             .action-save {
-                background: var(--thoughtware-blue);
+                background: var(--tiklab-blue);
                 color: #fff;
             }
 
@@ -64,7 +64,7 @@
 
         .empty-action-save {
             text-decoration: underline;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             width: 60px;
             height: 30px;
             line-height: 30px;

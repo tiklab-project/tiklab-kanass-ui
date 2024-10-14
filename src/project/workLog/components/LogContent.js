@@ -11,7 +11,7 @@ import { observer, Provider } from "mobx-react";
 import { Table, Row, Col, Space } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./LogContent.scss"
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import LogFilter from "./LogFilter";
 import { useState } from "react";
 import Button from "../../../common/button/Button";

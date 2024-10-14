@@ -14,9 +14,9 @@ import "./Layout.scss";
 
 import { inject, observer, Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
-import { AppLink, AvatarLink, HelpLink } from 'thoughtware-licence-ui';
+import { AppLink, AvatarLink, HelpLink } from 'tiklab-licence-ui';
 import FirstMenu from './FirstMenu';
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore

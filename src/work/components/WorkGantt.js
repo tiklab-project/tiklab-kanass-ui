@@ -13,10 +13,10 @@ import WorkCalendarStore from '../store/WorkCalendarStore';
 import { withRouter } from "react-router";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
-import { getVersionInfo } from "thoughtware-core-ui"
+import { getVersionInfo } from "tiklab-core-ui"
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import setImageUrl from "../../common/utils/setImageUrl";
-import {applySubscription} from "thoughtware-core-ui"
+import {applySubscription} from "tiklab-core-ui"
 const WorkGantt = (props) => {
     const { Gantt } = props;
     const { workList, editWork, setWorkShowType, setQuickFilterValue, archiveView } = WorkStore;

@@ -10,16 +10,16 @@
     }
     .pagination-box-ban{
         cursor:not-allowed;
-        color: var(--thoughtware-gray-500);
+        color: var(--tiklab-gray-500);
     }
     .pagination-box-allow{
         cursor: pointer;
         &:hover{
-          color: var(--thoughtware-blue);
+          color: var(--tiklab-blue);
         }
     }
     .pagination-box-current{
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
     .pagination-box-ref {
         cursor: pointer;

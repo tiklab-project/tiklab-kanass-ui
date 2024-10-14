@@ -8,7 +8,7 @@
  */
 import { Col, Row } from "antd";
 import React from "react";
-import { FormDesign as FormDesignList } from 'thoughtware-form-ui';
+import { FormDesign as FormDesignList } from 'tiklab-form-ui';
 
 const ProjectFormDetail = (props) => {
 

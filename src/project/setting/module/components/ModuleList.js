@@ -14,7 +14,7 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import { SearchOutlined } from '@ant-design/icons';
 import ModuleStore from "../store/ModuleStore";
 import { observer } from "mobx-react";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../../common/button/Button";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import InputSearch from "../../../../common/input/InputSearch";

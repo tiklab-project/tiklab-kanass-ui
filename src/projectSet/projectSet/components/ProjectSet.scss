@@ -5,7 +5,7 @@
     .projectSet-content {
         height: 100%;
         .projectSet-list {
-            padding: var(--thoughtware-padding);
+            padding: var(--tiklab-padding);
             height: 100%;
             background-color: #fff;
     
@@ -29,7 +29,7 @@
     
                     .projectSet-item:hover {
                         border-radius: 4px 4px 0 0;
-                        border-bottom: 2px solid var(--thoughtware-blue);
+                        border-bottom: 2px solid var(--tiklab-blue);
                         transition: 500;
                     }
     
@@ -42,9 +42,9 @@
                         flex-shrink: 0;
                         border-radius: 4px;
                         cursor: pointer;
-                        background-color: var(--thoughtware-gray-600);
+                        background-color: var(--tiklab-gray-600);
                         box-sizing: border-box;
-                        border-bottom: 2px solid var(--thoughtware-gray-600);
+                        border-bottom: 2px solid var(--tiklab-gray-600);
     
                         .item-title {
                             margin-bottom: 10px;
@@ -71,7 +71,7 @@
                             .item-name {
                                 font-size: 16px;
                                 text-overflow: ellipsis;
-                                font-weight: var(--thoughtware-font-weight-bold);
+                                font-weight: var(--tiklab-font-weight-bold);
                                 white-space: nowrap;
                                 overflow: hidden;
                                 max-width: 140px;
@@ -131,7 +131,7 @@
                     gap: 10px;
             
                     .projectSet-tab {
-                        font-size: var(--thoughtware-font-13);
+                        font-size: var(--tiklab-font-13);
                         cursor: pointer;
                         height: 40px;
                         line-height: 40px;
@@ -139,7 +139,7 @@
             
                     .active-tabs {
                         color: #000;
-                        border-bottom: 2px solid var(--thoughtware-blue);
+                        border-bottom: 2px solid var(--tiklab-blue);
                     }
                 }
             

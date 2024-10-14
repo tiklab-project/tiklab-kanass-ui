@@ -11,7 +11,7 @@ import React, { useRef, useEffect, useState, Fragment } from "react";
 import { Space, Row, Col, Table, Dropdown, Menu, Modal } from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import "./sprintList.scss";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
@@ -22,7 +22,7 @@ import { useDebounce } from "../../../common/utils/debounce";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore

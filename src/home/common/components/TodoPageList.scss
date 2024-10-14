@@ -1,5 +1,5 @@
 .todo-list-page {
-    padding: var(--thoughtware-padding);;
+    padding: var(--tiklab-padding);;
     background: #fff;
     
     .todo-select {
@@ -20,11 +20,11 @@
                 line-height: 40px;
             }
             .todo-tab-item:hover {
-                color: var(--thoughtware-bule);
+                color: var(--tiklab-bule);
             }
             .todo-tab-select {
-                border-bottom: 2px solid var(--thoughtware-blue);
-                color: var(--thoughtware-blue);
+                border-bottom: 2px solid var(--tiklab-blue);
+                color: var(--tiklab-blue);
             }
         }
     }

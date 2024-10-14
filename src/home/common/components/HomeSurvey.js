@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
 import { Empty, Tabs, Spin } from 'antd';
 import { withRouter } from 'react-router';

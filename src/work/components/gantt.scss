@@ -18,9 +18,9 @@
             justify-content: space-between;
             align-items: center;
             height: 50px;
-            background-color: var(--thoughtware-gray-200);
+            background-color: var(--tiklab-gray-200);
             overflow: hidden;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             position: relative;
             top: 0;
             .table-hearder-text {
@@ -31,7 +31,7 @@
             .table-hearder-gatter  {
                 flex: 1;
                 height: 50px;
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
                 overflow: auto;
             }
             .table-hearder-gatter::-webkit-scrollbar { 
@@ -59,12 +59,12 @@
 
             .table-hearder-assigner {
                 width: 90px;
-                border-right: 1px solid var(--thoughtware-gray);
+                border-right: 1px solid var(--tiklab-gray);
             }
 
             .table-hearder-time {
                 width: 250px;
-                border-right: 1px solid var(--thoughtware-gray);
+                border-right: 1px solid var(--tiklab-gray);
             }
 
             .table-timer {
@@ -83,7 +83,7 @@
                 height: 25px;
                 display: inline-flex;
                 text-align: center;
-                border-bottom: 1px solid  var(--thoughtware-gray);
+                border-bottom: 1px solid  var(--tiklab-gray);
                 line-height: 25px;
             }
             .table-day {
@@ -127,7 +127,7 @@
                     overflow: hidden;
                 }
                 .table-work-id {
-                    color: var(--thoughtware-gray-500);
+                    color: var(--tiklab-gray-500);
                     line-height: 25px;
                     margin-right: 5px;
                 }
@@ -181,7 +181,7 @@
         max-height: calc(100% - 50px);
         overflow-x: auto;
         overflow-y: hidden;
-        // border-left: var(--thoughtware-gray-200) 2px solid;
+        // border-left: var(--tiklab-gray-200) 2px solid;
         .table-date-background {
             // display: flex;
             position: absolute;
@@ -210,13 +210,13 @@
             text-align: center;
         }
         .table-day {
-            border-right: var(--thoughtware-gray-200) solid 1px;
+            border-right: var(--tiklab-gray-200) solid 1px;
         }
         .table-timer {
             .table-month {
                 height: 25px;
                 line-height: 25px;
-                background-color:  var(--thoughtware-gray-200);
+                background-color:  var(--tiklab-gray-200);
                 display: inline-flex;
                 .table-month-td {
                     border-right: solid #fff 1px;

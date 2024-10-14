@@ -9,7 +9,7 @@
 import { Service } from "../../../common/utils/requset"
 import { observable, action, extendObservable } from "mobx";
 
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 
 class HomeStore {
     // 项目列表

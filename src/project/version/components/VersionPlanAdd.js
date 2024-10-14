@@ -11,7 +11,7 @@ import React, {useState} from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./versionPlanAdd.scss"
 import {observer, inject} from "mobx-react";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 const { Search } = Input;
 
@@ -118,7 +118,7 @@ const  VersionPlanAddmodal = (props) => {
                             {props.name}
                         </Button>
                     </PrivilegeProjectButton>
-                    : <span onClick={showModal} style={{color: "var(--thoughtware-gray-400)"}}>{props.name}</span>
+                    : <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
             }
             <Modal
                 title="选择事项"

@@ -1,4 +1,4 @@
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const tenant = getUser(). tenant;
 

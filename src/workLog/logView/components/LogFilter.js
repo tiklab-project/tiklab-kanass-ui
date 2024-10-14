@@ -11,7 +11,7 @@ import { observer, inject } from "mobx-react";
 import { Form, DatePicker } from 'antd';
 import "./LogFilter.scss"
 import moment from "moment";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router";
 const { RangePicker } = DatePicker;
 

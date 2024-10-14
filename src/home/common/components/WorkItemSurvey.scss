@@ -1,7 +1,7 @@
 .statistics-workitem {
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
     flex: 1;
-    background-color: var(--thoughtware-gray-600);
+    background-color: var(--tiklab-gray-600);
     .statistics-workitem-title {
         width: 100%;
         display: flex;
@@ -27,7 +27,7 @@
     //         line-height: 35px;
     //         cursor: pointer;
     //         width: calc(50% - 5px);
-    //         padding: var(--thoughtware-padding);
+    //         padding: var(--tiklab-padding);
             
     //         gap: 10px;
     //         // .statistics-workitem-box-num {
@@ -38,10 +38,10 @@
     //         //     color: #666;
     //         // }
     //         // .statistics-workitem-box-num:hover {
-    //         //     color: var(--thoughtware-blue);
+    //         //     color: var(--tiklab-blue);
     //         // }
     //         // .statistics-workitem-box-name:hover {
-    //         //     color: var(--thoughtware-blue);
+    //         //     color: var(--tiklab-blue);
     //         // }
     //         .statistics-workitem-box-num {
     //             font-size: 16px;
@@ -54,10 +54,10 @@
 
     //     .statistics-workitem-box:hover {
     //         .statistics-workitem-box-num {
-    //             color: var(--thoughtware-blue);
+    //             color: var(--tiklab-blue);
     //         }
     //         .statistics-workitem-box-name {
-    //             color: var(--thoughtware-blue);
+    //             color: var(--tiklab-blue);
     //         }
             
     //     }

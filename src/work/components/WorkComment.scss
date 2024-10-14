@@ -86,8 +86,8 @@
             }
             .user-name {
                 font-size: 14px;
-                font-weight: var(--thoughtware-font-weight-bold);
-                color: var(--thoughtware-blue);
+                font-weight: var(--tiklab-font-weight-bold);
+                color: var(--tiklab-blue);
             }
             .user-date {
                 margin-left: 20px;
@@ -112,7 +112,7 @@
                 cursor: pointer;
             }
             span:hover {
-                color: var(--thoughtware-blue)
+                color: var(--tiklab-blue)
             }
         }
         .edit-comment-show {

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-04 10:39:18
  */
 import React from "react";
-import { User} from 'thoughtware-user-ui';
+import { User} from 'tiklab-user-ui';
 const OrgaUser = props => {
     return (
         <User

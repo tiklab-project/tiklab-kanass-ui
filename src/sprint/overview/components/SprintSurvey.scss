@@ -9,7 +9,7 @@
 .sprint-survey {
     // height: calc(100% - 48px);
     // overflow: auto;
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
 
     .ant-row {
         background: #f0f2f5;
@@ -25,7 +25,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -35,7 +35,7 @@
         }
 
         .more {
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             margin-left: 10px;
             cursor: pointer;
             display: flex;
@@ -51,8 +51,8 @@
         margin-bottom: 15px;
 
         .sprint-info-box {
-            padding: var(--thoughtware-padding);
-            background-color: var(--thoughtware-gray-600);
+            padding: var(--tiklab-padding);
+            background-color: var(--tiklab-gray-600);
             border-radius: 4px;
             flex: 1;
             height: 510px;
@@ -60,7 +60,7 @@
             .sprint-info-title {
                 display: flex;
                 align-items: center;
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
                 height: 30px;
                 line-height: 30px;
                 gap: 5px;
@@ -71,7 +71,7 @@
             }
 
             .sprint-container {
-                .thoughtware-profile .ant-avatar {
+                .tiklab-profile .ant-avatar {
                     width: 24px !important;
                     height: 24px !important;
                 }
@@ -92,7 +92,7 @@
                         }
 
                         .item-bottom {
-                            color: var(--thoughtware-gray-500);
+                            color: var(--tiklab-gray-500);
                             font-size: 12px;
                         }
 
@@ -120,7 +120,7 @@
 
             .sprint-state-start-button {
                 font-size: 12px;
-                background: var(--thoughtware-blue);
+                background: var(--tiklab-blue);
                 padding: 5px 10px;
                 border-radius: 5px;
                 color: #fff;
@@ -131,7 +131,7 @@
                 font-size: 12px;
                 padding: 5px 10px;
                 border-radius: 5px;
-                background-color: var(--thoughtware-gray-700);
+                background-color: var(--tiklab-gray-700);
                 color: #999;
                 cursor: no-drop;
             }
@@ -139,11 +139,11 @@
 
         .burn-down-box {
             flex: 1;
-            padding: var(--thoughtware-padding);
+            padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
             height: 510px;
-            background-color: var(--thoughtware-gray-600);
+            background-color: var(--tiklab-gray-600);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);
@@ -153,7 +153,7 @@
     }
 
     // .dynamic-box {
-    //     padding: var(--thoughtware-padding);
+    //     padding: var(--tiklab-padding);
     //     background-color: #fff;
     //     .dynamic-item {
     //         margin-bottom: 10px;
@@ -165,7 +165,7 @@
     //         .dynamic-item {
     //             margin-bottom: 10px;
     //             .dynamic-work-title:hover {
-    //                 color: var(--thoughtware-blue);
+    //                 color: var(--tiklab-blue);
     //             }
     //         }
     //         .dynamic-item:nth-child(4n+1) {

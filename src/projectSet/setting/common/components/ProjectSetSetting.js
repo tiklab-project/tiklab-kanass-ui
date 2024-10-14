@@ -12,9 +12,9 @@ import "../components/ProjectSetSettingDetailAside.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject } from "mobx-react";
 import ProjectSetSetDetailAdide from "./ProjectSetSettingDetailAside"
-import { ProjectNav, SystemNav } from "thoughtware-privilege-ui";
+import { ProjectNav, SystemNav } from "tiklab-privilege-ui";
 import { useTranslation } from "react-i18next";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const ProjectSetting = (props) => {
     const { route, systemRoleStore } = props;

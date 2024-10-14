@@ -11,7 +11,7 @@ import { Empty, Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkDocumentList.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
-import { applyJump } from "thoughtware-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
 import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";

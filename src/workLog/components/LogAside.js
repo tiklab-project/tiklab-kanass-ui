@@ -10,7 +10,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import "./LogAside.scss";
-import { getVersionInfo } from "thoughtware-core-ui";
+import { getVersionInfo } from "tiklab-core-ui";
 import LogStatisticsFree from './LogStatisticsFree';
 const SetAside = (props) => {
     // 无子级菜单处理

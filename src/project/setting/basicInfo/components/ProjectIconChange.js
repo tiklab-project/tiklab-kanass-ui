@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Form, Upload, message } from 'antd';
 import { withRouter } from "react-router";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 const ProjectIconChange = (props) => {
 

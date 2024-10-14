@@ -3,7 +3,7 @@
     gap: 32px;
     height: 32px;
     line-height: 32px;
-    border-bottom: 1px solid var(--thoughtware-gray-200);
+    border-bottom: 1px solid var(--tiklab-gray-200);
     padding: 0 15px;
     .tabs-bar-num {
         font-size: 12px;
@@ -11,8 +11,8 @@
         color: #999;
     }
     .tabs-bar-select {
-        border-bottom: 2px solid var(--thoughtware-blue);
-        color: var(--thoughtware-blue);
+        border-bottom: 2px solid var(--tiklab-blue);
+        color: var(--tiklab-blue);
     }
 
     .tabs-bar {
@@ -47,11 +47,11 @@
             }
 
             .tabs-dropdown-item:hover {
-                background-color: var(--thoughtware-gray-300);
+                background-color: var(--tiklab-gray-300);
             }
 
             .tabs-dropdown-select {
-                background-color: var(--thoughtware-gray-400);
+                background-color: var(--tiklab-gray-400);
             }
         }
 

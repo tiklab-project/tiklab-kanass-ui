@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 
 import { removeSessionStorage } from "../../common/utils/setSessionStorage";
 import { observer, inject } from "mobx-react";
-import { getVersionInfo } from "thoughtware-core-ui";
+import { getVersionInfo } from "tiklab-core-ui";
 import WorkGanttFree from "./WorkGanttFree";
 
 const WorkChangeView = (props) => {

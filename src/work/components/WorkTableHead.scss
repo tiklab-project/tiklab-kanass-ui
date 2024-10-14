@@ -4,8 +4,8 @@
     align-items: center;
     justify-content: space-between;
     .work-title {
-        font-size: var(--thoughtware-font-16);
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-size: var(--tiklab-font-16);
+        font-weight: var(--tiklab-font-weight-bold);
     }
     .work-top-right {
         display: flex;
@@ -25,8 +25,8 @@
             }
             .work-gantt-view-select {
                 color: #fff;
-                background-color: var(--thoughtware-blue);
-                border: 1px solid var(--thoughtware-blue);
+                background-color: var(--tiklab-blue);
+                border: 1px solid var(--tiklab-blue);
             }
             .work-gantt-view-week {
                 border: 1px solid #f0f0f0;

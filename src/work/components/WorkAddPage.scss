@@ -28,14 +28,14 @@
         height: 100%;
 
         .work-add-page-title {
-            font-size: var(--thoughtware-font-16);
-            font-weight: var(--thoughtware-font-weight-bold);
-            padding: var(--thoughtware-padding);
+            font-size: var(--tiklab-font-16);
+            font-weight: var(--tiklab-font-weight-bold);
+            padding: var(--tiklab-padding);
         }
 
         .work-add-page-form {
             overflow: auto;
-            padding: 0 var(--thoughtware-padding);
+            padding: 0 var(--tiklab-padding);
             min-height: calc(100% - 120px);
         }
 
@@ -77,7 +77,7 @@
         .work-add-button {
             display: flex;
             gap: 10px;
-            padding: 10px var(--thoughtware-padding);
+            padding: 10px var(--tiklab-padding);
             justify-content: flex-end;
         }
 
@@ -93,7 +93,7 @@
 
             .desc-true {
                 cursor: pointer;
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
         }
 
@@ -106,13 +106,13 @@
 
 
         .ant-upload-drag {
-            background: var(--thoughtware-gray-300);
+            background: var(--tiklab-gray-300);
 
         }
     }
 
     .work-add-page-right {
-        background-color: var(--thoughtware-gray-600);
+        background-color: var(--tiklab-gray-600);
         flex: 1;
         padding: 15px;
         overflow: auto;

@@ -53,7 +53,7 @@
                 
                 .log-percent-blue {
                     height: 6px;
-                    background-color: var(--thoughtware-blue);
+                    background-color: var(--tiklab-blue);
                     border-top-left-radius: 6px;
                     border-bottom-left-radius: 6px;
                 }
@@ -76,7 +76,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: var(--thoughtware-gray-500);
+            color: var(--tiklab-gray-500);
             font-size: 12px;
             font-weight: 600;
             .log-edit {

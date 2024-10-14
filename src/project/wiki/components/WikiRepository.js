@@ -14,7 +14,7 @@ import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";
 import { withRouter } from "react-router";
-import { applyJump } from "thoughtware-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import WikiRepositoryStore from "../store/WikiRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";

@@ -8,7 +8,7 @@
         background-color: #fff;
     }
     .ant-layout-sider {
-        background: var(--thoughtware-gray-600);
+        background: var(--tiklab-gray-600);
         .ant-layout-sider-children {
             position: fixed;
             width: 200px;
@@ -58,11 +58,11 @@
                         }
                     }
                     .project-menu-submenu:hover {
-                        background-color: var(--thoughtware-gray-300);
+                        background-color: var(--tiklab-gray-300);
                     }
 
                     .project-menu-select {
-                        background-color: var(--thoughtware-gray-400);
+                        background-color: var(--tiklab-gray-400);
                     }
                 }
                 .hidden-menu {
@@ -81,7 +81,7 @@
     .project-back {
         padding: 0 20px;
         font-weight: 600;
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         cursor: pointer;
         height: 40px;
         line-height: 40px;

@@ -6,7 +6,7 @@
     .project-sprint-list {
         background-color: #fff;
         height: 100%;
-        padding: var(--thoughtware-padding);;
+        padding: var(--tiklab-padding);;
         flex: 1;
       
         .sprint-tabs {
@@ -17,7 +17,7 @@
             line-height: 50px;
             white-space: nowrap;
             .sprint-tab {
-                font-size: var(--thoughtware-font-13);;
+                font-size: var(--tiklab-font-13);;
                 cursor: pointer;
                 height: 50px;
                 line-height: 50px;
@@ -28,7 +28,7 @@
             }
             .active-tabs {
                 color: #000;
-                border-bottom: var(--thoughtware-gray-400) 2px solid;
+                border-bottom: var(--tiklab-gray-400) 2px solid;
             }
         }
     
@@ -48,7 +48,7 @@
                 margin: 0 10px;
             }
             .active-tabs {
-                border-bottom: 2px solid var(--thoughtware-blue);
+                border-bottom: 2px solid var(--tiklab-blue);
             }
             .filter-search {
                 width: 120px;
@@ -60,7 +60,7 @@
                 gap: 10px;
                 .select-content {
                     padding: 5px 10px;
-                    background-color: var(--thoughtware-gray);
+                    background-color: var(--tiklab-gray);
                     width: 100px;
                 }
             }
@@ -80,7 +80,7 @@
                 align-items: center;
             }
             .sprint-name:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .sprint-status {
                 padding: 2px 3px;

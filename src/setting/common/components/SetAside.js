@@ -10,7 +10,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
-import { PrivilegeButton } from "thoughtware-privilege-ui";
+import { PrivilegeButton } from "tiklab-privilege-ui";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
 import Logo from "../../../home/common/components/Logo"
 import { observer } from 'mobx-react';

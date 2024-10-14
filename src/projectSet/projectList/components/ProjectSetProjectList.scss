@@ -2,7 +2,7 @@
     overflow: auto;
 }
 .projectSetDetail {
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
 
     .ant-col {
         padding: 20px;
@@ -26,7 +26,7 @@
             }
 
             .project-key {
-                color: var(--thoughtware-gray-500);
+                color: var(--tiklab-gray-500);
                 line-height: 25px;
             }
 
@@ -37,7 +37,7 @@
             }
 
             .project-text:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
                 text-decoration: underline;
             }
         }

@@ -43,7 +43,7 @@
                 height: 50px;
                 background-color: #fafafa;
                 overflow: hidden;
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
                 position: relative;
                 top: 0;
     
@@ -51,7 +51,7 @@
                     flex: 1;
                     height: 50px;
     
-                    font-weight: var(--thoughtware-font-weight-bold);
+                    font-weight: var(--tiklab-font-weight-bold);
                     overflow: auto;
                 }
     
@@ -81,16 +81,16 @@
     
                 .table-hearder-assigner {
                     width: 90px;
-                    // border-right: 1px solid var(--thoughtware-gray);
+                    // border-right: 1px solid var(--tiklab-gray);
                 }
                 .table-hearder-action {
                     width: 70px;
-                    border-right: 1px solid var(--thoughtware-gray);
+                    border-right: 1px solid var(--tiklab-gray);
                 }
     
                 .table-hearder-time {
                     width: 250px;
-                    border-right: 1px solid var(--thoughtware-gray);
+                    border-right: 1px solid var(--tiklab-gray);
                 }
     
                 .table-timer {
@@ -112,7 +112,7 @@
                     height: 25px;
                     display: inline-flex;
                     text-align: center;
-                    border-bottom: 1px solid var(--thoughtware-gray);
+                    border-bottom: 1px solid var(--tiklab-gray);
                     line-height: 25px;
     
                     .table-weekday {
@@ -299,10 +299,10 @@
                 align-items: center;
             }
             .stage-name-left-name:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .stage-key:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .stage-icon {
                 width: 16px;
@@ -311,7 +311,7 @@
                 font-size: 12px;
             }
             .stage-text:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .add-child-stage {
                 height: 18px;
@@ -327,7 +327,7 @@
             
         }
         .stage-name:hover .add-child-stage {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
         .stage-name:hover .add-icon {
             display: block;
@@ -363,7 +363,7 @@
         position: relative;
         .change-page-button {
             padding-left: 5px;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
         .change-page-button:hover{
             text-decoration: underline;

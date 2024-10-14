@@ -9,7 +9,7 @@
 import React,{useEffect,useState} from "react";
 import { Modal, Button,Table,message,Input,Select } from 'antd';
 import {observer, inject} from "mobx-react";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./Plan.scss";
 
 const { Search } = Input;
@@ -110,7 +110,7 @@ const  PlanWorkItemAddmodal = (props) => {
                             {props.name}
                         </Button>
                     </PrivilegeProjectButton>
-                    : <span onClick={showModal} style={{color: "var(--thoughtware-gray-400)"}}>{props.name}</span>
+                    : <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
             }
             <Modal
                 title="选择事项"

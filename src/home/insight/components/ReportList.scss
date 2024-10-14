@@ -9,8 +9,8 @@
     .report-list-title {
         height: 40px;
         line-height: 40px;
-        font-weight: var(--thoughtware-font-weight-bold);
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         display: inline-flex;
         justify-content: space-between;
         
@@ -27,7 +27,7 @@
             justify-content: space-between;
         }
         .report-content-title {
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
         }
         .report-content-desc {
             color: #7A869A;
@@ -40,7 +40,7 @@
             text-align: center;
             margin-top: 10px;
             color: #fff;
-            background: var(--thoughtware-blue);
+            background: var(--tiklab-blue);
             border-radius: 8px;
         }
     }

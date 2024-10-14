@@ -16,7 +16,7 @@ import "./ProjectSetDetailAside.scss";
 import ProjectSetSetButton from "./ProjectSetSettingButton";
 import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import Logo from '../../../home/common/components/Logo';
 import ProjectAside from '../../../common/projectAside/ProjectAside';
 

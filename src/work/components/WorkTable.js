@@ -15,7 +15,7 @@ import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import { setWorkDeatilInList } from "./WorkSearch";
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { getColumn, getWorkColumn } from "./WorkTableColumn";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 const getScreenType = () => {
     const width = window.innerWidth;
 

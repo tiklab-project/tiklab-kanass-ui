@@ -14,7 +14,7 @@ import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
 import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
-import { applyJump } from "thoughtware-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import TestRepositoryStore from "../store/TestRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";

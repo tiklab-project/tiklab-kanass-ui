@@ -9,10 +9,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "./MenuUser.scss";
-import { AvatarLink } from "thoughtware-licence-ui";
-import { AvatarLink as AvatarLinkCloud } from "thoughtware-licence-cloud-ui";
+import { AvatarLink } from "tiklab-licence-ui";
+import { AvatarLink as AvatarLinkCloud } from "tiklab-licence-cloud-ui";
 import UserIcon from "../UserIcon/UserIcon";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 const MenuUser = (props) => {
     const { isShowText } = props;
     const nickname = getUser().nickname;

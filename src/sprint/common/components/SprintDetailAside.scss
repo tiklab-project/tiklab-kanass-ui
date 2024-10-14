@@ -1,5 +1,5 @@
 .sprint-detail-side {
-    background-color: var(--thoughtware-gray);
+    background-color: var(--tiklab-gray);
     border-right: 1px solid #f0f0f0;
 
     .ant-layout-sider-children {
@@ -7,7 +7,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            background: var(--thoughtware-gray-600);
+            background: var(--tiklab-gray-600);
 
             ul {
                 padding: 0;
@@ -31,7 +31,7 @@
             }
 
             .setting:hover {
-                background-color: var(--thoughtware-gray-400);
+                background-color: var(--tiklab-gray-400);
             }
 
             .setting {
@@ -84,16 +84,16 @@
                 }
 
                 .sprint-menu-submenu-icon:hover {
-                    background-color: var(--thoughtware-gray-400);
+                    background-color: var(--tiklab-gray-400);
                 }
 
                 .sprint-menu-submenu:hover {
-                    background-color: var(--thoughtware-gray-300);
+                    background-color: var(--tiklab-gray-300);
                 }
 
                 .sprint-menu-select {
-                    background-color: var(--thoughtware-gray-400);
-                    border-left: 3px solid var(--thoughtware-blue);
+                    background-color: var(--tiklab-gray-400);
+                    border-left: 3px solid var(--tiklab-blue);
                 }
             }
 
@@ -111,7 +111,7 @@
                 line-height: 20px;
                 display: none;
                 z-index: 2;
-                background: var(--thoughtware-gray-400);
+                background: var(--tiklab-gray-400);
                 .sprint-expend-icon {
                     width: 10px;
                     height: 50px;

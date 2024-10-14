@@ -10,7 +10,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input } from "antd";
 import { Drawer } from 'antd';
 import "./LogDetail.scss";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { inject, observer } from "mobx-react";
 import { EditOutlined } from '@ant-design/icons';
 import Button from "../../../common/button/Button";
@@ -219,7 +219,7 @@ const LogDetail = (props) => {
                                 <div>所属事项</div>
                                 {
                                     userId === logDetail.user.id && <div className="log-edit" onClick={() => setEdit(true)}>
-                                        <EditOutlined style={{ fontSize: "16px", color: "var(--thoughtware-gray-500)" }} />
+                                        <EditOutlined style={{ fontSize: "16px", color: "var(--tiklab-gray-500)" }} />
                                     </div>
                                 }
                             </div>

@@ -19,7 +19,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Collapse } from 'antd';
 import VersionBasicStore from "../store/VersionBasicStore";
 import VersionChangeModal from "./VersionChangeModal";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;

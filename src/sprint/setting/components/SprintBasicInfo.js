@@ -19,7 +19,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { Collapse } from 'antd';
 import SprintBasicStore from "../store/SprintBasicStore";
 import SprintChangeModal from "../../overview/components/SprintEndState";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 const { Panel } = Collapse;
 
 const { RangePicker } = DatePicker;

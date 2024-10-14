@@ -1,5 +1,5 @@
 import React from "react";
-import { UserGroup } from 'thoughtware-user-ui';
+import { UserGroup } from 'tiklab-user-ui';
 
 const ProjectUserGroup = (props) => {
     return (

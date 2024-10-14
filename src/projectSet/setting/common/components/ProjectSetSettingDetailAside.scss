@@ -1,6 +1,6 @@
 
 .projectSet-set {
-    height: calc(100% - var(--thoughtware-head-height));
+    height: calc(100% - var(--tiklab-head-height));
     .ant-row {
         overflow: auto;
     }
@@ -8,7 +8,7 @@
         background-color: #fff;
     }
     .ant-layout-sider {
-        background-color: var(--thoughtware-gray-600);
+        background-color: var(--tiklab-gray-600);
         .ant-layout-sider-children {
             position: fixed;
             width: 200px;
@@ -25,7 +25,7 @@
     .projectSet-back {
         padding: 0 20px;
         font-weight: 600;
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         cursor: pointer;
         height: 40px;
         line-height: 40px;
@@ -81,11 +81,11 @@
             }
         }
         .projectSet-menu-submenu:hover {
-            background-color: var(--thoughtware-gray-300);
+            background-color: var(--tiklab-gray-300);
         }
 
         .projectSet-menu-select {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
     }
     .hidden-menu {

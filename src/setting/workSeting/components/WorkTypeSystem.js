@@ -4,7 +4,7 @@ import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const WorkTypeSystem = (props) => {

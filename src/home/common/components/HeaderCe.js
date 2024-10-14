@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
-import { AppLink, AvatarLink, HelpLink } from 'thoughtware-licence-ui';
-import { AppLink as AppLinkCloud, AvatarLink as AvatarLinkCloud, HelpLink as HelpLinkCloud } from 'thoughtware-licence-cloud-ui';
+import { AppLink, AvatarLink, HelpLink } from 'tiklab-licence-ui';
+import { AppLink as AppLinkCloud, AvatarLink as AvatarLinkCloud, HelpLink as HelpLinkCloud } from 'tiklab-licence-cloud-ui';
 
 const HeaderCe = (props) => {
     const { isShowText, SetIsShowText } = props;

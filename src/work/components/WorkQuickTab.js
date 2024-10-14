@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer, inject } from "mobx-react";
 import "./WorkQuickTab.scss";
 import { withRouter } from "react-router";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { searchWorkList } from "./WorkSearch";
 const WorkQuickTab = (props) => {
     const { workStore } = props;

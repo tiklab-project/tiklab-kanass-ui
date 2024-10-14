@@ -12,7 +12,7 @@ import ProdeAside from "./ProjectDetailAside";
 import "./ProjectLayout.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject, Provider } from "mobx-react";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";

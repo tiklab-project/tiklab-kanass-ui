@@ -36,13 +36,13 @@
         }
         .select-group-title {
             font-weight: 600;
-            color: var(--thoughtware-gray-500);
+            color: var(--tiklab-gray-500);
             font-size: 12px;
             padding: 0 10px;
         }
         .child-add-submit {
             cursor: pointer;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
     }
 
@@ -69,12 +69,12 @@
             margin-bottom: 10px;
         }
         .loading-more:hover{
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
     }
 
     .child-add-work-item:hover {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
 
     .child-add-work-item {

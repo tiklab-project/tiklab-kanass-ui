@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-11 10:41:38
  */
 import React from "react";
-import {Logout} from 'thoughtware-eam-ui';
+import {Logout} from 'tiklab-eam-ui';
 const ProjectLogout = (props) => {
     return (
         <Logout {...props}/>

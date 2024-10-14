@@ -33,8 +33,8 @@ const version = JSON.stringify('ce');
 const client = JSON.stringify('web');
 const isSaas = false;
 const mobile_url = JSON.stringify("/mobile.html")
-const homes_url = JSON.stringify("http://thoughtware.net")
-const eas_url = JSON.stringify("http://eas.test.thoughtware.net")
+const homes_url = JSON.stringify("http://tiklab.net")
+const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 module.exports = {
     base_url,
     userProduction,

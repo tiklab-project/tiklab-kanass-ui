@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 import SettingHomeStore from "../store/SettingHomeStore";
-import { applyJump, disableFunction, applySubscription, getUser, getVersionInfo } from "thoughtware-core-ui";
-import versionStore from "thoughtware-licence-ui/es/version/VersionStore";
+import { applyJump, disableFunction, applySubscription, getUser, getVersionInfo } from "tiklab-core-ui";
+import versionStore from "tiklab-licence-ui/es/version/VersionStore";
 import vipDark from '../../../assets/images/vip-one.png';
 import vipLight from '../../../assets/images/vip-two.png';
 import "./SettingHome.scss";

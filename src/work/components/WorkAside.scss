@@ -1,7 +1,7 @@
 .work-aside {
     width: 300px;
-    border-right: 1px solid var(--thoughtware-gray-200);
-    // background-color: var(--thoughtware-gray-610);
+    border-right: 1px solid var(--tiklab-gray-200);
+    // background-color: var(--tiklab-gray-610);
     ul {
         padding: 0
     }
@@ -57,12 +57,12 @@
 
     .work-aside-option::-webkit-scrollbar-thumb {
         border-radius: 5px;
-        background: var(--thoughtware-gray-500);
+        background: var(--tiklab-gray-500);
     }
 
     .work-aside-option::-webkit-scrollbar-track {
         border-radius: 0;
-        background: var(--thoughtware-gray-600);
+        background: var(--tiklab-gray-600);
     }
 
     // .work-aside-option {
@@ -143,12 +143,12 @@
         }
 
         .work-aside-item:hover {
-            background-color: var(--thoughtware-gray-610);
-            color: var(--thoughtware-blue);
+            background-color: var(--tiklab-gray-610);
+            color: var(--tiklab-blue);
         }
 
         .work-aside-select {
-            background-color: var(--thoughtware-gray-610);
+            background-color: var(--tiklab-gray-610);
         }
 
         .work-aside-hidden {
@@ -162,7 +162,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 5px 10px;
-        // background: var(--thoughtware-gray-600);
+        // background: var(--tiklab-gray-600);
         
         .work-aside-page-total {
             font-size: 12px;

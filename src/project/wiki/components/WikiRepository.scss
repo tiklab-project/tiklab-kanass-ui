@@ -2,7 +2,7 @@
     height: 100%;
     overflow: auto;
     .wiki-repository-list {
-        padding: var(--thoughtware-padding);
+        padding: var(--tiklab-padding);
         .wiki-repository-list-top {
             display: flex;
             justify-content: space-between;
@@ -14,7 +14,7 @@
             padding-bottom: 15px;
             .wiki-repository-tab-item {
                 cursor: pointer;
-                background-color: var(--thoughtware-gray-600);
+                background-color: var(--tiklab-gray-600);
                 height: 32px;
                 width: 80px;
                 display: flex;
@@ -25,9 +25,9 @@
             }
     
             .wiki-repository-tab-select {
-                font-weight: var(--thoughtware-font-weight-bold);
-                color: var(--thoughtware-blue);
-                background-color: var(--thoughtware-gray-400);
+                font-weight: var(--tiklab-font-weight-bold);
+                color: var(--tiklab-blue);
+                background-color: var(--tiklab-gray-400);
             }
         }
     }
@@ -36,10 +36,10 @@
         align-items: center;
     }
     .document-title:hover {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
     .repository-delete {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         cursor: pointer;
     }
     .repository-name {
@@ -47,6 +47,6 @@
         cursor: pointer;
     }
     .repository-name:hover {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
 }

@@ -12,8 +12,8 @@ import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
 import moment from "moment";
 import "./logUserProjectStatistics.scss";
 import statisticStore from "./store/StatisticStore";
-// import { enableAxios } from "thoughtware-core-ui";
-// import enableAxiosCloud from "thoughtware-tenant-cloud-ui";
+// import { enableAxios } from "tiklab-core-ui";
+// import enableAxiosCloud from "tiklab-tenant-cloud-ui";
 const { RangePicker } = DatePicker;
 
 // enableAxios()

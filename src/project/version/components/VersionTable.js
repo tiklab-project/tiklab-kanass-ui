@@ -10,13 +10,13 @@ import React, { useEffect, useState } from "react";
 import { Table, Space, Row, Col, DatePicker, Dropdown, Menu } from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject, Provider } from "mobx-react";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./versionTable.scss";
 import { withRouter } from "react-router";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import VersionStore from "../store/VersionStores";
 import InputSearch from '../../../common/input/InputSearch';
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"

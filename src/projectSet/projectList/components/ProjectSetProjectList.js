@@ -17,7 +17,7 @@ import { withRouter } from 'react-router';
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 import DeleteModal from '../../../common/deleteModal/deleteModal';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
-import { PrivilegeProjectButton } from 'thoughtware-privilege-ui';
+import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore

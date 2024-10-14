@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Select, Upload, message, } from 'antd';
 import "./workType.scss"
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import Button from "../../../common/button/Button";
 import {inject, observer} from "mobx-react";
 import { withRouter } from "react-router";

@@ -1,5 +1,5 @@
 .worklist-head {
-    // border-bottom: 1px solid var(--thoughtware-gray-200);
+    // border-bottom: 1px solid var(--tiklab-gray-200);
 
     .select-title {
         font-size: 16px;
@@ -14,7 +14,7 @@
 
         .worklist-head-name {
             font-size: 16px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
         }
 
         .worklist-head-right {
@@ -80,8 +80,8 @@
         }
 
         .worklist-head-tabs-active {
-            color: var(--thoughtware-blue);
-            border-bottom: 2px solid var(--thoughtware-blue);
+            color: var(--tiklab-blue);
+            border-bottom: 2px solid var(--tiklab-blue);
         }
     }
 

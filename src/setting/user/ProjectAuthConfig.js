@@ -1,5 +1,5 @@
 import React from "react";
-import {AuthConfig} from 'thoughtware-user-ui';
+import {AuthConfig} from 'tiklab-user-ui';
 
 const ProjectAuthConfig = (props) => {
     return (

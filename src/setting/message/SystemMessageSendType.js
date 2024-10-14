@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageSendType } from 'thoughtware-message-ui';
+import { MessageSendType } from 'tiklab-message-ui';
 
 const ProjectMessageSendType = (props) => {
     return (

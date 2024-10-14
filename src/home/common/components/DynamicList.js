@@ -10,7 +10,7 @@
 import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { inject, observer } from "mobx-react";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { Select, Row, Col, Empty, Pagination } from "antd";
 import "./DynamicList.scss";
 import DynamicItem from "../../../common/overviewComponent/DynamicItem";
@@ -94,7 +94,7 @@ const DynamicList = (props) => {
         findLogPageByTime(params)
     };
 
-    return (<Row style={{ height: "100%", overflow: "auto", background: "var(--thoughtware-gray-600)" }}>
+    return (<Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-600)" }}>
         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} className="dynamic-col">
             <div className="dynamic-list-page">
                 <div className="dynamic-list-top">

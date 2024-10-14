@@ -87,7 +87,7 @@
             flex: 1;
             .change-version-state {
                 font-size: 12px;
-                color: var(--thoughtware-gray-500);
+                color: var(--tiklab-gray-500);
             }
         }
     }
@@ -97,11 +97,11 @@
         line-height: 40px;
         cursor: pointer;
         border-top: 1px solid #F0F0F0;
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         font-size: 13px;
     }
     .change-version-selectName {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
    
     .menu-show {

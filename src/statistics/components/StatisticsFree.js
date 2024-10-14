@@ -11,7 +11,7 @@ import logprojectuser from "../../assets/images/logprojectuser.jpg";
 import logprojectwork from "../../assets/images/logprojectwork.jpg";
 import loguserproject from "../../assets/images/loguserproject.jpg";
 // import Button from "../../common/button/Button";
-import {applySubscription} from "thoughtware-core-ui"
+import {applySubscription} from "tiklab-core-ui"
 const StatisticsFree = (props) => {
     const { statisticsFreeVisable, setStatisticsFreeVisable } = props;
     const [imgUrl, setImgUrl] = useState(bulidend);

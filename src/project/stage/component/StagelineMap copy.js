@@ -237,8 +237,8 @@ const LineMapStage = (props) => {
                     height: 24,
                     attrs: {
                         body: {
-                            fill: 'var(--thoughtware-blue)', // 背景颜色
-                            stroke: 'var(--thoughtware-gray-400)',  // 边框颜色
+                            fill: 'var(--tiklab-blue)', // 背景颜色
+                            stroke: 'var(--tiklab-gray-400)',  // 边框颜色
                         },
                     },
                     translate: { x: xAxis }

@@ -125,16 +125,16 @@
                 flex: 1;
                 .projectSet-type {
                     font-size: 12px;
-                    color: var(--thoughtware-gray-500);
+                    color: var(--tiklab-gray-500);
                 }
             }
 
         }
         .change-projectSet-item:hover {
-            background-color: var(--thoughtware-gray-300);
+            background-color: var(--tiklab-gray-300);
         }
         .change-projectSet-selectItem {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
         .change-projectSet-more {
             padding: 0 20px;
@@ -142,7 +142,7 @@
             line-height: 40px;
             cursor: pointer;
             border-top: 1px solid #F0F0F0;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             font-size: 13px;
         }
         .change-projectSet-more:hover {
@@ -156,7 +156,7 @@
     }
 
     .change-projectSet-selectName {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
    
     .menu-show {

@@ -7,7 +7,7 @@
         line-height: 32px;
     }
     .work-title {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -22,7 +22,7 @@
     .child-create-input {
         height: 35px;
         border-radius: 4px;
-        border: 1px solid var(--thoughtware-blue);
+        border: 1px solid var(--tiklab-blue);
         display: flex;
         justify-content: space-between;
         padding: 0 10px;
@@ -44,7 +44,7 @@
             gap: 10px;
             .create-submit {
                 cursor: pointer;
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
 
             .create-cancel {

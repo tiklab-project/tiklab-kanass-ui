@@ -6,7 +6,7 @@
 }
 
 .project-type-col {
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
     ;
 }
 
@@ -22,7 +22,7 @@
     padding: 10px 20px;
 
     .project-add-title {
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
     }
 
 }
@@ -37,8 +37,8 @@
     }
 
     .add-model-select {
-        border: 1px solid var(--thoughtware-blue);
-        box-shadow: 0 0 3px var(--thoughtware-gray-400)56;
+        border: 1px solid var(--tiklab-blue);
+        box-shadow: 0 0 3px var(--tiklab-gray-400)56;
     }
 
     .add-model {
@@ -65,12 +65,12 @@
 
         .type-name {
             font-size: 20px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
         }
 
         .type-desc {
             line-height: 40px;
-            color: var(--thoughtware-gray-500);
+            color: var(--tiklab-gray-500);
         }
     }
 }
@@ -92,7 +92,7 @@
             text-align: center;
             border-radius: 25px;
             line-height: 25px;
-            border: 2px solid var(--thoughtware-gray-400);
+            border: 2px solid var(--tiklab-gray-400);
             box-sizing: content-box;
         }
 
@@ -104,18 +104,18 @@
     }
 
     .step-select {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
 
         .step-number,
         .step-number {
-            border: 2px solid var(--thoughtware-blue);
+            border: 2px solid var(--tiklab-blue);
         }
     }
 
     .step-line {
         height: 1px;
         flex: 1;
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
         margin: 0 20px;
     }
 }

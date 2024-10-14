@@ -13,7 +13,7 @@ import { Layout, Button } from "antd";
 
 import { useTranslation } from 'react-i18next';
 import "./ProjectSetSettingDetailAside.scss"
-import { PrivilegeProjectButton } from 'thoughtware-privilege-ui';
+import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
 const { Sider } = Layout;
 
 const ProjectSetSettingDetailAside = (props) => {

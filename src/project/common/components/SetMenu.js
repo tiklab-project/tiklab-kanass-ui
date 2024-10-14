@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./setMenu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { AvatarLink } from "thoughtware-licence-ui";
+import { AvatarLink } from "tiklab-licence-ui";
 
 const SetMenu = (props) => {
     const { isShowText } = props;

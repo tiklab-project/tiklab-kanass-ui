@@ -7,7 +7,7 @@ import WorkAddModel from "./WorkAddModel";
 import WorkChangeView from "./WorkChangeView";
 import Button from "../../common/button/Button";
 import WorkCreatDropdown from "./workCreatDropdown";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 
 
 const WorkTableHead = (props) => {

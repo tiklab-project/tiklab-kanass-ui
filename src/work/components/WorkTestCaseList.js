@@ -11,7 +11,7 @@ import { Empty, Table } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkTestCaseList.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
-import { applyJump } from "thoughtware-core-ui";
+import { applyJump } from "tiklab-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
 import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";

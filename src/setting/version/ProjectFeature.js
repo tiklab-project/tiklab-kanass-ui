@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { disableFunction, getVersionInfo } from "thoughtware-core-ui";
+import { disableFunction, getVersionInfo } from "tiklab-core-ui";
 
 import "./ProjectFeature.scss";
 import { Modal } from 'antd';

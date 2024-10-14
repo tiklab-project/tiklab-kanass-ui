@@ -3,7 +3,7 @@
     overflow: auto;
     position: relative;
     z-index: 0;
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
     background-color: #fff;
     .home-tab {
         display: flex;
@@ -11,7 +11,7 @@
         position: sticky;
         .home-tab-item {
             cursor: pointer;
-            background-color: var(--thoughtware-gray-600);
+            background-color: var(--tiklab-gray-600);
             height: 32px;
             width: 80px;
             display: flex;
@@ -22,14 +22,14 @@
         }
 
         .home-tab-select {
-            font-weight: var(--thoughtware-font-weight-bold);
-            color: var(--thoughtware-blue);
-            background-color: var(--thoughtware-gray-400);
+            font-weight: var(--tiklab-font-weight-bold);
+            color: var(--tiklab-blue);
+            background-color: var(--tiklab-gray-400);
         }
     }
 
     // .home-content {
-    //     background: var(--thoughtware-gray-600);
+    //     background: var(--tiklab-gray-600);
     // }
 
     .title {
@@ -39,7 +39,7 @@
         justify-content: space-between;
 
         .name {
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
         }
 
         .more:hover {
@@ -47,7 +47,7 @@
         }
 
         .more {
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -72,7 +72,7 @@
 
             .project-item:hover {
                 border-radius: 4px 4px 0 0;
-                border-bottom: 2px solid var(--thoughtware-blue);
+                border-bottom: 2px solid var(--tiklab-blue);
                 transition: 500;
             }
 
@@ -85,13 +85,13 @@
                 flex-shrink: 0;
                 border-radius: 4px;
                 cursor: pointer;
-                background-color: var(--thoughtware-gray-600);
+                background-color: var(--tiklab-gray-600);
                 box-sizing: border-box;
-                border-bottom: 2px solid var(--thoughtware-gray-600);
+                border-bottom: 2px solid var(--tiklab-gray-600);
 
                 .item-title {
                     margin-bottom: 10px;
-                    font-weight: var(--thoughtware-font-weight-bold);
+                    font-weight: var(--tiklab-font-weight-bold);
                     display: inline-flex;
                     align-items: center;
 
@@ -158,7 +158,7 @@
 
         &-top {
             width: 100%;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -168,7 +168,7 @@
             }
 
             .more {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
                 margin-left: 10px;
                 cursor: pointer;
                 display: flex;

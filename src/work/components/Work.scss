@@ -53,7 +53,7 @@
     height: 100%;
 }
 .work-list-col {
-    padding: var(--thoughtware-padding);
+    padding: var(--tiklab-padding);
 }
 .work-head {
     box-shadow: 0 0 4px 0 rgb(0,0,0,0.1), 0 0.5px 0 0 rgb(0,0,0,0,8);
@@ -85,7 +85,7 @@
 .work-addmodel {
     .desc-preview {
         border-radius: 4px;
-        background: var(--thoughtware-gray-300);
+        background: var(--tiklab-gray-300);
     }
     .ant-modal-content {
         .ant-modal-body {
@@ -95,7 +95,7 @@
                 background-color: #fff;
             }
             .ant-modal-title {
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
             }
         } 
     }

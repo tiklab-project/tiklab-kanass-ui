@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { message, Row, Col } from 'antd';
 import 'moment/locale/zh-cn';
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import { Provider } from "mobx-react";
 import "./ProjectSetAdd.scss";
 

@@ -4,7 +4,7 @@ import {  Modal, Button } from 'antd';
 import "./WorkGanttFree.scss";
 import gantt from "../../assets/images/gantt.jpg";
 // import Button from "../../common/button/Button";
-import {applySubscription} from "thoughtware-core-ui"
+import {applySubscription} from "tiklab-core-ui"
 const WorkGanttFree = (props) => {
     const { workGanttFreeVisable, setWorkGanttFreeVisable } = props;
 

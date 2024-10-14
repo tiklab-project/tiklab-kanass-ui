@@ -14,7 +14,7 @@
         cursor: pointer;
     }
     .worklog-content:hover {
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
     
 }
@@ -34,7 +34,7 @@
         line-height: 50px;
 
         .log-tab {
-            font-size: var(--thoughtware-font-13);
+            font-size: var(--tiklab-font-13);
             cursor: pointer;
             height: 50px;
             line-height: 50px;
@@ -46,9 +46,9 @@
         }
 
         .active-tabs {
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             color: #000;
-            border-bottom: 2px solid var(--thoughtware-blue);
+            border-bottom: 2px solid var(--tiklab-blue);
         }
     }
 

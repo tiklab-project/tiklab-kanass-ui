@@ -23,7 +23,7 @@
             height: 104px;
             .project-item:hover {
                 border-radius: 4px 4px 0 0;
-                border-bottom: 2px solid var(--thoughtware-blue);
+                border-bottom: 2px solid var(--tiklab-blue);
                 transition: 500;
             }
     
@@ -36,13 +36,13 @@
                 flex-shrink: 0;
                 border-radius: 4px;
                 cursor: pointer;
-                background-color: var(--thoughtware-gray-600);
+                background-color: var(--tiklab-gray-600);
                 box-sizing: border-box;
-                border-bottom: 2px solid var(--thoughtware-gray-600);
+                border-bottom: 2px solid var(--tiklab-gray-600);
                 
                 .item-title {
                     margin-bottom: 10px;
-                    font-weight: var(--thoughtware-font-weight-bold);
+                    font-weight: var(--tiklab-font-weight-bold);
                     display: inline-flex;
                     align-items: center;
                     font-size: 16px;
@@ -117,7 +117,7 @@
         }
         .active-tabs {
             color: #000;
-            border-bottom: 2px solid var(--thoughtware-blue);
+            border-bottom: 2px solid var(--tiklab-blue);
         }
         .filter-search {
             width: 150px;
@@ -136,7 +136,7 @@
         height: 40px;
         line-height: 40px;
         .project-tab{
-            font-size: var(--thoughtware-font-13);;
+            font-size: var(--tiklab-font-13);;
             cursor: pointer;
             height: 40px;
             line-height: 40px;
@@ -159,10 +159,10 @@
         // .ant-layout-sider {
         //     background-color: #fff;
         //     min-height: 100%;
-        //     border-right: 2px solid var(--thoughtware-gray-200);
+        //     border-right: 2px solid var(--tiklab-gray-200);
         //     .project-aside {
         //         height: 100%;
-        //         background:var(--thoughtware-gray);
+        //         background:var(--tiklab-gray);
         //         .project-title {
         //             height: 40px;
         //             display: flex;
@@ -171,9 +171,9 @@
         //             justify-content: space-between;
         //             align-items: center;
         //             padding: 0 20px;
-        //             font-weight: var(--thoughtware-font-weight-bold);
+        //             font-weight: var(--tiklab-font-weight-bold);
         //             color: #000;
-        //             border-bottom: 1px solid var(--thoughtware-gray-200);
+        //             border-bottom: 1px solid var(--tiklab-gray-200);
         //         }
         //         .project-menu {
         //             list-style-type:none;
@@ -195,11 +195,11 @@
         //             }
         //             .project-menu-submenu:hover {
         //                 cursor: pointer;
-        //                 color: var(--thoughtware-blue);
+        //                 color: var(--tiklab-blue);
         //             }
         //             .project-menu-select {
-        //                 background-color: var(--thoughtware-gray-400);
-        //                 border-left: 3px solid var(--thoughtware-blue);
+        //                 background-color: var(--tiklab-gray-400);
+        //                 border-left: 3px solid var(--tiklab-blue);
         //             }
         //         }
         //         .hidden-menu {
@@ -213,7 +213,7 @@
             .ant-col {
                 min-height: 100%;
                 background-color: #fff;
-                padding: var(--thoughtware-padding);
+                padding: var(--tiklab-padding);
             }
         }
         .project-table-box {
@@ -222,7 +222,7 @@
                 display: flex;
                 align-items: center;
                 .project-key {
-                    color: var(--thoughtware-gray-500);
+                    color: var(--tiklab-gray-500);
                     line-height: 25px;
                 }
                 .project-text {
@@ -231,12 +231,12 @@
                 }
                 .project-text:hover {
                     text-decoration: underline;
-                    color: var(--thoughtware-blue);
+                    color: var(--tiklab-blue);
                 }
             }
             .project-status {
                 padding: 5px 6px;
-                background: var(--thoughtware-gray-400);
+                background: var(--tiklab-gray-400);
                 border-radius: 4px;
                 font-size: 12px;
                 width: fit-content;
@@ -259,12 +259,12 @@
             div {
                 margin-bottom: 20px;
                 font-size: 16px;
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
             }
             padding: 20px;
         }
         .project-gide-botton {
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             cursor: pointer;
         }
     }

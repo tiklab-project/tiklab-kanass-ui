@@ -1,19 +1,19 @@
 .project-statistics-aside {
-    background: var(--thoughtware-gray-600);
+    background: var(--tiklab-gray-600);
     width: 250px;
-    // border-right: 1px solid var(--thoughtware-gray-200);
+    // border-right: 1px solid var(--tiklab-gray-200);
     height: 100%;
 
     .statistics-top-title {
         padding: 10px 20px;
-        font-size: var(--thoughtware-font-16);
-        font-weight: var(--thoughtware-font-weight-bold);
-        border-bottom: 1px var(--thoughtware-gray-200) solid;
+        font-size: var(--tiklab-font-16);
+        font-weight: var(--tiklab-font-weight-bold);
+        border-bottom: 1px var(--tiklab-gray-200) solid;
         
     }
 
     .statistics-type-title:hover {
-        background-color: var(--thoughtware-gray-300);
+        background-color: var(--tiklab-gray-300);
     }
 
     .statistics-type-title {
@@ -36,12 +36,12 @@
 
     .statistics-menu-firstmenu:hover {
         cursor: pointer;
-        background-color: var(--thoughtware-gray-300);
+        background-color: var(--tiklab-gray-300);
     }
 
     .statistics-menu-submenu:hover {
         cursor: pointer;
-        background-color: var(--thoughtware-gray-300);
+        background-color: var(--tiklab-gray-300);
     }
 
     .statistics-menu {
@@ -59,7 +59,7 @@
         }
 
         &-select {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
     }
 

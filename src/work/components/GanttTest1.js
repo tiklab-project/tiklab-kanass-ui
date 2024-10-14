@@ -382,7 +382,7 @@ const Gantt = (props) => {
     // 时间轴的样式
     const setTimeAxisStyle = (id) => {
         let color = {
-            backgroundColor: "var(--thoughtware-blue)",
+            backgroundColor: "var(--tiklab-blue)",
             borderColor: "#fff"
         };
         switch (id) {

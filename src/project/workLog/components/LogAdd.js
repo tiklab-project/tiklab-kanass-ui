@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import LogStore from "../store/LogStore";
 import "./LogAdd.scss"
 const { TextArea } = Input;

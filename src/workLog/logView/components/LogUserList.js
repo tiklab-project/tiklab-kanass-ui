@@ -4,7 +4,7 @@ import { Table, Row, Col, Space } from 'antd';
 import LogFilter from "./LogFilter";
 import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import Button from "../../../common/button/Button";
 import moment from "moment";
 import { withRouter } from "react-router";

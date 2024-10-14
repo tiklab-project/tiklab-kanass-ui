@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-27 11:39:35
  */
 import React from "react";
-import { Orga } from 'thoughtware-user-ui';
+import { Orga } from 'tiklab-user-ui';
 
 const OrgaList = () => {
     return (

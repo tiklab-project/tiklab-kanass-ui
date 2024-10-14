@@ -6,14 +6,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         margin-bottom: 10px;
     }
     .dynamic-list {
         .dynamic-item {
             margin-bottom: 10px;
             .dynamic-work-title:hover {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
         }
         .dynamic-list-item:nth-child(4n+1) {

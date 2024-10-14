@@ -9,7 +9,7 @@ import WorkFilterType from "./WorkFilterType";
 import WorkFilterQuick from "./WorkFilterQuick";
 import WorkFilterMaster from "./WorkFilterMaster";
 import WorkFilterProject from "./WorkFilterProject";
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkCreatDropdown from "./workCreatDropdown";
 import WorkSort from "./WorkSort";
 import WorkFilterModal from "./WorkFilterModal";

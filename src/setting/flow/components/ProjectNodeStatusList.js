@@ -1,5 +1,5 @@
 import React from "react";
-import {NodeStatus} from 'thoughtware-flow-ui';
+import {NodeStatus} from 'tiklab-flow-ui';
 
 const ProjectNodeStatusList = (props) => {
     return (

@@ -11,7 +11,7 @@ import GideImge from "../../../assets/images/projectGide.png";
 import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react"
 import { withRouter } from "react-router";
-import { PrivilegeButton } from "thoughtware-privilege-ui";
+import { PrivilegeButton } from "tiklab-privilege-ui";
 const ProjectGide = (props) => {
     const { projectStore } = props;
     return (

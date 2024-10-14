@@ -12,9 +12,9 @@ import ProdeAside from "./ProjectScrumSetAside";
 import "../components/projectSetDetail.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject } from "mobx-react";
-import { ProjectNav } from "thoughtware-privilege-ui";
+import { ProjectNav } from "tiklab-privilege-ui";
 import { useTranslation } from "react-i18next";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const ProjectScrumSet = (props) => {
     const { projectStore, systemRoleStore, route } = props;

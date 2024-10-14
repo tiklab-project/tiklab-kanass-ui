@@ -23,8 +23,8 @@
             line-height: 35px;
             cursor: pointer;
             flex: 1;
-            padding: var(--thoughtware-padding);
-            background-color: var(--thoughtware-gray-600);
+            padding: var(--tiklab-padding);
+            background-color: var(--tiklab-gray-600);
             gap: 10px;
             text-align: center;
             .project-status-num-content-box-num {
@@ -38,10 +38,10 @@
 
         .project-status-num-content-box:hover {
             .project-status-num-content-box-num {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             .project-status-num-content-box-name {
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
             }
             
         }

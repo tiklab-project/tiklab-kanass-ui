@@ -1,7 +1,7 @@
 import { observable, action, extendObservable } from "mobx";
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 export class WorkStore {
     @observable workBoardList = [];
     @observable workUserGroupBoardList = [];

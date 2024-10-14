@@ -1,5 +1,5 @@
 import React from "react";
-import {MessageNotice} from 'thoughtware-message-ui';
+import {MessageNotice} from 'tiklab-message-ui';
 
 const SystemMessageNotice = (props) => {
     return (

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Spin, Table, Space, Select, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { useState } from "react";
 import UserIcon from "../../../common/UserIcon/UserIcon";
@@ -13,7 +13,7 @@ import { useDebounce } from "../../../common/utils/debounce";
 import ProjectFilterQuick from "./ProjectFilterQuick";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
-import { PrivilegeButton } from "thoughtware-privilege-ui";
+import { PrivilegeButton } from "tiklab-privilege-ui";
 
 const ProjectList = (props) => {
     const { projectStore } = props;

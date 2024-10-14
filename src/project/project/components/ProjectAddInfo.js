@@ -4,7 +4,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
 import { useState } from "react";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";

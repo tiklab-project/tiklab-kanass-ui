@@ -8,7 +8,7 @@
         border-radius: 4px;
     }
     .worklist-filter-button:hover {
-         background-color: var(--thoughtware-gray);
+         background-color: var(--tiklab-gray);
     }
     .worklist-icon {
         width: 15px;
@@ -30,7 +30,7 @@
         height: 40px;
         line-height: 40px;
         padding: 0 20px;
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         border-bottom: 1px solid #F0F0F0;
     }
 
@@ -63,17 +63,17 @@
             height: 23px;
             line-height: 23px;
             border-radius: 4px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             cursor: pointer;
         }
 
         .view-list-type:hover {
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
 
         .sort-select {
             background-color: #d7d7d7;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
     }
 
@@ -82,12 +82,12 @@
     }
 
     .work-view-item:hover {
-        background-color: var(--thoughtware-gray-300);
+        background-color: var(--tiklab-gray-300);
 
     }
 
     .sort-type-select {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
 
     .worklist-view-icon {

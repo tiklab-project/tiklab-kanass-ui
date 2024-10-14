@@ -5,7 +5,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        font-weight: var(--thoughtware-font-weight-bold);
+        font-weight: var(--tiklab-font-weight-bold);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -13,7 +13,7 @@
             text-decoration:underline;
         }
         .more {
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
             margin-left: 10px;
             cursor: pointer;
             display: flex;

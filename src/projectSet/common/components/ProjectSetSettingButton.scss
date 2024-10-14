@@ -1,6 +1,6 @@
 .project-set-setting {
     position: relative;
-    border-top: 1px solid var(--thoughtware-gray-200);
+    border-top: 1px solid var(--tiklab-gray-200);
     .project-set-setting-title {
         cursor: pointer;
         display: flex;
@@ -11,7 +11,7 @@
         gap: 5px;
     }
     .project-set-setting-title:hover {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
 
     .project-set-setting-icon {
@@ -25,7 +25,7 @@
         }
     }
     .project-set-setting-icon:hover {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
     .setting {
         

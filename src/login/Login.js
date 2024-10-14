@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-11 10:41:38
  */
 import React from "react";
-import {Login} from 'thoughtware-eam-ui'
+import {Login} from 'tiklab-eam-ui'
 import logo from "../assets/images/logo.png";
 
 

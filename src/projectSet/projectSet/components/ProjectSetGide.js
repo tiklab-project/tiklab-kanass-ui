@@ -12,7 +12,7 @@ import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react";
 import "./projectSetGide.scss"
 import { withRouter } from "react-router";
-import { PrivilegeButton } from "thoughtware-privilege-ui";
+import { PrivilegeButton } from "tiklab-privilege-ui";
 const ProjectSetGide = (props) => {
     const [name, setName] = useState("添加项目集")
 

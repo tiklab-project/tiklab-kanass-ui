@@ -20,7 +20,7 @@ import InsightAddModal from "./InsightAddModal";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import InsightStore from "../store/InsightStore";
 import InputSearch from "../../../common/input/InputSearch";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 const { confirm } = Modal;
 

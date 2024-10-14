@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import {FlowChart} from 'thoughtware-flow-ui';
+import {FlowChart} from 'tiklab-flow-ui';
 import { observer } from "mobx-react";
 import ProjectFlowStore from "../store/ProjectFlowStore"
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const ProjectFlowDetailDesign = (props) => {
     const {getUserList, userList} = ProjectFlowStore;

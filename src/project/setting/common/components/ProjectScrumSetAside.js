@@ -12,7 +12,7 @@ import { withRouter } from "react-router-dom";
 import { Layout, Button } from "antd";
 
 import { useTranslation } from 'react-i18next';
-import { PrivilegeProjectButton, ProjectNav } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton, ProjectNav } from "tiklab-privilege-ui";
 const { Sider } = Layout;
 const ProjectScrumSetAside = (props) => {
     const { prorouter } = props;

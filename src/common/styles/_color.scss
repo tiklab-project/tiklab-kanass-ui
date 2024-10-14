@@ -25,53 +25,53 @@ $entry-color: #F0F2F5;
 $form-input-color: #e3e8f07d;
 
 :root {
-    --thoughtware-white: #fff;  
-    --thoughtware-black: #000;
-    --thoughtware-blue: #0D66E4;
-    --thoughtware-gray-200: #ececec;
-    --thoughtware-gray-300: #EDF0F5;
-    --thoughtware-gray-400: #e3e8f0;
-    --thoughtware-gray-410: #F1F5FC;
-    --thoughtware-gray-500: #999;
-    --thoughtware-gray-600: #fafbfc;
-    --thoughtware-gray-610: #f6f7f8;
-    --thoughtware-gray-700: #f7f7f7;
-    --thoughtware-gray-800: #fafbff;
-    --thoughtware-gray: #efefef;
+    --tiklab-white: #fff;  
+    --tiklab-black: #000;
+    --tiklab-blue: #0D66E4;
+    --tiklab-gray-200: #ececec;
+    --tiklab-gray-300: #EDF0F5;
+    --tiklab-gray-400: #e3e8f0;
+    --tiklab-gray-410: #F1F5FC;
+    --tiklab-gray-500: #999;
+    --tiklab-gray-600: #fafbfc;
+    --tiklab-gray-610: #f6f7f8;
+    --tiklab-gray-700: #f7f7f7;
+    --tiklab-gray-800: #fafbff;
+    --tiklab-gray: #efefef;
    
-    --thoughtware-padding: 20px;
-    --thoughtware-padding-resove: -20px;
-    --thoughtware-padding-item: 20px;
-    --thoughtware-padding-resove-item:-15px;
+    --tiklab-padding: 20px;
+    --tiklab-padding-resove: -20px;
+    --tiklab-padding-item: 20px;
+    --tiklab-padding-resove-item:-15px;
     
 
-    --thoughtware-font-12: 12px;
-    --thoughtware-font-13: 13px;
-    --thoughtware-font-14: 14px;
-    --thoughtware-font-15: 15px;
-    --thoughtware-font-16: 16px;
+    --tiklab-font-12: 12px;
+    --tiklab-font-13: 13px;
+    --tiklab-font-14: 14px;
+    --tiklab-font-15: 15px;
+    --tiklab-font-16: 16px;
 
-    --thoughtware-icon-size-16: 16px;
-    --thoughtware-icon-size-20: 20px;
-    --thoughtware-icon-size-22: 22px;
-    --thoughtware-icon-size-32: 32px;
-    --thoughtware-head-height: 48px;
-    --thoughtware-font-weight-bold: bold;
+    --tiklab-icon-size-16: 16px;
+    --tiklab-icon-size-20: 20px;
+    --tiklab-icon-size-22: 22px;
+    --tiklab-icon-size-32: 32px;
+    --tiklab-head-height: 48px;
+    --tiklab-font-weight-bold: bold;
 }
 
 
 @mixin first-level {
-    font-size: var(--thoughtware-font-16);
-    font-weight: var(--thoughtware-font-weight-bold);
+    font-size: var(--tiklab-font-16);
+    font-weight: var(--tiklab-font-weight-bold);
 }
 
 @mixin second-level {
-    font-size: var(--thoughtware-font-13);
+    font-size: var(--tiklab-font-13);
 }
 
 
 @mixin page-padding {
-    padding: var(--thoughtware-padding-item);
+    padding: var(--tiklab-padding-item);
 }
 
 .img-icon-right {
@@ -187,8 +187,8 @@ $form-input-color: #e3e8f07d;
 }
 
 .first-level {
-    font-size: var(--thoughtware-font-16);
-    font-weight: var(--thoughtware-font-weight-bold);
+    font-size: var(--tiklab-font-16);
+    font-weight: var(--tiklab-font-weight-bold);
 }
 
 .botton-icon {

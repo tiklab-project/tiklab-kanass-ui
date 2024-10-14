@@ -1,5 +1,5 @@
 .version-detail {
-    height: calc(100% - var(--thoughtware-head-height));
+    height: calc(100% - var(--tiklab-head-height));
     background-color: #fff;
 
     .version-top {
@@ -10,7 +10,7 @@
 
         .version-name {
             font-size: 18px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
         }
     }
     .version-title {
@@ -25,11 +25,11 @@
         }
         .version-name:hover {
             min-width: fit-content;
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
         .version-name-edit {
             width: 50%;
-            border: var(--thoughtware-blue) 2px solid;
+            border: var(--tiklab-blue) 2px solid;
             border-radius: 4px;
             line-height: 40px;
             padding: 0 10px;
@@ -68,7 +68,7 @@
         }
 
         &-first:hover {
-            color: var(--thoughtware-blue)
+            color: var(--tiklab-blue)
         }
         &-second {
             width: 20px;
@@ -84,8 +84,8 @@
                 border-radius: 4px;
             }
             .version-breadcrumb-text:hover {
-                color: var(--thoughtware-blue);
-                border: 1px solid var(--thoughtware-blue);
+                color: var(--tiklab-blue);
+                border: 1px solid var(--tiklab-blue);
             }
             &-modal {
                 width: 100px;
@@ -111,7 +111,7 @@
                 }
                 
                 &-submenu:hover {
-                    background-color: var(--thoughtware-gray-400);
+                    background-color: var(--tiklab-gray-400);
                 }
                 &-submenu {
                     height: 40px;
@@ -124,7 +124,7 @@
                 }
                 
                 &-select {
-                    background-color: var(--thoughtware-gray-400);
+                    background-color: var(--tiklab-gray-400);
                 }
             }
         }
@@ -142,8 +142,8 @@
 
         .workitem-title {
             font-size: 15px;
-            font-weight: var(--thoughtware-font-weight-bold);
-            /* color: var(--thoughtware-blue); */
+            font-weight: var(--tiklab-font-weight-bold);
+            /* color: var(--tiklab-blue); */
             margin: 20px 0;
             display: flex;
             justify-content: space-between;

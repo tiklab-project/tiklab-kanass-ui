@@ -13,11 +13,11 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import Button from "../../../common/button/Button";
 import ColorIcon from '../../../common/colorIcon/colorIcon';
 import ProjectEmpty from '../../../common/component/ProjectEmpty';
-import { PrivilegeButton } from 'thoughtware-privilege-ui';
+import { PrivilegeButton } from 'tiklab-privilege-ui';
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;

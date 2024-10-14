@@ -9,7 +9,7 @@
 
 import React from "react";
 import { Modal, Form, Input, DatePicker, Select } from 'antd';
-import { PrivilegeProjectButton } from "thoughtware-privilege-ui";
+import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import 'moment/locale/zh-cn';

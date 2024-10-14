@@ -24,7 +24,7 @@
             line-height: 20px;
             display: none;
             z-index: 2;
-            background: var(--thoughtware-gray-400);
+            background: var(--tiklab-gray-400);
             .first-menu-expend-icon {
                 width: 10px;
                 height: 50px;
@@ -54,14 +54,14 @@
         }
 
         &-active {
-            color: var(--thoughtware-blue);
-            background-color: var(--thoughtware-gray-400);
-            border-left: 3px solid var(--thoughtware-blue) !important;
+            color: var(--tiklab-blue);
+            background-color: var(--tiklab-gray-400);
+            border-left: 3px solid var(--tiklab-blue) !important;
             // width: 74px;
         }
 
         &-item:hover {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
 
         .svg-icon {
@@ -107,20 +107,20 @@
     background-color: #f0f3fa;
     .first-menu-link {
         &-active {
-            color: var(--thoughtware-blue);
-            background-color: var(--thoughtware-gray-400);
-            border-left: 3px solid var(--thoughtware-blue);
+            color: var(--tiklab-blue);
+            background-color: var(--tiklab-gray-400);
+            border-left: 3px solid var(--tiklab-blue);
         }
 
         &-item:hover {
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
         }
     }
     .first-menu-text-item:hover {
-        background-color: var(--thoughtware-gray-400);
+        background-color: var(--tiklab-gray-400);
     }
     .user-icon {
-        background-color: var(--thoughtware-blue);
+        background-color: var(--tiklab-blue);
         color: #ffffff;
     }
 }
@@ -140,7 +140,7 @@
         background-color: #414A5A;
     }
     .user-icon {
-        background-color: var(--thoughtware-blue);
+        background-color: var(--tiklab-blue);
         color: #fff;
     }
 }

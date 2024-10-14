@@ -19,7 +19,7 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
@@ -576,7 +576,7 @@ const EpicLineMap = (props) => {
     // 时间轴的样式
     const setTimeAxisStyle = (id) => {
         let color = {
-            backgroundColor: "var(--thoughtware-blue)",
+            backgroundColor: "var(--tiklab-blue)",
             borderColor: "#fff"
         };
         switch (id) {

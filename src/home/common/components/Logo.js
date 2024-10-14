@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
-import { productImg, productWhiteImg } from "thoughtware-core-ui";
+import { productImg, productWhiteImg } from "tiklab-core-ui";
 import "./Logo.scss";
 
 const Logo = (props) => {

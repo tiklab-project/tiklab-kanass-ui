@@ -9,7 +9,7 @@
 import React, { useState, useEffect } from 'react';
 import { Space } from "antd";
 import { withRouter } from 'react-router';
-import { getUser, getVersionInfo } from 'thoughtware-core-ui';
+import { getUser, getVersionInfo } from 'tiklab-core-ui';
 import { observer, inject, Provider } from "mobx-react";
 import Search from "../../search/components/Search";
 import MessageList from "./MessageList";

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import "../components/versionSurvey.scss";
 import { Row, Col, Progress, Empty, Select, Tooltip } from 'antd';
 import { observer, inject } from "mobx-react";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';

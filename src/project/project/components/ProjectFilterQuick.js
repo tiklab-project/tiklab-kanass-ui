@@ -3,7 +3,7 @@ import { SelectSimple, SelectItem } from "../../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./ProjectFilterQuick.scss"
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const ProjectFilterQuick = (props) => {
     const { projectStore } = props;

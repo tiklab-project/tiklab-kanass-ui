@@ -1,5 +1,5 @@
 import React from 'react';
-import { BusinessRoleList } from 'thoughtware-flow-ui';
+import { BusinessRoleList } from 'tiklab-flow-ui';
 
 
 const FlowBusinessRoleList = (props) => {

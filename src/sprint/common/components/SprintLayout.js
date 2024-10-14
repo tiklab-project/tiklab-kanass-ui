@@ -14,7 +14,7 @@ import { renderRoutes } from "react-router-config";
 import SprintDetailAside from "./SprintDetailAside";
 import SprintDetailStore from "../store/SprintDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
-import { getUser } from "thoughtware-core-ui";
+import { getUser } from "tiklab-core-ui";
 
 const Sprintdetail = (props) => {
     const { route, systemRoleStore } = props;

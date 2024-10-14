@@ -1,5 +1,5 @@
 import React from "react";
-import { ProjectRole } from 'thoughtware-privilege-ui';
+import { ProjectRole } from 'tiklab-privilege-ui';
 import { inject, observer } from "mobx-react";
 
 const ProjectRoleList = props => {

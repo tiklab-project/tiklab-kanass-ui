@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldType } from 'thoughtware-form-ui';
+import { FieldType } from 'tiklab-form-ui';
 
 const ProjectProjectDirectory = (props) => {
     return (

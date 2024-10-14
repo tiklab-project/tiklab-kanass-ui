@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import "../components/stageSurvey.scss";
 import { Row, Col, Progress, Empty, Tooltip } from 'antd';
 import { observer, inject } from "mobx-react";
-import { getUser } from 'thoughtware-core-ui';
+import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
@@ -179,7 +179,7 @@ const StageSurvey = (props) => {
 
     const status = ["未完成", "进行中", "已完成"]
     return (
-        <Row style={{ height: "100%", background: "var(--thoughtware-gray-600)", overflow: "auto" }}>
+        <Row style={{ height: "100%", background: "var(--tiklab-gray-600)", overflow: "auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="stage-survey">
                     <div className="stage-survey-top">

@@ -22,7 +22,7 @@ const plugins = [
         [
             "import",
             {
-                "libraryName": "thoughtware-eam-ui",
+                "libraryName": "tiklab-eam-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -36,15 +36,15 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-eam-ui/es/${fullName}`;
+                    return `tiklab-eam-ui/es/${fullName}`;
                 }
             },
-            "thoughtware-eam-ui"
+            "tiklab-eam-ui"
         ],
         [
             "import",
             {
-                "libraryName": "thoughtware-message-ui",
+                "libraryName": "tiklab-message-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -58,15 +58,15 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-message-ui/es/${fullName}`;
+                    return `tiklab-message-ui/es/${fullName}`;
                 }
             },
-            "thoughtware-message-ui"
+            "tiklab-message-ui"
         ],
         [
             "import",
             {
-                "libraryName": "thoughtware-form-ui",
+                "libraryName": "tiklab-form-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -80,15 +80,15 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-form-ui/es/${fullName}`;
+                    return `tiklab-form-ui/es/${fullName}`;
                 }
             },
-            "thoughtware-form-ui"
+            "tiklab-form-ui"
         ],
         [
             "import",
             {
-                "libraryName": "thoughtware-flow-ui",
+                "libraryName": "tiklab-flow-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -102,15 +102,15 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-flow-ui/es/${fullName}`;
+                    return `tiklab-flow-ui/es/${fullName}`;
                 }
             },
-            "thoughtware-flow-ui"
+            "tiklab-flow-ui"
         ],
         [
             "import",
             {
-                "libraryName": "thoughtware-licence-ui",
+                "libraryName": "tiklab-licence-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -124,15 +124,15 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-licence-ui/es/${fullName}`;
+                    return `tiklab-licence-ui/es/${fullName}`;
                 }
             },
-            "thoughtware-licence-ui"
+            "tiklab-licence-ui"
         ],
         [
             "import", 
             {
-                "libraryName": "thoughtware-security-ui",
+                "libraryName": "tiklab-security-ui",
                 "libraryDirectory": "es",
                 "style": true,
                 "customName": (name) => {
@@ -146,10 +146,10 @@ const plugins = [
                         const name = UpBit + lowBit
                         return total += name;
                     },'');
-                    return `thoughtware-security-ui/es/${fullName}`;
+                    return `tiklab-security-ui/es/${fullName}`;
                 }
             }, 
-            "thoughtware-security-ui"
+            "tiklab-security-ui"
         ],
         [
             "@babel/plugin-proposal-decorators",

@@ -24,8 +24,8 @@
             }
             .epic-view-select {
                 color: #fff;
-                background-color: var(--thoughtware-blue);
-                border: 1px solid var(--thoughtware-blue);
+                background-color: var(--tiklab-blue);
+                border: 1px solid var(--tiklab-blue);
             }
             .epic-view-week {
                 border: 1px solid #f0f0f0;
@@ -50,7 +50,7 @@
     //     display: flex;
     //     align-items: center;
     //     justify-content: center;
-    //     color: var(--thoughtware-blue);
+    //     color: var(--tiklab-blue);
         
     // }
     .epic-name {
@@ -64,13 +64,13 @@
             flex-shrink: 0;
         }
         .epic-key {
-            color: var(--thoughtware-gray-500);
+            color: var(--tiklab-gray-500);
             line-height: 25px;
             margin-right: 5px;
         }
         .epic-text {
             cursor: pointer;
-            // color: var(--thoughtware-blue);
+            // color: var(--tiklab-blue);
             line-height: 25px;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -120,7 +120,7 @@
         position: relative;
         .change-page-button {
             padding-left: 5px;
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
         .change-page-button:hover{
             text-decoration: underline;

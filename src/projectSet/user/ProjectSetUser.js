@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-01-21 11:22:59
  */
 import React from "react";
-import { DomainUser } from 'thoughtware-user-ui';
+import { DomainUser } from 'tiklab-user-ui';
 import { inject, observer } from "mobx-react";
 
 const ProjectSetUser = props => {
