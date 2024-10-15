@@ -84,11 +84,6 @@ kanass社区主要通过问题、讨论和拉取请求在 GitHub 上进行交流
 ## 报告安全漏洞
 请私下向我们报告安全漏洞。
 
-## 接触
-* 微信：apachedubbo
-* 钉钉群：37290003945
-* 邮件列表：指南
-* 安全问题：请私信给我们。
 
 ## kanass 生态
 * [kanass 网站](https://tiklab.net)- Tiklab kanass 官方网站
