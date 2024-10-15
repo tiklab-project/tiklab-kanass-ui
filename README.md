@@ -27,6 +27,7 @@ Kanass项目管理系统是专为项目管理而设计的应用软件，帮助�
 ```
 1. git clone 
 2. cd tiklab-kanass-ui
+npm install
 3. npm run start
 ```
 
