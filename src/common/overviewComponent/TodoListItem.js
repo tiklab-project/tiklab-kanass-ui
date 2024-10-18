@@ -13,7 +13,7 @@ const TodoListItem = (props) => {
         if(path.indexOf("sprint") > -1){
             props.history.push(`/${projectId}/sprint/${sprintId}/work/${workItemId}`);
         }
-        if(path.indexOf("home") > -1){
+        if(path.indexOf("index") > -1){
             props.history.push(`/project/${projectId}/work/${workItemId}`);
         }
         if(path.indexOf("project") > -1){

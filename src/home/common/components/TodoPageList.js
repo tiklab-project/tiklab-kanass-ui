@@ -17,10 +17,11 @@ import TodoListItem from "../../../common/overviewComponent/TodoListItem";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import PaginationCommon from "../../../common/page/Page";
+import HomeStore from  "../store/HomeStore"
 const TodoPageList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList, setTodoTaskList, findProjectList,
-        findProjectSetProjectList, todoTotal, todoCondition, todoActiveKey, setTodoActiveKey } = homeStore;
+        findProjectSetProjectList, todoTotal, todoCondition, todoActiveKey, setTodoActiveKey } = HomeStore;
     //登录者id
     const userId = getUser().userId;
     // 项目列表
@@ -68,7 +69,7 @@ const TodoPageList = (props) => {
                 setLoading(false)
             })
         }
-        if (path === "/index/todoList") {
+        if (props.route?.path === "/index/todoList") {
             setFirstText("首页")
             findTodopage(params).then(res => {
                 setLoading(false)
@@ -280,7 +281,7 @@ const TodoPageList = (props) => {
                         :
                         <>
                             {
-                                loading && <ProjectEmpty description="暂时没有待办~" />
+                                !loading && <ProjectEmpty description="暂时没有待办~" />
                             }
                         </>
                 }
@@ -303,4 +304,4 @@ const TodoPageList = (props) => {
 
     )
 }
-export default withRouter(inject('homeStore')(observer(TodoPageList)));
+export default withRouter(observer(TodoPageList));

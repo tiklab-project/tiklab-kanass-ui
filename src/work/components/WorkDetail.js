@@ -93,11 +93,11 @@ const WorkDetail = (props) => {
                 }
                 findStateNodeUserFieldList(data)
 
-                // if (props.match.path === "/project/:id/work/:workId") {
+                if (props.match.path === "/project/:id/work/:workId") {
+                    setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+                    setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+                }
 
-                // }
-                // setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
-                // setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
             }
         })
     }
@@ -107,26 +107,34 @@ const WorkDetail = (props) => {
             || props.match.path === "/:id/sprint/:sprint/work/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
+            if (id) {
+                // findPriority()
+                getWorkDetail(id)
+    
+            }
+            if (id === 0) {
+                setWorkInfo(null)
+                setInfoLoading(false)
+            }
         }
         return null;
     }, [props.match.params.workId])
 
     useEffect(() => {
         setWorkInfo()
-        if (workId && workId.length > 0) {
-            // findFieldList({ code: "workPriority" }).then(res => {
-            //     if (res.code === 0) {
-            //         setSelectItemList(res.data[0].selectItemList)
-            //     }
-            // })
-            findPriority()
-            getWorkDetail(workId)
-
+        if (props.match.path !== "/project/:id/work/:workId" && props.match.path !== "/:id/version/:version/work/:workId"
+            && props.match.path !== "/:id/sprint/:sprint/work/:workId") {
+                if (workId && workId.length > 0) {
+                    findPriority()
+                    getWorkDetail(workId)
+        
+                }
+                if (workId === 0) {
+                    setWorkInfo(null)
+                    setInfoLoading(false)
+                }
         }
-        if (workId === 0) {
-            setWorkInfo(null)
-            setInfoLoading(false)
-        }
+        
         return
     }, [workId]);
 

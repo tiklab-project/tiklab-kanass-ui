@@ -34,7 +34,8 @@ const Home = (props) => {
         if (path.indexOf("todoList") > -1) {
             setActiveKey("todoList")
         }
-    }, [])
+        return null;
+    }, [path])
 
     /**
      * 获取仪表盘跳转的url 地址，

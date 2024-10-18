@@ -8,6 +8,7 @@ import "./Page.scss";
 const PaginationCommon = props => {
 
     const { currentPage, changePage, totalPage, total, showRefresh, refresh } = props
+    console.log(totalPage)
     return <>
         {
             totalPage > 1 && <div className="pagination-box">

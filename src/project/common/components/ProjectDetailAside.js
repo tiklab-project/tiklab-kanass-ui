@@ -49,7 +49,7 @@ const ProjectDetailAside = (props) => {
             icon: 'workitem-' + theme,
             defaultIcon: "workitem-default",
             id: `/project/${projectId}/workitem`,
-            key: "work",
+            key: "workitem",
             encoded: "Work",
         },
         {
@@ -134,7 +134,7 @@ const ProjectDetailAside = (props) => {
             icon: 'workitem-' + theme,
             defaultIcon: "workitem-default",
             id: `/project/${projectId}/workitem`,
-            key: "work",
+            key: "workitem",
             encoded: "Work",
         },
 

@@ -32,6 +32,8 @@ const VersionPlan = (props) => {
     const [listType, setListType] = useState();
     const [showModal, setShowModal] = useState(false);
     const [actionType, setActionType] = useState("");
+    const [isDraggable, setIsDraggable] = useState(true);
+    const [isMove, setIsMove] = useState(false)
     // 拖放效果
     useEffect(() => {
         getNoPlanVersionWorkList(
@@ -77,6 +79,7 @@ const VersionPlan = (props) => {
 
     const moveStart = (id, versionId) => {
         setMoveWorkId(id)
+        setIsDraggable(false)
         setStartVersionId(versionId)
         const dragEvent = event.target
         dragEvent.style.background = "#d0e5f2";
@@ -91,6 +94,7 @@ const VersionPlan = (props) => {
         event.preventDefault();
         setActionType("update")
         setEndVersionId(Sid)
+        setIsDraggable(true)
         haveChildren({ id: moveWorkId }).then(res => {
             if (res.code === 0) {
                 if (res.data) {
@@ -115,12 +119,19 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     const newNoPlanWorkList = noPlanVersionWorkList.filter(item => { return item.id != moveWorkId })
-                    setNoPlanVersionWorkList(newNoPlanWorkList)
-
+                    const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setNoPlanVersionWorkList(newNoPlanWorkList1)
+                   
                     const addWorkList = noPlanVersionWorkList.filter(item => { return item.id == moveWorkId })
                     planVersionWorkList.unshift(...addWorkList)
-                    setPlanVersionWorkList(planVersionWorkList)
+                    const planVersionWorkList1 = planVersionWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setPlanVersionWorkList(planVersionWorkList1)
                 }
             })
         }
@@ -138,15 +149,22 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
                         if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setNoPlanVersionWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setNoPlanVersionWorkList(newNoPlanWorkList1)
 
                             const addWorkList = noPlanVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             planVersionWorkList.unshift(...addWorkList)
-                            setPlanVersionWorkList(planVersionWorkList)
+                            const planVersionWorkList1 = planVersionWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setPlanVersionWorkList(planVersionWorkList1)
                         }
                     })
 
@@ -160,6 +178,7 @@ const VersionPlan = (props) => {
         event.preventDefault();
         setActionType("delete")
         setEndVersionId(Sid)
+        setIsDraggable(true)
         haveChildren({ id: moveWorkId }).then(res => {
             if (res.code === 0) {
                 if (res.data) {
@@ -184,12 +203,19 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             delVersion(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     const newNoPlanWorkList = planVersionWorkList.filter(item => { return item.id != moveWorkId })
-                    setPlanVersionWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setPlanVersionWorkList(newNoPlanWorkList1)
 
                     const addWorkList = planVersionWorkList.filter(item => { return item.id == moveWorkId })
                     noPlanVersionWorkList.unshift(...addWorkList)
-                    setNoPlanVersionWorkList(noPlanVersionWorkList)
+                    const noPlanVersionWorkList1 = noPlanVersionWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setNoPlanVersionWorkList(noPlanVersionWorkList1)
                 }
 
             })
@@ -209,15 +235,22 @@ const VersionPlan = (props) => {
             dragEvent.style.background = "";
             delVersion(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
                         if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setPlanVersionWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setPlanVersionWorkList(newNoPlanWorkList1)
 
                             const addWorkList = planVersionWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             noPlanVersionWorkList.unshift(...addWorkList)
-                            setNoPlanVersionWorkList(noPlanVersionWorkList)
+                            const noPlanVersionWorkList1 = noPlanVersionWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setNoPlanVersionWorkList(noPlanVersionWorkList1)
                         }
                     })
                 }
@@ -265,20 +298,28 @@ const VersionPlan = (props) => {
         const data = {
             pageParam: {
                 pageSize: 20,
-                currentPage: noPlanSearchCondition.pageParam.currentPage + 1
+                currentPage: isMove ? 1 : noPlanSearchCondition.pageParam.currentPage + 1
             }
         }
-        getNoPlanVersionWorkList(data)
+        getNoPlanVersionWorkList(data).then(res => {
+            if(res.code === 0 && isMove){
+                setIsMove(false)
+            }
+        })
     }
 
     const changePlanVersionPage = () => {
         const data = {
             pageParam: {
                 pageSize: 20,
-                currentPage: searchCondition.pageParam.currentPage + 1
+                currentPage: isMove ? 1 : searchCondition.pageParam.currentPage + 1
             }
         }
-        getWorkList(data)
+        getWorkList(data).then(res => {
+            if(res.code === 0 && isMove){
+                setIsMove(false)
+            }
+        })
     }
 
     const submitOne = () => {
@@ -431,9 +472,10 @@ const VersionPlan = (props) => {
                                     return <div
                                         className="version-plan-item-box"
                                         onDrag={() => moveVersionPlanItem()}
-                                        draggable="true"
+                                        draggable={isDraggable}
                                         onDragStart={() => moveStart(item.id, null)}
                                         key={item.id}
+                                        onDragEnd = {() => {setIsDraggable(true); console.log("fa1")}}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
                                             <div className="work-item-icon">
@@ -540,8 +582,9 @@ const VersionPlan = (props) => {
                                     return <div
                                         className="version-plan-item-box"
                                         onDrag={() => moveVersionPlanItem(item.id)}
-                                        draggable="true"
+                                        draggable={isDraggable}
                                         onDragStart={() => moveStart(item.id, versionId)}
+                                        onDragEnd = {() => {setIsDraggable(true); console.log("fa1")}}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>

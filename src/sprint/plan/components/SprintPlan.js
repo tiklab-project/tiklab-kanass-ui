@@ -33,6 +33,8 @@ const SprintPlan = (props) => {
     const [endSprintId, setEndSprintId] = useState();
     const [showModal, setShowModal] = useState(false);
     const [actionType, setActionType] = useState("");
+    const [isDraggable, setIsDraggable] = useState(true);
+    const [isMove, setIsMove] = useState(false)
     // 拖放效果
     useEffect(() => {
         getNoPlanWorkList(
@@ -81,7 +83,9 @@ const SprintPlan = (props) => {
     }
 
     const moveStart = (id, sprintId) => {
+        console.log(1)
         setMoveWorkId(id)
+        setIsDraggable(false)
         setStartSprintId(sprintId)
         const dragEvent = event.target
         dragEvent.style.background = "#d0e5f2";
@@ -94,6 +98,8 @@ const SprintPlan = (props) => {
 
     const changeSprintPlan = (Sid) => {
         event.preventDefault();
+        console.log(3)
+        setIsDraggable(true)
         setActionType("update")
         setEndSprintId(Sid)
         haveChildren({ id: moveWorkId }).then(res => {
@@ -118,12 +124,19 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             updateWorkItem(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     const newNoPlanWorkList = noPlanSprintWorkList.filter(item => { return item.id != moveWorkId })
-                    setNoPlanSprintWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setNoPlanSprintWorkList(newNoPlanWorkList1)
 
                     const addWorkList = noPlanSprintWorkList.filter(item => { return item.id == moveWorkId })
                     planSprintWorkList.unshift(...addWorkList)
-                    setPlanSprintWorkList(planSprintWorkList)
+                    const planSprintWorkList1 = planSprintWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setPlanSprintWorkList(planSprintWorkList1)
                 }
             })
         }
@@ -143,13 +156,20 @@ const SprintPlan = (props) => {
                 if (res.code === 0) {
                     findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
                         if (res.code === 0) {
+                            setIsMove(true)
                             const ids = res.data;
                             const newNoPlanWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setNoPlanSprintWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setNoPlanSprintWorkList(newNoPlanWorkList1)
 
                             const addWorkList = noPlanSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             planSprintWorkList.unshift(...addWorkList)
-                            setPlanSprintWorkList(planSprintWorkList)
+                            const planSprintWorkList1 = planSprintWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setPlanSprintWorkList(planSprintWorkList1)
                         }
                     })
 
@@ -160,7 +180,9 @@ const SprintPlan = (props) => {
     }
 
     const delSprintPlan = (Sid) => {
+        console.log(3)
         event.preventDefault();
+        setIsDraggable(true)
         setActionType("delete")
         setEndSprintId(Sid)
         haveChildren({ id: moveWorkId }).then(res => {
@@ -186,12 +208,19 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     const newNoPlanWorkList = planSprintWorkList.filter(item => { return item.id != moveWorkId })
-                    setPlanSprintWorkList(newNoPlanWorkList)
+                    const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setPlanSprintWorkList(newNoPlanWorkList1)
 
                     const addWorkList = planSprintWorkList.filter(item => { return item.id == moveWorkId })
                     noPlanSprintWorkList.unshift(...addWorkList)
-                    setNoPlanSprintWorkList(noPlanSprintWorkList)
+                    const noPlanSprintWorkList1 = noPlanSprintWorkList.filter((item, index, self) => {
+                        return self.indexOf(item) === index;
+                    });
+                    setNoPlanSprintWorkList(noPlanSprintWorkList1)
                 }
 
             })
@@ -211,15 +240,22 @@ const SprintPlan = (props) => {
             dragEvent.style.background = "";
             delSprint(params).then((res) => {
                 if (res.code === 0) {
+                    setIsMove(true)
                     findWorkItemAndChildrenIds({ id: moveWorkId }).then(res => {
                         if (res.code === 0) {
                             const ids = res.data;
                             const newNoPlanWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) < 0 })
-                            setPlanSprintWorkList(newNoPlanWorkList)
+                            const newNoPlanWorkList1 = newNoPlanWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setPlanSprintWorkList(newNoPlanWorkList1)
 
                             const addWorkList = planSprintWorkList.filter(item => { return ids.indexOf(item.id) > -1 })
                             noPlanSprintWorkList.unshift(...addWorkList)
-                            setNoPlanSprintWorkList(noPlanSprintWorkList)
+                            const noPlanSprintWorkList1 = noPlanSprintWorkList.filter((item, index, self) => {
+                                return self.indexOf(item) === index;
+                            });
+                            setNoPlanSprintWorkList(noPlanSprintWorkList1)
                         }
                     })
 
@@ -240,6 +276,7 @@ const SprintPlan = (props) => {
     }
 
     const submitList = () => {
+        setIsDraggable(true)
         if (actionType === "delete") {
             delListSprintPlan(endSprintId)
         }
@@ -288,20 +325,28 @@ const SprintPlan = (props) => {
         const data = {
             pageParam: {
                 pageSize: 20,
-                currentPage: noPlanSearchCondition.pageParam.currentPage + 1
+                currentPage: isMove ? 1 : noPlanSearchCondition.pageParam.currentPage + 1
             }
         }
-        getNoPlanWorkList(data)
+        getNoPlanWorkList(data).then(res => {
+            if(res.code === 0 && isMove){
+                setIsMove(false)
+            }
+        })
     }
 
     const changePlanSprintPage = () => {
         const data = {
             pageParam: {
                 pageSize: 20,
-                currentPage: searchCondition.pageParam.currentPage + 1
+                currentPage: isMove ? 1 : searchCondition.pageParam.currentPage + 1
             }
         }
-        getWorkList(data)
+        getWorkList(data).then(res => {
+            if(res.code === 0 && isMove){
+                setIsMove(false)
+            }
+        })
     }
     const setStatuStyle = (id) => {
         let name;
@@ -434,8 +479,9 @@ const SprintPlan = (props) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
-                                        draggable="true"
+                                        draggable = {isDraggable}
                                         onDragStart={() => moveStart(item.id, null)}
+                                        onDragEnd = {() => setIsDraggable(true)}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
@@ -540,8 +586,9 @@ const SprintPlan = (props) => {
                                     return <div
                                         className="sprint-plan-item-box"
                                         onDrag={() => moveSprintPlanItem()}
-                                        draggable="true"
+                                        draggable = {isDraggable}
                                         onDragStart={() => moveStart(item.id, sprintId)}
+                                        onDragEnd = {() => setIsDraggable(true)}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>

@@ -16,6 +16,7 @@ import "./TodoPage.scss"
 import { withRouter } from "react-router";
 import TodoPageList from "./TodoPageList"
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
+
 const TodoListPage = (props) => {
     return (
         <Row className="todo-page">
@@ -27,4 +28,4 @@ const TodoListPage = (props) => {
 
     )
 }
-export default withRouter(inject('homeStore')(observer(TodoListPage)));
+export default withRouter(observer(TodoListPage));

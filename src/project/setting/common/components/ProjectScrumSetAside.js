@@ -102,32 +102,32 @@ const ProjectScrumSetAside = (props) => {
                     <div className="project-title title">
                         设置
                     </div>
-                    <ProjectNav
+                    {/* <ProjectNav
                         {...props}
                         domainId={projectId}
                         projectRouters={prorouter}
                         outerPath={`/project/${projectId}/set`} // 系统设置Layout路径
                         noAccessPath={`/project/${projectId}/set/noAccess`}  //找不到页面路径
-                    >
+                    > */}
                         <ul className="project-menu">
                             {
                                 prorouter && prorouter.map(item => {
-                                    return ( <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectId}  {...props}>
+                                    
+                                    return (
                                         <div className={`project-menu-submenu ${item.id === selectKey ? "project-menu-select" : ""}`}
-                                            key={item.id}
-                                            onClick={() => selectKeyFun(item.id)}
-                                        >
-                                            <span className={`${isShowText ? "" : "project-notext"}`}>
-                                                {item.title}
-                                            </span>
-                                        </div>
-                                    </PrivilegeProjectButton>
+                                        key={item.id}
+                                        onClick={() => selectKeyFun(item.id)}
+                                    >
+                                        <span className={`${isShowText ? "" : "project-notext"}`}>
+                                            {item.title}
+                                        </span>
+                                    </div>
                                     )
                                     
                                 })
                             }
                         </ul>
-                    </ProjectNav>
+                    {/* </ProjectNav> */}
 
                 </div>
             </Sider>

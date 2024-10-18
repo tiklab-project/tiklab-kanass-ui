@@ -464,19 +464,19 @@ const VersionLineMap = (props) => {
             stateName: ""
         };
         switch (id) {
-            case "0":
+            case "000000":
                 name = {
                     className: "version-status-todo",
                     stateName: "未开始"
                 };
                 break;
-            case "1":
+            case "111111":
                 name = {
                     className: "version-status-process",
                     stateName: "进行中"
                 };
                 break;
-            case "2":
+            case "222222":
                 name = {
                     className: "version-status-done",
                     stateName: "已结束"

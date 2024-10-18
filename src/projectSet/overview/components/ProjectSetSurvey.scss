@@ -83,7 +83,11 @@
                 height: 40px;
                 line-height: 40px;
                 font-size: 13px;
-                flex: 1;
+                min-width: 200px;
+                width: 50%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
                 .projectSet-info-title {
                     width: 100px;
                     color: #999;

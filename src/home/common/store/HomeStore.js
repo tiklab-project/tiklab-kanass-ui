@@ -66,7 +66,8 @@ class HomeStore {
     @observable todoCondition = {
         pageParam: {
             pageSize: 10,
-            currentPage: 1
+            currentPage: 1,
+            totalPage: 1
         },
         orderParams: [{
             name: "createtime",
@@ -298,7 +299,7 @@ class HomeStore {
             const list = data.data.dataList;
             if (type !== "projectSet") {
                 this.todoTaskList = list;
-                this.todoTotal = data.data.totalRecord;
+                this.todoCondition.pageParam.totalPage = data.data.totalPage;
             }
 
         }

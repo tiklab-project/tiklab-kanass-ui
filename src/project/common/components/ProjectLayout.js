@@ -61,7 +61,6 @@ const ProjectLayout = (props) => {
             <Spin spinning={loading} tip="加载中..." >
             {
                 project ? <Layout className="project-prodetail">
-
                     <ProdeAside
                         projectName={"项目1"}
                         project={project}
