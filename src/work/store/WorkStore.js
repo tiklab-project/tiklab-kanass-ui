@@ -649,11 +649,11 @@ export class WorkStore {
         const param = new FormData()
         param.append("id", id)
         const data = await Service("/workItem/findWorkItemAndSprintVersion",param);
-        if(data.code === 0){
-            this.workList.unshift(data.data);
-            this.workList = [...this.workList]
-            this.total = this.total + 1
-        }
+        // if(data.code === 0){
+        //     this.workList.unshift(data.data);
+        //     this.workList = [...this.workList]
+        //     this.total = this.total + 1
+        // }
         return data;
     }
 

@@ -15,6 +15,7 @@ import StageDetailAside from "./StageDetailAside";
 import StageDetailStore from "../store/StageDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
 import { getUser } from "tiklab-core-ui";
+import { UserVerify } from "tiklab-user-extension-ui";
 
 const Stagedetail = (props) => {
     const { route, systemRoleStore } = props;
@@ -50,4 +51,4 @@ const Stagedetail = (props) => {
         
     )
 }
-export default inject("systemRoleStore")(observer(Stagedetail));
+export default inject("systemRoleStore")(observer(UserVerify(Stagedetail,"/noAuth", "kanass")));

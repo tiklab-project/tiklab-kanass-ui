@@ -5,18 +5,8 @@ import React, { useEffect, useState } from "react";
 import "./WorkDeleteSelectModal.scss"
 const WorkDeleteSelectModal = (props) => {
     const { getPopupContainer, delectCurrentWorkItem, setDeleteSelectModal, 
-        deleteSelectModal, haveChildren, workId, setWorkId } = props;
-    const [buttonText, setButtonText] = useState("删除")
-    useEffect(()=> {
-        if(deleteSelectModal){
-            getHaveChildren()
-        }
-    }, [deleteSelectModal])
-
-    const getHaveChildren = () => {
-        
-    }
-
+        deleteSelectModal, haveChildren, workId, setWorkId, workStore } = props;
+    const {workList} = workStore;
     const closeDeleteSelectModal = () => {
         setDeleteSelectModal(false)
     }
@@ -24,6 +14,7 @@ const WorkDeleteSelectModal = (props) => {
     const selectAction = (value) => {
         setWorkId(workId)
         haveChildren({ id: workId }).then(res => {
+            console.log("查询下级事项",workList)
             if (res.code === 0) {
                 let buttonText = "删除"
                 if (res.data) {
@@ -41,7 +32,7 @@ const WorkDeleteSelectModal = (props) => {
                         className: "delete-modal",
                         getContainer: getPopupContainer ? () => getPopupContainer.current : null,
                         onOk() { delectCurrentWorkItem(workId) },
-                        // onCancel() { closeDeleteSelectModal(workId)},
+                        onCancel() { closeDeleteSelectModal(workId)},
                     });
                 }
             }

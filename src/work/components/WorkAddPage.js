@@ -19,7 +19,7 @@ const WorkAddPage = (props) => {
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
-        selectVersionList, findSelectVersionList, workList, total, setTotal
+        selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -242,7 +242,11 @@ const WorkAddPage = (props) => {
                                         duration: 1
                                     });
                                 } else {
+                                    if(workList.length >= searchCondition.pageParam.pageSize){
+                                        workList.pop();
+                                    }
                                     workList.unshift(data.data);
+                                    setWorkList([...workList])
                                     setTotal(total + 1)
                                     message.success({
                                         content: '添加成功',
@@ -479,8 +483,6 @@ const WorkAddPage = (props) => {
                                     </Select>
                                 </Form.Item>
                             }
-
-
 
                             <Form.Item
                                 label="所属版本"

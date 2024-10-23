@@ -8,6 +8,7 @@ const Index = AsyncComponent(() => import('./home/common/components/LayoutCe'))
 // const Index = AsyncComponent(() => import('./home/localHeader'))
 const HomePage = AsyncComponent(() => import('./home/common/components/HomePage'))
 const HomeSurvey = AsyncComponent(() => import('./home/common/components/HomeSurvey'))
+const SysExceptionContent = AsyncComponent(() => import('./login/SysExceptionContent.js'))
 const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
 const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
@@ -219,6 +220,11 @@ const Routers = [
         path: "/noAuth",
         exact: true,
         component: ExcludeProductUserContent,
+    },
+    {
+        path:"/500",
+        exact:true,
+        component:SysExceptionContent,
     },
     {
         exact: true,

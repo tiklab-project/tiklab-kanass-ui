@@ -31,7 +31,7 @@ const MilestoneList = (props) => {
 
     // 加载中
     const [loading, setLoading] = useState(false)
-
+    const statusList = ["未开始", "进行中", "已结束"]
     // 列表的列
     const columns = [
         {
@@ -39,11 +39,17 @@ const MilestoneList = (props) => {
             dataIndex: "name",
             key: "name"
         },
+        // {
+        //     title: "状态",
+        //     dataIndex: ["project", "projectName"],
+        //     key: "project.projectName",
+        //     render: (text) => <span>{text}</span>,
+        // },
         {
-            title: "所属项目",
-            dataIndex: ["project", "projectName"],
-            key: "project.projectName",
-            render: (text) => <span>{text}</span>,
+            title: "状态",
+            dataIndex: "milestoneStatus",
+            key: "milestoneStatus",
+            render: (text) => <span>{statusList[text]}</span>,
         },
         {
             title: "负责人",

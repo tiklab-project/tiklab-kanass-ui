@@ -15,6 +15,7 @@ import { SystemNav } from "tiklab-privilege-ui";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
 import { getUser } from 'tiklab-core-ui';
 import { inject, observer } from 'mobx-react';
+import { UserVerify } from 'tiklab-user-extension-ui';
 const { Sider, Content } = Layout;
 const Setting = (props) => {
     const { systemRoleStore } = props;
@@ -71,4 +72,4 @@ const Setting = (props) => {
     )
 }
 
-export default inject("systemRoleStore")(observer(Setting));
+export default inject("systemRoleStore")(observer(UserVerify(Setting,"/noAuth", "kanass")));

@@ -31,7 +31,7 @@ const UrlAddData = (props) => {
             })
         }
         return;
-    }, [urlId])
+    }, [urlId, actionType])
 
     const onFinish = () => {
         form.validateFields().then((values) => {
@@ -41,6 +41,7 @@ const UrlAddData = (props) => {
                         findAllSystemUrl().then(data => {
                             if (data.code === 0) {
                                 setUrlDataList(data.data)
+                                form.resetFields()
                             }
                         })
                     }
@@ -54,6 +55,7 @@ const UrlAddData = (props) => {
                         findAllSystemUrl().then(data => {
                             if (data.code === 0) {
                                 setUrlDataList(data.data)
+                                form.resetFields()
                             }
                         })
                     }

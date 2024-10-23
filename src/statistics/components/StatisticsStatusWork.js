@@ -21,7 +21,7 @@ const StatisticsWork = (props) => {
             title: '姓名',
             dataIndex: 'statisticalTitle',
             key: 'name',
-            render: text => <span>{text}</span>,
+            render: text => <span>{text ? text : "暂无设置报告人"}</span>,
         },
         {
             title: '数量',
@@ -65,7 +65,7 @@ const StatisticsWork = (props) => {
             yaixs = []
             preData = []
             data.data.map((item) => {
-                xaixs.push(item.statisticalTitle);
+                xaixs.push(item.statisticalTitle ? item.statisticalTitle : "暂无设置报告人");
                 yaixs.push(item.groupCount);
                 preData.push({ name: item.statisticalTitle, value: item.percent });
                 return 0;

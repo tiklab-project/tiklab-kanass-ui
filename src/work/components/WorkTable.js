@@ -39,7 +39,6 @@ const WorkTable = (props) => {
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setWorkList, haveChildren } = WorkStore;
-
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -122,6 +121,7 @@ const WorkTable = (props) => {
                     haveChildren={haveChildren}
                     workId={record.id}
                     setWorkId={setWorkId}
+                    workList = {workList}
                 />
             </PrivilegeProjectButton>
 
@@ -268,8 +268,9 @@ const WorkTable = (props) => {
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
             if (workList.length === 0) {
+                const currentPage = searchCondition.pageParam.currentPage 
                 // 当前页被删完, 总页数等于当前页， 往前移动一页
-                if (currentPage === totalPage && currentPage > 1) {
+                if (currentPage === total && currentPage > 1) {
                     const params = {
                         pageParam: {
                             pageSize: searchCondition.pageParam.pageSize,
@@ -277,11 +278,11 @@ const WorkTable = (props) => {
                         }
                     }
                     setWorkDeatilInList(WorkStore, params)
-                } else if (currentPage === totalPage && currentPage <= 1) {
+                } else if (currentPage === total && currentPage <= 1) {
                     // 当前页被删完, 总页数等于当前页，而且是第一页
                     setWorkId(0)
                     setWorkIndex(0)
-                } else if (currentPage < totalPage) {
+                } else if (currentPage < total) {
                     setWorkDeatilInList(WorkStore)
                 }
             } else {
@@ -313,7 +314,6 @@ const WorkTable = (props) => {
                         <WorkTableFilter />
                         <div className="work-table-content" ref={workTable}>
                             <Spin spinning={tableLoading} tip="加载中">
-
                                 <Table
                                     scroll={{
                                         x: "100%"

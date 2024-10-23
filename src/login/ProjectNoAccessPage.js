@@ -1,5 +1,6 @@
 import React from "react";
 import {NoAccess} from "tiklab-privilege-ui";
+import { UserVerify } from "tiklab-user-extension-ui";
 
 /**
  * 没有资源访问权限
@@ -18,4 +19,4 @@ const ProjectNoAccessPage = props =>{
     )
 }
 
-export default ProjectNoAccessPage;
+export default UserVerify(ProjectNoAccessPage,"/noAuth", "kanass");

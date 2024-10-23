@@ -356,7 +356,7 @@ const LogAdd = (props) => {
                         ]}
 
                     >
-                        <Input
+                        <InputNumber
                             min={0}
                             type="number"
                             key="surplusTime"

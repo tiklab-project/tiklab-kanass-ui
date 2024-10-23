@@ -81,7 +81,8 @@ const MilestoneAddEditModal = (props) => {
                     }
                 })
             } else {
-                value.id = props.id
+                value.id = props.id;
+                value.milestoneStatus = fieldsValue.milestoneStatus
                 editMilestoneById(value).then(res=> {
                     if(res.code === 0){
                         form.resetFields()

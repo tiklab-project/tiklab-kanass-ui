@@ -14,6 +14,7 @@ import { renderRoutes } from "react-router-config";
 import VersionDetailAside from "./VersionDetailAside";
 import VersionDetailStore from "../store/VersionDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
+import { UserVerify } from "tiklab-user-extension-ui";
 
 const Versiondetail = (props) => {
     const store = {
@@ -41,4 +42,4 @@ const Versiondetail = (props) => {
         
     )
 }
-export default observer(Versiondetail);
+export default observer(UserVerify(Versiondetail,"/noAuth", "kanass"));
