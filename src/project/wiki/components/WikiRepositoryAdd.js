@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Form, Table, Radio, Select } from 'antd';
 import { observer, inject } from "mobx-react";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
-
+import "./WikiRepositoryAdd.scss"
 const WikiRepositoryAdd = (props) => {
     const [form] = Form.useForm();
     const { wikiAddvisible, setWikiAddvisible, wikiRepositoryStore, projectId, setProjectWikiList } = props;
@@ -104,6 +104,7 @@ const WikiRepositoryAdd = (props) => {
                     closable={false}
                     width={800}
                     destroyOnClose = {true}
+                    className="repository-add-modal"
                 >
                     <Table
                         columns={columns}

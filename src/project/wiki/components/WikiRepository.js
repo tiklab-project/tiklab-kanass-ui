@@ -32,6 +32,8 @@ const WikiRepository = (props) => {
     const [activeKey, setActiveKey] = useState("document");
     // 初始化
     useEffect(() => {
+        const activeKey = props.location.state ? props.location.state.activeKey : 'document';
+        setActiveKey(activeKey)
         findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
             if (res.code === 0) {
                 setProjectWikiList(res.data)

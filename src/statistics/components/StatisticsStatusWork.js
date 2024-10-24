@@ -14,6 +14,7 @@ const StatisticsWork = (props) => {
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint;
     const projectSetId = props.match.params.projectSetId;
+    const [isLoading, setIsLodaing] = useState(false);
     const titleRef = useRef();
     const pdfRef = useRef();
     const columns = [
@@ -180,8 +181,10 @@ const StatisticsWork = (props) => {
         setStatisticsData(params)
     }
 
-    const onExportPDF = () => {
-        exportPDF('事项字段统计', [titleRef.current, pdfRef.current])
+    const onExportPDF = async() => {
+        setIsLodaing(true)
+        await exportPDF('事项字段统计', [titleRef.current, pdfRef.current])
+        setIsLodaing(false)
     }
     return (
         <div className="statistics-work">
@@ -232,7 +235,7 @@ const StatisticsWork = (props) => {
                         </Select>
                     </Form.Item>
                     <div className="statics-submit">
-                        <Button type="primary" htmlType="submit" onClick={() => onExportPDF()}>
+                        <Button type="primary" htmlType="submit" loading = {isLoading} onClick={() => onExportPDF()}>
                             导出报表
                         </Button>
                     </div>

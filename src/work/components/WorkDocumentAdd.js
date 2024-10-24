@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Table, message } from 'antd';
+import { Modal, Table, message } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -41,6 +41,19 @@ const WorkDocumentAddmodal = (props) => {
                                 setDocumentList(data.data.dataList)
                             }
                         })
+                    }else {
+                        Modal.confirm({
+                            title: '提示?',
+                            content: "该项目没有关联知识库，是否先去添加知识库",
+                            centered: true,
+                            okText: "去添加",
+                            cancelText: "取消",
+                            getContainer: documentAdd ? () => documentAdd.current : null,
+                            onOk() { props.history.push({
+                                pathname: `/project/${projectId}/wiki`,
+                                state: { activeKey: "repository" }
+                            }) }
+                        });
                     }
                 }
             })

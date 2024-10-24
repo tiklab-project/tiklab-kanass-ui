@@ -183,6 +183,8 @@ const TestRepository = (props) => {
     ];
     // 初始化
     useEffect(() => {
+        const activeKey = props.location.state ? props.location.state.activeKey : 'testCase';
+        setActiveKey(activeKey)
         findProjectTestRepositoryList({ projectId: projectId }).then(res => {
             if (res.code === 0) {
                 setProjectTestList(res.data)

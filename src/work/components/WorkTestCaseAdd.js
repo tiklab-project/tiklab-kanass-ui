@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Table } from 'antd';
+import { message, Modal, Table } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -42,6 +42,19 @@ const WorkTestCaseAddmodal = (props) => {
                             }
                             
                         })
+                    }else {
+                        Modal.confirm({
+                            title: '提示?',
+                            content: "该项目没有关联用例库，是否先去添加用例库",
+                            centered: true,
+                            okText: "去添加",
+                            cancelText: "取消",
+                            getContainer: testCaseAdd ? () => testCaseAdd.current : null,
+                            onOk() { props.history.push({
+                                pathname: `/project/${projectId}/test`,
+                                state: { activeKey: "repository" }
+                            }) }
+                        });
                     }
 
                 }

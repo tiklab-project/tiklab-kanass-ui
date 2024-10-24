@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Modal, Form, Table, Radio, Select } from 'antd';
 import { observer, inject } from "mobx-react";
-
+import "./TestRepositoryAdd.scss";
 const TestRepositoryAdd = (props) => {
     const [form] = Form.useForm();
     const { testAddvisible, setTestAddvisible, testRepositoryStore, projectId, setProjectTestList } = props;
@@ -98,6 +98,7 @@ const TestRepositoryAdd = (props) => {
                     closable={false}
                     width={800}
                     destroyOnClose = {true}
+                    className="test-add-modal"
                 >
                     <Table
                         columns={columns}

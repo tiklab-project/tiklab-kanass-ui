@@ -142,43 +142,43 @@ const WorkType = (props) => {
             key: 'flow',
             render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
         },
-        {
-            title: "操作",
-            key: "action",
-            align: "left",
-            width: '10%',
-            render: (text, record) => (
-                <Space size="middle">
+        // {
+        //     title: "操作",
+        //     key: "action",
+        //     align: "left",
+        //     width: '10%',
+        //     render: (text, record) => (
+        //         <Space size="middle">
 
-                    <svg
-                        className="svg-icon" aria-hidden="true"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => upWorkType(record.id)}
-                    >
-                        <use xlinkHref="#icon-totop"></use>
-                    </svg>
+        //             <svg
+        //                 className="svg-icon" aria-hidden="true"
+        //                 style={{ cursor: "pointer" }}
+        //                 onClick={() => upWorkType(record.id)}
+        //             >
+        //                 <use xlinkHref="#icon-totop"></use>
+        //             </svg>
 
-                    <svg
-                        className="svg-icon" aria-hidden="true"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => downWorkType(record.id)}
-                    >
-                        <use xlinkHref="#icon-todown"></use>
-                    </svg>
-                    {
-                        record.workType.grouper === "custom" && <>
-                            <WorkTypeEditmodal
-                                name="编辑"
-                                id={record.id}
-                            >
-                                编辑
-                            </WorkTypeEditmodal>
-                            <DeleteModal deleteFunction={deleWorkType} id={record.id} />
-                        </>
-                    }
-                </Space>
-            ),
-        },
+        //             <svg
+        //                 className="svg-icon" aria-hidden="true"
+        //                 style={{ cursor: "pointer" }}
+        //                 onClick={() => downWorkType(record.id)}
+        //             >
+        //                 <use xlinkHref="#icon-todown"></use>
+        //             </svg>
+        //             {
+        //                 record.workType.grouper === "custom" && <>
+        //                     <WorkTypeEditmodal
+        //                         name="编辑"
+        //                         id={record.id}
+        //                     >
+        //                         编辑
+        //                     </WorkTypeEditmodal>
+        //                     <DeleteModal deleteFunction={deleWorkType} id={record.id} />
+        //                 </>
+        //             }
+        //         </Space>
+        //     ),
+        // },
     ];
 
     return (<Provider {...store}>
