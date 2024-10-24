@@ -39,6 +39,7 @@ const WorkTable = (props) => {
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setWorkList, haveChildren } = WorkStore;
+        
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -106,7 +107,7 @@ const WorkTable = (props) => {
         props.history.push(`${pathname}/${record.id}`)
         setIsModalVisible(true)
     }
-
+    console.log(workList)
     const actionColumn = {
         title: '操作',
         width: "60",
@@ -121,8 +122,7 @@ const WorkTable = (props) => {
                     haveChildren={haveChildren}
                     workId={record.id}
                     setWorkId={setWorkId}
-                    workList = {workList}
-                />
+                /> 
             </PrivilegeProjectButton>
 
         ),
@@ -236,7 +236,7 @@ const WorkTable = (props) => {
             const column = getWorkColumn(screenCode, goProdetail, sortArray, actionColumn)
             setProjectColums(column)
         }
-    }, [screenSize])
+    }, [screenSize, workList])
 
 
 
@@ -265,10 +265,11 @@ const WorkTable = (props) => {
 
 
     const deleteWork = (deleteWorkItem, removeTree, workId) => {
+        console.log("second", workList)
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
             if (workList.length === 0) {
-                const currentPage = searchCondition.pageParam.currentPage 
+                const currentPage = searchCondition.pageParam.currentPage
                 // 当前页被删完, 总页数等于当前页， 往前移动一页
                 if (currentPage === total && currentPage > 1) {
                     const params = {
@@ -286,6 +287,7 @@ const WorkTable = (props) => {
                     setWorkDeatilInList(WorkStore)
                 }
             } else {
+                console.log("three", workList)
                 const node = removeTree(workList, null, workId);
                 if (node != null) {
                     setWorkId(node.id)
@@ -297,7 +299,9 @@ const WorkTable = (props) => {
         })
     }
 
+    console.log("table222", workList)
     const delectCurrentWorkItem = (workId) => {
+        console.log("first", workList)
         deleteWork(deleteWorkItem, removeNodeInTree, workId)
         setDeleteSelectModal(false)
     }
@@ -305,9 +309,7 @@ const WorkTable = (props) => {
     const [deleteSelectModal, setDeleteSelectModal] = useState(false)
 
     const workTable = useRef()
-    return (
-        <Provider {...store}>
-            <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
+    return (<Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
                 <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className={`work-table ${["sm", "md", "lg"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
                         <WorkTableHead />
@@ -354,18 +356,17 @@ const WorkTable = (props) => {
                             </Spin>
                         </div>
                     </div>
-                    <WorkDetailDrawer
+                    {/* <WorkDetailDrawer
                         isModalVisible={isModalVisible}
                         setIsModalVisible={setIsModalVisible}
                         modelRef={modelRef}
                         showPage={true}
                         delectCurrentWorkItem={delectCurrentWorkItem}
                         {...props}
-                    />
+                    /> */}
 
                 </Col>
             </Row>
-        </Provider>
 
     );
 }

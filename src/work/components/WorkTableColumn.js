@@ -1,6 +1,7 @@
 import React from "react";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import { observer } from "mobx-react";
 
 
 
@@ -398,6 +399,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
         actionColumn
     ];
 }
+
 
 const getColumn = (screenSize, goProdetail, sortArray, actionColumn) => {
     if (screenSize === "xxl") {
