@@ -7,14 +7,12 @@ const WorkDeleteSelectModal = (props) => {
     const { getPopupContainer, delectCurrentWorkItem, setDeleteSelectModal, 
         deleteSelectModal, haveChildren, workId, setWorkId, workStore } = props;
     const {workList} = workStore;
-    console.log(workList)
     const closeDeleteSelectModal = () => {
         setDeleteSelectModal(false)
     }
     
     const selectAction = (value) => {
         setWorkId(workId)
-        console.log(workList)
         haveChildren({ id: workId }).then(res => {
             console.log("查询下级事项",workList)
             if (res.code === 0) {
@@ -34,7 +32,7 @@ const WorkDeleteSelectModal = (props) => {
                         className: "delete-modal",
                         getContainer: getPopupContainer ? () => getPopupContainer.current : null,
                         onOk() { delectCurrentWorkItem(workId) },
-                        onCancel() { closeDeleteSelectModal(workId)},
+                        // onCancel() { closeDeleteSelectModal(workId)},
                     });
                 }
             }

@@ -31,7 +31,7 @@ const VersionSurvey = (props) => {
     const masterId = getUser().userId;
     const [workStatusList, setWorkStatusList] = useState();
     // 进度
-    const [percent, setPercent] = useState()
+    const [percent, setPercent] = useState(0)
     useEffect(() => {
         const data = {
             masterId: masterId,
@@ -275,7 +275,7 @@ const VersionSurvey = (props) => {
                                         <use xlinkHref="#icon-rate"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top item-progress"><Progress percent={100} status="active" /></div>
+                                        <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
                                         <div className="item-bottom">版本进度</div>
                                     </div>
                                 </div>

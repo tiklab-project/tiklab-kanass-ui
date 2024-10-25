@@ -94,28 +94,28 @@ const WorkTestCaseList = (props) => {
         if (record.exist) {
             switch (record.caseType) {
                 case "api-unit":
-                    toCaseDetail("apiUnitId", record)
+                    toCaseDetail("apiUnit", record)
                     break;
                 case "api-scene":
-                    toCaseDetail("apiSceneId", record)
+                    toCaseDetail("apiScene", record)
                     break;
                 case "api-perform":
-                    toCaseDetail("apiPerfId", record)
+                    toCaseDetail("apiPerform", record)
                     break;
                 case "web-scene":
-                    toCaseDetail("webSceneId", record)
+                    toCaseDetail("webScene", record)
                     break;
                 case "web-perform":
-                    toCaseDetail("webPerfId", record)
+                    toCaseDetail("webPerform", record)
                     break;
                 case "app-scene":
-                    toCaseDetail("appSceneId", record)
+                    toCaseDetail("appScene", record)
                     break;
                 case "app-perform":
-                    toCaseDetail("appPerfId", record)
+                    toCaseDetail("appPerform", record)
                     break;
                 case "function":
-                    toCaseDetail("functionId", record)
+                    toCaseDetail("function", record)
                     break;
 
             }
@@ -129,7 +129,7 @@ const WorkTestCaseList = (props) => {
     const toCaseDetail = (caseType, data) => {
         findSystemUrl({ name: "teston" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
+            applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
         })
     }
 

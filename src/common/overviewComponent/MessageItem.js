@@ -34,8 +34,7 @@ const MessageListItem = (props) => {
     }
 
     const goSprintDetail = () => {
-        debugger
-        props.history.push(`/${projectId}/sprint/${sprintId}/workitem`);
+        props.history.push(`/${projectId}/sprint/${sprintId}/overview`);
         // if (status === 0) {
         //     const value = {
         //         id: id,

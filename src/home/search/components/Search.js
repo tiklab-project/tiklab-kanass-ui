@@ -211,8 +211,8 @@ const Search = (props) => {
      */
     const toProject = async (data) => {
         // 创建最近访问的信息
-        updateRecent({ id: data.modelId })
-        props.history.replace(`/project/${data.modelId}/workitem`)
+        updateRecent({ id: data.id })
+        props.history.replace(`/project/${data.id}/workitem`)
         // location.reload();
         // 存储用于被点击菜单的回显
         sessionStorage.setItem("menuKey", "project")
@@ -235,9 +235,9 @@ const Search = (props) => {
     // 有bug
     const toWorkItem = (data) => {
         updateRecent({ id: data.id })
-        setWorkId(data.modelId)
-        props.history.push(`/project/${data.project.id}/work/${data.modelId}`)
-        setSessionStorage("detailCrumbArray", [{ id: data.modelId, code: data.code, title: data.name, iconUrl: data.iconUrl }])
+        setWorkId(data.id)
+        props.history.push(`/project/${data.project.id}/work/${data.id}`)
+        setSessionStorage("detailCrumbArray", [{ id: data.id, code: data.code, title: data.name, iconUrl: data.iconUrl }])
         sessionStorage.setItem("menuKey", "project")
 
     }

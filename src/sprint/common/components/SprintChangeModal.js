@@ -83,7 +83,7 @@ const SprintChangeModal = (props) => {
                 {
                     isShowText ? <div className="sprint-title title" onClick={showMoreMenu}>
 
-                        <ColorIcon name={sprint?.sprintName} className="icon-24" color={sprint.color} />
+                        <ColorIcon name={sprint?.sprintName} className="icon-24" color={sprint?.color} />
                         <div className={`sprint-text `} >
                             <div>
                                 {sprint?.sprintName}
@@ -99,7 +99,7 @@ const SprintChangeModal = (props) => {
                         <Tooltip placement="right" title={sprint?.sprintName}>
                             <div className='sprint-title-icon' onClick={showMoreMenu} >
 
-                                <ColorIcon name={sprint?.sprintName} className="img-32" color={sprint.color} />
+                                <ColorIcon name={sprint?.sprintName} className="img-32" color={sprint?.color} />
                                 {/* <div className={`sprint-toggleCollapsed`}>
                                     <svg className="icon-15" aria-hidden="true">
                                         <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
@@ -121,7 +121,7 @@ const SprintChangeModal = (props) => {
 
                 >
 
-                    <ColorIcon name={sprint?.sprintName} className="icon-32" color={sprint.color} />
+                    <ColorIcon name={sprint?.sprintName} className="icon-32" color={sprint?.color} />
                     <div className="change-sprint-info">
                         <div className="change-sprint-name">{sprint?.sprintName}</div>
                         <div className="change-sprint-state">{sprint?.sprintState?.name}</div>

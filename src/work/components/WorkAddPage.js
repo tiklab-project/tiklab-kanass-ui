@@ -544,7 +544,7 @@ const WorkAddPage = (props) => {
                                     span: 18,
                                 }}
                             >
-                                <div style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
+                                <div className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
                                     <DocumentEditor
                                         focusEditor={true}
                                         value={slateValue}

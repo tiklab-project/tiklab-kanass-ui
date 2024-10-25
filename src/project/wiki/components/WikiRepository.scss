@@ -34,6 +34,7 @@
     .document-title {
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
     .document-title:hover {
         color: var(--tiklab-blue);

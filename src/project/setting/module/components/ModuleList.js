@@ -63,9 +63,9 @@ const ModuleList = (props) => {
     const onSearch = (values) => {
         const params = {
             projectId: projectId,
-            moduleName: values.target.value
+            moduleName: values
         }
-        setModuleName(values.target.value)
+        setModuleName(values)
         findModule(params)
         // // 重置分页参数，从第一页开始搜索
         // setPageParam({ current: 1, pageSize: 10 })

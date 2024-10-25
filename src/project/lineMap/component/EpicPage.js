@@ -80,7 +80,6 @@ const EpicPage = (props) => {
      * @param {*} value 
      */
     const onSearch = (value) => {
-
         getWorkConditionPageTree({ title: value })
     }
 
@@ -99,9 +98,6 @@ const EpicPage = (props) => {
         }
         getWorkConditionPageTree(values)
     }
-    
-    
-
 
     return (
         <Provider {...store}>

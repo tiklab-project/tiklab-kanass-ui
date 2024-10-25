@@ -46,7 +46,7 @@ const TestRepository = (props) => {
     const goRepository = (data) => {
         findSystemUrl({ name: "teston" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            applyJump(`${testUrl}/#/repository/detail/${data.id}`)
+            applyJump(`${testUrl}/#/project/${data.id}/testcase`)
         })
     }
     // 列表的列
@@ -121,12 +121,49 @@ const TestRepository = (props) => {
         })
     }
 
-    const goCaseDetail = (data) => {
+    const goCaseDetail = (record) => {
+        if (record.exist) {
+            switch (record.caseType) {
+                case "api-unit":
+                    toCaseDetail("apiUnit", record)
+                    break;
+                case "api-scene":
+                    toCaseDetail("apiScene", record)
+                    break;
+                case "api-perform":
+                    toCaseDetail("apiPerform", record)
+                    break;
+                case "web-scene":
+                    toCaseDetail("webScene", record)
+                    break;
+                case "web-perform":
+                    toCaseDetail("webPerform", record)
+                    break;
+                case "app-scene":
+                    toCaseDetail("appScene", record)
+                    break;
+                case "app-perform":
+                    toCaseDetail("appPerform", record)
+                    break;
+                case "function":
+                    toCaseDetail("function", record)
+                    break;
+
+            }
+        } else {
+            return;
+        }
+
+    }
+
+
+    const toCaseDetail = (caseType, data) => {
         findSystemUrl({ name: "teston" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            applyJump(`${testUrl}/#/repository/${data.caseType}/${data.id}`)
+            applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
         })
     }
+
     const testCaseColumns = [
         {
             title: "标题",

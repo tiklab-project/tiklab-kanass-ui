@@ -107,7 +107,6 @@ const WorkTable = (props) => {
         props.history.push(`${pathname}/${record.id}`)
         setIsModalVisible(true)
     }
-    console.log(workList)
     const actionColumn = {
         title: '操作',
         width: "60",
@@ -299,9 +298,7 @@ const WorkTable = (props) => {
         })
     }
 
-    console.log("table222", workList)
     const delectCurrentWorkItem = (workId) => {
-        console.log("first", workList)
         deleteWork(deleteWorkItem, removeNodeInTree, workId)
         setDeleteSelectModal(false)
     }
@@ -356,14 +353,14 @@ const WorkTable = (props) => {
                             </Spin>
                         </div>
                     </div>
-                    {/* <WorkDetailDrawer
+                    <WorkDetailDrawer
                         isModalVisible={isModalVisible}
                         setIsModalVisible={setIsModalVisible}
                         modelRef={modelRef}
                         showPage={true}
                         delectCurrentWorkItem={delectCurrentWorkItem}
                         {...props}
-                    /> */}
+                    />
 
                 </Col>
             </Row>

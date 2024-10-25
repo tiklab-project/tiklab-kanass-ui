@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState, useRef } from "react";
 import { Provider, inject, observer } from "mobx-react";
-import { Layout } from "antd";
+import { Empty, Layout } from "antd";
 import "../components/SprintLayout.scss";
 import { renderRoutes } from "react-router-config";
 import SprintDetailAside from "./SprintDetailAside";
@@ -16,39 +16,54 @@ import SprintDetailStore from "../store/SprintDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
 import { getUser } from "tiklab-core-ui";
 import { UserVerify } from "tiklab-user-extension-ui";
+import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Sprintdetail = (props) => {
     const { route, systemRoleStore } = props;
     const store = {
         sprintDetailStore: SprintDetailStore
     }
+    const { findSprint, sprint } = SprintDetailStore;
     const { setSearchConditionNull, setTabValue } = WorkStore;
     const userId = getUser().userId;
     const projectId = props.match.params.id;
     const project = JSON.parse(localStorage.getItem("project"));
+    const sprintId = props.match.params.sprint;
 
     useEffect(() => {
         setSearchConditionNull()
-        setTabValue({id: "all", type: "system"})
+        findSprint({ sprintId: sprintId }).then(res => {
+            console.log(res)
+        })
+        setTabValue({ id: "all", type: "system" })
         const isPublish = project?.projectLimits === "0" ? true : false;
         systemRoleStore.getInitProjectPermissions(userId, projectId, isPublish)
         return () => {
             setSearchConditionNull()
-            setTabValue({id: "all", type: "system"})
+            setTabValue({ id: "all", type: "system" })
         }
     }, []);
-    
 
-    
+
+
     return (<Provider {...store}>
         <Layout className="sprint-detail">
             <SprintDetailAside />
-            <Layout className="sprint-detail-content">
-                {renderRoutes(route.routes)}
-            </Layout>
+            {
+                sprint ? <Layout className="sprint-detail-content">
+                    {renderRoutes(route.routes)}
+                </Layout>
+                    :
+                    <div className="sprint-detail-empty">
+                        <ProjectEmpty description="迭代不存在或者已被删除"></ProjectEmpty>
+                    </div>
+
+            }
+
         </Layout>
+
     </Provider>
-        
+
     )
 }
-export default inject("systemRoleStore")(observer(UserVerify(Sprintdetail,"/noAuth", "kanass")));
+export default inject("systemRoleStore")(UserVerify(observer(Sprintdetail), "/noAuth", "kanass"));

@@ -511,7 +511,7 @@ const EpicLineMap = (props) => {
                                             alt=""
                                             className="img-25"
                                         />
-                                        <span className="epic-key">{item.id}</span>
+                                        <span className="epic-key">{item.code}</span>
                                         <div className="epic-text" onClick={() => goEpicWorkDetail(item, index)}>{item.title}</div>
                                     </div>
                                 </div>
@@ -602,6 +602,9 @@ const EpicLineMap = (props) => {
         return color;
     }
 
+    const delectCurrentWorkItem = () => {
+
+    }
     return (
         <div className="epic-linemap">
             <div>
@@ -732,7 +735,8 @@ const EpicLineMap = (props) => {
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}
                 showPage={true}
-                deleteWork = {deleteWork}
+                // deleteWork = {deleteWork}
+                delectCurrentWorkItem={deleteWork}
                 {...props}
             />
 

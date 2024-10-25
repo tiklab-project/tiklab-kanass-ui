@@ -49,7 +49,11 @@
             .work-add-desc {
                 flex: 1;
             }
-
+            .work-item-desc {
+                .edit-toolbar {
+                    padding-right: 10px;
+                }
+            }
             .ant-form-item {
                 // flex-direction: row;
 

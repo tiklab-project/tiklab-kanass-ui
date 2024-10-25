@@ -204,7 +204,7 @@ const WorkTestCaseAddmodal = (props) => {
                                     value={item.id}
                                     label={item.testRepositoryName}
                                     key={item.id}
-                                    imgUrl={`${base_url}/${item.iconUrl}`}
+                                    // imgUrl={`${base_url}/${item.iconUrl}`}
                                 />
                             })
                         }

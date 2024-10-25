@@ -97,7 +97,7 @@ const SprintDetailAside = (props) => {
     ]
     useEffect(() => {
         findSprint({ id: sprintId }).then(res => {
-            if (res.data.sprintState.id === "222222") {
+            if (res.data?.sprintState.id === "222222") {
                 setSprintRouter(doneRouter)
             } else {
                 setSprintRouter(allRouter)
