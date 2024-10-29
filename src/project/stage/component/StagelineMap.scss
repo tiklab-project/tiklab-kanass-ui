@@ -1,6 +1,6 @@
 
 .stage-linemap {
-    height: calc(100% - 220px);
+    height: calc(100% - 160px);
     position: relative;
     .linemap-time {
         margin-top: 10px;
@@ -373,7 +373,7 @@
     .scroll-row {
         display: flex;
         justify-content: flex-end;
-        margin-top: 20px;
+        margin-top: 10px;
 
         .scroll-box {
             width: calc(100% - 520px);

@@ -267,7 +267,7 @@ const WorkTable = (props) => {
         console.log("second", workList)
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
-            if (workList.length === 0) {
+            if (workList.length === 1) {
                 const currentPage = searchCondition.pageParam.currentPage
                 // 当前页被删完, 总页数等于当前页， 往前移动一页
                 if (currentPage === total && currentPage > 1) {
@@ -282,6 +282,8 @@ const WorkTable = (props) => {
                     // 当前页被删完, 总页数等于当前页，而且是第一页
                     setWorkId(0)
                     setWorkIndex(0)
+                    const node = removeTree(workList, null, workId);
+                    setIsModalVisible(false)
                 } else if (currentPage < total) {
                     setWorkDeatilInList(WorkStore)
                 }

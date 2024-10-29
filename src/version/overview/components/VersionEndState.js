@@ -21,21 +21,24 @@ const VersionEndState = props => {
     const [selectVersionList, setSelectVersionLis] = useState();
     const [newVersionId, setNewVersionId] = useState();
     const { t, i18n } = useTranslation();
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     const doneRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            url: `/${projectId}/version/${versionId}/overview`,
-            key: "survey",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
+            id: `/${projectId}/version/${versionId}/overview`,
+            key: "overview",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/version/${versionId}/workitem`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            id: `/${projectId}/version/${versionId}/workitem`,
             key: "work",
             encoded: "work",
-        }
+        },
     ]
 
     useEffect(() => {

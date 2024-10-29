@@ -21,25 +21,30 @@ const SprintEndState = props => {
     const [selectSprintList, setSelectSprintLis] = useState();
     const [newSprintId, setNewSprintId] = useState()
     const { t, i18n } = useTranslation();
+    const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
+  
     const doneRouter = [
         {
             title: `${t('survey')}`,
-            icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/overview`,
-            key: "survey",
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
+            id: `/${projectId}/sprint/${sprintId}/overview`,
+            key: "overview",
             encoded: "Survey",
         },
         {
             title: "事项",
-            icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/workitem`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            id: `/${projectId}/sprint/${sprintId}/workitem`,
             key: "work",
             encoded: "work",
         },
         {
             title: "统计",
-            icon: 'survey',
-            url: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
+            id: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
         }
