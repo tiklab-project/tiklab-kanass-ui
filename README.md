@@ -202,7 +202,7 @@ Kanass 支持多种项目模型，拥有强大的事项跟踪与管理功能，�
 
 * 集成sward、TestHubo
 
-    集成tiklab全家桶中的sward知识库工具和TestHubo自动化测试工具，能够在Kanass中使用知识资源和接口测试功能
+    为了优化集成，我们将sward知识库工具和TestHubo自动化测试工具无缝整合到Kanass 中，提升团队协作效率与测试流程的顺畅度。
 
 * OpenApi
 
