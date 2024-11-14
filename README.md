@@ -1,5 +1,5 @@
 
-# 项目管理工具——kanass
+# 项目管理工具——Kanass
 
 Kanass项目管理系统是专为项目管理而设计的应用软件，帮助项目管理者在有限的资源约束下，运用系统项目涉及的全部工作进行有效管理；本系统支持敏捷式项目管理与瀑布式项目管理两种模型；主要功能有项目管理，事项管理，工时管理，统计等
 
@@ -195,17 +195,18 @@ Kanass 支持多种项目模型，拥有强大的事项跟踪与管理功能，�
 
 ## 2.5 集成开放
 
-可集成jira数据，sward知识系统，并提供OpenApi，便于被第三方集成
-* 集成jira
-    可以导入jira，轻松的实现从jira到Kanass的数据迁移
+可集成JIRA数据，sward知识系统，并提供OpenApi，便于被第三方集成
+* 集成JIRA
 
-* 集成sward、testHubo
+    可以导入JIRA，轻松的实现从JIRA到Kanass的数据迁移
 
-    集成tiklab全家桶中的sward知识库工具和testHubo自动化测试工具，能够在kanass中使用知识资源和接口测试功能
+* 集成sward、TestHubo
 
-* openApi
+    集成tiklab全家桶中的sward知识库工具和TestHubo自动化测试工具，能够在Kanass中使用知识资源和接口测试功能
 
-    我们提供openApI接口，用于被第三方应用集成 
+* OpenApi
+
+    我们提供OpenApi接口，用于被第三方应用集成 
 
 ## 2.6 多版本、多终端
 
@@ -235,14 +236,14 @@ Kanass 支持多种项目模型，拥有强大的事项跟踪与管理功能，�
 
 * 使用
     
-    公有云版本使用是进入官网注册一个账号，可用手机号与邮箱注册
+    公有云版本使用是进入[官网](https://tiklab.net/)注册一个账号，可用手机号与邮箱注册
     登录进入工作台选择要点击Kanass，就成功的开通了Kanass，就可进入系统使用了
 
 # 4. 运行 TestHubo
 
 ```
 1. git clone 
-2. cd tiklab-kanass-ui
+2. cd tiklab-Kanass-ui
 3. npm install
 4. npm run start
 ```
