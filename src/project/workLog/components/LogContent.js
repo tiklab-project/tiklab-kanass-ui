@@ -20,6 +20,8 @@ import LogDetail from "./LogDetail";
 import moment from "moment";
 import LogStore from "../store/LogStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const LogContent = (props) => {
     const store = {
         logStore: LogStore
@@ -86,25 +88,38 @@ const LogContent = (props) => {
     }
 
     const columns = [
-        // {
-        //     title: "事项",
-        //     dataIndex: ["workItem", "title"],
-        //     key: "workItem",
-        //     align: "left",
-        //     render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="span-botton">
-        //         {text}
-        //     </Space>,
-        // },
         {
             title: "工作内容",
             dataIndex: "workContent",
             key: "workContent",
             align: "left",
-            width: "50%",
+            width: "30%",
             ellipsis: true,
             render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="worklog-content">
                 {text}
             </div>,
+        },
+        {
+            title: "用时",
+            dataIndex: "takeupTime",
+            key: "takeupTime",
+            align: "left",
+            width: "7%"
+        },
+        {
+            title: "事项",
+            dataIndex: ["workItem", "title"],
+            key: "workItem",
+            align: "left",
+            width: "30%",
+            render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
+                <ImgComponent
+                    src={record.workItem.workTypeSys?.iconUrl}
+                    alt=""
+                    className="icon-15"
+                />
+                {text}
+            </Space>,
         },
         {
             title: "项目",
@@ -118,25 +133,23 @@ const LogContent = (props) => {
             dataIndex: ["user", "nickname"],
             key: "user",
             align: "left",
-            width: "10%"
+            width: "10%",
+            render: (text, record, index) => <Space>
+                <UserIcon userInfo={record.workItem.assigner} name={record.workItem.assigner?.nickname} />
+                {text}
+            </Space>,
         },
         {
             title: "记录日期",
             dataIndex: "workDate",
             key: "workDate",
             align: "left",
-            width: "20%",
+            width: "10%",
             render: (text, record, index) => <div>
                 {text?.slice(0, 10)}
             </div>,
         },
-        {
-            title: "用时",
-            dataIndex: "takeupTime",
-            key: "takeupTime",
-            align: "left",
-            width: "7%"
-        },
+
         // {
         //     title: "操作",
         //     dataIndex: "action",

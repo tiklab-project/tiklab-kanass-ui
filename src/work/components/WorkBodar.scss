@@ -18,7 +18,7 @@
         display: flex;
         align-items: center;
         overflow-x: auto;
-        padding-bottom: 10px;
+        // padding-bottom: 10px;
         .work-bodar-list {
             display: flex;
             gap: 20px;
@@ -85,10 +85,13 @@
                     margin: 0 auto;
                     border-radius: 4px;
                     margin-bottom: 10px;
-                    padding: 10px;
+                    padding: 5px 10px;
                     font-size: 13px;
                     background-color: #fff;
                     width: 250px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
                     .work-item-assigner {
                         display: flex;
                         align-items: center;
@@ -97,8 +100,20 @@
                     .work-item-title {
                         line-height: 30px;
                         cursor: pointer;
+                        // color: var(--tiklab-blue);
+                        // font-weight: var(--tiklab-font-weight-bold);
+                    }
+
+                    .work-item-name:hover {
                         color: var(--tiklab-blue);
-                        font-weight: var(--tiklab-font-weight-bold);
+                    }
+                    .work-item-name {
+                        height: 30px;
+                        overflow: hidden;
+                        width: 200px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
                     }
                     .work-item-bottom {
                         display: flex;

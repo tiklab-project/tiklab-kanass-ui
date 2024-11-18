@@ -57,7 +57,7 @@ const LogAllList = (props) => {
 
     const columns = [
         {
-            title: "工作内容",
+            title: "工作内容22",
             dataIndex: "workContent",
             key: "workContent",
             align: "left",
@@ -66,6 +66,20 @@ const LogAllList = (props) => {
             render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="worklog-content">
                 {text}
             </div>,
+        },
+        {
+            title: "用时",
+            dataIndex: "takeupTime",
+            key: "endTime",
+            align: "left",
+            width: "7%"
+        },
+        {
+            title: "事项",
+            dataIndex: ["workItem", "title"],
+            key: "workItem",
+            align: "left",
+            width: "15%"
         },
         {
             title: "项目",
@@ -86,14 +100,7 @@ const LogAllList = (props) => {
             dataIndex: "workDate",
             key: "workDate",
             align: "left"
-        },
-        {
-            title: "用时",
-            dataIndex: "takeupTime",
-            key: "endTime",
-            align: "left",
-            width: "7%"
-        },
+        }
 
     ];
 

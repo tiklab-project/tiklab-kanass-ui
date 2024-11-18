@@ -43,7 +43,7 @@ const WorkBodar = (props) => {
         workCalendarStore: WorkCalendarStore
     };
     const projectId = props.match.params.id;
-    useEffect(async() => {
+    useEffect(async () => {
         setWorkShowType("bodar")
         // setQuickFilterValue({
         //     value: "pending",
@@ -209,7 +209,7 @@ const WorkBodar = (props) => {
                         </div>
                     </Col>
                 </Row>
-                <div className={`work-bodar-content ${loading ? "work-bodar-content-spin" : "" }`}>
+                <div className={`work-bodar-content ${loading ? "work-bodar-content-spin" : ""}`}>
                     <Spin spinning={loading} tip="加载中">
                         <div className="work-bodar-flex">
                             <div className="work-bodar-list">
@@ -245,29 +245,17 @@ const WorkBodar = (props) => {
                                                                             draggable={"true"}
                                                                             onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                                         >
+                                                                            <ImgComponent
+                                                                                src={workItem.workTypeSys?.iconUrl}
+                                                                                alt=""
+                                                                                className="icon-24"
+                                                                            />
                                                                             <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
-                                                                                {workItem.title}
-                                                                            </div>
-
-                                                                            <div className="work-item-bottom">
-                                                                                <div>
-                                                                                    <ImgComponent
-                                                                                        src={workItem.workTypeSys?.iconUrl}
-                                                                                        alt=""
-                                                                                        className="menu-icon"
-
-                                                                                    />
-                                                                                    <span >{workItem.code}</span>
-                                                                                </div>
-                                                                                <div className="work-item-assigner"
-                                                                                    onClick={() => showModal(workItem, workIndex, index)}
-                                                                                >
-                                                                                    <span>{workItem.assigner?.nickname}</span>
-                                                                                    <UserIcon userInfo={workItem.assigner} name={workItem.assigner?.nickname} />
+                                                                                <div>{workItem.code}</div>
+                                                                                <div className="work-item-name">
+                                                                                    {workItem.title}
                                                                                 </div>
                                                                             </div>
-
-
                                                                         </div>
                                                                     })
                                                                         :
