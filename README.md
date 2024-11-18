@@ -239,14 +239,37 @@ Kanass 支持多种项目模型，拥有强大的事项跟踪与管理功能，�
     公有云版本使用是进入[官网](https://tiklab.net/)注册一个账号，可用手机号与邮箱注册
     登录进入工作台选择要点击Kanass，就成功的开通了Kanass，就可进入系统使用了
 
-# 4. 运行 TestHubo
+# 4. 运行 Kanass
 
-```
-1. git clone 
-2. cd tiklab-Kanass-ui
-3. npm install
-4. npm run start
-```
+* 配置npm仓库地址
+
+    ```
+    npm config set registry https://mirror.tiklab.net/repository/tiklab-npm
+    ```
+
+* 配置后端地址
+   
+    进入 enviroment/enviroment_local.js 文件
+
+    修改 api 的值为你启动的后端项目 tiklab-kanass 的地址
+
+
+
+* 启动
+
+    ```
+    1. git clone <仓库地址>
+    2. cd tiklab-Kanass-ui
+    3. npm install
+    4. npm run start
+    ```
+
+* 登录
+   
+   账号：admin
+   
+   密码：123456
+
 
 # 5. 需求反馈
 
