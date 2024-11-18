@@ -225,7 +225,9 @@ Kanass 支持多种项目模型，拥有强大的事项跟踪与管理功能，�
 
 免费开放源代码，通过协作和共享的方式推动项目的发展；
 
+
 # 3. 下载与演示
+
 * 下载
     
     Kanass 下载地址：https://download.tiklab.net/kanass
