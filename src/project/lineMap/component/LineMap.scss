@@ -47,15 +47,15 @@
 }
 
 .sprint-linemap {
-    height: calc(100% - 160px);
+    height: calc(100% - 47px);
 }
 
 .version-linemap {
-    height: calc(100% - 160px);
+    height: calc(100% - 47px);
 }
 
 .epic-linemap {
-    height: calc(100% - 165px);
+    height: calc(100% - 47px);
     position: relative;
 
 }
@@ -67,7 +67,7 @@
 .linemap-time {
     margin-top: 15px;
     position: relative;
-    height: 100%;
+    height: calc(100% - 30px);
 
     ul {
         margin: 0;
@@ -85,11 +85,9 @@
     }
 
     .time-table {
-        border-bottom: 1px solid #fafafa;
         text-align: center;
         overflow: hidden;
         position: relative;
-        height: 100%;
         flex: 1;
 
         .table-border {
@@ -130,7 +128,8 @@
             .table-hearder-text {
                 height: 50px;
                 text-align: left;
-                padding-left: 15px;
+                // padding-left: 15px;
+                padding: 0 8px;
             }
 
             .table-hearder-title {
@@ -201,7 +200,7 @@
             .table-td {
                 height: 50px;
                 position: relative;
-                padding-left: 15px;
+                padding: 0 8px;
                 text-align: left;
 
                 .table-icon {
@@ -217,7 +216,6 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-
                 display: flex;
                 align-items: center;
 
@@ -233,6 +231,10 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 border-right: #f0f0f0 1px solid;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 12px;
             }
 
             .table-td-time {
@@ -350,7 +352,7 @@
 .scroll-row {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 10px;
 
     .scroll-box {
         width: calc(100% - 450px);

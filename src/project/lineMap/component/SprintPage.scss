@@ -1,5 +1,6 @@
 .sprint {
     margin-top: 15px;
+    height: calc(100% - 87px);
     .ant-empty {
         margin-top: 20px;
     }
@@ -64,7 +65,7 @@
     }
     .sprint-name:hover{
         color: var(--tiklab-blue);
-        background-color: var(--tiklab-gray-400);
+        // background-color: var(--tiklab-gray-400);
         
     }
     .sprint-linemap {
@@ -83,6 +84,10 @@
         .sprint-status-done {
             background: #dfecd5e3;
             color: #5e5314;
+        }
+        .sprint-icon {
+            font-size: 10px;
+            margin-right: 5px;
         }
     }
 }

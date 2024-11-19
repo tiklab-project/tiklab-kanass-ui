@@ -10,17 +10,19 @@ import React, { useEffect, useState, Fragment, useRef, useImperativeHandle } fro
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
-import "./Epic.scss"
+// import "./Epic.scss"
 import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
 import moment from 'moment';
 import { useDebounce } from "../../../common/utils/debounce";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const VersionLineMap = (props) => {
     // 获取当前年月日
     const { data, archiveView, setGraph, graph, lineMapStore, versionLineRef } = props;
 
-
+    const projectId = props.match.params.id;
     const { updateVersion } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -61,7 +63,7 @@ const VersionLineMap = (props) => {
 
         return;
     }, [archiveView])
-    
+
     const creatGraph = () => {
         // 开始与结束日期，解析一个表示某个日期的字符串，
         // 并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数
@@ -79,7 +81,7 @@ const VersionLineMap = (props) => {
 
 
         const graph = new Graph({
-            container: document.getElementById("epic"),
+            container: document.getElementById("version"),
             width: graphWidth,
             grid: {
                 size: unitLength,
@@ -114,9 +116,9 @@ const VersionLineMap = (props) => {
             }
         })
 
-        graph.on("node:change:position", ({ node, options }) =>updateByChangeNodePosition({node}))
+        graph.on("node:change:position", ({ node, options }) => updateByChangeNodePosition({ node }))
 
-        graph.on("node:change:size", ({ node, options }) =>updateByChangeNodeSize({node, options}))
+        graph.on("node:change:size", ({ node, options }) => updateByChangeNodeSize({ node, options }))
 
         setGraph(graph)
     }
@@ -134,11 +136,11 @@ const VersionLineMap = (props) => {
         endTime = moment(endTime).subtract(1, "day").format('YYYY-MM-DD');
         params.publishTime = endTime;
 
-        let startTime = startX * archiveBase  + firstDateMillisecond;
+        let startTime = startX * archiveBase + firstDateMillisecond;
         startTime = moment(startTime).format('YYYY-MM-DD');
         params.startTime = startTime;
         updateVersion(params).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 data[index].publishTime = endTime;
                 data[index].startTime = startTime;
             }
@@ -157,12 +159,12 @@ const VersionLineMap = (props) => {
         const startX = nodeBox.x;
         const nodeWidth = nodeBox.width;
         if (direction === "right") {
-        
+
             const dataTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
             let day = moment(dataTime).subtract(1, "day").format('YYYY-MM-DD');
             params.publishTime = day;
             updateVersion(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].publishTime = day;
                 }
             })
@@ -172,13 +174,13 @@ const VersionLineMap = (props) => {
             let day = moment(dataTime).format('YYYY-MM-DD');
             params.startTime = day;
             updateVersion(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].startTime = day;
                 }
-                
+
             })
         }
-    
+
     }, [500])
 
     //渲染画布
@@ -193,7 +195,7 @@ const VersionLineMap = (props) => {
     const [scrollLeft, setScrollLeft] = useState()
     useEffect(() => {
         if (ganttdata !== undefined) {
-            document.getElementById("epic").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("version").style.height = (ganttdata.nodes.length * 50);
             setGarph()
         }
         const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
@@ -213,7 +215,7 @@ const VersionLineMap = (props) => {
         goToday: goToday
     }))
     // 画布节点数据
-    
+
 
     //路线节点数据
     const setNode = (data) => {
@@ -228,7 +230,7 @@ const VersionLineMap = (props) => {
 
             let end = item?.publishTime;
             endPra = Date.parse(end);
-            endPra = 86400000  + endPra;
+            endPra = 86400000 + endPra;
             // 画布开始时间转化为毫秒
 
             // 每个事项的x轴
@@ -382,7 +384,9 @@ const VersionLineMap = (props) => {
         }
     }
 
-    
+    const goVersionDetail = (id) => {
+        props.history.push({ pathname: `/${projectId}/version/${id}/workitem`})
+    }
     //绘制表格
     const tableTd = (data, fid, deep) => {
         return (data && data.length > 0 && data.map((item, index) => {
@@ -392,28 +396,12 @@ const VersionLineMap = (props) => {
                         <li style={{ listStyleType: "none" }}>
                             <div key={item.id} className="table-tr ">
                                 <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
-                                    <div>
-                                        {
-                                            item.children && item.children.length > 0 ?
-                                            <>
 
-                                                {
-                                                    isExpandedTree(item.id) ?
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workDown"></use>
-                                                        </svg> :
-                                                        <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                            <use xlinkHref="#icon-workRight"></use>
-                                                        </svg>
-                                                }
-                                            </>
-                                            :
-                                            <></>
-                                        }
-                                    </div>
                                     <div
-                                        className="epic-name"
-                                        >
+                                        className="version-name"
+                                        onClick={() => goVersionDetail(item.id)}
+                                    >
+                                        <ColorIcon name={item.name} className="icon-20 version-icon" color={item.color} />
                                         {item.name}
                                     </div>
                                 </div>
@@ -423,16 +411,17 @@ const VersionLineMap = (props) => {
                                     </span>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
-                                        {item.master?.name}
+                                    <UserIcon name={item.master?.nickname} size="small" />
+                                    {item.master?.nickname}
                                 </div>
                                 {/* <div className="table-td table-border table-td-time">{item.startTime} ~ {item.publishDate}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
-                                isExpandedTree(item.id) &&  <div>
-                                {
-                                    item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
-                                }
+                                isExpandedTree(item.id) && <div>
+                                    {
+                                        item.children && item.children.length > 0 && tableTd(item.children, item.id, deep + 1)
+                                    }
                                 </div>
                             }
                         </li>
@@ -569,7 +558,7 @@ const VersionLineMap = (props) => {
                                     }
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                    <div id="version" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
                                     <div className="table-date-background">
                                         {
                                             archiveView === "month" && dateArray && dateArray.map((item, index) => {

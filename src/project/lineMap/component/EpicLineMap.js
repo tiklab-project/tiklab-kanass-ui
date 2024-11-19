@@ -22,12 +22,13 @@ import { useDebounce } from "../../../common/utils/debounce";
 import { getUser } from "tiklab-core-ui";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
     const { data, totalPage, total, currentPage, lineMapStore,
         archiveView, setGraph, graph, workStore, changePage, workTypeList } = props;
-    const { setWorkId, setWorkIndex, createRecent, editWork, setWorkList, 
+    const { setWorkId, setWorkIndex, createRecent, editWork, setWorkList,
         getWorkConditionPageTree, deleteWorkItem, workList } = workStore;
 
     const { updateEpic } = lineMapStore;
@@ -54,8 +55,8 @@ const EpicLineMap = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
 
     const projectId = props.match.params.id;
-   
-    
+
+
 
     useEffect(() => {
         if (data.length > 0) {
@@ -86,7 +87,7 @@ const EpicLineMap = (props) => {
     // 删除事项
     const deleteWork = (id) => {
         deleteWorkItem(id).then(() => {
-            removeNodeInTree(workList,null, id)
+            removeNodeInTree(workList, null, id)
             setIsModalVisible(false)
             if (workList.length == 0) {
                 getWorkConditionPageTree()
@@ -208,7 +209,7 @@ const EpicLineMap = (props) => {
                 planEndTime: day
             }
             editWork(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].planEndTime = day;
                 }
             })
@@ -224,7 +225,7 @@ const EpicLineMap = (props) => {
                 planBeginTime: day
             }
             editWork(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].planBeginTime = day;
                 }
             })
@@ -266,7 +267,7 @@ const EpicLineMap = (props) => {
     }, [ganttdata])
 
     // 画布节点数据
-    
+
 
     //路线节点数据
     const setNode = (data) => {
@@ -384,7 +385,7 @@ const EpicLineMap = (props) => {
             return array
         })
         return array;
-        
+
     }
 
     const getWeekDay = (year, month, days) => {
@@ -423,16 +424,16 @@ const EpicLineMap = (props) => {
         let count = arr[month - 1] || (isLeapYear(year) ? 29 : 28);
         if (currentMonth === month && year === currentYear - 1) {
             // 如果今天是2024年2月29号
-            if(dayjs().format("MM-DD") === "02-29"){
+            if (dayjs().format("MM-DD") === "02-29") {
                 return [28]
-            }else {
+            } else {
                 return Array.from(new Array(count - currentDay + 1), (item, value) => value + currentDay);
             }
         } else if (currentMonth === month && year === currentYear + 1) {
             // 如果今天是2024年2月29号
-            if(dayjs().format("MM-DD") === "02-29"){
-                return Array.from(new Array(currentDay-1), (item, value) => value + 1);
-            }else {
+            if (dayjs().format("MM-DD") === "02-29") {
+                return Array.from(new Array(currentDay - 1), (item, value) => value + 1);
+            } else {
                 return Array.from(new Array(currentDay), (item, value) => value + 1);
             }
         } else {
@@ -491,28 +492,27 @@ const EpicLineMap = (props) => {
 
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workDown"></use>
                                                             </svg> :
-                                                            <svg className="img-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
                                                 :
-                                                <>
-                                                    <svg className="img-icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-point"></use>
-                                                    </svg>
-                                                </>
+                                                <div className="icon-10">
+                                                </div>
                                         }
                                         <ImgComponent
-                                            src = {item.workTypeSys?.iconUrl}
+                                            src={item.workTypeSys?.iconUrl}
                                             alt=""
                                             className="img-25"
                                         />
-                                        <span className="epic-key">{item.code}</span>
-                                        <div className="epic-text" onClick={() => goEpicWorkDetail(item, index)}>{item.title}</div>
+                                        <div className="epic-title">
+                                            <span className="epic-key">{item.code}</span>
+                                            <div className="epic-text" onClick={() => goEpicWorkDetail(item, index)}>{item.title}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -521,7 +521,8 @@ const EpicLineMap = (props) => {
                                     </span>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
-                                    {item.assigner?.name}
+                                    <UserIcon name={item.master?.nickname} size="small" />
+                                    {item.assigner?.nickname}
                                 </div>
                                 {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>
@@ -607,129 +608,142 @@ const EpicLineMap = (props) => {
     }
     return (
         <div className="epic-linemap">
-            <div>
-                <div className="linemap-time">
-                    <div className="time-table">
-                        <div className="table-hearder">
-                            <div className="table-hearder-text table-border table-hearder-title">
-                                标题
-                            </div>
-                            <div className="table-hearder-text table-border table-hearder-status">
-                                状态
-                            </div>
-                            <div className="table-hearder-text table-border table-hearder-assigner">
-                                负责人
-                            </div>
-                            <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
-                                <div className="table-timer" >
-                                    <div className="table-month" id="table-month" ref={timerCore}>
+            <div className="linemap-time">
+                <div className="time-table">
+                    <div className="table-hearder">
+                        <div className="table-hearder-text table-border table-hearder-title">
+                            标题
+                        </div>
+                        <div className="table-hearder-text table-border table-hearder-status">
+                            状态
+                        </div>
+                        <div className="table-hearder-text table-border table-hearder-assigner">
+                            负责人
+                        </div>
+                        <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
+                            <div className="table-timer" >
+                                <div className="table-month" id="table-month" ref={timerCore}>
+                                    {
+                                        dateArray && dateArray.map((item, index) => {
+                                            return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
+                                                {item.month}
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                                {
+                                    archiveView === "week" && <div className="table-date" id="table-date">
                                         {
                                             dateArray && dateArray.map((item, index) => {
-                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
-                                                    {item.month}
-                                                </div>
+                                                return item.day.map((dayitem, dayindex) => {
+                                                    return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
+                                                        className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                        key={`${index}${dayindex}`}
+                                                    >
+                                                        {dayitem}
+                                                    </div>
+                                                })
                                             })
                                         }
                                     </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="table-body " id="tale-body" ref={timerColOuter}>
+                        <div ref={timerColCore}>
+                            <li style={{ listStyleType: "none" }} id="table-content" >
+                                {
+                                    tableTd(data, 0, 0)
+
+                                }
+
+                            </li>
+                            <div className="table-pic" id="table-pic" ref={ganttOuter}>
+                                <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
+                                <div className="table-date-background" id="table-date-background">
                                     {
-                                        archiveView === "week" && <div className="table-date" id="table-date">
+                                        archiveView === "month" && dateArray && dateArray.map((item, index) => {
+                                            return <div
+                                                style={{ width: `${unitLength * item.day.length}px` }}
+                                                key={index}
+                                                className="table-month"
+                                            />
+                                        })
+                                    }
+                                    {
+                                        archiveView === "week" && dateArray && dateArray.map((item, index) => {
+                                            return item.day.map((dayitem, dayindex) => {
+                                                return <div style={{ width: unitLength, maxWidth: unitLength }}
+                                                    className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                    key={`${index}${dayindex}`}
+                                                >
+                                                </div>
+                                            })
+
+                                        })
+                                    }
+                                </div>
+
+                            </div>
+                            {
+                                data.length <= 0 && <div className="epci-empty">
+                                    没有需求和需求集，点击<WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />添加
+                                </div>
+                            }
+                            {
+                                totalPage > 0 && <>
+                                    {
+                                        <div className="epic-change-page" >
+                                            <div>{data.length}个, 共{total}个</div>
                                             {
-                                                dateArray && dateArray.map((item, index) => {
-                                                    return item.day.map((dayitem, dayindex) => {
-                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
-                                                            className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                            key={`${index}${dayindex}`}
-                                                        >
-                                                            {dayitem}
-                                                        </div>
-                                                    })
-                                                })
+                                                currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage()}>点击加载</div>
+                                                    :
+                                                    <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+
                                             }
                                         </div>
                                     }
-                                </div>
-                            </div>
-                        </div>
-                        <div className="table-body " id="tale-body" ref={timerColOuter}>
-                            <div ref={timerColCore}>
-                                <li style={{ listStyleType: "none" }} id="table-content" >
-                                    {
-                                        tableTd(data, 0, 0)
-
-                                    }
-
-                                </li>
-                                <div className="table-pic" id="table-pic" ref={ganttOuter}>
-                                    <div id="epic" ref={ganttCore} style={{ width: ganttWidth, zIndex: 1 }} className="gantt-box" />
-                                    <div className="table-date-background" id="table-date-background">
-                                        {
-                                            archiveView === "month" && dateArray && dateArray.map((item, index) => {
-                                                return <div
-                                                    style={{ width: `${unitLength * item.day.length}px` }}
-                                                    key={index}
-                                                    className="table-month"
-                                                />
-                                            })
-                                        }
-                                        {
-                                            archiveView === "week" && dateArray && dateArray.map((item, index) => {
-                                                return item.day.map((dayitem, dayindex) => {
-                                                    return <div style={{ width: unitLength, maxWidth: unitLength }}
-                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
-                                                        key={`${index}${dayindex}`}
-                                                    >
-                                                    </div>
-                                                })
-
-                                            })
-                                        }
-                                    </div>
-
-                                </div>
-                                {
-                                    data.length <= 0 && <div className="epci-empty">
-                                        没有需求和需求集，点击<WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />添加
-                                    </div>
-                                }
-                                {
-                                    totalPage > 0 && <>
-                                        {
-                                            <div className="epic-change-page" >
-                                                <div>{data.length}个, 共{total}个</div>
-                                                {
-                                                    currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage()}>点击加载</div>
-                                                        :
-                                                        <div style={{ paddingLeft: "10px" }}>已加载全部</div>
-
-                                                }
-                                            </div>
-                                        }
-                                    </>
-                                }
-
-                            </div>
+                                </>
+                            }
 
                         </div>
+
                     </div>
                 </div>
-                <RowScroll
-                    timerCore={timerCore}
-                    timerOuter={timerOuter}
+            </div>
+            {
+                totalPage > 0 && <>
+                    {
+                        <div className="epic-change-page" >
+                            <div>{workList.length}个, 共{total}个</div>
+                            {
+                                currentPage < totalPage ? <div className="change-page-button">点击加载</div>
+                                    :
+                                    <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+
+                            }
+                        </div>
+                    }
+                </>
+            }
+            {
+                isShowCol && <ColScroll
+                    timerCore={timerColCore}
+                    timerOuter={timerColOuter}
                     ganttCore={ganttCore}
                     ganttOuter={ganttOuter}
-                    ganttWidth={ganttWidth}
-                    scrollLeft={scrollLeft}
+                    isModalVisible={isModalVisible}
                 />
-                {
-                    isShowCol && <ColScroll
-                        timerCore={timerColCore}
-                        timerOuter={timerColOuter}
-                        ganttCore={ganttCore}
-                        ganttOuter={ganttOuter}
-                        isModalVisible = {isModalVisible}
-                    />
-                }
-            </div>
+            }
+            <RowScroll
+                timerCore={timerCore}
+                timerOuter={timerOuter}
+                ganttCore={ganttCore}
+                ganttOuter={ganttOuter}
+                ganttWidth={ganttWidth}
+                scrollLeft={scrollLeft}
+            />
             <WorkDetailDrawer
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}

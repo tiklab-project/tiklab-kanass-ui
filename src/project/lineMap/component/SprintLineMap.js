@@ -15,13 +15,16 @@ import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
 import moment from 'moment';
 import { useDebounce } from "../../../common/utils/debounce";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import UserIcon from "../../../common/UserIcon/UserIcon";
+
 const SprintLineMap = (props) => {
     // 获取当前年月日
     const { data, setShowEpicAddModal, setAddChild, setParentId,
         archiveView, setGraph, graph, lineMapStore, sprintLineRef } = props;
 
-
-    const { updateSprint } = lineMapStore;
+    const projectId = props.match.params.id;
+    const { updateSprint,createRecent } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth()
@@ -112,7 +115,7 @@ const SprintLineMap = (props) => {
             }
         })
 
-        graph.on("node:change:position", ({ node, options }) => updateByChangeNodePosition({node}))
+        graph.on("node:change:position", ({ node, options }) => updateByChangeNodePosition({ node }))
 
         graph.on("node:change:size", ({ node, options }) => updateByChangeNodeSize({ node, options }))
         setGraph(graph)
@@ -131,11 +134,11 @@ const SprintLineMap = (props) => {
         endTime = moment(endTime).subtract(1, "day").format('YYYY-MM-DD');
         params.endTime = endTime;
 
-        let startTime = startX * archiveBase  + firstDateMillisecond;
+        let startTime = startX * archiveBase + firstDateMillisecond;
         startTime = moment(startTime).format('YYYY-MM-DD');
         params.startTime = startTime;
         updateSprint(params).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 data[index].endTime = endTime;
                 data[index].startTime = startTime;
             }
@@ -159,7 +162,7 @@ const SprintLineMap = (props) => {
             let day = moment(dataTime).subtract(1, "day").format('YYYY-MM-DD');
             params.endTime = day;
             updateSprint(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].endTime = day;
                 }
             })
@@ -170,13 +173,13 @@ const SprintLineMap = (props) => {
             let day = moment(dataTime).format('YYYY-MM-DD');
             params.startTime = day;
             updateSprint(params).then(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     data[index].startTime = day;
                 }
-                
+
             })
         }
-    
+
     }, [500])
 
 
@@ -213,7 +216,7 @@ const SprintLineMap = (props) => {
     }, [ganttdata])
 
     // 画布节点数据
-    
+
 
     //路线节点数据
     const setNode = (data) => {
@@ -389,6 +392,18 @@ const SprintLineMap = (props) => {
         }
     }
 
+    const goSprintDetail = (id, sprintName) => {
+        // const params = {
+        //     name: sprintName,
+        //     model: "sprint",
+        //     modelId: id,
+        //     project: { id: project.id },
+        //     projectType: { id: project.projectType.id },
+        // }
+        // createRecent(params)
+        props.history.push({ pathname: `/${projectId}/sprint/${id}/workitem` })
+        localStorage.setItem("sprintId", id);
+    }
 
     //绘制表格
     const tableTd = (data, fid, deep) => {
@@ -398,31 +413,12 @@ const SprintLineMap = (props) => {
                     <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
                         <li style={{ listStyleType: "none" }}>
                             <div key={item.id} className="table-tr ">
-                                <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
-                                    <div>
-                                        {
-                                            item.children && item.children.length > 0 ?
-                                                <>
+                                <div className="table-td table-border table-td-name">
 
-                                                    {
-                                                        isExpandedTree(item.id) ?
-                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                                <use xlinkHref="#icon-workDown"></use>
-                                                            </svg> :
-                                                            <svg className="svg-icon" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                                                <use xlinkHref="#icon-workRight"></use>
-                                                            </svg>
-                                                    }
-                                                </>
-                                                :
-                                                <>
-
-                                                </>
-                                        }
-                                    </div>
                                     <div
                                         className="sprint-name"
-                                        onClick={() => goEpicWorkDetail(item, index)}>
+                                        onClick={() => goSprintDetail(item.id, item.sprintName)}>
+                                        <ColorIcon name={item.sprintName} className="icon-20 sprint-icon" color={item.color} />
                                         {item.sprintName}
                                     </div>
                                 </div>
@@ -431,7 +427,10 @@ const SprintLineMap = (props) => {
                                         {item.sprintState.name}
                                     </span>
                                 </div>
-                                <div className="table-td table-border table-td-assigner">{item.master.name}</div>
+                                <div className="table-td table-border table-td-assigner">
+                                    <UserIcon name={item.master?.nickname} size="small" />
+                                    {item.master.nickname}
+                                </div>
                                 {/* <div className="table-td table-border table-td-time">{item.startTime} ~ {item.endTime}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>

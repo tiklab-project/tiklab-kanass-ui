@@ -68,7 +68,7 @@
                 .table-hearder-text {
                     height: 50px;
                     text-align: left;
-                    padding-left: 15px;
+                    padding: 0 8px;
                 }
     
                 .table-hearder-title {
@@ -143,7 +143,7 @@
                 .table-td {
                     height: 50px;
                     position: relative;
-                    padding-left: 15px;
+                    padding: 0 8px;
                     text-align: left;
     
                     .table-icon {
@@ -174,7 +174,9 @@
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
-                    
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
                 }
 
                 .table-td-action {
@@ -301,17 +303,26 @@
             .stage-name-left-name:hover {
                 color: var(--tiklab-blue);
             }
+            .stage-key {
+                color: #999;
+            }
             .stage-key:hover {
                 color: var(--tiklab-blue);
             }
             .stage-icon {
-                width: 16px;
-                height: 16px;
+                width: 20px;
+                height: 20px;
                 border-radius: 3px;
                 font-size: 12px;
             }
             .stage-text:hover {
                 color: var(--tiklab-blue);
+            }
+            .stage-text {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 210px;
             }
             .add-child-stage {
                 height: 18px;
@@ -324,13 +335,35 @@
                     height: 12px;
                 }
             }
+            .stage-title {
+                line-height: 20px;
+                font-size: 12px;
+                gap: 10px;
+            }
             
         }
-        .stage-name:hover .add-child-stage {
-            background-color: var(--tiklab-gray-400);
+        
+        // .stage-name:hover .add-child-stage {
+        //     background-color: var(--tiklab-gray-400);
+        // }
+        // .stage-name:hover .add-icon {
+        //     display: block;
+        // }
+        .work-status {
+            padding: 2px 3px;
+            background: #e2e1e4;
+            border-radius: 4px;
+            font-size: 10px;
+            width: fit-content;
+            color: #2b333e;
         }
-        .stage-name:hover .add-icon {
-            display: block;
+        .work-status-process{
+            background: #b0d5dfa1;
+            color: #132c33;
+        }
+        .work-status-done {
+            background: #dfecd5e3;
+            color: #5e5314;
         }
     }
 

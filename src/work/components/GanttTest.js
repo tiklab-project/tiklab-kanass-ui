@@ -21,7 +21,7 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const Gantt = (props) => {
     // 获取当前年月日
-    const { workStore, WorkDetailDrawer,  projectId, sprintId, versionId,
+    const { workStore, WorkDetailDrawer, projectId, sprintId, versionId,
         useDebounce, archiveView, finWorkList } = props;
     const { workList, setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total,
         setQuickFilterValue, setWorkShowType } = workStore;
@@ -75,16 +75,16 @@ const Gantt = (props) => {
     useEffect(() => {
         // 画布参数
         // if (ganttCore?.current) {
-            
+
         // }
         setdateArray(getDate())
-            creatGraph()
-            setGanttData(setNode(workList))
+        creatGraph()
+        setGanttData(setNode(workList))
 
         return;
     }, [archiveView])
 
-    
+
 
     const creatGraph = () => {
         if (graph) {
@@ -244,11 +244,11 @@ const Gantt = (props) => {
             setGarph()
             const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
             setScrollLeft(scrollWidth)
-    
+
             document.getElementById('table-pic').scrollTo({ left: scrollWidth });
             document.getElementById('table-timer').scrollTo({ left: scrollWidth });
         }
-       
+
         return
     }, [ganttdata])
 
@@ -676,25 +676,12 @@ const Gantt = (props) => {
                                                 没有事项~
                                             </div>
                                         }
-                                        {
-                                            totalPage > 0 && <>
-                                                {
-                                                    <div className="epic-change-page" >
-                                                        <div>{workList.length}个, 共{total}个</div>
-                                                        {
-                                                            currentPage < totalPage ? <div className="change-page-button">点击加载</div>
-                                                                :
-                                                                <div style={{ paddingLeft: "10px" }}>已加载全部</div>
 
-                                                        }
-                                                    </div>
-                                                }
-                                            </>
-                                        }
 
                                     </div>
 
                                 </div>
+                               
                             </div>
                             <RowScroll
                                 timerCore={timerCore}

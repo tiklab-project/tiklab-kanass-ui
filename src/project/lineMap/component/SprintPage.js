@@ -23,7 +23,7 @@ const SprintPage = (props) => {
     }
     const projectId = props.match.params.id;
     const [sprintList, setSprintList] = useState([])
-    const { findSprintRoadMap, sprintRoadList } = LineMapStore;
+    const { findSprintRoadMap, sprintRoadList, createRecent } = LineMapStore;
 
     const [graph, setGraph] = useState()
     /**

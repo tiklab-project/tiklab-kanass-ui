@@ -11,7 +11,7 @@
 .work-bodar-content {
     background: var(--tiklab-gray-600);
     overflow: auto;
-   
+    height: 100%;
     .work-bodar-flex {
         width: 100%;
         height: 100%;
@@ -22,7 +22,7 @@
         .work-bodar-list {
             display: flex;
             gap: 20px;
-            padding: 20px;
+            padding: 0 20px;
             height: 100%;
             margin: 0 auto;
             overflow: auto;
@@ -49,17 +49,19 @@
                     background: var(--tiklab-gray-600);
                     top: 0;
                     z-index: 2;
-                    padding: 15px 0;
+                    // paddin;
                     .work-bodar-title-content {
-                        background-color: #fff;
+                        background: var(--tiklab-gray-600);
+                        font-size: 13px;
                     }
                     .work-bodar-num {
-                        font-size: 12px;
+                        font-size: 10px;
                         margin-left: 10px;
+                        color: #999;
                     }
                 }
                 .work-border-box-list {
-                    height: calc(100% - 72px);
+                    height: calc(100% - 45px);
                     overflow-x: hidden;
                     // width: fit-content;
                     .change-page {

@@ -22,12 +22,13 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModal";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
         setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId,
         setDeleteSelectModal, deleteStageList, deleteWork, stageStore, changePage } = props;
-    const {totalPage, currentPage, total} = stageStore;
+    const { totalPage, currentPage, total } = stageStore;
     const { createRecent, setWorkId, setWorkIndex, haveChildren, stageList } = workStore;
 
     const todayDate = new Date()
@@ -481,29 +482,29 @@ const StageLinemap = (props) => {
                             <div key={item.id} className={`table-tr`}>
                                 <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
                                     <div className="stage-name">
-                                        <div className="add-child-stage" onClick={() => addChidStage(item.id)}>
+                                        {/* <div className="add-child-stage" onClick={() => addChidStage(item.id)}>
                                             <svg className="add-icon" aria-hidden="true">
                                                 <use xlinkHref="#icon-add3"></use>
                                             </svg>
-                                        </div>
+                                        </div> */}
                                         {
                                             (item.children && item.children.length > 0 || item.childrenWorkItem?.length > 0) ?
                                                 <>
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workDown"></use>
                                                             </svg> :
-                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
                                                 :
-                                                <div className="icon-12" aria-hidden="true" />
+                                                <div className="icon-10" aria-hidden="true" />
                                         }
-                                       
-                                        <ColorIcon className="stage-icon" name = {item.stageName} color = {item.color} />
+
+                                        <ColorIcon className="stage-icon" name={item.stageName} color={item.color} />
                                         <div className="stage-text" onClick={() => showEditStage(item.id)}>{item.stageName}</div>
                                     </div>
                                 </div>
@@ -513,11 +514,12 @@ const StageLinemap = (props) => {
                                     </span>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
-                                    {item.master?.name}
+                                    <UserIcon name={item.master?.nickname} size="small" />
+                                    {item.master?.nickname}
                                 </div>
                                 <div className={`table-td table-border table-td-action`}>
-                                    <svg className="img-icon-right" aria-hidden="true">
-                                        <use xlinkHref="#icon-edit"></use>
+                                    <svg className="img-icon-right" aria-hidden="true" onClick={() => addChidStage(item.id)}>
+                                        <use xlinkHref="#icon-add2"></use>
                                     </svg>
                                     <DeleteModal deleteFunction={deleteStageList} id={item.id} content={"确定删除当前计划以及所有下级计划和事项"} />
                                     {/* <svg className="img-icon-right" aria-hidden="true" onClick={() => deleteStage()}>
@@ -559,24 +561,24 @@ const StageLinemap = (props) => {
                             <div key={item.id} className={`table-tr`}>
                                 <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
                                     <div className="stage-name">
-                                        <div className="stage-empty-icon" aria-hidden="true" />
+                                        {/* <div className="stage-empty-icon" aria-hidden="true" /> */}
                                         {
                                             item.children && item.children.length > 0 ?
                                                 <>
 
                                                     {
                                                         isExpandedTree(item.id) ?
-                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workDown"></use>
                                                             </svg> :
-                                                            <svg className="icon-12" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
                                                                 <use xlinkHref="#icon-workRight"></use>
                                                             </svg>
                                                     }
                                                 </>
                                                 :
                                                 <>
-                                                    <div className="icon-12" aria-hidden="true">
+                                                    <div className="icon-10" aria-hidden="true">
 
                                                     </div>
                                                 </>
@@ -584,10 +586,13 @@ const StageLinemap = (props) => {
                                         <ImgComponent
                                             src={item.workTypeSys?.iconUrl}
                                             alt=""
-                                            className="img-icon"
+                                            className="icon-20"
                                         />
-                                        <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.code}</span>
-                                        <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
+                                        <div className="stage-title">
+                                            <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.code}</span>
+                                            <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -596,7 +601,8 @@ const StageLinemap = (props) => {
                                     </span>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
-                                    {item.assigner?.name}
+                                <UserIcon name={item.assigner?.nickname} size="small" />
+                                    {item.assigner?.nickname}
                                 </div>
                                 <div className={`table-td table-border table-td-action`}>
                                     <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item, index)}>

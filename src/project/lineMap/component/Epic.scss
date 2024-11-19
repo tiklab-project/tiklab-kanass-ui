@@ -1,5 +1,6 @@
 .epic {
     margin-top: 15px;
+    height: calc(100% - 87px);
     .ant-empty {
         margin-top: 20px;
     }
@@ -65,23 +66,25 @@
         }
         .epic-key {
             color: var(--tiklab-gray-500);
-            line-height: 25px;
             margin-right: 5px;
         }
         .epic-text {
             cursor: pointer;
-            // color: var(--tiklab-blue);
-            line-height: 25px;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
             width: 180px;
         }
         .epic-text:hover {
-            text-decoration: underline;
+            color: var(--tiklab-blue);
         }
     }
 
+    .epic-title {
+        line-height: 20px;
+        font-size: 12px;
+        gap: 10px;
+    }
     .epci-empty {
         display: flex;
         align-items: center;
@@ -114,10 +117,10 @@
         align-items: center;
         justify-content: center;
         padding: 5px 0;
-        font-weight: 600;
         background-color: #fff;
         z-index: 10;
-        position: relative;
+        position: absolute;
+        width: 450px;
         .change-page-button {
             padding-left: 5px;
             color: var(--tiklab-blue);
