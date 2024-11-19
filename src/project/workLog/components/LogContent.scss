@@ -17,15 +17,20 @@
         color: var(--tiklab-blue);
     }
     .work-name {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: normal;
-        word-break: break-word;
+       
         display: flex;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        padding-right: 20px;
-        cursor: pointer;
+        align-items: center;
+        
+        .work-name-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: normal;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            cursor: pointer;
+        }
     }
 }
 

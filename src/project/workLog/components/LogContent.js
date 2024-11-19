@@ -118,7 +118,7 @@ const LogContent = (props) => {
                     alt=""
                     className="icon-15"
                 />
-                {text}
+                <div className="work-name-text">{text}</div>
             </Space>,
         },
         {
