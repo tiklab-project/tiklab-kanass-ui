@@ -102,13 +102,13 @@ const ProjectScrumSetAside = (props) => {
                     <div className="project-title title">
                         设置
                     </div>
-                    {/* <ProjectNav
+                    <ProjectNav
                         {...props}
                         domainId={projectId}
                         projectRouters={prorouter}
                         outerPath={`/project/${projectId}/set`} // 系统设置Layout路径
                         noAccessPath={`/project/${projectId}/set/noAccess`}  //找不到页面路径
-                    > */}
+                    >
                         <ul className="project-menu">
                             {
                                 prorouter && prorouter.map(item => {
@@ -127,7 +127,7 @@ const ProjectScrumSetAside = (props) => {
                                 })
                             }
                         </ul>
-                    {/* </ProjectNav> */}
+                    </ProjectNav>
 
                 </div>
             </Sider>
