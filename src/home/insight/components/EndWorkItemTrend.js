@@ -225,7 +225,7 @@ const EndWorkItemTrend = (props) => {
                     <div className="end-trend-title">
                         <div>
                             完成事项趋势
-                            <ImgComponent src={"warning.png"} alt="" width="20px" height="20px" />
+                            {/* <ImgComponent src={"warning.png"} alt="" width="20px" height="20px" /> */}
                         </div>
                         {
                             !isView && <div className="report-action">

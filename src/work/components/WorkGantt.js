@@ -50,7 +50,7 @@ const WorkGantt = (props) => {
     }
 
     return (<Provider {...store}>
-        <div>
+        <div style={{height: "100%"}}>
             <Row style={{ background: "#fff" }}>
                 <Col
                     className="work-col"

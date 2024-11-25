@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { Progress, Pagination, Empty, Select, Form, Button } from 'antd';
+import { Progress, Pagination, Empty, Select, Form, Button, Spin } from 'antd';
 import "./ProjectOperateTable.scss";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
@@ -27,7 +27,7 @@ const ProjectOperateTable = (props) => {
     const [isEditor, setIsEditor] = useState(editInsight ? true : false)
     // 统计表单
     const [form] = Form.useForm();
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         /**
          * 查找所有项目集并设置默认项目集
@@ -44,21 +44,21 @@ const ProjectOperateTable = (props) => {
      */
     useEffect(() => {
         if (isEditor) {
-
+            setLoading(true)
             statisticsProjectOperateList({ projectSetId: condition.data.data.projectSetId }).then(res => {
                 if (res.code === 0) {
                     setProjectOPerteList(res.data.projectOperateReportList)
                     setProjectSet(res.data.projectSet)
-                    
+                    setLoading(false)
                 }
             })
         } else {
-            if(!projectSet){
-                form.setFieldsValue({ projectSetId: null})
-            }else {
+            if (!projectSet) {
+                form.setFieldsValue({ projectSetId: null })
+            } else {
                 form.setFieldsValue({ projectSetId: condition.data.data.projectSetId })
             }
-            
+
         }
         return;
     }, [isEditor])
@@ -87,7 +87,7 @@ const ProjectOperateTable = (props) => {
 
     return (
         <div className="project-operate" key={condition.i} data-grid={condition}>
-            <div >
+            <div className="project-operate-box">
                 <div className="project-operate-title">
                     <div className="operate-title">
                         <div>
@@ -115,94 +115,104 @@ const ProjectOperateTable = (props) => {
                 </div>
                 {
                     isEditor ?
-                        <Fragment>
-                            {
-                                projectSet ? <>
-                                    {
-                                        projectOperateList?.length > 0 ?
-                                            <Fragment>
-                                                <div className="project-operate-table">
-                                                    <div className="project-operate-col head">
-                                                        <div className="project-operate-row">项目名字</div>
-                                                        <div className="project-operate-row">当前进展</div>
+                        <Spin spinning={loading} tip="加载中..." >
+                            <Fragment>
 
-                                                        <div className="project-operate-row">新增/完成事项</div>
-                                                        <div className="project-operate-row">存量事项</div>
-                                                        {/* <div className="project-operate-row">事项交付周期</div> */}
+                                {
+                                    projectSet ? <>
+                                        {
+                                            projectOperateList?.length > 0 ?
+                                                <div className="project-operate-table-box">
+                                                    <div className="project-operate-table">
+                                                        <div className="project-operate-col head">
+                                                            <div className="project-operate-row">项目名字</div>
+                                                            <div className="project-operate-row">当前进展</div>
 
-                                                        <div className="project-operate-row">新增/完成需求</div>
-                                                        <div className="project-operate-row">存量需求</div>
-                                                        {/* <div className="project-operate-row">需求交付周期</div> */}
+                                                            <div className="project-operate-row">新增/完成事项</div>
+                                                            <div className="project-operate-row">存量事项</div>
+                                                            {/* <div className="project-operate-row">事项交付周期</div> */}
 
-                                                        <div className="project-operate-row">新增/完成任务</div>
-                                                        <div className="project-operate-row">存量任务</div>
-                                                        {/* <div className="project-operate-row">任务交付周期</div> */}
+                                                            <div className="project-operate-row">新增/完成需求</div>
+                                                            <div className="project-operate-row">存量需求</div>
+                                                            {/* <div className="project-operate-row">需求交付周期</div> */}
 
-                                                        <div className="project-operate-row">新增/修复缺陷</div>
-                                                        <div className="project-operate-row">存量缺陷</div>
-                                                        {/* <div className="project-operate-row">缺陷修复周期</div> */}
+                                                            <div className="project-operate-row">新增/完成任务</div>
+                                                            <div className="project-operate-row">存量任务</div>
+                                                            {/* <div className="project-operate-row">任务交付周期</div> */}
 
-                                                        <div className="project-operate-row">已超期事项</div>
-                                                    </div>
-                                                    {
-                                                        projectOperateList.map((item) => {
-                                                            return (
-                                                                <div className="project-operate-col" key={item.projectId}>
-                                                                    <div className="project-operate-row">{item.projectName}</div>
-                                                                    <div className="project-operate-row">
-                                                                        <Progress
-                                                                            type="circle"
-                                                                            strokeColor={{
-                                                                                '0%': '#108ee9',
-                                                                                '100%': '#87d068',
-                                                                            }}
-                                                                            percent={80}
-                                                                            showInfo={false}
-                                                                            width={30}
-                                                                            strokeWidth={20}
-                                                                            strokeLinecap="butt"
-                                                                        />
-                                                                        <span>{item.precent}</span>
+                                                            <div className="project-operate-row">新增/修复缺陷</div>
+                                                            <div className="project-operate-row">存量缺陷</div>
+                                                            {/* <div className="project-operate-row">缺陷修复周期</div> */}
+
+                                                            <div className="project-operate-row">已超期事项</div>
+                                                        </div>
+                                                        {
+                                                            projectOperateList.map((item) => {
+                                                                return (
+                                                                    <div className="project-operate-col" key={item.projectId}>
+                                                                        <div className="project-operate-row">{item.projectName}</div>
+                                                                        <div className="project-operate-row">
+                                                                            <Progress
+                                                                                type="circle"
+                                                                                strokeColor={{
+                                                                                    '0%': '#108ee9',
+                                                                                    '100%': '#87d068',
+                                                                                }}
+                                                                                percent={80}
+                                                                                showInfo={false}
+                                                                                width={30}
+                                                                                strokeWidth={20}
+                                                                                strokeLinecap="butt"
+                                                                            />
+                                                                            <span>{item.precent}</span>
+                                                                        </div>
+                                                                        <div className="project-operate-row">{item.newWorkItemCount}/{item.endWorkItemCount}</div>
+                                                                        <div className="project-operate-row">{item.noEndWorkItemCount}</div>
+                                                                        {/* <div className="project-operate-row">{item.workItemEndAveragePeriod}</div> */}
+
+                                                                        <div className="project-operate-row">{item.newDemand}/{item.endDemandCount}</div>
+                                                                        <div className="project-operate-row">{item.noEndDemandCount}</div>
+                                                                        {/* <div className="project-operate-row">{item.demandEndAveragePeriod}</div> */}
+
+                                                                        <div className="project-operate-row">{item.newTask}/{item.endTaskCount}</div>
+                                                                        <div className="project-operate-row">{item.noEndTaskCount}</div>
+                                                                        {/* <div className="project-operate-row">{item.taskEndAveragePeriod}</div> */}
+
+                                                                        <div className="project-operate-row">{item.newBug}/{item.endBugCount}</div>
+                                                                        <div className="project-operate-row">{item.noEndBugCount}</div>
+                                                                        {/* <div className="project-operate-row">{item.bugEndAveragePeriod}</div> */}
+
+                                                                        <div className="project-operate-row">{item.overdueWorkItemCount}</div>
                                                                     </div>
-                                                                    <div className="project-operate-row">{item.newWorkItemCount}/{item.endWorkItemCount}</div>
-                                                                    <div className="project-operate-row">{item.noEndWorkItemCount}</div>
-                                                                    {/* <div className="project-operate-row">{item.workItemEndAveragePeriod}</div> */}
-
-                                                                    <div className="project-operate-row">{item.newDemand}/{item.endDemandCount}</div>
-                                                                    <div className="project-operate-row">{item.noEndDemandCount}</div>
-                                                                    {/* <div className="project-operate-row">{item.demandEndAveragePeriod}</div> */}
-
-                                                                    <div className="project-operate-row">{item.newTask}/{item.endTaskCount}</div>
-                                                                    <div className="project-operate-row">{item.noEndTaskCount}</div>
-                                                                    {/* <div className="project-operate-row">{item.taskEndAveragePeriod}</div> */}
-
-                                                                    <div className="project-operate-row">{item.newBug}/{item.endBugCount}</div>
-                                                                    <div className="project-operate-row">{item.noEndBugCount}</div>
-                                                                    {/* <div className="project-operate-row">{item.bugEndAveragePeriod}</div> */}
-
-                                                                    <div className="project-operate-row">{item.overdueWorkItemCount}</div>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
                                                 </div>
+                                                :
+                                                <>
+                                                {
+                                                !loading && <ProjectEmpty description="项目集中没有项目~" />
+                                                }
+                                                </>
+                                                
+                                        }
+                                    </>
+                                        :
+                                        <>
+                                            {
+                                                !loading && <div className="delete-warning">
+                                                    <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />
+                                                    项目集不能被查看或者被删除，请修改配置或者删除
+                                                </div>
+                                            }
+                                        </>
 
-                                                {/* <div className="project-operate-page">
-                                            <Pagination defaultCurrent={1} total={1} />
-                                        </div> */}
-                                            </Fragment>
-                                            :
-                                            <ProjectEmpty description="项目集中没有项目~" />
-                                    }
-                                </>
-                                    :
-                                    <div className="delete-warning">
-                                        <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />  
-                                        项目集不能被查看或者被删除，请修改配置或者删除
-                                    </div>
-                            }
+                                }
 
-                        </Fragment>
+                            </Fragment>
+                        </Spin>
+
                         :
                         <Form
                             name="form"

@@ -41,10 +41,22 @@ const ProjectSetTable = (props) => {
                 setRecentLoading(false)
             }
         })
+        findProjectSetFocus(userId)
         getUseList()
         return;
     }, [])
 
+    const findProjectSetFocus = (id) => {
+        findProjectSetFocusList({ masterId: id }).then(res => {
+            if (res.code === 0) {
+                const focusList = res.data;
+                focusList.map(item => {
+                    focusProjectSetList.push(item.projectSetId)
+                })
+                setFocusProjectSetList(focusProjectSetList)
+            }
+        })
+    }
 
     const goProjectSetDetail = (record) => {
         const params = {

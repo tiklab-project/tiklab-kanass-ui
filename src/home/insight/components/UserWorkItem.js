@@ -137,7 +137,10 @@ const UserWorkItem = (props) => {
                     setChart(myChart)
                     let option = {
                         title: {
-                            text: res.data.project.projectName
+                            text: res.data.project.projectName,
+                            textStyle:{
+                                fontWeight: "nomal"
+                            }
                         },
                         tooltip: {
                             trigger: 'axis',

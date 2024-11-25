@@ -552,6 +552,23 @@ const StageLinemap = (props) => {
         setWorkId(record.id)
         setDeleteSelectModal(true)
     }
+
+    const setWorkItemStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
+
     const tableWorkTd = (data, fid, deep) => {
         return (data && data.length > 0 && data.map((item, index) => {
             return (
@@ -591,12 +608,11 @@ const StageLinemap = (props) => {
                                         <div className="stage-title">
                                             <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.code}</span>
                                             <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
-
                                         </div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
-                                    <span className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                    <span className={`work-status ${setWorkItemStatuStyle(item.workStatusNode.id)}`}>
                                         {item.workStatusNode.name}
                                     </span>
                                 </div>

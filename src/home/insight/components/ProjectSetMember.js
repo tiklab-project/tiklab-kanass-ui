@@ -87,8 +87,10 @@ const ProjectSetMember = (props) => {
                     setChart(myChart)
                     let option = {
                         title: {
-                            text: projectSet.name
-
+                            text: projectSet.name,
+                            textStyle:{
+                                fontWeight: "nomal"
+                            }
                         },
                         tooltip: {
                             trigger: 'axis',
@@ -178,7 +180,7 @@ const ProjectSetMember = (props) => {
                         <div className="projectset-user-content" id={`project-user-${index}`}>
                             {
                                 !projectSet ? <div className="delete-warning">
-                                    <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />  项目集不能被查看或者被删除，请修改配置或者删除
+                                    <ImgComponent src={'warning.png'} alt="" width="20px" height="20px" />项目集不能被查看或者被删除，请修改配置或者删除
                                 </div>
                                     :
                                     <>

@@ -5,8 +5,12 @@
     margin-bottom: 10px;
     height: 100%;
     background-color: #fafbfc;
+    padding: 0 10px;
     // overflow: auto;
     // box-shadow: 0 2px 15px rgba(0,0,0,.15);
+    .ant-spin-nested-loading {
+        height: 100%;
+    }
     .project-breadcrumb {
         display: flex;
         align-items: center;
@@ -27,8 +31,6 @@
     &-title  {
         height: 40px;
         line-height: 40px;
-        font-weight: var(--tiklab-font-weight-bold);
-        font-size: 16px;
         display: flex;
         padding: 0 10px;
         margin-bottom: 10px;
@@ -39,10 +41,12 @@
             width: 100%;
         }
     }
+    .project-operate-table-box {
+        overflow: auto;
+    }
     .project-operate-table {
         text-align: center;
-        margin-bottom: 15px;
-        
+        min-width: 940px;
         padding: 0 10px;
         overflow: auto;
         height: calc(100% - 70px);

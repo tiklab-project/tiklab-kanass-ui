@@ -114,6 +114,7 @@ const ProjectScrumSetAside = (props) => {
                                 prorouter && prorouter.map(item => {
                                     
                                     return (
+                                        <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectId}  {...props}>
                                         <div className={`project-menu-submenu ${item.id === selectKey ? "project-menu-select" : ""}`}
                                         key={item.id}
                                         onClick={() => selectKeyFun(item.id)}
@@ -122,6 +123,7 @@ const ProjectScrumSetAside = (props) => {
                                             {item.title}
                                         </span>
                                     </div>
+                                    </PrivilegeProjectButton>
                                     )
                                     
                                 })

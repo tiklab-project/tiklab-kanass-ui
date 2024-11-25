@@ -100,12 +100,6 @@ const WorkTypeAddModal = (props) => {
             key: "desc",
         },
         {
-            title: '表单配置',
-            dataIndex: ['form', 'name'],
-            key: 'form',
-            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">{text}</div>,
-        },
-        {
             title: '流程配置',
             dataIndex: ['flow', 'name'],
             key: 'flow',
