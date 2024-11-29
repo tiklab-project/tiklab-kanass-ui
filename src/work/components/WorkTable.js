@@ -309,8 +309,8 @@ const WorkTable = (props) => {
 
     const workTable = useRef()
     return (<Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
-                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
-                    <div className={`work-table ${["sm", "md", "lg"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
+                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                    <div className={`work-table ${["sm", "md", "lg", "xl"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
                         <WorkTableHead />
                         <WorkTableFilter />
                         <div className="work-table-content" ref={workTable}>

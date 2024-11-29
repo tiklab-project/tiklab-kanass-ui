@@ -89,7 +89,7 @@ const ProjectSetSettingDetailAside = (props) => {
                         {
                             prorouter && prorouter.map(item => {
                                 return <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>
-                                    <div className={`projectSet-menu-submenu ${item.key === selectKey ? "projectSet-menu-select" : ""}`}
+                                    <div className={`projectSet-menu-submenu ${item.id === selectKey ? "projectSet-menu-select" : ""}`}
                                         key={item.key}
                                         onClick={() => selectKeyFun(item.id)}
                                     >

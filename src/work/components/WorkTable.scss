@@ -64,6 +64,14 @@
 
         .work-info-text {
             font-size: 13px;
+           
+        }
+
+        .work-info-master-text {
+            max-width: 85px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .work-table-select {
