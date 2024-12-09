@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Radio, Table, Space, Row, Col, message, Tabs } from "antd";
+import { Radio, Table, Space, Row, Col, message, Tabs, Alert } from "antd";
 import { observer, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
@@ -30,6 +30,8 @@ const WikiRepository = (props) => {
     const [wikiAddvisible, setWikiAddvisible] = useState()
     const [projectWikiList, setProjectWikiList] = useState()
     const [activeKey, setActiveKey] = useState("document");
+    const [swardUrl, setSwardUrl] = useState([]);
+
     // 初始化
     useEffect(() => {
         const activeKey = props.location.state ? props.location.state.activeKey : 'document';
@@ -47,12 +49,20 @@ const WikiRepository = (props) => {
             }
 
         })
+
+        findSystemUrl({ name: "sward" }).then(res => {
+            if (res.code === 0) {
+                setSwardUrl(res.data)
+            }
+        })
+
         return;
     }, []);
     const deleteRepository = (id) => {
         deleteProjectWikiRepositoryByCondition({ repositoryId: id, projectId: projectId }).then(data => {
             if (data.code === 0) {
                 message.info('删除成功');
+
                 findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
                     if (res.code === 0) {
                         setProjectWikiList(res.data)
@@ -65,7 +75,10 @@ const WikiRepository = (props) => {
     const goWikiDetail = (data) => {
 
         findSystemUrl({ name: "sward" }).then(res => {
-            const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl
+            let kanassUrl;
+            if (res.code === 0 && res.data.length > 0) {
+                kanassUrl = res.data[0]?.webUrl
+            }
             applyJump(`${kanassUrl}/#/repository/${data.id}/overview`)
         })
     }
@@ -114,10 +127,13 @@ const WikiRepository = (props) => {
     const goWikiDocument = (data) => {
         if (data.exist) {
             findSystemUrl({ name: "sward" }).then(res => {
-                const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
-                if(data.documentType === "document"){
+                let kanassUrl;
+                if (res.code === 0 && res.data.length > 0) {
+                    kanassUrl = res.data[0]?.webUrl
+                }
+                if (data.documentType === "document") {
                     applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/rich/${data.id}`);
-                }else {
+                } else {
                     applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/markdown/${data.id}`);
                 }
             })
@@ -144,18 +160,18 @@ const WikiRepository = (props) => {
             render: (text, record) => (
                 <div className="document-title">
                     <div>
-                    {
-                        record.kanassDocument.documentType !== "markdown" && <svg className="icon-32" aria-hidden="true">
-                            <use xlinkHref="#icon-file"></use>
-                        </svg>
-                    }
-                    {
-                        record.kanassDocument.documentType === "markdown" && <svg className="icon-32" aria-hidden="true">
-                            <use xlinkHref="#icon-minmap"></use>
-                        </svg>
-                    }
+                        {
+                            record.kanassDocument.documentType !== "markdown" && <svg className="icon-32" aria-hidden="true">
+                                <use xlinkHref="#icon-file"></use>
+                            </svg>
+                        }
+                        {
+                            record.kanassDocument.documentType === "markdown" && <svg className="icon-32" aria-hidden="true">
+                                <use xlinkHref="#icon-minmap"></use>
+                            </svg>
+                        }
                     </div>
-                    
+
                     <span onClick={() => goWikiDocument(record.kanassDocument)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
 
                 </div>
@@ -242,12 +258,27 @@ const WikiRepository = (props) => {
 
                             </div>
                             {
-                                activeKey === "repository" && <Button type="primary" onClick={() => showWikiRepository()}>
+                                swardUrl.length > 0 && activeKey === "repository" && <Button type="primary" onClick={() => showWikiRepository()}>
                                     添加知识库
                                 </Button>
                             }
 
                         </div>
+                        {
+                            swardUrl.length <= 0 && <Alert
+                                message="没有知识库地址，请去添加"
+                                type="info"
+                                action={
+                                    <Space>
+                                        <Button type="text" size="small" onClick={() => props.history.push("/setting/urlData")}>
+                                            添加
+                                        </Button>
+                                    </Space>
+                                }
+                                closable
+                            />
+                        }
+
                         {
                             activeKey === "document" && <div ref={workDocument}>
                                 <Table
@@ -256,7 +287,7 @@ const WikiRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                 />
                                 <PaginationCommon
                                     currentPage={documentCondition.pageParam.currentPage}
@@ -273,7 +304,7 @@ const WikiRepository = (props) => {
                                     rowKey={(record) => record.id}
                                     pagination={false}
                                     onChange={false}
-                                    scroll={{x: "100%"}}
+                                    scroll={{ x: "100%" }}
                                 />
                                 <WikiRepositoryAdd
                                     projectId={projectId}

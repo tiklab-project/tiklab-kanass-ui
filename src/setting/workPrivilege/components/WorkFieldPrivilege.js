@@ -4,50 +4,40 @@ import WorkPrivilegeStore from '../store/WorkPrivilegeStore';
 import "./WorkFieldPrivilege.scss";
 import { EditOutlined } from "@ant-design/icons";
 const WorkFieldPrivilege = (props) => {
-    const { workTypeId, privilegeId, roleType, roleId } = props;
+    const { formId, privilegeId, roleType, roleId } = props;
+    console.log(formId, "sss")
     const [isEdit, setIsEdit] = useState(false);
     const { findFormFieldList, findWorkType, updateWorkRoleAllFunction, findWorkRoleFunctionList } = WorkPrivilegeStore;
 
     const [fieldIdList, setFieldIdList] = useState()
     const [fieldOptionList, setFieldOptionList] = useState([])
-    const [roleFunctionList, setRoleFunctionList] = useState([])
     const [checkedList, setCheckedList] = useState([]);
     const checkAll = fieldOptionList.length === checkedList.length;
     const indeterminate = checkedList.length > 0 && checkedList.length < fieldOptionList.length;
-    useEffect(() => {
-        findWorkType({ id: workTypeId }).then(workType => {
-            if (workType.code === 0) {
-                const formId = workType.data.form.id;
-                findFormFieldList({ formId: formId }).then(form => {
-                    if (form.code === 0) {
-                        console.log(form)
-                        const fieldList = form.data;
-                        const list = [];
-                        const ids = [];
-                        fieldList.map(item => {
-                            const option = {
-                                value: item.field.id,
-                                label: item.field.name,
-                                code: item.field.code,
-                                checked: false
-                            }
-                            list.push(option)
-                            ids.push(item.field.id)
-                        })
 
-                        setFieldIdList(ids)
-                        setFieldOptionList(list)
+    useEffect(() => {
+        findFormFieldList({ formId: formId }).then(form => {
+            if (form.code === 0) {
+                console.log(form)
+                const fieldList = form.data;
+                const list = [];
+                const ids = [];
+                fieldList.map(item => {
+                    const option = {
+                        value: item.field.id,
+                        label: item.field.name,
+                        code: item.field.code,
+                        checked: false
                     }
+                    list.push(option)
+                    ids.push(item.field.id)
                 })
+
+                setFieldIdList(ids)
+                setFieldOptionList(list)
             }
         })
-        findWorkRoleFunctionList({roleId: roleId, functionType: "field", privilegeId: privilegeId}).then(res => {
-            if(res.code === 0){
-                setRoleFunctionList(res.data)
-                const list = res.data.map(item => item.functionId)
-                setCheckedList(list)
-            }
-        })
+
         return
     }, [])
 
@@ -74,7 +64,7 @@ const WorkFieldPrivilege = (props) => {
             type: "system"
         }
         updateWorkRoleAllFunction(params).then(res => {
-            if(res.code === 0){
+            if (res.code === 0) {
                 console.log(res.data)
             }
         })
@@ -128,5 +118,6 @@ const WorkFieldPrivilege = (props) => {
         </div>
     );
 };
+
 export default WorkFieldPrivilege;
 

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Space, Row, Col, message } from "antd";
+import { Table, Space, Row, Col, message, Alert } from "antd";
 import { Provider, observer } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
@@ -29,6 +29,7 @@ const TestRepository = (props) => {
     const [testAddvisible, setTestAddvisible] = useState()
     const [projectTestList, setProjectTestList] = useState()
     const [activeKey, setActiveKey] = useState("testCase");
+    const [testhuboUrl, setTesthuboUrl] = useState([]);
 
     const delteRepository = (id) => {
         deleteProjectTestRepositoryByCondition({ repositoryId: id, projectId: projectId }).then(data => {
@@ -44,10 +45,11 @@ const TestRepository = (props) => {
     }
 
     const goRepository = (data) => {
-        findSystemUrl({ name: "teston" }).then(res => {
+        findSystemUrl({ name: "testhubo" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
             applyJump(`${testUrl}/#/project/${data.id}/testcase`)
         })
+        
     }
     // 列表的列
     const columns = [
@@ -158,7 +160,7 @@ const TestRepository = (props) => {
 
 
     const toCaseDetail = (caseType, data) => {
-        findSystemUrl({ name: "teston" }).then(res => {
+        findSystemUrl({ name: "testhubo" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
             applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
         })
@@ -229,6 +231,11 @@ const TestRepository = (props) => {
 
         })
         findWorkTestCasePage({ projectId: projectId })
+        findSystemUrl({ name: "testhubo" }).then(res => {
+            if (res.code === 0) {
+                setTesthuboUrl(res.data)
+            }
+        })
         return;
     }, []);
 
@@ -259,12 +266,26 @@ const TestRepository = (props) => {
 
                             </div>
                             {
-                                activeKey === "repository" && <Button type="primary" onClick={() => showTestRepository()}>
+                               testhuboUrl.length > 0 && activeKey === "repository" && <Button type="primary" onClick={() => showTestRepository()}>
                                     添加用例库
                                 </Button>
                             }
 
                         </div>
+                        {
+                            testhuboUrl.length <= 0 && <Alert
+                                message="没有用例库地址，请去添加"
+                                type="info"
+                                action={
+                                    <Space>
+                                        <Button type="text" size="small" onClick={() => props.history.push("/setting/urlData")}>
+                                            添加
+                                        </Button>
+                                    </Space>
+                                }
+                                closable
+                            />
+                        }
                         {
                             activeKey === "repository" && <>
                                 <Table

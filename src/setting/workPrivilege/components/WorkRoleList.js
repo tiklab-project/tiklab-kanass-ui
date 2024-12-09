@@ -5,20 +5,20 @@ import "./WorkRoleList.scss";
 import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 import { observer } from "mobx-react";
 import { withRouter } from "react-router";
+import qs from 'qs';
 
 const WorkRoleList = (props) => {
     const projectId = props.match.params.id;
-    const privilegeId = props.match.params.privilegeId;
+    const search = props.location.search;
+    const searchArray = qs.parse(search.replace(/^\?/, ''))
+    const workTypeId = searchArray?.workTypeId;
+    const formId = searchArray?.formId;
     const { findRolePageAndRoleUserNumber, findVRolePage, findWorkPrivilege, findDmRolePageByNumber } = WorkPrivilegeStore;
     const [roleList, setRoleList] = useState();
     const [privilege, setPrivilege] = useState()
 
     useEffect(() => {
-        findWorkPrivilege({ id: privilegeId }).then(res => {
-            if (res.code === 0) {
-                setPrivilege(res.data)
-            }
-        })
+
         if(projectId){
             findDmRolePageByNumber({domainId: projectId}).then(res=> {
                 if (res.code === 0) {
@@ -95,9 +95,10 @@ const WorkRoleList = (props) => {
 
     const goRoleFunction = (id, type) => {
         if(projectId){
-            props.history.push(`/project/${projectId}/set/${privilegeId}/${type}/${id}`)
+            // props.history.push(`/project/${projectId}/set/${privilegeId}/${type}/${id}`)
         }else {
-            props.history.push(`/setting/workRoleFunction/${privilegeId}/${type}/${id}`)
+            // props.history.push(`/setting/workRoleFunction/${privilegeId}/${type}/${id}`)
+            props.history.push({pathname:'/setting/workRoleFunction',search:`?workTypeId=${workTypeId}&formId=${formId}&&roleId = ${id}`});
         }
         
     }
@@ -121,7 +122,7 @@ const WorkRoleList = (props) => {
     return (
         <div className="work-privilege-role">
             <Breadcrumb
-                firstText={privilege?.name}
+                firstText={"事项类型"}
                 secondText = "角色"
             />
             <Table columns={roleColumns} dataSource={roleList} rowKey={record => record.id} scroll={{x: "100%"}}/>

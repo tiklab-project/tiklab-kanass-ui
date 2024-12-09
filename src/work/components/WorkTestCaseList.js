@@ -127,7 +127,7 @@ const WorkTestCaseList = (props) => {
 
 
     const toCaseDetail = (caseType, data) => {
-        findSystemUrl({ name: "teston" }).then(res => {
+        findSystemUrl({ name: "testhubo" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl
             applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
         })

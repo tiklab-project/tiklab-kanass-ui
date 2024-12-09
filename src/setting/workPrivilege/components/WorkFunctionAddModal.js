@@ -17,34 +17,28 @@ const tailLayout = {
 };
 
 const WorkFunctionAddModal = (props) => {
-    const iconList = [
-        {
-            iconUrl: "proivilege1.png",
-            key: "proivilege1"
-        },
-        {
-            iconUrl: "proivilege2.png",
-            key: "proivilege2"
-        },
-        {
-            iconUrl: "proivilege3.png",
-            key: "proivilege3"
-        },
-        {
-            iconUrl: "proivilege4.png",
-            key: "proivilege4"
-        },
-        {
-            iconUrl: "proivilege5.png",
-            key: "proivilege5"
-        }
-    ]
-    const [iconUrl, setIconUrl] = useState("")
+    const {setDataSource, type, id} = props;
+    const [functionInfo, setFunctionInfo] = useState()
 
-    const { findWorkFunctionList, createWorkFunction } = WorkPrivilegeStore;
+    const { findAllWorkItemFunction, createWorkItemFunction, findWorkItemFunction, updateWorkItemFunction } = WorkPrivilegeStore;
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
-    const [firstWorkFunctionList, setFirstWorkFunctionList] = useState()
+
+    useEffect(()=> {
+        if(visible && type === "edit"){
+            findWorkItemFunction({id: id}).then(res => {
+                if(res.code === 0){
+                    setFunctionInfo(res.data)
+                    const data = res.data;
+                    form.setFieldsValue({
+                        name: data.name,
+                        code: data.code
+                    })
+                }
+            })
+        }
+        return
+    }, [visible])
 
     const showModal = () => {
         setVisible(true);
@@ -53,17 +47,41 @@ const WorkFunctionAddModal = (props) => {
     const onFinish = () => {
         form.validateFields().then((values) => {
             console.log(values)
-            const params = {
-                name: values.name,
-                code: values.code,
-                parentId: values.parentId
-            }
-            createWorkFunction(params).then(res => {
-                if (res.code === 0) {
-                    setVisible(false);
-                    form.resetFields()
+            // const params = {
+            //     name: values.name,
+            //     code: values.code
+            // }
+            if(type === "edit"){
+                const params = {
+                    id: id,
+                    name: values.name,
+                    code: values.code
                 }
-            })
+                updateWorkItemFunction(params).then(res => {
+                    if (res.code === 0) {
+                        setVisible(false);
+                        findAllWorkItemFunction().then(res => {
+                            if (res.code === 0) {
+                                setDataSource(res.data)
+                            }
+                        })
+                        form.resetFields()
+                    }
+                })
+            }else {
+                createWorkItemFunction(values).then(res => {
+                    if (res.code === 0) {
+                        setVisible(false);
+                        findAllWorkItemFunction().then(res => {
+                            if (res.code === 0) {
+                                setDataSource(res.data)
+                            }
+                        })
+                        form.resetFields()
+                    }
+                })
+            }
+           
             // setVisible(false);
         })
     };
@@ -77,16 +95,8 @@ const WorkFunctionAddModal = (props) => {
         setVisible(false);
     };
 
-    useEffect(() => {
-        if(visible){
-            findWorkFunctionList({ parentIdIsNull: true }).then(res => {
-                if (res.code === 0) {
-                    setFirstWorkFunctionList(res.data)
-                }
-            })
-        }
-        
-    }, [visible])
+
+
     return (
         <>
             <Fragment>
@@ -137,29 +147,7 @@ const WorkFunctionAddModal = (props) => {
                             <Input />
                         </Form.Item>
 
-                        <Form.Item
-                            label={`挂载节点`}
-                            name="parentId"
-                            rules={[
-                                {
-                                    required: false,
-                                    message: '请输入分组',
-                                },
-                            ]}
-                        >
-                            <Select
-                                placeholder="系统"
-                                allowClear
-                            >
-                                {
-                                    firstWorkFunctionList && firstWorkFunctionList.map(item => {
-                                        return (
-                                            <Select.Option value = {item.id}>{item.name}</Select.Option>
-                                        )
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
+                      
 
                     </Form>
                 </Modal>

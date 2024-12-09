@@ -1159,6 +1159,8 @@ const WorkBasicInfo = (props) => {
                                     ticket={ticket}
                                     tenant={tenant}
                                     base_url={base_url}
+                                    viewImageUrl = "/image"
+                                    img_url = {base_url}
                                     minHeight={300}
                                     onChange={(value) => updataDesc(value)}
                                     {...props}
@@ -1176,6 +1178,8 @@ const WorkBasicInfo = (props) => {
                                     slateValue && <PreviewEditor
                                         value={slateValue}
                                         base_url={base_url}
+                                        viewImageUrl = "/image"
+                                        img_url = {base_url}
                                         ticket={ticket}
                                         tenant={tenant}
                                         {...props}

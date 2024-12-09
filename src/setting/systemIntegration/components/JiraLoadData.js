@@ -104,10 +104,6 @@ const LoadData = (props) => {
                         <div className="load-precess-text"> 当前解析项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
                     </div>
                 }
-
-               
-
-
             </div>
         </div>
         //     </Col>

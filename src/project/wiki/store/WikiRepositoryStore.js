@@ -63,11 +63,8 @@ export class WikiRepositoryStore {
     @action
     findSystemUrl = async(params) => {
         const data = await Service("/systemUrl/findSystemUrlList", params)
-        let urlData;
-        if(data.code === 0 && data.data.length > 0){
-            urlData = data.data[0]
-        }
-        return urlData;
+        
+        return data;
     }
 
     @action

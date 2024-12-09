@@ -27,8 +27,11 @@
             font-size: 12px; 
             line-height: 15px;
             border-radius: 5px; 
-            width: 44px;
+            width: fit-content;
+            max-width: 100px;
+            text-overflow: ellipsis;
             white-space: nowrap;
+            overflow: hidden;
         }
         .dynamic-work-newValue {
             padding: 5px 10px; 

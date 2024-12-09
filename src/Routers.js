@@ -311,13 +311,18 @@ const Routers = [
                 exact: true
             },
             {
+                path: "/setting/workRoleFunction",
+                component: WorkRoleFunction,
+                exact: true
+            },
+            {
                 path: "/setting/workPrivilege",
                 component: WorkPrivilege,
                 exact: true
             },
             {
-                path: "/setting/workRoleFunction/:privilegeId/:roleType/:roleId",
-                component: WorkRoleFunction,
+                path: "/setting/workPrivilegeRoleList",
+                component: WorkPrivilegeRoleList,
                 exact: true
             },
             {
@@ -330,11 +335,7 @@ const Routers = [
                 component: WorkPrivilegeList,
                 exact: true
             },
-            {
-                path: "/setting/workPrivilegeRoleList/:privilegeId",
-                component: WorkPrivilegeRoleList,
-                exact: true
-            },
+            
             {
                 path: "/setting/worktypeSystem",
                 component: WorkTypeSystem,

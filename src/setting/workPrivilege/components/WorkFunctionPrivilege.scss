@@ -1,9 +1,14 @@
 .work-function-privilege {
+    .work-function-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .work-function-promisse {
         display: flex;
         gap: 10px;
     }
-    .work-function-promisse-table {
-        margin-top: 10px;
+    .ant-checkbox-wrapper {
+        line-height: 40px;
     }
 }

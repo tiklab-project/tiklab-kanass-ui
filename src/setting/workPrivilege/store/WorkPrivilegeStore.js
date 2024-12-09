@@ -36,20 +36,36 @@ export class WorkPrivilegeStore {
     }
     
     @action
-    createWorkFunction = async(params) => {
-        const data = await Service("/workFunction/createWorkFunction", params)
+    createWorkItemFunction = async(params) => {
+        const data = await Service("/workItemFunction/createWorkItemFunction", params)
         return data;
     }
 
     @action
-    findWorkFunctionList = async (params) => {
-        const data = await Service("/workFunction/findWorkFunctionList", params)
+    updateWorkItemFunction = async(params) => {
+        const data = await Service("/workItemFunction/updateWorkItemFunction", params)
         return data;
     }
 
     @action
-    findWorkFunctionTreeList = async(params) => {
-        const data = await Service("/workFunction/findWorkFunctionTreeList", params)
+    findWorkItemFunction = async (value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/workItemFunction/findWorkItemFunction", params)
+        return data;
+    }
+
+    @action
+    findAllWorkItemFunction = async(params) => {
+        const data = await Service("/workItemFunction/findAllWorkItemFunction", params)
+        return data;
+    }
+
+    @action
+    deleteWorkItemFunction = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/workItemFunction/deleteWorkItemFunction", params);
         return data;
     }
 
@@ -102,8 +118,8 @@ export class WorkPrivilegeStore {
     }
 
     @action
-    findWorkRoleFunctionList = async(value) => {
-        const data = await Service("/workRoleFunction/findWorkRoleFunctionList", value)
+    findWorkItemRoleFunctionList = async(value) => {
+        const data = await Service("/workItemRoleFunction/findWorkItemRoleFunctionList", value)
         return data;
     }
 

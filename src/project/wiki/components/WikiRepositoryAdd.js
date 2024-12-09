@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Form, Table, Radio, Select } from 'antd';
+import { Modal, Form, Table, Radio, Select, Alert, Space, Button } from 'antd';
 import { observer, inject } from "mobx-react";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import "./WikiRepositoryAdd.scss"
 const WikiRepositoryAdd = (props) => {
     const [form] = Form.useForm();
     const { wikiAddvisible, setWikiAddvisible, wikiRepositoryStore, projectId, setProjectWikiList } = props;
-    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository } = wikiRepositoryStore;
+    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository, findSystemUrl } = wikiRepositoryStore;
 
     const [repositoryList, setRepositoryList] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
-
+    
     useEffect(() => {
         findUnProjectWikiRepository({ projectId: projectId }).then(res => {
             if (res.code === 0) {
@@ -24,12 +24,12 @@ const WikiRepositoryAdd = (props) => {
     const submitRepositoryList = () => {
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
-                const value = {wikiRepository: {id: selectedRow[i].id}, project: {id: projectId}}
+                const value = { wikiRepository: { id: selectedRow[i].id }, project: { id: projectId } }
                 createProjectWikiRepository(value).then((data) => {
                     if (data.code === 0) {
                         findProjectWikiRepositoryList({ projectId: projectId }).then((res) => {
-                            if(res.code === 0){
-                                setProjectWikiList(res.data) 
+                            if (res.code === 0) {
+                                setProjectWikiList(res.data)
                             }
                         })
                         setWikiAddvisible(false)
@@ -103,25 +103,26 @@ const WikiRepositoryAdd = (props) => {
                     onOk={submitRepositoryList}
                     closable={false}
                     width={800}
-                    destroyOnClose = {true}
+                    destroyOnClose={true}
                     className="repository-add-modal"
                 >
                     <Table
-                        columns={columns}
-                        dataSource={repositoryList}
-                        rowKey={record => record.id}
-                        rowSelection={{
-                            selectedRow,
-                            onChange: selectWorkRepository,
-                            getCheckboxProps: (record) => ({
-                                disabled: record.rele === true
-                            })
-                        }}
-                        okText="确定"
-                        cancelText="取消"
-                        pagination={false}
-                        scroll={{x: "100%"}}
-                    />
+                            columns={columns}
+                            dataSource={repositoryList}
+                            rowKey={record => record.id}
+                            rowSelection={{
+                                selectedRow,
+                                onChange: selectWorkRepository,
+                                getCheckboxProps: (record) => ({
+                                    disabled: record.rele === true
+                                })
+                            }}
+                            okText="确定"
+                            cancelText="取消"
+                            pagination={false}
+                            scroll={{ x: "100%" }}
+                        />
+
                 </Modal>
             </Fragment>
 

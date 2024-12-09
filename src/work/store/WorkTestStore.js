@@ -110,13 +110,13 @@ export class WorkTestStore {
     }
 
     @action
-    findTestOnRepositoryUserList = async(value) => {
+    findTesthuboRepositoryUserList = async(value) => {
         // const params = new FormData();
         // params.append("repositoryIds", value)
         const params = {
             repositoryIds: value
         }
-        const data = await Service("/workTestCase/findTestOnRepositoryUserList", params)
+        const data = await Service("/workTestCase/findTesthuboRepositoryUserList", params)
 
         return data;
     }

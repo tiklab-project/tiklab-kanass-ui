@@ -10,7 +10,7 @@ const WorkTestCaseAddmodal = (props) => {
     // const {searchpro} =  projectStore;
     const { findTestCasePageByWorkItemId, createWorkTestCase,
         findProjectTestRepositoryList, findUnRelationWorkTestCaseList,
-        findTestOnRepositoryUserList, unRelationWorkCondition } = workTestStore;
+        findTesthuboRepositoryUserList, unRelationWorkCondition } = workTestStore;
 
     const {userList,getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
@@ -36,7 +36,7 @@ const WorkTestCaseAddmodal = (props) => {
                                 setTestCaseList(data.data.dataList)
                             }
                         })
-                        findTestOnRepositoryUserList(list).then(res => {
+                        findTesthuboRepositoryUserList(list).then(res => {
                             if(res.code === 0){
                                 setTestCaseUserList(res.data)
                             }

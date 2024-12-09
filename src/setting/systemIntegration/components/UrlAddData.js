@@ -93,7 +93,7 @@ const UrlAddData = (props) => {
                         onFinishFailed={onFinishFailed}
                     >
 
-                        <Form.Item
+                        {/* <Form.Item
                             label={"系统名称"}
                             name="name"
                             rules={[
@@ -104,7 +104,7 @@ const UrlAddData = (props) => {
                             ]}
                         >
                             <Input />
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item
                             label={"系统地址"}
                             name="systemUrl"

@@ -81,6 +81,11 @@ const WorkTypeList = (props) => {
         props.history.push(`/setting/FormDetail/${id}`)
     }
 
+    const viewPrivilege = (record) => {
+        // /setting/workPrivilegeRoleList
+        props.history.push({pathname:'/setting/workPrivilegeRoleList',search:`?workTypeId=${record.id}&formId=${record.form.id}`});
+    }
+
     const columns = [
         {
             title: "类型名称",
@@ -112,6 +117,12 @@ const WorkTypeList = (props) => {
             render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
         },
         {
+            title: '表单配置',
+            dataIndex: ['form', 'name'],
+            key: 'form',
+            render: (text, record) => <div className="span-botton">{text}</div>
+        },
+        {
             title: '使用到的项目',
             dataIndex: 'useNumber',
             key: 'flow',
@@ -125,7 +136,7 @@ const WorkTypeList = (props) => {
             render: (text, record) => (
                 <Space size="middle">
 
-                    <svg
+                    {/* <svg
                         className="svg-icon" aria-hidden="true"
                         style={{ cursor: "pointer" }}
                         onClick={() => upWorkType(record.id)}
@@ -139,7 +150,7 @@ const WorkTypeList = (props) => {
                         onClick={() => downWorkType(record.id)}
                     >
                         <use xlinkHref="#icon-todown"></use>
-                    </svg>
+                    </svg> */}
                     {
                         record.grouper === "custom" && <>
                             <WorkTypeAddmodal
@@ -155,6 +166,7 @@ const WorkTypeList = (props) => {
 
                         </>
                     }
+                    <div onClick={() => viewPrivilege(record)}>查看权限</div>
                 </Space>
             ),
         },
