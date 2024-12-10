@@ -20,56 +20,6 @@ const ProjectScrumSetAside = (props) => {
     const { t } = useTranslation();
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     // 路由
-    // const prorouter = [
-    //     {
-    //         title: `${t('projectInfo')}`,
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/basicInfo`,
-    //         encoded: "Survey",
-    //     },
-    //     {
-    //         title: "事项类型",
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/projectWorkType`,
-    //         encoded: "WorkType",
-    //     },
-    //     {
-    //         title: `${t('user')}`,
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/user`,
-    //         encoded: "User",
-    //     },
-    //     {
-    //         title: `${t('privilege')}`,
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/projectDomainRole`,
-    //         encoded: "Privilege",
-    //     },
-    //     {
-    //         title: "流程",
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/projectFlow`,
-    //         encoded: "WorkFlow",
-    //     },
-    //     {
-    //         title: "表单",
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/projectForm`,
-    //         encoded: "WorkForm",
-    //     },
-    //     {
-    //         title: `${t('module')}`,
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/module`,
-    //         encoded: "Module"
-    //     },
-    //     {
-    //         title: `消息通知方案`,
-    //         icon: 'survey',
-    //         id: `/project/${projectId}/set/messagenotice`,
-    //         encoded: "messagenotice"
-    //     }
-    // ];
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/project/${projectId}/set/basicInfo`);
 

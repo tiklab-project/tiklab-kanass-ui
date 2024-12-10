@@ -3,43 +3,74 @@ import { Button, Checkbox, Col, Divider, Row } from 'antd';
 import WorkPrivilegeStore from '../store/WorkPrivilegeStore';
 import "./WorkFieldPrivilege.scss";
 import { EditOutlined } from "@ant-design/icons";
+import { withRouter } from 'react-router';
 const WorkFieldPrivilege = (props) => {
-    const { formId, privilegeId, roleType, roleId } = props;
-    console.log(formId, "sss")
+    const { formId } = props;
+    console.log(formId)
     const [isEdit, setIsEdit] = useState(false);
-    const { findFormFieldList, findWorkType, updateWorkRoleAllFunction, findWorkRoleFunctionList } = WorkPrivilegeStore;
-
+    const { findFormFieldList, updateWorkItemRoleAllFunction, findWorkItemRoleFunctionList,
+        findWorkItemRoleFunctionDmList, updateWorkItemRoleAllFunctionDm
+    } = WorkPrivilegeStore;
+    const projectId = props.match.params.id;
     const [fieldIdList, setFieldIdList] = useState()
     const [fieldOptionList, setFieldOptionList] = useState([])
     const [checkedList, setCheckedList] = useState([]);
     const checkAll = fieldOptionList.length === checkedList.length;
     const indeterminate = checkedList.length > 0 && checkedList.length < fieldOptionList.length;
+    const roleId = props.match.params.roleId;
+    const workTypeId = props.match.params.workTypeId;
 
     useEffect(() => {
         findFormFieldList({ formId: formId }).then(form => {
             if (form.code === 0) {
-                console.log(form)
                 const fieldList = form.data;
-                const list = [];
-                const ids = [];
-                fieldList.map(item => {
-                    const option = {
-                        value: item.field.id,
-                        label: item.field.name,
-                        code: item.field.code,
-                        checked: false
-                    }
-                    list.push(option)
-                    ids.push(item.field.id)
-                })
+                if (projectId) {
+                    findWorkItemRoleFunctionDmList({ workTypeId: workTypeId, roleId: roleId, functionType: "field" }).then(data => {
+                        if (data.code === 0) {
+                            const list = handleWorkFunctionList(fieldList, data.data);
+                            setFieldOptionList(list);
+                        }
+                    })
+                } else {
+                    findWorkItemRoleFunctionList({ workTypeId: workTypeId, roleId: roleId, functionType: "field" }).then(data => {
+                        if (data.code === 0) {
+                            const list = handleWorkFunctionList(fieldList, data.data);
+                            setFieldOptionList(list)
+                        }
+                    })
+                }
 
-                setFieldIdList(ids)
-                setFieldOptionList(list)
             }
         })
 
-        return
+        return null;
     }, [])
+
+    const handleWorkFunctionList = (functionList, roleFunctionList) => {
+        let list = [];
+        let ids = [];
+        functionList.map(item => {
+            const params = {
+                value: item.field.id,
+                label: item.field.name,
+                code: item.code,
+                indeterminate: false,
+                checked: false
+            }
+            const cheackRoleFunctionList = roleFunctionList.filter(roleFunction => roleFunction.functionId === item.field.id)
+            console.log(cheackRoleFunctionList, "ssss")
+            if (cheackRoleFunctionList.length > 0) {
+                checkedList.push(cheackRoleFunctionList[0].functionId)
+                params.checked = true
+            }
+
+            list.push(params)
+            ids.push(item.field.id)
+        })
+        setCheckedList(checkedList)
+        setFieldIdList(ids)
+        return list;
+    }
 
     const onChange = (list) => {
         setCheckedList(list);
@@ -53,21 +84,27 @@ const WorkFieldPrivilege = (props) => {
     }
 
     const save = () => {
-        console.log(checkedList)
-        setIsEdit(true);
+        setIsEdit(false);
         const params = {
+            functionListId: checkedList,
             roleId: roleId,
-            roleType: roleType,
-            privilegeId: privilegeId,
-            functionList: checkedList,
-            functionType: "field",
-            type: "system"
+            workTypeId: workTypeId,
+            functionType: 'field'
         }
-        updateWorkRoleAllFunction(params).then(res => {
-            if (res.code === 0) {
-                console.log(res.data)
-            }
-        })
+        if (projectId) {
+            params.domainId = projectId;
+            updateWorkItemRoleAllFunctionDm(params).then(res => {
+                if (res.code === 0) {
+                    console.log(res.data)
+                }
+            })
+        } else {
+            updateWorkItemRoleAllFunction(params).then(res => {
+                if (res.code === 0) {
+                    console.log(res.data)
+                }
+            })
+        }
     }
 
     return (
@@ -99,7 +136,6 @@ const WorkFieldPrivilege = (props) => {
                 onChange={onChange}
                 value={checkedList}
                 disabled={!isEdit}
-            // options = {fieldOptionList}
             >
 
                 <Row>
@@ -114,10 +150,9 @@ const WorkFieldPrivilege = (props) => {
                     }
                 </Row>
             </Checkbox.Group>
-            {/* <CheckboxGroup options={fieldOptionList} value={checkedList} onChange={onChange} /> */}
         </div>
     );
 };
 
-export default WorkFieldPrivilege;
+export default withRouter(WorkFieldPrivilege);
 

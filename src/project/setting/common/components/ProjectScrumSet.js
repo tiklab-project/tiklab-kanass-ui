@@ -96,7 +96,7 @@ const ProjectScrumSet = (props) => {
             id: `/project/${projectId}/set/messagenotice`,
             encoded: "messagenotice",
             purviewCode: "ProjectMessagenotice"
-        }
+        },
     ];
     return (
         <Layout className="project-set">

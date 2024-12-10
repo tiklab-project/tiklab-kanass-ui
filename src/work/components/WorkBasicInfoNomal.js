@@ -81,7 +81,6 @@ const WorkBasicInfo = (props) => {
                 workType: workInfo.workType?.id,
                 percent: workInfo.percent,
                 projectVersion: workInfo.projectVersion?.id,
-
                 estimateTime: workInfo.estimateTime || 0,
                 surplusTime: workInfo.surplusTime || 0,
                 preDependWorkItem: workInfo.preDependWorkItem ? { value: workInfo.preDependWorkItem?.id, label: workInfo.preDependWorkItem?.title } : null,

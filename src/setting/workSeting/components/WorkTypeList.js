@@ -82,8 +82,7 @@ const WorkTypeList = (props) => {
     }
 
     const viewPrivilege = (record) => {
-        // /setting/workPrivilegeRoleList
-        props.history.push({pathname:'/setting/workPrivilegeRoleList',search:`?workTypeId=${record.id}&formId=${record.form.id}`});
+        props.history.push({pathname:`/setting/workPrivilegeRoleList/${record.id}`});
     }
 
     const columns = [
@@ -111,16 +110,22 @@ const WorkTypeList = (props) => {
         },
        
         {
-            title: '流程配置',
+            title: '流程',
             dataIndex: ['flow', 'name'],
             key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
+            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">流程配置</div>
         },
         {
-            title: '表单配置',
+            title: '表单',
             dataIndex: ['form', 'name'],
             key: 'form',
-            render: (text, record) => <div className="span-botton">{text}</div>
+            render: (text, record) => <div className="span-botton">表单配置</div>
+        },
+        {
+            title: '权限',
+            dataIndex: 'useNumber',
+            key: 'flow',
+            render: (text, record) => <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
         },
         {
             title: '使用到的项目',
@@ -128,6 +133,7 @@ const WorkTypeList = (props) => {
             key: 'flow',
             render: (text, record) => <div>{text}个项目</div>
         },
+        
         {
             title: "操作",
             key: "action",
@@ -152,7 +158,7 @@ const WorkTypeList = (props) => {
                         <use xlinkHref="#icon-todown"></use>
                     </svg> */}
                     {
-                        record.grouper === "custom" && <>
+                        record.grouper === "custom" ? <>
                             <WorkTypeAddmodal
                                 name="编辑"
                                 type="edit"
@@ -165,8 +171,10 @@ const WorkTypeList = (props) => {
 
 
                         </>
+                        :
+                        <div>---</div>
                     }
-                    <div onClick={() => viewPrivilege(record)}>查看权限</div>
+                    
                 </Space>
             ),
         },
@@ -182,13 +190,6 @@ const WorkTypeList = (props) => {
                         name="添加事件类型"
                         type="add"
                         grouper="custom"
-                        // addWorkTypeList={addCustomWorkTypeList}
-                        // fromList={fromList}
-                        // getFormList={getFormList}
-                        // flowList={flowList}
-                        // getFlowList={getFlowList}
-                        // creatIcon={creatIcon}
-                        // findIconList={findIconList}
                         bottonType="primary"
                     ></WorkTypeAddmodal>
                 </div>

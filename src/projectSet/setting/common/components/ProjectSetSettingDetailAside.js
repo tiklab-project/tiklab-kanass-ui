@@ -21,29 +21,7 @@ const ProjectSetSettingDetailAside = (props) => {
     //语言包
     const { t } = useTranslation();
     const projectSetId = JSON.parse(localStorage.getItem("projectSet")).id;
-    // 路由
-    // const prorouter = [
-    //     {
-    //         title: "项目集信息",
-    //         icon: 'survey',
-    //         key: `/projectSet/${projectSetId}/set/basicInfo`,
-    //         encoded: "Survey",
-    //     },
-    //     {
-    //         title: `${t('user')}`,
-    //         icon: 'survey',
-    //         key: `/projectSet/${projectSetId}/set/user`,
-    //         encoded: "DominRole",
-    //         purviewCode: "ProjectSetUser",
-    //     },
-    //     {
-    //         title: `${t('privilege')}`,
-    //         icon: 'survey',
-    //         key: `/projectSet/${projectSetId}/set/dominRole`,
-    //         encoded: "User",
-    //         purviewCode: "ProjectSetPrivilege",
-    //     }
-    // ];
+
     // 当前选中路由
     const [selectKey, setSelectKey] = useState(`/projectScrumDetail/${projectSetId}/set/basicInfo`);
 

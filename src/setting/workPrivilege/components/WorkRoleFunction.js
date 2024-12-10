@@ -7,88 +7,45 @@ import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 import WorkFieldPrivilege from "./WorkFieldPrivilege";
 import { withRouter } from "react-router";
-import qs from 'qs';
+import qs from "qs";
 
 const WorkRoleFunction = (props) => {
-    
-    console.log(props,props.location.search, "sssss")
+    const { findWorkType, findWorkTypeDm } = WorkPrivilegeStore;
+    const workTypeId = props.match.params.workTypeId;
     const search = props.location.search;
     const searchArray = qs.parse(search.replace(/^\?/, ''))
-    const workTypeId = searchArray?.workTypeId;
-    const formId = searchArray?.formId;
-
-    const [role, setRole] = useState();
+    const roleName = searchArray?.roleName;
+    const [workTypeInfo, setWorkTypeInfo] = useState();
+    const projectId = props.match.params.id;
+    const [formId, setFormId] = useState()
+    
     useEffect(() => {
-        // findWorkPrivilege({ id: privilegeId }).then(res => {
-        //     if (res.code === 0) {
-        //         const workTypeId = res.data.workTypeId;
-        //         setWorkTypeId(workTypeId)
-        //         setPrivilege(res.data)
-        //     }
-        // })
-        // findRoleUserList({ id: roleId }).then(res => {
-        //     if (res.code === 0) {
-        //         setRoleList(res.data)
-        //     }
-        // })
-        // if(roleType === "role"){
-        //     findRole({id: roleId}).then(res => {
-        //         if(res.code === 0){
-        //             setRole(res.data)
-        //         }
-        //     })
-        // }
-        // if(roleType === "virtualRole"){
-        //     findVRole({id: roleId}).then(res => {
-        //         if(res.code === 0){
-        //             setRole(res.data)
-        //         }
-        //     })
-        // }
-        return
+        if(projectId){
+            findWorkTypeDm({id: workTypeId}).then(res => {
+                if(res.code === 0){
+                    setWorkTypeInfo(res.data.workType)
+                    setFormId(res.data.form.id)
+                    console.log(res.data.workType)
+                }
+            })
+        }else {
+            findWorkType({id: workTypeId}).then(res => {
+                if(res.code === 0){
+                    console.log(res.data)
+                    setWorkTypeInfo(res.data)
+                    setFormId(res.data.form.id)
+                }
+            })
+        }
+        
+        return null;
     }, [])
 
 
-    const columns = [
-        {
-            title: '姓名',
-            dataIndex: 'nickname',
-            key: 'nickname'
-        },
-        {
-            title: '用户名',
-            dataIndex: 'name',
-            key: 'name'
-        },
-        {
-            title: '手机号',
-            dataIndex: 'phone',
-            key: 'phone',
-            render: (text) => <a>{text || "---"}</a>,
-        },
-        {
-            title: '邮箱',
-            dataIndex: 'email',
-            key: 'email',
-            render: (text) => <a>{text || "---"}</a>,
-        }
-    ];
     return (
         <div className="work-role-function">
-            <Breadcrumb firstText="事项权限" secondText={role?.name} />
+            <Breadcrumb firstText={workTypeInfo?.name} secondText={roleName} />
             <Tabs defaultActiveKey="1">
-                {/* {
-                    roleType === "role" && <Tabs.TabPane tab="用户" key="1">
-                        <Table
-                            pagination={false}
-                            columns={columns}
-                            dataSource={roleList}
-                            rowKey={r => r.id}
-                            scroll={{x: "100%"}}
-                        />
-                    </Tabs.TabPane>
-                } */}
-
                 <Tabs.TabPane tab="功能权限" key="2">
                     <WorkFunctionPrivilege workTypeId={workTypeId} />
                 </Tabs.TabPane>

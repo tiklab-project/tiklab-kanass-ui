@@ -107,6 +107,10 @@ const WorkType = (props) => {
         props.history.push(`/project/${projectId}/set/ProjectFormDetail/${id}`)
     }
 
+    const viewPrivilege = (record) => {
+        props.history.push({pathname:`/project/${projectId}/set/workPrivilege/${record.id}`});
+    }
+
     const columns = [
         {
             title: "类型名称",
@@ -142,6 +146,11 @@ const WorkType = (props) => {
             key: 'flow',
             render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
         },
+        {
+            title: '权限',
+            key: 'privilege',
+            render: (text, record) => <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
+        }
         // {
         //     title: "操作",
         //     key: "action",

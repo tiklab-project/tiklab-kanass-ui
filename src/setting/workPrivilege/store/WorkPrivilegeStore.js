@@ -48,6 +48,12 @@ export class WorkPrivilegeStore {
     }
 
     @action
+    updateWorkItemRoleAllFunctionDm = async(params) => {
+        const data = await Service("/workItemRoleFunctionDm/updateWorkItemRoleAllFunctionDm", params)
+        return data;
+    }
+
+    @action
     findWorkItemFunction = async (value) => {
         const params = new FormData();
         params.append("id", value.id);
@@ -90,8 +96,8 @@ export class WorkPrivilegeStore {
     }
 
     @action
-    updateWorkRoleAllFunction= async(params) => {
-        const data = await Service("/workRoleFunction/updateWorkRoleAllFunction", params)
+    updateWorkItemRoleAllFunction= async(params) => {
+        const data = await Service("/workItemRoleFunction/updateWorkItemRoleAllFunction", params)
         return data;
     }
 
@@ -104,11 +110,20 @@ export class WorkPrivilegeStore {
     }
 
     @action
+    findWorkTypeDm = async(value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/workTypeDm/findWorkTypeDm", params)
+        return data;
+    }
+
+    @action
     findFormFieldList = async(value) => {
         
         const data = await Service("/formField/findFormFieldList", value)
         return data;
     }
+
     @action
     findRoleUserList = async(value) => {
         const params = new FormData();
@@ -120,6 +135,12 @@ export class WorkPrivilegeStore {
     @action
     findWorkItemRoleFunctionList = async(value) => {
         const data = await Service("/workItemRoleFunction/findWorkItemRoleFunctionList", value)
+        return data;
+    }
+    
+    @action
+    findWorkItemRoleFunctionDmList = async(value) => {
+        const data = await Service("/workItemRoleFunctionDm/findWorkItemRoleFunctionDmList", value)
         return data;
     }
 

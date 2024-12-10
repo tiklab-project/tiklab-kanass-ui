@@ -5,21 +5,24 @@ import "./WorkRoleList.scss";
 import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 import { observer } from "mobx-react";
 import { withRouter } from "react-router";
-import qs from 'qs';
 
 const WorkRoleList = (props) => {
     const projectId = props.match.params.id;
-    const search = props.location.search;
-    const searchArray = qs.parse(search.replace(/^\?/, ''))
-    const workTypeId = searchArray?.workTypeId;
-    const formId = searchArray?.formId;
-    const { findRolePageAndRoleUserNumber, findVRolePage, findWorkPrivilege, findDmRolePageByNumber } = WorkPrivilegeStore;
+    const workTypeId = props.match.params.workTypeId;
+    const { findRolePageAndRoleUserNumber, findVRolePage, findWorkType, 
+        findDmRolePageByNumber, findWorkTypeDm } = WorkPrivilegeStore;
     const [roleList, setRoleList] = useState();
-    const [privilege, setPrivilege] = useState()
-
+    const [workTypeInfo, setWorkTypeInfo] = useState();
+    
     useEffect(() => {
-
+        // 获取事项类型信息
         if(projectId){
+            findWorkTypeDm({id: workTypeId}).then(res => {
+                if(res.code === 0){
+                    setWorkTypeInfo(res.data.workType)
+                    console.log(res.data.workType)
+                }
+            })
             findDmRolePageByNumber({domainId: projectId}).then(res=> {
                 if (res.code === 0) {
                     let list = res.data.dataList;
@@ -54,6 +57,12 @@ const WorkRoleList = (props) => {
                 }
             })
         }else {
+            findWorkType({id: workTypeId}).then(res => {
+                if(res.code === 0){
+                    console.log(res.data)
+                    setWorkTypeInfo(res.data)
+                }
+            })
             findRolePageAndRoleUserNumber({type: "2", group: "system"}).then(res => {
                 if (res.code === 0) {
                     let list = res.data.dataList;
@@ -87,18 +96,19 @@ const WorkRoleList = (props) => {
                     })
                 }
             })
-    
+            
         }
         
 
     }, [])
 
-    const goRoleFunction = (id, type) => {
+    const goRoleFunction = (record) => {
         if(projectId){
-            // props.history.push(`/project/${projectId}/set/${privilegeId}/${type}/${id}`)
+            props.history.push({pathname: `/project/${projectId}/set/rolefunction/${workTypeId}/${record.id}`,search:`?roleName=${record.name}`})
         }else {
             // props.history.push(`/setting/workRoleFunction/${privilegeId}/${type}/${id}`)
-            props.history.push({pathname:'/setting/workRoleFunction',search:`?workTypeId=${workTypeId}&formId=${formId}&&roleId = ${id}`});
+            props.history.push({pathname:`/setting/workRoleFunction/${workTypeId}/${record.id}`
+                ,search:`?roleName=${record.name}`});
         }
         
     }
@@ -107,7 +117,7 @@ const WorkRoleList = (props) => {
             title: '角色名称',
             dataIndex: 'name',
             key: 'name',
-            render: (text, record) => <span className="role-table-name" onClick={() => goRoleFunction(record.id, record.roleType)}>{text}</span>,
+            render: (text, record) => <span className="role-table-name" onClick={() => goRoleFunction(record)}>{text}</span>,
         },
         {
             title: '类型',
@@ -122,7 +132,7 @@ const WorkRoleList = (props) => {
     return (
         <div className="work-privilege-role">
             <Breadcrumb
-                firstText={"事项类型"}
+                firstText={workTypeInfo?.name}
                 secondText = "角色"
             />
             <Table columns={roleColumns} dataSource={roleList} rowKey={record => record.id} scroll={{x: "100%"}}/>
