@@ -853,8 +853,7 @@ const WorkBasicInfo = (props) => {
                                 </Form.Item>
                             }
 
-                            <Form.Item label="负责人" name="assigner"
-                            >
+                            <Form.Item label="负责人" name="assigner">
                                 <Select
                                     placeholder="无"
                                     className="work-select"

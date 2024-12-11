@@ -7,6 +7,7 @@ import Button from "../../common/button/Button";
 import WorkRelationStore from "../store/WorkRelationStore";
 import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
@@ -18,6 +19,7 @@ const WorkRelation = (props) => {
     const [selectIds, setSelectIds] = useState();
     const [addRelation, showAddRelation] = useState(false);
     const project = JSON.parse(localStorage.getItem("project"));
+    
 
     useEffect(() => {
         if (!addRelation) {
@@ -102,19 +104,16 @@ const WorkRelation = (props) => {
                 {text}
             </div>
         },
-        // {
-        //     title: "负责人",
-        //     dataIndex: ["workItem", "assigner", "name"],
-        //     key: "assigner",
-        //     width: "10%"
-        // },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
             width: "10%",
             render: (text, record) => (
-                <span onClick={() => delectRelation(record.id)} className="span-botton" >解除关联</span>
+                <WorkPrivilegeComponent workId = {workId} code = "WorkRelationDelete">
+                    <span onClick={() => delectRelation(record.id)} className="span-botton">解除关联</span>
+                </WorkPrivilegeComponent>
+                
             ),
         }
     ];
@@ -125,9 +124,12 @@ const WorkRelation = (props) => {
                 <div className="relation-top-title">共{selectWorkRelationList.length}条</div>
                 {
                     !addRelation &&
-                    <Button onClick={() => showAddRelation(true)}>
-                        添加事项
-                    </Button>
+                    <WorkPrivilegeComponent workId = {workId} code = "WorkRelationAdd">
+                        <Button onClick={() => showAddRelation(true)}>
+                            添加事项
+                        </Button>
+                    </WorkPrivilegeComponent>
+                    
                 }
             </div>
             <div className="relation-content">

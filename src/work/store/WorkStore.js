@@ -1064,5 +1064,15 @@ export class WorkStore {
         const data = await Service("/flow/findFlow", params)
         return data;
     }
+
+    @action
+    findWorkItemRoleFunctionDmCode = async(value) => {
+
+        const data = await Service("/workItemRoleFunctionDm/findWorkItemRoleFunctionDmCode", value)
+        if(data.code === 0){
+            this.permissionFieldList = data.data;
+        }
+        return data;
+    }
 }
 export default new WorkStore();

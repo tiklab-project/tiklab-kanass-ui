@@ -8,6 +8,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import LogAdd from "../../project/workLog/components/LogAdd";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 
 
 const WorkLog = (props) => {
@@ -31,15 +32,15 @@ const WorkLog = (props) => {
 
     // 计算剩余时间
     const getGemianTime = () => {
-        findWorkItemAndUsedTime({id: workId}).then(res => {
-            if(res.code === 0){
-                const workInfo  = res.data;
+        findWorkItemAndUsedTime({ id: workId }).then(res => {
+            if (res.code === 0) {
+                const workInfo = res.data;
                 setWorkItem(res.data)
                 const estimateTime = workInfo.estimateTime;
                 const surplusTime = workInfo.surplusTime;
                 const usedTime = workInfo.usedTime;
                 const overTime = usedTime - estimateTime;
-        
+
                 if (overTime >= 0) {
                     const overPress = overTime / (surplusTime + usedTime);
                     setOverPercent((overPress * 100).toFixed(2))
@@ -51,7 +52,7 @@ const WorkLog = (props) => {
                 }
             }
         })
-        
+
     }
 
     const findWorkLogList = () => {
@@ -82,12 +83,15 @@ const WorkLog = (props) => {
         <Fragment>
 
             <div className="work-log" ref={workLog}>
-               
+
                 <div className="worklog-top" style={{ width: "100%", textAlign: "right" }}>
                     <div className="worklog-top-title">共{workLogList.length}条</div>
-                    <Button onClick={showModal} type={"primary"}>
-                        添加工时
-                    </Button>
+                    <WorkPrivilegeComponent workId={workId} code="WorkLogAdd">
+                        <Button onClick={showModal} type={"primary"}>
+                            添加工时
+                        </Button>
+                    </WorkPrivilegeComponent>
+
                 </div>
                 <div className="work-log-static">
                     <div className="log-static-item">
@@ -148,11 +152,15 @@ const WorkLog = (props) => {
                                             <div className="log-content">{item.workContent}</div>
 
                                             <div className="log-action" ref={logAction}>
-                                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
-                                                    onClick={() => showEdit(item)}>
-                                                    <use xlinkHref="#icon-edit"></use>
-                                                </svg>
-                                                <DeleteModal deleteFunction={deleteLog} id={item.id} getPopupContainer={workLog.current} />
+                                                <WorkPrivilegeComponent workId={workId} code="WorkLogEdit">
+                                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
+                                                        onClick={() => showEdit(item)}>
+                                                        <use xlinkHref="#icon-edit"></use>
+                                                    </svg>
+                                                </WorkPrivilegeComponent>
+                                                <WorkPrivilegeComponent workId={workId} code="WorkLogDelete">
+                                                    <DeleteModal deleteFunction={deleteLog} id={item.id} getPopupContainer={workLog.current} />
+                                                </WorkPrivilegeComponent>
 
                                             </div>
                                         </div>

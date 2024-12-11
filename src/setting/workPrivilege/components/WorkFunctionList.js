@@ -56,10 +56,7 @@ const WorkFunctionList = () => {
             width: '10%',
             render: (text, record) => (
                 <Space size="middle">
-                    {/* <svg className="svg-icon" aria-hidden="true"  style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg> */}
-                     <WorkFunctionAddModal type = "edit" id = {record.id} setDataSource = {setDataSource}/>
+                    <WorkFunctionAddModal type = "edit" id = {record.id} setDataSource = {setDataSource}/>
                     <svg className="svg-icon" aria-hidden="true" style={{ cursor: "pointer" }} onClick={() => deleteWorkFunction(record.id)}>
                         <use xlinkHref="#icon-delete"></use>
                     </svg>

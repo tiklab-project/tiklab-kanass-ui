@@ -20,7 +20,6 @@ const WorkRoleList = (props) => {
             findWorkTypeDm({id: workTypeId}).then(res => {
                 if(res.code === 0){
                     setWorkTypeInfo(res.data.workType)
-                    console.log(res.data.workType)
                 }
             })
             findDmRolePageByNumber({domainId: projectId}).then(res=> {
@@ -29,7 +28,7 @@ const WorkRoleList = (props) => {
                     const roleList = []
                     list.map(item => {
                         const data = {
-                            id: item.role.id,
+                            id: item.role.parentId ? item.role.parentId : item.role.id,
                             name: item.role.name,
                             roleType: "role",
                             type: "角色"
@@ -40,7 +39,6 @@ const WorkRoleList = (props) => {
     
                     findVRolePage().then(vrole => {
                         if (vrole.code === 0) {
-                            // setVroleList(vrole.data.dataList)
                             list = vrole.data.dataList
                             list.map(item => {
                                 const data = {

@@ -6,7 +6,6 @@ import { EditOutlined } from "@ant-design/icons";
 import { withRouter } from 'react-router';
 const WorkFieldPrivilege = (props) => {
     const { formId } = props;
-    console.log(formId)
     const [isEdit, setIsEdit] = useState(false);
     const { findFormFieldList, updateWorkItemRoleAllFunction, findWorkItemRoleFunctionList,
         findWorkItemRoleFunctionDmList, updateWorkItemRoleAllFunctionDm
@@ -39,7 +38,6 @@ const WorkFieldPrivilege = (props) => {
                         }
                     })
                 }
-
             }
         })
 

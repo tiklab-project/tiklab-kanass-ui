@@ -12,6 +12,7 @@ import { changeWorkItemParent } from "./WorkGetList";
 import SprintPlanStore from "../../sprint/plan/stores/SprintPlanStore";
 import VersionPlanStore from "../../version/plan/stores/VersionPlanStore";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore
@@ -244,7 +245,9 @@ const WorkChild = (props) => {
             key: 'action',
             width: "13%",
             render: (text, record) => (
-                <span onClick={() => delectChild(record.id)} className="span-botton">解除父子关系</span>
+                <WorkPrivilegeComponent workId={workId} code="WorkChildrenDelete">
+                    <span onClick={() => delectChild(record.id)} className="span-botton">解除父子关系</span>
+                </WorkPrivilegeComponent>
             ),
         }
     ];
@@ -257,12 +260,18 @@ const WorkChild = (props) => {
                 {
                     !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">
-                        <Button onClick={() => { showAddChild(true); showSelectChild(false) }}>
-                            添加{type}
-                        </Button>
-                        <Button onClick={() => { showAddChild(false); showSelectChild(true) }}>
-                            关联{type}
-                        </Button>
+                        <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
+                            <Button onClick={() => { showAddChild(true); showSelectChild(false) }}>
+                                添加{type}
+                            </Button>
+
+                        </WorkPrivilegeComponent>
+                        <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
+                            <Button onClick={() => { showAddChild(false); showSelectChild(true) }}>
+                                关联{type}
+                            </Button>
+                        </WorkPrivilegeComponent>
+
                     </div>
 
                 }

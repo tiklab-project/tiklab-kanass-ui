@@ -15,6 +15,7 @@ import { applyJump } from "tiklab-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
 import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkDocumentList = (props) => {
     const store = {
         workWikiStore: WorkWikiStore
@@ -46,12 +47,12 @@ const WorkDocumentList = (props) => {
         if (data.exist) {
             findSystemUrl({ name: "sward" }).then(res => {
                 const kanassUrl = res.webUrl ? res.webUrl : res.systemUrl;
-                if(data.documentType === "document"){
+                if (data.documentType === "document") {
                     applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/rich/${data.id}`);
-                }else {
+                } else {
                     applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/markdown/${data.id}`);
                 }
-                
+
             })
         } else {
             return
@@ -101,8 +102,9 @@ const WorkDocumentList = (props) => {
             key: 'action',
             width: "15%",
             render: (text, record) => (
-                // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
-                <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workDocument.current} />
+                <WorkPrivilegeComponent workId={workId} code="WorkDocumentDelete">
+                    <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workDocument.current} />
+                </WorkPrivilegeComponent>
             ),
         }
     ];
@@ -113,9 +115,12 @@ const WorkDocumentList = (props) => {
             <div className="repository-top">
                 <div className="repository-top-title">共{workDocumentList.length}个</div>
                 <div className="child-top-botton">
-                    <Button onClick={() => { showSelectDocument(true) }}>
-                        添加文档
-                    </Button>
+                    <WorkPrivilegeComponent workId={workId} code="WorkDocumentAdd">
+                        <Button onClick={() => { showSelectDocument(true) }}>
+                            添加文档
+                        </Button>
+                    </WorkPrivilegeComponent>
+
                 </div>
 
 

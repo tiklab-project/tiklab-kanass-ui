@@ -24,6 +24,7 @@ import WorkDetailCrumb from "./WorkDetailCrumb";
 import WorkDetailTab from "./WorkDetailTab";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 
 const rowSpan = {
     sm: 24,
@@ -39,7 +40,7 @@ const WorkDetail = (props) => {
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
-        findSelectVersionList, haveChildren, findStageList, findStateNodeUserFieldList, permissionFieldList
+        findSelectVersionList, haveChildren, findStageList, findWorkItemRoleFunctionDmCode, permissionFieldList
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -88,10 +89,15 @@ const WorkDetail = (props) => {
                 // 获取字段权限
                 // 获取表单字段权限
                 const data = {
+                    workTypeId: res.workType.id,
                     workId: workId,
                     userId: userId
                 }
-                findStateNodeUserFieldList(data)
+                findWorkItemRoleFunctionDmCode(data).then(res => {
+                    if(res.code === 0){
+                        console.log(res.data)
+                    }
+                })
 
                 if (props.match.path === "/project/:id/work/:workId") {
                     setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
@@ -170,11 +176,7 @@ const WorkDetail = (props) => {
                                 setWorkList([...list])
                             }
                         })
-                        const data = {
-                            workId: workId,
-                            userId: userId
-                        }
-                        findStateNodeUserFieldList(data)
+                        
                     }
                     if (res.code === 40000) {
                         message.error(res.msg)
@@ -355,7 +357,7 @@ const WorkDetail = (props) => {
                                                                                 </svg>
                                                                             </Button>
                                                                         </Dropdown>
-                                                                        <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
+                                                                        <WorkPrivilegeComponent code={'WorkItemDelete'} workId ={workId}  {...props}>
                                                                             <WorkDeleteSelectModal
                                                                                 getPopupContainer={workDetailTop}
                                                                                 delectCurrentWorkItem={delectCurrentWorkItem}
@@ -363,13 +365,14 @@ const WorkDetail = (props) => {
                                                                                 workId={workId}
                                                                                 setWorkId={setWorkId}
                                                                             />
-                                                                        </PrivilegeProjectButton>
+                                                                        </WorkPrivilegeComponent>
 
                                                                     </div>
                                                                 </div>
 
                                                             </div>
                                                         </div>
+                                                        <WorkPrivilegeComponent roleId = {userId} domainId = {projectId} workTypeId = {workInfo.workType.id}/>
                                                         <WorkDetailTab
                                                             workInfo={workInfo}
                                                             relationModalNum={relationModalNum}

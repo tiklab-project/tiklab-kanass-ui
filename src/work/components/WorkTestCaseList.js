@@ -15,6 +15,7 @@ import { applyJump } from "tiklab-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
 import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore
@@ -56,7 +57,7 @@ const WorkTestCaseList = (props) => {
                         <use xlinkHref="#icon-testcase"></use>
                     </svg>
                     <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
-        
+
                 </div>
             ),
         },
@@ -84,8 +85,9 @@ const WorkTestCaseList = (props) => {
             key: 'action',
             width: "10%",
             render: (text, record) => (
-                // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
-                <DeleteModal deleteFunction = {delectRepository} id = {record.id} getPopupContainer = {workTestCase.current}/>
+                <WorkPrivilegeComponent workId={workId} code="WorkTestDelete">
+                    <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workTestCase.current} />
+                </WorkPrivilegeComponent>
             ),
         }
     ];
@@ -135,13 +137,16 @@ const WorkTestCaseList = (props) => {
 
     const workTestCase = useRef(null)
     return (<Provider {...store}>
-        <div className="work-testcase" ref = {workTestCase}>
+        <div className="work-testcase" ref={workTestCase}>
             <div className="testcase-top">
                 <div className="testcase-top-title">共{testCaseList.length}个</div>
                 <div className="child-top-botton">
-                    <Button onClick={() => { showSelectTestCase(true) }}>
-                        添加用例
-                    </Button>
+                    <WorkPrivilegeComponent workId={workId} code="WorkTestAdd">
+                        <Button onClick={() => { showSelectTestCase(true) }}>
+                            添加用例
+                        </Button>
+                    </WorkPrivilegeComponent>
+
                 </div>
 
             </div>
@@ -161,17 +166,17 @@ const WorkTestCaseList = (props) => {
                 }
                 {
                     testCaseList?.length > 0 ? <Table
-                    className="testcase-table"
-                    columns={columns}
-                    dataSource={testCaseList}
-                    rowKey={record => record.id}
-                    pagination={false}
-                    scroll={{x: "100%"}}
-                />
-                :
-                <Empty description = "暂无关联用例" />
+                        className="testcase-table"
+                        columns={columns}
+                        dataSource={testCaseList}
+                        rowKey={record => record.id}
+                        pagination={false}
+                        scroll={{ x: "100%" }}
+                    />
+                        :
+                        <Empty description="暂无关联用例" />
                 }
-                
+
             </div>
         </div>
     </Provider>
