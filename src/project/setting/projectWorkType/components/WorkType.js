@@ -129,28 +129,29 @@ const WorkType = (props) => {
                 </div>
             )
         },
+       
         {
-            title: "描述",
-            dataIndex: ["workType", "desc"],
-            key: "desc",
-        },
-        {
-            title: '表单配置',
+            title: '表单',
             dataIndex: ['form', 'name'],
             key: 'form',
-            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">{text}</div>,
+            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">表单配置</div>,
         },
         {
-            title: '流程配置',
+            title: '流程',
             dataIndex: ['flow', 'name'],
             key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
+            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">流程配置</div>
         },
         {
             title: '权限',
             key: 'privilege',
             render: (text, record) => <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
-        }
+        },
+        {
+            title: "描述",
+            dataIndex: ["workType", "desc"],
+            key: "desc",
+        },
         // {
         //     title: "操作",
         //     key: "action",
@@ -159,21 +160,6 @@ const WorkType = (props) => {
         //     render: (text, record) => (
         //         <Space size="middle">
 
-        //             <svg
-        //                 className="svg-icon" aria-hidden="true"
-        //                 style={{ cursor: "pointer" }}
-        //                 onClick={() => upWorkType(record.id)}
-        //             >
-        //                 <use xlinkHref="#icon-totop"></use>
-        //             </svg>
-
-        //             <svg
-        //                 className="svg-icon" aria-hidden="true"
-        //                 style={{ cursor: "pointer" }}
-        //                 onClick={() => downWorkType(record.id)}
-        //             >
-        //                 <use xlinkHref="#icon-todown"></use>
-        //             </svg>
         //             {
         //                 record.workType.grouper === "custom" && <>
         //                     <WorkTypeEditmodal

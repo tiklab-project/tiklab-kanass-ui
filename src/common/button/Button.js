@@ -1,5 +1,9 @@
+/*
+ * 按钮
+ */
+
 import React from "react";
-import "./button.scss";
+import "./Button.scss";
 import { Spin } from "antd";
 
 const Button = (props) => {

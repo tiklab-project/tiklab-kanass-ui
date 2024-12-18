@@ -218,7 +218,7 @@ const WorkChild = (props) => {
             </div>
         },
         {
-            title: "事件类型",
+            title: "事项类型",
             dataIndex: ["workTypeSys", "name"],
             key: "workType",
             width: "10%"

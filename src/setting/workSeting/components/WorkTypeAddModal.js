@@ -19,9 +19,9 @@ const WorkTypeAddModal = (props) => {
 
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
-    const {  bottonType,addWorkTypeList, workSetingStore, grouper } = props;
+    const {  bottonType,addWorkTypeList, workSetingStore, grouper, formIds } = props;
     const { getFormList, getFlowList, flowList, fromList, findWorkTypeListById,
-        editWorkTypeList, findIconList, creatIcon, createWorkType} = workSetingStore;
+        editWorkTypeList, findIconList, creatIcon, createWorkType, } = workSetingStore;
 
     const [iconList, setIconList] = useState();
 
@@ -29,7 +29,7 @@ const WorkTypeAddModal = (props) => {
 
     useEffect(() => {
         // getAllWorkTypeList()
-        getFormList(grouper)
+        // getFormList({notInIds:formIds, group: grouper})
         return;
     }, []);
 
@@ -41,15 +41,15 @@ const WorkTypeAddModal = (props) => {
     const showModal = () => {
         setVisible(true);
         getIconList()
-        getFormList(grouper).then((res) => {
-            if (res && res.length > 0) {
+        getFormList({notInIds:formIds, group: grouper}).then((res) => {
+            if (res && res.length > 0 && props.type != "edit") {
                 form.setFieldsValue({
                     form: res[0].id
                 })
             }
         })
         getFlowList().then(res => {
-            if (res) {
+            if (res && props.type != "edit") {
                 form.setFieldsValue({
                     flow: res[0].id
                 })
@@ -195,6 +195,28 @@ const WorkTypeAddModal = (props) => {
                             </Select>
                         </Form.Item>
                         <Form.Item
+                            label="表单配置"
+                            name="form"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请选择表单配置',
+                                },
+                            ]}
+                        >
+                            <Select
+                                placeholder="默认"
+                                allowClear
+                            >
+                                {
+                                    fromList && fromList.map((item) => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    })
+
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
                             label="类型描述"
                             name="desc"
                             rules={[
@@ -225,11 +247,6 @@ const WorkTypeAddModal = (props) => {
                                     })
                                 }
 
-                                {/* <Upload {...upLoadIcon}>
-                                    <div className="work-type-icon">
-                                        <img src={UploadIcon1} alt="" className="img-icon-right"/>
-                                    </div>
-                                </Upload> */}
                             </div>
                         </Form.Item>
                     </Form>

@@ -50,6 +50,8 @@ const WorkRoleFunction = AsyncComponent(() => import("./setting/workPrivilege/co
 const WorkFunctionList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkFunctionList.js"))
 const WorkPrivilegeList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkPrivilegeList.js"))
 const WorkPrivilegeRoleList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkRoleList.js"))
+const ProjectWorkRoleList = AsyncComponent(() => import("./project/setting/projectWorkType/components/ProjectWorkRoleList.js"))
+const ProjectWorkRoleFunction = AsyncComponent(() => import("./project/setting/projectWorkType/components/ProjectWorkRoleFunction.js"))
 
 const SystemFeature = AsyncComponent(() => import('./setting/privilege/SystemFeature'))
 const SystemRoleBuilt = AsyncComponent(() => import('./setting/privilege/SystemRoleBuilt'))
@@ -762,12 +764,12 @@ const Routers = [
                     },
                     {
                         path: "/project/:id/set/rolefunction/:workTypeId/:roleId",
-                        component: WorkRoleFunction,
+                        component: ProjectWorkRoleFunction,
                         exact: true
                     },
                     {
                         path: "/project/:id/set/workPrivilege/:workTypeId",
-                        component: WorkPrivilegeRoleList,
+                        component: ProjectWorkRoleList,
                         exact: true
                     },
                     {

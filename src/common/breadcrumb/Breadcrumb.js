@@ -1,10 +1,16 @@
+/*
+ * 公共面包屑
+ */
 import React from "react";
 import { withRouter } from "react-router";
 
 import "./Breadcrumb.scss"
 const Breadcumb = (props) => {
-    const { homeImage, firstText, secondText, firstUrl, children } = props;
+    const { firstText, secondText, firstUrl, children } = props;
 
+    /**
+     * 返回页面
+     */
     const goUrl = () => {
         if (firstUrl) {
             props.history.push(firstUrl)

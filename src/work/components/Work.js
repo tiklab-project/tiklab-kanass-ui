@@ -1,9 +1,8 @@
+
 import React, { useEffect } from "react";
-import { renderRoutes } from "react-router-config";
 import WorkTable from "./WorkTable";
 import WorkList from "./WorkList";
 import WorkBodar from "./WorkBodar";
-// import WorkGantt from "./WorkGantt";
 import WorkStore from "../store/WorkStore";
 import { observer, Provider } from "mobx-react";
 import WorkCalendarStore from '../store/WorkCalendarStore';

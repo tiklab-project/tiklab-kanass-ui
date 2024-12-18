@@ -116,13 +116,7 @@ export class ProjectWorkTypeStore {
 	editWorkType = async(value) => {
         let params = {
             id: value.id,
-            name: value.name,
-            form: {
-                id: value.form
-            },
-            flow: {
-                id : value.flow
-            }
+            name: value.name
         }
         const data = await Service("/workTypeDm/updateWorkTypeDm", params)
         return data;

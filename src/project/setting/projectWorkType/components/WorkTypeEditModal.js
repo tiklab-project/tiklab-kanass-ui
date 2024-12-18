@@ -44,8 +44,8 @@ const WorkTypeEditModal = (props) => {
             if (res.code === 0) {
                 form.setFieldsValue({
                     name: res.data.workType.name,
-                    form: res.data.form.id,
-                    flow: res.data.flow.id
+                    // form: res.data.form.id,
+                    // flow: res.data.flow.id
                 })
             }
 
@@ -99,7 +99,7 @@ const WorkTypeEditModal = (props) => {
                         form={form}
                     >
 
-                        {/* <Form.Item
+                        <Form.Item
                             label="类型名称"
                             name="name"
                             rules={[
@@ -110,7 +110,7 @@ const WorkTypeEditModal = (props) => {
                             ]}
                         >
                             <Input />
-                        </Form.Item> */}
+                        </Form.Item>
                         {/* <Form.Item
                             label="表单配置"
                             name="form"
@@ -134,7 +134,7 @@ const WorkTypeEditModal = (props) => {
 
                         </Form.Item>
                         {formList && formList.length <= 0 && <div className="form-add" onClick={() => props.history.push("/setting/form")}>没有自定义表单，点击添加</div>} */}
-                        <Form.Item
+                        {/* <Form.Item
                             label="流程配置"
                             name="flow"
                             rules={[
@@ -155,7 +155,7 @@ const WorkTypeEditModal = (props) => {
 
                                 }
                             </Select>
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
                 </Modal>
             </div>

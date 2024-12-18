@@ -48,6 +48,7 @@ export class WorkSetingStore {
         if (data.code === 0) {
             this.workAllTypeList = data.data;
         }
+        return data;
     }
 
     @action
@@ -256,7 +257,7 @@ export class WorkSetingStore {
     // 获取所有表单列表
     @action
     getFormList = async (value) => {
-        const data = await Service("/form/findFormList", { group: value })
+        const data = await Service("/form/findFormList", value)
         if (data.code === 0) {
             this.fromList = data.data
         }

@@ -74,11 +74,11 @@ const WorkTypeSystem = (props) => {
 
     const [loading, setLoading] = useState(false)
     const goFlow = (id) => {
-        props.history.push("/organ/workTypeFlow/" + id)
+        props.history.push("/setting/flowDetailDesign/" + id)
     }
 
     const goForm = (id) => {
-        props.history.push("/organ/workTypeForm/" + id)
+        props.history.push("/setting/FormDetailSys/" + id)
     }
 
     const columns = [
@@ -89,27 +89,45 @@ const WorkTypeSystem = (props) => {
             render: (text, record) => (
                 <div className="work-type-name" >
                     <div className="work-type-icon">
-                            <ImgComponent
-                                    src={record.iconUrl}
-                                    alt=""
-                                    className="icon-32"
-                                />
+                        <ImgComponent
+                            src={record.iconUrl}
+                            alt=""
+                            className="icon-32"
+                        />
                     </div>
                     <div className="work-type-text">{text}</div>
                 </div>
             )
         },
+
+        {
+            title: '流程',
+            dataIndex: ['flow', 'name'],
+            key: 'flow',
+            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">流程配置</div>
+        },
+        {
+            title: '表单',
+            dataIndex: ['form', 'name'],
+            key: 'form',
+            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">表单配置</div>
+        },
+        {
+            title: '权限',
+            dataIndex: 'useNumber',
+            key: 'flow',
+            render: (text, record) => <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
+        },
+        {
+            title: '使用到的项目',
+            dataIndex: 'useNumber',
+            key: 'flow',
+            render: (text, record) => <div>{text}个项目</div>
+        },
         {
             title: "描述",
             dataIndex: "desc",
             key: "desc",
-        },
-       
-        {
-            title: '流程配置',
-            dataIndex: ['flow', 'name'],
-            key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">{text}</div>
         },
         {
             title: "操作",
@@ -224,7 +242,7 @@ const WorkTypeSystem = (props) => {
                             loading={loading}
                             dataSource={workSystemTypeList}
                             pagination={false}
-                            scroll={{x: "100%"}}
+                            scroll={{ x: "100%" }}
                         />
                     </div>
                 </div>

@@ -16,8 +16,18 @@ const WorkTypeList = (props) => {
     } = WorkSetingStore;
 
     const tenant = getUser().tenant;
+    const [formIds, setFormIds] = useState([])
     useEffect(() => {
-        getAllWorkTypeList()
+        getAllWorkTypeList().then(res => {
+            if(res.code === 0){
+                const data = res.data;
+                data.map(item => {
+                    const formId = item.form.id;
+                    formIds.push(formId)
+                })
+                setFormIds(formIds);
+            }
+        })
         // getFormList()
         return;
     }, []);
@@ -103,11 +113,7 @@ const WorkTypeList = (props) => {
                 </div>
             )
         },
-        {
-            title: "描述",
-            dataIndex: "desc",
-            key: "desc",
-        },
+       
        
         {
             title: '流程',
@@ -119,7 +125,7 @@ const WorkTypeList = (props) => {
             title: '表单',
             dataIndex: ['form', 'name'],
             key: 'form',
-            render: (text, record) => <div className="span-botton">表单配置</div>
+            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">表单配置</div>
         },
         {
             title: '权限',
@@ -133,7 +139,11 @@ const WorkTypeList = (props) => {
             key: 'flow',
             render: (text, record) => <div>{text}个项目</div>
         },
-        
+        {
+            title: "描述",
+            dataIndex: "desc",
+            key: "desc",
+        },
         {
             title: "操作",
             key: "action",
@@ -187,10 +197,11 @@ const WorkTypeList = (props) => {
             >
                 <div className="add-botton">
                     <WorkTypeAddmodal
-                        name="添加事件类型"
+                        name="添加事项类型"
                         type="add"
                         grouper="custom"
                         bottonType="primary"
+                        formIds = {formIds}
                     ></WorkTypeAddmodal>
                 </div>
             </Breadcumb>

@@ -115,12 +115,8 @@ const WorkBasicInfo = (props) => {
     useEffect(() => {
         // 查找flow关联的form
         const flowId = workInfo.workType.flow.id
-        findFlow({ id: flowId }).then(res => {
-            if (res.code === 0) {
-                console.log(res.data)
-                findFormConfig({ id: res.data.form.id })
-            }
-        })
+        findFlow({ id: flowId })
+        findFormConfig({ id: workInfo.workType.form.id })
 
         findFieldList({ code: "taskType" }).then(res => {
             if (res.code === 0) {

@@ -116,10 +116,10 @@ const WorkBasicInfo = (props) => {
         findFlow({ id: flowId }).then(res => {
             if (res.code === 0) {
                 console.log(res.data)
-                findFormConfig({ id: res.data.form.id })
+                // findFormConfig({ id: res.data.form.id })
             }
         })
-
+        findFormConfig({ id: workInfo.workType.form.id })
         findWorkAttachList(workInfo.id)
         detailForm.resetFields()
         if (workId !== "" && workInfo) {
