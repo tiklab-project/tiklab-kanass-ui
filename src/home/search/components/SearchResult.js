@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:38:52
  */
 
 import React,{ useEffect, useRef, useState} from "react";
@@ -73,7 +73,6 @@ const SearchResult = (props) => {
         localStorage.setItem("projectId",id)
         await props.history.push("/prodetail/overview")
         setShow("hidden")
-        // location.reload();
 
     }
 

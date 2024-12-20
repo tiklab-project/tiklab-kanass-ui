@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 切换迭代弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-07-28 16:55:28
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-01-18 09:46:31
+ */
 import React, { useEffect, useRef, useState } from "react";
 import "./SprintChangeModal.scss";
 import { withRouter } from "react-router";
@@ -54,7 +62,7 @@ const SprintChangeModal = (props) => {
     }
 
     /**
-     * 切换项目
+     * 切换迭代
      * @param {id} id 
      */
     const selectSprintId = (id) => {

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:36:39
  */
 
 import React, { Fragment, useEffect, useState } from "react";
@@ -31,7 +31,6 @@ const ProjectSetWorkItem = (props) => {
     const [project, setProjectWorkitem] = useState([])
     const [chart, setChart] = useState(null)
     const [projectSet, setProjectSet] = useState({});
-    const [value, setValue] = useState()
     useEffect(() => {
         /**
          * 查找所有项目集并设置默认项目集

@@ -1,14 +1,14 @@
 /*
- * @Descripttion: 迭代列表， 自定义列表
+ * @Descripttion: 迭代列表，自定义列表
  * @sprint: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 13:02:38
+ * @LastEditTime: 2024-12-18 17:32:53
  */
 
-import React, { useRef, useEffect, useState, Fragment } from "react";
-import { Space, Row, Col, Table, Dropdown, Menu, Modal } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Space, Row, Col, Table} from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import "./sprintList.scss";
 import { getUser } from "tiklab-core-ui";

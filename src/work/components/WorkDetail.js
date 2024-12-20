@@ -1,17 +1,16 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项详情
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-13 11:20:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-09 14:26:52
+ * @LastEditTime: 2024-12-20 16:39:38
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Space, Empty, Dropdown, Skeleton, Button as ButtonAntd, Select, InputNumber, Popconfirm, message, Modal, Col, Row } from "antd";
+import { Form, Dropdown, Skeleton, Button as ButtonAntd, message, Modal, Col, Row } from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkDetailBottom from "./WorkDetailBottom";
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { getUser } from 'tiklab-core-ui'
 import "./WorkDetail.scss";
 import { SwapRightOutlined } from '@ant-design/icons';
@@ -33,10 +32,11 @@ const rowSpan = {
     xl: 24,
     xxl: 24
 }
+
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
 
-    const { workStore, setIsModalVisible, delectCurrentWorkItem, delectWorkItemAndChildren, rowSpan, closeModal } = props;
+    const { workStore, setIsModalVisible, delectCurrentWorkItem, rowSpan, closeModal } = props;
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,

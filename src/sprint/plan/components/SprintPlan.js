@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 迭代计划
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-11-25 16:01:57
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 15:31:55
+ */
 import React, { useEffect, useState } from "react";
 import "../components/sprintPlan.scss";
 import { observer, inject, Provider } from "mobx-react";
@@ -12,6 +20,7 @@ import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import { Modal, message } from "antd";
 import Button from "../../../common/button/Button";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+
 const SprintPlan = (props) => {
     const store = {
         sprintPlanStore: SprintPlanStore,
@@ -24,7 +33,7 @@ const SprintPlan = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { getSelectUserList, getWorkTypeList, getWorkStatus, workTypeList,
         userList, workStatusList, setWorkId, setWorkIndex, setWorkShowType,
-        deleteWorkItem, workId, deleteWorkItemAndChildren } = WorkStore;
+        deleteWorkItem, workId } = WorkStore;
     const { getNoPlanWorkList, noPlanSprintWorkList, setNoPlanSprintWorkList, getWorkList, planSprintWorkList, setPlanSprintWorkList,
         findSprintList, updateWorkItem, delSprint, noPlanSearchCondition, searchCondition,
         planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, listType, setListType } = SprintPlanStore;

@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集接口
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-06 17:31:15
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-17 11:19:17
+ * @LastEditTime: 2024-12-18 17:55:21
  */
 import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset";

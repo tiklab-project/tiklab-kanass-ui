@@ -1,4 +1,11 @@
-
+/*
+ * @Descripttion: 付费功能提示界面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 15:58:16
+ */
 import React, { useState } from "react";
 import { Modal, Button } from 'antd';
 import "./StatisticsFree.scss";
@@ -10,8 +17,8 @@ import endtotaltrend from "../../assets/images/endtotaltrend.jpg";
 import logprojectuser from "../../assets/images/logprojectuser.jpg";
 import logprojectwork from "../../assets/images/logprojectwork.jpg";
 import loguserproject from "../../assets/images/loguserproject.jpg";
-// import Button from "../../common/button/Button";
-import {applySubscription} from "tiklab-core-ui"
+import {applySubscription} from "tiklab-core-ui";
+
 const StatisticsFree = (props) => {
     const { statisticsFreeVisable, setStatisticsFreeVisable } = props;
     const [imgUrl, setImgUrl] = useState(bulidend);
@@ -62,7 +69,6 @@ const StatisticsFree = (props) => {
         setActiveImage(id)
     }
     return <Modal
-        // title="甘特图"
         width={980}
         height={500}
         footer={null}

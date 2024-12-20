@@ -4,14 +4,13 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-16 10:58:01
+ * @LastEditTime: 2024-12-18 15:43:13
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import "./setMenu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { AvatarLink } from "tiklab-licence-ui";
 
 const SetMenu = (props) => {
     const { isShowText } = props;

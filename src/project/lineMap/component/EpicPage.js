@@ -4,21 +4,19 @@
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-18 15:49:52
  */
 import React, { useState, useEffect, useRef } from "react";
-import Button from "../../../common/button/Button";
 import EpicLineMap from "./EpicLineMap";
 import InputSearch from "../../../common/input/InputSearch";
-import WorkAddModel from "../../../work/components/WorkAddModel"
 import "./Epic.scss"
 import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import EpicStore from '../store/EpicStore';
 import WorkStore from "../../../work/store/WorkStore";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
-import { Empty } from "antd";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+
 const EpicPage = (props) => {
     const store = {
         epicStore: EpicStore,
@@ -34,7 +32,7 @@ const EpicPage = (props) => {
 
 
     const [graph, setGraph] = useState()
-    const workAddModel = useRef()
+    
     /**
      * 获取第一级史诗
      */

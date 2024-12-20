@@ -1,4 +1,12 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+/*
+ * @Descripttion: 事项详情tab 部分
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-13 11:20:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:39:38
+ */
+import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import WorkRelation from "./WorkRelation";

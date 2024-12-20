@@ -1,3 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:24:07
+ * @Description: 防抖节流
+ */
+
 import { useRef, useCallback, useEffect } from "react";
 export function useDebounce(fn, delay, dep = []) {
     const { current } = useRef({ fn, timer: null });

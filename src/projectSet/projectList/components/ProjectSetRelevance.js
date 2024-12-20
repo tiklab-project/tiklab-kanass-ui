@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 项目集关联
+ * @Descripttion: 项目集关联项目弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-05 15:41:43
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-10 10:21:08
+ * @LastEditTime: 2024-12-18 17:49:39
  */
 import React, { useState } from "react";
 import { Modal, Divider } from 'antd';

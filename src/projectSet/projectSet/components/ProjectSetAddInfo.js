@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Modal, Form, Input, Select, DatePicker, Row, Col, message } from 'antd';
+import { Form, Input, DatePicker, message } from 'antd';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import "./ProjectSetAddInfo.scss";
 import Button from "../../../common/button/Button"
@@ -13,38 +13,10 @@ const layout = {
         span: 6,
     }
 };
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
 
-const iconList = [
-    {
-        iconUrl: "project1.png",
-        key: "projectSet1"
-    },
-    {
-        iconUrl: "project2.png",
-        key: "projectSet2"
-    },
-    {
-        iconUrl: "project3.png",
-        key: "projectSet3"
-    },
-    {
-        iconUrl: "project4.png",
-        key: "projectSet4"
-    },
-    {
-        iconUrl: "project5.png",
-        key: "projectSet5"
-    }
-]
 
 const ProjectSetAddInfo = (props) => {
-    const { addProjectSetSet, findAllProjectSet, setVisible } = props;
+    const { addProjectSetSet, findAllProjectSet } = props;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [

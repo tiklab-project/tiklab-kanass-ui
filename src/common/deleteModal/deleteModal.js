@@ -1,3 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 13:45:43
+ * @Description: 删除dropdown
+ */
+
 import React from "react";
 import { Dropdown, Modal, Menu } from "antd";
 import "./deleteModal.scss"

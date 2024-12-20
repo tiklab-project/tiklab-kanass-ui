@@ -4,8 +4,9 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 14:13:42
  */
+
 import React, { useEffect, useRef, useState } from "react";
 import "./MoreMenuModal.scss";
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,6 @@ import { withRouter } from "react-router";
 
 const MoreMenuModel = (props) => {
     const { isShowText, moreMenu, morePath, theme } = props;
-    const projectId = props.match.params.id;
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[3];
@@ -24,9 +24,6 @@ const MoreMenuModel = (props) => {
     const modelRef = useRef()
     // 更多点击按钮的的ref
     const setButton = useRef()
-    const { t } = useTranslation();
-    // 当前被点击菜单的key
-    const paths = ["statistics"]
 
     /**
      * 显示菜单弹窗
@@ -37,18 +34,6 @@ const MoreMenuModel = (props) => {
         modelRef.current.style.left = setButton.current.clientWidth
     }
 
-    /**
-     * 更多菜单数组
-     */
-    // const moreMenu = [
-    //     {
-    //         title: `${t('statistic')}`,
-    //         icon: 'statisticslog',
-    //         url: `/project/${projectId}/statistics/workItem`,
-    //         key: "statistics",
-    //         encoded: "Statistic",
-    //     }
-    // ]
 
     /**
      * 监听菜单的弹窗的显示与不显示

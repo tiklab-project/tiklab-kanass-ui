@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-18 15:49:26
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
@@ -26,12 +26,11 @@ import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const EpicLineMap = (props) => {
     // 获取当前年月日
-    const { data, totalPage, total, currentPage, lineMapStore,
+    const { data, totalPage, total, currentPage,
         archiveView, setGraph, graph, workStore, changePage, workTypeList } = props;
     const { setWorkId, setWorkIndex, createRecent, editWork, setWorkList,
         getWorkConditionPageTree, deleteWorkItem, workList } = workStore;
 
-    const { updateEpic } = lineMapStore;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth() + 1;
@@ -42,7 +41,6 @@ const EpicLineMap = (props) => {
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
     const [ganttWidth, setGanttWidth] = useState(0)
-    const tenant = getUser().tenant;
     // 使用于路线图显示的数据
     const [ganttdata, setGantt] = useState();
     const [expandedTree, setExpandedTree] = useState([])

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:04:22
  */
 
 import React, { Fragment, useEffect, useState } from "react";
@@ -31,10 +31,10 @@ const EndWorkItemTrend = (props) => {
     // 所有项目的列表
     const [projectList, setProjectList] = useState([]);
     const [projectCountList, setProjectCountList] = useState({})
-    // 统计数据
-    const [List, setList] = useState()
+
 
     const [chart, setChart] = useState();
+    
     useEffect(() => {
         /**
          * 查找所有项目列表

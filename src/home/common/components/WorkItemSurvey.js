@@ -1,4 +1,12 @@
-import React, { useEffect, useState } from 'react';
+/*
+ * @Descripttion: 事项统计图标
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 15:03:51
+ */
+import React, { useEffect, } from 'react';
 import "./WorkItemSurvey.scss";
 import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
@@ -10,11 +18,9 @@ import echarts from "../../../common/echarts/echarts"
 const WorkItemSurvey = (props) => {
     const { statisticsWorkItemByStatus } = HomeStore;
     const { setSearchCondition, findStateNodeList, setQuickFilterValue } = WorkStore;
-    const [workItemCount, setWorkItemCount] = useState({});
 
     useEffect(() => {
         initWorkChart()
-
         return;
     }, [])
 
@@ -211,70 +217,11 @@ const WorkItemSurvey = (props) => {
 
     }
 
-    const data = [
-        {
-            id: "remain",
-            name: "未完成",
-            icon: "allwork",
-            code: "pending"
-        },
-        {
-            id: "progress",
-            name: "进行中",
-            icon: "progress",
-            code: "progress"
-        },
-        {
-            id: "todo",
-            name: "未开始",
-            icon: "endwork",
-            code: "todo"
-        },
-        {
-            id: "overdue",
-            name: "逾期",
-            icon: "overdue",
-            code: "overdue"
-        },
-        {
-            id: "todo",
-            name: "未开始",
-            icon: "endwork",
-            code: "todo"
-        },
-        {
-            id: "overdue",
-            name: "逾期",
-            icon: "overdue",
-            code: "overdue"
-        }
-    ]
     return (
         <div className="statistics-workitem">
             <div className="statistics-workitem-title">
                 事项概况
             </div>
-            {/* <div className="statistics-workitem-content">
-                {
-                    data.map(item => {
-                        return <div 
-                            id = {item.id}
-                            className="statistics-workitem-box" 
-                            onClick={() => selectMenu(item.icon)}
-                        >
-                            <svg className="icon-40" aria-hidden="true">
-                                <use xlinkHref={`#icon-${item.icon}`}></use>
-                            </svg>
-                            <div className="statistics-workitem-box-right">
-                                <div className="statistics-workitem-box-num">{workItemCount[item.id]}</div>
-                                <div className="statistics-workitem-box-name">{item.name}</div>
-                            </div>
-
-                        </div>
-                    })
-                }
-
-            </div> */}
             <div id="statistics-workitem-chart" className="statistics-workitem-chart"></div>
         </div>
     )

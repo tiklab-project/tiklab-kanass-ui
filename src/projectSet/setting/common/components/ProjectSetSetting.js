@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-07 15:07:14
+ * @LastEditTime: 2024-12-18 17:57:01
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col } from 'antd';
@@ -19,8 +19,6 @@ import { getUser } from "tiklab-core-ui";
 const ProjectSetting = (props) => {
     const { route, systemRoleStore } = props;
     const { t } = useTranslation();
-    // 当前项目名字
-    const [projectname, setProjectname] = useState();
 
     // 获取当前项目id
     const projectSetId = props.match.params.projectSetId;

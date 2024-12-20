@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集引导
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-11-08 11:02:27
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-11-09 10:02:15
+ * @LastEditTime: 2024-12-18 17:52:52
  */
 import React, { useState, useEffect } from "react";
 import GideImge from "../../../assets/images/projectGide.png"

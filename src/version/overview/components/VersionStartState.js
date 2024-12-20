@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本转换到开始状态的页面弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-20 16:08:14
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";

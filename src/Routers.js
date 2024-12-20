@@ -78,10 +78,6 @@ const ProjectFlowDetailDesign = AsyncComponent(() => import("./project/setting/p
 const ProjectFormList = AsyncComponent(() => import('./project/setting/projectForm/ProjectForm'))
 const ProjectFormDetail = AsyncComponent(() => import('./project/setting/projectForm/ProjectFormDetail'))
 
-const ProjectPrivilege = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectPrivilege.js"))
-const ProjectPrivilegeRoleList = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectPrivilegeRoleList.js"))
-const ProjectRoleFunction = AsyncComponent(() => import("./project/setting/projectPrivilege/ProjectRoleFunction.js"))
-
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
 const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
@@ -116,7 +112,6 @@ const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/compo
 const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(() => import('./statistics/components/StatisticsStatusWork'))
-const StatisticsMore = AsyncComponent(() => import('./statistics/components/StatisticsMore'))
 
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
@@ -728,11 +723,6 @@ const Routers = [
                         path: "/project/:id/statistics/workItem",
                         component: StatisticsWork,
                         exact: true
-                    },
-                    {
-                        path: "/project/:id/statistics/advert",
-                        component: StatisticsMore,
-                        exact: true
                     }
                 ]
             },
@@ -793,18 +783,6 @@ const Routers = [
                     {
                         path: "/project/:id/set/messagenotice",
                         component: DomainMessageNoticeContent,
-                    },
-                    {
-                        path: "/project/:id/set/projectPrivilege",
-                        component: ProjectPrivilege,
-                    },
-                    {
-                        path: "/project/:id/set/projectPrivilegeRoleList/:privilegeId",
-                        component: ProjectPrivilegeRoleList,
-                    },
-                    {
-                        path: "/project/:id/set/:privilegeId/:roleType/:roleId",
-                        component: ProjectRoleFunction,
                     },
                     {
                         exact: false,
@@ -905,11 +883,6 @@ const Routers = [
                         path: "/projectSet/:projectSetId/statistics/workItem",
                         component: StatisticsWork,
                         exact: true
-                    },
-                    {
-                        path: "/projectSet/:projectSetId/statistics/advert",
-                        component: StatisticsMore,
-                        exact: true
                     }
                 ]
             },
@@ -929,11 +902,6 @@ const Routers = [
                     {
                         path: "/:id/sprint/:sprint/statistics/workItem",
                         component: StatisticsWork,
-                        exact: true
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/statistics/advert",
-                        component: StatisticsMore,
                         exact: true
                     }
                 ]
@@ -1156,12 +1124,6 @@ const Routers = [
                         exact: false,
                         component: LogAllList,
                         key: "LogAllList"
-                    },
-                    
-                    {
-                        path: "/log/advert",
-                        component: StatisticsMore,
-                        exact: true
                     }
 
                 ]

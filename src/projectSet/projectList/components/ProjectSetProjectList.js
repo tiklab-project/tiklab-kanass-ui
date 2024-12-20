@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集的项目列表
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-05 09:41:05
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-17 13:20:21
+ * @LastEditTime: 2024-12-18 17:49:14
  */
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Select, Row, Col } from 'antd';
@@ -24,7 +24,6 @@ const ProjectSetProjectList = (props) => {
     }
     const { findProjectList, updateProject, projectRelevance } = ProjectSetProjectStore;
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
-    const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     useEffect(() => {
         findProjectList({ projectSetId: projectSetId })
         return;

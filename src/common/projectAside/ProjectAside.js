@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-16 10:58:01
+ * @LastEditTime: 2024-12-18 14:14:10
  */
 
 import React, { Fragment, useState, useEffect, useRef } from 'react';
@@ -17,7 +17,7 @@ const { Sider } = Layout;
 
 const ProjectAside = (props) => {
     const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl, backName, iconName } = props;
-    const isInProject = props.location.pathname.split("/")[2];
+
     const [projectRouter, setProjectRouter] = useState([]);
 
     const [moreMenu, setMoreMenu] = useState()
@@ -25,6 +25,7 @@ const ProjectAside = (props) => {
     const [morePath, setMorePath] = useState()
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [themeClass, setThemeClass] = useState("project-sider-gray")
+    
     const resizeUpdate = (e) => {
         // 通过事件对象获取浏览器窗口的高度
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;

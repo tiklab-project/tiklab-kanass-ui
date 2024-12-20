@@ -1,9 +1,18 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:35:31
+ * @Description: 版本信息接口
+ */
+
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 
 export class VersionBasicStore {
     @observable useList = [];
-    @observable status = []
+    @observable status = [];
+    
     @action
     findVersion = async (values) => {
 
@@ -13,7 +22,6 @@ export class VersionBasicStore {
         if (data.code === 0) {
             return data;
         }
-
     }
 
     @action

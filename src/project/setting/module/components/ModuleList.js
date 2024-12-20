@@ -4,14 +4,13 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 13:02:38
+ * @LastEditTime: 2024-12-18 17:23:15
  */
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Row, Col } from "antd";
 import ModuleAddmodal from "./ModuleAddModal";
 import "../components/module.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
-import { SearchOutlined } from '@ant-design/icons';
 import ModuleStore from "../store/ModuleStore";
 import { observer } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -20,9 +19,7 @@ import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import InputSearch from "../../../../common/input/InputSearch";
 const ModuleList = (props) => {
     // 解析 moduleStore
-    const { moduleList, findModuleListTree, createModule, deleteModule,
-        editModuleById, setPageParam
-    } = ModuleStore;
+    const { moduleList, findModuleListTree, createModule, deleteModule, editModuleById} = ModuleStore;
 
     const [type, setType] = useState("add")
     const [moduleId, setModuleId] = useState()
@@ -31,9 +28,6 @@ const ModuleList = (props) => {
     const [modalName, setModalName] = useState()
     // 项目id
     const projectId = props.match.params.id;
-
-    // 搜索模块的名称
-    const [moduleName, setModuleName] = useState("")
 
     // 加载中
     const [loading, setLoading] = useState(false)
@@ -65,10 +59,7 @@ const ModuleList = (props) => {
             projectId: projectId,
             moduleName: values
         }
-        setModuleName(values)
         findModule(params)
-        // // 重置分页参数，从第一页开始搜索
-        // setPageParam({ current: 1, pageSize: 10 })
     };
 
 

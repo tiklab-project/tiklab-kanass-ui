@@ -1,5 +1,13 @@
+/*
+ * @Descripttion: 项目添加
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 16:53:12
+ */
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Select, DatePicker, message, Row, Col, Steps, Breadcrumb, Spin } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import 'moment/locale/zh-cn';
 import { observer, inject } from "mobx-react";
 import "./ProjectAdd.scss";
@@ -10,7 +18,6 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
-    const { projectStore } = props;
     const { projectTypelist, getProjectTypeList, getUseList, findIconList, createProject } = ProjectStore;
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()

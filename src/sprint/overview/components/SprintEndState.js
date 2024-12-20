@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 迭代转为完成状态的弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
@@ -12,7 +12,6 @@ import { Select, Modal, message, DatePicker } from "antd";
 import SprintDetailStore from "../../common/store/SprintDetailStore";
 import "./SprintEndState.scss";
 import { useTranslation } from "react-i18next";
-const { RangePicker } = DatePicker;
 
 const SprintEndState = props => {
     const { projectId, sprintId, visible, setVisible, SprintSurveyStore, sprintInfo, setSprintInfo } = props;

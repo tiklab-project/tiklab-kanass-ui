@@ -23,8 +23,6 @@ const UserWorkItem = (props) => {
     const [isEditor, setIsEditor] = useState(editInsight ? true : false);
     // 统计条件的表单
     const [form] = Form.useForm();
-    // 项目集列表
-    const [projectSetList, setProjectSetList] = useState([])
     const [userList, setUserList] = useState([])
     const [project, setProject] = useState({})
     // 所有项目的列表

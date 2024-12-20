@@ -1,21 +1,18 @@
 /*
- * @Descripttion: 路线图表格页面 
+ * @Descripttion: 甘特图，测试用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-20 16:36:24
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
-import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./gantt.scss";
 // import "./Epic.scss"
 import RowScroll from "./RowScroll";
 import ColScroll from "./ColScroll"
-import { withRouter } from "react-router";
 import dayjs from 'dayjs';
-import { Empty } from "antd";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 

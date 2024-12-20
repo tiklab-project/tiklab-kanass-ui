@@ -1,12 +1,20 @@
+/*
+ * @Descripttion: 知识库添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-03-02 13:28:22
+ */
 import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Form, Table, Radio, Select, Alert, Space, Button } from 'antd';
+import { Modal, Form, Table } from 'antd';
 import { observer, inject } from "mobx-react";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import "./WikiRepositoryAdd.scss"
 const WikiRepositoryAdd = (props) => {
     const [form] = Form.useForm();
     const { wikiAddvisible, setWikiAddvisible, wikiRepositoryStore, projectId, setProjectWikiList } = props;
-    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository, findSystemUrl } = wikiRepositoryStore;
+    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository } = wikiRepositoryStore;
 
     const [repositoryList, setRepositoryList] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);

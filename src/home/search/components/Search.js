@@ -8,7 +8,6 @@
  */
 
 import React, { Fragment, useEffect, useRef, useState, useCallback } from "react";
-import { SearchOutlined } from '@ant-design/icons';
 import "../components/Search.scss";
 import { Empty, Modal, Spin } from "antd";
 import { observer, inject } from "mobx-react";
@@ -22,10 +21,8 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Search = (props) => {
-    const { isShowText, theme, setShowMenu, showMenu } = props;
-    // const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default";
-    const { getSearchSore, setKeyWord, findRecentList,
-        updateRecent, findWorkItemByKeyWorks, findProjectList, } = SearchStore;
+    const { isShowText, theme } = props;
+    const { findRecentList,updateRecent, findWorkItemByKeyWorks, findProjectList, } = SearchStore;
     // 最近查看的项目列表
     const [projectList, setProjectList] = useState([]);
     const { setWorkId } = WorkStore;
@@ -35,11 +32,8 @@ const Search = (props) => {
     const [keyboardIndex, setKeyboardIndex] = useState({ modal: "project", index: 0 });
     const [searchModal, setSearchModal] = useState(false);
     // 登录者id
-    // const userId = getUser().userId;
-    const tenant = getUser().tenant;
     // 搜索下拉框ref
     const searchBox = useRef();
-    const inputRef = useRef();
     const userId = getUser().userId;
     const [recentWorkLoading, setRecentWorkLoading] = useState(true)
     const [recentProjectLoading, setRecentProjectLoading] = useState(true)
@@ -49,7 +43,6 @@ const Search = (props) => {
             if (e.code === 'ArrowDown') {
                 if (keyboardIndex.modal === "project" && keyboardIndex.index + 1 < projectList.length) {
                     setKeyboardIndex(keyboardIndex => ({ modal: keyboardIndex.modal, index: keyboardIndex.index + 1 }))
-                    // setKeyboards(keyBordars => keyBordars + 1)
                 }
                 if (keyboardIndex.modal === "project" && keyboardIndex.index + 1 === projectList.length) {
                     setKeyboardIndex({ modal: "workItem", index: 0 })
@@ -138,26 +131,11 @@ const Search = (props) => {
             } else {
                 setWorkItemList(res.data)
             }
-            // if (projectListLength <= 0 && res.data.length > 0) {
-            //     setKeyboardIndex({ modal: "workItem", index: 0 })
-            // }
             setRecentWorkLoading(false)
         })
 
 
     }
-
-    // const showBox = () => {
-    //     const keyWord = inputRef.current.value;
-    //     if (keyWord) {
-    //         searchByKeyWork(keyWord)
-    //         setIsSeach(true)
-    //     } else {
-    //         findRecent()
-    //         setIsSeach(false)
-    //     }
-    //     setShow(true)
-    // }
     useEffect(() => {
         if (searchModal) {
             findRecent()

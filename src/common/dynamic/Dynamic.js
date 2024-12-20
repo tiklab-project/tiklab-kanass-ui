@@ -1,7 +1,15 @@
+
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 13:45:43
+ * @Description: 动态
+ */
 import React, { Fragment } from "react";
 import moment from "moment";
-import "./Dynamic.scss"
-import { inject, observer } from "mobx-react";
+import "./Dynamic.scss";
+
 
 const WorkItemDynamic = (props) => {
     const { dynamicData } = props;
@@ -10,8 +18,7 @@ const WorkItemDynamic = (props) => {
         if(type === "workItem"){
             localStorage.setItem("projectId", project.id)
             localStorage.setItem("projectTypeId", project.projectType.id)
-            // setWorkId(id)
-            // setWorkIndex(1)
+
             props.history.push(`/prodetail/workone/${id}`)
         }
     }

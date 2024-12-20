@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 迭代概况
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-08 15:47:40
+ * @LastEditTime: 2024-12-20 15:31:22
  */
 import React, { useEffect, useState } from "react";
 import "../components/sprintSurvey.scss";
@@ -16,20 +16,18 @@ import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import SprintSurveyStore from "../store/SprintSurveyStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
-import TodoListBox from "../../../common/overviewComponent/TodoListBox";
 import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const SprintSurvey = (props) => {
-    const { findSprint, findSprintBurnDowmChartPage, opLogList, 
-        findLogPageByTime, logList, todoTaskList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
+    const { findSprint, findSprintBurnDowmChartPage, findLogPageByTime, 
+        logList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
     const [sprintInfo, setSprintInfo] = useState()
     const masterId = getUser().userId;
-    const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 进度
     const [percent, setPercent] = useState()
     // 事项状态列表

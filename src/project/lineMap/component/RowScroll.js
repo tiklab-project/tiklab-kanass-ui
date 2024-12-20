@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 横滚动轴
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-18 14:45:06
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-18 16:24:38
+ * @LastEditTime: 2024-12-18 15:56:00
  */
 import React,{useRef,useEffect} from "react";
 

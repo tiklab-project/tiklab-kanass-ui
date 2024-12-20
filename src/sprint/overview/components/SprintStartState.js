@@ -1,14 +1,14 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 迭代转为开始状态的弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-20 15:30:35
  */
-import React, { Fragment, useEffect, useState } from "react";
-import { observer, inject } from "mobx-react";
-import { Select, Modal, message, Form, Input, DatePicker } from "antd";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react";
+import { Modal, message, Form, Input, DatePicker } from "antd";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';

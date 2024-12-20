@@ -4,29 +4,27 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-19 18:00:13
+ * @LastEditTime: 2024-12-18 16:41:39
  */
 import React, { useEffect, useState } from "react";
-import "../components/Survey.scss"
-import { observer, inject } from "mobx-react";
+import "../components/Survey.scss";
+import { observer } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
-import echarts from "../../../common/echarts/echarts"
-import { Row, Col, Empty, Progress, Spin } from "antd";
+import echarts from "../../../common/echarts/echarts";
+import { Row, Col, Progress, Spin } from "antd";
 import ProjectSurveyStore from "../store/ProjectSurveyStore";
-import Workstore from "../../../work/store/WorkStore";
-import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import DyncmicTimeAxis from "./DyncmicTimeAxis";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+
 const Survey = (props) => {
-    const { statWorkItemByBusStatus, findProject,
-        findProjectBurnDowmChartPage, findMilestoneList, findLogPageByTime, findtodopage,
-        findRecentPage, recentList, updateRecent, logList } = ProjectSurveyStore;
-    const { setWorkId } = Workstore;
+    const { statWorkItemByBusStatus, findProject, findProjectBurnDowmChartPage, 
+        findMilestoneList, findLogPageByTime, findtodopage, findRecentPage, logList } = ProjectSurveyStore;
+
     //当前用户名字
     const masterName = getUser().name;
     // 项目id
@@ -35,11 +33,8 @@ const Survey = (props) => {
     const [workStatusList, setWorkStatusList] = useState();
     // 项目详情
     const [project, setProject] = useState();
-    // 待办列表
-    const [todoList, setTodoList] = useState([]);
+    
     const [loading, setLoading] = useState(true)
-    // 日志列表
-    // const [logList, setLogList] = useState([]);
     // 里程碑列表
     const [milestoneList, setMilestoneList] = useState();
     // 进度
@@ -65,9 +60,7 @@ const Survey = (props) => {
         // 获取待办列表
         setLoading(true)
         findtodopage({ projectId: projectId, currentPage: 1, userId: userId }).then(res => {
-            if (res.code === 0) {
-                setTodoList(res.data.dataList)
-            }
+
             setLoading(false)
         })
 
@@ -81,7 +74,6 @@ const Survey = (props) => {
         findRecentPage(userId)
         return;
     }, [])
-
 
     useEffect(() => {
         if (project) {

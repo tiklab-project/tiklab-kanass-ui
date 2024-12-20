@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:29:19
+ * @Description: 项目的事项权限
+ */
 import React from "react";
 import WorkRoleList from "../../../../setting/workPrivilege/components/WorkRoleList";
 import { Col, Row } from "antd";

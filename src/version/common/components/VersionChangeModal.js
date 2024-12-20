@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 版本切换弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:05:12
+ */
 import React, { useEffect, useRef, useState } from "react";
 import "./VersionChangeModal.scss";
 import { withRouter } from "react-router";
@@ -98,13 +106,7 @@ const VersionChangeModal = (props) => {
                         :
                         <Tooltip placement="right" title={version?.name}>
                             <div className='version-title-icon' onClick={showMoreMenu} >
-                                
                                 <ColorIcon name={version?.name} className="img-32" color={version?.color} />
-                                {/* <div className={`version-toggleCollapsed`}>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
-                                    </svg>
-                                </div> */}
                             </div>
                         </Tooltip>
 

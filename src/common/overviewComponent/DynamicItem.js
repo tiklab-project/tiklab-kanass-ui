@@ -1,29 +1,22 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 13:53:09
+ * @Description: 动态列表项
+ */
+
 import React from "react";
 import "./DynamicItem.scss"
 import { withRouter } from "react-router";
 const DynamicListItem = (props) => {
-    const { content, model, type, key } = props;
+    const { content, type } = props;
     const data = JSON.parse(content)
-    const { createUserIcon, master, workItemTitle, receiveTime, createTime,
-        workItemId, projectId, oldValue, newValue, projectName, creatTime } = data;
+    const { master, workItemTitle, workItemId, projectId, oldValue, newValue, projectName } = data;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const path = props.match.path;
     const goDynamicDetail = () => {
-        // switch (model) {
-        //     case "sprint":
-        //         props.history.push(`/${projectId}/sprint/${sprintId}/work/${workItemId}`);
-        //         break;
-        //     case "version":
-        //         props.history.push(`/${projectId}/version/${versionId}/work/${workItemId}`);
-        //         break;
-        //     case "projectSet":
-        //         props.history.push(`/project/${projectId}/work/${workItemId}`);
-        //         break;
-        //     default:
-        //         props.history.push(`/project/${projectId}/work/${workItemId}`);
-        //         break;
-        // }
         if (path.indexOf("sprint") > -1) {
             props.history.push(`/${projectId}/sprint/${sprintId}/work/${workItemId}`);
         }

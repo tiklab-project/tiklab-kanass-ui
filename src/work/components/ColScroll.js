@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 竖滚动轴
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-18 18:28:57

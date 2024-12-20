@@ -1,6 +1,15 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:08:20
+ * @Description: 消息列表项
+ */
+
 import React from "react";
 import "./MessageItem.scss"
 import { withRouter } from "react-router";
+
 const MessageListItem = (props) => {
     const { content, status, type, updateMessageDispatchItem, id, item, currenTab, setUnReadMessage, findMessageDispatchItemPage } = props;
     const data = JSON.parse(content)

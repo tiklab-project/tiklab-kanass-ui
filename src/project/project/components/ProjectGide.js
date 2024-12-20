@@ -1,19 +1,18 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 空数据引导
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-11-08 11:02:27
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-11-09 10:02:15
+ * @LastEditTime: 2024-12-18 17:06:27
  */
-import React, { Fragment } from "react";
+import React from "react";
 import GideImge from "../../../assets/images/projectGide.png";
 import Button from "../../../common/button/Button";
 import { observer, inject } from "mobx-react"
 import { withRouter } from "react-router";
 import { PrivilegeButton } from "tiklab-privilege-ui";
 const ProjectGide = (props) => {
-    const { projectStore } = props;
     return (
         <div className="project-gide">
             <div>

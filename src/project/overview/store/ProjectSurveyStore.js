@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目概况页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-11-22 17:05:45
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-02 09:58:09
+ * @LastEditTime: 2024-12-18 16:42:11
  */
 import { action, observable } from "mobx";
 import { Service } from "../../../common/utils/requset"

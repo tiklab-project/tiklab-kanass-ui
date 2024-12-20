@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本概况
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-08 15:47:40
+ * @LastEditTime: 2024-12-20 16:14:32
  */
 import React, { useEffect, useState } from "react";
 import "../components/versionSurvey.scss";
@@ -15,7 +15,6 @@ import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
 import moment from 'moment';
 import VersionSurveyStore from "../store/VersionSurveyStore";
-import WorkStore from "../../../work/store/WorkStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import VersionStartState from "./VersionStartState";
@@ -38,14 +37,20 @@ const VersionSurvey = (props) => {
             versionId: versionId,
             projectId: projectId
         }
+
+        // 查找版本下全部、待办、已完成、已逾期的事项个数
         findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent ? percent.toFixed(2) : 0)
         })
+
+        // 查找版本信息
         findVersion({ versionId: versionId }).then(res => {
             setVersionInfo(res.data)
             const version = res.data;
+
+            // 查找版本燃尽图
             FindVersionBurnDowmChartPage(versionId).then(res => {
                 if (res.code === 0) {
                     let timerXaixs = [];
@@ -73,18 +78,20 @@ const VersionSurvey = (props) => {
                 }
             })
         })
-        // 燃尽图
+        // 查找人员列表
         getUseList(projectId)
 
+        // 按照时间排序查找动态
         findLogPageByTime({data:{ versionId: versionId }})
 
+        // 查找待办事项
         findtodopage({ userId: masterId, versionId: versionId })
 
         return;
     }, [versionId]);
-    const [fieldName, setFieldName] = useState("")
+   
     /**
-     * 燃尽图
+     * 燃尽图初始化
      */
     const burnDownChart = (timerXaixs, workCountYaixs, Yaxis) => {
         const burnDown = echarts.init(document.getElementById('version-burn-down'));
@@ -119,6 +126,9 @@ const VersionSurvey = (props) => {
         burnDown.setOption(option)
     }
 
+    /**
+    * 跳转到动态详情
+    */
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
@@ -140,8 +150,11 @@ const VersionSurvey = (props) => {
         props.history.push(`/${projectId}/version/${versionId}/workitem`)
     }
 
-
-
+    /**
+     * 状态按钮显示
+     * @param {状态id} state 
+     * @returns 
+     */
     const stateButton = (state) => {
         let dom = null;
 
@@ -168,12 +181,20 @@ const VersionSurvey = (props) => {
         }
         return dom;
     }
+
     const [startStateVisable, setStartStateVisable] = useState(false)
     const [endStateVisable, setEndStateVisable] = useState(false)
+
+    /**
+     * 转换到开始状态
+     */
     const changeStateToStart = () => {
         setStartStateVisable(true)
     }
 
+    /**
+     * 转换到结束状态
+     */
     const changeStateToEnd = () => {
         setEndStateVisable(true)
     }

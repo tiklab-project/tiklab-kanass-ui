@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 史诗添加事项弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 15:53:43
+ */
 import React from "react";
 import { Modal,Table,message,Input,Select } from 'antd';
 import "./EpicPlanAddModal.scss"

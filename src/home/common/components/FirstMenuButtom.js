@@ -1,16 +1,21 @@
-import React, { Component, useState } from "react";
+/*
+ * @Descripttion: 一级导航底部按钮
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:36:59
+ */
+import React from "react";
 import { AppLink, AvatarLink, HelpLink } from 'tiklab-licence-ui';
 import { AppLink as AppLinkCloud, AvatarLink as AvatarLinkCloud, HelpLink as HelpLinkCloud } from 'tiklab-licence-cloud-ui';
-import Search from "../../search/components/Search";
 import MessageList from "./MessageList";
-import ProjectFeature from '../../../setting/version/ProjectFeature';
 import UserIcon from "../../../common/UserIcon/UserIcon"
 import "./FirstMenuButtom.scss"
 import { getUser } from "tiklab-core-ui";
-import Theme from "./Theme";
 import SetingMenu from "./SetingMenu";
 const FirstMenuButtom = (props) => {
-    const { isShowText, SetIsShowText, theme, changeTheme } = props;
+    const { isShowText, theme, changeTheme } = props;
     const nickname = getUser().nickname;
     return <>
         {

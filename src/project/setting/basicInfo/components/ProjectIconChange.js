@@ -1,5 +1,13 @@
+/*
+ * @Descripttion: 项目图标上传弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-07 14:59:04
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:14:23
+ */
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Upload, message } from 'antd';
+import { Modal, Form, message } from 'antd';
 import { withRouter } from "react-router";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
 import {getUser} from "tiklab-core-ui";
@@ -13,28 +21,7 @@ const ProjectIconChange = (props) => {
     const {creatIcon, findIconList} = ProjectBasicInfoStore;
     const [projectIconUrl, setProjectIconUrl] = useState("")
     const [iconList, setIconList] = useState()
-    // const iconList = [
-    //     {
-    //         iconUrl: "project1.png",
-    //         key: "project1"
-    //     },
-    //     {
-    //         iconUrl: "project2.png",
-    //         key: "project2"
-    //     },
-    //     {
-    //         iconUrl: "project3.png",
-    //         key: "project3"
-    //     },
-    //     {
-    //         iconUrl: "project4.png",
-    //         key: "project4"
-    //     },
-    //     {
-    //         iconUrl: "project5.png",
-    //         key: "project5"
-    //     }
-    // ]
+
 
     useEffect(() => {
         getIconList()
@@ -65,6 +52,10 @@ const ProjectIconChange = (props) => {
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const upload_url = env === "local" ? base_url : "";
+
+    /**
+     * 上传图标，暂时隐藏此功能
+     */
     const upLoadIcon = {
         name: 'uploadFile',
         action: `${upload_url}/dfs/upload`,

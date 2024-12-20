@@ -1,20 +1,18 @@
 /*
- * @Descripttion: 项目的更多菜单弹窗
+ * @Descripttion: 一次菜单的更多菜单弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 14:43:27
  */
 import React, { useEffect, useRef, useState } from "react";
 import "./FirstMoreMenuModal.scss";
-import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import Search from "../../search/components/Search";
 
 const FirstMoreMenuModal = (props) => {
     const { isShowText, moreMenu, morePath, theme } = props;
-    const projectId = props.match.params.id;
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[1];
@@ -26,9 +24,6 @@ const FirstMoreMenuModal = (props) => {
     const modelRef = useRef()
     // 更多点击按钮的的ref
     const setButton = useRef()
-    const { t } = useTranslation();
-    // 当前被点击菜单的key
-    const paths = ["statistics"]
 
     /**
      * 显示菜单弹窗
@@ -39,18 +34,7 @@ const FirstMoreMenuModal = (props) => {
         modelRef.current.style.left = setButton.current.clientWidth + 3;
     }
 
-    /**
-     * 更多菜单数组
-     */
-    // const moreMenu = [
-    //     {
-    //         title: `${t('statistic')}`,
-    //         icon: 'statisticslog',
-    //         url: `/project/${projectId}/statistics/workItem`,
-    //         key: "statistics",
-    //         encoded: "Statistic",
-    //     }
-    // ]
+
 
     /**
      * 监听菜单的弹窗的显示与不显示
@@ -76,14 +60,7 @@ const FirstMoreMenuModal = (props) => {
         }
     }
 
-    /**
-     * 点击菜单
-     * @param {菜单key} key 
-     */
-    const selectMenu = (key) => {
-        props.history.push(key)
-        setShowMenu(false)
-    }
+
     const changeCurrentLink = item => {
         if(item.key !== "search"){
             localStorage.removeItem("sprintId")
@@ -91,8 +68,8 @@ const FirstMoreMenuModal = (props) => {
             sessionStorage.setItem("menuKey", item.key)
         }
         setShowMenu(false)
-
     }
+    
     return (
         <div className="more-menu">
             {

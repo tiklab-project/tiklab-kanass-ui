@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 版本计划事项接口
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:14:32
+ */
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class VersionPlanStore {

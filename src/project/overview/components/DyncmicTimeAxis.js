@@ -1,4 +1,12 @@
-import React, { Children } from "react";
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-25 14:05:12
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 16:07:25
+ * @Description: 项目动态列表
+ */
+
+import React from "react";
 import "./DyncmicTimeAxis.scss";
 import DyncmicItem from "../../../common/overviewComponent/DynamicItem"
 import { observer } from "mobx-react";
@@ -6,7 +14,6 @@ const DyncmicTimeAxis = (props) => {
     const { logList } = props;
 
     return <div className="dyncmic-timeaxis">
-        {/* <div className="dyncmic-timeaxis-title">最近动态</div> */}
 
         <div className="dyncmic-timeaxis-content">
             {

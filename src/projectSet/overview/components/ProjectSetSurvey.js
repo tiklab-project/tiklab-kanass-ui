@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集概况
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-18 17:48:37
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer } from "mobx-react";
@@ -23,17 +23,13 @@ const ProjectSetSurvey = props => {
     const projectSetId = props.match.params.projectSetId;
     const [processProjectList, setProcessProjectList] = useState();
     const projectSet = JSON.parse(localStorage.getItem("projectSet"));
-    const [todoTaskList, setTodoTaskList] = useState([])
+
     useEffect(() => {
         findProjectSetLogpage({ projectSetId: projectSetId })
 
         return;
     }, [])
 
-
-    const goProcessProject = () => {
-        props.history.push(`/projectSet/${projectSetId}/dynamic`)
-    }
 
     const goProdetail = (project) => {
         localStorage.setItem("project", JSON.stringify(project));
@@ -53,16 +49,12 @@ const ProjectSetSurvey = props => {
     const goOpLogDetail = (url) => {
         window.location.href = url
     }
-    const goTodoDetail = (url) => {
-        window.location.href = url
-    }
+
     const goDynamicList = () => {
         props.history.push(`/projectSet/${projectSetId}/dynamic`)
 
     }
-    const goToListPage = () => {
-        props.history.push(`/projectSet/${projectSetId}/workTodo`)
-    }
+
     return (
         <Row className="projectSet-survey">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>

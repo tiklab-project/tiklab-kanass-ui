@@ -1,3 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-24 15:12:39
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 16:07:33
+ * @Description: 项目待办统计
+ */
+
 import React, { useEffect, useState } from 'react';
 import "./ProjectTodoStatistics.scss";
 import { withRouter } from 'react-router';
@@ -11,8 +19,6 @@ const ProjectTodoStatistics = (props) => {
     const {statisticsProjectTodoWorkByStatus} = ProjectSurveyStore;
     const [todoCount, setTodoCount] = useState();
     
-
-
     useEffect(()=> {
         statisticsProjectTodoWorkByStatus({projectId: projectId}).then(res => {
             if(res.code === 0){

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:42:19
  */
 import React, { useEffect, useRef, useState } from "react";
 import "./MoreMenuModal.scss";
@@ -23,9 +23,6 @@ const MoreMenuModel = (props) => {
     const modelRef = useRef()
     // 更多点击按钮的的ref
     const setButton = useRef()
-    const { t } = useTranslation();
-    // 当前被点击菜单的key
-    const paths = ["statistics"]
 
     /**
      * 显示菜单弹窗

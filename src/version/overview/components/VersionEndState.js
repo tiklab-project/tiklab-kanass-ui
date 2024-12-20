@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本转换到结束状态的页面弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
@@ -12,7 +12,6 @@ import { Select, Modal, message, DatePicker } from "antd";
 import "./VersionEndState.scss";
 import VersionDetailStore from "../../common/store/VersionDetailStore";
 import { useTranslation } from "react-i18next";
-const { RangePicker } = DatePicker;
 
 const VersionEndState = props => {
     const { projectId, versionId, visible, setVisible, VersionSurveyStore, versionInfo, setVersionInfo } = props;

@@ -1,13 +1,13 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本设置页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-20 16:18:11
  */
-import React, { Fragment, useEffect, useState } from "react";
-import { observer, inject } from "mobx-react";
+import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react";
 import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message, Alert } from "antd";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';

@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集列表
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-05 09:41:05
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-10 10:35:43
+ * @LastEditTime: 2024-12-18 17:54:53
  */
 import React, { useEffect, useState, Fragment } from 'react';
 import { Table, Space, Row, Col, Empty, Spin } from 'antd';
@@ -46,6 +46,10 @@ const ProjectSetTable = (props) => {
         return;
     }, [])
 
+    /**
+     * 查找关注的项目集
+     * @param {项目集id} id 
+     */
     const findProjectSetFocus = (id) => {
         findProjectSetFocusList({ masterId: id }).then(res => {
             if (res.code === 0) {
@@ -57,6 +61,7 @@ const ProjectSetTable = (props) => {
             }
         })
     }
+
 
     const goProjectSetDetail = (record) => {
         const params = {

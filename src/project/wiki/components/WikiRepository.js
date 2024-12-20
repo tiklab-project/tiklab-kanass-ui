@@ -1,15 +1,14 @@
 /*
- * @Descripttion: 版本列表页
+ * @Descripttion: 知识库列表页
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-02 13:28:22
+ * @LastEditTime: 2024-12-18 17:36:48
  */
 import React, { useEffect, useRef, useState } from "react";
 import { Radio, Table, Space, Row, Col, message, Tabs, Alert } from "antd";
 import { observer, Provider } from "mobx-react";
-import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
 import WikiRepositoryAdd from "./WikiRepositoryAdd";

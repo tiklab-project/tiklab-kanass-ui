@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 一级导航
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:42:04
+ */
 import React, { useEffect, useState } from "react";
 import "./FirstMenu.scss";
 import { Layout } from "antd";
@@ -76,25 +84,6 @@ const FirstMenu = (props) => {
             props.history.push(item.to)
             sessionStorage.setItem("menuKey", item.key)
         }
-    }
-
-    const setActiveIcon = (type) => {
-        let activeIcon = type + theme + "-active"
-        switch (theme) {
-            case "default":
-                activeIcon = type + theme + "-active";
-                break;
-            case "blue":
-                activeIcon = type + theme;
-                break;
-            case "black":
-                activeIcon = type + "blue";
-                break;
-            default:
-                activeIcon = type + theme + "-active";
-                break;
-        }
-        return activeIcon;
     }
 
     // 系统顶部菜单

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 路线图表格页面 
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 15:53:43
+ */
 import React, { Fragment, useEffect, useState } from "react";
 import EpicPlanAddmodal from "./EpicPlanAddModal";
 import { observer, inject } from "mobx-react";

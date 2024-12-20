@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目集添加弹窗
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:51:03
+ */
 import React, { useState } from "react";
 import { message, Row, Col } from 'antd';
 import 'moment/locale/zh-cn';

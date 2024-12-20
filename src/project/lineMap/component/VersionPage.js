@@ -1,19 +1,17 @@
 /*
- * @Descripttion: 史诗页面 
+ * @Descripttion: 版本页面 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-18 15:56:32
  */
 import React, { useState, useEffect, useRef } from "react";
 import VersionLineMap from "./VersionLineMap";
-import InputSearch from "../../../common/input/InputSearch";
 import "./VersionPage.scss"
 import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import LineMapStore from "../store/LineMapStore";
-import { Empty } from "antd";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const VersionPage = (props) => {
     const versionLineRef = useRef();

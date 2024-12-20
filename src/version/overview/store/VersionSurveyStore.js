@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本接口
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-11-25 16:01:57
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-04 09:00:09
+ * @LastEditTime: 2024-12-20 16:15:44
  */
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
@@ -54,7 +54,7 @@ class VersionSurveyStore {
         return data;
     }
 
-     // 燃尽图
+    // 燃尽图
     @action
     FindVersionBurnDowmChartPage = async(versionId)=> {
         const params={

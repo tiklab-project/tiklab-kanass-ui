@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 计划入口页面
+ * @Descripttion: 计划入口页面，瀑布式模型使用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-15 16:52:29
+ * @LastEditTime: 2024-12-18 17:33:57
  */
 import React, { useEffect, useState, useRef } from "react";
 import { Provider } from "mobx-react";

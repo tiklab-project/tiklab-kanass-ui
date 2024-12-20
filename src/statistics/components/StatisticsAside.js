@@ -1,12 +1,12 @@
 /*
- * @Descripttion: 项目统计右侧菜单
+ * @Descripttion: 统计右侧菜单
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-20 15:37:52
  */
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { getVersionInfo } from "tiklab-core-ui";

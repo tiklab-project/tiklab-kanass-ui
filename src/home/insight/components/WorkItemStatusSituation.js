@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:37:41
  */
 
 import React, { useEffect, useState } from "react";
@@ -79,9 +79,6 @@ const WorkItemStatusSituation = (props) => {
         setIsEditor(!isEditor)
         reportList.lg[index].data.data = values;
         reportList.lg[index].data.isEdit = true;
-        // statisticsWorkItemStatusCount(values).then(res => {
-        //     setWorkItemStatusCount(res.data)
-        // })
     }
 
     /**

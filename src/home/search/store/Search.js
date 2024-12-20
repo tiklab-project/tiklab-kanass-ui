@@ -19,13 +19,6 @@ export class SearchStore{
     @observable 
     keyword = ""
 
-    // 搜索分页参数
-    // @observable 
-    // searchCondition = {
-    //     pageSize: 10,
-    //     currentPage: 1
-    // }
-
     @observable searchCondition = {
         orderParams: [{
             title: "标题",

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-07 15:07:14
+ * @LastEditTime: 2024-12-18 17:20:27
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col } from 'antd';
@@ -12,13 +12,12 @@ import ProdeAside from "./ProjectScrumSetAside";
 import "../components/projectSetDetail.scss";
 import { renderRoutes } from "react-router-config";
 import { observer, inject } from "mobx-react";
-import { ProjectNav } from "tiklab-privilege-ui";
 import { useTranslation } from "react-i18next";
 import { getUser } from "tiklab-core-ui";
 
 const ProjectScrumSet = (props) => {
     const { projectStore, systemRoleStore, route } = props;
-    const { searchpro, findProjectList, prolist } = projectStore;
+    const { searchpro, prolist } = projectStore;
     const { t } = useTranslation();
     // 当前项目名字
     const [projectname, setProjectname] = useState();

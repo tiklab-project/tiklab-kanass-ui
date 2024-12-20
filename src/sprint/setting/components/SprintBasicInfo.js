@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 迭代设置页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-20 15:34:37
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
@@ -18,7 +18,6 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 import { Collapse } from 'antd';
 import SprintBasicStore from "../store/SprintBasicStore";
-import SprintChangeModal from "../../overview/components/SprintEndState";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 const { Panel } = Collapse;
 
@@ -46,7 +45,7 @@ const SprintBasicInfo = props => {
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
     const { deleteSprint, updateSprint, findSprint, getUseList, useList, status,
-        findAllSprintState, findSelectSprintList } = SprintBasicStore;
+        findAllSprintState } = SprintBasicStore;
     const [disable, setDisabled] = useState(true);
     const [sprintInfo, setSprintInfo] = useState();
     const [sprintChangeVisable, setSprintChangeVisable] = useState(false)

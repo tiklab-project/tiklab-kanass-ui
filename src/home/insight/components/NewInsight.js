@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:06:26
  */
 
 import React, { useEffect, useState } from "react";
@@ -32,7 +32,6 @@ const NewInsight = (props) => {
     const [showReportList, setShowReportList] = useState(false);
     // 当前仪表盘在列表中的索引，用于设置添加仪表盘时的位置
     const [reportIndex, setReportIndex] = useState(1)
-    const [chart, setChart] = useState();
 
     useEffect(() => {
         getInsightById()

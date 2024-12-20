@@ -1,13 +1,13 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 版本页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-02-08 14:24:49
+ * @LastEditTime: 2024-12-20 16:06:26
  */
-import React, { useEffect, useState, useRef } from "react";
-import { Provider, inject, observer } from "mobx-react";
+import React, { useEffect } from "react";
+import { Provider, observer } from "mobx-react";
 import { Layout } from "antd";
 import "../components/VersionLayout.scss";
 import { renderRoutes } from "react-router-config";

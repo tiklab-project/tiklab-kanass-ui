@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-07-28 16:56:50
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-24 09:32:54
+ * @LastEditTime: 2024-12-18 17:38:23
  */
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
@@ -39,6 +39,7 @@ export class LogStore {
     }
 
     @observable projectList = [];
+    
     /**
      * 查找所有的项目
      * @returns 

@@ -1,4 +1,11 @@
-
+/*
+ * @Descripttion: 根据事项字段统计事项
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-03-30 10:14:58
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:02:24
+ */
 import React, { useEffect, useRef, useState } from "react";
 import { Table, Form, Select, Button } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -35,6 +42,7 @@ const StatisticsWork = (props) => {
             key: 'pre',
         }
     ];
+
     let [xaixs, setXaixs] = useState([]);
     let [yaixs, setYaixs] = useState([]);
     let [preData, setPreData] = useState([]);
@@ -141,13 +149,6 @@ const StatisticsWork = (props) => {
         })
     }
 
-
-    const onGenderChange = (value) => {
-
-    };
-
-    const onFinishFailed = (values) => {
-    };
     const statisticalList = [
         {
             value: "state",
@@ -196,7 +197,6 @@ const StatisticsWork = (props) => {
                     name="form"
                     form={form}
                     initialValues={{ remember: true }}
-                    onFinishFailed={onFinishFailed}
                     labelAlign="left"
                     layout="inline"
                     onValuesChange={(changedValues, allValues) => changField(changedValues, allValues)}
@@ -222,7 +222,6 @@ const StatisticsWork = (props) => {
                     <Form.Item name="collectionField" label="统计项" rules={[{ required: true }]}>
                         <Select
                             placeholder="选择一个统计项"
-                            onChange={onGenderChange}
                             style={{
                                 width: 120,
                               }}

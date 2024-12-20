@@ -1,9 +1,17 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+/*
+ * @Descripttion: 下拉选择框
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:13:16
+ */
+
+import React, { useEffect, useState, useRef } from "react";
 import "./Select.scss";
 const SelectSimple = (props) => {
     const { onChange, onFocus, onSearchChange, onBlur, onMouseEnter, onMouseLeave,
-        ismult, title, children, value, className, simpleClassName, suffixIcon,
-        hoverFieldName, fieldName, positionType, disabled = false } = props;
+        ismult, title, children, value, className, simpleClassName, positionType, disabled = false } = props;
     const [showDropDown, setShowDropDown] = useState(false);
     const dropDown = useRef();
     const [searchValue, setSearchValue] = useState();
@@ -11,12 +19,11 @@ const SelectSimple = (props) => {
     let [selectData, setSelectData] = useState(value ? value : (ismult ? [] : null))
     const [selectLength, setSelectLength] = useState(0)
 
-    const inputRef = useRef()
+    const inputRef = useRef();
+
     useEffect(() => {
-        // onFocus()
         window.addEventListener("mousedown", closeModal, false);
         return () => {
-
             window.removeEventListener("mousedown", closeModal, false);
         }
     }, [showDropDown])
@@ -44,7 +51,6 @@ const SelectSimple = (props) => {
             if (onSearchChange) {
                 cancel()
             }
-
             setShowDropDown(false)
         }
     }
@@ -85,8 +91,6 @@ const SelectSimple = (props) => {
                 onFocus();
             }
         }
-
-
     }
 
 
@@ -108,6 +112,7 @@ const SelectSimple = (props) => {
         setSelectLength(0)
         onChange(null)
     }
+
     return <div className={`select-view ${simpleClassName ? simpleClassName : ""}`}>
         <div className={`select-content ${disabled ? "select-content-disabled" : ""}`}
             onMouseEnter={() => onMouseEnter && onMouseEnter()}
@@ -116,7 +121,7 @@ const SelectSimple = (props) => {
         >
             {
                 ismult ?
-                    <div >
+                    <div>
                         {title}
                     </div>
                     :

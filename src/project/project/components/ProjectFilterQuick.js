@@ -1,21 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
+/*
+ * @Descripttion: 项目快捷筛选
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:05:35
+ */
+import React from "react";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
-import "./ProjectFilterQuick.scss"
-import { getUser } from "tiklab-core-ui";
+import "./ProjectFilterQuick.scss";
 
 const ProjectFilterQuick = (props) => {
     const { projectStore } = props;
     const { projectQuickFilter, setProjectQuickFilter, findJoinProjectList } = projectStore;
-    console.log(projectQuickFilter)
-    const userId = getUser().userId;
 
     const quickFilterList = [
-        // {
-        //     value: "total",
-        //     label: "全部"
-        // },
         {
             value: "progress",
             label: "进行中"
@@ -24,10 +25,6 @@ const ProjectFilterQuick = (props) => {
             value: "noend",
             label: "未结束"
         },
-        // {
-        //     value: "creat",
-        //     label: "我创建的"
-        // },
         {
             value: "overdue",
             label: "已逾期"

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项添加信息页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-01-15 14:34:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:37:19
+ */
 import React, { useState, useEffect, useImperativeHandle, Fragment } from "react";
 import { Form, Input, Select, DatePicker, message } from "antd";
 import { observer, inject } from "mobx-react";
@@ -17,7 +25,7 @@ const WorkAddPage = (props) => {
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel, stageTreeList } = props;
     const { moduleList, selectSprintList, userList, findProjectList, projectList,
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
-        findPriority, priorityList, getWorkTypeList, workId, findFormConfig, formList,
+        findPriority, priorityList, workId, findFormConfig,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
         selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition
     } = workStore;

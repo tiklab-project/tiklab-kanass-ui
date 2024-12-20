@@ -1,10 +1,14 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-20 14:10:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:11:58
+ * @Description: 分页
+ */
 import React from "react";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import "./Page.scss";
 
-/**
- * 分页
- */
 const PaginationCommon = props => {
 
     const { currentPage, changePage, totalPage, total, showRefresh, refresh } = props

@@ -1,34 +1,32 @@
 /*
- * @Descripttion: 动态列表
+ * @Descripttion: 动态列表页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-11 13:36:22
+ * @LastEditTime: 2024-12-18 14:36:59
  */
 
 import React, { useEffect, useState } from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import { inject, observer } from "mobx-react";
-import { getUser } from "tiklab-core-ui";
-import { Select, Row, Col, Empty, Pagination } from "antd";
+import { Select, Row, Col} from "antd";
 import "./DynamicList.scss";
-import DynamicItem from "../../../common/overviewComponent/DynamicItem";
 import HomeStore from "../store/HomeStore";
 import DyncmicTimeAxis from "../../../project/overview/components/DyncmicTimeAxis";
 import PaginationCommon from "../../../common/page/Page";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const DynamicList = (props) => {
-    const { homeStore } = props;
-    const { findLogPageByTime, opLogCondition, logList, opLogTotal, setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
-    console.log(opLogTotal)
-    const userId = getUser().userId;
+    const { findLogPageByTime, opLogCondition, logList, 
+        setOpLogList, findProjectSetProjectList, findProjectSetLogpage } = HomeStore;
+
     const [projectList, setProjectList] = useState()
     const [firstText, setFirstText] = useState();
     const versionId = props.match.params.version;
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
     const path = props.match?.path;
+    
     useEffect(() => {
         getSerchList()
         const params = {

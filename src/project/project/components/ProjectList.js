@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-11-08 11:02:27
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:06:27
+ */
 import React, { Fragment, useEffect } from "react";
 import { Spin, Table, Space, Select, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -25,7 +33,6 @@ const ProjectList = (props) => {
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
     const [recentLoading, setRecentLoading] = useState(true);
-    const tenant = getUser().tenant;
 
     useEffect(() => {
         setActiveTabs("1")

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 迭代计划接口
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-11-25 16:01:57
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 15:34:00
+ */
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../../common/utils/requset";
 export class SprintPlanStore {

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-08 16:06:35
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-09 15:27:15
+ * @LastEditTime: 2024-12-18 16:51:08
  */
 import React, { useState } from "react";
 import { Modal, Button,Select,DatePicker,Input,Form } from 'antd';
@@ -12,7 +12,7 @@ import { observer,inject } from "mobx-react";
 import moment from 'moment';
 const { RangePicker } = DatePicker;
 
-const  PlanAddModal = (props) => {
+const PlanAddModal = (props) => {
     const [form] = Form.useForm();
     // 弹窗的显示与不显示
     const [visible, setVisible] = React.useState(false);

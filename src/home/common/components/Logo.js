@@ -1,3 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-31 15:27:49
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 15:00:05
+ * @Description: 系统log
+ */
+
 import React from "react";
 import { withRouter } from "react-router";
 import { productImg, productWhiteImg } from "tiklab-core-ui";

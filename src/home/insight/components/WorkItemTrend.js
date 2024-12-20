@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-18 15:37:54
  */
 
 import React, { Fragment, useEffect, useState } from "react";
@@ -156,7 +156,6 @@ const WorkItemTrend = (props) => {
             projectId: values.projectId
         }
         setIsEditor(!isEditor)
-        // statisticsDayWorkItem(params)
         reportList.lg[index].data.data = params;
         reportList.lg[index].data.isEdit = true;
     }

@@ -1,13 +1,15 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 15:41:29
+ * @Description: 没有资源访问权限
+ */
+
 import React from "react";
 import {NoAccess} from "tiklab-privilege-ui";
 import { UserVerify } from "tiklab-user-extension-ui";
 
-/**
- * 没有资源访问权限
- * @param props
- * @returns {JSX.Element}
- * @constructor
- */
 const ProjectNoAccessPage = props =>{
     const project = JSON.parse(localStorage.getItem('project'));
     const projectId = project?.id;

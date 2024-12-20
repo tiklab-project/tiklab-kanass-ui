@@ -1,12 +1,12 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目设置页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-08 09:24:33
+ * @LastEditTime: 2024-12-18 17:14:23
  */
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Input, Form, Select, DatePicker, Button, Modal, Row, Col, message, Alert } from "antd";
 import 'moment/locale/zh-cn';
@@ -18,7 +18,6 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectIconChange from "./ProjectIconChange"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
-import { getUser } from "tiklab-core-ui";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
 
@@ -48,14 +47,11 @@ const BasicInfo = props => {
     const projectId = props.match.params.id;
     const { projectStore } = props;
     const {findDmUserList} = ProjectBasicInfoStore;
-    const { deleproList, updateProject, searchpro, projectTypelist,
-        getProjectTypeList, getUseList, uselist } = projectStore;
+    const { deleproList, updateProject, searchpro, projectTypelist, getProjectTypeList } = projectStore;
     const [disable, setDisabled] = useState(true);
     const [iconUrl, setIconUrl] = useState();
     const [visible, setVisible] = useState(false);
     const [projectInfo, setProjectInfo] = useState();
-    const tenant = getUser().tenant;
-    const [activeKey, setActiveKey] = useState("1");
     const [dmUser, setDmUser] = useState([])
     // 周期
     const rangeConfig = {

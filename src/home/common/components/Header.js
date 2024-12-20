@@ -4,10 +4,9 @@
  * @Author: 袁婕轩
  * @Date: 2022-01-08 10:44:07
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 10:16:03
+ * @LastEditTime: 2024-12-18 14:44:05
  */
 import React, { useState, useEffect } from 'react';
-import { Space } from "antd";
 import { withRouter } from 'react-router';
 import { getUser, getVersionInfo } from 'tiklab-core-ui';
 import { observer, inject, Provider } from "mobx-react";

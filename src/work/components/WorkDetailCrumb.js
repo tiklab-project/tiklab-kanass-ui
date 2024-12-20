@@ -1,12 +1,20 @@
+/*
+ * @Descripttion: 事项详情面包屑
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-12-13 11:20:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 16:39:38
+ */
 import React from "react";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
 import "./WorkDetailCrumb.scss";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 const WorkDetailCrumb = (props) => {
-    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId,
-        versionId, sprintId
+    const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId,versionId, sprintId
      } = props;
+
     const isDetail = () => {
         let isView = false;
         if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"

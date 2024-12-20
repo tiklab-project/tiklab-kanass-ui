@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-18 17:34:22
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
@@ -12,7 +12,7 @@ import { Graph } from '@antv/x6';
 import "./StagelineMap.scss";
 // import "./Epic.scss"
 import RowScroll from "./RowScroll";
-import ColScroll from "./CoLScroll"
+import ColScroll from "./ColScroll"
 import { withRouter } from "react-router";
 import dayjs from 'dayjs';
 import { useDebounce } from "../../../common/utils/debounce";
@@ -23,6 +23,7 @@ import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModa
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,

@@ -1,3 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-20 15:34:42
+ * @Description: 迭代设置接口
+ */
+
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"
 

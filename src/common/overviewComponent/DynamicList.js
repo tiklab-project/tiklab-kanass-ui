@@ -1,12 +1,18 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 14:08:20
+ * @Description: 动态列表
+ */
+
 import React from "react";
 import "./DyncmicList.scss";
-import { Empty } from "antd";
-import DyncmicItem from "./DynamicItem"
 import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
 import { observer } from "mobx-react";
 import ProjectEmpty from "../component/ProjectEmpty";
 const DyncmicList = (props) => {
-    const {logList, goDynamicList, goOpLogDetail} = props;
+    const {logList, goDynamicList} = props;
     return (
         <div className="dynamic-box">
         <div className="box-title">

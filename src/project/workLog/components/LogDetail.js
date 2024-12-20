@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-07-28 16:55:28
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-18 09:46:31
+ * @LastEditTime: 2024-12-18 17:37:38
  */
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "antd";
@@ -22,15 +22,14 @@ const LogDetail = (props) => {
     const [logDetail, setLogDetail] = useState()
     // 用时
     const [takeupTime, setTakeupTime] = useState()
-
+    // 剩余用时
     const [surplusTime, setSurplusTime] = useState()
     const [isCustomSurplusTime, setIsCustomSurplusTime] = useState(false)
-    // 修改日志的字段key
-    const [fieldName, setFieldName] = useState("")
     // 日志内容
     const [workContent, setWorkContent] = useState()
-
+    
     const [workItem, setWorkItem] = useState()
+    // 进度
     const [progressPercent, setProgressPercent] = useState(0)
     const [overPercent, setOverPercent] = useState(0)
     const [edit, setEdit] = useState(false)
