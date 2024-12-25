@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2022-01-18 18:28:57
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 09:18:04
+ * @LastEditTime: 2024-12-25 15:45:58
  */
 import React,{useEffect, useRef} from "react";
 
@@ -37,6 +37,7 @@ const CowScroll =(props)=> {
     }
 
     useEffect(() => {
+        // 添加鼠标监听事件
         const handleWheel = (e) => {
             const scrollSlider = colScrollRef.current;
             const boxScroll = boxColScrollRef.current
@@ -72,7 +73,9 @@ const CowScroll =(props)=> {
         }
     }, [colScrollRef.current])
 
-    
+    /**
+     * 拖拽滚动轴
+     */
     const colScroll = () => {
         const scrollSlider = colScrollRef.current;
         const boxScroll = boxColScrollRef.current

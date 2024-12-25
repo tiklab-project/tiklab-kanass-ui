@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-01-15 14:34:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:37:19
+ * @LastEditTime: 2024-12-25 15:53:16
  */
 import React, { useState, useEffect, useImperativeHandle, Fragment } from "react";
 import { Form, Input, Select, DatePicker, message } from "antd";
@@ -48,7 +48,9 @@ const WorkAddPage = (props) => {
         form.setFieldsValue({
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
+        // 获取自定义表单字段
         getForm(workType.workType?.form?.id)
+
         getEachWorkType()
 
 
@@ -58,6 +60,8 @@ const WorkAddPage = (props) => {
         if (!projectId) {
             findProjectList();
         }
+
+        // 获取事项优先级
         findPriority().then(res => {
             if (res.code === 0) {
                 form.setFieldsValue({
@@ -65,14 +69,12 @@ const WorkAddPage = (props) => {
                 })
             }
         });
-        // getWorkTypeList({ projectId: projectId });
 
         return;
     }, [])
 
     /**
-     * 
-     * @param {*} project 
+     * 获取不同的事项类型的类型的选项，比如缺陷类型，需求类型 
      */
     const getEachWorkType = () => {
         switch (workType.workType.code) {
@@ -204,10 +206,12 @@ const WorkAddPage = (props) => {
         findFormConfig({ id: id })
     }
 
+    // 选择项目
     const selectProject = (value, option) => {
         getProjectValue(option.project)
     }
 
+    //提交表单
     const onFinish = () => {
         form.validateFields().then((values) => {
             console.log(values)
@@ -267,12 +271,7 @@ const WorkAddPage = (props) => {
                                 }
                             }
                         }
-
-
-
                     })
-
-
                 } else {
                     message.error({
                         content: '添加失败',
@@ -288,7 +287,7 @@ const WorkAddPage = (props) => {
         })
     };
 
-
+    // 暴露方法给父级组件
     useImperativeHandle(workAddPageRef, () => ({
         submit: onFinish,
         onReset: onReset
@@ -318,16 +317,28 @@ const WorkAddPage = (props) => {
 
     const [newWorkItem, setNewWorkItem] = useState();
 
+    /**
+     * 修改值
+     * @param {字段值} changedValues 
+     */
     const changeWorkItem = (changedValues) => {
         setNewWorkItem({ ...newWorkItem, ...changedValues })
         setIsEditStart(true)
     }
 
+    /**
+     * 修改内容
+     * @param {内容} value 
+     */
     const changeDesc = (value) => {
         setSlateValue(value)
         setIsEditStart(true)
     }
-
+    
+    /**
+     * 搜索计划关键字
+     * @param {搜索关键字} value 
+     */
     const searchStage = (value) => {
         console.log(value)
         findStageList({ projectId: projectId, stageName: value })

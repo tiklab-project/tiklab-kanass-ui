@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 15:34:37
+ * @LastEditTime: 2024-12-25 15:40:39
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
@@ -68,6 +68,10 @@ const SprintBasicInfo = props => {
         findAllSprintState()
         return;
     }, [])
+
+    /**
+     * 初始化迭代信息
+     */
     const info = () => {
         findSprint(sprintId).then((response) => {
             if (response.code === 0) {

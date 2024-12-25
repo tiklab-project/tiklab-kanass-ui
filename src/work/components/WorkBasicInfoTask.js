@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 任务事项详情页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-01-15 14:34:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-25 16:24:08
+ */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
@@ -26,7 +34,6 @@ const { Dragger } = Upload;
 
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
-    // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const exFormRef = useRef();

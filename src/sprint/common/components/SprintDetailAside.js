@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-16 10:57:23
+ * @LastEditTime: 2024-12-23 11:19:33
  */
 
 import React, { Fragment, useState, useEffect, useRef } from 'react';
@@ -28,6 +28,7 @@ const SprintDetailAside = (props) => {
     // 当前选中路由
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;
+    console.log("aside", sprintId)
     const projectId = props.match.params.id;
 
     const [isShowText, SetIsShowText] = useState(false)

@@ -1,7 +1,14 @@
+/*
+ * @Descripttion: 详情页面事项列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-01-15 14:34:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-25 15:46:44
+ */
 import React, { useRef, useState, useEffect } from 'react';
 import { observer, inject } from "mobx-react";
 import WorkListHead from "./WorkListHead";
-import WorkListFilter from "./WorkListFilter";
 import "./WorkAside.scss"
 import { Empty, Spin } from 'antd';
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
@@ -11,7 +18,6 @@ import ImgComponent from '../../common/imgComponent/ImgComponent';
 import WorkFilterType from './WorkFilterType';
 import WorkFilterQuick from './WorkFilterQuick';
 const WorkAside = (props) => {
-    // 选择事务
     const workAside = useRef()
     const workAsideList = useRef()
     const { workStore } = props;
@@ -91,6 +97,11 @@ const WorkAside = (props) => {
         }
     }
 
+    /**
+     * 翻页
+     * @param {*} page 
+     * @returns 
+     */
     const changePage = (page) => {
         if (page > totalPage || page < 1) {
             return
@@ -101,6 +112,7 @@ const WorkAside = (props) => {
                     currentPage: page,
                 }
             }
+            // 翻页之后右侧显示翻译之后第一个事项的内容
             setWorkDeatilInList(workStore, values)
         }
     }
@@ -110,6 +122,7 @@ const WorkAside = (props) => {
         return expandedTree.some(item => item === key)
     }
 
+    // 展开或者关闭上下级
     const setOpenOrClose = async key => {
         if (isExpandedTree(key)) {
             setExpandedTree(expandedTree.filter(item => item !== key))
@@ -263,6 +276,9 @@ const WorkAside = (props) => {
         setWorkAside(scrollTop)
     }
 
+    /**
+     * 刷新当前页面
+     */
     const refresh = () => {
         const values = {
             pageParam: {

@@ -4,11 +4,10 @@
  * @Author: 袁婕轩
  * @Date: 2021-01-15 14:34:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:37:19
+ * @LastEditTime: 2024-12-25 15:46:44
  */
 import React, { useImperativeHandle, useState, useRef, useEffect } from "react";
 import { Modal, message } from 'antd';
-// import "../../common/components/project.scss";
 import WorkAddPage from "./WorkAddPage";
 import "./WorkAddModel.scss"
 import { observer, inject } from "mobx-react";
@@ -55,9 +54,7 @@ const WorkAddModel = (props) => {
 
     return (
         <Modal
-            // title= {"添加事项"} 
             visible={showAddModel}
-            // visible = {true}
             width={800}
             className="work-addmodel"
             destroyOnClose={true}

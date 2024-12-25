@@ -29,7 +29,7 @@ const Sprintdetail = (props) => {
     const projectId = props.match.params.id;
     const project = JSON.parse(localStorage.getItem("project"));
     const sprintId = props.match.params.sprint;
-
+    console.log("layout", sprintId)
     useEffect(() => {
         setSearchConditionNull()
         findSprint({ sprintId: sprintId }).then(res => {

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:23:40
+ * @LastEditTime: 2024-12-23 09:35:35
  */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -22,6 +22,8 @@ import { observer } from "mobx-react"
 import "./assets/index";
 import { useVersion } from "tiklab-eam-ui/es/utils";
 import { privilegeStores } from "tiklab-privilege-ui/es/store";
+import { InitInstallProvider } from 'tiklab-eam-ui';
+
 enableAxios()
 const Index = observer((props) => {
     console.log(window.location.search)
@@ -38,17 +40,20 @@ const Index = observer((props) => {
         ...privilegeStores,
         ...orgStores
     }
-    
+
     return (
-        <Provider {...allStore}>
-            <ConfigProvider locale={zhCN}>
-                <HashRouter>
-                    {
-                        renderRoutes(Routers)
-                    }
-                </HashRouter>
-            </ConfigProvider>
-        </Provider>
+        <InitInstallProvider bgroup={'kanass'}>
+            <Provider {...allStore}>
+                <ConfigProvider locale={zhCN}>
+                    <HashRouter>
+                        {
+                            renderRoutes(Routers)
+                        }
+                    </HashRouter>
+                </ConfigProvider>
+            </Provider>
+        </InitInstallProvider>
+
     )
 });
 

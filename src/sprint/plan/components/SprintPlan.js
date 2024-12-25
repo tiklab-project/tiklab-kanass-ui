@@ -4,11 +4,11 @@
  * @Author: 袁婕轩
  * @Date: 2021-11-25 16:01:57
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 15:31:55
+ * @LastEditTime: 2024-12-25 15:28:02
  */
 import React, { useEffect, useState } from "react";
 import "../components/sprintPlan.scss";
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
@@ -17,7 +17,7 @@ import SprintPlanStore from "../stores/SprintPlanStore";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import { useDebounce } from "../../../common/utils/debounce";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
-import { Modal, message } from "antd";
+import { Modal } from "antd";
 import Button from "../../../common/button/Button";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 
@@ -46,6 +46,7 @@ const SprintPlan = (props) => {
     const [isMove, setIsMove] = useState(false)
     // 拖放效果
     useEffect(() => {
+        // 获取没被规划的事项列表
         getNoPlanWorkList(
             {
                 projectId: projectId,
@@ -59,6 +60,8 @@ const SprintPlan = (props) => {
                 }
             }
         )
+
+        // 获取当前迭代的事项列表
         getWorkList(
             {
                 projectId: projectId,
@@ -81,16 +84,20 @@ const SprintPlan = (props) => {
         return
     }, [])
 
-
-
-
+    /**
+     * 抓取事项
+     */
     const moveSprintPlanItem = () => {
         const dragEvent = event.target
         setDragEvent(dragEvent)
         dragEvent.style.background = "#d0e5f2";
-
     }
 
+    /**
+     * 开始移动
+     * @param {被移动事项id} id 
+     * @param {事项当前所属迭代id} sprintId 
+     */
     const moveStart = (id, sprintId) => {
         console.log(1)
         setMoveWorkId(id)
@@ -105,23 +112,33 @@ const SprintPlan = (props) => {
         event.preventDefault();
     }
 
+    /**
+     * 放置事项
+     * @param {被分配的迭代id} Sid 
+     */
     const changeSprintPlan = (Sid) => {
         event.preventDefault();
         console.log(3)
         setIsDraggable(true)
         setActionType("update")
         setEndSprintId(Sid)
+        // 判断被移动事项是否有下级事项
         haveChildren({ id: moveWorkId }).then(res => {
             if (res.code === 0) {
                 if (res.data) {
                     setShowModal(true)
                 } else {
+                    // 没有下级，只移动一个事项
                     moveOneWorkItem(Sid)
                 }
             }
         })
     }
 
+    /**
+     * 被移动事项没有下级，只移动一个事项
+     * @param {*} Sid 
+     */
     const moveOneWorkItem = (Sid) => {
         let params = {
             startId: moveWorkId,
@@ -152,6 +169,10 @@ const SprintPlan = (props) => {
         setShowModal(false)
     }
 
+    /**
+     * 移动当前事项以及下级事项
+     * @param {迭代id} Sid 
+     */
     const moveWorkItemList = (Sid) => {
         let params = {
             startId: moveWorkId,
@@ -188,12 +209,17 @@ const SprintPlan = (props) => {
         setShowModal(false)
     }
 
+    /**
+     * 删除事项的迭代关联
+     * @param {*} Sid 
+     */
     const delSprintPlan = (Sid) => {
         console.log(3)
         event.preventDefault();
         setIsDraggable(true)
         setActionType("delete")
         setEndSprintId(Sid)
+        // 判断事项有没有下级，有的话一块删除与迭代的关联
         haveChildren({ id: moveWorkId }).then(res => {
             if (res.code === 0) {
                 if (res.data) {
@@ -205,6 +231,11 @@ const SprintPlan = (props) => {
         })
 
     }
+
+    /**
+     * 删除当前事项与迭代的关联
+     * @param {迭代id} Sid 
+     */
     const delSprintOnePlan = (Sid) => {
         event.preventDefault();
         let params = {
@@ -237,6 +268,10 @@ const SprintPlan = (props) => {
         setShowModal(false)
     }
 
+     /**
+     * 删除当前事项以及下级与迭代的关联
+     * @param {迭代id} Sid 
+     */
     const delListSprintPlan = (Sid) => {
         event.preventDefault();
         let params = {
@@ -275,6 +310,9 @@ const SprintPlan = (props) => {
         setShowModal(false)
     }
 
+    /**
+     * 只规划当前事项，不包括下级事项
+     */
     const submitOne = () => {
         if (actionType === "delete") {
             delSprintOnePlan(endSprintId)
@@ -284,6 +322,9 @@ const SprintPlan = (props) => {
         }
     }
 
+    /**
+     * 移动事项以及事项的下级
+     */
     const submitList = () => {
         setIsDraggable(true)
         if (actionType === "delete") {
@@ -294,6 +335,10 @@ const SprintPlan = (props) => {
         }
     }
 
+
+    /**
+     * 筛选未被规划事项
+     */
     const handleChange = useDebounce((field, value) => {
         getNoPlanWorkList({
             [field]: value,
@@ -304,6 +349,9 @@ const SprintPlan = (props) => {
         })
     }, [500])
 
+    /**
+     * 筛选已经规划的事项
+     */
     const findSprintWorkItem = useDebounce((field, value) => {
         getWorkList({
             [field]: value,
@@ -330,6 +378,9 @@ const SprintPlan = (props) => {
         props.history.push(`${pathname}/${work.id}`)
     }
 
+    /**
+     * 加载未被规划的下一页事项
+     */
     const changeNoPlanSprintPage = () => {
         const data = {
             pageParam: {
@@ -344,6 +395,9 @@ const SprintPlan = (props) => {
         })
     }
 
+    /**
+     * 加载当前迭代的下一页事项
+     */
     const changePlanSprintPage = () => {
         const data = {
             pageParam: {
@@ -357,6 +411,9 @@ const SprintPlan = (props) => {
             }
         })
     }
+
+
+
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -373,6 +430,10 @@ const SprintPlan = (props) => {
         return name;
     }
 
+    /**
+     * 删除事项
+     * @param {删除事项接口方法} deleteWorkItem 
+     */
     const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(res => {
             if (res.code === 0) {

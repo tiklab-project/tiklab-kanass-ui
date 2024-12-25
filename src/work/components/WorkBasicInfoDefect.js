@@ -1,5 +1,13 @@
+/*
+ * @Descripttion: 缺陷事项详情页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-01-15 14:34:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-25 16:59:31
+ */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
+import { Form, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
@@ -7,7 +15,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import Button from "../../common/button/Button";
-import { DocumentEditor, PreviewEditor, EditorBig, EditorBigContent } from "tiklab-slate-ui";
+import { DocumentEditor, PreviewEditor} from "tiklab-slate-ui";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css";
 import { useDebounce } from "../../common/utils/debounce";
@@ -15,9 +23,9 @@ import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
-import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
+import { changeWorkItemList, changeWorkItemParent } from "./WorkGetList";
 import StageStore from "../../project/stage/store/StageStore";
-import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import { updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
@@ -26,7 +34,6 @@ const { Dragger } = Upload;
 
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
-    // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const exFormRef = useRef();
@@ -44,14 +51,13 @@ const WorkBasicInfo = (props) => {
         labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
         wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
-    const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
-        createCheckboxSelectItemRelation, deleteWorkAttach, findStateNodeUserFieldList, findFlow, permissionFieldList
+        userList, searchWorkById,  findChildrenLevel, stageList, createSelectItemRelation,
+        createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList
     } = workStore;
 
 
@@ -68,8 +74,11 @@ const WorkBasicInfo = (props) => {
     const [parentList, setParentList] = useState();
     const [preWorkList, setPreWorkList] = useState();
 
-    const userId = getUser().userId;
 
+    /**
+     * 初始化事项的信息
+     * @param {事项信息} workInfo 
+     */
     const initForm = (workInfo) => {
         if (workInfo) {
             detailForm.setFieldsValue({
@@ -186,6 +195,11 @@ const WorkBasicInfo = (props) => {
             }
         }
     }
+
+    /**
+     * 删除附件
+     * @param {附件id} id 
+     */
     const deleteAttach = (id) => {
         deleteWorkAttach(id).then(() => {
             findWorkAttachList(workId)
@@ -712,7 +726,6 @@ const WorkBasicInfo = (props) => {
 
     return (
         <div className="work-info">
-            {contextHolder}
             <div className="other-title">
                 基本信息:
             </div>

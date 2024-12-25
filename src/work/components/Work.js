@@ -2,7 +2,7 @@
  * @Author: 袁婕轩
  * @Date: 2024-07-01 18:13:18
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:36:43
+ * @LastEditTime: 2024-12-25 15:46:36
  * @Description: 事项页面
  */
 
@@ -20,6 +20,11 @@ const Work = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+
+    /**
+     * 根据页面显示类型加载页面
+     * @returns 页面
+     */
     const view = () => {
         let dom = <WorkTable />;
         switch (workShowType) {

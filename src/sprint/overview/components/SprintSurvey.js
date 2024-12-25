@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 15:31:22
+ * @LastEditTime: 2024-12-25 15:00:27
  */
 import React, { useEffect, useState } from "react";
 import "../components/sprintSurvey.scss";
@@ -69,12 +69,15 @@ const SprintSurvey = (props) => {
                 }
             })
         })
-
+        
+       // 查找版本下全部、待办、已完成、已逾期的事项个数
         findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
             setPercent(percent * 100 ? percent.toFixed(2) * 100 : 0)
         })
+
+        //按照时间顺序查找日志
         findLogPageByTime({data: { sprintId: sprintId }})
 
         findtodopage({ userId: masterId, sprintId: sprintId, status: 1, pageSize: 10 })
