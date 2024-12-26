@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项详情页面的版本选择下拉框
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:37:00
+ */
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkDetailVersionSelect.scss"
 import { Empty, Modal } from "antd";
@@ -14,6 +22,9 @@ const WorkDetailVersionSelect = (props) => {
     const [relationVersionList, setRelationVersionList] = useState();
     const [showModal, setShowModal] = useState(false);
 
+    /**
+     * 监听鼠标事件，关闭版本选择下拉框
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -22,11 +33,17 @@ const WorkDetailVersionSelect = (props) => {
 
     }, [showDropdown])
 
+    /**
+     * 获取版本列表
+     */
     useEffect(() => {
         getWorkVersionList();
         return;
     }, [])
 
+    /**
+     * 获取版本列表
+     */
     const getWorkVersionList = () => {
         findWorkVersionList(workId).then(res => {
             if (res.code === 0) {
@@ -35,6 +52,9 @@ const WorkDetailVersionSelect = (props) => {
         })
     }
 
+    /**
+     * 关闭版本选择下拉框
+     */
     const closeModal = (e) => {
         if (!dropdownRef.current) {
             return;
@@ -44,6 +64,10 @@ const WorkDetailVersionSelect = (props) => {
             setShowMoreDropdown(false)
         }
     }
+
+    /**
+     * 显示更多版本
+     */
     const showMore = (e) => {
         e.stopPropagation();
         setShowMoreDropdown(true);
@@ -53,6 +77,10 @@ const WorkDetailVersionSelect = (props) => {
             return
         }
     }
+
+    /**
+     * 显示版本选择下拉框
+     */
     const showSelect = (e) => {
         e.stopPropagation();
         setShowMoreDropdown(false)
@@ -62,6 +90,9 @@ const WorkDetailVersionSelect = (props) => {
 
     }
 
+    /**
+     * 更新事项的版本属性
+     */
     const updateWork = (item) => {
         setSelectVersion(item)
         haveChildren({ id: workId }).then(res => {
@@ -75,6 +106,9 @@ const WorkDetailVersionSelect = (props) => {
         })
     }
 
+    /**
+     * 更新事项的版本属性
+     */
     const updateWorkItem = (type, versionId) => {
         let params = {
             id: workId,

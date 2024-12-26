@@ -1,5 +1,12 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:47:55
+ * @Description: 添加关联事项弹窗
+ */
 import React, { useEffect, useState, useRef } from "react";
-import { Modal, Table, Select, message, Input, Empty } from 'antd';
+import { message } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkRelationAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -9,13 +16,17 @@ import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
-    const tenant = getUser().tenant;
+
     const { workTypeList, workId, workStatusList, getWorkStatus } = workStore;
     const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
     const relationAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
-    const [pageSize, setPageSize] = useState(20)
+    const [pageSize, setPageSize] = useState(20);
+
+    /**
+     * 获取关联事项列表
+     */
     useEffect(() => {
         getWorkRelationList({
             projectId: projectId,
@@ -31,6 +42,9 @@ const WorkRelationAddModal = (props) => {
         return;
     }, [])
 
+    /**
+     * 关闭弹窗
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -38,6 +52,9 @@ const WorkRelationAddModal = (props) => {
         }
     }, [selectChild])
 
+    /**
+     * 关闭弹窗
+     */
     const closeModal = (e) => {
         if (!relationAdd.current) {
             return;
@@ -47,6 +64,9 @@ const WorkRelationAddModal = (props) => {
         }
     }
 
+    /**
+     * 创建关联事项
+     */
     const creatWorkRelation = (id) => {
         addWorkRelation({ id: id, workItem: workId }).then((res) => {
             if (res.code === 0) {
@@ -57,7 +77,9 @@ const WorkRelationAddModal = (props) => {
         })
     }
 
-    // 搜索事项
+    /**
+     * 根据状态搜索未被关联事项
+     */
     const searchUnselectWorkRelationByStatus = (key, value) => {
         setCurrent(1)
         setPageSize(20)
@@ -72,6 +94,9 @@ const WorkRelationAddModal = (props) => {
         )
     }
 
+    /**
+     * 根据事项名称搜索未被关联事项
+     */
     const searchUnselectWorkRelationByTitle = (value) => {
         setCurrent(1)
         setPageSize(20)
@@ -86,6 +111,10 @@ const WorkRelationAddModal = (props) => {
             }
         )
     }
+
+    /**
+     * 加载下一页
+     */
     const loadNextPage = () => {
         setCurrent(current + 1)
         const params = {

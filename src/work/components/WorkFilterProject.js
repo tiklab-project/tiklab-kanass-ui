@@ -1,4 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+/*
+ * @Descripttion: 事项详情页面的项目筛选组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:19:27
+ */
+import React, { useEffect} from "react";
 import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
@@ -6,15 +14,20 @@ import "./WorkFilterProject.scss";
 import { searchWorkList } from "./WorkSearch";
 
 const WorkFilterProject = (props) => {
-    const { workStore, heightFilter } = props;
+    const { workStore } = props;
     const { findProjectList, projectList } = workStore;
 
-
+    /**
+     * 获取项目列表
+     */
     useEffect(() => {
         findProjectList()
         return;
     }, [])
 
+    /**
+     * 选择项目
+     */
     const selectChange = (value) => {
         if(value){
             search({
@@ -36,11 +49,12 @@ const WorkFilterProject = (props) => {
         
     }
 
+    /**
+     * 搜索事项
+     */
     const search = values => {
         searchWorkList(workStore, values)
     }
-
-
 
     return (<div className="work-project-filter">
         <SelectSimple name="projectId"

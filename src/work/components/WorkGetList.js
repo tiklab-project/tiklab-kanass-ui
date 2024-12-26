@@ -1,4 +1,8 @@
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
+
+/**
+ * 根据不同的页面，获取不同的事项列表
+ */
 const finWorkList = (router, workStore, params) => {
     const setValue = () => {
         let type = "";
@@ -27,7 +31,9 @@ const finWorkList = (router, workStore, params) => {
     setValue();
 }
 
-
+/**
+ * 获取事项列表
+ */
 const goWorkItem = (type, workStore, params) => {
     const { sprintId, versionId, stageId, projectId, quickFilter } = params;
     const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
@@ -162,6 +168,9 @@ const changeWorkItemParent = (originalArray, newParentId, workItem) => {
 
 }
 
+/**
+ * 更新树路径
+ */
 const updateTreePath = (newWorkItem) => {
     const id = newWorkItem.id;
     const treePath = id + ";" + newWorkItem.treePath
@@ -170,6 +179,9 @@ const updateTreePath = (newWorkItem) => {
     })
 }
 
+/**
+ * 删除旧的子节点
+ */
 const deleteOldChildren = (originalArray, workItemId) => {
     let deletedNode = null;
 
@@ -224,6 +236,9 @@ const addNewParentChildren = (originalArray, newParentId, workItem) => {
 
 }
 
+/**
+ * 更改事项列表中被修改的事项的信息
+ */
 const changeWorkItemList = (originalArray, workItem) => {
     originalArray.forEach((item, index) => {
         if (item.id === workItem.id) {

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-13 11:20:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:39:38
+ * @LastEditTime: 2024-12-26 14:31:23
  */
 import React from "react";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
@@ -24,6 +24,9 @@ const WorkDetailCrumb = (props) => {
         return isView;
     }
 
+    /**
+     * 返回事项列表
+     */
     const goWorkList = () => {
         if (props.match.path === "/project/:id/work/:workId") {
             props.history.push(`/project/${projectId}/workitem`)
@@ -37,11 +40,17 @@ const WorkDetailCrumb = (props) => {
 
     }
 
+    /**
+     * 关闭事项详情抽屉
+     */
     const closeDrawer = () => {
         setIsModalVisible(false)
         setWorkId(0)
     }
 
+    /**
+     * 点击面包屑，返回上级事项
+     */
     const goCrumWork = (index, id) => {
         const lastCrum = detailCrumbArray[detailCrumbArray.length - 1];
         if (lastCrum.type === "flow") {

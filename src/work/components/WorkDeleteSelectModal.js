@@ -1,16 +1,22 @@
-
+/*
+ * @Descripttion: 删除事项下拉框
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:31:54
+ */
 import { inject, observer } from "mobx-react";
 import { Dropdown, Menu, Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./WorkDeleteSelectModal.scss"
 const WorkDeleteSelectModal = (props) => {
-    const { getPopupContainer, delectCurrentWorkItem, setDeleteSelectModal, 
-        deleteSelectModal, haveChildren, workId, setWorkId, workStore } = props;
+    const { getPopupContainer, delectCurrentWorkItem, haveChildren, workId, setWorkId, workStore } = props;
     const {workList} = workStore;
-    const closeDeleteSelectModal = () => {
-        setDeleteSelectModal(false)
-    }
-    
+
+    /**
+     * 选择删除事项
+     */
     const selectAction = (value) => {
         setWorkId(workId)
         haveChildren({ id: workId }).then(res => {

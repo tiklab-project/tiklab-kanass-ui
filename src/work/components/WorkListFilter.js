@@ -1,6 +1,14 @@
+/*
+ * @Descripttion: 事项列表筛选组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:38:37
+ */
 
 import React, { useState, useRef, useEffect } from "react";
-import { Input, Radio, Dropdown, Menu } from "antd";
+import { Input } from "antd";
 import { withRouter } from "react-router";
 import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
@@ -25,7 +33,9 @@ const WorkListFilter = (props) => {
         return;
     }, [])
 
-  
+    /**
+     * 搜索事项
+     */
     const handleChange = (field, value) => {
         search({
             [field]: value,
@@ -36,11 +46,16 @@ const WorkListFilter = (props) => {
         })
     }
 
+    /**
+     * 搜索事项
+     */
     const search = values => {
         searchWorkList(workStore, values)
     };
 
-
+    /**
+     * 排序
+     */
     const sorter = (orderParams) => {
         searchCondition.orderParams = orderParams;
         searchCondition.pageParam = {

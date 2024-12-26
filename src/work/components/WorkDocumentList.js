@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项详情页面的文档列表
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-09-27 09:41:12
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-10-09 15:25:16
+ * @LastEditTime: 2024-12-26 15:11:44
  */
 import React, { useEffect, useRef, useState } from "react";
 import { Empty, Table } from 'antd';
@@ -26,6 +26,10 @@ const WorkDocumentList = (props) => {
     const [workDocumentList, setWorkDocumentList] = useState([])
     const [selectIds, setSelectIds] = useState()
     const [selectDocument, showSelectDocument] = useState(false);
+
+    /**
+     * 获取文档列表
+     */
     useEffect(() => {
         findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
             setWorkDocumentList([...data])
@@ -33,7 +37,9 @@ const WorkDocumentList = (props) => {
         return;
     }, [workId])
 
-    // 
+    /**
+     * 删除文档
+     */
     const delectRepository = (id) => {
         deleteWorkItemDocument({ workItemId: workId, documentId: id }).then((data) => {
             if (data.code === 0) {
@@ -43,6 +49,10 @@ const WorkDocumentList = (props) => {
             }
         })
     }
+
+    /**
+     * 跳转文档详情
+     */
     const goWikiDetail = (data) => {
         if (data.exist) {
             findSystemUrl({ name: "sward" }).then(res => {
@@ -59,6 +69,10 @@ const WorkDocumentList = (props) => {
         }
 
     }
+
+    /**
+     * 渲染文档列表
+     */
     const columns = [
         {
             title: "标题",

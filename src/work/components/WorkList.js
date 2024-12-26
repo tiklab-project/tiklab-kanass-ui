@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项列表详情视图
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-01-08 10:49:51
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-12-18 17:32:06
+ * @LastEditTime: 2024-12-26 15:40:41
  */
 import React, { useEffect, useState } from "react";
 import WorkAside from "./WorkAside";
@@ -31,6 +31,9 @@ const WorkList = (props) => {
     const versionId = props.match.params.version ? props.match.params.version : null;
     const stageId = props.match.params.stage ? props.match.params.stage : null;
 
+    /**
+     * 获取事项列表
+     */
     useEffect(() => {
         setWorkShowType("list")
         const params = {
@@ -44,6 +47,9 @@ const WorkList = (props) => {
         return;
     }, [projectId])
 
+    /**
+     * 设置事项详情页面的路由
+     */
     useEffect(() => {
         if (workId && workId.length > 0) {
             const pathname = props.match.url;
@@ -52,6 +58,9 @@ const WorkList = (props) => {
         return;
     }, [workId]);
 
+    /**
+     * 删除事项
+     */
     const deleteWork = (deleteWorkItem, removeTree) => {
         deleteWorkItem(workId).then(() => {
             // 当第当前页被删完, 总页数大于当前页
@@ -83,12 +92,13 @@ const WorkList = (props) => {
 
         })
     }
-
+    
     const delectCurrentWorkItem = () => {
         deleteWork(deleteWorkItem, removeNodeInTree)
     }
 
 
+    
     const rowSpan = {
         xs: { span: "22", offset: "1" },
         sm: { span: "22", offset: "1" },

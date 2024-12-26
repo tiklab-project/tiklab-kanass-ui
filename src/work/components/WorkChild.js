@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 子事项
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:31:42
+ */
 import React, { Fragment, useEffect, useState } from "react";
 import { Input, Table, Row, Col, message, Empty } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
@@ -38,7 +46,10 @@ const WorkChild = (props) => {
     const project = workInfo?.project;
     const projectType = project?.projectType.type;
     const path = props.match?.path;
-    console.log(path)
+
+    /**
+     * 根据父级id,查找下级事项
+     */
     useEffect(() => {
         if (workTypeCode === "epic") {
             findWorkTypeListByCode().then(res => {
@@ -51,6 +62,9 @@ const WorkChild = (props) => {
         return;
     }, [workId])
 
+    /**
+     * 获取子事项列表
+     */
     const findWorkChildList = () => {
         const params = {
             parentId: workId,
@@ -73,22 +87,22 @@ const WorkChild = (props) => {
 
         })
     }
+    
+    /**
+     * 删除子事项
+     */
     const delectChild = (id) => {
         const params = {
             id: id
         }
         deleWorkChild(params).then((res) => {
             if (res.code === 0) {
+                // 获取子事项列表
                 findWorkChildList()
-                // if (workShowType === "bodar") {
-                //     getWorkBoardList()
-                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tree") {
-                //     getWorkConditionPageTree()
-                // } else if ((workShowType === "list" || workShowType === "table") && viewType === "tile") {
-                //     getWorkConditionPage()
-                // }
+                // 获取事项及其子事项
                 findWorkItemAndChidren({ id: id }).then(res => {
                     if (res.code === 0) {
+                        // 更改列表
                         const list = changeWorkItemParent(workList, null, res.data)
                         setWorkList([...list])
                     }
@@ -97,13 +111,19 @@ const WorkChild = (props) => {
         })
     }
 
-
+    /**
+     * 跳转事项详情
+     */
     const goWorkItem = (record) => {
         setTabValue(1)
         setWorkId(record.id)
+        
+        // 设置事项详情的面包屑
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
         newDetailCrumbArray.push({ id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl })
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
+
+        // 创建最近事项
         const params = {
             name: record.title,
             model: "workItem",
@@ -113,13 +133,17 @@ const WorkChild = (props) => {
             iconUrl: record.workTypeSys.iconUrl
         }
         createRecent(params)
+
+        // 跳转事项详情
         if (props.match.path === "/project/:id/workDetail/:workId") {
             props.history.push(`/project/${project.id}/workDetail/${record.id}`)
         }
 
     }
 
-
+    /**
+     * 创建子事项
+     */
     const createChildWorkItem = () => {
         const params = {
             title: workItemTitle,
@@ -148,22 +172,26 @@ const WorkChild = (props) => {
 
         }
 
-        if (workTypeCode === "epic") {
-            params.workType = demandTypeId
-        }
+        // 创建子事项
         addWork(params).then(res => {
             if (res.code === 0) {
                 showAddChild(false)
+                // 获取子事项列表
                 findWorkChildList()
+
+                // 获取当前的工作流
                 getTransitionList(workStatusNodeId, workType?.flow?.id)
+                // 更新树形列表
                 findWorkItemAndChidren({ id: res.data }).then(res => {
 
                     if (res.code === 0) {
                         if (path === "/:id/sprint/:sprint/plan") {
                             planSprintWorkList.unshift(res.data)
+                            // 更新迭代规划列表
                             setPlanSprintWorkList(planSprintWorkList)
                         } else if (path === "/:id/version/:version/plan") {
                             planVersionWorkList.unshift(res.data)
+                            // 更新版本规划列表
                             setPlanVersionWorkList(planVersionWorkList)
                         } else {
                             const list = changeWorkItemParent(workList, workId, res.data)
@@ -176,7 +204,10 @@ const WorkChild = (props) => {
         })
     }
 
-    const updateNameByKey = (event) => {
+    /**
+     * 创建子事项
+     */
+    const createChildrenWorkItem = (event) => {
 
         if (event.keyCode === 13) {
             event.stopPropagation();
@@ -186,6 +217,9 @@ const WorkChild = (props) => {
 
     }
 
+    /**
+     * 设置事项状态样式
+     */
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -201,6 +235,10 @@ const WorkChild = (props) => {
         }
         return name;
     }
+
+    /**
+     * 列配置
+     */
     const columns = [
         {
             title: "标题",
@@ -296,7 +334,7 @@ const WorkChild = (props) => {
                         <Input
                             placeholder="输入事项名称"
                             onChange={(value) => setWorkItemTitle(value.target.value)}
-                            onKeyDown={(event) => updateNameByKey(event)}
+                            onKeyDown={(event) => createChildrenWorkItem(event)}
                         />
                         <div className="child-create-submit">
                             <div className="create-submit" onClick={() => createChildWorkItem()}>

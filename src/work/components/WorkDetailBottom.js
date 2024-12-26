@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-13 11:20:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:39:38
+ * @LastEditTime: 2024-12-26 14:31:44
  */
 import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
@@ -29,10 +29,14 @@ const WorkDetailBottom = (props) => {
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
     // 富文本内容
-
+    
+    // 事项类型     
     const [workTypeText, setWorkTypeText] = useState("事项")
+    // 任务类型
     const [taskType, setTaskType] = useState()
+    // 事项类型编码
     const workTypeCode = workInfo.workTypeCode;
+
     useEffect(() => {
         if (workInfo) {
             if (workInfo.workTypeCode) {
@@ -55,6 +59,8 @@ const WorkDetailBottom = (props) => {
                 }
             }
         }
+
+        // 如果当前是需求类型，获取任务的文本
         if (workInfo.workTypeCode === "demand") {
             findDmWorkTypeByCode({ code: "task", projectId: workInfo.project.id }).then(res => {
                 if (res.code === 0) {
@@ -65,6 +71,9 @@ const WorkDetailBottom = (props) => {
         return
     }, [workInfo])
 
+    /**
+     * 根据事项类型编码，渲染相应的事项详情
+     */
     const deatilType = () => {
         if (workInfo?.workTypeCode) {
             switch (workInfo?.workTypeCode) {

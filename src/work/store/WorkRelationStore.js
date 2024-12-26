@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:46:04
+ * @Description: 
+ */
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
 
@@ -37,7 +44,7 @@ class WorkRelationStore {
         return data;
     }
 
-    //获取已选择人员
+    //获取关联事项
     @action
 	getSelectWorkRelationList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value})

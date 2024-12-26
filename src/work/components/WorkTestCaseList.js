@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 测试用例列表
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-09-27 09:41:12
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-10-09 15:25:16
+ * @LastEditTime: 2024-12-26 17:12:12
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Empty, Table } from 'antd';
@@ -33,9 +33,11 @@ const WorkTestCaseList = (props) => {
         return;
     }, [workId])
 
-    // 
+    /**
+     * 删除事项测试用例
+     * @param {测试用例id} id 
+     */
     const delectRepository = (id) => {
-        console.log(id)
         deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
             if (data.code === 0) {
                 findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
@@ -92,6 +94,10 @@ const WorkTestCaseList = (props) => {
         }
     ];
 
+    /**
+     * 跳转测试用例详情
+     * @param {测试用例数据} record 
+     */
     const goCaseDetail = (record) => {
         if (record.exist) {
             switch (record.caseType) {
@@ -127,7 +133,11 @@ const WorkTestCaseList = (props) => {
 
     }
 
-
+    /**
+     * 跳转测试用例详情
+     * @param {测试用例类型} caseType 
+     * @param {测试用例数据} data 
+     */
     const toCaseDetail = (caseType, data) => {
         findSystemUrl({ name: "testhubo" }).then(res => {
             const testUrl = res.webUrl ? res.webUrl : res.systemUrl

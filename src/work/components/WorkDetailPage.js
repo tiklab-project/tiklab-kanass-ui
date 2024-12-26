@@ -1,8 +1,15 @@
-import React, { useRef, useImperativeHandle, useEffect, useState } from 'react';
-import { Row, Col } from 'antd';
+/*
+ * @Descripttion: 事项详情页面，用于事项详情视图
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:31:26
+ */
+import React, { useRef, useEffect } from 'react';
 import WorkDetail from "./WorkDetail";
 import "./WorkDetail.scss"
-import { observer, inject, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import WorkStore from '../store/WorkStore';
 const WorkDetailPage = (props) => {
     const { deleteWorkItem, workId, setWorkShowType } = WorkStore;

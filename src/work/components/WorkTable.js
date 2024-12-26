@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:53:32
+ * @Description: 事项列表页面
+ */
 import React, { useState, useRef, useEffect } from "react";
 import { Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu } from 'antd';
 import { observer, Provider } from "mobx-react";
@@ -10,12 +17,16 @@ import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkStore from "../store/WorkStore";
 import { finWorkList } from "./WorkGetList";
-import { removeNodeInTree, removeNodeInTreeAddChildren } from "../../common/utils/treeDataAction";
+import { removeNodeInTree } from "../../common/utils/treeDataAction";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 import { setWorkDeatilInList } from "./WorkSearch";
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { getColumn, getWorkColumn } from "./WorkTableColumn";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+
+/**
+ * 获取屏幕类型
+ */
 const getScreenType = () => {
     const width = window.innerWidth;
 
@@ -49,31 +60,11 @@ const WorkTable = (props) => {
     const [projectColums, setProjectColums] = useState([])
     const [loading, setLoading] = useState(true)
     const path = props.match.path;
-    const store = {
-        workStore: WorkStore,
-        workCalendarStore: WorkCalendarStore
-    };
 
-    const moreMenu = (record) => {
-        return <Menu onClick={() => selectWorkItem(record)}>
-            <Menu.Item key="delete">
-                <div>删除</div>
-            </Menu.Item>
-        </Menu>
-    };
-
-    const selectWorkItem = (record) => {
-        setWorkId(record.id)
-        setDeleteSelectModal(true)
-        // getHaveChildren(record.id)
-    }
-
+    
     useEffect(async () => {
+        // 设置事项列表页面类型
         setWorkShowType("table")
-        // setQuickFilterValue({
-        //     value: "all",
-        //     label: "全部"
-        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,
@@ -86,8 +77,10 @@ const WorkTable = (props) => {
         return;
     }, [projectId, sprintId, versionId, stageId])
 
-
-    const goProdetail = (record, index) => {
+    /**
+     * 跳转事项详情
+     */
+    const goWorkItemDetail = (record, index) => {
         const params = {
             name: record.title,
             model: "workItem",
@@ -107,6 +100,10 @@ const WorkTable = (props) => {
         props.history.push(`${pathname}/${record.id}`)
         setIsModalVisible(true)
     }
+
+    /**
+     * 操作列
+     */
     const actionColumn = {
         title: '操作',
         width: "60",
@@ -131,6 +128,10 @@ const WorkTable = (props) => {
 
     //  排序
     const [sortArray, setSortArray] = useState(["id"]);
+
+    /**
+     * 排序
+     */
     const sorterTable = (pagination, filters, sorter, extra) => {
 
         const setSortParams = (sorter) => {
@@ -225,14 +226,16 @@ const WorkTable = (props) => {
 
     }
 
-
+    /**
+     * 根据屏幕大小设置列
+     */
     useEffect(() => {
 
         if (props.location.pathname === "/workitem") {
-            const column = getColumn(screenCode, goProdetail, sortArray, actionColumn)
+            const column = getColumn(screenCode, goWorkItemDetail, sortArray, actionColumn)
             setProjectColums(column)
         } else {
-            const column = getWorkColumn(screenCode, goProdetail, sortArray, actionColumn)
+            const column = getWorkColumn(screenCode, goWorkItemDetail, sortArray, actionColumn)
             setProjectColums(column)
         }
     }, [screenSize, workList])
@@ -240,7 +243,9 @@ const WorkTable = (props) => {
 
 
 
-    // 改变页数
+    /**
+     * 改变页数
+     */
     const changePage = (page, pageSize) => {
         const values = {
             pageParam: {
@@ -261,8 +266,9 @@ const WorkTable = (props) => {
         }
     }
 
-
-
+    /**
+     * 删除事项
+     */
     const deleteWork = (deleteWorkItem, removeTree, workId) => {
         console.log("second", workList)
         deleteWorkItem(workId).then(() => {
@@ -282,13 +288,11 @@ const WorkTable = (props) => {
                     // 当前页被删完, 总页数等于当前页，而且是第一页
                     setWorkId(0)
                     setWorkIndex(0)
-                    const node = removeTree(workList, null, workId);
                     setIsModalVisible(false)
                 } else if (currentPage < total) {
                     setWorkDeatilInList(WorkStore)
                 }
             } else {
-                console.log("three", workList)
                 const node = removeTree(workList, null, workId);
                 if (node != null) {
                     setWorkId(node.id)
@@ -299,6 +303,10 @@ const WorkTable = (props) => {
             setWorkList([...workList])
         })
     }
+
+    /**
+     * 删除当前事项，并关闭详情弹窗
+     */
 
     const delectCurrentWorkItem = (workId) => {
         deleteWork(deleteWorkItem, removeNodeInTree, workId)

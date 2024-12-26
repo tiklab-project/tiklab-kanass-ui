@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:49:38
+ * @Description: 事项排序组件
+ */
 import React, { useEffect, useState, useRef } from "react";
 import "./WorkSort.scss";
 
@@ -7,10 +14,7 @@ const WorkSort = (props) => {
     const sortDropDown = useRef();
 
     const [isAsc, setIsAsc] = useState("desc");
-    const [sortType, setSortType] = useState({
-        value: "id",
-        title: "事项ID"
-    })
+ 
 
     const attribute = [
         {
@@ -54,6 +58,9 @@ const WorkSort = (props) => {
         }
     }, [showSortDropDown])
 
+    /**
+     * 关闭排序弹窗
+     */
     const closeModal = (e) => {
         if (!sortDropDown.current) {
             return;
@@ -63,7 +70,14 @@ const WorkSort = (props) => {
         }
     }
 
+    /**
+     * 排序数组
+     */
     let [sortArray, setSortArray] = useState([{name: "code", orderType: "desc"}]);
+
+    /**
+     * 排序
+     */
     const upDownSort = (sortName, sortType) => {
         // JSON.stringify(sortArray).indexOf()
         if(sortType === "cancel") {

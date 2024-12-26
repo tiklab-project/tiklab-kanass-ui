@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 日历月视图，暂时不用
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 13:29:29
+ */
 import React,{ useEffect, useState, useImperativeHandle } from "react";
 import { observer, inject } from "mobx-react";
 import './WorkCalendarMonth.scss';

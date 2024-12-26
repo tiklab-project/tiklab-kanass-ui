@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项评论
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-11-24 14:10:13
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-11-26 14:34:52
+ * @LastEditTime: 2024-12-26 14:31:48
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Input, Button, Empty, Pagination, Modal, Col } from "antd";
@@ -64,10 +64,13 @@ const WorkComment = (props) => {
         return;
     }, [workId])
 
-
+    /**
+     * 打开评论输入框
+     */
     const changeInput = () => {
         setIsInPut(true)
     }
+
     useEffect(() => {
         if (isInput) {
             commentInput.current.focus({

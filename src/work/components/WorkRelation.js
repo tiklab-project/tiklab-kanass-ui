@@ -1,5 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Row, Col, Empty } from 'antd';
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:58:21
+ * @Description: 事项关联
+ */
+import React, { useEffect, useState } from "react";
+import { Table, Empty } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
@@ -20,7 +27,9 @@ const WorkRelation = (props) => {
     const [addRelation, showAddRelation] = useState(false);
     const project = JSON.parse(localStorage.getItem("project"));
     
-
+    /**
+     * 获取关联事项列表
+     */
     useEffect(() => {
         if (!addRelation) {
             getSelectWorkRelationList({ workItemId: workId }).then((res) => {
@@ -38,11 +47,16 @@ const WorkRelation = (props) => {
         return;
     }, [workId, addRelation])
 
-
+    /**
+     * 删除关联事项
+     */
     const delectRelation = (id) => {
         deleWorkRelation(id)
     }
 
+    /**
+     * 跳转事项详情
+     */
     const goWorkItem = (workItem) => {
         setWorkId(workItem.id)
         const newDetailCrumbArray = getSessionStorage("detailCrumbArray");
@@ -55,9 +69,13 @@ const WorkRelation = (props) => {
             project: { id: project.id },
             projectType: { id: project.projectType.id },
         }
+        // 创建最近访问
         createRecent(params)
     }
 
+    /**
+     * 设置事项状态样式
+     */
     const setStatuStyle = (id) => {
         let name;
         switch (id) {

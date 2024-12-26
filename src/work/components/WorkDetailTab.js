@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项详情页面的tab
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:03:36
+ */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
@@ -7,10 +15,14 @@ const WorkDetailTab = (props) => {
     const {  workInfo, relationModalNum, tabValue, setTabValue} = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
-    // 富文本内容
+ 
 
     const [workTypeText, setWorkTypeText] = useState("事项")
     const workTypeCode = workInfo.workTypeCode;
+
+    /**
+     * 设置事项类型文本
+     */
     useEffect(() => {
         if (workInfo) {
             if (workInfo.workTypeCode) {
@@ -42,6 +54,9 @@ const WorkDetailTab = (props) => {
     const [showMoreTab, setShowMoreTab] = useState(false);
     const tabsDropDown = useRef();
 
+    /**
+     * 监听鼠标事件，关闭更多tab
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -49,6 +64,9 @@ const WorkDetailTab = (props) => {
         }
     }, [setShowMoreTab])
 
+    /**
+     * 关闭更多tab
+     */
     const closeModal = (e) => {
         if (!tabsDropDown.current) {
             return;
@@ -58,13 +76,18 @@ const WorkDetailTab = (props) => {
         }
     }
 
+    /**
+     * 设置更多tab
+     */
     const setTabMore = (text, value) => {
         setTabValue(value)
         setShowMoreTab(false)
         setMoreTabsNum(value)
     }
 
-
+    /**
+     * 设置更多tab数量
+     */
     const setMoreTabsNum = (tabValue) => {
         let num = 0;
         switch (tabValue) {
@@ -85,6 +108,10 @@ const WorkDetailTab = (props) => {
         }
         return num;
     }
+
+    /**
+     * 渲染事项详情页面的tab
+     */
     return (
         <div className="workitem-tabs">
             <div className={`tabs-bar ${tabValue === 1 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(1)} >详细信息</div>

@@ -1,4 +1,10 @@
-import { observable, action, extendObservable } from "mobx";
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-12-26 16:53:00
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 17:12:06
+ * @Description: 事项接口
+ */
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
 import { getUser } from "tiklab-core-ui";
@@ -27,7 +33,6 @@ export class WorkStore {
     @observable workTypeList = [];
     @observable workStatusList = [];
     @observable workInfo = [];
-    @observable workBreadCrumbText = "全部事项";
     // 快捷搜索选中值
     @observable quickFilterValue = null;
     // 默认页数，总页数
@@ -49,14 +54,7 @@ export class WorkStore {
         }
     };
 
-    // @observable stageParams = {
-    //     projectId: projectid,
-    //     orderParams: [{
-    //         name: "startTime",
-    //         orderType: "desc"
-    //     }]
-    // }
-
+    // 看板视图筛选条件
     @observable searchBorderChangepageCondition = {
         orderParams: [{
             name: "code",
@@ -104,102 +102,114 @@ export class WorkStore {
     @observable workBoardCurrentPage = [];
     @observable permissionFieldList = [];
 
-    @action
+    // 设置总个数
+    @action 
     setTotal = (value) => {
         this.total = value;
     }
     
+    // 设置甘特图视图类型，月视图或者周视图
     @action
     setArchiveView = (value) => {
         this.archiveView = value
     }
 
  
-
+    // 设置默认页数
     @action
     setDefaultCurrent = (value) => {
         this.defaultCurrent = value;
     }
+
+    // 设置事项详情面包屑
     @action
     setDetailCrumbArray = (value) => {
         this.detailCrumbArray = value
     }
 
+    // 设置保存中
     @action
     setAlertText = (value) => {
         this.alertText = value
     }
 
+    // 设置是否显示保存中
     @action
     setIsShowAlert = (value) => {
         this.isShowAlert = value
     }
 
 
+    // 设置事项列表
     @action
     setWorkList = (value) => {
         this.workList = value;
     }
     
-    @action
-    setWorkBreadCrumbText = (value) => {
-        this.workBreadCrumbText = value
-    }
-
+    // 设置编辑器内容
     @action
     setEditorContent = (value) => {
         this.editorContent = value
     }
 
+    // 设置事项id
     @action
     setWorkId = (value) => {
         this.workId = value
     }
 
-    // 获取当前事项index
+    // 设置当前事项index
     @action
     setWorkIndex = (value) => {
         this.workIndex = value
     }
 
+    // 设置事项视图类型，table，gantt，lineMap，list
     @action
     setWorkShowType = (value) => {
         localStorage.setItem("view", this.workShowType)
         this.workShowType = value
     }
 
+    // 设置事项视图类型,tree，list
     @action
     setViewType = (value) => {
         this.viewType = value
     }
 
+    // 设置看板视图分组，nogroup，userGroup
     @action
     setBoardGroup = (value) => {
         this.boardGroup = value
     }
 
+    // 设置事项类型
     @action
     setWorkType = (value) => {
         this.workType = value
     }
 
+    // 设置事项详情tab渲染的值，1，2，3，4
     @action
     setTabValue = (value) => {
         this.tabValue = value
     }
 
+    // 设置快捷搜索选中值
     @action
     setQuickFilterValue = (value) => {
         this.quickFilterValue = value
     }
 
-    // 看板视图当前事项的状态的index
+    // 设置看板视图当前事项的状态的index
+    @action
     setIndexParams = (workIndex, statusIndex) => {
         this.indexParams.workIndex = workIndex
         this.indexParams.statusIndex = statusIndex
     }
 
     // 看板视图移动位置后，列表交换
+    @action
     changeBorderList = (startBoxIndex, startWorkBoxIndex, index, targetStatusId) => {
         Object.assign(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
         this.workBoardList[index].workItemList.dataList.push(this.workBoardList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
@@ -207,11 +217,12 @@ export class WorkStore {
     }
 
     // 若调用接口失败，则还原
+    @action
     reductionWorkBoardList = (value) => {
         this.workBoardList = value
     }
 
-    //查找所有项目
+    //查找所有项目  
     @action
     findProjectList = async () => {
         const data = await Service("/project/findAllProject")
@@ -236,6 +247,7 @@ export class WorkStore {
         return data;
     }
 
+    // 根据项目id查找版本
     @action
     findVersionList = async(projectId) => {
         const params = {
@@ -252,6 +264,7 @@ export class WorkStore {
         return data;
     }
 
+    // 根据项目id查找已选择版本
     @action
     findSelectVersionList = async(projectId) => {
         const params = {
@@ -286,6 +299,7 @@ export class WorkStore {
         return data;
     }
 
+    // 根据项目id查找已选择迭代
     @action
     findSelectSprintList = async(projectid) => {
         const params = {
@@ -303,6 +317,7 @@ export class WorkStore {
         return data;
     }
 
+    // 根据项目id查找阶段
     @action
     findStageList = async(value) => {
         const stageParams = {
@@ -320,7 +335,7 @@ export class WorkStore {
         return data;
     }
 
-    //获取已选择人员
+    //获取已选择人员    
     @action
     getSelectUserList = async(projectId) => {
         const params = {
@@ -348,7 +363,7 @@ export class WorkStore {
         return data.data
     }
 
-    //获取事项列表
+    //获取事项列表  
     @action
     getWorkAllList = async(value) => {
         const data = await Service("/workItem/findAllWorkItem",value);
@@ -381,6 +396,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取看板视图事项列表 
     findChangePageWorkBoardList = async (value) => {
         // this.setSearchCondition(value)
         Object.assign(this.searchBorderChangepageCondition, value)
@@ -396,7 +412,7 @@ export class WorkStore {
         return data;
     }
 
-    // 获取人员分组的看板视图事项列表
+    // 获取人员分组的看板视图事项列表   
     findWorkUserGroupBoardList = async (value) => {
         this.setSearchCondition(value)
         const data = await Service("/workItem/findWorkUserGroupBoardList",this.searchCondition);
@@ -417,11 +433,13 @@ export class WorkStore {
         return data;
     }
 
+    // 合并搜索条件
     @action
     setSearchCondition = (value) => {
         this.searchCondition = Object.assign(this.searchCondition,  { ...value })
     }
 
+    // 设置搜索条件为空
     @action
     setSearchConditionNull = async () => {
         const that = this;
@@ -440,11 +458,7 @@ export class WorkStore {
         await setValue();
     }
 
-    /**
-     * 
-     * @param {*} value 
-     * @returns 
-     */
+    // 获取事项树形列表
     @action
     getWorkConditionPageTree = async(value) => {
 
@@ -476,6 +490,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取树形结构下各个类型的事项个数
     @action
     findWorkItemNumByWorkType = async(value) => {
         this.setSearchCondition(value)
@@ -486,6 +501,7 @@ export class WorkStore {
         return data.data;
     }
 
+    // 获取平铺结构下各个类型的事项个数
     @action
     findWorkItemNumByWorkList = async(value) => {
         this.setSearchCondition(value)
@@ -496,6 +512,7 @@ export class WorkStore {
         return data.data;
     }
     
+    // 获取快捷搜索各个类型的事项个数
     @action
     findWorkItemNumByQuickSearch = async(value) => {
         this.setSearchCondition(value)
@@ -506,6 +523,8 @@ export class WorkStore {
         return data;
     }
 
+    
+    // 获取各个状态的事项个数
     @action
     findWorkItemNumByWorkStatus = async(value) => {
         this.setSearchCondition(value)
@@ -516,16 +535,8 @@ export class WorkStore {
         return data.data;
     }
 
-    // @action
-    // getWorkItemNum = () => {
-    //     // if(this.viewType === "tile" || this.workShowType === "bodar"){
-    //     //     this.findWorkItemNumByWorkStatus()
-    //     // }
-    //     if (this.viewType === "tree" && this.workShowType !== "bodar") {
-    //         this.findWorkItemNumByQuickSearch()
-    //     }
-    // }
 
+    // 获取事项个数
     @action
     getWorkItemNum = () => {
         if(this.viewType === "tile" || this.workShowType === "bodar"){
@@ -536,6 +547,7 @@ export class WorkStore {
         }
     }
 
+    // 获取平铺的事项列表
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
@@ -556,11 +568,9 @@ export class WorkStore {
                 this.workList = data.data.dataList;
             }
             this.tableLoading = false;
-            // this.workList = data.data.dataList;
             this.currentPage = this.searchCondition.pageParam.currentPage;
             this.totalPage = data.data.totalPage;
             this.total = data.data.totalRecord;
-            // this.findWorkItemNumByWorkType()
         }
         return data;
     }
@@ -575,7 +585,7 @@ export class WorkStore {
     }
 
 
-    //添加事项列表
+    //添加事项
     @action
     addWork = async(value) => {
         const params = {
@@ -644,20 +654,17 @@ export class WorkStore {
         return data.data;
     }
 
+    // 根据id查找事项，和已关联过的迭代和版本
     @action
     findWorkItemById = async(id) => {
         const param = new FormData()
         param.append("id", id)
         const data = await Service("/workItem/findWorkItemAndSprintVersion",param);
-        // if(data.code === 0){
-        //     this.workList.unshift(data.data);
-        //     this.workList = [...this.workList]
-        //     this.total = this.total + 1
-        // }
+
         return data;
     }
 
-    // 创建事项附件
+    // 创建事项附件 
     @action
     createWorkAttach = async(params) => {
         const data = await Service("/workAttach/createWorkAttach",params);
@@ -677,6 +684,7 @@ export class WorkStore {
         return data;        
     }
 
+    // 删除事项附件
     @action
     deleteWorkAttach = async(value) => {
         const params = new FormData();
@@ -694,6 +702,7 @@ export class WorkStore {
         return data;
     }
 
+    // 删除事项及其子事项
     @action
     deleteWorkItemAndChildren = async(value) => {
         const params = new FormData()
@@ -722,7 +731,7 @@ export class WorkStore {
         return data;
     }
 
-    // 修改事项状态
+    // 修改事项状态 
     @action
     changeWorkStatus = async(value) => {
         let params = {
@@ -737,12 +746,6 @@ export class WorkStore {
         return data;
     }
 
-    // 修改字段
-    // updateWorkItem = async(value) => {
-    //     const data = await Service("/workItem/updateWorkItem",params);
-    //     return data;
-
-    // }
 
     // 修改计划日期
     changePercent = async(value) => {
@@ -814,13 +817,6 @@ export class WorkStore {
         return data;
     }
 
-
-    @action
-    setMenuFold = (index) => {
-
-        this.menuFold[index] = !this.menuFold[index]
-    }
-
     // 上传文件
     @action
     uploadFile = async() => {
@@ -855,13 +851,14 @@ export class WorkStore {
         return data;
     }
 
+    // 获取事项状态流转列表
     findTransitionList = async(value) => {
         const data = await Service("/transition/findTransitionListByBusiness", value);
         return data;
     }
 
 
-
+    // 根据事项类型code获取事项类型
     @action
     findDmWorkTypeByCode = async(value) => {
         const params = new FormData()
@@ -872,6 +869,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取状态列表
     @action
     findStateNodeList = async(value) => {
         const data = await Service("/stateNode/findQuickFilterStateNodeList", value)
@@ -879,6 +877,8 @@ export class WorkStore {
 
     }
 
+
+    // 获取逾期事项列表
     @action
     statWorkItemOverdue = async(value) => {
         let params = {
@@ -903,6 +903,7 @@ export class WorkStore {
         return data.data;
     }
 
+    // 根据id查找事项
     @action
     findWorkItem = async(value) => {
         const params = new FormData()
@@ -918,6 +919,7 @@ export class WorkStore {
 
     }
 
+    // 创建最近访问
     @action
     createRecent = async (value) => {
         const data = await Service("/recent/createRecent", value)
@@ -925,6 +927,7 @@ export class WorkStore {
 
     }
 
+    // 获取字段列表
     @action
     findFieldList = async (value) => {
         const data = await Service("/field/findFieldList", value)
@@ -940,6 +943,7 @@ export class WorkStore {
 
     }
 
+    // 获取流程列表
     @action
     findDmFlowList = async (value) => {
         const data = await Service("/dmFlow/findDmFlowList", value);
@@ -947,6 +951,7 @@ export class WorkStore {
 
     }
 
+    // 导出事项表格
     @action
     exportWorkItemXml = async () => {
         // const data = await Axios("/exportfile/exportWorkItemXml", this.searchCondition);
@@ -979,6 +984,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取事项关联的各个相关模型的个数，子事项，关联事项，评论，文档、动态，用于事项详情页面的tab的展示
     @action
     findWorkItemRelationModelCount = async (value) => {
         const params = new FormData();
@@ -988,6 +994,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取事项关联的版本
     @action
     findWorkVersionList = async (value) => {
         const params = new FormData();
@@ -996,6 +1003,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取事项关联的迭代
     @action
     findWorkSprintList = async (value) => {
         const params = new FormData();
@@ -1004,6 +1012,7 @@ export class WorkStore {
         return data;
     }
 
+    // 查看事项有几级下级事项
     @action
     findChildrenLevel = async(value) => {
         const params = new FormData();
@@ -1012,6 +1021,7 @@ export class WorkStore {
         return data;
     }
 
+    //获取事项及其子事项
     @action
     findWorkItemAndChidren = async(value) => {
         const params = new FormData();
@@ -1020,6 +1030,7 @@ export class WorkStore {
         return data;
     }
 
+    // 查看事项是否有子事项
     @action
     haveChildren = async(value) => {
         const params = new FormData();
@@ -1042,24 +1053,15 @@ export class WorkStore {
         return data;
     }
 
+    // 获取用户权限
     @action
     findUserWorkFunction = async(value) => {
         const data = await Service("/workRoleFunction/findUserWorkFunction", value)
         return data;
     }
 
-    @action
-    findStateNodeUserFieldList = async(value) => {
-        const params = new FormData();
-        params.append("userId", value.userId)
-        params.append("workId", value.workId)
-        const data = await Service("/stateNodeUserField/findStateNodeUserFieldList", params)
-        if(data.code === 0){
-            this.permissionFieldList = data.data;
-        }
-        return data;
-    }
 
+    // 获取流程
     @action
     findFlow = async(value) => {
         const params = new FormData();
@@ -1068,6 +1070,7 @@ export class WorkStore {
         return data;
     }
 
+    // 获取事项的表单字段和功能的权限列表
     @action
     findWorkItemRoleFunctionDmCode = async(value) => {
 

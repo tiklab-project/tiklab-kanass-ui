@@ -1,4 +1,14 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:48:56
+ * @Description: 搜索事项
+ */
 
+/**
+ * 搜索事项
+ */
 const searchWorkList = (workStore, values) => {
     const {workShowType, viewType, getWorkConditionPageTree, getWorkConditionPage, setWorkId, setWorkIndex, 
         getWorkBoardList, getWorkGanttListTree} = workStore;
@@ -33,6 +43,9 @@ const searchWorkList = (workStore, values) => {
     }
 }
 
+/**
+ * 在事项列表页面搜索事项
+ */
 const setWorkDeatilInList = (workStore, value, isRefresh) => {
     const { viewType, getWorkConditionPageTree, getWorkConditionPage, setWorkId, setWorkIndex} = workStore;
     if (viewType === "tree") {

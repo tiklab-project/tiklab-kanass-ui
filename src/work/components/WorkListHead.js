@@ -1,31 +1,29 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:39:56
+ * @Description: 事项列表视图顶部组件
+ */
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router";
-import { Menu } from "antd";
 import "./WorkListFilter.scss";
 import { observer, inject } from "mobx-react";
 import WorkChangeView from "./WorkChangeView";
 import "./WorkListHead.scss"
-import WorkFilterType from "./WorkFilterType";
-import WorkFilterQuick from "./WorkFilterQuick";
-import WorkFilterMaster from "./WorkFilterMaster";
-import WorkFilterProject from "./WorkFilterProject";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkCreatDropdown from "./workCreatDropdown";
-import WorkSort from "./WorkSort";
-import WorkFilterModal from "./WorkFilterModal";
 import WorkListFilter from "./WorkListFilter";
 
 const WorkListHead = (props) => {
     const { workStore, } = props;
-    const { getWorkConditionPageTree, getWorkConditionPage, setWorkShowType, setViewType,
-        workShowType, viewType, workTypeList, setWorkIndex, setWorkId, searchCondition,
-        getWorkBoardList, setWorkBreadCrumbText, getWorkStatus,
+    const { setWorkShowType, setViewType,
+        workShowType, viewType, workTypeList, getWorkBoardList, setWorkBreadCrumbText, getWorkStatus,
         getSelectUserList } = workStore;
     const projectId = props.match.params.id ? props.match.params.id : null
 
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const viewDropDown = useRef();
-    const layout = "inline";
 
     useEffect(() => {
         getWorkStatus()
@@ -45,6 +43,9 @@ const WorkListHead = (props) => {
         return
     }, [])
 
+    /**
+     * 关闭视图下拉框，暂时没有用
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -60,10 +61,6 @@ const WorkListHead = (props) => {
             setShowViewDropDown(false)
         }
     }
-
-
-
-
 
     return (
         <div className="worklist-head" >

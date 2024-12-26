@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 添加子事项
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:31:46
+ */
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
 import { Empty, message } from 'antd';
 import { observer, inject } from "mobx-react";
@@ -11,12 +19,11 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId, stageId } = props;
 
-    const { workId, workShowType, findPriority, priorityList, getWorkStatus, workStatusList,
+    const { workId, findPriority, priorityList, getWorkStatus, workStatusList,
         demandTypeId, findWorkItemAndChidren, workList, setWorkList } = workStore;
 
     const { addWorkChild, findSelectWorkItemList, getWorkChildList, selectChildToTal,
-        selectWorkChildList, findChildrenLevel, getWorkBoardList, } = workChild;
-    const tenant = getUser().tenant;
+        selectWorkChildList, findChildrenLevel } = workChild;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
 
@@ -25,7 +32,9 @@ const WorkChildAddmodal = (props) => {
     const [pageText, setPageText] = useState("加载更多")
     const [pageSize, setPageSize] = useState(20);
 
-
+    /**
+     * 获取事项列表
+     */
     useEffect(() => {
         findWorkItem({
             workPriorityIds: null,
@@ -42,6 +51,9 @@ const WorkChildAddmodal = (props) => {
         return;
     }, [])
 
+    /**
+     * 获取可选择的事项列表
+     */
     const findWorkItem = (value) => {
         const params = {
             projectId: projectId,
@@ -56,6 +68,9 @@ const WorkChildAddmodal = (props) => {
         findSelectWorkItemList(params)
     }
 
+    /**
+     * 监听鼠标事项关闭弹窗
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -72,14 +87,18 @@ const WorkChildAddmodal = (props) => {
         }
     }
 
+    /**
+     * 确定添加事项
+     */
     const determineAdd = (item) => {
         const id = item.id;
         let currentLevel = 0;
         if (treePath) {
             const parentArray = treePath.split(";")
+            // 获取当前事项的层级
             currentLevel = parentArray.length - 1;
         }
-        // 判断被添加事项有几级
+        // 判断被添加事项有几级，限制为三级
         findChildrenLevel({ id: id }).then(res => {
             if (res.code === 0) {
                 if (res.data === 2) {
@@ -107,6 +126,9 @@ const WorkChildAddmodal = (props) => {
         })
     }
 
+    /**
+     * 创建子事项
+     */
     const creatWorkChild = (item) => {
         const id = item.id;
         let params = {
@@ -123,17 +145,13 @@ const WorkChildAddmodal = (props) => {
         createChildWorkItem(params, item)
     }
 
+    /**
+     * 创建子事项
+     */
     const createChildWorkItem = (value, item) => {
-        /** 需要优化 0312 */
         addWorkChild(value).then((res) => {
             showSelectChild(false)
-            // if (workShowType === "bodar") {
-            //     getWorkBoardList()
-            // } else if (viewType === "tree") {
-            //     getWorkConditionPageTree()
-            // } else if (viewType === "tile") {
-            //     getWorkConditionPage()
-            // }
+            // 更新树形列表
             findWorkItemAndChidren({ id: value.id }).then(res => {
                 if (res.code === 0) {
                     const list = changeWorkItemParent(workList, workId, res.data)
@@ -151,6 +169,7 @@ const WorkChildAddmodal = (props) => {
                     parentId: workId
                 }
             }
+            // 获取子事项列表
             getWorkChildList(params).then(res => {
                 if (res.code === 0) {
                     setChildWorkList(res.data)
@@ -160,7 +179,9 @@ const WorkChildAddmodal = (props) => {
     }
 
 
-    // 搜索事项
+    /**
+     * 搜索未被选择的事项
+     */
     const searchUnselectWorkByStatus = (key, value) => {
         setCurrent(1)
         setPageSize(20)
@@ -173,6 +194,9 @@ const WorkChildAddmodal = (props) => {
         })
     }
 
+    /**
+     * 根据id或者事项标题搜索未被选择的事项
+     */
     const searchUnselectWorkById = (value) => {
         setCurrent(1)
         setPageSize(20)
@@ -186,6 +210,9 @@ const WorkChildAddmodal = (props) => {
         })
     }
 
+    /**
+     * 加载下一页
+     */
     const loadNextPage = () => {
         setCurrent(current + 1)
         const params = {

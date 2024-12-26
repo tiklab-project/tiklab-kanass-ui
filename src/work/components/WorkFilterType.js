@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项详情页面的类型筛选组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:40:43
+ */
 import React, { useEffect, useState, useRef } from "react";
 import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
@@ -8,12 +16,12 @@ import { searchWorkList } from "./WorkSearch";
 const WorkFilterType = (props) => {
     const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const { searchCondition, findWorkTypeDmList, tabValue, setTabValue,} = workStore;
+    const { findWorkTypeDmList, tabValue, setTabValue,} = workStore;
     const [selectWorkType, setSelectWorkType] = useState();
     const [workTypeList, setWorkTypeList] = useState();
 
     useEffect(() => {
+        // 获取事项类型列表
         findWorkTypeDmList({ projectId: projectId }).then(res => {
             if (res.code === 0) {
                 setWorkTypeList(res.data)
@@ -24,25 +32,13 @@ const WorkFilterType = (props) => {
         }else {
             setSelectWorkType(tabValue)
         }
-        
-        // findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
-        //     if (res.code === 0) {
-        //         // setWorkCustom(res.data)
-            
-        //         if (res.data.length > 0) {
-        //             setWorkTypeList(workTypeList.push(res.data))
-
-        //         }
-
-        //     }
-        // })
+ 
         return;
     }, [])
 
-
-
-   
-
+    /**
+     * 选择事项类型
+     */
     const selectType = (value, option) => {
         
         if(value){
@@ -71,6 +67,9 @@ const WorkFilterType = (props) => {
         })
     }
 
+    /**
+     * 搜索事项
+     */
     const search = values => {
         searchWorkList(workStore, values)
     };

@@ -1,9 +1,13 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:57:05
+ * @Description: 事项列表列
+ */
 import React from "react";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
-import { observer } from "mobx-react";
-
-
 
 const setStatuStyle = (id) => {
     let name;
@@ -21,7 +25,10 @@ const setStatuStyle = (id) => {
     return name;
 }
 
-const xxlColumn = (goProdetail, sortArray, actionColumn) => {
+/**
+ * 小屏的事项列表列设置
+ */
+const xxlColumn = (goWorkItemDetail, sortArray) => {
     return [
         {
             title: '序号',
@@ -31,7 +38,7 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goWorkItemDetail(record, index)}>
                 <div className="work-icon">
                     <ImgComponent
                         src={record.workTypeSys?.iconUrl}
@@ -52,7 +59,7 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goWorkItemDetail(record, index)}>
                 {text}
             </div>
         },
@@ -164,7 +171,10 @@ const xxlColumn = (goProdetail, sortArray, actionColumn) => {
     ];
 }
 
-const lgColumn = (goProdetail, sortArray, actionColumn) => {
+/**
+ * 大屏屏的事项列表列设置
+ */
+const lgColumn = (goWorkItemDetail, sortArray, actionColumn) => {
     return [
         {
             title: '序号',
@@ -174,7 +184,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goWorkItemDetail(record, index)}>
                 <div className="work-icon">
                     <ImgComponent
                         src={record.workTypeSys?.iconUrl}
@@ -194,7 +204,7 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goWorkItemDetail(record, index)}>
                 {text}
             </div>
         },
@@ -274,7 +284,10 @@ const lgColumn = (goProdetail, sortArray, actionColumn) => {
     ];
 }
 
-const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
+/**
+ * 超大屏的事项列表列设置
+ */
+const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
     return [
         {
             title: '序号',
@@ -284,7 +297,7 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goWorkItemDetail(record, index)}>
                 <div className="work-icon">
                     <ImgComponent
                         src={record.workTypeSys?.iconUrl}
@@ -304,7 +317,7 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goWorkItemDetail(record, index)}>
                 {text}
             </div>
         },
@@ -398,7 +411,10 @@ const xxlWorkColumn = (goProdetail, sortArray, actionColumn) => {
     ];
 }
 
-const lgWorkColumn = (goProdetail, sortArray, actionColumn) => {
+/**
+ * 大屏的事项列表列设置
+ */
+const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
     return [
         {
             title: '序号',
@@ -408,7 +424,7 @@ const lgWorkColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goWorkItemDetail(record, index)}>
                 <div className="work-icon">
                     <ImgComponent
                         src={record.workTypeSys?.iconUrl}
@@ -428,7 +444,7 @@ const lgWorkColumn = (goProdetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 1
             },
-            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goProdetail(record, index)}>
+            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goWorkItemDetail(record, index)}>
                 {text}
             </div>
         },
@@ -509,20 +525,35 @@ const lgWorkColumn = (goProdetail, sortArray, actionColumn) => {
     ];
 }
 
-
-const getColumn = (screenSize, goProdetail, sortArray, actionColumn) => {
+/**
+ * 设置全局事项页面的列
+ * @param {屏幕尺寸} screenSize 
+ * @param {跳转事项详情} goWorkItemDetail 
+ * @param {排序} sortArray 
+ * @param {操作列} actionColumn 
+ * @returns 
+ */
+const getColumn = (screenSize, goWorkItemDetail, sortArray, actionColumn) => {
     if (screenSize === "xxl") {
-        return xxlColumn(goProdetail, sortArray, actionColumn);
+        return xxlColumn(goWorkItemDetail, sortArray, actionColumn);
     } else {
-        return lgColumn(goProdetail, sortArray, actionColumn)
+        return lgColumn(goWorkItemDetail, sortArray, actionColumn)
     }
 }
 
-const getWorkColumn = (screenSize, goProdetail, sortArray, actionColumn) => {
+/**
+ * 设置项目内事项页面的列
+ * @param {屏幕尺寸} screenSize 
+ * @param {跳转事项详情} goWorkItemDetail 
+ * @param {排序} sortArray 
+ * @param {操作列} actionColumn 
+ * @returns 
+ */
+const getWorkColumn = (screenSize, goWorkItemDetail, sortArray, actionColumn) => {
     if (screenSize === "xxl") {
-        return xxlWorkColumn(goProdetail, sortArray, actionColumn);
+        return xxlWorkColumn(goWorkItemDetail, sortArray, actionColumn);
     } else {
-        return lgWorkColumn(goProdetail, sortArray, actionColumn)
+        return lgWorkColumn(goWorkItemDetail, sortArray, actionColumn)
     }
 }
 

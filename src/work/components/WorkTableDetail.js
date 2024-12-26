@@ -1,12 +1,12 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项详情抽屉
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-01-08 17:04:29
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 11:38:24
+ * @LastEditTime: 2024-12-26 15:57:19
  */
-import React, { useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { Row, Col } from 'antd';
 import WorkDetail from "./WorkDetail";
 import "./WorkDetail.scss"

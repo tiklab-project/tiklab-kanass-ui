@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-12-26 16:02:00
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 16:49:08
+ * @Description: 事项添加测试用例
+ */
+import React, { useEffect, useState, useRef } from "react";
 import { message, Modal, Table } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
@@ -7,21 +14,23 @@ import { SelectSimple, SelectItem } from "../../common/select";
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
     const { workId } = workStore;
-    // const {searchpro} =  projectStore;
+
     const { findTestCasePageByWorkItemId, createWorkTestCase,
         findProjectTestRepositoryList, findUnRelationWorkTestCaseList,
-        findTesthuboRepositoryUserList, unRelationWorkCondition } = workTestStore;
+        findTesthuboRepositoryUserList } = workTestStore;
 
-    const {userList,getSelectUserList } = workStore;
+    const {getSelectUserList } = workStore;
     const [selectedRow, setSelectedRow] = useState([]);
     const [testCaseList, setTestCaseList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
     const [repositoryallIdList, setRepositoryallIdList] = useState([]);
     const [repositoryValue, setRepositoryValue] = useState()
     const [testCaseUserList, setTestCaseUserList] = useState([]);
+    
     useEffect(() => {
         if (selectTestCase === true) {
             getSelectUserList(projectId)
+            //获取项目内测试用例库
             findProjectTestRepositoryList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     setRepositoryaList(res.data)
@@ -31,16 +40,17 @@ const WorkTestCaseAddmodal = (props) => {
                             list.push(item.id)
                         })
                         setRepositoryallIdList(list)
+                        //获取项目内测试用例库未关联事项的测试用例
                         findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
                                 setTestCaseList(data.data.dataList)
                             }
                         })
+                        //获取用例库作者
                         findTesthuboRepositoryUserList(list).then(res => {
                             if(res.code === 0){
                                 setTestCaseUserList(res.data)
                             }
-                            
                         })
                     }else {
                         Modal.confirm({
@@ -92,8 +102,10 @@ const WorkTestCaseAddmodal = (props) => {
     ];
 
 
-
-    // 选择知识库筛选数据
+    /**
+     * 根据用例库id筛选未关联测试用例
+     * @param {用例库id} value 
+     */
     const searchUnselectWorkRepository = (value) => {
         let params;
         if(value){
@@ -121,6 +133,10 @@ const WorkTestCaseAddmodal = (props) => {
         })
     }
 
+    /**
+     * 根据用例作者id筛选未关联测试用例
+     * @param {用例作者id} value 
+     */
     const searchUnselectUser = (value) => {
         const categoryQuery = {
             creatUserId: value.value,
@@ -151,16 +167,23 @@ const WorkTestCaseAddmodal = (props) => {
 
         })
     }
-    // 选择文档
+    
+    /**
+     * 选择测试用例
+     * @param {已选测试用例} selected 
+     * @param {已选测试用例列表} selectedRows 
+     */
     const selectWorkRepository = (selected, selectedRows) => {
         setSelectedRow(selectedRows)
     }
-    //提交用户列表
+    
+    /**
+     * 提交测试用例
+     */
     const submitWorkRepositoryList = () => {
         const workItemTestCase = [];
         if (selectedRow.length !== 0) {
             for (let i = 0; i < selectedRow.length; i++) {
-                // createWorkTestCase({id: selectedRowKeys[i],workitemId:workId })
                 workItemTestCase.push({ 
                     testCaseId: selectedRow[i].id, 
                     workItemId: workId, 
@@ -168,8 +191,10 @@ const WorkTestCaseAddmodal = (props) => {
                     projectId: projectId
                 })
             }
+            //创建事项测试用例
             createWorkTestCase(workItemTestCase).then((data) => {
                 if (data.code === 0) {
+                    //获取事项测试用例
                     findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
                         setWorkTestCaseList([...data])
                     })
@@ -255,11 +280,7 @@ const WorkTestCaseAddmodal = (props) => {
                         scroll={{x: "100%"}}
                     />
                 </div>
-
-
             </div>
-
-
         </>
     );
 };

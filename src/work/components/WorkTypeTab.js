@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-12-26 16:51:10
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 17:12:11
+ * @Description: 事项类型筛选tab
+ */
 import React, { useEffect, useState, useRef } from "react";
 import { observer, inject } from "mobx-react";
 import "./WorkTypeTab.scss";
@@ -15,12 +22,14 @@ const WorkTypeTab = (props) => {
     const [showMoreTab, setShowMoreTab] = useState(false);
     const tabsDropDown = useRef();
     useEffect(() => {
+        //获取系统内置事项类型
         findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
             if (res.code === 0) {
                 setWorkSystem(res.data)
             }
         })
 
+        //获取自定义事项类型
         findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
             if (res.code === 0) {
                 setWorkCustom(res.data)
@@ -33,6 +42,9 @@ const WorkTypeTab = (props) => {
         return;
     }, [])
 
+    /**
+     * 关闭更多事项类型弹窗
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -49,6 +61,10 @@ const WorkTypeTab = (props) => {
         }
     }
 
+    /**
+     * 选择自定义事项类型
+     * @param {事项类型} value 
+     */
     const selectCustomType = (value) => {
         setMoreTabValue(value)
         search({ workTypeId: value.id })
@@ -61,6 +77,10 @@ const WorkTypeTab = (props) => {
         setShowMoreTab(false)
     }
 
+    /**
+     * 选择事项类型
+     * @param {事项类型} value 
+     */
     const selectType = (value) => {
         if (value === "all") {
             search({ workTypeId: "" })
@@ -87,11 +107,19 @@ const WorkTypeTab = (props) => {
         }
     }
 
-    //查找事务
+    /**
+     * 搜索事项
+     * @param {搜索条件} values 
+     */
     const search = values => {
         searchWorkList(workStore, values)
     };
 
+    /**
+     * 设置事项数量
+     * @param {事项数量} num 
+     * @returns {事项数量}
+     */
     const setWorkNum = (num) => {
         let showNum;
         const isMax = Math.floor(num / 1000);

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-01-15 14:34:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-26 11:22:45
+ * @LastEditTime: 2024-12-26 17:12:10
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
@@ -61,7 +61,7 @@ const WorkBasicInfo = (props) => {
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
-        createCheckboxSelectItemRelation, deleteWorkAttach, findStateNodeUserFieldList, findFlow, permissionFieldList
+        createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList
     } = workStore;
 
     // 预估工时

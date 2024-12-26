@@ -1,14 +1,21 @@
+/*
+ * @Descripttion: 事项详情页面的高级筛选组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:40:46
+ */
 import React, { useEffect, useState, useRef } from "react";
 import { Form, DatePicker, Select } from 'antd';
 import Button from "../../common/button/Button";
 import moment from 'moment';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
-import WorkFilterQuick from "./WorkFilterQuick"
 import { finWorkList } from "./WorkGetList"
 import { searchWorkList } from "./WorkSearch";
 import WorkFilterHighItem from "./WorkFilterHighItem";
-const { RangePicker } = DatePicker;
+
 const WorkFilterHigh = (props) => {
     // 查找表单
     const [form] = Form.useForm();
@@ -31,7 +38,9 @@ const WorkFilterHigh = (props) => {
         getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList,
         versionList, setTabValue } = workStore;
 
-
+    /**
+     * 获取事项各个属性列表
+     */
     useEffect(() => {
         findPriority()
         findSprintList(projectId)
@@ -48,7 +57,9 @@ const WorkFilterHigh = (props) => {
     }, [searchCondition])
 
 
-    //查找事务
+    /**
+     * 监听表单变化
+     */
     const changeField = (changedValues, allValues) => {
         const field = Object.keys(changedValues)[0];
         let value;
@@ -127,6 +138,9 @@ const WorkFilterHigh = (props) => {
 
     };
 
+    /**
+     * 重置筛选条件
+     */
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
@@ -145,10 +159,18 @@ const WorkFilterHigh = (props) => {
         finWorkList(path, workStore, params)
     }
 
+    /**
+     * 查找事项
+     */
     const findWorkItem = (value) => {
         searchWorkList(workStore, value)
     }
+
     const dateFormat = "YYYY-MM-DD"
+
+    /**
+     * 初始化表单
+     */
     const initForm = () => {
         form.setFieldsValue({
             workStatusIds: searchCondition.workStatusIds,
@@ -163,21 +185,18 @@ const WorkFilterHigh = (props) => {
         })
     }
 
-    const isShow = (key) => {
-        const show = false;
-        const index = moreFilterValue.indexOf(key);
-        if (index > -1) {
-            show = true
-        }
-        return show;
-    }
-
+    /**
+     * 添加筛选条件
+     */
     const addFilter = (value) => {
         console.log(value)
         setMoreFilterValue(value)
     }
-    const selectArray = [
 
+    /**
+     * 隐藏的筛选条件选项
+     */
+    const selectArray = [
         { value: 'createdDate', label: '创建日期' },
         { value: 'updateDate', label: '更新日期' },
         { value: 'planStartDate', label: '计划开始日期' },
@@ -185,6 +204,7 @@ const WorkFilterHigh = (props) => {
         { value: 'workPriorityIds', label: '优先级' },
         { value: 'moduleIds', label: '所属模块' },
     ]
+
     return (
         <div className="height-filter" ref={heightFilter}>
             <Form

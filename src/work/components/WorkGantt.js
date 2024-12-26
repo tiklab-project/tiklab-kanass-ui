@@ -1,25 +1,32 @@
+/*
+ * @Descripttion: 事项详情页面的甘特图组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:32:41
+ */
 
 import React, { useEffect, useState } from "react";
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
 import { observer, Provider } from "mobx-react";
 import { Row, Col, Button } from 'antd';
-import { Empty } from "antd";
 import "./WorkGantt.scss";
 import { finWorkList } from "./WorkGetList";
 import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
-// import Gantt from "./GanttTest"
 import { withRouter } from "react-router";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import { useDebounce } from "../../common/utils/debounce";
 import { getVersionInfo } from "tiklab-core-ui"
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import setImageUrl from "../../common/utils/setImageUrl";
-import {applySubscription} from "tiklab-core-ui"
+import {applySubscription} from "tiklab-core-ui";
+
 const WorkGantt = (props) => {
     const { Gantt } = props;
-    const { workList, editWork, setWorkShowType, setQuickFilterValue, archiveView } = WorkStore;
+    const { workList, editWork, setWorkShowType, archiveView } = WorkStore;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -32,10 +39,6 @@ const WorkGantt = (props) => {
     };
     useEffect(() => {
         setWorkShowType("gantt")
-        // setQuickFilterValue({
-        //     value: "pending",
-        //     label: "我的待办"
-        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,
@@ -45,6 +48,9 @@ const WorkGantt = (props) => {
         return;
     }, [projectId])
 
+    /**
+     * 购买订阅
+     */
     const goBuy = () => {
         applySubscription("kanass")
     }

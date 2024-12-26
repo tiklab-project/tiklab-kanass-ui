@@ -1,13 +1,24 @@
+/*
+ * @Descripttion: 事项详情页面的甘特图演示组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:40:42
+ */
 
 import React from "react";
 import {  Modal, Button } from 'antd';
 import "./WorkGanttFree.scss";
 import gantt from "../../assets/images/gantt.jpg";
-// import Button from "../../common/button/Button";
-import {applySubscription} from "tiklab-core-ui"
+import {applySubscription} from "tiklab-core-ui";
+
 const WorkGanttFree = (props) => {
     const { workGanttFreeVisable, setWorkGanttFreeVisable } = props;
 
+    /**
+     * 购买订阅
+     */
     const goBuy = () => {
         applySubscription("kanass")
     }

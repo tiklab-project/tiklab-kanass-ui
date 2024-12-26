@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项详情抽屉
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-01-08 17:04:29
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 11:38:24
+ * @LastEditTime: 2024-12-26 14:31:29
  */
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react';
 import { Modal, Select, Drawer } from 'antd';
@@ -17,15 +17,24 @@ const WorkDetailDrawer = (props) => {
     const { isModalVisible, setIsModalVisible, showPage, modelRef, workStore, 
         delectCurrentWorkItem } = props;
     const { setWorkId, workShowType } = workStore;
-    
+
+    /**
+     * 打开事项详情抽屉
+     */
     const showModal = () => {
         setIsModalVisible(true);
     }
 
+    /**
+     * 暴露给父组件的方法
+     */
     useImperativeHandle(modelRef, () => ({
         showDetail: showModal
     }))
 
+    /**
+     * 监听鼠标事件，关闭事项详情抽屉
+     */ 
     useEffect(() => {
         document.addEventListener("mouseup", closeModal, false);
         return () => {
@@ -34,7 +43,9 @@ const WorkDetailDrawer = (props) => {
 
     }, [isModalVisible])
 
-
+    /**
+     * 关闭事项详情抽屉
+     */
     const closeModal = (e) => {
         if (!detailRef.current) {
             return;
@@ -64,6 +75,9 @@ const WorkDetailDrawer = (props) => {
         }
     }
 
+    /**
+     * 手动关闭事项详情抽屉
+     */
     const closeDrawer = () => {
         let pathname = props.location.pathname;
         const index = pathname.lastIndexOf("\/");

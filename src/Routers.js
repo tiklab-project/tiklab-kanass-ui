@@ -87,10 +87,8 @@ const ProjectLog = AsyncComponent(() => import("./project/workLog/components/Log
 const Work = AsyncComponent(() => import('./work/components/Work'))
 const WorkList = AsyncComponent(() => import('./work/components/WorkList'))
 const WorkTable = AsyncComponent(() => import('./work/components/WorkTable'))
-const WorkListSystem = AsyncComponent(() => import("./work/components/WorkListSystem"))
 const WorkBodar = AsyncComponent(() => import('./work/components/WorkBodar'))
 const WorkTableDetail = AsyncComponent(() => import('./work/components/WorkTableDetail'))
-const WorkDetailDrawer = AsyncComponent(() => import('./work/components/WorkDetailDrawer'))
 const WorkDetailPage = AsyncComponent(() => import('./work/components/WorkDetailPage'))
 const Milestone = AsyncComponent(() => import('./project/milestone/components/MilestoneList'))
 

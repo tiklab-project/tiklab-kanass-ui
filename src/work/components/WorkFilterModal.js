@@ -1,5 +1,12 @@
+/*
+ * @Descripttion: 事项详情页面的筛选按钮
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:17:20
+ */
 import React, { useRef, useEffect, useState } from "react";
-import { Modal, Select } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { observer, inject } from "mobx-react";
 import "./WorkAsideFilter.scss";
@@ -14,6 +21,9 @@ const WorkFilterModal = (props) => {
 
     const [filterModal, setFiltetModal] = useState()
     
+    /**
+     * 监听筛选组件的关闭
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, false);
         return () => {
@@ -21,6 +31,9 @@ const WorkFilterModal = (props) => {
         }
     }, [filterDropDownRef])
 
+    /**
+     * 关闭筛选组件
+     */
     const closeModal = (e) => {
         if (!filterDropDownRef.current) {
             return;
@@ -32,6 +45,9 @@ const WorkFilterModal = (props) => {
 
     const [listStyle, setListStyle] = useState()
 
+    /**
+     * 显示筛选组件
+     */
     const showModal = () => {
         if (workShowType === "list") {
             // setHeightFilter(workListSearch.current.clientWidth + 50);

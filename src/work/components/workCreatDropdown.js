@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 创建事项下拉选择框
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 14:31:00
+ */
 import React, { useState, useRef, useEffect } from "react";
 import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
@@ -35,11 +43,15 @@ const WorkCreatDropdown = (props) => {
         }
     }
 
+    /**
+     * 选择事项类型
+     */
     const selectAddType = (workType) => {
         setState(workType)
         workAddModel.current.setShowAddModel(true)
         setShowModal(false)
     }
+
     return (
         <div className="work-creat">
             {

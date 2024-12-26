@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import "./WorkChangeView.scss";
 import { Radio, Popconfirm } from 'antd';
@@ -13,16 +14,18 @@ import WorkGanttFree from "./WorkGanttFree";
 const WorkChangeView = (props) => {
     const { buttonType, workStore } = props;
     const { getWorkConditionPage, getWorkConditionPageTree, viewType, workShowType, setWorkShowType,
-        setViewType, setWorkId, setWorkIndex } = workStore
+        setViewType, setWorkId, setWorkIndex } = workStore;
+
+    // 视图下拉框
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
     const versionInfo = getVersionInfo();
-    const projectId = props.match.params.id;
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
-    const versionId = props.match.params.version ? props.match.params.version : null;
-    const stageId = props.match.params.stage ? props.match.params.stage : null;
-    const path = props.match.path;
+
     const [workGanttFreeVisable, setWorkGanttFreeVisable] = useState(false);
+    
+    /**
+     * 监听视图切换
+     */
     useEffect(() => {
         window.addEventListener("mousedown", closeModal, true);
         return () => {
@@ -30,6 +33,9 @@ const WorkChangeView = (props) => {
         }
     }, [showViewDropDown])
 
+    /**
+     * 关闭视图下拉框
+     */
     const closeModal = (e) => {
         if (!treeDropDown.current) {
             return;
@@ -57,13 +63,18 @@ const WorkChangeView = (props) => {
         }
     ]
 
+    /**
+     * 甘特图视图
+     */
     const ganttViewList = {
         value: "gantt",
         path: "Gantt",
         title: "甘特图"
     }
 
-
+    /**
+     * 切换视图
+     */
     const changeWorkView = (item) => {
         if (item.value === workShowType) return;
         if (item.value === "gantt") {
@@ -75,35 +86,24 @@ const WorkChangeView = (props) => {
         }
         setWorkShowType(item.value)
         setWorkId()
-        
-        // if (path.indexOf("project") > -1) {
-        //     props.history.push(`/project/${projectId}/work${item.path}`)
-        // }else if (path.indexOf("sprint") > 1) {
-        //     props.history.push(`/${projectId}/sprint/${sprintId}/work${item.path}`)
-        // }else if (path.indexOf("version") > 1) {
-        //     props.history.push(`/${projectId}/version/${versionId}/work${item.path}`)
-        // }else if (path.indexOf("stagedetail") > 1) {
-        //     props.history.push(`/${projectId}/stagedetail/${stageId}/work${item.path}`)
-        // }else {
-        //     props.history.push(`/work${item.path}`)
-        // }
 
-        
-        
-        
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)
     };
 
-    //切换平铺或者树状
+    /**
+     * 切换平铺或者树状
+     */
     const changTileOrTree = (e) => {
         const value = e.target.value
         setViewType(value)
         switch (value) {
             case "tile":
                 if (workShowType === "list") {
+                    // 获取小列表，并展示第一个事项详情
                     getPageList();
                 } else if (workShowType === "table") {
+                    // 获取列表
                     getWorkConditionPage();
                 } else if (workShowType === "gantt") {
                     const values = {
@@ -112,6 +112,7 @@ const WorkChangeView = (props) => {
                             currentPage: 1,
                         }
                     }
+                    // 获取列表
                     getWorkConditionPage(values);
                 }
                 break;
@@ -135,6 +136,10 @@ const WorkChangeView = (props) => {
         }
         setShowViewDropDown(false)
     }
+
+    /**
+     * 获取树状列表
+     */
     const getPageTree = (value) => {
         getWorkConditionPageTree(value).then((res) => {
             if (res.code === 0) {
@@ -149,6 +154,10 @@ const WorkChangeView = (props) => {
             }
         })
     }
+
+    /**
+     * 获取列表
+     */
     const getPageList = (value) => {
         getWorkConditionPage(value).then((res) => {
             if (res.code === 0) {
@@ -163,6 +172,7 @@ const WorkChangeView = (props) => {
             }
         })
     }
+    
 
     return <div className="work-change-view">
         {
@@ -201,20 +211,7 @@ const WorkChangeView = (props) => {
 
                         })
                     }
-                    {/* <div
-                        className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
-                        onClick={() => changeWorkView(ganttViewList)}
-                    >
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref={`#icon-gantt`}></use>
-                        </svg>
-                        甘特图
-                        {
-                            versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-member`}></use>
-                            </svg>
-                        }
-                    </div> */}
+
 
                     {
                         versionInfo.expired === false ?

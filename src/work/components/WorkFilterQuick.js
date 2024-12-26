@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项详情页面的快捷筛选组件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:19:25
+ */
 import React, { useEffect, useState, useRef } from "react";
 import { SelectSimple, SelectItem } from "../../common/select";
 import { withRouter } from "react-router";
@@ -7,7 +15,7 @@ import { getUser } from "tiklab-core-ui";
 import { setWorkDeatilInList } from "./WorkSearch";
 
 const WorkFilterQuick = (props) => {
-    const { workStore, heightFilter } = props;
+    const { workStore } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const { setSearchCondition, findStateNodeList, quickFilterValue, setQuickFilterValue} = workStore;
@@ -15,10 +23,6 @@ const WorkFilterQuick = (props) => {
     const userId = getUser().userId;
 
     const quickFilterList = [
-        // {
-        //     value: "all",
-        //     label: "全部"
-        // },
         {
             value: "pending",
             label: "我的待办"
@@ -37,6 +41,9 @@ const WorkFilterQuick = (props) => {
         }
     ]
 
+    /**
+     * 根据条件获取状态节点列表
+     */
     const getStateNodeList = async (value) => {
         const stateNodeList = []
         await findStateNodeList(value).then(res => {
@@ -55,6 +62,9 @@ const WorkFilterQuick = (props) => {
         return newStateNodeList;
     }
 
+    /**
+     * 选择快捷筛选条件
+     */
     const selectMenu = (value) => {
         setQuickFilterValue(value)
         if (!value) {
@@ -85,6 +95,9 @@ const WorkFilterQuick = (props) => {
 
     }
 
+    /**
+     * 获取全部事项
+     */
     const getAllWorkItem = () => {
         const initValues = {
             projectId: projectId,
@@ -102,6 +115,9 @@ const WorkFilterQuick = (props) => {
         getWorkList(initValues);
     }
 
+    /**
+     * 获取待办事项
+     */
     const getPendingWorkItem = () => {
         let initValues = {
             projectId: projectId,
@@ -120,6 +136,9 @@ const WorkFilterQuick = (props) => {
         })
     }
 
+    /**
+     * 获取已办事项
+     */
     const getEndingWorkItem = () => {
         let initValues = {
             projectId: projectId,
@@ -138,6 +157,9 @@ const WorkFilterQuick = (props) => {
         })
     }
 
+    /**
+     * 获取我创建的事项
+     */
     const getCreatWorkItem = () => {
         let initValues = {
             projectId: projectId,
@@ -154,6 +176,9 @@ const WorkFilterQuick = (props) => {
         getWorkList(initValues);
     }
 
+    /**
+     * 获取已逾期的事项
+     */
     const getOverdueWorkItem = () => {
         let initValues = {
             sprintId: sprintId,
@@ -169,6 +194,9 @@ const WorkFilterQuick = (props) => {
         getWorkList(initValues);
     }
 
+    /**
+     * 获取事项列表
+     */
     const getWorkList = (initValues) => {
         setWorkDeatilInList(workStore, initValues)
     }

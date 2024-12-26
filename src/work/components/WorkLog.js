@@ -1,5 +1,11 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:45:13
+ * @Description: 事项工时记录
+ */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Empty, Progress } from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkLog.scss";
 import WorkLogStore from "../store/WorkLogStore";
@@ -12,13 +18,11 @@ import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 
 
 const WorkLog = (props) => {
-    const [visible, setVisible] = useState(false);
-    const { workStore, closeModal, workInfo, searchWorkById } = props;
+    const { workStore, closeModal, workInfo } = props;
     const { findWorkLogPage, workLogList, deleteWorKLog, findWorkItemAndUsedTime } = WorkLogStore;
     const [progressPercent, setProgressPercent] = useState(0)
     const [overPercent, setOverPercent] = useState(0)
     const { workId } = workStore;
-    const [editLogId, setEditLogId] = useState()
     const [modalType, setModalType] = useState()
     const [logInfo, setLogInfo] = useState();
     const logAction = useRef()
@@ -30,7 +34,10 @@ const WorkLog = (props) => {
         return;
     }, [workId])
 
-    // 计算剩余时间
+
+    /**
+     * 获取事项工时，计算逾期时间比例，进度
+     */
     const getGemianTime = () => {
         findWorkItemAndUsedTime({ id: workId }).then(res => {
             if (res.code === 0) {
@@ -55,30 +62,42 @@ const WorkLog = (props) => {
 
     }
 
+    /**
+     * 获取事项工时列表
+     */
     const findWorkLogList = () => {
         findWorkLogPage({ workItemId: workId })
         getGemianTime()
     }
 
+    /**
+     * 显示添加工时弹窗
+     */
     const showModal = () => {
         setShowLogAdd(true);
-        setEditLogId()
         setModalType("add")
     };
 
     const workLog = useRef();
+
+    /**
+     * 显示编辑工时状态
+     */
     const showEdit = (item) => {
-        setEditLogId(item.id)
         setShowLogAdd(true)
         setModalType("edit")
         setLogInfo(item)
     }
 
+    /**
+     * 删除工时
+     */
     const deleteLog = (id) => {
         deleteWorKLog(id).then(res => {
             findWorkLogList()
         })
     }
+
     return (
         <Fragment>
 

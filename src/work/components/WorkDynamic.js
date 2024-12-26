@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项详情页面的动态tab页
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-03-03 16:36:24
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-03 18:23:31
+ * @LastEditTime: 2024-12-26 15:40:48
  */
 import React, { useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
@@ -12,7 +12,6 @@ import "./WorkDynamic.scss"
 import { DatePicker, Empty } from 'antd';
 import "./WorkDynamic.scss";
 import WorkDynamicStore from '../store/WorkDynamicStore';
-import DynamicListItem from "../../common/overviewComponent/DynamicItem"
 import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import PaginationCommon from "../../common/page/Page";
@@ -28,6 +27,9 @@ const WorkDynamic = (props) => {
         findLogPageByTime({ data: { workItemId: workId } })
     }, [workId])
 
+    /**
+     * 分页
+     */
     const onPageChange = (page) => {
         const params = {
             pageParam: {
@@ -39,6 +41,9 @@ const WorkDynamic = (props) => {
         findLogPageByTime(params)
     };
 
+    /**
+     * 时间范围选择
+     */
     const changeData = (dateValue) => {
         let values = {}
         if(dateValue){

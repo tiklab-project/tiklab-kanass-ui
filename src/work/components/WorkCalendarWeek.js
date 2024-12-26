@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 日历周视图，暂时不用
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 13:29:40
+ */
 import React,{ useEffect, useState, useImperativeHandle } from "react";
 import { observer, inject } from "mobx-react";
 import "./WorkCalendarWeek.scss"

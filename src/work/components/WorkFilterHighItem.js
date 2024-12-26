@@ -1,10 +1,24 @@
+/*
+ * @Descripttion: 事项详情页面的高级筛选组件的单个筛选条件
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-02-05 11:02:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 15:40:45
+ */
 import React, { useEffect, useState, useRef } from "react";
 import { Form, DatePicker, Select } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 const { RangePicker } = DatePicker;
+
+
 const WorkFilterHighItem = (props) => {
     const { heightFilter, filterKey, priorityList, moduleList, labelHidden } = props;
+
+    /**
+     * 根据选择的属性渲染对应的筛选条件的项
+     */
     const getFilterItem = () => {
         let dom = null;
         switch (filterKey) {
