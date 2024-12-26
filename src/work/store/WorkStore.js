@@ -828,7 +828,7 @@ export class WorkStore {
         return data.data;
     }
 
-    // 根据事项类型，获取自定义表单
+    // 根据事项类型，获取自定义表单字段
     findFormConfig = async(value) => {
         const param = new FormData()
         param.append("formId", value.id)
@@ -965,12 +965,14 @@ export class WorkStore {
 
     }
 
+    // 查找能被设置为上级的事项列表
     @action
     findCanBeRelationParentWorkItemList = async (value) => {
         const data = await Service("/workItem/findCanBeRelationParentWorkItemList", value)
         return data;
     }
     
+    //根据id 或者事项标题查找可被关联成的前置事项列表
     @action
     findCanBeRelationPerWorkItemList = async (value) => {
         const data = await Service("/workItem/findCanBeRelationPerWorkItemList", value)
@@ -1033,6 +1035,7 @@ export class WorkStore {
         return data;
     }
 
+    // 创建时间与字段选项的关联关系
     @action
     createCheckboxSelectItemRelation = async(value) => {
         const data = await Service("/selectItemRelation/createCheckboxSelectItemRelation", value)

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-01-15 14:34:23
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-25 15:46:44
+ * @LastEditTime: 2024-12-26 11:15:41
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Form, Spin, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
@@ -23,9 +23,9 @@ import { SelectItem, SelectSimple } from "../../common/select"
 import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
-import { changeWorkItemList, changeWorkItemParent, deleteAndQueryDeepData } from "./WorkGetList";
+import { changeWorkItemList, changeWorkItemParent } from "./WorkGetList";
 import StageStore from "../../project/stage/store/StageStore";
-import { updateTree, updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import { updateWorkTree } from "../../project/stage/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
@@ -34,50 +34,55 @@ const { Dragger } = Upload;
 
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
-    // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const exFormRef = useRef();
+
+    // 自定义字段的栅格设置
     const layoutExForm = {
         labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
         wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
 
+    // 字段的栅格设置
     const layout = {
         labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
         wrapperCol: { lg: { span: 18 }, xxl: { span: 20 } },
     };
 
+    // 选项较长的栅格设置
     const layoutBottom = {
         labelCol: { lg: { span: 3 }, xxl: { span: 2 } },
         wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
-    const [messageApi, contextHolder] = message.useMessage();
 
     const { workStore, workInfo, setWorkInfo } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
-        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, workIndex, findChildrenLevel, stageList, createSelectItemRelation,
-        createCheckboxSelectItemRelation, deleteWorkAttach, findStateNodeUserFieldList, findFlow, permissionFieldList
+        findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
+        userList, searchWorkById, findChildrenLevel, stageList, createSelectItemRelation,
+        createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList
     } = workStore;
 
-
+    // 预估工时
     const [estimateTimeValue, setEstimateTimeValue] = useState(0)
+    // 剩余工时
     const [surplusTimeValue, setSurplusTimeValue] = useState(0)
 
-
-    const [selectItemList, setSelectItemList] = useState();
-    const [eachTypeField, setEachTypeField] = useState();
-
+    // 项目id
     const projectId = props.match.params.id;
+    // 项目类型
     const projectType = workInfo?.project?.projectType.type;
 
+    // 上级事项
     const [parentList, setParentList] = useState();
+    // 前置事项
     const [preWorkList, setPreWorkList] = useState();
 
-    const userId = getUser().userId;
-
+    /**
+     * 初始化事项的信息
+     * @param {事项信息} workInfo 
+     */
     const initForm = (workInfo) => {
         if (workInfo) {
             detailForm.setFieldsValue({
@@ -121,18 +126,27 @@ const WorkBasicInfo = (props) => {
     useEffect(() => {
         // 查找flow关联的form
         const flowId = workInfo.workType.flow.id
+        // 查找流程
         findFlow({ id: flowId }).then(res => {
             if (res.code === 0) {
                 console.log(res.data)
-                // findFormConfig({ id: res.data.form.id })
             }
         })
+
+        //根据事项类型，获取自定义表单字段
         findFormConfig({ id: workInfo.workType.form.id })
+
+        // 查找附件列表
         findWorkAttachList(workInfo.id)
+
+        // 清空表单
         detailForm.resetFields()
         if (workId !== "" && workInfo) {
+            // 初始化信息
             initForm(workInfo)
         }
+
+        // 描述设置为查看模式
         setEditorType(false)
 
         const params = {
@@ -140,12 +154,15 @@ const WorkBasicInfo = (props) => {
             projectId: workInfo.project.id,
             workTypeId: workInfo.workType.id
         }
+
+        // 查找能被设置为上级的事项列表
         findCanBeRelationParentWorkItemList(params).then(res => {
             if (res.code === 0) {
                 setParentList(res.data.dataList);
             }
         })
 
+        // 根据id 或者事项标题查找可被关联成的前置事项列表
         findCanBeRelationPerWorkItemList(params).then(res => {
             if (res.code === 0) {
                 setPreWorkList(res.data.dataList);
@@ -161,6 +178,8 @@ const WorkBasicInfo = (props) => {
     const tenant = getUser().tenant;
     // 上传附件的信息
     const upload_url = env === "local" ? base_url : "";
+
+    // 上传附件
     const filesParams = {
         name: 'uploadFile',
         multiple: true,
@@ -191,6 +210,11 @@ const WorkBasicInfo = (props) => {
             }
         }
     }
+
+    /**
+     * 删除附件
+     * @param {附件id} id 
+     */
     const deleteAttach = (id) => {
         deleteWorkAttach(id).then(() => {
             findWorkAttachList(workId)
@@ -242,6 +266,7 @@ const WorkBasicInfo = (props) => {
     // 设置日期选择器格式
     const dateFormat = 'YYYY-MM-DD';
 
+    // 暂时作为常量
     const [validateStatus, setValidateStatus] = useState("validating")
     const [showValidateStatus, setShowValidateStatus] = useState(false)
 
@@ -363,9 +388,6 @@ const WorkBasicInfo = (props) => {
                 id: changedValues.attachment
             }
         }
-        if (changeKey === "eachType") {
-            changedValues.fieldId = eachTypeField.id;
-        }
         let data = {
             ...changedValues,
             id: workId,
@@ -425,66 +447,12 @@ const WorkBasicInfo = (props) => {
         })
     }
 
+  
+
     /**
-     * 判断选择事项是否能作为上级
-     * @param {parentId} parentId 
-     * @returns 
+     * 更新预估时间
+     * @param {预估时间} value 
      */
-    const determineUpdate = async (parentId) => {
-        let disableChange = false;
-        try {
-            const res = await searchWorkById(parentId);
-            if (res) {
-                let currentLevel = 0;
-                // 判断选择事项的状态是否能添加为前置事项
-                if (disableChange) {
-                    if (res.workStatusCode === "DONE") {
-                        disableChange = true;
-                    } else {
-                        if (workInfo.workStatusCode !== "TODO") {
-                            disableChange = false;
-                        }
-                    }
-                }
-
-                // 如果判断状态为可添加，根据层级判断是否可添加
-                if (disableChange) {
-                    if (res.treePath) {
-                        const parentArray = res.treePath.split(";");
-                        currentLevel = parentArray.length - 1;
-                    }
-                    const childrenLevelRes = await findChildrenLevel({ id: workId }); // 注意这里使用了await
-                    if (childrenLevelRes.code === 0) {
-                        if (childrenLevelRes.data === 2) {
-                            message.warning("事项限制为三级，所选事项不能作为父级");
-                            disableChange = false;
-                        } else if (childrenLevelRes.data === 1) {
-                            if (currentLevel === 0) {
-                                disableChange = true;
-                            } else {
-                                message.warning("事项限制为三级，所选事项不能作为父级");
-                                disableChange = false;
-                            }
-                        } else if (childrenLevelRes.data === 0) {
-                            if (currentLevel < 2) {
-                                disableChange = true;
-                            } else {
-                                message.warning("事项限制为三级，所选事项不能作为父级");
-                                disableChange = false;
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (error) {
-            // 处理错误
-            console.error(error);
-        }
-
-        return disableChange;
-    };
-
-
     const updataEstimateTime = (value) => {
         setEstimateTimeValue(value)
         const data = {
@@ -500,6 +468,10 @@ const WorkBasicInfo = (props) => {
         setFieldName("")
     }
 
+    /**
+     * 更新剩余时间
+     * @param {剩余时间} value 
+     */
     const updataSurplusTime = (value) => {
         setSurplusTimeValue(value)
         const data = {
@@ -514,8 +486,9 @@ const WorkBasicInfo = (props) => {
         })
         setFieldName("")
     }
+    
     /**
-     * 万能表单字段更新
+     * 自定义表单字段更新
      */
     const updateExtData = (changedValues, allValues) => {
         console.log(changedValues, allValues, formList)
@@ -538,6 +511,10 @@ const WorkBasicInfo = (props) => {
         editWork(data)
     }
 
+    /**
+     * 创建时间与字段选项的关联关系
+     * @param {*} changedValues 
+     */
     const createSelectRelation = (changedValues) => {
         //创建关联关系 
         let fieldId = "";
@@ -557,6 +534,7 @@ const WorkBasicInfo = (props) => {
                     selectItemId: select[0]?.id,
                     relationId: workId
                 }
+                //创建时间与单个字段选项的关联关系
                 createSelectItemRelation(params)
             }
             if (fieldType === "checkbox") {
@@ -571,17 +549,19 @@ const WorkBasicInfo = (props) => {
                     selectItemIds: ids,
                     relationId: workId
                 }
+                //创建时间与多选字段选项的关联关系
                 createCheckboxSelectItemRelation(params)
             }
         }
 
     }
 
+    // 鼠标放置的字段的名字
     const [hoverFieldName, setHoverFieldName] = useState("")
+    // 聚焦的字段的名字
     const [fieldName, setFieldName] = useState("")
+    // 点击字段
     const changeStyle = (value, fieldCode) => {
-        // console.log("点击")
-        // console.log()
         if (!isPermissionField(fieldCode)) {
             return;
         }
@@ -590,9 +570,10 @@ const WorkBasicInfo = (props) => {
 
     // 转换描述编辑模式setEditorType
     const [editorType, setEditorType] = useState(false);
+    // 描述内容
     const [slateValue, setSlateValue] = useState()
 
-
+    // 转换描述编辑模式
     const editorDesc = () => {
         setEditorType(false);
         // let data = {
@@ -607,31 +588,13 @@ const WorkBasicInfo = (props) => {
         // })
     }
 
+    // 取消编辑描述
     const cancel = () => {
         setEditorType(false);
         setSlateValue(workInfo.desc)
     }
 
-    const [showMoreTab, setShowMoreTab] = useState(false);
-    const tabsDropDown = useRef();
-
-    useEffect(() => {
-        window.addEventListener("mousedown", closeModal, false);
-        return () => {
-            window.removeEventListener("mousedown", closeModal, false);
-        }
-    }, [setShowMoreTab])
-
-    const closeModal = (e) => {
-        if (!tabsDropDown.current) {
-            return;
-        }
-        if (!tabsDropDown.current.contains(e.target) && tabsDropDown.current !== e.target) {
-            setShowMoreTab(false)
-        }
-    }
-
-    const [parentLoading, setParentLoading] = useState(false);
+    
     // 根据id 或者事项标题查找可被关联的上级事项
     const searchParentByWord = useDebounce((value) => {
         const params = {
@@ -641,15 +604,16 @@ const WorkBasicInfo = (props) => {
             title: value,
             likeId: value
         }
-        setParentLoading(true)
         findCanBeRelationParentWorkItemList(params).then(res => {
             if (res.code === 0) {
-                setParentLoading(false)
                 setParentList(res.data.dataList);
             }
         })
     }, [500])
 
+    /**
+     * 根据id 或者事项标题查找可被关联成的前置事项列表
+     */
     const searchPerByWord = useDebounce((value) => {
         const params = {
             id: workId,
@@ -684,22 +648,29 @@ const WorkBasicInfo = (props) => {
     }, [500])
 
 
-    // 创建字段选择值与事项的关联关系
-
-
-    const onClear = (fieldId) => {
-        console.log(fieldId);
-    }
-
+    //自定义表单列表
     const [visableCustomForm, setVisableCustomForm] = useState(false);
+
+    /**
+     * 展开自定义表单
+     */
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
     }
 
+     /**
+     * 查找当前用户是否有当前的功能权限
+     * @param {功能编码} code 
+     * @returns 
+     */
     const isPermissionField = (code) => {
         return permissionFieldList.indexOf(code) > -1 ? false : true
     }
 
+    /**
+     * 鼠标进入表单，显示为编辑模式
+     * @param {*} code 
+     */
     const onMouseEnter = (code) => {
         if (!isPermissionField(code)) {
             setHoverFieldName(code)
@@ -707,6 +678,9 @@ const WorkBasicInfo = (props) => {
 
     }
 
+     /**
+     * 点击描述，转为可编辑模式
+     */
     const switchEditorDesc = () => {
         console.log(isPermissionField("desc"))
         if (!isPermissionField("desc")) {
@@ -717,7 +691,6 @@ const WorkBasicInfo = (props) => {
 
     return (
         <div className="work-info">
-            {contextHolder}
             <div className="other-title">
                 基本信息:
             </div>
@@ -1137,7 +1110,6 @@ const WorkBasicInfo = (props) => {
                                             onMouseLeave={() => setFieldName("")}
                                             fieldId={item.id}
                                             // onChange={onChange}
-                                            onClear={() => onClear(item.id)}
                                             data={item.selectItemList}
                                             getPopupContainer={() => exFormRef.current}
                                             disabled={isPermissionField(item.code)}

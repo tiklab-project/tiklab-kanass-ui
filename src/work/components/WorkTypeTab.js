@@ -111,7 +111,6 @@ const WorkTypeTab = (props) => {
             >
                 全部
                 <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum.all)}</span>
-                {/* <span>({setWorkNum(1009)})</span> */}
             </div>
             {
                 workSystem && workSystem.map(item => {

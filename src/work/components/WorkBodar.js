@@ -1,4 +1,11 @@
-
+/*
+ * @Descripttion: 看板事项页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-01-15 14:34:23
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-26 13:16:59
+ */
 import React, { useRef, useEffect, useState, Fragment } from 'react';
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import "./WorkBodar.scss";
@@ -11,7 +18,7 @@ import WorkStore from "../store/WorkStore";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import WorkTableHead from "./WorkTableHead";
 import WorkTableFilter from "./WorkTableFilter";
-import { Select, Row, Col, Spin, Empty } from "antd";
+import { Row, Col, Spin, Empty } from "antd";
 import { finWorkList } from "./WorkGetList"
 import ImgComponent from '../../common/imgComponent/ImgComponent';
 
@@ -20,8 +27,7 @@ const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, findTransitionList,
         setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList,
-        workBoardCurrentPage, setQuickFilterValue, workShowType, getWorkBoardList, deleteWorkItem,
-        deleteWorkItemAndChildren, workId } = WorkStore;
+        workBoardCurrentPage, workShowType, getWorkBoardList, deleteWorkItem, workId } = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
     const [startBoxIndex, setStartBoxIndex] = useState("")
@@ -43,13 +49,12 @@ const WorkBodar = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+
+    // 项目id
     const projectId = props.match.params.id;
+
     useEffect(async () => {
         setWorkShowType("bodar")
-        // setQuickFilterValue({
-        //     value: "pending",
-        //     label: "我的待办"
-        // })
         const params = {
             projectId: projectId,
             sprintId: sprintId,
@@ -68,6 +73,12 @@ const WorkBodar = (props) => {
         // dragEvent.style.background = "#d0e5f2";
     }
 
+    /**
+     * 查找能够被放置的状态id
+     * @param {事项id} workId 
+     * @param {状态id} stateId 
+     * @param {流程id} flowId 
+     */
     const findStatusList = (workId, stateId, flowId) => {
         let params = {
             domainId: workId,
@@ -101,6 +112,7 @@ const WorkBodar = (props) => {
         setStartBoxIndex(index)
         setStartWorkBoxIndex(workIndex)
 
+        // 查找能够被放置的状态id
         findStatusList(workId, statuId, flowId)
         setFlowId(flowId)
 
@@ -111,7 +123,12 @@ const WorkBodar = (props) => {
         event.preventDefault();
     }
 
-    const changeStatus = (targetStatusId, index, item) => {
+    /**
+     * 
+     * @param {目标状态id} targetStatusId 
+     * @param {目标状态所处的索引} index 
+     */
+    const changeStatus = (targetStatusId, index) => {
         event.preventDefault();
         const transition = transitionList.filter(item => item.toNode.id === targetStatusId);
         const value = {
@@ -124,9 +141,12 @@ const WorkBodar = (props) => {
         if (targetStatusId !== moveStatusId) {
             //改变事件状态 
             let boardList = JSON.parse(JSON.stringify(workBoardList));
-            changeBorderList(startBoxIndex, startWorkBoxIndex, index, targetStatusId)
+            // 看板视图移动位置后，列表交换
+            changeBorderList(startBoxIndex, startWorkBoxIndex, index, targetStatusId);
+            // 修改事项
             editWork(value).then((res) => {
                 if (res.code !== 0) {
+                    // 若调用接口失败，则还原
                     reductionWorkBoardList(boardList)
                 }
             })
@@ -152,6 +172,7 @@ const WorkBodar = (props) => {
             projectType: { id: project.projectType.id },
             iconUrl: workItem.workTypeSys.iconUrl
         }
+        // 创建最近查看的事项
         createRecent(params)
 
         setIndexParams(index, statusid)
@@ -161,12 +182,16 @@ const WorkBodar = (props) => {
         const pathname = props.match.url;;
         props.history.replace(`${pathname}/${workItem.id}`)
         setIsModalVisible(true)
+        // 设置事项详情的顶部面包屑
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-
-
 
     }
 
+    /**
+     * 翻页
+     * @param {状态信息} item 
+     * @param {状态索引} index 
+     */
     const changePage = (item, index) => {
         const data = {
             index: index,
@@ -179,6 +204,10 @@ const WorkBodar = (props) => {
         findChangePageWorkBoardList(data)
     }
 
+    /**
+     * 删除事项
+     * @param {删除事项接口} deleteWorkItem 
+     */
     const deleteWork = (deleteWorkItem) => {
         deleteWorkItem(workId).then(() => {
             if (workShowType === "bodar") {
@@ -187,13 +216,18 @@ const WorkBodar = (props) => {
         })
     }
 
+    /**
+     * 删除事项，关闭详情弹窗
+     */
     const delectCurrentWorkItem = () => {
         deleteWork(deleteWorkItem)
         setIsModalVisible(false)
     }
 
 
-
+    /**
+     * 取消拖拽
+     */
     const cancelDrag = () => {
         setIsSameFlowBox([])
         setMoveWorkId(null)
@@ -231,7 +265,7 @@ const WorkBodar = (props) => {
                                                     isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
                                                         <div
                                                             className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`}
-                                                            onDrop={() => changeStatus(item.state.id, index, item)}
+                                                            onDrop={() => changeStatus(item.state.id, index)}
                                                         >
                                                         </div>
                                                         :
@@ -293,7 +327,7 @@ const WorkBodar = (props) => {
                                             {
                                                 item.workBoardList && item.workBoardList.map(workList => {
                                                     return <div className="work-bodar-box"
-                                                        onDrop={() => changeStatus(workList.state.id, index, workList)}
+                                                        onDrop={() => changeStatus(workList.state.id, index)}
                                                         onDragOver={dragover}
                                                         id={`targetBox${index}`}
                                                         key={workList.state.id}
