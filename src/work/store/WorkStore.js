@@ -2,12 +2,13 @@
  * @Author: 袁婕轩
  * @Date: 2024-12-26 16:53:00
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-26 17:12:06
+ * @LastEditTime: 2024-12-27 17:47:17
  * @Description: 事项接口
  */
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
 import { getUser } from "tiklab-core-ui";
+import { observable, action } from "mobx";
 export class WorkStore {
     @observable workBoardList = [];
     @observable workUserGroupBoardList = [];

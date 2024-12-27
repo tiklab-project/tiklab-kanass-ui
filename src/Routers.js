@@ -105,7 +105,7 @@ const Module = AsyncComponent(() => import('./project/setting/module/components/
 const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/components/BasicInfo'))
 
 // 项目权限
-const ProjectDomainRole = AsyncComponent(() => import('./project/privilege/ProjectDomainRole'));
+const ProjectDomainRole = AsyncComponent(() => import('./project/setting/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(() => import('./statistics/components/StatisticsStatusWork'))
 
