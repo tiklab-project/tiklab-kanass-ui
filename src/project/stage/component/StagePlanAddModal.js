@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 计划的事项关联弹窗
+ * @Descripttion: 计划的事项关联弹窗，弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:10:30
+ * @LastEditTime: 2024-12-27 14:11:55
  */
 import React, {useState} from "react";
 import { Modal,Table,message,Input,Select } from 'antd';

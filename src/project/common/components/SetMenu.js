@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 敏捷开发项目详情页面左侧设置按钮
+ * @Descripttion: 项目详情页面左侧导航设置按钮
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 15:43:13
+ * @LastEditTime: 2024-12-27 13:35:24
  */
 
 import React, { useRef } from "react";

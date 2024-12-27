@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 版本规划关联事项
+ * @Descripttion: 版本规划关联事项，弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-09 19:09:13
+ * @LastEditTime: 2024-12-27 15:01:37
  */
 
 import React, {useState} from "react";
@@ -15,7 +15,7 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 const { Search } = Input;
 
-const  VersionPlanAddmodal = (props) => {
+const VersionPlanAddmodal = (props) => {
     const {actionPlanId,versionPlanStore,addVersionPlan} = props;
     const {getUnPlanVersionWorkItemList,versionPlanList, workTypeList, getWorkTypeList} = versionPlanStore;
     // 弹窗的显示

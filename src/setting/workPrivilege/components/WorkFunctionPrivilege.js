@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 16:48:10
+ * @Description: 角色的事项功能权限
+ */
 import React, { useState, useEffect } from 'react';
 import { Button, Checkbox, Col, Divider, Row, Table } from 'antd';
 import { EditOutlined } from "@ant-design/icons";

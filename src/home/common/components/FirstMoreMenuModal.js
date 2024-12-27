@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 14:43:27
+ * @LastEditTime: 2024-12-27 10:38:00
  */
 import React, { useEffect, useRef, useState } from "react";
 import "./FirstMoreMenuModal.scss";
@@ -60,11 +60,16 @@ const FirstMoreMenuModal = (props) => {
         }
     }
 
-
+    
+    /**
+     * 切换菜单
+     * @param {菜单} item 
+     */
     const changeCurrentLink = item => {
         if(item.key !== "search"){
             localStorage.removeItem("sprintId")
             props.history.push(item.to)
+            // 用于选中效果
             sessionStorage.setItem("menuKey", item.key)
         }
         setShowMenu(false)

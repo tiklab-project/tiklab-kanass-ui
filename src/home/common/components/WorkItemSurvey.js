@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 事项统计图标
+ * @Descripttion: 事项概况统计
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 15:03:51
+ * @LastEditTime: 2024-12-27 10:54:38
  */
 import React, { useEffect, } from 'react';
 import "./WorkItemSurvey.scss";
@@ -24,6 +24,7 @@ const WorkItemSurvey = (props) => {
         return;
     }, [])
 
+    // 初始化数据
     const initWorkChart = () => {
         const chartDom = document.getElementById(`statistics-workitem-chart`)
         statisticsWorkItemByStatus().then(res => {
@@ -91,8 +92,9 @@ const WorkItemSurvey = (props) => {
                 });
             }
         })
-    }
+    }   
 
+    // 获取状态节点列表
     const getStateNodeList = async (value) => {
         const stateNodeList = []
         await findStateNodeList(value).then(res => {

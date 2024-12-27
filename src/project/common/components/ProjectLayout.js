@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 敏捷开发项目详情页
+ * @Descripttion: 项目详情页
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-12 15:19:17
+ * @LastEditTime: 2024-12-27 13:35:27
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Empty, Spin } from 'antd';

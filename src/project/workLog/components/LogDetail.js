@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 日志详情抽屉
+ * @Descripttion: 工时详情抽屉
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-28 16:55:28
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 17:37:38
+ * @LastEditTime: 2024-12-27 15:01:32
  */
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "antd";

@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 史诗详情
+ * @Descripttion: 史诗详情, 弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-09 19:09:13
+ * @LastEditTime: 2024-12-27 13:35:23
  */
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { observer, inject, Provider } from "mobx-react";

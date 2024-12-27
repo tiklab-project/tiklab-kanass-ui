@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 15:47:07
+ * @Description: 设置首页，弃用
+ */
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 import SettingHomeStore from "../store/SettingHomeStore";

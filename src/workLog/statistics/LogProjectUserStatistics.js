@@ -1,11 +1,11 @@
 
 /*
- * @Descripttion: 项目的成员工时统计
+ * @Descripttion: 项目的成员工时统计， 测试用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-30 17:40:03
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 10:25:50
+ * @LastEditTime: 2024-12-27 10:32:33
  */
 import React, { useEffect, useState } from "react"
 import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
@@ -17,8 +17,6 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 const { RangePicker } = DatePicker;
 
 
-// enableAxios()
-// enableAxiosCloud()
 const LogProjectUserStatistics = (props) => {
     const { findProjectList, findProjectUserLog, uploadProjectUserLogPdf } = statisticStore;
     const [form] = Form.useForm();
@@ -69,6 +67,7 @@ const LogProjectUserStatistics = (props) => {
     // 当前页数
     const [current, setCurrent] = useState(0)
 
+    // 查询
     const submitSeachInfo = (fieldsValue) => {
         const values = {
             ...fieldsValue,

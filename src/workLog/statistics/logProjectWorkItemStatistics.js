@@ -1,11 +1,11 @@
 
 /*
- * @Descripttion: 项目事项工时统计
+ * @Descripttion: 项目事项工时统计， 测试插件用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-30 17:40:03
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 10:27:10
+ * @LastEditTime: 2024-12-27 10:32:31
  */
 import React, { Fragment, useEffect, useState } from "react"
 import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
@@ -16,9 +16,6 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 
 const { RangePicker } = DatePicker;
 
-
-// enableAxios()
-// enableAxiosCloud()
 const LogProjectWorkItemStatistics = (props) => {
     const { findProjectList, findProjectWorkItemLog, uploadProjectWorkLogPdf } = statisticStore;
     const [form] = Form.useForm();

@@ -1,4 +1,11 @@
-
+/*
+ * @Descripttion: 流程设置界面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-06-01 13:24:51
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2022-03-28 16:34:32
+ */
 import React, { useEffect } from "react";
 import {FlowChart} from 'tiklab-flow-ui';
 import { observer } from "mobx-react";

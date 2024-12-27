@@ -4,20 +4,18 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:56:02
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 11:22:59
+ * @LastEditTime: 2024-12-27 15:01:36
  */
 import React, { useState } from "react";
 import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
-import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../common/button/Button";
 const { RangePicker } = DatePicker;
 const VersionAddmodal = (props) => {
-    const { versionStore, findVersion, userList, getUseList, setActiveTabs, selectTabs } = props;
-    const { editVersion, addVersion, searchVersionById, status, findAllVersionState,
-        getVersionList, searchCondition } = versionStore;
+    const { versionStore, userList, getUseList, setActiveTabs, selectTabs } = props;
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState } = versionStore;
     const [form] = Form.useForm();
     const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 弹窗显示

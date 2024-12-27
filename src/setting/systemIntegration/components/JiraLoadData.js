@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: JIAR 导入
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-10-13 16:54:17
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 13:11:30
+ * @LastEditTime: 2024-12-27 16:29:07
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { Upload, message, Button, Row, Col, Progress } from 'antd';

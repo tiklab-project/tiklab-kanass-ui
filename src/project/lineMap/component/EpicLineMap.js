@@ -1,16 +1,15 @@
 /*
- * @Descripttion: 路线图表格页面 
+ * @Descripttion: 需求池路线图页面 
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 15:49:26
+ * @LastEditTime: 2024-12-27 13:35:18
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
 import { Graph } from '@antv/x6';
 import "./LineMap.scss";
-// import "./Epic.scss"
 import RowScroll from "./RowScroll";
 import ColScroll from "./CoLScroll"
 import { withRouter } from "react-router";
@@ -19,7 +18,6 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import { useDebounce } from "../../../common/utils/debounce";
-import { getUser } from "tiklab-core-ui";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";

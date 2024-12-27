@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 版本规划关联事项
+ * @Descripttion: 版本规划关联事项，弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-04-09 16:39:00
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-09 19:09:13
+ * @LastEditTime: 2024-12-27 15:01:38
  */
 
 import React, { useEffect, useState } from "react";

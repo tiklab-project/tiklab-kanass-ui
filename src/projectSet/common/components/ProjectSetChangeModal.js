@@ -4,14 +4,14 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:56:02
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-21 11:22:59
+ * @LastEditTime: 2024-12-27 15:01:31
  */
 import React, { useEffect, useRef, useState } from "react";
 import "./ProjectSetChangeModal.scss";
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
 import { Tooltip } from "antd";
-import ColorIcon from "../../../common/colorIcon/colorIcon";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const ProjectSetChangeModal = (props) => {
     const { projectSetStore, isShowText, theme } = props;

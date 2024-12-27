@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-01-20 14:12:22
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 10:24:12
+ * @LastEditTime: 2024-12-27 10:32:34
  */
 import axios from "axios";
 import { Service } from "../../../common/utils/requset";
@@ -21,36 +21,7 @@ export class StatisticsStore {
     @observable UserYaixs = [];
     @observable UserPreData = [];
     @observable reportId = ""
-    @observable reportList = [
-        {
-            title: '事项统计',
-            icon: 'iconsmile',
-            type: 'work',
-            id: 'workall',
-            children: []
-        },
-        {
-            title: '事项创建与解决统计',
-            icon: 'iconsmile',
-            type: 'bulidend',
-            id: 'bulidendall',
-            children: []
-        },
-        {
-            title: '事项新增趋势',
-            icon: 'iconsmile',
-            type: 'newtrend',
-            id: 'newtrendall',
-            children: []
-        },
-        {
-            title: '日志统计',
-            icon: 'iconsmile',
-            type: 'logStatistics',
-            id: 'logStatisticsAll',
-            children: []
-        }
-    ]
+   
 
 
 

@@ -45,10 +45,8 @@ const WorkTypeForm = AsyncComponent(() => import('./setting/workSeting/component
 const ProjectType = AsyncComponent(() => import('./setting/projectType/components/ProjectType'))
 
 // 事项权限
-const WorkPrivilege = AsyncComponent(() => import("./setting/workPrivilege/components/WorkPrivilegeList.js"))
 const WorkRoleFunction = AsyncComponent(() => import("./setting/workPrivilege/components/WorkRoleFunction.js"))
 const WorkFunctionList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkFunctionList.js"))
-const WorkPrivilegeList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkPrivilegeList.js"))
 const WorkPrivilegeRoleList = AsyncComponent(() => import("./setting/workPrivilege/components/WorkRoleList.js"))
 const ProjectWorkRoleList = AsyncComponent(() => import("./project/setting/projectWorkType/components/ProjectWorkRoleList.js"))
 const ProjectWorkRoleFunction = AsyncComponent(() => import("./project/setting/projectWorkType/components/ProjectWorkRoleFunction.js"))
@@ -99,7 +97,7 @@ const VersionDetail = AsyncComponent(() => import('./project/version/components/
 const VersionPlan = AsyncComponent(() => import('./project/version/components/VersionPlan'))
 const VersionBasicInfo = AsyncComponent(() => import('./version/setting/components/VersionBasicInfo'))
 
-const PrivilegeDomainUser = AsyncComponent(() => import('./project/user/User'));
+const PrivilegeDomainUser = AsyncComponent(() => import('./project/setting/user/User.js'));
 const Plan = AsyncComponent(() => import('./project/plan/components/Plan'));
 const PlanWorkItem = AsyncComponent(() => import('./project/plan/components/PlanWorkItem'));
 
@@ -163,7 +161,6 @@ const FormListSystem = AsyncComponent(() => import('./setting/form/ProjectFormLi
 const ProjectProjectFormList = AsyncComponent(() => import('./setting/form/ProjectProjectFormList'))
 const FormDetail = AsyncComponent(() => import('./setting/form/ProjectFormDetail'))
 const ProjectFormDetailSystem = AsyncComponent(() => import('./setting/form/ProjectFormDetailSystem'))
-// const ProjectFlowList = AsyncComponent(() => import('./setting/flow/projectProjectFlowList'))
 const ProjectSystemFlowList = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowList'))
 const ProjectSystemFlowListSystem = AsyncComponent(() => import('./setting/flow/components/ProjectSystemFlowListSystem'))
 
@@ -310,11 +307,7 @@ const Routers = [
                 component: WorkRoleFunction,
                 exact: true
             },
-            {
-                path: "/setting/workPrivilege",
-                component: WorkPrivilege,
-                exact: true
-            },
+
             {
                 path: "/setting/workPrivilegeRoleList/:workTypeId",
                 component: WorkPrivilegeRoleList,
@@ -323,11 +316,6 @@ const Routers = [
             {
                 path: "/setting/workFunctionList",
                 component: WorkFunctionList,
-                exact: true
-            },
-            {
-                path: "/setting/workPrivilegeList",
-                component: WorkPrivilegeList,
                 exact: true
             },
             

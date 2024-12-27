@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 17:35:11
+ * @LastEditTime: 2024-12-27 14:13:36
  */
 import React from "react";
 import ProjectStatisticsAsicde from "./ProjectStatisticsAside";
@@ -33,6 +33,5 @@ const ProjectStatistics = (props) => {
             </Layout>
         </Layout>
     )
-
 }
 export default withRouter(ProjectStatistics);  

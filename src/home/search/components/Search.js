@@ -4,12 +4,12 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-25 14:38:38
+ * @LastEditTime: 2024-12-27 11:34:04
  */
 
-import React, { Fragment, useEffect, useRef, useState, useCallback } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "../components/Search.scss";
-import { Empty, Modal, Spin } from "antd";
+import { Modal, Spin } from "antd";
 import { observer, inject } from "mobx-react";
 import { getUser } from "tiklab-core-ui";
 import SearchStore from "../store/Search";

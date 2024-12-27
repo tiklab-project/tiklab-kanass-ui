@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 项目集修改页面
+ * @Descripttion: 项目集信息展示与修改页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 17:56:15
+ * @LastEditTime: 2024-12-27 15:06:57
  */
 import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
@@ -14,7 +14,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
 import "../components/ProjectSetBasicInfo.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
-import ProjectSetIcon from "./changeProjectSetIcon";
+import ProjectSetIcon from "./ChangeProjectSetIcon";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
 

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-04-16 10:57:23
+ * @LastEditTime: 2024-12-27 15:01:30
  */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -22,9 +22,6 @@ const ProjectSetSettingButton = (props) => {
     const goProjectSetSetting = () => {
         props.history.push(`/projectSet/${projectSetId}/set/basicInfo`)
     }
-
-
-   
 
     return (
         <div className="project-set-setting">

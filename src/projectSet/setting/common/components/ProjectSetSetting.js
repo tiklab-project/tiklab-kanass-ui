@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 项目详情页
+ * @Descripttion: 项目集设置页面
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 17:57:01
+ * @LastEditTime: 2024-12-27 15:09:09
  */
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col } from 'antd';

@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 项目集权限
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-03-05 17:06:32

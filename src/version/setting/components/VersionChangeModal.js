@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 版本切换弹窗
+ * @Descripttion: 弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-20 16:32:30
+ * @LastEditTime: 2024-12-27 16:59:20
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer } from "mobx-react";

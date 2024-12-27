@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 项目集添加详细信息
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-18 17:51:03
+ */
 import React, { Fragment } from "react";
 import { Form, Input, DatePicker, message } from 'antd';
 import locale from 'antd/es/date-picker/locale/zh_CN';

@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-12-07 14:59:04
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-18 17:48:37
+ * @LastEditTime: 2024-12-27 15:01:29
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer } from "mobx-react";
@@ -15,7 +15,7 @@ import BasicInfoStore from "../store/BasicInfoStore";
 import DynamicList from "../../../common/overviewComponent/DynamicList";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
-import ColorIcon from "../../../common/colorIcon/colorIcon";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const ProjectSetSurvey = props => {
 

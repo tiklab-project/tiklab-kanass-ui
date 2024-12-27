@@ -1,3 +1,10 @@
+/*
+ * @Author: 袁婕轩
+ * @Date: 2024-07-01 18:13:18
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 16:48:10
+ * @Description: 角色事项权限入口
+ */
 import React, { useEffect, useState } from "react";
 import { Checkbox, Table, Tabs } from "antd";
 import "./WorkRoleFunction.scss";
