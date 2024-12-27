@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 日历接口，弃用
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-02-08 10:29:43
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-20 10:11:51
+ * @LastEditTime: 2024-12-27 09:07:50
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";

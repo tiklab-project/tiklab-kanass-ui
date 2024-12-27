@@ -2,8 +2,8 @@
  * @Author: 袁婕轩
  * @Date: 2024-07-01 18:13:18
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-26 15:46:04
- * @Description: 
+ * @LastEditTime: 2024-12-27 10:20:44
+ * @Description: 关联事项接口
  */
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
@@ -27,7 +27,7 @@ class WorkRelationStore {
         currentPage: 1
     };
 
-    // 获取所有成员
+    // 获取未被当前事项关联的事项列表
     @action
 	getWorkRelationList = async(value) => {
         Object.assign(this.searchCondition, {...value})
@@ -44,7 +44,7 @@ class WorkRelationStore {
         return data;
     }
 
-    //获取关联事项
+    //获取当前事项已关联事项列表
     @action
 	getSelectWorkRelationList = async(value) => {
         Object.assign(this.searchSelectCondition, {...value})
@@ -68,7 +68,7 @@ class WorkRelationStore {
     }
 
 
-    //添加已选择人员
+    //添加关联事项
     @action
 	addWorkRelation = async(value) => {
         let params = {
@@ -83,7 +83,7 @@ class WorkRelationStore {
         return data;
     }
 
-    //添加已选择人员
+    //删除关联事项
     @action
 	deleWorkRelation = async(value) => {
         const params = new FormData()

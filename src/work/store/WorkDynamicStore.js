@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项动态接口
  * @version: 1.0.0
  * @Author: 袁婕轩
- * @Date: 2022-03-03 16:41:54
+ * @Date: 2024-12-27 09:22:37
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-03 16:49:56
+ * @LastEditTime: 2024-12-27 10:20:46
  */
 import { observable, action, extendObservable } from "mobx";
 import {Service} from "../../common/utils/requset";
@@ -23,6 +23,7 @@ export class WorkDynamicStore {
         data: {}
     }
 
+
     @observable opLogTimeCondition = {
         pageParam: {
             pageSize: 10,
@@ -39,6 +40,7 @@ export class WorkDynamicStore {
         this.opLogCondition = extendObservable(this.opLogCondition, { ...value })
     }
 
+    // 获取事项动态
     @action
     findLogpage = async (value) => {
         this.setOpLogCondition(value)
@@ -72,6 +74,7 @@ export class WorkDynamicStore {
         return data;
     }
 
+    // 根据时间排序获取事项动态
     @action
     findLogPageByTime = async (value) => {
         Object.assign(this.opLogTimeCondition, value)

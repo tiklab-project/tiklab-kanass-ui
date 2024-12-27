@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项评论接口
  * @version: 1.0.0
  * @Author: 袁婕轩
- * @Date: 2021-11-24 15:01:00
+ * @Date: 2024-12-27 09:22:37
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2021-11-26 14:34:25
+ * @LastEditTime: 2024-12-27 10:20:48
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";
@@ -20,12 +20,14 @@ export class WorkCommentStore {
         }
     };
 
+    // 创建事项评论
     @action
     createWorkComment = async (value) => {
         const data = await Service("/workComment/createWorkComment", value)
         return data;
     }
 
+    // 获取事项评论
     @action
     findWorkCommentPage = async (value) => {
         Object.assign(this.workCommentPage, { ...value });
@@ -33,12 +35,14 @@ export class WorkCommentStore {
         return data;
     }
 
+    // 更新事项评论
     @action
     updateWorkComment = async (value) => {
         const data = await Service("/workComment/updateWorkComment", value)
         return data;
     }
 
+    // 删除事项评论
     @action
     deleteWorkComment = async (value) => {
         const params = new FormData();

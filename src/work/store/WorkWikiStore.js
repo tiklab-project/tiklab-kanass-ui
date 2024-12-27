@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 事项文档接口
  * @version: 1.0.0
  * @Author: 袁婕轩
- * @Date: 2021-09-29 13:28:36
+ * @Date: 2024-12-27 09:22:37
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-20 10:14:50
+ * @LastEditTime: 2024-12-27 09:43:05
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";
@@ -23,6 +23,8 @@ export class WorkWikiStore {
         }
     };
     @observable unRelationTotal = 0;
+
+    // 获取事项关联的文档列表
     @action
     findDocumentPageByWorkItemId = async(value) => {
         const params = new FormData()
@@ -34,37 +36,9 @@ export class WorkWikiStore {
         return data.data;
     }
 
-    @action
-    findDocumentPage = async(value) => {
-        Object.assign(this.findDoucmnetCondition, {...value})
-        const params={
-            repositoryId: this.findDoucmnetCondition.repositoryId,
-            repositoryIds: this.findDoucmnetCondition.repositoryIds,
-            name: this.findDoucmnetCondition.name,
-            workItemId: this.findDoucmnetCondition.workItemId,
-            orderParams: [{
-                name: "name",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: this.findDoucmnetCondition.currentPage
-            }
-        }
-        const data = await Service("/workItemDocument/findWorkItemDocumentPage", params)
-        return data;
-    }
 
-    @action
-    findRepositoryDocumentList = async(value) => {
-        const params={
-            repositoryId: value.repositoryId,
-            name: value.name
-        }
-        const data = await Service("/wikidocument/findDocumentList", params)
-        return data;
-    }
 
+    // 获取未被当前事项关联的文档列表
     @action
     findUnRelationWorkDocumentList = async(value) => {
    
@@ -76,24 +50,28 @@ export class WorkWikiStore {
         return data;
     }
 
+    // 创建事项与文档的关联关系
     @action
     createWorkItemDocument = async(params) => {
         const data = await Service("/workItemDocument/createWorkItemDocument", params)
         return data;
     }
 
+    // 获取知识库列表
     @action
     getRepositoryAllList = async(params) => {
         const data = await Service("/wikirepository/findAllRepository", params)
         return data;
     }
 
+    // 获取知识库成员列表
     @action
     findWikiUserList = async() => {
         const data = await Service("/wikirepository/findWikiUserList")
         return data;
     }
 
+    // 获取项目的知识库列表
     @action
     findProjectWikiRepositoryList = async(params) => {
         const data = await Service("/projectWikiRepository/findProjectWikiRepositoryList", params)
@@ -106,11 +84,7 @@ export class WorkWikiStore {
         return data;
     }
 
-    /**
-     * 获取知识库的地址
-     * @param {*} param 
-     * @returns 
-     */
+    //获取知识库的地址
     @action
     findSystemUrl = async(params) => {
         const data = await Service("/systemUrl/findSystemUrlList", params)
@@ -121,6 +95,7 @@ export class WorkWikiStore {
         return urlData;
     }
 
+    // 获取知识库成员列表
     @action
     findRepositoryUserList = async(value) => {
         const params = {

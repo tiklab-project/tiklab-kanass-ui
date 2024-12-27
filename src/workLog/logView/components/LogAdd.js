@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 日志添加
+ * @Descripttion: 工时添加
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-28 16:55:28
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-18 09:46:31
+ * @LastEditTime: 2024-12-27 10:20:42
  */
 import React, { useEffect, useState } from "react";
 import { Modal, InputNumber, Form, Input, Select } from 'antd';

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 工时列表
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-06-01 13:24:51
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 10:20:41
+ */
 import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import { Table, Row, Col, Space } from 'antd';

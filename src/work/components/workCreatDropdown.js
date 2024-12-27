@@ -4,21 +4,21 @@
  * @Author: 袁婕轩
  * @Date: 2021-02-05 11:02:37
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-26 14:31:00
+ * @LastEditTime: 2024-12-27 09:20:04
  */
 import React, { useState, useRef, useEffect } from "react";
 import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
-import { getUser } from "tiklab-core-ui";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle, stageList } = props;
     const modelRef = useRef()
     const [stateType, setState] = useState();
     const workAddModel = useRef()
     const [showModal, setShowModal] = useState(false);
-    const tenant = getUser().tenant;
+    
     /**
     * 监听切换弹窗的显示与不显示
     */

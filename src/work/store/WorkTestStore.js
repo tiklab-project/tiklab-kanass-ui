@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 测试用例接口
  * @version: 1.0.0
  * @Author: 袁婕轩
- * @Date: 2021-09-29 13:28:36
+ * @Date: 2024-12-27 09:22:37
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-20 10:14:50
+ * @LastEditTime: 2024-12-27 10:20:43
  */
 import { observable, action } from "mobx";
 import { Service } from "../../common/utils/requset";
@@ -23,6 +23,8 @@ export class WorkTestStore {
         }
     };
     @observable unRelationTotal = 0;
+
+    // 获取事项的测试用例列表
     @action
     findTestCasePageByWorkItemId = async(value) => {
         const params = new FormData()
@@ -34,37 +36,9 @@ export class WorkTestStore {
         return data.data;
     }
 
-    @action
-    findDocumentPage = async(value) => {
-        Object.assign(this.findDoucmnetCondition, {...value})
-        const params={
-            repositoryId: this.findDoucmnetCondition.repositoryId,
-            repositoryIds: this.findDoucmnetCondition.repositoryIds,
-            name: this.findDoucmnetCondition.name,
-            workItemId: this.findDoucmnetCondition.workItemId,
-            orderParams: [{
-                name: "name",
-                orderType:"asc"
-            }],
-            pageParam: {
-                pageSize: 10,
-                currentPage: this.findDoucmnetCondition.currentPage
-            }
-        }
-        const data = await Service("/workItemDocument/findWorkItemDocumentPage", params)
-        return data;
-    }
 
-    @action
-    findRepositoryDocumentList = async(value) => {
-        const params={
-            repositoryId: value.repositoryId,
-            name: value.name
-        }
-        const data = await Service("/wikidocument/findDocumentList", params)
-        return data;
-    }
-
+ 
+    // 获取未被当前事项关联的测试用例列表
     @action
     findUnRelationWorkTestCaseList = async(value) => {
         Object.assign(this.unRelationWorkCondition, {...value}) 
@@ -76,30 +50,29 @@ export class WorkTestStore {
         return data;
     }
 
+    // 关联测试用例
     @action
     createWorkTestCase = async(params) => {
         const data = await Service("/workTestCase/createWorkTestCase", params)
         return data;
     }
 
-
+    // 获取测试用例库列表
     @action
     findProjectTestRepositoryList = async(params) => {
         const data = await Service("/projectTestRepository/findProjectTestRepositoryList", params)
         return data;
     }
 
+    // 删除测试用例与事项的关联关系
     @action
     deleteWorkTestCaseRele = async(param) => {
         const data = await Service("/workTestCase/deleteWorkTestCaseList", param)
         return data;
     }
 
-    /**
-     * 获取知识库的地址
-     * @param {*} param 
-     * @returns 
-     */
+    // 获取设置的用例系统地址
+    @action
     findSystemUrl = async(params) => {
         const data = await Service("/systemUrl/findSystemUrlList", params)
         let urlData;
@@ -109,10 +82,9 @@ export class WorkTestStore {
         return urlData;
     }
 
+    // 获取测试用例库成员列表
     @action
     findTesthuboRepositoryUserList = async(value) => {
-        // const params = new FormData();
-        // params.append("repositoryIds", value)
         const params = {
             repositoryIds: value
         }

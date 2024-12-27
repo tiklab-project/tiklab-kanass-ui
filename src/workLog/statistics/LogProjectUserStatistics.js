@@ -1,19 +1,17 @@
 
 /*
- * @Descripttion: 用户工时
+ * @Descripttion: 项目的成员工时统计
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-30 17:40:03
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-25 13:24:52
+ * @LastEditTime: 2024-12-27 10:25:50
  */
 import React, { useEffect, useState } from "react"
 import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
 import moment from "moment";
 import "./LogProjectUserStatistics.scss";
 import statisticStore from "./store/StatisticStore";
-import { enableAxios } from "tiklab-core-ui";
-// import enableAxiosCloud from "tiklab-tenant-cloud-ui";
 import { observer } from "mobx-react";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 const { RangePicker } = DatePicker;

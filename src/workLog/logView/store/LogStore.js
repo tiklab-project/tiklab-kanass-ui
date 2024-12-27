@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 工时store
+ * @Descripttion: 工时接口
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-07-28 16:56:50
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-24 09:32:54
+ * @LastEditTime: 2024-12-27 10:20:37
  */
 import { observable, action } from "mobx";
 import { Service } from "../../../common/utils/requset"

@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Descripttion: 日志侧边栏
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2021-06-01 13:24:51
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-28 16:34:32
+ * @LastEditTime: 2024-12-27 09:53:28
  */
 import React, { Fragment, useState, useEffect } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
@@ -20,6 +20,7 @@ const SetAside = (props) => {
     const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
     const select = (data) => {
         if (data.type === "statistics") {
+            // 判断是否是付费用户，付费用户能使用统计，普通用户点击弹出引导消费页面
             if (versionInfo.expired === false) {
                 props.history.push(data.path)
                 setSelectKey(data.path)
@@ -34,7 +35,7 @@ const SetAside = (props) => {
 
     }
 
-
+    // 日志菜单
     const logMenuList = [
         {
             title: '工时查看',
@@ -71,7 +72,7 @@ const SetAside = (props) => {
         },
     ]
 
-
+    // 渲染菜单
     const renderMenu = (data, deep, index) => {
         return (
             <li
@@ -107,6 +108,7 @@ const SetAside = (props) => {
         return expandedTree.some(item => item === key)
     }
 
+    // 菜单的展开与闭合
     const setOpenOrClose = key => {
         if (isExpandedTree(key)) {
             setExpandedTree(expandedTree.filter(item => item !== key))

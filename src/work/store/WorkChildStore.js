@@ -1,3 +1,9 @@
+/*
+ * @Descripttion: 事项子事项接口
+ * @Author: 袁婕轩
+ * @Date: 2024-12-27 09:07:50
+ * @LastEditTime: 2024-12-27 10:20:49
+ */
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
 class WorkChildStore {
@@ -30,11 +36,6 @@ class WorkChildStore {
     };
 
     
-
-    // @action
-    // setChildWorkItem = (value) => {
-    //     this.childWorkItem = value
-    // }
     // 获取史诗下可添加的事项
     @action
     findEpicSelectWorkItemList = async(value) => {
@@ -52,7 +53,7 @@ class WorkChildStore {
         return data;
     }
 
-     // 获取其他事项类型下可添加的事项
+    // 获取其他事项类型下可添加的事项
     @action
     findSelectWorkItemList = async(value) => {
         Object.assign(this.searchCondition, {...value})
@@ -69,6 +70,7 @@ class WorkChildStore {
         return data;
     }
 
+    // 获取事项层级
     @action
     findChildrenLevel = async(value) => {
         const params = new FormData();
@@ -77,6 +79,7 @@ class WorkChildStore {
         return data;
     }
 
+    // 设置事项层级
     @action 
     setWorkChildList = (value) => {
         this.workChildList = value;
@@ -89,7 +92,8 @@ class WorkChildStore {
         const data = await Service("/workItem/findWorkItemList", this.searchSelectCondition)
         return data;
     }
-    //添加已选择事项
+    
+    // 添加子事项
     @action
 	addWorkChild = async(value) => {
         let params = {
@@ -118,7 +122,7 @@ class WorkChildStore {
         return data;
     }
 
-    //添加已选择事项
+    //删除事项
     @action
 	deleWorkChild = async(value) => {
         let params = {
@@ -135,6 +139,7 @@ class WorkChildStore {
         return data;
     }
 
+    // 根据code获取事项类型
     @action
 	findWorkTypeListByCode = async() => {
         const params  = new FormData();

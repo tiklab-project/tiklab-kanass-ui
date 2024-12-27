@@ -1,4 +1,12 @@
 
+/*
+ * @Descripttion: 工时统计演示页面
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2021-06-01 13:24:51
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 09:55:14
+ */
 import React, { useState } from "react";
 import { Modal, Button } from 'antd';
 import "./LogStatisticsFree.scss";
@@ -10,6 +18,8 @@ const LogStatisticsFree = (props) => {
     const { logStatisticsFreeVisable, setLogStatisticsFreeVisable } = props;
     const [imgUrl, setImgUrl] = useState(logprojectuser);
     const [activeImage, setActiveImage] = useState("bulidend");
+
+    // 购买
     const goBuy = () => {
         applySubscription("kanass")
     }

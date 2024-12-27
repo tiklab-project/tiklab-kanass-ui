@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 事项工时接口
+ * @version: 1.0.0
+ * @Author: 袁婕轩
+ * @Date: 2024-12-27 09:22:37
+ * @LastEditors: 袁婕轩
+ * @LastEditTime: 2024-12-27 10:20:45
+ */
 import { observable, action } from "mobx";
 import {Service} from "../../common/utils/requset";
 export class WorkLogStore {
@@ -16,7 +24,7 @@ export class WorkLogStore {
             currentPage: 1,
         }
     };
-    //查找所有工时
+    // 获取事项工时列表
     @action
     findWorkLogPage = async(value) => {
         Object.assign(this.workLogCondition, value)
@@ -28,18 +36,16 @@ export class WorkLogStore {
         return data;
     }
 
-    //添加工时
+    //添加工时  
     @action
     addWorkLog = async(value) => {
         const data = await Service("/workLog/createWorkLog", value)
-        // if(data.code === 0){
-        //     this.findWorkLogPage({workItemId:this.workId})
-        // }
+
         return data;
 		
     }
 
-    //删除工时
+    //删除工时  
     @action
     deleteWorKLog = async(value) => {
         const param = new FormData()
@@ -51,7 +57,7 @@ export class WorkLogStore {
         return data;
     }
 
-    //编辑工时
+    //编辑工时  
     @action
     editWorKLog = async(value) => {
         let params = {
@@ -89,6 +95,7 @@ export class WorkLogStore {
         this.PlanTime = value
     }
 
+    // 获取事项和用时
     @action
     findWorkItemAndUsedTime = async(value) => {
         const params = new FormData();
