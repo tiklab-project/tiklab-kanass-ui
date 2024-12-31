@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 10:54:41
+ * @LastEditTime: 2024-12-30 14:23:03
  */
 import React, { useEffect, useState } from 'react';
 import "./TodoStatistics.scss";
@@ -125,7 +125,7 @@ const TodoStatistics = (props) => {
                                 <use xlinkHref={`#icon-${item.icon}`}></use>
                             </svg>
                             <div className="statistics-todotask-box-right">
-                                <div className="statistics-todotask-box-num">{todoCount && todoCount[item.id]}</div>
+                                <div className="statistics-todotask-box-num">{todoCount && createReport[item.id]}</div>
                                 <div className="statistics-todotask-box-name">{item.name}</div>
                             </div>
 

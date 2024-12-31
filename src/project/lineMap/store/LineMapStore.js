@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-07-27 09:28:20
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-19 11:17:56
+ * @LastEditTime: 2024-12-30 14:26:11
  */
 import { observable, action } from "mobx";
 import {Service} from "../../../common/utils/requset"
@@ -58,18 +58,6 @@ export class LineMapStore {
 
     
     // 获取迭代路线图
-    /**
-     * 获取史诗路线图
-     * @param {项目id} projectId 
-     * @returns 
-     */
-    @action
-	findEpicRoadMap = async(projectId) => {
-        const param = new FormData()
-        param.append("projectId", projectId)
-        const data = await Service("/roadMap/findEpicRoadMap", param)
-        return data;
-    }
 
     @action
 	updateEpic = async(value) => {

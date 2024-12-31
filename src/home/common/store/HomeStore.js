@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-11-22 14:04:12
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-01-25 13:21:47
+ * @LastEditTime: 2024-12-30 14:23:05
  */
 import { Service } from "../../../common/utils/requset"
 import { observable, action, extendObservable } from "mobx";
@@ -465,11 +465,7 @@ class HomeStore {
         return data;
     }
 
-    @action
-    statisticsAllNewWorkItemTend = async () => {
-        const data = await Service("/projectInsightReport/statisticsAllNewWorkItemTend")
-        return data;
-    }
+ 
 
     @action
     statisticsProjectByStatus = async () => {

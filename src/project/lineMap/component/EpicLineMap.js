@@ -4,7 +4,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-03-30 10:14:58
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 13:35:18
+ * @LastEditTime: 2024-12-30 14:53:49
  */
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import { observer, inject } from "mobx-react";
@@ -599,9 +599,6 @@ const EpicLineMap = (props) => {
         return color;
     }
 
-    const delectCurrentWorkItem = () => {
-
-    }
     return (
         <div className="epic-linemap">
             <div className="linemap-time">
