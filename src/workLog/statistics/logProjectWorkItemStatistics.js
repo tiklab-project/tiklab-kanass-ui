@@ -5,7 +5,7 @@
  * @Author: 袁婕轩
  * @Date: 2021-07-30 17:40:03
  * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 10:32:31
+ * @LastEditTime: 2025-01-02 13:51:19
  */
 import React, { Fragment, useEffect, useState } from "react"
 import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
@@ -83,7 +83,6 @@ const LogProjectWorkItemStatistics = (props) => {
                 setWorkItemManhour(res.data.workItemManhour)
                 setworkLog(res.data)
             }
-            // setTableWork(res.data)
             setCurrent(1)
         })
     }

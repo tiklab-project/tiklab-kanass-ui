@@ -12,12 +12,8 @@ import { Select, Form, Pagination, DatePicker, Empty, Button } from 'antd';
 import moment from "moment";
 import "./logUserProjectStatistics.scss";
 import statisticStore from "./store/StatisticStore";
-// import { enableAxios } from "tiklab-core-ui";
-// import enableAxiosCloud from "tiklab-tenant-cloud-ui";
 const { RangePicker } = DatePicker;
 
-// enableAxios()
-// enableAxiosCloud()
 const LogUserProjectStatistics = (props) => {
     const { findProjectList, findUserProjectLog, uploadLogUserProjectPdf } = statisticStore;
     const [form] = Form.useForm();
@@ -80,7 +76,6 @@ const LogUserProjectStatistics = (props) => {
                 setWorkItemManhour(res.data.workItemManhour)
                 setworkLog(res.data)
             }
-            // setTableWork(res.data)
             serCurrent(1)
         })
 
