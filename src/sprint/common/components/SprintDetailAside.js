@@ -10,15 +10,12 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import "../../../assets/font-icon/iconfont.css";
 import { withRouter } from "react-router-dom";
-import { Layout, Button } from "antd";
 import { observer, inject } from "mobx-react";
 import { useTranslation } from 'react-i18next';
 import SprintChangeModal from "./SprintChangeModal";
 import "./sprintDetailAside.scss";
-import Logo from "../../../home/common/components/Logo";
-import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectAside from '../../../common/projectAside/ProjectAside';
-const { Sider } = Layout;
+
 
 const SprintDetailAside = (props) => {
     const { sprintDetailStore } = props;

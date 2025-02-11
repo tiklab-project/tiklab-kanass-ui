@@ -16,7 +16,7 @@ import { getUser } from "tiklab-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
-import { UserVerify } from "tiklab-user-extension-ui";
+// import { UserVerify } from "tiklab-user-extension-ui";
 
 const ProjectLayout = (props) => {
     const store = {
@@ -95,4 +95,5 @@ const ProjectLayout = (props) => {
     )
 
 }
-export default inject("systemRoleStore")(UserVerify(observer(ProjectLayout),"/noAuth", "kanass"));
+// export default inject("systemRoleStore")(UserVerify(observer(ProjectLayout),"/noAuth", "kanass"));
+export default inject("systemRoleStore")(observer(ProjectLayout));

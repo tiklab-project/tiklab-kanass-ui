@@ -9,12 +9,11 @@
 import React, { useState, useEffect } from 'react';
 
 import { renderRoutes } from "react-router-config";
-import Header from "./Header";
 import "./Layout.scss";
 
 import { inject, observer, Provider } from 'mobx-react';
 import HomeStore from "../store/HomeStore";
-import { AppLink, AvatarLink, HelpLink } from 'tiklab-licence-ui';
+
 import FirstMenu from './FirstMenu';
 import { getUser } from 'tiklab-core-ui';
 const Layout = (props) => {
@@ -27,15 +26,19 @@ const Layout = (props) => {
     console.log(pathname)
     const user = getUser();
     useEffect(() => {
+        if (props.location.pathname === "/") {
+
+            props.history.push("/index/overview");
+        }
         if (user && user.userId) {
             systemRoleStore.getSystemPermissions(user.userId, "kanass")
         }
-        return;
+
     }, [])
     return (
         <Provider {...store}>
             <div className="layout">
-                <FirstMenu AppLink={AppLink} {...props} />
+                <FirstMenu {...props} />
                 <div className="layout-right">
                     
                     {renderRoutes(route)}

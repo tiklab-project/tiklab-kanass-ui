@@ -13,7 +13,7 @@ import ProjectSetDetailAside from "./ProjectSetDetailAside";
 import { renderRoutes } from "react-router-config";
 import ProjectSetStore from "../../projectSet/store/ProjectSetStore"
 import { Provider } from "mobx-react";
-import { UserVerify } from "tiklab-user-extension-ui";
+// import { UserVerify } from "tiklab-user-extension-ui";
 
 const ProjectSetDetail = (props) => {
     const store = {
@@ -39,4 +39,5 @@ const ProjectSetDetail = (props) => {
 
     )
 }
-export default UserVerify(ProjectSetDetail,"/noAuth", "kanass");
+// export default UserVerify(ProjectSetDetail,"/noAuth", "kanass");
+export default ProjectSetDetail;

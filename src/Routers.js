@@ -234,11 +234,6 @@ const Routers = [
         component: ProjectLogOut,
     },
     {
-        path: "/",
-        component: () => <Redirect to="/index/overview" />,
-        exact: true,
-    },
-    {
         path: "/setting",
         component: Setting,
         key: 'Setting',
@@ -1222,6 +1217,13 @@ const Routers = [
             },
 
         ]
-    }
+    },
+    // {
+    //     path: "/",
+    //     component: () => <Redirect to="/index/overview" />,
+    //     exact: true,
+    // }
+
+
 ]
 export default Routers;

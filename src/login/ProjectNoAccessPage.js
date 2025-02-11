@@ -8,7 +8,7 @@
 
 import React from "react";
 import {NoAccess} from "tiklab-privilege-ui";
-import { UserVerify } from "tiklab-user-extension-ui";
+// import { UserVerify } from "tiklab-user-extension-ui";
 
 const ProjectNoAccessPage = props =>{
     const project = JSON.parse(localStorage.getItem('project'));
@@ -21,4 +21,5 @@ const ProjectNoAccessPage = props =>{
     )
 }
 
-export default UserVerify(ProjectNoAccessPage,"/noAuth", "kanass");
+// export default UserVerify(ProjectNoAccessPage,"/noAuth", "kanass");
+export default ProjectNoAccessPage;

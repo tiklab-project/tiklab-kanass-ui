@@ -15,7 +15,7 @@ import SprintDetailAside from "./SprintDetailAside";
 import SprintDetailStore from "../store/SprintDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
 import { getUser } from "tiklab-core-ui";
-import { UserVerify } from "tiklab-user-extension-ui";
+// import { UserVerify } from "tiklab-user-extension-ui";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Sprintdetail = (props) => {
@@ -66,4 +66,5 @@ const Sprintdetail = (props) => {
 
     )
 }
-export default inject("systemRoleStore")(UserVerify(observer(Sprintdetail), "/noAuth", "kanass"));
+// export default inject("systemRoleStore")(UserVerify(observer(Sprintdetail), "/noAuth", "kanass"));
+export default inject("systemRoleStore")(observer(Sprintdetail));

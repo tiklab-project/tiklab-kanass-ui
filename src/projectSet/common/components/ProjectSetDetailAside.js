@@ -9,18 +9,12 @@
 
 import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
-import { Layout, Button } from "antd";
 import { observer, inject } from "mobx-react";
-import { useTranslation } from 'react-i18next';
 import "./ProjectSetDetailAside.scss";
-import ProjectSetSetButton from "./ProjectSetSettingButton";
-import MenuUser from "../../../common/menuUser/MenuUser";
 import ProjectSetChangeModal from "./ProjectSetChangeModal";
 import { getUser } from "tiklab-core-ui";
-import Logo from '../../../home/common/components/Logo';
 import ProjectAside from '../../../common/projectAside/ProjectAside';
 
-const { Sider } = Layout;
 
 const ProjectSetDetailAside = (props) => {
     const { systemRoleStore, isShowText, SetIsShowText } = props;
