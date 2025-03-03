@@ -38,10 +38,10 @@ const WorkListHead = (props) => {
 
 
 
-    useEffect(() => {
-        setWorkBreadCrumbText("全部事项")
-        return
-    }, [])
+    // useEffect(() => {
+    //     setWorkBreadCrumbText("全部事项")
+    //
+    // }, [])
 
     /**
      * 关闭视图下拉框，暂时没有用
