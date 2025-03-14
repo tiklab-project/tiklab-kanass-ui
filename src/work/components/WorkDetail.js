@@ -91,7 +91,8 @@ const WorkDetail = (props) => {
                 const data = {
                     workTypeId: res.workType.id,
                     workId: workId,
-                    userId: userId
+                    userId: userId,
+                    domainId:projectId
                 }
                 findWorkItemRoleFunctionDmCode(data).then(res => {
                     if(res.code === 0){
