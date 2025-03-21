@@ -97,6 +97,7 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
             </div>
         },
         {
+
             title: '负责人',
             dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',

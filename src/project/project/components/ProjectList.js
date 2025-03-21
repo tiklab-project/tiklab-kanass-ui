@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:06:27
  */
 import React, { Fragment, useEffect } from "react";
-import { Spin, Table, Space, Select, Empty } from 'antd';
+import { Spin, Table, Space,Tooltip, Select, Empty } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
@@ -297,7 +297,9 @@ const ProjectList = (props) => {
                                             alt=""
                                             className="icon-32"
                                         />
+                                        <Tooltip title={item.projectName}>
                                         <span className="item-name">{item.projectName}</span>
+                                        </Tooltip>
                                     </div>
                                     <div className="item-work">
                                         <div className="process-work">

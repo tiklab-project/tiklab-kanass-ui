@@ -74,7 +74,7 @@ const WorkAddPage = (props) => {
     }, [])
 
     /**
-     * 获取不同的事项类型的类型的选项，比如缺陷类型，需求类型 
+     * 获取不同的事项类型的类型的选项，比如缺陷类型，需求类型
      */
     const getEachWorkType = () => {
         switch (workType.workType.code) {
@@ -116,7 +116,7 @@ const WorkAddPage = (props) => {
 
     /**
      * 在项目内添加事项或者选择项目之后， 设置表单初始化值
-     * @param {*} project 
+     * @param {*} project
      */
     const getProjectValue = (project) => {
         const projectId = project.id;
@@ -214,6 +214,17 @@ const WorkAddPage = (props) => {
     //提交表单
     const onFinish = () => {
         form.validateFields().then((values) => {
+            if (values.title.length > 100) { // 假设标题最大长度为100
+                message.error({
+                    content: '标题长度不能超过100个字符',
+                    className: 'custom-class',
+                    style: {
+                        marginTop: '20vh',
+                    },
+                });
+                return;
+            }
+
             console.log(values)
             values.builder = getUser().userId;
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
@@ -319,7 +330,7 @@ const WorkAddPage = (props) => {
 
     /**
      * 修改值
-     * @param {字段值} changedValues 
+     * @param {字段值} changedValues
      */
     const changeWorkItem = (changedValues) => {
         setNewWorkItem({ ...newWorkItem, ...changedValues })
@@ -328,16 +339,16 @@ const WorkAddPage = (props) => {
 
     /**
      * 修改内容
-     * @param {内容} value 
+     * @param {内容} value
      */
     const changeDesc = (value) => {
         setSlateValue(value)
         setIsEditStart(true)
     }
-    
+
     /**
      * 搜索计划关键字
-     * @param {搜索关键字} value 
+     * @param {搜索关键字} value
      */
     const searchStage = (value) => {
         console.log(value)
@@ -572,6 +583,8 @@ const WorkAddPage = (props) => {
                                         ticket={ticket}
                                         tenant={tenant}
                                         base_url={base_url}
+                                        viewImageUrl = "/image"
+                                        img_url = {base_url}
                                         maxHeight={500}
                                         {...props}
                                     />

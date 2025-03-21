@@ -19,17 +19,42 @@ import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const ProjectSetSurvey = props => {
 
-    const { logList, findProjectSetLogpage, createRecent } = BasicInfoStore;
+    const { logList, findProjectList, createRecent } = BasicInfoStore;
     const projectSetId = props.match.params.projectSetId;
-    const [processProjectList, setProcessProjectList] = useState();
-    const projectSet = JSON.parse(localStorage.getItem("projectSet"));
+    // const [processProjectList, setProcessProjectList] = useState();
+    // const projectSet = JSON.parse(localStorage.getItem("projectSet"));
+    const [projectSet, setProjectSet] = useState(JSON.parse(localStorage.getItem("projectSet")) || { projects: [] });
+    const [processProjectList, setProcessProjectList] = useState(projectSet.projects || []);
+
 
     useEffect(() => {
-        findProjectSetLogpage({ projectSetId: projectSetId })
+        const fetchData = async () => {
+            try {
+                const response = await findProjectList({ projectSetId: projectSetId });
+                if (response.code === 0 && Array.isArray(response.data)) {
+                    const data = response.data;
+                    const projectSetData = {
+                        projects: data,
+                        name: data[0]?.projectName || "未命名项目集",
+                        color: data[0]?.color || "#4CAF50",
+                        startTime: data[0]?.startTime,
+                        endTime: data[0]?.endTime,
+                        master: data[0]?.master,
+                        projectSetLimits: data[0]?.projectSetLimits
+                    };
+                    localStorage.setItem("projectSet", JSON.stringify(projectSetData));
+                    setProjectSet(projectSetData);
+                    setProcessProjectList(data.filter(project => project.projectState === "1")); // 筛选进行中的项目
+                } else {
+                    console.error("项目集数据获取失败:", response.msg || response.detailMsg);
+                }
+            } catch (error) {
+                console.error("获取项目集数据时出错:", error);
+            }
+        };
 
-        return;
-    }, [])
-
+        fetchData();
+    }, [projectSetId, findProjectList]);
 
     const goProdetail = (project) => {
         localStorage.setItem("project", JSON.stringify(project));
@@ -62,7 +87,7 @@ const ProjectSetSurvey = props => {
                     <div className="projectSet-survey-top">
                         <div className="survey-top-left">
                             <div className="projectSet-info">
-                                <ColorIcon color = {projectSet.color} name = {projectSet.name} className = "projectSet-icon"/>
+                                {/*<ColorIcon color = {projectSet.color} name = {projectSet.name} className = "projectSet-icon"/>*/}
                                 <div className="projectSet-info-content">
                                     <div className="projectSet-info-content-item box-title">
                                         {projectSet?.name}
@@ -79,7 +104,10 @@ const ProjectSetSurvey = props => {
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">项目数量</div>
-                                    <div className="projectSet-info-result">0</div>
+                                    <div className="projectSet-info-result">
+                                        {Array.isArray(projectSet?.projects) ? projectSet.projects.length : 0}
+                                    </div>
+                                    {/*<div className="projectSet-info-result">0</div>*/}
                                 </div>
                                 <div className="projectSet-info-item">
                                     <div className="projectSet-info-title">计划开始日期</div>
@@ -101,33 +129,33 @@ const ProjectSetSurvey = props => {
                             <div className="projectSet-process-project-list">
                                 {
                                     processProjectList && processProjectList.length > 0 ? processProjectList.map(item => {
-                                        return <div className="projectSet-process-project-item"
-                                            key={item.id}
-                                            onClick={() => goProdetail(item)}
-                                        >
-                                            <div className="projectSet-process-project-left">
-                                                <div>
-                                                    <ImgComponent
-                                                        src={item.iconUrl}
-                                                        className="icon-32"
-                                                        title={item.projectName}
-                                                        alt=""
-                                                    />
+                                            return <div className="projectSet-process-project-item"
+                                                        key={item.id}
+                                                        onClick={() => goProdetail(item)}
+                                            >
+                                                <div className="projectSet-process-project-left">
+                                                    <div>
+                                                        <ImgComponent
+                                                            src={item.iconUrl}
+                                                            className="icon-32"
+                                                            title={item.projectName}
+                                                            alt=""
+                                                        />
+                                                    </div>
+
+                                                    <div className="projectSet-process-project-name">
+
+                                                        <div className="projectSet-process-project-date">{item.projectKey}</div>
+                                                        <div className="name">{item.projectName}</div>
+                                                    </div>
                                                 </div>
 
-                                                <div className="projectSet-process-project-name">
-                                                    
-                                                    <div className="projectSet-process-project-date">{item.projectKey}</div>
-                                                    <div className="name">{item.projectName}</div>
+
+                                                <div className="projectSet-process-project-process">
+                                                    {item.master.name}
                                                 </div>
                                             </div>
-
-
-                                            <div className="projectSet-process-project-process">
-                                                {item.master.name}
-                                            </div>
-                                        </div>
-                                    })
+                                        })
                                         :
                                         <ProjectEmpty description="暂时没有动态~" />
                                 }
@@ -144,3 +172,4 @@ const ProjectSetSurvey = props => {
 }
 
 export default observer(ProjectSetSurvey);
+

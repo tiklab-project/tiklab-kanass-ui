@@ -155,6 +155,7 @@ const ModuleAddModal = (props) => {
                             // value = {parentId}
                             // onChange={(value)=> setParentId(value)}
                             treeDefaultExpandAll
+                            disabled={props.type === 'add' && props.parent !== undefined}
                         >   
                         {
                             moduleTree(moduleList)

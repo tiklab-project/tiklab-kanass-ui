@@ -1,3 +1,4 @@
+//定义 Babel 的编译规则和行为
 const presets = [
         "@babel/preset-env",
         "@babel/preset-react"
@@ -16,7 +17,7 @@ const plugins = [
                 "libraryName": "antd",
                 "libraryDirectory": "es",
                 "style": "css",
-                
+
             }
         ],
         [
@@ -130,7 +131,7 @@ const plugins = [
             "tiklab-licence-ui"
         ],
         [
-            "import", 
+            "import",
             {
                 "libraryName": "tiklab-security-ui",
                 "libraryDirectory": "es",
@@ -148,7 +149,7 @@ const plugins = [
                     },'');
                     return `tiklab-security-ui/es/${fullName}`;
                 }
-            }, 
+            },
             "tiklab-security-ui"
         ],
         [

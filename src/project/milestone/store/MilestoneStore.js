@@ -133,7 +133,11 @@ export class MilestoneStore {
     setPageParam = (value) => {
         this.milestonePageParam = { ...value }
     }
-
+    /**
+     * 获取用户列表
+     * @param projectId
+     * @returns {Promise<unknown>}
+     */
     @action
     getUseList = async(projectId) => {
         const params = {

@@ -6,18 +6,33 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-18 17:49:39
  */
-import React, { useState } from "react";
-import { Modal, Divider } from 'antd';
+import React, { useState,useEffect } from "react";
+import { Modal, Divider,Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import "./ProjectSetRelevance.scss";
 import Button from "../../../common/button/Button";
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
+import ProjectSetStore from "../../../projectSet/projectSet/store/ProjectSetStore";
 import { observer } from 'mobx-react';
 const ProjectSetRelevance = (props) => {
     const { projectSetId } = props;
     const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList } = ProjectSetProjectStore;
     const [visible, setVisible] = useState(false)
     const [checkedList, setCheckedList] = useState([]);
+    const [projectSetName, setProjectSetName] = useState('');
+
+    // 在组件挂载时获取项目集名称
+    useEffect(() => {
+        const fetchData = async () => {
+            if (projectSetId) {
+                const res = await ProjectSetStore.findProjectSet(projectSetId); // 调用 ProjectSetStore 的方法
+                if (res.code === 0) {
+                    setProjectSetName(res.data.name || "未命名项目集"); // 假设接口返回的名称字段为 "name"
+                }
+            }
+        };
+        fetchData();
+    }, [projectSetId]);
 
     /**
      * 添加项目集
@@ -54,10 +69,27 @@ const ProjectSetRelevance = (props) => {
             }
         })
     }
-
-
-
     const onCheckChange = e => {
+        const all = document.getElementsByName("all")[0];
+        if (e.target.checked === true) {
+            let noCheck = noRelatedProjects.find((item) => item.id === e.target.value);
+
+            setCheckedList(prev => [...prev, noCheck]);
+
+            // 如果所有未关联被选中，全选变为true
+            if (checkedList.length + 1 === noRelatedProjects.length) {
+                all.checked = true;
+            }
+        } else {
+            setCheckedList(prev => prev.filter(item => item.id !== e.target.value));
+
+            if (all && all.checked === true) {
+                all.checked = false;
+            }
+        }
+    };
+
+    /*const onCheckChange = e => {
         const all = document.getElementsByName("all")[0]
         if (e.target.checked === true) {
             let noCheck = []
@@ -65,8 +97,7 @@ const ProjectSetRelevance = (props) => {
                 return item.id === e.target.value
             })
 
-            checkedList.push(noCheck[0])
-            setCheckedList([...checkedList])
+            setCheckedList(prev => [...prev, noCheck[0]]);
 
             // 如果所有未关联被选中，全选变为true
             if (checkedList.length === noRelatedProjects.length) {
@@ -82,8 +113,7 @@ const ProjectSetRelevance = (props) => {
                 all.checked = false
             }
         }
-
-    };
+    };*/
 
     const onCheckAllChange = e => {
         const noSelect = document.getElementsByName("noSelectProject")
@@ -104,7 +134,20 @@ const ProjectSetRelevance = (props) => {
         }
     };
 
-    const deleteRelevance = (id) => {
+    const handleClearChecked = () => {
+        setCheckedList([]); // 清空 checkedList
+        const all = document.getElementsByName("all")[0];
+        if (all) {
+            all.checked = false; // 取消全选框的选中状态
+        }
+        // 遍历所有未关联项目的复选框并取消选中状态
+        const noSelect = document.getElementsByName("noSelectProject");
+        for (let i = 0; i < noSelect.length; i++) {
+            noSelect[i].checked = false;
+        }
+    };
+
+    /*const deleteRelevance = (id) => {
         // 右边删除，左边多选框变为未选中
         const noSelect = document.getElementById(id)
         noSelect.checked = false;
@@ -120,12 +163,24 @@ const ProjectSetRelevance = (props) => {
         if (all.checked = true) {
             all.checked = false
         }
-    }
+    }*/
+    const deleteRelevance = (id) => {
+        const noSelect = document.getElementById(id);
+        noSelect.checked = false;
+
+        setCheckedList(prev => prev.filter(item => item.id !== id));
+
+        const all = document.getElementsByName("all")[0];
+        if (all && all.checked === true) {
+            all.checked = false;
+        }
+    };
+
 
     return <div >
         <Button type="primary" onClick={() => addProjectSet()}>关联项目</Button>
         <Modal
-            title={`关联项目集至：项目集`}
+            title={`关联项目至：${projectSetName || '项目集'}`}
             visible={visible}
             onOk={sumitFrom}
             onCancel={submitCancel}
@@ -149,7 +204,13 @@ const ProjectSetRelevance = (props) => {
                         noRelatedProjects && noRelatedProjects.map((item) => {
                             return (
                                 <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>{item.projectName}</label>
+                                    <label htmlFor={item.id}>
+                                        <Tooltip title={item.projectName}>
+                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {item.projectName}
+                                            </span>
+                                        </Tooltip>
+                                    </label>
                                     <input type="checkbox" name="noSelectProject" id={item.id} value={item.id} onChange={(e) => onCheckChange(e)} />
                                 </div>
                             )
@@ -162,7 +223,13 @@ const ProjectSetRelevance = (props) => {
                         relatedProjects && relatedProjects.map((item) => {
                             return (
                                 <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>{item.projectName}</label>
+                                    <label htmlFor={item.id}>
+                                        <Tooltip title={item.projectName}>
+                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {item.projectName}
+                                            </span>
+                                        </Tooltip>
+                                    </label>
                                     <input type="checkbox" name="relevanceProject" value={item.id} disabled />
                                 </div>
                             )
@@ -171,15 +238,21 @@ const ProjectSetRelevance = (props) => {
                 </div>
                 <div className="projectSet-box-right">
                     <div className="projectSet-box-right-title">
-                        <span>已选项目</span> 
-                        <span className="project-clear">清空</span>
+                        <span>已选项目</span>
+                        <span className="project-clear" onClick={() => handleClearChecked()}>清空</span>
                     </div>
                     <Divider />
                     {
                         checkedList && checkedList.map((item,) => {
                             return (
                                 <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>{item.projectName}</label>
+                                    <label htmlFor={item.id}>
+                                        <Tooltip title={item.projectName}>
+                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {item.projectName}
+                                            </span>
+                                        </Tooltip>
+                                    </label>
                                     <span onClick={() => deleteRelevance(item.id)}><DeleteOutlined /></span>
                                 </div>
                             )

@@ -117,7 +117,7 @@ const BasicInfo = props => {
                 ...values,
                 startTime: time[0].format("YYYY-MM-DD"),
                 endTime: time[1].format("YYYY-MM-DD"),
-                master: { id: values.master },
+                master: {id: values.master},
                 projectType: {
                     id: values.projectType
                 },
@@ -131,9 +131,13 @@ const BasicInfo = props => {
                     message.success("修改成功");
                     setDisabled(true);
                 }
-            });
-        })
-    }
+            })
+        }).catch((errorInfo) => {
+            // 显示具体错误信息
+            const errors = errorInfo.errorFields.map(field => field.errors[0]);
+            message.error(`表单验证失败：${errors.join('；')}`);
+        });
+    };
     // 状态类型
     const status = [
         {
@@ -164,6 +168,8 @@ const BasicInfo = props => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
+        // 新增：重置确认表单
+        confirmForm.resetFields();
         setIsModalVisible(true);
     };
 
@@ -175,13 +181,18 @@ const BasicInfo = props => {
                     setIsModalVisible(false);
                     props.history.push("/project")
                 }
-            })
-
-        })
+            }).catch((error) => {
+                console.error("Error deleting project:", error);
+            });
+        }).catch((errorInfo) => {
+            // 验证失败时的处理
+            console.error("Validation failed:", errorInfo);
+        });
 
     };
 
     const handleCancel = () => {
+        console.log("Modal cancelled"); // 调试日志
         setIsModalVisible(false);
     };
 
@@ -271,6 +282,20 @@ const BasicInfo = props => {
                                     <Form.Item
                                         label="项目名称"
                                         name="projectName"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: '项目名称不能为空！',
+                                            },
+                                            {
+                                                max: 50, // 假设最大长度为50字符
+                                                message: '项目名称不能超过50个字符！',
+                                            },
+                                            {
+                                                pattern: /^[\w\s\u4e00-\u9fa5]+$/, // 限制为中英文、数字、空格
+                                                message: '只能使用中英文、数字和空格！',
+                                            },
+                                        ]}
                                     >
                                         <Input placeholder="项目名称" />
                                     </Form.Item>
@@ -356,7 +381,17 @@ const BasicInfo = props => {
                                             <Button onClick={() => cancel()}>
                                                 取消
                                             </Button>
-                                            <Button htmlType="submit" type="primary" disabled={disable}>
+                                            {/*<Button htmlType="submit" type="primary" disabled={disable}>
+                                                保存
+                                            </Button>*/}
+                                            <Button
+                                                htmlType="submit"
+                                                type="primary"
+                                                disabled={
+                                                    form.getFieldsError().some(field => field.errors.length > 0) ||
+                                                    form.getFieldValue('projectName')?.length > 50
+                                                }
+                                            >
                                                 保存
                                             </Button>
                                         </Form.Item>
@@ -394,7 +429,7 @@ const BasicInfo = props => {
                         okType="danger"
                         okButtonProps={{ type: "primary" }}
                     >
-                        <Alert message=" 此项目及其事务、组件、附件和版本将被永久删除" type="error" showIcon />
+                        <Alert message=" 此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除" type="error" showIcon />
 
                         <Form
                             form={confirmForm}
@@ -411,17 +446,30 @@ const BasicInfo = props => {
                                 label="项目名称"
                                 name="confirmProjectName"
                                 rules={[
+                                //     {
+                                //         required: true,
+                                //         message: `请输入项目名称`,
+                                //     },
+                                //     ({ getFieldValue }) => ({
+                                //         validator(rule, value) {
+                                //             //getFieldValue可以获得其他输入框的内容
+                                //             if (projectInfo?.projectName !== value) return Promise.reject(`请输入正确的项目名称`);
+                                //             return Promise.resolve();
+                                //         }
+                                //     })
+                                // ]}
+                                    //({ getFieldValue }) => ({
                                     {
-                                        required: true,
-                                        message: `请输入项目名称`,
-                                    },
-                                    ({ getFieldValue }) => ({
-                                        validator(rule, value) {
-                                            //getFieldValue可以获得其他输入框的内容
-                                            if (projectInfo?.projectName !== value) return Promise.reject(`请输入正确的项目名称`);
+                                    validator(rule, value) {
+                                            if (!value) {
+                                                return Promise.reject(`请输入项目名称`);
+                                            }
+                                            if (projectInfo?.projectName !== value) {
+                                                return Promise.reject(`请输入正确的项目名称`);
+                                            }
                                             return Promise.resolve();
                                         }
-                                    })
+                                    }
                                 ]}
                             >
                                 <Input value={confirmProjectName} onChange={(value) => setConfirmProjectName(value.target.value)} />

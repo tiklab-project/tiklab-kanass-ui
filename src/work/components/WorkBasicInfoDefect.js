@@ -14,6 +14,8 @@ import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import moment from 'moment';
+// 设置 moment 的语言环境为中文
+moment.locale('zh-cn'); // 确保 moment 使用中文
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor} from "tiklab-slate-ui";
 import { SwitchPreliminaryType } from "tiklab-form-ui";
@@ -216,9 +218,9 @@ const WorkBasicInfo = (props) => {
                 createWorkAttach(params).then(() => {
                     findWorkAttachList(workId)
                 })
-                message.success(`${info.file.name} file uploaded successfully.`);
+                message.success(`${info.file.name} 文件上传成功.`);
             } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
+                message.error(`${info.file.name} 文件上传失败.`);
             }
         }
     }

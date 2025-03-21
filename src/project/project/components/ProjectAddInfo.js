@@ -61,15 +61,17 @@ const ProjectAddInfo = (props) => {
     }
 
     const setProjectKey = useDebounce((value) => {
-        creatProjectKey(value.replace(/\s+/g, '')).then(res => {
-            if(res.code === 0){
-                setKey(res.data)
+        // 过滤非字母数字字符，并去除空格
+        const filteredValue = value.replace(/[^A-Za-z0-9]/g, '').replace(/\s+/g, '');
+        creatProjectKey(filteredValue).then(res => {
+            if (res.code === 0) {
+                setKey(res.data);
                 form.setFieldsValue({
                     projectKey: res.data
-                })
+                });
             }
-        })
-    }, [500])
+        });
+    }, 500);
     const ticket = getUser().ticket;
     const tenant = getUser().tenant;
     const upload_url = env === "local" ? base_url : "";
@@ -124,20 +126,23 @@ const ProjectAddInfo = (props) => {
                 iconUrl: iconUrl
             }
             createProject(data).then(res => {
-                setLoading(false)
+                setLoading(false);
                 if (res.code === 0) {
-                    message.success('添加成功');
-                    props.history.goBack()
-                    setCurrentStep("0")
-                } else if(res.code === 40000){
-                    message.error(res.msg)
+                    message.success('项目添加成功');
+                    props.history.goBack();
+                    setCurrentStep("0");
                 } else {
-                    message.error("添加失败")
+                    // 显示具体错误信息（如名称过长、重复等）
+                    message.error(res.msg || '项目添加失败，请检查输入内容');
                 }
-
-            })
-        })
-    }
+            }).catch(() => {
+                message.error("请求失败，请重试");
+            });
+        }).catch(() => {
+            // 表单验证失败时提示
+            message.warn("请检查表单内容是否符合要求");
+        });
+    };
 
 
     const checkLimit = (_, value) => {
@@ -217,11 +222,19 @@ const ProjectAddInfo = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: '使用中英文、数字、空格组合',
+                                message: '项目名称不能为空！', // 优化必填提示
+                            },
+                            {
+                                max: 50, // 假设最大长度为50字符
+                                message: '项目名称不能超过50个字符！', // 长度超限提示
+                            },
+                            {
+                                pattern: /^[\w\s\u4e00-\u9fa5]+$/, // 限制为中英文、数字、空格
+                                message: '只能使用中英文、数字和空格！',
                             },
                         ]}
                     >
-                        <Input placeholder="使用中英文、数字、空格组合" onChange={(value)=> setProjectKey(value.target.value)}/>
+                        <Input placeholder="只能使用中英文、数字、空格组合" onChange={(value)=> setProjectKey(value.target.value)}/>
                     </Form.Item>
                     <Form.Item
                         label="项目Key"

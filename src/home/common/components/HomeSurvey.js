@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
-import { Empty, Tabs, Spin } from 'antd';
+import { Empty, Tabs, Spin,Tooltip } from 'antd';
 import { withRouter } from 'react-router';
 import WorkStore from '../../../work/store/WorkStore';
 import { setSessionStorage } from "../../../common/utils/setSessionStorage"
@@ -127,7 +127,9 @@ const HomeSurvey = (props) => {
                                                 alt=""
                                                 className="icon-32"
                                             />
+                                            <Tooltip title={item.projectName}>
                                             <span className="item-name">{item.projectName}</span>
+                                            </Tooltip>
                                         </div>
                                         <div className="item-work">
                                             <div className="process-work">
