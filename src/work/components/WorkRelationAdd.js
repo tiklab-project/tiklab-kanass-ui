@@ -214,8 +214,8 @@ const WorkRelationAddModal = (props) => {
                             </SelectSimple>
                         }
                         <div className="relation-add-submit">
-                            <span onClick={() => showAddRelation(false)}>
-                                取消
+                            <span className="close-icon" onClick={() => showAddRelation(false)}>
+                               ×
                             </span>
                         </div>
 

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 15:01:34
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, InputNumber, Form, Input, Select } from 'antd';
+import { Modal, InputNumber, Form, Input, Select, Button} from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
@@ -37,32 +37,30 @@ const LogAdd = (props) => {
         labelCol: { lg: { span: 6 }, xxl: { span: 4 } },
         wrapperCol: { lg: { span: 24 }, xxl: { span: 24 } },
     };
+    // 抽屉样式控制
+    const drawerStyle = {
+        right: showLogAdd ? 0 : "-400px",
+        transition: "right 0.3s ease",
+    };
     useEffect(() => {
         console.log(showLogAdd)
         if (showLogAdd) {
-
+            document.body.style.overflow = "hidden"; // 锁定主页面滚动
             if (page === "workDetail") {
-                getGemianTime()
-                document.removeEventListener("mouseup", closeModal, false);
+                getGemianTime();
             } else {
                 if (!projectId) {
-                    findJoinProjectList({})
-                }else {
-                    findWorkItemPage({ projectId: projectId }).then(res => {
+                    findJoinProjectList({});
+                } else {
+                    findWorkItemPage({ projectId }).then((res) => {
                         if (res.code === 0) {
-                            setWorkItemList(res.data.dataList)
+                            setWorkItemList(res.data.dataList);
                         }
-                    })
+                    });
                 }
-                
             }
-
-
         } else {
-            if (page === "workDetail") {
-                document.addEventListener("mouseup", closeModal, false);
-            }
-
+            document.body.style.overflow = ""; // 恢复滚动
         }
 
     }, [showLogAdd])
@@ -133,7 +131,7 @@ const LogAdd = (props) => {
                                 }
                             }
                         })
-                       
+
                     }
                 })
             }else {
@@ -154,33 +152,31 @@ const LogAdd = (props) => {
                                 }
                             }
                         })
-                       
+
                     }
-                   
-    
+
+
                 })
             }
-            
 
-            
+
+
         })
     }
 
     /**
-     * 关闭弹窗
+     * 关闭抽屉
      */
     const closeLogModal = () => {
         setShowLogAdd(false)
         setTakeupTime(0)
-        if (page === "workDetail") {
-            document.addEventListener("mouseup", closeModal, false);
-        }
+        addLog.resetFields();
 
     }
 
     /**
      * 按照名称关键字搜索事项列表
-     * @param {名称} value 
+     * @param {名称} value
      */
     const searchWorkItem = (value) => {
         if (value) {
@@ -195,8 +191,8 @@ const LogAdd = (props) => {
 
     /**
      * 根据搜索结果改变工时信息
-     * @param {*} newValue 
-     * @param {*} option 
+     * @param {*} newValue
+     * @param {*} option
      */
     const changeSearchTitle = (newValue, option) => {
         setValue(newValue);
@@ -250,14 +246,20 @@ const LogAdd = (props) => {
     }
 
     return (
-        <Modal
-            title={`${modalType === "add" ? '添加工时' : '编辑工时'}`}
-            visible={showLogAdd}
-            onOk={creatLog}
-            onCancel={closeLogModal}
-            destroyOnClose={true}
-            closable={false}
+        <div
+            className={`work-log-drawer ${showLogAdd ? '' : 'work-log-drawer-hidden'}`}
+            style={{ width: '400px' }} // 根据需求调整宽度
         >
+            <div className="drawer-header">
+                <h3>{modalType === "add" ? '添加工时' : '编辑工时'}</h3>
+                <button
+                    className="drawer-close-btn"
+                    onClick={closeLogModal}
+                >
+                    ×
+                </button>
+            </div>
+
             <Form
                 // {...layout}
                 name="basic"
@@ -403,9 +405,19 @@ const LogAdd = (props) => {
                 >
                     <TextArea rows={4} placeholder = "工作内容" />
                 </Form.Item>
+                <Form.Item className="log-button-group">
+                    <Button
+                        type="primary"
+                        onClick={() => creatLog()}
+                        style={{ marginRight: '10px' }}
+                    >
+                        {modalType === "add" ? "添加" : "保存"}
+                    </Button>
+                    <Button onClick={closeLogModal}>取消</Button>
+                </Form.Item>
             </Form>
 
-        </Modal>
+        </div>
     )
 }
 

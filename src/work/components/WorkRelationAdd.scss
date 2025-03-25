@@ -52,8 +52,14 @@
             padding: 0 10px;
         }
         .relation-add-submit {
-            cursor: pointer;
-            color: var(--tiklab-blue);
+            .close-icon {
+                font-size: 20px;
+                cursor: pointer;
+                color: #666;
+                &:hover {
+                    color: #337ecc;
+                }
+            }
         }
     }
     .relation-add-table {

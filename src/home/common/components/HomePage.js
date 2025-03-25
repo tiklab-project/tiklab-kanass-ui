@@ -23,7 +23,7 @@ const Home = (props) => {
     useEffect(() => {
         getInsightUrl()
 
-        if (path.indexOf("overview") > -1) {
+        /*if (path.includes("overview") > -1) {
             setActiveKey("overview")
         }
 
@@ -35,6 +35,15 @@ const Home = (props) => {
             setActiveKey("todoList")
         }
         return null;
+        */
+        // 仅根据当前路径更新activeKey，不触发其他操作
+        if (path.includes("overview")) {
+            setActiveKey("overview");
+        } else if (path.includes("insight")) {
+            setActiveKey("insight");
+        } else if (path.includes("todoList")) {
+            setActiveKey("todoList");
+        }
     }, [path])
 
     /**
@@ -66,9 +75,19 @@ const Home = (props) => {
         <Row className="home" >
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="home-tab">
-                    <div className={`home-tab-item ${activeKey === "overview" ? "home-tab-select" : ""}`} key={1} onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
-                    <div className={`home-tab-item ${activeKey === "todoList" ? "home-tab-select" : ""}`} key={2} onClick={() => selectRouter("/index/todoList", "todoList")}>待办</div>
-                    <div className={`home-tab-item ${activeKey === "insight" ? "home-tab-select" : ""}`} key={3} onClick={() => selectRouter(insightUrl, "insight")}>仪表盘</div>
+
+                    <div className={`home-tab-item ${activeKey === "overview" ? "home-tab-select" : ""}`}
+                         key={1}
+                         onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
+
+                    <div className="right-tabs-container">
+                    <div className={`home-tab-item ${activeKey === "todoList" ? "home-tab-select" : ""}`}
+                         key={2}
+                         onClick={() => selectRouter("/index/todoList", "todoList")}>待办</div>
+                    <div className={`home-tab-item ${activeKey === "insight" ? "home-tab-select" : ""}`}
+                         key={3}
+                         onClick={() => selectRouter(insightUrl, "insight")}>仪表盘</div>
+                </div>
                 </div>
                
                 {renderRoutes(route.routes)}

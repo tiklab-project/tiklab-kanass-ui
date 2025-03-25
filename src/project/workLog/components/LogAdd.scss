@@ -1,4 +1,4 @@
-.log-add {
+/*.log-add {
     .log-add-time {
         display: flex;
         // align-items: center;
@@ -9,4 +9,54 @@
         }
     }
     
+}*/
+.work-log-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px; /* 初始隐藏 */
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.3s ease;
 }
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e8e8e8;
+    h3 {
+        margin: 0;
+    }
+    .drawer-close-btn {
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+.log-add {
+    max-width: 350px;
+    margin: 20px auto;
+    .ant-form-item {
+        margin-bottom: 16px;
+    }
+}
+
+.submit-btn {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    padding: 8px 20px;
+    background: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+

@@ -71,7 +71,7 @@ const WorkLog = (props) => {
     }
 
     /**
-     * 显示添加工时弹窗
+     * 显示添加工时抽屉
      */
     const showModal = () => {
         setShowLogAdd(true);
@@ -200,7 +200,6 @@ const WorkLog = (props) => {
                     page="workDetail"
                     workId={workId}
                     closeModal={closeModal}
-                    getContainer={workLog?.current}
                     showLogAdd={showLogAdd}
                     setShowLogAdd={setShowLogAdd}
                     modalType={modalType}

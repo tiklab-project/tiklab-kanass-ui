@@ -66,18 +66,29 @@ const SprintLineMap = (props) => {
     const creatGraph = () => {
         // 开始与结束日期，解析一个表示某个日期的字符串，
         // 并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数
-        let start = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`;
+        /*let start = `${currentYear - 1}.${currentMonth + 1}.${currentDay}`;
         let end = `${currentYear + 1}.${currentMonth + 1}.${currentDay}`
         start = Date.parse(start);
-        end = Date.parse(end);
+        end = Date.parse(end);*/
 
         // 用开始日期与结束日期定义画布的宽度
-        let graphWidth = Math.abs(start - end);
+        /*let graphWidth = Math.abs(start - end);
 
 
         graphWidth = Math.floor(graphWidth / archiveBase) + unitLength
-        setGanttWidth(graphWidth)
+        setGanttWidth(graphWidth)*/
+        // 计算计划周期的开始和结束时间
+        const start = moment().subtract(1, "year").startOf("day"); // 当前年份-1年的开始
+        const end = moment().add(1, "year").endOf("day"); // 当前年份+1年的结束
 
+        const startMs = start.valueOf();
+        const endMs = end.valueOf();
+
+        // 计算画布宽度（单位：archiveBase 的数量）
+        let graphWidth = Math.abs(endMs - startMs) / archiveBase;
+        graphWidth = Math.floor(graphWidth) + unitLength; // 加上单元格边距
+
+        setGanttWidth(graphWidth);
 
         const graph = new Graph({
             container: document.getElementById("sprint"),
@@ -107,10 +118,15 @@ const SprintLineMap = (props) => {
                     if (cell.isNode()) {
                         const cellRange = cell.getBBox()
                         cellRange.x = 0;
-                        cellRange.width = graphWidth;
+                        //cellRange.width = graphWidth;
+                        cellRange.width = graphWidth - cell.width();
                         return cellRange;
                     }
                     return null
+                },
+                resizing: {
+                    enabled: true,
+                    restrictBoundary: true, // 确保调整大小不超出画布边界
                 },
             }
         })
@@ -127,7 +143,7 @@ const SprintLineMap = (props) => {
         const startX = nodeBox.x;
         const nodeWidth = nodeBox.width;
         const index = node.store.data.index;
-        let params = { id: "", startTime: "", endTime: "" };
+        /*let params = { id: "", startTime: "", endTime: "" };
         params.id = sprintId;
 
         let endTime = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
@@ -141,12 +157,39 @@ const SprintLineMap = (props) => {
             if (res.code === 0) {
                 data[index].endTime = endTime;
                 data[index].startTime = startTime;
+            }*/
+        // 获取当前节点的时间边界
+        const MIN_TIME = Date.parse(moment().subtract(1, "year").startOf("year").format("YYYY-MM-DD"));
+        const MAX_TIME = Date.parse(moment().add(1, "year").endOf("year").format("YYYY-MM-DD"));
+
+        // 计算新的时间
+        let startTimeMs = startX * archiveBase + firstDateMillisecond;
+        let endTimeMs = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
+
+        // 强制时间在计划周期内
+        startTimeMs = Math.max(startTimeMs, MIN_TIME);
+        endTimeMs = Math.min(endTimeMs, MAX_TIME);
+
+        // 确保 startTime < endTime
+        if (startTimeMs >= endTimeMs) {
+            endTimeMs = startTimeMs + 86400000; // 至少1天
+        }
+
+        // 转换为日期格式
+        const startTime = moment(startTimeMs).format('YYYY-MM-DD');
+        const endTime = moment(endTimeMs).subtract(1, "day").format('YYYY-MM-DD'); // 减1天避免越界
+
+        // 更新数据
+        updateSprint({ id: sprintId, startTime, endTime }).then(res => {
+            if (res.code === 0) {
+                data[index].startTime = startTime;
+                data[index].endTime = endTime;
             }
         })
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {
-        const nodeBox = node.getBBox();
+        /*const nodeBox = node.getBBox();
 
         const sprintId = node.id;
         let params = { id: "", startTime: "", endTime: "" };
@@ -177,7 +220,36 @@ const SprintLineMap = (props) => {
                     data[index].startTime = day;
                 }
 
-            })
+            })*/
+        const nodeBox = node.getBBox();
+        const sprintId = node.id;
+        const index = node.store.data.index;
+        const direction = options.relativeDirection;
+
+        const MIN_TIME = Date.parse(moment().subtract(1, "year").startOf("year").format("YYYY-MM-DD"));
+        const MAX_TIME = Date.parse(moment().add(1, "year").endOf("year").format("YYYY-MM-DD"));
+
+        const startX = nodeBox.x;
+        const nodeWidth = nodeBox.width;
+
+        if (direction === "right") {
+            let endTimeMs = (startX + nodeWidth) * archiveBase + firstDateMillisecond;
+            endTimeMs = Math.min(endTimeMs, MAX_TIME); // 不超过最大时间
+
+            const endTime = moment(endTimeMs).subtract(1, "day").format('YYYY-MM-DD');
+            updateSprint({ id: sprintId, endTime }).then(res => {
+                if (res.code === 0) data[index].endTime = endTime;
+            });
+        }
+
+        if (direction === "left") {
+            let startTimeMs = startX * archiveBase + firstDateMillisecond;
+            startTimeMs = Math.max(startTimeMs, MIN_TIME); // 不小于最小时间
+
+            const startTime = moment(startTimeMs).format('YYYY-MM-DD');
+            updateSprint({ id: sprintId, startTime }).then(res => {
+                if (res.code === 0) data[index].startTime = startTime;
+            });
         }
 
     }, [500])

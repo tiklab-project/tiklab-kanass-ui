@@ -7,8 +7,7 @@
     background-color: #fff;
     .home-tab {
         display: flex;
-        gap: 20px;
-        position: sticky;
+        align-items: center;
         .home-tab-item {
             cursor: pointer;
             background-color: var(--tiklab-gray-600);
@@ -26,6 +25,11 @@
             color: var(--tiklab-blue);
             background-color: var(--tiklab-gray-400);
         }
+    }
+    .right-tabs-container {
+        margin-left: auto;
+        display: flex;
+        gap: 20px;
     }
 
     // .home-content {
@@ -181,10 +185,10 @@
             .todo-item {
                 margin-bottom: 10px;
             }
-            
 
 
-          
+
+
         }
     }
 
@@ -206,6 +210,6 @@
         gap: 10px;
     }
 
-    
-   
+
+
 }
