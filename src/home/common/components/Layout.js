@@ -43,15 +43,15 @@ const Layout = (props) => {
         '/project',
         '/projectSet',
         '/workitem',
-        '/log/list'
+        '/log/list',
+        '/workitem/:id'
     ];
 
     let curPath = props.location.pathname
 
-    // 检查当前的 curPath 是否与任一路径精确匹配,匹配就显示
-    const showFirstMenu = showFirstMenuPaths.some(path =>
-        matchPath(curPath, { path, exact: true })
-    );
+    // 判断当前路径是否匹配精确路径或以 /workitem 开头
+    const showFirstMenu = showFirstMenuPaths.includes(curPath) || curPath.startsWith('/workitem');
+
 
 
     return (
