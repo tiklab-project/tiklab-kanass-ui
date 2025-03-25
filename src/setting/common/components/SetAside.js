@@ -102,7 +102,7 @@ const SetAside = (props) => {
                         onClick={() => setOpenOrClose(item.id)}
                     >
                         {
-                            item.icon && <span to={item.id} className="orga-aside-item-left">
+                            item.icon && <span key={item.id} className="orga-aside-item-left">
                                 <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`#icon-${item.icon}`}></use>
                                 </svg>

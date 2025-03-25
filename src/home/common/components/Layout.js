@@ -16,6 +16,7 @@ import HomeStore from "../store/HomeStore";
 
 import FirstMenu from './FirstMenu';
 import { getUser } from 'tiklab-core-ui';
+import {matchPath} from "react-router";
 const Layout = (props) => {
     const store = {
         homeStore: HomeStore
@@ -35,12 +36,29 @@ const Layout = (props) => {
         }
 
     }, [])
+
+
+    const showFirstMenuPaths = [
+        '/index/overview',
+        '/project',
+        '/projectSet',
+        '/workitem',
+        '/log/list'
+    ];
+
+    let curPath = props.location.pathname
+
+    // 检查当前的 curPath 是否与任一路径精确匹配,匹配就显示
+    const showFirstMenu = showFirstMenuPaths.some(path =>
+        matchPath(curPath, { path, exact: true })
+    );
+
+
     return (
         <Provider {...store}>
             <div className="layout">
-                <FirstMenu {...props} />
+                {showFirstMenu && <FirstMenu {...props} />}
                 <div className="layout-right">
-                    
                     {renderRoutes(route)}
                 </div>
 

@@ -137,7 +137,7 @@ const setDevRouter= [
         ]
     },
     {
-        title: "系统集成",
+        title: "集成与开放",
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
@@ -154,6 +154,11 @@ const setDevRouter= [
                 id: '/setting/urlData',
                 code: "urlData",
                 purviewCode: "SysUrlData"
+            },
+            {
+                title: 'openApi',
+                id: 'openApi',
+
             }
         ]
     },

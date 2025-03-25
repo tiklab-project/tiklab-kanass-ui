@@ -233,811 +233,14 @@ const Routers = [
         exact: true,
         component: ProjectLogOut,
     },
-    {
-        path: "/setting",
-        component: Setting,
-        key: 'Setting',
-        routes: [
-            {
-                path: "/setting/home",
-                component: SettingHome,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/orga",
-                component: OrgaContent,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/user",
-                component: OrgaUser,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/dir",
-                component: ProjectDirectory,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/userGroup",
-                component: ProjectUserGroup,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/usersystemgroup",
-                component: ProjectSystemUserGroup,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/workstatus",
-                component: ProjectFlowStatusList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/nodestatus",
-                component: ProjectNodeStatusList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/businessrole",
-                component: FlowBusinessRoleList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/worktype",
-                component: WorkTypeList,
-                exact: true
-            },
-            {
-                path: "/setting/workRoleFunction/:workTypeId/:roleId",
-                component: WorkRoleFunction,
-                exact: true
-            },
-
-            {
-                path: "/setting/workPrivilegeRoleList/:workTypeId",
-                component: WorkPrivilegeRoleList,
-                exact: true
-            },
-            {
-                path: "/setting/workFunctionList",
-                component: WorkFunctionList,
-                exact: true
-            },
-            
-            {
-                path: "/setting/worktypeSystem",
-                component: WorkTypeSystem,
-                exact: true
-            },
-            {
-                path: "/setting/workpriority",
-                component: WorkPriority,
-                exact: true
-            },
-            {
-                path: "/setting/workTypeFlow/:id",
-                component: WorkTypeFlow,
-                exact: true
-            },
-            {
-                path: "/setting/workTypeForm/:id",
-                component: WorkTypeForm,
-                exact: true
-            },
-            {
-                path: "/setting/projectType",
-                component: ProjectType,
-                exact: true
-            },
-            // 系统功能管理
-            {
-                path: "/setting/systemFeature",
-                component: SystemFeature,
-                row: true,
-                exact: true
-            },
-            // 系统内置角色管理
-            {
-                path: "/setting/systemRoleBuilt",
-                component: SystemRoleBuilt,
-                row: true,
-                exact: true
-            },
-            // 系统角色管理
-            {
-                path: "/setting/systemRole",
-                component: SystemRole,
-                row: true,
-                exact: true
-            },
-            // 项目功能管理
-            {
-                path: "/setting/projectFeature",
-                component: ProjectFeature,
-                row: true,
-                exact: true
-            },
-            // 项目角色管理
-            {
-                path: "/setting/projectRole",
-                component: ProjectRole,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/fieldType",
-                component: ProjectProjectDirectory,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/preliminaryTypeSys",
-                component: ProjectProjectDirectorySys,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/preliminarySystem",
-                component: ProjectPreliminaryListSystem,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/preliminary",
-                component: ProjectPreliminaryList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/form",
-                component: FormList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/FormDetail/:formId",
-                component: FormDetail,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/FormDetailSys/:formId",
-                component: ProjectFormDetailSystem,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/formsystem",
-                component: FormListSystem,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/projectForm",
-                component: ProjectProjectFormList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/projectFormDetail/:id",
-                component: FormDetail,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/systemFlow",
-                component: ProjectSystemFlowList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/flowDetailView/:flowId",
-                component: FlowDetailView,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/flowDetailDesign/:flowId",
-                component: FlowDetailDesign,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/systemFlowsystem",
-                component: ProjectSystemFlowListSystem,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/messageNotice",
-                component: SystemMessageNotice,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/messageNoticeSystem",
-                component: SystemMessageNoticeBase,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/projectMessageNotice",
-                component: ProjectMessageNoticeContent,
-                row: true,
-                exact: true
-            },
-
-            {
-                path: "/setting/messageTemplate",
-                component: SystemMessageTemplate,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/messageType",
-                component: SystemMessageType,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/messageSendType",
-                component: SystemMessageSendType,
-                row: true,
-                exact: true
-            },
-
-            {
-                path: "/setting/taskList",
-                component: TaskListContent,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/myTodoTask",
-                component: MyTodoTaskContent,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/todoTypeTask",
-                component: TodoTypeListContent,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/todoTempList",
-                component: TodoTempListContent,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/log",
-                component: LogList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/myLogTemplateList",
-                component: LogTemplateList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/projectLogTypeList",
-                component: ProjectLogTypeList,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/loadData",
-                component: LoadData,
-                exact: true
-            },
-            {
-                path: "/setting/urlData",
-                component: UrlData,
-                exact: true
-            },
-            {
-                path: "/setting/version",
-                component: LicenceVersion,
-                row: true,
-                exact: true
-            }, {
-                path: "/setting/productAuth",
-                component: ProductAuth,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/backups",
-                component: Backups,
-                row: true,
-                exact: true
-            },
-            {
-                path: "/setting/virtual",
-                component: ProjectVirtualRoleList,
-                row: true,
-                exact: true
-            }
-        ]
-    },
-   
-    {
-        path: "/project/:id",
-        component: ProjectDetail,
-        routes: [
-            {
-                path: "/project/:id/overview",
-                component: Survey,
-            },
-            {
-                path: "/project/:id/stage",
-                component: Stage,
-            },
-            // {
-            //     path: "/project/:id/stageDetail/:stageId",
-            //     component: StageDetail,
-
-            // },
-            {
-                path: "/project/:id/sprint",
-                component: Sprint
-
-            },
-            {
-                path: "/project/:id/wiki",
-                component: WikiRepository
-            },
-            {
-                path: "/project/:id/test",
-                component: TestRepository
-            },
-            {
-                path: "/project/:id/linemap",
-                component: Linemap,
-            },
-            {
-                path: "/project/:id/linemap/:workId",
-                component: Linemap,
-                exact: true
-            },
-            {
-                path: "/project/:id/sprintPlan",
-                component: PlanSprint,
-            },
-            {
-                path: "/project/:id/version",
-                component: Version,
-            },
-            {
-                path: "/project/:id/versionPlan",
-                component: VersionPlan,
-            },
-            {
-                path: "/project/:id/version/:versionId",
-                component: VersionDetail,
-            },
-
-            {
-                path: "/project/:id/epic/:epicId",
-                component: EpicDetail,
-            },
-            {
-                path: "/project/:id/workTable",
-                component: WorkTable
-            },
-
-            {
-                path: "/project/:id/workBodar",
-                component: WorkBodar,
-            },
-            {
-                path: "/project/:id/workitem",
-                component: Work,
-            },
-            {
-                path: "/project/:id/workList",
-                component: WorkList
-            },
-            {
-                path: "/project/:id/workGantt",
-                component: WorkGantt,
-            },
-
-            {
-                path: "/project/:id/work/:workId",
-                component: WorkDetailPage
-            },
-
-
-            {
-                path: "/project/:id/WorkDetail",
-                component: WorkTableDetail,
-                exact: true
-            },
-            {
-                path: "/project/:id/addDemand",
-                component: WorkAddPage,
-            },
-            {
-                path: "/project/:id/milestone",
-                component: Milestone,
-            },
-            {
-                path: "/project/:id/plan",
-                component: Plan,
-            },
-            {
-                path: "/project/:id/workTodo",
-                component: WorkTodoPage,
-            },
-            {
-                path: "/project/:id/dynamic",
-                component: Dynamic,
-            },
-            {
-                path: "/project/:id/planWorkItem/:id",
-                component: PlanWorkItem,
-            },
-
-            {
-                path: "/project/:id/log",
-                component: ProjectLog,
-            },
-            {
-                path: "/project/:id/statistics",
-                component: ProjectStatistics,
-                routes: [
-                    {
-                        path: "/project/:id/statistics/workItem",
-                        component: StatisticsWork,
-                        exact: true
-                    }
-                ]
-            },
-            {
-                path: "/project/:id/set",
-                exact: false,
-                component: ProjectScrumSetDetail,
-                key: "ProjectSetDetail",
-                routes: [
-                    {
-                        path: "/project/:id/set/basicInfo",
-                        component: BasicInfo,
-                    },
-                    {
-                        path: "/project/:id/set/module",
-                        component: Module,
-                    },
-                    {
-                        path: "/project/:id/set/user",
-                        component: PrivilegeDomainUser,
-                    },
-                    {
-                        path: "/project/:id/set/projectDomainRole",
-                        component: ProjectDomainRole,
-                    },
-                    {
-                        path: "/project/:id/set/projectworkType",
-                        component: ProjectWorkType,
-                    },
-                    {
-                        path: "/project/:id/set/rolefunction/:workTypeId/:roleId",
-                        component: ProjectWorkRoleFunction,
-                        exact: true
-                    },
-                    {
-                        path: "/project/:id/set/workPrivilege/:workTypeId",
-                        component: ProjectWorkRoleList,
-                        exact: true
-                    },
-                    {
-                        path: "/project/:id/set/projectFlow",
-                        component: ProjectFlowList,
-                    },
-                    {
-                        path: "/project/:id/set/projectForm",
-                        component: ProjectFormList,
-                    },
-                    {
-                        path: "/project/:id/set/ProjectFormDetail/:formId",
-                        component: ProjectFormDetail,
-                    },
-                   
-                    {
-                        path: "/project/:id/set/projectFlowDetail/:flowId",
-                        component: ProjectFlowDetailDesign,
-                        exact: true
-                    },
-                    {
-                        path: "/project/:id/set/messagenotice",
-                        component: DomainMessageNoticeContent,
-                    },
-                    {
-                        exact: false,
-                        path: "/project/:id/set/noaccess",
-                        component: NoAccessPage,
-                        key: "ProjectSetNoaccess"
-                    },
-                ]
-            },
-         
-        ]
-    },
-    {   
-        path: "/project/:id/noAccess",
-        exact: true,
-        component: ProjectNoAccessPage
-    },
-   
-    {
-        path: "/projectSet/:projectSetId",
-        exact: false,
-        component: ProjectSetDetail,
-        key: "ProjectSetDetail",
-        routes: [
-            {
-                path: "/projectSet/:projectSetId/set",
-                exact: false,
-                component: ProjectSetSet,
-                key: "ProjectSetDetailAdide",
-                routes: [
-                    {
-                        path: "/projectSet/:projectSetId/set/basicInfo",
-                        exact: false,
-                        component: ProjectSetBasicInfo,
-                        key: "ProjectSetBasicInfo"
-                    },
-                    {
-                        path: "/projectSet/:projectSetId/set/dominRole",
-                        exact: false,
-                        component: ProjectSetDomainRole,
-                        key: "ProjectSetDomainRole"
-                    },
-                    {
-                        path: "/projectSet/:projectSetId/set/user",
-                        exact: false,
-                        component: ProjectSetUser,
-                        key: "ProjectSetUser"
-                    },
-                    {
-                        exact: false,
-                        path: "/projectSet/:projectSetId/set/noaccess",
-                        component: NoAccessPage,
-                        key: "ProjectSetNoaccess"
-                    },
-                ]
-            },
-            {
-                path: "/projectSet/:projectSetId/overview",
-                exact: false,
-                component: ProjectSetSurvey,
-                key: "ProjectSetSurvey"
-            },
-            {
-                path: "/projectSet/:projectSetId/dynamic",
-                exact: false,
-                component: Dynamic,
-                key: "ProjectSetSurvey"
-            },
-            {
-                path: "/projectSet/:projectSetId/workTodo",
-                exact: false,
-                component: WorkTodoPage,
-                key: "ProjectSetSurvey"
-            },
-            {
-                path: "/projectSet/:projectSetId/project",
-                exact: false,
-                component: ProjectSetProjectList,
-                key: "ProjectSetProjectList"
-            },
-            {
-                path: "/projectSet/:projectSetId/dominRole",
-                exact: false,
-                component: ProjectSetDomainRole,
-                key: "ProjectSetDomainRole"
-            },
-            {
-                path: "/projectSet/:projectSetId/user",
-                exact: false,
-                component: ProjectSetUser,
-                key: "ProjectSetUser"
-            },
-            {
-                path: "/projectSet/:projectSetId/statistics",
-                component: ProjectSetStatistics,
-                routes: [
-                    {
-                        path: "/projectSet/:projectSetId/statistics/workItem",
-                        component: StatisticsWork,
-                        exact: true
-                    }
-                ]
-            },
-
-        ]
-    },
-  
-   
-    {
-        path: "/:id/sprint/:sprint",
-        component: SprintHome,
-        routes: [
-            {
-                path: "/:id/sprint/:sprint/statistics",
-                component: SprintStatistics,
-                routes: [
-                    {
-                        path: "/:id/sprint/:sprint/statistics/workItem",
-                        component: StatisticsWork,
-                        exact: true
-                    }
-                ]
-            },
-            {
-                path: "/:id/sprint/:sprint/workitem",
-                component: Work,
-            },
-            {
-                path: "/:id/sprint/:sprint/work/:workId",
-                component: WorkDetailPage,
-            },
-            {
-                path: "/:id/sprint/:sprint/workDetail",
-                component: WorkTableDetail,
-            },
-            {
-                path: "/:id/sprint/:sprint/overview",
-                component: Sprintsurvey,
-            },
-            {
-                path: "/:id/sprint/:sprint/plan",
-                component: SprintPlan,
-            },
-            {
-                path: "/:id/sprint/:sprint/setting",
-                component: SprintBasicInfo,
-            },
-            {
-                path: "/:id/sprint/:sprint/dynamic",
-                exact: false,
-                component: Dynamic
-            },
-            {
-                path: "/:id/sprint/:sprint/workTodo",
-                exact: false,
-                component: WorkTodoPage
-            },
-            {
-                path: "/:id/sprint/:sprint/workList",
-                component: WorkList,
-            },
-            
-            {
-                path: "/:id/sprint/:sprint/workGantt",
-                component: WorkGantt,
-            },
-            {
-                path: "/:id/sprint/:sprint/workTable",
-                component: WorkTable,
-
-            },
-            {
-                path: "/:id/sprint/:sprint/workBodar",
-                component: WorkBodar,
-            }
-        ]
-    },
-
-    {
-        path: "/:id/version/:version",
-        component: VersionHome,
-        routes: [
-            {
-                path: "/:id/version/:version/work/:workId",
-                component: WorkDetailPage,
-            },
-            {
-                path: "/:id/version/:version/workDetail",
-                component: WorkTableDetail,
-            },
-            {
-                path: "/:id/version/:version/overview",
-                component: Versionsurvey,
-            },
-            {
-                path: "/:id/version/:version/plan",
-                component: VersionWorkItemPlan,
-            },
-            {
-                path: "/:id/version/:version/setting",
-                component: VersionBasicInfo,
-            },
-            {
-                path: "/:id/version/:version/dynamic",
-                component: Dynamic
-            },
-            {
-                path: "/:id/version/:version/workitem",
-                component: Work,
-            },
-            {
-                path: "/:id/version/:version/workList",
-                component: WorkList,
-            },
-            {
-                path: "/:id/version/:version/workGantt",
-                component: WorkGantt,
-            },
-            {
-                path: "/:id/version/:version/workTable",
-                component: WorkTable,
-            },
-            {
-                path: "/:id/version/:version/workBodar",
-                component: WorkBodar,
-            },
-            {
-                path: "/:id/version/:version/workTodo",
-                component: WorkTodoPage,
-            },
-        ]
-    },
     // {
-    //     path: "/:id/stagedetail/:stage",
-    //     component: StageHome,
-    //     routes: [
-    //         {
-    //             path: "/:id/stagedetail/:stage/workItem",
-    //             component: Work,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/work/:workId",
-    //             component: WorkDetailPage,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workDetail",
-    //             component: WorkTableDetail,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/dynamic",
-    //             component: Dynamic
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workList",
-    //             component: WorkList,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workGantt",
-    //             component: WorkGantt,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workTable",
-    //             component: WorkTable,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workBodar",
-    //             component: WorkBodar,
-    //         },
-    //         {
-    //             path: "/:id/stagedetail/:stage/workTodo",
-    //             component: WorkTodoPage,
-    //         },
-    //     ]
+    //     path: "/openapi/doc",
+    //     component: OpenApiDocPage,
+    //     key:'OpenApiDocPage',
     // },
+
+   
+
     {
         component: Index,
         path: "/",
@@ -1105,6 +308,811 @@ const Routers = [
 
             },
 
+            {
+                path: "/setting",
+                component: Setting,
+                key: 'Setting',
+                routes: [
+                    {
+                        path: "/setting/home",
+                        component: SettingHome,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/orga",
+                        component: OrgaContent,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/user",
+                        component: OrgaUser,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/dir",
+                        component: ProjectDirectory,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/userGroup",
+                        component: ProjectUserGroup,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/usersystemgroup",
+                        component: ProjectSystemUserGroup,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workstatus",
+                        component: ProjectFlowStatusList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/nodestatus",
+                        component: ProjectNodeStatusList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/businessrole",
+                        component: FlowBusinessRoleList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/worktype",
+                        component: WorkTypeList,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workRoleFunction/:workTypeId/:roleId",
+                        component: WorkRoleFunction,
+                        exact: true
+                    },
+
+                    {
+                        path: "/setting/workPrivilegeRoleList/:workTypeId",
+                        component: WorkPrivilegeRoleList,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workFunctionList",
+                        component: WorkFunctionList,
+                        exact: true
+                    },
+
+                    {
+                        path: "/setting/worktypeSystem",
+                        component: WorkTypeSystem,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workpriority",
+                        component: WorkPriority,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workTypeFlow/:id",
+                        component: WorkTypeFlow,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/workTypeForm/:id",
+                        component: WorkTypeForm,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/projectType",
+                        component: ProjectType,
+                        exact: true
+                    },
+                    // 系统功能管理
+                    {
+                        path: "/setting/systemFeature",
+                        component: SystemFeature,
+                        row: true,
+                        exact: true
+                    },
+                    // 系统内置角色管理
+                    {
+                        path: "/setting/systemRoleBuilt",
+                        component: SystemRoleBuilt,
+                        row: true,
+                        exact: true
+                    },
+                    // 系统角色管理
+                    {
+                        path: "/setting/systemRole",
+                        component: SystemRole,
+                        row: true,
+                        exact: true
+                    },
+                    // 项目功能管理
+                    {
+                        path: "/setting/projectFeature",
+                        component: ProjectFeature,
+                        row: true,
+                        exact: true
+                    },
+                    // 项目角色管理
+                    {
+                        path: "/setting/projectRole",
+                        component: ProjectRole,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/fieldType",
+                        component: ProjectProjectDirectory,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/preliminaryTypeSys",
+                        component: ProjectProjectDirectorySys,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/preliminarySystem",
+                        component: ProjectPreliminaryListSystem,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/preliminary",
+                        component: ProjectPreliminaryList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/form",
+                        component: FormList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/FormDetail/:formId",
+                        component: FormDetail,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/FormDetailSys/:formId",
+                        component: ProjectFormDetailSystem,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/formsystem",
+                        component: FormListSystem,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/projectForm",
+                        component: ProjectProjectFormList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/projectFormDetail/:id",
+                        component: FormDetail,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/systemFlow",
+                        component: ProjectSystemFlowList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/flowDetailView/:flowId",
+                        component: FlowDetailView,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/flowDetailDesign/:flowId",
+                        component: FlowDetailDesign,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/systemFlowsystem",
+                        component: ProjectSystemFlowListSystem,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/messageNotice",
+                        component: SystemMessageNotice,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/messageNoticeSystem",
+                        component: SystemMessageNoticeBase,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/projectMessageNotice",
+                        component: ProjectMessageNoticeContent,
+                        row: true,
+                        exact: true
+                    },
+
+                    {
+                        path: "/setting/messageTemplate",
+                        component: SystemMessageTemplate,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/messageType",
+                        component: SystemMessageType,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/messageSendType",
+                        component: SystemMessageSendType,
+                        row: true,
+                        exact: true
+                    },
+
+                    {
+                        path: "/setting/taskList",
+                        component: TaskListContent,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/myTodoTask",
+                        component: MyTodoTaskContent,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/todoTypeTask",
+                        component: TodoTypeListContent,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/todoTempList",
+                        component: TodoTempListContent,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/log",
+                        component: LogList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/myLogTemplateList",
+                        component: LogTemplateList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/projectLogTypeList",
+                        component: ProjectLogTypeList,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/loadData",
+                        component: LoadData,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/urlData",
+                        component: UrlData,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/version",
+                        component: LicenceVersion,
+                        row: true,
+                        exact: true
+                    }, {
+                        path: "/setting/productAuth",
+                        component: ProductAuth,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/backups",
+                        component: Backups,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/virtual",
+                        component: ProjectVirtualRoleList,
+                        row: true,
+                        exact: true
+                    }
+                ]
+            },
+
+            {
+                path: "/project/:id",
+                component: ProjectDetail,
+                routes: [
+                    {
+                        path: "/project/:id/overview",
+                        component: Survey,
+                    },
+                    {
+                        path: "/project/:id/stage",
+                        component: Stage,
+                    },
+                    // {
+                    //     path: "/project/:id/stageDetail/:stageId",
+                    //     component: StageDetail,
+
+                    // },
+                    {
+                        path: "/project/:id/sprint",
+                        component: Sprint
+
+                    },
+                    {
+                        path: "/project/:id/wiki",
+                        component: WikiRepository
+                    },
+                    {
+                        path: "/project/:id/test",
+                        component: TestRepository
+                    },
+                    {
+                        path: "/project/:id/linemap",
+                        component: Linemap,
+                    },
+                    {
+                        path: "/project/:id/linemap/:workId",
+                        component: Linemap,
+                        exact: true
+                    },
+                    {
+                        path: "/project/:id/sprintPlan",
+                        component: PlanSprint,
+                    },
+                    {
+                        path: "/project/:id/version",
+                        component: Version,
+                    },
+                    {
+                        path: "/project/:id/versionPlan",
+                        component: VersionPlan,
+                    },
+                    {
+                        path: "/project/:id/version/:versionId",
+                        component: VersionDetail,
+                    },
+
+                    {
+                        path: "/project/:id/epic/:epicId",
+                        component: EpicDetail,
+                    },
+                    {
+                        path: "/project/:id/workTable",
+                        component: WorkTable
+                    },
+
+                    {
+                        path: "/project/:id/workBodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/project/:id/workitem",
+                        component: Work,
+                    },
+                    {
+                        path: "/project/:id/workList",
+                        component: WorkList
+                    },
+                    {
+                        path: "/project/:id/workGantt",
+                        component: WorkGantt,
+                    },
+
+                    {
+                        path: "/project/:id/work/:workId",
+                        component: WorkDetailPage
+                    },
+
+
+                    {
+                        path: "/project/:id/WorkDetail",
+                        component: WorkTableDetail,
+                        exact: true
+                    },
+                    {
+                        path: "/project/:id/addDemand",
+                        component: WorkAddPage,
+                    },
+                    {
+                        path: "/project/:id/milestone",
+                        component: Milestone,
+                    },
+                    {
+                        path: "/project/:id/plan",
+                        component: Plan,
+                    },
+                    {
+                        path: "/project/:id/workTodo",
+                        component: WorkTodoPage,
+                    },
+                    {
+                        path: "/project/:id/dynamic",
+                        component: Dynamic,
+                    },
+                    {
+                        path: "/project/:id/planWorkItem/:id",
+                        component: PlanWorkItem,
+                    },
+
+                    {
+                        path: "/project/:id/log",
+                        component: ProjectLog,
+                    },
+                    {
+                        path: "/project/:id/statistics",
+                        component: ProjectStatistics,
+                        routes: [
+                            {
+                                path: "/project/:id/statistics/workItem",
+                                component: StatisticsWork,
+                                exact: true
+                            }
+                        ]
+                    },
+                    {
+                        path: "/project/:id/set",
+                        exact: false,
+                        component: ProjectScrumSetDetail,
+                        key: "ProjectSetDetail",
+                        routes: [
+                            {
+                                path: "/project/:id/set/basicInfo",
+                                component: BasicInfo,
+                            },
+                            {
+                                path: "/project/:id/set/module",
+                                component: Module,
+                            },
+                            {
+                                path: "/project/:id/set/user",
+                                component: PrivilegeDomainUser,
+                            },
+                            {
+                                path: "/project/:id/set/projectDomainRole",
+                                component: ProjectDomainRole,
+                            },
+                            {
+                                path: "/project/:id/set/projectworkType",
+                                component: ProjectWorkType,
+                            },
+                            {
+                                path: "/project/:id/set/rolefunction/:workTypeId/:roleId",
+                                component: ProjectWorkRoleFunction,
+                                exact: true
+                            },
+                            {
+                                path: "/project/:id/set/workPrivilege/:workTypeId",
+                                component: ProjectWorkRoleList,
+                                exact: true
+                            },
+                            {
+                                path: "/project/:id/set/projectFlow",
+                                component: ProjectFlowList,
+                            },
+                            {
+                                path: "/project/:id/set/projectForm",
+                                component: ProjectFormList,
+                            },
+                            {
+                                path: "/project/:id/set/ProjectFormDetail/:formId",
+                                component: ProjectFormDetail,
+                            },
+
+                            {
+                                path: "/project/:id/set/projectFlowDetail/:flowId",
+                                component: ProjectFlowDetailDesign,
+                                exact: true
+                            },
+                            {
+                                path: "/project/:id/set/messagenotice",
+                                component: DomainMessageNoticeContent,
+                            },
+                            {
+                                exact: false,
+                                path: "/project/:id/set/noaccess",
+                                component: NoAccessPage,
+                                key: "ProjectSetNoaccess"
+                            },
+                        ]
+                    },
+
+                    {
+                        path: "/project/:id/noAccess",
+                        exact: true,
+                        component: ProjectNoAccessPage
+                    },
+                ]
+            },
+
+
+            {
+                path: "/projectSet/:projectSetId",
+                exact: false,
+                component: ProjectSetDetail,
+                key: "ProjectSetDetail",
+                routes: [
+                    {
+                        path: "/projectSet/:projectSetId/set",
+                        exact: false,
+                        component: ProjectSetSet,
+                        key: "ProjectSetDetailAdide",
+                        routes: [
+                            {
+                                path: "/projectSet/:projectSetId/set/basicInfo",
+                                exact: false,
+                                component: ProjectSetBasicInfo,
+                                key: "ProjectSetBasicInfo"
+                            },
+                            {
+                                path: "/projectSet/:projectSetId/set/dominRole",
+                                exact: false,
+                                component: ProjectSetDomainRole,
+                                key: "ProjectSetDomainRole"
+                            },
+                            {
+                                path: "/projectSet/:projectSetId/set/user",
+                                exact: false,
+                                component: ProjectSetUser,
+                                key: "ProjectSetUser"
+                            },
+                            {
+                                exact: false,
+                                path: "/projectSet/:projectSetId/set/noaccess",
+                                component: NoAccessPage,
+                                key: "ProjectSetNoaccess"
+                            },
+                        ]
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/overview",
+                        exact: false,
+                        component: ProjectSetSurvey,
+                        key: "ProjectSetSurvey"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/dynamic",
+                        exact: false,
+                        component: Dynamic,
+                        key: "ProjectSetSurvey"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/workTodo",
+                        exact: false,
+                        component: WorkTodoPage,
+                        key: "ProjectSetSurvey"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/project",
+                        exact: false,
+                        component: ProjectSetProjectList,
+                        key: "ProjectSetProjectList"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/dominRole",
+                        exact: false,
+                        component: ProjectSetDomainRole,
+                        key: "ProjectSetDomainRole"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/user",
+                        exact: false,
+                        component: ProjectSetUser,
+                        key: "ProjectSetUser"
+                    },
+                    {
+                        path: "/projectSet/:projectSetId/statistics",
+                        component: ProjectSetStatistics,
+                        routes: [
+                            {
+                                path: "/projectSet/:projectSetId/statistics/workItem",
+                                component: StatisticsWork,
+                                exact: true
+                            }
+                        ]
+                    },
+
+                ]
+            },
+
+            {
+                path: "/:id/sprint/:sprint",
+                component: SprintHome,
+                routes: [
+                    {
+                        path: "/:id/sprint/:sprint/statistics",
+                        component: SprintStatistics,
+                        routes: [
+                            {
+                                path: "/:id/sprint/:sprint/statistics/workItem",
+                                component: StatisticsWork,
+                                exact: true
+                            }
+                        ]
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workitem",
+                        component: Work,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/work/:workId",
+                        component: WorkDetailPage,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workDetail",
+                        component: WorkTableDetail,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/overview",
+                        component: Sprintsurvey,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/plan",
+                        component: SprintPlan,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/setting",
+                        component: SprintBasicInfo,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/dynamic",
+                        exact: false,
+                        component: Dynamic
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workTodo",
+                        exact: false,
+                        component: WorkTodoPage
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workList",
+                        component: WorkList,
+                    },
+
+                    {
+                        path: "/:id/sprint/:sprint/workGantt",
+                        component: WorkGantt,
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workTable",
+                        component: WorkTable,
+
+                    },
+                    {
+                        path: "/:id/sprint/:sprint/workBodar",
+                        component: WorkBodar,
+                    }
+                ]
+            },
+
+            {
+                path: "/:id/version/:version",
+                component: VersionHome,
+                routes: [
+                    {
+                        path: "/:id/version/:version/work/:workId",
+                        component: WorkDetailPage,
+                    },
+                    {
+                        path: "/:id/version/:version/workDetail",
+                        component: WorkTableDetail,
+                    },
+                    {
+                        path: "/:id/version/:version/overview",
+                        component: Versionsurvey,
+                    },
+                    {
+                        path: "/:id/version/:version/plan",
+                        component: VersionWorkItemPlan,
+                    },
+                    {
+                        path: "/:id/version/:version/setting",
+                        component: VersionBasicInfo,
+                    },
+                    {
+                        path: "/:id/version/:version/dynamic",
+                        component: Dynamic
+                    },
+                    {
+                        path: "/:id/version/:version/workitem",
+                        component: Work,
+                    },
+                    {
+                        path: "/:id/version/:version/workList",
+                        component: WorkList,
+                    },
+                    {
+                        path: "/:id/version/:version/workGantt",
+                        component: WorkGantt,
+                    },
+                    {
+                        path: "/:id/version/:version/workTable",
+                        component: WorkTable,
+                    },
+                    {
+                        path: "/:id/version/:version/workBodar",
+                        component: WorkBodar,
+                    },
+                    {
+                        path: "/:id/version/:version/workTodo",
+                        component: WorkTodoPage,
+                    },
+                ]
+            },
+            // {
+            //     path: "/:id/stagedetail/:stage",
+            //     component: StageHome,
+            //     routes: [
+            //         {
+            //             path: "/:id/stagedetail/:stage/workItem",
+            //             component: Work,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/work/:workId",
+            //             component: WorkDetailPage,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workDetail",
+            //             component: WorkTableDetail,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/dynamic",
+            //             component: Dynamic
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workList",
+            //             component: WorkList,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workGantt",
+            //             component: WorkGantt,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workTable",
+            //             component: WorkTable,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workBodar",
+            //             component: WorkBodar,
+            //         },
+            //         {
+            //             path: "/:id/stagedetail/:stage/workTodo",
+            //             component: WorkTodoPage,
+            //         },
+            //     ]
+            // },
             {
                 path: "/project",
                 exact: true,
