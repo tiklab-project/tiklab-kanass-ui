@@ -236,7 +236,9 @@ const TodoPageList = (props) => {
 
 
     return (
-        <div className="todo-list-page">
+        <Row className="home" >
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <div className="todo-list-page">
             <div className="todo-header">
                 <span className="back-link" onClick={() => props.history.goBack()}>
                     <LeftOutlined/>
@@ -310,7 +312,8 @@ const TodoPageList = (props) => {
         }
 
     </div>
-
+            </Col>
+        </Row>
     )
 }
 export default withRouter(observer(TodoPageList));
