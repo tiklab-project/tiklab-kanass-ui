@@ -123,16 +123,16 @@ const HomeSurvey = (props) => {
             <div className="home-content">
                 <div className="home-tab">
 
-                    <div className={` ${activeKey === "overview" ? "home-tab-select" : ""}`}
+                    <div style={{cursor:"pointer"}}
                          key={1}
                          onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
 
                     <div className="right-tabs-container">
-                        <div className={` ${activeKey === "todoList" ? "home-tab-select" : ""}`}
+                        <div style={{cursor:"pointer"}}
                              key={2}
                              onClick={() => selectRouter("/index/todoList", "todoList")}>
                             待办</div>
-                        <div className={` ${activeKey === "insight" ? "home-tab-select" : ""}`}
+                        <div style={{cursor:"pointer"}}
                              key={3}
                              onClick={() => selectRouter('/index/insightlist', "insight")}>
                             仪表盘</div>

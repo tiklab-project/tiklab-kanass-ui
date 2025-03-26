@@ -15,6 +15,13 @@ import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import { CalendarOutlined, BarChartOutlined } from '@ant-design/icons';
 
+
+/**
+ * 废弃
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Home = (props) => {
     const { route, insightStore, homeStore } = props;
     const { activeKey, setActiveKey, findInsightList } = homeStore;
