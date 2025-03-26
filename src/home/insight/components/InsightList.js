@@ -237,7 +237,7 @@ const InsightList = (props) => {
             <div>
                 <div className="insight-list">
                     <div className="insight-header">
-                <span className="back-link" onClick={() => props.history.goBack()}>
+                <span className="back-link" onClick={() => props.history.push("/index/overview")}>
                     <LeftOutlined />
                 </span>
                         <h1 className="page-title">仪表盘</h1>
