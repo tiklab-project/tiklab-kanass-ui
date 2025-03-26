@@ -22,6 +22,8 @@ import InsightStore from "../store/InsightStore";
 import InputSearch from "../../../common/input/InputSearch";
 import { getUser } from "tiklab-core-ui";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import { LeftOutlined } from '@ant-design/icons';
+
 const { confirm } = Modal;
 
 const InsightList = (props) => {
@@ -231,6 +233,12 @@ const InsightList = (props) => {
         <Provider {...store}>
             <div>
                 <div className="insight-list">
+                    <div className="insight-header">
+                <span className="back-link" onClick={() => props.history.goBack()}>
+                    <LeftOutlined />
+                </span>
+                        <h1 className="page-title">仪表盘</h1>
+                    </div>
                     <div className="insight-tabs-search">
                         <div className="insight-tabs">
                             {

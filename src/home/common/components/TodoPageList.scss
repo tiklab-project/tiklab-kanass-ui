@@ -1,7 +1,9 @@
 .todo-list-page {
     padding: var(--tiklab-padding);;
     background: #fff;
-    
+    max-width: 1200px;
+    margin: 0 auto;
+
     .todo-select {
         width: 200px;
     }
@@ -56,4 +58,25 @@
         }
     }
   
+}
+
+.todo-header {
+    margin-bottom: 20px;
+}
+
+.back-link {
+    cursor: pointer;
+    color: #333333;
+    font-weight: bold;
+    margin-right: 16px;
+}
+
+.page-title {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 20px;
 }

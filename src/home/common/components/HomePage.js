@@ -1,3 +1,4 @@
+
 /*
  * @Descripttion: 首页
  * @version: 1.0.0
@@ -12,6 +13,8 @@ import "../components/HomePage.scss";
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
+import { CalendarOutlined, BarChartOutlined } from '@ant-design/icons';
+
 const Home = (props) => {
     const { route, insightStore, homeStore } = props;
     const { activeKey, setActiveKey, findInsightList } = homeStore;
@@ -23,7 +26,7 @@ const Home = (props) => {
     useEffect(() => {
         getInsightUrl()
 
-        /*if (path.includes("overview") > -1) {
+        if (path.includes("overview") > -1) {
             setActiveKey("overview")
         }
 
@@ -35,15 +38,7 @@ const Home = (props) => {
             setActiveKey("todoList")
         }
         return null;
-        */
-        // 仅根据当前路径更新activeKey，不触发其他操作
-        if (path.includes("overview")) {
-            setActiveKey("overview");
-        } else if (path.includes("insight")) {
-            setActiveKey("insight");
-        } else if (path.includes("todoList")) {
-            setActiveKey("todoList");
-        }
+
     }, [path])
 
     /**
@@ -63,12 +58,12 @@ const Home = (props) => {
 
     /**
      * tab 切换
-     * @param {地址} url 
-     * @param {tab key} activeKey 
+     * @param {地址} url
+     * @param {tab key} activeKey
      */
     const selectRouter = (url, activeKey) => {
-        props.history.push(url)
-        setActiveKey(activeKey)
+            props.history.push(url)
+            setActiveKey(activeKey)
     }
 
     return (
@@ -76,20 +71,22 @@ const Home = (props) => {
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="home-tab">
 
-                    <div className={`home-tab-item ${activeKey === "overview" ? "home-tab-select" : ""}`}
+                    <div className={` ${activeKey === "overview" ? "home-tab-select" : ""}`}
                          key={1}
                          onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
 
                     <div className="right-tabs-container">
-                    <div className={`home-tab-item ${activeKey === "todoList" ? "home-tab-select" : ""}`}
-                         key={2}
-                         onClick={() => selectRouter("/index/todoList", "todoList")}>待办</div>
-                    <div className={`home-tab-item ${activeKey === "insight" ? "home-tab-select" : ""}`}
-                         key={3}
-                         onClick={() => selectRouter(insightUrl, "insight")}>仪表盘</div>
+                        <div className={` ${activeKey === "todoList" ? "home-tab-select" : ""}`}
+                             key={2}
+                             onClick={() => selectRouter("/index/todoList", "todoList")}>
+                            待办</div>
+                        <div className={` ${activeKey === "insight" ? "home-tab-select" : ""}`}
+                             key={3}
+                             onClick={() => selectRouter(insightUrl, "insight")}>
+                            仪表盘</div>
+                    </div>
                 </div>
-                </div>
-               
+
                 {renderRoutes(route.routes)}
             </Col>
         </Row>
@@ -98,3 +95,4 @@ const Home = (props) => {
 
 
 export default withRouter(inject("homeStore")(observer(Home)));
+

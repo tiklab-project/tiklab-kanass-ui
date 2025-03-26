@@ -4,7 +4,9 @@
     position: relative;
     z-index: 0;
     padding: var(--tiklab-padding);
-    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    //background-color: #fff;
     .home-tab {
         display: flex;
         align-items: center;
@@ -22,8 +24,8 @@
 
         .home-tab-select {
             font-weight: var(--tiklab-font-weight-bold);
-            color: var(--tiklab-blue);
-            background-color: var(--tiklab-gray-400);
+            //color: var(--tiklab-blue);
+            //background-color: var(--tiklab-gray-400);
         }
     }
     .right-tabs-container {
@@ -209,7 +211,6 @@
         display: flex;
         gap: 10px;
     }
-
 
 
 }

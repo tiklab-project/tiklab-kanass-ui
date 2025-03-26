@@ -239,52 +239,45 @@ const Routers = [
     //     key:'OpenApiDocPage',
     // },
 
-   
+
 
     {
         component: Index,
         path: "/",
         routes: [
             {
-                path: "/index",
+                path: "/index/overview",
                 exact: false,
-                component: HomePage,
-                key: 'home',
-                routes: [
-                    {
-                        path: "/index/overview",
-                        exact: false,
-                        component: HomeSurvey,
-                        key: "ProjectSet"
+                component: HomeSurvey,
+                key: "ProjectSet"
 
-                    },
-                    {
-                        path: "/index/todoList",
-                        exact: false,
-                        component: WorkTodo,
-                        key: "ProjectSet"
-
-                    },
-                    {
-                        path: "/index/insightlist",
-                        exact: false,
-                        component: InsightList,
-                        key: "InsightList"
-                    },
-                    {
-                        path: "/index/newInsight/:id",
-                        exact: false,
-                        component: NewInsight,
-                        key: "NewInsight"
-                    },
-                    {
-                        path: "/index/viewInsight/:id",
-                        exact: false,
-                        component: ViewInsight,
-                        key: "ViewInsight"
-                    }
-                ]
             },
+            {
+                path: "/index/todoList",
+                exact: false,
+                component: WorkTodo,
+                key: "ProjectSet"
+
+            },
+            {
+                path: "/index/insightlist",
+                exact: false,
+                component: InsightList,
+                key: "InsightList"
+            },
+            {
+                path: "/index/newInsight/:id",
+                exact: false,
+                component: NewInsight,
+                key: "NewInsight"
+            },
+            {
+                path: "/index/viewInsight/:id",
+                exact: false,
+                component: ViewInsight,
+                key: "ViewInsight"
+            },
+
             {
                 path: "/log",
                 exact: false,
@@ -1138,7 +1131,7 @@ const Routers = [
                 exact: true,
                 component: WorkTodo,
             },
-            
+
 
             {
                 path: "/dynamic",
@@ -1167,7 +1160,7 @@ const Routers = [
                 key: "ProjectSet"
             },
 
-          
+
             {
                 path: "/searchResult",
                 exact: false,
@@ -1235,3 +1228,4 @@ const Routers = [
 
 ]
 export default Routers;
+

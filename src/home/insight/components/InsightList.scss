@@ -5,6 +5,8 @@
     .insight-list {
         background-color: #fff;
         padding: var(--tiklab-padding);
+        max-width: 1200px;
+        margin: 0 auto;
         // height: 100%;
         // min-height: calc(100% - 145px);
         .insight-search-add {
@@ -12,6 +14,7 @@
             text-align: right;
             display: flex;
             justify-content: space-between;
+
            
 
         }
@@ -75,4 +78,25 @@
         padding: 24px !important;
     }
 
+}
+
+.insight-header {
+    margin-bottom: 20px;
+}
+
+.back-link {
+    cursor: pointer;
+    color: #333333;
+    font-weight: bold;
+    margin-right: 16px;
+}
+
+.page-title {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 20px;
 }

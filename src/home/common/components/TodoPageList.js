@@ -18,6 +18,8 @@ import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import PaginationCommon from "../../../common/page/Page";
 import HomeStore from  "../store/HomeStore"
+import { LeftOutlined } from '@ant-design/icons';
+
 const TodoPageList = (props) => {
     const { homeStore } = props;
     const { findTodopage, todoTaskList, setTodoTaskList, findProjectList,
@@ -233,7 +235,14 @@ const TodoPageList = (props) => {
 
 
 
-    return (<div className="todo-list-page">
+    return (
+        <div className="todo-list-page">
+            <div className="todo-header">
+                <span className="back-link" onClick={() => props.history.goBack()}>
+                    <LeftOutlined/>
+                </span>
+                <h1 className="page-title">待办</h1>
+            </div>
         {
             path !== "/index/todoList" && <Breadcrumb
                 {...props}

@@ -12,8 +12,6 @@ import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
 import { Empty, Tabs, Spin,Tooltip } from 'antd';
 import { withRouter } from 'react-router';
-import WorkStore from '../../../work/store/WorkStore';
-import { setSessionStorage } from "../../../common/utils/setSessionStorage"
 import WorkItemTrend from './WorkItemTrend';
 import ProjectStatusNum from './ProjectStatusNum';
 import WorkItemSurvey from './WorkItemSurvey';
@@ -25,7 +23,7 @@ const { TabPane } = Tabs;
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
-        findTodopage, setActiveKey, findRecentPage
+        findTodopage, setActiveKey,activeKey, findRecentPage
     } = homeStore;
     // 登录者id
     const userId = getUser().userId;
@@ -107,77 +105,111 @@ const HomeSurvey = (props) => {
         return showNum;
     }
 
+
+    /**
+     * tab 切换
+     * @param {地址} url
+     * @param {tab key} activeKey
+     */
+    const selectRouter = (url, activeKey) => {
+        props.history.push(url)
+        setActiveKey(activeKey)
+    }
+
+
     return (
-        <div className="home-content">
-            <div className="recent-project">
-                <div className="title">
-                    <div className="name">常用项目</div>
+
+        <div className={"home"}>
+            <div className="home-content">
+                <div className="home-tab">
+
+                    <div className={` ${activeKey === "overview" ? "home-tab-select" : ""}`}
+                         key={1}
+                         onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
+
+                    <div className="right-tabs-container">
+                        <div className={` ${activeKey === "todoList" ? "home-tab-select" : ""}`}
+                             key={2}
+                             onClick={() => selectRouter("/index/todoList", "todoList")}>
+                            待办</div>
+                        <div className={` ${activeKey === "insight" ? "home-tab-select" : ""}`}
+                             key={3}
+                             onClick={() => selectRouter('/index/insightlist', "insight")}>
+                            仪表盘</div>
+                    </div>
                 </div>
 
-                <Spin spinning={recentLoading} tip = "加载中..." >
+                <div className="recent-project">
+                    <div className="title">
+                        <div className="name">常用项目</div>
+                    </div>
 
-                    <div className="home-project">
-                        {
-                            recentProjectList && recentProjectList.length > 0 ?
-                                recentProjectList.map((item, index) => {
-                                    return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
-                                        <div className="item-title">
-                                            <ImgComponent
-                                                src={item.iconUrl}
-                                                alt=""
-                                                className="icon-32"
-                                            />
-                                            <Tooltip title={item.projectName}>
-                                            <span className="item-name">{item.projectName}</span>
-                                            </Tooltip>
-                                        </div>
-                                        <div className="item-work">
-                                            <div className="process-work">
+                    <Spin spinning={recentLoading} tip = "加载中..." >
+
+                        <div className="home-project">
+                            {
+                                recentProjectList && recentProjectList.length > 0 ?
+                                    recentProjectList.map((item, index) => {
+                                        return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
+                                            <div className="item-title">
+                                                <ImgComponent
+                                                    src={item.iconUrl}
+                                                    alt=""
+                                                    className="icon-32"
+                                                />
+                                                <Tooltip title={item.projectName}>
+                                                    <span className="item-name">{item.projectName}</span>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="item-work">
+                                                <div className="process-work">
                                                 <span className="work-label" style={{ color: "#999" }}>
                                                     待办事项
                                                 </span>
-                                                <span>
+                                                    <span>
                                                     {setWorkNum(item.processWorkItemNumber)}
                                                 </span>
-                                            </div>
-                                            <div className="end-work">
+                                                </div>
+                                                <div className="end-work">
                                                 <span className="work-label" style={{ color: "#999" }}>
                                                     已完成事项
                                                 </span>
-                                                <span>
+                                                    <span>
                                                     {setWorkNum(item.endWorkItemNumber)}
                                                 </span>
+                                                </div>
+
                                             </div>
-
                                         </div>
-                                    </div>
-                                })
-                                :
-                                <>
-                                    {
-                                        !recentLoading && <ProjectEmpty description="暂时没有项目~" />
-                                    }
-                                </>
+                                    })
+                                    :
+                                    <>
+                                        {
+                                            !recentLoading && <ProjectEmpty description="暂时没有项目~" />
+                                        }
+                                    </>
 
 
-                        }
+                            }
+                        </div>
+                    </Spin>
+                </div>
+                <ProjectStatusNum />
+                <div className="statistics-box">
+                    <div className="statistics-box-title">
+                        事项统计
                     </div>
-                </Spin>
-            </div>
-            <ProjectStatusNum />
-            <div className="statistics-box">
-                <div className="statistics-box-title">
-                    事项统计
+                    <div className="statistics-content">
+                        <WorkItemSurvey />
+                        <WorkItemTrend />
+                    </div>
+
                 </div>
-                <div className="statistics-content">
-                    <WorkItemSurvey />
-                    <WorkItemTrend />
-                </div>
+                <TodoStatistics isHome={true} />
 
             </div>
-            <TodoStatistics isHome={true} />
-
         </div>
+
     );
 }
 
