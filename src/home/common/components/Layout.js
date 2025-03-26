@@ -40,6 +40,8 @@ const Layout = (props) => {
 
     const showFirstMenuPaths = [
         '/index/overview',
+        '/index/todoList',
+        '/index/insightlist',
         '/project',
         '/projectSet',
         '/workitem',
@@ -47,10 +49,11 @@ const Layout = (props) => {
         '/workitem/:id'
     ];
 
+
     let curPath = props.location.pathname
 
     // 判断当前路径是否匹配精确路径或以 /workitem 开头
-    const showFirstMenu = showFirstMenuPaths.includes(curPath) || curPath.startsWith('/workitem');
+    const showFirstMenu = showFirstMenuPaths.includes(curPath) || curPath.startsWith('/workitem') || curPath.startsWith('/index');
 
 
 
