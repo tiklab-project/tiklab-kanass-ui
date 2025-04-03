@@ -43,6 +43,10 @@ const WorkAddPage = (props) => {
     const [selectItem, setSelectItem] = useState();
     const [loading, setLoading] = useState(false);
     const path = props.match.path;
+    const urlParams = new URLSearchParams(props.history.location.search)
+    let workItemType = urlParams.get("workItemType")
+    let caseId = urlParams.get("caseId")
+
 
     useEffect(() => {
         form.setFieldsValue({
@@ -233,6 +237,12 @@ const WorkAddPage = (props) => {
             values.desc = slateValue;
             values.project = projectId ? projectId : values.project;
             values.fieldId = selectItem?.id;
+
+            // 特殊处理，从testhubo点击过来添加缺陷
+            if(workItemType&&workItemType==="defect"){
+                values.caseId = caseId
+            }
+
             setLoading(true)
             addWork(values).then((res) => {
                 setWorkId(res.data)
@@ -283,6 +293,11 @@ const WorkAddPage = (props) => {
                             }
                         }
                     })
+
+
+                    if(workItemType&&workItemType==="defect"){
+                        props.history.replace({pathname:props.history.pathname})
+                    }
                 } else {
                     message.error({
                         content: '添加失败',
@@ -292,6 +307,7 @@ const WorkAddPage = (props) => {
                         },
                     });
                 }
+
                 setLoading(false)
             })
 
