@@ -11,6 +11,7 @@ import WorkAddModel from "./WorkAddModel";
 import "./workCreatDropdown.scss";
 import Button from "../../common/button/Button";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import {useHistory} from "react-router";
 
 const WorkCreatDropdown = (props) => {
     const { workTypeList, buttonType, modelStyle, stageList } = props;
@@ -28,6 +29,25 @@ const WorkCreatDropdown = (props) => {
             window.removeEventListener("mousedown", closeModal, false);
         }
     }, [showModal])
+
+    let history = useHistory()
+
+
+    // 特殊处理，从testhubo跳过来自动打开添加缺陷弹窗
+    useEffect(()=>{
+        if(workTypeList&&workTypeList.length>0){
+            const urlParams = new URLSearchParams(history.location.search)
+            let workItemType = urlParams.get("workItemType")
+            if(workItemType){
+                const matchWorkItem = workTypeList.find(item=>item.workType.code===workItemType)
+                selectAddType(matchWorkItem)
+            }
+            let caseId = urlParams.get("caseId")
+        }
+    },[workTypeList])
+
+
+
 
     /**
      * 关闭弹窗

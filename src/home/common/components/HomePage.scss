@@ -5,7 +5,7 @@
     z-index: 0;
     padding: var(--tiklab-padding);
     display: flex;
-    justify-content: center;
+    //justify-content: center;
     //background-color: #fff;
     .home-tab {
         display: flex;
@@ -34,9 +34,9 @@
         gap: 20px;
     }
 
-    // .home-content {
-    //     background: var(--tiklab-gray-600);
-    // }
+     //.home-content {
+     //    min-width: 900px;
+     //}
 
     .title {
         width: 100%;

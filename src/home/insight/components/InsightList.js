@@ -230,11 +230,14 @@ const InsightList = (props) => {
 
 
     return (
-        <Provider {...store}>
+
+        <Row className="home" >
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <Provider {...store}>
             <div>
                 <div className="insight-list">
                     <div className="insight-header">
-                <span className="back-link" onClick={() => props.history.goBack()}>
+                <span className="back-link" onClick={() => props.history.push("/index/overview")}>
                     <LeftOutlined />
                 </span>
                         <h1 className="page-title">仪表盘</h1>
@@ -280,7 +283,8 @@ const InsightList = (props) => {
             </Row> */}
 
         </Provider>
-
+            </Col>
+        </Row>
     )
 }
 export default withRouter(observer(InsightList));

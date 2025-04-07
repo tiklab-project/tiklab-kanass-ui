@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import "./HomePage.scss";
-import { Empty, Tabs, Spin,Tooltip } from 'antd';
+import {Empty, Tabs, Spin, Tooltip, Row, Col} from 'antd';
 import { withRouter } from 'react-router';
 import WorkItemTrend from './WorkItemTrend';
 import ProjectStatusNum from './ProjectStatusNum';
@@ -119,20 +119,21 @@ const HomeSurvey = (props) => {
 
     return (
 
-        <div className={"home"}>
-            <div className="home-content">
+        <Row className="home" >
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+                <div className="home-content">
                 <div className="home-tab">
 
-                    <div className={` ${activeKey === "overview" ? "home-tab-select" : ""}`}
+                    <div style={{cursor:"pointer"}}
                          key={1}
                          onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
 
                     <div className="right-tabs-container">
-                        <div className={` ${activeKey === "todoList" ? "home-tab-select" : ""}`}
+                        <div style={{cursor:"pointer"}}
                              key={2}
                              onClick={() => selectRouter("/index/todoList", "todoList")}>
                             待办</div>
-                        <div className={` ${activeKey === "insight" ? "home-tab-select" : ""}`}
+                        <div style={{cursor:"pointer"}}
                              key={3}
                              onClick={() => selectRouter('/index/insightlist', "insight")}>
                             仪表盘</div>
@@ -208,7 +209,8 @@ const HomeSurvey = (props) => {
                 <TodoStatistics isHome={true} />
 
             </div>
-        </div>
+            </Col>
+        </Row>
 
     );
 }
