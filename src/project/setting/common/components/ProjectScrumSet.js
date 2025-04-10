@@ -54,6 +54,7 @@ const ProjectScrumSet = (props) => {
             encoded: "WorkType",
             purviewCode: "ProjectWorkType",
         },
+
         {
             title: `${t('user')}`,
             icon: 'survey',
@@ -88,6 +89,12 @@ const ProjectScrumSet = (props) => {
             id: `/project/${projectId}/set/module`,
             encoded: "Module",
             purviewCode: "ProjectModule"
+        },
+        {
+            title: "集成",
+            icon: 'survey',
+            id: `/project/${projectId}/set/integration`,
+            encoded: "integration",
         },
         {
             title: `消息通知方案`,

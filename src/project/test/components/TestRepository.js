@@ -11,90 +11,24 @@ import { Table, Space, Row, Col, message, Alert } from "antd";
 import { Provider, observer } from "mobx-react";
 import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
-import TestRepositoryAdd from "./TestRepositoryAdd";
 import { withRouter } from "react-router";
 import { applyJump } from "tiklab-core-ui";
 import TestRepositoryStore from "../store/TestRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";
+import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
     }
-    const { deleteProjectTestRepositoryByCondition, findProjectTestRepositoryList, findSystemUrl,
-        testCaseList, testCaseCondition, findWorkTestCasePage, deleteWorkTestCase } = TestRepositoryStore;
+    const { findSystemUrl,
+        testCaseList, testCaseCondition,
+        findWorkTestCasePage, deleteWorkTestCase
+    } = TestRepositoryStore;
 
     const projectId = props.match.params.id;
-    const [testAddvisible, setTestAddvisible] = useState()
-    const [projectTestList, setProjectTestList] = useState()
-    const [activeKey, setActiveKey] = useState("testCase");
     const [testhuboUrl, setTesthuboUrl] = useState([]);
 
-    const delteRepository = (id) => {
-        deleteProjectTestRepositoryByCondition({ repositoryId: id, projectId: projectId }).then(data => {
-            if (data.code === 0) {
-                message.info('删除成功');
-                findProjectTestRepositoryList({ projectId: projectId }).then(res => {
-                    if (res.code === 0) {
-                        setProjectTestList(res.data)
-                    }
-                })
-            }
-        })
-    }
-
-    const goRepository = (data) => {
-        findSystemUrl({ name: "testhubo" }).then(res => {
-            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
-            applyJump(`${testUrl}/#/project/${data.id}/testcase`)
-        })
-        
-    }
-    // 列表的列
-    const columns = [
-        {
-            title: "仓库名称",
-            dataIndex: "testRepositoryName",
-            key: "name",
-            align: "left",
-
-            render: (text, record) => <div className="repository-title" onClick={() => goRepository(record)}>
-                {
-                    record.iconUrl ?
-                        <img
-                            src={(record.iconUrl)}
-                            alt=""
-                            className="icon-30"
-                        />
-                        :
-                        <img
-                            src={('images/repository1.png')}
-                            alt=""
-                            className="icon-30"
-                        />
-                }
-                <span className="repository-name">{text}</span>
-            </div>,
-        },
-        {
-            title: "负责人",
-            dataIndex: "user",
-            key: "user",
-            align: "left",
-            width: "20%",
-        },
-        {
-            title: '操作',
-            key: 'action',
-            width: "10%",
-            render: (text, record) => (
-                <Space size="small">
-                    {/* <span className="repository-delete" onClick={() => delteRepository(record.id)}>删除</span> */}
-                    <DeleteModal deleteFunction={delteRepository} id={record.id} getPopupContainer={testRepository.current} />
-                </Space>
-            ),
-        },
-    ];
 
     const changePage = (currentPage) => {
         const value = {
@@ -221,63 +155,59 @@ const TestRepository = (props) => {
     ];
     // 初始化
     useEffect(() => {
-        const activeKey = props.location.state ? props.location.state.activeKey : 'testCase';
-        setActiveKey(activeKey)
-        findProjectTestRepositoryList({ projectId: projectId }).then(res => {
-            if (res.code === 0) {
-                setProjectTestList(res.data)
-            }
 
-        })
         findWorkTestCasePage({ projectId: projectId })
         findSystemUrl({ name: "testhubo" }).then(res => {
             if (res.code === 0) {
                 setTesthuboUrl(res.data)
             }
         })
-        return;
     }, []);
 
 
-    const showTestRepository = () => {
-        setTestAddvisible(true)
-    }
     const testRepository = useRef(null)
     return (<Provider {...store}>
         <div className="test-repository" ref={testRepository}>
             <Row >
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="test-repository-list">
-                        <div className="test-repository-list-top">
-                            <div className="test-repository-tab">
-                                <div
-                                    className={`test-repository-tab-item ${activeKey === "testCase" ? "test-repository-tab-select" : ""}`}
-                                    key={1}
-                                    onClick={() => setActiveKey("testCase")}
+                        <div style={{marginBottom: "24px"}}>
+                            <Breadcumb firstText="测试">
+                                <Button
+                                    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
+                                    type="primary"
                                 >
-                                    用例
-                                </div>
-                                <div
-                                    className={`test-repository-tab-item ${activeKey === "repository" ? "test-repository-tab-select" : ""}`}
-                                    key={2}
-                                    onClick={() => setActiveKey("repository")}
-                                >用例库</div>
-
-                            </div>
-                            {
-                               testhuboUrl.length > 0 && activeKey === "repository" && <Button type="primary" onClick={() => showTestRepository()}>
-                                    添加用例库
+                                    用例库
                                 </Button>
-                            }
-
+                            </Breadcumb>
                         </div>
+                        <div>
+                            <Table
+                                columns={testCaseColumns}
+                                dataSource={testCaseList}
+                                rowKey={(record) => record.id}
+                                pagination={false}
+                                onChange={false}
+                                scroll={{x: "100%"}}
+                            />
+                            <PaginationCommon
+                                currentPage={testCaseCondition.pageParam.currentPage}
+                                changePage={(currentPage) => changePage(currentPage)}
+                                totalPage={testCaseCondition.pageParam.totalPage}
+                                total={testCaseCondition.pageParam.total}
+                                showRefer={false}
+                            />
+                        </div>
+
+
                         {
                             testhuboUrl.length <= 0 && <Alert
                                 message="没有用例库地址，请去添加"
                                 type="info"
                                 action={
                                     <Space>
-                                        <Button type="text" size="small" onClick={() => props.history.push("/setting/urlData")}>
+                                        <Button type="text" size="small"
+                                                onClick={() => props.history.push("/setting/urlData")}>
                                             添加
                                         </Button>
                                     </Space>
@@ -285,49 +215,11 @@ const TestRepository = (props) => {
                                 closable
                             />
                         }
-                        {
-                            activeKey === "repository" && <>
-                                <Table
-                                    columns={columns}
-                                    dataSource={projectTestList}
-                                    rowKey={(record) => record.id}
-                                    pagination={false}
-                                    onChange={false}
-                                    scroll={{x: "100%"}}
-                                />
-                                <TestRepositoryAdd
-                                    projectId={projectId}
-                                    testAddvisible={testAddvisible}
-                                    setTestAddvisible={setTestAddvisible}
-                                    setProjectTestList={setProjectTestList}
-                                />
-                            </>
-                        }
-                        {
-                            activeKey === "testCase" && <div>
-                                <Table
-                                    columns={testCaseColumns}
-                                    dataSource={testCaseList}
-                                    rowKey={(record) => record.id}
-                                    pagination={false}
-                                    onChange={false}
-                                    scroll={{x: "100%"}}
-                                />
-                                <PaginationCommon
-                                    currentPage={testCaseCondition.pageParam.currentPage}
-                                    changePage={(currentPage) => changePage(currentPage)}
-                                    totalPage={testCaseCondition.pageParam.totalPage}
-                                    total = {testCaseCondition.pageParam.total}
-                                    showRefer = {false}
-                                />
-                            </div>
-                        }
-
                     </div>
                 </Col>
             </Row>
         </div>
-    </Provider>
+        </Provider>
 
 
     );

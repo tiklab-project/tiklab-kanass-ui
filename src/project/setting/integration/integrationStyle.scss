@@ -1,0 +1,17 @@
+
+
+.project-set-integration{
+    padding: var(--tiklab-padding);
+
+    .integration-add-btn{
+        margin-bottom: 10px;
+
+        display: flex;
+        //justify-content: end;
+    }
+
+    .ant-tabs-bottom>.ant-tabs-nav:before, .ant-tabs-bottom>div>.ant-tabs-nav:before, .ant-tabs-top>.ant-tabs-nav:before, .ant-tabs-top>div>.ant-tabs-nav:before{
+        border-bottom: 0;
+    }
+
+}

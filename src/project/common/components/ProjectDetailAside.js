@@ -95,7 +95,7 @@ const ProjectDetailAside = (props) => {
             encoded: "Milestone",
         },
         {
-            title: "知识库",
+            title: "文档",
             icon: 'repository',
             defaultIcon: "repository",
             id: `/project/${projectId}/wiki`,
@@ -103,7 +103,7 @@ const ProjectDetailAside = (props) => {
             encoded: "wiki",
         },
         {
-            title: "测试用例",
+            title: "测试",
             icon: 'test',
             defaultIcon: "test",
             id: `/project/${projectId}/test`,
@@ -172,7 +172,7 @@ const ProjectDetailAside = (props) => {
             encoded: "Milestone",
         },
         {
-            title: "知识库",
+            title: "文档",
             icon: 'repository',
             defaultIcon: "repository",
             id: `/project/${projectId}/wiki`,
@@ -180,7 +180,7 @@ const ProjectDetailAside = (props) => {
             encoded: "wiki",
         },
         {
-            title: "测试用例",
+            title: "测试",
             icon: 'test',
             defaultIcon: "test",
             id: `/project/${projectId}/test`,

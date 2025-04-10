@@ -103,6 +103,8 @@ const PlanWorkItem = AsyncComponent(() => import('./project/plan/components/Plan
 
 const Module = AsyncComponent(() => import('./project/setting/module/components/ModuleList'))
 const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/components/BasicInfo'))
+const IntegrationContent = AsyncComponent(()=>import("./project/setting/integration/IntegrationContent"))
+
 
 // 项目权限
 const ProjectDomainRole = AsyncComponent(() => import('./project/setting/privilege/ProjectDomainRole'));
@@ -788,6 +790,10 @@ const Routers = [
                             {
                                 path: "/project/:id/set/module",
                                 component: Module,
+                            },
+                            {
+                               path: "/project/:id/set/integration",
+                               component: IntegrationContent
                             },
                             {
                                 path: "/project/:id/set/user",
