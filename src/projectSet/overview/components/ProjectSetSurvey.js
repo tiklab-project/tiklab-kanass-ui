@@ -8,7 +8,7 @@
  */
 import React, { Fragment, useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import { Empty, Row, Col } from "antd";
+import { Empty, Row, Col, Tooltip } from "antd";
 import 'moment/locale/zh-cn';
 import "../components/ProjectSetSurvey.scss";
 import BasicInfoStore from "../store/BasicInfoStore";
@@ -19,7 +19,7 @@ import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 const ProjectSetSurvey = props => {
 
-    const { logList, findProjectList, createRecent } = BasicInfoStore;
+    const { logList, findProjectList, createRecent, findProjectSet } = BasicInfoStore;
     const projectSetId = props.match.params.projectSetId;
     // const [processProjectList, setProcessProjectList] = useState();
     // const projectSet = JSON.parse(localStorage.getItem("projectSet"));
@@ -28,19 +28,22 @@ const ProjectSetSurvey = props => {
 
 
     useEffect(() => {
+        console.log("*********logList："+logList)
         const fetchData = async () => {
             try {
                 const response = await findProjectList({ projectSetId: projectSetId });
-                if (response.code === 0 && Array.isArray(response.data)) {
+                const projectSetResponse = await findProjectSet(projectSetId);
+                if (response.code === 0 && Array.isArray(response.data) && projectSetResponse.code === 0) {
                     const data = response.data;
                     const projectSetData = {
                         projects: data,
-                        name: data[0]?.projectName || "未命名项目集",
-                        color: data[0]?.color || "#4CAF50",
-                        startTime: data[0]?.startTime,
-                        endTime: data[0]?.endTime,
-                        master: data[0]?.master,
-                        projectSetLimits: data[0]?.projectSetLimits
+                        name: projectSetResponse.data.name || "未命名项目集",
+                        color: projectSetResponse.data.color || "#4CAF50",
+                        startTime: projectSetResponse.data.startTime,
+                        endTime: projectSetResponse.data.endTime,
+                        master: projectSetResponse.data.master,
+                        projectSetLimits: projectSetResponse.data.projectSetLimits,
+                        creatTime: projectSetResponse.data.creatTime.substring(0, 10)
                     };
                     localStorage.setItem("projectSet", JSON.stringify(projectSetData));
                     setProjectSet(projectSetData);
@@ -80,6 +83,10 @@ const ProjectSetSurvey = props => {
 
     }
 
+    const goProcessProject = () => {
+        props.history.push(`/projectSet/${projectSetId}/project`)
+    }
+
     return (
         <Row className="projectSet-survey">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -93,7 +100,7 @@ const ProjectSetSurvey = props => {
                                         {projectSet?.name}
                                     </div>
                                     <div className="projectSet-info-content-item">
-                                        {projectSet?.master?.name} 创建于 {projectSet?.startTime}
+                                        {projectSet?.master?.name} 创建于 {projectSet?.creatTime}
                                     </div>
                                 </div>
                             </div>
@@ -122,39 +129,54 @@ const ProjectSetSurvey = props => {
                         <div className="projectSet-process-project">
                             <div className="box-title">
                                 <span className="name">进行中项目</span>
-                                {/* <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()}>
-                                    <use xlinkHref="#icon-rightjump"></use>
-                                </svg> */}
+
+                                {
+                                    processProjectList && processProjectList.length > 3 ?
+                                        <Tooltip
+                                            title={"更多"}
+                                            placement={"top"}
+                                        >
+                                            <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()} style={{ cursor: "pointer" }}>
+                                                <use xlinkHref="#icon-right"></use>
+                                            </svg>
+                                        </Tooltip>
+
+                                        :
+                                        <></>
+                                }
                             </div>
                             <div className="projectSet-process-project-list">
                                 {
-                                    processProjectList && processProjectList.length > 0 ? processProjectList.map(item => {
-                                            return <div className="projectSet-process-project-item"
-                                                        key={item.id}
-                                                        onClick={() => goProdetail(item)}
-                                            >
-                                                <div className="projectSet-process-project-left">
-                                                    <div>
-                                                        <ImgComponent
-                                                            src={item.iconUrl}
-                                                            className="icon-32"
-                                                            title={item.projectName}
-                                                            alt=""
-                                                        />
+                                    processProjectList && processProjectList.length > 0 ? processProjectList.map((item, index) => {
+                                            // 展示前3个，后续点击更多跳转到列表页
+                                            if (index < 3){
+                                                return <div className="projectSet-process-project-item"
+                                                            key={item.id}
+                                                            onClick={() => goProdetail(item)}
+                                                >
+                                                    <div className="projectSet-process-project-left">
+                                                        <div>
+                                                            <ImgComponent
+                                                                src={item.iconUrl}
+                                                                className="icon-32"
+                                                                title={item.projectName}
+                                                                alt=""
+                                                            />
+                                                        </div>
+
+                                                        <div className="projectSet-process-project-name">
+
+                                                            <div className="projectSet-process-project-date">{item.projectKey}</div>
+                                                            <div className="name">{item.projectName}</div>
+                                                        </div>
                                                     </div>
 
-                                                    <div className="projectSet-process-project-name">
 
-                                                        <div className="projectSet-process-project-date">{item.projectKey}</div>
-                                                        <div className="name">{item.projectName}</div>
+                                                    <div className="projectSet-process-project-process">
+                                                        {item.master.name}
                                                     </div>
                                                 </div>
-
-
-                                                <div className="projectSet-process-project-process">
-                                                    {item.master.name}
-                                                </div>
-                                            </div>
+                                            }
                                         })
                                         :
                                         <ProjectEmpty description="暂时没有动态~" />

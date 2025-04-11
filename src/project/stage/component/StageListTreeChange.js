@@ -111,6 +111,7 @@ const removeNodeInTreeAddChildren = (tree, id) => {
 const updateStageInfo = (tree, id, stage) => {
     for (let i = 0; i < tree.length; i++) {
         if (tree[i].id === id) {
+            console.log(JSON.stringify(stage))
             tree[i] = {...tree[i], ...stage};
             // 插入成功后返回true
         } else {

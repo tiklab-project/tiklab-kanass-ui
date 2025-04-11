@@ -1,3 +1,4 @@
+
 /*
  * @Author: 袁婕轩
  * @Date: 2024-07-01 18:13:18
@@ -156,41 +157,41 @@ const WorkLog = (props) => {
 
                     {
                         workLogList.length > 0 ? workLogList.map(item => {
-                            return <>
-                                <div className="work-log-item" key={item.id}>
-                                    <div style={{ flex: 1 }}>
-                                        <div className="work-log-item-first">
-                                            <div className="work-log-item-user">
-                                                <UserIcon size="big">{item.user.nickname}</UserIcon>
-                                                <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
-                                            </div>
-                                            <div className="log-item-date">{item.workDate}</div>
-
-                                        </div>
-                                        <div className="work-log-item-second">
-                                            <div className="log-content">{item.workContent}</div>
-
-                                            <div className="log-action" ref={logAction}>
-                                                <WorkPrivilegeComponent workId={workId} code="WorkLogEdit">
-                                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
-                                                        onClick={() => showEdit(item)}>
-                                                        <use xlinkHref="#icon-edit"></use>
-                                                    </svg>
-                                                </WorkPrivilegeComponent>
-                                                <WorkPrivilegeComponent workId={workId} code="WorkLogDelete">
-                                                    <DeleteModal deleteFunction={deleteLog} id={item.id} getPopupContainer={workLog.current} />
-                                                </WorkPrivilegeComponent>
+                                return <>
+                                    <div className="work-log-item" key={item.id}>
+                                        <div style={{ flex: 1 }}>
+                                            <div className="work-log-item-first">
+                                                <div className="work-log-item-user">
+                                                    <UserIcon size="big">{item.user.nickname}</UserIcon>
+                                                    <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
+                                                </div>
+                                                <div className="log-item-date">{item.workDate}</div>
 
                                             </div>
+                                            <div className="work-log-item-second">
+                                                <div className="log-content">{item.workContent}</div>
+
+                                                <div className="log-action" ref={logAction}>
+                                                    <WorkPrivilegeComponent workId={workId} code="WorkLogEdit">
+                                                        <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
+                                                             onClick={() => showEdit(item)}>
+                                                            <use xlinkHref="#icon-edit"></use>
+                                                        </svg>
+                                                    </WorkPrivilegeComponent>
+                                                    <WorkPrivilegeComponent workId={workId} code="WorkLogDelete">
+                                                        <DeleteModal deleteFunction={deleteLog} id={item.id} getPopupContainer={workLog.current} />
+                                                    </WorkPrivilegeComponent>
+
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
 
-                                </div>
 
+                                </>
 
-                            </>
-
-                        })
+                            })
                             :
                             <ProjectEmpty description="暂时没有工时记录~" />
                     }
@@ -213,3 +214,4 @@ const WorkLog = (props) => {
 }
 
 export default inject("workStore")(observer(WorkLog));
+

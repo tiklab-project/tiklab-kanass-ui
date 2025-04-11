@@ -7,7 +7,7 @@
         line-height: 30px;
         padding: 0px 11px;
         .select-more {
-            background-color: #f3f4f5;
+            //background-color: #f3f4f5;
             border-radius: 2px;
             height: 20px;
             line-height: 20px;
@@ -15,6 +15,17 @@
             font-size: 12px;
             text-align: center;
             cursor: pointer;
+            .select-more-icon {
+                visibility: hidden;
+                opacity: 0;
+                margin-top: 3px;
+                width: 10px;
+                height: 15px;
+            }
+        }
+        &:hover .select-more-icon{
+            visibility: visible;
+            opacity: 1;
         }
         .select-close {
             width: 15px;

@@ -165,7 +165,7 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
                     />
 
                 </div>
-                <div className="work-info-text">{text}</div>
+                <div className="work-info-text">{text.length > 10 ? text.slice(0, 10) + "..." : text}</div>
             </div>
         }
 

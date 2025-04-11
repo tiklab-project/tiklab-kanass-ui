@@ -13,6 +13,7 @@ import WorkBodar from "./WorkBodar";
 import WorkStore from "../store/WorkStore";
 import { observer, Provider } from "mobx-react";
 import WorkCalendarStore from '../store/WorkCalendarStore';
+import workStore from "../store/WorkStore";
 const Work = (props) => {
     const { WorkGantt } = props;
     const { workShowType } = WorkStore;
@@ -44,6 +45,7 @@ const Work = (props) => {
                 dom = <WorkTable />;
                 break;
         }
+        console.log(JSON.stringify(props.route));
         return dom;
     }
 

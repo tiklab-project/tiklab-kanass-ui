@@ -44,6 +44,12 @@ const WorkDetailCrumb = (props) => {
      * 关闭事项详情抽屉
      */
     const closeDrawer = () => {
+        let pathname = props.location.pathname;
+        console.log("closeDrawer"+pathname);
+        const index = pathname.lastIndexOf("\/");
+        pathname = pathname.substring(0, index);
+        console.log("closeDrawer"+pathname);
+        props.history.replace(`${pathname}`)
         setIsModalVisible(false)
         setWorkId(0)
     }

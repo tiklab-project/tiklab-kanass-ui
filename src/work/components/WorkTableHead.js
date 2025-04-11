@@ -23,6 +23,8 @@ const WorkTableHead = (props) => {
         getWorkConditionPageTree, getWorkConditionPage, searchCondition,
         getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView } = workStore;
     const [stateType, setState] = useState();
+    // console.log("**********id:"+props.match.params.id);
+    // console.log("**********props*****:"+JSON.stringify(props))
     const projectId = props.match.params.id ? props.match.params.id : null;
     const workAddModel = useRef()
 

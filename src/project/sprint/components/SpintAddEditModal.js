@@ -145,7 +145,7 @@ const SprintAddModal = (props) => {
                                 },
                             ]}
                         >
-                            <Input placeholder="迭代名称" />
+                            <Input placeholder="迭代名称" maxLength={40} />
                         </Form.Item>
                         <Form.Item
                             label="负责人"

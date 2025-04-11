@@ -1,3 +1,4 @@
+
 .project {
     overflow: auto;
     height: 100%;
@@ -13,30 +14,30 @@
 
         .home-project {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
             margin-top: 10px;
             overflow: hidden;
             gap: 10px;
             padding-bottom: 10px;
-            height: auto; // 设置为 auto 以适应内容高度
-            justify-content: flex-start;
+            height: 104px;
             .project-item:hover {
                 border-radius: 4px 4px 0 0;
                 border-bottom: 2px solid var(--tiklab-blue);
-                transition: 500ms; // 添加单位
+                transition: 500;
             }
 
             .project-item {
                 max-width: 260px;
                 min-width: 204px;
-                flex: 1 1 calc(25% - 10px); // 确保每个项目项占据25%的宽度减去间距
+                flex: 1;
                 padding: 12px;
-                box-sizing: border-box; // 使用 border-box 确保内边距和边框包含在宽度内
+                box-sizing: content-box;
                 flex-shrink: 0;
                 border-radius: 4px;
                 cursor: pointer;
                 background-color: var(--tiklab-gray-600);
+                box-sizing: border-box;
                 border-bottom: 2px solid var(--tiklab-gray-600);
 
                 .item-title {
@@ -120,7 +121,7 @@
         }
         .filter-search {
             width: 150px;
-            border-radius: 4px;
+            border-radius: 4px;;
         }
         .project-search {
             display: flex;
@@ -134,26 +135,78 @@
         justify-content: flex-start;
         height: 40px;
         line-height: 40px;
-        gap: 10px;
-    }
-    .project-tab {
-        font-size: var(--tiklab-font-13);
-        cursor: pointer;
-        height: 40px;
-        line-height: 40px;
-        margin-right: 10px;
-    }
-    .project-tab:last-child {
-        margin-right: 0;
+        .project-tab{
+            font-size: var(--tiklab-font-13);;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 20px;
+        }
+        .project-tab:last-child {
+            margin-right: 0;
+        }
     }
     // .project-num {
     //     font-size: 12px;
     //     color: #606060;
     // }
 
+
     .project-content {
         height: 100%;
         background-color: #fff;
+        // padding: 15px;
+        // .ant-layout-sider {
+        //     background-color: #fff;
+        //     min-height: 100%;
+        //     border-right: 2px solid var(--tiklab-gray-200);
+        //     .project-aside {
+        //         height: 100%;
+        //         background:var(--tiklab-gray);
+        //         .project-title {
+        //             height: 40px;
+        //             display: flex;
+        //             line-height: 40px;
+        //             width: 100%;
+        //             justify-content: space-between;
+        //             align-items: center;
+        //             padding: 0 20px;
+        //             font-weight: var(--tiklab-font-weight-bold);
+        //             color: #000;
+        //             border-bottom: 1px solid var(--tiklab-gray-200);
+        //         }
+        //         .project-menu {
+        //             list-style-type:none;
+        //             padding: 0px;
+        //             .icon {
+        //                 margin-right: 10px;
+        //             }
+        //             li:hover {
+        //                 background-color: #EDF0F5;
+        //             }
+        //             .project-menu-submenu {
+        //                 height: 40px;
+        //                 display: flex;
+        //                 line-height: 40px;
+        //                 padding-left: 40px;
+        //                 width: 100%;
+
+        //                 align-items: center;
+        //             }
+        //             .project-menu-submenu:hover {
+        //                 cursor: pointer;
+        //                 color: var(--tiklab-blue);
+        //             }
+        //             .project-menu-select {
+        //                 background-color: var(--tiklab-gray-400);
+        //                 border-left: 3px solid var(--tiklab-blue);
+        //             }
+        //         }
+        //         .hidden-menu {
+        //             display: none;
+        //         }
+        //     }
+        // }
         .ant-row {
             height: 100%;
             overflow: auto;
@@ -198,7 +251,7 @@
         justify-content: center;
         align-items: center;
         height: 80%;
-        img {
+        img{
             width: 200px;
             height: 200px;
         }
@@ -215,4 +268,5 @@
             cursor: pointer;
         }
     }
+
 }

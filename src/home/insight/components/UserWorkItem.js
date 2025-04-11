@@ -137,7 +137,9 @@ const UserWorkItem = (props) => {
                         title: {
                             text: res.data.project.projectName,
                             textStyle:{
-                                fontWeight: "nomal"
+                                fontWeight: "nomal",
+                                overflow: 'break',  // 超出截断
+                                width: res.data.project.projectName.length > 20 ? 140 : 'auto'             // 标题最大宽度（px
                             }
                         },
                         tooltip: {

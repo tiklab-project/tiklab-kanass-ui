@@ -42,7 +42,7 @@ const VersionSurvey = (props) => {
         findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
-            setPercent(percent ? percent.toFixed(2) : 0)
+            setPercent(percent ? (percent * 100).toFixed(2) : 0)
         })
 
         // 查找版本信息
@@ -287,7 +287,7 @@ const VersionSurvey = (props) => {
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{versionInfo?.relaStartTime ? versionInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {versionInfo?.relaPublishTime ? versionInfo?.relaPublishTime.slice(0, 10) : "未发布"}</div>
+                                        <div className="item-top">{versionInfo?.relaStartTime ? versionInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {versionInfo?.versionState?.id === "222222" ? versionInfo?.relaPublishTime.slice(0, 10) : "未发布"}</div>
                                         <div className="item-bottom">版本实际周期</div>
                                     </div>
                                 </div>

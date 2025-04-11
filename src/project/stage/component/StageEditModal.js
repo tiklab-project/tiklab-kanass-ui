@@ -15,8 +15,8 @@ import { appendStageInTree, updateStageInfo, updateTree } from "./StageListTreeC
 import moment from "moment";
 const { TextArea } = Input;
 const StageEditModal = (props) => {
-    const { showStageEditModal, setShowStageEditModal, stageStore, stageId } = props;
-    const { updateStage, useList, getUseList, stageList, findStage, findParentStageList, parentStageList } = stageStore
+    const { showStageEditModal, setShowStageEditModal, stageStore, stageId} = props;
+    const { updateStage, useList, getUseList, stageList, findStage, findParentStageList, parentStageList, findStageListTreePage } = stageStore
     const [form] = Form.useForm();
     const dateFormat = 'YYYY-MM-DD';
     // 项目id
@@ -82,6 +82,7 @@ const StageEditModal = (props) => {
             }else {
                 values.isChangeParent = true;
             }
+            console.log(JSON.stringify(values))
             updateStage(values).then(res => {
                 if(res.code === 0){
                     if(values.isChangeParent){
@@ -89,7 +90,7 @@ const StageEditModal = (props) => {
                     }else {
                         updateStageInfo(stageList, stageId,values)
                     }
-                    
+                    findStageListTreePage()
                     setShowStageEditModal(false)
                 }
             })
@@ -191,7 +192,7 @@ const StageEditModal = (props) => {
                         >
                             {
                                 useList && useList.map((item, index) => {
-                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user.name}</Select.Option>
+                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user.nickname}</Select.Option>
                                 })
                             }
                         </Select>

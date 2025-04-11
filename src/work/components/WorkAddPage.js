@@ -600,7 +600,7 @@ const WorkAddPage = (props) => {
                                         tenant={tenant}
                                         base_url={base_url}
                                         viewImageUrl = "/image"
-                                        img_url = {base_url}
+                                        img_url = {base_url === '/' ? '' : base_url}
                                         maxHeight={500}
                                         {...props}
                                     />

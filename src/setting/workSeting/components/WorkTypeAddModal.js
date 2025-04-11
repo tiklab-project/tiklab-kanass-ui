@@ -40,6 +40,13 @@ const WorkTypeAddModal = (props) => {
         return;
     }, []);
 
+    /**
+     * 默认选择第一个图标
+     */
+    useEffect(() => {
+        setIconUrl(iconList?.[0]?.iconUrl || '');
+    }, [iconList]);
+
     const getIconList = () => {
         findIconList({ iconType: "workType" }).then((res) => {
             setIconList(res.data)

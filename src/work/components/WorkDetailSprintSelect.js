@@ -139,7 +139,11 @@ const WorkDetailSprintSelect = (props) => {
                             :
                             <>
                                 {
-                                    relationSprintList && <div className="select-more" onClick={(e) => showMore(e)}>{relationSprintList.length}</div>
+                                    relationSprintList && <div className="select-more" onClick={(e) => showMore(e)}>
+                                        <svg className="select-more-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-workDown"></use>
+                                        </svg>
+                                    </div>
                                 }
                             </>
                     }

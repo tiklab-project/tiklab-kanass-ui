@@ -171,7 +171,7 @@ const WorkTypeTab = (props) => {
                     <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
                         {
                             workCustom.map(item => {
-                                return <div key={item.id} className={`tabs-dropdown-item ${tabValue?.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name}</div>
+                                return <div key={item.id} className={`tabs-dropdown-item ${tabValue?.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name.length > 5 ? item.workType.name.substring(0,4) + "..." : item.workType.name}</div>
                             })
                         }
                     </div>

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-25 14:38:38
  */
 
-import React from "react";
+import React, {useEffect} from "react";
 import { Input, Modal, Form } from 'antd';
 import { withRouter } from "react-router";
 import { inject, observer } from "mobx-react";
@@ -26,6 +26,13 @@ const InsightAddModal = (props) => {
     const { createInsight, findInsightList } = insightStore;
     // 添加表单
     const [form] = Form.useForm();
+
+    // 弹窗关闭后清空内容
+    useEffect(() => {
+        if (!visible){
+            form.resetFields();
+        }
+    }, [visible]);
 
     /**
      * 创建仪表盘

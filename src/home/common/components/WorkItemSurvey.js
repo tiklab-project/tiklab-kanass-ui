@@ -81,7 +81,13 @@ const WorkItemSurvey = (props) => {
                             data: yData,
                             type: 'bar'
                         }
-                    ]
+                    ],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            return params.name + ' : ' + params.value;
+                        }
+                    }
                 };
 
                 myChart.setOption(option);

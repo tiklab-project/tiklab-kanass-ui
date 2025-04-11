@@ -60,7 +60,11 @@ const WorkComment = (props) => {
         })
     }
     useEffect(() => {
-        getCommentList({ workItemId: workId })
+        let initValue = {
+            workItemId: workId,
+            pageParam:{currentPage: 1, pageSize: 10}
+        }
+        getCommentList(initValue)
         return;
     }, [workId])
 
@@ -128,7 +132,7 @@ const WorkComment = (props) => {
      * 翻页
      */
     const changePage = (page, pageSize) => {
-        getCommentList({ current: page })
+        getCommentList({pageParam:{currentPage: page, pageSize: 10}})
     }
     const workComment = useRef(null);
     return (<>
@@ -202,7 +206,7 @@ const WorkComment = (props) => {
                             <div style={{ textAlign: "right", width: "100%", marginTop: "10px" }}>
                                 <Pagination
                                     defaultCurrent={1}
-                                    pageSize={6}
+                                    defpageSize={10}
                                     total={totalRecord}
                                     onChange={(page, pageSize) => changePage(page, pageSize)}
                                 />

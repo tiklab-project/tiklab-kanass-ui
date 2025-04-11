@@ -36,7 +36,7 @@ const VersionTable = (props) => {
     const userId = getUser().userId;
     // 初始化
     useEffect(() => {
-        // findVersion({ projectId: projectId, versionState: null })
+        getVersionList({ projectId: projectId, name: null, versionStates: null })
         findAllVersionState().then(res => {
             if (res.code === 0) {
                 setVersionStateList(res.data)

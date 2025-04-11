@@ -154,7 +154,7 @@ export class BasicInfoStore {
     }
 
     @action
-    findProjectSet = async(valuvaluees) => {
+    findProjectSet = async(value) => {
         const params = new FormData();
         params.append("id", value)
         const data = await Service("/projectSet/findProjectSet", params);

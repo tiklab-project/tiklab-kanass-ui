@@ -74,7 +74,7 @@ const SprintSurvey = (props) => {
         findWorkItemNumByQuickSearch(data).then(res => {
             setWorkStatusList(res.data)
             const percent = res.data?.ending / res.data?.all;
-            setPercent(percent * 100 ? percent.toFixed(2) * 100 : 0)
+            setPercent(percent * 100 ? (percent * 100).toFixed(2) : 0)
         })
 
         //按照时间顺序查找日志
@@ -266,7 +266,7 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-date"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{sprintInfo?.relaStartTime ? sprintInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {sprintInfo?.relaEndTime ? sprintInfo?.relaEndTime.slice(0, 10) : "未结束"}</div>
+                                        <div className="item-top">{sprintInfo?.relaStartTime ? sprintInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {sprintInfo?.sprintState?.id === "222222" ? sprintInfo?.relaEndTime.slice(0, 10) : "未结束"}</div>
                                         <div className="item-bottom">迭代实际周期</div>
                                     </div>
                                 </div>

@@ -134,7 +134,8 @@ const WorkDetailVersionSelect = (props) => {
 
                     </div>
                     {
-                        showDropdown && selectVersion ?
+                        // && selectVersion
+                        showDropdown  ?
                             <div className="select-close" onClick={() => updateWork(null)}>
                                 <svg className="select-close-icon" aria-hidden="true">
                                     <use xlinkHref="#icon-close"></use>
@@ -143,7 +144,11 @@ const WorkDetailVersionSelect = (props) => {
                             :
                             <>
                                 {
-                                    relationVersionList && <div className="select-more" onClick={(e) => showMore(e)}>{relationVersionList?.length}</div>
+                                    relationVersionList && <div className="select-more" onClick={(e) => showMore(e)}>
+                                        <svg className="select-more-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-workDown"></use>
+                                        </svg>
+                                    </div>
                                 }
                             </>
                     }

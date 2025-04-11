@@ -26,7 +26,7 @@ const StatisticsWork = (props) => {
     const pdfRef = useRef();
     const columns = [
         {
-            title: '姓名',
+            title: '名称',
             dataIndex: 'statisticalTitle',
             key: 'name',
             render: text => <span>{text ? text : "暂无设置报告人"}</span>,
@@ -108,7 +108,7 @@ const StatisticsWork = (props) => {
                 type: 'value'
             },
             series: [{
-                name: '人数',
+                // name: '人数',
                 type: 'bar',
                 data: yaixs
             }]

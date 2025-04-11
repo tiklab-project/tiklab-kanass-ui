@@ -90,12 +90,13 @@ const WorkDetailDrawer = (props) => {
     return (<>
         <Drawer
             placement="right"
-            onClose={closeDrawer}
+            // onClose={closeDrawer}
             visible={isModalVisible}
             className={`${isModalVisible ? "work-table-detail" : ''} `}
             closable={false}
             destroyOnClose={true}
-            mask={false}
+            width={"68%"}
+            // mask={false}
         >
             <div className="work-detail-drawer" ref={detailRef}>
                 <WorkDetail 

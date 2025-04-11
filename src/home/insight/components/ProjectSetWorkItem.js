@@ -84,8 +84,7 @@ const ProjectSetWorkItem = (props) => {
                 }
                 if (projectSet && project) {
                     project.project.map((item, index) => {
-                        yAxisValue.push(item.projectName)
-
+                        yAxisValue.push(item.projectName.length > 13 ? item.projectName.substring(0,13) + "..." : item.projectName);
                     })
                     project.countList.map((item, index) => {
                         // yAxisValue.push(item.projectName)
