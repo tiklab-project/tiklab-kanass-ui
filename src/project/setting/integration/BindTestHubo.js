@@ -4,7 +4,6 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import TestRepositoryAdd from "../../test/components/TestRepositoryAdd";
 import TestRepositoryStore from "../../test/store/TestRepositoryStore";
 import {observer,Provider} from "mobx-react";
-import Button from "../../../common/button/Button";
 import {applyJump} from "tiklab-core-ui";
 
 const BindTestHubo = (props) => {

@@ -181,6 +181,23 @@ const TestRepository = (props) => {
                                 </Button>
                             </Breadcumb>
                         </div>
+
+                        {
+                            testhuboUrl.length <= 0 && <Alert
+                                message="没有用例库地址，请去添加"
+                                type="info"
+                                action={
+                                    <Space>
+                                        <Button type="text" size="small"
+                                                onClick={() => props.history.push("/setting/urlData")}>
+                                            添加
+                                        </Button>
+                                    </Space>
+                                }
+                                closable
+                            />
+                        }
+
                         <div>
                             <Table
                                 columns={testCaseColumns}
@@ -200,21 +217,7 @@ const TestRepository = (props) => {
                         </div>
 
 
-                        {
-                            testhuboUrl.length <= 0 && <Alert
-                                message="没有用例库地址，请去添加"
-                                type="info"
-                                action={
-                                    <Space>
-                                        <Button type="text" size="small"
-                                                onClick={() => props.history.push("/setting/urlData")}>
-                                            添加
-                                        </Button>
-                                    </Space>
-                                }
-                                closable
-                            />
-                        }
+
                     </div>
                 </Col>
             </Row>

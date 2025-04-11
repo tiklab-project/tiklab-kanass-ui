@@ -163,6 +163,22 @@ const WikiRepository = (props) => {
                             </Breadcumb>
                         </div>
 
+                        {
+                            swardUrl.length <= 0 && <Alert
+                                message="没有知识库地址，请去添加"
+                                type="info"
+                                action={
+                                    <Space>
+                                        <Button type="text" size="small"
+                                                onClick={() => props.history.push("/setting/urlData")}>
+                                            添加
+                                        </Button>
+                                    </Space>
+                                }
+                                closable
+                            />
+                        }
+
                         <div ref={workDocument}>
                             <Table
                                 columns={documentColumns}
@@ -179,21 +195,7 @@ const WikiRepository = (props) => {
                             />
                         </div>
 
-                        {
-                            swardUrl.length <= 0 && <Alert
-                                message="没有知识库地址，请去添加"
-                                type="info"
-                                action={
-                                    <Space>
-                                        <Button type="text" size="small"
-                                                onClick={() => props.history.push("/setting/urlData")}>
-                                            添加
-                                        </Button>
-                                    </Space>
-                                }
-                                closable
-                            />
-                        }
+
                     </div>
                 </Col>
             </Row>

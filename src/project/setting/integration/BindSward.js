@@ -5,7 +5,6 @@ import {applyJump} from "tiklab-core-ui";
 import WikiRepositoryAdd from "../../wiki/components/WikiRepositoryAdd";
 import {observer,Provider} from "mobx-react";
 import WikiRepositoryStore from "../../wiki/store/WikiRepositoryStore";
-import Button from "../../../common/button/Button";
 
 const BindSward = (props) => {
     const {activeKey,wikiAddvisible,setWikiAddvisible} = props
@@ -119,8 +118,6 @@ const BindSward = (props) => {
             />
         </Provider>
     )
-
-
 }
 
 export default observer(BindSward);
