@@ -63,7 +63,7 @@ const UrlData = () => {
     // 添加地址
     const addUrl = (system, e) => {
         if (e) e.stopPropagation();
-        setModalTitle(`添加${system}地址`);
+        setModalTitle(`设置${system}地址`);
         setUrlAddvisible(true);
         setActionType("add");
         setSelectedSystem(system);
@@ -109,7 +109,7 @@ const UrlData = () => {
                                                 icon={<PlusOutlined />}
                                                 onClick={(e) => addUrl(system.name, e)}
                                             >
-                                                添加{system.name}服务
+                                                设置{system.name}服务
                                             </Button>
                                         </div>
                                     ) : (
@@ -118,12 +118,12 @@ const UrlData = () => {
                                                 <div className="url-label">系统地址:</div>
                                                 <div className="url-value">{systemData.systemUrl}</div>
                                             </div>
-                                            {systemData.webUrl && (
-                                                <div className="url-item">
-                                                    <div className="url-label">浏览器端地址:</div>
-                                                    <div className="url-value">{systemData.webUrl}</div>
-                                                </div>
-                                            )}
+                                            {/*{systemData.webUrl && (*/}
+                                            {/*    <div className="url-item">*/}
+                                            {/*        <div className="url-label">浏览器端地址:</div>*/}
+                                            {/*        <div className="url-value">{systemData.webUrl}</div>*/}
+                                            {/*    </div>*/}
+                                            {/*)}*/}
                                             <div className="action-buttons">
                                                 <Space>
                                                     <Button

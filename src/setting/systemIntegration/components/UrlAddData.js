@@ -135,18 +135,18 @@ const UrlAddData = (props) => {
                         <Input placeholder="以http://或https://开头" />
                     </Form.Item>
 
-                    <Form.Item
-                        label="浏览器端地址"
-                        name="webUrl"
-                        rules={[
-                            {
-                                pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),
-                                message: '请输入正确网址'
-                            }
-                        ]}
-                    >
-                        <Input placeholder="以http://或https://开头（可选）" />
-                    </Form.Item>
+                    {/*<Form.Item*/}
+                    {/*    label="浏览器端地址"*/}
+                    {/*    name="webUrl"*/}
+                    {/*    rules={[*/}
+                    {/*        {*/}
+                    {/*            pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),*/}
+                    {/*            message: '请输入正确网址'*/}
+                    {/*        }*/}
+                    {/*    ]}*/}
+                    {/*>*/}
+                    {/*    <Input placeholder="以http://或https://开头（可选）" />*/}
+                    {/*</Form.Item>*/}
                 </Form>
             </Modal>
         </Fragment>
