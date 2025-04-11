@@ -1,131 +1,169 @@
-/*
- * @Descripttion:  sward, testHubo 地址列表
- * @version: 1.0.0
- * @Author: 袁婕轩
- * @Date: 2021-10-13 16:54:17
- * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 16:30:26
- */
 import React, { Fragment, useEffect, useState } from "react";
-import { Table, Space, Button, Row, Col, message } from 'antd';
+import { Collapse, Button, message, Space, Tooltip } from 'antd';
+import { LinkOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./UrlData.scss";
 import { observer, Provider } from "mobx-react";
 import UrlAddData from "./UrlAddData";
-import UrlDataStore from "../store/UrlDataStore"
-const UrlData = (props) => {
+import UrlDataStore from "../store/UrlDataStore";
+
+const { Panel } = Collapse;
+
+const UrlData = () => {
     const store = {
         urlDataStore: UrlDataStore
-    }
+    };
+
     const { findAllSystemUrl, deleteSystemUrl } = UrlDataStore;
     const [urlDataList, setUrlDataList] = useState([]);
-    const [modalTitle, setModalTitle] = useState()
-    const [urlAddvisible, setUrlAddvisible] = useState()
-    const [actionType, setActionType] = useState()
-    const [urlId, setUrlId] = useState()
-    const editSystemUrl = (id) => {
-        setActionType("edit")
-        setUrlId(id)
-        setUrlAddvisible(true)
-        setModalTitle("编辑地址")
-    }
+    const [modalTitle, setModalTitle] = useState("");
+    const [urlAddvisible, setUrlAddvisible] = useState(false);
+    const [actionType, setActionType] = useState("");
+    const [urlId, setUrlId] = useState("");
+    const [selectedSystem, setSelectedSystem] = useState("");
 
-    const deleSystemUrl = (id) => {
+    // 预定义的系统列表
+    const systemList = [
+        { name: "sward", description: "sward知识库文档服务地址配置" },
+        { name: "testhubo", description: "testhubo测试系统地址配置" }
+    ];
+
+    // 获取系统数据
+    const getSystemData = (systemName) => {
+        return urlDataList.find(item => item.name === systemName) || null;
+    };
+
+    // 编辑地址
+    const editSystemUrl = (id, system, e) => {
+        e.stopPropagation(); // 阻止冒泡，防止触发 Collapse 的展开/折叠
+        setActionType("edit");
+        setUrlId(id);
+        setSelectedSystem(system);
+        setUrlAddvisible(true);
+        setModalTitle("编辑地址");
+    };
+
+    // 删除地址
+    const deleSystemUrl = (id, e) => {
+        e.stopPropagation(); // 阻止冒泡，防止触发 Collapse 的展开/折叠
         const params = new FormData();
-        params.append("id", id)
+        params.append("id", id);
         deleteSystemUrl(params).then(res => {
             if (res.code === 0) {
                 findAllSystemUrl().then(data => {
                     if (data.code === 0) {
-                        setUrlDataList(data.data)
+                        setUrlDataList(data.data);
                     }
-                })
-                message.info("删除成功")
+                });
+                message.success("删除成功");
             }
-        })
-    }
-    const columns = [
-        {
-            title: '系统',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: '地址',
-            dataIndex: 'systemUrl',
-            key: 'systemUrl',
-        },
-        {
-            title: '浏览器端地址',
-            dataIndex: 'webUrl',
-            key: 'webUrl',
-            render: (text, record) => (
-                <Space size="small">
-                    <span>{text ? text : "无"}</span>
-                </Space>
-            ),
-        },
-        {
-            title: '操作',
-            key: 'action',
-            render: (text, record) => (
-                <Fragment>
-                    <Space size="middle">
-                        <span className="systemurl-edit" onClick={() => editSystemUrl(record.id)}>编辑</span>
-                        <span className="systemurl-dete" onClick={() => deleSystemUrl(record.id)}>删除</span>
-                    </Space>
-                    {/* <Space size="small">
-                        
-                    </Space> */}
-                </Fragment>
+        });
+    };
 
-            ),
-        }
-    ];
+    // 添加地址
+    const addUrl = (system, e) => {
+        if (e) e.stopPropagation();
+        setModalTitle(`添加${system}地址`);
+        setUrlAddvisible(true);
+        setActionType("add");
+        setSelectedSystem(system);
+    };
 
+    // 初始加载数据
     useEffect(() => {
         findAllSystemUrl().then(res => {
-            setUrlDataList(res.data)
-        })
-        return;
-    }, [])
+            setUrlDataList(res.data);
+        });
+    }, []);
 
-    const addUrl = () => {
-        setModalTitle("添加地址")
-        setUrlAddvisible(true)
-        setActionType("add")
-    }
-    return (<Provider {...store}>
-        <Fragment>
-            {/* <Row >
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}> */}
-                    <div className="url-data">
-                        <Breadcumb
-                            firstText="地址"
-                        >
-                            <div>
-                                <Button type="primary" onClick={() => addUrl()}>
-                                    添加地址
-                                </Button>
-                            </div>
-                        </Breadcumb>
-                        <Table columns={columns} dataSource={urlDataList} scroll={{x: "100%"}} />
-                    </div>
-                {/* </Col>
-            </Row> */}
-            <UrlAddData
-                urlAddvisible={urlAddvisible}
-                setUrlAddvisible={setUrlAddvisible}
-                modalTitle={modalTitle}
-                actionType={actionType}
-                setUrlDataList={setUrlDataList}
-                urlId={urlId}
-            />
-        </Fragment>
-    </Provider>
+    return (
+        <Provider {...store}>
+            <Fragment>
+                <div className="url-data">
+                    <Breadcumb firstText="服务集成" />
 
+                    <Collapse
+                        expandIconPosition="right"
+                        className="url-collapse"
+                        defaultActiveKey={[]}
+                    >
+                        {systemList.map(system => {
+                            const systemData = getSystemData(system.name);
 
-    )
-}
+                            return (
+                                <Panel
+                                    key={system.name}
+                                    header={
+                                        <div className="panel-header">
+                                            <span className="panel-title">
+                                                <LinkOutlined className="link-icon" /> {system.name}
+                                            </span>
+                                            <span className="panel-desc">{system.description}</span>
+                                        </div>
+                                    }
+                                >
+                                    {!systemData ? (
+                                        <div className="empty-content">
+                                            <Button
+                                                type="primary"
+                                                icon={<PlusOutlined />}
+                                                onClick={(e) => addUrl(system.name, e)}
+                                            >
+                                                添加{system.name}服务
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <div className="panel-content">
+                                            <div className="url-item">
+                                                <div className="url-label">系统地址:</div>
+                                                <div className="url-value">{systemData.systemUrl}</div>
+                                            </div>
+                                            {systemData.webUrl && (
+                                                <div className="url-item">
+                                                    <div className="url-label">浏览器端地址:</div>
+                                                    <div className="url-value">{systemData.webUrl}</div>
+                                                </div>
+                                            )}
+                                            <div className="action-buttons">
+                                                <Space>
+                                                    <Button
+                                                        type="primary"
+                                                        size="small"
+                                                        icon={<EditOutlined />}
+                                                        onClick={(e) => editSystemUrl(systemData.id, system.name, e)}
+                                                    >
+                                                        编辑
+                                                    </Button>
+                                                    <Button
+                                                        danger
+                                                        size="small"
+                                                        icon={<DeleteOutlined />}
+                                                        onClick={(e) => deleSystemUrl(systemData.id, e)}
+                                                    >
+                                                        删除
+                                                    </Button>
+                                                </Space>
+                                            </div>
+                                        </div>
+                                    )}
+                                </Panel>
+                            );
+                        })}
+                    </Collapse>
+                </div>
+
+                <UrlAddData
+                    urlAddvisible={urlAddvisible}
+                    setUrlAddvisible={setUrlAddvisible}
+                    modalTitle={modalTitle}
+                    actionType={actionType}
+                    setUrlDataList={setUrlDataList}
+                    urlId={urlId}
+                    selectedSystem={selectedSystem}
+                />
+            </Fragment>
+        </Provider>
+    );
+};
 
 export default observer(UrlData);

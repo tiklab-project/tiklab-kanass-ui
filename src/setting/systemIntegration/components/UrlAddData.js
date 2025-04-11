@@ -1,14 +1,7 @@
-/*
- * @Descripttion:  sward, testHubo 地址添加弹窗
- * @version: 1.0.0
- * @Author: 袁婕轩
- * @Date: 2021-10-13 16:54:17
- * @LastEditors: 袁婕轩
- * @LastEditTime: 2024-12-27 16:29:07
- */
-import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Form, Input, Radio, Select } from 'antd';
+import React, { Fragment, useEffect } from "react";
+import { Modal, Form, Input } from 'antd';
 import { observer, inject } from "mobx-react";
+
 const layout = {
     labelCol: {
         span: 6,
@@ -20,63 +13,78 @@ const layout = {
 
 const UrlAddData = (props) => {
     const [form] = Form.useForm();
-    const { urlAddvisible, setUrlAddvisible, urlDataStore, modalTitle, setUrlDataList, actionType, urlId } = props;
-    const { createSystemUrl, findAllSystemUrl, findSystemUrl, updateSystemUrl } = urlDataStore;
+    const {
+        urlAddvisible,
+        setUrlAddvisible,
+        urlDataStore,
+        modalTitle,
+        setUrlDataList,
+        actionType,
+        urlId,
+        selectedSystem
+    } = props;
 
+    const {
+        createSystemUrl,
+        findAllSystemUrl,
+        findSystemUrl,
+        updateSystemUrl
+    } = urlDataStore;
+
+    // 编辑模式下获取数据
     useEffect(() => {
-        if (actionType === "edit") {
+        if (actionType === "edit" && urlId) {
             const params = new FormData();
             params.append("id", urlId);
             findSystemUrl(params).then(res => {
                 if (res.code === 0) {
                     const data = res.data;
                     form.setFieldsValue({
-                        name: data.name,
                         systemUrl: data.systemUrl,
-                        webUrl: data.webUrl
-                    })
+                        webUrl: data.webUrl || ""
+                    });
                 }
-            })
+            });
+        } else if (actionType === "add" && selectedSystem) {
+            form.setFieldsValue({
+                name: selectedSystem
+            });
         }
-        return;
-    }, [urlId, actionType])
+    }, [urlId, actionType, form, findSystemUrl, selectedSystem]);
 
     const onFinish = () => {
         form.validateFields().then((values) => {
+            // 确保表单中包含系统名称
+            if (!values.name && selectedSystem) {
+                values.name = selectedSystem;
+            }
+
             if (actionType === "add") {
                 createSystemUrl(values).then(res => {
                     if (res.code === 0) {
-                        findAllSystemUrl().then(data => {
-                            if (data.code === 0) {
-                                setUrlDataList(data.data)
-                                form.resetFields()
-                            }
-                        })
+                        refreshDataAndCleanup();
                     }
-                })
-
-            }
-            if (actionType === "edit") {
+                });
+            } else if (actionType === "edit") {
                 values.id = urlId;
                 updateSystemUrl(values).then(res => {
                     if (res.code === 0) {
-                        findAllSystemUrl().then(data => {
-                            if (data.code === 0) {
-                                setUrlDataList(data.data)
-                                form.resetFields()
-                            }
-                        })
+                        refreshDataAndCleanup();
                     }
-                })
-
+                });
             }
-            setUrlAddvisible(false);
-        })
-
+        });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+    // 刷新数据并清理表单
+    const refreshDataAndCleanup = () => {
+        findAllSystemUrl().then(data => {
+            if (data.code === 0) {
+                setUrlDataList(data.data);
+                form.resetFields();
+                setUrlAddvisible(false);
+            }
+        });
     };
 
     const onCancel = () => {
@@ -85,67 +93,63 @@ const UrlAddData = (props) => {
     };
 
     return (
-        <>
-            <Fragment>
-                <Modal
-                    title={modalTitle}
-                    visible={urlAddvisible}
-                    onCancel={onCancel}
-                    onOk={onFinish}
-                    closable={false}
+        <Fragment>
+            <Modal
+                title={modalTitle}
+                visible={urlAddvisible}
+                onCancel={onCancel}
+                onOk={onFinish}
+                closable={false}
+                destroyOnClose
+            >
+                <Form
+                    {...layout}
+                    name="urlForm"
+                    form={form}
+                    preserve={false}
+                    initialValues={{
+                        name: selectedSystem || ""
+                    }}
                 >
-                    <Form
-                        {...layout}
-                        name="basic"
-                        form={form}
-                        onFinishFailed={onFinishFailed}
+                    <Form.Item
+                        name="name"
+                        hidden
                     >
+                        <Input />
+                    </Form.Item>
 
-                        {/* <Form.Item
-                            label={"系统名称"}
-                            name="name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请输入系统名称',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> */}
-                        <Form.Item
-                            label={"系统地址"}
-                            name="systemUrl"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请输入系统地址',
-                                },
-                                {
-                                    pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),
-                                    message: '请输入正确网址'
-                                }
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={"浏览器端地址"}
-                            name="webUrl"
-                            rules={[
-                                {
-                                    pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),
-                                    message: '请输入正确网址'
-                                }
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Form>
-                </Modal>
-            </Fragment>
+                    <Form.Item
+                        label="系统地址"
+                        name="systemUrl"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入系统地址',
+                            },
+                            {
+                                pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),
+                                message: '请输入正确网址'
+                            }
+                        ]}
+                    >
+                        <Input placeholder="以http://或https://开头" />
+                    </Form.Item>
 
-        </>
+                    <Form.Item
+                        label="浏览器端地址"
+                        name="webUrl"
+                        rules={[
+                            {
+                                pattern: new RegExp(/^(https:\/\/|http:\/\/)/, "g"),
+                                message: '请输入正确网址'
+                            }
+                        ]}
+                    >
+                        <Input placeholder="以http://或https://开头（可选）" />
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </Fragment>
     );
 };
 

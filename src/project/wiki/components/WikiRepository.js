@@ -17,6 +17,7 @@ import WikiRepositoryStore from "../store/WikiRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import {SettingOutlined} from "@ant-design/icons";
 
 const WikiRepository = (props) => {
     const store = {
@@ -158,8 +159,14 @@ const WikiRepository = (props) => {
                     <div className="wiki-repository-list">
                         <div style={{marginBottom:"24px"}}>
                             <Breadcumb firstText="文档">
-                                <Button onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
-                                        type="primary">知识库</Button>
+                                <span
+                                    className="link-text"
+                                    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
+                                    style={{cursor: 'pointer'}}
+                                >
+                                    <SettingOutlined style={{marginRight: '5px'}}/>
+                                    关联知识库
+                                </span>
                             </Breadcumb>
                         </div>
 

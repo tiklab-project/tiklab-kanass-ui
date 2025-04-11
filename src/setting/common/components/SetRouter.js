@@ -150,7 +150,7 @@ const setDevRouter= [
                 purviewCode: "SysJira"
             },
             {
-                title: '地址配置',
+                title: '服务集成',
                 id: '/setting/urlData',
                 code: "urlData",
                 purviewCode: "SysUrlData"

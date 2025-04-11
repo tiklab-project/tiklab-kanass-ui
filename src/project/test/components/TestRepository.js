@@ -17,6 +17,7 @@ import TestRepositoryStore from "../store/TestRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import {SettingOutlined} from "@ant-design/icons";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
@@ -173,13 +174,16 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
                         <div style={{marginBottom: "24px"}}>
                             <Breadcumb firstText="测试">
-                                <Button
+                                <span
+                                    className="link-text"
                                     onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
-                                    type="primary"
+                                    style={{cursor: 'pointer'}}
                                 >
-                                    用例库
-                                </Button>
+                                    <SettingOutlined style={{marginRight: '5px'}}/>
+                                    关联用例库
+                                </span>
                             </Breadcumb>
+
                         </div>
 
                         {

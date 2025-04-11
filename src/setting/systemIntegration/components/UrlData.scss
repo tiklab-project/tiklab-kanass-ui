@@ -1,11 +1,86 @@
 .url-data {
-    padding: var(--tiklab-padding);
+    padding: 20px;
+    background-color: #fff;
+
+    .url-collapse {
+        margin-top: 20px;
+
+        .panel-header {
+            display: flex;
+            flex-direction: column;
+
+            .panel-title {
+                font-size: 16px;
+                font-weight: 500;
+
+                .link-icon {
+                    color: #1890ff;
+                    margin-right: 8px;
+                }
+            }
+
+            .panel-desc {
+                font-size: 12px;
+                color: rgba(0, 0, 0, 0.45);
+                margin-top: 4px;
+                margin-left: 24px;
+            }
+        }
+
+        .panel-content {
+            padding: 8px 24px;
+
+            .url-item {
+                display: flex;
+                margin-bottom: 12px;
+
+                .url-label {
+                    width: 120px;
+                    font-weight: 500;
+                    color: rgba(0, 0, 0, 0.65);
+                }
+
+                .url-value {
+                    color: rgba(0, 0, 0, 0.85);
+                    word-break: break-all;
+                }
+            }
+
+            .action-buttons {
+                margin-top: 16px;
+                padding-top: 16px;
+                border-top: 1px dashed #e8e8e8;
+            }
+        }
+
+        .empty-content {
+            padding: 24px;
+            text-align: center;
+        }
+    }
+
+    // 修改 Ant Design Collapse 组件的样式
+    .ant-collapse {
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+
+        .ant-collapse-item {
+            border-bottom: 1px solid #d9d9d9;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .ant-collapse-header {
+                align-items: flex-start !important;
+                padding: 16px 24px !important;
+
+                .ant-collapse-arrow{
+                    top: 20px;
+                }
+            }
+        }
+    }
+
 }
-.systemurl-edit {
-    color: var(--tiklab-blue);
-    cursor: pointer;
-}
-.systemurl-dete {
-    color: var(--tiklab-blue);
-    cursor: pointer;
-}
+

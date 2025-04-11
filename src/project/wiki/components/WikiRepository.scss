@@ -53,4 +53,15 @@
     .ant-alert-info {
         margin: 10px 0;
     }
+
+
+    .link-text {
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #40a9ff;
+        }
+    }
 }

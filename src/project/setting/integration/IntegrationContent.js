@@ -30,13 +30,13 @@ const IntegrationContent = (props) => {
                                     type="primary"
                                     onClick={() => setWikiAddvisible(true)}
                                 >
-                                    添加知识库
+                                    关联知识库
                                 </Button>
                                 :<Button
                                     type="primary"
                                     onClick={() => setTestAddvisible(true)}
                                 >
-                                    添加用例库
+                                    关联用例库
                                 </Button>
                         }
                     </Breadcumb>
@@ -47,7 +47,7 @@ const IntegrationContent = (props) => {
                         onChange={setActiveKey}
                     >
                         <TabPane
-                            tab="Sward"
+                            tab="sward"
                             key="sward"
                         >
                             <BindSward
@@ -59,7 +59,7 @@ const IntegrationContent = (props) => {
 
                         </TabPane>
                         <TabPane
-                            tab="TestHubo"
+                            tab="testhubo"
                             key="testhubo"
                         >
                             <BindTestHubo
