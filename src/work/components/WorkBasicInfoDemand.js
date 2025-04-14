@@ -807,13 +807,13 @@ const WorkBasicInfo = (props) => {
                                         className="work-select"
                                         key="selectStage"
                                         bordered={fieldName === "stage" ? true : false}
-                                        suffixIcon={fieldName === "stage" || hoverFieldName == "stage" ? <CaretDownOutlined /> : false}
+                                        suffixIcon={fieldName === "stage" || hoverFieldName === "stage" ? <CaretDownOutlined /> : false}
                                         onFocus={() => changeStyle("stage", "stage")}
                                         onBlur={() => setFieldName("")}
                                         onMouseEnter={() => onMouseEnter("stage")}
                                         onMouseLeave={() => setHoverFieldName("")}
                                         getPopupContainer={() => formRef.current}
-                                        disabled={() => isPermissionField("stage")}
+                                        disabled={isPermissionField("stage")}
                                     >
                                         {
                                             stageList && stageList.map((item) => {

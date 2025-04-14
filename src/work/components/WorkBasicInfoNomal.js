@@ -779,7 +779,7 @@ const WorkBasicInfo = (props) => {
                                         onMouseEnter={() => onMouseEnter("stage")}
                                         onMouseLeave={() => setHoverFieldName("")}
                                         getPopupContainer={() => formRef.current}
-                                        disabled={() => isPermissionField("stage")}
+                                        disabled={isPermissionField("stage")}
                                     >
                                         {
                                             stageList && stageList.map((item) => {

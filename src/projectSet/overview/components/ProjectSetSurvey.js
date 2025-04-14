@@ -43,7 +43,7 @@ const ProjectSetSurvey = props => {
                         endTime: projectSetResponse.data.endTime,
                         master: projectSetResponse.data.master,
                         projectSetLimits: projectSetResponse.data.projectSetLimits,
-                        creatTime: projectSetResponse.data.creatTime.substring(0, 10)
+                        creatTime: projectSetResponse?.data?.creatTime === null ? "--" : projectSetResponse?.data?.creatTime.substring(0, 10)
                     };
                     localStorage.setItem("projectSet", JSON.stringify(projectSetData));
                     setProjectSet(projectSetData);
