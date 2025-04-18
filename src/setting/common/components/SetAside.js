@@ -40,6 +40,8 @@ const SetAside = (props) => {
                 setLicenceVisible(true);
             }else if (versionInfo.expired === true && id === "/setting/ipRoster"){
                 setSecurityVisible(true);
+            }else if(id === "/openapi/doc"){
+                window.open( `/#${id}`, '_blank');
             }else{
                 props.history.push(id)
                 setSelectKey(id)

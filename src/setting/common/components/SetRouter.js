@@ -156,7 +156,7 @@ const setDevRouter= [
             },
             {
                 title: 'openApi',
-                id: 'openApi',
+                id: '/openapi/doc',
 
             }
         ]
