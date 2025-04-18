@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:06:27
  */
 import React, { Fragment, useEffect } from "react";
-import { Spin, Table, Space,Tooltip, Select, Empty } from 'antd';
+import { Spin, Table, Space,Tooltip, Select, Empty, Progress } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { getUser } from 'tiklab-core-ui';
@@ -176,6 +176,7 @@ const ProjectList = (props) => {
             dataIndex: "projectName",
             key: "projectName",
             align: "left",
+            width: "30%",
             render: (text, record) =>
                 <div className="project-name" onClick={() => goProdetail(record)} >
                     <div className="project-icon">
@@ -187,7 +188,14 @@ const ProjectList = (props) => {
                     </div>
                     <div>
                         <div className="project-key">{record.projectKey}</div>
-                        <div className="project-text">{text}</div>
+                        {
+                            text.length > 10 ?
+                                <Tooltip title={text}>
+                                    <div className="project-text">{text.substring(0, 10) + "..."}</div>
+                                </Tooltip>
+                                :<div className="project-text">{text}</div>
+                        }
+                        {/*<div className="project-text">{text}</div>*/}
                     </div>
 
                 </div>
@@ -199,8 +207,18 @@ const ProjectList = (props) => {
             align: "left",
             render: (text, record) =>
                 <div className="project-name">
-                    <div >{text}</div>
+                    <div >{text.substring(0,2)}</div>
                 </div>
+        },
+        {
+            title: "项目状态",
+            dataIndex: "projectState",
+            key: "projectState",
+            align: "left",
+            width: "10%",
+            render: (text, record) => (
+                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+            )
         },
         {
             title: "负责人",
@@ -228,13 +246,23 @@ const ProjectList = (props) => {
             )
         },
         {
-            title: "项目状态",
-            dataIndex: "projectState",
-            key: "projectState",
+            title: "项目进度",
+            dataIndex: "percent",
+            key: "percent",
             align: "left",
             width: "10%",
             render: (text, record) => (
-                <div className="project-status">{status[text]}</div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Progress
+                        type="circle"
+                        width={20}
+                        percent={text}
+                        strokeColor="#1890ff"  // 固定颜色
+                        strokeWidth={12}       // 加粗线条
+                        format={() => null}    // 隐藏圆圈内的百分比文字
+                    />
+                    <span style={{ marginLeft: 8, minWidth: 30 }}>{text}%</span>
+                </div>
             )
         },
         {

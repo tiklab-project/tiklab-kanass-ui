@@ -23,12 +23,14 @@ import WorkDeleteSelectModal from "../../../work/components/WorkDeleteSelectModa
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import {Select} from "antd";
+import {CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
 
 const StageLinemap = (props) => {
     // 获取当前年月日
     const { workStore, data, archiveView, setGraph, graph, updateStage, setShowStageAddModal,
         setParentId, setAddChild, setIsModalVisible, setShowStageEditModal, setStageId,
-        setDeleteSelectModal, deleteStageList, deleteWork, stageStore, changePage } = props;
+        setDeleteSelectModal, deleteStageList, deleteWork, stageStore, changePage, findStageListTreePage } = props;
     const { totalPage, currentPage, total } = stageStore;
     const { createRecent, setWorkId, setWorkIndex, haveChildren, stageList } = workStore;
 
@@ -468,7 +470,16 @@ const StageLinemap = (props) => {
         setShowStageEditModal(true)
     }
 
+    const handleChange = (id, value) => {
+        const params = {
+            id: id,
+            status: value
+        }
+        updateStage(params).then(res => {
+            findStageListTreePage({projectId: projectId});
+        })
 
+    }
 
 
 
@@ -511,7 +522,39 @@ const StageLinemap = (props) => {
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
                                     <span className={`work-status ${setStatuStyle(item.status)}`}>
-                                        {status[item.status]}
+                                        <Select
+                                            className={`stage-state-select`}
+                                            defaultValue={"--"}
+                                            dropdownMatchSelectWidth={false}
+                                            value={status[item.status]}
+                                            bordered={false}
+                                            showArrow={false}
+                                            optionLabelProp="label"
+                                            onChange={(value) => handleChange(item.id, value)}
+                                        >
+                                                {
+                                                    item.status === "0" ?
+                                                        <Select.Option value="1">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                            开始计划
+                                                        </Select.Option>
+                                                        : item.status === "1" ?
+                                                            <Select.Option value="2">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <CloseCircleOutlined />
+                                                                </span>
+                                                                发布计划
+                                                            </Select.Option> :
+                                                            <Select.Option value="1">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                                开始计划
+                                                            </Select.Option>
+                                                }
+                                            </Select>
                                     </span>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
@@ -673,10 +716,10 @@ const StageLinemap = (props) => {
                 name = "work-status-todo";
                 break;
             case "1":
-                name = "work-status-done";
+                name = "work-status-process";
                 break;
             default:
-                name = "work-status-process";
+                name = "work-status-done";
                 break;
         }
         return name;

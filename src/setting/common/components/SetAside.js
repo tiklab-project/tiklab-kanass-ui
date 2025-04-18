@@ -14,6 +14,9 @@ import { PrivilegeButton } from "tiklab-privilege-ui";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
 import Logo from "../../../home/common/components/Logo"
 import { observer } from 'mobx-react';
+import {getVersionInfo} from "tiklab-core-ui";
+import {LicenceEnhance} from "tiklab-licence-ui";
+import {SecurityEnhance} from "tiklab-security-ui";
 const SetAside = (props) => {
     const { setSelectKey, selectKey,  setExpandedTree, expandedTree } = SettingHomeStore;
     // 无子级菜单处理
@@ -22,15 +25,25 @@ const SetAside = (props) => {
    
     const [router, setRouterMenu] = useState(setDevRouter);
     const authType = JSON.parse(localStorage.getItem("authConfig"))?.authType;
+    const versionInfo = getVersionInfo();
+    const [licenceVisible, setLicenceVisible ] = useState(false);
+    const [securityVisible, setSecurityVisible ] = useState(false);
     // const env = localStorage.getItem("authType").authType;
     const select = (data) => {
         const id = data.id;
+
         if (data.islink && !authType) {
             const authUrl = JSON.parse(localStorage.getItem("authConfig")).authServiceUrl + "#" + data.id;
             window.open(authUrl, '_blank');
         } else {
-            props.history.push(id)
-            setSelectKey(id)
+            if (versionInfo.expired === true && id === "/setting/logo"){
+                setLicenceVisible(true);
+            }else if (versionInfo.expired === true && id === "/setting/ipRoster"){
+                setSecurityVisible(true);
+            }else{
+                props.history.push(id)
+                setSelectKey(id)
+            }
         }
     }
 
@@ -164,6 +177,24 @@ const SetAside = (props) => {
                 </ul>
             </div>
 
+            <LicenceEnhance
+                visible={licenceVisible}
+                setVisible={setLicenceVisible}
+                bgroup="kanass"
+                list={[
+                    {id: 'logo', title: '自定义logo', icon: 'customLogo'}
+                ]}
+            />
+
+
+            <SecurityEnhance
+                visible={securityVisible}
+                setVisible={setSecurityVisible}
+                bgroup="kanass"
+                list={[
+                    {id: 'ipRoster', title: 'IP黑白名单', icon: 'ipRoster'}
+                ]}
+            />
         </Fragment>
     )
 }

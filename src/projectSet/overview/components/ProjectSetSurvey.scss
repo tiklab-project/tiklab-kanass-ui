@@ -18,7 +18,7 @@
         font-weight: var(--tiklab-font-weight-bold);
         // height: 30px;
         // line-height: 30px;
-        margin-bottom: 10px;
+        //margin-bottom: 10px;
     }
 
     .projectSet-survey-top {
@@ -30,7 +30,7 @@
         .survey-top-left {
             flex: 1;
             border-radius: 4px;
-            height: 220px;
+            height: 270px;
             padding: var(--tiklab-padding);
             background-color: var(--tiklab-gray-600);
             width: calc(50% - 10px);
@@ -39,7 +39,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding-bottom: 20px;
+                padding-bottom: 10px;
                 column-gap: 10px;
                 .projectSet-icon {
                     width: 32px;
@@ -69,10 +69,16 @@
             }
 
             .projectSet-info-content {
+                display: flex;
                 flex: 1;
+                align-items: center;
             }
 
-            .projectSet-infobottom {
+            .projectSet-info-content-item{
+                margin-left: 15px;
+            }
+
+            .projectSet-info-bottom {
                 display: flex;
                 flex-wrap: wrap;
             }
@@ -87,6 +93,10 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                .svg-icon {
+                    margin-top: 10px;
+                    margin-right: 5px;
+                }
                 .projectSet-info-title {
                     width: 100px;
                     color: #999;
@@ -94,8 +104,51 @@
                 }
                 .projectSet-info-result {
                     white-space: nowrap;
+
+                    .projectSet-status-select {
+                        .ant-select-selector {
+                            padding-top: 3px;
+                            padding-left: 0;
+                        }
+                        &-todo{
+                            color: var(--tiklab-black);
+                        }
+                        &-process{
+                            color: var(--tiklab-blue);
+                        }
+                        &-done{
+                            color: var(--tiklab-gray-500);
+                        }
+                    }
                 }
             }
+
+            .projectSet-info-item-progress {
+                display: inline-flex;
+                align-items: center;
+                height: 40px;
+                font-size: 13px;
+                width: 200px;
+                min-width: 50%;
+                vertical-align: middle;
+
+                .projectSet-info-item-progress-title {
+                    flex-shrink: 0;
+                    width: 100px;
+                    color: #999;
+                }
+
+                .projectSet-info-item-progress-result {
+                    flex: 1;
+                    min-width: 0;
+                    width: 150px;
+
+                    .ant-progress {
+                        width: 100%;
+                    }
+                }
+            }
+
         }
 
         .projectSet-process-project {
@@ -104,7 +157,7 @@
             margin-left: 20px;
             padding: var(--tiklab-padding);
             background-color: var(--tiklab-gray-600);
-            height: 220px;
+            height: 270px;
             width: calc(50% - 10px);
 
             &-list {

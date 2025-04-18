@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import "../components/sprintSurvey.scss";
-import { Row, Col, Progress, Empty, Tooltip } from 'antd';
+import {Row, Col, Progress, Empty, Tooltip, Select} from 'antd';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
@@ -20,9 +20,10 @@ import SprintEndState from "./SprintEndState";
 import SprintStartState from "./SprintStartState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import {ClockCircleOutlined, CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
 const SprintSurvey = (props) => {
     const { findSprint, findSprintBurnDowmChartPage, findLogPageByTime, 
-        logList,findtodopage,  findWorkItemNumByQuickSearch } = SprintSurveyStore;
+        logList,findtodopage,  findWorkItemNumByQuickSearch, updateSprint } = SprintSurveyStore;
 
     const sprintId = props.match.params.sprint;
     const projectId = props.match.params.id;
@@ -177,6 +178,20 @@ const SprintSurvey = (props) => {
         setEndStateVisable(true)
     }
 
+    const handleChange = (value) => {
+        const param = {
+            id: sprintId,
+            sprintState: {
+                id: value
+            }
+        }
+        updateSprint(param).then(res => {
+            findSprint({ sprintId: sprintId }).then(res => {
+                setSprintInfo(res.data)
+            })
+        })
+    }
+
     return (
         <Row className="sprint-survey-row">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -188,9 +203,6 @@ const SprintSurvey = (props) => {
                                     <ColorIcon name={sprintInfo?.sprintName} className="icon-24" color={sprintInfo?.color} />
                                     {sprintInfo && sprintInfo.sprintName}
                                 </div>
-                                {
-                                    stateButton(sprintInfo?.sprintState.id)
-                                }
                             </div>
 
                             <div className="sprint-container">
@@ -246,7 +258,41 @@ const SprintSurvey = (props) => {
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{sprintInfo?.sprintState.name}</div>
+                                        <div className="item-top">
+                                            <Select
+                                                className={`sprint-state-select sprint-state-select${sprintInfo?.sprintState?.id === "000000" ? "-todo" : sprintInfo?.sprintState?.id === "111111" ? "-process" : "-done"}`}
+                                                defaultValue={"--"}
+                                                dropdownMatchSelectWidth={false}
+                                                value={sprintInfo?.sprintState?.name}
+                                                bordered={false}
+                                                showArrow={false}
+                                                // disabled={project?.projectState === "3" ? true : false}
+                                                onChange={handleChange}
+                                            >
+                                                {
+                                                    sprintInfo?.sprintState?.id === "000000" ?
+                                                        <Select.Option value="111111">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                            开始迭代
+                                                        </Select.Option>
+                                                        : sprintInfo?.sprintState?.id === "111111" ?
+                                                            <Select.Option value="222222">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <CloseCircleOutlined />
+                                                                </span>
+                                                                结束迭代
+                                                            </Select.Option> :
+                                                            <Select.Option value="111111">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                                开始迭代
+                                                            </Select.Option>
+                                                }
+                                            </Select>
+                                        </div>
                                         <div className="item-bottom">迭代状态</div>
                                     </div>
                                 </div>
@@ -278,6 +324,22 @@ const SprintSurvey = (props) => {
                                     <div className="item-content">
                                         <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
                                         <div className="item-bottom">迭代进度</div>
+                                    </div>
+                                </div>
+                                <div className="sprint-item">
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{sprintInfo?.estimateTime}  小时</div>
+                                            <div className="item-bottom">迭代预计工时</div>
+                                        </div>
+                                    </div>
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{sprintInfo?.surplusTime}  小时</div>
+                                            <div className="item-bottom">迭代剩余工时</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

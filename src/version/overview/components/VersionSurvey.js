@@ -20,9 +20,10 @@ import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import VersionStartState from "./VersionStartState";
 import VersionEndState from "./VersionEndState";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
+import {ClockCircleOutlined, CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
 const VersionSurvey = (props) => {
     const { findVersion, FindVersionBurnDowmChartPage,
-        findtodopage, findWorkItemNumByQuickSearch, getUseList, logList, findLogPageByTime } = VersionSurveyStore;
+        findtodopage, findWorkItemNumByQuickSearch, getUseList, logList, findLogPageByTime, updateVersion } = VersionSurveyStore;
 
     const versionId = props.match.params.version;
     const [versionInfo, setVersionInfo] = useState();
@@ -198,6 +199,20 @@ const VersionSurvey = (props) => {
     const changeStateToEnd = () => {
         setEndStateVisable(true)
     }
+
+    const handleChange = (value) => {
+        const param = {
+            id: versionId,
+            versionState: {
+                id: value
+            }
+        }
+        updateVersion(param).then(res => {
+            findVersion({ versionId: versionId }).then(res => {
+                setVersionInfo(res.data)
+            })
+        })
+    }
     
     return (
         <Row className="version-survey-row" >
@@ -210,9 +225,9 @@ const VersionSurvey = (props) => {
                                     <ColorIcon name = {versionInfo?.name} className = "list-img" color = {versionInfo?.color}/>
                                     {versionInfo && versionInfo.name}
                                 </div>
-                                {
-                                    stateButton(versionInfo?.versionState.id)
-                                }
+                                {/*{*/}
+                                {/*    stateButton(versionInfo?.versionState.id)*/}
+                                {/*}*/}
                             </div>
                             <div className="version-container">
                                 <div className="version-item">
@@ -267,7 +282,41 @@ const VersionSurvey = (props) => {
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{versionInfo?.versionState?.name}</div>
+                                        <div className="item-top">
+                                            <Select
+                                                className={`version-state-select version-state-select${versionInfo?.versionState?.id === "000000" ? "-todo" : versionInfo?.versionState?.id === "111111" ? "-process" : "-done"}`}
+                                                defaultValue={"--"}
+                                                dropdownMatchSelectWidth={false}
+                                                value={versionInfo?.versionState?.name}
+                                                bordered={false}
+                                                showArrow={false}
+                                                // disabled={project?.projectState === "3" ? true : false}
+                                                onChange={handleChange}
+                                            >
+                                                {
+                                                    versionInfo?.versionState?.id === "000000" ?
+                                                        <Select.Option value="111111">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                            开始版本
+                                                        </Select.Option>
+                                                        : versionInfo?.versionState?.id === "111111" ?
+                                                            <Select.Option value="222222">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <CloseCircleOutlined />
+                                                                </span>
+                                                                发布版本
+                                                            </Select.Option> :
+                                                            <Select.Option value="111111">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                                开始版本
+                                                            </Select.Option>
+                                                }
+                                            </Select>
+                                        </div>
                                         <div className="item-bottom">版本状态</div>
                                     </div>
                                 </div>
@@ -298,6 +347,22 @@ const VersionSurvey = (props) => {
                                     <div className="item-content">
                                         <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
                                         <div className="item-bottom">版本进度</div>
+                                    </div>
+                                </div>
+                                <div className="version-item">
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{versionInfo?.estimateTime}  小时</div>
+                                            <div className="item-bottom">版本预计工时</div>
+                                        </div>
+                                    </div>
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{versionInfo?.surplusTime}  小时</div>
+                                            <div className="item-bottom">版本剩余工时</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -240,6 +240,15 @@
                 border-radius: 4px;
                 font-size: 12px;
                 width: fit-content;
+                &-todo {
+                    background: #e2e1e4;
+                }
+                &-process {
+                    background: #b0d5dfa1;
+                }
+                &-done {
+                    background: #dfecd5e3;
+                }
             }
             .ant-select-selector {
                 padding: 0;

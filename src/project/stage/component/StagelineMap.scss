@@ -365,6 +365,88 @@
             background: #dfecd5e3;
             color: #5e5314;
         }
+
+        .stage-state-select {
+            .ant-select-selector {
+                padding: 0;
+                font-size: 10px;
+            }
+            &-todo{
+                background: #e2e1e4;
+                color: #2b333e;
+            }
+            &-process{
+                background: #b0d5dfa1;
+                color: #132c33;
+            }
+            &-done{
+                background: #dfecd5e3;
+                color: #5e5314;
+            }
+        }
+
+        .stage-state-select-option-todo .ant-select-item-option{
+            border-radius: 4px;
+            font-size: 12px;
+            padding-left: 20px;
+            margin: 3px 10px 4px;
+            background: #e2e1e4;
+            color: #2b333e
+        }
+
+        .stage-state-select-option-process{
+            border-radius: 4px;
+            font-size: 12px;
+            padding-left: 20px;
+            margin: 3px 10px 4px;
+            background: #b0d5dfa1;
+            color: #132c33
+        }
+
+        .stage-state-select-option-done{
+            border-radius: 4px;
+            font-size: 12px;
+            padding-left: 20px;
+            margin: 3px 10px 3px;
+            background: #dfecd5e3;
+            color: #5e5314
+        }
+
+        //
+        //.select-option-status .ant-select-item {
+        //    padding: 2px 3px;
+        //    border-radius: 4px;
+        //    font-size: 10px;
+        //    width: fit-content;
+        //    &-todo{
+        //        background: #e2e1e4;
+        //        color: #2b333e;
+        //    }
+        //    &-process{
+        //        background: #b0d5dfa1;
+        //        color: #132c33;
+        //    }
+        //    &-done{
+        //        background: #dfecd5e3;
+        //        color: #5e5314;
+        //    }
+        //}
+        //.select-option-status-process{
+        //    padding: 2px 3px;
+        //    background: #e2e1e4;
+        //    border-radius: 4px;
+        //    font-size: 10px;
+        //    width: fit-content;
+        //    color: #2b333e;
+        //}
+        //.select-option-status-todo{
+        //    padding: 2px 3px;
+        //    background: #e2e1e4;
+        //    border-radius: 4px;
+        //    font-size: 10px;
+        //    width: fit-content;
+        //    color: #2b333e;
+        //}
     }
 
     .top-botton {

@@ -163,6 +163,7 @@ const Stage = (props) => {
                                 setDeleteSelectModal = {setDeleteSelectModal}
                                 deleteStageList = {deleteStageList}
                                 deleteWork = {deleteWork}
+                                findStageListTreePage = {findStageListTreePage}
                             />
                         </div>
                         <StageAddModal

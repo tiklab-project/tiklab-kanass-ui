@@ -239,7 +239,7 @@ const BasicInfo = props => {
 
                     />
 
-                    <Collapse defaultActiveKey = {"1"} expandIconPosition={"right"}>
+                    <Collapse expandIconPosition={"right"}>
                         <Panel header={projectInfoDesc()} key="1" >
                             <div className="project-set-icon">
                                 <Form.Item

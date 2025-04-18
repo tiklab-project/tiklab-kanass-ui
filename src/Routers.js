@@ -199,6 +199,8 @@ const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(() => import("./workLog/components/Log"))
 const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 
+const OpenApiDocPage = AsyncComponent(() => import('./setting/openapi/OpenApiDocPages'))
+
 const Routers = [
     {
         path: "/login",
@@ -235,11 +237,11 @@ const Routers = [
         exact: true,
         component: ProjectLogOut,
     },
-    // {
-    //     path: "/openapi/doc",
-    //     component: OpenApiDocPage,
-    //     key:'OpenApiDocPage',
-    // },
+    {
+        path: "/openapi/doc",
+        component: OpenApiDocPage,
+        key:'OpenApiDocPage',
+    },
 
 
 

@@ -243,5 +243,15 @@ export class ProjectSurveyStore {
         const data = await Service("/projectInsightReport/statisticsProjectTodoWorkByStatus", params)
         return data;
     }
+
+    @action
+    updateProjectStage = async (value) => {
+        const params = {
+            id: value.id,
+            projectState: value.projectState
+        };
+        const data = await Service("/project/updateProject", params)
+        return data;
+    }
 }
 export default new ProjectSurveyStore();

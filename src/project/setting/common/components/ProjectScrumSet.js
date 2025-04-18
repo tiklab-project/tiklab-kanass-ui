@@ -48,14 +48,6 @@ const ProjectScrumSet = (props) => {
             encoded: "Survey",
         },
         {
-            title: "事项类型",
-            icon: 'survey',
-            id: `/project/${projectId}/set/projectWorkType`,
-            encoded: "WorkType",
-            purviewCode: "ProjectWorkType",
-        },
-
-        {
             title: `${t('user')}`,
             icon: 'survey',
             id: `/project/${projectId}/set/user`,
@@ -68,6 +60,20 @@ const ProjectScrumSet = (props) => {
             id: `/project/${projectId}/set/projectDomainRole`,
             encoded: "Privilege",
             purviewCode: "ProjectPrivilege"
+        },
+        {
+            title: `消息`,
+            icon: 'survey',
+            id: `/project/${projectId}/set/messagenotice`,
+            encoded: "messagenotice",
+            purviewCode: "ProjectMessagenotice"
+        },
+        {
+            title: "事项类型",
+            icon: 'survey',
+            id: `/project/${projectId}/set/projectWorkType`,
+            encoded: "WorkType",
+            purviewCode: "ProjectWorkType",
         },
         {
             title: "流程",
@@ -96,13 +102,7 @@ const ProjectScrumSet = (props) => {
             id: `/project/${projectId}/set/integration`,
             encoded: "integration",
         },
-        {
-            title: `消息通知方案`,
-            icon: 'survey',
-            id: `/project/${projectId}/set/messagenotice`,
-            encoded: "messagenotice",
-            purviewCode: "ProjectMessagenotice"
-        },
+
     ];
     return (
         <Layout className="project-set">

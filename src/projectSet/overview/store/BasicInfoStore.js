@@ -161,6 +161,17 @@ export class BasicInfoStore {
         return data;
     }
 
+    @action
+    updateProjectSet = async(value) => {
+        const data = await Service("/projectSet/updateProjectSet", value);
+        return data;
+    }
+
+    @action
+    statisticsProjectSetWorkCount = async (params) => {
+        const data = await Service("/projectInsightReport/statisticsTodoWorkByStatus", params)
+        return data;
+    }
 }
 
 export default new BasicInfoStore();

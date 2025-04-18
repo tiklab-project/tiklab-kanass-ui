@@ -55,7 +55,7 @@
             background-color: var(--tiklab-gray-600);
             border-radius: 4px;
             flex: 1;
-            height: 510px;
+            height: 550px;
 
             .sprint-info-title {
                 display: flex;
@@ -83,6 +83,13 @@
                     margin-bottom: 10px;
                     cursor: pointer;
 
+                    .item-group {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        width: 50%;
+                    }
+
                     .item-content {
 
                         .item-top,
@@ -101,6 +108,21 @@
                             display: flex;
                             align-items: center;
                         }
+                    }
+                }
+
+                .sprint-state-select {
+                    .ant-select-selector {
+                        padding-left: 0;
+                    }
+                    &-todo{
+                        color: var(--tiklab-black);
+                    }
+                    &-process{
+                        color: var(--tiklab-blue);
+                    }
+                    &-done{
+                        color: var(--tiklab-gray-500);
                     }
                 }
 
@@ -142,7 +164,7 @@
             padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
-            height: 510px;
+            height: 550px;
             background-color: var(--tiklab-gray-600);
             .burn-down {
                 width: calc(100% - 20px);

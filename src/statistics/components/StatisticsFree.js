@@ -70,7 +70,7 @@ const StatisticsFree = (props) => {
     }
     return <Modal
         width={980}
-        height={500}
+        height={550}
         footer={null}
         visible={statisticsFreeVisable}
         className="statistics-free-modal"
@@ -79,6 +79,9 @@ const StatisticsFree = (props) => {
         <div className="statistics-free">
             <div className="statistics-free-introduce">
                 <div className="statistics-title">统计</div>
+                <div className="statistics-text">
+                    付费版本专属功能
+                </div>
                 <div className="statistics-desc">
                     更多的事项、工时统计
                 </div>
@@ -107,7 +110,7 @@ const StatisticsFree = (props) => {
                 </div>
 
                 <Button type="primary" size={"middle"} block onClick={() => goBuy()}>
-                    立即购买
+                    咨询购买
                 </Button>
             </div>
             <div className="statistics-free-image">

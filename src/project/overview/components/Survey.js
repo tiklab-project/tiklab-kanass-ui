@@ -13,7 +13,8 @@ import { getUser } from 'tiklab-core-ui';
 import moment from 'moment';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import echarts from "../../../common/echarts/echarts";
-import { Row, Col, Progress, Spin } from "antd";
+import {Row, Col, Progress, Spin, Select} from "antd";
+import {PlayCircleOutlined, CloseCircleOutlined, ClockCircleOutlined} from "@ant-design/icons"
 import ProjectSurveyStore from "../store/ProjectSurveyStore";
 import MilestoneTimeline from "../../milestone/components/MilestoneTimeline";
 import TodoStatistics from "../../../home/common/components/TodoStatistics";
@@ -23,7 +24,7 @@ import ProjectEmpty from "../../../common/component/ProjectEmpty";
 
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject, findProjectBurnDowmChartPage, 
-        findMilestoneList, findLogPageByTime, findtodopage, findRecentPage, logList } = ProjectSurveyStore;
+        findMilestoneList, findLogPageByTime, findtodopage, findRecentPage, logList, updateProjectStage } = ProjectSurveyStore;
 
     //当前用户名字
     const masterName = getUser().name;
@@ -115,7 +116,7 @@ const Survey = (props) => {
                 data = "未开始";
                 break;
             case "2":
-                data = "已启动";
+                data = "进行中";
                 break;
             case "3":
                 data = "已结束";
@@ -180,6 +181,16 @@ const Survey = (props) => {
         props.history.push(`/project/${projectId}/workitem`)
     }
 
+    const handleChange = (value) => {
+        updateProjectStage({
+            id: projectId,
+            projectState: value
+        }).then(res => {
+            findProject(projectId).then(res => {
+                setProject(res.data)
+            })
+        })
+    }
 
 
     return (
@@ -254,7 +265,43 @@ const Survey = (props) => {
                                         <use xlinkHref="#icon-status"></use>
                                     </svg>
                                     <div className="item-content">
-                                        <div className="item-top">{statusSet(project?.projectState)}</div>
+                                        <div className="item-top">
+
+                                            <Select
+                                                className={`project-state-select project-state-select${project?.projectState === "1" ? "-project-todo" : project?.projectState === "2" ? "-project-process" : "-project-done"}`}
+                                                defaultValue={"--"}
+                                                dropdownMatchSelectWidth={false}
+                                                value={statusSet(project?.projectState)}
+                                                bordered={false}
+                                                showArrow={false}
+                                                // disabled={project?.projectState === "3" ? true : false}
+                                                onChange={handleChange}
+                                            >
+                                                {
+                                                    project?.projectState === "1" ?
+                                                        <Select.Option value="2">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                            开始项目
+                                                        </Select.Option>
+                                                        : project?.projectState === "2" ?
+                                                            <Select.Option value="3">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <CloseCircleOutlined />
+                                                                </span>
+                                                                结束项目
+                                                            </Select.Option> :
+                                                            <Select.Option value="2">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                                开始项目
+                                                            </Select.Option>
+                                                }
+                                            </Select>
+
+                                        </div>
                                         <div className="item-bottom">项目状态</div>
                                     </div>
                                 </div>
@@ -276,6 +323,23 @@ const Survey = (props) => {
                                     <div className="item-content">
                                         <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
                                         <div className="item-bottom">项目进度</div>
+                                    </div>
+                                </div>
+
+                                <div className="project-item">
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{project?.estimateTime}  小时</div>
+                                            <div className="item-bottom">项目预计工时</div>
+                                        </div>
+                                    </div>
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="item-content">
+                                            <div className="item-top">{project?.surplusTime}  小时</div>
+                                            <div className="item-bottom">项目剩余工时</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:49:14
  */
 import React, { useEffect, useState } from 'react';
-import { Table, Space, Select, Row, Col } from 'antd';
+import {Table, Space, Select, Row, Col, Tooltip, Progress} from 'antd';
 import "../components/ProjectSetProjectList.scss";
 import ProjectSetRelevance from "./ProjectSetRelevance";
 import { Provider, observer } from 'mobx-react';
@@ -18,6 +18,7 @@ import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 import DeleteModal from '../../../common/deleteModal/deleteModal';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
 import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -58,6 +59,11 @@ const ProjectSetProjectList = (props) => {
 
     };
 
+    const status = {
+        1: "未开始",
+        2: "进行中",
+        3: "已结束",
+    }
     // 列数据
     const columns = [
         {
@@ -76,7 +82,14 @@ const ProjectSetProjectList = (props) => {
                 </div>
                 <div>
                     <div className="project-key">{record.projectKey}</div>
-                    <div className="project-text">{text}</div>
+                    {
+                        text.length > 10 ?
+                            <Tooltip title={text}>
+                                <div className="project-text">{text.substring(0, 10) + "..."}</div>
+                            </Tooltip>
+                            :<div className="project-text">{text}</div>
+                    }
+                    {/*<div className="project-text">{text}</div>*/}
                 </div>
 
             </div>
@@ -89,32 +102,31 @@ const ProjectSetProjectList = (props) => {
             align: "left",
             render: (text, record) =>
                 <div className="project-name">
-                    <div >{text}</div>
+                    <div >{text.substring(0,2)}</div>
                 </div>
+        },
+        {
+            title: "项目状态",
+            dataIndex: "projectState",
+            key: "projectState",
+            align: "left",
+            width: "10%",
+            render: (text, record) => (
+                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+            )
         },
         {
             title: "负责人",
             dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
-            width: "8%"
-        },
-        {
-            title: "状态",
-            dataIndex: "projectState",
-            key: "projectState",
-            align: "left",
             width: "8%",
-            render: (text) => (() => {
-                switch (text) {
-                    case "1":
-                        return <span>未开始</span>
-                    case "2":
-                        return <span>已开始</span>
-                    case "3":
-                        return <span>已结束</span>
-                }
-            })()
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={text} />
+                    {text}
+                </Space>
+            )
         },
         {
             title: "计划时间",
@@ -129,13 +141,34 @@ const ProjectSetProjectList = (props) => {
             )
         },
         {
-            title: "事项完成/总数量",
+            title: "项目进度",
             dataIndex: "workItemNumber",
             key: "workItemNumber",
             align: "left",
             render: (text, record) => (
                 <>
-                    {record.endWorkItemNumber} / {record.workItemNumber}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Progress
+                            type="circle"
+                            width={20}
+                            percent={
+                                record.workItemNumber === 0 ? 0 :
+                                    (100 * record.endWorkItemNumber / record.workItemNumber).toFixed(2)
+                            }
+                            trailColor={"#c4c4c4"}
+                            strokeColor={"#1890ff"}  // 固定颜色
+                            strokeWidth={12}       // 加粗线条
+                            format={() => null}    // 隐藏圆圈内的百分比文字
+                        />
+                        <span style={{ marginLeft: 8, minWidth: 30 }}>{
+                            record.workItemNumber === 0 ? 0 :
+                                (100 * record.endWorkItemNumber / record.workItemNumber).toFixed(2)
+                        }%</span>
+                    </div>
+                    {/*<Progress type="circle" width={50} percent={*/}
+                    {/*    record.workItemNumber === 0 ? 0 :*/}
+                    {/*    100 * (record.endWorkItemNumber/record.workItemNumber).toFixed(2)*/}
+                    {/*}></Progress>*/}
                 </>
             )
         },
