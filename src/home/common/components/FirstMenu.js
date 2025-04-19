@@ -254,7 +254,7 @@ const FirstMenu = (props) => {
             >
                 <div className="first-menu">
                     <div className="first-menu-top">
-                        <Logo theme={theme} isShowText={isShowText} />
+                        <Logo theme={theme} isShowText={isShowText} {...props} />
                         {renderRouter()}
                     </div>
 
