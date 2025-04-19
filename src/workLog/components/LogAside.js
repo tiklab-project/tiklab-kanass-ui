@@ -91,9 +91,9 @@ const SetAside = (props) => {
                     <span>{data.title}</span>
                 </span>
                 {
-                    versionInfo.expired === true && data.type === "statistics" && <svg className="img-icon" aria-hidden="true" >
-                        <use xlinkHref="#icon-member"></use>
-                    </svg>
+                    // versionInfo.expired === true && data.type === "statistics" && <svg className="img-icon" aria-hidden="true" >
+                    //     <use xlinkHref="#icon-member"></use>
+                    // </svg>
                 }
 
             </li>

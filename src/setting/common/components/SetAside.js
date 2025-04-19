@@ -184,7 +184,7 @@ const SetAside = (props) => {
                 setVisible={setLicenceVisible}
                 bgroup="kanass"
                 list={[
-                    {id: 'logo', title: '自定义logo', icon: 'customLogo'}
+                    {id: 'logo', title: '自定义logo', icon: '/images/customLogo.jpg'}
                 ]}
             />
 
@@ -194,7 +194,7 @@ const SetAside = (props) => {
                 setVisible={setSecurityVisible}
                 bgroup="kanass"
                 list={[
-                    {id: 'ipRoster', title: 'IP黑白名单', icon: 'ipRoster'}
+                    {id: 'ipRoster', title: 'IP黑白名单', icon: '/images/ipRoster.jpg'}
                 ]}
             />
         </Fragment>

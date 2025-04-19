@@ -116,9 +116,9 @@ const StatisticsAsicde = (props) => {
                                             {item.title}
                                         </span>
                                         {
-                                            versionInfo.expired === true && index > 0 && <svg className="img-icon" aria-hidden="true" >
-                                                <use xlinkHref="#icon-member"></use>
-                                            </svg>
+                                            // versionInfo.expired === true && index > 0 && <svg className="img-icon" aria-hidden="true" >
+                                            //     <use xlinkHref="#icon-member"></use>
+                                            // </svg>
                                         }
 
                                     </div>
@@ -164,9 +164,9 @@ const StatisticsAsicde = (props) => {
                                                     {item.title}
                                                 </span>
                                                 {
-                                                    versionInfo.expired === true && <svg className="img-icon" aria-hidden="true" >
-                                                        <use xlinkHref="#icon-member"></use>
-                                                    </svg>
+                                                    // versionInfo.expired === true && <svg className="img-icon" aria-hidden="true" >
+                                                    //     <use xlinkHref="#icon-member"></use>
+                                                    // </svg>
                                                 }
                                             </div>
                                         </div>

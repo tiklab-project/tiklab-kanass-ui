@@ -236,9 +236,9 @@ const WorkChangeView = (props) => {
                                     甘特图
                                 </div>
                                 {
-                                    versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-member`}></use>
-                                    </svg>
+                                    // versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
+                                    //     <use xlinkHref={`#icon-member`}></use>
+                                    // </svg>
                                 }
                             </div>
                     }
