@@ -17,8 +17,8 @@ import { observer } from 'mobx-react';
 import {getVersionInfo} from "tiklab-core-ui";
 import {LicenceEnhance} from "tiklab-licence-ui";
 import {SecurityEnhance} from "tiklab-security-ui";
-import {customLogo} from "../../../assets/images/customLogo.jpg"
-import {ipRoster} from "../../../assets/images/ipRoster.jpg"
+import customLogoImg from "../../../assets/images/customLogo.jpg"
+import ipRosterImg from "../../../assets/images/ipRoster.jpg"
 
 const SetAside = (props) => {
     const { setSelectKey, selectKey,  setExpandedTree, expandedTree } = SettingHomeStore;
@@ -187,7 +187,7 @@ const SetAside = (props) => {
                 setVisible={setLicenceVisible}
                 bgroup="kanass"
                 list={[
-                    {id: 'logo', title: '自定义logo', icon: customLogo}
+                    {id: 'logo', title: '自定义logo', icon: customLogoImg}
                 ]}
             />
 
@@ -197,7 +197,7 @@ const SetAside = (props) => {
                 setVisible={setSecurityVisible}
                 bgroup="kanass"
                 list={[
-                    {id: 'ipRoster', title: 'IP黑白名单', icon: ipRoster}
+                    {id: 'ipRoster', title: 'IP黑白名单', icon: ipRosterImg}
                 ]}
             />
         </Fragment>
