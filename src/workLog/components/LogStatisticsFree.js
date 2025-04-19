@@ -21,6 +21,9 @@ const LogStatisticsFree = (props) => {
 
     // 购买
     const goBuy = () => {
+        window.open('https://tiklab.net/contactus', '_blank');
+    }
+    const goBuyNow = () => {
         applySubscription("kanass")
     }
     const list = [
@@ -57,6 +60,9 @@ const LogStatisticsFree = (props) => {
         <div className="statistics-free">
             <div className="statistics-free-introduce">
                 <div className="statistics-title">统计</div>
+                <div className="statistics-text">
+                    付费版本专属功能
+                </div>
                 <div className="statistics-desc">
                     工时统计
                 </div>
@@ -64,7 +70,7 @@ const LogStatisticsFree = (props) => {
                 <div className="statistics-desc-box">
                     {
                         list.map(item => {
-                            return <div 
+                            return <div
                                 className={`statistics-desc-item ${item.id === activeImage ? 'statistics-desc-active-item' : ''}`}
                                 onClick={() => changeImage(item.imgUrl, item.id)}
                                 onMouseEnter={() => changeImage(item.imgUrl, item.id)}
@@ -72,13 +78,17 @@ const LogStatisticsFree = (props) => {
                             >
                                 <svg className="icon-14" aria-hidden="true">
                                     <use xlinkHref="#icon-radio"></use>
-                                </svg>{item.title}
+                                </svg>
+                                {item.title}
                             </div>
                         })
                     }
                 </div>
 
                 <Button type="primary" size={"middle"} block onClick={() => goBuy()}>
+                    咨询购买
+                </Button>
+                <Button type="default" size={"middle"} block onClick={() => goBuyNow()}>
                     立即购买
                 </Button>
             </div>

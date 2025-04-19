@@ -20,6 +20,9 @@ import {SecurityEnhance} from "tiklab-security-ui";
 import customLogoImg from "../../../assets/images/customLogo.jpg"
 import ipRosterImg from "../../../assets/images/ipRoster.jpg"
 
+import CustomLogoFree from './CustomLogoFree';
+import IPRosterFree from './IPRosterFree';
+
 const SetAside = (props) => {
     const { setSelectKey, selectKey,  setExpandedTree, expandedTree } = SettingHomeStore;
     // 无子级菜单处理
@@ -182,23 +185,15 @@ const SetAside = (props) => {
                 </ul>
             </div>
 
-            <LicenceEnhance
+            <CustomLogoFree
                 visible={licenceVisible}
                 setVisible={setLicenceVisible}
-                bgroup="kanass"
-                list={[
-                    {id: 'logo', title: '自定义logo', icon: customLogoImg}
-                ]}
             />
 
 
-            <SecurityEnhance
+            <IPRosterFree
                 visible={securityVisible}
                 setVisible={setSecurityVisible}
-                bgroup="kanass"
-                list={[
-                    {id: 'ipRoster', title: 'IP黑白名单', icon: ipRosterImg}
-                ]}
             />
         </Fragment>
     )

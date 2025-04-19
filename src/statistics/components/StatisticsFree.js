@@ -24,6 +24,9 @@ const StatisticsFree = (props) => {
     const [imgUrl, setImgUrl] = useState(bulidend);
     const [activeImage, setActiveImage] = useState("bulidend");
     const goBuy = () => {
+        window.open('https://tiklab.net/contactus', '_blank');
+    }
+    const goBuyNow = () => {
         applySubscription("kanass")
     }
     const list = [
@@ -70,7 +73,7 @@ const StatisticsFree = (props) => {
     }
     return <Modal
         width={980}
-        height={550}
+        height={600}
         footer={null}
         visible={statisticsFreeVisable}
         className="statistics-free-modal"
@@ -111,6 +114,9 @@ const StatisticsFree = (props) => {
 
                 <Button type="primary" size={"middle"} block onClick={() => goBuy()}>
                     咨询购买
+                </Button>
+                <Button type="default" size={"middle"} block onClick={() => goBuyNow()}>
+                    立即购买
                 </Button>
             </div>
             <div className="statistics-free-image">
