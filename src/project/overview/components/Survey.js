@@ -26,8 +26,6 @@ const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject, findProjectBurnDowmChartPage, 
         findMilestoneList, findLogPageByTime, findtodopage, findRecentPage, logList, updateProjectStage } = ProjectSurveyStore;
 
-    //当前用户名字
-    const masterName = getUser().name;
     // 项目id
     const projectId = props.match.params.id;
     // 事项状态列表
@@ -211,7 +209,7 @@ const Survey = (props) => {
                             </div>
                             <div className="project-container">
                                 <div className="project-item">
-                                    <UserIcon userInfo={project?.master} size={"big"} className="item-icon" name={masterName} />
+                                    <UserIcon userInfo={project?.master} size={"big"} className="item-icon" name={project?.master?.nickname} />
                                     <div className="item-content">
                                         <div className="item-top">{project?.master?.nickname}</div>
                                         <div className="item-bottom">项目负责人</div>
