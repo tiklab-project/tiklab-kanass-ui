@@ -31,6 +31,7 @@ import { updateWorkTree } from "../../project/stage/component/StageListTreeChang
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import CircleProgress from "../../common/progress/CircleProgress";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
@@ -1018,19 +1019,14 @@ const WorkBasicInfo = (props) => {
                                 hasFeedback={showValidateStatus === "percent" ? true : false}
                                 validateStatus={validateStatus}
                             >
-                                <InputNumber min={0} max={100}
-                                    key="percent"
-                                    formatter={value => `${value}%`}
-                                    parser={value => value.replace('%', '')}
-                                    bordered={fieldName === "percent" ? true : false}
-                                    suffixIcon={fieldName === "percent" || hoverFieldName == "percent" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("percent", "percent")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => onMouseEnter("percent")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    disabled={isPermissionField("percent")}
-                                />
-                                {/* % */}
+                                <div style={{ padding: "0 11px" }}>
+                                    <CircleProgress
+                                        percent={
+                                            workInfo?.estimateTime === 0 || null ? 0 : (workInfo?.estimateTime - workInfo?.surplusTime) * 100 / workInfo?.estimateTime
+                                        }
+                                        size={"mini"}
+                                    />
+                                </div>
                             </Form.Item>
                             <Form.Item name="buildTime" label="创建时间"
                                 hasFeedback={showValidateStatus === "buildTime" ? true : false}

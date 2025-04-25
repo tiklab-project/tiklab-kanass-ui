@@ -253,6 +253,13 @@
             .ant-select-selector {
                 padding: 0;
             }
+            .project-table-progress{
+                display: flex;
+                align-items: center;
+                .ant-progress-text{
+                    font-weight: bold;
+                }
+            }
         }
     }
     .project-gide {

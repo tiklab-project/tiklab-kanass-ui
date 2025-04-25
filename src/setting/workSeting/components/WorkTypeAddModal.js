@@ -8,7 +8,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Select, Upload, message, } from 'antd';
 import "./workType.scss"
-import { getUser } from 'tiklab-core-ui';
+import {getUser, getVersionInfo} from 'tiklab-core-ui';
 import Button from "../../../common/button/Button";
 import {inject, observer} from "mobx-react";
 import { withRouter } from "react-router";
@@ -26,13 +26,15 @@ const WorkTypeAddModal = (props) => {
 
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
-    const {  bottonType,addWorkTypeList, workSetingStore, grouper, formIds } = props;
+    const {  bottonType,addWorkTypeList, workSetingStore, grouper, formIds, visibleFree, setVisibleFree } = props;
     const { getFormList, getFlowList, flowList, fromList, findWorkTypeListById,
         editWorkTypeList, findIconList, creatIcon, createWorkType, } = workSetingStore;
 
     const [iconList, setIconList] = useState();
 
     const [iconUrl, setIconUrl] = useState("");
+
+    const versionInfo = getVersionInfo();
 
     useEffect(() => {
         // getAllWorkTypeList()
@@ -52,38 +54,44 @@ const WorkTypeAddModal = (props) => {
             setIconList(res.data)
         })
     }
-    const showModal = () => {
-        setVisible(true);
-        getIconList()
-        getFormList({notInIds:formIds, group: grouper}).then((res) => {
-            if (res && res.length > 0 && props.type != "edit") {
-                form.setFieldsValue({
-                    form: res[0].id
-                })
-            }
-        })
-        getFlowList().then(res => {
-            if (res && props.type != "edit") {
-                form.setFieldsValue({
-                    flow: res[0].id
-                })
-            }
-        })
 
-        if (props.type === "edit") {
-            findWorkTypeListById(props.id).then((res) => {
-                form.setFieldsValue({
-                    name: res.name,
-                    id: res.id,
-                    desc: res.desc,
-                    grouper: grouper,
-                    form: res.form.id,
-                    flow: res.flow.id
-                })
-                // setGruoper(res.grouper)
-                setIconUrl(res.iconUrl)
+    const showModal = () => {
+        if (versionInfo?.expired === true){
+            setVisibleFree(true)
+        }else {
+            setVisible(true);
+            getIconList()
+            getFormList({notInIds:formIds, group: grouper}).then((res) => {
+                if (res && res.length > 0 && props.type != "edit") {
+                    form.setFieldsValue({
+                        form: res[0].id
+                    })
+                }
             })
+            getFlowList().then(res => {
+                if (res && props.type != "edit") {
+                    form.setFieldsValue({
+                        flow: res[0].id
+                    })
+                }
+            })
+
+            if (props.type === "edit") {
+                findWorkTypeListById(props.id).then((res) => {
+                    form.setFieldsValue({
+                        name: res.name,
+                        id: res.id,
+                        desc: res.desc,
+                        grouper: grouper,
+                        form: res.form.id,
+                        flow: res.flow.id
+                    })
+                    // setGruoper(res.grouper)
+                    setIconUrl(res.iconUrl)
+                })
+            }
         }
+
     };
 
     const onFinish = () => {

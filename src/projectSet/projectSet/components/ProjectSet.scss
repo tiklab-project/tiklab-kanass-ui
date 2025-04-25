@@ -156,6 +156,24 @@
                 .projectSet-action-icon {
                     cursor: pointer;
                 }
+
+                .project-status {
+                    padding: 5px 6px;
+                    background: var(--tiklab-gray-400);
+                    border-radius: 4px;
+                    font-size: 12px;
+                    width: fit-content;
+                    &-todo {
+                        background: #e2e1e4;
+                    }
+                    &-process {
+                        background: #b0d5dfa1;
+                    }
+                    &-done {
+                        background: #dfecd5e3;
+                    }
+                }
+
             }
         
         }

@@ -28,6 +28,16 @@ const WorkTableFilter = (props) => {
         workShowType, viewType, findProjectList, getSelectUserList,
         getWorkTypeList, getWorkStatus, userList, getWorkBoardList } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
+
+    const [groupStatus, setGroupStatus] = useState({
+        todo: { statusType: 'todo', allChecked: false, partialChecked: false },
+        progress: { statusType: 'progress',allChecked: false, partialChecked: false },
+        done: { statusType: 'done',allChecked: false, partialChecked: false }
+    });
+
+    const progressRef = useRef(null);
+
+
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
@@ -78,6 +88,92 @@ const WorkTableFilter = (props) => {
         })
     }
 
+    /**
+     * 父复选框选择逻辑
+     * @param e
+     * @param groupType
+     */
+    const handleGroupCheck = (e, groupType) => {
+        e.stopPropagation();
+        const currentSelected = searchCondition?.workStatusIds || [];
+        let newSelected = [...currentSelected];
+
+        const groupItems = workStatusList.filter(item => {
+            if (groupType === "todo") return item.id === "todo";
+            if (groupType === "done") return item.id === "done";
+            return item.id !== "todo" && item.id !== "done" && item.id !== "start";
+        });
+
+        if (e.target.checked) {
+            // 添加组内所有未选中的项
+            groupItems.forEach(item => {
+                if (!newSelected.includes(item.id)) {
+                    newSelected.push(item.id);
+                }
+            });
+        } else {
+            // 移除组内所有已选中的项
+            newSelected = newSelected.filter(id =>
+                !groupItems.some(item => item.id === id)
+            );
+        }
+        stateChange("workStatusIds", newSelected);
+    };
+
+    // 判断是否所有子项都被选中
+    const isAllChecked = (groupId) => {
+        const groupItems = workStatusList.filter(item => {
+            if (groupId === "todo") return item.id === "todo";
+            if (groupId === "done") return item.id === "done";
+            return item.id !== "todo" && item.id !== "done" && item.id !== "start";
+        });
+        const currentSelected = searchCondition?.workStatusIds || [];
+        return groupItems.every(item => currentSelected.includes(item.id));
+    }
+
+    // 判断是否仅部分子项被选中
+    const isPartiallyChecked = (groupId) => {
+        const groupItems = workStatusList.filter(item => {
+            if (groupId === "todo") return item.id === "todo";
+            if (groupId === "done") return item.id === "done";
+            return item.id !== "todo" && item.id !== "done" && item.id !== "start";
+        });
+        const currentSelected = searchCondition?.workStatusIds || [];
+        const checkedCount = groupItems.filter(item => currentSelected.includes(item.id)).length;
+        return checkedCount > 0 && checkedCount < groupItems.length;
+    }
+
+    /**
+     * 子复选框选择逻辑
+     * @param e
+     * @param groupId
+     */
+    const handleChildChange = (e, groupId) => {
+        const newValue = e.target.value;
+        const isChecked = e.target.checked;
+        const newSelectData = searchCondition?.workStatusIds || [];
+        if(isChecked) {
+            if(!newSelectData.includes(newValue)) {
+                newSelectData.push(newValue);
+            }
+        } else {
+            const index = newSelectData.indexOf(newValue);
+            if(index > -1) {
+                newSelectData.splice(index, 1);
+            }
+        }
+        // searchCondition.workStatusIds = newSelectData;
+        stateChange(newSelectData);
+
+        // // 更新组的状态
+        setGroupStatus({
+            ...groupStatus,
+            [groupId]: {
+                allChecked: isAllChecked(groupId),
+                partialChecked: isPartiallyChecked(groupId)
+            }
+        });
+    }
 
     const sorter = (orderParams) => {
         searchCondition.orderParams = orderParams;
@@ -148,11 +244,24 @@ const WorkTableFilter = (props) => {
                         name="workStatus"
                         onChange={(value) => stateChange("workStatusIds", value)}
                         title={"状态"}
-                        ismult={"true"}
+                        ismult={true}
                         value={searchCondition?.workStatusIds}
                         suffixIcon = {true}
                     >
-                        <div className="select-group-title">未开始</div>
+                        <div className="select-group-title">
+                            <input type="checkbox"
+                                   className="group-checkbox"
+                                   ref={(el) => {
+                                       if (el) {
+                                           el.checked = isAllChecked("todo");
+                                           el.indeterminate = isPartiallyChecked("todo");
+                                       }
+                                   }}
+                                   onClick={(e) => {
+                                       e.stopPropagation();
+                                   }} // 添加一个处理函数来管理组选择逻辑
+                                   onChange = {(e) => handleGroupCheck(e, "todo")} // 添加一个处理函数来管理组选择逻辑
+                            />未开始</div>
                         {
                             workStatusList.map(item => {
                                 if (item.id === "todo") {
@@ -161,6 +270,8 @@ const WorkTableFilter = (props) => {
                                         label={item.name}
                                         key={item.id}
                                         imgUrl={item.iconUrl}
+                                        status={"todo"}
+                                        handleChildChange={(e) => handleChildChange(e, "todo")}
                                     />
                                 } else {
                                     return <div key={item.id}></div>
@@ -168,7 +279,22 @@ const WorkTableFilter = (props) => {
 
                             })
                         }
-                        <div className="select-group-title">进行中</div>
+
+                        <div className="select-group-title">
+                            <input type="checkbox"
+                                   className="group-checkbox"
+                                   ref={(el) => {
+                                       if (el) {
+                                           el.checked = isAllChecked("progress");
+                                           el.indeterminate = isPartiallyChecked("progress");
+                                       }
+                                   }}
+                                   onClick={(e) => {
+                                       e.stopPropagation();
+                                   }} // 添加一个处理函数来管理组选择逻辑
+                                   onChange = {(e) => handleGroupCheck(e, "progress")} // 添加一个处理函数来管理组选择逻辑
+                            />进行中
+                        </div>
                         {
                             workStatusList.map(item => {
                                 if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
@@ -177,6 +303,8 @@ const WorkTableFilter = (props) => {
                                         label={item.name}
                                         key={item.id}
                                         imgUrl={item.iconUrl}
+                                        status={"progress"}
+                                        handleChildChange={(e) => handleChildChange(e, "progress")}
                                     />
                                 } else {
                                     return <div key={item.id}></div>
@@ -186,7 +314,22 @@ const WorkTableFilter = (props) => {
                         }
 
 
-                        <div className="select-group-title">已完成</div>
+
+
+                        <div className="select-group-title">
+                            <input type="checkbox"
+                                   className="group-checkbox"
+                                   ref={(el) => {
+                                       if (el) {
+                                           el.checked = isAllChecked("done");
+                                           el.indeterminate = isPartiallyChecked("done");
+                                       }
+                                   }}
+                                   onClick={(e) => {
+                                       e.stopPropagation();
+                                   }} // 添加一个处理函数来管理组选择逻辑
+                                   onChange = {(e) => handleGroupCheck(e, "done")} // 添加一个处理函数来管理组选择逻辑
+                            />已完成</div>
                         {
                             workStatusList.map(item => {
                                 if (item.id === "done") {
@@ -195,6 +338,8 @@ const WorkTableFilter = (props) => {
                                         label={item.name}
                                         key={item.id}
                                         imgUrl={item.iconUrl}
+                                        status={"done"}
+                                        handleChildChange={(e) => handleChildChange(e, "done")}
                                     />
                                 } else {
                                     return <div key={item.id}></div>

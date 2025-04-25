@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import { Table, Space, Row, Col, DatePicker, Dropdown, Menu } from "antd";
+import {Table, Space, Row, Col, DatePicker, Dropdown, Menu, Progress} from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -20,6 +20,7 @@ import { getUser } from "tiklab-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
+import CircleProgress from "../../../common/progress/CircleProgress";
 const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
@@ -177,6 +178,21 @@ const VersionTable = (props) => {
             render: (text, record) => <div className={`version-status ${setStatuStyle(record.versionState.id)}`}>
                 {text}
             </div>
+        },
+        {
+            title: "进度",
+            dataIndex: "progress",
+            key: "progress",
+            align: "left",
+            render: (text, record) => (
+                <>
+                    <CircleProgress
+                        percent={
+                            record?.workNumber === 0 ? 0 : (record?.workDoneNumber / record?.workNumber) * 100
+                        }
+                    />
+                </>
+            )
         },
         {
             title: "操作",

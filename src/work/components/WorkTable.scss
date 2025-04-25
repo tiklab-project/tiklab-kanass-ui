@@ -135,5 +135,13 @@
             color: var(--tiklab-blue);
             text-decoration: underline;
         }
+
+        .table-progress{
+            display: flex;
+            align-items: center;
+            .ant-progress-text{
+                font-weight: bold;
+            }
+        }
     }
 }

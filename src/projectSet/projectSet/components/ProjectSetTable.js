@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 15:05:47
  */
 import React, { useEffect, useState, Fragment } from 'react';
-import { Table, Space, Row, Col, Empty, Spin } from 'antd';
+import {Table, Space, Row, Col, Empty, Spin, Progress} from 'antd';
 import "./ProjectSet.scss";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
@@ -18,6 +18,7 @@ import Button from "../../../common/button/Button";
 import ColorIcon from '../../../common/colorIcon/colorIcon';
 import ProjectEmpty from '../../../common/component/ProjectEmpty';
 import { PrivilegeButton } from 'tiklab-privilege-ui';
+import CircleProgress from "../../../common/progress/CircleProgress";
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -31,6 +32,11 @@ const ProjectSetTable = (props) => {
     const [focusProjectSetList, setFocusProjectSetList] = useState([])
     const [recentProjectSetList, setRecentProjectSetList] = useState([])
     const userId = getUser().userId;
+    const status = [
+        "未开始",
+        "进行中",
+        "已结束",
+    ]
 
     useEffect(() => {
         // findRecentProjectSetList({})
@@ -152,6 +158,29 @@ const ProjectSetTable = (props) => {
             align: "left",
             width: "15%"
 
+        },
+        {
+            title: "项目状态",
+            dataIndex: "status",
+            key: "status",
+            align: "left",
+            width: "10%",
+            render: (text, record) => (
+                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+            )
+        },
+        {
+            title: "进度",
+            dataIndex: "progress",
+            key: "progress",
+            align: "left",
+            render: (text, record) => (
+                <>
+                    <CircleProgress
+                        percent={text}
+                    />
+                </>
+            )
         },
         {
             title: "操作",

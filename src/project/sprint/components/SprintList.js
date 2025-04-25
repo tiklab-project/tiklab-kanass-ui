@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Space, Row, Col, Table} from 'antd';
+import {Space, Row, Col, Table, Progress} from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import "./sprintList.scss";
 import { getUser } from "tiklab-core-ui";
@@ -23,6 +23,7 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import CircleProgress from "../../../common/progress/CircleProgress";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -274,6 +275,21 @@ const Sprint = (props) => {
             render: (text, record) => <div className={`sprint-status ${setStatuStyle(record.sprintState.id)}`}>
                 {text}
             </div>
+        },
+        {
+            title: "进度",
+            dataIndex: "progress",
+            key: "progress",
+            align: "left",
+            render: (text, record) => (
+                <>
+                    <CircleProgress
+                        percent={
+                            record?.workNumber === 0 ? 0 : (record?.workDoneNumber / record?.workNumber) * 100
+                        }
+                    />
+                </>
+            )
         },
         {
             title: "操作",

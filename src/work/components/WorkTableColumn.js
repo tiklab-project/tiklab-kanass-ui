@@ -8,6 +8,7 @@
 import React from "react";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
+import {Progress} from "antd";
 
 const setStatuStyle = (id) => {
     let name;
@@ -63,18 +64,6 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
                 {text}
             </div>
         },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 2
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
-            </div>
-        },
 
         {
             title: '优先级',
@@ -97,6 +86,44 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
             </div>
         },
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+                {text}
+            </div>
+        },
+        {
+            title: '进度',
+            dataIndex: 'estimateTime',
+            key: 'estimateTime',
+
+            className: `${sortArray.indexOf("estimateTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            render: (text, record) =><div className={`work-info`}>
+                <div className={"table-progress"}>
+                    <Progress
+                        type="circle"
+                        width={25}
+                        percent={
+                            record?.estimateTime === 0 || null ? 0 : (record?.estimateTime - record?.surplusTime) * 100 / record?.estimateTime
+                        }
+                        strokeColor={"#1890ff"}  // 进度条颜色
+                        strokeWidth={8}          // 加粗线条
+                        trailColor={"#d5d5d5"}   // 背景颜色
+                        format={(percent) => {
+                            return Math.round(percent);  // 只保留整数部分，隐藏圆圈内的百分比符号
+                        }}
+                        status={"normal"}
+                    />
+                </div>
+            </div>
+        },
+
+        {
 
             title: '负责人',
             dataIndex: ['assigner', 'nickname'],
@@ -104,20 +131,6 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
             className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 4
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
-            </div>
-        },
-
-        {
-            title: '创建人',
-            dataIndex: ['builder', 'nickname'],
-            key: 'builderId',
-            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 5
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
@@ -134,6 +147,19 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-text work-info-master-text">{text ? text : "无"}</div>
+            </div>
+        },
+        {
+            title: '创建人',
+            dataIndex: ['builder', 'nickname'],
+            key: 'builderId',
+            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 5
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
             </div>
         },
         {
@@ -322,18 +348,7 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                 {text}
             </div>
         },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 2
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
-            </div>
-        },
+
 
         {
             title: '优先级',
@@ -356,26 +371,50 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             </div>
         },
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+                {text}
+            </div>
+        },
+        {
+            title: '进度',
+            dataIndex: 'estimateTime',
+            key: 'estimateTime',
+
+            className: `${sortArray.indexOf("estimateTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            render: (text, record) =><div className={`work-info`}>
+                <div className={"table-progress"}>
+                    <Progress
+                        type="circle"
+                        width={25}
+                        percent={
+                            record?.estimateTime === 0 || null ? 0 : (record?.estimateTime - record?.surplusTime) * 100 / record?.estimateTime
+                        }
+                        strokeColor={"#1890ff"}  // 进度条颜色
+                        strokeWidth={8}          // 加粗线条
+                        trailColor={"#d5d5d5"}   // 背景颜色
+                        format={(percent) => {
+                            return Math.round(percent);  // 只保留整数部分，隐藏圆圈内的百分比符号
+                        }}
+                        status={"normal"}
+                    />
+                </div>
+            </div>
+        },
+
+        {
             title: '负责人',
             dataIndex: ['assigner', 'nickname'],
             key: 'assignerId',
             className: `${sortArray.indexOf("assignerId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 4
-            },
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
-            </div>
-        },
-
-        {
-            title: '创建人',
-            dataIndex: ['builder', 'nickname'],
-            key: 'builderId',
-            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 5
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
@@ -392,6 +431,19 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             },
             render: (text, record) => <div className="work-info">
                 <div className="work-info-text work-info-master-text">{text ? text : "无"}</div>
+            </div>
+        },
+        {
+            title: '创建人',
+            dataIndex: ['builder', 'nickname'],
+            key: 'builderId',
+            className: `${sortArray.indexOf("builderId") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 5
+            },
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
+                <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
             </div>
         },
         {

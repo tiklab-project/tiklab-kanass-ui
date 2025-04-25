@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 import ImgComponent from "../imgComponent/ImgComponent";
 const SelectItem = (props) => {
-    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children, isRemote } = props;
+    const { value, label, key, imgUrl, onChange, selectData, ismult, setShowDropDown,option, children, isRemote, handleChildChange, status } = props;
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -19,6 +19,10 @@ const SelectItem = (props) => {
         // event.nativeEvent.stopImmediatePropagation()
         if (ismult) {
             onChange(e.target)
+            // 子复选框选择逻辑
+            if (handleChildChange){
+                handleChildChange(e, status)
+            }
             setChecked(selectData.includes(value))
         } else {
             onChange({ label: label, value: value }, option)
@@ -33,6 +37,10 @@ const SelectItem = (props) => {
 
         if (ismult) {
             onChange(selectCheck.current)
+            // 子复选框选择逻辑
+            if (handleChildChange){
+                handleChildChange(e,status)
+            }
             setChecked(selectData.includes(value))
         } else {
             onChange({ label: label, value: value }, option)

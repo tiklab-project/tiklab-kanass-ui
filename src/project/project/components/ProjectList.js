@@ -22,6 +22,7 @@ import ProjectFilterQuick from "./ProjectFilterQuick";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import { PrivilegeButton } from "tiklab-privilege-ui";
+import CircleProgress from "../../../common/progress/CircleProgress";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -252,17 +253,9 @@ const ProjectList = (props) => {
             align: "left",
             width: "10%",
             render: (text, record) => (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Progress
-                        type="circle"
-                        width={20}
-                        percent={text}
-                        strokeColor="#1890ff"  // 固定颜色
-                        strokeWidth={12}       // 加粗线条
-                        format={() => null}    // 隐藏圆圈内的百分比文字
-                    />
-                    <span style={{ marginLeft: 8, minWidth: 30 }}>{text}%</span>
-                </div>
+                <CircleProgress
+                    percent={text}
+                />
             )
         },
         {

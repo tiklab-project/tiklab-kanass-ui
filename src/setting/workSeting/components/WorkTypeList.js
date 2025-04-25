@@ -4,9 +4,10 @@ import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import WorkSetingStore from "../store/WorkSetingStore"
-import { getUser } from "tiklab-core-ui";
+import {getUser, getVersionInfo} from "tiklab-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import WorkTypeFree from "./WorkTypeFree";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -14,7 +15,8 @@ const WorkTypeList = (props) => {
     }
     const { workAllTypeList, getAllWorkTypeList, deleteWorkTypeCustomList, setWorkTypeList,
     } = WorkSetingStore;
-
+    const versionInfo = getVersionInfo();
+    const [visibleFree, setVisibleFree] = useState(false);
     const tenant = getUser().tenant;
     const [formIds, setFormIds] = useState([])
     useEffect(() => {
@@ -33,14 +35,19 @@ const WorkTypeList = (props) => {
     }, []);
 
     const deleWorkType = (id) => {
-        deleteWorkTypeCustomList(id).then(res => {
-            if (res.code === 3001) {
-                message.error(res.msg);
-            }
-            if (res.cdoe === 0) {
-                message.success(res.data);
-            }
-        })
+        if (versionInfo?.expired === true){
+            setVisibleFree(true);
+        }else {
+            deleteWorkTypeCustomList(id).then(res => {
+                if (res.code === 3001) {
+                    message.error(res.msg);
+                }
+                if (res.cdoe === 0) {
+                    message.success(res.data);
+                }
+            })
+        }
+
     }
 
     const onSearch = (value) => {
@@ -82,13 +89,22 @@ const WorkTypeList = (props) => {
     }
 
     const [loading, setLoading] = useState(false)
-    const goFlow = (id) => {
+    const goFlow = (id, grouper) => {
         // props.history.push("/setting/systemFlow")
-        props.history.push(`/setting/flowDetailDesign/${id}`)
+        if (grouper === "custom" && versionInfo?.expired === true){
+            setVisibleFree(true);
+        }else {
+            props.history.push(`/setting/flowDetailDesign/${id}`)
+        }
+
     }
 
-    const goForm = (id) => {
-        props.history.push(`/setting/FormDetail/${id}`)
+    const goForm = (id, grouper) => {
+        if (grouper === "custom" && versionInfo?.expired === true){
+            setVisibleFree(true);
+        }else {
+            props.history.push(`/setting/FormDetail/${id}`)
+        }
     }
 
     const viewPrivilege = (record) => {
@@ -119,13 +135,13 @@ const WorkTypeList = (props) => {
             title: '流程',
             dataIndex: ['flow', 'name'],
             key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id)} className="span-botton">流程配置</div>
+            render: (text, record) => <div onClick={() => goFlow(record.flow.id, record.grouper)} className="span-botton">流程配置</div>
         },
         {
             title: '表单',
             dataIndex: ['form', 'name'],
             key: 'form',
-            render: (text, record) => <div onClick={() => goForm(record.form.id)} className="span-botton">表单配置</div>
+            render: (text, record) => <div onClick={() => goForm(record.form.id, record.grouper)} className="span-botton">表单配置</div>
         },
         {
             title: '权限',
@@ -174,6 +190,8 @@ const WorkTypeList = (props) => {
                                 type="edit"
                                 id={record.id}
                                 grouper="custom"
+                                visibleFree={visibleFree}
+                                setVisibleFree={setVisibleFree}
                             >
                                 编辑
                             </WorkTypeAddmodal>
@@ -202,6 +220,8 @@ const WorkTypeList = (props) => {
                         grouper="custom"
                         bottonType="primary"
                         formIds = {formIds}
+                        visibleFree={visibleFree}
+                        setVisibleFree={setVisibleFree}
                     ></WorkTypeAddmodal>
                 </div>
             </Breadcumb>
@@ -216,6 +236,10 @@ const WorkTypeList = (props) => {
                 />
             </div>
         </div>
+        <WorkTypeFree
+            visible={visibleFree}
+            setVisible={setVisibleFree}
+        />
     </Provider>
 
     );

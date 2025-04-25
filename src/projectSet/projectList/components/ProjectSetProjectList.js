@@ -19,6 +19,7 @@ import DeleteModal from '../../../common/deleteModal/deleteModal';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
 import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import CircleProgress from "../../../common/progress/CircleProgress";
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -147,28 +148,12 @@ const ProjectSetProjectList = (props) => {
             align: "left",
             render: (text, record) => (
                 <>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Progress
-                            type="circle"
-                            width={20}
-                            percent={
-                                record.workItemNumber === 0 ? 0 :
-                                    (100 * record.endWorkItemNumber / record.workItemNumber).toFixed(2)
-                            }
-                            trailColor={"#c4c4c4"}
-                            strokeColor={"#1890ff"}  // 固定颜色
-                            strokeWidth={12}       // 加粗线条
-                            format={() => null}    // 隐藏圆圈内的百分比文字
-                        />
-                        <span style={{ marginLeft: 8, minWidth: 30 }}>{
+                    <CircleProgress
+                        percent={
                             record.workItemNumber === 0 ? 0 :
-                                (100 * record.endWorkItemNumber / record.workItemNumber).toFixed(2)
-                        }%</span>
-                    </div>
-                    {/*<Progress type="circle" width={50} percent={*/}
-                    {/*    record.workItemNumber === 0 ? 0 :*/}
-                    {/*    100 * (record.endWorkItemNumber/record.workItemNumber).toFixed(2)*/}
-                    {/*}></Progress>*/}
+                                (100 * record.endWorkItemNumber / record.workItemNumber)
+                        }
+                    />
                 </>
             )
         },
