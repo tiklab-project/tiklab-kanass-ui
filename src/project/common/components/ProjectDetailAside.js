@@ -109,6 +109,14 @@ const ProjectDetailAside = (props) => {
             id: `/project/${projectId}/test`,
             key: "test",
             encoded: "test",
+        },
+        {
+            title: "评审",
+            icon: 'appraised',
+            defaultIcon: "appraised",
+            id: `/project/${projectId}/appraised`,
+            key: "appraised",
+            encoded: "appraised",
         }
     ];
 
@@ -186,6 +194,14 @@ const ProjectDetailAside = (props) => {
             id: `/project/${projectId}/test`,
             key: "test",
             encoded: "test",
+        },
+        {
+            title: "评审",
+            icon: 'appraised',
+            defaultIcon: "appraised",
+            id: `/project/${projectId}/appraised`,
+            key: "appraised",
+            encoded: "appraised",
         }
 
     ];

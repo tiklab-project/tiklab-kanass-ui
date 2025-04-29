@@ -201,6 +201,12 @@ const LogAllList = AsyncComponent(() => import("./project/workLog/components/Log
 
 const OpenApiDocPage = AsyncComponent(() => import('./setting/openapi/OpenApiDocPages'))
 
+const Appraised = AsyncComponent(() => import('./project/appraised/components/AppraisedTable'))
+
+// 评审
+const AppraisedHome = AsyncComponent(() => import('./appraised/common/components/AppraisedLayout'))
+const AppraisedWorkItem = AsyncComponent(() => import('./appraised/appraisedWorkItem/components/AppraisedWorkItemTable'))
+
 const Routers = [
     {
         path: "/login",
@@ -855,6 +861,10 @@ const Routers = [
                         exact: true,
                         component: ProjectNoAccessPage
                     },
+                    {
+                        path: "/project/:id/appraised",
+                        component: Appraised,
+                    }
                 ]
             },
 
@@ -1072,48 +1082,16 @@ const Routers = [
                     },
                 ]
             },
-            // {
-            //     path: "/:id/stagedetail/:stage",
-            //     component: StageHome,
-            //     routes: [
-            //         {
-            //             path: "/:id/stagedetail/:stage/workItem",
-            //             component: Work,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/work/:workId",
-            //             component: WorkDetailPage,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workDetail",
-            //             component: WorkTableDetail,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/dynamic",
-            //             component: Dynamic
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workList",
-            //             component: WorkList,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workGantt",
-            //             component: WorkGantt,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workTable",
-            //             component: WorkTable,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workBodar",
-            //             component: WorkBodar,
-            //         },
-            //         {
-            //             path: "/:id/stagedetail/:stage/workTodo",
-            //             component: WorkTodoPage,
-            //         },
-            //     ]
-            // },
+            {
+                path: "/:id/appraised/:appraised",
+                component: AppraisedHome,
+                routes: [
+                    {
+                        path: "/:id/appraised/:appraised/workitem",
+                        component: AppraisedWorkItem,
+                    },
+                    ]
+            },
             {
                 path: "/project",
                 exact: true,

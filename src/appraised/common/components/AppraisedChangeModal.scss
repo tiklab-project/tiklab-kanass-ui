@@ -1,0 +1,113 @@
+.change-appraised {
+  position: relative;
+
+  .appraised-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    gap: 5px;
+    .appraised-text {
+      flex: 1;
+      .type {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+
+    span {
+      width: 100px;
+      height: 100%;
+      overflow: hidden;
+
+      i {
+        margin-right: 10px;
+      }
+    }
+
+    .appraised-aside-icon {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+  }
+
+  .appraised-title-icon {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    cursor: pointer;
+    .appraised-aside-icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+
+  .change-appraised-botton {
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    text-align: center;
+  }
+  .change-appraised-box {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #fff;
+    color: #000;
+    box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+    .change-appraised-head {
+      height: 40px;
+      line-height: 40px;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 0 20px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+  }
+
+
+  .change-appraised-item {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .change-appraised-info {
+      line-height: 30px;
+      flex: 1;
+      .change-appraised-state {
+        font-size: 12px;
+        color: var(--tiklab-gray-500);
+      }
+    }
+  }
+  .change-appraised-more {
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    border-top: 1px solid #F0F0F0;
+    color: var(--tiklab-blue);
+    font-size: 13px;
+  }
+  .change-appraised-selectName {
+    background-color: var(--tiklab-gray-400);
+  }
+
+  .menu-show {
+    display: block;
+  }
+  .menu-hidden {
+    display: none;
+  }
+}

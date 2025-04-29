@@ -1,0 +1,132 @@
+.appraised-detail-side {
+  background-color: var(--tiklab-gray);
+  border-right: 1px solid #f0f0f0;
+
+  .ant-layout-sider-children {
+    .appraised-aside-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--tiklab-gray-600);
+
+      ul {
+        padding: 0;
+        margin: 0;
+      }
+
+      .appraised-set-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+      }
+
+      .appraised-set-title {
+        border-top: 1px solid #f0f2f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        margin-bottom: 10px;
+      }
+
+      .setting:hover {
+        background-color: var(--tiklab-gray-400);
+      }
+
+      .setting {
+        border-top: 1px solid #f0f2f5;
+        cursor: pointer;
+        span {
+          margin: 0 10px 0 10px;
+        }
+
+        .icon {
+          margin-left: 10px;
+        }
+      }
+
+      .appraised-menu {
+        list-style-type: none;
+        cursor: pointer;
+        flex: 1;
+        .appraised-back-project {
+          margin-bottom: 10px;
+          border-bottom: 1px solid #d7d7d7;
+        }
+        .appraised-menu-submenu {
+          height: 40px;
+          display: flex;
+          line-height: 40px;
+          width: 100%;
+          align-items: center;
+          padding-left: 20px;
+          cursor: pointer;
+
+          i {
+            margin-right: 10px;
+          }
+        }
+
+        .appraised-menu-submenu-icon {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          flex-direction: column;
+          margin-bottom: 10px;
+          padding: 5px 0;
+          cursor: pointer;
+
+          .appraised-aside-icon {
+            width: 15px;
+            height: 15px;
+          }
+        }
+
+        .appraised-menu-submenu-icon:hover {
+          background-color: var(--tiklab-gray-400);
+        }
+
+        .appraised-menu-submenu:hover {
+          background-color: var(--tiklab-gray-300);
+        }
+
+        .appraised-menu-select {
+          background-color: var(--tiklab-gray-400);
+          border-left: 3px solid var(--tiklab-blue);
+        }
+      }
+
+      .hidden-menu {
+        display: none;
+      }
+
+      .appraised-expend {
+        position: absolute;
+        right: -5px;
+        width: 10px;
+        height: 50px;
+        border-radius: 20px;
+        top: 70%;
+        line-height: 20px;
+        display: none;
+        z-index: 2;
+        background: var(--tiklab-gray-400);
+        .appraised-expend-icon {
+          width: 10px;
+          height: 50px;
+        }
+      }
+    }
+  }
+
+  .ant-layout-sider-children:hover {
+    .appraised-expend {
+      display: block;
+    }
+  }
+
+  .appraised-notext {
+    display: none;
+  }
+}

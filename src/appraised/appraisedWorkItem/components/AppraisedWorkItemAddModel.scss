@@ -1,0 +1,227 @@
+@media (max-width: 768px) {
+  .work-add-page {
+    height: calc(100% - 20px);
+  }
+}
+
+/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
+@media (min-width: 769px) and (max-width: 1280px) {
+  .work-add-page {
+    height: calc(100% - 60px);
+  }
+}
+
+/* 在分辨率大于 1024px 时应用的样式 */
+@media (min-width: 1280px) {
+  .work-add-page {
+    height: 80%;
+  }
+}
+
+.work-add-page {
+  gap: 20px;
+
+  .appraised-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .appraised-filter-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .select-content {
+        padding: 5px 10px;
+        background-color: var(--tiklab-gray);
+        width: 100px;
+      }
+    }
+  }
+
+  .appraised-search {
+    width: 200px;
+    border-radius: 4px;
+
+  }
+
+  .appraised-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    line-height: 50px;
+
+    .appraised-tab {
+      font-size: var(--tiklab-font-13);
+      cursor: pointer;
+      height: 50px;
+      line-height: 50px;
+      margin-right: 20px;
+      white-space: nowrap;
+    }
+
+    .appraised-tab:last-child {
+      margin-right: 0;
+    }
+
+    .active-tabs {
+      border-bottom: 2px solid var(--tiklab-blue);
+    }
+  }
+
+  .appraised-table-box {
+    .appraised-status {
+      padding: 2px 3px;
+      background: #e2e1e4;
+      border-radius: 4px;
+      font-size: 10px;
+      width: fit-content;
+      color: #2b333e;
+    }
+    .appraised-master {
+      display: flex;
+      align-items: center;
+    }
+    .appraised-status-todo {
+      background: #e2e1e4;
+      color: #2b333e;
+    }
+
+    .appraised-status-process {
+      background: #b0d5dfa1;
+      color: #132c33;
+    }
+
+    .appraised-status-done {
+      background: #dfecd5e3;
+      color: #5e5314;
+    }
+
+    .ant-pagination-simple .ant-pagination-simple-pager input {
+      user-select: none;
+      pointer-events: none;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+
+  .work-add-page-content {
+    // padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .work-add-page-title {
+      font-size: var(--tiklab-font-16);
+      font-weight: var(--tiklab-font-weight-bold);
+      padding: var(--tiklab-padding);
+    }
+
+    .work-add-page-form {
+      overflow: auto;
+      padding: 0 var(--tiklab-padding);
+      min-height: calc(100% - 120px);
+    }
+
+    .work-add-form {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .work-add-desc {
+        flex: 1;
+      }
+      .work-item-desc {
+        .edit-toolbar {
+          padding-right: 10px;
+        }
+      }
+      .ant-form-item {
+        // flex-direction: row;
+
+        .ant-form-item-control {
+          height: calc(100% - 30px);
+
+          .ant-form-item-control-input {
+            height: 100%;
+
+            .edit {
+              height: 100%;
+            }
+
+            .edit-box {
+              height: calc(100% - 49px);
+            }
+            .edit-box::-webkit-scrollbar {
+              width: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .work-add-button {
+      display: flex;
+      gap: 10px;
+      padding: 10px var(--tiklab-padding);
+      justify-content: flex-end;
+    }
+
+    .desc-botton {
+      display: flex;
+      gap: 10px;
+      height: 40px;
+      line-height: 40px;
+
+      .desc-cancel {
+        cursor: pointer;
+      }
+
+      .desc-true {
+        cursor: pointer;
+        color: var(--tiklab-blue);
+      }
+    }
+
+    .ant-upload-drag-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0 !important;
+    }
+
+
+    .ant-upload-drag {
+      background: var(--tiklab-gray-300);
+
+    }
+  }
+
+  .work-add-page-right {
+    background-color: var(--tiklab-gray-600);
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+
+    .ant-form-item {
+      margin: 0 0 15px;
+    }
+
+    .ant-input {
+      margin-left: 10px;
+    }
+
+    .ant-input-number {
+      margin-left: 10px;
+    }
+
+    .ant-form-item-label {
+      padding-left: 11px;
+    }
+  }
+}

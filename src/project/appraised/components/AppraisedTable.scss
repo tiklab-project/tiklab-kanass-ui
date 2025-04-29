@@ -1,0 +1,111 @@
+.project-appraised {
+  // height: calc(100% - 55px);
+  // padding: var(--tiklab-padding);
+  .ant-row {
+    overflow: auto;
+    height: 100%;
+  }
+  .project-appraised-list {
+    background-color: #fff;
+    height: 100%;
+    padding: var(--tiklab-padding);
+  }
+  .appraised-name {
+    cursor: pointer;
+  }
+  .appraised-name:hover {
+    color: var(--tiklab-blue);
+  }
+
+  .appraised-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    line-height: 50px;
+
+    .appraised-tab {
+      font-size: var(--tiklab-font-13);
+      cursor: pointer;
+      height: 50px;
+      line-height: 50px;
+      margin-right: 20px;
+      white-space: nowrap;
+    }
+
+    .appraised-tab:last-child {
+      margin-right: 0;
+    }
+
+    .active-tabs {
+      border-bottom: 2px solid var(--tiklab-blue);
+    }
+  }
+
+  .appraised-table-box {
+    .appraised-status {
+      padding: 2px 3px;
+      background: #e2e1e4;
+      border-radius: 4px;
+      font-size: 10px;
+      width: fit-content;
+      color: #2b333e;
+    }
+    .appraised-master {
+      display: flex;
+      align-items: center;
+    }
+    .appraised-status-todo {
+      background: #e2e1e4;
+      color: #2b333e;
+    }
+
+    .appraised-status-process {
+      background: #b0d5dfa1;
+      color: #132c33;
+    }
+
+    .appraised-status-done {
+      background: #dfecd5e3;
+      color: #5e5314;
+    }
+
+    .ant-pagination-simple .ant-pagination-simple-pager input {
+      user-select: none;
+      pointer-events: none;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+
+  .appraised-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .appraised-filter-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .select-content {
+        padding: 5px 10px;
+        background-color: var(--tiklab-gray);
+        width: 100px;
+      }
+    }
+  }
+
+  .appraised-search {
+    width: 200px;
+    border-radius: 4px;
+
+  }
+
+  .span-botton {
+    cursor: pointer;
+  }
+
+}
