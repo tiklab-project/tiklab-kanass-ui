@@ -8,7 +8,7 @@
  * @LastEditTime: 2024-12-27 15:01:34
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, InputNumber, Form, Input, Select, Button} from 'antd';
+import {Modal, InputNumber, Form, Input, Select, Button, Drawer} from 'antd';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { getUser } from "tiklab-core-ui";
@@ -249,181 +249,193 @@ const LogAdd = (props) => {
     }
 
     return (
-        <>
+        // <>
 
-            <div
-                className={`work-log-drawer ${showLogAdd ? '' : 'work-log-drawer-hidden'}`}
-                style={{ width: '400px' }} // 根据需求调整宽度
+        <Drawer
+            title={modalType === "add" ? '添加工时' : '编辑工时'}
+            placement="right"
+            closable={false}
+            onClose={closeLogModal}
+            visible={showLogAdd}
+            width={400}
+            mask={true}
+            className={`${showLogAdd} ? work-log-drawer : ''`}
+        >
+            <Form
+                // {...layout}
+                name="basic"
+                form={addLog}
+                preserve={false}
+                layout="vertical"
+                className="log-add"
             >
-                <div className="drawer-header">
-                    <h3>{modalType === "add" ? '添加工时' : '编辑工时'}</h3>
-                    <button
-                        className="drawer-close-btn"
-                        onClick={closeLogModal}
-                    >
-                        ×
-                    </button>
-                </div>
-
-                <Form
-                    // {...layout}
-                    name="basic"
-                    form={addLog}
-                    preserve={false}
-                    layout="vertical"
-                    className="log-add"
-                >
-                    {
-                        path === "/log/list" && <Form.Item
-                            label="项目"
-                            name="project"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "请选择项目",
-                                },
-                            ]}
-                        >
-                            <Select
-                                showSearch
-                                value={value}
-                                onChange={changeProject}
-                                optionFilterProp='children'
-                            >
-                                {
-                                    projectList.length > 0 && projectList.map((item) => {
-                                        return <Select.Option
-                                            value={item.id}
-                                            key={item.id}
-                                            projectId={item.id}
-                                        >{item.projectName}</Select.Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
-                    }
-                    <Form.Item
-                        label="事项"
-                        name="workItem"
+                {
+                    path === "/log/list" && <Form.Item
+                        label="项目"
+                        name="project"
                         rules={[
                             {
                                 required: true,
-                                message: "请选择事项",
+                                message: "请选择项目",
                             },
                         ]}
                     >
                         <Select
                             showSearch
                             value={value}
-                            onSearch={searchWorkItem}
-                            onChange={changeSearchTitle}
+                            onChange={changeProject}
                             optionFilterProp='children'
                         >
                             {
-                                workItemList.length > 0 && workItemList.map((item) => {
+                                projectList.length > 0 && projectList.map((item) => {
                                     return <Select.Option
                                         value={item.id}
                                         key={item.id}
-                                        projectId={item.project.id}
-                                        surplusTime={item.surplusTime}
-                                        planTakeupTime={item.planTakeupTime}
-                                    >{item.title}</Select.Option>
+                                        projectId={item.id}
+                                    >{item.projectName}</Select.Option>
                                 })
                             }
                         </Select>
                     </Form.Item>
+                }
+                <Form.Item
+                    label="事项"
+                    name="workItem"
+                    rules={[
+                        {
+                            required: true,
+                            message: "请选择事项",
+                        },
+                    ]}
+                >
+                    <Select
+                        showSearch
+                        value={value}
+                        onSearch={searchWorkItem}
+                        onChange={changeSearchTitle}
+                        optionFilterProp='children'
+                    >
+                        {
+                            workItemList.length > 0 && workItemList.map((item) => {
+                                return <Select.Option
+                                    value={item.id}
+                                    key={item.id}
+                                    projectId={item.project.id}
+                                    surplusTime={item.surplusTime}
+                                    planTakeupTime={item.planTakeupTime}
+                                >{item.title}</Select.Option>
+                            })
+                        }
+                    </Select>
+                </Form.Item>
 
-                    <div className="log-add-time">
-                        <Form.Item
-                            label="预估用时"
-                            name="estimateTime"
-                            className="log-form-item"
-                        >
-                            <Input min={0} disabled={true} placeholder = {0} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="已用时"
-                            name="usedTime"
-                            className="log-form-item"
-                        >
-                            <Input min={0} disabled={true} placeholder = {0} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
-                        </Form.Item>
-                    </div>
-                    <div className="log-add-time">
-                        <Form.Item
-                            label="登记用时"
-                            name="takeupTime"
-                            className="log-form-item"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '登记用时不能为空',
-                                },
-                            ]}
-
-                        >
-                            <InputNumber
-                                min={0}
-                                type="number"
-                                key="surplusTime"
-                                suffix="小时"
-                                placeholder = {0}
-                                style={{ width: '100%' }}
-                                onBlur={(value) => changeTakeupTime(value)}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="剩余用时"
-                            name="surplusTime"
-                            className="log-form-item"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '剩余用时不能为空',
-                                },
-                            ]}
-
-                        >
-                            <Input
-                                min={0}
-                                type="number"
-                                key="surplusTime"
-                                suffix="小时"
-                                style={{ width: '100%' }}
-                                placeholder = {0}
-                                onChange={() => setIsCustomSurplusTime(true)}
-                            />
-                        </Form.Item>
-                    </div>
+                <div className="log-add-time">
+                    <Form.Item
+                        label="预估用时"
+                        name="estimateTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} placeholder = {0} type="number" key="estimateTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
 
                     <Form.Item
-                        label="工作内容"
-                        name="workContent"
+                        label="已用时"
+                        name="usedTime"
+                        className="log-form-item"
+                    >
+                        <Input min={0} disabled={true} placeholder = {0} type="number" key="surplusTime" suffix="小时" style={{ width: '100%' }} />
+                    </Form.Item>
+                </div>
+                <div className="log-add-time">
+                    <Form.Item
+                        label="登记用时"
+                        name="takeupTime"
+                        className="log-form-item"
                         rules={[
                             {
                                 required: true,
-                                message: '请输入工作内容',
+                                message: '登记用时不能为空',
                             },
                         ]}
-                    >
-                        <TextArea rows={4} placeholder = "工作内容" />
-                    </Form.Item>
-                    <Form.Item className="log-button-group">
-                        <Button
-                            type="primary"
-                            onClick={() => creatLog()}
-                            style={{ marginRight: '10px' }}
-                        >
-                            {modalType === "add" ? "添加" : "保存"}
-                        </Button>
-                        <Button onClick={closeLogModal}>取消</Button>
-                    </Form.Item>
-                </Form>
 
-            </div>
-        </>
+                    >
+                        <InputNumber
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            placeholder = {0}
+                            style={{ width: '100%' }}
+                            onBlur={(value) => changeTakeupTime(value)}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="剩余用时"
+                        name="surplusTime"
+                        className="log-form-item"
+                        rules={[
+                            {
+                                required: true,
+                                message: '剩余用时不能为空',
+                            },
+                        ]}
+
+                    >
+                        <Input
+                            min={0}
+                            type="number"
+                            key="surplusTime"
+                            suffix="小时"
+                            style={{ width: '100%' }}
+                            placeholder = {0}
+                            onChange={() => setIsCustomSurplusTime(true)}
+                        />
+                    </Form.Item>
+                </div>
+
+                <Form.Item
+                    label="工作内容"
+                    name="workContent"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入工作内容',
+                        },
+                    ]}
+                >
+                    <TextArea rows={4} placeholder = "工作内容" />
+                </Form.Item>
+                <Form.Item className="log-button-group">
+                    <Button
+                        type="primary"
+                        onClick={() => creatLog()}
+                        style={{ marginRight: '10px' }}
+                    >
+                        {modalType === "add" ? "添加" : "保存"}
+                    </Button>
+                    <Button onClick={closeLogModal}>取消</Button>
+                </Form.Item>
+            </Form>
+        </Drawer>
+            // <div
+            //     className={`work-log-drawer ${showLogAdd ? '' : 'work-log-drawer-hidden'}`}
+            //     style={{ width: '400px' }} // 根据需求调整宽度
+            // >
+            //     <div className="drawer-header">
+            //         <h3>{modalType === "add" ? '添加工时' : '编辑工时'}</h3>
+            //         <button
+            //             className="drawer-close-btn"
+            //             onClick={closeLogModal}
+            //         >
+            //             ×
+            //         </button>
+            //     </div>
+            //
+            //
+            //
+            // </div>
+        // </>
     )
 }
 

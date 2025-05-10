@@ -1,0 +1,168 @@
+.work-item-time-page{
+
+  .top-action {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+
+    .top-action-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+
+  .work-status {
+    padding: 2px 3px;
+    background: #e2e1e4;
+    border-radius: 4px;
+    font-size: 10px;
+    width: fit-content;
+    color: #2b333e;
+  }
+
+  .work-status-process {
+    background: #b0d5dfa1;
+    color: #132c33;
+  }
+
+  .work-status-done {
+    background: #dfecd5e3;
+    color: #5e5314;
+  }
+
+  .work-id {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5px;
+    gap: 5px;
+    .work-key {
+      color: var(--tiklab-gray-500);
+    }
+    .work-key:hover {
+      color: var(--tiklab-blue);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .work-title {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 300px;
+
+  }
+  .work-title:hover {
+    color: var(--tiklab-blue);
+    text-decoration: underline;
+  }
+
+  .work-item-info {
+    display: flex;
+    align-items: center;
+
+    .tiklab-profile {
+      .ant-avatar {
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
+  }
+
+  .grouped-table-row {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .grouped-table-row:hover {
+    background-color: #fafafa;
+  }
+
+  /* 移除表格默认的边框 */
+  .grouped-table-row:last-child {
+    border-bottom: none;
+  }
+
+  /* 表头表格样式 */
+  .header-table {
+    .ant-table-tbody > tr > td {
+      border-bottom: none !important;
+      padding: 8px 16px !important;
+    }
+
+    .ant-table-placeholder {
+      display: none;
+    }
+  }
+
+  .content-table{
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 3px;
+
+    .group-title{
+      display: flex;
+      align-items: center;
+      padding: 6px 6px;
+      background-color: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+      //font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .group-title:hover{
+      background-color: #f5f5f5;
+    }
+    .group-title-item-count{
+      margin-left: 12px;
+      font-size: 12px;
+      color: #8c8c8c;
+      background-color: #f0f0f0;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+  }
+
+  /* 表格行样式 */
+  .grouped-table-row {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s;
+  }
+
+  .grouped-table-row:hover {
+    background-color: #fafafa !important;
+  }
+
+  .grouped-table-row:last-child {
+    border-bottom: none;
+  }
+
+  /* 分组标题悬停效果 */
+  .group-title:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* 自定义滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+}

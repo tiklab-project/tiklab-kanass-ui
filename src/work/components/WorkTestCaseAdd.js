@@ -55,7 +55,7 @@ const WorkTestCaseAddmodal = (props) => {
                     }else {
                         Modal.confirm({
                             title: '提示?',
-                            content: "该项目没有关联用例库，是否先去添加用例库",
+                            content: "该项目没有关联测试项目，是否先去添加测试项目",
                             centered: true,
                             okText: "去添加",
                             cancelText: "取消",
@@ -88,7 +88,7 @@ const WorkTestCaseAddmodal = (props) => {
             width: 150
         },
         {
-            title: "用例库",
+            title: "测试项目",
             dataIndex: ["repository", "name"],
             key: "repository",
             width: 150
@@ -219,7 +219,7 @@ const WorkTestCaseAddmodal = (props) => {
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
-                        title={"用例库"}
+                        title={"测试项目"}
                         suffixIcon = {true}
                         value = {repositoryValue}
                     >

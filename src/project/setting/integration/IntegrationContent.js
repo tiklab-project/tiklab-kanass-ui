@@ -36,7 +36,7 @@ const IntegrationContent = (props) => {
                                     type="primary"
                                     onClick={() => setTestAddvisible(true)}
                                 >
-                                    关联用例库
+                                    关联项目
                                 </Button>
                         }
 

@@ -220,14 +220,7 @@ const LogContent = (props) => {
                         <Button type="primary" onClick={() => setShowLogAdd(true)}>
                             添加工时
                         </Button>
-                        <LogAdd
-                            page="projectLog"
-                            showLogAdd={showLogAdd}
-                            setShowLogAdd={setShowLogAdd}
-                            findWorkLogList={changeTabs}
-                            modalType={"add"}
-                            activeTab={activeTab}
-                        />
+
                     </Breadcumb>
                     <div className="log-tab-filter">
                         <div className="log-tabs">
@@ -255,9 +248,6 @@ const LogContent = (props) => {
                         dataSource={logList}
                         rowKey={(record) => record.id}
                         onChange={changePage}
-                        scroll={{
-                            x: "100%"
-                        }}
                         pagination={{
                             // onChange: changePage,
                             total: totalLog,
@@ -273,6 +263,14 @@ const LogContent = (props) => {
                         logDetailVisable={logDetailVisable}
                         setLogDetailVisable={setLogDetailVisable}
                         getList={getList}
+                    />
+                    <LogAdd
+                        page="projectLog"
+                        showLogAdd={showLogAdd}
+                        setShowLogAdd={setShowLogAdd}
+                        findWorkLogList={changeTabs}
+                        modalType={"add"}
+                        activeTab={activeTab}
                     />
                 </div>
             </Col>

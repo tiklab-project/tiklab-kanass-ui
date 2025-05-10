@@ -1,4 +1,4 @@
-import AppraisedWorkItemStore from "../sotre/AppraisedWorkItemStore";
+import AppraisedWorkItemStore from "../store/AppraisedWorkItemStore";
 import React, {useEffect, useState} from 'react';
 import {Col, Row, Space, Table, Tooltip} from "antd";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -10,13 +10,13 @@ import {observer, inject, Provider} from "mobx-react";
 import {withRouter} from "react-router";
 import WorkTypeTab from "../../../work/components/WorkTypeTab";
 import WorkCalendarStore from "../../../work/store/WorkCalendarStore";
-import AppraisedAddModal from "../../../project/appraised/components/AppraisedAdd";
+import AppraisedAddModal from "./AppraisedAdd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import "./AppraisedWorkItemTable.scss"
 import AppraisedWorkItemDetailDrawer from "./AppraisedWorkItemDetailDrawer";
-import workStore from "../../../work/store/WorkStore";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import AppraisedStores from "../store/AppraisedStores";
 
 const AppraisedWorkItemTable = (props) => {
     const store = {appraisedWorkItemStore: AppraisedWorkItemStore, workStore: WorkStore, workCalendarStore: WorkCalendarStore}
@@ -25,26 +25,33 @@ const AppraisedWorkItemTable = (props) => {
     const [tableList, setTableList] = useState([]);
     const {searchAppraisedWorkItemPage, searchCondition,
         total, setRecordId, deleteAppraisedWorkItem, appraisedWorkItemList} = AppraisedWorkItemStore;
-    const {setWorkId, workId} = workStore;
+    const {setWorkId, workId} = WorkStore;
+    const {searchAppraisedById} = AppraisedStores;
 
     // 项目id 评审id
     const projectId = props.match.params.id;
     const appraisedId = props.match.params.appraised;
     const [showAddModel, setShowAddModel] = useState(false);
     const [detailVisible, setDetailVisible] = useState(false);
+    const [appraised, setAppraised] = useState();
 
-    // const [recordId, setRecordId] = useState("");
+    // tab的key
+    const [activeTabs, setActiveTabs] = useState("all");
     const handleAddClick = () => {
         // 打开关联事项页面
         setShowAddModel(true);
     }
 
     useEffect(() => {
-        searchTable({appraisedId: appraisedId});
+        searchTable({appraisedId: appraisedId, workItemTitle: null, workItemAppraisedState: null});
+        searchAppraisedById(appraisedId).then(res => {
+            // console.log("appraised:     "+JSON.stringify(res));
+            setAppraised(res.data);
+        })
     },[])
 
     const onSearch  = (value) => {
-        console.log(value);
+        searchTable({workItemTitle: value})
     }
 
     const deleteItem = (id) => {
@@ -63,7 +70,6 @@ const AppraisedWorkItemTable = (props) => {
     }
 
     const goDetail = (record) => {
-        console.log("关联id：   "+record.id);
         setRecordId(record.id);
         setWorkId(record.workItem.id)
         const pathname = props.match.url;
@@ -204,20 +210,111 @@ const AppraisedWorkItemTable = (props) => {
         });
     }
 
+    /**
+     * tab 数组
+     */
+    const statusTab = [
+        {
+            title: '全部',
+            key: 'all',
+            icon: "all"
+        },
+        {
+            title: '待评审',
+            key: 'unAppraised',
+            icon: "programconcern"
+        },
+        {
+            title: '通过',
+            key: 'pass',
+            icon: "programconcern"
+        },
+        {
+            title: '未通过',
+            key: 'unPass',
+            icon: "programconcern"
+        },
+        {
+            title: '建议',
+            key: 'advice',
+            icon: "programconcern"
+        }
+    ]
+
+    /**
+     * tab 切换
+     * @param {tab key} key
+     */
+    const selectTabs = (key, page) => {
+        setActiveTabs(key)
+        const params = {
+            // projectId: projectId,
+            pageParam: {
+                pageSize: searchCondition.pageParam.pageSize,
+                currentPage: page,
+            }
+        }
+        console.log(key);
+        switch (key) {
+            case "all":
+                searchAppraisedWorkItemPage({ workItemAppraisedState : null, ...params }).then(res => {
+                    setTableList(res.data.dataList)
+                });
+                break;
+            case "unAppraised":
+                searchAppraisedWorkItemPage({ workItemAppraisedState : "0", ...params }).then(res => {
+                    setTableList(res.data.dataList)
+                });
+                break;
+            case "pass":
+                searchAppraisedWorkItemPage({ workItemAppraisedState : "1", ...params }).then(res => {
+                    setTableList(res.data.dataList)
+                });
+                break;
+            case "unPass":
+                searchAppraisedWorkItemPage({ workItemAppraisedState : "2", ...params }).then(res => {
+                    setTableList(res.data.dataList)
+                });
+                break;
+            case "advice":
+                searchAppraisedWorkItemPage({ workItemAppraisedState : "3", ...params }).then(res => {
+                    setTableList(res.data.dataList)
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    const goBack = () => {
+        props.history.push(`/project/${projectId}/appraised`)
+    }
+
     return <Provider {...store}>
         <div className={`project-appraised`}>
             <Row >
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-appraised-list">
-                        <Breadcumb firstText="需求列表">
+                        <div className={"appraised-top"}>
+                            <svg className="icon-25" aria-hidden="true" onClick={goBack}>
+                                <use xlinkHref="#icon-left"></use>
+                            </svg>
+                            <p className="appraised-title">{appraised?.name}</p>
                             <Button onClick={handleAddClick} buttonText={"关联需求"} />
-                        </Breadcumb>
+                        </div>
                         <div className="appraised-filter">
                             <div className="appraised-tabs">
-                                {/*<WorkTypeTab*/}
-                                {/*    workStore={WorkStore}*/}
-                                {/*    workCalendarStore={WorkCalendarStore}*/}
-                                {/*></WorkTypeTab>*/}
+                                {
+                                    statusTab.map(item => {
+                                        return <div
+                                            className={`appraised-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
+                                            key={item.key}
+                                            onClick={() => selectTabs(item.key, 1)}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    })
+                                }
                             </div>
                             <div className="appraised-filter-right">
                                 <InputSearch

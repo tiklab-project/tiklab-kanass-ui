@@ -158,9 +158,10 @@ const AppraisedWorkItemAddModel = (props) => {
 
     return (
         <Modal
-            title={"关联事项"}
+            title={"关联需求"}
             visible={showAddModel}
             width={1000}
+            height={450}
             className="appraisedWorkItem-addmodel"
             destroyOnClose={true}
             onOk={handleOk}
@@ -171,16 +172,13 @@ const AppraisedWorkItemAddModel = (props) => {
             footer={null}
             maskClosable={false}
         >
-            <Row >
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
+            {/*<Row >*/}
+            {/*    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>*/}
                     <div className="work-add-page">
                         <div className="appraised-filter">
-                            <div className="appraised-tabs">
-                                {/*<WorkTypeTab*/}
-                                {/*    workStore={WorkStore}*/}
-                                {/*    workCalendarStore={WorkCalendarStore}*/}
-                                {/*></WorkTypeTab>*/}
-                            </div>
+                            {/*<div className="appraised-tabs">*/}
+                            {/*    <p>关联需求</p>*/}
+                            {/*</div>*/}
                             <div className="appraised-filter-right">
                                 <InputSearch
                                     placeholder="搜索事项"
@@ -209,7 +207,6 @@ const AppraisedWorkItemAddModel = (props) => {
                                 onSearch={onSearch}
                                 scroll={{ x: "100%" }}
                             >
-
                             </Table>
                             <div className="work-add-button">
                                 <Button type="primary" onClick={() => onFinish()}>创建</Button>
@@ -218,8 +215,8 @@ const AppraisedWorkItemAddModel = (props) => {
                         </div>
                     </div>
 
-                </Col>
-            </Row>
+            {/*    </Col>*/}
+            {/*</Row>*/}
 
         </Modal>
     )

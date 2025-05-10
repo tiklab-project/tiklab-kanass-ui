@@ -35,9 +35,7 @@ const AppraisedWorkItemDetailDrawer = (props) => {
 
 
     useEffect(() => {
-        console.log("重新渲染抽屉的id：  "+recordId)
         findAppraisedWorkItemById(getRecordId()).then(data => {
-            console.log("返回值：   "+JSON.stringify(data))
             if (data.code === 0){
                 form.setFieldsValue({
                     workItemAppraisedState:data.data.workItemAppraisedState,

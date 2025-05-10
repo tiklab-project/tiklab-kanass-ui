@@ -20,7 +20,7 @@ const BindTestHubo = (props) => {
     // 列表的列
     const columns = [
         {
-            title: "仓库名称",
+            title: "项目名称",
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",

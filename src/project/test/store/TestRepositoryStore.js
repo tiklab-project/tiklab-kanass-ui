@@ -15,6 +15,20 @@ export class TestRepositoryStore {
         }
     }
 
+    @observable testPlanList = [];
+    @observable testPlanCondition = {
+        orderParams: [{
+            name: "id",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+            totalPage: 1,
+            total: 1
+        }
+    }
+
     @action
     findAllRepository = async(params) => {
         const data = await Service("/testrepository/findAllRepository", params)
@@ -75,6 +89,60 @@ export class TestRepositoryStore {
         const value = new FormData();
         value.append("id", params.id)
         const data = await Service("/workTestCase/deleteWorkTestCase", value)
+        return data;
+    }
+
+    @action
+    findProjectTestRepositoryPlanPage = async(value) => {
+        Object.assign(this.testPlanCondition, value)
+        const data = await Service("/projectTestRepositoryPlan/findProjectTestRepositoryPlanPage", this.testPlanCondition)
+        if(data.code === 0){
+            this.testPlanList = data.data.dataList;
+            this.testPlanCondition.pageParam.totalPage = data.data.totalPage;
+            this.testPlanCondition.pageParam.total = data.data.totalRecord;
+        }
+        return data;
+    }
+
+    @action
+    findAllTestPlan = async(id) => {
+        const value = new FormData();
+        console.log("参数：  ", id)
+        value.append("repositoryId", id)
+        const data = await Service("/projectTestRepositoryPlan/findAllProjectTestRepositoryPlanByRepositoryId", value)
+        return data;
+    }
+
+    @action
+    findAllProjectTestRepositoryPlan = async (projectId, repositoryId) => {
+        const params = new FormData();
+        params.append("projectId", projectId);
+        params.append("testRepositoryId", repositoryId);
+        const data = await Service("/projectTestRepositoryPlan/findProjectTestRepositoryPlanList", params);
+        return data;
+    }
+
+    @action
+    createProjectTestRepositoryPlan = async (params) => {
+        const data = await Service("/projectTestRepositoryPlan/createProjectTestRepositoryPlan", params);
+        return data;
+    };
+
+    @action
+    deleteProjectTestRepositoryPlanByCondition = async (projectId, repositoryId, planId) => {
+        const value = new FormData();
+        value.append("repositoryId", repositoryId);
+        value.append("planId", planId);
+        value.append("projectId", projectId);
+        const data = await Service("/projectTestRepositoryPlan/deleteProjectTestRepositoryPlanByCondition", value);
+        return data;
+    }
+
+    @action
+    deleteProjectTestRepositoryPlan = async(id) => {
+        const value = new FormData();
+        value.append("id", id)
+        const data = await Service("/projectTestRepositoryPlan/deleteProjectTestRepositoryPlan", value)
         return data;
     }
 }

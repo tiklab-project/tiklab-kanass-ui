@@ -82,7 +82,23 @@
       border: 0;
     }
   }
-
+  .appraised-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    svg{
+      cursor: pointer;
+    }
+    .appraised-title{
+      font-size: var(--tiklab-font-16);
+      font-weight: var(--tiklab-font-weight-bold);
+      margin: 0;
+    }
+    .project-botton{
+      margin-left: auto;
+    }
+  }
 
   .appraised-filter {
     display: flex;

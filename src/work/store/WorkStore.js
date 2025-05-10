@@ -11,6 +11,7 @@ import { getUser } from "tiklab-core-ui";
 import { observable, action } from "mobx";
 export class WorkStore {
     @observable workBoardList = [];
+    @observable workItemStatusList = [];
     @observable workUserGroupBoardList = [];
     @observable workList = [];
     @observable workListTime = [];
@@ -44,6 +45,30 @@ export class WorkStore {
     @observable editorContent = [];
     @observable demandTypeId = ""
     @observable searchCondition = {
+        orderParams: [{
+            name: "code",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+            total: 1
+        }
+    };
+
+    // 路线图中使用的搜索条件
+    @observable workItemStatusSearchCondition = {
+        orderParams: [{
+            name: "code",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+            total: 1
+        }
+    };
+    @observable workItemTimeSearchCondition = {
         orderParams: [{
             name: "code",
             orderType: "desc"
@@ -93,6 +118,7 @@ export class WorkStore {
     // 状态列表
     @observable statesList = []
     @observable workBoardListLength = 0;
+    @observable workItemStatusListLength = 0;
 
     //事项状态
     @observable workType = ""
@@ -101,6 +127,7 @@ export class WorkStore {
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
     @observable workBoardCurrentPage = [];
+    @observable workItemStatusCurrentPage = [];
     @observable permissionFieldList = [];
 
     // 设置总个数
@@ -217,10 +244,24 @@ export class WorkStore {
         this.workBoardList[startBoxIndex].workItemList.dataList.splice(startWorkBoxIndex, 1)
     }
 
+    // 看板视图移动位置后，列表交换
+    @action
+    changeWorkItemStatusList = (startBoxIndex, startWorkBoxIndex, index, targetStatusId) => {
+        Object.assign(this.workItemStatusList[startBoxIndex].workItemList.dataList[startWorkBoxIndex], { workStatus: { id: targetStatusId } })
+        this.workItemStatusList[index].workItemList.dataList.push(this.workItemStatusList[startBoxIndex].workItemList.dataList[startWorkBoxIndex])
+        this.workItemStatusList[startBoxIndex].workItemList.dataList.splice(startWorkBoxIndex, 1)
+    }
+
     // 若调用接口失败，则还原
     @action
     reductionWorkBoardList = (value) => {
         this.workBoardList = value
+    }
+
+    // 若调用接口失败，则还原
+    @action
+    reductionWorkItemStatusList = (value) => {
+        this.workItemStatusList = value
     }
 
     //查找所有项目  
@@ -397,6 +438,29 @@ export class WorkStore {
         return data;
     }
 
+    // 获取路线图按状态的布局
+    getWorkItemStatusList = async (value) => {
+        this.setWorkItemStatusSearchCondition(value)
+        this.workItemStatusCurrentPage = []
+        this.workItemStatusList = []
+        const data = await Service("/workItem/findWorkBoardList",this.workItemStatusSearchCondition);
+        if (data.code === 0) {
+            this.workItemStatusList = data.data;
+            const listLength = this.workItemStatusList.length
+            let length = this.workItemStatusList[0].workItemList.length;
+            this.workItemStatusCurrentPage.push(this.workItemStatusList[0].workItemList.currentPage)
+            for (let j = 1; j < listLength; j++) {
+                this.workItemStatusCurrentPage.push(this.workItemStatusList[j].workItemList.currentPage)
+                if (this.workItemStatusList[j].workItemList.length > length) {
+                    length = this.workItemStatusList[j].workItemList.length;
+                }
+            }
+            this.workItemStatusListLength = length;
+            this.findWorkItemNumByWorkListWhenWorkItemStatus()
+        }
+        return data;
+    }
+
     // 获取看板视图事项列表 
     findChangePageWorkBoardList = async (value) => {
         // this.setSearchCondition(value)
@@ -408,7 +472,23 @@ export class WorkStore {
             const index = value.index;
             this.workBoardCurrentPage[index] = data.data.workItemList.currentPage;
             this.workBoardList[index].workItemList.dataList.push(...data.data.workItemList.dataList);
-            
+
+        }
+        return data;
+    }
+
+    // 获取看板视图事项列表
+    findChangePageWorkItemStatusList = async (value) => {
+        // this.setSearchCondition(value)
+        Object.assign(this.searchBorderChangepageCondition, value)
+        this.getWorkItemNum();
+        const data = await Service("/workItem/findChangePageWorkBoardList",this.searchBorderChangepageCondition);
+        console.log(this.searchBorderChangepageCondition)
+        if (data.code === 0) {
+            const index = value.index;
+            this.workItemStatusCurrentPage[index] = data.data.workItemList.currentPage;
+            this.workItemStatusList[index].workItemList.dataList.push(...data.data.workItemList.dataList);
+
         }
         return data;
     }
@@ -438,6 +518,17 @@ export class WorkStore {
     @action
     setSearchCondition = (value) => {
         this.searchCondition = Object.assign(this.searchCondition,  { ...value })
+    }
+
+    // 路线图中 按状态 使用的搜索条件
+    @action
+    setWorkItemStatusSearchCondition = (value) => {
+        this.workItemStatusSearchCondition = Object.assign(this.workItemStatusSearchCondition,  { ...value })
+    }
+    // 路线图中 按事件 使用的搜索条件
+    @action
+    setWorkItemTimesSearchCondition = (value) => {
+        this.workItemTimeSearchCondition = Object.assign(this.workItemTimeSearchCondition,  { ...value })
     }
 
     // 设置搜索条件为空
@@ -507,6 +598,17 @@ export class WorkStore {
     findWorkItemNumByWorkList = async(value) => {
         this.setSearchCondition(value)
         const data = await Service("/workItem/findWorkItemListNumByWorkType",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+        }
+        return data.data;
+    }
+
+    // 路线图--按状态视图下使用
+    @action
+    findWorkItemNumByWorkListWhenWorkItemStatus = async(value) => {
+        this.setWorkItemStatusSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemListNumByWorkType",this.workItemStatusSearchCondition);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
         }
@@ -1082,5 +1184,16 @@ export class WorkStore {
         }
         return data;
     }
+
+    @action
+    findWorkItemList = async (value) => {
+        this.setWorkItemTimesSearchCondition(value);
+        const data = await Service("/workItem/findWorkItemList", this.workItemTimeSearchCondition);
+        if (data.code === 0){
+            this.setWorkList(data.data.list);
+        }
+        return data.data;
+    }
+
 }
 export default new WorkStore();

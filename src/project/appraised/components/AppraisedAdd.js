@@ -86,13 +86,6 @@ const AppraisedAddModal = (props) => {
     const showModal = () => {
         getUserList(projectId)
         setVisible(true);
-        // findAllAppraisedState().then(res => {
-        //     if (res.code === 0) {
-        //         form.setFieldsValue({
-        //             appraisedState: res?.data[0]?.id
-        //         })
-        //     }
-        // })
         if (props.type === "edit") {
             searchAppraisedById(props.id).then((res) => {
                 form.setFieldsValue({

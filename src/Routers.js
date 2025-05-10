@@ -205,7 +205,7 @@ const Appraised = AsyncComponent(() => import('./project/appraised/components/Ap
 
 // 评审
 const AppraisedHome = AsyncComponent(() => import('./appraised/common/components/AppraisedLayout'))
-const AppraisedWorkItem = AsyncComponent(() => import('./appraised/appraisedWorkItem/components/AppraisedWorkItemTable'))
+const AppraisedWorkItem = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemTable'))
 
 const Routers = [
     {
@@ -862,6 +862,10 @@ const Routers = [
                         component: ProjectNoAccessPage
                     },
                     {
+                        path: "/project/:id/appraised/:appraised",
+                        component: AppraisedWorkItem,
+                    },
+                    {
                         path: "/project/:id/appraised",
                         component: Appraised,
                     }
@@ -1082,16 +1086,16 @@ const Routers = [
                     },
                 ]
             },
-            {
-                path: "/:id/appraised/:appraised",
-                component: AppraisedHome,
-                routes: [
-                    {
-                        path: "/:id/appraised/:appraised/workitem",
-                        component: AppraisedWorkItem,
-                    },
-                    ]
-            },
+            // {
+            //     path: "/:id/appraised/:appraised",
+            //     component: AppraisedHome,
+            //     routes: [
+            //         {
+            //             path: "/:id/appraised/:appraised/workitem",
+            //             component: AppraisedWorkItem,
+            //         },
+            //         ]
+            // },
             {
                 path: "/project",
                 exact: true,

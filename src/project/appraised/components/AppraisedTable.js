@@ -122,8 +122,8 @@ const AppraisedTable = (props) => {
         // }
         // createRecent(params)
 
-        props.history.push({ pathname: `/${projectId}/appraised/${id}/workitem` })
-        localStorage.setItem("sprintId", id);
+        props.history.push(`/project/${projectId}/appraised/${id}`)
+        localStorage.setItem("appraisedId", id);
     };
 
     // 加载中

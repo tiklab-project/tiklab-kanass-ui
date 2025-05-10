@@ -99,7 +99,7 @@ const TestRepositoryAdd = (props) => {
         <>
             <Fragment>
                 <Modal
-                    title={"添加用例测试仓库"}
+                    title={"添加测试项目"}
                     visible={testAddvisible}
                     onCancel={onCancel}
                     onOk={submitRepositoryList}

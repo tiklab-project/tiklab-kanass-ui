@@ -17,32 +17,35 @@ import TestRepositoryStore from "../store/TestRepositoryStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import {SettingOutlined} from "@ant-design/icons";
+import TestPlanAdd  from "./TestPlanAdd";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
     }
     const { findSystemUrl,
         testCaseList, testCaseCondition,
+        testPlanList, testPlanCondition,
+        findProjectTestRepositoryPlanPage, deleteProjectTestRepositoryPlan,
         findWorkTestCasePage, deleteWorkTestCase
     } = TestRepositoryStore;
 
     const projectId = props.match.params.id;
     const [testhuboUrl, setTesthuboUrl] = useState([]);
-
+    const [planList, setPlanList] = useState([]);
 
     const changePage = (currentPage) => {
         const value = {
             pageParam: {
 
-                ...testCaseCondition.pageParam,
+                ...testPlanCondition.pageParam,
                 currentPage: currentPage
             }
 
         }
-        findWorkTestCasePage(value).then(res => {
+        findProjectTestRepositoryPlanPage(value).then(res => {
             if (res.code === 0) {
                 console.log(res.data)
+                setPlanList(res.data.dataList)
             }
 
         })
@@ -53,6 +56,18 @@ const TestRepository = (props) => {
         deleteWorkTestCase({ id: id }).then(res => {
             if (res.code === 0) {
                 findWorkTestCasePage({ projectId: projectId })
+            }
+        })
+    }
+
+    const deleteTestPlan = (id) => {
+        deleteProjectTestRepositoryPlan(id).then(res => {
+            if (res.code === 0) {
+                findProjectTestRepositoryPlanPage({ projectId: projectId }).then(res => {
+                    if (res.code === 0){
+                        setPlanList(res.data.dataList)
+                    }
+                })
             }
         })
     }
@@ -100,10 +115,10 @@ const TestRepository = (props) => {
         })
     }
 
-    const testCaseColumns = [
+    const testPlanColumns = [
         {
             title: "标题",
-            dataIndex: ["projectTestCase", "testCaseName"],
+            dataIndex: ["testPlan", "name"],
             key: "name",
             width: "20%",
             render: (text, record) => (
@@ -114,34 +129,45 @@ const TestRepository = (props) => {
                         </svg>
                     </div>
 
-
-                    <span onClick={() => goCaseDetail(record.projectTestCase)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                    {text}
+                    {/*<span onClick={() => goCaseDetail(record.projectTestCase)} className={`${record.exist ? "span-botton" : ""}`} >{</span>*/}
                 </div>
 
             ),
         },
         {
-            title: "目录",
-            dataIndex: ["projectTestCase", "testCategoryName"],
-            key: "testCaseName",
-            width: 150
+            title: "开始时间",
+            dataIndex: ["testPlan","startTime"],
+            key: "startTime",
+            width: 150,
+            render:(text, record) => {
+                return text.substring(0, 10)
+            }
         },
         {
-            title: "仓库",
-            dataIndex: ["projectTestCase", "repository", "name"],
+            title: "结束时间",
+            dataIndex: ["testPlan","endTime"],
+            key: "endTime",
+            width: 150,
+            render:(text, record) => {
+                return text.substring(0, 10)
+            }
+        },
+        {
+            title: "状态",
+            dataIndex: ["testPlan", "state"],
+            key: "state",
+            width: 150,
+            render: (text, record) =>
+                <div className={`plan-state ${setStatuStyle(record.testPlan.state)}`}>
+                    {text === 0 ? "未开始" : text === 1 ? "进行中" : "结束"}
+                </div>
+
+        },
+        {
+            title: "项目",
+            dataIndex: ["testRepository", "testRepositoryName"],
             key: "repository",
-            width: 150
-        },
-        {
-            title: "作者",
-            dataIndex: ["projectTestCase", "createUser"],
-            key: "createUser",
-            width: 150
-        },
-        {
-            title: "关联事项",
-            dataIndex: ["workItem", "title"],
-            key: "workItem",
             width: 150
         },
         {
@@ -150,20 +176,51 @@ const TestRepository = (props) => {
             key: 'action',
             width: "10%",
             render: (text, record) => (
-                <DeleteModal deleteFunction={delectTestCase} id={record.id} getPopupContainer={testRepository.current} />
+                <DeleteModal deleteFunction={deleteTestPlan} id={record.id} getPopupContainer={testRepository.current} />
             ),
         }
     ];
+
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case 0:
+                name = "state-todo";
+                break;
+            case 1:
+                name = "state-process";
+                break;
+            case 2:
+                name = "state-done";
+                break;
+            default:
+                name = "state-process";
+                break;
+        }
+        return name;
+    }
     // 初始化
     useEffect(() => {
 
-        findWorkTestCasePage({ projectId: projectId })
+        // findWorkTestCasePage({ projectId: projectId })
+        findProjectTestRepositoryPlanPage({ projectId: projectId }).then(res => {
+            if (res.code === 0) {
+                console.log(JSON.stringify(res.data));
+                setPlanList(res.data.dataList)
+            }
+        })
         findSystemUrl({ name: "testhubo" }).then(res => {
             if (res.code === 0) {
                 setTesthuboUrl(res.data)
             }
         })
     }, []);
+
+    const [planVisible, setPlanVisible] = useState(false);
+
+    const addTestPlan = () => {
+        setPlanVisible(true);
+    }
 
 
     const testRepository = useRef(null)
@@ -174,21 +231,22 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
                         <div style={{marginBottom: "24px"}}>
                             <Breadcumb firstText="测试">
-                                <span
-                                    className="link-text"
-                                    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
-                                    style={{cursor: 'pointer'}}
-                                >
-                                    <SettingOutlined style={{marginRight: '5px'}}/>
-                                    关联用例库
-                                </span>
+                                {/*<span*/}
+                                {/*    className="link-text"*/}
+                                {/*    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}*/}
+                                {/*    style={{cursor: 'pointer'}}*/}
+                                {/*>*/}
+                                {/*    <SettingOutlined style={{marginRight: '5px'}}/>*/}
+                                {/*    关联用例库*/}
+                                {/*</span>*/}
+                                <Button type={"primary"} onClick={addTestPlan}>关联测试计划</Button>
                             </Breadcumb>
 
                         </div>
 
                         {
                             testhuboUrl.length <= 0 && <Alert
-                                message="没有用例库地址，请去添加"
+                                message="没有项目地址，请去添加"
                                 type="info"
                                 action={
                                     <Space>
@@ -204,8 +262,9 @@ const TestRepository = (props) => {
 
                         <div>
                             <Table
-                                columns={testCaseColumns}
-                                dataSource={testCaseList}
+                                columns={testPlanColumns}
+                                // dataSource={testCaseList}
+                                dataSource={planList}
                                 rowKey={(record) => record.id}
                                 pagination={false}
                                 onChange={false}
@@ -219,12 +278,16 @@ const TestRepository = (props) => {
                                 showRefer={false}
                             />
                         </div>
-
-
-
                     </div>
                 </Col>
             </Row>
+            <TestPlanAdd
+                planVisible={planVisible}
+                setPlanVisible={setPlanVisible}
+                projectId={projectId}
+                setPlanList={setPlanList}
+                testRepositoryStore={TestRepositoryStore}
+            />
         </div>
         </Provider>
 

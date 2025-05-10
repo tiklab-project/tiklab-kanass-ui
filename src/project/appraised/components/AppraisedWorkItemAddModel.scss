@@ -1,22 +1,22 @@
-@media (max-width: 768px) {
-  .work-add-page {
-    height: calc(100% - 20px);
-  }
-}
-
-/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
-@media (min-width: 769px) and (max-width: 1280px) {
-  .work-add-page {
-    height: calc(100% - 60px);
-  }
-}
-
-/* 在分辨率大于 1024px 时应用的样式 */
-@media (min-width: 1280px) {
-  .work-add-page {
-    height: 80%;
-  }
-}
+//@media (max-width: 768px) {
+//  .work-add-page {
+//    height: calc(100% - 20px);
+//  }
+//}
+//
+///* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
+//@media (min-width: 769px) and (max-width: 1280px) {
+//  .work-add-page {
+//    height: calc(100% - 60px);
+//  }
+//}
+//
+///* 在分辨率大于 1024px 时应用的样式 */
+//@media (min-width: 1280px) {
+//  .work-add-page {
+//    height: 80%;
+//  }
+//}
 
 .work-add-page {
   gap: 20px;
@@ -112,7 +112,7 @@
     // padding: 0 15px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    //height: 100%;
 
     .work-add-page-title {
       font-size: var(--tiklab-font-16);
