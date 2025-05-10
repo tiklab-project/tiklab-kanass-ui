@@ -176,15 +176,16 @@
               .work-item-date {
                 font-size: 12px;
                 color: #999;
-                min-width: 90px;
+                //min-width: 90px;
+                width: max-content;
                 text-align: center;
                 line-height: normal;
                 margin-top: 5px;
-                margin-left: 15px;
+                //margin-left: 15px;
 
                 background: #f5f5f5;
                 border-radius: 10px;
-                padding: 1px 2px;
+                padding: 2px 8px;
                 display: inline-block;
               }
               .work-item-bottom {
