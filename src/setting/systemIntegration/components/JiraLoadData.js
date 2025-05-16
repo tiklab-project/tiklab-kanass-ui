@@ -84,10 +84,12 @@ const LoadData = (props) => {
             }
         })
     }
+    // 上传附件的信息
+    const upload_url = env === "local" ? base_url : "";
     const domain = window.location.host;
     const uploadProps = {
         name: 'uploadFile',
-        action: `${base_url}/importDate/importJireDate`,
+        action: `${upload_url}/importDate/importJireDate`,
         headers: {
             ticket: ticket,
             tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null
