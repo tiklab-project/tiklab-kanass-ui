@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Spin, Table} from 'antd';
+import {Col, Row, Spin, Table} from 'antd';
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
 import "./WorkItemTimePage.scss"
 import InputSearch from "../../../common/input/InputSearch";
@@ -12,17 +12,20 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import LineMapStore from "../store/LineMapStore";
 
 const WorkItemTimePage = (props) => {
 
     const store = {
         epicStore: EpicStore,
-        workStore: WorkStore
+        workStore: WorkStore,
+        lineMapStore: LineMapStore
     }
 
     const { findWorkTypeDmList } = EpicStore;
     const { createRecent, setWorkId, setWorkIndex,
         findWorkItemList, deleteWorkItem} = WorkStore;
+    const { lineMapView , setLineMapView} = LineMapStore;
     // 项目id
     const projectId = props.match.params.id;
     const [workTypeList, setWorkTypeList] = useState();
@@ -266,64 +269,87 @@ const WorkItemTimePage = (props) => {
         })
      }
 
+     const onChange = (view) => {
+         setLineMapView(view);
+     }
+
     return <Provider {...store}>
-        <div className="work-item-time-page">
-            <div className="top-action">
-                <InputSearch
-                    placeholder="搜索需求"
-                    allowClear
-                    onChange={onSearch}
-                />
-                <div className="top-action-right">
-                    <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
-                </div>
-            </div>
-            {
-                loading ? <Spin /> :
-                    <div style={{
-                        background: '#fff',
-                        borderRadius: 8,
-                        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
-                        overflow: 'hidden',
-                        height: 1000, // 固定高度
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
-
-                        <div className="header-table">
-                            <Table
-                                columns={columns}
-                                rowKey={'header'}
-                                pagination={false}
-                                showHeader={true}
-                                style={{ border: 'none' }}
-                                locale={{ Empty: {description:null} }} // 禁用空数据提示
-                            />
-                        </div>
-
-                        <div className="content-table">
-                            {
-                                groupedData.map((group) => (
-                                    <div key={group.month}>
-                                        {renderGroupTitle(group)}
-                                        {expandedGroups[group.month] && (
-                                            <Table
-                                                columns={columns}
-                                                dataSource={group.items}
-                                                rowKey="id"
-                                                pagination={false}
-                                                showHeader={false}
-                                                style={{ border: 'none' }}
-                                                // rowClassName={() => 'grouped-table-row'}
-                                            />
-                                        )}
-                                    </div>
-                                ))
-                            }
+        <Row>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
+                <div className="project-linemap">
+                    <div className="project-linemap-head">
+                        <div className="project-linemap-title">路线图</div>
+                        <div className="line-map-tab">
+                            <div className={`tab-tabpane ${lineMapView === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
+                                按状态
+                            </div>
+                            <div className={`tab-tabpane ${lineMapView === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>
+                                按时间
+                            </div>
                         </div>
                     </div>
-            }
-        </div>
+
+                </div>
+                <div className="work-item-time-page">
+                    <div className="top-action">
+                        <InputSearch
+                            placeholder="搜索需求"
+                            allowClear
+                            onChange={onSearch}
+                        />
+                        <div className="top-action-right">
+                            <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
+                        </div>
+                    </div>
+                    {
+                        loading ? <Spin /> :
+                            <div style={{
+                                background: '#fff',
+                                borderRadius: 8,
+                                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+                                overflow: 'hidden',
+                                height: 1000, // 固定高度
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}>
+
+                                <div className="header-table">
+                                    <Table
+                                        columns={columns}
+                                        rowKey={'header'}
+                                        pagination={false}
+                                        showHeader={true}
+                                        style={{ border: 'none' }}
+                                        locale={{ Empty: {description:null} }} // 禁用空数据提示
+                                    />
+                                </div>
+
+                                <div className="content-table">
+                                    {
+                                        groupedData.map((group) => (
+                                            <div key={group.month}>
+                                                {renderGroupTitle(group)}
+                                                {expandedGroups[group.month] && (
+                                                    <Table
+                                                        columns={columns}
+                                                        dataSource={group.items}
+                                                        rowKey="id"
+                                                        pagination={false}
+                                                        showHeader={false}
+                                                        style={{ border: 'none' }}
+                                                        // rowClassName={() => 'grouped-table-row'}
+                                                    />
+                                                )}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                    }
+                </div>
+            </Col>
+        </Row>
+
 
         <WorkDetailDrawer
             isModalVisible={isModalVisible}

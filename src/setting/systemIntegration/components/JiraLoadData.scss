@@ -1,6 +1,13 @@
 .load {
     padding: var(--tiklab-padding);
 }
+.load-step{
+    padding-top: 5px;
+    padding-bottom: 15px;
+    .ant-steps-item-icon{
+        padding-top: 7px;
+    }
+}
 .load-jira {
     padding: 20px;
     border-radius: 10px;

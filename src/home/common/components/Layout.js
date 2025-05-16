@@ -38,6 +38,7 @@ const Layout = (props) => {
     }, [])
 
 
+    // 外层的路由：只有下面的路由才展示侧边栏
     const showFirstMenuPaths = [
         '/index/overview',
         '/index/todoList',
@@ -46,6 +47,9 @@ const Layout = (props) => {
         '/projectSet',
         '/workitem',
         '/log/list',
+        '/log/statistic/projectuser',
+        '/log/statistic/projectwork',
+        '/log/statistic/userproject',
         '/workitem/:id'
     ];
 

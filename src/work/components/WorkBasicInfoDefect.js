@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-26 10:07:25
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Form, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty } from "antd";
+import {Form, Upload, message, Table, DatePicker, Select, InputNumber, Space, Empty, Tooltip} from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
 import { getUser } from 'tiklab-core-ui';
 import { observer, inject } from "mobx-react";
@@ -265,6 +265,7 @@ const WorkBasicInfo = (props) => {
             title: '文件类型',
             dataIndex: "type",
             key: 'type',
+            render: (text) => <Tooltip title={text}>{text.length >= 32 ? text.substring(0, 32) + "..." : text}</Tooltip>
         },
         {
             title: '操作',

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 16:29:07
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { Upload, message, Button, Row, Col, Progress } from 'antd';
+import {Upload, message, Button, Row, Col, Progress, Steps} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import "./JiraLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -21,11 +21,32 @@ const LoadData = (props) => {
     const [percent, setPercent] = useState(0);
     const [loading, setLoading] = useState(false)
     let [timer, setTimerS] = useState()
+    // 节点状态 finish结束、error失败、wait等待、process进行中
+    const [step0, setStep0] = useState({
+        key: "0",
+        title: "上传文件",
+        status: "process"
+    })
+    const [step1, setStep1] = useState({
+        key: "1",
+        title: "校验版本",
+        status: "wait"
+    })
+    const [step2, setStep2] = useState({
+        key: "2",
+        title: "解析数据",
+        status: "wait"
+    })
+    const [step3, setStep3] = useState({
+        key: "3",
+        title: "开始导入",
+        status: "wait"
+    })
+
     // let timer;
     useEffect(() => {
         return () => clearInterval(timer)
-    }
-        , [])
+    }, [])
 
     const getJiraInputSchedule = () => {
         findJiraInputSchedule().then(res => {
@@ -38,6 +59,12 @@ const LoadData = (props) => {
                     setPercent(rr);
                     
                 }
+
+                setStep0({...step0, status: res.data.step.step0});
+                setStep1({...step1, status: res.data.step.step1});
+                setStep2({...step2, status: res.data.step.step2});
+                setStep3({...step3, status: res.data.step.step3});
+
                 if (res.data.status === 1) {
                     clearInterval(timer);
                     setLoading(false)
@@ -47,6 +74,10 @@ const LoadData = (props) => {
                     clearInterval(timer);
                     setLoading(false)
                     message.error("导入失败")
+                    // setStep0({...step0, status: res.data.step.step0});
+                    setStep1({...step1, status: "wait"});
+                    setStep2({...step2, status: "wait"});
+                    setStep3({...step3, status: "wait"});
                 }
                 // setPercent(3 / 10);
                 setCurrentSchedule(currentSchedule)
@@ -88,20 +119,34 @@ const LoadData = (props) => {
         //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
         <div className="load">
             <Breadcumb
-                firstText="jira集成"
+                firstText="JIRA导入"
             />
+            <div className="load-step">
+                <Steps>
+                    <Steps.Step key={step0.key} title={step0.title} status={step0.status} />
+                    <Steps.Step key={step1.key} title={step1.title} status={step1.status} />
+                    <Steps.Step key={step2.key} title={step2.title} status={step2.status} />
+                    <Steps.Step key={step3.key} title={step3.title} status={step3.status} />
+                </Steps>
+            </div>
             <div className="load-jira">
                 <div>从本地文件导入Jira数据</div>
                 <div className="load-box">
                     上传Jira zip包：
                     <Upload {...uploadProps}>
-                        <Button icon={<UploadOutlined />}>导入jira数据</Button>
+                        <Button icon={<UploadOutlined />}>导入Jira数据</Button>
                     </Upload>
                 </div>
+                <div>
+                    目前支持的版本为9.4.0、8.4.1，其他版本导入可能会丢失部分数据
+                </div>
+                <div>
+                    注意：附件的导入需要手动将/var/atlassian/application-data/jira/data下的/attachment文件夹添加到zip包中
+                </div>
                 {
-                    loading && <div className="load-precess">
+                    step2.status === "process" && loading && <div className="load-precess">
                         <Progress percent={percent} showInfo={false} />
-                        <div className="load-precess-text"> 当前解析项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
+                        <div className="load-precess-text"> 当前导入项目：<span className="load-precess-name">{currentSchedule.project?.projectName}</span>  <span>{currentSchedule.currentNum} / {currentSchedule.total}</span></div>
                     </div>
                 }
             </div>

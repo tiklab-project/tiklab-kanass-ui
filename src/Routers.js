@@ -452,12 +452,12 @@ const Routers = [
                         row: true,
                         exact: true
                     },
-                    {
-                        path: "/setting/fieldType",
-                        component: ProjectProjectDirectory,
-                        row: true,
-                        exact: true
-                    },
+                    // { 隐藏字段类型
+                    //     path: "/setting/fieldType",
+                    //     component: ProjectProjectDirectory,
+                    //     row: true,
+                    //     exact: true
+                    // },
                     {
                         path: "/setting/preliminaryTypeSys",
                         component: ProjectProjectDirectorySys,

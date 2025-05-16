@@ -185,11 +185,16 @@ const SprintSurvey = (props) => {
                 id: value
             }
         }
-        updateSprint(param).then(res => {
-            findSprint({ sprintId: sprintId }).then(res => {
-                setSprintInfo(res.data)
+        // 如果关闭迭代
+        if (value === "222222"){
+            changeStateToEnd();
+        }else {
+            updateSprint(param).then(res => {
+                findSprint({ sprintId: sprintId }).then(res => {
+                    setSprintInfo(res.data)
+                })
             })
-        })
+        }
     }
 
     return (

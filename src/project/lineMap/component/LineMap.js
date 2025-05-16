@@ -24,6 +24,27 @@ const Linemap = (props) => {
     // 当前显示路线图类型，迭代或版本
     const [type, setType] = useState("workItemTime");
 
+    const { lineMapView } = LineMapStore;
+    /**
+     * 根据页面显示类型加载页面
+     * @returns 页面
+     */
+    const view = () => {
+        let dom = <WorkItemStatusPage />;
+        switch (lineMapView) {
+            case "workItemStatus":
+                dom = <WorkItemStatusPage />;
+                break;
+            case "workItemTime":
+                dom = <WorkItemTimePage />;
+                break;
+            default:
+                dom = <WorkItemStatusPage />;
+                break;
+        }
+        // console.log(JSON.stringify(props.route));
+        return dom;
+    }
 
 
     /**
@@ -36,53 +57,34 @@ const Linemap = (props) => {
 
     return (
         <Provider {...store}>
-            <Row>
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
-                    <div className="project-linemap">
-                        <div className="project-linemap-head">
-                            <div className="project-linemap-title">路线图</div>
-                            <div className="line-map-tab">
-                                {/*<div className={`tab-tabpane ${type === "sprint" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("sprint")}>*/}
-                                {/*    迭代*/}
-                                {/*</div>*/}
-                                {/*<div className={`tab-tabpane ${type === "version" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("version")}>*/}
-                                {/*    版本*/}
-                                {/*</div>*/}
-                                <div className={`tab-tabpane ${type === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
-                                    按状态
-                                </div>
-                                <div className={`tab-tabpane ${type === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>
-                                    按时间
-                                </div>
-                                {/*<div className={`tab-tabpane ${type === "epic" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("epic")}>*/}
-                                {/*    需求池*/}
-                                {/*</div>*/}
-                            </div>
-                        </div>
+            {view()}
+            {/*<Row>*/}
+            {/*    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>*/}
+            {/*        <div className="project-linemap">*/}
+            {/*            <div className="project-linemap-head">*/}
+            {/*                <div className="project-linemap-title">路线图</div>*/}
+            {/*                <div className="line-map-tab">*/}
+            {/*                    <div className={`tab-tabpane ${type === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>*/}
+            {/*                        按状态*/}
+            {/*                    </div>*/}
+            {/*                    <div className={`tab-tabpane ${type === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>*/}
+            {/*                        按时间*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
 
-                        {
-                            type === "sprint" &&
-                            <SprintPage />
-                        }
-                        {
-                            type === "version" &&
-                            <VersionPage />
-                        }
-                        {
-                            type === "workItemStatus" &&
-                            <WorkItemStatusPage />
-                        }
-                        {
-                            type === "workItemTime" &&
-                            <WorkItemTimePage />
-                        }
-                        {
-                            type === "epic" &&
-                            <EpicPage />
-                        }
-                    </div>
-                </Col>
-            </Row>
+            {/*        </div>*/}
+            {/*    </Col>*/}
+            {/*</Row>*/}
+            {/*{*/}
+            {/*    type === "workItemTime" &&*/}
+            {/*    <WorkItemTimePage />*/}
+            {/*}*/}
+            {/*{*/}
+            {/*    type === "workItemStatus" &&*/}
+            {/*    <WorkItemStatusPage />*/}
+            {/*}*/}
+
 
         </Provider>
 

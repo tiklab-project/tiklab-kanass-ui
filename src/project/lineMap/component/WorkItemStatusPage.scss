@@ -139,17 +139,20 @@
               cursor: pointer;
               display: flex;
               flex-direction: column;
-              gap: 8px;
+              //gap: 8px;
+              width: 100%;
 
               .work-item-content {
                 display: flex;
                 align-items: center; /* 让 Img 和文字垂直居中 */
                 gap: 8px; /* 调整 Img 和文字的间距 */
+                width: 100%;
 
                 .work-item-text {
                   display: flex;
                   flex-direction: column; /* 让 code 和 title 垂直排列 */
                   line-height: 1.5; /* 调整行高 */
+                  min-width: 0;
 
                   .work-item-code{
                     font-family: monospace;
@@ -163,7 +166,7 @@
                   .work-item-name {
                     font-size: 15px;
                     font-weight: 500;
-                    width: 100%;
+                    //width: 100%;
                     color: var(--tiklab-black);
                     flex-grow: 1;
                     white-space: nowrap;

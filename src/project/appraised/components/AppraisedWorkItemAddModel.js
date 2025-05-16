@@ -172,16 +172,14 @@ const AppraisedWorkItemAddModel = (props) => {
             footer={null}
             maskClosable={false}
         >
-            {/*<Row >*/}
-            {/*    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>*/}
-                    <div className="work-add-page">
+            <div className="work-add-page">
                         <div className="appraised-filter">
                             {/*<div className="appraised-tabs">*/}
                             {/*    <p>关联需求</p>*/}
                             {/*</div>*/}
                             <div className="appraised-filter-right">
                                 <InputSearch
-                                    placeholder="搜索事项"
+                                    placeholder="搜索需求"
                                     allowClear
                                     style={{ width: 200 }}
                                     onChange={onSearch}
@@ -189,35 +187,33 @@ const AppraisedWorkItemAddModel = (props) => {
                             </div>
                         </div>
                         <div className="work-add-page-content">
-                            <Table
-                                className={"appraised-table-box"}
-                                columns={columns}
-                                rowSelection={rowSelection}
-                                dataSource={canConnectWorkItemList}
-                                rowKey={(record) => record.id}
-                                pagination={{
-                                    total: workItemTotal,
-                                    pageSize: workItemSearchCondition?.pageParam?.pageSize,
-                                    current: workItemSearchCondition?.pageParam?.currentPage,
-                                    onChange: changePage,
-                                    position: ["bottomCenter"],
-                                    hideOnSinglePage: true,
-                                    simple: true
-                                }}
-                                onSearch={onSearch}
-                                scroll={{ x: "100%" }}
-                            >
-                            </Table>
+                            <div className="work-add-table">
+                                <Table
+                                    className={"appraised-table-box"}
+                                    columns={columns}
+                                    rowSelection={rowSelection}
+                                    dataSource={canConnectWorkItemList}
+                                    rowKey={(record) => record.id}
+                                    pagination={{
+                                        total: workItemTotal,
+                                        pageSize: workItemSearchCondition?.pageParam?.pageSize,
+                                        current: workItemSearchCondition?.pageParam?.currentPage,
+                                        onChange: changePage,
+                                        position: ["bottomCenter"],
+                                        hideOnSinglePage: true,
+                                        simple: true
+                                    }}
+                                    onSearch={onSearch}
+                                    scroll={{ x: "100%" }}
+                                >
+                                </Table>
+                            </div>
                             <div className="work-add-button">
                                 <Button type="primary" onClick={() => onFinish()}>创建</Button>
                                 <Button onClick={() => handleCancel()}>取消</Button>
                             </div>
                         </div>
                     </div>
-
-            {/*    </Col>*/}
-            {/*</Row>*/}
-
         </Modal>
     )
 }

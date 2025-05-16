@@ -11,6 +11,14 @@ import {Service} from "../../../common/utils/requset"
 export class LineMapStore {
     @observable sprintRoadList = [];
     @observable versionRoadList = [];
+
+    @observable lineMapView = localStorage.getItem("lineMapView") ? localStorage.getItem("lineMapView") : "workItemStatus"
+
+    @action
+    setLineMapView = (type) => {
+        localStorage.setItem("lineMapView", type)
+        this.lineMapView = type;
+    }
     /**
      * 获取迭代路线图
      * @param {项目id} projectId 

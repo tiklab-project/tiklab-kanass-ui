@@ -207,11 +207,16 @@ const VersionSurvey = (props) => {
                 id: value
             }
         }
-        updateVersion(param).then(res => {
-            findVersion({ versionId: versionId }).then(res => {
-                setVersionInfo(res.data)
+        // 如果关闭版本
+        if (value === "222222"){
+            changeStateToEnd();
+        }else {
+            updateVersion(param).then(res => {
+                findVersion({ versionId: versionId }).then(res => {
+                    setVersionInfo(res.data)
+                })
             })
-        })
+        }
     }
     
     return (
