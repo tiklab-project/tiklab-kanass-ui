@@ -431,13 +431,13 @@ const setPrdRouter= [
         purviewCode: "SysForm",
         code: "SysForm",
         children: [
-            
-            {
-                title: '字段类型',
-                id: '/setting/fieldType',
-                purviewCode: "SysFieldType",
-                code: "fieldType",
-            },
+
+            //     title: '字段类型',
+            //     id: '/setting/fieldType',
+            //     purviewCode: "SysFieldType",
+            //     code: "fieldType",
+            // },
+            // {
             {
                 title: '字段',
                 id: '/setting/preliminary',
