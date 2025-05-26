@@ -24,7 +24,7 @@ import "./WorkDetailBottom.scss";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
-        tabValue, setTabValue, closeModal } = props;
+        tabValue, setTabValue, closeModal, workDetailMetaData, setWorkDetailMetaData } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
@@ -82,6 +82,8 @@ const WorkDetailBottom = (props) => {
                         {...props}
                         workInfo={workInfo}
                         setWorkInfo={setWorkInfo}
+                        workDetailMetaData={workDetailMetaData}
+                        setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
                     />;
@@ -91,6 +93,8 @@ const WorkDetailBottom = (props) => {
                         {...props}
                         workInfo={workInfo}
                         setWorkInfo={setWorkInfo}
+                        workDetailMetaData={workDetailMetaData}
+                        setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
                     />
@@ -99,6 +103,8 @@ const WorkDetailBottom = (props) => {
                         {...props}
                         workInfo={workInfo}
                         setWorkInfo={setWorkInfo}
+                        workDetailMetaData={workDetailMetaData}
+                        setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
                     />
@@ -107,6 +113,8 @@ const WorkDetailBottom = (props) => {
                         {...props}
                         workInfo={workInfo}
                         setWorkInfo={setWorkInfo}
+                        workDetailMetaData={workDetailMetaData}
+                        setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
                     />

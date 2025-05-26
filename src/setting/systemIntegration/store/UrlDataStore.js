@@ -37,6 +37,12 @@ export class UrlDataStore {
         const data = await Service("/importDate/findJiraInputSchedule");
         return data;
     }
+
+    @action
+    findMantisInputSchedule = async () => {
+        const data = await Service("/importDate/findMantisInputSchedule");
+        return data;
+    }
 }
 
 export default new UrlDataStore();

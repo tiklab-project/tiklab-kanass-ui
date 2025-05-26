@@ -139,7 +139,8 @@ const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/ba
 const ProjectSetStatistics = AsyncComponent(() => import("./projectSet/statistics/ProjectSetStatistics"))
 
 // 导入外部数据
-const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
+const JiraLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
+const MantisLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/MantisLoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
 const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
@@ -617,8 +618,13 @@ const Routers = [
                         exact: true
                     },
                     {
-                        path: "/setting/loadData",
-                        component: LoadData,
+                        path: "/setting/jiraLoadData",
+                        component: JiraLoadData,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/mantisLoadData",
+                        component: MantisLoadData,
                         exact: true
                     },
                     {

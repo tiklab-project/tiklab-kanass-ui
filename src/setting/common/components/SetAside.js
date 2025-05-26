@@ -59,6 +59,7 @@ const SetAside = (props) => {
     useEffect(() => {
         if (env === "local") {
             setRouterMenu(setDevRouter)
+            console.log(JSON.stringify(setDevRouter))
         }
         if (env !== "local") {
             setRouterMenu(setPrdRouter)

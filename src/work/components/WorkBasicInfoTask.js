@@ -59,7 +59,7 @@ const WorkBasicInfo = (props) => {
         wrapperCol: { xs: { span: 20 }, sm: { span: 20 }, md: { span: 20 }, lg: { span: 20 }, xl: { span: 20 }, xxl: { span: 22 } },
     };
 
-    const { workStore, workInfo, setWorkInfo } = props;
+    const { workStore, workInfo, setWorkInfo, workDetailMetaData, setWorkDetailMetaData } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
@@ -136,22 +136,25 @@ const WorkBasicInfo = (props) => {
     useEffect(() => {
         // 查找flow关联的form
         const flowId = workInfo.workType.flow.id;
-        // 查找流程
-        findFlow({ id: flowId })
+        // // 查找流程
+        // findFlow({ id: flowId })
+        //
+        // //根据事项类型，获取自定义表单字段
+        // findFormConfig({ id: workInfo.workType.form.id })
+        //
+        // // 查找缺陷类型的选项值
+        // findFieldList({ code: "taskType" }).then(res => {
+        //     if (res.code === 0) {
+        //         setSelectItemList(res.data[0].selectItemList)
+        //         setEachTypeField(res.data[0])
+        //     }
+        // })
 
-        //根据事项类型，获取自定义表单字段
-        findFormConfig({ id: workInfo.workType.form.id })
+        setSelectItemList(workDetailMetaData.fieldList[0][0].selectItemList)
+        setEachTypeField(workDetailMetaData.fieldList[0][0])
 
-        // 查找缺陷类型的选项值
-        findFieldList({ code: "taskType" }).then(res => {
-            if (res.code === 0) {
-                setSelectItemList(res.data[0].selectItemList)
-                setEachTypeField(res.data[0])
-            }
-        })
-
-        // 查找附件列表
-        findWorkAttachList(workInfo.id)
+        // // 查找附件列表
+        // findWorkAttachList(workInfo.id)
 
         // 清空表单
         detailForm.resetFields()
@@ -169,20 +172,22 @@ const WorkBasicInfo = (props) => {
             workTypeId: workInfo.workType.id
         }
 
-        // 查找能被设置为上级的事项列表
-        findCanBeRelationParentWorkItemList(params).then(res => {
-            if (res.code === 0) {
-                setParentList(res.data.dataList);
-            }
-        })
+        // // 查找能被设置为上级的事项列表
+        // findCanBeRelationParentWorkItemList(params).then(res => {
+        //     if (res.code === 0) {
+        //         setParentList(res.data.dataList);
+        //     }
+        // })
 
-        //根据id 或者事项标题查找可被关联成的前置事项列表
-        findCanBeRelationPerWorkItemList(params).then(res => {
-            if (res.code === 0) {
-                setPreWorkList(res.data.dataList);
-            }
-        })
+        setParentList(workDetailMetaData.canBeRelationParentWorkItemList);
 
+        // //根据id 或者事项标题查找可被关联成的前置事项列表
+        // findCanBeRelationPerWorkItemList(params).then(res => {
+        //     if (res.code === 0) {
+        //         setPreWorkList(res.data.dataList);
+        //     }
+        // })
+        setPreWorkList(workDetailMetaData.canBeRelationPerWorkItemList);
 
         return null;
     }, [workInfo])
@@ -807,6 +812,7 @@ const WorkBasicInfo = (props) => {
                                     <WorkDetailSelect
                                         selectList={sprintList}
                                         workId={workId}
+                                        workDetailMetaData={workDetailMetaData}
                                         sprint={workInfo?.sprint}
                                         hoverFieldName={hoverFieldName}
                                         setHoverFieldName={setHoverFieldName}
@@ -984,6 +990,7 @@ const WorkBasicInfo = (props) => {
                                 <WorkDetailVersionSelect
                                     selectList={selectVersionList}
                                     workId={workId}
+                                    workDetailMetaData={workDetailMetaData}
                                     version={workInfo?.projectVersion}
                                     hoverFieldName={hoverFieldName}
                                     setHoverFieldName={setHoverFieldName}

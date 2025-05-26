@@ -40,7 +40,8 @@ const WorkDetail = (props) => {
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
-        findSelectVersionList, haveChildren, findStageList, findWorkItemRoleFunctionDmCode, permissionFieldList
+        findSelectVersionList, haveChildren, findStageList, findWorkItemRoleFunctionDmCode, permissionFieldList,
+        findWorkItemDetailMetaData
     } = workStore;
     const [detailCrumbArray, setDetailCrumbArray] = useState(getSessionStorage("detailCrumbArray"));
     const projectId = props.match.params.id;
@@ -56,30 +57,27 @@ const WorkDetail = (props) => {
     const workDetailTop = useRef();
     const [relationModalNum, setRelationModalNum] = useState();
     const [tabValue, setTabValue] = useState(1);
+    const [workDetailMetaData, setWorkDetailMetaData] = useState();
 
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
 
     const getWorkDetail = (id) => {
         setInfoLoading(true)
-        searchWorkById(id).then((res) => {
+        findWorkItemDetailMetaData(id).then((result) => {
             setInfoLoading(false)
             setTabValue(1)
-            if (res) {
-                setWorkInfo(res)
-                // 获取选项列表
-                const projectId = res.project.id
-                getWorkTypeList({ projectId: projectId });
-                getModuleList(projectId)
-                findSprintList(projectId)
-                getSelectUserList(projectId);
-                findSelectVersionList(projectId)
+            if (result){
+                setWorkDetailMetaData(result.data);
+                const res = result.data.workItem;
+                setWorkInfo(res);
 
-                findStageList({ projectId: projectId })
-
-                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
                 setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
                 setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
+
+
+                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+
                 findWorkItemRelationModelCount({ workItemId: res.id, workTypeCode: res.workTypeCode }).then(res => {
                     if (res.code === 0) {
                         setRelationModalNum(res.data)
@@ -104,9 +102,54 @@ const WorkDetail = (props) => {
                     setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
                     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
                 }
-
             }
         })
+        //
+        // searchWorkById(id).then((res) => {
+        //     setInfoLoading(false)
+        //     setTabValue(1)
+        //     if (res) {
+        //         setWorkInfo(res)
+        //         // 获取选项列表
+        //         const projectId = res.project.id
+        //         getWorkTypeList({ projectId: projectId });
+        //         getModuleList(projectId)
+        //         findSprintList(projectId)
+        //         getSelectUserList(projectId);
+        //         findSelectVersionList(projectId)
+        //
+        //         findStageList({ projectId: projectId })
+        //
+        //         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+        //         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
+        //         setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
+        //         findWorkItemRelationModelCount({ workItemId: res.id, workTypeCode: res.workTypeCode }).then(res => {
+        //             if (res.code === 0) {
+        //                 setRelationModalNum(res.data)
+        //             }
+        //         })
+        //
+        //         // 获取字段权限
+        //         // 获取表单字段权限
+        //         const data = {
+        //             workTypeId: res.workType.id,
+        //             workId: workId,
+        //             userId: userId,
+        //             domainId:projectId
+        //         }
+        //         findWorkItemRoleFunctionDmCode(data).then(res => {
+        //             if(res.code === 0){
+        //                 console.log(res.data)
+        //             }
+        //         })
+        //
+        //         if (props.match.path === "/project/:id/work/:workId") {
+        //             setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
+        //             setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+        //         }
+        //
+        //     }
+        // })
     }
 
     useEffect(() => {
@@ -120,6 +163,7 @@ const WorkDetail = (props) => {
     
             }
             if (id === 0) {
+                setWorkDetailMetaData(null);
                 setWorkInfo(null)
                 setInfoLoading(false)
             }
@@ -129,6 +173,7 @@ const WorkDetail = (props) => {
 
     useEffect(() => {
         setWorkInfo()
+        setWorkDetailMetaData();
         if (props.match.path !== "/project/:id/work/:workId" && props.match.path !== "/:id/version/:version/work/:workId"
             && props.match.path !== "/:id/sprint/:sprint/work/:workId") {
                 if (workId && workId.length > 0) {
@@ -137,6 +182,7 @@ const WorkDetail = (props) => {
         
                 }
                 if (workId === 0) {
+                    setWorkDetailMetaData(null);
                     setWorkInfo(null)
                     setInfoLoading(false)
                 }
@@ -390,6 +436,8 @@ const WorkDetail = (props) => {
                                                         <WorkDetailBottom
                                                             workInfo={workInfo}
                                                             setWorkInfo={setWorkInfo}
+                                                            workDetailMetaData={workDetailMetaData}
+                                                            setWorkDetailMetaData={setWorkDetailMetaData}
                                                             getWorkDetail={getWorkDetail}
                                                             workDeatilForm={workDeatilForm}
                                                             relationModalNum={relationModalNum}

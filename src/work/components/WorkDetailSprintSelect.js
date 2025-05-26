@@ -12,7 +12,7 @@ import { Empty, Modal } from "antd";
 import Button from "../../common/button/Button";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkDetailSprintSelect = (props) => {
-    const { selectList, sprint, workId, workStore, workStatusCode, disabled = false } = props;
+    const { selectList, sprint, workId, workStore, workStatusCode, disabled = false , workDetailMetaData} = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
     const { findWorkSprintList, editWork, haveChildren } = workStore;
@@ -41,11 +41,12 @@ const WorkDetailSprintSelect = (props) => {
      * 获取迭代列表
      */
     const getWorkSprintList = () => {
-        findWorkSprintList(workId).then(res => {
-            if (res.code === 0) {
-                setRelationSprintList(res.data)
-            }
-        })
+        // findWorkSprintList(workId).then(res => {
+        //     if (res.code === 0) {
+        //         setRelationSprintList(res.data)
+        //     }
+        // })
+        setRelationSprintList(workDetailMetaData.workSprintList)
     }
 
     /**

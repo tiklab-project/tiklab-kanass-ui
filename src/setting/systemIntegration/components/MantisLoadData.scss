@@ -1,0 +1,73 @@
+.load {
+    padding: var(--tiklab-padding);
+}
+.load-step{
+    padding-top: 5px;
+    padding-bottom: 15px;
+    .ant-steps-item-icon{
+        padding-top: 7px;
+    }
+}
+.load-mantis {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #DEEBFF;
+}
+.load-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+.load-precess {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+    .load-precess-text {
+        padding-top: 5px;
+        .load-precess-name {
+            font-weight: 600;
+        }
+    }
+}
+.load-progress {
+    width: 80%;
+    height: 10px;
+    border-radius: 4px;
+    border: 1px #DEEBFF solid ;
+    position: relative;
+    margin-top: 20px;
+    .load-progressbox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 30px;
+        height: 10px;
+        border-radius: 4px;
+        background-color: #DEEBFF;
+        animation-duration: 1s;
+        /* 动画时长1s */
+        animation-fill-mode: forwards; 
+        /*当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）*/
+        animation-iteration-count: infinite;
+        /* 动画次数 无限次 */
+        animation-name: animationa;
+        /* 执行动画名称 */
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes animationa {
+    /* 修改背景定位 */
+    0% {
+        left: 0;
+    }
+    100% {
+        left: calc(100% - 30px);
+    }
+}

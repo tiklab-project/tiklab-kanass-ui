@@ -27,7 +27,8 @@ const WorkAddPage = (props) => {
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, workId, findFormConfig,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
-        selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition
+        selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition,
+        findWorkItemCreateMetaData
     } = workStore;
 
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -52,27 +53,109 @@ const WorkAddPage = (props) => {
         form.setFieldsValue({
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
-        // 获取自定义表单字段
-        getForm(workType.workType?.form?.id)
-
-        getEachWorkType()
-
-
-        if (project) {
-            getProjectValue(project)
+        const param = {
+            projectId: projectId,
+            workType: workType
         }
-        if (!projectId) {
-            findProjectList();
-        }
+        findWorkItemCreateMetaData(param).then(res => {
 
-        // 获取事项优先级
-        findPriority().then(res => {
-            if (res.code === 0) {
+            // 事项子类型下拉框
+            setSelectItem(res.data.fieldList[0][0])
+            form.setFieldsValue({
+                eachType: res.data.fieldList[0][0]?.selectItemList[0]?.id,
+            })
+
+
+
+            // 设置优先级
+            form.setFieldsValue({
+                workPriority: res.data.fieldList[1][0]?.selectItemList[0].id
+            })
+
+            // 设置项目信息
+            if (project){
                 form.setFieldsValue({
-                    workPriority: priorityList[0]?.id
+                    parentWorkItem: workId,
+                    project: projectId,
+                    sprint: sprintId,
+                    assigner: project?.master.id,
+                    planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
                 })
+
+                // 设置模块
+                form.setFieldsValue({
+                    module: res.data.moduleList[0]?.id
+                })
+
+                // 设置所选版本、迭代、计划
+                // 敏捷模型
+                console.log("sprintId:  " + sprintId)
+                if (projectType === 'scrum'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+                // 瀑布模型
+                if (projectType === 'nomal'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                if (versionId) {
+                    form.setFieldsValue({
+                        projectVersion: versionId
+                    })
+                } else {
+                    if (res.data.versionList.length > 0) {
+                        form.setFieldsValue({
+                            projectVersion: res.data.versionList[0]?.id
+                        })
+                    } else {
+                        form.setFieldsValue({
+                            projectVersion: null
+                        })
+                    }
+                }
             }
+
+
         });
+
+        // // 获取自定义表单字段
+        // getForm(workType.workType?.form?.id)
+        //
+        // getEachWorkType()
+        //
+        //
+        // if (project) {
+        //     getProjectValue(project)
+        // }
+        // if (!projectId) {
+        //     findProjectList();
+        // }
+        //
+        // // 获取事项优先级
+        // findPriority().then(res => {
+        //     if (res.code === 0) {
+        //         form.setFieldsValue({
+        //             workPriority: priorityList[0]?.id
+        //         })
+        //     }
+        // });
 
         return;
     }, [])

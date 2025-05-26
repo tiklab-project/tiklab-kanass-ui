@@ -150,9 +150,15 @@ const setDevRouter= [
             },
             {
                 title: 'JIRA导入',
-                id: '/setting/loadData',
-                code: "loadData",
+                id: '/setting/jiraLoadData',
+                code: "jiraLoadData",
                 purviewCode: "SysJira"
+            },
+            {
+                title: 'Mantis导入',
+                id: '/setting/mantisLoadData',
+                code: "mantisLoadData",
+                purviewCode: "SysMantis"
             },
             {
                 title: 'openApi',
@@ -488,9 +494,15 @@ const setPrdRouter= [
             },
             {
                 title: 'JIRA导入',
-                id: '/setting/loadData',
-                code: "loadData",
+                id: '/setting/jiraLoadData',
+                code: "jiraLoadData",
                 purviewCode: "SysJira"
+            },
+            {
+                title: 'Mantis导入',
+                id: '/setting/mantisLoadData',
+                code: "mantisLoadData",
+                purviewCode: "SysMantis"
             },
             {
                 title: 'openApi',

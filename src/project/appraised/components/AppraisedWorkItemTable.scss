@@ -81,6 +81,17 @@
       padding: 0;
       border: 0;
     }
+
+
+    .appraised-code:hover{
+      cursor: pointer;
+      color: var(--tiklab-blue);
+    }
+
+    .appraised-name:hover {
+      cursor: pointer;
+      color: var(--tiklab-blue);
+    }
   }
   .appraised-top {
     display: flex;

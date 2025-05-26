@@ -57,7 +57,7 @@ const WorkBasicInfo = (props) => {
         wrapperCol: { lg: { span: 21 }, xxl: { span: 22 } },
     };
 
-    const { workStore, workInfo, setWorkInfo } = props;
+    const { workStore, workInfo, setWorkInfo, workDetailMetaData, setWorkDetailMetaData } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
         attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
         findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
@@ -127,18 +127,21 @@ const WorkBasicInfo = (props) => {
     useEffect(() => {
         // 查找flow关联的form
         const flowId = workInfo.workType.flow.id
-        // 查找流程
-        findFlow({ id: flowId }).then(res => {
-            if (res.code === 0) {
-                console.log(res.data)
-            }
-        })
+        // // 查找流程
+        // findFlow({ id: flowId }).then(res => {
+        //     if (res.code === 0) {
+        //         console.log(res.data)
+        //     }
+        // })
+        //
+        // //根据事项类型，获取自定义表单字段
+        // findFormConfig({ id: workInfo.workType.form.id })
 
         //根据事项类型，获取自定义表单字段
         findFormConfig({ id: workInfo.workType.form.id })
 
         // 查找附件列表
-        findWorkAttachList(workInfo.id)
+        // findWorkAttachList(workInfo.id)
 
         // 清空表单
         detailForm.resetFields()
@@ -156,19 +159,23 @@ const WorkBasicInfo = (props) => {
             workTypeId: workInfo.workType.id
         }
 
-        // 查找能被设置为上级的事项列表
-        findCanBeRelationParentWorkItemList(params).then(res => {
-            if (res.code === 0) {
-                setParentList(res.data.dataList);
-            }
-        })
+        // // 查找能被设置为上级的事项列表
+        // findCanBeRelationParentWorkItemList(params).then(res => {
+        //     if (res.code === 0) {
+        //         setParentList(res.data.dataList);
+        //     }
+        // })
 
-        // 根据id 或者事项标题查找可被关联成的前置事项列表
-        findCanBeRelationPerWorkItemList(params).then(res => {
-            if (res.code === 0) {
-                setPreWorkList(res.data.dataList);
-            }
-        })
+        setParentList(workDetailMetaData.canBeRelationParentWorkItemList);
+
+        // // 根据id 或者事项标题查找可被关联成的前置事项列表
+        // findCanBeRelationPerWorkItemList(params).then(res => {
+        //     if (res.code === 0) {
+        //         setPreWorkList(res.data.dataList);
+        //     }
+        // })
+
+        setPreWorkList(workDetailMetaData.canBeRelationPerWorkItemList);
 
 
         return null;
@@ -754,6 +761,7 @@ const WorkBasicInfo = (props) => {
                                     <WorkDetailSelect
                                         selectList={sprintList}
                                         workId={workId}
+                                        workDetailMetaData={workDetailMetaData}
                                         sprint={workInfo?.sprint}
                                         hoverFieldName={hoverFieldName}
                                         setHoverFieldName={setHoverFieldName}
@@ -932,6 +940,7 @@ const WorkBasicInfo = (props) => {
                                 <WorkDetailVersionSelect
                                     selectList={selectVersionList}
                                     workId={workId}
+                                    workDetailMetaData={workDetailMetaData}
                                     version={workInfo?.projectVersion}
                                     hoverFieldName={hoverFieldName}
                                     setHoverFieldName={setHoverFieldName}

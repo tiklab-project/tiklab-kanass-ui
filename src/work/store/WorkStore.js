@@ -1195,5 +1195,108 @@ export class WorkStore {
         return data.data;
     }
 
+    @action
+    findWorkItemCreateMetaData = async (value) => {
+        const createWorkType = value.workType;
+        const projectId = value.projectId;
+        const fieldList = [];
+        switch (createWorkType.workType?.code){
+            case "demand":
+            case "epic":
+                fieldList.push("demandType");
+                break;
+            case "task":
+                fieldList.push("taskType");
+                break;
+            case "defect":
+                fieldList.push("bugType");
+                break;
+        }
+        fieldList.push("workPriority");
+        const param = {
+            projectId:projectId,
+            fieldCode: fieldList
+        }
+        const data = await Service("/workItemMetaData/findCreateMetaData", param);
+        if(data.code === 0){
+            this.formList.length = 0;
+            this.formList.push(data.data?.form);
+
+            this.stageList = data.data.stageList;
+
+            this.selectSprintList = data.data.sprintList;
+
+            this.selectVersionList = data.data.versionList;
+
+            this.moduleList = data.data.moduleList;
+
+            this.priorityList = data.data.fieldList[1][0].selectItemList;
+
+            const list = data.data.dmUserPage.dataList;
+            const newList = [];
+            const newIds = [];
+            list.map(item => {
+                if(newIds.indexOf(item.user?.id)> -1){
+                    return null
+                }else {
+                    newIds.push(item.user?.id)
+                    newList.push(item)
+                }
+            })
+            this.userList = newList;
+        }
+        return data;
+    }
+
+    @action
+    findWorkItemDetailMetaData = async (workItemId) => {
+        const param = {
+            workItemId:workItemId
+        }
+
+        const data = await Service("/workItemMetaData/findDetailMetaData", param);
+        if(data.code === 0){
+
+            this.attachList = data.data.workAttachList;
+
+            this.workTypeList = data.data.workTypeDmList;
+            data.data.workTypeDmList.map(item => {
+                if(item.workType.code === "demand"){
+                    this.demandTypeId = item.id;
+                }
+            })
+
+            this.selectVersionList = data.data.versionList;
+
+            this.selectSprintList = data.data.sprintList;
+
+            this.formList.length = 0;
+            this.formList.push(data.data?.form);
+
+            this.stageList = data.data.stageList;
+
+            this.sprintList = data.data.sprintList;
+
+            this.versionList = data.data.versionList;
+
+            this.moduleList = data.data.moduleList;
+
+            const list = data.data.dmUserPage.dataList;
+            const newList = [];
+            const newIds = [];
+            list.map(item => {
+                if(newIds.indexOf(item.user?.id)> -1){
+                    return null
+                }else {
+                    newIds.push(item.user?.id)
+                    newList.push(item)
+                }
+            })
+            this.userList = newList;
+
+        }
+        return data;
+    }
+
 }
 export default new WorkStore();

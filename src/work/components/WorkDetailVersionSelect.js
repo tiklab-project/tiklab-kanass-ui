@@ -12,7 +12,7 @@ import { Empty, Modal } from "antd";
 import Button from "../../common/button/Button";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 const WorkDetailVersionSelect = (props) => {
-    const { selectList, version, workId, workStore, workStatusCode, disabled = false } = props;
+    const { selectList, version, workId, workStore, workStatusCode, disabled = false, workDetailMetaData } = props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMoreDropdown, setShowMoreDropdown] = useState(false);
 
@@ -45,11 +45,12 @@ const WorkDetailVersionSelect = (props) => {
      * 获取版本列表
      */
     const getWorkVersionList = () => {
-        findWorkVersionList(workId).then(res => {
-            if (res.code === 0) {
-                setRelationVersionList(res.data)
-            }
-        })
+        // findWorkVersionList(workId).then(res => {
+        //     if (res.code === 0) {
+        //         setRelationVersionList(res.data)
+        //     }
+        // })
+        setRelationVersionList(workDetailMetaData.workVersionList)
     }
 
     /**

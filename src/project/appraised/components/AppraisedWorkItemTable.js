@@ -127,13 +127,13 @@ const AppraisedWorkItemTable = (props) => {
             dataIndex: 'code',
             key: 'code',
             width: "20%",
-            render: (text, record, index) => <Space >
+            render: (text, record, index) => <Space onClick={() => goDetail(record)}>
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
                     alt=""
                     className="menu-icon"
                 />
-                <div className="appraised-key">{record.workItem.code}</div>
+                <div className="appraised-code">{record.workItem.code}</div>
             </Space>
         },
         {
@@ -144,7 +144,9 @@ const AppraisedWorkItemTable = (props) => {
             width: "50%",
             render: (text, record) => <Space onClick={() => goDetail(record)}>
                 <Tooltip title={record.workItem.title}>
-                    {record.workItem.title.length > 28 ? record.workItem.title.substring(0, 28) + "..." : record.workItem.title}
+                    <div className="appraised-name">
+                        {record.workItem.title.length > 28 ? record.workItem.title.substring(0, 28) + "..." : record.workItem.title}
+                    </div>
                 </Tooltip>
             </Space>
 
