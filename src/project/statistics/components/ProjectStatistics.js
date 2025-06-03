@@ -11,7 +11,7 @@ import ProjectStatisticsAsicde from "./ProjectStatisticsAside";
 import { Layout, Row, Col } from 'antd';
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router";
-import "../../statistics/components/Statistics.scss"
+import "./Statistics.scss"
 const { Sider } = Layout;
 const ProjectStatistics = (props) => {
     // 路由

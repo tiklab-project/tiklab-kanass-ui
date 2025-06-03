@@ -9,9 +9,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Table, Form, Select, Button } from 'antd';
 import { observer, inject } from "mobx-react";
-import echarts from "../../common/echarts/echarts";
+import echarts from "../../../common/echarts/echarts";
 import { withRouter } from "react-router";
-import { exportPDF } from "./exportPDFDom";
+import { exportPDF } from "../../../common/pdf/exportPDFDom";
 import StatisticsStore from "../store/StatisticStore";
 
 const StatisticsWork = (props) => {

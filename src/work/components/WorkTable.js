@@ -97,6 +97,7 @@ const WorkTable = (props) => {
         setSessionStorage("detailCrumbArray", [{ id: record.id, code: record.code, title: record.title, iconUrl: record.workTypeSys.iconUrl }])
 
         const pathname = props.match.url;
+        console.log("pathname     " + pathname)
         props.history.push(`${pathname}/${record.id}`)
         setIsModalVisible(true)
     }

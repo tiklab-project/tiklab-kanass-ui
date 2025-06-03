@@ -479,6 +479,10 @@ const WorkBasicInfo = (props) => {
      * @param {预估时间} value 
      */
     const updataEstimateTime = (value) => {
+        if (value < 0){
+            message.info("预估时间不能小于0")
+            return;
+        }
         setEstimateTimeValue(value)
         const data = {
             updateField: "estimateTime",
@@ -498,6 +502,10 @@ const WorkBasicInfo = (props) => {
      * @param {剩余时间} value 
      */
     const updataSurplusTime = (value) => {
+        if (value < 0){
+            message.info("剩余时间不能小于0")
+            return;
+        }
         setSurplusTimeValue(value)
         const data = {
             updateField: "surplusTime",
@@ -898,6 +906,7 @@ const WorkBasicInfo = (props) => {
                             >
                                 <InputNumber
                                     suffix="小时"
+                                    min={0}
                                     bordered={fieldName === "estimateTime" ? true : false}
                                     suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("estimateTime", "estimateTime")}
@@ -916,6 +925,7 @@ const WorkBasicInfo = (props) => {
                             >
                                 <InputNumber
                                     suffix="小时"
+                                    min={0}
                                     bordered={fieldName === "surplusTime" ? true : false}
                                     suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("surplusTime", "surplusTime")}

@@ -196,6 +196,7 @@ const HomeSurvey = (props) => {
                     </Spin>
                 </div>
                 <ProjectStatusNum />
+                <TodoStatistics isHome={true} />
                 <div className="statistics-box">
                     <div className="statistics-box-title">
                         事项统计
@@ -206,7 +207,7 @@ const HomeSurvey = (props) => {
                     </div>
 
                 </div>
-                <TodoStatistics isHome={true} />
+
 
             </div>
             </Col>

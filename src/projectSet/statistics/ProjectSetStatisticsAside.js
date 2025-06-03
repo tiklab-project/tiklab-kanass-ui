@@ -9,7 +9,7 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 import { observer, inject } from "mobx-react";
-import StatisticsAside from '../../statistics/components/StatisticsAside';
+import StatisticsAside from '../../project/statistics/components/StatisticsAside';
 const ProjectSetStatisticsAside = (props) => {
     const workReportList = [
         {

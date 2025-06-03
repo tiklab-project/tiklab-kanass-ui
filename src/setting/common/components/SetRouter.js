@@ -162,7 +162,7 @@ const setDevRouter= [
             },
             {
                 title: 'openApi',
-                id: '/openapi/doc',
+                id: '/openapi',
 
             }
         ]
@@ -506,7 +506,7 @@ const setPrdRouter= [
             },
             {
                 title: 'openApi',
-                id: '/openapi/doc',
+                id: '/openapi',
 
             }
         ]

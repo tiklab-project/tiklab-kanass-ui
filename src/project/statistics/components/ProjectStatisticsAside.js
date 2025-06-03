@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:35:05
  */
 import React from 'react';
-import StatisticsAside from '../../statistics/components/StatisticsAside';
+import StatisticsAside from './StatisticsAside';
 const ProjectStatisticsAsicde = (props) => {
     
 

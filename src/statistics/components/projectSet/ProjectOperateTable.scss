@@ -1,0 +1,110 @@
+.statistics{
+  background-color: #fff;
+  height: 100%;
+
+  .statistics-top{
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+    padding: var(--tiklab-padding) var(--tiklab-padding) 0 var(--tiklab-padding);
+    .statistics-work-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+  }
+
+  .project-operate {
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 100%;
+    background-color: #fff;
+    padding: 12px 20px;
+    // overflow: auto;
+    // box-shadow: 0 2px 15px rgba(0,0,0,.15);
+    .ant-spin-nested-loading {
+      height: 100%;
+    }
+    .project-breadcrumb {
+      display: flex;
+      align-items: center;
+      padding: 10px 0px;
+      font-size: 15px;
+      font-weight: var(--tiklab-font-weight-bold);
+      margin-right: 20px;
+      &-icon {
+        width: 25px;
+        height: 25px;
+      }
+      &-second {
+        width: 20px;
+        height: 15px;
+        margin: 0 6px;
+      }
+    }
+    &-title  {
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      padding: 0 10px;
+      margin-bottom: 10px;
+      .operate-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+    }
+    .project-operate-table-box {
+      overflow: auto;
+    }
+    .project-operate-table {
+      text-align: center;
+      min-width: 940px;
+      padding: 0 10px;
+      overflow: auto;
+      height: calc(100% - 70px);
+      .project-operate-col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        .project-operate-row {
+          flex: 1;
+        }
+        .ant-progress {
+          margin-right: 10px;
+        }
+      }
+      .head {
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 13px;
+        color: #7A869A;
+      }
+    }
+    .project-operate-table > :last-child {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+
+    .project-operate-page {
+      text-align: right;
+      margin-bottom: 15px;
+    }
+    .ant-form {
+      padding: 0 10px;
+    }
+
+    .delete-warning {
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: calc(100% - 74px);
+    }
+  }
+}

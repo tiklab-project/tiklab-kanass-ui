@@ -135,28 +135,6 @@ const WorkAddPage = (props) => {
 
         });
 
-        // // 获取自定义表单字段
-        // getForm(workType.workType?.form?.id)
-        //
-        // getEachWorkType()
-        //
-        //
-        // if (project) {
-        //     getProjectValue(project)
-        // }
-        // if (!projectId) {
-        //     findProjectList();
-        // }
-        //
-        // // 获取事项优先级
-        // findPriority().then(res => {
-        //     if (res.code === 0) {
-        //         form.setFieldsValue({
-        //             workPriority: priorityList[0]?.id
-        //         })
-        //     }
-        // });
-
         return;
     }, [])
 

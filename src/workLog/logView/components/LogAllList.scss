@@ -1,6 +1,8 @@
 
 .log-list {
-    padding: var(--tiklab-padding);
+    height: 100%;
+    overflow: auto;
+    background: #fff;
     .log-list-top-right {
         display: flex;
         align-items: center;

@@ -1,0 +1,229 @@
+.todo-list-page{
+  padding-top: var(--tiklab-padding);
+  .todo-header{
+
+    .back-link {
+      cursor: pointer;
+      color: #333333;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .page-title {
+      display: inline-block;
+      margin: 0;
+      vertical-align: top;
+      font-size: 14px;
+      color: #333333;
+      font-weight: bold;
+      line-height: 20px;
+    }
+  }
+  .table-top{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .table-top-right{
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+      .select-group-title {
+        font-weight: 600;
+        color: var(--tiklab-gray-500);
+        font-size: 12px;
+        padding: 10px 10px 5px;
+      }
+      .worklist-icon {
+        width: 15px;
+        height: 15px;
+      }
+
+      .select-content {
+        padding: 5px 10px;
+        background-color: var(--tiklab-gray);
+        width: 100px;
+      }
+
+      .select-content:hover {
+        background-color: var(--tiklab-gray-400);
+        color: var(--tiklab-black);
+      }
+      .worklist-table-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .search-input {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px;
+          border: 2px solid #f0f0f0;
+          height: 32px;
+          line-height: 32px;
+          border-radius: 4px;
+        }
+
+        .search-cancel {
+          cursor: pointer;
+        }
+
+        .search-cancel:hover {
+          color: var(--tiklab-blue);
+        }
+
+        .worklist-icon {
+          width: 15px;
+          height: 15px;
+        }
+      }
+
+
+
+    }
+  }
+
+  .work-table-content {
+    padding-top: var(--tiklab-padding);
+    .ant-table-measure-row {
+      display: none;
+    }
+    .ant-pagination {
+      margin: 16px 0 0;
+    }
+    .work-first-col {
+      display: inline-flex;
+      align-items: center;
+      width: 200px;
+    }
+    .ant-pagination-total-text {
+      color: #666;
+      margin-right: 15px;
+    }
+    .ant-table-cell {
+      white-space: nowrap;
+      height: 50px;
+    }
+    .ant-table-thead {
+      .work-first-col {
+        display: table-cell;
+        padding-left: 23px;
+      }
+
+      .ant-table-cell:hover {
+        .ant-table-column-sorter-full {
+          visibility: visible;
+        }
+      }
+
+
+      .hidden-sort-icon {
+        .ant-table-column-sorter-full {
+          visibility: hidden;
+        }
+      }
+
+      .show-sort-icon {
+        .ant-table-column-sorter-full {
+          visibility: visible;
+        }
+      }
+
+      th.ant-table-column-sort {
+        background: #fff;
+      }
+    }
+
+    td.ant-table-column-sort {
+      background-color: #fff;
+    }
+
+    .work-info-text {
+      font-size: 13px;
+
+    }
+
+    .work-info-master-text {
+      max-width: 85px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .work-table-select {
+      background: #edf0f5;
+    }
+
+    .work-info {
+      display: flex;
+      align-items: center;
+
+      .tiklab-profile {
+        .ant-avatar {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
+    }
+
+    .work-status {
+      padding: 2px 3px;
+      background: #e2e1e4;
+      border-radius: 4px;
+      font-size: 10px;
+      width: fit-content;
+      color: #2b333e;
+    }
+
+    .work-status-process {
+      background: #b0d5dfa1;
+      color: #132c33;
+    }
+
+    .work-status-done {
+      background: #dfecd5e3;
+      color: #5e5314;
+    }
+
+    .work-id {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 5px;
+      gap: 5px;
+      .work-key {
+        color: var(--tiklab-gray-500);
+      }
+      .work-key:hover {
+        color: var(--tiklab-blue);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+    .work-title {
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 300px;
+
+    }
+    .work-title:hover {
+      color: var(--tiklab-blue);
+      text-decoration: underline;
+    }
+
+    .table-progress{
+      display: flex;
+      align-items: center;
+      .ant-progress-text{
+        font-weight: bold;
+      }
+    }
+  }
+}

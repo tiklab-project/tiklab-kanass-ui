@@ -129,7 +129,7 @@ const LogAllList = (props) => {
     }
     return (
         <Row className="log-list">
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcrumb firstText={"全部工时"}>
                     <Button type="primary" onClick={() => setShowLogAdd(true)}>
                         添加工时

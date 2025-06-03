@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 待办事项列表
+ * @Descripttion: 待办事项列表   暂时弃置
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2020-12-18 16:05:16
@@ -71,7 +71,7 @@ const TodoPageList = (props) => {
                 setLoading(false)
             })
         }
-        if (props.route?.path === "/index/todoList") {
+        if (props.route?.path === "/index/todoPage") {
             setFirstText("首页")
             findTodopage(params).then(res => {
                 setLoading(false)
@@ -150,7 +150,7 @@ const TodoPageList = (props) => {
      * 获取搜索参数的列表
      */
     const getSerchList = () => {
-        if (path === "/index/todoList") {
+        if (path === "/index/todoPage") {
             findProjectList().then(res => {
                 if (res.code === 0) {
                     setProjectList(res.data)
@@ -246,7 +246,7 @@ const TodoPageList = (props) => {
                 <h1 className="page-title">待办</h1>
             </div>
         {
-            path !== "/index/todoList" && <Breadcrumb
+            path !== "/index/todoPage" && <Breadcrumb
                 {...props}
                 firstText={firstText}
                 secondText="待办事项"
@@ -261,7 +261,7 @@ const TodoPageList = (props) => {
             </div>
             <div className="todo-filter">
                 {
-                    (path === "/index/todoList" || path === "/projectSet/:projectSetId/workTodo") &&
+                    (path === "/index/todoPage" || path === "/projectSet/:projectSetId/workTodo") &&
                     <Select
                         placeholder="项目"
                         allowClear

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Col, Row, Spin, Table} from 'antd';
+import {Col, List, Row, Space, Spin, Table} from 'antd';
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
 import "./WorkItemTimePage.scss"
 import InputSearch from "../../../common/input/InputSearch";
@@ -13,6 +13,7 @@ import {setSessionStorage} from "../../../common/utils/setSessionStorage";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import LineMapStore from "../store/LineMapStore";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
 
 const WorkItemTimePage = (props) => {
 
@@ -195,7 +196,8 @@ const WorkItemTimePage = (props) => {
                     </svg>
                 )}
                 <span>{group.month}</span>
-                <span className="group-title-item-count">{group.count}个需求</span>
+                {/*<span className="group-title-item-count">{group.count}个需求</span>*/}
+                <span>（{group.count}）</span>
             </div>
         );
     };
@@ -258,7 +260,7 @@ const WorkItemTimePage = (props) => {
     }, []);
 
     const deleteWork = (id) => {
-        deleteWorkItem({ id: id }).then(res => {
+        deleteWorkItem(id).then(res => {
             if (res.code === 0) {
                 const param = {
                     projectId: projectId,
@@ -312,32 +314,56 @@ const WorkItemTimePage = (props) => {
                                 display: 'flex',
                                 flexDirection: 'column'
                             }}>
-
-                                <div className="header-table">
-                                    <Table
-                                        columns={columns}
-                                        rowKey={'header'}
-                                        pagination={false}
-                                        showHeader={true}
-                                        style={{ border: 'none' }}
-                                        locale={{ Empty: {description:null} }} // 禁用空数据提示
-                                    />
-                                </div>
-
                                 <div className="content-table">
                                     {
                                         groupedData.map((group) => (
                                             <div key={group.month}>
                                                 {renderGroupTitle(group)}
                                                 {expandedGroups[group.month] && (
-                                                    <Table
-                                                        columns={columns}
+                                                    <List
                                                         dataSource={group.items}
-                                                        rowKey="id"
-                                                        pagination={false}
-                                                        showHeader={false}
-                                                        style={{ border: 'none' }}
-                                                        // rowClassName={() => 'grouped-table-row'}
+                                                        renderItem={(item, index) => (
+                                                            <List.Item
+                                                                // className="work-item"
+                                                                // onClick={() => goWorkItemDetail(item, index)}
+                                                                actions={[
+                                                                    <Space size="small">
+                                                                        <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                                                            {item.workStatusNode?.name}
+                                                                        </div>
+                                                                        <DeleteModal deleteFunction={deleteWork} id={item.id} />
+                                                                    </Space>
+                                                                ]}
+                                                            >
+                                                                <div className="item-content-wrapper">
+                                                                    <div className="item-avatar">
+                                                                        <ImgComponent
+                                                                            src={item.workTypeSys?.iconUrl}
+                                                                            alt=""
+                                                                            className="menu-icon"
+                                                                        />
+                                                                        {/*<span className="item-code">{item.code}</span>*/}
+                                                                    </div>
+
+                                                                    <div className="item-content" onClick={() => goWorkItemDetail(item, index)}>
+                                                                        <div
+                                                                            className="item-title"
+
+                                                                        >
+                                                                            {item.title}
+                                                                        </div>
+                                                                        <div className="item-description">
+                                                                            <UserIcon name={item.builder?.nickname} />
+                                                                            <span className="item-creator">{item.builder?.nickname}</span>
+                                                                            <span className="item-time">{item.buildTime.substring(0, 10)}</span>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </List.Item>
+
+                                                        )}
                                                     />
                                                 )}
                                             </div>

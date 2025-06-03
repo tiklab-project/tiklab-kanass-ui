@@ -50,7 +50,18 @@ const Layout = (props) => {
         '/log/statistic/projectuser',
         '/log/statistic/projectwork',
         '/log/statistic/userproject',
-        '/workitem/:id'
+        '/workitem/:id',
+        '/statistics/projectSet/member',
+        '/statistics/projectSet/workItem',
+        '/statistics/projectSet/projectProgress',
+        '/statistics/project/memberItem',
+        '/statistics/workItem/newTrend',
+        '/statistics/workItem/completeTrend',
+        '/statistics/workItem/overview',
+        '/statistics/workItem/workItemTrend',
+        '/statistics/log/projectuser',
+        '/statistics/log/projectwork',
+        '/statistics/log/userproject'
     ];
 
 

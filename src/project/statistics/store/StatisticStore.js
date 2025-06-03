@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 10:32:36
  */
 import axios from "axios";
-import { Service, ServiceGet } from "../../common/utils/requset";
+import { Service, ServiceGet } from "../../../common/utils/requset";
 import { observable, action } from "mobx";
 import { getUser } from "tiklab-core-ui";
 

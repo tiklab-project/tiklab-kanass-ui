@@ -70,7 +70,7 @@ class HomeStore {
             totalPage: 1
         },
         orderParams: [{
-            name: "createtime",
+            name: "createTime",
             orderType: "desc"
         }],
         bgroup: "kanass",

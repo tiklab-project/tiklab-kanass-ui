@@ -489,6 +489,10 @@ const WorkBasicInfo = (props) => {
      * @param {预估时间} value 
      */
     const updataEstimateTime = (value) => {
+        if (value < 0){
+            message.info("预估时间不能小于0")
+            return;
+        }
         setEstimateTimeValue(value)
         const data = {
             updateField: "estimateTime",
@@ -508,6 +512,10 @@ const WorkBasicInfo = (props) => {
      * @param {剩余时间} value 
      */
     const updataSurplusTime = (value) => {
+        if (value < 0){
+            message.info("剩余时间不能小于0")
+            return;
+        }
         setSurplusTimeValue(value)
         const data = {
             updateField: "surplusTime",

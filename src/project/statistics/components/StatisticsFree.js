@@ -9,14 +9,14 @@
 import React, { useState } from "react";
 import { Modal, Button } from 'antd';
 import "./StatisticsFree.scss";
-import bulidend from "../../assets/images/bulidend.jpg";
-import newtrend from "../../assets/images/newtrend.jpg";
-import endtrend from "../../assets/images/endtrend.jpg";
-import newtotaltrend from "../../assets/images/newtotaltrend.jpg";
-import endtotaltrend from "../../assets/images/endtotaltrend.jpg";
-import logprojectuser from "../../assets/images/logprojectuser.jpg";
-import logprojectwork from "../../assets/images/logprojectwork.jpg";
-import loguserproject from "../../assets/images/loguserproject.jpg";
+import bulidend from "../../../assets/images/bulidend.jpg";
+import newtrend from "../../../assets/images/newtrend.jpg";
+import endtrend from "../../../assets/images/endtrend.jpg";
+import newtotaltrend from "../../../assets/images/newtotaltrend.jpg";
+import endtotaltrend from "../../../assets/images/endtotaltrend.jpg";
+import logprojectuser from "../../../assets/images/logprojectuser.jpg";
+import logprojectwork from "../../../assets/images/logprojectwork.jpg";
+import loguserproject from "../../../assets/images/loguserproject.jpg";
 import {applySubscription} from "tiklab-core-ui";
 
 const StatisticsFree = (props) => {

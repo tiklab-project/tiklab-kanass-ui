@@ -109,13 +109,13 @@ const FirstMenu = (props) => {
             icon: 'projectset-' + theme,
             actionIcon: 'projectset-' + theme + "-active",
         },
-        {
-            to: '/workitem',
-            title: '事项',
-            key: 'workitem',
-            icon: 'workitem-' + theme,
-            actionIcon: 'workitem-' + theme + "-active",
-        },
+        // {
+        //     to: '/workitem',
+        //     title: '事项',
+        //     key: 'workitem',
+        //     icon: 'workitem-' + theme,
+        //     actionIcon: 'workitem-' + theme + "-active",
+        // },
         {
             to: '/log/list',
             title: '工时',
@@ -123,6 +123,13 @@ const FirstMenu = (props) => {
             icon: 'log-' + theme,
             actionIcon: 'log-' + theme + "-active",
         },
+        {
+            to: '/statistics/project/memberItem',
+            title: '统计',
+            key: 'statistics',
+            icon: 'statistics-' + theme,
+            actionIcon: 'statistics-' + theme + "-active",
+        }
 
     ]
 

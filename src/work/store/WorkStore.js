@@ -614,6 +614,16 @@ export class WorkStore {
         }
         return data.data;
     }
+
+    // 待办页面的事项列表
+    @action
+    findWorkItemPageTreeWhenTodo = async(value) => {
+        const data = await Service("/workItem/findWorkItemPageTreeByQuery",value);
+        if (data.code === 0){
+            this.findWorkItemNumByWorkType()
+        }
+        return data;
+    }
     
     // 获取快捷搜索各个类型的事项个数
     @action
@@ -1219,8 +1229,7 @@ export class WorkStore {
         }
         const data = await Service("/workItemMetaData/findCreateMetaData", param);
         if(data.code === 0){
-            this.formList.length = 0;
-            this.formList.push(data.data?.form);
+            this.formList = data.data.form.customFieldList;
 
             this.stageList = data.data.stageList;
 
@@ -1270,8 +1279,7 @@ export class WorkStore {
 
             this.selectSprintList = data.data.sprintList;
 
-            this.formList.length = 0;
-            this.formList.push(data.data?.form);
+            this.formList = data.data.form.customFieldList;
 
             this.stageList = data.data.stageList;
 

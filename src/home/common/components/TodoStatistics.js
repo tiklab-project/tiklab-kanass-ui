@@ -11,11 +11,13 @@ import "./TodoStatistics.scss";
 import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import HomeStore from '../store/HomeStore';
+import WorkStore from "../../../work/store/WorkStore";
 
 
 const TodoStatistics = (props) => {
     const {isHome} = props;
     const { statisticsTodoWorkByStatus,setActiveKey,  setTodoActiveKey } = HomeStore;
+    const { setQuickFilterValue, setSearchCondition, setSearchConditionNull, getWorkStatus, workStatusList } = WorkStore
     const [todoCount, setTodoCount] = useState();
     const projectId = props.match.params.id;
     const versionId = props.match.params.version;
@@ -24,6 +26,7 @@ const TodoStatistics = (props) => {
     const path = props.match?.path;
 
     useEffect(()=> {
+        getWorkStatus();
         let params = {}
         if (path === "/project/:id/overview") {
             params = {
@@ -61,7 +64,7 @@ const TodoStatistics = (props) => {
             name: "全部待办",
             icon: "allwork",
             code: "pending",
-            tab: 1
+            tab: 0
         },
         {
             id: "progress",
@@ -90,8 +93,50 @@ const TodoStatistics = (props) => {
         
         setActiveKey("todoList")
         setTodoActiveKey(tabNum)
+        // console.log("---------tabNum---------", tabNum)
+        // let params;
+        // setSearchConditionNull();
+        // switch (tabNum){
+        //     case 0:
+        //         params = {
+        //             workStatusIds:["todo"]
+        //         }
+        //         setSearchCondition(params)
+        //         break;
+        //     case 1:
+        //         const progressIds  = [];
+        //         workStatusList.map(item => {
+        //             if(item.status === "PROGRESS"){
+        //                 progressIds.push(item.id)
+        //             }
+        //         })
+        //         params = {
+        //             workStatusIds:progressIds
+        //         }
+        //         setSearchCondition(params)
+        //         break;
+        //     case 2:
+        //         params = {
+        //             workStatusIds:["done"]
+        //         }
+        //         setSearchCondition(params)
+        //         break;
+        //     case 3:
+        //         params = {
+        //             overdue:true
+        //         }
+        //         const filterValue = {
+        //             label:"已逾期",
+        //             value:"overdue"
+        //         }
+        //         setQuickFilterValue(filterValue)
+        //         setSearchCondition(params)
+        //         break;
+        //
+        // }
         if(path === "/index/overview"){
-            props.history.push(`/index/todoList`)
+            // props.history.push(`/workitem`)  直接跳转到事项页面  弃置
+            props.history.push(`/index/todoPage`)
         }
         if (path === "/project/:id/overview") {
             props.history.push(`/project/${projectId}/workTodo`)

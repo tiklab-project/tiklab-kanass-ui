@@ -104,57 +104,12 @@ const WorkDetail = (props) => {
                 }
             }
         })
-        //
-        // searchWorkById(id).then((res) => {
-        //     setInfoLoading(false)
-        //     setTabValue(1)
-        //     if (res) {
-        //         setWorkInfo(res)
-        //         // 获取选项列表
-        //         const projectId = res.project.id
-        //         getWorkTypeList({ projectId: projectId });
-        //         getModuleList(projectId)
-        //         findSprintList(projectId)
-        //         getSelectUserList(projectId);
-        //         findSelectVersionList(projectId)
-        //
-        //         findStageList({ projectId: projectId })
-        //
-        //         getTransitionList(res.workStatusNode.id, res.workType.flow.id)
-        //         setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-        //         setAssigner({ label: res.assigner?.nickname, value: res.assigner?.id })
-        //         findWorkItemRelationModelCount({ workItemId: res.id, workTypeCode: res.workTypeCode }).then(res => {
-        //             if (res.code === 0) {
-        //                 setRelationModalNum(res.data)
-        //             }
-        //         })
-        //
-        //         // 获取字段权限
-        //         // 获取表单字段权限
-        //         const data = {
-        //             workTypeId: res.workType.id,
-        //             workId: workId,
-        //             userId: userId,
-        //             domainId:projectId
-        //         }
-        //         findWorkItemRoleFunctionDmCode(data).then(res => {
-        //             if(res.code === 0){
-        //                 console.log(res.data)
-        //             }
-        //         })
-        //
-        //         if (props.match.path === "/project/:id/work/:workId") {
-        //             setSessionStorage("detailCrumbArray", [{ id: res.id, code: res.code, title: res.title, iconUrl: res.workTypeSys.iconUrl }])
-        //             setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
-        //         }
-        //
-        //     }
-        // })
     }
 
     useEffect(() => {
+        console.log("进入详情了     " + props.match.path)
         if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
-            || props.match.path === "/:id/sprint/:sprint/work/:workId") {
+            || props.match.path === "/:id/sprint/:sprint/work/:workId" || props.match.path === "/index/todoList/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
             if (id) {

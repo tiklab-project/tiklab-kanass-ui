@@ -11,7 +11,7 @@ import SprintStatisticsAside from "./SprintStatisticsAside";
 import { Layout, Row, Col } from 'antd';
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router";
-import "../../statistics/components/Statistics.scss"
+import "../../project/statistics/components/Statistics.scss"
 const { Sider } = Layout;
 const SprintStatistics = (props) => {
     const route = props.route

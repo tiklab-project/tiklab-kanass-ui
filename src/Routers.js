@@ -1,6 +1,7 @@
 import React from "react";
 import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
+import {AccessToken} from "tiklab-openapi-ui";
 // import WorkGantt from "./work/components/WorkGantt";
 
 
@@ -13,6 +14,7 @@ const WorkAll = AsyncComponent(() => import('./work/components/Work'))
 const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicList"))
 const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageList"))
+const TodoList = AsyncComponent(() => import('./home/common/components/TodoList'))
 
 const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
@@ -108,8 +110,8 @@ const IntegrationContent = AsyncComponent(()=>import("./project/setting/integrat
 
 // 项目权限
 const ProjectDomainRole = AsyncComponent(() => import('./project/setting/privilege/ProjectDomainRole'));
-const ProjectStatistics = AsyncComponent(() => import('./project/statistics/ProjectStatistics'))
-const StatisticsWork = AsyncComponent(() => import('./statistics/components/StatisticsStatusWork'))
+const ProjectStatistics = AsyncComponent(() => import('./project/statistics/components/ProjectStatistics'))
+const StatisticsWork = AsyncComponent(() => import('./project/statistics/components/StatisticsStatusWork'))
 
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
@@ -200,7 +202,18 @@ const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(() => import("./workLog/components/Log"))
 const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 
-const OpenApiDocPage = AsyncComponent(() => import('./setting/openapi/OpenApiDocPages'))
+const Statistics = AsyncComponent(() => import('./statistics/components/Statistics'))
+const ProjectSetMember = AsyncComponent(() => import('./statistics/components/projectSet/ProjectSetMember'))
+const ProjectSetWorkItem = AsyncComponent(() => import('./statistics/components/projectSet/ProjectSetWorkItem'))
+const ProjectOperateTable = AsyncComponent(() => import('./statistics/components/projectSet/ProjectOperateTable'))
+const UserWorkItem = AsyncComponent(() => import('./statistics/components/project/UserWorkItem'))
+const CompleteWorkItemTrend = AsyncComponent(() => import('./statistics/components/workItem/CompleteWorkItemTrend'))
+const WorkItemTrend = AsyncComponent(() => import('./statistics/components/workItem/WorkItemTrend'))
+const NewWorkItemTrend = AsyncComponent(() => import('./statistics/components/workItem/NewWorkItemTrend'))
+const WorkItemStatusSituation = AsyncComponent(() => import('./statistics/components/workItem/WorkItemStatusSituation'))
+
+const OpenApiPages = AsyncComponent(() => import('./setting/openapi/OpenApiPages'))
+const OpenApiDocPages = AsyncComponent(() => import('./setting/openapi/OpenApiDocPages'))
 
 const Appraised = AsyncComponent(() => import('./project/appraised/components/AppraisedTable'))
 
@@ -245,9 +258,14 @@ const Routers = [
         component: ProjectLogOut,
     },
     {
-        path: "/openapi/doc",
-        component: OpenApiDocPage,
-        key:'OpenApiDocPage',
+        path: "/openapi",
+        component: OpenApiPages,
+        key:'OpenApiPages',
+    },
+    {
+        path: "/openApiDoc",
+        component: OpenApiDocPages,
+        key:'OpenApiDocPages',
     },
 
 
@@ -264,11 +282,25 @@ const Routers = [
 
             },
             {
-                path: "/index/todoList",
+                path: "/index/todoPage",
                 exact: false,
-                component: WorkTodo,
+                component: WorkTodoPage,
                 key: "ProjectSet"
 
+            },
+            {
+              path: "/index/todoList",
+              exact: false,
+              component: TodoList,
+              key: "TodoList",
+                routes: [
+                    {
+                        path: "/index/todoList/:workId",
+                        exact: false,
+                        component: WorkDetailPage,
+                        key: "TodoListDetail"
+                    }
+                ]
             },
             {
                 path: "/index/insightlist",
@@ -289,17 +321,78 @@ const Routers = [
                 key: "ViewInsight"
             },
 
+            // {
+            //     path: "/log",
+            //     exact: false,
+            //     component: Log,
+            //     key: "Log",
+            //     routes: [
+            //         {
+            //             path: "/log/list",
+            //             exact: false,
+            //             component: LogAllList,
+            //             key: "LogAllList"
+            //         }
+            //
+            //     ]
+            // },
             {
-                path: "/log",
+                path: "/log/list",
                 exact: false,
-                component: Log,
-                key: "Log",
+                component: LogAllList,
+                key: "LogAllList",
+            },
+            {
+                path: "/statistics",
+                component: Statistics,
                 routes: [
                     {
-                        path: "/log/list",
+                        path: "/statistics/projectSet/member",
                         exact: false,
-                        component: LogAllList,
-                        key: "LogAllList"
+                        component: ProjectSetMember,
+                        key: "ProjectSetMember"
+                    },
+                    {
+                        path: "/statistics/projectSet/workItem",
+                        exact: false,
+                        component: ProjectSetWorkItem,
+                        key: "ProjectSetWorkItem"
+                    },
+                    {
+                        path: "/statistics/projectSet/projectProgress",
+                        exact: false,
+                        component: ProjectOperateTable,
+                        key: "projectSetProjectProgress"
+                    },
+                    {
+                        path: "/statistics/project/memberItem",
+                        exact: false,
+                        component: UserWorkItem,
+                        key: "UserWorkItem"
+                    },
+                    {
+                        path: "/statistics/workItem/newTrend",
+                        exact: false,
+                        component: NewWorkItemTrend,
+                        key: "newTrend"
+                    },
+                    {
+                        path: "/statistics/workItem/completeTrend",
+                        exact: false,
+                        component: CompleteWorkItemTrend,
+                        key: "completeTrend"
+                    },
+                    {
+                        path: "/statistics/workItem/workItemTrend",
+                        exact: false,
+                        component: WorkItemTrend,
+                        key: "workItemTrend"
+                    },
+                    {
+                        path: "/statistics/workItem/overview",
+                        exact: false,
+                        component: WorkItemStatusSituation,
+                        key: "workItemOverview"
                     }
 
                 ]

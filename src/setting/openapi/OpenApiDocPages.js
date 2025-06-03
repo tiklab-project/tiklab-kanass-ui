@@ -8,6 +8,7 @@
 
 import React from 'react';
 import {OpenApiDocPage} from 'tiklab-postin-client-ui'
+import "./OpenApiDocPages.scss"
 
 const OpenApiDocPages = (props) => {
     return <OpenApiDocPage {...props}/>
