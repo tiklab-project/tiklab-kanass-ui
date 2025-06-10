@@ -259,7 +259,7 @@ const WorkBodar = (props) => {
                                                 key={item.state.id}
                                             >
                                                 <div className="work-bodar-title">
-                                                    <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个事项</span></div>
+                                                    <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">（{item.workItemList.totalRecord}）</span></div>
                                                 </div>
                                                 {
                                                     isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
@@ -286,10 +286,10 @@ const WorkBodar = (props) => {
                                                                                 className="icon-24"
                                                                             />
                                                                             <div className="work-item-title" onClick={() => showModal(workItem, workIndex, index)}>
-                                                                                <div>{workItem.code}</div>
                                                                                 <div className="work-item-name">
                                                                                     {workItem.title}
                                                                                 </div>
+                                                                                <div className="work-item-code">{workItem.code}</div>
                                                                             </div>
                                                                         </div>
                                                                     })

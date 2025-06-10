@@ -250,7 +250,7 @@ const VersionTable = (props) => {
     */
     const versionTab = [
         {
-            title: '全部版本',
+            title: '全部',
             key: 'all',
             icon: "all"
         },

@@ -147,7 +147,7 @@ const Sprint = (props) => {
      */
     const sprintTab = [
         {
-            title: '全部迭代',
+            title: '全部',
             key: 'all',
             icon: "all"
         },

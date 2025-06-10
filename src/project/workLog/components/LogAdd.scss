@@ -1,16 +1,3 @@
-
-   .log-add {
-        .log-add-time {
-            display: flex;
-            // align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            .log-form-item {
-                flex: 1;
-            }
-        }
-
-    }
 .work-log-drawer {
     //position: fixed;
     //top: 0;
@@ -43,13 +30,52 @@
 }
 
 .log-add {
-    max-width: 350px;
+    width: 100%;
+    max-width: 450px;
     margin: 20px auto;
+
+    .log-add-time-combined {
+        margin-bottom: 16px;
+
+        .log-form-item-combined {
+            .ant-form-item-label {
+                text-align: left;
+            }
+
+            .combined-input-container {
+                display: flex;
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                overflow: hidden;
+
+                .combined-input-left,
+                .combined-input-right {
+                    flex: 1;
+                    border: none !important;
+                    border-radius: 0 !important;
+                    box-shadow: none !important;
+
+                    &:focus {
+                        box-shadow: none !important;
+                    }
+                }
+
+                .combined-input-left {
+                    border-right: 1px solid #d9d9d9 !important;
+                }
+
+                .ant-input-number,
+                .ant-input {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+
     .ant-form-item {
         margin-bottom: 16px;
     }
 }
-
 .submit-btn {
     display: block;
     width: 100px;

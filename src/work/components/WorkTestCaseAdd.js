@@ -11,12 +11,13 @@ import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
     const { workId } = workStore;
 
     const { findTestCasePageByWorkItemId, createWorkTestCase,
-        findProjectTestRepositoryList, findUnRelationWorkTestCaseList,
+        findProjectTestRepositoryList, findUnRelationWorkTestCaseList, unRelationTotal, setUnRelationWorkCondition,
         findTesthuboRepositoryUserList } = workTestStore;
 
     const {getSelectUserList } = workStore;
@@ -26,6 +27,9 @@ const WorkTestCaseAddmodal = (props) => {
     const [repositoryallIdList, setRepositoryallIdList] = useState([]);
     const [repositoryValue, setRepositoryValue] = useState()
     const [testCaseUserList, setTestCaseUserList] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState();
+    const [totalPage, setTotalPage] = useState();
     
     useEffect(() => {
         if (selectTestCase === true) {
@@ -44,14 +48,16 @@ const WorkTestCaseAddmodal = (props) => {
                         findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
                             if (data.code === 0) {
                                 setTestCaseList(data.data.dataList)
+                                setCurrentPage(data.data.currentPage)
+                                setTotalPage(data.data.totalPage)
                             }
                         })
-                        //获取用例库作者
-                        findTesthuboRepositoryUserList(list).then(res => {
-                            if(res.code === 0){
-                                setTestCaseUserList(res.data)
-                            }
-                        })
+                        // //获取用例库作者
+                        // findTesthuboRepositoryUserList(list).then(res => {
+                        //     if(res.code === 0){
+                        //         setTestCaseUserList(res.data)
+                        //     }
+                        // })
                     }else {
                         Modal.confirm({
                             title: '提示?',
@@ -129,6 +135,8 @@ const WorkTestCaseAddmodal = (props) => {
         findUnRelationWorkTestCaseList(params).then((data) => {
             if (data.code === 0) {
                 setTestCaseList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
             }
         })
     }
@@ -148,6 +156,8 @@ const WorkTestCaseAddmodal = (props) => {
         findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
             if (data.code === 0) {
                 setTestCaseList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
             }
 
         })
@@ -163,6 +173,8 @@ const WorkTestCaseAddmodal = (props) => {
         findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
             if (data.code === 0) {
                 setTestCaseList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
             }
 
         })
@@ -205,6 +217,18 @@ const WorkTestCaseAddmodal = (props) => {
             info()
         }
     }
+
+    const changePage = (page) => {
+        setUnRelationWorkCondition({pageParam:{currentPage: page}})
+        findUnRelationWorkTestCaseList().then((data) => {
+            if (data.code === 0) {
+                setTestCaseList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
+            }
+        })
+    }
+
     //没有选择用户提升
     const info = () => {
         message.info('请选择事项');
@@ -279,6 +303,35 @@ const WorkTestCaseAddmodal = (props) => {
                         pagination={false}
                         scroll={{x: "100%"}}
                     />
+                    <div className="testCase-add-page">
+                        <div className="testCase-add-page-total">
+                            共{unRelationTotal}条
+                        </div>
+                        <div className="testCase-add-bottom" >
+                            <div className="page-button" onClick={() => changePage(currentPage - 1)}>
+                                <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+                            </div>
+
+                            <span>
+                                {currentPage}
+                            </span>
+                            <span>
+                                &nbsp; / &nbsp;
+                            </span>
+                            <span>
+                                {totalPage}
+                            </span>
+                            <div className="page-button" onClick={() => changePage(currentPage + 1)}>
+                                <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                            </div>
+
+                        </div>
+                        {/*<div className="testCase-add-page-ref" onClick={() => refresh()} >*/}
+                        {/*    <svg className="svg-icon" aria-hidden="true">*/}
+                        {/*        <use xlinkHref="#icon-refresh"></use>*/}
+                        {/*    </svg>*/}
+                        {/*</div>*/}
+                    </div>
                 </div>
             </div>
         </>

@@ -1,0 +1,65 @@
+/* 容器整体布局 */
+.height-filter {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 确保占满父容器高度 */
+}
+.less-margin{
+  margin-left: -25px;
+}
+
+/* 内容区域 - 可滚动部分 */
+.height-filter-content {
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 垂直滚动 */
+  padding: 16px; /* 可选：添加内边距 */
+  min-height: 0; /* 关键：允许内容区域收缩 */
+  height: 800px /* 确保占满父容器高度 */
+}
+/* 底部区域 */
+.workitem-filter-height-buttom {
+  flex-shrink: 0;
+  padding: 16px;
+  background: #f9f9f9;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  .workitem-filter-height-more{
+    width: 100%;
+    .filter-add-condition {
+      width: 100%;
+      .ant-select-selector {
+        //border: 1px dashed #d9d9d9 !important;
+        //background: #fafafa !important;
+        &:hover {
+          border-color: #1890ff !important;
+        }
+      }
+  }
+  }
+
+  .workitem-filter-height-botton {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+}
+//.workitem-filter-height-buttom::before {
+//  content: "";
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  width: 95%; /* 只占 95% 宽度 */
+//  height: 2px;
+//  background: #f0f0f0;
+//}
+
+
+///* 表单容器 */
+//.workitem-filter-height {
+//  display: flex;
+//  flex-direction: column;
+//  min-height: 100%; /* 确保表单占满内容区域 */
+//}

@@ -39,7 +39,7 @@ const Linemap = (props) => {
                 dom = <WorkItemTimePage />;
                 break;
             default:
-                dom = <WorkItemStatusPage />;
+                dom = <WorkItemTimePage />;
                 break;
         }
         // console.log(JSON.stringify(props.route));

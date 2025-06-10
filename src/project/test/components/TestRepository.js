@@ -115,6 +115,13 @@ const TestRepository = (props) => {
         })
     }
 
+    const goPlanDetail = (data) => {
+        findSystemUrl({ name: "testhubo" }).then(res => {
+            const testUrl = res.data[0].systemUrl
+            applyJump(`${testUrl}/#/plan/${data.planId}/case`)
+        })
+    }
+
     const testPlanColumns = [
         {
             title: "标题",
@@ -129,8 +136,10 @@ const TestRepository = (props) => {
                         </svg>
                     </div>
 
-                    {text}
-                    {/*<span onClick={() => goCaseDetail(record.projectTestCase)} className={`${record.exist ? "span-botton" : ""}`} >{</span>*/}
+                    {/*{text}*/}
+                    <span onClick={() => goPlanDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >
+                        {text}
+                    </span>
                 </div>
 
             ),
@@ -141,7 +150,7 @@ const TestRepository = (props) => {
             key: "startTime",
             width: 150,
             render:(text, record) => {
-                return text.substring(0, 10)
+                return text === null ? "" : text.substring(0, 10)
             }
         },
         {
@@ -150,7 +159,7 @@ const TestRepository = (props) => {
             key: "endTime",
             width: 150,
             render:(text, record) => {
-                return text.substring(0, 10)
+                return text === null ? "" : text.substring(0, 10)
             }
         },
         {

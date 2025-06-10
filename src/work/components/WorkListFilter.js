@@ -91,7 +91,7 @@ const WorkListFilter = (props) => {
                         </div>
                     </div>
                     <WorkFilterModal form={form} viewType={"list"} {...props} workListSearch = {workListSearch}/>
-                    <WorkSort sorter={sorter} buttonType={"icon"} />
+                    {/*<WorkSort sorter={sorter} buttonType={"icon"} />*/}
                 </div>
                     :
                     <div className="worklist-search-large">

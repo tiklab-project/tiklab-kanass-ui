@@ -13,7 +13,7 @@ const base_url = JSON.stringify(api);
 const plugin_base_url = JSON.stringify("http://192.168.10.5:3000");
 
 // let plugin_url = `/pluginConfig/getPluginConfig`;
-let plugin_url = `http://192.168.10.19:3000/plugin.json`;
+let plugin_url = `http://192.168.10.5:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
 const upload_url = JSON.stringify('http://192.168.10.5:8080')
@@ -32,9 +32,9 @@ const version = JSON.stringify('ce');
 const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
-const mobile_url = JSON.stringify('http://192.168.10.19:3010/')
-const homes_url = JSON.stringify("http://192.168.10.19")
-const kanass_url =JSON.stringify("http://192.168.10.25:3004")
+const mobile_url = JSON.stringify('http://192.168.10.5:3100/')
+const homes_url = JSON.stringify("http://192.168.10.5")
+const kanass_url =JSON.stringify("http://192.168.10.5:3100")
 // const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 const workUrl = JSON.stringify("https://work.cloud.tiklab.net")
 module.exports = {

@@ -143,6 +143,7 @@ const ProjectSetStatistics = AsyncComponent(() => import("./projectSet/statistic
 // 导入外部数据
 const JiraLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const MantisLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/MantisLoadData'))
+const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/LoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
 const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
@@ -721,6 +722,11 @@ const Routers = [
                         exact: true
                     },
                     {
+                        path: "/setting/loadData",
+                        component: LoadData,
+                        exact: true
+                    },
+                    {
                         path: "/setting/urlData",
                         component: UrlData,
                         exact: true
@@ -858,7 +864,7 @@ const Routers = [
                     },
                     {
                         path: "/project/:id/workTodo",
-                        component: WorkTodoPage,
+                        component: TodoList,
                     },
                     {
                         path: "/project/:id/dynamic",
@@ -1025,7 +1031,7 @@ const Routers = [
                     {
                         path: "/projectSet/:projectSetId/workTodo",
                         exact: false,
-                        component: WorkTodoPage,
+                        component: TodoList,
                         key: "ProjectSetSurvey"
                     },
                     {
@@ -1108,7 +1114,7 @@ const Routers = [
                     {
                         path: "/:id/sprint/:sprint/workTodo",
                         exact: false,
-                        component: WorkTodoPage
+                        component: TodoList
                     },
                     {
                         path: "/:id/sprint/:sprint/workList",
@@ -1181,7 +1187,7 @@ const Routers = [
                     },
                     {
                         path: "/:id/version/:version/workTodo",
-                        component: WorkTodoPage,
+                        component: TodoList,
                     },
                 ]
             },

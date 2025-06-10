@@ -353,7 +353,6 @@ const WorkItemTimePage = (props) => {
                                                                             {item.title}
                                                                         </div>
                                                                         <div className="item-description">
-                                                                            <UserIcon name={item.builder?.nickname} />
                                                                             <span className="item-creator">{item.builder?.nickname}</span>
                                                                             <span className="item-time">{item.buildTime.substring(0, 10)}</span>
                                                                         </div>

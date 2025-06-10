@@ -15,8 +15,6 @@ import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { setWorkDeatilInList } from './WorkSearch';
 import ImgComponent from '../../common/imgComponent/ImgComponent';
-import WorkFilterType from './WorkFilterType';
-import WorkFilterQuick from './WorkFilterQuick';
 const WorkAside = (props) => {
     const workAside = useRef()
     const workAsideList = useRef()
@@ -229,24 +227,28 @@ const WorkAside = (props) => {
                                 <div className="icon-10" />
                         }
                     </div>
-                    <div style={{ height: "44px", marginRight: "5px" }}>
-                        <ImgComponent
-                            src={item.workTypeSys?.iconUrl}
-                            alt=""
-                            className="icon-22"
-                        />
-                    </div>
-
-
-                    <div className="work-aside-item-name">
-                        <div className="work-aside-item-first">
-                            <span>{item.code}</span>
+                    <div className="work-aside-item-content">
+                        <div className="work-aside-item-image">
+                            <ImgComponent
+                                src={item.workTypeSys?.iconUrl}
+                                alt=""
+                                className="icon-22"
+                            />
                         </div>
-                        <div className="work-aside-item-second" id={item.id}>{item.title}</div>
+
+                        <div className="work-aside-item-name">
+                            <div className="work-aside-item-first" id={item.id}>
+                                {item.title}
+                            </div>
+                            <div className="work-aside-item-second">
+                                <span>{item.code}</span>
+                            </div>
+                        </div>
+                        <div className={`work-aside-status ${setStatuStyle(item.workStatusNode?.id)}`}>
+                            {item.workStatusNode?.name}
+                        </div>
                     </div>
-                    <div className={`work-aside-status ${setStatuStyle(item.workStatusNode?.id)}`}>
-                        {item.workStatusNode?.name}
-                    </div>
+
                 </div>
                 {
                     item.children && item.children.length > 0 && TreeSecondDom(item.children, index, item.id, deep + 1)
@@ -293,10 +295,10 @@ const WorkAside = (props) => {
         <div className="work-aside" ref={workAside} onMouseMove={changWidth}>
             <WorkListHead />
             <div className="work-aside-option">
-                <div className="worklist-head-second">
-                    <WorkFilterType />
-                    <WorkFilterQuick />
-                </div>
+                {/*<div className="worklist-head-second">*/}
+                    {/*<WorkFilterType />*/}
+                    {/*<WorkFilterQuick />*/}
+                {/*</div>*/}
                 <Spin spinning={tableLoading} tip="加载中">
                     <div className={`work-aside-fixed`} ref={workAsideList}>
                         <div className="work-aside-contant" >

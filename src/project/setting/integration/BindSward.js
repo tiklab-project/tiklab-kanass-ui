@@ -91,7 +91,7 @@ const BindSward = (props) => {
         findSystemUrl({ name: "sward" }).then(res => {
             let kanassUrl;
             if (res.code === 0 && res.data.length > 0) {
-                kanassUrl = res.data[0]?.webUrl
+                kanassUrl = res.data[0]?.systemUrl
             }
             applyJump(`${kanassUrl}/#/repository/${data.id}/overview`)
         })

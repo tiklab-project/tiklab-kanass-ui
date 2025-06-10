@@ -12,9 +12,10 @@ import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import "./WorkFilterType.scss"
 import { searchWorkList } from "./WorkSearch";
+import {Select} from "antd";
 
 const WorkFilterType = (props) => {
-    const { workStore } = props;
+    const { workStore, label } = props;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const { findWorkTypeDmList, tabValue, setTabValue,} = workStore;
     const [selectWorkType, setSelectWorkType] = useState();
@@ -74,29 +75,49 @@ const WorkFilterType = (props) => {
         searchWorkList(workStore, values)
     };
 
-    return (<div className="work-type-filter">
-        <SelectSimple 
-            name="workType"
-            onChange={(value, option) => selectType(value, option)}
-            title={"类型"}
-            ismult={false}
-            value={selectWorkType}
-            suffixIcon = {true}
-        >
-            {
-                workTypeList && workTypeList.length > 0 && workTypeList?.map(item => {
-                    return <SelectItem
-                        value={item.workType.id}
-                        label={item.workType.name}
-                        key={item.workType.id}
-                        option = {item.workType}
-                        
-                    />
-                })
-            }
-        </SelectSimple>
+    return (
+        <div className="work-type-filter">
+            {/*<Select*/}
+            {/*    className="select-view"*/}
+            {/*    suffixIcon={true}*/}
+            {/*    */}
+            {/*    onChange={(value, option) => selectType(value, option)}*/}
+            {/*    value={selectWorkType}*/}
+            {/*>*/}
+            {/*    {*/}
+            {/*        workTypeList && workTypeList.length > 0 && workTypeList?.map(item => {*/}
+            {/*            return <Select.Option*/}
+            {/*                value={item.workType.id}*/}
+            {/*                label={item.workType.name}*/}
+            {/*                key={item.workType.id}*/}
+            {/*                option = {item.workType}*/}
+            {/*            >*/}
+            {/*                {item.workType.name}*/}
+            {/*            </Select.Option>*/}
+            {/*        })*/}
+            {/*    }*/}
+            {/*</Select>*/}
+            <SelectSimple
+                name="workType"
+                onChange={(value, option) => selectType(value, option)}
+                title={label}
+                ismult={false}
+                value={selectWorkType}
+                suffixIcon = {true}
+            >
+                {
+                    workTypeList && workTypeList.length > 0 && workTypeList?.map(item => {
+                        return <SelectItem
+                            value={item.workType.id}
+                            label={item.workType.name}
+                            key={item.workType.id}
+                            option = {item.workType}
 
-    </div>
+                        />
+                    })
+                }
+            </SelectSimple>
+        </div>
 
     )
 }

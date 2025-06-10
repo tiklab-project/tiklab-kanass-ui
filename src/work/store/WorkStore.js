@@ -585,8 +585,20 @@ export class WorkStore {
     // 获取树形结构下各个类型的事项个数
     @action
     findWorkItemNumByWorkType = async(value) => {
+        console.log("AAAAAAAAAAAAAAA")
         this.setSearchCondition(value)
         const data = await Service("/workItem/findWorkItemNumByWorkType",this.searchCondition);
+        if (data.code === 0) {
+            this.eveWorkTypeNum = data.data;
+        }
+        return data.data;
+    }
+
+    // 获取树形结构下各个类型的事项个数
+    @action
+    findWorkItemNumWhenTodo = async(value) => {
+        // this.setSearchCondition(value)
+        const data = await Service("/workItem/findWorkItemNumByWorkType", value);
         if (data.code === 0) {
             this.eveWorkTypeNum = data.data;
         }
@@ -620,7 +632,7 @@ export class WorkStore {
     findWorkItemPageTreeWhenTodo = async(value) => {
         const data = await Service("/workItem/findWorkItemPageTreeByQuery",value);
         if (data.code === 0){
-            this.findWorkItemNumByWorkType()
+            // this.findWorkItemNumByWorkType()
         }
         return data;
     }

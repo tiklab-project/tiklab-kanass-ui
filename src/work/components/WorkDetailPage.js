@@ -50,15 +50,18 @@ const WorkDetailPage = (props) => {
 
         })
     }
-    return (<Provider {...store}>
-        <WorkDetail
-            delectCurrentWorkItem={deleteWork}
-            detailRef={detailRef}
-            showPage={true}
-            rowSpan = {rowSpan}
-            {...props}
-        />
-    </Provider>
+    return (
+        <Provider {...store}>
+            <div>
+                <WorkDetail
+                    delectCurrentWorkItem={deleteWork}
+                    detailRef={detailRef}
+                    showPage={true}
+                    rowSpan = {rowSpan}
+                    {...props}
+                />
+            </div>
+        </Provider>
 
     );
 };

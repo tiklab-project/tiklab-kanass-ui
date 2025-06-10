@@ -38,7 +38,7 @@ const InsightList = (props) => {
 
     const insightTab = [
         {
-            title: '所有仪表盘',
+            title: '所有',
             key: '1',
             icon: "insight"
         },

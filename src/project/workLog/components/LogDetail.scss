@@ -7,40 +7,46 @@
     }
     .work-log-static {
         display: flex;
-        align-items: center;
+        align-items: stretch;  // 让子项高度一致
         justify-content: space-between;
-        gap: 20px;
+        gap: 16px;
         margin-bottom: 20px;
+
+
         .log-static-item {
             flex: 1;
+            background-color: var(--tiklab-gray-600);
+            padding: 10px;
             .log-static-item-title {
                 height: 40px;
                 line-height: 40px;
+                text-align: center;
             }
+
             .log-static-item-num {
                 font-size: 20px;
                 font-weight: 600;
                 height: 40px;
                 line-height: 40px;
+                text-align: center;
                 .unit {
                     font-size: 12px;
                     font-weight: normal;
                 }
             }
         }
+
         .log-static-progress {
             flex: 1.5;
             text-align: center;
+            background-color: var(--tiklab-gray-600);
+            padding: var(--tiklab-padding);
             .log-static-item-title {
                 height: 40px;
                 line-height: 40px;
+                text-align: center;
             }
-            .log-static-item-num {
-                height: 40px;
-                line-height: 40px;
-                display: flex;
-                align-items: center;
-            }
+
             .log-percent {
                 display: flex;
                 justify-content: flex-start;
@@ -84,8 +90,9 @@
 
         }
         .log-detail-content {
+            display: flex;
             overflow-wrap: anywhere;
-            flex: 1;
+            gap: 15px;
         }
     }
     .log-submit-botton {

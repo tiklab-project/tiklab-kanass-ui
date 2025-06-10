@@ -121,7 +121,9 @@ const LoadData = (props) => {
         //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
         <div className="load">
             <Breadcumb
-                firstText="JIRA导入"
+                firstText="导入外部数据"
+                firstUrl="/setting/loadData"
+                secondText="Jira导入"
             />
             <div className="load-step">
                 <Steps>

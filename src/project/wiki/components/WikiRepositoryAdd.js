@@ -28,6 +28,14 @@ const WikiRepositoryAdd = (props) => {
         return;
     }, [])
 
+    useEffect(() => {
+        findUnProjectWikiRepository({ projectId: projectId }).then(res => {
+            if (res.code === 0) {
+                setRepositoryList(res.data)
+            }
+        })
+    }, [wikiAddvisible]);
+
     //提交用户列表
     const submitRepositoryList = () => {
         if (selectedRow.length !== 0) {

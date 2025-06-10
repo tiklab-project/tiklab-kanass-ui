@@ -15,6 +15,10 @@
         .worklist-head-name {
             font-size: 16px;
             font-weight: var(--tiklab-font-weight-bold);
+            .select-item{
+                font-size: 14px;
+                font-weight: normal;
+            }
         }
 
         .worklist-head-right {

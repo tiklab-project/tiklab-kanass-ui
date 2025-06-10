@@ -56,7 +56,7 @@
                     }
                     .work-bodar-num {
                         font-size: 10px;
-                        margin-left: 10px;
+                        margin-left: 5px;
                         color: #999;
                     }
                 }
@@ -85,8 +85,10 @@
                 }
                 .work-bodar-item{
                     margin: 0 auto;
-                    border-radius: 4px;
-                    margin-bottom: 10px;
+                    //border-radius: 4px;
+                    //margin-bottom: 10px;
+                    /* 新增下划线样式 */
+                    border-bottom: 3px solid #fafbfc;
                     padding: 5px 10px;
                     font-size: 13px;
                     background-color: #fff;
@@ -100,7 +102,7 @@
                         gap: 5px;
                     }
                     .work-item-title {
-                        line-height: 30px;
+                        line-height: 25px;
                         cursor: pointer;
                         // color: var(--tiklab-blue);
                         // font-weight: var(--tiklab-font-weight-bold);
@@ -110,12 +112,16 @@
                         color: var(--tiklab-blue);
                     }
                     .work-item-name {
-                        height: 30px;
-                        overflow: hidden;
+                        height: 25px;
                         width: 200px;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         overflow: hidden;
+                    }
+                    .work-item-code {
+                        height: 25px;
+                        font-size: 12px;
+                        color: #666;
                     }
                     .work-item-bottom {
                         display: flex;

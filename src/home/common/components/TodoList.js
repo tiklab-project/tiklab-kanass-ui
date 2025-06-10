@@ -12,17 +12,31 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkCalendarStore from "../../../work/store/WorkCalendarStore";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
+import HomeStore from "../store/HomeStore";
+import {getUser} from "tiklab-core-ui";
+import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
+import ProjectStore from "../../../project/project/store/ProjectStore";
 
 const TodoList = (props) => {
     const store = {
         workStore: WorkStore,
-        workCalendarStore: WorkCalendarStore
+        workCalendarStore: WorkCalendarStore,
+        homeStore: HomeStore
     };
 
     const { workId, setWorkId, findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum, findWorkItemPageTreeWhenTodo,
-        findWorkItemNumByWorkType, findProjectList, projectList, deleteWorkItem, setWorkIndex } = WorkStore;
+        findWorkItemNumWhenTodo, deleteWorkItem, setWorkIndex, getWorkStatus } = WorkStore;
+    const {todoActiveKey} = HomeStore;
+    const {findProjectList, projectList} = ProjectStore
 
-    const [projectId, setProjectId] = useState(null);
+    // const [projectId, setProjectId] = useState(null);
+    // 面包屑第一个标题
+    const [firstText, setFirstText] = useState();
+    const projectId = props.match.params.id;
+    const versionId = props.match.params.version;
+    const sprintId = props.match.params.sprint;
+    const projectSetId = props.match.params.projectSetId;
+    const path = props.match?.path;
 
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
@@ -40,32 +54,22 @@ const TodoList = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
 
-    const [searchParam, setSearchParam] = useState({
-        orderParams: [{
-            name: "work_priority_id",
-            orderType: "desc"
-        }],
-        pageParam: {
-            pageSize: 20,
-            currentPage: 1,
-            total: 1
-        },
-        workStatusIds:["todo"]
-    })
+    const [searchParam, setSearchParam] = useState()
+    const [todoLabel, setTodoLabel] = useState();
 
     // 初始化
-    useEffect(() => {
+    useEffect(async () => {
         setLoading(true)
         // 初始化事项类型
         // 获取系统内置事项类型
-        findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
+        findWorkTypeDmList({projectId: projectId, grouper: "system"}).then(res => {
             if (res.code === 0) {
                 setWorkSystem(res.data)
             }
         })
 
         // 获取自定义事项类型
-        findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
+        findWorkTypeDmList({projectId: projectId, grouper: "custom"}).then(res => {
             if (res.code === 0) {
                 setWorkCustom(res.data)
                 if (res.data.length > 0) {
@@ -73,18 +77,88 @@ const TodoList = (props) => {
                 }
             }
         })
-        // 事项类型下的事项个数
-        findWorkItemNumByWorkType();
+
 
         // 项目列表
-        findProjectList();
+        if (projectSetId){
+            findProjectList({projectSetId:  projectSetId});
 
+        }else {
+            findProjectList();
+        }
+
+        // 初始化查询参数
+        let param = {
+            orderParams: [{
+                name: "code",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+                total: 1
+            },
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId,
+            assignerIds: getUser().id
+        }
+
+        if (todoActiveKey === 0) {
+            // 待办
+            param = {...param, workStatusIds: ["todo"]}
+            setTodoLabel("待办")
+        }
+        else if (todoActiveKey === 1) {
+            // 进行中
+            const res = await getWorkStatus();
+            let progressArray = [];
+            res.map(item => {
+                if (item.status === "PROGRESS") {
+                    progressArray.push(item.id)
+                }
+            });
+            param = {...param, workStatusIds: progressArray}
+            setTodoLabel("进行中")
+        }
+        else if (todoActiveKey === 2) {
+            // 完成
+            param = {...param, workStatusIds: ["done"]}
+            setTodoLabel("已完成")
+        }
+        else {
+            // 逾期
+            param = {...param, overdue: true}
+            setTodoLabel("已逾期")
+        }
+        setSearchParam(param);
+
+        console.log(param)
         // 初始化表格数据
-        findWorkItemPageTreeWhenTodo(searchParam).then((res) => {
+        findWorkItemNumWhenTodo(param);
+        findWorkItemPageTreeWhenTodo(param).then((res) => {
             setTableInfo(res.data)
-            setLoading(false)
         })
 
+        if (props.route?.path === "/project/:id/workTodo") {
+            const projectId = props.match.params.id;
+            setFirstText("项目概况")
+        }
+        if (props.route?.path === "/index/todoList") {
+            setFirstText("首页")
+        }
+
+        if (props.route?.path === "/projectSet/:projectSetId/workTodo") {
+            setFirstText("项目集概况")
+        }
+
+        if (props.route?.path === "/:id/sprint/:sprint/workTodo") {
+            setFirstText("迭代概况")
+        }
+        if (props.route?.path === "/:id/version/:version/workTodo") {
+            setFirstText("版本概况")
+        }
+        setLoading(false)
         return;
     }, [])
 
@@ -173,7 +247,6 @@ const TodoList = (props) => {
                 currentPage: 1,
             }
         })
-        console.log("查询框*************", JSON.stringify(searchParam))
         // searchWorkList(searchParam)
     }
 
@@ -189,6 +262,8 @@ const TodoList = (props) => {
     }
 
     const searchWorkList = (values) => {
+        // 事项类型下的事项个数
+        findWorkItemNumWhenTodo(values);
         // 搜索事项
         findWorkItemPageTreeWhenTodo(values).then((res) => {
             if(res.code === 0){
@@ -199,8 +274,10 @@ const TodoList = (props) => {
 
     // 当 searchParam 变化时触发搜索
     useEffect(() => {
-        console.log("更新后的参数", JSON.stringify(searchParam));
-        searchWorkList(searchParam);
+        if (searchParam != null){
+            console.log("更新后的参数", JSON.stringify(searchParam));
+            searchWorkList(searchParam);
+        }
     }, [searchParam]); // 依赖项为 searchParam
 
     /**
@@ -281,6 +358,18 @@ const TodoList = (props) => {
             </div>
         },
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            width: "10%",
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+                {text}
+            </div>
+        },
+        {
             title: '事项类型',
             dataIndex: 'workTypeSys',
             key: 'workTypeSys',
@@ -331,6 +420,23 @@ const TodoList = (props) => {
         // },
     ];
 
+    // 设置状态类型
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
+
     const deleteItem  = (id) => {
         setLoading(true)
         deleteWorkItem(id).then(res => {
@@ -364,10 +470,11 @@ const TodoList = (props) => {
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="todo-list-page">
                         <div className="todo-header">
-                        <span className="back-link" onClick={() => props.history.goBack()}>
-                            <LeftOutlined/>
-                        </span>
-                            <h1 className="page-title">待办</h1>
+                        <Breadcrumb
+                            {...props}
+                            firstText={firstText}
+                            secondText="待办"
+                        />
                         </div>
                         <div className="table-top">
                             <div className="worktype-tabs">
@@ -417,6 +524,9 @@ const TodoList = (props) => {
                                 }
                             </div>
                             <div className="table-top-right">
+                                <div className="worklist-table-todo-label">
+                                    {todoLabel}
+                                </div>
                                 {/*搜索框*/}
                                 <div className="worklist-table-search">
                                     <div className="search-input">
@@ -433,24 +543,27 @@ const TodoList = (props) => {
                                     </div>
                                 </div>
                                 {/*项目下拉框*/}
-                                <SelectSimple
-                                    name="projectIds"
-                                    onChange={(value) => selectChange( value)}
-                                    title={"项目"}
-                                    ismult={true}
-                                    suffixIcon = {true}
-                                >
-                                    {
-                                        projectList.map(item => {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.projectName}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        })
-                                    }
-                                </SelectSimple>
+                                {
+                                    (props.route.path === "/index/todoList" || props.route.path === "/projectSet/:projectSetId/workTodo") &&
+                                    <SelectSimple
+                                        name="projectIds"
+                                        onChange={(value) => selectChange( value)}
+                                        title={"项目"}
+                                        ismult={true}
+                                        suffixIcon = {true}
+                                    >
+                                        {
+                                            projectList.map(item => {
+                                                return <SelectItem
+                                                    value={item.id}
+                                                    label={item.projectName}
+                                                    key={item.id}
+                                                    imgUrl={item.iconUrl}
+                                                />
+                                            })
+                                        }
+                                    </SelectSimple>
+                                }
                             </div>
                         </div>
 

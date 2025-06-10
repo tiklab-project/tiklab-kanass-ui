@@ -484,7 +484,7 @@ const SprintPlan = (props) => {
                     onDragOver={dragover}
                 >
                     <div className="sprint-plan-box-top">
-                        <div className="sprint-plan-title">待办规划事项</div>
+                        <div className="sprint-plan-title">待规划事项</div>
                         <div className="sprint-plan-filter">
                             <InputSearch onChange={(value) => handleChange("keyWord", value)} placeholder={"搜索事项"} />
                             <SelectSimple name="workTypeIds"
@@ -558,7 +558,7 @@ const SprintPlan = (props) => {
                                             <div className="work-item-icon">
                                                 <ImgComponent
                                                     alt=""
-                                                    className="icon-32"
+                                                    className="icon-22"
                                                     src={item.workTypeSys.iconUrl}
 
                                                 />
@@ -665,7 +665,7 @@ const SprintPlan = (props) => {
                                             <div className="work-item-icon">
                                                 <ImgComponent
                                                     alt=""
-                                                    className="icon-32"
+                                                    className="icon-22"
                                                     src={item.workTypeSys.iconUrl}
 
                                                 />

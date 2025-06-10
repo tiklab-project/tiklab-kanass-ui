@@ -148,17 +148,23 @@ const setDevRouter= [
                 code: "urlData",
                 purviewCode: "SysUrlData"
             },
+            // {
+            //     title: 'JIRA导入',
+            //     id: '/setting/jiraLoadData',
+            //     code: "jiraLoadData",
+            //     purviewCode: "SysJira"
+            // },
+            // {
+            //     title: 'Mantis导入',
+            //     id: '/setting/mantisLoadData',
+            //     code: "mantisLoadData",
+            //     purviewCode: "SysMantis"
+            // },
             {
-                title: 'JIRA导入',
-                id: '/setting/jiraLoadData',
-                code: "jiraLoadData",
+                title: '导入外部数据',
+                id: '/setting/loadData',
+                code: "loadData",
                 purviewCode: "SysJira"
-            },
-            {
-                title: 'Mantis导入',
-                id: '/setting/mantisLoadData',
-                code: "mantisLoadData",
-                purviewCode: "SysMantis"
             },
             {
                 title: 'openApi',
@@ -492,17 +498,23 @@ const setPrdRouter= [
                 code: "urlData",
                 purviewCode: "SysUrlData"
             },
+            // {
+            //     title: 'JIRA导入',
+            //     id: '/setting/jiraLoadData',
+            //     code: "jiraLoadData",
+            //     purviewCode: "SysJira"
+            // },
+            // {
+            //     title: 'Mantis导入',
+            //     id: '/setting/mantisLoadData',
+            //     code: "mantisLoadData",
+            //     purviewCode: "SysMantis"
+            // },
             {
-                title: 'JIRA导入',
-                id: '/setting/jiraLoadData',
-                code: "jiraLoadData",
+                title: '导入外部数据',
+                id: '/setting/loadData',
+                code: "loadData",
                 purviewCode: "SysJira"
-            },
-            {
-                title: 'Mantis导入',
-                id: '/setting/mantisLoadData',
-                code: "mantisLoadData",
-                purviewCode: "SysMantis"
             },
             {
                 title: 'openApi',

@@ -14,6 +14,7 @@ import "./WorkListHead.scss"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkCreatDropdown from "./workCreatDropdown";
 import WorkListFilter from "./WorkListFilter";
+import WorkFilterType from "./WorkFilterType";
 
 const WorkListHead = (props) => {
     const { workStore, } = props;
@@ -66,7 +67,7 @@ const WorkListHead = (props) => {
         <div className="worklist-head" >
             <div className="worklist-head-first">
                 <div className="worklist-head-name">
-                    事项
+                    <WorkFilterType {...props} label="事项" />
                 </div>
                 <div className="worklist-head-right">
                     <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>

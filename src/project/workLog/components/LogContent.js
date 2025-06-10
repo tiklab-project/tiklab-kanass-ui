@@ -229,7 +229,7 @@ const LogContent = (props) => {
                                 key={"allLog"}
                                 onClick={() => changeTabs("allLog")}
                             >
-                                所有工时
+                                所有
                             </div>
                             <div
                                 className={`log-tab ${activeTab === "myLog" ? "active-tabs" : ""}`}

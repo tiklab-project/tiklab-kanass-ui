@@ -298,7 +298,7 @@ const WorkItemStatusPage = (props) => {
                                                     key={item.state.id}
                                         >
                                             <div className="work-bodar-title">
-                                                <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord} 个需求</span></div>
+                                                <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">（{item.workItemList.totalRecord}）</span></div>
                                             </div>
                                             {
                                                 isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
@@ -321,27 +321,24 @@ const WorkItemStatusPage = (props) => {
                                                                             onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                                         >
 
-                                                                            <div className="work-item-title" >
-                                                                                <div className="work-item-content">
+                                                                            <div className="work-item-title">
+                                                                                <div className="work-item-icon">
                                                                                     <ImgComponent
                                                                                         src={workItem.workTypeSys?.iconUrl}
                                                                                         alt=""
                                                                                         className="icon-24"
                                                                                     />
-                                                                                    <div className="work-item-text">
-                                                                                        <div className="work-item-code">
-                                                                                            {workItem.code}
-                                                                                        </div>
+                                                                                </div>
+                                                                                <div className="work-item-content">
+                                                                                    <div className="work-item-top">
                                                                                         <div className="work-item-name">
                                                                                             {workItem.title}
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="work-item-content">
-                                                                                    <div
-                                                                                        className="icon-24"
-                                                                                    />
-                                                                                    <div className="work-item-text">
+                                                                                    <div className="work-item-bottom">
+                                                                                        <div className="work-item-code">
+                                                                                            {workItem.code}
+                                                                                        </div>
                                                                                         <div className="work-item-date">
                                                                                             {workItem.buildTime.substring(0,10)}
                                                                                         </div>

@@ -489,7 +489,7 @@ const VersionPlan = (props) => {
                                             <div className="work-item-icon">
                                                 <ImgComponent
                                                     alt=""
-                                                    className="icon-32"
+                                                    className="icon-22"
                                                     src={item.workTypeSys.iconUrl}
 
                                                 />
@@ -599,7 +599,7 @@ const VersionPlan = (props) => {
                                             <div className="work-item-icon">
                                                 <ImgComponent
                                                     alt=""
-                                                    className="icon-32"
+                                                    className="icon-22"
                                                     src={item.workTypeSys.iconUrl}
 
                                                 />

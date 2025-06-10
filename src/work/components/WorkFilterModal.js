@@ -12,9 +12,12 @@ import { observer, inject } from "mobx-react";
 import "./WorkAsideFilter.scss";
 import WorkFilterHigh from "./WorkFilterHigh";
 import "./WorkFilterModal.scss";
+import {Tabs} from "antd";
+import WorkFilterQuickItem from "./WorkFilterQuickItem";
+import WorkSortItem from "./WorkSortItem";
 const WorkFilterModal = (props) => {
     const { style, workListSearch, workStore } = props;
-    const { workShowType } = workStore;
+    const { workShowType, getWorkConditionPageTree, getWorkConditionPage, viewType, searchCondition, getWorkBoardList } = workStore;
     const filterDropDownRef = useRef();
     const layout = "horizontal"
     const heightFilterTop = useRef()
@@ -72,6 +75,28 @@ const WorkFilterModal = (props) => {
         }
         setFiltetModal(true)
     }
+
+    /**
+     * 排序
+     */
+    const sorter = (orderParams) => {
+        searchCondition.orderParams = orderParams;
+        searchCondition.pageParam = {
+            pageSize: 20,
+            currentPage: 1
+        }
+        if (viewType === "tree") {
+            getWorkConditionPageTree()
+        }
+        if (viewType === "tile") {
+            getWorkConditionPage()
+        }
+
+        if (workShowType === "bodar") {
+            getWorkBoardList(searchCondition)
+        }
+
+    }
     
 
 
@@ -92,17 +117,42 @@ const WorkFilterModal = (props) => {
                 style={listStyle}
             >
                 <div className="filter-modal-title" ref = {heightFilterTop}>
-                    <div>筛选</div>
+                    <div>{workShowType === "list" ? "筛选与排序" : "筛选"}</div>
                     <div onClick={() => setFiltetModal(false)}><CloseOutlined /></div>
-                    
+
                 </div>
-                <WorkFilterHigh
-                    labelHidden={false}
-                    layout={layout}
-                    filterModal={filterModal}
-                    setFiltetModal={setFiltetModal}
-                    {...props}
-                />
+                {
+                    workShowType === "table" ?
+                        <WorkFilterHigh
+                            labelHidden={false}
+                            layout={layout}
+                            filterModal={filterModal}
+                            setFiltetModal={setFiltetModal}
+                            {...props}
+                        />
+                        :
+                        <div className="work-filter-tabs">
+                            <Tabs tabPosition="left" defaultActiveKey="1" className="filter-tabs">
+                                <Tabs.TabPane tab="筛选" key="1" className="filter-tab-content">
+                                    <WorkFilterHigh
+                                        labelHidden={false}
+                                        layout={layout}
+                                        filterModal={filterModal}
+                                        setFiltetModal={setFiltetModal}
+                                        {...props}
+                                    />
+                                </Tabs.TabPane>
+                                {
+                                    (workShowType === "list" || workShowType === "bodar" || workShowType === "gantt") &&
+                                    <Tabs.TabPane tab="排序" key="2" className="filter-tab-content">
+                                        <WorkSortItem sorter={sorter} />
+                                    </Tabs.TabPane>
+                                }
+                            </Tabs>
+                        </div>
+                }
+
+
             </div>
 
         </div>

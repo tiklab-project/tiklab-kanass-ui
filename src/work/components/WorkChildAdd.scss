@@ -8,7 +8,10 @@
         position: absolute;
         z-index: 3;
         width: 100%;
-        box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+        box-shadow:
+                0 6px 16px -8px rgba(0, 0, 0, 0.15),  /* 水平偏移 | 垂直偏移 | 模糊半径 | 扩展半径 | 颜色 */
+                0 12px 28px 4px rgba(0, 0, 0, 0.12),
+                0 18px 40px 12px rgba(0, 0, 0, 0.08);
         background: #fff;
         height: 100%;
         border-radius: 5px;

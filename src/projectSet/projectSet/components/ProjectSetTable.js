@@ -207,7 +207,7 @@ const ProjectSetTable = (props) => {
 
     const projectTab = [
         {
-            title: '所有项目集',
+            title: '所有',
             key: '1',
             icon: "project"
         },

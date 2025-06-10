@@ -76,7 +76,7 @@ const BindTestHubo = (props) => {
 
     const goRepository = (data) => {
         findSystemUrl({ name: "testhubo" }).then(res => {
-            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
+            const testUrl = res.data[0].systemUrl
             applyJump(`${testUrl}/#/project/${data.id}/testcase`)
         })
 

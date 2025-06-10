@@ -24,6 +24,11 @@ export class WorkTestStore {
     };
     @observable unRelationTotal = 0;
 
+    @action
+    setUnRelationWorkCondition = (value) => {
+        this.unRelationWorkCondition = {...value}
+}
+
     // 获取事项的测试用例列表
     @action
     findTestCasePageByWorkItemId = async(value) => {

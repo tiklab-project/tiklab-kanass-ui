@@ -136,7 +136,7 @@ const TodoStatistics = (props) => {
         // }
         if(path === "/index/overview"){
             // props.history.push(`/workitem`)  直接跳转到事项页面  弃置
-            props.history.push(`/index/todoPage`)
+            props.history.push(`/index/todoList`)
         }
         if (path === "/project/:id/overview") {
             props.history.push(`/project/${projectId}/workTodo`)

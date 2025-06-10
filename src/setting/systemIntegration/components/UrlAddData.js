@@ -40,8 +40,7 @@ const UrlAddData = (props) => {
                 if (res.code === 0) {
                     const data = res.data;
                     form.setFieldsValue({
-                        systemUrl: data.systemUrl,
-                        webUrl: data.webUrl || ""
+                        systemUrl: data.systemUrl
                     });
                 }
             });

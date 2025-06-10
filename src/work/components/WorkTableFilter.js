@@ -236,7 +236,7 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
-                <WorkFilterQuick />
+                {/*<WorkFilterQuick />*/}
 
                 {
                     workStatusList && workStatusList.length > 0 &&
@@ -372,9 +372,9 @@ const WorkTableFilter = (props) => {
                 <WorkFilterModal layout={"horizontal"} {...props} />
 
 
-                {
-                    (workShowType === "bodar" || workShowType === "gantt") && <WorkSort sorter={sorter} />
-                }
+                {/*{*/}
+                {/*    (workShowType === "bodar" || workShowType === "gantt") && <WorkSort sorter={sorter} />*/}
+                {/*}*/}
 
             </div>
         </div>

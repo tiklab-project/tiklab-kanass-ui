@@ -13,8 +13,10 @@ import moment from 'moment';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
 import { finWorkList } from "./WorkGetList"
-import { searchWorkList } from "./WorkSearch";
+import {searchWorkList, setWorkDeatilInList} from "./WorkSearch";
 import WorkFilterHighItem from "./WorkFilterHighItem";
+import "./WorkFilterHigh.scss"
+import {PlusOutlined} from "@ant-design/icons";
 
 const WorkFilterHigh = (props) => {
     // 查找表单
@@ -36,7 +38,7 @@ const WorkFilterHigh = (props) => {
     const { workShowType, priorityList, findPriority, findSprintList, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
         getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList,
-        versionList, setTabValue } = workStore;
+        versionList, setTabValue, setQuickFilterValue, findStateNodeList, setSearchCondition } = workStore;
 
     /**
      * 获取事项各个属性列表
@@ -56,6 +58,24 @@ const WorkFilterHigh = (props) => {
         return;
     }, [searchCondition])
 
+    const quickFilterList = [
+        {
+            value: "pending",
+            label: "我的待办"
+        },
+        {
+            value: "ending",
+            label: "我的已办"
+        },
+        {
+            value: "creat",
+            label: "我创建的"
+        },
+        {
+            value: "overdue",
+            label: "已逾期"
+        }
+    ]
 
     /**
      * 监听表单变化
@@ -63,6 +83,11 @@ const WorkFilterHigh = (props) => {
     const changeField = (changedValues, allValues) => {
         const field = Object.keys(changedValues)[0];
         let value;
+        console.log("changeField    " + JSON.stringify(changedValues))
+        if (field === "workQuickFilter"){
+            getWorkStatusRangeWorkItem({value: changedValues.workQuickFilter})
+            return
+        }
         switch (field) {
             case "createdDate":
                 value = {
@@ -139,11 +164,173 @@ const WorkFilterHigh = (props) => {
     };
 
     /**
+     * 获取事项状态范围对应的查询参数
+     * @param value   {{value}}
+     */
+    const getWorkStatusRangeWorkItem = (value) => {
+        setQuickFilterValue(value.value)
+        console.log("筛选条件++++++" + JSON.stringify(value))
+        if (!value) {
+            getAllWorkItem();
+            return
+        } else {
+            let data = value.value;
+            switch (data) {
+                case "all":
+                    getAllWorkItem();
+                    break;
+                case "pending":
+                    getPendingWorkItem();
+                    break;
+                case "ending":
+                    getEndingWorkItem();
+                    break;
+                case "creat":
+                    getCreatWorkItem();
+                    break;
+                case "overdue":
+                    getOverdueWorkItem();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 获取全部事项
+     */
+    const getAllWorkItem = () => {
+        const initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            overdue: false,
+            builderId: null,
+            workStatusIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+
+        }
+        setSearchCondition(initValues)
+        getWorkList(initValues);
+    }
+
+    /**
+     * 获取待办事项
+     */
+    const getPendingWorkItem = () => {
+        let initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            overdue: false,
+            builderId: null,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        getStateNodeList({ quickName: "pending" }).then(data => {
+            initValues = { workStatusIds: data, ...initValues }
+            setSearchCondition(initValues);
+            getWorkList(initValues);
+        })
+    }
+
+    /**
+     * 获取已办事项
+     */
+    const getEndingWorkItem = () => {
+        let initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            overdue: false,
+            builderId: null,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        getStateNodeList({ quickName: "done" }).then(data => {
+            initValues = { workStatusIds: data, ...initValues }
+            setSearchCondition(initValues);
+            getWorkList(initValues);
+        })
+    }
+
+    /**
+     * 获取我创建的事项
+     */
+    const getCreatWorkItem = () => {
+        let initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            overdue: false,
+            builderId: userId,
+            workStatusIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        setSearchCondition(initValues);
+        getWorkList(initValues);
+    }
+
+    /**
+     * 获取已逾期的事项
+     */
+    const getOverdueWorkItem = () => {
+        let initValues = {
+            sprintId: sprintId,
+            overdue: true,
+            builderId: null,
+            workStatusIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        setSearchCondition(initValues)
+        getWorkList(initValues);
+    }
+
+    /**
+     * 获取事项列表
+     */
+    const getWorkList = (initValues) => {
+        setWorkDeatilInList(workStore, initValues)
+    }
+
+    /**
+     * 根据条件获取状态节点列表
+     */
+    const getStateNodeList = async (value) => {
+        const stateNodeList = []
+        await findStateNodeList(value).then(res => {
+            if (res.code === 0) {
+                if (res.data.length > 0) {
+                    res.data.map(item => {
+                        stateNodeList.push(item.id)
+                    })
+                }
+            }
+        })
+        const newStateNodeList = stateNodeList.filter((item, index) => {
+            return stateNodeList.indexOf(item) === index;  // 因为indexOf 只能查找到第一个
+        });
+
+        return newStateNodeList;
+    }
+
+    /**
      * 重置筛选条件
      */
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
+        setQuickFilterValue(null)
         setTabValue({
             id: "all",
             type: "system",
@@ -206,145 +393,163 @@ const WorkFilterHigh = (props) => {
     ]
 
     return (
-        <div className="height-filter" ref={heightFilter}>
-            <Form
-                form={form}
-                name="control-hooks"
-                layout="vertical"
-                className="workitem-filter-height"
-                labelAlign="left"
-                onValuesChange={(changedValues, allValues) => changeField(changedValues, allValues)}
-                {...formItemLayout}
+        <div className={`height-filter ${workShowType === "table" ? "":"less-margin"}`} ref={heightFilter}>
+            <div className="height-filter-content">
+                <Form
+                    form={form}
+                    name="control-hooks"
+                    layout="vertical"
+                    className="workitem-filter-height"
+                    labelAlign="left"
+                    onValuesChange={(changedValues, allValues) => changeField(changedValues, allValues)}
+                    {...formItemLayout}
 
-            >
-                {
-                    workShowType === "list" && <>
-                        {/* <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
+                >
+                    <Form.Item name="workQuickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
+                        <Select
+                            placeholder="快速筛选"
+                            className="work-select"
+                            key="workQuickFilter"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
+                        >
+                            {
+                                quickFilterList && quickFilterList.map((item) => {
+                                    return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+
+                    {
+                        workShowType === "list" && <>
+                            {/* <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
                             <WorkFilterQuick heightFilter={heightFilter} />
                         </Form.Item> */}
 
-                        <Form.Item
-                            name="assignerIds"
-                            label={labelHidden ? null : "负责人"}
-                            rules={[{ required: false }]}
+                            <Form.Item
+                                name="assignerIds"
+                                label={labelHidden ? null : "负责人"}
+                                rules={[{ required: false }]}
+                            >
+                                <Select
+                                    mode="multiple"
+                                    placeholder="负责人"
+                                    className="work-select"
+                                    key="assignerIds"
+                                    maxTagCount={1}
+                                    getPopupContainer={() => heightFilter.current}
+
+                                    showArrow = {true}
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
+                                <Select
+                                    mode="multiple"
+                                    placeholder="状态"
+                                    className="work-select"
+                                    key="workStatusIds"
+                                    maxTagCount={1}
+                                    getPopupContainer={() => heightFilter.current}
+                                    showArrow = {true}
+                                >
+                                    {
+                                        workStatusList && workStatusList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        </>
+
+                    }
+
+                    <Form.Item name="builderIds" label={labelHidden ? null : "创建人"} rules={[{ required: false }]} >
+                        <Select
+                            mode="multiple"
+                            placeholder="创建人"
+                            className="work-select"
+                            key="builderIds"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
                         >
+                            {
+                                userList && userList.map((item) => {
+                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+
+                    {
+                        (projectType === "scrum" && !sprintId) &&
+                        <Form.Item name="currentSprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                             <Select
                                 mode="multiple"
-                                placeholder="负责人"
+                                placeholder="所属迭代"
                                 className="work-select"
-                                key="assignerIds"
+                                key="sprint"
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
-                                
                                 showArrow = {true}
                             >
                                 {
-                                    userList && userList.map((item) => {
-                                        return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                    sprintList && sprintList.map((item) => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
                                     })
                                 }
                             </Select>
                         </Form.Item>
-                        <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
+                    }
+                    {
+                        !versionId &&
+                        <Form.Item
+                            name="currentVersionIds"
+                            label={labelHidden ? null : "所属版本"}
+                            style={{ minWidth: '70px', flex: 1 }}
+                            rules={[{ required: false }]}
+                        >
                             <Select
                                 mode="multiple"
-                                placeholder="状态"
+                                placeholder="所属版本"
                                 className="work-select"
-                                key="workStatusIds"
+                                key="version"
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
                                 showArrow = {true}
                             >
                                 {
-                                    workStatusList && workStatusList.map((item) => {
+                                    versionList && versionList.map((item) => {
                                         return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                     })
                                 }
                             </Select>
                         </Form.Item>
-                    </>
-
-                }
-
-                <Form.Item name="builderIds" label={labelHidden ? null : "创建人"} rules={[{ required: false }]} >
-                    <Select
-                        mode="multiple"
-                        placeholder="创建人"
-                        className="work-select"
-                        key="builderIds"
-                        maxTagCount={1}
-                        getPopupContainer={() => heightFilter.current}
-                        showArrow = {true}
-                    >
-                        {
-                            userList && userList.map((item) => {
-                                return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                            })
-                        }
-                    </Select>
-                </Form.Item>
-
-                {
-                    (projectType === "scrum" && !sprintId) &&
-                    <Form.Item name="currentSprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
-                        <Select
-                            mode="multiple"
-                            placeholder="所属迭代"
-                            className="work-select"
-                            key="sprint"
-                            maxTagCount={1}
-                            getPopupContainer={() => heightFilter.current}
-                            showArrow = {true}
-                        >
-                            {
-                                sprintList && sprintList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                }
-                {
-                    !versionId &&
-                    <Form.Item
-                        name="currentVersionIds"
-                        label={labelHidden ? null : "所属版本"}
-                        style={{ minWidth: '70px', flex: 1 }}
-                        rules={[{ required: false }]}
-                    >
-                        <Select
-                            mode="multiple"
-                            placeholder="所属版本"
-                            className="work-select"
-                            key="version"
-                            maxTagCount={1}
-                            getPopupContainer={() => heightFilter.current}
-                            showArrow = {true}
-                        >
-                            {
-                                versionList && versionList.map((item) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                }
-                {
-                    moreFilterValue.map(item => {
-                        return (
-                            <WorkFilterHighItem
-                                labelHidden={labelHidden}
-                                priorityList={priorityList}
-                                moduleList={moduleList}
-                                heightFilter={heightFilter}
-                                filterKey={item}
-                            />
-                        )
-                    })
-                }
+                    }
+                    {
+                        moreFilterValue.map(item => {
+                            return (
+                                <WorkFilterHighItem
+                                    labelHidden={labelHidden}
+                                    priorityList={priorityList}
+                                    moduleList={moduleList}
+                                    heightFilter={heightFilter}
+                                    filterKey={item}
+                                />
+                            )
+                        })
+                    }
 
 
-                {/* <Form.Item name="moduleIds" label={labelHidden ? null : "添加条件"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
+                    {/* <Form.Item name="moduleIds" label={labelHidden ? null : "添加条件"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                     <Select
                         mode="multiple"
                         className="filter-modal-title-select"
@@ -358,21 +563,30 @@ const WorkFilterHigh = (props) => {
                     />
                 </Form.Item> */}
 
-            </Form>
+                </Form>
+            </div>
 
 
             <div className="workitem-filter-height-buttom">
-                <Select
-                    mode="multiple"
-                    className="filter-modal-title-select"
-                    value={moreFilterValue}
-                    onChange={(value) => addFilter(value)}
-                    getPopupContainer={() => heightFilter.current}
-                    maxTagCount={0}
-                    style={{ width: "120" }}
-                    placeholder="添加条件"
-                    options={selectArray}
-                />
+                <div className="workitem-filter-height-more">
+                    <Select
+                        mode="multiple"
+                        className="filter-add-condition"
+                        value={moreFilterValue}
+                        onChange={addFilter}
+                        getPopupContainer={() => heightFilter.current}
+                        maxTagCount={2}
+                        placeholder={
+                            <span>
+                          <PlusOutlined style={{ marginRight: 8 }} />
+                           添加条件
+                        </span>
+                        }
+                        options={selectArray}
+                        suffixIcon={null} // 隐藏默认箭头
+                    />
+                </div>
+
                 <div className="workitem-filter-height-botton">
                     <Button onClick={() => resetFilter()}>重置</Button>
                     <Button onClick={() => setFiltetModal(false)}>取消</Button>

@@ -58,7 +58,8 @@ const WorkTestCaseList = (props) => {
                     <svg className="menu-icon" aria-hidden="true">
                         <use xlinkHref="#icon-testcase"></use>
                     </svg>
-                    <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+                    {text}
+                    {/*<span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>*/}
 
                 </div>
             ),
@@ -140,7 +141,8 @@ const WorkTestCaseList = (props) => {
      */
     const toCaseDetail = (caseType, data) => {
         findSystemUrl({ name: "testhubo" }).then(res => {
-            const testUrl = res.webUrl ? res.webUrl : res.systemUrl
+            console.log(JSON.stringify(res))
+            const testUrl = res.systemUrl
             applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
         })
     }

@@ -238,33 +238,60 @@ const LogDetail = (props) => {
                         </div>
 
                         <div className="log-detail-item">
-                            <div className="log-detail-label">登记工时</div>
+                            <div className="log-detail-label">登记工时 / 剩余工时</div>
                             {
-                                edit ? <Input
-                                    suffix="小时"
-                                    type="number"
-                                    style={{ width: "100px" }}
-                                    value={takeupTime}
-                                    onChange={(value) => changeTakeupTime(value)}
-                                />
+                                edit ?
+                                    <div>
+                                        <Input
+                                            suffix="小时"
+                                            type="number"
+                                            style={{ width: "100px" }}
+                                            value={takeupTime}
+                                            onChange={(value) => changeTakeupTime(value)}
+                                        />
+                                        <Input
+                                            suffix="小时"
+                                            type="number"
+                                            style={{ width: "100px" }}
+                                            value={surplusTime}
+                                            onChange={(value) => changeSurplusTime(value)}
+                                        />
+                                    </div>
                                     :
-                                    <div className="log-detail-content">{logDetail?.takeupTime}</div>
+                                    <div className="log-detail-content">
+                                        <div>{logDetail?.takeupTime}  小时</div>
+                                        <div>{workItem?.surplusTime}  小时</div>
+                                    </div>
                             }
                         </div>
-                        <div className="log-detail-item">
-                            <div className="log-detail-label">剩余时间</div>
-                            {
-                                edit ? <Input
-                                    suffix="小时"
-                                    type="number"
-                                    style={{ width: "100px" }}
-                                    value={surplusTime}
-                                    onChange={(value) => changeSurplusTime(value)}
-                                />
-                                    :
-                                    <div className="log-detail-content">{workItem?.surplusTime}</div>
-                            }
-                        </div>
+                        {/*<div className="log-detail-item">*/}
+                        {/*    <div className="log-detail-label">登记工时</div>*/}
+                        {/*    {*/}
+                        {/*        edit ? <Input*/}
+                        {/*            suffix="小时"*/}
+                        {/*            type="number"*/}
+                        {/*            style={{ width: "100px" }}*/}
+                        {/*            value={takeupTime}*/}
+                        {/*            onChange={(value) => changeTakeupTime(value)}*/}
+                        {/*        />*/}
+                        {/*            :*/}
+                        {/*            <div className="log-detail-content">{logDetail?.takeupTime}</div>*/}
+                        {/*    }*/}
+                        {/*</div>*/}
+                        {/*<div className="log-detail-item">*/}
+                        {/*    <div className="log-detail-label">剩余时间</div>*/}
+                        {/*    {*/}
+                        {/*        edit ? <Input*/}
+                        {/*            suffix="小时"*/}
+                        {/*            type="number"*/}
+                        {/*            style={{ width: "100px" }}*/}
+                        {/*            value={surplusTime}*/}
+                        {/*            onChange={(value) => changeSurplusTime(value)}*/}
+                        {/*        />*/}
+                        {/*            :*/}
+                        {/*            <div className="log-detail-content">{workItem?.surplusTime}</div>*/}
+                        {/*    }*/}
+                        {/*</div>*/}
                         <div className="log-detail-item">
                             <div className="log-detail-label">工作内容</div>
                             {
