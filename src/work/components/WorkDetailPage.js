@@ -52,14 +52,24 @@ const WorkDetailPage = (props) => {
     }
     return (
         <Provider {...store}>
-            <div>
-                <WorkDetail
-                    delectCurrentWorkItem={deleteWork}
-                    detailRef={detailRef}
-                    showPage={true}
-                    rowSpan = {rowSpan}
-                    {...props}
-                />
+            <div style={{
+                height: "100vh", // 使用视口高度
+                overflow: "hidden", // 防止页面整体滚动
+                display: "flex",
+                flexDirection: "column"
+            }}>
+                <div style={{
+                    flex: 1,
+                    overflow: "auto" // 这里设置滚动
+                }}>
+                    <WorkDetail
+                        delectCurrentWorkItem={deleteWork}
+                        detailRef={detailRef}
+                        showPage={true}
+                        rowSpan={rowSpan}
+                        {...props}
+                    />
+                </div>
             </div>
         </Provider>
 

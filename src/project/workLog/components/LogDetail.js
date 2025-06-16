@@ -168,7 +168,7 @@ const LogDetail = (props) => {
                 onClose={onClose}
                 visible={logDetailVisable}
                 width={500}
-                mask={false}
+                mask={true}
                 className="log-detail-drawer"
                 getContainer={false}
             >

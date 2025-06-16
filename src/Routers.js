@@ -259,11 +259,6 @@ const Routers = [
         component: ProjectLogOut,
     },
     {
-        path: "/openapi",
-        component: OpenApiPages,
-        key:'OpenApiPages',
-    },
-    {
         path: "/openApiDoc",
         component: OpenApiDocPages,
         key:'OpenApiDocPages',
@@ -720,6 +715,11 @@ const Routers = [
                         path: "/setting/mantisLoadData",
                         component: MantisLoadData,
                         exact: true
+                    },
+                    {
+                        path: "/setting/openApi",
+                        component: OpenApiPages,
+                        key:'OpenApiPages',
                     },
                     {
                         path: "/setting/loadData",

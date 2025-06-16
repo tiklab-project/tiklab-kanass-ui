@@ -12,19 +12,27 @@ import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
 const WorkDocumentAddmodal = (props) => {
     const { workWikiStore, workStore, setWorkDocumentList, projectId, showSelectDocument, selectDocument } = props;
     const { workId } = workStore;
 
     const { findDocumentPageByWorkItemId, createWorkItemDocument,
         findProjectWikiRepositoryList, findUnRelationWorkDocumentList,
-        findRepositoryUserList, userList } = workWikiStore;
+        findRepositoryUserList, userList, unRelationTotal, setUnRelationWorkCondition, currentRecord, setCurrentRecord,cleanCurrentRecord
+    } = workWikiStore;
 
     const [selectedRow, setSelectedRow] = useState([]);
     const [documentList, setDocumentList] = useState([])
     const [repositoryallList, setRepositoryaList] = useState([]);
     const [repositoryallIdList, setRepositoryallIdList] = useState([]);
     const [repositoryValue, setRepositoryValue] = useState()
+
+    const [currentPage, setCurrentPage] = useState();
+    const [totalPage, setTotalPage] = useState();
+    const [addModalVisible, setAddModalVisible] = useState(false);
 
     /**
      * 监听selectDocument的变化，获取文档列表
@@ -47,10 +55,16 @@ const WorkDocumentAddmodal = (props) => {
                             repositoryIds: list, 
                             name: "", 
                             repositoryId: null, 
-                            projectId: projectId
+                            projectId: projectId,
+                            pageParam:{
+                                pageSize:10,
+                                currentPage: 1
+                            }
                         }).then((data) => {
                             if (data.code === 0) {
                                 setDocumentList(data.data.dataList)
+                                setCurrentPage(data.data.currentPage)
+                                setTotalPage(data.data.totalPage)
                             }
                         })
                     }else {
@@ -92,9 +106,43 @@ const WorkDocumentAddmodal = (props) => {
             dataIndex: "userName",
             key: "assigner",
             width: 150
+        },
+        {
+            title: '操作',
+            width: "60",
+            key: 'action',
+            render: (text, record) => (
+                <div style={{ display: "flex", gap: "15px" }}>
+                    <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemDocument(record)}>
+                        <use xlinkHref="#icon-add2"></use>
+                    </svg>
+                </div>
+            ),
         }
     ];
+    const showAddModal = (record) => {
+        setCurrentRecord(record)
+        // setAddModalVisible(true);
+        addWorkItemDocument(record);
+        cleanCurrentRecord();
+    }
 
+    const addWorkItemDocument = (record) => {
+        const param = [{
+            documentId: record.id,
+            workItem: {id: workId},
+            repositoryId: record.kanassRepositoryId,
+            projectId: projectId
+        }]
+        createWorkItemDocument(param).then((data) => {
+            if (data.code === 0) {
+                findDocumentPageByWorkItemId({ workItemId: workId }).then((data) => {
+                    setWorkDocumentList([...data])
+                })
+                showSelectDocument(false)
+            }
+        })
+    }
 
     /**
      * 根据知识库筛选数据
@@ -124,6 +172,8 @@ const WorkDocumentAddmodal = (props) => {
         findUnRelationWorkDocumentList(params).then((data) => {
             if (data.code === 0) {
                 setDocumentList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
             }
         })
     }
@@ -149,6 +199,8 @@ const WorkDocumentAddmodal = (props) => {
         findUnRelationWorkDocumentList(categoryQuery).then((data) => {
             if (data.code === 0) {
                 setDocumentList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
             }
 
         })
@@ -192,6 +244,26 @@ const WorkDocumentAddmodal = (props) => {
     const info = () => {
         message.info('请选择文档');
     };
+
+    const changePage = (page) => {
+        if (page < 1 || page > totalPage){
+            return;
+        }
+        setUnRelationWorkCondition({
+            pageParam:{
+                pageSize:10,
+                currentPage: page
+            }
+        })
+        findUnRelationWorkDocumentList().then((data) => {
+            if (data.code === 0) {
+                setDocumentList(data.data.dataList)
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
+            }
+        })
+    }
+
     const documentAdd = useRef()
     return (
         <>
@@ -236,12 +308,12 @@ const WorkDocumentAddmodal = (props) => {
                     }
 
 
-                    <div className="document-add-submit" style={{width: "66px"}}>
-                        <span onClick={() => submitWorkDocumentList()}>
-                            确定
-                        </span>
-                        <span style={{ marginLeft: "10px" }} onClick={() => showSelectDocument(false)}>
-                            取消
+                    <div className="document-add-submit">
+                        {/*<span onClick={() => submitWorkDocumentList()}>*/}
+                        {/*    确定*/}
+                        {/*</span>*/}
+                        <span style={{ marginLeft: "auto", cursor: "pointer" }} onClick={() => showSelectDocument(false)}>
+                            X
                         </span>
                     </div>
                 </div>
@@ -250,24 +322,66 @@ const WorkDocumentAddmodal = (props) => {
                         columns={columns}
                         dataSource={documentList}
                         rowKey={record => record.id}
-                        rowSelection={{
-                            selectedRow,
-                            onChange: selectWorkRepository,
-                            getCheckboxProps: (record) => ({
-                                disabled: record.rele === true
-                            })
-                        }}
+                        // rowSelection={{
+                        //     selectedRow,
+                        //     onChange: selectWorkRepository,
+                        //     getCheckboxProps: (record) => ({
+                        //         disabled: record.rele === true
+                        //     })
+                        // }}
+                        // onRow={(record) =>({
+                        //     onClick: () => handleRowClick(record)
+                        // })}
                         okText="确定"
                         cancelText="取消"
                         pagination={false}
                         scroll={{x: "100%"}}
                     />
-                </div>
+                    <div className="document-add-page">
+                        <div className="document-add-page-total">
+                            共{unRelationTotal}条
+                        </div>
+                        <div className="document-add-bottom" >
+                            <div className="page-button" onClick={() => changePage(currentPage - 1)}>
+                                <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+                            </div>
 
+                            <span>
+                                {currentPage}
+                            </span>
+                            <span>
+                                &nbsp; / &nbsp;
+                            </span>
+                            <span>
+                                {totalPage}
+                            </span>
+                            <div className="page-button" onClick={() => changePage(currentPage + 1)}>
+                                <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                            </div>
+
+                        </div>
+                        {/*<div className="document-add-page-ref" onClick={() => refresh()} >*/}
+                        {/*    <svg className="svg-icon" aria-hidden="true">*/}
+                        {/*        <use xlinkHref="#icon-refresh"></use>*/}
+                        {/*    </svg>*/}
+                        {/*</div>*/}
+                    </div>
+                </div>
 
             </div>
 
-
+            <Modal
+                title={"是否添加文档"}
+                visible={addModalVisible}
+                onOk={(e) => {
+                    e.nativeEvent.stopImmediatePropagation()
+                    addWorkItemDocument()
+                }}
+                onCancel={() => {
+                    cleanCurrentRecord();
+                    setAddModalVisible(false);
+                }}
+            />
         </>
     );
 };

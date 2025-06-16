@@ -4,7 +4,7 @@
     }
 }
 
-/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
+/* 在分辨率大于 768px 且小于等于 1280px 时应用的样式 */
 @media (min-width: 769px) and (max-width: 1280px) {
     .work-add-page {
         height: calc(100% - 60px);

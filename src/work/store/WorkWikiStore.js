@@ -12,6 +12,8 @@ export class WorkWikiStore {
     @observable workDoucumentList = [];
     @observable doucumentList = [];
     @observable userList = []
+    @observable currentRecord = {};
+
     @observable findDoucmnetCondition = {
         currentPage: 1  
     };
@@ -23,6 +25,21 @@ export class WorkWikiStore {
         }
     };
     @observable unRelationTotal = 0;
+
+    @action
+    setUnRelationWorkCondition = (value) => {
+        Object.assign(this.unRelationWorkCondition, {...value})
+    }
+
+    @action
+    setCurrentRecord = (value) => {
+        this.currentRecord = value;
+    }
+
+    @action
+    cleanCurrentRecord = () => {
+        this.currentRecord = {};
+    }
 
     // 获取事项关联的文档列表
     @action
@@ -42,7 +59,7 @@ export class WorkWikiStore {
     @action
     findUnRelationWorkDocumentList = async(value) => {
    
-        Object.assign(this.unRelationWorkCondition, {...value}) 
+        Object.assign(this.unRelationWorkCondition, {...value})
         const data = await Service("/wikidocument/findUnRelationWorkDocumentList", this.unRelationWorkCondition)
         if(data.code === 0) {
             this.unRelationTotal = data.data.totalRecord;

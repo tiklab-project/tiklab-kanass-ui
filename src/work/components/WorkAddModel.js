@@ -55,7 +55,7 @@ const WorkAddModel = (props) => {
     return (
         <Modal
             visible={showAddModel}
-            width={800}
+            width={850}
             className="work-addmodel"
             destroyOnClose={true}
             onOk={handleOk}

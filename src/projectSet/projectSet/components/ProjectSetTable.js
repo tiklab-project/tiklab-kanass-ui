@@ -24,13 +24,21 @@ const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
     const { getProjectSetlist, projectSetList, getUseList, findProjectSetFocusList,
         deleteProjectSetFocusByQuery, createProjectSetFocus, findRecentProjectSetList,
-        findFocusProjectSetList, findJoinProjectSetList, createRecent } = projectSetStore;
+        findFocusProjectSetList, findJoinProjectSetList, createRecent, findProjectSetCount, projectSetPageParams, total,
+        findProjectSetPage
+    } = projectSetStore;
 
     const [name, setName] = useState("添加项目集")
     const [recentLoading, setRecentLoading] = useState(true);
     const [activeTabs, setActiveTabs] = useState("1")
     const [focusProjectSetList, setFocusProjectSetList] = useState([])
     const [recentProjectSetList, setRecentProjectSetList] = useState([])
+    const [projectSetCount, setProjectSetCount] = useState({
+        total: 0,
+        myFocus: 0,
+        myCreated: 0
+    })
+    const [loading, setLoading] = useState(false);
     const userId = getUser().userId;
     const status = [
         "未开始",
@@ -45,6 +53,11 @@ const ProjectSetTable = (props) => {
             if (res.code === 0) {
                 setRecentProjectSetList(res.data)
                 setRecentLoading(false)
+            }
+        })
+        findProjectSetCount({ name:null }).then(res => {
+            if (res.code === 0){
+                setProjectSetCount(res.data)
             }
         })
         findProjectSetFocus(userId)
@@ -86,7 +99,34 @@ const ProjectSetTable = (props) => {
     }
 
     const onSearch = (value) => {
-        findJoinProjectSetList({ name: value })
+        setLoading(true)
+        findProjectSetPage({
+            name: value,
+            pageParam: {
+                pageSize: 5,
+                currentPage: 1
+            }
+        }).then(res => {
+            setLoading(false)
+        })
+        findProjectSetCount({ name: value }).then(res => {
+            if (res.code === 0){
+                setProjectSetCount(res.data)
+            }
+        })
+    }
+
+    const changePage = (page, pageSize) => {
+        const values = {
+            pageParam: {
+                pageSize: pageSize,
+                currentPage: page,
+            }
+        }
+        setLoading(true)
+        findProjectSetPage(values).then(res => {
+            setLoading(false);
+        })
     }
 
     const pageDowm = (pagination) => {
@@ -209,17 +249,20 @@ const ProjectSetTable = (props) => {
         {
             title: '所有',
             key: '1',
-            icon: "project"
+            icon: "project",
+            value: "total"
         },
         {
             title: '我收藏的',
             key: '3',
-            icon: "projectSetfocus"
+            icon: "projectSetfocus",
+            value: "myFocus"
         },
         {
             title: '我创建的',
             key: '4',
-            icon: "projectSetcreated"
+            icon: "projectSetcreated",
+            value: "myCreated"
         }
     ]
 
@@ -227,13 +270,13 @@ const ProjectSetTable = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectSetList({})
+                findProjectSetPage({ focusMasterId: null, creator: null, projectName: null })
                 break;
             case "3":
-                findFocusProjectSetList({ master: userId })
+                findProjectSetPage({ focusMasterId: userId, creator: null, projectName: null })
                 break;
             case "4":
-                getProjectSetlist({ master: userId });
+                findProjectSetPage({ focusMasterId: null, creator: userId, projectName: null });
                 break
             default:
                 break;
@@ -313,7 +356,7 @@ const ProjectSetTable = (props) => {
                                     key={item.key}
                                     onClick={() => selectTabs(item.key)}
                                 >
-                                    {item.title}
+                                    {item.title}<span className="tabs-bar-num">{projectSetCount[item.value]}</span>
                                 </div>
                             })
                         }
@@ -322,18 +365,27 @@ const ProjectSetTable = (props) => {
                 </div>
                 <div>
                     <div className="projectSet-table-box">
-                        <Table
-                            columns={columns}
-                            dataSource={projectSetList}
-                            rowKey={record => record.id}
-                            pagination={false}
-                            onChange={pageDowm}
-                            className="projectSet-table-item"
-                            scroll={{
-                                x: "100%"
-                            }}
+                        <Spin spinning={loading} tip="加载中">
+                            <Table
+                                columns={columns}
+                                dataSource={projectSetList}
+                                rowKey={record => record.id}
+                                pagination={{
+                                    total: total,
+                                    pageSize: projectSetPageParams.pageParam.pageSize,
+                                    current: projectSetPageParams.pageParam.currentPage,
+                                    onChange: changePage,
+                                    position: ["bottomCenter"],
+                                    showTotal: () => `共${total}条`
+                                }}
+                                onChange={pageDowm}
+                                className="projectSet-table-item"
+                                scroll={{
+                                    x: "100%"
+                                }}
 
-                        />
+                            />
+                        </Spin>
                     </div>
 
                 </div>

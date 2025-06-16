@@ -56,7 +56,7 @@ const WorkDocumentList = (props) => {
     const goWikiDetail = (data) => {
         if (data.exist) {
             findSystemUrl({ name: "sward" }).then(res => {
-                const kanassUrl = res.data[0].systemUrl;
+                const kanassUrl = res.systemUrl;
                 if (data.documentType === "document") {
                     applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/rich/${data.id}`);
                 } else {

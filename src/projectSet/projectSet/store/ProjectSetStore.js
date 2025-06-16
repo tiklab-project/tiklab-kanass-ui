@@ -16,10 +16,16 @@ export class ProjectSetStore {
     @observable projectRelevance = [];
     @observable noRelatedProjects = [];
     @observable relatedProjects = [];
+    @observable total = 0;
     @observable projectSetPageParams = {
-        current: 1,
-        pageSize: 10,
-        total: 1
+        orderParams: [{
+            name: "name",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 5,
+            currentPage: 1
+        }
     }
     @observable projectPageParams = {
         orderParams: [{
@@ -195,6 +201,17 @@ export class ProjectSetStore {
         return data;
     }
 
+    @action
+    findProjectSetPage = async (value) => {
+        Object.assign(this.projectSetPageParams, value)
+        const data = await Service("/projectSet/findProjectSetPage", this.projectSetPageParams);
+        if(data.code === 0){
+            this.projectSetList = data.data.dataList;
+            this.total = data.data.totalRecord;
+        }
+        return data;
+    }
+
     findProjectSetSortRecentTime = async(value) => {
         const data = await Service("/projectSet/findProjectSetSortRecentTime", value);
 
@@ -274,6 +291,12 @@ export class ProjectSetStore {
      @action
      findIconList = async (params) => {
          const data = await Service("/icon/findIconList", params)
+         return data;
+     }
+
+     @action
+     findProjectSetCount = async () => {
+         const data = await Service("/projectSet/findProjectSetCount", this.projectSetPageParams);
          return data;
      }
  

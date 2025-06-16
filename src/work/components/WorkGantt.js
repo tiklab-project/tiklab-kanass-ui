@@ -23,9 +23,10 @@ import { getVersionInfo } from "tiklab-core-ui"
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import setImageUrl from "../../common/utils/setImageUrl";
 import {applySubscription} from "tiklab-core-ui";
+import Gantt from "./gantter/Gantt";
 
 const WorkGantt = (props) => {
-    const { Gantt } = props;
+    // const { Gantt } = props;
     const { workList, editWork, setWorkShowType, archiveView } = WorkStore;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -71,7 +72,7 @@ const WorkGantt = (props) => {
             </Row>
             <div>
                 {
-                    Gantt && versionInfo.expired === false ? <>
+                      <>
                         {
                             workList && workList.length > 0 ?
                                 <Gantt 
@@ -92,15 +93,15 @@ const WorkGantt = (props) => {
 
                         }
                     </>
-                        :
-                        <div style={{ marginTop: "50px" }}>
-                            <ProjectEmpty description="付费功能请去购买~">
-                                <Button type="primary" size={"middle"} onClick={() => goBuy()}>
-                                    立即购买
-                                </Button>
-                            </ProjectEmpty>
-
-                        </div>
+                        // :
+                        // <div style={{ marginTop: "50px" }}>
+                        //     <ProjectEmpty description="付费功能请去购买~">
+                        //         <Button type="primary" size={"middle"} onClick={() => goBuy()}>
+                        //             立即购买
+                        //         </Button>
+                        //     </ProjectEmpty>
+                        //
+                        // </div>
                 }
 
             </div>

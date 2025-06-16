@@ -54,7 +54,7 @@ const TestRepositoryAdd = (props) => {
     // 列表的列
     const columns = [
         {
-            title: "用例仓库名称",
+            title: "项目名称",
             dataIndex: "testRepositoryName",
             key: "name",
             align: "left",
@@ -99,7 +99,7 @@ const TestRepositoryAdd = (props) => {
         <>
             <Fragment>
                 <Modal
-                    title={"添加测试项目"}
+                    title={"添加项目"}
                     visible={testAddvisible}
                     onCancel={onCancel}
                     onOk={submitRepositoryList}

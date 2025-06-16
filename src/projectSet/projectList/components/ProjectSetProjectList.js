@@ -24,10 +24,10 @@ const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
     }
-    const { findProjectList, updateProject, projectRelevance } = ProjectSetProjectStore;
+    const { findProjectPage, updateProject, projectRelevance, total, projectPageParams } = ProjectSetProjectStore;
     const [projectSetId, setProjectSetId] = useState(props.match.params.projectSetId);
     useEffect(() => {
-        findProjectList({ projectSetId: projectSetId })
+        findProjectPage({ projectSetId: projectSetId })
         return;
     }, [projectSetId])
 
@@ -45,7 +45,7 @@ const ProjectSetProjectList = (props) => {
 
         updateProject(values).then((data) => {
             if (data.code === 0) {
-                findProjectList(projectSetId)
+                findProjectPage(projectSetId)
             }
         })
 
@@ -271,7 +271,19 @@ const ProjectSetProjectList = (props) => {
     ]
 
     const onSearch = (value) => {
-        findProjectList({ projectName: value })
+        findProjectPage({ projectName: value })
+    }
+
+    const changePage = (page, pageSize) => {
+        const values = {
+            pageParam: {
+                pageSize: pageSize,
+                currentPage: page,
+            }
+        }
+
+        findProjectPage(values);
+
     }
     return <Provider {...store}>
         <Row className="projectset-project">
@@ -307,7 +319,14 @@ const ProjectSetProjectList = (props) => {
                                 columns={columns}
                                 dataSource={projectRelevance}
                                 rowKey={record => record.id}
-                                pagination={false}
+                                pagination={{
+                                    total: total,
+                                    pageSize: projectPageParams.pageParam.pageSize,
+                                    current: projectPageParams.pageParam.currentPage,
+                                    onChange: changePage,
+                                    position: ["bottomCenter"],
+                                    showTotal: () => `共${total}条`
+                                }}
                                 scroll={{
                                     x: "100%"
                                 }}

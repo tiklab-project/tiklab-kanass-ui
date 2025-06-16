@@ -21,11 +21,11 @@
         .testcase-title {
             display: flex;
             align-items: center;
-            cursor: pointer;
+            //cursor: pointer;
         }
-        .testcase-title:hover {
-            color: var(--tiklab-blue);
-        }
+        //.testcase-title:hover {
+        //    color: var(--tiklab-blue);
+        //}
     }
     .testcase-content {
         background: #fff;

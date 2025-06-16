@@ -21,11 +21,14 @@ const ProjectSet = (props) => {
     }
     const [loading, setLoading] = useState(true)
 
-    const { findAllProjectSet, allProjectSetList } = ProjectSetStore;
+    const { findAllProjectSet, projectSetList, findProjectSetPage } = ProjectSetStore;
     //初始化获取项目列表
     useEffect(() => {
         setLoading(true)
-        findAllProjectSet({}).then(res => {
+        // findAllProjectSet({}).then(res => {
+        //     setLoading(false)
+        // })
+        findProjectSetPage({}).then(res => {
             setLoading(false)
         })
         return;
@@ -37,7 +40,7 @@ const ProjectSet = (props) => {
 
                 <Layout className="projectSet-content">
                     {
-                        allProjectSetList && allProjectSetList.length > 0 ?
+                        projectSetList && projectSetList.length > 0 ?
                             <ProjectSetContent /> :
                             <>
                                 {

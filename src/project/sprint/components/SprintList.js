@@ -31,7 +31,7 @@ const Sprint = (props) => {
     const projectId = props.match.params.id;
     const { findAllSprintState, findSprintPage, uselist, getUseList,
         sprintList, setSprintList, delesprintList, createSprintFocus, findSprintFocusList,
-        deleteSprintFocus, total, createRecent, sprintPageParams
+        deleteSprintFocus, total, createRecent, sprintPageParams, findSprintCount
     } = SprintStore;
 
     const project = JSON.parse(localStorage.getItem("project"));
@@ -48,6 +48,12 @@ const Sprint = (props) => {
     const [sprintId, setSprintId] = useState();
 
     const [sprintStateList, setsprintStateList] = useState([])
+
+    const [springCount, setSprintCount] = useState({
+        total: 0,
+        myCreated: 0,
+        myFocus: 0
+    })
     /**
      * 获取关注的迭代, 获取项目的所有迭代，获取所有迭代状态
      */
@@ -59,6 +65,9 @@ const Sprint = (props) => {
                 setsprintStateList(res.data)
             }
         });
+        findSprintCount().then(res => {
+            setSprintCount(res.data)
+        })
         selectTabs(activeTabs, 1)
         return;
     }, [])
@@ -85,7 +94,16 @@ const Sprint = (props) => {
      * @param {输入框的值} data 
      */
     const onSearch = useDebounce((data) => {
-        findSprintPage({ sprintName: data })
+        findSprintPage({
+            sprintName: data,
+            pageParam: {
+                pageSize: 5,
+                currentPage: 1,
+            }
+        })
+        findSprintCount().then(res => {
+            setSprintCount(res.data)
+        })
     }, [500])
 
     /**
@@ -117,6 +135,9 @@ const Sprint = (props) => {
             if (data.code === 0) {
                 sprintList[index].focusIs = false
                 setSprintList([...sprintList])
+                findSprintCount().then(res => {
+                    setSprintCount(res.data)
+                })
             }
         })
     }
@@ -136,6 +157,9 @@ const Sprint = (props) => {
             if (data.code === 0) {
                 sprintList[index].focusIs = true
                 setSprintList([...sprintList])
+                findSprintCount().then(res => {
+                    setSprintCount(res.data)
+                })
             }
         })
     }
@@ -149,17 +173,20 @@ const Sprint = (props) => {
         {
             title: '全部',
             key: 'all',
-            icon: "all"
+            icon: "all",
+            value: "total"
         },
         {
             title: '我创建的',
             key: 'build',
-            icon: "programconcern"
+            icon: "programconcern",
+            value: "myCreated"
         },
         {
             title: '我关注的',
             key: 'focus',
-            icon: "programconcern"
+            icon: "programconcern",
+            value: "myFocus"
         }
     ]
 
@@ -237,6 +264,9 @@ const Sprint = (props) => {
             }
         }
         findSprintPage(params);
+        findSprintCount().then(res => {
+            setSprintCount(res.data)
+        })
     }
 
     const columns = [
@@ -343,7 +373,7 @@ const Sprint = (props) => {
                                             key={item.key}
                                             onClick={() => selectTabs(item.key, 1)}
                                         >
-                                            {item.title}
+                                            {item.title}<span className="tabs-bar-num">{springCount[item.value]}</span>
                                         </div>
                                     })
                                 }
@@ -392,8 +422,7 @@ const Sprint = (props) => {
                                         current: sprintPageParams.pageParam.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"],
-                                        hideOnSinglePage: true,
-                                        simple: true
+                                        showTotal: () => `共${total}条`
                                     }}
                                 />
                             </div>

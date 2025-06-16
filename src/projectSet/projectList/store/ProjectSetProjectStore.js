@@ -31,6 +31,7 @@ export class ProjectSetProjectStore {
             currentPage: 1
         }
     }
+    @observable total = 0;
 
     @observable type = "add";
     @observable visible = false;
@@ -60,15 +61,32 @@ export class ProjectSetProjectStore {
 
     /**
      * 获取项目集关联项目
-     * @param {项目集id} values 
-     * @returns 
+     * @param {项目集id} values
+     * @returns
      */
     @action
     findProjectList = async (values) => {
         Object.assign(this.projectPageParams, { ...values })
         const data = await Service("/projectSet/findProjectList", this.projectPageParams);
-        
+
         this.projectRelevance = data.data
+        return data;
+    }
+
+    /**
+     * 获取项目集关联项目
+     * @param {项目集id} values
+     * @returns
+     */
+    @action
+    findProjectPage = async (values) => {
+        Object.assign(this.projectPageParams, { ...values })
+        const data = await Service("/projectSet/findProjectPage", this.projectPageParams);
+
+        if (data.code === 0){
+            this.projectRelevance = data.data.dataList
+            this.total = data.data.totalRecord
+        }
         return data;
     }
 

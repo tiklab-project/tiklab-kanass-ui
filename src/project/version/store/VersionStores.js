@@ -246,5 +246,11 @@ export class VersionStore {
         return data;
     }
 
+    @action
+    findVersionCount  = async () => {
+        const data = await Service("/projectVersion/findVersionCount", this.searchCondition)
+        return data;
+    }
+
 }
 export default new VersionStore();

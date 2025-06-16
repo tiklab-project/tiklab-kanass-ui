@@ -22,6 +22,11 @@
                 height: 50px;
                 line-height: 50px;
                 margin-right: 20px;
+                .tabs-bar-num {
+                    font-size: 12px;
+                    padding-left: 3px;
+                    color: #999;
+                }
             }
             .sprint-tab:last-child {
                 margin-right: 0;

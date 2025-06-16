@@ -10,12 +10,13 @@ import React from "react";
 import WorkTable from "./WorkTable";
 import WorkList from "./WorkList";
 import WorkBodar from "./WorkBodar";
+import WorkGantt from "./WorkGantt";
 import WorkStore from "../store/WorkStore";
 import { observer, Provider } from "mobx-react";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import workStore from "../store/WorkStore";
 const Work = (props) => {
-    const { WorkGantt } = props;
+    // const { WorkGantt } = props;
     const { workShowType } = WorkStore;
     const store = {
         workStore: WorkStore,

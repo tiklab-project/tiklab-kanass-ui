@@ -11,6 +11,7 @@ import { Service } from "../../common/utils/requset";
 export class WorkTestStore {
     @observable workDoucumentList = [];
     @observable doucumentList = [];
+    @observable currentRecord = {};
 
     @observable findDoucmnetCondition = {
         currentPage: 1  
@@ -19,15 +20,25 @@ export class WorkTestStore {
     @observable unRelationWorkCondition = {
         pageParam: {
             currentPage: 1,
-            pageSize: 1
+            pageSize: 10
         }
     };
     @observable unRelationTotal = 0;
 
     @action
     setUnRelationWorkCondition = (value) => {
-        this.unRelationWorkCondition = {...value}
-}
+        Object.assign(this.unRelationWorkCondition, {...value})
+    }
+
+    @action
+    setCurrentRecord = (value) => {
+        this.currentRecord = value;
+    }
+
+    @action
+    cleanCurrentRecord = () => {
+        this.currentRecord = {};
+    }
 
     // 获取事项的测试用例列表
     @action

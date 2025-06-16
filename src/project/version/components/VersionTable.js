@@ -27,7 +27,7 @@ const VersionTable = (props) => {
     }
     const { versionList, setVersionList, getVersionList, deleVersion, createRecent,
         createVersionFocus, deleteVersionFocus, userList, getUseList, searchCondition,
-        total, findAllVersionState } = VersionStore;
+        total, findAllVersionState, findVersionCount } = VersionStore;
     const project = JSON.parse(localStorage.getItem("project"));
     // 项目id
     const projectId = props.match.params.id;
@@ -35,14 +35,24 @@ const VersionTable = (props) => {
     const [activeTabs, setActiveTabs] = useState("all");
     const [versionStateList, setVersionStateList] = useState([]);
     const userId = getUser().userId;
+    const [versionCount, setVersionCount] = useState({
+        total: 0,
+        myCreated: 0,
+        myFocus: 0
+    })
     // 初始化
     useEffect(() => {
-        getVersionList({ projectId: projectId, name: null, versionStates: null })
+        getVersionList({ projectId: projectId, name: null, versionStates: null }).then(res => {
+            findVersionCount().then(res => {
+                setVersionCount(res.data)
+            })
+        })
         findAllVersionState().then(res => {
             if (res.code === 0) {
                 setVersionStateList(res.data)
             }
         })
+
         selectTabs(activeTabs, 1)
         return;
     }, []);
@@ -81,6 +91,9 @@ const VersionTable = (props) => {
             if (data.code === 0) {
                 versionList[index].focusIs = true
                 setVersionList([...versionList])
+                findVersionCount().then(res => {
+                    setVersionCount(res.data)
+                })
             }
         })
     }
@@ -99,6 +112,9 @@ const VersionTable = (props) => {
             if (data.code === 0) {
                 versionList[index].focusIs = false
                 setVersionList([...versionList])
+                findVersionCount().then(res => {
+                    setVersionCount(res.data)
+                })
             }
         })
     }
@@ -232,6 +248,9 @@ const VersionTable = (props) => {
         setLoading(true)
         getVersionList(value).then((res) => {
             setLoading(false)
+            findVersionCount().then(res => {
+                setVersionCount(res.data)
+            })
         })
     }
 
@@ -252,17 +271,20 @@ const VersionTable = (props) => {
         {
             title: '全部',
             key: 'all',
-            icon: "all"
+            icon: "all",
+            value: "total"
         },
         {
             title: '我创建的',
             key: 'build',
-            icon: "programconcern"
+            icon: "programconcern",
+            value: "myCreated"
         },
         {
             title: '我关注的',
             key: 'focus',
-            icon: "programconcern"
+            icon: "programconcern",
+            value: "myFocus"
         }
     ]
 
@@ -303,7 +325,11 @@ const VersionTable = (props) => {
                 currentPage: 1,
             }
         }
-        getVersionList(params);
+        getVersionList(params).then(
+            findVersionCount().then(res => {
+                setVersionCount(res.data)
+            })
+        );
     }
 
     const changePage = (page, pageSize) => {
@@ -342,7 +368,7 @@ const VersionTable = (props) => {
                                             key={item.key}
                                             onClick={() => selectTabs(item.key, 1)}
                                         >
-                                            {item.title}
+                                            {item.title}<span className="tabs-bar-num">{versionCount[item.value]}</span>
                                         </div>
                                     })
                                 }
@@ -388,8 +414,7 @@ const VersionTable = (props) => {
                                         current: searchCondition.pageParam.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"],
-                                        hideOnSinglePage: true,
-                                        simple: true
+                                        showTotal: () => `共${total}条`
                                     }}
                                     loading={loading}
                                     onSearch={onSearch}

@@ -261,6 +261,13 @@ export class SprintStore {
         const data = await Service("/recent/createRecent", value)
         return data;
     }
+
+    @action
+    findSprintCount = async () => {
+
+        const data = await Service("/sprint/findSprintCount", this.sprintPageParams)
+        return data;
+    }
 }
 
 export default new SprintStore();

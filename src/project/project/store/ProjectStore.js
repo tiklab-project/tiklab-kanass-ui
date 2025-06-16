@@ -10,13 +10,18 @@ export class ProjectStore {
     @observable projectName = "";
     @observable activeTabs = "1";
     @observable projectQuickFilter = null;
+    @observable total = 0;
 
      
     @observable projectPageParams = {
         orderParams: [{
             name: "startTime",
             orderType: "desc"
-        }]
+        }],
+        pageParam: {
+            pageSize: 5,
+            currentPage: 1
+        }
     };
     @action
     setProject = (value) => {
@@ -54,6 +59,17 @@ export class ProjectStore {
         const data = await Service("/project/findJoinProjectList", this.projectPageParams)
         if(data.code === 0){
             this.projectList = data.data;
+        }
+        return data;
+    }
+
+    @action
+    findProjectPage = async (value) => {
+        Object.assign(this.projectPageParams, value)
+        const data = await Service("/project/findProjectPage", this.projectPageParams)
+        if(data.code === 0){
+            this.projectList = data.data.dataList;
+            this.total = data.data.totalRecord;
         }
         return data;
     }
@@ -238,6 +254,12 @@ export class ProjectStore {
         const params = new FormData();
         params.append("projectName", value)
         const data = await Service("/project/creatProjectKey", params)
+        return data;
+    }
+
+    @action
+    findProjectCount = async() => {
+        const data = await Service("/project/findProjectCount", this.projectPageParams)
         return data;
     }
 }

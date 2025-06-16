@@ -141,6 +141,11 @@
             height: 40px;
             line-height: 40px;
             margin-right: 20px;
+            .tabs-bar-num {
+                font-size: 12px;
+                padding-left: 3px;
+                color: #999;
+            }
         }
         .project-tab:last-child {
             margin-right: 0;
@@ -228,6 +233,11 @@
                 .project-text {
                     cursor: pointer;
                     line-height: 25px;
+                    overflow: hidden;
+                    width: 100%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    min-width: 0;
                 }
                 .project-text:hover {
                     text-decoration: underline;

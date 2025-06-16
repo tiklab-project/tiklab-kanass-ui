@@ -93,7 +93,38 @@ export class WorkStore {
     }
     @observable workId = "";
     @observable workIndex = "";
-    
+
+    // 待办视图筛选条件
+    @observable todoListPageCondition = {
+        orderParams: [{
+            name: "code",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }
+    }
+
+    @action
+    cleanTodoListPageCondition = () => {
+        this.todoListPageCondition = {
+            orderParams: [{
+                name: "code",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+    }
+
+    @action
+    setTodoListPageCondition = (value) => {
+        Object.assign(this.todoListPageCondition, value)
+    }
+    @observable todoListTotal = 0;
    
     // 当前事项的状态index 
     @observable indexParams = {
@@ -632,6 +663,7 @@ export class WorkStore {
     findWorkItemPageTreeWhenTodo = async(value) => {
         const data = await Service("/workItem/findWorkItemPageTreeByQuery",value);
         if (data.code === 0){
+            this.todoListTotal = data.data.totalRecord;
             // this.findWorkItemNumByWorkType()
         }
         return data;

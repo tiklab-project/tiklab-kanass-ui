@@ -14,7 +14,7 @@ import "./ProjectFilterQuick.scss";
 
 const ProjectFilterQuick = (props) => {
     const { projectStore } = props;
-    const { projectQuickFilter, setProjectQuickFilter, findJoinProjectList } = projectStore;
+    const { projectQuickFilter, setProjectQuickFilter, findProjectPage } = projectStore;
 
     const quickFilterList = [
         {
@@ -44,26 +44,42 @@ const ProjectFilterQuick = (props) => {
                 case "total":
                     params = {
                         projectStates: null,
-                        overdue: false
+                        overdue: false,
+                        pageParam: {
+                            pageSize: 5,
+                            currentPage: 1,
+                        }
                     }
                     break;
                 case "progress":
                     params = {
                         projectStates: ["2"],
-                        overdue: false
+                        overdue: false,
+                        pageParam: {
+                            pageSize: 5,
+                            currentPage: 1,
+                        }
                     }
                     // setProjectPageParams(params);
                     break;
                 case "noend":
                     params = {
                         projectStates: ["1", "2"],
-                        overdue: false
+                        overdue: false,
+                        pageParam: {
+                            pageSize: 5,
+                            currentPage: 1,
+                        }
                     }
                     break;
                 case "overdue":
                     params = {
                         projectStates: ["1", "2"],
-                        overdue: true
+                        overdue: true,
+                        pageParam: {
+                            pageSize: 5,
+                            currentPage: 1,
+                        }
                     }
                     break;
                 default:
@@ -71,7 +87,7 @@ const ProjectFilterQuick = (props) => {
             }
         }
        
-        findJoinProjectList(params)
+        findProjectPage(params)
     }
 
 

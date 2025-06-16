@@ -33,7 +33,11 @@ const UserWorkItem = (props) => {
 
 
         findAllProject().then(res => {
-            setProjectList(res.data)
+            if (res.code === 0 && res.data.length > 0){
+                setProjectList(res.data)
+                form.setFieldsValue({ projectId: res.data[0].id })
+                statisticsUserWorkItem({ projectId: res.data[0].id })
+            }
         })
         return;
     }, [])

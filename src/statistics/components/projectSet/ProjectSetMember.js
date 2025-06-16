@@ -34,7 +34,16 @@ const ProjectSetMember = (props) => {
          * 查找所有项目集并设置默认项目集
          */
         findAllProjectSet().then(res => {
-            setProjectSetList(res.data)
+            if (res.code === 0 && res.data.length > 0){
+                setProjectSetList(res.data)
+                form.setFieldsValue({
+                    projectSetId: res.data[0].id
+                })
+                statisticsProjectUser({
+                    projectSetId: res.data[0].id
+                })
+            }
+
         })
     }, [])
 

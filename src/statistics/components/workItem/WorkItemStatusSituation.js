@@ -14,6 +14,8 @@ import { Form, Select, Button } from 'antd';
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import StatisticsStore from "../../store/StatisticsStore";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import moment from "moment/moment";
+import {defaultDateFormat, getFirstDayOfMonth, getLastDayOfMonth} from "../StatisticsDateFormat";
 const WorkItemStatusSituation = (props) => {
     const { statisticsWorkItemStatusCount, reportList, findAllProject } = StatisticsStore;
     // 事项的各个状态的数据统计列表
@@ -48,7 +50,18 @@ const WorkItemStatusSituation = (props) => {
     //  */
     useEffect(() => {
         findAllProject().then(res => {
-            setProjectList(res.data)
+            if (res.code === 0 && res.data.length > 0){
+                setProjectList(res.data)
+                form.setFieldsValue({
+                    projectId: res.data[0].id,
+                    workItemTypeCode: "all"
+                })
+
+                onValuesChange({
+                    projectId: res.data[0].id,
+                    workItemTypeCode: "all"
+                })
+            }
         })
         return;
 

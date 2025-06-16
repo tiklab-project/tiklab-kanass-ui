@@ -24,7 +24,8 @@ const TodoList = (props) => {
         homeStore: HomeStore
     };
 
-    const { workId, setWorkId, findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum, findWorkItemPageTreeWhenTodo,
+    const { workId, setWorkId, findWorkTypeDmList, tabValue, setTabValue, eveWorkTypeNum,todoListTotal,
+        findWorkItemPageTreeWhenTodo, todoListPageCondition, setTodoListPageCondition, cleanTodoListPageCondition,
         findWorkItemNumWhenTodo, deleteWorkItem, setWorkIndex, getWorkStatus } = WorkStore;
     const {todoActiveKey} = HomeStore;
     const {findProjectList, projectList} = ProjectStore
@@ -88,25 +89,33 @@ const TodoList = (props) => {
         }
 
         // 初始化查询参数
-        let param = {
-            orderParams: [{
-                name: "code",
-                orderType: "desc"
-            }],
-            pageParam: {
-                pageSize: 20,
-                currentPage: 1,
-                total: 1
-            },
+        // let param = {
+        //     orderParams: [{
+        //         name: "code",
+        //         orderType: "desc"
+        //     }],
+        //     pageParam: {
+        //         pageSize: 20,
+        //         currentPage: 1,
+        //         total: 1
+        //     },
+        //     projectId: projectId,
+        //     sprintId: sprintId,
+        //     versionId: versionId,
+        //     assignerIds: getUser().id
+        // }
+        setTodoListPageCondition({
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
-            assignerIds: getUser().id
-        }
+            assignerIds: getUser().id,
+        })
 
         if (todoActiveKey === 0) {
             // 待办
-            param = {...param, workStatusIds: ["todo"]}
+            setTodoListPageCondition({
+                workStatusIds: ["todo"]
+            })
             setTodoLabel("待办")
         }
         else if (todoActiveKey === 1) {
@@ -118,25 +127,30 @@ const TodoList = (props) => {
                     progressArray.push(item.id)
                 }
             });
-            param = {...param, workStatusIds: progressArray}
+            setTodoListPageCondition({
+                workStatusIds: progressArray
+            })
             setTodoLabel("进行中")
         }
         else if (todoActiveKey === 2) {
             // 完成
-            param = {...param, workStatusIds: ["done"]}
+            setTodoListPageCondition({
+                workStatusIds: ["done"]
+            })
             setTodoLabel("已完成")
         }
         else {
             // 逾期
-            param = {...param, overdue: true}
+            setTodoListPageCondition({
+                overdue: true
+            })
             setTodoLabel("已逾期")
         }
-        setSearchParam(param);
+        // setSearchParam(todoListPageCondition);
 
-        console.log(param)
         // 初始化表格数据
-        findWorkItemNumWhenTodo(param);
-        findWorkItemPageTreeWhenTodo(param).then((res) => {
+        findWorkItemNumWhenTodo(todoListPageCondition);
+        findWorkItemPageTreeWhenTodo(todoListPageCondition).then((res) => {
             setTableInfo(res.data)
         })
 
@@ -204,7 +218,13 @@ const TodoList = (props) => {
      */
     const selectType = (value) => {
         if (value === "all") {
-            search({ workTypeId: "" })
+            search({
+                workTypeId: "",
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
+            })
             setTabValue({
                 id: "all",
                 type: "system",
@@ -232,8 +252,9 @@ const TodoList = (props) => {
      * 搜索事项
      * @param {搜索条件} values
      */
-    const search = values => {
-        searchWorkList(values)
+    const search = value => {
+        setTodoListPageCondition(value)
+        searchWorkList()
     };
 
     const inputChange = (field, value) => {
@@ -247,6 +268,7 @@ const TodoList = (props) => {
                 currentPage: 1,
             }
         })
+        setTodoListPageCondition({keyWord: value})
         // searchWorkList(searchParam)
     }
 
@@ -262,10 +284,12 @@ const TodoList = (props) => {
     }
 
     const searchWorkList = (values) => {
+        console.log("查询的参数：    " + JSON.stringify(values))
+        setTodoListPageCondition(values)
         // 事项类型下的事项个数
-        findWorkItemNumWhenTodo(values);
+        findWorkItemNumWhenTodo(todoListPageCondition);
         // 搜索事项
-        findWorkItemPageTreeWhenTodo(values).then((res) => {
+        findWorkItemPageTreeWhenTodo(todoListPageCondition).then((res) => {
             if(res.code === 0){
                 setTableInfo(res.data)
             }
@@ -276,7 +300,7 @@ const TodoList = (props) => {
     useEffect(() => {
         if (searchParam != null){
             console.log("更新后的参数", JSON.stringify(searchParam));
-            searchWorkList(searchParam);
+            searchWorkList();
         }
     }, [searchParam]); // 依赖项为 searchParam
 
@@ -448,15 +472,15 @@ const TodoList = (props) => {
     }
 
     const changePage = (page, pageSize) => {
-        setSearchParam({
-            ...searchParam,
+        // setSearchParam({
+        //     ...searchParam,
+        //
+        // })
+        searchWorkList({
             pageParam: {
-                ...searchParam.pageParam,
-                pageSize: pageSize,
+                pageSize: 20,
                 currentPage: page,
-            }
-        })
-        searchWorkList(searchParam)
+            }})
     }
 
     const delectCurrentWorkItem = () =>{
@@ -473,7 +497,7 @@ const TodoList = (props) => {
                         <Breadcrumb
                             {...props}
                             firstText={firstText}
-                            secondText="待办"
+                            secondText={todoLabel}
                         />
                         </div>
                         <div className="table-top">
@@ -580,9 +604,9 @@ const TodoList = (props) => {
                                     loading={loading}
                                     rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
                                     pagination={{
-                                        total: tableInfo.totalPage,
-                                        pageSize: tableInfo.pageSize,
-                                        current: tableInfo.currentPage,
+                                        total: todoListTotal,
+                                        pageSize: todoListPageCondition.pageParam.pageSize,
+                                        current: todoListPageCondition.pageParam.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"],
                                         showTotal: () => `共${tableInfo.totalRecord}条`

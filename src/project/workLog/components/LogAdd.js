@@ -254,7 +254,7 @@ const LogAdd = (props) => {
 
         <div onClick={(e) => {
             console.log("点击事件")
-            e.stopPropagation()
+            // e.stopPropagation()
         }}>
             <Modal
                 title={modalType === "add" ? '添加工时' : '编辑工时'}
@@ -263,6 +263,12 @@ const LogAdd = (props) => {
                 onOk={creatLog}
                 visible={showLogAdd}
                 width={500}
+                maskClosable={false} // 禁止点击遮罩层关闭
+                getContainer={false} // 确保Modal不在Drawer的DOM树中
+                onClick={(e) => {
+                    e.stopPropagation(); // 阻止事件冒泡
+                    e.nativeEvent.stopImmediatePropagation(); // 更彻底地阻止事件
+                }}
             >
                 <Form
                     // {...layout}

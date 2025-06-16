@@ -25,6 +25,8 @@
         // margin-bottom: 15px;
         gap: 20px;
         .project-box {
+            width: 50%;
+            overflow: hidden;
             padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
@@ -67,7 +69,7 @@
                 }
 
                 .project-progress {
-                    width: 100%;
+                    width: calc(100% - 60px);
                     .item-content {
                         width: calc(100% - 30px);
                     }
@@ -83,6 +85,7 @@
                 }
 
                 .project-work {
+                    width: calc(100% - 20px);
                     display: flex;
                     justify-content: space-between;
                     flex-shrink: 0;
@@ -108,7 +111,7 @@
         }
 
         .burn-down-box {
-            // width: calc(100% - 515px);
+            width: 50%;
             flex: 1;
             flex-shrink: 0;
             height: auto;

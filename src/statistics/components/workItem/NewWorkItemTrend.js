@@ -16,6 +16,7 @@ import moment from "moment";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import StatisticsStore from "../../store/StatisticsStore";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import {defaultDateFormat, getFirstDayOfMonth, getLastDayOfMonth, getNowFormatDate} from "../StatisticsDateFormat";
 
 const { RangePicker } = DatePicker;
 
@@ -32,7 +33,22 @@ const NewWorkItemTrend = (props) => {
     useEffect(() => {
         // 获取所有项目列表
         findAllProject().then(res => {
-            setProjectList(res.data)
+            if (res.code === 0 && res.data.length > 0){
+                setProjectList(res.data)
+                form.setFieldsValue({
+                    projectId: res.data[0].id,
+                    cellTime: "day",
+                    dateRanger: [moment(getFirstDayOfMonth(), defaultDateFormat), moment(getLastDayOfMonth(), defaultDateFormat)],
+                    workItemTypeCode: "all"
+                })
+
+                onValuesChange({
+                    projectId: res.data[0].id,
+                    cellTime: "day",
+                    dateRanger: [moment(getFirstDayOfMonth(), defaultDateFormat), moment(getLastDayOfMonth(), defaultDateFormat)],
+                    workItemTypeCode: "all"
+                })
+            }
         })
         return;
     }, [])

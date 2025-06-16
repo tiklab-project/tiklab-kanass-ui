@@ -60,6 +60,11 @@ const WorkChangeView = (props) => {
             value: "bodar",
             path: "Bodar",
             title: "看板"
+        },
+        {
+            value: "gantt",
+            path: "Gantt",
+            title: "甘特图"
         }
     ]
 
@@ -77,13 +82,13 @@ const WorkChangeView = (props) => {
      */
     const changeWorkView = (item) => {
         if (item.value === workShowType) return;
-        if (item.value === "gantt") {
-            if (versionInfo.expired === true) {
-                setWorkGanttFreeVisable(true);
-                return
-            }
-            
-        }
+        // if (item.value === "gantt") {
+        //     if (versionInfo.expired === true) {
+        //         setWorkGanttFreeVisable(true);
+        //         return
+        //     }
+        //
+        // }
         setWorkShowType(item.value)
         setWorkId()
 
@@ -213,35 +218,35 @@ const WorkChangeView = (props) => {
                     }
 
 
-                    {
-                        versionInfo.expired === false ?
-                            <div
-                                className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(ganttViewList)}
-                            >
-                                <svg className="svg-icon" aria-hidden="true">
-                                    <use xlinkHref={`#icon-gantt`}></use>
-                                </svg>
-                                甘特图
-                            </div>
-                            :
-                            <div
-                                className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}
-                                onClick={() => changeWorkView(ganttViewList)}
-                            >
-                                <div className="dropdown-item">
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-gantt`}></use>
-                                    </svg>
-                                    甘特图
-                                </div>
-                                {
-                                    // versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">
-                                    //     <use xlinkHref={`#icon-member`}></use>
-                                    // </svg>
-                                }
-                            </div>
-                    }
+                    {/*{*/}
+                    {/*    versionInfo.expired === false ?*/}
+                    {/*        <div*/}
+                    {/*            className={`dropdown-item ${"gantt" === workShowType ? "view-type-select" : ""}`}*/}
+                    {/*            onClick={() => changeWorkView(ganttViewList)}*/}
+                    {/*        >*/}
+                    {/*            <svg className="svg-icon" aria-hidden="true">*/}
+                    {/*                <use xlinkHref={`#icon-gantt`}></use>*/}
+                    {/*            </svg>*/}
+                    {/*            甘特图*/}
+                    {/*        </div>*/}
+                    {/*        :*/}
+                    {/*        <div*/}
+                    {/*            className={`dropdown-buy-item ${"gantt" === workShowType ? "view-type-select" : ""}`}*/}
+                    {/*            onClick={() => changeWorkView(ganttViewList)}*/}
+                    {/*        >*/}
+                    {/*            <div className="dropdown-item">*/}
+                    {/*                <svg className="svg-icon" aria-hidden="true">*/}
+                    {/*                    <use xlinkHref={`#icon-gantt`}></use>*/}
+                    {/*                </svg>*/}
+                    {/*                甘特图*/}
+                    {/*            </div>*/}
+                    {/*            {*/}
+                    {/*                // versionInfo.expired === true && <svg className="svg-icon" aria-hidden="true">*/}
+                    {/*                //     <use xlinkHref={`#icon-member`}></use>*/}
+                    {/*                // </svg>*/}
+                    {/*            }*/}
+                    {/*        </div>*/}
+                    {/*}*/}
 
                 </div>
 

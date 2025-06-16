@@ -27,21 +27,31 @@ import CircleProgress from "../../../common/progress/CircleProgress";
 const ProjectList = (props) => {
     const { projectStore } = props;
     const { projectList, findProjectSortRecentTime, createRecent, findJoinProjectList, createProjectFocus, findProjectFocusList,
-        deleteProjectFocusByQuery, activeTabs, setActiveTabs
+        deleteProjectFocusByQuery, activeTabs, setActiveTabs, findProjectCount, findProjectPage, total, projectPageParams
     } = projectStore;
 
     const userId = getUser().userId;
     const [focusProjectList, setFocusProjectList] = useState([])
     const [recentProjectList, setRecentProjectList] = useState()
     const [recentLoading, setRecentLoading] = useState(true);
+    const [projectCount,  setProjectCount] = useState({
+        total: 0,
+        myCreated: 0,
+        myFocus: 0,
+    });
 
     useEffect(() => {
         setActiveTabs("1")
-        findJoinProjectList({ focusUser: null, creator: null, projectName: null })
+        findProjectPage({ focusUser: null, creator: null, projectName: null })
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)
             setRecentLoading(false)
+        })
+        findProjectCount().then(res => {
+            if (res.code === 0){
+                setProjectCount(res.data)
+            }
         })
         findProjectFocus(userId)
         return;
@@ -57,17 +67,20 @@ const ProjectList = (props) => {
         {
             title: '所有',
             key: '1',
-            icon: "project"
+            icon: "project",
+            value: "total",
         },
         {
             title: '我收藏的',
             key: '3',
-            icon: "programconcern"
+            icon: "programconcern",
+            value: "myFocus",
         },
         {
             title: '我创建的',
             key: '4',
-            icon: "programbuild"
+            icon: "programbuild",
+            value: "myCreated",
         }
     ]
 
@@ -103,17 +116,42 @@ const ProjectList = (props) => {
     const onSearch = useDebounce(value => {
         switch (activeTabs) {
             case "1":
-                findJoinProjectList({ focusUser: null, creator: null, projectName: value })
+                findProjectPage({
+                    focusUser: null,
+                    creator: null,
+                    projectName: value,
+                    pageParam: {
+                        pageSize: 5,
+                        currentPage: 1,
+                    }
+                })
                 break;
             case "3":
-                findJoinProjectList({ focusUser: userId, creator: null, projectName: value })
+                findProjectPage({
+                    focusUser: userId,
+                    creator: null,
+                    projectName: value,
+                    pageParam: {
+                        pageSize: 5,
+                        currentPage: 1,
+                    } })
                 break;
             case "4":
-                findJoinProjectList({ focusUser: null, creator: userId, projectName: value });
+                findProjectPage({
+                    focusUser: null,
+                    creator: userId,
+                    projectName: value,
+                    pageParam: {
+                        pageSize: 5,
+                        currentPage: 1,
+                    } });
                 break
             default:
                 break;
         }
+        findProjectCount().then(res => {
+            setProjectCount(res.data)
+        })
     }, [500]);
 
 
@@ -122,17 +160,29 @@ const ProjectList = (props) => {
         setActiveTabs(key)
         switch (key) {
             case "1":
-                findJoinProjectList({ focusUser: null, creator: null, projectName: null })
+                findProjectPage({ focusUser: null, creator: null, projectName: null })
                 break;
             case "3":
-                findJoinProjectList({ focusUser: userId, creator: null, projectName: null })
+                findProjectPage({ focusUser: userId, creator: null, projectName: null })
                 break;
             case "4":
-                findJoinProjectList({ focusUser: null, creator: userId, projectName: null });
+                findProjectPage({ focusUser: null, creator: userId, projectName: null });
                 break
             default:
                 break;
         }
+    }
+
+    const changePage = (page, pageSize) => {
+        const values = {
+            pageParam: {
+                pageSize: pageSize,
+                currentPage: page,
+            }
+        }
+
+        findProjectPage(values);
+
     }
 
     const addFocusProject = (id) => {
@@ -188,15 +238,17 @@ const ProjectList = (props) => {
                         />
                     </div>
                     <div>
+                        {/*{*/}
+                        {/*    text.length > 10 ?*/}
+                        {/*        <Tooltip title={text}>*/}
+                        {/*            <div className="project-text">{text.substring(0, 10) + "..."}</div>*/}
+                        {/*        </Tooltip>*/}
+                        {/*        :<div className="project-text">{text}</div>*/}
+                        {/*}*/}
+                        <Tooltip title={text}>
+                            <div className="project-text">{text}</div>
+                        </Tooltip>
                         <div className="project-key">{record.projectKey}</div>
-                        {
-                            text.length > 10 ?
-                                <Tooltip title={text}>
-                                    <div className="project-text">{text.substring(0, 10) + "..."}</div>
-                                </Tooltip>
-                                :<div className="project-text">{text}</div>
-                        }
-                        {/*<div className="project-text">{text}</div>*/}
                     </div>
 
                 </div>
@@ -366,7 +418,7 @@ const ProjectList = (props) => {
                                     key={item.key}
                                     onClick={() => selectTabs(item.key)}
                                 >
-                                    {item.title}
+                                    {item.title}<span className="tabs-bar-num">{projectCount[item.value]}</span>
                                 </div>
                             })
                         }
@@ -384,7 +436,14 @@ const ProjectList = (props) => {
                     dataSource={projectList}
                     rowKey={record => record.id}
                     // onChange={handleTableChange}
-                    pagination={false}
+                    pagination={{
+                        total: total,
+                        pageSize: projectPageParams.pageParam.pageSize,
+                        current: projectPageParams.pageParam.currentPage,
+                        onChange: changePage,
+                        position: ["bottomCenter"],
+                        showTotal: () => `共${total}条`
+                    }}
                     bordered={false}
                     scroll={{
                         x: "100%"

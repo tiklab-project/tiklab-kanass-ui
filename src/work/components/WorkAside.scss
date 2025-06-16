@@ -9,7 +9,7 @@
     .work-aside-option {
         border-radius: 4px;
         // position: relative;
-        height: calc(100% - 120px);
+        height: calc(100% - 130px);
         overflow: auto;
         // overflow-y: auto;
         width: 100%;
@@ -92,7 +92,8 @@
             .work-aside-item-icon {
                 margin-right: 5px;
                 height: 44px;
-                padding-top: 5px;
+                display: flex;
+                align-items: center;
             }
 
             .work-aside-item-content{
@@ -167,6 +168,7 @@
         }
 
         .work-aside-item:hover {
+            cursor: pointer;
             background-color: var(--tiklab-gray-610);
             color: var(--tiklab-blue);
         }

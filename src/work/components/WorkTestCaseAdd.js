@@ -45,7 +45,16 @@ const WorkTestCaseAddmodal = (props) => {
                         })
                         setRepositoryallIdList(list)
                         //获取项目内测试用例库未关联事项的测试用例
-                        findUnRelationWorkTestCaseList({ workItemId: workId, repositoryIds: list, name: "", repositoryId: null }).then((data) => {
+                        findUnRelationWorkTestCaseList({
+                            workItemId: workId,
+                            repositoryIds: list,
+                            name: "",
+                            repositoryId: null,
+                            pageParam: {
+                                pageSize: 10,
+                                currentPage: 1
+                            }
+                        }).then((data) => {
                             if (data.code === 0) {
                                 setTestCaseList(data.data.dataList)
                                 setCurrentPage(data.data.currentPage)
@@ -85,28 +94,67 @@ const WorkTestCaseAddmodal = (props) => {
             title: "标题",
             dataIndex: "testCaseName",
             key: "title",
-            width: 150
+            width: 150,
+            render: (text, record) => (
+                <div className="testCase-add-table-item">
+                    {text}
+                </div>
+            )
         },
         {
-            title: "目录",
+            title: "模块",
             dataIndex: "testCategoryName",
             key: "testCategoryName",
-            width: 150
+            width: 150,
+            render: (text, record) => (
+                <div className="testCase-add-table-item">
+                    {text}
+                </div>
+            )
         },
         {
-            title: "测试项目",
+            title: "项目",
             dataIndex: ["repository", "name"],
             key: "repository",
             width: 150
         },
         {
-            title: "作者",
+            title: "负责人",
             dataIndex: "createUser",
             key: "createUser",
             width: 150
+        },
+        {
+            title: '操作',
+            width: "60",
+            key: 'action',
+            render: (text, record) => (
+                <div style={{ display: "flex", gap: "15px" }}>
+                    <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemTestCase(record)}>
+                        <use xlinkHref="#icon-add2"></use>
+                    </svg>
+                </div>
+            ),
         }
     ];
 
+    const addWorkItemTestCase = (record) => {
+        const param = [{
+            testCaseId: record.id,
+            workItemId: workId,
+            repositoryId: record.kanassRepositoryId,
+            projectId: projectId
+        }]
+        createWorkTestCase(param).then((data) => {
+            if (data.code === 0) {
+                //获取事项测试用例
+                findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+                    setWorkTestCaseList([...data])
+                })
+                showSelectTestCase(false)
+            }
+        })
+    }
 
     /**
      * 根据用例库id筛选未关联测试用例
@@ -219,7 +267,15 @@ const WorkTestCaseAddmodal = (props) => {
     }
 
     const changePage = (page) => {
-        setUnRelationWorkCondition({pageParam:{currentPage: page}})
+        if (page < 1 || page > totalPage){
+            return;
+        }
+        setUnRelationWorkCondition({
+            pageParam:{
+                pageSize:10,
+                currentPage: page
+            }
+        })
         findUnRelationWorkTestCaseList().then((data) => {
             if (data.code === 0) {
                 setTestCaseList(data.data.dataList)
@@ -243,7 +299,7 @@ const WorkTestCaseAddmodal = (props) => {
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
-                        title={"测试项目"}
+                        title={"项目"}
                         suffixIcon = {true}
                         value = {repositoryValue}
                     >
@@ -261,7 +317,7 @@ const WorkTestCaseAddmodal = (props) => {
                     {
                         testCaseUserList && testCaseUserList.length > 0 && <SelectSimple name="user"
                             onChange={(value) => searchUnselectUser(value)}
-                            title={"用例作者"}
+                            title={"负责人"}
                             suffixIcon = {true}
                         >
                             {
@@ -278,11 +334,11 @@ const WorkTestCaseAddmodal = (props) => {
 
 
                     <div className="testCase-add-submit" style={{width: "66px"}}>
-                        <span onClick={() => submitWorkRepositoryList()}>
-                            确定
-                        </span>
-                        <span style={{ marginLeft: "10px" }} onClick={() => showSelectTestCase(false)}>
-                            取消
+                        {/*<span onClick={() => submitWorkRepositoryList()}>*/}
+                        {/*    确定*/}
+                        {/*</span>*/}
+                        <span style={{ marginLeft: "10px",cursor: "pointer" }} onClick={() => showSelectTestCase(false)}>
+                            X
                         </span>
                     </div>
                 </div>
@@ -291,13 +347,13 @@ const WorkTestCaseAddmodal = (props) => {
                         columns={columns}
                         dataSource={testCaseList}
                         rowKey={record => record.id}
-                        rowSelection={{
-                            selectedRow,
-                            onChange: selectWorkRepository,
-                            getCheckboxProps: (record) => ({
-                                disabled: record.rele === true
-                            })
-                        }}
+                        // rowSelection={{
+                        //     selectedRow,
+                        //     onChange: selectWorkRepository,
+                        //     getCheckboxProps: (record) => ({
+                        //         disabled: record.rele === true
+                        //     })
+                        // }}
                         okText="确定"
                         cancelText="取消"
                         pagination={false}
@@ -333,6 +389,7 @@ const WorkTestCaseAddmodal = (props) => {
                         {/*</div>*/}
                     </div>
                 </div>
+
             </div>
         </>
     );

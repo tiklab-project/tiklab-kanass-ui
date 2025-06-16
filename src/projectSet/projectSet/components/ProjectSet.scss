@@ -135,6 +135,11 @@
                         cursor: pointer;
                         height: 40px;
                         line-height: 40px;
+                        .tabs-bar-num {
+                            font-size: 12px;
+                            padding-left: 3px;
+                            color: #999;
+                        }
                     }
             
                     .active-tabs {
