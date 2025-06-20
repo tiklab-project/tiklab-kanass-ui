@@ -771,6 +771,28 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
+                            <Form.Item label="负责人" name="assigner"
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectAssigner"
+                                    bordered={fieldName === "assigner" ? true : false}
+                                    suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("assigner", "assigner")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => onMouseEnter("assigner")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("assigner")}
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
                             <Form.Item label="所属模块" name="module"
                                        hasFeedback={showValidateStatus === "module" ? true : false}
                                        validateStatus={validateStatus}
@@ -792,28 +814,6 @@ const WorkBasicInfo = (props) => {
                                     {
                                         moduleList && moduleList.map((item) => {
                                             return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-                            <Form.Item label="负责人" name="assigner"
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectAssigner"
-                                    bordered={fieldName === "assigner" ? true : false}
-                                    suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("assigner", "assigner")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => onMouseEnter("assigner")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    getPopupContainer={() => formRef.current}
-                                    disabled={isPermissionField("assigner")}
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
                                         })
                                     }
                                 </Select>
