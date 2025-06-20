@@ -19,7 +19,7 @@ export class ProjectStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 5,
+            pageSize: 10,
             currentPage: 1
         }
     };

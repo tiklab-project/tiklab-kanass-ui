@@ -18,6 +18,24 @@
                 width: 50%;
                 border-radius: 4px;
                 flex: 1;
+
+                .builder-and-more-info {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .form-custom-open {
+                        height: 30px;
+                        padding: 6px 0;
+                    }
+                    .close {
+                        transition: all 0.2s;
+                    }
+
+                    .open {
+                        transform: rotate(-180deg);
+                        transition: all 0.2s;
+                    }
+                }
             }
 
             .left {
@@ -46,19 +64,6 @@
             }
             .select-view:hover {
                 background-color: #f7f8fa;
-            }
-            .form-custom-open {
-                height: 30px;
-                margin-bottom: 10px;
-                padding: 6px 0;
-            }
-            .close {
-                transition: all 0.2s;
-            }
-
-            .open {
-                transform: rotate(-180deg);
-                transition: all 0.2s;
             }
         }
 

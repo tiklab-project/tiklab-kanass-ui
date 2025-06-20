@@ -21,6 +21,9 @@ import WorkBasicInfoNomal from "./WorkBasicInfoNomal";
 import WorkBasicInfoTask from "./WorkBasicInfoTask";
 import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkDetailBottom.scss";
+import WorkRelationPage from "./WorkRelationPage";
+import WorkLogPage from "./WorkLogPage";
+import WorkLinkPage from "./WorkLinkPage";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
@@ -136,94 +139,23 @@ const WorkDetailBottom = (props) => {
                 }
                 {
                     tabValue === 2 &&
-                    <div className="tabs-tabpanel">
-                        <WorkRelation projectId={workInfo?.project?.id} {...props} />
-                    </div>
+                    <WorkLogPage
+                        searchWorkById={searchWorkById}
+                        {...props}
+                    />
                 }
                 {
-                    tabValue === 3 && workInfo.workTypeCode !== "epic" && deep < 3 &&
-                    <div className="tabs-tabpanel">
-                        <WorkChild
-                            workId={workId}
-                            workType={workInfo.workType}
-                            flow={workInfo.flow}
-                            viewType={viewType}
-                            treePath={workInfo.treePath}
-                            projectId={workInfo.project.id}
-                            type={`子${workTypeText}`}
-                            workStatusNodeId={workInfo?.workStatusNode?.id}
-                            getTransitionList={getTransitionList}
-                            setTabValue = {setTabValue}
-                            {...props}
-                        />
-                    </div>
+                    tabValue === 3 &&
+                    <WorkRelationPage
+                        workTypeText={workTypeText}
+                        deep={deep}
+                        viewType={viewType}
+                        taskType = {taskType}
+                        {...props} />
                 }
                 {
-                    tabValue === 3 && workInfo.workTypeCode === "epic" && deep < 3 &&
-                    <div className="tabs-tabpanel">
-                        <WorkChild
-                            workId={workId}
-                            workType={workInfo.workType}
-                            workTypeCode={workInfo.workTypeCode}
-                            flow={workInfo.flow}
-                            viewType={viewType}
-                            treePath={workInfo.treePath}
-                            projectId={workInfo.project.id}
-                            type={`${workTypeText}`}
-                            {...props}
-                        />
-                    </div>
-                }
-                {
-                    tabValue === 4 && workTypeCode === "demand" && deep < 3 &&
-                    <div className="tabs-tabpanel">
-                        <WorkChild
-                            workId={workId}
-                            workType={taskType}
-                            treePath={workInfo.treePath}
-                            projectId={workInfo.project.id}
-                            workInfo={workInfo}
-                            type="任务"
-                            {...props}
-                        />
-                    </div>
-                }
-                {
-                    tabValue === 5 &&
-                    <div className="tabs-tabpanel">
-                        <WorkLog 
-                            closeModal = {closeModal} 
-                            surplusTime={workInfo.surplusTime} 
-                            workInfo={workInfo} 
-                            planTakeupTime={workInfo.planTakeupTime} 
-                            searchWorkById = {searchWorkById}
-                            {...props} 
-                        />
-                    </div>
-                }
-                {
-                    tabValue === 6 &&
-                    <div className="tabs-tabpanel">
-                        <WorkDynamic {...props} />
-                    </div>
-                }
-                {
-                    tabValue === 7 &&
-                    <div className="tabs-tabpanel">
-                        <WorkComment workId={workId} />
-                    </div>
-                }
-                {
-                    tabValue === 8 &&
-                    <div className="tabs-tabpanel">
-                        <WorkRepository {...props} projectId={workInfo.project.id} />
-                    </div>
-                }
-                {
-                    tabValue === 9 &&
-                    <div className="tabs-tabpanel">
-                        <WorkTestCaseList {...props} projectId={workInfo.project.id} />
-                    </div>
+                    tabValue === 4 &&
+                    <WorkLinkPage {...props} />
                 }
             </div>
         </div>

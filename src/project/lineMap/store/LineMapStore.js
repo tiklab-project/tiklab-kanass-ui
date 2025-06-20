@@ -12,7 +12,7 @@ export class LineMapStore {
     @observable sprintRoadList = [];
     @observable versionRoadList = [];
 
-    @observable lineMapView = localStorage.getItem("lineMapView") ? localStorage.getItem("lineMapView") : "workItemStatus"
+    @observable lineMapView = localStorage.getItem("lineMapView") ? localStorage.getItem("lineMapView") : "workItemTime"
 
     @action
     setLineMapView = (type) => {

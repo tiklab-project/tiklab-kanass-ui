@@ -32,7 +32,7 @@ const Breadcumb = (props) => {
                         <use xlinkHref="#icon-pageLeft"></use>
                     </svg>
                 }
-                <span className={`${secondText ? "page-link" : ""}`}>{firstText}</span>
+                <span className={`${secondText ? "page-back" : ""}`} onClick={secondText ? goUrl : undefined}>{firstText}</span>
                 {
                     secondText && <> &nbsp; / &nbsp; <span>{secondText}</span>
                     </>

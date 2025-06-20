@@ -226,22 +226,26 @@
             .project-name {
                 display: flex;
                 align-items: center;
-                .project-key {
-                    color: var(--tiklab-gray-500);
-                    line-height: 25px;
-                }
-                .project-text {
-                    cursor: pointer;
-                    line-height: 25px;
-                    overflow: hidden;
-                    width: 100%;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    min-width: 0;
-                }
-                .project-text:hover {
-                    text-decoration: underline;
-                    color: var(--tiklab-blue);
+
+                .project-name-content{
+                    .project-key {
+                        color: var(--tiklab-gray-500);
+                        line-height: 25px;
+                    }
+                    width: calc(100% - 40px);
+                    .project-text {
+                        cursor: pointer;
+                        line-height: 25px;
+                        overflow: hidden;
+                        width: 100%;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        min-width: 0;
+                    }
+                    .project-text:hover {
+                        text-decoration: underline;
+                        color: var(--tiklab-blue);
+                    }
                 }
             }
             .project-status {

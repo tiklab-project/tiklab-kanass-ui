@@ -276,102 +276,99 @@ const WorkItemTimePage = (props) => {
      }
 
     return <Provider {...store}>
-        <Row>
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
+        <Row style={
+            {
+                height: "100vh",
+                overflowY:"auto"
+            }
+        }>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "4" }}>
                 <div className="project-linemap">
                     <div className="project-linemap-head">
                         <div className="project-linemap-title">路线图</div>
                         <div className="line-map-tab">
-                            <div className={`tab-tabpane ${lineMapView === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
-                                按状态
-                            </div>
                             <div className={`tab-tabpane ${lineMapView === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>
                                 按时间
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div className="work-item-time-page">
-                    <div className="top-action">
-                        <InputSearch
-                            placeholder="搜索需求"
-                            allowClear
-                            onChange={onSearch}
-                        />
-                        <div className="top-action-right">
-                            <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
-                        </div>
-                    </div>
-                    {
-                        loading ? <Spin /> :
-                            <div style={{
-                                background: '#fff',
-                                borderRadius: 8,
-                                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
-                                overflow: 'hidden',
-                                height: 1000, // 固定高度
-                                display: 'flex',
-                                flexDirection: 'column'
-                            }}>
-                                <div className="content-table">
-                                    {
-                                        groupedData.map((group) => (
-                                            <div key={group.month}>
-                                                {renderGroupTitle(group)}
-                                                {expandedGroups[group.month] && (
-                                                    <List
-                                                        dataSource={group.items}
-                                                        renderItem={(item, index) => (
-                                                            <List.Item
-                                                                // className="work-item"
-                                                                // onClick={() => goWorkItemDetail(item, index)}
-                                                                actions={[
-                                                                    <Space size="small">
-                                                                        <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
-                                                                            {item.workStatusNode?.name}
-                                                                        </div>
-                                                                        <DeleteModal deleteFunction={deleteWork} id={item.id} />
-                                                                    </Space>
-                                                                ]}
-                                                            >
-                                                                <div className="item-content-wrapper">
-                                                                    <div className="item-avatar">
-                                                                        <ImgComponent
-                                                                            src={item.workTypeSys?.iconUrl}
-                                                                            alt=""
-                                                                            className="menu-icon"
-                                                                        />
-                                                                        {/*<span className="item-code">{item.code}</span>*/}
-                                                                    </div>
-
-                                                                    <div className="item-content" onClick={() => goWorkItemDetail(item, index)}>
-                                                                        <div
-                                                                            className="item-title"
-
-                                                                        >
-                                                                            {item.title}
-                                                                        </div>
-                                                                        <div className="item-description">
-                                                                            <span className="item-creator">{item.builder?.nickname}</span>
-                                                                            <span className="item-time">{item.buildTime.substring(0, 10)}</span>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </List.Item>
-
-                                                        )}
-                                                    />
-                                                )}
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                            <div className={`tab-tabpane ${lineMapView === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
+                                按状态
                             </div>
-                    }
+                        </div>
+                    </div>
+                    <div className="work-item-time-page">
+                        <div className="top-action">
+                            <InputSearch
+                                placeholder="搜索需求"
+                                allowClear
+                                onChange={onSearch}
+                            />
+                            <div className="top-action-right">
+                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
+                            </div>
+                        </div>
+                        {
+                            loading ? <Spin /> :
+                                <div className="work-item-time-content">
+                                    <div className="content-table">
+                                        {
+                                            groupedData.map((group) => (
+                                                <div key={group.month}>
+                                                    {renderGroupTitle(group)}
+                                                    {expandedGroups[group.month] && (
+                                                        <List
+                                                            dataSource={group.items}
+                                                            renderItem={(item, index) => (
+                                                                <List.Item
+                                                                    // className="work-item"
+                                                                    // onClick={() => goWorkItemDetail(item, index)}
+                                                                    actions={[
+                                                                        <Space size="small">
+                                                                            <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                                                                {item.workStatusNode?.name}
+                                                                            </div>
+                                                                            <DeleteModal deleteFunction={deleteWork} id={item.id} />
+                                                                        </Space>
+                                                                    ]}
+                                                                >
+                                                                    <div className="item-content-wrapper">
+                                                                        <div className="item-avatar">
+                                                                            <ImgComponent
+                                                                                src={item.workTypeSys?.iconUrl}
+                                                                                alt=""
+                                                                                className="menu-icon"
+                                                                            />
+                                                                            {/*<span className="item-code">{item.code}</span>*/}
+                                                                        </div>
+
+                                                                        <div className="item-content" onClick={() => goWorkItemDetail(item, index)}>
+                                                                            <div
+                                                                                className="item-title"
+
+                                                                            >
+                                                                                {item.title}
+                                                                            </div>
+                                                                            <div className="item-description">
+                                                                                <span className="item-creator">{item.builder?.nickname}</span>
+                                                                                <span className="item-time">{item.buildTime.substring(0, 10)}</span>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </List.Item>
+
+                                                            )}
+                                                        />
+                                                    )}
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                        }
+                    </div>
                 </div>
+
             </Col>
         </Row>
 

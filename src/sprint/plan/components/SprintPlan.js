@@ -504,24 +504,24 @@ const SprintPlan = (props) => {
                                     })
                                 }
                             </SelectSimple>
-                            <SelectSimple
-                                name="assignerIds"
-                                onChange={(value) => handleChange("assignerIds", value)}
-                                title={"负责人"} ismult={true}
-                                value={noPlanSearchCondition?.assignerIds}
-                            >
-                                {
-                                    userList.map(item => {
-                                        return <SelectItem
-                                            value={item.user?.id}
-                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.user?.id}
-                                            imgUrl={item.user?.iconUrl}
+                            {/*<SelectSimple*/}
+                            {/*    name="assignerIds"*/}
+                            {/*    onChange={(value) => handleChange("assignerIds", value)}*/}
+                            {/*    title={"负责人"} ismult={true}*/}
+                            {/*    value={noPlanSearchCondition?.assignerIds}*/}
+                            {/*>*/}
+                            {/*    {*/}
+                            {/*        userList.map(item => {*/}
+                            {/*            return <SelectItem*/}
+                            {/*                value={item.user?.id}*/}
+                            {/*                label={item.user?.nickname ? item.user?.nickname : item.user?.name}*/}
+                            {/*                key={item.user?.id}*/}
+                            {/*                imgUrl={item.user?.iconUrl}*/}
 
-                                        />
-                                    })
-                                }
-                            </SelectSimple>
+                            {/*            />*/}
+                            {/*        })*/}
+                            {/*    }*/}
+                            {/*</SelectSimple>*/}
                             <SelectSimple
                                 name="workStatus"
                                 onChange={(value) => handleChange("workStatusIds", value)}
@@ -609,24 +609,24 @@ const SprintPlan = (props) => {
                                     })
                                 }
                             </SelectSimple>
-                            <SelectSimple
-                                name="assignerIds"
-                                onChange={(value) => findSprintWorkItem("assignerIds", value)}
-                                title={"负责人"} ismult={true}
-                                value={searchCondition?.assignerIds}
-                            >
-                                {
-                                    userList.map(item => {
-                                        return <SelectItem
-                                            value={item.user?.id}
-                                            label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                            key={item.user?.id}
-                                            imgUrl={item.user?.iconUrl}
+                            {/*<SelectSimple*/}
+                            {/*    name="assignerIds"*/}
+                            {/*    onChange={(value) => findSprintWorkItem("assignerIds", value)}*/}
+                            {/*    title={"负责人"} ismult={true}*/}
+                            {/*    value={searchCondition?.assignerIds}*/}
+                            {/*>*/}
+                            {/*    {*/}
+                            {/*        userList.map(item => {*/}
+                            {/*            return <SelectItem*/}
+                            {/*                value={item.user?.id}*/}
+                            {/*                label={item.user?.nickname ? item.user?.nickname : item.user?.name}*/}
+                            {/*                key={item.user?.id}*/}
+                            {/*                imgUrl={item.user?.iconUrl}*/}
 
-                                        />
-                                    })
-                                }
-                            </SelectSimple>
+                            {/*            />*/}
+                            {/*        })*/}
+                            {/*    }*/}
+                            {/*</SelectSimple>*/}
                             <SelectSimple
                                 name="workStatus"
                                 onChange={(value) => findSprintWorkItem("workStatusIds", value)}

@@ -121,7 +121,7 @@ const ProjectList = (props) => {
                     creator: null,
                     projectName: value,
                     pageParam: {
-                        pageSize: 5,
+                        pageSize: projectPageParams.pageParam.pageSize,
                         currentPage: 1,
                     }
                 })
@@ -132,7 +132,7 @@ const ProjectList = (props) => {
                     creator: null,
                     projectName: value,
                     pageParam: {
-                        pageSize: 5,
+                        pageSize: projectPageParams.pageParam.pageSize,
                         currentPage: 1,
                     } })
                 break;
@@ -142,7 +142,7 @@ const ProjectList = (props) => {
                     creator: userId,
                     projectName: value,
                     pageParam: {
-                        pageSize: 5,
+                        pageSize: projectPageParams.pageParam.pageSize,
                         currentPage: 1,
                     } });
                 break
@@ -227,7 +227,8 @@ const ProjectList = (props) => {
             dataIndex: "projectName",
             key: "projectName",
             align: "left",
-            width: "30%",
+            width: "25%",
+            ellipsis: true,
             render: (text, record) =>
                 <div className="project-name" onClick={() => goProdetail(record)} >
                     <div className="project-icon">
@@ -237,14 +238,7 @@ const ProjectList = (props) => {
                             className="icon-32"
                         />
                     </div>
-                    <div>
-                        {/*{*/}
-                        {/*    text.length > 10 ?*/}
-                        {/*        <Tooltip title={text}>*/}
-                        {/*            <div className="project-text">{text.substring(0, 10) + "..."}</div>*/}
-                        {/*        </Tooltip>*/}
-                        {/*        :<div className="project-text">{text}</div>*/}
-                        {/*}*/}
+                    <div className="project-name-content">
                         <Tooltip title={text}>
                             <div className="project-text">{text}</div>
                         </Tooltip>
@@ -258,6 +252,7 @@ const ProjectList = (props) => {
             dataIndex: ["projectType", "name"],
             key: "projectType",
             align: "left",
+            width: "8%",
             render: (text, record) =>
                 <div className="project-name">
                     <div >{text.substring(0,2)}</div>
@@ -278,6 +273,7 @@ const ProjectList = (props) => {
             dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
+            width: "10%",
             render: (text, record) => (
                 <Space>
                     <UserIcon name={text} />
@@ -291,7 +287,7 @@ const ProjectList = (props) => {
             dataIndex: "startTime",
             key: "startTime",
             align: "left",
-            width: "25%",
+            width: "20%",
             render: (text, record) => (
                 <>
                     {record.startTime} - {record.endTime}
@@ -315,7 +311,7 @@ const ProjectList = (props) => {
             dataIndex: "projectName",
             key: "projectName",
             align: "left",
-            width: "100px",
+            width: "10%",
             render: (text, record) =>
                 <div style={{ display: "flex", gap: "15px" }}>
                     {

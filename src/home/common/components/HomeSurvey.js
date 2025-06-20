@@ -23,7 +23,7 @@ const { TabPane } = Tabs;
 const HomeSurvey = (props) => {
     const { homeStore } = props
     const { findProjectSortRecentTime, createRecent,
-        findTodopage, setActiveKey,activeKey, findRecentPage
+        findTodopage, setActiveKey,activeKey, findRecentPage, setTodoActiveKey
     } = homeStore;
     // 登录者id
     const userId = getUser().userId;
@@ -112,8 +112,9 @@ const HomeSurvey = (props) => {
      * @param {tab key} activeKey
      */
     const selectRouter = (url, activeKey) => {
-        props.history.push(url)
+        setTodoActiveKey(0);
         setActiveKey(activeKey)
+        props.history.push(url)
     }
 
 

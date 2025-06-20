@@ -14,7 +14,7 @@ import "./ProjectFilterQuick.scss";
 
 const ProjectFilterQuick = (props) => {
     const { projectStore } = props;
-    const { projectQuickFilter, setProjectQuickFilter, findProjectPage } = projectStore;
+    const { projectQuickFilter, setProjectQuickFilter, findProjectPage, projectPageParams } = projectStore;
 
     const quickFilterList = [
         {
@@ -46,7 +46,7 @@ const ProjectFilterQuick = (props) => {
                         projectStates: null,
                         overdue: false,
                         pageParam: {
-                            pageSize: 5,
+                            pageSize: projectPageParams.pageParam.pageSize,
                             currentPage: 1,
                         }
                     }
@@ -56,7 +56,7 @@ const ProjectFilterQuick = (props) => {
                         projectStates: ["2"],
                         overdue: false,
                         pageParam: {
-                            pageSize: 5,
+                            pageSize: projectPageParams.pageParam.pageSize,
                             currentPage: 1,
                         }
                     }
@@ -67,7 +67,7 @@ const ProjectFilterQuick = (props) => {
                         projectStates: ["1", "2"],
                         overdue: false,
                         pageParam: {
-                            pageSize: 5,
+                            pageSize: projectPageParams.pageParam.pageSize,
                             currentPage: 1,
                         }
                     }
@@ -77,7 +77,7 @@ const ProjectFilterQuick = (props) => {
                         projectStates: ["1", "2"],
                         overdue: true,
                         pageParam: {
-                            pageSize: 5,
+                            pageSize: projectPageParams.pageParam.pageSize,
                             currentPage: 1,
                         }
                     }

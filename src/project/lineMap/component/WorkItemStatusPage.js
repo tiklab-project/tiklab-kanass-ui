@@ -17,10 +17,8 @@ import InputSearch from "../../../common/input/InputSearch";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import LineMapStore from "../store/LineMapStore";
 const WorkItemStatusPage = (props) => {
-    const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
-        workUserGroupBoardList, findTransitionList, findWorkTypeDmList, setSearchConditionNull,
-        setWorkId, setWorkIndex, createRecent, setWorkShowType, findChangePageWorkBoardList, getWorkItemStatusList,
-        workBoardCurrentPage, workShowType, getWorkBoardList, deleteWorkItem, workId,
+    const {  editWork, setIndexParams,  findTransitionList, findWorkTypeDmList,
+        setWorkId, setWorkIndex, createRecent, findChangePageWorkBoardList, getWorkItemStatusList, deleteWorkItem, workId,
         workItemStatusList, workItemStatusCurrentPage, reductionWorkItemStatusList, changeWorkItemStatusList} = WorkStore;
     const [moveWorkId, setMoveWorkId] = useState("")
     const [moveStatusId, setMoveStatusId] = useState("")
@@ -59,7 +57,7 @@ const WorkItemStatusPage = (props) => {
                     sprintId: sprintId,
                     versionId: versionId,
                     stageId: stageId,
-                    workTypeSysId: res.data[0].workType.id
+                    workTypeId: res.data[0].workType.id
                 }
                 setLoading(true)
                 getWorkItemStatusList(params);
@@ -250,144 +248,169 @@ const WorkItemStatusPage = (props) => {
     const onChange = (view) => {
         setLineMapView(view)
     }
+
+    const setStatusStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-item-status-todo";
+                break;
+            case "progress":
+                name = "work-item-status-process";
+                break;
+            case "done":
+                name = "work-item-status-done";
+                break;
+            default:
+                name = "work-item-status-process";
+                break;
+        }
+        return name;
+    }
+
+    const parseDate = (dateString) => {
+        const date = new Date(dateString);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份补零
+        const day = date.getDate().toString().padStart(2, '0'); // 日期补零
+        return `${month}月${day}日`;
+    }
     return (
         <Provider {...store}>
             <div className="work-bordar">
-                <Row>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
-                        <div className="project-linemap">
+                <Row style={
+                    {
+                        height: "100%"
+                    }
+                }>
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "16", offset: "4" }}>
+                        <div className="project-linemap" style={{ height : "100%" }}>
                             <div className="project-linemap-head">
                                 <div className="project-linemap-title">路线图</div>
                                 <div className="line-map-tab">
-                                    <div className={`tab-tabpane ${lineMapView === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
-                                        按状态
-                                    </div>
                                     <div className={`tab-tabpane ${lineMapView === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>
                                         按时间
                                     </div>
+                                    <div className={`tab-tabpane ${lineMapView === "workItemStatus" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemStatus")}>
+                                        按状态
+                                    </div>
                                 </div>
                             </div>
+                            <div className="top-action" style={{ background: "#fff" }}>
+                                <InputSearch
+                                    placeholder="搜索需求"
+                                    allowClear
+                                    onChange={onSearch}
+                                />
+                                <div className="top-action-right">
+                                    <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
+                                </div>
+                            </div>
+                            <div className={`work-border-content-page ${loading ? "work-border-content-spin" : ""}`}>
+                                <Spin spinning={loading} tip="加载中">
+                                    <div className="work-border-flex">
+                                        {/*<div className="work-border-list">*/}
 
-                        </div>
-                        <div className="top-action" style={{ background: "#fff" }}>
-                            <InputSearch
-                                placeholder="搜索需求"
-                                allowClear
-                                onChange={onSearch}
-                            />
-                            <div className="top-action-right">
-                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} modelStyle={{ right: 0 }} />
+                                        {
+                                            //boardGroup === "nogroup" &&
+                                            workItemStatusList && workItemStatusList.map((item, index) => {
+                                                if (item.state) {
+                                                    return <div className={`work-border-box`}
+
+                                                                onDragOver={dragover}
+                                                                id={`targetBox${index}`}
+                                                                key={item.state.id}
+                                                    >
+                                                        <div className="work-border-title">
+                                                            <div className="work-border-title-content">{item.state.name}<span className="work-border-num">（{item.workItemList.totalRecord}）</span></div>
+                                                        </div>
+                                                        {
+                                                            isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
+                                                                <div
+                                                                    className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-border-box-border" : ""}`}
+                                                                    onDrop={() => changeStatus(item.state.id, index)}
+                                                                >
+                                                                </div>
+                                                                :
+                                                                <>
+                                                                    <div className="work-border-box-list" onDrop={() => cancelDrag()}>
+                                                                        {
+                                                                            item.workItemList.dataList.length > 0 ? item.workItemList.dataList.map((workItem, workIndex) => {
+                                                                                    return <div
+                                                                                        className={`work-border-item ${moveWorkId === workItem.id ? "work-border-item-move" : ""}`}
+                                                                                        key={workItem.id}
+                                                                                        onDrag={() => moveWorkItem()}
+                                                                                        onClick={() => showModal(workItem, workIndex, index)}
+                                                                                        draggable={"true"}
+                                                                                        onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
+                                                                                    >
+
+                                                                                        <div className="work-item-bordar">
+                                                                                            <div className="work-item-icon">
+                                                                                                <ImgComponent
+                                                                                                    src={workItem.workTypeSys?.iconUrl}
+                                                                                                    alt=""
+                                                                                                    className="icon-15"
+                                                                                                />
+                                                                                                <div className="work-item-code">
+                                                                                                    {workItem.code}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div className="work-item-title">
+                                                                                                {workItem.title}
+                                                                                            </div>
+                                                                                            <div className="work-item-bottom">
+                                                                                                <div className={`work-item-status ${setStatusStyle(workItem.workStatusNode.id)}`}>
+                                                                                                    {workItem.workStatusNode.name}
+                                                                                                </div>
+                                                                                                <div className="work-item-date">
+                                                                                                    {parseDate(workItem.buildTime)}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                })
+                                                                                :
+                                                                                <>
+                                                                                    {
+                                                                                        !loading && <Empty description="暂无事项" />
+                                                                                    }
+                                                                                </>
+
+                                                                        }
+                                                                        {
+                                                                            workItemStatusCurrentPage.length > 0 && item.workItemList.totalPage > 1 &&
+                                                                            workItemStatusCurrentPage[index] < item.workItemList.totalPage &&
+                                                                            <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
+                                                                        }
+                                                                    </div>
+
+                                                                </>
+
+                                                        }
+                                                    </div>
+                                                }
+
+                                            })
+                                        }
+
+                                        {/*</div>*/}
+
+                                        <WorkDetailDrawer
+                                            isModalVisible={isModalVisible}
+                                            setIsModalVisible={setIsModalVisible}
+                                            modelRef={modelRef}
+                                            showPage={true}
+                                            delectCurrentWorkItem={delectCurrentWorkItem}
+                                            {...props}
+                                        />
+
+                                    </div>
+                                </Spin>
                             </div>
                         </div>
                     </Col>
                 </Row>
-
-                <div className={`work-bodar-content-page ${loading ? "work-bodar-content-spin" : ""}`}>
-                <Spin spinning={loading} tip="加载中">
-                    <div className="work-bodar-flex">
-                        <div className="work-bodar-list">
-
-                            {
-                                //boardGroup === "nogroup" &&
-                                workItemStatusList && workItemStatusList.map((item, index) => {
-                                    if (item.state) {
-                                        return <div className={`work-bodar-box`}
-
-                                                    onDragOver={dragover}
-                                                    id={`targetBox${index}`}
-                                                    key={item.state.id}
-                                        >
-                                            <div className="work-bodar-title">
-                                                <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">（{item.workItemList.totalRecord}）</span></div>
-                                            </div>
-                                            {
-                                                isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
-                                                    <div
-                                                        className={`${(isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1) ? "work-bodar-box-border" : ""}`}
-                                                        onDrop={() => changeStatus(item.state.id, index)}
-                                                    >
-                                                    </div>
-                                                    :
-                                                    <>
-                                                        <div className="work-border-box-list" onDrop={() => cancelDrag()}>
-                                                            {
-                                                                item.workItemList.dataList.length > 0 ? item.workItemList.dataList.map((workItem, workIndex) => {
-                                                                        return <div
-                                                                            className={`work-bodar-item ${moveWorkId === workItem.id ? "work-bodar-item-move" : ""}`}
-                                                                            key={workItem.id}
-                                                                            onDrag={() => moveWorkItem()}
-                                                                            onClick={() => showModal(workItem, workIndex, index)}
-                                                                            draggable={"true"}
-                                                                            onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
-                                                                        >
-
-                                                                            <div className="work-item-title">
-                                                                                <div className="work-item-icon">
-                                                                                    <ImgComponent
-                                                                                        src={workItem.workTypeSys?.iconUrl}
-                                                                                        alt=""
-                                                                                        className="icon-24"
-                                                                                    />
-                                                                                </div>
-                                                                                <div className="work-item-content">
-                                                                                    <div className="work-item-top">
-                                                                                        <div className="work-item-name">
-                                                                                            {workItem.title}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className="work-item-bottom">
-                                                                                        <div className="work-item-code">
-                                                                                            {workItem.code}
-                                                                                        </div>
-                                                                                        <div className="work-item-date">
-                                                                                            {workItem.buildTime.substring(0,10)}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    })
-                                                                    :
-                                                                    <>
-                                                                        {
-                                                                            !loading && <Empty description="暂无事项" />
-                                                                        }
-                                                                    </>
-
-                                                            }
-                                                            {
-                                                                workItemStatusCurrentPage.length > 0 && item.workItemList.totalPage > 1 &&
-                                                                workItemStatusCurrentPage[index] < item.workItemList.totalPage &&
-                                                                <div className="change-page" onClick={() => changePage(item, index)}>加载更多</div>
-                                                            }
-                                                        </div>
-
-                                                    </>
-
-                                            }
-                                        </div>
-                                    }
-
-                                })
-                            }
-
-                        </div>
-
-                        <WorkDetailDrawer
-                            isModalVisible={isModalVisible}
-                            setIsModalVisible={setIsModalVisible}
-                            modelRef={modelRef}
-                            showPage={true}
-                            delectCurrentWorkItem={delectCurrentWorkItem}
-                            {...props}
-                        />
-
-                    </div>
-                </Spin>
-
             </div>
-            </div>
-
         </Provider>
 
     )

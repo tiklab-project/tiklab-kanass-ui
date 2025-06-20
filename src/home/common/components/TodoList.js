@@ -108,13 +108,15 @@ const TodoList = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
-            assignerIds: getUser().id,
+            assignerId: getUser().userId,
         })
 
+        console.log("todoActiveKey:  " + todoActiveKey)
         if (todoActiveKey === 0) {
             // 待办
             setTodoListPageCondition({
-                workStatusIds: ["todo"]
+                workStatusIds: ["todo"],
+                overdue: null
             })
             setTodoLabel("待办")
         }
@@ -128,20 +130,23 @@ const TodoList = (props) => {
                 }
             });
             setTodoListPageCondition({
-                workStatusIds: progressArray
+                workStatusIds: progressArray,
+                overdue: null
             })
             setTodoLabel("进行中")
         }
         else if (todoActiveKey === 2) {
             // 完成
             setTodoListPageCondition({
-                workStatusIds: ["done"]
+                workStatusIds: ["done"],
+                overdue: null
             })
             setTodoLabel("已完成")
         }
         else {
             // 逾期
             setTodoListPageCondition({
+                workStatusIds: null,
                 overdue: true
             })
             setTodoLabel("已逾期")
@@ -497,7 +502,7 @@ const TodoList = (props) => {
                         <Breadcrumb
                             {...props}
                             firstText={firstText}
-                            secondText={todoLabel}
+                            secondText={"待办"}
                         />
                         </div>
                         <div className="table-top">

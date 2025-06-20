@@ -51,6 +51,7 @@ const WorkChild = (props) => {
      * 根据父级id,查找下级事项
      */
     useEffect(() => {
+        console.log("进入关联子事项页面了")
         if (workTypeCode === "epic") {
             findWorkTypeListByCode().then(res => {
                 setDemand(res.data)

@@ -114,56 +114,17 @@ const WorkDetailTab = (props) => {
      */
     return (
         <div className="workitem-tabs">
-            <div className={`tabs-bar ${tabValue === 1 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(1)} >详细信息</div>
+            <div className={`tabs-bar ${tabValue === 1 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(1)} >
+                详细信息
+            </div>
             <div className={`tabs-bar ${tabValue === 2 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(2)}>
+                动态日志
+            </div>
+            <div className={`tabs-bar ${tabValue === 3 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(3)}>
                 关联事项
-                <span className="tabs-bar-num">{relationModalNum?.relationWork}</span>
             </div>
-            {
-                deep < 3 && <>
-                    <div className={`tabs-bar ${tabValue === 3 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(3)}>
-                        子{workTypeText}
-                        <span className="tabs-bar-num">{relationModalNum?.childrenWork}</span>
-                    </div>
-                    {
-                        workTypeCode === "demand" && <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
-                            任务
-                            <span className="tabs-bar-num">{relationModalNum?.childrenTaskWork}</span>
-                        </div>
-                    }
-                </>
-            }
-
-            <div className={`tabs-bar ${tabValue === 5 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(5)}>
-                工时
-                <span className="tabs-bar-num">{relationModalNum?.workLog}</span>
-            </div>
-            <div className={`tabs-bar ${tabValue === 6 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(6)}>
-                动态
-                <span className="tabs-bar-num">{relationModalNum?.dynamic}</span>
-            </div>
-            <div className="tabs-more">
-                <div className="tabs-more-button" >
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => setShowMoreTab(true)}>
-                        <use xlinkHref="#icon-more"></use>
-                    </svg>
-                </div>
-
-                <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
-
-                    <div className={`tabs-dropdown-item ${tabValue === 7 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("评论", 7)}>
-                        评论
-                        <span className="tabs-bar-num">{relationModalNum?.workComment}</span>
-                    </div>
-                    <div className={`tabs-dropdown-item ${tabValue === 8 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("文档", 8)}>
-                        文档
-                        <span className="tabs-bar-num">{relationModalNum?.workDoucment}</span>
-                    </div>
-                    <div className={`tabs-dropdown-item ${tabValue === 9 ? "tabs-dropdown-select" : ""}`} onClick={() => setTabMore("测试用例", 9)}>
-                        测试用例
-                        <span className="tabs-bar-num">{relationModalNum?.workTestCase}</span>
-                    </div>
-                </div>
+            <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
+                关联数据
             </div>
         </div>
     )

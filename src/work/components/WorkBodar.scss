@@ -1,27 +1,46 @@
+@media (max-width: 768px) {
+    .work-bodar-box {
+        width: 215px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+    .work-bodar-box {
+        width: 260px;
+    }
+}
+
+@media (min-width: 1281px) {
+    .work-bodar-box {
+        width: 315px;
+    }
+}
 .work-bordar {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-
+.ant-row-more-item {
+    height: auto;
+}
 .work-bodar-filter {
     padding: var(--tiklab-padding);
 }
 
 .work-bodar-content {
-    background: var(--tiklab-gray-600);
     overflow: auto;
-    height: 100%;
-    .work-bodar-flex {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        overflow-x: auto;
+    height: calc(100vh - 130px);
+    //.work-bodar-flex {
+    //    width: 100%;
+    //    height: 100%;
+    //    display: flex;
+    //    align-items: center;
+    //    overflow-x: auto;
         // padding-bottom: 10px;
         .work-bodar-list {
             display: flex;
-            gap: 20px;
+            justify-content: space-between;
+            //gap: 20px;
             padding: 0 20px;
             height: 100%;
             margin: 0 auto;
@@ -37,21 +56,19 @@
             .work-bodar-box {
                 min-height: 210px;
                 border-radius: 4px;
-                // width: fit-content;
-                // height: fit-content;
+                background-color: #edeff2;
                 flex-shrink: 0;
-                min-width: 250px;
                 // overflow: auto;
                 .work-bodar-title {
                     line-height: 40px;
                     position: sticky;
                     text-align: center;
-                    background: var(--tiklab-gray-600);
+                    background: #edeff2;
                     top: 0;
                     z-index: 2;
                     // paddin;
                     .work-bodar-title-content {
-                        background: var(--tiklab-gray-600);
+                        background: #edeff2;
                         font-size: 13px;
                     }
                     .work-bodar-num {
@@ -63,7 +80,7 @@
                 .work-border-box-list {
                     height: calc(100% - 45px);
                     overflow-x: hidden;
-                    // width: fit-content;
+                    padding: 2px;
                     .change-page {
                         display: flex;
                         justify-content: center;
@@ -73,60 +90,87 @@
                 }
         
                 .work-border-box-list::-webkit-scrollbar {
-                    width: 5px;
-                }
-                .work-border-box-list::-webkit-scrollbar-thumb {
-                    border-radius: 5px;
-                    background: var(--tiklab-gray-400);
-                }
-                .work-border-box-list::-webkit-scrollbar-track {
-                    border-radius: 0;
-                    background: var(--tiklab-gray-600);
+                    width: 0 !important;
+                    height: 0 !important;
                 }
                 .work-bodar-item{
-                    margin: 0 auto;
-                    //border-radius: 4px;
-                    //margin-bottom: 10px;
+                    margin: 0 5px 10px;
                     /* 新增下划线样式 */
-                    border-bottom: 3px solid #fafbfc;
+                    outline: 1px solid var(--tiklab-gray-400);
                     padding: 5px 10px;
                     font-size: 13px;
                     background-color: #fff;
-                    width: 250px;
                     display: flex;
                     align-items: center;
                     gap: 5px;
-                    .work-item-assigner {
-                        display: flex;
-                        align-items: center;
-                        gap: 5px;
-                    }
-                    .work-item-title {
-                        line-height: 25px;
-                        cursor: pointer;
-                        // color: var(--tiklab-blue);
-                        // font-weight: var(--tiklab-font-weight-bold);
-                    }
+                    transition: background-color .2s ease;
 
-                    .work-item-name:hover {
-                        color: var(--tiklab-blue);
-                    }
-                    .work-item-name {
-                        height: 25px;
-                        width: 200px;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                    }
-                    .work-item-code {
-                        height: 25px;
-                        font-size: 12px;
-                        color: #666;
-                    }
-                    .work-item-bottom {
-                        display: flex;
+                    .work-item-bordar {
+                        width: 100%;
+                        cursor: pointer;
+                        display: grid;
                         align-items: center;
-                        justify-content: space-between;
+                        gap: 8px;
+
+                        .work-item-icon {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px; /* 图标和代码间距 */
+                        }
+                        .work-item-code {
+                            font-size: 12px;
+                            color: #999; /* 灰色文字 */
+                            font-family: monospace; /* 代码字体 */
+                        }
+
+                        .work-item-title {
+                            font-size: 14px;
+                            color: #333;
+                            width: calc(100% - 30px);
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis; /* 标题过长显示省略号 */
+                        }
+
+
+                        .work-item-bottom {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            font-size: 12px;
+
+                            .work-item-status {
+                                padding: 2px 3px;
+                                background: #e2e1e4;
+                                border-radius: 4px;
+                                font-size: 10px;
+                                width: fit-content;
+                                color: #2b333e;
+                            }
+                            .work-item-status-todo {
+                                background: #e2e1e4;
+                                color: #2b333e;
+                            }
+
+                            .work-item-status-process {
+                                background: #b0d5dfa1;
+                                color: #132c33;
+                            }
+
+                            .work-item-status-done {
+                                background: #dfecd5e3;
+                                color: #5e5314;
+                            }
+
+                            .work-item-date {
+                                padding: 2px 3px;
+                                background: #f5f5f5;
+                                border-radius: 4px;
+                                font-size: 10px;
+                                width: fit-content;
+                                color: #2b333e;
+                            }
+                        }
                     }
                 }
                
@@ -135,12 +179,15 @@
                 }
             }
         }
+        .work-bodar-list-more-item {
+            gap: 20px;
+        }
         .work-bodar-name {
             font-size: 16px;
             font-weight: var(--tiklab-font-weight-bold);
             padding: 20px;
         }
-    }
+    //}
 }
 .work-bodar-content-spin {
     display: flex;

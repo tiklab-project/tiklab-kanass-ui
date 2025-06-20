@@ -1,0 +1,26 @@
+.log-page-top {
+  padding: 0 20px 20px;
+  display: flex;
+  gap: 15px;
+  .log-page-tab {
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #efefef;
+  }
+
+  .log-page-tab:hover {
+    background-color: #F2F5FD;
+  }
+
+  .log-page-tab-active {
+    font-weight: 500;
+    color: var(--tiklab-blue);
+    background-color: #e3e8f0;
+  }
+}
+
+.log-page-content {
+  padding: 0 20px;
+  height: calc(100% - 100px);
+}
