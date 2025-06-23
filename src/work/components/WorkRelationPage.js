@@ -38,7 +38,7 @@ const WorkRelationPage = (props) => {
             <div className="relation-page-top">
                 {
                     tabValue.map((item, index) => {
-                        if (item.id !== 1 || (item.id === 1 && deep < 3)) {
+                        if (item.id ===0 || (item.id === 1 && deep < 3)) {
                             return (
                                 <div
                                     key={item.id}

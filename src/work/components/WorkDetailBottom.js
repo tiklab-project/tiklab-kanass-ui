@@ -141,6 +141,7 @@ const WorkDetailBottom = (props) => {
                     tabValue === 2 &&
                     <WorkLogPage
                         searchWorkById={searchWorkById}
+                        workId={workId}
                         {...props}
                     />
                 }
@@ -151,11 +152,15 @@ const WorkDetailBottom = (props) => {
                         deep={deep}
                         viewType={viewType}
                         taskType = {taskType}
+                        workId={workId}
                         {...props} />
                 }
                 {
                     tabValue === 4 &&
-                    <WorkLinkPage {...props} />
+                    <WorkLinkPage
+                        workId={workId}
+                        {...props}
+                    />
                 }
             </div>
         </div>
