@@ -20,6 +20,7 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 import ProjectBasicInfoStore from "../store/ProjectBasicInfoStore";
+import DeleteProjectModal from "../../../project/components/DeleteProjectModal";
 
 const { Panel } = Collapse;
 
@@ -208,7 +209,7 @@ const BasicInfo = props => {
                 <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
-                项目图标信息，可见范围，负责人等信息，可点击修改</div>
+                项目名称，可见范围，负责人等信息，可点击修改</div>
         </div>
     );
 
@@ -242,30 +243,30 @@ const BasicInfo = props => {
                     <Collapse expandIconPosition={"right"}>
                         <Panel header={projectInfoDesc()} key="1" >
                             <div className="project-set-icon">
-                                <Form.Item
-                                    label="项目图标"
-                                    className="project-form-icon"
-                                    {...layout}
-                                    labelAlign="left"
-                                >
-                                    <div className="project-form-icon-content">
-                                        <div>
-                                            <ImgComponent
-                                                src={iconUrl}
-                                                alt=""
-                                                style={{ marginRight: "10px", width: "50px", height: "50px" }}
-                                            />
+                                {/*<Form.Item*/}
+                                {/*    label="项目图标"*/}
+                                {/*    className="project-form-icon"*/}
+                                {/*    {...layout}*/}
+                                {/*    labelAlign="left"*/}
+                                {/*>*/}
+                                {/*    <div className="project-form-icon-content">*/}
+                                {/*        <div>*/}
+                                {/*            <ImgComponent*/}
+                                {/*                src={iconUrl}*/}
+                                {/*                alt=""*/}
+                                {/*                style={{ marginRight: "10px", width: "50px", height: "50px" }}*/}
+                                {/*            />*/}
 
-                                            <span>项目图标，可点击更改按钮修改icon</span>
-                                        </div>
+                                {/*            <span>项目图标，可点击更改按钮修改icon</span>*/}
+                                {/*        </div>*/}
 
-                                        <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
-                                            <div className="change-button" onClick={() => setVisible(true)}>
-                                                更改图标
-                                            </div>
-                                        </PrivilegeProjectButton>
-                                    </div>
-                                </Form.Item>
+                                {/*        <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>*/}
+                                {/*            <div className="change-button" onClick={() => setVisible(true)}>*/}
+                                {/*                更改图标*/}
+                                {/*            </div>*/}
+                                {/*        </PrivilegeProjectButton>*/}
+                                {/*    </div>*/}
+                                {/*</Form.Item>*/}
 
                                 <Form
                                     {...layout}
@@ -416,67 +417,14 @@ const BasicInfo = props => {
                     </Collapse>
 
                 </div>
-                <div className="project-delete-confirm">
-                    <Modal
-                        title="确定删除"
-                        getContainer={false}
-                        visible={isModalVisible}
-                        closable={false}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
-                        okText={"确定"}
-                        cancelText={"取消"}
-                        okType="danger"
-                        okButtonProps={{ type: "primary" }}
-                    >
-                        <Alert message=" 此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除" type="error" showIcon />
 
-                        <Form
-                            form={confirmForm}
-                            name="dependencies"
-                            autoComplete="off"
-                            style={{
-                                maxWidth: 600,
-                            }}
-                            layout="vertical"
-                        >
-
-
-                            <Form.Item
-                                label="项目名称"
-                                name="confirmProjectName"
-                                rules={[
-                                //     {
-                                //         required: true,
-                                //         message: `请输入项目名称`,
-                                //     },
-                                //     ({ getFieldValue }) => ({
-                                //         validator(rule, value) {
-                                //             //getFieldValue可以获得其他输入框的内容
-                                //             if (projectInfo?.projectName !== value) return Promise.reject(`请输入正确的项目名称`);
-                                //             return Promise.resolve();
-                                //         }
-                                //     })
-                                // ]}
-                                    //({ getFieldValue }) => ({
-                                    {
-                                    validator(rule, value) {
-                                            if (!value) {
-                                                return Promise.reject(`请输入项目名称`);
-                                            }
-                                            if (projectInfo?.projectName !== value) {
-                                                return Promise.reject(`请输入正确的项目名称`);
-                                            }
-                                            return Promise.resolve();
-                                        }
-                                    }
-                                ]}
-                            >
-                                <Input value={confirmProjectName} onChange={(value) => setConfirmProjectName(value.target.value)} />
-                            </Form.Item>
-                        </Form>
-                    </Modal>
-                </div>
+                <DeleteProjectModal
+                    isModalVisible={isModalVisible}
+                    handleOk={handleOk}
+                    handleCancel={handleCancel}
+                    confirmForm={confirmForm}
+                    projectInfo={projectInfo}
+                />
 
                 <ProjectIconChange
                     visible={visible}

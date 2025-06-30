@@ -17,6 +17,7 @@ import StatisticsStore from "../../store/StatisticsStore";
 
 
 const UserWorkItem = (props) => {
+    const {noEdit} = props;
     const { statisticsUserWorkItemCount, findAllProject, reportList } = StatisticsStore;
     // 统计条件的表单
     const [form] = Form.useForm();
@@ -158,34 +159,37 @@ const UserWorkItem = (props) => {
 
     return (
         <div className="statistics">
-            <div className="statistics-top">
-                <div  className="statistics-work-title">项目成员事项统计</div>
-                <Form
-                    name="form"
-                    form={form}
-                    initialValues={{ remember: true }}
-                    onValuesChange={(changedValues, allValues) => onValuesChange(changedValues, allValues)}
-                    style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}
-                >
-                    <Form.Item name="projectId"
-                               label="项目"
-                               rules={[{ required: true }]}
-                               style={{flex: '1 1 300px'}}
+            {
+                !noEdit && <div className="statistics-top">
+                    <div  className="statistics-work-title">项目成员事项统计</div>
+                    <Form
+                        name="form"
+                        form={form}
+                        initialValues={{ remember: true }}
+                        onValuesChange={(changedValues, allValues) => onValuesChange(changedValues, allValues)}
+                        style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}
                     >
-                        <Select
-                            style={{ width: '100%', maxWidth: '250px' }}
-                            placeholder="请选择项目"
-                            rules={[{ required: true }]}
+                        <Form.Item name="projectId"
+                                   label="项目"
+                                   rules={[{ required: true }]}
+                                   style={{flex: '1 1 300px'}}
                         >
-                            {
-                                projectList && projectList.map(item => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                </Form>
-            </div>
+                            <Select
+                                bordered={false}
+                                style={{ width: '100%', maxWidth: '250px', backgroundColor: '#f0f0f0' }}
+                                placeholder="请选择项目"
+                                rules={[{ required: true }]}
+                            >
+                                {
+                                    projectList && projectList.map(item => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                    </Form>
+                </div>
+            }
 
             <div className="user-workitem">
                 <div className="user-workitem-top">

@@ -96,7 +96,8 @@ const WorkItemStatusSituation = (props) => {
                                wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
                     >
                         <Select
-                            style={{ width: '100%', maxWidth: '250px' }}
+                            bordered={false}
+                            style={{ width: '100%', maxWidth: '250px', backgroundColor: '#f0f0f0' }}
                             placeholder="请选择项目"
                         >
                             {
@@ -113,7 +114,8 @@ const WorkItemStatusSituation = (props) => {
                                wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
                     >
                         <Select
-                            style={{ width: '100%', maxWidth: '250px' }}
+                            bordered={false}
+                            style={{ width: '100%', maxWidth: '250px', backgroundColor: '#f0f0f0' }}
                             placeholder="请选择统计事项类型"
                         >
                             {

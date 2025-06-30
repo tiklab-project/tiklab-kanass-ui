@@ -32,6 +32,12 @@ const StatisticsAside = (props) => {
     // 统计菜单
     const statisticsMenuList = [
         {
+            title: '概览',
+            path: "/statistics/overview",
+            key: "overview",
+            icon: "survey-default",
+        },
+        {
             title: '项目统计',
             path: "/statistics/project",
             key: "projectStatistics",

@@ -21,6 +21,7 @@ import {defaultDateFormat, getFirstDayOfMonth, getLastDayOfMonth, getNowFormatDa
 const { RangePicker } = DatePicker;
 
 const NewWorkItemTrend = (props) => {
+    const {noEdit} = props;
     const { statisticsNewWorkItemCount, findAllProject, reportList } = StatisticsStore;
     // 统计条件的表单
     const [form] = Form.useForm();
@@ -182,85 +183,94 @@ const NewWorkItemTrend = (props) => {
 
     return (
         <div  className="statistics">
-            <div className="statistics-top">
-                <div className="statistics-work-title">新增事项趋势统计</div>
-                <Form
-                    name="form"
-                    form={form}
-                    initialValues={{ remember: true }}
-                    onValuesChange={(changedValues, allValues) => {onValuesChange(allValues)}}
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: '16px'
-                    }}
-                    layout="inline"
-                >
-                    <Form.Item name="projectId"
-                               label="项目"
-                               rules={[{ required: true }]}
-                               labelCol={{ flex: '100px' }}  // 固定 label 宽度
-                               wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
+            {
+                !noEdit &&
+                <div className="statistics-top">
+                    <div className="statistics-work-title">新增事项趋势统计</div>
+                    <Form
+                        name="form"
+                        form={form}
+                        initialValues={{ remember: true }}
+                        onValuesChange={(changedValues, allValues) => {onValuesChange(allValues)}}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '16px'
+                        }}
+                        layout="inline"
                     >
-                        <Select
-                            placeholder="请选择项目"
+                        <Form.Item name="projectId"
+                                   label="项目"
+                                   rules={[{ required: true }]}
+                                   labelCol={{ flex: '100px' }}  // 固定 label 宽度
+                                   wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
                         >
-                            {
-                                projectList && projectList.map(item => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
+                            <Select
+                                bordered={false}
+                                style={{backgroundColor: '#f0f0f0'}}
+                                placeholder="请选择项目"
+                            >
+                                {
+                                    projectList && projectList.map(item => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
 
-                    <Form.Item
-                        name="cellTime"
-                        label="期间"
-                        rules={[{ required: true }]}
-                        labelCol={{ flex: '100px' }}  // 固定 label 宽度
-                        wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
-                    >
-                        <Select
-                            placeholder="请选择期间"
+                        <Form.Item
+                            name="cellTime"
+                            label="期间"
+                            rules={[{ required: true }]}
+                            labelCol={{ flex: '100px' }}  // 固定 label 宽度
+                            wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
                         >
-                            {
-                                dateList && dateList.map(item => {
-                                    return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item name="dateRanger"
-                               label="开始结束时间"
-                               rules={[{ required: true }]}
-                               labelCol={{ flex: '100px' }}  // 固定 label 宽度
-                               wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
-                    >
-                        <RangePicker
-                            style={{
-                                width: '100%',
-                                maxWidth: '600px' // 可选：限制最大宽度
-                            }}
-                        />
-                    </Form.Item>
-                    <Form.Item name="workItemTypeCode"
-                               label="统计事项类型"
-                               rules={[{ required: true }]}
-                               labelCol={{ flex: '100px' }}  // 固定 label 宽度
-                               wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
-                    >
-                        <Select
-                            placeholder="请选择统计事项类型"
+                            <Select
+                                bordered={false}
+                                style={{backgroundColor: '#f0f0f0'}}
+                                placeholder="请选择期间"
+                            >
+                                {
+                                    dateList && dateList.map(item => {
+                                        return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name="dateRanger"
+                                   label="开始结束时间"
+                                   rules={[{ required: true }]}
+                                   labelCol={{ flex: '100px' }}  // 固定 label 宽度
+                                   wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
                         >
-                            {
-                                workItemType && workItemType.map(item => {
-                                    return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                </Form>
-            </div>
+                            <RangePicker
+                                style={{
+                                    width: '100%',
+                                    maxWidth: '600px' // 可选：限制最大宽度
+                                }}
+                            />
+                        </Form.Item>
+                        <Form.Item name="workItemTypeCode"
+                                   label="统计事项类型"
+                                   rules={[{ required: true }]}
+                                   labelCol={{ flex: '100px' }}  // 固定 label 宽度
+                                   wrapperCol={{ flex: 'auto' }}  // 剩余空间给输入控件
+                        >
+                            <Select
+                                bordered={false}
+                                style={{backgroundColor: '#f0f0f0'}}
+                                placeholder="请选择统计事项类型"
+                            >
+                                {
+                                    workItemType && workItemType.map(item => {
+                                        return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                    </Form>
+                </div>
+            }
             <div className="new-trend">
                 <div className="new-trend-top">
                     <div className="new-trend-title">

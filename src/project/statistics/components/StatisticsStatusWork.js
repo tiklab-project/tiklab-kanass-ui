@@ -16,6 +16,7 @@ import StatisticsStore from "../store/StatisticStore";
 
 const StatisticsWork = (props) => {
     const { statisticWorkItem, findProjectList } = StatisticsStore;
+    const { index, statistical, noEdit } = props
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
@@ -51,7 +52,13 @@ const StatisticsWork = (props) => {
 
     const [projectList, setProjectList] = useState()
     useEffect(() => {
-        const params = { collectionField: "state", projectId: projectId, sprintId: sprintId, projectSetId: projectSetId }
+        const params = {
+            collectionField: statistical ? statistical : "state",
+            projectId: projectId,
+            sprintId: sprintId,
+            projectSetId: projectSetId
+        }
+        console.log()
         form.setFieldsValue({
             collectionField: "state",
             projectId: projectId
@@ -98,7 +105,7 @@ const StatisticsWork = (props) => {
     }, [statisticsWorkList, reportId])
 
     const setBar = () => {
-        const workBar = echarts.init(document.getElementById('workBar'));
+        const workBar = echarts.init(document.getElementById(index ? 'workBar' + index : 'workBar'));
         workBar.setOption({
             tooltip: {},
             xAxis: {
@@ -156,7 +163,7 @@ const StatisticsWork = (props) => {
         },
         {
             value: "assigner",
-            title: "经办人"
+            title: "负责人"
         },
         {
             value: "builder",
@@ -189,70 +196,79 @@ const StatisticsWork = (props) => {
     }
     return (
         <div className="statistics-work">
-            <div className="statistics-work-top" >
-                <div className="statistics-work-title" ref={titleRef}>事项状态统计</div>
+            {
+                !noEdit &&
+                <div className="statistics-work-top" >
+                    <div className="statistics-work-title" ref={titleRef}>事项状态统计</div>
 
+                    <Form
+                        name="form"
+                        form={form}
+                        initialValues={{ remember: true }}
+                        labelAlign="left"
+                        layout="inline"
+                        onValuesChange={(changedValues, allValues) => changField(changedValues, allValues)}
+                    >
+                        {
+                            projectSetId && <Form.Item name="projectId" label="项目">
+                                <Select
+                                    bordered={false}
+                                    placeholder="项目"
+                                    allowClear
+                                    style={{
+                                        width: 120,
+                                        backgroundColor: '#f0f0f0'
+                                    }}
+                                >
+                                    {
+                                        projectList && projectList.map(item => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        }
 
-                <Form
-                    name="form"
-                    form={form}
-                    initialValues={{ remember: true }}
-                    labelAlign="left"
-                    layout="inline"
-                    onValuesChange={(changedValues, allValues) => changField(changedValues, allValues)}
-                >
-                    {
-                        projectSetId && <Form.Item name="projectId" label="项目">
+                        <Form.Item name="collectionField" label="统计项" rules={[{ required: true }]}>
                             <Select
-                                placeholder="项目"
-                                allowClear
+                                bordered={false}
+                                placeholder="选择一个统计项"
                                 style={{
                                     width: 120,
+                                    backgroundColor: '#f0f0f0'
                                 }}
                             >
                                 {
-                                    projectList && projectList.map(item => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                    statisticalList && statisticalList.map(item => {
+                                        return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
                                     })
                                 }
                             </Select>
                         </Form.Item>
-                    }
+                        <div className="statics-submit">
+                            <Button type="primary" htmlType="submit" loading = {isLoading} onClick={() => onExportPDF()}>
+                                导出报表
+                            </Button>
+                        </div>
+                    </Form>
 
-                    <Form.Item name="collectionField" label="统计项" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="选择一个统计项"
-                            style={{
-                                width: 120,
-                              }}
-                        >
-                            {
-                                statisticalList && statisticalList.map(item => {
-                                    return <Select.Option value={item.value} key={item.value}>{item.title}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <div className="statics-submit">
-                        <Button type="primary" htmlType="submit" loading = {isLoading} onClick={() => onExportPDF()}>
-                            导出报表
-                        </Button>
-                    </div>
-                </Form>
-            </div>
-
+                </div>
+            }
 
             <div className="statistics-work-content" ref={pdfRef}>
 
-                <Table
-                    columns={columns}
-                    dataSource={statisticsWorkList}
-                    rowKey={(record) => record.statisticalId}
-                    className="statistics-work-table"
-                    pagination={false}
-                    scroll={{x: "100%"}}
-                />
-                <div id="workBar" className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
+                {
+                    !noEdit &&
+                    <Table
+                        columns={columns}
+                        dataSource={statisticsWorkList}
+                        rowKey={(record) => record.statisticalId}
+                        className="statistics-work-table"
+                        pagination={false}
+                        scroll={{x: "100%"}}
+                    />
+                }
+                <div id={`${index ? 'workBar' + index : 'workBar'}`} className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
                
             </div>
 

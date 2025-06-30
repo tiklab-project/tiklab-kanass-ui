@@ -1,0 +1,38 @@
+.project-delete-confirm {
+  .ant-alert {
+    margin-bottom: 10px;
+  }
+  .ant-alert-message {
+    white-space: pre-line; // 保留换行符并自动换行
+    word-break: break-word; // 防止长单词溢出
+  }
+
+  .delete-modal-form-item {
+    // 使标签和输入框各占一行
+    display: flex;
+    flex-direction: column;
+    gap: 8px; // 调整间距
+    height: 80px !important;
+
+    // 标签样式
+    .ant-form-item-label {
+      display: block;
+      text-align: left;
+      padding: 0;
+      margin-bottom: 4px;
+    }
+
+    // 输入框样式
+    .ant-form-item-control {
+      width: 100%;
+    }
+    .ant-row,
+    .ant-col {
+      // 重置被污染的属性
+      height: auto !important;
+      min-height: unset !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+  }
+}

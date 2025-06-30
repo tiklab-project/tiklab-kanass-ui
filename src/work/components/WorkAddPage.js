@@ -47,6 +47,7 @@ const WorkAddPage = (props) => {
     const urlParams = new URLSearchParams(props.history.location.search)
     let workItemType = urlParams.get("workItemType")
     let caseId = urlParams.get("caseId")
+    const [editorType, setEditorType] = useState(false);
 
 
     useEffect(() => {
@@ -432,6 +433,23 @@ const WorkAddPage = (props) => {
         findStageList({ projectId: projectId, stageName: value })
     }
 
+    /**
+     * 点击描述，转为可编辑模式
+     */
+    const switchEditorDesc = () => {
+        setEditorType(false)
+    }
+
+    // 转换描述编辑模式
+    const editorDesc = () => {
+        setEditorType(true);
+    }
+    // 取消编辑描述
+    const cancel = () => {
+        setEditorType(true);
+        // setSlateValue(workInfo.desc)
+    }
+
     return (
         <Fragment>
             <div className="work-add-page">
@@ -444,12 +462,6 @@ const WorkAddPage = (props) => {
                             className="work-add-form"
                             layout="vertical"
                             labelAlign="right"
-                            labelCol={{
-                                span: 24,
-                            }}
-                            wrapperCol={{
-                                span: 20
-                            }}
                             onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
                         >
                             <Form.Item
@@ -468,6 +480,8 @@ const WorkAddPage = (props) => {
                                     bordered={false}
                                 >
                                     <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
                                         placeholder="项目"
                                         allowClear
                                         className="work-select"
@@ -483,26 +497,40 @@ const WorkAddPage = (props) => {
                                 </Form.Item>
                             }
                             <Form.Item
-                                label="负责人"
-                                name="assigner"
-                                rules={[{ required: true, message: '请输入负责人!' }]}
+                                label="描述"
                             >
-                                <Select
-                                    placeholder="负责人"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    showSearch
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
+                                {
+                                    <div className="work-desc">
+                                            <div className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
+                                                <DocumentEditor
+                                                    focusEditor={true}
+                                                    value={slateValue}
+                                                    onChange={(value) => changeDesc(value)}
+                                                    minHeight={150}
+                                                    ticket={ticket}
+                                                    tenant={tenant}
+                                                    base_url={base_url}
+                                                    viewImageUrl = "/image"
+                                                    img_url = {base_url === '/' ? '' : base_url}
+                                                    maxHeight={150}
+                                                    {...props}
+                                                />
+                                            </div>
+                                        </div>
+                                }
                             </Form.Item>
                             {
-                                selectItem && <Form.Item label={selectItem?.name} name="eachType">
+                                selectItem &&
+                                <Form.Item
+                                    label={selectItem?.name}
+                                    name="eachType"
+                                    wrapperCol={{
+                                        span: 10,
+                                    }}
+                                >
                                     <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
                                         placeholder="无"
                                         className="work-select"
                                         key="selectEachType"
@@ -523,16 +551,91 @@ const WorkAddPage = (props) => {
                                     </Select>
                                 </Form.Item>
                             }
+                            <Form.Item
+                                label="优先级"
+                                name="workPriority"
+                                rules={[{ required: false, message: '请输入优先级!' }]}
+                                wrapperCol={{
+                                    span: 10,
+                                }}
+                            >
+                                <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
+                                    placeholder="优先级"
+                                    allowClear
+                                    className="work-select"
+                                    key="selectWorkPriority"
+                                >
+                                    {
+                                        priorityList && priorityList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="负责人"
+                                name="assigner"
+                                rules={[{ required: true, message: '请输入负责人!' }]}
+                                wrapperCol={{
+                                    span: 10,
+                                }}
+                            >
+                                <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
+                                    placeholder="负责人"
+                                    className="work-select"
+                                    key="selectWorkUser"
+                                    showSearch
+                                >
+                                    {
+                                        userList && userList.map((item) => {
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                name="planTime"
+                                label="计划日期"
+                                wrapperCol={{
+                                    span: 10,
+                                }}
+                            >
+                                <RangePicker />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="所属模块"
+                                name="module"
+                                rules={[{ required: false, message: '请输入所属模块!' }]}
+                            >
+                                <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
+                                    placeholder="模块"
+                                    allowClear
+                                    className="work-select"
+                                    key="selectModule"
+                                >
+                                    {
+                                        moduleList && moduleList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
                             {
                                 projectType === "nomal" && <Form.Item
                                     label="所属计划"
                                     name="stage"
                                     rules={[{ required: true, message: '请输入所属计划!' }]}
-                                    wrapperCol={{
-                                        span: 16,
-                                    }}
                                 >
                                     <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
                                         placeholder="计划"
                                         allowClear
                                         className="work-select"
@@ -548,35 +651,15 @@ const WorkAddPage = (props) => {
                                     </Select>
                                 </Form.Item>
                             }
-
-                            <Form.Item
-                                label="优先级"
-                                name="workPriority"
-                                rules={[{ required: false, message: '请输入优先级!' }]}
-                            >
-                                <Select
-                                    placeholder="优先级"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectWorkPriority"
-                                >
-                                    {
-                                        priorityList && priorityList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
                             {
                                 projectType === "scrum" && <Form.Item
                                     label="所属迭代"
                                     name="sprint"
                                     rules={[{ required: false, message: '请输入所属迭代!' }]}
-                                    wrapperCol={{
-                                        span: 16,
-                                    }}
                                 >
                                     <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
                                         placeholder="迭代"
                                         allowClear
                                         className="work-select"
@@ -597,6 +680,8 @@ const WorkAddPage = (props) => {
                                 rules={[{ required: false, message: '请输入所属版本!' }]}
                             >
                                 <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
                                     placeholder="版本"
                                     allowClear
                                     className="work-select"
@@ -609,34 +694,6 @@ const WorkAddPage = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item
-                                label="所属模块"
-                                name="module"
-                                rules={[{ required: false, message: '请输入所属模块!' }]}
-                            >
-                                <Select
-                                    placeholder="模块"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectModule"
-                                >
-                                    {
-                                        moduleList && moduleList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-
-                            <Form.Item
-                                name="planTime"
-                                label="计划日期"
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                            >
-                                <RangePicker />
-                            </Form.Item>
 
                             <Form.Item
                                 name="planTakeupTime"
@@ -645,29 +702,7 @@ const WorkAddPage = (props) => {
                             >
                                 <Input suffix="小时" type="number" className="" />
                             </Form.Item>
-                            <Form.Item
-                                label="描述"
-                                wrapperCol={{
-                                    span: 18,
-                                }}
-                            >
-                                <div className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
-                                    <DocumentEditor
-                                        focusEditor={true}
-                                        value={slateValue}
-                                        onChange={(value) => changeDesc(value)}
-                                        minHeight={300}
-                                        ticket={ticket}
-                                        tenant={tenant}
-                                        base_url={base_url}
-                                        viewImageUrl = "/image"
-                                        img_url = {base_url === '/' ? '' : base_url}
-                                        maxHeight={500}
-                                        {...props}
-                                    />
-                                </div>
 
-                            </Form.Item>
 
                         </Form>
                     </div>

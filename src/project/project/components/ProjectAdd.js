@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 16:53:12
  */
 import React, { useEffect, useState } from "react";
-import { Row, Col, Spin } from 'antd';
+import {Row, Col, Spin, Modal} from 'antd';
 import 'moment/locale/zh-cn';
 import { observer, inject } from "mobx-react";
 import "./ProjectAdd.scss";
@@ -22,6 +22,7 @@ const ProjectAdd = (props) => {
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()
     const [loading, setLoading] = useState(false)
+    const {projectAddVisible, setProjectAddVisible} = props
 
     const getIconList = () => {
         findIconList({ iconType: "project" })
@@ -38,6 +39,11 @@ const ProjectAdd = (props) => {
         getUseList()
         getIconList()
     };
+
+    const onCancel = () => {
+        setCurrentStep(0)
+        setProjectAddVisible(false)
+    }
 
 
     const Head = () => {
@@ -102,7 +108,14 @@ const ProjectAdd = (props) => {
     const step2 = (
         <div>
 
-            <ProjectAddInfo createProject={createProject} workType={workType} setVisible={setVisible} setCurrentStep={setCurrentStep} setLoading = {setLoading}/>
+            <ProjectAddInfo
+                createProject={createProject}
+                workType={workType}
+                setVisible={setVisible}
+                setCurrentStep={setCurrentStep}
+                setLoading = {setLoading}
+                onCancel = {onCancel}
+            />
         </div>
 
     )
@@ -124,25 +137,35 @@ const ProjectAdd = (props) => {
     }
 
     return (
-        <div className="project-add">
-            <Spin spinning={loading} delay={500} tip = "添加中...">
-                <Row>
-                    <Col
-                        className="project-type-col"
-                        lg={{ span: "18", offset: "3" }}
-                        xl={{ span: "14", offset: "5" }}
-                        xxl={{ span: "10", offset: "7" }}
-                        style={{ height: "100%" }}
-                    >
-                        <Head />
-                        <Steps />
-                        {steps[currentStep].content}
-                        {/* <step1 /> */}
-                    </Col>
-                </Row>
-            </Spin>
-            
-        </div>
+        <Modal
+            title={"添加项目"}
+            visible={projectAddVisible}
+            height={650}
+            width={700}
+            footer={null}
+            onCancel={onCancel}
+            maskClosable={true}
+        >
+            <div className="project-add">
+                <Spin spinning={loading} delay={500} tip = "添加中...">
+                    {/*<Row>*/}
+                    {/*    <Col*/}
+                    {/*        className="project-type-col"*/}
+                    {/*        lg={{ span: "18", offset: "3" }}*/}
+                    {/*        xl={{ span: "14", offset: "5" }}*/}
+                    {/*        xxl={{ span: "10", offset: "7" }}*/}
+                    {/*        style={{ height: "100%" }}*/}
+                    {/*    >*/}
+                            {/*<Head />*/}
+                            <Steps />
+                            {steps[currentStep].content}
+                            {/* <step1 /> */}
+                    {/*    </Col>*/}
+                    {/*</Row>*/}
+                </Spin>
+
+            </div>
+        </Modal>
     );
 };
 

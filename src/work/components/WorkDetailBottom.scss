@@ -1,10 +1,10 @@
 .workitem-detail-row {
-    // height: calc(100% - 32px);
     // overflow: auto;
+    overflow-y: auto;
     background: #fff;
     padding: 20px 15px;
-    height: 100%;
     .workitem-tabs-content {
+        height: 100%;
         .detail-top {
             display: flex;
             justify-content: space-between;
@@ -26,6 +26,7 @@
                     .form-custom-open {
                         height: 30px;
                         padding: 6px 0;
+                        margin-right: 10px;
                     }
                     .close {
                         transition: all 0.2s;
@@ -196,6 +197,7 @@
         }
         .work-detail-box:last-child {
             margin-bottom: 0;
+            padding-bottom: 20px;
         }
         .desc-preview {
             padding: 10px;

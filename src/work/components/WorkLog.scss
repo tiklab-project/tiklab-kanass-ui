@@ -1,7 +1,7 @@
 .work-log {
     .worklog-top {
         display: flex;
-        justify-content: space-between;
+        //justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
         .worklog-top-title {
@@ -23,7 +23,21 @@
     .work-log-drawer-hidden {
         transform: translateX(100%);
     }
-    
+
+    .work-log-list{
+        margin-bottom: 10px;
+    }
+
+    .work-log-more{
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+
+        margin-bottom: 10px;
+
+        color: #969696;
+        border-radius: 3px;
+    }
 
     .work-log-item {
         display: flex;

@@ -64,7 +64,7 @@ const StatisticsAsicde = (props) => {
         if (props.match.path === "/projectSet/:projectSetId/statistics") {
             url = `/projectSet/${projectSetId}/statistics`;
         }
-        if (versionInfo.expired === false || type === "workItem") {
+        if (versionInfo.expired === false || type === "workItem" || type === "overview") {
             url = `${url}/${type}`;
             setSelectRouter(type)
             props.history.push(url);
@@ -80,6 +80,15 @@ const StatisticsAsicde = (props) => {
         <div className="project-statistics-aside">
             <div className="statistics-top-title">
                 <span>统计</span>
+            </div>
+            <div className={`statistics-type-title ${"overview" === selectRouter ? "statistics-menu-select" : ""}`} onClick={() => selectKey("overview")}>
+                <div className="statistics-type-title-left">
+                    <svg className="menu-icon" aria-hidden="true" >
+                        <use xlinkHref="#icon-survey-default"></use>
+                    </svg>
+
+                    概览
+                </div>
             </div>
             <div className='statistics-type-title' onClick={() => setOpenOrClose("work")}>
                 <div className="statistics-type-title-left">

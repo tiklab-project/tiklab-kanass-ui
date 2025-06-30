@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-18 17:06:27
  */
-import React, { Fragment, useEffect } from "react";
+import React, {Fragment, useEffect, useRef} from "react";
 import { Spin, Table, Space,Tooltip, Select, Empty, Progress } from 'antd';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
@@ -23,6 +23,8 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import { PrivilegeButton } from "tiklab-privilege-ui";
 import CircleProgress from "../../../common/progress/CircleProgress";
+import ProjectAdd from "./ProjectAdd";
+import ProjectOperateSelectModal from "./ProjectOperateSelectModal";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -39,6 +41,9 @@ const ProjectList = (props) => {
         myCreated: 0,
         myFocus: 0,
     });
+
+    const [projectAddVisible, setProjectAddVisible] = useState(false);
+    const projectListRef = useRef();
 
     useEffect(() => {
         setActiveTabs("1")
@@ -316,17 +321,22 @@ const ProjectList = (props) => {
                 <div style={{ display: "flex", gap: "15px" }}>
                     {
                         focusProjectList.indexOf(record.id) !== -1 ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => deleteFocusProject(record.id)}>
+                            <svg className="operate-icon" aria-hidden="true" onClick={() => deleteFocusProject(record.id)}>
                                 <use xlinkHref="#icon-view"></use>
                             </svg>
                             :
-                            <svg className="svg-icon" aria-hidden="true" onClick={() => addFocusProject(record.id)}>
+                            <svg className="operate-icon" aria-hidden="true" onClick={() => addFocusProject(record.id)}>
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => goToProjectSet(record)}>
-                        <use xlinkHref="#icon-set"></use>
-                    </svg>
+                    {/*<svg className="operate-icon" aria-hidden="true" onClick={() => goToProjectSet(record)}>*/}
+                    {/*    <use xlinkHref="#icon-more-default"></use>*/}
+                    {/*</svg>*/}
+                    <ProjectOperateSelectModal
+                        projectInfo={record}
+                        projectStore={projectStore}
+                        getPopupContainer={projectListRef}
+                    />
                 </div>
         }
     ];
@@ -346,7 +356,7 @@ const ProjectList = (props) => {
                 firstText="项目"
             >
                 <PrivilegeButton code={'ProjectAdd'}  {...props}>
-                    <Button type="primary" onClick={() => props.history.push("/projectAdd")} buttonText={"添加项目"} />
+                    <Button type="primary" onClick={() => {setProjectAddVisible(true)}} buttonText={"添加项目"} />
                 </PrivilegeButton>
 
             </Breadcumb>
@@ -426,7 +436,7 @@ const ProjectList = (props) => {
                 </div>
             </div>
 
-            <div className="project-table-box">
+            <div className="project-table-box" ref={projectListRef}>
                 <Table
                     columns={columns}
                     dataSource={projectList}
@@ -446,6 +456,10 @@ const ProjectList = (props) => {
                     }}
                 />
             </div>
+            <ProjectAdd
+                projectAddVisible  = {projectAddVisible}
+                setProjectAddVisible = {setProjectAddVisible}
+            />
         </Fragment>
     )
 }

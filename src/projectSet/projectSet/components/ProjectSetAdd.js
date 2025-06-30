@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:51:03
  */
 import React, { useState } from "react";
-import { message, Row, Col } from 'antd';
+import {message, Row, Col, Modal, Spin} from 'antd';
 import 'moment/locale/zh-cn';
 import { getUser } from 'tiklab-core-ui';
 import { Provider } from "mobx-react";
@@ -23,11 +23,12 @@ const ProjectSetAdd = (props) => {
         projectSetStore: ProjectSetStore
     }
     const [visible, setVisible] = React.useState(false);
-    const { setAllProjectSetList } = props;
+    const { setAllProjectSetList, projectSetAddVisible, setProjectSetAddVisible } = props;
     const { addProjectSetSet, getProjectSetlist, findAllProjectSet, creatIcon, findIconList } = ProjectSetStore;
 
 
     const [currentStep, setCurrentStep] = useState(1)
+    const [loading, setLoading] = useState(false)
 
 
     const getIconList = () => {
@@ -87,29 +88,34 @@ const ProjectSetAdd = (props) => {
         )
     }
 
+    const onCancel = () => {
+        setProjectSetAddVisible(false)
+    }
 
-    return (<Provider {...store}>
-         <div className="projectSet-add">
-            <Row>
-                <Col
-                    className="projectSet-type-col"
-                    lg={{ span: "18", offset: "3" }}
-                    xl={{ span: "14", offset: "5" }}
-                    xxl={{ span: "10", offset: "7" }}
-                    sm={24} 
-
-                    md={24}
-                    style={{ height: "100%" }}
-                >
-                    <Head />
-                    <div>
-
-                        <ProjectSetAddInfo findAllProjectSet={findAllProjectSet} addProjectSetSet={addProjectSetSet} setAllProjectSetList={setAllProjectSetList} getProjectSetlist={getProjectSetlist} setVisible={setVisible} setCurrentStep={setCurrentStep} />
-                    </div>
-                </Col>
-            </Row>
-        </div>
-    </Provider>
+    return (
+        <Modal
+            title={"添加项目集"}
+            visible={projectSetAddVisible}
+            height={600}
+            width={700}
+            footer={null}
+            onCancel={onCancel}
+        >
+            <div className="projectSet-add">
+                <Spin spinning={loading} tip="添加中...">
+                    <ProjectSetAddInfo
+                        findAllProjectSet={findAllProjectSet}
+                        addProjectSetSet={addProjectSetSet}
+                        setAllProjectSetList={setAllProjectSetList}
+                        getProjectSetlist={getProjectSetlist}
+                        setVisible={setVisible}
+                        setCurrentStep={setCurrentStep}
+                        onCancel={onCancel}
+                        setLoading={setLoading}
+                    />
+                </Spin>
+            </div>
+        </Modal>
        
     );
 };

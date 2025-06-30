@@ -20,6 +20,16 @@ export class WorkCommentStore {
         }
     };
 
+    @observable commentList = []
+
+    // 创建新的评论
+    @observable inputComment = false;
+
+    @action
+    setInputComment = () => {
+        this.inputComment = !this.inputComment;
+    }
+
     // 创建事项评论
     @action
     createWorkComment = async (value) => {
@@ -32,6 +42,17 @@ export class WorkCommentStore {
     findWorkCommentPage = async (value) => {
         Object.assign(this.workCommentPage, { ...value });
         const data = await Service("/workComment/findWorkCommentPage", this.workCommentPage)
+        if (data.code === 0){
+            this.commentList = data.data.dataList;
+        }
+        return data;
+    }
+
+    // 获取事项评论
+    @action
+    findWorkCommentList = async (value) => {
+        Object.assign(this.workCommentPage, { ...value });
+        const data = await Service("/workComment/findWorkCommentList", this.workCommentPage)
         return data;
     }
 

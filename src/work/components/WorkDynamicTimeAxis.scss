@@ -1,0 +1,124 @@
+.work-dyncmic-timeaxis {
+  .work-dyncmic-timeaxis-content {
+    margin-top: 15px;
+    .work-dyncmic-timeaxis-box {
+      margin-top: 0;
+      .work-dyncmic-timeaxis-date {
+        margin-left: 10px;
+        padding: 0 10px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 5px;
+        position: relative;
+        font-size: 16px;
+        width: fit-content;
+        background-color: var(--tiklab-gray-400);
+        .work-dyncmic-timeaxis-date-content {
+          position: relative;
+        }
+        .work-dyncmic-timeaxis-date-content::before {
+          content: "";
+          display: inline-block;
+          position: absolute;
+          border-radius: 50%;
+          background: #fff;
+          width: 11px;
+          height: 11px;
+          top: 11px;
+          left: -25px;
+          border: 3px solid var(--tiklab-blue);
+        }
+      }
+      .work-dyncmic-timeaxis-date::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 15px;
+        left: -10px;
+        width: 0;
+        height: calc(50% + 40px);
+        border-left: 1px solid #dadfe6;
+      }
+      .work-dyncmic-timeaxis-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 0;
+        position: relative;
+
+        .work-dyncmic-timeaxis-item-time {
+          position: relative;
+        }
+
+        .work-dyncmic-timeaxis-item-time::before {
+          content: "";
+          display: inline-block;
+          position: absolute;
+          border-radius: 50%;
+          background: #dadfe6;
+          width: 7px;
+          height: 7px;
+          top: 7px;
+          left: -23px;
+        }
+      }
+
+      .work-dyncmic-showtimeaxis-item::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 0;
+        height: 100%;
+        border-left: 1px solid #dadfe6;
+      }
+    }
+
+    .work-dyncmic-more{
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+
+      margin-bottom: 10px;
+
+      color: #969696;
+      border-radius: 3px;
+    }
+  }
+
+  .dynamic-user-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 32px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .work-dyncmic-timeaxis-item:nth-child(4n+1) {
+    .dynamic-user-icon {
+      background-color: #cadbf3;
+    }
+  }
+
+  .work-dyncmic-timeaxis-item:nth-child(4n+2) {
+    .dynamic-user-icon {
+      background-color: #deedd7;
+    }
+  }
+
+  .work-dyncmic-timeaxis-item:nth-child(4n+3) {
+    .dynamic-user-icon {
+      background-color: #ffebee;
+    }
+  }
+
+  .work-dyncmic-timeaxis-item:nth-child(4n+4) {
+    .dynamic-user-icon {
+      background-color: #e8eaf6;
+    }
+  }
+}

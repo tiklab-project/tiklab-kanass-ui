@@ -17,6 +17,7 @@ import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import ProjectSetIcon from "./ChangeProjectSetIcon";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import { Collapse } from 'antd';
+import DeleteProjectSetModal from "../../../projectSet/components/DeleteProjectSetModal";
 
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
@@ -309,16 +310,11 @@ const ProjectSetBasicInfo = props => {
 
 
                 </div>
-                <Modal
-                    title="是否删除"
-                    visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel}
-                    okText={"确定"}
-                    cancelText={"取消"}
-                    okType="danger"
-                    okButtonProps={{ type: "primary" }}
-                >
-                    此项目集与项目的关联关系将被解除。
-                </Modal>
+                <DeleteProjectSetModal
+                    isModalVisible={isModalVisible}
+                    handleOk={handleOk}
+                    handleCancel={handleCancel}
+                />
                 <ProjectSetIcon
                     visible={visible}
                     setVisible={setVisible}

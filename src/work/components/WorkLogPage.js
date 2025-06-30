@@ -31,52 +31,21 @@ const WorkLogPage = (props) => {
 
     return(
         <Provider>
-            <div className="log-page-top">
-                {
-                    tabValue.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={"log-page-tab " + (selectTab === index ? "log-page-tab-active" : "")}
-                                onClick={() => {
-                                    console.log("index:  " + index)
-                                    setSelectTab(index)
-                                }}
-                            >
-                                {item.label}
-                            </div>
-                        )
-                    })
-                }
-            </div>
             <div className="log-page-content">
-                {
-                    selectTab === 0 &&
-                    <div className="tabs-tabpanel">
-                        <WorkDynamic {...props} />
-                    </div>
-                }
 
-                {
-                    selectTab === 1 &&
-                    <div className="tabs-tabpanel">
-                        <WorkComment workId={workId} />
-                    </div>
-                }
+                <WorkDynamic {...props} />
 
-                {
-                    selectTab === 2 &&
-                    <div className="tabs-tabpanel">
-                        <WorkLog
-                            closeModal = {closeModal}
-                            surplusTime={workInfo.surplusTime}
-                            workInfo={workInfo}
-                            planTakeupTime={workInfo.planTakeupTime}
-                            searchWorkById = {searchWorkById}
-                            {...props}
-                        />
-                    </div>
-                }
+                <WorkLog
+                    closeModal = {closeModal}
+                    surplusTime={workInfo.surplusTime}
+                    workInfo={workInfo}
+                    planTakeupTime={workInfo.planTakeupTime}
+                    searchWorkById = {searchWorkById}
+                    {...props}
+                />
+
+                <WorkComment workId={workId} />
+
             </div>
         </Provider>
     )

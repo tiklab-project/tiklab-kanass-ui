@@ -123,7 +123,8 @@ const ProjectOperateTable = (props) => {
                                style={{flex: '1 1 300px'}}
                     >
                         <Select
-                            style={{ width: '100%', maxWidth: '250px' }}
+                            bordered={false}
+                            style={{ width: '100%', maxWidth: '250px', backgroundColor: '#f0f0f0' }}
                             placeholder="请选择项目集"
                         >
                             {

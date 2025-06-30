@@ -68,7 +68,7 @@ const ProjectSystemUserGroup = AsyncComponent(() => import("./setting/user/Proje
 
 // 项目
 const Project = AsyncComponent(() => import('./project/project/components/Project'))
-const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
+// const ProjectAdd = AsyncComponent(() => import('./project/project/components/ProjectAdd'))
 const ProjectDetail = AsyncComponent(() => import('./project/common/components/ProjectLayout'))
 const ProjectScrumSetDetail = AsyncComponent(() => import('./project/setting/common/components/ProjectScrumSet'))
 const ProjectWorkType = AsyncComponent(() => import('./project/setting/projectWorkType/components/WorkType'))
@@ -112,6 +112,7 @@ const IntegrationContent = AsyncComponent(()=>import("./project/setting/integrat
 const ProjectDomainRole = AsyncComponent(() => import('./project/setting/privilege/ProjectDomainRole'));
 const ProjectStatistics = AsyncComponent(() => import('./project/statistics/components/ProjectStatistics'))
 const StatisticsWork = AsyncComponent(() => import('./project/statistics/components/StatisticsStatusWork'))
+const ProjectStatisticsOverview = AsyncComponent(() => import('./project/statistics/components/ProjectStatisticsOverview'))
 
 
 const WorkAddPage = AsyncComponent(() => import('./work/components/WorkAddPage'))
@@ -130,7 +131,7 @@ const SearchResult = AsyncComponent(() => import('./home/search/components/Searc
 
 // 项目集
 const ProjectSet = AsyncComponent(() => import('./projectSet/projectSet/components/ProjectSet'))
-const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
+// const ProjectSetAdd = AsyncComponent(() => import("./projectSet/projectSet/components/ProjectSetAdd"))
 const ProjectSetDetail = AsyncComponent(() => import('./projectSet/common/components/ProjectSetLayout'))
 const ProjectSetProjectList = AsyncComponent(() => import('./projectSet/projectList/components/ProjectSetProjectList'))
 const ProjectSetSurvey = AsyncComponent(() => import('./projectSet/overview/components/ProjectSetSurvey'))
@@ -204,6 +205,7 @@ const Log = AsyncComponent(() => import("./workLog/components/Log"))
 const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 
 const Statistics = AsyncComponent(() => import('./statistics/components/Statistics'))
+const StatisticsOverview = AsyncComponent(() => import('./statistics/components/overview/StatisticsOverview'))
 const ProjectSetMember = AsyncComponent(() => import('./statistics/components/projectSet/ProjectSetMember'))
 const ProjectSetWorkItem = AsyncComponent(() => import('./statistics/components/projectSet/ProjectSetWorkItem'))
 const ProjectOperateTable = AsyncComponent(() => import('./statistics/components/projectSet/ProjectOperateTable'))
@@ -221,6 +223,7 @@ const Appraised = AsyncComponent(() => import('./project/appraised/components/Ap
 // 评审
 const AppraisedHome = AsyncComponent(() => import('./appraised/common/components/AppraisedLayout'))
 const AppraisedWorkItem = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemTable'))
+const AppraisedWorkItemDetail = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemStatusDrawer'))
 
 const Routers = [
     {
@@ -342,6 +345,12 @@ const Routers = [
                 path: "/statistics",
                 component: Statistics,
                 routes: [
+                    {
+                        path: "/statistics/overview",
+                        exact: false,
+                        component: StatisticsOverview,
+                        key: "statisticsOverview"
+                    },
                     {
                         path: "/statistics/projectSet/member",
                         exact: false,
@@ -884,6 +893,11 @@ const Routers = [
                         component: ProjectStatistics,
                         routes: [
                             {
+                                path: "/project/:id/statistics/overview",
+                                component: ProjectStatisticsOverview,
+                                exact: true
+                            },
+                            {
                                 path: "/project/:id/statistics/workItem",
                                 component: StatisticsWork,
                                 exact: true
@@ -969,6 +983,10 @@ const Routers = [
                     {
                         path: "/project/:id/appraised/:appraised",
                         component: AppraisedWorkItem,
+                    },
+                    {
+                        path: "/project/:id/appraised/:appraised/:workId",
+                        component: WorkDetailPage,
                     },
                     {
                         path: "/project/:id/appraised",
@@ -1057,6 +1075,11 @@ const Routers = [
                         component: ProjectSetStatistics,
                         routes: [
                             {
+                                path: "/projectSet/:projectSetId/statistics/overview",
+                                component: ProjectStatisticsOverview,
+                                exact: true
+                            },
+                            {
                                 path: "/projectSet/:projectSetId/statistics/workItem",
                                 component: StatisticsWork,
                                 exact: true
@@ -1075,6 +1098,11 @@ const Routers = [
                         path: "/:id/sprint/:sprint/statistics",
                         component: SprintStatistics,
                         routes: [
+                            {
+                                path: "/:id/sprint/:sprint/statistics/overview",
+                                component: ProjectStatisticsOverview,
+                                exact: true
+                            },
                             {
                                 path: "/:id/sprint/:sprint/statistics/workItem",
                                 component: StatisticsWork,
@@ -1214,13 +1242,13 @@ const Routers = [
                 component: ProjectNotFound,
                 key: 'NotFound'
             },
-            {
-                path: "/projectAdd",
-                exact: true,
-                component: ProjectAdd,
-                key: 'project'
-
-            },
+            // {
+            //     path: "/projectAdd",
+            //     exact: true,
+            //     component: ProjectAdd,
+            //     key: 'project'
+            //
+            // },
             {
                 path: "/workTodo",
                 exact: true,
@@ -1248,12 +1276,12 @@ const Routers = [
                 //     }
                 // ]
             },
-            {
-                path: "/projectSetAdd",
-                exact: false,
-                component: ProjectSetAdd,
-                key: "ProjectSet"
-            },
+            // {
+            //     path: "/projectSetAdd",
+            //     exact: false,
+            //     component: ProjectSetAdd,
+            //     key: "ProjectSet"
+            // },
 
 
             {

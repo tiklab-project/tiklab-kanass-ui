@@ -164,10 +164,17 @@ const Survey = (props) => {
     }
 
     /**
-    * 跳转到动态列表
-    */
+     * 跳转到动态列表
+     */
     const goDynamicList = () => {
         props.history.push(`/project/${projectId}/dynamic`)
+    }
+
+    /**
+     * 跳转到里程碑列表
+     */
+    const goMileStoneList = () => {
+        props.history.push(`/project/${projectId}/milestone`)
     }
 
 
@@ -352,7 +359,13 @@ const Survey = (props) => {
                     <div className="milestone-box">
                         <div className="box-title">
                             里程碑
+                            <div className="more" onClick={() => goMileStoneList()}>
+                                <svg aria-hidden="true" className="svg-icon">
+                                    <use xlinkHref="#icon-right"></use>
+                                </svg>
+                            </div>
                         </div>
+
                         <div className="milestone-box-timeline">
                             {
                                 milestoneList?.length > 0 ?

@@ -18,6 +18,7 @@ import StatisticsStore from "../../store/StatisticsStore";
 
 
 const ProjectSetMember = (props) => {
+    const { noEdit } = props;
     const insightStore = StatisticsStore;
     const { statisticsProjectUserCount, findAllProjectSet, reportList } = insightStore;
 
@@ -128,33 +129,37 @@ const ProjectSetMember = (props) => {
 
     return (
         <div className="statistics">
-            <div className="statistics-top">
-                <div className="statistics-work-title">项目成员统计</div>
-                <Form
-                    name="form"
-                    form={form}
-                    initialValues={{ remember: true }}
-                    style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}
-                    onValuesChange={(changedValues, allValues) => {onValuesChange(changedValues, allValues)}}
-                >
-                    <Form.Item name="projectSetId"
-                               label="项目集"
-                               rules={[{ required: true }]}
-                               style={{flex: '1 1 300px'}}
+            {
+                !noEdit &&
+                <div className="statistics-top">
+                    <div className="statistics-work-title">项目成员统计</div>
+                    <Form
+                        name="form"
+                        form={form}
+                        initialValues={{ remember: true }}
+                        style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}
+                        onValuesChange={(changedValues, allValues) => {onValuesChange(changedValues, allValues)}}
                     >
-                        <Select
-                            style={{ width: '100%', maxWidth: '250px' }}
-                            placeholder="请选择项目集"
+                        <Form.Item name="projectSetId"
+                                   label="项目集"
+                                   rules={[{ required: true }]}
+                                   style={{flex: '1 1 300px'}}
                         >
-                            {
-                                projectSetList && projectSetList.map(item => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                </Form>
-            </div>
+                            <Select
+                                bordered={false}
+                                style={{ width: '100%', maxWidth: '250px', backgroundColor: '#f0f0f0' }}
+                                placeholder="请选择项目集"
+                            >
+                                {
+                                    projectSetList && projectSetList.map(item => {
+                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                    </Form>
+                </div>
+            }
             <div className="projectset-user">
                 <div className="projectset-user-top">
                     <div className="projectset-user-title">

@@ -1,0 +1,43 @@
+
+
+
+.statistics-overview{
+    padding: 15px;
+    .statistics-top{
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 1;
+        padding: var(--tiklab-padding) var(--tiklab-padding) 0 var(--tiklab-padding);
+        .statistics-work-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .statistics-row{
+        height: 80%;
+        //overflow: auto;
+        //padding: 10px;
+        //gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .statistics-row {
+            height: 30% !important;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1280px) {
+        .statistics-row {
+            height: 50% !important;
+        }
+    }
+
+    @media (min-width: 1281px) {
+        .statistics-row {
+            height: 80% !important;
+        }
+    }
+}

@@ -1,5 +1,8 @@
 .project-select-type {
     padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 
     .project-type-head {
         font-size: 14px;
@@ -19,7 +22,7 @@
         justify-content: space-around;
         align-items: center;
         border-radius: 4px;
-        padding: 10 20px;
+        padding: 10px 20px;
         max-width: 300px;
         background-color: #f9f9f9;
         .type-icon {
@@ -81,15 +84,15 @@
         gap: 30px;
 
         .project-limits {
-            padding: 15px 20px;
+            padding: 5px 10px;
             background-color: #fff;
             border-radius: 4px;
             width: 220px;
 
             .limits-title {
                 font-size: 16px;
-                height: 40px;
-                line-height: 40px;
+                height: 20px;
+                line-height: 20px;
             }
 
             .limits-desc {

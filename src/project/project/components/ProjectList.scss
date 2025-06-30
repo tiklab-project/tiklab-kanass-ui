@@ -223,6 +223,11 @@
         }
         .project-table-box {
             margin-top: 15px;
+            .operate-icon{
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
             .project-name {
                 display: flex;
                 align-items: center;

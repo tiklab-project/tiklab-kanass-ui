@@ -32,16 +32,17 @@ const WorkDetailDrawer = (props) => {
         showDetail: showModal
     }))
 
-    /**
-     * 监听鼠标事件，关闭事项详情抽屉
-     */ 
-    useEffect(() => {
-        document.addEventListener("mouseup", closeModal, false);
-        return () => {
-            document.removeEventListener("mouseup", closeModal, false);
-        }
-
-    }, [isModalVisible])
+    // /**
+    //  * 监听鼠标事件，关闭事项详情抽屉
+    //  */
+    // useEffect(() => {
+    //     console.log("出发了  父组件effect")
+    //     document.addEventListener("mouseup", closeModal, false);
+    //     return () => {
+    //         document.removeEventListener("mouseup", closeModal, false);
+    //     }
+    //
+    // }, [isModalVisible])
 
     /**
      * 关闭事项详情抽屉
@@ -90,12 +91,12 @@ const WorkDetailDrawer = (props) => {
     return (<>
         <Drawer
             placement="right"
-            // onClose={closeDrawer}
+            onClose={closeDrawer}
             visible={isModalVisible}
             className={`${isModalVisible ? "work-table-detail" : ''} `}
             closable={false}
             destroyOnClose={true}
-            width={"68%"}
+            width={"52%"}
             // mask={false}
         >
             <div className="work-detail-drawer" ref={detailRef}>

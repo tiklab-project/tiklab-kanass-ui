@@ -385,7 +385,7 @@ const WorkDetail = (props) => {
                                                     </Skeleton>
                                                 </Col>
                                             </Row>
-                                            <Row style={{ flex: 1 }}>
+                                            <Row style={{ height:"85%",flex: 1 }}>
                                                 <Col {...rowSpan} style={{ background: "#fff" }}>
                                                     <Skeleton loading={infoLoading} active>
                                                         <WorkDetailBottom

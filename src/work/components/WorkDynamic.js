@@ -8,13 +8,12 @@
  */
 import React, { useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
-import "./WorkDynamic.scss"
 import { DatePicker, Empty } from 'antd';
 import "./WorkDynamic.scss";
 import WorkDynamicStore from '../store/WorkDynamicStore';
-import DyncmicTimeAxis from "../../project/overview/components/DyncmicTimeAxis";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import PaginationCommon from "../../common/page/Page";
+import WorkDynamicTimeAxis from "./WorkDynamicTimeAxis";
 
 const { RangePicker } = DatePicker;
 const WorkDynamic = (props) => {
@@ -61,28 +60,22 @@ const WorkDynamic = (props) => {
     }
 
     return <>
+        <div className="other-title">
+            事项动态:
+        </div>
         <div className="work-dynamic" ref = {workDynamic}>
-            <div className="work-dynamic-top">
-                <div className="work-dynamic-title">共{opLogTimeCondition.pageParam.total}个</div>
-                <RangePicker
-
-                    format={'YYYY/MM/DD'}
-                    onChange={changeData}
-                    getPopupContainer = {()=> workDynamic.current}
-                />
-            </div>
             {
-                logTimeList && logTimeList.length > 0 ? <DyncmicTimeAxis logList={logTimeList} /> :
+                logTimeList && logTimeList.length > 0 ? <WorkDynamicTimeAxis logList={logTimeList} workId={workId} /> :
                     <ProjectEmpty description={"暂无动态"} />
             }
-            <PaginationCommon
+            {/*<PaginationCommon*/}
 
-                currentPage={opLogTimeCondition.pageParam.currentPage}
-                changePage={(currentPage) => onPageChange(currentPage)}
-                totalPage={opLogTimeCondition.pageParam.totalPage}
-                total={opLogTimeCondition.pageParam.total}
-                showRefer={false}
-            />
+            {/*    currentPage={opLogTimeCondition.pageParam.currentPage}*/}
+            {/*    changePage={(currentPage) => onPageChange(currentPage)}*/}
+            {/*    totalPage={opLogTimeCondition.pageParam.totalPage}*/}
+            {/*    total={opLogTimeCondition.pageParam.total}*/}
+            {/*    showRefer={false}*/}
+            {/*/>*/}
         </div>
 
     </>

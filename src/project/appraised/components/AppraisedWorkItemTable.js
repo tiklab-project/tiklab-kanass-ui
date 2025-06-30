@@ -1,22 +1,21 @@
 import AppraisedWorkItemStore from "../store/AppraisedWorkItemStore";
 import React, {useEffect, useState} from 'react';
 import {Col, Row, Space, Table, Tooltip} from "antd";
-import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import WorkStore from "../../../work/store/WorkStore";
 import AppraisedWorkItemAddModel from "./AppraisedWorkItemAddModel";
 import {observer, inject, Provider} from "mobx-react";
 import {withRouter} from "react-router";
-import WorkTypeTab from "../../../work/components/WorkTypeTab";
 import WorkCalendarStore from "../../../work/store/WorkCalendarStore";
-import AppraisedAddModal from "./AppraisedAdd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import "./AppraisedWorkItemTable.scss"
-import AppraisedWorkItemDetailDrawer from "./AppraisedWorkItemDetailDrawer";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import AppraisedStores from "../store/AppraisedStores";
+import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
+import {setSessionStorage} from "../../../common/utils/setSessionStorage";
+import AppraisedWorkItemStatusDrawer from "./AppraisedWorkItemStatusDrawer";
 
 const AppraisedWorkItemTable = (props) => {
     const store = {appraisedWorkItemStore: AppraisedWorkItemStore, workStore: WorkStore, workCalendarStore: WorkCalendarStore}
@@ -33,6 +32,7 @@ const AppraisedWorkItemTable = (props) => {
     const appraisedId = props.match.params.appraised;
     const [showAddModel, setShowAddModel] = useState(false);
     const [detailVisible, setDetailVisible] = useState(false);
+    const [statusVisible, setStatusVisible] = useState(false);
     const [appraised, setAppraised] = useState();
 
     // tab的key
@@ -73,14 +73,26 @@ const AppraisedWorkItemTable = (props) => {
         setRecordId(record.id);
         setWorkId(record.workItem.id)
         const pathname = props.match.url;
-        props.history.push(`${pathname}/${record.id}`)
+        setSessionStorage("detailCrumbArray", [{ id: record.workItem.id, code: record.workItem.code, title: record.workItem.title, iconUrl: record.workItem.workTypeSys.iconUrl }])
+        props.history.push(`${pathname}/${record.workItem.id}`)
         setDetailVisible(true);
 
     }
 
-    const getState = (state) => {
+    const goAppraisedStatus = (record) => {
+        console.log("点击status：  " + record.id)
+        setRecordId(record.id);
+        // setWorkId(record.workItem.id)
+        const pathname = props.match.url;
+        // setSessionStorage("detailCrumbArray", [{ id: record.workItem.id, code: record.workItem.code, title: record.workItem.title, iconUrl: record.workItem.workTypeSys.iconUrl }])
+        props.history.push(`${pathname}/${record.id}`)
+        setStatusVisible(true);
+
+    }
+
+    const getState = (state, record) => {
         if (state === "0"){
-            return<Space>
+            return<Space onClick={() => goAppraisedStatus(record)}>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-unAppraised"></use>
                 </svg>
@@ -90,7 +102,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "1"){
-            return<Space>
+            return<Space onClick={() => goAppraisedStatus(record)}>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-pass"></use>
                 </svg>
@@ -100,7 +112,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "2"){
-            return<Space>
+            return<Space onClick={() => goAppraisedStatus(record)}>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-unPass"></use>
                 </svg>
@@ -110,7 +122,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "3"){
-            return<Space>
+            return<Space onClick={() => goAppraisedStatus(record)}>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-advice"></use>
                 </svg>
@@ -167,17 +179,17 @@ const AppraisedWorkItemTable = (props) => {
             width: "15%",
             render: (text, record) => <Space>
                 <UserIcon userInfo={record.workItem.builder?.id} name={record.workItem.builder?.nickname} />
-                {record.workItem.builder.name}
+                {record.workItem.builder.nickname}
             </Space>
         },
         {
-            title: '评审结果',
+            title: '评审意见',
             dataIndex: 'workItemAppraisedState',
             key: 'workItemAppraisedState',
             ellipsis: true,
             width: "15%",
             render: (text, record) =>
-                getState(record.workItemAppraisedState)
+                getState(record.workItemAppraisedState, record)
                 // <div className={`appraised-status ${record.workItemAppraisedState === 1}`}>
                 //     appraisedWorkItemState[record?.workItemAppraisedState]?.name
                 // </div>
@@ -360,9 +372,17 @@ const AppraisedWorkItemTable = (props) => {
                 searchTable={searchTable}
                 {...props}
             />
-            <AppraisedWorkItemDetailDrawer
-                visible={detailVisible}
-                setVisible={setDetailVisible}
+            <AppraisedWorkItemStatusDrawer
+                visible={statusVisible}
+                setVisible={setStatusVisible}
+                // recordId={}
+                searchTable={searchTable}
+                {...props}
+            />
+
+            <WorkDetailDrawer
+                isModalVisible={detailVisible}
+                setIsModalVisible={setDetailVisible}
                 searchTable={searchTable}
                 {...props}
             />

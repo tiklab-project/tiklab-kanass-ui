@@ -24,7 +24,7 @@ const layout = {
 
 
 const ProjectSetAddInfo = (props) => {
-    const { addProjectSetSet, findAllProjectSet } = props;
+    const { addProjectSetSet, findAllProjectSet, onCancel, setLoading } = props;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -40,6 +40,7 @@ const ProjectSetAddInfo = (props) => {
 
     const onFinish = () => {
         form.validateFields().then((values) => {
+            setLoading(true)
             const time = values["startTime"]
             const data = {
                 name: values.projectSetName,
@@ -50,15 +51,17 @@ const ProjectSetAddInfo = (props) => {
                 iconUrl: iconUrl
             }
             addProjectSetSet(data).then(res => {
+                setLoading(false)
                 if (res.code === 40000) {
                     message.error(res.msg);
                 }
                 if (res.code === 0) {
                     message.success('添加成功');
-                    props.history.goBack()
+                    // 跳转到项目集--项目列表页面
+                    props.history.push(`/projectSet/${res.data}/project`)
                     findAllProjectSet({})
-                    
-                    // props.history.push(`/projectSet/${res.data}/overview`)
+
+
                 }
             })
         })
@@ -105,6 +108,12 @@ const ProjectSetAddInfo = (props) => {
             </div>
         )
     }
+
+    const handleOnCancel = () => {
+        form.resetFields();
+        onCancel()
+    }
+
     return (
         <Fragment>
             <div className="projectSet-addinfo">
@@ -160,7 +169,7 @@ const ProjectSetAddInfo = (props) => {
                         <TextArea rows={3} />
                     </Form.Item>
                     <div className="projectSet-add-submit">
-                        <Button htmlType="button" onClick={() => props.history.goBack()}>
+                        <Button style={{marginLeft: "auto"}} htmlType="button" onClick={handleOnCancel}>
                             取消
                         </Button>
 

@@ -124,7 +124,9 @@ const MilestoneList = (props) => {
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="project-milestone-list">
                         <Breadcumb
-                            firstText="里程碑"
+                            {...props}
+                            firstText="项目概况"
+                            secondText="里程碑"
                         >
                             <MilestoneAddEditModal
                                 name="添加里程碑"

@@ -736,6 +736,14 @@ const WorkBasicInfo = (props) => {
                             colon={false}
 
                         >
+
+                            <Form.Item label="事项类型" name="workType"
+                                       hasFeedback={showValidateStatus === "workType" ? true : false}
+                                       validateStatus={validateStatus}
+                            >
+                                <div style={{ padding: "0 11px" }}>{workInfo.workTypeSys?.name}</div>
+                            </Form.Item>
+
                             <Form.Item label="优先级" name="workPriority"
                                 hasFeedback={showValidateStatus === "workPriority" ? true : false}
                                 validateStatus={validateStatus}
@@ -771,6 +779,7 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
+
                             <Form.Item label="负责人" name="assigner"
                             >
                                 <Select
@@ -793,31 +802,7 @@ const WorkBasicInfo = (props) => {
                                     }
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="所属模块" name="module"
-                                       hasFeedback={showValidateStatus === "module" ? true : false}
-                                       validateStatus={validateStatus}
-                            >
-                                <Select
-                                    placeholder="无"
-                                    className="work-select"
-                                    key="selectModule"
-                                    bordered={fieldName === "module" ? true : false}
-                                    suffixIcon={fieldName === "module" || hoverFieldName == "module" ? <CaretDownOutlined /> : false}
-                                    onFocus={() => changeStyle("module", "module")}
-                                    onBlur={() => setFieldName("")}
-                                    onMouseEnter={() => onMouseEnter("module")}
-                                    onMouseLeave={() => setHoverFieldName("")}
-                                    allowClear
-                                    getPopupContainer={() => formRef.current}
-                                    disabled={isPermissionField("module")}
-                                >
-                                    {
-                                        moduleList && moduleList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
+
 
                             {/*{*/}
                             {/*    <div className={`form-custom-open `} onClick={() => openCustomForm()}>*/}
@@ -957,24 +942,7 @@ const WorkBasicInfo = (props) => {
                                         />
                                         小时
                                     </Form.Item>
-                                    <Form.Item name="surplusTime" label="剩余用时"
-                                               hasFeedback={showValidateStatus === "surplusTime" ? true : false}
-                                               validateStatus={validateStatus}
-                                    >
-                                        <InputNumber
-                                            suffix="小时"
-                                            bordered={fieldName === "surplusTime" ? true : false}
-                                            suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
-                                            onFocus={() => changeStyle("surplusTime", "surplusTime")}
-                                            onBlur={() => setFieldName("")}
-                                            onMouseEnter={() => setHoverFieldName("surplusTime")}
-                                            onMouseLeave={() => setHoverFieldName("")}
-                                            onChange={(value) => updataSurplusTime(value)}
-                                            value={surplusTimeValue}
-                                            disabled={isPermissionField("surplusTime")}
-                                        />
-                                        小时
-                                    </Form.Item>
+
                                     <Form.Item
                                         name="planTime" label="计划日期"
                                         hasFeedback={showValidateStatus === "planTime" ? true : false}
@@ -1015,16 +983,39 @@ const WorkBasicInfo = (props) => {
                                 <div style={{ padding: "0 11px" }}>{workInfo.project?.projectName}</div>
                             </Form.Item> */}
 
-                            <Form.Item label="事项类型" name="workType"
-                                hasFeedback={showValidateStatus === "workType" ? true : false}
-                                validateStatus={validateStatus}
-                            >
-                                <div style={{ padding: "0 11px" }}>{workInfo.workTypeSys?.name}</div>
-                            </Form.Item>
+
+
                             <Form.Item label="状态" name="workStatus"
                             >
                                 <div style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
                             </Form.Item>
+
+                            <Form.Item label="所属模块" name="module"
+                                       hasFeedback={showValidateStatus === "module" ? true : false}
+                                       validateStatus={validateStatus}
+                            >
+                                <Select
+                                    placeholder="无"
+                                    className="work-select"
+                                    key="selectModule"
+                                    bordered={fieldName === "module" ? true : false}
+                                    suffixIcon={fieldName === "module" || hoverFieldName == "module" ? <CaretDownOutlined /> : false}
+                                    onFocus={() => changeStyle("module", "module")}
+                                    onBlur={() => setFieldName("")}
+                                    onMouseEnter={() => onMouseEnter("module")}
+                                    onMouseLeave={() => setHoverFieldName("")}
+                                    allowClear
+                                    getPopupContainer={() => formRef.current}
+                                    disabled={isPermissionField("module")}
+                                >
+                                    {
+                                        moduleList && moduleList.map((item) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+
                             <Form.Item label="创建人" name="builder"
                                        hasFeedback={showValidateStatus === "builder" ? true : false}
                                        validateStatus={validateStatus}
@@ -1089,6 +1080,25 @@ const WorkBasicInfo = (props) => {
                                                validateStatus={validateStatus}
                                     >
                                         <div style={{ padding: "0 11px" }}>{workInfo.buildTime}</div>
+                                    </Form.Item>
+
+                                    <Form.Item name="surplusTime" label="剩余用时"
+                                               hasFeedback={showValidateStatus === "surplusTime" ? true : false}
+                                               validateStatus={validateStatus}
+                                    >
+                                        <InputNumber
+                                            suffix="小时"
+                                            bordered={fieldName === "surplusTime" ? true : false}
+                                            suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
+                                            onFocus={() => changeStyle("surplusTime", "surplusTime")}
+                                            onBlur={() => setFieldName("")}
+                                            onMouseEnter={() => setHoverFieldName("surplusTime")}
+                                            onMouseLeave={() => setHoverFieldName("")}
+                                            onChange={(value) => updataSurplusTime(value)}
+                                            value={surplusTimeValue}
+                                            disabled={isPermissionField("surplusTime")}
+                                        />
+                                        小时
                                     </Form.Item>
                                 </>
                             }
@@ -1291,7 +1301,7 @@ const WorkBasicInfo = (props) => {
                         <Dragger className="work-detail-upload" {...filesParams}>
                             <p className="ant-upload-drag-icon">
                                 <svg className="icon-20" aria-hidden="true">
-                                    <use xlinkHref="#icon-uploadImg"></use>
+                                    <use xlinkHref="#icon-uploadImg-gray"></use>
                                 </svg>上传附件
                             </p>
                         </Dragger>

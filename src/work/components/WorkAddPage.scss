@@ -37,6 +37,10 @@
             overflow: auto;
             padding: 0 var(--tiklab-padding);
             min-height: calc(100% - 120px);
+
+            .ant-picker-range{
+                width: 100%;
+            }
         }
 
         .work-add-form {
@@ -50,9 +54,21 @@
                 flex: 1;
             }
             .work-item-desc {
-                .edit-toolbar {
-                    padding-right: 10px;
+                .edit-menu{
+                    .edit-toolbar {
+                        gap: 0;
+                        .tool-item{
+                            padding: 0;
+                            min-width: 23px;
+                        }
+                    }
                 }
+
+            }
+
+            .desc-preview {
+                padding: 10px;
+                background-color: var(--tiklab-gray-600);
             }
             .ant-form-item {
                 // flex-direction: row;
@@ -86,6 +102,7 @@
         }
 
         .desc-botton {
+            margin-top: 10px;
             display: flex;
             gap: 10px;
             height: 40px;

@@ -1,0 +1,44 @@
+.statistics-overview {
+  background-color: #fff;
+  height: 100%;
+
+  .statistics-overview-top {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+    padding: var(--tiklab-padding) var(--tiklab-padding) 0 var(--tiklab-padding);
+
+    .statistics-overview-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
+  .project-statistics-row{
+    height: 80%;
+    .statistics-col-title {
+      font-weight: 500;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+  }
+  //@media (max-width: 768px) {
+  //  .project-statistics-row {
+  //    height: 30% !important;
+  //  }
+  //}
+  //
+  //@media (min-width: 769px) and (max-width: 1280px) {
+  //  .project-statistics-row {
+  //    height: 50% !important;
+  //  }
+  //}
+  //
+  //@media (min-width: 1281px) {
+  //  .project-statistics-row {
+  //    height: 80% !important;
+  //  }
+  //}
+}

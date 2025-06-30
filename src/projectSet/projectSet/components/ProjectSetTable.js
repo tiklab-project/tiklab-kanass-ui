@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-27 15:05:47
  */
-import React, { useEffect, useState, Fragment } from 'react';
+import React, {useEffect, useState, Fragment, useRef} from 'react';
 import {Table, Space, Row, Col, Empty, Spin, Progress} from 'antd';
 import "./ProjectSet.scss";
 import { inject, observer } from 'mobx-react';
@@ -19,6 +19,8 @@ import ColorIcon from '../../../common/colorIcon/colorIcon';
 import ProjectEmpty from '../../../common/component/ProjectEmpty';
 import { PrivilegeButton } from 'tiklab-privilege-ui';
 import CircleProgress from "../../../common/progress/CircleProgress";
+import ProjectSetAdd from "./ProjectSetAdd";
+import ProjectSetOperateSelectModal from "./ProjectSetOperateSelectModal";
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -45,6 +47,10 @@ const ProjectSetTable = (props) => {
         "进行中",
         "已结束",
     ]
+
+    const [projectSetAddVisible, setProjectSetAddVisible] = useState(false);
+
+    const projectSetTableRef = useRef();
 
     useEffect(() => {
         // findRecentProjectSetList({})
@@ -238,9 +244,11 @@ const ProjectSetTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => goToProjectSetSet(record)}>
-                        <use xlinkHref="#icon-set"></use>
-                    </svg>
+                    <ProjectSetOperateSelectModal
+                        getPopupContainer={projectSetTableRef}
+                        projectSetInfo={record}
+                        projectSetStore={projectSetStore}
+                        />
                 </div>
         }
     ]
@@ -292,7 +300,7 @@ const ProjectSetTable = (props) => {
                     <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
                         <Button
                             style={{ width: "fit-content" }}
-                            type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
+                            type="primary" onClick={() => {setProjectSetAddVisible(true)}} buttonText={name} >
                         </Button>
                     </PrivilegeButton>
 
@@ -364,7 +372,7 @@ const ProjectSetTable = (props) => {
                     <InputSearch onChange={(value) => onSearch(value)} placeholder={"搜索项目集"} />
                 </div>
                 <div>
-                    <div className="projectSet-table-box">
+                    <div className="projectSet-table-box" ref={projectSetTableRef}>
                         <Spin spinning={loading} tip="加载中">
                             <Table
                                 columns={columns}
@@ -391,6 +399,10 @@ const ProjectSetTable = (props) => {
                 </div>
             </Col>
         </Row>
+        <ProjectSetAdd
+            projectSetAddVisible={projectSetAddVisible}
+            setProjectSetAddVisible={setProjectSetAddVisible}
+        />
     </div>
 }
 

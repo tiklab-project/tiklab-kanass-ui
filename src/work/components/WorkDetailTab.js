@@ -10,6 +10,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import "./WorkDetailTab.scss";
+import {withRouter} from "react-router";
 
 const WorkDetailTab = (props) => {
     const {  workInfo, relationModalNum, tabValue, setTabValue} = props;
@@ -19,6 +20,8 @@ const WorkDetailTab = (props) => {
 
     const [workTypeText, setWorkTypeText] = useState("事项")
     const workTypeCode = workInfo.workTypeCode;
+
+    const path = props.match.path;
 
     /**
      * 设置事项类型文本
@@ -117,16 +120,22 @@ const WorkDetailTab = (props) => {
             <div className={`tabs-bar ${tabValue === 1 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(1)} >
                 详细信息
             </div>
-            <div className={`tabs-bar ${tabValue === 2 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(2)}>
-                动态日志
-            </div>
+            {
+                path !== "/project/:id/appraised/:appraised" &&
+                <div className={`tabs-bar ${tabValue === 2 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(2)}>
+                    动态日志
+                </div>
+            }
             <div className={`tabs-bar ${tabValue === 3 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(3)}>
                 关联事项
             </div>
-            <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
-                关联数据
-            </div>
+            {
+                path !== "/project/:id/appraised/:appraised" &&
+                <div className={`tabs-bar ${tabValue === 4 ? "tabs-bar-select" : ""}`} onClick={() => setTabValue(4)}>
+                    关联数据
+                </div>
+            }
         </div>
     )
 };
-export default inject("workStore")(observer(WorkDetailTab));
+export default withRouter(inject("workStore")(observer(WorkDetailTab)));

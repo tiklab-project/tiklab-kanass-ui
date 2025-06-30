@@ -30,7 +30,7 @@ const layout = {
 
 
 const ProjectAddInfo = (props) => {
-    const { createProject, workType, setCurrentStep, setLoading } = props;
+    const { createProject, workType, setCurrentStep, setLoading, onCancel } = props;
     const {findIconList, creatIcon, creatProjectKey} = ProjectStore;
     const [form] = Form.useForm();
     const rangeConfig = {
@@ -123,13 +123,16 @@ const ProjectAddInfo = (props) => {
                 endTime: time[1].format("YYYY-MM-DD"),
                 projectState: values.projectState,
                 projectLimits: values.projectLimits,
-                iconUrl: iconUrl
+                // iconUrl: iconUrl
+                iconUrl: workType.iconUrl
             }
             createProject(data).then(res => {
                 setLoading(false);
                 if (res.code === 0) {
                     message.success('项目添加成功');
-                    props.history.goBack();
+                    // props.history.goBack();
+                    // 跳转到项目--事项页面
+                    props.history.push(`/project/${res.data}/workitem`);
                     setCurrentStep("0");
                 } else {
                     // 显示具体错误信息（如名称过长、重复等）
@@ -186,6 +189,11 @@ const ProjectAddInfo = (props) => {
             </div>
         )
     }
+
+    const handleOnCancel = () => {
+        form.resetFields();
+        onCancel()
+    }
     return (
         <Fragment>
             <div className="project-select-type">
@@ -200,7 +208,7 @@ const ProjectAddInfo = (props) => {
                             <div className="type-desc">{workType.desc}</div>
                         </div>
                     </div>
-                    <Button onClick={() => setCurrentStep(0)}>更改类型</Button>
+                    {/*<Button onClick={() => setCurrentStep(0)}>更改类型</Button>*/}
                 </div>
 
             </div>
@@ -284,35 +292,30 @@ const ProjectAddInfo = (props) => {
                     >
                         <TextArea rows={3} placeholder = "项目描述" />
                     </Form.Item>
-                    <Form.Item
-                        label="图标"
-                        name="icon"
-                    >
-                        <div className="project-icon-box">
-                            {
-                                iconList && iconList.map((item) => {
-                                    return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>
+                    {/*<Form.Item*/}
+                    {/*    label="图标"*/}
+                    {/*    name="icon"*/}
+                    {/*>*/}
+                    {/*    <div className="project-icon-box">*/}
+                    {/*        {*/}
+                    {/*            iconList && iconList.map((item) => {*/}
+                    {/*                return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>*/}
 
-                                        <ImgComponent 
-                                            alt="" 
-                                            className="img-icon" 
-                                            src={(`${item.iconUrl}`)}
-                                        />
-                                    </div>
-                                })
-                            }
-                            {/* <Upload {...upLoadIcon}>
-                                <div className="project-icon">
-                                    <img src={UploadIcon1} alt="" className="list-img"/>
-                                </div>
-                            </Upload> */}
-                        </div>
-                    </Form.Item>
+                    {/*                    <ImgComponent */}
+                    {/*                        alt="" */}
+                    {/*                        className="img-icon" */}
+                    {/*                        src={(`${item.iconUrl}`)}*/}
+                    {/*                    />*/}
+                    {/*                </div>*/}
+                    {/*            })*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</Form.Item>*/}
                     <div className="project-add-submit">
-                        <Button htmlType="button" onClick={() => setCurrentStep(0)}>
+                        <Button style={{marginLeft: "auto"}} htmlType="button" onClick={() => setCurrentStep(0)}>
                             上一步
                         </Button>
-                        <Button htmlType="button" onClick={() => props.history.goBack()}>
+                        <Button htmlType="button" onClick={handleOnCancel}>
                             取消
                         </Button>
 

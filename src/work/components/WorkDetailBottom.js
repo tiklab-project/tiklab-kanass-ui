@@ -9,21 +9,16 @@
 import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
-import WorkRelation from "./WorkRelation";
-import WorkChild from "./WorkChild";
-import WorkLog from "./WorkLog";
-import WorkComment from "./WorkComment";
-import WorkDynamic from "./WorkDynamic";
-import WorkRepository from "./WorkDocumentList";
 import WorkBasicInfoDefect from "./WorkBasicInfoDefect";
 import WorkBasicInfoDemand from "./WorkBasicInfoDemand";
 import WorkBasicInfoNomal from "./WorkBasicInfoNomal";
 import WorkBasicInfoTask from "./WorkBasicInfoTask";
-import WorkTestCaseList from "./WorkTestCaseList";
 import "./WorkDetailBottom.scss";
 import WorkRelationPage from "./WorkRelationPage";
 import WorkLogPage from "./WorkLogPage";
 import WorkLinkPage from "./WorkLinkPage";
+import {withRouter} from "react-router";
+import WorkCommentInput from "./WorkCommentInput";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
@@ -39,6 +34,18 @@ const WorkDetailBottom = (props) => {
     const [taskType, setTaskType] = useState()
     // 事项类型编码
     const workTypeCode = workInfo.workTypeCode;
+
+    const path = props.match.path;
+
+    const [detailRowHeight, setDetailRowHeight] = useState('calc(100% - 55px)');
+
+    const reSizeDetailRowHeight = () =>{
+        setDetailRowHeight('calc(100% - 150px)')
+    }
+
+    const reSetDetailRowHeight = () =>{
+        setDetailRowHeight('calc(100% - 55px)')
+    }
 
     useEffect(() => {
         if (workInfo) {
@@ -127,23 +134,32 @@ const WorkDetailBottom = (props) => {
 
   
     return (
-        <div className="workitem-detail-row">
+        <div className="workitem-detail-row" style={tabValue === 2 ? {height: detailRowHeight} : {height: '100%'}}>
             <div className="workitem-tabs-content">
                 {
                     tabValue === 1 &&
-                    <div className="tabs-tabpanel">
+                    // <div className="tabs-tabpanel">
+                    <>
                         {
                             workInfo && deatilType()
                         }
-                    </div>
+                    </>
+                    // </div>
                 }
                 {
-                    tabValue === 2 &&
-                    <WorkLogPage
-                        searchWorkById={searchWorkById}
-                        workId={workId}
-                        {...props}
-                    />
+                    tabValue === 2 && path !== "/project/:id/appraised/:appraised" &&
+                    <>
+                        <WorkLogPage
+                            searchWorkById={searchWorkById}
+                            workId={workId}
+                            {...props}
+                        />
+                        <WorkCommentInput
+                            workId={workId}
+                            reSizeDetailRowHeight={reSizeDetailRowHeight}
+                            reSetDetailRowHeight={reSetDetailRowHeight}
+                        />
+                    </>
                 }
                 {
                     tabValue === 3 &&
@@ -156,7 +172,7 @@ const WorkDetailBottom = (props) => {
                         {...props} />
                 }
                 {
-                    tabValue === 4 &&
+                    tabValue === 4 && path !== "/project/:id/appraised/:appraised" &&
                     <WorkLinkPage
                         workId={workId}
                         {...props}
@@ -166,4 +182,4 @@ const WorkDetailBottom = (props) => {
         </div>
     )
 };
-export default inject("workStore")(observer(WorkDetailBottom));
+export default withRouter(inject("workStore")(observer(WorkDetailBottom)));
