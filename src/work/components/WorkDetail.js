@@ -310,7 +310,7 @@ const WorkDetail = (props) => {
                                 <>
                                     {workInfo &&
                                         <div className="work-detail">
-                                            <Row >
+                                            <Row className="work-detail-top-row">
                                                 <Col {...rowSpan} style={{ background: "#fff", width: "100%" }}>
                                                     <Skeleton loading={infoLoading} active>
                                                         <WorkDetailCrumb
@@ -385,7 +385,7 @@ const WorkDetail = (props) => {
                                                     </Skeleton>
                                                 </Col>
                                             </Row>
-                                            <Row style={{ height:"85%",flex: 1 }}>
+                                            <Row className="work-detail-info-row">
                                                 <Col {...rowSpan} style={{ background: "#fff" }}>
                                                     <Skeleton loading={infoLoading} active>
                                                         <WorkDetailBottom

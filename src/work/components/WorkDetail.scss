@@ -40,8 +40,8 @@
 //}
 
 .work-detail-drawer {
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    //overflow-y: auto;
+    //scrollbar-gutter: stable;
     height: 100%;
 }
 .work-table-detail {
@@ -57,13 +57,19 @@
 
     .work-detail {
         height: 100%;
-        //min-width: 685px;
+        .work-detail-top-row{
+            height: 120px;
+        }
+        .work-detail-info-row{
+            height: calc(100% - 120px);
+            flex: 1;
+        }
+
+
         .ant-form-item-label {
             min-width: 100px;
         }
-        // overflow: auto;
-        // -ms-overflow-style: none;
-        // overflow: -moz-scrollbars-none;
+
     }
 }
 
@@ -75,6 +81,14 @@
     flex-direction: column;
     // overflow: hidden;
     display: flex;
+
+    .work-detail-top-row{
+        height: 120px;
+    }
+    .work-detail-info-row{
+        height: calc(100% - 120px);
+        flex: 1;
+    }
 
     .ant-form-item {
         margin-bottom: 10px;

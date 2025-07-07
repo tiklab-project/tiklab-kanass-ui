@@ -230,11 +230,27 @@ const StageLinemap = (props) => {
             }
             setGarph()
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
-        setScrollLeft(scrollWidth)
+        if (data[0]) {
+            const firstItemStart = Date.parse(data[0].startTime.substring(0, 10));
+            const firstItemPosition = Math.floor((firstItemStart - firstDateMillisecond) / archiveBase);
+            const scrollWidth = currentMonth > 1 ?
+                (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) :
+                (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
 
-        document.getElementById('table-pic').scrollTo({ left: scrollWidth });
-        document.getElementById('table-timer').scrollTo({ left: scrollWidth });
+            // 计算滚动位置，确保第一条记录可见
+            const scrollPosition = Math.max(0, firstItemPosition - 100); // 减去100是为了留出一些左边距
+            setScrollLeft(scrollPosition)
+            // 直接设置滚动位置
+            document.getElementById('table-pic').scrollTo({ left: scrollPosition });
+            document.getElementById('table-timer').scrollTo({ left: scrollPosition });
+        }else {
+            const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
+            setScrollLeft(scrollWidth)
+
+            document.getElementById('table-pic').scrollTo({ left: scrollWidth });
+            document.getElementById('table-timer').scrollTo({ left: scrollWidth });
+        }
+
         return
     }, [ganttdata])
 
@@ -517,7 +533,17 @@ const StageLinemap = (props) => {
                                         }
 
                                         <ColorIcon className="stage-icon" name={item.stageName} color={item.color} />
-                                        <div className="stage-text" onClick={() => showEditStage(item.id)}>{item.stageName}</div>
+                                        <div className="stage-text" onClick={() => showEditStage(item.id)}>
+                                            <div className="stage-text-top">
+                                                {item.stageName}
+                                            </div>
+                                            <div className="stage-text-bottom">
+                                                <span>{item.master?.nickname}</span>
+                                                <span>{item.startTime.slice(0, 10)}</span>
+                                                <span>-</span>
+                                                <span>{item.endTime.slice(0, 10)}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
@@ -557,10 +583,10 @@ const StageLinemap = (props) => {
                                             </Select>
                                     </span>
                                 </div>
-                                <div className={`table-td table-border table-td-assigner`}>
-                                    <UserIcon name={item.master?.nickname} size="small" />
-                                    {item.master?.nickname}
-                                </div>
+                                {/*<div className={`table-td table-border table-td-assigner`}>*/}
+                                {/*    <UserIcon name={item.master?.nickname} size="small" />*/}
+                                {/*    {item.master?.nickname}*/}
+                                {/*</div>*/}
                                 <div className={`table-td table-border table-td-action`}>
                                     <svg className="img-icon-right" aria-hidden="true" onClick={() => addChidStage(item.id)}>
                                         <use xlinkHref="#icon-add2"></use>
@@ -649,9 +675,17 @@ const StageLinemap = (props) => {
                                             alt=""
                                             className="icon-20"
                                         />
-                                        <div className="stage-title">
-                                            <span className="stage-key" onClick={() => showWorkItem(item, index)}>{item.code}</span>
-                                            <div className="stage-text" onClick={() => showWorkItem(item, index)}>{item.title}</div>
+                                        <div className="stage-title" onClick={() => showWorkItem(item, index)}>
+                                            <div className="stage-work-title">
+                                                {item.title}
+                                            </div>
+                                            <span className="stage-key">
+                                                <span>{item.code}</span>
+                                                {/*<span>{item.assigner?.nickname}</span>*/}
+                                                <span>{item.planBeginTime.slice(0, 10)}</span>
+                                                <span>-</span>
+                                                <span>{item.planEndTime.slice(0, 10)}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -660,10 +694,10 @@ const StageLinemap = (props) => {
                                         {item.workStatusNode.name}
                                     </span>
                                 </div>
-                                <div className={`table-td table-border table-td-assigner`}>
-                                <UserIcon name={item.assigner?.nickname} size="small" />
-                                    {item.assigner?.nickname}
-                                </div>
+                                {/*<div className={`table-td table-border table-td-assigner`}>*/}
+                                {/*<UserIcon name={item.assigner?.nickname} size="small" />*/}
+                                {/*    {item.assigner?.nickname}*/}
+                                {/*</div>*/}
                                 <div className={`table-td table-border table-td-action`}>
                                     <svg className="img-icon-right" aria-hidden="true" onClick={() => showWorkItem(item, index)}>
                                         <use xlinkHref="#icon-edit"></use>
@@ -768,9 +802,9 @@ const StageLinemap = (props) => {
                             <div className="table-hearder-text table-border table-hearder-status">
                                 状态
                             </div>
-                            <div className="table-hearder-text table-border table-hearder-assigner">
-                                负责人
-                            </div>
+                            {/*<div className="table-hearder-text table-border table-hearder-assigner">*/}
+                            {/*    负责人*/}
+                            {/*</div>*/}
                             <div className="table-hearder-text table-border table-hearder-action">
                                 操作
                             </div>
@@ -840,16 +874,19 @@ const StageLinemap = (props) => {
                                     </div>
                                 </div>
                                 {
-                                    totalPage > 1 && <>
+                                    totalPage > 0 && <>
                                         {
                                             <div className="stage-change-page" >
-                                                <div>{data.length}个, 共{total}个</div>
-                                                {
-                                                    currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage()}>点击加载</div>
-                                                        :
-                                                        <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+                                                <div className="change-page-left">
+                                                    <span>{data.length}个, 共{total}个</span>
+                                                    {
+                                                        currentPage < totalPage ? <span className="change-page-button" onClick={() => changePage()}>点击加载</span>
+                                                            :
+                                                            <span style={{ paddingLeft: "10px" }}>已加载全部</span>
 
-                                                }
+                                                    }
+                                                </div>
+                                                <div className="change-page-right"></div>
                                             </div>
                                         }
                                     </>

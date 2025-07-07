@@ -23,6 +23,7 @@ import { setWorkDeatilInList } from "./WorkSearch";
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { getColumn, getWorkColumn } from "./WorkTableColumn";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import WorkModuleFilter from "./WorkModuleFilter";
 
 /**
  * 获取屏幕类型
@@ -317,64 +318,72 @@ const WorkTable = (props) => {
     const [deleteSelectModal, setDeleteSelectModal] = useState(false)
 
     const workTable = useRef()
-    return (<Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
-                <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
-                    <div className={`work-table ${["sm", "md", "lg", "xl"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
-                        <WorkTableHead />
-                        <WorkTableFilter />
-                        <div className="work-table-content" ref={workTable}>
-                            <Spin spinning={tableLoading} tip="加载中">
-                                <Table
-                                    scroll={{
-                                        x: "100%"
-                                    }}
-                                    columns={projectColums}
-                                    dataSource={workList}
-                                    rowKey={(record) => record.id}
-                                    showSorterTooltip={false}
-                                    loading={loading}
-                                    rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
-                                    pagination={{
-                                        total: total,
-                                        pageSize: searchCondition.pageParam.pageSize,
-                                        current: searchCondition.pageParam.currentPage,
-                                        onChange: changePage,
-                                        position: ["bottomCenter"],
-                                        showTotal: () => `共${total}条`
-                                    }}
-                                    onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
-                                    expandable={{
-                                        expandIcon: ({ expanded, onExpand, record }) => (
-                                            record.children && record.children.length > 0 ? expanded ?
-                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-workDown"></use>
-                                                </svg> :
-                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                    <use xlinkHref="#icon-workRight"></use>
-                                                </svg>
-                                                :
-                                                <>
-                                                    <svg className="icon-10">
+    return (
+            <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+                <WorkModuleFilter
+                    workStore={WorkStore}
+                />
+                <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+                    <Row style={{ height: "100%", width: "100%", overflow: "auto", background: "#fff" }}>
+                        <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
+                            <div className={`work-table ${["sm", "md", "lg", "xl"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
+                                <WorkTableHead />
+                                <WorkTableFilter />
+                                <div className="work-table-content" ref={workTable}>
+                                    <Spin spinning={tableLoading} tip="加载中">
+                                        <Table
+                                            scroll={{
+                                                x: "100%"
+                                            }}
+                                            columns={projectColums}
+                                            dataSource={workList}
+                                            rowKey={(record) => record.id}
+                                            showSorterTooltip={false}
+                                            loading={loading}
+                                            rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
+                                            pagination={{
+                                                total: total,
+                                                pageSize: searchCondition.pageParam.pageSize,
+                                                current: searchCondition.pageParam.currentPage,
+                                                onChange: changePage,
+                                                position: ["bottomCenter"],
+                                                showTotal: () => `共${total}条`
+                                            }}
+                                            onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
+                                            expandable={{
+                                                expandIcon: ({ expanded, onExpand, record }) => (
+                                                    record.children && record.children.length > 0 ? expanded ?
+                                                            <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                                <use xlinkHref="#icon-workDown"></use>
+                                                            </svg> :
+                                                            <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                                <use xlinkHref="#icon-workRight"></use>
+                                                            </svg>
+                                                        :
+                                                        <>
+                                                            <svg className="icon-10">
 
-                                                    </svg>
-                                                </>
-                                        )
-                                    }}
-                                />
-                            </Spin>
-                        </div>
-                    </div>
-                    <WorkDetailDrawer
-                        isModalVisible={isModalVisible}
-                        setIsModalVisible={setIsModalVisible}
-                        modelRef={modelRef}
-                        showPage={true}
-                        delectCurrentWorkItem={delectCurrentWorkItem}
-                        {...props}
-                    />
+                                                            </svg>
+                                                        </>
+                                                )
+                                            }}
+                                        />
+                                    </Spin>
+                                </div>
+                            </div>
+                            <WorkDetailDrawer
+                                isModalVisible={isModalVisible}
+                                setIsModalVisible={setIsModalVisible}
+                                modelRef={modelRef}
+                                showPage={true}
+                                delectCurrentWorkItem={delectCurrentWorkItem}
+                                {...props}
+                            />
 
-                </Col>
-            </Row>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
 
     );
 }

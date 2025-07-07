@@ -63,12 +63,13 @@ const Gantt = (props) => {
         if (ganttCore?.current && workList.length > 0) {
             setdateArray(getDate())
             creatGraph()
-
             setGantt(setNode(workList))
         }
 
         return;
     }, [archiveView, workList, expandedTree])
+
+
 
     const creatGraph = () => {
         if (graphRef.current) {
@@ -217,23 +218,38 @@ const Gantt = (props) => {
     const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
         if (ganttdata !== undefined) {
-            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50) + 20;
             document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
             const picBoxHeight = document.getElementById('table-pic').offsetHeight;
             if (picBoxHeight < ganttdata.nodes.length * 50) {
                 setIsShowCol(true)
-                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50);
+                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50) + 20;
                 document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
             } else {
                 setIsShowCol(false)
             }
             setGarph()
         }
-        const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
-        setScrollLeft(scrollWidth)
+        if (workList[0]?.planBeginTime) {
+            const firstItemStart = Date.parse(workList[0].planBeginTime.substring(0, 10));
+            const firstItemPosition = Math.floor((firstItemStart - firstDateMillisecond) / archiveBase);
+            const scrollWidth = currentMonth > 1 ?
+                (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) :
+                (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
 
-        document.getElementById('table-pic').scrollTo({ left: scrollWidth });
-        document.getElementById('table-timer').scrollTo({ left: scrollWidth });
+            // 计算滚动位置，确保第一条记录可见
+            const scrollPosition = Math.max(0, firstItemPosition - 100); // 减去100是为了留出一些左边距
+            setScrollLeft(scrollPosition)
+            // 直接设置滚动位置
+            document.getElementById('table-pic').scrollTo({ left: scrollPosition });
+            document.getElementById('table-timer').scrollTo({ left: scrollPosition });
+        }else {
+            const scrollWidth = currentMonth > 1 ? (isLeapYear(currentYear) ? 366 * unitLength : 365 * unitLength) : (isLeapYear(currentYear - 1) ? 366 * unitLength : 365 * unitLength);
+            setScrollLeft(scrollWidth)
+
+            document.getElementById('table-pic').scrollTo({ left: scrollWidth });
+            document.getElementById('table-timer').scrollTo({ left: scrollWidth });
+        }
         return
     }, [ganttdata])
 
@@ -415,7 +431,6 @@ const Gantt = (props) => {
 
 
     // 树的展开与闭合
-
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)
     }
@@ -483,8 +498,13 @@ const Gantt = (props) => {
                                             className="icon-24"
                                         />
                                         <div>
-                                            <span className="table-work-id">{item.code}</span>
                                             <div className="table-work-text" onClick={() => goWorkDetail(item, index)}>{item.title}</div>
+                                            <span className="table-work-id">
+                                                <span>{item.code}</span>
+                                                <span>{item.planBeginTime.slice(0, 10)}</span>
+                                                <span>-</span>
+                                                <span>{item.planEndTime.slice(0, 10)}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -493,11 +513,6 @@ const Gantt = (props) => {
                                         {item.workStatusNode.name}
                                     </span>
                                 </div>
-                                <div className={`table-td table-border table-td-assigner`}>
-                                    <UserIcon name={item.assigner?.nickname} size="small" />
-                                    {item.assigner?.nickname}
-                                </div>
-                                {/* <div className="table-td table-border table-td-time">{item.planBeginTime?.slice(0, 10)} ~ {item.planEndTime?.slice(0, 10)}</div> */}
                                 <div className="table-gatter table-border"></div>
                             </div>
                             {
@@ -598,9 +613,9 @@ const Gantt = (props) => {
                             <div className="table-hearder-text table-border table-hearder-status">
                                 状态
                             </div>
-                            <div className="table-hearder-text table-border table-hearder-assigner">
-                                负责人
-                            </div>
+                            {/*<div className="table-hearder-text table-border table-hearder-assigner">*/}
+                            {/*    负责人*/}
+                            {/*</div>*/}
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>
@@ -638,6 +653,21 @@ const Gantt = (props) => {
                                         tableTd(workList, 0, 0)
 
                                     }
+                                    {
+                                        totalPage > 0 && <>
+                                            {
+                                                <div className="gantt-change-page" >
+                                                    <div>{workList.length}个, 共{total}个</div>
+                                                    {
+                                                        currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage(currentPage)}>点击加载</div>
+                                                            :
+                                                            <div style={{ paddingLeft: "10px" }}>已加载全部</div>
+
+                                                    }
+                                                </div>
+                                            }
+                                        </>
+                                    }
 
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
@@ -665,7 +695,8 @@ const Gantt = (props) => {
                                             })
                                         }
                                     </div>
-
+                                    {/*空div，防止滚动后gantt错位*/}
+                                    <div style={{ width: "100px", height: "20px"}}></div>
                                 </div>
                                 {
                                     workList.length <= 0 && <div className="epci-empty">
@@ -677,21 +708,6 @@ const Gantt = (props) => {
                             </div>
 
                         </div>
-                        {
-                            totalPage > 0 && <>
-                                {
-                                    <div className="gantt-change-page" >
-                                        <div>{workList.length}个, 共{total}个</div>
-                                        {
-                                            currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage(currentPage)}>点击加载</div>
-                                                :
-                                                <div style={{ paddingLeft: "10px" }}>已加载全部</div>
-
-                                        }
-                                    </div>
-                                }
-                            </>
-                        }
                     </div>
 
                     {

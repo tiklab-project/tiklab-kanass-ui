@@ -7,6 +7,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import "./WorkLog.scss";
+import "./WorkLogMoreDrawer.scss"
 
 const WorkLogMoreDrawer = (props) => {
 
@@ -14,7 +15,6 @@ const WorkLogMoreDrawer = (props) => {
     const { findWorkLogPage, workLogList, workLogCondition } = WorkLogStore;
     const logAction = useRef()
     const workLog = useRef();
-    const [logList, setLogList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalRecord, setTotalRecord] = useState(0);
     const [pageSize, setPageSize] = useState(20);
@@ -25,16 +25,18 @@ const WorkLogMoreDrawer = (props) => {
 
     useEffect(() => {
         const params = {
-            workItemId: workId
-
+            workItemId: workId,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
         }
         findWorkLogPage(params).then(res => {
-            setLogList(res.data.dataList);
             setCurrentPage(res.data.currentPage)
             setTotalRecord(res.data.totalRecord)
             setPageSize(res.data.pageSize)
         })
-    }, []);
+    }, [moreDrawerVisible]);
 
     /**
      * 分页
@@ -48,16 +50,29 @@ const WorkLogMoreDrawer = (props) => {
 
         }
         findWorkLogPage(params).then(res => {
-            setLogList(res.data.dataList);
             setCurrentPage(res.data.currentPage)
             setTotalRecord(res.data.totalRecord)
             setPageSize(res.data.pageSize)
         })
     };
 
+    const loadNextPage = () => {
+        const params = {
+            pageParam: {
+                ...workLogCondition.pageParam,
+                currentPage: currentPage + 1
+            }
+        }
+        findWorkLogPage(params).then(res => {
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+            setPageSize(res.data.pageSize)
+        })
+    }
+
     return (
         <Drawer
-            title="工时动态"
+            title="工时信息"
             placement="right"
             visible={moreDrawerVisible}
             onClose={onClose}
@@ -66,7 +81,7 @@ const WorkLogMoreDrawer = (props) => {
             <div className="work-log" ref={workLog}>
                 <div className="work-log-list">
                     {
-                        logList.map(item => {
+                        workLogList && workLogList.length > 0 && workLogList.map(item => {
 
                             return <>
                                 <div className="work-log-item" key={item.id}>
@@ -104,16 +119,14 @@ const WorkLogMoreDrawer = (props) => {
 
                             })
                     }
+                    {
+                        totalRecord > currentPage * pageSize ?
+                            <div className="work-log-more" onClick={loadNextPage}>加载更多</div>
+                            :
+                            <div className="work-log-more">到底啦~</div>
+                    }
                 </div>
             </div>
-
-            <Pagination
-                current={currentPage}
-                total={totalRecord}
-                pageSize={pageSize}
-                onChange={(currentPage) => onPageChange(currentPage)}
-                style={{ marginTop: 20, textAlign: 'center' }}
-            />
         </Drawer>
     )
 };

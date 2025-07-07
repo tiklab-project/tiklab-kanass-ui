@@ -1,19 +1,17 @@
 .work-comment-input{
   width: 100%;
   background-color: white;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 0 20px 20px;
-  //left: 20px;
-  //right: 20px;
+  //position: absolute;
+  //bottom: 0;
+  //left: 0;
+  padding: 10px 0 20px;
   display: flex;
   align-items: center;
   .work-comment-box {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    //justify-content: flex-start;
+    //align-items: center;
     svg {
       margin-right: 10px;
     }
@@ -60,4 +58,20 @@
       width: 100%;
     }
   }
+
+  .work-comment-input-button{
+    width: 100%;
+    background-color: #f7f9fc;
+    border-radius: 4px;
+    min-height: 40px;
+
+    align-items: center;
+    display: flex;
+    padding-left: 20px;
+    color: var(--tiklab-gray-500);
+  }
+}
+
+.work-comment-box-select{
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
 }

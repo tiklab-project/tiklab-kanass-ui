@@ -35,7 +35,7 @@ export class StageStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 20,
+            pageSize: 10,
             currentPage: 1,
         }
     }

@@ -24,7 +24,7 @@ const ProjectSetAdd = (props) => {
     }
     const [visible, setVisible] = React.useState(false);
     const { setAllProjectSetList, projectSetAddVisible, setProjectSetAddVisible } = props;
-    const { addProjectSetSet, getProjectSetlist, findAllProjectSet, creatIcon, findIconList } = ProjectSetStore;
+    const { addProjectSetSet, getProjectSetlist, findAllProjectSet, creatIcon, findIconList, findProjectSet } = ProjectSetStore;
 
 
     const [currentStep, setCurrentStep] = useState(1)
@@ -112,6 +112,7 @@ const ProjectSetAdd = (props) => {
                         setCurrentStep={setCurrentStep}
                         onCancel={onCancel}
                         setLoading={setLoading}
+                        findProjectSet={findProjectSet}
                     />
                 </Spin>
             </div>

@@ -37,16 +37,6 @@ const WorkDetailBottom = (props) => {
 
     const path = props.match.path;
 
-    const [detailRowHeight, setDetailRowHeight] = useState('calc(100% - 55px)');
-
-    const reSizeDetailRowHeight = () =>{
-        setDetailRowHeight('calc(100% - 150px)')
-    }
-
-    const reSetDetailRowHeight = () =>{
-        setDetailRowHeight('calc(100% - 55px)')
-    }
-
     useEffect(() => {
         if (workInfo) {
             if (workInfo.workTypeCode) {
@@ -134,7 +124,7 @@ const WorkDetailBottom = (props) => {
 
   
     return (
-        <div className="workitem-detail-row" style={tabValue === 2 ? {height: detailRowHeight} : {height: '100%'}}>
+        <div className="workitem-detail-row">
             <div className="workitem-tabs-content">
                 {
                     tabValue === 1 &&
@@ -153,11 +143,6 @@ const WorkDetailBottom = (props) => {
                             searchWorkById={searchWorkById}
                             workId={workId}
                             {...props}
-                        />
-                        <WorkCommentInput
-                            workId={workId}
-                            reSizeDetailRowHeight={reSizeDetailRowHeight}
-                            reSetDetailRowHeight={reSetDetailRowHeight}
                         />
                     </>
                 }

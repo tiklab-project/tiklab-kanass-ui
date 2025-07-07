@@ -42,7 +42,7 @@ const WorkBodarContent = (props) => {
         <div className={`work-bodar-content ${loading ? "work-bodar-content-spin" : ""}`}>
             <Spin spinning={loading} tip="加载中">
                 {/*<div className="work-bodar-flex">*/}
-                    <div className={`work-bodar-list ${workBoardList.length > 4 ? "work-bodar-list-more-item" : ""}`}>
+                    <div className={`work-bodar-list`}>
 
                         {
                             boardGroup === "nogroup" && workBoardList && workBoardList.map((item, index) => {

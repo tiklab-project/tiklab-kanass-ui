@@ -20,7 +20,7 @@ export class WorkLogStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 20,
+            pageSize: 10,
             currentPage: 1,
         }
     };
@@ -30,7 +30,12 @@ export class WorkLogStore {
         Object.assign(this.workLogCondition, value)
         const data = await Service("/workLog/findWorkLogPage", this.workLogCondition)
         if(data.code=== 0){
-            this.workLogList = data.data.dataList;
+            if (this.workLogCondition.pageParam.currentPage === 1){
+                this.workLogList = data.data.dataList;
+            }
+            if (this.workLogCondition.pageParam.currentPage > 1){
+                this.workLogList = this.workLogList.concat(data.data.dataList);
+            }
             this.workLogCondition.total = data.data.totalRecord
         }
         return data;

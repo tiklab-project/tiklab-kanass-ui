@@ -17,6 +17,7 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import WorkCommentMoreDrawer from "./WorkCommentMoreDrawer";
+import WorkCommentInput from "./WorkCommentInput";
 const { TextArea } = Input;
 
 const WorkComment = (props) => {
@@ -154,10 +155,15 @@ const WorkComment = (props) => {
     const workComment = useRef(null);
     return (<>
         <div className="other-title">
-            评论:
+            评论
         </div>
         <div className="work-comment" ref = {workComment}>
             <div className="work-comment-list-box">
+                <WorkCommentInput
+                    workId={workId}
+                    // reSizeDetailRowHeight={reSizeDetailRowHeight}
+                    // reSetDetailRowHeight={reSetDetailRowHeight}
+                />
                 {
                     workCommentList && workCommentList.length > 0 ?
                         <Fragment>
@@ -176,34 +182,14 @@ const WorkComment = (props) => {
                                                     <span className="user-date">{item.createTime}</span>
                                                 </div>
                                                 {
-                                                    editCommentId === item.id ? <div className="comment-input">
-                                                            <TextArea
-                                                                rows={4}
-                                                                className="comment-text"
-                                                                defaultValue={item.details}
-                                                                onChange={(e) => setEditCommentContent(e.target.value)}
-                                                                ref={editInput}
-                                                            />
-                                                            <div className="comment-submit">
-                                                                <Button type="primary" className="submit" onClick={() => submitEditComment(item.id)}>发布</Button>
-                                                                <Button className="cancel" onClick={() => setEditCommentId()}>取消</Button>
-                                                            </div>
+                                                    <Fragment>
+                                                        <div className="comment-content">
+                                                            {item.details}
                                                         </div>
-                                                        : <Fragment>
-                                                            <div className="comment-content">
-                                                                {item.details}
-                                                            </div>
-                                                            <div className="comment-operate" ref={logAction}>
-                                                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
-                                                                     onClick={() => setEditCommentId(item.id)}>
-                                                                    <use xlinkHref="#icon-edit"></use>
-                                                                </svg>
-                                                                <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
-                                                                {/*<span onClick={() => setEditCommentId(item.id)}>编辑</span>*/}
-                                                                {/*<span onClick={() => deleteComment(item.id)}>删除</span>*/}
-                                                                {/*<span>赞</span>*/}
-                                                            </div>
-                                                        </Fragment>
+                                                        <div className="comment-operate" ref={logAction}>
+                                                            <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
+                                                        </div>
+                                                    </Fragment>
 
                                                 }
                                             </div>
@@ -211,19 +197,12 @@ const WorkComment = (props) => {
                                     })
                                 }
                             </div>
-                            {/*<div style={{ textAlign: "right", width: "100%", marginTop: "10px" }}>*/}
-                            {/*    <Pagination*/}
-                            {/*        defaultCurrent={1}*/}
-                            {/*        defpageSize={10}*/}
-                            {/*        total={totalRecord}*/}
-                            {/*        onChange={(page, pageSize) => changePage(page, pageSize)}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                        </Fragment> : <ProjectEmpty description = {"暂无评论"} />
+                        </Fragment> :
+                        <div style={{textAlign: "center"}}>暂无评论</div>
                 }
                 {
                     hasMore &&
-                    <div className="work-comment-more" onClick={showMore}>--查看更多--</div>
+                    <div className="work-comment-more" onClick={showMore}>查看更多</div>
                 }
             </div>
 

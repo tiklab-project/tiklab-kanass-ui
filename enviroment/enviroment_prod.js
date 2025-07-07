@@ -27,7 +27,7 @@ fetchMethod = JSON.stringify(fetchMethod);
 let env = "prod";
 env = JSON.stringify(env)
 
-const appKey = JSON.stringify('');
+const appKey = JSON.stringify('tiklab_kanass');
 const appSecret = JSON.stringify('');
 const version = JSON.stringify('ce');
 const client = JSON.stringify('web');

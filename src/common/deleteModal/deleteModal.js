@@ -39,7 +39,7 @@ const DeleteModal = (props) => {
             trigger="click"
             getPopupContainer = {getPopupContainer ? () => getPopupContainer : null}
         >
-            <svg className="svg-icon" aria-hidden="true" style={{cursor: "pointer"}}>
+            <svg className="icon-20" aria-hidden="true" style={{cursor: "pointer"}}>
                 <use xlinkHref="#icon-more"></use>
             </svg>
 

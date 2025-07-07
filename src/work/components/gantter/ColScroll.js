@@ -21,16 +21,29 @@ const CowScroll =(props)=> {
         const ganttOuterDom = ganttOuter.current;
         const ganttCoreDom = ganttCore.current;
 
-        const timerCoreDomWidth = timerCoreDom.offsetHeight;
-        const timerOuterDomWidth = timerOuterDom.offsetHeight;
+        const timerCoreDomHeight = timerCoreDom.offsetHeight;
+        const timerOuterDomHeight = timerOuterDom.offsetHeight;
 
-        const ganttOuterDomWidth = ganttOuterDom.offsetHeight;
-        const ganttCoreDomWidth = ganttCoreDom.offsetHeight;
+        console.log("timerCoreDomHeight: " + timerCoreDomHeight)
+        console.log("timerOuterDomHeight: " + timerOuterDomHeight)
 
+        const ganttOuterDomHeight = ganttOuterDom.offsetHeight;
+        const ganttCoreDomHeight = ganttCoreDom.offsetHeight;
 
-        const timerSilder = (timerCoreDomWidth - timerOuterDomWidth) * value / scrollHeight;
-        const ganttSilder = (ganttCoreDomWidth - ganttOuterDomWidth) * value / scrollHeight;
+        console.log("ganttOuterDomHeight: " + ganttOuterDomHeight)
+        console.log("ganttCoreDomHeight: " + ganttCoreDomHeight)
 
+        const maxGanttScroll = ganttCoreDomHeight - ganttOuterDomHeight;
+        const timerSilder = (timerCoreDomHeight - timerOuterDomHeight) * value / scrollHeight;
+        let ganttSilder = (ganttCoreDomHeight - ganttOuterDomHeight) * value / scrollHeight;// 因为列表底部增加了20px的加载更多div，所以gantt部分也增加20px
+
+        // if (ganttSilder > maxGanttScroll){
+        //     ganttSilder = maxGanttScroll;
+        //
+        //     // ganttCoreDom.style.height = "calc(100% - 85px)"
+        // }
+        console.log(timerSilder)
+        console.log(ganttSilder)
         timerOuterDom.scrollTo({ top: timerSilder })
         ganttOuterDom.scrollTo({ top: ganttSilder })
     }

@@ -61,7 +61,7 @@ const WorkGantt = (props) => {
             <Row style={{ background: "#fff" }}>
                 <Col
                     className="work-col"
-                    sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "18", offset: "3" }}
+                    sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "24", offset: "0" }}
                     style={{ background: "#fff", padding: "20px" }}
                 >
                     <div className="work-list-col">

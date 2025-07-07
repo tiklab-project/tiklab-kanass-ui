@@ -29,7 +29,7 @@ const WorkCommentInput = (props) => {
             createWorkComment(data).then(res => {
                 if (res.code === 0) {
                     setIsInPut(false)
-                    reSetDetailRowHeight()
+                    // reSetDetailRowHeight()
                     setCommentContent("")
                     getCommentList({ workItemId: workId })
                     setInputComment()
@@ -40,7 +40,7 @@ const WorkCommentInput = (props) => {
 
     const onCancel = () => {
         setCommentContent("")
-        reSetDetailRowHeight()
+        // reSetDetailRowHeight()
         setIsInPut(false);
     }
 
@@ -59,7 +59,7 @@ const WorkCommentInput = (props) => {
      */
     const changeInput = () => {
         setIsInPut(true)
-        reSizeDetailRowHeight()
+        // reSizeDetailRowHeight()
     }
 
     useEffect(() => {
@@ -73,28 +73,36 @@ const WorkCommentInput = (props) => {
     }, [isInput])
 
     return(
-        <div className="work-comment-input">
-            <div className="work-comment-box">
-                <svg className="icon-32" aria-hidden="true">
-                    <use xlinkHref="#icon-icontouxiang1"></use>
-                </svg>
-                <div className={`comment-botton ${isInput ? "comment-botton-hidden" : ""}`} onClick={() => changeInput()}>请输入评论...</div>
-                <div className={`comment-input ${isInput ? "comment-input-show" : ""}`}>
-                    <TextArea
-                        id="comment-input"
-                        rows={4}
-                        className="comment-text"
-                        value={commentContent}
-                        onChange={(e) => setCommentContent(e.target.value)}
-                        ref={commentInput}
-                    />
-                    <div className="comment-submit">
-                        <Button type="primary" className="submit" onClick={() => submitComment()}>发布</Button>
-                        <Button className="cancel" onClick={onCancel}>取消</Button>
-                    </div>
-                </div>
+        <div className={`work-comment-input `}>
+            {
+                isInput ?
+                    <div className={`work-comment-box ${isInput ? "" : ""}`}>
+                        <svg className="icon-32" aria-hidden="true">
+                            <use xlinkHref="#icon-icontouxiang1"></use>
+                        </svg>
+                        <div className={`comment-botton ${isInput ? "comment-botton-hidden" : ""}`} onClick={() => changeInput()}>请输入评论...</div>
+                        <div className={`comment-input ${isInput ? "comment-input-show" : ""}`}>
+                            <TextArea
+                                id="comment-input"
+                                rows={4}
+                                className="comment-text"
+                                value={commentContent}
+                                onChange={(e) => setCommentContent(e.target.value)}
+                                ref={commentInput}
+                            />
+                            <div className="comment-submit">
+                                <Button type="primary" className="submit" onClick={() => submitComment()}>发布</Button>
+                                <Button className="cancel" onClick={onCancel}>取消</Button>
+                            </div>
+                        </div>
 
-            </div>
+                    </div>
+                     :
+                    <div className="work-comment-input-button" onClick={changeInput}>
+                        点击输入评论
+                    </div>
+            }
+
         </div>
 
     )

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:23:15
  */
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Row, Col } from "antd";
+import {Input, Table, Space, Row, Col, message} from "antd";
 import ModuleAddmodal from "./ModuleAddModal";
 import "../components/module.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
@@ -111,8 +111,12 @@ const ModuleList = (props) => {
     ];
 
     const deleteModuleList = (id) => {
-        deleteModule(id).then(() => {
-            findModule({projectId: projectId})
+        deleteModule(id).then((res) => {
+            if (res.data === false){
+                message.error("该模块下存在事项无法删除")
+            }else {
+                findModule({projectId: projectId})
+            }
         })
     }
 

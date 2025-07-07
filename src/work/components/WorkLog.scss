@@ -1,4 +1,5 @@
 .work-log {
+    margin-bottom: 20px;
     .worklog-top {
         display: flex;
         //justify-content: space-between;
@@ -40,11 +41,8 @@
     }
 
     .work-log-item {
-        display: flex;
         align-items: center;
-        gap: 10px;
         padding: 10px 0;
-        justify-content: space-between;
         .edit-box {
             padding-bottom: 10px;
             border-top: 1px soild #f0f0f0;
@@ -70,15 +68,16 @@
             }
         }
         .work-log-item-second {
-            display: flex;
+            //display: flex;
             align-items: center;
-            justify-content: space-between;
+            //justify-content: space-between;
             margin-left: 32px;
             .log-content {
                 line-height: 30px;
             }
             .log-action {
                 display: flex;
+                justify-content: right;
             }
         }
     }

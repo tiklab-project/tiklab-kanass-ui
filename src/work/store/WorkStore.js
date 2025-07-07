@@ -137,11 +137,13 @@ export class WorkStore {
 
     // 事项的视图类型
     @observable workShowType = localStorage.getItem("view") ? localStorage.getItem("view") : "table";
-    @observable archiveView = "week"
+    @observable archiveView = "month"
 
     // 事项的视图类型
     @observable viewType = "tree"
     @observable boardGroup = "nogroup"
+    @observable tableTitle = null;
+    @observable moduleTitle = null;
 
     // 自定义表单列表
     @observable formList = []
@@ -160,6 +162,16 @@ export class WorkStore {
     @observable workBoardCurrentPage = [];
     @observable workItemStatusCurrentPage = [];
     @observable permissionFieldList = [];
+
+    @action
+    setTableTitle = (value) => {
+        this.tableTitle = value
+    }
+
+    @action
+    setModuleTitle = (value) => {
+        this.moduleTitle = value
+    }
 
     // 设置总个数
     @action 

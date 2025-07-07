@@ -96,8 +96,8 @@ const ProjectDetailAside = (props) => {
         // },
         {
             title: "文档",
-            icon: 'repository',
-            defaultIcon: "repository",
+            icon: 'repository-' + theme,
+            defaultIcon: "repository-default",
             id: `/project/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",
@@ -181,8 +181,8 @@ const ProjectDetailAside = (props) => {
         // },
         {
             title: "文档",
-            icon: 'repository',
-            defaultIcon: "repository",
+            icon: 'repository-' + theme,
+            defaultIcon: "repository-default",
             id: `/project/${projectId}/wiki`,
             key: "wiki",
             encoded: "wiki",

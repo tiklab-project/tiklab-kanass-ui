@@ -80,7 +80,7 @@ const WorkLog = (props) => {
             }
             setLogList(res.data.dataList)
         })
-        getGemianTime()
+        // getGemianTime()
     }
 
     const showMore = () => {
@@ -119,62 +119,16 @@ const WorkLog = (props) => {
         <Fragment>
 
             <div className="other-title other-title-button">
-                工时信息:
-                {/*<WorkPrivilegeComponent workId={workId} code="WorkLogsAdd">*/}
+                工时信息
                     <Button className="other-title-add-button" type="text" onClick={showModal}>
                         <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
                             <use xlinkHref="#icon-add2"></use>
                         </svg>
                         添加工时
                     </Button>
-                {/*</WorkPrivilegeComponent>*/}
             </div>
 
             <div className="work-log" ref={workLog}>
-
-                {/*<div className="worklog-top" style={{ width: "100%", textAlign: "right" }}>*/}
-                {/*    */}
-                {/*</div>*/}
-                {/*<div className="work-log-static">*/}
-                {/*    <div className="log-static-item">*/}
-                {/*        <div className="log-static-item-title">预估工时</div>*/}
-                {/*        <div className="log-static-item-num">{workItem.estimateTime} <span className="unit">小时</span></div>*/}
-                {/*    </div>*/}
-                {/*    <div className="log-static-item">*/}
-                {/*        <div className="log-static-item-title">已记录</div>*/}
-                {/*        <div className="log-static-item-num">{workItem.usedTime} <span className="unit">小时</span></div>*/}
-                {/*    </div>*/}
-                {/*    <div className="log-static-item">*/}
-                {/*        <div className="log-static-item-title">剩余工时</div>*/}
-                {/*        <div className="log-static-item-num">{workItem.surplusTime} <span className="unit">小时</span></div>*/}
-                {/*    </div>*/}
-                {/*    <div className="log-static-progress">*/}
-                {/*        <div className="log-static-item-title">进度</div>*/}
-                {/*        <div className="log-static-item-num">*/}
-                {/*            <div className="log-percent">*/}
-                {/*                <div*/}
-                {/*                    className="log-percent-blue"*/}
-                {/*                    style={{*/}
-                {/*                        width: `${progressPercent}%`,*/}
-                {/*                        borderBottomRightRadius: overPercent <= 0 ? '6px' : '0px',*/}
-                {/*                        borderTopRightRadius: overPercent <= 0 ? '6px' : '0px'*/}
-                {/*                    }}*/}
-                {/*                ></div>*/}
-                {/*                <div*/}
-                {/*                    className="log-percent-red"*/}
-                {/*                    style={{*/}
-                {/*                        width: `${overPercent}%`,*/}
-                {/*                        borderBottomLeftRadius: progressPercent <= 0 ? '6px' : '0px',*/}
-                {/*                        borderTopLeftRadius: progressPercent <= 0 ? '6px' : '0px'*/}
-                {/*                    }}*/}
-                {/*                >*/}
-
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-
                 <div className="work-log-list">
 
                     {
@@ -217,10 +171,24 @@ const WorkLog = (props) => {
 
                             })
                             :
-                            <ProjectEmpty description="暂时没有工时记录~" />
+                            <div style={{
+                                textAlign: "center",
+                            }}>
+                                暂无记录，
+                                <span
+                                onClick={showModal}
+                                style={{
+                                    color: "var(--tiklab-blue)",
+                                    cursor: "pointer"
+                                }}
+                                >
+                                    添加工时
+                                </span>
+
+                            </div>
                     }
                     {
-                        hasMore && <div className="work-log-more" onClick={showMore}> --查看更多-- </div>
+                        hasMore && <div className="work-log-more" onClick={showMore}>查看更多</div>
                     }
                 </div>
 

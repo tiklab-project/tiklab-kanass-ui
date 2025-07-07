@@ -24,7 +24,7 @@ const layout = {
 
 
 const ProjectSetAddInfo = (props) => {
-    const { addProjectSetSet, findAllProjectSet, onCancel, setLoading } = props;
+    const { addProjectSetSet, findAllProjectSet, onCancel, setLoading, findProjectSet } = props;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -52,14 +52,19 @@ const ProjectSetAddInfo = (props) => {
             }
             addProjectSetSet(data).then(res => {
                 setLoading(false)
+                const projectSetId = res.data;
                 if (res.code === 40000) {
                     message.error(res.msg);
                 }
                 if (res.code === 0) {
                     message.success('添加成功');
-                    // 跳转到项目集--项目列表页面
-                    props.history.push(`/projectSet/${res.data}/project`)
-                    findAllProjectSet({})
+                    findProjectSet(res.data).then(res => {
+                        localStorage.setItem("projectSet", JSON.stringify(res.data))
+                        // 跳转到项目集--项目列表页面
+                        props.history.push(`/projectSet/${projectSetId}/project`)
+                        findAllProjectSet({})
+                    })
+
 
 
                 }

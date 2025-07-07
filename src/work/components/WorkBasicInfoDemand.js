@@ -45,6 +45,7 @@ import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import CircleProgress from "../../common/progress/CircleProgress";
+import UserIcon from "../../common/UserIcon/UserIcon";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
@@ -281,7 +282,7 @@ const WorkBasicInfo = (props) => {
             title: '文件类型',
             dataIndex: "type",
             key: 'type',
-            render: (text) => <Tooltip title={text}>{text.length >= 32 ? text.substring(0, 32) + "..." : text}</Tooltip>
+            render: (text, record) => <Tooltip title={record.attachmentName.split('.').pop()}>{record.attachmentName.split('.').pop()}</Tooltip>
         },
         {
             title: '操作',
@@ -718,11 +719,26 @@ const WorkBasicInfo = (props) => {
         }
 
     }
+    const setStatuStyle = (status) => {
+        let name;
+        switch (status) {
+            case "TODO":
+                name = "work-status-todo";
+                break;
+            case "DONE":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
 
     return (
         <div className="work-info">
             <div className="other-title">
-                基本信息:
+                基本信息
             </div>
             <div className="work-detail-box">
                 <div className="detail-top">
@@ -797,7 +813,16 @@ const WorkBasicInfo = (props) => {
                                 >
                                     {
                                         userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                            return <Select.Option value={item.user?.id} key={item.user?.id}>
+                                                <div style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: "10px"
+                                                }}>
+                                                    <UserIcon name={item.user?.nickname} />
+                                                    {item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                                </div>
+                                            </Select.Option>
                                         })
                                     }
                                 </Select>
@@ -987,7 +1012,7 @@ const WorkBasicInfo = (props) => {
 
                             <Form.Item label="状态" name="workStatus"
                             >
-                                <div style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
+                                <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
                             </Form.Item>
 
                             <Form.Item label="所属模块" name="module"
@@ -1021,7 +1046,13 @@ const WorkBasicInfo = (props) => {
                                        validateStatus={validateStatus}
                             >
                                 <div className="builder-and-more-info">
-                                    <div style={{ padding: "0 11px" }}>
+                                    <div style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "10px",
+                                        padding: "0 11px"
+                                    }}>
+                                        <UserIcon name={workInfo.builder.nickname} />
                                         {workInfo.builder?.nickname ? workInfo.builder.nickname : workInfo.builder.name}
                                     </div>
                                     <div className="form-custom-open" onClick={() => openCustomForm()}>
@@ -1230,7 +1261,7 @@ const WorkBasicInfo = (props) => {
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className="other-title">描述：</div>
+                <div className="other-title">描述</div>
             </div>
 
             <div className="work-detail-box desc-box">
@@ -1277,7 +1308,7 @@ const WorkBasicInfo = (props) => {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="other-title attach-title">
-                    附件:
+                    附件
                 </div>
             </div>
 

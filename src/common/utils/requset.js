@@ -9,10 +9,11 @@
 
 import axios from "axios";
 
-import {Axios as service} from "tiklab-core-ui";
+import {Axios as service, getAPIgateway} from "tiklab-core-ui";
 
 const Service = (url, data) => {
     return service.request({
+        header: getAPIgateway(),
         url: url,
         method: "post",
         data: data

@@ -1,6 +1,7 @@
 .work-comment {
     background: #fff;
     border-radius: 4px;
+    margin-bottom: 20px;
     .ant-pagination {
         text-align: center;
     }
@@ -52,12 +53,14 @@
     &-list {
         overflow: auto;
         .comment-item {
-            margin-bottom: 20px;
+            //margin-bottom: 20px;
+            padding: 10px 0;
             .comment-user {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                margin: 20px 0;
+                height: 40px;
+                //margin: 20px 0;
                 .user-icon {
                     width: 30px;
                     height: 30px;
@@ -78,7 +81,8 @@
             }
 
             .comment-content {
-                margin-left: 26px;
+                margin-left: 35px;
+                line-height: 30px;
                 //margin-bottom: 20px;
             }
             .comment-operate {

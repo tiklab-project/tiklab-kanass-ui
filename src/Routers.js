@@ -225,6 +225,9 @@ const AppraisedHome = AsyncComponent(() => import('./appraised/common/components
 const AppraisedWorkItem = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemTable'))
 const AppraisedWorkItemDetail = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemStatusDrawer'))
 
+// requestError
+const RequestErrorContent = AsyncComponent(() => import('./common/requestError/RequestErrorContent'))
+
 const Routers = [
     {
         path: "/login",
@@ -265,6 +268,11 @@ const Routers = [
         path: "/openApiDoc",
         component: OpenApiDocPages,
         key:'OpenApiDocPages',
+    },
+    {
+        path: "/requestError",
+        component: RequestErrorContent,
+        key:'RequestError',
     },
 
 

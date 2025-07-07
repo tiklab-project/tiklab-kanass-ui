@@ -61,21 +61,13 @@ const WorkDynamic = (props) => {
 
     return <>
         <div className="other-title">
-            事项动态:
+            事项动态
         </div>
         <div className="work-dynamic" ref = {workDynamic}>
             {
                 logTimeList && logTimeList.length > 0 ? <WorkDynamicTimeAxis logList={logTimeList} workId={workId} /> :
                     <ProjectEmpty description={"暂无动态"} />
             }
-            {/*<PaginationCommon*/}
-
-            {/*    currentPage={opLogTimeCondition.pageParam.currentPage}*/}
-            {/*    changePage={(currentPage) => onPageChange(currentPage)}*/}
-            {/*    totalPage={opLogTimeCondition.pageParam.totalPage}*/}
-            {/*    total={opLogTimeCondition.pageParam.total}*/}
-            {/*    showRefer={false}*/}
-            {/*/>*/}
         </div>
 
     </>

@@ -330,6 +330,7 @@ const WorkFilterHigh = (props) => {
     const resetFilter = () => {
         form.resetFields()
         setSearchConditionNull()
+        setMoreFilterValue([])
         setQuickFilterValue(null)
         setTabValue({
             id: "all",

@@ -282,7 +282,7 @@ const WorkItemStatusPage = (props) => {
                         height: "100%"
                     }
                 }>
-                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "16", offset: "4" }}>
+                    <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "4" }}>
                         <div className="project-linemap" style={{ height : "100%" }}>
                             <div className="project-linemap-head">
                                 <div className="project-linemap-title">路线图</div>

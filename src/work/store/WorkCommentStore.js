@@ -43,7 +43,13 @@ export class WorkCommentStore {
         Object.assign(this.workCommentPage, { ...value });
         const data = await Service("/workComment/findWorkCommentPage", this.workCommentPage)
         if (data.code === 0){
-            this.commentList = data.data.dataList;
+            if(this.workCommentPage.pageParam.currentPage === 1){
+                this.commentList = data.data.dataList;
+            }
+            if(this.workCommentPage.pageParam.currentPage > 1){
+                this.commentList = this.commentList.concat(data.data.dataList);
+            }
+            // this.commentList = data.data.dataList;
         }
         return data;
     }

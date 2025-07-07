@@ -283,6 +283,8 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         <div className="work-title-bottom">
                             <span>{record.code}</span>
                             <span>{record.builder.nickname}</span>
+                            <span>·</span>
+                            <span>{record.buildTime.slice(0, 10)}</span>
                         </div>
                     </div>
 
@@ -362,18 +364,18 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                 <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
             </div>
         },
-        {
-            title: '创建时间',
-            dataIndex: "buildTime",
-            key: 'buildTime',
-            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 6
-            },
-            render: (text, record) => <div className="work-info-text">
-                {text.slice(0, 10)}
-            </div>
-        },
+        // {
+        //     title: '创建时间',
+        //     dataIndex: "buildTime",
+        //     key: 'buildTime',
+        //     className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+        //     sorter: {
+        //         multiple: 6
+        //     },
+        //     render: (text, record) => <div className="work-info-text">
+        //         {text.slice(0, 10)}
+        //     </div>
+        // },
         actionColumn
 
     ];
@@ -410,6 +412,8 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         <div className="work-title-bottom">
                             <span>{record.code}</span>
                             <span>{record.builder.nickname}</span>
+                            <span>·</span>
+                            <span>{record.buildTime.slice(0, 10)}</span>
                         </div>
                     </div>
 
@@ -462,18 +466,18 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             </div>
         },
 
-        {
-            title: '创建时间',
-            dataIndex: "buildTime",
-            key: 'buildTime',
-            className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 6
-            },
-            render: (text, record) => <div className="work-info-text">
-                {text.slice(0, 10)}
-            </div>
-        },
+        // {
+        //     title: '创建时间',
+        //     dataIndex: "buildTime",
+        //     key: 'buildTime',
+        //     className: `${sortArray.indexOf("buildTime") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+        //     sorter: {
+        //         multiple: 6
+        //     },
+        //     render: (text, record) => <div className="work-info-text">
+        //         {text.slice(0, 10)}
+        //     </div>
+        // },
         actionColumn
     ];
 }

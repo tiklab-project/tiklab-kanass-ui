@@ -49,7 +49,7 @@ const WorkDynamicTimeAxis = (props) => {
                 })
             }
             {
-                hasMore && <div className="work-dyncmic-more" onClick={showMore}> --查看更多-- </div>
+                hasMore && <div className="work-dyncmic-more" onClick={showMore}>查看更多</div>
             }
         </div>
 

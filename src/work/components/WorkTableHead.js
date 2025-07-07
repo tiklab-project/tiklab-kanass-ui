@@ -21,7 +21,7 @@ const WorkTableHead = (props) => {
     const { workStore } = props;
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, searchCondition,
-        getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView } = workStore;
+        getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView, tableTitle, moduleTitle } = workStore;
     const [stateType, setState] = useState();
     // console.log("**********id:"+props.match.params.id);
     // console.log("**********props*****:"+JSON.stringify(props))
@@ -66,11 +66,23 @@ const WorkTableHead = (props) => {
     );
 
 
+    const getTitle = () => {
+        if (tableTitle && moduleTitle){
+            return `${tableTitle}/${moduleTitle}`;
+        }else if (tableTitle){
+            return tableTitle;
+        }else if (moduleTitle){
+            return moduleTitle;
+        }else {
+            return "事项"
+        }
+    }
+
 
     return (
         <Fragment>
             <div className="work-breadcrumb">
-                <div className="work-title">事项</div>
+                <div className="work-title">{getTitle()}</div>
                 <div className="work-top-right">
                     {
                         workShowType === "gantt" && <div className="work-gantt-view">

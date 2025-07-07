@@ -6,34 +6,78 @@ import WorkDynamicStore from "../store/WorkDynamicStore";
 import WorkDynmicItem from "./WorkDynamicItem";
 import "./WorkDynamicTimeAxis.scss"
 import "./WorkDynamicItem.scss"
+import "./WorkDynamicMoreDrawer.scss"
 
 const WorkDynamicMoreDrawer = (props) => {
-    const { logTimeList, findMoreLogPageByTime, opLogTimeCondition } = WorkDynamicStore;
+    const { findMoreLogPageByTime, opLogTimeCondition } = WorkDynamicStore;
     const {moreDrawerVisible, setMoreDrawerVisible, workId} = props;
     const [dataList, setDataList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalRecord, setTotalRecord] = useState(0);
     const [pageSize, setPageSize] = useState(10);
+    const [maxSize, setMaxSize] = useState(10)
 
 
     useEffect(() => {
         const params = {
             data:{
-                workItemId: workId
+                workItemId: workId,
+                pageParam:{
+                    pageSize: 10,
+                    currentPage: 1
+                }
             }
-
         }
-        findMoreLogPageByTime(params).then(res => {
-            setDataList(res.data.dataList);
-            setCurrentPage(res.data.currentPage)
-            setTotalRecord(res.data.totalRecord)
-            setPageSize(res.data.pageSize)
-        })
-    }, []);
+        searchList(params)
+
+    }, [moreDrawerVisible]);
 
     const onClose = () => {
         setMoreDrawerVisible(false);
     };
+
+    const searchList = (params) => {
+        findMoreLogPageByTime(params).then(res => {
+            if (res.data.currentPage === 1){
+                setDataList(res.data.dataList);
+            }else if (res.data.currentPage > 1){
+                setDataList(mergeList(dataList, res.data.dataList));
+            }
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+            setPageSize(res.data.pageSize)
+        })
+    }
+
+    const mergeList = (logTimeList, dataList) =>{
+        // 创建一个新的合并后的数组
+        const mergedDataList = [...logTimeList];
+
+        // 遍历 page2 的 dataList
+        for (const item of dataList) {
+            // 检查相同日期的条目是否已存在
+            const existingItemIndex = mergedDataList.findIndex(x => x.time === item.time);
+
+            if (existingItemIndex >= 0) {
+                // 如果存在相同日期的条目，合并 loggingList
+                mergedDataList[existingItemIndex].loggingList = [
+                    ...mergedDataList[existingItemIndex].loggingList,
+                    ...item.loggingList
+                ];
+            } else {
+                // 如果不存在，直接添加整个条目
+                mergedDataList.push(item);
+            }
+        }
+
+        // 按时间降序排序（最新的在前面）
+        mergedDataList.sort((a, b) => new Date(b.time) - new Date(a.time));
+        mergedDataList.forEach(item => {
+            item.loggingList.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+        });
+
+        return mergedDataList;
+    }
 
     /**
      * 分页
@@ -44,15 +88,20 @@ const WorkDynamicMoreDrawer = (props) => {
                 ...opLogTimeCondition.pageParam,
                 currentPage: page
             }
-
         }
-        findMoreLogPageByTime(params).then(res => {
-            setDataList(res.data.dataList);
-            setCurrentPage(res.data.currentPage)
-            setTotalRecord(res.data.totalRecord)
-            setPageSize(res.data.pageSize)
-        })
+        searchList(params);
     };
+
+    const loadNextPage = () => {
+        const params = {
+            pageParam: {
+                ...opLogTimeCondition.pageParam,
+                currentPage: currentPage + 1
+            }
+        }
+        setMaxSize(maxSize + 10)
+        searchList(params);
+    }
 
     return(
         <Drawer
@@ -67,7 +116,7 @@ const WorkDynamicMoreDrawer = (props) => {
             <div className="work-dyncmic-timeaxis">
                 <div className="work-dyncmic-timeaxis-content">
                     {
-                        dataList.map((item, index) => {
+                        dataList && dataList.length > 0 && dataList.map((item, index) => {
                             return <div key={item.time} className="work-dyncmic-timeaxis-box">
                                 {
                                     item.loggingList.map((dyncmicItem, dyncmicIndex) => {
@@ -89,17 +138,14 @@ const WorkDynamicMoreDrawer = (props) => {
                             </div>
                         })
                     }
+                    {
+                        totalRecord > currentPage * pageSize ?
+                            <div className="work-dyncmic-more" onClick={loadNextPage}>加载更多</div>
+                            :
+                            <div className="work-dyncmic-more">到底啦~</div>
+                    }
                 </div>
             </div>
-
-
-            <Pagination
-                current={currentPage}
-                total={totalRecord}
-                pageSize={pageSize}
-                onChange={(currentPage) => onPageChange(currentPage)}
-                style={{ marginTop: 20, textAlign: 'center' }}
-            />
         </Drawer>
     )
 };

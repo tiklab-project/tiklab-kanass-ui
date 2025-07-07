@@ -44,6 +44,12 @@ const ProjectSetChangeModal = (props) => {
      * 获取全部项目集，用于切换
      */
     useEffect(() => {
+        findProjectSet(projectSetId).then(data => {
+            if (data.code === 0) {
+                setProjectSet(data.data)
+                localStorage.setItem("projectSet", JSON.stringify(data.data))
+            }
+        })
         findJoinProjectSetList({}).then(res => {
             if (res.code === 0) {
                 setFindJoinProjectSetList(res.data)
@@ -54,12 +60,10 @@ const ProjectSetChangeModal = (props) => {
                 setProjectSetAllList(res.data)
             }
         })
-        findProjectSet(projectSetId).then(data => {
-            if (data.code === 0) {
-                setProjectSet(data.data)
-                localStorage.setItem("projectSet", JSON.stringify(data.data))
-            }
-        })
+
+
+        // console.log("projectSet:    ")
+        // console.log(projectSet)
         return
     }, [])
 

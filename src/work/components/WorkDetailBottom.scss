@@ -1,6 +1,8 @@
 .workitem-detail-row {
     // overflow: auto;
+    height: calc(100% - 20px);
     overflow-y: auto;
+    scrollbar-gutter: stable;
     background: #fff;
     padding: 20px 15px;
     .workitem-tabs-content {
@@ -18,6 +20,29 @@
                 width: 50%;
                 border-radius: 4px;
                 flex: 1;
+
+                .work-status {
+                    margin-left: 11px;
+                    padding: 2px 3px;
+                    border-radius: 11px;
+                    font-size: 14px;
+                    width: fit-content;
+                }
+
+                .work-status-todo {
+                    background: #e2e1e4;
+                    color: #2b333e;
+                }
+
+                .work-status-process {
+                    background: #b0d5dfa1;
+                    color: #132c33;
+                }
+
+                .work-status-done {
+                    background: #dfecd5e3;
+                    color: #5e5314;
+                }
 
                 .builder-and-more-info {
                     display: flex;
@@ -201,6 +226,7 @@
         }
         .desc-preview {
             padding: 10px;
+            min-height: 80px;
             background-color: var(--tiklab-gray-600);
         }
     }

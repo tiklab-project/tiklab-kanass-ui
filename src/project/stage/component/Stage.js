@@ -58,7 +58,7 @@ const Stage = (props) => {
         return;
     }, [])
 
-    const [archiveView, setArchiveView] = useState("week")
+    const [archiveView, setArchiveView] = useState("month")
     const changeMonth = () => {
         setArchiveView("month");
         graph.dispose()

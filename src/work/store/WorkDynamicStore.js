@@ -80,12 +80,20 @@ export class WorkDynamicStore {
         Object.assign(this.opLogTimeCondition, value)
         const data = await Service("/oplog/findLogPageByTime", this.opLogTimeCondition);
         if (data.code === 0) {
+            // if (this.opLogTimeCondition.pageParam.pageSize === 1){
+            //     this.logTimeList = data.data.dataList;
+            // }else if (this.opLogTimeCondition.pageParam.pageSize > 1){
+            //     this.logTimeList = this.mergeList(this.logTimeList, data.data.dataList)
+            //     // this.logTimeList = this.logTimeList.concat(data.data.dataList)
+            // }
             this.logTimeList = data.data.dataList;
             this.opLogTimeCondition.pageParam.total = data.data.totalRecord;
             this.opLogTimeCondition.pageParam.totalPage = data.data.totalPage;
         }
         return data;
     }
+
+
 
     //   事项动态标签下的更多事项动态
     @action
