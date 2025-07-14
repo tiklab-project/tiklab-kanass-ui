@@ -8,6 +8,10 @@ const WorkModuleAddModal = (props) => {
     const {createModule} = moduleStore
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        form.resetFields();
+    }, [moduleVisible]);
+
     const handleOk = () => {
         const param = {
             moduleName: form.getFieldValue("moduleName"),

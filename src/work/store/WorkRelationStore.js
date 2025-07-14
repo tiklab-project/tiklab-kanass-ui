@@ -26,6 +26,11 @@ class WorkRelationStore {
     @observable searchSelectCondition = {
         currentPage: 1
     };
+    @observable relateAndChildNum = {
+        relateNum: 0,
+        childNum: 0,
+        taskChildNum: 0
+    }
 
     // 获取未被当前事项关联的事项列表
     @action
@@ -91,6 +96,22 @@ class WorkRelationStore {
         const data = await Service("/workRelate/deleteWorkRelate", params)
 		if(data.code=== 0){
             this.getSelectWorkRelationList()
+        }
+        return data;
+    }
+
+    @action
+    findWorkRelateAndChildNum = async (value) => {
+        const params = {
+            workItemId: value
+        }
+        const data = await Service("/workRelate/findWorkRelateAndChildNum", params)
+        if (data.code === 0){
+            this.relateAndChildNum = {
+                relateNum: data.data.relateNum || 0,
+                childNum: data.data.childNum || 0,
+                taskChildNum: data.data.taskChildNum || 0
+            };
         }
         return data;
     }

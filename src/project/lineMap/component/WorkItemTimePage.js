@@ -90,65 +90,6 @@ const WorkItemTimePage = (props) => {
 
     }
 
-    // 表格列配置
-    const columns = [
-        {
-            title: '序号',
-            dataIndex: 'code',
-            key: 'code',
-            width: "10%",
-            render: (text, record, index) => <div className="work-id work-first-col" onClick={() => goWorkItemDetail(record, index)}>
-                <div className="work-icon">
-                    <ImgComponent
-                        src={record.workTypeSys?.iconUrl}
-                        alt=""
-                        className="menu-icon"
-                    />
-                </div>
-                <div className="work-key">{record.code}</div>
-            </div>,
-        },
-        {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            width: "30%",
-            render: (text, record, index) => <div className="work-title" title = {text} onClick={() => goWorkItemDetail(record, index)}>
-                {text}
-            </div>,
-        },
-        {
-            title: '创建人',
-            dataIndex: ['builder','nickname'],
-            key: 'builder',
-            width: "15%",
-            render: (text, record) => <div className="work-item-info">
-                <div className="work-info-img" style={{ marginRight: "5px" }}><UserIcon name={text} /></div>
-                <div className="work-info-text work-info-master-text" title = {text}>{text}</div>
-            </div>,
-        },
-        {
-            title: '创建时间',
-            dataIndex: 'buildTime',
-            key: 'buildTime',
-            width: "15%",
-            render: (text, record) => <div>
-                {text.substring(0, 10)}
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'status',
-            width: "10%",
-            render: (text, record) => {
-                return <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                    {text}
-                </div>
-            },
-        },
-    ];
-
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -322,12 +263,16 @@ const WorkItemTimePage = (props) => {
                                                                     // className="work-item"
                                                                     // onClick={() => goWorkItemDetail(item, index)}
                                                                     actions={[
-                                                                        <Space size="small">
-                                                                            <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
-                                                                                {item.workStatusNode?.name}
+                                                                        // <Space size="small">
+                                                                            <div className="workItem-operate">
+                                                                                <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
+                                                                                    {item.workStatusNode?.name}
+                                                                                </div>
+                                                                                <div className="delete-operate">
+                                                                                    <DeleteModal deleteFunction={deleteWork} id={item.id} />
+                                                                                </div>
                                                                             </div>
-                                                                            <DeleteModal deleteFunction={deleteWork} id={item.id} />
-                                                                        </Space>
+                                                                        // </Space>
                                                                     ]}
                                                                 >
                                                                     <div className="item-content-wrapper">

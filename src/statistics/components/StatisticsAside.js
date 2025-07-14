@@ -10,7 +10,7 @@ import LogStatisticsFree from "../../workLog/components/LogStatisticsFree";
 const StatisticsAside = (props) => {
     // 无子级菜单处理
     const path = props.location.pathname;
-    const [selectKey, setSelectKey] = useState("/statistics/project/memberItem");
+    const [selectKey, setSelectKey] = useState("/statistics/overview");
     const versionInfo = getVersionInfo();
     const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
     const select = (data) => {
@@ -169,7 +169,7 @@ const StatisticsAside = (props) => {
     }
 
     // 树的展开与闭合
-    const [expandedTree, setExpandedTree] = useState(["projectStatistics"])
+    const [expandedTree, setExpandedTree] = useState([])
 
     const isExpandedTree = (key) => {
         return expandedTree.some(item => item === key)

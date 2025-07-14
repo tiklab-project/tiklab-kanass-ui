@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-26 15:40:46
  */
 import React, { useEffect, useState, useRef } from "react";
-import { Form, DatePicker, Select } from 'antd';
+import {Form, DatePicker, Select, Space, Dropdown, Menu} from 'antd';
 import Button from "../../common/button/Button";
 import moment from 'moment';
 import { observer, inject } from "mobx-react";
@@ -17,6 +17,7 @@ import {searchWorkList, setWorkDeatilInList} from "./WorkSearch";
 import WorkFilterHighItem from "./WorkFilterHighItem";
 import "./WorkFilterHigh.scss"
 import {PlusOutlined} from "@ant-design/icons";
+import {getUser} from "tiklab-core-ui";
 
 const WorkFilterHigh = (props) => {
     // 查找表单
@@ -26,7 +27,9 @@ const WorkFilterHigh = (props) => {
     const project = JSON.parse(localStorage.getItem("project"));
     const projectType = projectId ? project?.projectType?.type : "scrum";
     const [moreFilterValue, setMoreFilterValue] = useState([]);
+    const [dropDownVisible, setDropDownVisible] = useState(false);
     const path = props.match.path;
+    const userId = getUser().userId;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const heightFilter = useRef()
@@ -206,6 +209,7 @@ const WorkFilterHigh = (props) => {
             sprintId: sprintId,
             overdue: false,
             builderId: null,
+            assignerId: null,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -226,6 +230,7 @@ const WorkFilterHigh = (props) => {
             sprintId: sprintId,
             overdue: false,
             builderId: null,
+            assignerId: userId,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -247,6 +252,7 @@ const WorkFilterHigh = (props) => {
             sprintId: sprintId,
             overdue: false,
             builderId: null,
+            assignerId: userId,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -268,6 +274,7 @@ const WorkFilterHigh = (props) => {
             sprintId: sprintId,
             overdue: false,
             builderId: userId,
+            assignerId: null,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -285,7 +292,8 @@ const WorkFilterHigh = (props) => {
         let initValues = {
             sprintId: sprintId,
             overdue: true,
-            builderId: null,
+            builderId: userId,
+            assignerId: userId,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -381,6 +389,16 @@ const WorkFilterHigh = (props) => {
         setMoreFilterValue(value)
     }
 
+    const handleMenuClick = (menu) => {
+        const filterId = menu.key;// 筛选条件id
+        setMoreFilterValue(prev => {
+            // 使用新数组而不是修改原数组
+            return prev.includes(filterId)
+                ? prev.filter(item => item !== filterId) // 删除id
+                : [...prev, filterId]; // 添加id
+        });
+    }
+
     /**
      * 隐藏的筛选条件选项
      */
@@ -392,6 +410,31 @@ const WorkFilterHigh = (props) => {
         { value: 'workPriorityIds', label: '优先级' },
         { value: 'moduleIds', label: '所属模块' },
     ]
+
+    const menu = (
+        <Menu
+            selectedKeys={moreFilterValue}
+            onClick={handleMenuClick}
+        >
+            {selectArray.map(item => (
+                <Menu.Item key={item.value}>
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "250px" ,
+                        justifyContent: "space-between"
+                    }}>
+                        {item.label}
+                        {
+                            moreFilterValue.includes(item.value) &&
+                            <span>✓</span>
+                        }
+
+                     </div>
+                </Menu.Item>
+            ))}
+        </Menu>
+    );
 
     return (
         <div className={`height-filter ${workShowType === "table" ? "":"less-margin"}`} ref={heightFilter}>
@@ -414,6 +457,7 @@ const WorkFilterHigh = (props) => {
                             maxTagCount={1}
                             getPopupContainer={() => heightFilter.current}
                             showArrow = {true}
+                            style={{backgroundColor: '#f0f0f0'}}
                         >
                             {
                                 quickFilterList && quickFilterList.map((item) => {
@@ -425,32 +469,6 @@ const WorkFilterHigh = (props) => {
 
                     {
                         workShowType === "list" && <>
-                            {/* <Form.Item name="quickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
-                            <WorkFilterQuick heightFilter={heightFilter} />
-                        </Form.Item> */}
-
-                            <Form.Item
-                                name="assignerIds"
-                                label={labelHidden ? null : "负责人"}
-                                rules={[{ required: false }]}
-                            >
-                                <Select
-                                    mode="multiple"
-                                    placeholder="负责人"
-                                    className="work-select"
-                                    key="assignerIds"
-                                    maxTagCount={1}
-                                    getPopupContainer={() => heightFilter.current}
-
-                                    showArrow = {true}
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
                             <Form.Item name="workStatusIds" label={labelHidden ? null : "状态"} rules={[{ required: false }]} >
                                 <Select
                                     mode="multiple"
@@ -460,6 +478,7 @@ const WorkFilterHigh = (props) => {
                                     maxTagCount={1}
                                     getPopupContainer={() => heightFilter.current}
                                     showArrow = {true}
+                                    style={{backgroundColor: '#f0f0f0'}}
                                 >
                                     {
                                         workStatusList && workStatusList.map((item) => {
@@ -481,6 +500,26 @@ const WorkFilterHigh = (props) => {
                             maxTagCount={1}
                             getPopupContainer={() => heightFilter.current}
                             showArrow = {true}
+                            style={{backgroundColor: '#f0f0f0'}}
+                        >
+                            {
+                                userList && userList.map((item) => {
+                                    return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item name="assignerIds" label={labelHidden ? null : "负责人"} rules={[{ required: false }]} >
+                        <Select
+                            mode="multiple"
+                            placeholder="负责人"
+                            className="work-select"
+                            key="assignerIds"
+                            maxTagCount={1}
+                            getPopupContainer={() => heightFilter.current}
+                            showArrow = {true}
+                            style={{backgroundColor: '#f0f0f0'}}
                         >
                             {
                                 userList && userList.map((item) => {
@@ -501,6 +540,7 @@ const WorkFilterHigh = (props) => {
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
                                 showArrow = {true}
+                                style={{backgroundColor: '#f0f0f0'}}
                             >
                                 {
                                     sprintList && sprintList.map((item) => {
@@ -526,6 +566,7 @@ const WorkFilterHigh = (props) => {
                                 maxTagCount={1}
                                 getPopupContainer={() => heightFilter.current}
                                 showArrow = {true}
+                                style={{backgroundColor: '#f0f0f0'}}
                             >
                                 {
                                     versionList && versionList.map((item) => {
@@ -570,22 +611,20 @@ const WorkFilterHigh = (props) => {
 
             <div className="workitem-filter-height-buttom">
                 <div className="workitem-filter-height-more">
-                    <Select
-                        mode="multiple"
-                        className="filter-add-condition"
-                        value={moreFilterValue}
-                        onChange={addFilter}
+                    <Dropdown
+                        overlay={menu}
+                        visible={dropDownVisible}
+                        onVisibleChange={(visible) => setDropDownVisible(visible)}
+                        trigger={['click']}
+                        placement="bottomLeft"
                         getPopupContainer={() => heightFilter.current}
-                        maxTagCount={2}
-                        placeholder={
-                            <span>
-                          <PlusOutlined style={{ marginRight: 8 }} />
-                           添加条件
-                        </span>
-                        }
-                        options={selectArray}
-                        suffixIcon={null} // 隐藏默认箭头
-                    />
+                    >
+                        <Space>
+                            <PlusOutlined />
+                            <span>更多条件</span>
+                        </Space>
+
+                    </Dropdown>
                 </div>
 
                 <div className="workitem-filter-height-botton">

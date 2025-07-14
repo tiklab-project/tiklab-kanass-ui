@@ -282,7 +282,9 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         </div>
                         <div className="work-title-bottom">
                             <span>{record.code}</span>
-                            <span>{record.builder.nickname}</span>
+                            <span style={{
+                                paddingLeft: "5px"
+                            }}>{record.builder.nickname}</span>
                             <span>·</span>
                             <span>{record.buildTime.slice(0, 10)}</span>
                         </div>
@@ -411,7 +413,9 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         </div>
                         <div className="work-title-bottom">
                             <span>{record.code}</span>
-                            <span>{record.builder.nickname}</span>
+                            <span style={{
+                                paddingLeft: "5px"
+                            }}>{record.builder.nickname}</span>
                             <span>·</span>
                             <span>{record.buildTime.slice(0, 10)}</span>
                         </div>

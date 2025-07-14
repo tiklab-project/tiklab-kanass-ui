@@ -14,29 +14,36 @@
   overflow-y: auto; /* 垂直滚动 */
   padding: 16px; /* 可选：添加内边距 */
   min-height: 0; /* 关键：允许内容区域收缩 */
-  height: 800px /* 确保占满父容器高度 */
+  height: 800px; /* 确保占满父容器高度 */
+
+  .workitem-filter-height{
+    .ant-select-selector{
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 0;
+    }
+
+    .ant-picker-range{
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 0;
+    }
+  }
 }
 /* 底部区域 */
 .workitem-filter-height-buttom {
   flex-shrink: 0;
   padding: 16px;
-  background: #f9f9f9;
+  background: #fff;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
 
   .workitem-filter-height-more{
+    background: #f9f9f9;
     width: 100%;
-    .filter-add-condition {
-      width: 100%;
-      .ant-select-selector {
-        //border: 1px dashed #d9d9d9 !important;
-        //background: #fafafa !important;
-        &:hover {
-          border-color: #1890ff !important;
-        }
-      }
-  }
+    display: flex;
+    justify-content: center;
   }
 
   .workitem-filter-height-botton {

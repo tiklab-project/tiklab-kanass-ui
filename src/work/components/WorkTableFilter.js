@@ -349,26 +349,7 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
-                <SelectSimple
-                    name="assignerIds"
-                    onChange={(value) => selectChange("assignerIds", value)}
-                    title={"负责人"}
-                    ismult={true}
-                    value={searchCondition?.assignerIds}
-                    suffixIcon = {true}
-                    positionType = "right"
-                >
-                    {
-                        userList.map(item => {
-                            return <SelectItem
-                                value={item.user?.id}
-                                label={item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                key={item.user?.id}
-                                imgUrl={item.user?.iconUrl}
-                            />
-                        })
-                    }
-                </SelectSimple>
+
                 <WorkFilterModal layout={"horizontal"} {...props} />
 
 

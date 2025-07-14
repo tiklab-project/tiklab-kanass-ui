@@ -6,7 +6,7 @@ import {Upload, message, Button, Row, Col, Progress, Steps} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import "./MantisLoadData.scss";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import { getUser } from 'tiklab-core-ui';
+import {getAPIgateway, getUser} from 'tiklab-core-ui';
 import { observer } from "mobx-react";
 import UrlDataStore from "../store/UrlDataStore"
 const LoadData = (props) => {
@@ -82,10 +82,14 @@ const LoadData = (props) => {
     // 上传附件的信息
     const upload_url = env === "local" ? base_url : "";
     const domain = window.location.host;
+    const value = getAPIgateway();
     const uploadProps = {
         name: 'uploadFile',
         action: `${upload_url}/importDate/importMantisDate`,
         headers: {
+            appkey: value.appKey,
+            timestamp: value.timestamp,
+            sign: value.sign,
             ticket: ticket,
             tenant: getUser().tenant && version === "cloud" ? getUser().tenant : null
         },

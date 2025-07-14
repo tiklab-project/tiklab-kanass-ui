@@ -7,13 +7,12 @@
  * @LastEditTime: 2024-12-26 17:12:12
  */
 import React, { useEffect, useState, useRef, Fragment } from "react";
-import { Empty, Table } from 'antd';
+import { Empty, Table, Button } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkTestCaseList.scss"
 import WorkTestCaseAddmodal from "./WorkTestCaseAdd"
 import { applyJump } from "tiklab-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
-import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkTestCaseList = (props) => {
@@ -154,7 +153,18 @@ const WorkTestCaseList = (props) => {
                 <div className="testcase-top-title">共{testCaseList.length}个</div>
                 <div className="child-top-botton">
                     <WorkPrivilegeComponent workId={workId} code="WorkTestAdd">
-                        <Button onClick={() => { showSelectTestCase(true) }}>
+                        <Button
+                            style={{
+                                display: "flex",
+                                textAlign: "center",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                            type="text"
+                            onClick={() => { showSelectTestCase(true) }}>
+                            <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                <use xlinkHref="#icon-add2"></use>
+                            </svg>
                             添加用例
                         </Button>
                     </WorkPrivilegeComponent>

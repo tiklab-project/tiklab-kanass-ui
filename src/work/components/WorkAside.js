@@ -20,7 +20,7 @@ const WorkAside = (props) => {
     const workAsideList = useRef()
     const { workStore } = props;
     const { tableLoading, setWorkId, workId, setWorkIndex, workList, currentPage, totalPage,
-        searchCondition, total } = workStore;
+        searchCondition, total, viewType } = workStore;
     const [expandedTree, setExpandedTree] = useState([]);
 
 
@@ -213,20 +213,23 @@ const WorkAside = (props) => {
                     onClick={(event) => changeWorkChilden(item, index)}
                 >
 
-                    <div className="work-aside-item-icon">
-                        {
-                            item.children && item.children.length > 0 ?
-                                (isExpandedTree(item.id) ?
-                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                        <use xlinkHref="#icon-workDown"></use>
-                                    </svg> :
-                                    <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
-                                        <use xlinkHref="#icon-workRight"></use>
-                                    </svg>
-                                ) :
-                                <div className="icon-10" />
-                        }
-                    </div>
+                    {
+                        viewType === "tree" &&
+                        <div className="work-aside-item-icon">
+                            {
+                                item.children && item.children.length > 0 ?
+                                    (isExpandedTree(item.id) ?
+                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                <use xlinkHref="#icon-workDown"></use>
+                                            </svg> :
+                                            <svg className="icon-10" aria-hidden="true" onClick={() => setOpenOrClose(item.id)}>
+                                                <use xlinkHref="#icon-workRight"></use>
+                                            </svg>
+                                    ) :
+                                    <div className="icon-10" />
+                            }
+                        </div>
+                    }
                     <div className="work-aside-item-content">
                         <div className="work-aside-item-image">
                             <ImgComponent

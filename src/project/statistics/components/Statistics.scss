@@ -29,8 +29,24 @@
             .statistics-work-table {
                 padding: 15px 0;
             }
-            .statistics-work-bar {
+            .statistics-area{
                 background-color: #fafbfc;
+                .statistics-title{
+                    padding-top: 15px;
+                    padding-left: 15px;
+                }
+                .statistics-work-bar {
+                    background-color: #fafbfc;
+                    width: 100%;
+                    height: 500px;
+                }
+
+                @media (max-height:800px){
+                    .statistics-work-bar{
+                        height: 400px;
+                    }
+                }
+
             }
         }
 

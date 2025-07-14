@@ -178,7 +178,6 @@ const WorkLog = (props) => {
                                 <span
                                 onClick={showModal}
                                 style={{
-                                    color: "var(--tiklab-blue)",
                                     cursor: "pointer"
                                 }}
                                 >

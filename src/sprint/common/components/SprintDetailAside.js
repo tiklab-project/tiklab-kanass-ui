@@ -61,10 +61,19 @@ const SprintDetailAside = (props) => {
             title: "统计",
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",
-            id: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
+            id: `/${projectId}/sprint/${sprintId}/statistics/overview`,
             key: "statistics",
             encoded: "statistics",
+        },
+        {
+            title: "设置",
+            icon: 'set-' + theme,
+            defaultIcon: "set-default",
+            id: `/${projectId}/sprint/${sprintId}/setting`,
+            key: "set",
+            encoded: "set",
         }
+
     ];
 
     const doneRouter = [
@@ -91,6 +100,14 @@ const SprintDetailAside = (props) => {
             id: `/${projectId}/sprint/${sprintId}/statistics/workItem`,
             key: "statistics",
             encoded: "statistics",
+        },
+        {
+            title: "设置",
+            icon: 'set-' + theme,
+            defaultIcon: "set-default",
+            id: `/${projectId}/sprint/${sprintId}/setting`,
+            key: "set",
+            encoded: "set",
         }
     ]
     useEffect(() => {
@@ -134,6 +151,7 @@ const SprintDetailAside = (props) => {
                 backName = {"返回项目"}
                 path={path}
                 setUrl = {`/${projectId}/sprint/${sprintId}/setting`}
+                unNeedBottomSet = {true}// 不显示底部的设置
                 backUrl = {`/project/${projectId}/sprint`}
                 iconName = "back"
             />

@@ -21,7 +21,7 @@ import UserIcon from "../../../common/UserIcon/UserIcon";
 const Gantt = (props) => {
     // 获取当前年月日
     const { workList, workStore, WorkDetailDrawer, setImageUrl, projectId, useDebounce, archiveView } = props;
-    const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total, getWorkConditionPageTree } = workStore;
+    const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total, getWorkConditionPageTree, viewType } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -475,7 +475,7 @@ const Gantt = (props) => {
                                 <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
                                     <div className="table-work-name">
                                         {
-                                            item.children && item.children.length > 0 ?
+                                            viewType === "tree" && item.children && item.children.length > 0 &&
                                                 <>
 
                                                     {
@@ -488,9 +488,9 @@ const Gantt = (props) => {
                                                             </svg>
                                                     }
                                                 </>
-                                                :
-                                                <div className="icon-10">
-                                                </div>
+                                                // :
+                                                // <div className="icon-10">
+                                                // </div>
                                         }
                                         <ImgComponent
                                             src={item.workTypeSys?.iconUrl}
@@ -500,7 +500,7 @@ const Gantt = (props) => {
                                         <div>
                                             <div className="table-work-text" onClick={() => goWorkDetail(item, index)}>{item.title}</div>
                                             <span className="table-work-id">
-                                                <span>{item.code}</span>
+                                                {/*<span>{item.code}</span>*/}
                                                 <span>{item.planBeginTime.slice(0, 10)}</span>
                                                 <span>-</span>
                                                 <span>{item.planEndTime.slice(0, 10)}</span>

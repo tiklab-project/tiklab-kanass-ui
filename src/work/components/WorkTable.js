@@ -350,23 +350,26 @@ const WorkTable = (props) => {
                                                 showTotal: () => `共${total}条`
                                             }}
                                             onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
-                                            expandable={{
-                                                expandIcon: ({ expanded, onExpand, record }) => (
-                                                    record.children && record.children.length > 0 ? expanded ?
-                                                            <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                                <use xlinkHref="#icon-workDown"></use>
-                                                            </svg> :
-                                                            <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
-                                                                <use xlinkHref="#icon-workRight"></use>
-                                                            </svg>
-                                                        :
-                                                        <>
-                                                            <svg className="icon-10">
+                                            expandable={
+                                                viewType === "tree" && {
+                                                    expandIcon: ({ expanded, onExpand, record }) => (
+                                                        record.children && record.children.length > 0 ? expanded ?
+                                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                                    <use xlinkHref="#icon-workDown"></use>
+                                                                </svg> :
+                                                                <svg className="icon-10" aria-hidden="true" onClick={e => onExpand(record, e)}>
+                                                                    <use xlinkHref="#icon-workRight"></use>
+                                                                </svg>
+                                                            :
+                                                            <>
+                                                                <svg className="icon-10">
 
-                                                            </svg>
-                                                        </>
-                                                )
-                                            }}
+                                                                </svg>
+                                                            </>
+                                                    )
+                                                }
+                                            }
+
                                         />
                                     </Spin>
                                 </div>

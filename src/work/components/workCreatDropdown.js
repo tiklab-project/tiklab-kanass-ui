@@ -103,7 +103,7 @@ const WorkCreatDropdown = (props) => {
                                     alt=""
                                     className="img-icon-right"
                                 />
-                                <div className="work-type-item-name">添加{item.workType.name}</div>
+                                <div className="work-type-item-name">{item.workType.name}</div>
                             {/* </div> */}
                         </div>
 

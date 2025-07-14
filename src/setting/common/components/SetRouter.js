@@ -167,7 +167,7 @@ const setDevRouter= [
                 purviewCode: "SysJira"
             },
             {
-                title: 'openApi',
+                title: 'OpenApi',
                 id: '/setting/openApi',
 
             }
@@ -517,7 +517,7 @@ const setPrdRouter= [
                 purviewCode: "SysJira"
             },
             {
-                title: 'openApi',
+                title: 'OpenApi',
                 id: '/setting/openApi',
 
             }

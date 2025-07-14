@@ -6,11 +6,10 @@
  * @Description: 事项关联
  */
 import React, { useEffect, useState } from "react";
-import { Table, Empty } from 'antd';
+import {Table, Empty, Button} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
-import Button from "../../common/button/Button";
 import WorkRelationStore from "../store/WorkRelationStore";
 import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
@@ -19,10 +18,10 @@ const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
     }
-    const { workStore } = props;
+    const { workStore, workRelation } = props;
     const { workId, setWorkId, createRecent } = workStore;
     const { selectWorkRelationList, getSelectWorkRelationList,
-        addWorkRelation, searchAllWorkRelation, deleWorkRelation } = WorkRelationStore;
+        addWorkRelation, searchAllWorkRelation, deleWorkRelation, findWorkRelateAndChildNum } = workRelation;
     const [selectIds, setSelectIds] = useState();
     const [addRelation, showAddRelation] = useState(false);
     const project = JSON.parse(localStorage.getItem("project"));
@@ -51,7 +50,9 @@ const WorkRelation = (props) => {
      * 删除关联事项
      */
     const delectRelation = (id) => {
-        deleWorkRelation(id)
+        deleWorkRelation(id).then((res) => {
+            findWorkRelateAndChildNum(workId)
+        })
     }
 
     /**
@@ -98,6 +99,7 @@ const WorkRelation = (props) => {
             dataIndex: ["workItem", "title"],
             key: "title",
             ellipsis: true,
+            width: "60%",
             render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record.workItem)}>
                 <ImgComponent
                     alt=""
@@ -127,6 +129,11 @@ const WorkRelation = (props) => {
             dataIndex: 'action',
             key: 'action',
             width: "10%",
+            align: "right",
+            cellStyle: {
+                textAlign: 'right',
+                paddingRight: '10px', // 调整间距
+            },
             render: (text, record) => (
                 <WorkPrivilegeComponent workId = {workId} code = "WorkRelationDelete">
                     <span onClick={() => delectRelation(record.id)} className="span-botton">解除关联</span>
@@ -139,11 +146,22 @@ const WorkRelation = (props) => {
     return (<Provider {...store}>
         <div className="work-relation">
             <div className="relation-top">
-                <div className="relation-top-title">共{selectWorkRelationList.length}条</div>
+                {/*<div className="relation-top-title">共{selectWorkRelationList.length}条</div>*/}
                 {
                     !addRelation &&
                     <WorkPrivilegeComponent workId = {workId} code = "WorkRelationAdd">
-                        <Button onClick={() => showAddRelation(true)}>
+                        <Button
+                            style={{
+                                display: "flex",
+                                textAlign: "center",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                            type="text"
+                            onClick={() => showAddRelation(true)}>
+                            <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                <use xlinkHref="#icon-add2"></use>
+                            </svg>
                             添加事项
                         </Button>
                     </WorkPrivilegeComponent>
@@ -181,4 +199,4 @@ const WorkRelation = (props) => {
 
     )
 }
-export default inject("workStore")(observer(WorkRelation));
+export default inject("workStore", "workRelation")(observer(WorkRelation));

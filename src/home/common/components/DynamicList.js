@@ -92,7 +92,7 @@ const DynamicList = (props) => {
         findLogPageByTime(params)
     };
 
-    return (<Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-600)" }}>
+    return (<Row style={{ height: "100%", overflow: "auto", background: "var(--tiklab-gray-800)" }}>
         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }} className="dynamic-col">
             <div className="dynamic-list-page">
                 <div className="dynamic-list-top">

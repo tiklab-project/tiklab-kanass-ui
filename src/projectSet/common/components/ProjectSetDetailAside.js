@@ -48,8 +48,16 @@ const ProjectSetDetailAside = (props) => {
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",
             key: "statistics",
-            id: `/projectSet/${projectSetId}/statistics/workItem`,
+            id: `/projectSet/${projectSetId}/statistics/overview`,
             encoded: "Statistics",
+        },
+        {
+            title: "设置",
+            icon: 'set-' + theme,
+            defaultIcon: "set-default",
+            id: `/projectSet/${projectSetId}/set/basicInfo`,
+            key: "set",
+            encoded: "set",
         }
     ];
 
@@ -78,6 +86,7 @@ const ProjectSetDetailAside = (props) => {
                 backName = {"返回首页"}
                 path={path}
                 setUrl={`/projectSet/${projectSetId}/set/basicInfo`}
+                unNeedBottomSet = {true}// 不显示底部的设置
                 backUrl={`/projectSet`}
                 iconName = "home"
             />

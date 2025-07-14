@@ -7,11 +7,10 @@
  * @LastEditTime: 2024-12-26 14:31:42
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Row, Col, message, Empty } from 'antd';
+import {Input, Table, Row, Col, message, Empty, Button} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
-import Button from "../../common/button/Button";
 import WorkChildStore from "../store/WorkChildStore";
 import { getUser } from "tiklab-core-ui";
 import { setSessionStorage, getSessionStorage } from "../../common/utils/setSessionStorage";
@@ -21,9 +20,12 @@ import SprintPlanStore from "../../sprint/plan/stores/SprintPlanStore";
 import VersionPlanStore from "../../version/plan/stores/VersionPlanStore";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
+import WorkRelationStore from "../store/WorkRelationStore";
+import workRelation from "./WorkRelation";
 const WorkChild = (props) => {
     const store = {
-        workChild: WorkChildStore
+        workChild: WorkChildStore,
+        workRelation: WorkRelationStore
     }
     const { treePath, workStore, workType, projectId, type, workTypeCode,
         getTransitionList, workStatusNodeId, workInfo, setTabValue } = props;
@@ -37,7 +39,7 @@ const WorkChild = (props) => {
 
     const { workId, workList, setWorkId, addWork, createRecent, demandtestcaseId,
         selectVersionList, sprintList, priorityList, setWorkList, findWorkItemAndChidren } = workStore;
-
+    const { findWorkRelateAndChildNum } = WorkRelationStore;
     const { getWorkChildList, deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     const [demandId, setDemand] = useState();
@@ -99,6 +101,7 @@ const WorkChild = (props) => {
         deleWorkChild(params).then((res) => {
             if (res.code === 0) {
                 // 获取子事项列表
+                findWorkRelateAndChildNum(workId)
                 findWorkChildList()
                 // 获取事项及其子事项
                 findWorkItemAndChidren({ id: id }).then(res => {
@@ -151,7 +154,8 @@ const WorkChild = (props) => {
             parentWorkItem: workId,
             project: projectId,
             builder: getUser().userId,
-            sprint: sprintId ? sprintId : sprintList[0]?.id,
+            sprint: null,
+            stage: null,
             projectVersion: versionId ? versionId : selectVersionList[0]?.id,
             workType: workType.id,
             workPriority: priorityList[0]?.id,
@@ -178,6 +182,7 @@ const WorkChild = (props) => {
             if (res.code === 0) {
                 showAddChild(false)
                 // 获取子事项列表
+                findWorkRelateAndChildNum(workId)
                 findWorkChildList()
 
                 // 获取当前的工作流
@@ -246,6 +251,7 @@ const WorkChild = (props) => {
             dataIndex: "title",
             key: "title",
             ellipsis: true,
+            width: "55%",
             render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record)}>
                 <ImgComponent
                     alt=""
@@ -260,29 +266,29 @@ const WorkChild = (props) => {
             title: "事项类型",
             dataIndex: ["workTypeSys", "name"],
             key: "workType",
-            width: "10%"
+            ellipsis: true,
+            width: "8%"
 
         },
         {
             title: "事项状态",
             dataIndex: ["workStatusNode", "name"],
             key: "workStatus",
-            width: "10%",
+            width: "8%",
             render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode?.id)}`}>
                 {text}
             </div>
         },
-        // {
-        //     title: "负责人",
-        //     dataIndex: ["assigner", "name"],
-        //     key: "assigner",
-        //     width: "10%"
-        // },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
             width: "13%",
+            align: "right",
+            cellStyle: {
+                textAlign: 'right',
+                paddingRight: '10px', // 调整间距
+            },
             render: (text, record) => (
                 <WorkPrivilegeComponent workId={workId} code="WorkChildrenDelete">
                     <span onClick={() => delectChild(record.id)} className="span-botton">解除父子关系</span>
@@ -295,18 +301,39 @@ const WorkChild = (props) => {
     return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
-                <div className="child-top-title">共{childWorkList?.length}条</div>
+                {/*<div className="child-top-title">共{childWorkList?.length}条</div>*/}
                 {
                     !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">
                         <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
-                            <Button onClick={() => { showAddChild(true); showSelectChild(false) }}>
+                            <Button
+                                style={{
+                                    display: "flex",
+                                    textAlign: "center",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                                type="text"
+                                onClick={() => { showAddChild(true); showSelectChild(false) }}>
+                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                    <use xlinkHref="#icon-add2"></use>
+                                </svg>
                                 添加{type}
                             </Button>
-
                         </WorkPrivilegeComponent>
                         <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
-                            <Button onClick={() => { showAddChild(false); showSelectChild(true) }}>
+                            <Button
+                                style={{
+                                    display: "flex",
+                                    textAlign: "center",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                                type="text"
+                                onClick={() => { showAddChild(false); showSelectChild(true) }}>
+                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                    <use xlinkHref="#icon-add2"></use>
+                                </svg>
                                 关联{type}
                             </Button>
                         </WorkPrivilegeComponent>
@@ -320,6 +347,7 @@ const WorkChild = (props) => {
                     selectChild && <WorkChildAddmodal
                         {...props}
                         name="添加事项"
+                        titile={`关联${type}`}
                         selectIds={selectIds}
                         selectChild={selectChild}
                         showSelectChild={showSelectChild}

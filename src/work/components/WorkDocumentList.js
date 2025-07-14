@@ -7,13 +7,12 @@
  * @LastEditTime: 2024-12-26 15:11:44
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Empty, Table } from 'antd';
+import { Empty, Table, Button } from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkDocumentList.scss"
 import WorkDocumentAddmodal from "./WorkDocumentAdd"
 import { applyJump } from "tiklab-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
-import Button from "../../common/button/Button"
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 const WorkDocumentList = (props) => {
@@ -130,7 +129,18 @@ const WorkDocumentList = (props) => {
                 <div className="repository-top-title">共{workDocumentList.length}个</div>
                 <div className="child-top-botton">
                     <WorkPrivilegeComponent workId={workId} code="WorkDocumentAdd">
-                        <Button onClick={() => { showSelectDocument(true) }}>
+                        <Button
+                            style={{
+                                display: "flex",
+                                textAlign: "center",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                            type="text"
+                            onClick={() => { showSelectDocument(true) }}>
+                            <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                <use xlinkHref="#icon-add2"></use>
+                            </svg>
                             添加文档
                         </Button>
                     </WorkPrivilegeComponent>

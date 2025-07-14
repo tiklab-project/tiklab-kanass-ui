@@ -29,7 +29,7 @@ const VersionBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 20,
+            span: 5,
         },
     };
     const formTailLayout = {
@@ -37,8 +37,7 @@ const VersionBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 18,
-            offset: 4
+            span: 5
         },
     };
     const [form] = Form.useForm();
@@ -154,7 +153,7 @@ const VersionBasicInfo = props => {
                 <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
-                版本图标信息，可见范围，负责人等信息，可点击修改</div>
+                版本名称、负责人、计划时间、等信息，可点击修改</div>
         </div>
     );
 
@@ -196,6 +195,7 @@ const VersionBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
+                                    layout={"vertical"}
                                 // onValuesChange={(changedValues, allValues) => onValuesChange(changedValues)}
                                 >
                                     <Form.Item
@@ -227,7 +227,7 @@ const VersionBasicInfo = props => {
                                         </Select>
                                     </Form.Item>
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} showTime />
+                                        <RangePicker locale={locale} />
                                     </Form.Item>
                                     <PrivilegeProjectButton code={'ProjectVersionEdit'} domainId={projectId}  {...props}>
                                         <Form.Item {...formTailLayout} >

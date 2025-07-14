@@ -13,10 +13,11 @@ import echarts from "../../../common/echarts/echarts";
 import { withRouter } from "react-router";
 import { exportPDF } from "../../../common/pdf/exportPDFDom";
 import StatisticsStore from "../store/StatisticStore";
+import "./StatisticsStatusWork.scss"
 
 const StatisticsWork = (props) => {
     const { statisticWorkItem, findProjectList } = StatisticsStore;
-    const { index, statistical, noEdit } = props
+    const { index, statistical, noEdit, overviewTitle } = props
     const [activeKey, setActiveKey] = useState("bar");
     const [form] = Form.useForm();
     const projectId = props.match.params.id;
@@ -268,7 +269,15 @@ const StatisticsWork = (props) => {
                         scroll={{x: "100%"}}
                     />
                 }
-                <div id={`${index ? 'workBar' + index : 'workBar'}`} className="statistics-work-bar" style={{ width: "100%", height: "500px" }} />
+                <div className="statistics-area">
+                    {
+                        overviewTitle &&
+                        <div className="statistics-title">
+                            {overviewTitle}
+                        </div>
+                    }
+                    <div id={`${index ? 'workBar' + index : 'workBar'}`} className="statistics-work-bar" />
+                </div>
                
             </div>
 

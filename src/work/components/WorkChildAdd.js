@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-26 14:31:46
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
-import { Empty, message } from 'antd';
+import {Empty, message, Select} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkChildAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -16,17 +16,20 @@ import { getUser } from "tiklab-core-ui";
 import { changeWorkItemParent } from "./WorkGetList";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import WorkRelationStore from "../store/WorkRelationStore";
+import Breadcumb from "../../common/breadcrumb/Breadcrumb";
 const WorkChildAddmodal = (props) => {
-    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList, selectChild, projectId, demandId, stageId } = props;
+    const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList,
+        selectChild, projectId, demandId, stageId, titile } = props;
 
     const { workId, findPriority, priorityList, getWorkStatus, workStatusList,
         demandTypeId, findWorkItemAndChidren, workList, setWorkList } = workStore;
-
+    const { findWorkRelateAndChildNum } = WorkRelationStore;
     const { addWorkChild, findSelectWorkItemList, getWorkChildList, selectChildToTal,
         selectWorkChildList, findChildrenLevel } = workChild;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const project = JSON.parse(localStorage.getItem("project"));
-
+    const searchRef = useRef();
     const childAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
@@ -151,6 +154,7 @@ const WorkChildAddmodal = (props) => {
     const createChildWorkItem = (value, item) => {
         addWorkChild(value).then((res) => {
             showSelectChild(false)
+            findWorkRelateAndChildNum(workId)
             // 更新树形列表
             findWorkItemAndChidren({ id: value.id }).then(res => {
                 if (res.code === 0) {
@@ -228,8 +232,19 @@ const WorkChildAddmodal = (props) => {
         <>
             <div className="child-add" ref={childAdd}>
                 <div className="child-add-model" >
-                    <div className="child-add-search">
-                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"搜索事项名称，id"} />
+                    <div className="child-add-model-top">
+                        <div className="child-add-title">选择事项</div>
+                        <div className="child-add-submit">
+                            <svg className="svg-icon" aria-hidden="true" onClick={() => showSelectChild(false)}>
+                                <use xlinkHref="#icon-close"></use>
+                            </svg>
+                            {/*<span onClick={() => showSelectChild(false)}>*/}
+                            {/*    取消*/}
+                            {/*</span>*/}
+                        </div>
+                    </div>
+                    <div className="child-add-search" ref={searchRef}>
+                        <InputSearch style={{ minWidth: "150px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"搜索事项"} />
                         <SelectSimple name="workPriorityIds"
                             onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}
                             title={"事项优先级"} ismult={true}
@@ -241,7 +256,7 @@ const WorkChildAddmodal = (props) => {
                                         label={item.name}
                                         key={item.id}
                                         imgUrl={item.iconUrl}
-                                        isRemote = {true}
+                                        isRemote = {false}
                                     />
                                 })
                             }
@@ -305,15 +320,9 @@ const WorkChildAddmodal = (props) => {
                                 }
                             </SelectSimple>
                         }
-                        <div className="child-add-submit">
-                            <span onClick={() => showSelectChild(false)}>
-                                取消
-                            </span>
-                        </div>
                     </div>
                     {
                         selectWorkChildList && selectWorkChildList.length > 0 ? <div className="child-add-table">
-                            <div className="child-add-table-title">选择事项</div>
                             {
                                 selectWorkChildList && selectWorkChildList.map(item => {
                                     return <div className="child-add-work-item" onClick={() => determineAdd(item)} key={item.id}>

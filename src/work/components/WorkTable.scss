@@ -36,7 +36,7 @@
         .ant-table-thead {
             .work-first-col {
                 display: table-cell;
-                padding-left: 23px;
+                //padding-left: 23px;
             }
 
             .ant-table-cell:hover {
@@ -173,7 +173,7 @@
                 .work-title-bottom {
                     display: flex;
                     align-items: center;
-                    gap: 8px;
+                    gap: 3px;
                     font-size: 12px;
                     color: #666;
                     line-height: 1.3;

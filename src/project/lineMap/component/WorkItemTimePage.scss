@@ -29,9 +29,12 @@
     .work-status {
       padding: 2px 3px;
       background: #e2e1e4;
-      border-radius: 4px;
-      font-size: 10px;
-      width: fit-content;
+      font-size: 12px;
+      height: 100%;
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: #2b333e;
     }
 
@@ -75,6 +78,7 @@
 
           .item-title {
             font-size: 14px;
+            font-weight: 400;
             color: rgba(0, 0, 0, 0.85);
             margin-bottom: 4px;
             white-space: nowrap;
@@ -161,6 +165,21 @@
         background-color: #f0f0f0;
         padding: 2px 8px;
         border-radius: 10px;
+      }
+
+      .workItem-operate{
+        border-radius: 2px;
+        border: 1px solid #e6e6e6;
+        background-color: #fafafa;
+        display: flex;
+        gap: 5px;
+        //padding: 5px;
+        height: 30px;
+        align-items: center;
+        margin-right: 10px;
+        .delete-operate{
+          margin-right: 5px;
+        }
       }
     }
 

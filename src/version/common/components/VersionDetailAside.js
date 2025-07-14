@@ -71,6 +71,14 @@ const VersionDetailAside = (props) => {
             id: `/${projectId}/version/${versionId}/plan`,
             key: "plan",
             encoded: "plan",
+        },
+        {
+            title: "设置",
+            icon: 'set-' + theme,
+            defaultIcon: "set-default",
+            id: `/${projectId}/version/${versionId}/setting`,
+            key: "set",
+            encoded: "set",
         }
     ];
 
@@ -91,6 +99,14 @@ const VersionDetailAside = (props) => {
             key: "work",
             encoded: "work",
         },
+        {
+            title: "设置",
+            icon: 'set-' + theme,
+            defaultIcon: "set-default",
+            id: `/${projectId}/version/${versionId}/setting`,
+            key: "set",
+            encoded: "set",
+        }
     ]
 
     //点击左侧菜单
@@ -117,6 +133,7 @@ const VersionDetailAside = (props) => {
                 path={path}
                 backName = {"返回项目"}
                 setUrl = {`/${projectId}/version/${versionId}/setting`}
+                unNeedBottomSet = {true}// 不显示底部的设置
                 backUrl = {`/project/${projectId}/version`}
                 iconName = "back"
             />

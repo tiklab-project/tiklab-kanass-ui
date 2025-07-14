@@ -20,6 +20,10 @@ export class ModuleStore {
     // 分页参数
     @observable 
     searchCondition = {
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
     };
     
 
@@ -99,11 +103,13 @@ export class ModuleStore {
      */
     @action
 	findModuleListTree = async(value) => {
-        // Object.assign(this.searchCondition, { ...value })
-        const data = await Service("/module/findModuleListTree", value)
+        console.log(this.searchCondition)
+        Object.assign(this.searchCondition, { ...value })
+        const data = await Service("/module/findModuleListTree", this.searchCondition)
         if(data.code===0){
             this.moduleList = data.data
         }
+        console.log(this.searchCondition)
         return data;
     }
 

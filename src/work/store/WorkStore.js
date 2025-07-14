@@ -140,7 +140,7 @@ export class WorkStore {
     @observable archiveView = "month"
 
     // 事项的视图类型
-    @observable viewType = "tree"
+    @observable viewType = "tile"
     @observable boardGroup = "nogroup"
     @observable tableTitle = null;
     @observable moduleTitle = null;
@@ -667,6 +667,13 @@ export class WorkStore {
             this.eveWorkTypeNum = data.data;
         }
         return data.data;
+    }
+
+    // 获取我的待办和我创建的事项数量
+    @action
+    findUserCreateAndTodoWorkNum = async(value) => {
+        const data = await Service("/workItem/findUserCreateAndTodoWorkNum",value);
+        return data;
     }
 
     // 待办页面的事项列表

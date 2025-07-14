@@ -9,7 +9,7 @@
     .time-table {
         text-align: center;
         .table-border {
-            border-bottom: 1px solid #fafafa;
+            //border-bottom: 1px solid #fafafa;
             height: 50px;
             line-height: 50px;
         }
@@ -57,7 +57,7 @@
             .table-hearder-status {
                 width: 60px;
                 padding: 0 8px;
-                border-right: 1px solid var(--tiklab-gray);
+                border-right: 2px solid #d3d3d3;
             }
 
             .table-hearder-assigner {
@@ -162,7 +162,7 @@
             .table-td-status {
                 width: 60px;
                 padding: 0 8px;
-                border-right: #f0f0f0 1px solid;
+                border-right: 2px solid #d3d3d3;
                 .work-status {
                     padding: 2px 3px;
                     background: #e2e1e4;

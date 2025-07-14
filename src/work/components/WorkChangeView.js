@@ -14,8 +14,8 @@ import WorkGanttFree from "./WorkGanttFree";
 const WorkChangeView = (props) => {
     const { buttonType, workStore } = props;
     const { getWorkConditionPage, getWorkConditionPageTree, viewType, workShowType, setWorkShowType,
-        setViewType, setWorkId, setWorkIndex } = workStore;
-
+        setViewType, setWorkId, setWorkIndex, setWorkList , setSearchConditionNull, setSearchCondition} = workStore;
+    const projectId = props.match.params.id;
     // 视图下拉框
     const [showViewDropDown, setShowViewDropDown] = useState(false);
     const treeDropDown = useRef();
@@ -89,6 +89,13 @@ const WorkChangeView = (props) => {
         //     }
         //
         // }
+        // 重新初始化搜索条件
+        setSearchConditionNull();
+        const param = {
+            projectId: projectId
+        }
+        setSearchCondition(param);
+
         setWorkShowType(item.value)
         setWorkId()
 
@@ -102,6 +109,7 @@ const WorkChangeView = (props) => {
     const changTileOrTree = (e) => {
         const value = e.target.value
         setViewType(value)
+        setWorkList([])// 防止切换时出现Table默认的展开框
         switch (value) {
             case "tile":
                 if (workShowType === "list") {

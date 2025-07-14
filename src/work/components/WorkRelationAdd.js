@@ -18,7 +18,7 @@ const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
 
     const { workTypeList, workId, workStatusList, getWorkStatus } = workStore;
-    const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal } = workRelation;
+    const { addWorkRelation, getWorkRelationList, workRelationList, unRelationTotal, findWorkRelateAndChildNum } = workRelation;
     const relationAdd = useRef();
     const [current, setCurrent] = useState(1);
     const [pageText, setPageText] = useState("加载更多")
@@ -74,6 +74,7 @@ const WorkRelationAddModal = (props) => {
                 message.info('添加成功');
                 showAddRelation(false)
             }
+            findWorkRelateAndChildNum(workId)
         })
     }
 
@@ -137,8 +138,16 @@ const WorkRelationAddModal = (props) => {
             <div className="relation-add" ref={relationAdd}>
 
                 <div className="relation-add-model" >
+                    <div className="relation-add-model-top">
+                        <div className="relation-add-table-title">选择事项</div>
+                        <div className="relation-add-submit">
+                            <span className="close-icon" onClick={() => showAddRelation(false)}>
+                               ×
+                            </span>
+                        </div>
+                    </div>
                     <div className="relation-add-search">
-                        <InputSearch style={{ minWidth: "250px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"搜索事项"} />
+                        <InputSearch style={{ minWidth: "150px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"搜索事项"} />
                         <SelectSimple name="workTypeIds"
                             onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
                             title={"事项类型"} ismult={true}
@@ -213,15 +222,10 @@ const WorkRelationAddModal = (props) => {
                                 }
                             </SelectSimple>
                         }
-                        <div className="relation-add-submit">
-                            <span className="close-icon" onClick={() => showAddRelation(false)}>
-                               ×
-                            </span>
-                        </div>
+
 
                     </div>
                     <div className="relation-add-table">
-                        <div className="relation-add-table-title">选择事项</div>
                         {
                             workRelationList && workRelationList.length > 0 ?
                                 <div className="relation-add-list">

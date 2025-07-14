@@ -16,7 +16,7 @@ import "./ProjectAside.scss"
 const { Sider } = Layout;
 
 const ProjectAside = (props) => {
-    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, backUrl, backName, iconName } = props;
+    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, unNeedBottomSet, backUrl, backName, iconName } = props;
 
     const [projectRouter, setProjectRouter] = useState([]);
 
@@ -187,7 +187,9 @@ const ProjectAside = (props) => {
                         />}
                     </div>
 
-                    <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
+                    {
+                        !unNeedBottomSet && <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
+                    }
                     {/* <div className="project-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ? <svg className="project-expend-icon" aria-hidden="true">

@@ -30,7 +30,7 @@
             padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
-            background-color: var(--tiklab-gray-600);
+            background-color: var(--tiklab-gray-800);
             flex: 1;
             flex-shrink: 0;
             height: auto; /* 高度改为自适应 */
@@ -118,7 +118,7 @@
             padding: var(--tiklab-padding);
             background-color: #fff;
             border-radius: 4px;
-            background-color: var(--tiklab-gray-600);
+            background-color: var(--tiklab-gray-800);
             .burn-down {
                 width: calc(100% - 20px);
                 height: calc(100% - 20px);
@@ -135,7 +135,7 @@
         margin-top: 20px;
         &-timeline {
             padding: var(--tiklab-padding);
-            background-color: var(--tiklab-gray-600);
+            background-color: var(--tiklab-gray-800);
             .timeline-item {
                 text-align: center;
                 color: var(--tiklab-blue);

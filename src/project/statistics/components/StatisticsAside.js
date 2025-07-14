@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-20 15:37:52
  */
-import React, { useState, Fragment } from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import "./StatisticsAside.scss"
 import { withRouter } from "react-router-dom";
 import { getVersionInfo } from "tiklab-core-ui";
@@ -22,7 +22,7 @@ const StatisticsAsicde = (props) => {
     const [logMenuList, setLogMenuList] = useState(logReportList)
     const [statisticsFreeVisable, setStatisticsFreeVisable] = useState(false);
     // 选中的菜单
-    const [selectRouter, setSelectRouter] = useState("workItem")
+    const [selectRouter, setSelectRouter] = useState("overview")
     // 已展开子级的计划id集合
     const [expandedTree, setExpandedTree] = useState([])
 
@@ -76,6 +76,10 @@ const StatisticsAsicde = (props) => {
 
     }
 
+    // useEffect(() => {
+    //     selectKey(selectRouter)
+    // }, []);
+
     return (
         <div className="project-statistics-aside">
             <div className="statistics-top-title">
@@ -99,7 +103,7 @@ const StatisticsAsicde = (props) => {
                 </div>
                 <div>
                     {
-                        !isExpandedTree("work") ?
+                        isExpandedTree("work") ?
                             <svg className="svg-icon" aria-hidden="true">
                                 <use xlinkHref="#icon-statistics-down"></use>
                             </svg> :
@@ -112,7 +116,7 @@ const StatisticsAsicde = (props) => {
             </div>
             <Fragment>
                 {
-                    !isExpandedTree("work") && <div className="statistics-menu">
+                    isExpandedTree("work") && <div className="statistics-menu">
                         {
                             workMenuList && workMenuList.map((item, index) => {
                                 return <div key={index}>
@@ -149,7 +153,7 @@ const StatisticsAsicde = (props) => {
                             </div>
                             <div>
                                 {
-                                    !isExpandedTree("log") ?
+                                    isExpandedTree("log") ?
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref="#icon-statistics-down"></use>
                                         </svg> :
@@ -160,7 +164,7 @@ const StatisticsAsicde = (props) => {
                             </div>
                         </div>
                         {
-                            !isExpandedTree("log") && <div className="statistics-menu">
+                            isExpandedTree("log") && <div className="statistics-menu">
                                 {
                                     logMenuList && logMenuList.map((item, index) => {
                                         return <div key={index}>

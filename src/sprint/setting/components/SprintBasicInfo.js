@@ -28,7 +28,7 @@ const SprintBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 20,
+            span: 5,
         },
     };
     const formTailLayout = {
@@ -36,8 +36,7 @@ const SprintBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 18,
-            offset: 4
+            span: 5
         },
     };
     const [form] = Form.useForm();
@@ -162,7 +161,7 @@ const SprintBasicInfo = props => {
                 <svg aria-hidden="true" className="img-icon-right" fill="#fff">
                     <use></use>
                 </svg>
-                迭代图标信息，可见范围，负责人等信息，可点击修改</div>
+                迭代名称、负责人、计划时间、等信息，可点击修改</div>
         </div>
     );
 
@@ -203,6 +202,7 @@ const SprintBasicInfo = props => {
                                     onFinish={onFinish}
                                     onFieldsChange={() => setDisabled(false)}
                                     labelAlign={"left"}
+                                    layout={"vertical"}
                                 >
                                     <Form.Item
                                         label="迭代名称"
@@ -234,7 +234,7 @@ const SprintBasicInfo = props => {
                                         </Select>
                                     </Form.Item>
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
-                                        <RangePicker locale={locale} showTime />
+                                        <RangePicker locale={locale} />
                                     </Form.Item>
                                     <Form.Item
                                         label="迭代描述"

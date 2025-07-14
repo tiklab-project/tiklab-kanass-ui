@@ -19,6 +19,7 @@ import WorkLogPage from "./WorkLogPage";
 import WorkLinkPage from "./WorkLinkPage";
 import {withRouter} from "react-router";
 import WorkCommentInput from "./WorkCommentInput";
+import WorkRelationStore from "../store/WorkRelationStore";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
@@ -26,6 +27,7 @@ const WorkDetailBottom = (props) => {
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
+    const { findWorkRelateAndChildNum } = WorkRelationStore
     // 富文本内容
     
     // 事项类型     
@@ -38,6 +40,7 @@ const WorkDetailBottom = (props) => {
     const path = props.match.path;
 
     useEffect(() => {
+        findWorkRelateAndChildNum(workId);
         if (workInfo) {
             if (workInfo.workTypeCode) {
                 switch (workInfo.workTypeCode) {
@@ -154,6 +157,7 @@ const WorkDetailBottom = (props) => {
                         viewType={viewType}
                         taskType = {taskType}
                         workId={workId}
+                        workRelationStore={WorkRelationStore}
                         {...props} />
                 }
                 {

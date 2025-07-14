@@ -124,7 +124,7 @@ const FirstMenu = (props) => {
             actionIcon: 'log-' + theme + "-active",
         },
         {
-            to: '/statistics/project/memberItem',
+            to: '/statistics/overview',
             title: '统计',
             key: 'statistics',
             icon: 'statistics-' + theme,

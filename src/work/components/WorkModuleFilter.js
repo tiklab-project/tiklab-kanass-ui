@@ -6,20 +6,22 @@ import "./WorkModuleFilter.scss"
 import {searchWorkList, setWorkDeatilInList} from "./WorkSearch";
 import {getUser} from "tiklab-core-ui";
 import {
-    CheckCircleOutlined, DownOutlined,
-    ExclamationCircleOutlined, FolderOpenOutlined,
-    FolderOutlined, PlusOutlined, RightOutlined,
+    DownOutlined, FolderOpenOutlined,
+    FolderOutlined, PlusOutlined,
     ScheduleOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Button, message, Modal, Tree} from "antd";
+import {Button, Input, message, Modal, Tree} from "antd";
 import WorkModuleAddModal from "./WorkModuleAddModal";
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import WorkModuleFilterOperateSelectModal from "./WorkModuleFilterOperateSelectModal";
 const {TreeNode} = Tree;
 
 const WorkModuleFilter = (props) => {
     const { workStore } = props;
-    const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, getWorkConditionPageTree, setTableTitle, setModuleTitle } = workStore;
+    const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList,
+        getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle,
+        viewType, findUserCreateAndTodoWorkNum, workList } = workStore;
     const {findModuleListTree, deleteModule} = ModuleStore
     const [isOpen, setIsOpen] = useState(true);
     const projectId = props.match.params.id ? props.match.params.id : null;
@@ -33,6 +35,11 @@ const WorkModuleFilter = (props) => {
     const [moduleVisible, setModuleVisible] = useState(false);
     const [parentId, setParentId] = useState(null);
     const [moduleSelect, setModuleSelect] = useState(null);
+    const [inputValue, setInputValue] = useState("");
+    const [workNum, setWorkNum] = useState({
+        pending:0,
+        create:0
+    });
 
     const quickFilterList = [
         {
@@ -83,6 +90,18 @@ const WorkModuleFilter = (props) => {
         }
     }
 
+    useEffect(() => {
+        const param = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId,
+            builderId: userId, // 创建人，负责人后端会处理
+        }
+        findUserCreateAndTodoWorkNum(param).then(res =>{
+            setWorkNum(res.data)
+        })
+    }, workList);
+
     /**
      * 获取全部事项
      */
@@ -90,8 +109,10 @@ const WorkModuleFilter = (props) => {
         const initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            versionId: versionId,
             overdue: false,
             builderId: null,
+            assignerId: null,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -111,8 +132,10 @@ const WorkModuleFilter = (props) => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            versionId: versionId,
             overdue: false,
             builderId: null,
+            assignerId: userId,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -133,8 +156,10 @@ const WorkModuleFilter = (props) => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            versionId: versionId,
             overdue: false,
             builderId: null,
+            assignerId: userId,
             pageParam: {
                 pageSize: 20,
                 currentPage: 1,
@@ -155,8 +180,10 @@ const WorkModuleFilter = (props) => {
         let initValues = {
             projectId: projectId,
             sprintId: sprintId,
+            versionId: versionId,
             overdue: false,
             builderId: userId,
+            assignerId: null,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -173,9 +200,12 @@ const WorkModuleFilter = (props) => {
      */
     const getOverdueWorkItem = () => {
         let initValues = {
+            projectId: projectId,
             sprintId: sprintId,
+            versionId: versionId,
             overdue: true,
             builderId: null,
+            assignerId: userId,
             workStatusIds: [],
             pageParam: {
                 pageSize: 20,
@@ -218,14 +248,10 @@ const WorkModuleFilter = (props) => {
 
 
     useEffect(() => {
-        findModuleListTree({projectId: projectId}).then(res => {
-            console.log(res)
-            setTreeList(res.data)
-        });
-        // // 默认选中我创建的
-        // setTableTitle("我创建的")
-        // setQuickFilterValue("creat")
-        // getCreatWorkItem()
+        const param = {
+            projectId: projectId
+        }
+        selectTreeData(param)
 
     }, [moduleVisible]);
 
@@ -237,24 +263,24 @@ const WorkModuleFilter = (props) => {
     const handleAddNodeClick = (id) => {
         setParentId(id);
         setModuleVisible(true);
-        findModuleListTree({projectId: projectId}).then(res => {
+    }
+
+    const selectTreeData = (param) => {
+        findModuleListTree(param).then(res => {
             console.log(res)
             setTreeList(res.data)
         });
     }
 
-    const handleDeleteNodeClick = (id) => {
-        // 先检查是否存在关联的事项
-        deleteModule(id).then(res => {
-            if (res.data === false){
-                message.error("该模块下存在事项无法删除")
-            }
-            findModuleListTree({projectId: projectId}).then(res => {
-                console.log(res)
-                setTreeList(res.data)
-            });
-        });
+    const inputChange = (value) =>{
+        setInputValue(value)
+        const param = {
+            projectId: projectId,
+            moduleName: value
+        }
+        selectTreeData(param);
     }
+
 
     // 点击筛选事件
     const handleNodeClick = (id, moduleName) => {
@@ -275,12 +301,22 @@ const WorkModuleFilter = (props) => {
             }
         }
 
-        getWorkConditionPageTree(param).then(res => {
-            setModuleSelect(id)
-            setModuleTitle(moduleName)
-            setTableTitle(null)
-            setQuickFilterValue("all")
-        })
+        if (viewType === "tree"){
+            getWorkConditionPageTree(param).then(res => {
+                setModuleSelect(id)
+                setModuleTitle(moduleName)
+                setTableTitle(null)
+                setQuickFilterValue("all")
+            })
+        }else if (viewType === "tile"){
+            getWorkConditionPage(param).then(res => {
+                setModuleSelect(id)
+                setModuleTitle(moduleName)
+                setTableTitle(null)
+                setQuickFilterValue("all")
+            })
+        }
+
 
     }
 
@@ -320,15 +356,22 @@ const WorkModuleFilter = (props) => {
                                         <span style={{marginLeft: "5px"}}>{item.moduleName}</span>
                                     </div>
                                     {
-                                        hoverNodeKey === item.id &&
-                                        <div className="module-tree-node-action">
-                                            <div
-                                                onClick={() => handleAddNodeClick(item.id)}
-                                            >
-                                                <PlusOutlined />
+                                        (hoverNodeKey === item.id || moduleSelect === item.id) &&
+                                            <div className="module-tree-node-action">
+                                                <div
+                                                    onClick={() => handleAddNodeClick(item.id)}
+                                                >
+                                                    <PlusOutlined style={{ fontSize: '17px' }}/>
+                                                </div>
+                                                <WorkModuleFilterOperateSelectModal
+                                                    moduleInfo={item}
+                                                    moduleStore={ModuleStore}
+                                                    projectId={projectId}
+                                                    selectTreeData={selectTreeData}
+                                                    handleNodeClick={handleNodeClick}
+                                                />
+                                                {/*<DeleteModal deleteFunction = {handleDeleteNodeClick} id = {item.id} />*/}
                                             </div>
-                                            <DeleteModal deleteFunction = {handleDeleteNodeClick} id = {item.id} />
-                                        </div>
                                     }
 
                                 </div>
@@ -358,7 +401,20 @@ const WorkModuleFilter = (props) => {
                     <div className="work-module-filter-sider">
                         <div className="work-module-filter-sider-top">
                             <div className="work-module-filter-sider-top-title">
-                                事项
+                                <div className="module-search">
+                                    <div className="search-input">
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-search"></use>
+                                        </svg>
+                                        <Input bordered={false} allowClear
+                                               className="module-filter-search-input"
+                                               key={"search"}
+                                               onChange={(value) => inputChange(value.target.value)}
+                                               placeholder="搜索模块"
+                                               value={inputValue}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             {
                                 quickFilterList.map((item, index) => {
@@ -369,7 +425,8 @@ const WorkModuleFilter = (props) => {
                                                 || index === 1 && <UserOutlined />
                                             }
                                             <div className="work-module-filter-sider-top-item-title">
-                                                {item.label}
+                                                <span>{item.label}</span>
+                                                <span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>
                                             </div>
                                         </div>
                                     )
@@ -385,8 +442,14 @@ const WorkModuleFilter = (props) => {
                                 <div className="content-module-title">
                                     模块
                                 </div>
-                                <div style={{marginLeft: "auto",cursor: "pointer"}} onClick={addRootModule}>
-                                    <PlusOutlined />
+                                <div
+                                    style={{
+                                        marginLeft: "auto",
+                                        marginRight: "7px",
+                                        cursor: "pointer",
+                                    }}
+                                     onClick={addRootModule}>
+                                    <PlusOutlined style={{ fontSize: '17px' }}/>
                                 </div>
                             </div>
                             <div className="content-module-tree">

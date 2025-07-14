@@ -33,6 +33,7 @@ const ModuleAddModal = (props) => {
 
 
     useEffect(() => {
+        form.resetFields();
         if (visible) {
             if (type === "edit") {
                 searchModuleById(id).then((res) => {

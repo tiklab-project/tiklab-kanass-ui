@@ -2,19 +2,36 @@
  * 关联事项子tab页 包含 关联事项 子事项 页面
  */
 import {withRouter} from "react-router";
-import {Provider} from "mobx-react";
+import {observer, Provider} from "mobx-react";
 import WorkRelationStore from "../store/WorkRelationStore";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import WorkRelation from "./WorkRelation";
 import WorkChild from "./WorkChild";
 import "./WorkRelationPage.scss"
+import {Space} from "antd";
 
 const WorkRelationPage = (props) => {
+
+    const { workInfo, workTypeText, deep, workId, getTransitionList, setTabValue, viewType, taskType, workRelationStore } = props;
     const store = {
-        workRelation: WorkRelationStore,
+        workRelation: workRelationStore,
         workStore: props.workStore
     }
-    const { workInfo, workTypeText, deep, workId, getTransitionList, setTabValue, viewType, taskType } = props;
+    const { relateAndChildNum } = workRelationStore;
+
+
+    const getNum = (id) => {
+        switch (id) {
+            case 0:
+                return relateAndChildNum.relateNum;
+            case 1:
+                return relateAndChildNum.childNum;
+            case 2:
+                return relateAndChildNum.taskChildNum;
+            default:
+                return 0;
+        }
+    }
 
     const tabValue = [
         {
@@ -47,7 +64,10 @@ const WorkRelationPage = (props) => {
                                         setSelectTab(index);
                                     }}
                                 >
-                                    {item.label}
+                                    <Space>
+                                        <span>{item.label}</span>
+                                        <span>{getNum(item.id)}</span>
+                                    </Space>
                                 </div>
                             );
                         }
@@ -60,7 +80,10 @@ const WorkRelationPage = (props) => {
                                         setSelectTab(index);
                                     }}
                                 >
-                                    {item.label}
+                                    <Space>
+                                        <span>{item.label}</span>
+                                        <span>{getNum(item.id)}</span>
+                                    </Space>
                                 </div>
                             );
                         }
@@ -130,4 +153,4 @@ const WorkRelationPage = (props) => {
     )
 
 }
-export default withRouter(WorkRelationPage);
+export default withRouter(observer(WorkRelationPage));
