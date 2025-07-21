@@ -576,6 +576,7 @@ const WorkFilterHigh = (props) => {
                             </Select>
                         </Form.Item>
                     }
+
                     {
                         moreFilterValue.map(item => {
                             return (
@@ -590,43 +591,27 @@ const WorkFilterHigh = (props) => {
                         })
                     }
 
+                    <div className="workitem-filter-height-more">
+                        <Dropdown
+                            overlay={menu}
+                            visible={dropDownVisible}
+                            onVisibleChange={(visible) => setDropDownVisible(visible)}
+                            trigger={['click']}
+                            placement="bottomLeft"
+                            getPopupContainer={() => heightFilter.current}
+                        >
+                            <Space>
+                                <PlusOutlined />
+                                <span>更多条件</span>
+                            </Space>
 
-                    {/* <Form.Item name="moduleIds" label={labelHidden ? null : "添加条件"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
-                    <Select
-                        mode="multiple"
-                        className="filter-modal-title-select"
-                        value={moreFilterValue}
-                        onChange={(value) => addFilter(value)}
-                        getPopupContainer={() => heightFilter.current}
-                        maxTagCount={0}
-                        style={{ width: "120" }}
-                        placeholder="添加条件"
-                        options={selectArray}
-                    />
-                </Form.Item> */}
-
+                        </Dropdown>
+                    </div>
                 </Form>
             </div>
 
 
             <div className="workitem-filter-height-buttom">
-                <div className="workitem-filter-height-more">
-                    <Dropdown
-                        overlay={menu}
-                        visible={dropDownVisible}
-                        onVisibleChange={(visible) => setDropDownVisible(visible)}
-                        trigger={['click']}
-                        placement="bottomLeft"
-                        getPopupContainer={() => heightFilter.current}
-                    >
-                        <Space>
-                            <PlusOutlined />
-                            <span>更多条件</span>
-                        </Space>
-
-                    </Dropdown>
-                </div>
-
                 <div className="workitem-filter-height-botton">
                     <Button onClick={() => resetFilter()}>重置</Button>
                     <Button onClick={() => setFiltetModal(false)}>取消</Button>

@@ -136,7 +136,7 @@ const setDevRouter= [
         ]
     },
     {
-        title: "集成与开放",
+        title: "集成开放",
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
@@ -486,7 +486,7 @@ const setPrdRouter= [
         ]
     },
     {
-        title: "集成与开放",
+        title: "集成开放",
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",

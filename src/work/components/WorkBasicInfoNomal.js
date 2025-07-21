@@ -1031,7 +1031,7 @@ const WorkBasicInfo = (props) => {
                     visible={moreVisible}
                     onClose={() => setMoreVisible(false)}
                     footer={null}
-                    width={500}
+                    width={400}
                     height={"100%"}
                 >
                     <div className={"work-detail-more-modal"} ref={moreFormRef}>

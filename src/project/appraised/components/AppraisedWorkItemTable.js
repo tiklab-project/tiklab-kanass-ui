@@ -1,6 +1,6 @@
 import AppraisedWorkItemStore from "../store/AppraisedWorkItemStore";
 import React, {useEffect, useState} from 'react';
-import {Col, Row, Space, Table, Tooltip} from "antd";
+import {Col, Progress, Row, Space, Table, Tooltip} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import WorkStore from "../../../work/store/WorkStore";
@@ -25,7 +25,7 @@ const AppraisedWorkItemTable = (props) => {
     const {searchAppraisedWorkItemPage, searchCondition,
         total, setRecordId, deleteAppraisedWorkItem, appraisedWorkItemList} = AppraisedWorkItemStore;
     const {setWorkId, workId} = WorkStore;
-    const {searchAppraisedById} = AppraisedStores;
+    const {searchAppraisedById, status} = AppraisedStores;
 
     // 项目id 评审id
     const projectId = props.match.params.id;
@@ -34,6 +34,8 @@ const AppraisedWorkItemTable = (props) => {
     const [detailVisible, setDetailVisible] = useState(false);
     const [statusVisible, setStatusVisible] = useState(false);
     const [appraised, setAppraised] = useState();
+    const [percent, setPercent] = useState(0);
+    const [percentInfo, setPercentInfo] = useState("0 / 0");
 
     // tab的key
     const [activeTabs, setActiveTabs] = useState("all");
@@ -47,8 +49,18 @@ const AppraisedWorkItemTable = (props) => {
         searchAppraisedById(appraisedId).then(res => {
             // console.log("appraised:     "+JSON.stringify(res));
             setAppraised(res.data);
+            // const number = ((res.data.passAppraisedWorkItemNumber + unPassAppraisedWorkItemNumber) / res.data.allAppraisedWorkItemNumber).toFixed(2);
+            // setPercent(number)
         })
     },[])
+
+    useEffect(() => {
+        if (appraised){
+            setPercent(((appraised.passAppraisedWorkItemNumber + appraised.unPassAppraisedWorkItemNumber) * 100 / appraised.allAppraisedWorkItemNumber).toFixed(2))
+            setPercentInfo((appraised.passAppraisedWorkItemNumber + appraised.unPassAppraisedWorkItemNumber) + " / " + appraised.allAppraisedWorkItemNumber)
+        }
+
+    }, [appraised]);
 
     const onSearch  = (value) => {
         searchTable({workItemTitle: value})
@@ -64,8 +76,7 @@ const AppraisedWorkItemTable = (props) => {
     const appraisedWorkItemState = {
         "0":"待评审",
         "1":"通过",
-        "2":"不通过",
-        "3":"建议"
+        "2":"不通过"
 
     }
 
@@ -80,19 +91,16 @@ const AppraisedWorkItemTable = (props) => {
     }
 
     const goAppraisedStatus = (record) => {
-        console.log("点击status：  " + record.id)
         setRecordId(record.id);
-        // setWorkId(record.workItem.id)
         const pathname = props.match.url;
-        // setSessionStorage("detailCrumbArray", [{ id: record.workItem.id, code: record.workItem.code, title: record.workItem.title, iconUrl: record.workItem.workTypeSys.iconUrl }])
         props.history.push(`${pathname}/${record.id}`)
         setStatusVisible(true);
 
     }
 
-    const getState = (state, record) => {
+    const getState = (state) => {
         if (state === "0"){
-            return<Space onClick={() => goAppraisedStatus(record)}>
+            return<Space>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-unAppraised"></use>
                 </svg>
@@ -102,7 +110,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "1"){
-            return<Space onClick={() => goAppraisedStatus(record)}>
+            return<Space>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-pass"></use>
                 </svg>
@@ -112,7 +120,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "2"){
-            return<Space onClick={() => goAppraisedStatus(record)}>
+            return<Space>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-unPass"></use>
                 </svg>
@@ -122,7 +130,7 @@ const AppraisedWorkItemTable = (props) => {
             </Space>
         }
         if (state === "3"){
-            return<Space onClick={() => goAppraisedStatus(record)}>
+            return<Space>
                 <svg className="icon-20" aria-hidden="true">
                     <use xlinkHref="#icon-advice"></use>
                 </svg>
@@ -131,6 +139,31 @@ const AppraisedWorkItemTable = (props) => {
                 </div>
             </Space>
         }
+    }
+
+    const getAppraisedState = (state) => {
+        return <div className={`appraised-status ${setStatuStyle(state)}`}>
+            {status[Number(state)]?.name}
+        </div>
+    }
+
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "0":
+                name = "appraised-status-todo";
+                break;
+            case "1":
+                name = "appraised-status-process";
+                break;
+            case "2":
+                name = "appraised-status-done";
+                break;
+            default:
+                name = "appraised-status-process";
+                break;
+        }
+        return name;
     }
 
     const columns=[
@@ -189,11 +222,11 @@ const AppraisedWorkItemTable = (props) => {
             ellipsis: true,
             width: "15%",
             render: (text, record) =>
-                getState(record.workItemAppraisedState, record)
-                // <div className={`appraised-status ${record.workItemAppraisedState === 1}`}>
-                //     appraisedWorkItemState[record?.workItemAppraisedState]?.name
-                // </div>
-
+                <Space onClick={() => goAppraisedStatus(record)} style={{cursor: "pointer"}}>
+                    {
+                        getState(record.workItemAppraisedState)
+                    }
+                </Space>
         },
         {
             title: "操作",
@@ -246,11 +279,6 @@ const AppraisedWorkItemTable = (props) => {
         {
             title: '未通过',
             key: 'unPass',
-            icon: "programconcern"
-        },
-        {
-            title: '建议',
-            key: 'advice',
             icon: "programconcern"
         }
     ]
@@ -315,6 +343,46 @@ const AppraisedWorkItemTable = (props) => {
                             </svg>
                             <p className="appraised-title">{appraised?.name}</p>
                             <Button onClick={handleAddClick} buttonText={"关联需求"} />
+                        </div>
+                        <div className="appraised-top-info">
+                            <div className="top-info-content">
+                                <div className="left-info">
+                                    <div className="info-title">状态：</div>
+                                    <div>{getAppraisedState(appraised?.appraisedState)}</div>
+                                    <div className="info-title">负责人：</div>
+                                    <div>{appraised?.master.nickname}</div>
+                                    <div className="info-title">开始时间：</div>
+                                    <div>{appraised?.startTime.slice(0, 10)}</div>
+                                    <div className="info-title">结束时间：</div>
+                                    <div>{appraised?.endTime.slice(0, 10)}</div>
+                                    <div className="info-title">描述：</div>
+                                    <div style={{gridColumn: "2 / -1"}}>{appraised?.description ? appraised?.description : "-"}</div>
+                                </div>
+                                <div className="right-progress">
+                                    <div className="info-title">评审进度</div>
+                                    <div style={{margin: "10px 0"}}>
+                                        <Progress
+                                            percent={percent}
+                                            status={"normal"}
+                                            format={() => `${percentInfo}`}
+                                        />
+                                    </div>
+                                    <div className="progress-info">
+                                        {/*<div>*/}
+                                        {/*    <div className="info-title">通过：</div>*/}
+                                        {/*    <div>{appraised?.passAppraisedWorkItemNumber}</div>*/}
+                                        {/*</div>*/}
+                                        <div className="progress-info-content">
+                                            <div className="info-title">未审批：</div>
+                                            <div>{appraised?.allAppraisedWorkItemNumber - appraised?.passAppraisedWorkItemNumber - appraised?.unPassAppraisedWorkItemNumber}</div>
+                                        </div>
+                                        <div className="progress-info-content">
+                                            <div className="info-title">所有：</div>
+                                            <div>{appraised?.allAppraisedWorkItemNumber}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="appraised-filter">
                             <div className="appraised-tabs">

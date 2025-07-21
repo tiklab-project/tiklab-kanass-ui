@@ -1,5 +1,8 @@
 .work-log {
     margin-bottom: 20px;
+
+    //width: 70%;
+
     .worklog-top {
         display: flex;
         //justify-content: space-between;
@@ -26,6 +29,9 @@
     }
 
     .work-log-list{
+
+        //width: 70%;
+
         margin-bottom: 10px;
     }
 
@@ -66,6 +72,10 @@
                 gap: 10px;
              
             }
+            .log-action {
+                display: flex;
+                justify-content: right;
+            }
         }
         .work-log-item-second {
             //display: flex;
@@ -74,10 +84,13 @@
             margin-left: 32px;
             .log-content {
                 line-height: 30px;
-            }
-            .log-action {
-                display: flex;
-                justify-content: right;
+                text-overflow: ellipsis;
+                //white-space: nowrap;
+                overflow: hidden;
+
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
             }
         }
     }

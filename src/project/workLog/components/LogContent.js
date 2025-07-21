@@ -7,6 +7,7 @@
  * @LastEditTime: 2024-12-27 15:01:33
  */
 import React, { useEffect } from "react";
+import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
 import { Table, Row, Col, Space } from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -40,6 +41,7 @@ const LogContent = (props) => {
     const [logDetailVisable, setLogDetailVisable] = useState(false);
     // 点击显示详情的日志id
     const [logId, setLogId] = useState()
+    const [inProject, setInProject] = useState(false)
     const projectId = props.match.params.id;
 
     /**
@@ -47,7 +49,9 @@ const LogContent = (props) => {
     */
     useEffect(() => {
         getList()
-
+        if (props.route.path === "/project/:id/log"){
+            setInProject(true)
+        }
         return;
     }, [])
 
@@ -87,7 +91,63 @@ const LogContent = (props) => {
         setListIndex(index)
     }
 
-    const columns = [
+    const projectWorkLogcolumns = [
+        {
+            title: "工作内容",
+            dataIndex: "workContent",
+            key: "workContent",
+            align: "left",
+            width: "40%",
+            ellipsis: true,
+            render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="worklog-content">
+                {text}
+            </div>,
+        },
+        {
+            title: "用时",
+            dataIndex: "takeupTime",
+            key: "takeupTime",
+            align: "left",
+            width: "7%"
+        },
+        {
+            title: "事项",
+            dataIndex: ["workItem", "title"],
+            key: "workItem",
+            align: "left",
+            width: "30%",
+            render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
+                <ImgComponent
+                    src={record.workItem.workTypeSys?.iconUrl}
+                    alt=""
+                    className="icon-15"
+                />
+                <div className="work-name-text">{text}</div>
+            </Space>,
+        },
+        {
+            title: "负责人",
+            dataIndex: ["user", "nickname"],
+            key: "user",
+            align: "left",
+            width: "10%",
+            render: (text, record, index) => <Space>
+                <UserIcon userInfo={record.workItem.assigner} name={record.workItem.assigner?.nickname} />
+                {text}
+            </Space>,
+        },
+        {
+            title: "记录日期",
+            dataIndex: "workDate",
+            key: "workDate",
+            align: "left",
+            width: "10%",
+            render: (text, record, index) => <div>
+                {text?.slice(0, 10)}
+            </div>,
+        },
+    ];
+    const workLogcolumns = [
         {
             title: "工作内容",
             dataIndex: "workContent",
@@ -244,7 +304,7 @@ const LogContent = (props) => {
                     </div>
                     <Table
                         className="log-table"
-                        columns={columns}
+                        columns={inProject ? projectWorkLogcolumns : workLogcolumns}
                         dataSource={logList}
                         rowKey={(record) => record.id}
                         onChange={changePage}
@@ -279,4 +339,4 @@ const LogContent = (props) => {
 
     )
 }
-export default observer(LogContent);
+export default withRouter(observer(LogContent));

@@ -93,11 +93,35 @@
             display: flex;
             overflow-wrap: anywhere;
             gap: 15px;
+            align-items: center;
         }
     }
     .log-submit-botton {
         display: flex;
         align-items: center;
         gap: 15px;
+    }
+
+    .log-percent {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 6px;
+        width: 75%;
+        background: #ebeef5;
+        border-radius: 10px;
+
+        .log-percent-blue {
+            height: 6px;
+            background-color: var(--tiklab-blue);
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+        .log-percent-red {
+            height: 6px;
+            background-color: #ff0000;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
     }
 }

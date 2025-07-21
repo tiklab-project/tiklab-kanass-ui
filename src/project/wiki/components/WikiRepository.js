@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:36:48
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Space, Row, Col, Alert } from "antd";
+import {Table, Space, Row, Col, Alert, Empty, Input} from "antd";
 import { observer, Provider } from "mobx-react";
 import Button from "../../../common/button/Button";
 import "./wikiRepository.scss";
@@ -31,12 +31,19 @@ const WikiRepository = (props) => {
 
     const projectId = props.match.params.id;
     const [swardUrl, setSwardUrl] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+    const [totalPage, setTotalPage] = useState(1);
+    const [total, setTotal] = useState(0);
 
     // 初始化
     useEffect(() => {
-        findWorkItemDocumentPage({ projectId: projectId }).then(res => {
+        findWorkItemDocumentPage({
+            projectId: projectId,
+            name: ""
+        }).then(res => {
             if (res.code === 0) {
-                console.log(res.data)
+                setTotalPage(res.data.totalPage)
+                setTotal(res.data.totalRecord)
             }
 
         })
@@ -70,7 +77,10 @@ const WikiRepository = (props) => {
     const delectRepository = (id) => {
         deleteWorkItemDocument({ id: id }).then((data) => {
             if (data.code === 0) {
-                findWorkItemDocumentPage()
+                findWorkItemDocumentPage().then(res => {
+                    setTotalPage(res.data.totalPage)
+                    setTotal(res.data.totalRecord)
+                })
             }
         })
     }
@@ -143,11 +153,30 @@ const WikiRepository = (props) => {
         }
         findWorkItemDocumentPage(value).then(res => {
             if (res.code === 0) {
-                console.log(res.data)
+                setTotalPage(res.data.totalPage)
+                setTotal(res.data.totalRecord)
             }
 
         })
         console.log(currentPage)
+    }
+
+    const inputChange = (value) => {
+        setInputValue(value)
+        const param = {
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            },
+            name: value
+        }
+        findWorkItemDocumentPage(param).then(res => {
+            if (res.code === 0) {
+                setTotalPage(res.data.totalPage)
+                setTotal(res.data.totalRecord)
+            }
+
+        })
     }
 
     const workDocument = useRef(null)
@@ -159,14 +188,7 @@ const WikiRepository = (props) => {
                     <div className="wiki-repository-list">
                         <div style={{marginBottom:"24px"}}>
                             <Breadcumb firstText="文档">
-                                <span
-                                    className="link-text"
-                                    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
-                                    style={{cursor: 'pointer'}}
-                                >
-                                    <SettingOutlined style={{marginRight: '5px'}}/>
-                                    关联知识库
-                                </span>
+
                             </Breadcumb>
                         </div>
 
@@ -187,6 +209,30 @@ const WikiRepository = (props) => {
                         }
 
                         <div ref={workDocument}>
+                            <div className="wiki-table-top">
+                                <div className="search-input">
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-search"></use>
+                                    </svg>
+                                    <Input bordered={false} allowClear
+                                           className="work-relation-search-input"
+                                           key={"search"}
+                                           onChange={(value) => inputChange(value.target.value)}
+                                           placeholder="搜索文档"
+                                           value={inputValue}
+                                    />
+                                </div>
+                                <div className="top-operate">
+                                    <span
+                                        className="link-text"
+                                        onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
+                                        style={{cursor: 'pointer'}}
+                                    >
+                                        <SettingOutlined style={{marginRight: '5px'}}/>
+                                        {/*关联知识库*/}
+                                    </span>
+                                </div>
+                            </div>
                             <Table
                                 columns={documentColumns}
                                 dataSource={documentList}
@@ -194,11 +240,17 @@ const WikiRepository = (props) => {
                                 pagination={false}
                                 onChange={false}
                                 scroll={{x: "100%"}}
+                                locale={{
+                                    emptyText: (
+                                        <Empty description={"暂无数据"}/>
+                                    )
+                                }}
                             />
                             <PaginationCommon
                                 currentPage={documentCondition.pageParam.currentPage}
                                 changePage={(currentPage) => changePage(currentPage)}
-                                totalPage={documentCondition.pageParam.totalPage}
+                                totalPage={totalPage}
+                                total={total}
                             />
                         </div>
 

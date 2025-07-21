@@ -43,6 +43,7 @@ const WorkChild = (props) => {
     const { getWorkChildList, deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
     const [childWorkList, setChildWorkList] = useState([]);
     const [demandId, setDemand] = useState();
+    const [inputValue, setInputValue] = useState("");
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const project = workInfo?.project;
@@ -88,6 +89,15 @@ const WorkChild = (props) => {
                 setChildWorkList(res.data)
             }
 
+        })
+    }
+
+    const inputChange = (value) => {
+        setInputValue(value)
+        getWorkChildList({title: value}).then((res) => {
+            if (res.code === 0) {
+                setChildWorkList(res.data)
+            }
         })
     }
     
@@ -301,7 +311,23 @@ const WorkChild = (props) => {
     return (<Provider {...store}>
         <div className="work-child">
             <div className="child-top">
-                {/*<div className="child-top-title">共{childWorkList?.length}条</div>*/}
+                <div className="child-top-title">
+                    {/*<div className="search-input">*/}
+                    {/*    <svg className="svg-icon" aria-hidden="true">*/}
+                    {/*        <use xlinkHref="#icon-search"></use>*/}
+                    {/*    </svg>*/}
+                    {/*    <Input bordered={false} allowClear*/}
+                    {/*           className="work-child-search-input"*/}
+                    {/*           key={"search"}*/}
+                    {/*           onChange={(value) => inputChange(value.target.value)}*/}
+                    {/*           placeholder="搜索事项"*/}
+                    {/*           value={inputValue}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
+                    <svg className="icon-22" aria-hidden="true" style={{ cursor: "pointer" }} onClick={findWorkChildList}>
+                        <use xlinkHref="#icon-refresh"></use>
+                    </svg>
+                </div>
                 {
                     !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">

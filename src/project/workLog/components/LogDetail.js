@@ -32,6 +32,7 @@ const LogDetail = (props) => {
     // 进度
     const [progressPercent, setProgressPercent] = useState(0)
     const [overPercent, setOverPercent] = useState(0)
+    const [totalPercent, setTotalPercent] = useState(0)
     const [edit, setEdit] = useState(false)
     // 登录人id
     const userId = getUser().userId;
@@ -93,9 +94,11 @@ const LogDetail = (props) => {
                         setOverPercent((overPress * 100).toFixed(2))
                         const uerPress = estimateTime / (surplusTime + usedTime);
                         setProgressPercent((uerPress * 100).toFixed(2))
+                        setTotalPercent((overPress*100 + uerPress*100).toFixed(2))
                     } else {
                         const uerPress = usedTime / estimateTime;
                         setProgressPercent((uerPress * 100).toFixed(2))
+                        setTotalPercent((uerPress * 100).toFixed(2))
                     }
                 }
 
@@ -160,6 +163,40 @@ const LogDetail = (props) => {
         })
     }
 
+    // 使用 useRef 存储定时器
+    const timerRef = useRef(null);
+
+    // 清除定时器的函数
+    const clearTimer = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    };
+
+    // 统一的鼠标移出处理
+    const handleMouseLeave = (field) => {
+        // 设置200ms延迟后再执行
+        timerRef.current = setTimeout(() => {
+            setEdit(null);
+            submit();
+        }, 200);
+    };
+
+    // 统一的鼠标移入处理
+    const handleMouseEnter = (field) => {
+        // 如果已经有定时器，先清除
+        clearTimer();
+        setEdit(field);
+    };
+
+    // 在组件卸载时清除定时器
+    useEffect(() => {
+        return () => {
+            clearTimer();
+        };
+    }, []);
+
     return (
         <div ref={logDetailRef}>
             <Drawer
@@ -172,45 +209,45 @@ const LogDetail = (props) => {
                 className="log-detail-drawer"
                 getContainer={false}
             >
-                <div className="work-log-static">
-                    <div className="log-static-item">
-                        <div className="log-static-item-title">预估工时</div>
-                        <div className="log-static-item-num">{workItem?.estimateTime} <span className="unit">小时</span></div>
-                    </div>
-                    <div className="log-static-item">
-                        <div className="log-static-item-title">已记录</div>
-                        <div className="log-static-item-num">{workItem?.usedTime} <span className="unit">小时</span></div>
-                    </div>
-                    <div className="log-static-item">
-                        <div className="log-static-item-title">剩余工时</div>
-                        <div className="log-static-item-num">{workItem?.surplusTime} <span className="unit">小时</span></div>
-                    </div>
-                    <div className="log-static-progress">
-                        <div className="log-static-item-title">进度</div>
-                        <div className="log-static-item-num">
-                            <div className="log-percent">
-                                <div
-                                    className="log-percent-blue"
-                                    style={{
-                                        width: `${progressPercent}%`,
-                                        borderBottomRightRadius: overPercent <= 0 ? '6px' : '0px',
-                                        borderTopRightRadius: overPercent <= 0 ? '6px' : '0px'
-                                    }}
-                                ></div>
-                                <div
-                                    className="log-percent-red"
-                                    style={{
-                                        width: `${overPercent}%`,
-                                        borderBottomLeftRadius: progressPercent <= 0 ? '6px' : '0px',
-                                        borderTopLeftRadius: progressPercent <= 0 ? '6px' : '0px'
-                                    }}
-                                >
+                {/*<div className="work-log-static">*/}
+                {/*    <div className="log-static-item">*/}
+                {/*        <div className="log-static-item-title">预估工时</div>*/}
+                {/*        <div className="log-static-item-num">{workItem?.estimateTime} <span className="unit">小时</span></div>*/}
+                {/*    </div>*/}
+                {/*    <div className="log-static-item">*/}
+                {/*        <div className="log-static-item-title">已记录</div>*/}
+                {/*        <div className="log-static-item-num">{workItem?.usedTime} <span className="unit">小时</span></div>*/}
+                {/*    </div>*/}
+                {/*    <div className="log-static-item">*/}
+                {/*        <div className="log-static-item-title">剩余工时</div>*/}
+                {/*        <div className="log-static-item-num">{workItem?.surplusTime} <span className="unit">小时</span></div>*/}
+                {/*    </div>*/}
+                {/*    <div className="log-static-progress">*/}
+                {/*        <div className="log-static-item-title">进度</div>*/}
+                {/*        <div className="log-static-item-num">*/}
+                {/*            <div className="log-percent">*/}
+                {/*                <div*/}
+                {/*                    className="log-percent-blue"*/}
+                {/*                    style={{*/}
+                {/*                        width: `${progressPercent}%`,*/}
+                {/*                        borderBottomRightRadius: overPercent <= 0 ? '6px' : '0px',*/}
+                {/*                        borderTopRightRadius: overPercent <= 0 ? '6px' : '0px'*/}
+                {/*                    }}*/}
+                {/*                ></div>*/}
+                {/*                <div*/}
+                {/*                    className="log-percent-red"*/}
+                {/*                    style={{*/}
+                {/*                        width: `${overPercent}%`,*/}
+                {/*                        borderBottomLeftRadius: progressPercent <= 0 ? '6px' : '0px',*/}
+                {/*                        borderTopLeftRadius: progressPercent <= 0 ? '6px' : '0px'*/}
+                {/*                    }}*/}
+                {/*                >*/}
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 {
                     logDetail && <div className="log-detail">
                         <div className="log-detail-item">
@@ -218,7 +255,7 @@ const LogDetail = (props) => {
                                 <div>所属事项</div>
                                 {
                                     userId === logDetail.user.id && <div className="log-edit" onClick={() => setEdit(true)}>
-                                        <EditOutlined style={{ fontSize: "16px", color: "var(--tiklab-gray-500)" }} />
+                                        {/*<EditOutlined style={{ fontSize: "16px", color: "var(--tiklab-gray-500)" }} />*/}
                                     </div>
                                 }
                             </div>
@@ -228,20 +265,18 @@ const LogDetail = (props) => {
                             <div className="log-detail-label">所属项目</div>
                             <div className="log-detail-content">{logDetail?.project?.projectName}</div>
                         </div>
+
                         <div className="log-detail-item">
-                            <div className="log-detail-label">登记人</div>
-                            <div className="log-detail-content">{logDetail?.user?.nickname}</div>
-                        </div>
-                        <div className="log-detail-item">
-                            <div className="log-detail-label">登记时间</div>
-                            <div className="log-detail-content">{logDetail?.workDate}</div>
+                            <div className="log-detail-label">预估工时</div>
+                            <div className="log-detail-content">{workItem?.estimateTime}</div>
                         </div>
 
                         <div className="log-detail-item">
                             <div className="log-detail-label">登记工时 / 剩余工时</div>
                             {
-                                edit ?
-                                    <div>
+                                edit === "time" ?
+                                    <div onMouseLeave={() => handleMouseLeave("time")}
+                                         onMouseEnter={() => clearTimer()}>
                                         <Input
                                             suffix="小时"
                                             type="number"
@@ -258,60 +293,72 @@ const LogDetail = (props) => {
                                         />
                                     </div>
                                     :
-                                    <div className="log-detail-content">
+                                    <div className="log-detail-content" onMouseEnter={() => handleMouseEnter("time")}>
                                         <div>{logDetail?.takeupTime}  小时</div>
                                         <div>{workItem?.surplusTime}  小时</div>
                                     </div>
                             }
                         </div>
-                        {/*<div className="log-detail-item">*/}
-                        {/*    <div className="log-detail-label">登记工时</div>*/}
-                        {/*    {*/}
-                        {/*        edit ? <Input*/}
-                        {/*            suffix="小时"*/}
-                        {/*            type="number"*/}
-                        {/*            style={{ width: "100px" }}*/}
-                        {/*            value={takeupTime}*/}
-                        {/*            onChange={(value) => changeTakeupTime(value)}*/}
-                        {/*        />*/}
-                        {/*            :*/}
-                        {/*            <div className="log-detail-content">{logDetail?.takeupTime}</div>*/}
-                        {/*    }*/}
-                        {/*</div>*/}
-                        {/*<div className="log-detail-item">*/}
-                        {/*    <div className="log-detail-label">剩余时间</div>*/}
-                        {/*    {*/}
-                        {/*        edit ? <Input*/}
-                        {/*            suffix="小时"*/}
-                        {/*            type="number"*/}
-                        {/*            style={{ width: "100px" }}*/}
-                        {/*            value={surplusTime}*/}
-                        {/*            onChange={(value) => changeSurplusTime(value)}*/}
-                        {/*        />*/}
-                        {/*            :*/}
-                        {/*            <div className="log-detail-content">{workItem?.surplusTime}</div>*/}
-                        {/*    }*/}
-                        {/*</div>*/}
+
+                        <div className="log-detail-item">
+                            <div className="log-detail-label">进度</div>
+                            <div className="log-detail-content">
+                                <div className="log-percent">
+                                    <div
+                                        className="log-percent-blue"
+                                        style={{
+                                            width: `${progressPercent}%`,
+                                            borderBottomRightRadius: overPercent <= 0 ? '6px' : '0px',
+                                            borderTopRightRadius: overPercent <= 0 ? '6px' : '0px'
+                                        }}
+                                    />
+                                    <div
+                                        className="log-percent-red"
+                                        style={{
+                                            width: `${overPercent}%`,
+                                            borderBottomLeftRadius: progressPercent <= 0 ? '6px' : '0px',
+                                            borderTopLeftRadius: progressPercent <= 0 ? '6px' : '0px'
+                                        }}
+                                    />
+                                </div>
+                                <span>{totalPercent}%</span>
+                            </div>
+                        </div>
+
                         <div className="log-detail-item">
                             <div className="log-detail-label">工作内容</div>
                             {
-                                edit ?
+                                edit === "content" ?
 
-                                    <TextArea
-                                        rows={3}
-                                        value={workContent}
-                                        onChange={(value) => setWorkContent(value.target.value)}
-                                    />
+                                    <div onMouseLeave={() => handleMouseLeave("content")}
+                                         onMouseEnter={() => clearTimer()}>
+                                        <TextArea
+                                            rows={3}
+                                            value={workContent}
+                                            onChange={(value) => setWorkContent(value.target.value)}
+                                        />
+                                    </div>
                                     :
-                                    <div className="log-detail-content">{logDetail?.workContent}</div>
+                                    <div className="log-detail-content" onMouseEnter={() => handleMouseEnter("content")}>{logDetail?.workContent}</div>
                             }
                         </div>
-                        {
-                            edit && <div className="log-submit-botton">
-                                <Button onClick = {() => setEdit(false)}> 取消 </Button>
-                                <Button type="primary" onClick = {() => submit()}> 确定 </Button>
-                            </div>
-                        }
+
+                        {/*{*/}
+                        {/*    edit && <div className="log-submit-botton">*/}
+                        {/*        <Button onClick = {() => setEdit(false)}> 取消 </Button>*/}
+                        {/*        <Button type="primary" onClick = {() => submit()}> 确定 </Button>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
+
+                        <div className="log-detail-item">
+                            <div className="log-detail-label">登记人</div>
+                            <div className="log-detail-content">{logDetail?.user?.nickname}</div>
+                        </div>
+                        <div className="log-detail-item">
+                            <div className="log-detail-label">登记时间</div>
+                            <div className="log-detail-content">{logDetail?.workDate}</div>
+                        </div>
+
 
                     </div>
                 }

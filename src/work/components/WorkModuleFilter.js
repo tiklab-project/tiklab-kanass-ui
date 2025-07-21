@@ -32,6 +32,7 @@ const WorkModuleFilter = (props) => {
     const [treeList ,setTreeList] = useState([]);
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [hoverNodeKey, setHoverNodeKey] = useState(null);
+    const [hoverTitle, setHoverTitle] = useState(false);
     const [moduleVisible, setModuleVisible] = useState(false);
     const [parentId, setParentId] = useState(null);
     const [moduleSelect, setModuleSelect] = useState(null);
@@ -349,11 +350,11 @@ const WorkModuleFilter = (props) => {
                                     <div className="module-tree-node-title">
                                         {
                                             isExpand ?
-                                                <FolderOpenOutlined />
+                                                <FolderOpenOutlined style={{ fontSize: '17px' }} />
                                                 :
-                                                <FolderOutlined />
+                                                <FolderOutlined style={{ fontSize: '17px' }} />
                                         }
-                                        <span style={{marginLeft: "5px"}}>{item.moduleName}</span>
+                                        <span style={{marginLeft: "8px"}}>{item.moduleName}</span>
                                     </div>
                                     {
                                         (hoverNodeKey === item.id || moduleSelect === item.id) &&
@@ -399,30 +400,31 @@ const WorkModuleFilter = (props) => {
             {
                 isOpen ?
                     <div className="work-module-filter-sider">
-                        <div className="work-module-filter-sider-top">
-                            <div className="work-module-filter-sider-top-title">
-                                <div className="module-search">
-                                    <div className="search-input">
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-search"></use>
-                                        </svg>
-                                        <Input bordered={false} allowClear
-                                               className="module-filter-search-input"
-                                               key={"search"}
-                                               onChange={(value) => inputChange(value.target.value)}
-                                               placeholder="搜索模块"
-                                               value={inputValue}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="work-module-filter-sider-top" style={{ paddingTop: "10px" }}>
+                            {/*<div className="work-module-filter-sider-top-title">*/}
+                                {/*<div className="module-search">*/}
+                                {/*    <div className="search-input">*/}
+                                {/*        <svg className="svg-icon" aria-hidden="true">*/}
+                                {/*            <use xlinkHref="#icon-search"></use>*/}
+                                {/*        </svg>*/}
+                                {/*        <Input bordered={false} allowClear*/}
+                                {/*               className="module-filter-search-input"*/}
+                                {/*               key={"search"}*/}
+                                {/*               onChange={(value) => inputChange(value.target.value)}*/}
+                                {/*               placeholder="搜索模块"*/}
+                                {/*               value={inputValue}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*事项*/}
+                            {/*</div>*/}
                             {
                                 quickFilterList.map((item, index) => {
                                     return (
                                         <div className={`work-module-filter-sider-top-item ${quickFilterValue === item.value ? "work-module-filter-sider-top-item-active" : ""}`} onClick={() => getWorkStatusRangeWorkItem(item.value, item.label)}>
                                             {
-                                                index === 0 && <ScheduleOutlined />
-                                                || index === 1 && <UserOutlined />
+                                                index === 0 && <ScheduleOutlined style={{fontSize: "16px"}} />
+                                                || index === 1 && <UserOutlined style={{fontSize: "16px"}} />
                                             }
                                             <div className="work-module-filter-sider-top-item-title">
                                                 <span>{item.label}</span>
@@ -434,13 +436,19 @@ const WorkModuleFilter = (props) => {
                             }
                         </div>
                         <div className="work-module-filter-sider-content">
-                            <div className="content-module-head" onClick={(e) => {
-                                e.stopPropagation()
-                                handleNodeClick(null, null)
-                            }}>
-                                <FolderOutlined />
+                            <div className="content-module-head"
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleNodeClick(null, null)
+                                }}
+                                 onMouseEnter={() => setHoverTitle(true)}
+                                 onMouseLeave={() => setHoverTitle(false)}
+                            >
+                                <svg className="icon-18" aria-hidden="true">
+                                    <use xlinkHref="#icon-module"></use>
+                                </svg>
                                 <div className="content-module-title">
-                                    模块
+                                    所有事项
                                 </div>
                                 <div
                                     style={{
@@ -448,8 +456,8 @@ const WorkModuleFilter = (props) => {
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                     onClick={addRootModule}>
-                                    <PlusOutlined style={{ fontSize: '17px' }}/>
+                                    onClick={addRootModule}>
+                                    <PlusOutlined style={{ fontSize: '17px' }} />
                                 </div>
                             </div>
                             <div className="content-module-tree">

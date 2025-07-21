@@ -137,5 +137,21 @@ export class AppraisedStore {
         return data;
     }
 
+    /**
+     * 根据id查找评审
+     * @returns
+     * @param id
+     */
+    @action
+    searchAppraisedAndWorkItemNumById = async (id) => {
+        const param = new FormData()
+        param.append("id", id)
+        const data = await Service("/appraised/findAppraisedAndWorkItemNum", param);
+        if (data.code === 0) {
+            this.appraisedItem = data.data;
+        }
+        return data;
+    }
+
 }
 export default new AppraisedStore();

@@ -15,6 +15,7 @@ import { applyJump } from "tiklab-core-ui";
 import WorkTestStore from "../store/WorkTestStore";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
+import WorkTestCaseCreateDropDown from "./WorkTestCaseCreateDropDown";
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore
@@ -151,7 +152,10 @@ const WorkTestCaseList = (props) => {
         <div className="work-testcase" ref={workTestCase}>
             <div className="testcase-top">
                 <div className="testcase-top-title">共{testCaseList.length}个</div>
-                <div className="child-top-botton">
+                <div className="testcase-top-botton">
+                    {/*<WorkPrivilegeComponent workId={workId} code="WorkTestAdd">*/}
+                    {/*    <WorkTestCaseCreateDropDown/>*/}
+                    {/*</WorkPrivilegeComponent>*/}
                     <WorkPrivilegeComponent workId={workId} code="WorkTestAdd">
                         <Button
                             style={{
@@ -165,7 +169,7 @@ const WorkTestCaseList = (props) => {
                             <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
                                 <use xlinkHref="#icon-add2"></use>
                             </svg>
-                            添加用例
+                            关联用例
                         </Button>
                     </WorkPrivilegeComponent>
 

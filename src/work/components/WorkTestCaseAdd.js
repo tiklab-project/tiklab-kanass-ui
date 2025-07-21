@@ -51,7 +51,7 @@ const WorkTestCaseAddmodal = (props) => {
                             name: "",
                             repositoryId: null,
                             pageParam: {
-                                pageSize: 10,
+                                pageSize: 5,
                                 currentPage: 1
                             }
                         }).then((data) => {
@@ -94,7 +94,7 @@ const WorkTestCaseAddmodal = (props) => {
             title: "标题",
             dataIndex: "testCaseName",
             key: "title",
-            width: 150,
+            width: "25%",
             render: (text, record) => (
                 <div className="testCase-add-table-item">
                     {text}
@@ -105,7 +105,7 @@ const WorkTestCaseAddmodal = (props) => {
             title: "模块",
             dataIndex: "testCategoryName",
             key: "testCategoryName",
-            width: 150,
+            width: "20%",
             render: (text, record) => (
                 <div className="testCase-add-table-item">
                     {text}
@@ -116,17 +116,17 @@ const WorkTestCaseAddmodal = (props) => {
             title: "项目",
             dataIndex: ["repository", "name"],
             key: "repository",
-            width: 150
+            width: "10%"
         },
         {
             title: "负责人",
             dataIndex: "createUser",
             key: "createUser",
-            width: 150
+            width: "10%"
         },
         {
             title: '操作',
-            width: "60",
+            width: "10%",
             key: 'action',
             render: (text, record) => (
                 <div style={{ display: "flex", gap: "15px" }}>
@@ -166,7 +166,7 @@ const WorkTestCaseAddmodal = (props) => {
             params = {
                 repositoryIds: [value?.value],
                 pageParam: {
-                    pageSize: 10,
+                    pageSize: 5,
                     currentPage: 1
                 }
             }
@@ -174,7 +174,7 @@ const WorkTestCaseAddmodal = (props) => {
             params = {
                 repositoryIds: repositoryallIdList,
                 pageParam: {
-                    pageSize: 10,
+                    pageSize: 5,
                     currentPage: 1
                 }
             }
@@ -197,7 +197,7 @@ const WorkTestCaseAddmodal = (props) => {
         const categoryQuery = {
             creatUserId: value.value,
             pageParam: {
-                pageSize: 10,
+                pageSize: 5,
                 currentPage: 1
             }
         }
@@ -214,7 +214,7 @@ const WorkTestCaseAddmodal = (props) => {
         const categoryQuery = {
             name: value,
             pageParam: {
-                pageSize: 10,
+                pageSize: 5,
                 currentPage: 1
             }
         }
@@ -272,7 +272,7 @@ const WorkTestCaseAddmodal = (props) => {
         }
         setUnRelationWorkCondition({
             pageParam:{
-                pageSize:10,
+                pageSize:5,
                 currentPage: page
             }
         })
@@ -294,9 +294,17 @@ const WorkTestCaseAddmodal = (props) => {
         <>
             <div className="testCase-add" ref={testCaseAdd}>
 
+                <div className="testCase-add-modal-top">
+                    <div className="testCase-add-table-title">选择用例</div>
+                    <div className="testCase-add-submit">
+                        <span className="close-icon" onClick={() => showSelectTestCase(false)}>
+                               ×
+                        </span>
+                    </div>
+                </div>
                 <div className="testCase-add-search">
                     <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索用例"} />
-                    <SelectSimple 
+                    <SelectSimple
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
                         title={"项目"}
@@ -331,16 +339,6 @@ const WorkTestCaseAddmodal = (props) => {
                             }
                         </SelectSimple>
                     }
-
-
-                    <div className="testCase-add-submit" style={{width: "66px"}}>
-                        {/*<span onClick={() => submitWorkRepositoryList()}>*/}
-                        {/*    确定*/}
-                        {/*</span>*/}
-                        <span style={{ marginLeft: "10px",cursor: "pointer" }} onClick={() => showSelectTestCase(false)}>
-                            X
-                        </span>
-                    </div>
                 </div>
                 <div className="testCase-add-model">
                     <Table

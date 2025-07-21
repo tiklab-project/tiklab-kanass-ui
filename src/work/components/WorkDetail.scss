@@ -58,10 +58,10 @@
     .work-detail {
         height: 100%;
         .work-detail-top-row{
-            height: 200px;
+            height: 170px;
         }
         .work-detail-info-row{
-            height: calc(100% - 200px);
+            height: calc(100% - 170px);
             flex: 1;
         }
 
@@ -83,10 +83,10 @@
     display: flex;
 
     .work-detail-top-row{
-        height: 200px;
+        height: 170px;
     }
     .work-detail-info-row{
-        height: calc(100% - 200px);
+        height: calc(100% - 170px);
         flex: 1;
     }
 
@@ -382,6 +382,10 @@
 
             .ant-form-item-label > label::after {
                 display: none;
+            }.ant-form-item-label > label {
+                color: var(--tiklab-gray-500);
+                font-weight: 400;
+                font-size: 13px;
             }
             .ant-input:focus {
                 border: none;
@@ -407,7 +411,7 @@
             }
 
             .work-status {
-                margin-left: -11px;
+                //margin-left: -11px;
                 border-radius: 5px;
                 font-size: 14px;
                 width: fit-content;
@@ -435,6 +439,7 @@
         margin-bottom: 5px;
         font-size: 13px;
 
+        //width: 70%;
     }
 
     .other-title-button{

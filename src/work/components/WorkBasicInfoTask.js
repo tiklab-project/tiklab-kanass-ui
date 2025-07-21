@@ -1180,7 +1180,7 @@ const WorkBasicInfo = (props) => {
                                                         .toFixed(2)
                                                 )
                                         }
-                                        status={"normal"}
+                                        width={400}
                                     />
                                 </div>
                             </Form.Item>

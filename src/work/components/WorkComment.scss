@@ -2,6 +2,9 @@
     background: #fff;
     border-radius: 4px;
     margin-bottom: 20px;
+
+    //width: 70%;
+
     .ant-pagination {
         text-align: center;
     }
@@ -52,38 +55,51 @@
     }
     &-list {
         overflow: auto;
+
+        //width: 70%;
+
         .comment-item {
             //margin-bottom: 20px;
             padding: 10px 0;
-            .comment-user {
+            .comment-top {
                 display: flex;
                 align-items: center;
-                justify-content: flex-start;
-                height: 40px;
-                //margin: 20px 0;
-                .user-icon {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 15px;
-                    margin-right: 10px;
-                }
-                .user-name {
-                    margin-left: 10px;
-                    font-size: 14px;
-                    font-weight: var(--tiklab-font-14);
-                    color: var(--tiklab-black);
-                }
-                .user-date {
-                    margin-left: auto;
-                    color: #999;
-                    font-size: 13px;
+                justify-content: space-between;
+                .comment-user {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    height: 40px;
+                    gap: 10px;
+                    .user-icon {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 15px;
+                    }
+                    .user-name {
+                        font-size: 14px;
+                        font-weight: var(--tiklab-font-14);
+                        color: var(--tiklab-black);
+                    }
+                    .user-date {
+                        color: #999;
+                        font-size: 13px;
+                    }
                 }
             }
+
 
             .comment-content {
                 margin-left: 35px;
                 line-height: 30px;
+                text-overflow: ellipsis;
+                //white-space: nowrap;
+                overflow: hidden;
                 //margin-bottom: 20px;
+
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
             }
             .comment-operate {
                 display: flex;

@@ -6,7 +6,7 @@
  * @Description: 事项关联
  */
 import React, { useEffect, useState } from "react";
-import {Table, Empty, Button} from 'antd';
+import {Table, Empty, Button, Input} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
@@ -24,6 +24,7 @@ const WorkRelation = (props) => {
         addWorkRelation, searchAllWorkRelation, deleWorkRelation, findWorkRelateAndChildNum } = workRelation;
     const [selectIds, setSelectIds] = useState();
     const [addRelation, showAddRelation] = useState(false);
+    const [inputValue, setInputValue] = useState("");
     const project = JSON.parse(localStorage.getItem("project"));
     
     /**
@@ -45,6 +46,20 @@ const WorkRelation = (props) => {
 
         return;
     }, [workId, addRelation])
+
+    const inputChange = (value) => {
+        setInputValue(value)
+        getSelectWorkRelationList({title: value}).then((res) => {
+            let array = [workId];
+            if (res && res.length > 0) {
+                res.map((item) => {
+                    array.push(item.workItem.id)
+                    return array;
+                })
+            }
+            setSelectIds(array)
+        })
+    }
 
     /**
      * 删除关联事项
@@ -146,7 +161,34 @@ const WorkRelation = (props) => {
     return (<Provider {...store}>
         <div className="work-relation">
             <div className="relation-top">
-                {/*<div className="relation-top-title">共{selectWorkRelationList.length}条</div>*/}
+                <div className="relation-top-title">
+                    {/*<div className="search-input">*/}
+                    {/*        <svg className="svg-icon" aria-hidden="true">*/}
+                    {/*            <use xlinkHref="#icon-search"></use>*/}
+                    {/*        </svg>*/}
+                    {/*        <Input bordered={false} allowClear*/}
+                    {/*               className="work-relation-search-input"*/}
+                    {/*               key={"search"}*/}
+                    {/*               onChange={(value) => inputChange(value.target.value)}*/}
+                    {/*               placeholder="搜索事项"*/}
+                    {/*               value={inputValue}*/}
+                    {/*        />*/}
+                    {/*</div>*/}
+                    <svg className="icon-22" aria-hidden="true" style={{ cursor: "pointer" }} onClick={() => {
+                        getSelectWorkRelationList({ workItemId: workId }).then((res) => {
+                            let array = [workId];
+                            if (res && res.length > 0) {
+                                res.map((item) => {
+                                    array.push(item.workItem.id)
+                                    return array;
+                                })
+                            }
+                            setSelectIds(array)
+                        })
+                    }}>
+                        <use xlinkHref="#icon-refresh"></use>
+                    </svg>
+                </div>
                 {
                     !addRelation &&
                     <WorkPrivilegeComponent workId = {workId} code = "WorkRelationAdd">

@@ -140,14 +140,10 @@ const WorkLog = (props) => {
                                                 <div className="work-log-item-first">
                                                     <div className="work-log-item-user">
                                                         <UserIcon size="big" name={item.user.nickname}/>
-                                                        <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
+                                                        <span>{item.user.nickname}</span>
+                                                        <div className="log-item-date">{item.workDate.slice(0,10)}</div>
+                                                        <span className="log-item-text">记录了 {item.takeupTime} 小时</span>
                                                     </div>
-                                                    <div className="log-item-date">{item.workDate}</div>
-
-                                                </div>
-                                                <div className="work-log-item-second">
-                                                    <div className="log-content">{item.workContent}</div>
-
                                                     <div className="log-action" ref={logAction}>
                                                         <WorkPrivilegeComponent workId={workId} code="WorkLogEdit">
                                                             <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
@@ -160,6 +156,9 @@ const WorkLog = (props) => {
                                                         </WorkPrivilegeComponent>
 
                                                     </div>
+                                                </div>
+                                                <div className="work-log-item-second">
+                                                    <div className="log-content">{item.workContent}</div>
                                                 </div>
                                             </div>
 
@@ -186,11 +185,11 @@ const WorkLog = (props) => {
 
                             </div>
                     }
-                    {
-                        hasMore && <div className="work-log-more" onClick={showMore}>查看更多</div>
-                    }
                 </div>
 
+                {
+                    hasMore && <div className="work-log-more" onClick={showMore}>查看更多</div>
+                }
                 <LogAdd
                     page="workDetail"
                     workId={workId}

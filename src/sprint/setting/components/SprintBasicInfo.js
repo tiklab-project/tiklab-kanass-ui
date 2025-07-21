@@ -28,7 +28,7 @@ const SprintBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 5,
+            span: 12,
         },
     };
     const formTailLayout = {
@@ -36,7 +36,7 @@ const SprintBasicInfo = props => {
             span: 4,
         },
         wrapperCol: {
-            span: 5
+            span: 12
         },
     };
     const [form] = Form.useForm();

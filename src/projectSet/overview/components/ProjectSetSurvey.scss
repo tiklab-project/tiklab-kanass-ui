@@ -30,7 +30,7 @@
         .survey-top-left {
             flex: 1;
             border-radius: 4px;
-            height: 270px;
+            //height: 270px;
             padding: var(--tiklab-padding);
             background-color: var(--tiklab-gray-800);
             width: calc(50% - 10px);
@@ -75,24 +75,41 @@
             }
 
             .projectSet-info-content-item{
-                margin-left: 15px;
+                margin-left: 5px;
             }
 
             .projectSet-info-bottom {
-                display: flex;
-                flex-wrap: wrap;
+
+                .project-status {
+                    width: calc(100% - 10px);
+                    display: flex;
+                    justify-content: space-between;
+                    flex-shrink: 0;
+                    flex-wrap: nowrap;
+                    gap: 10px;
+                }
+                .status-item {
+                    cursor: pointer;
+                    width: 100px;
+                }
             }
 
             .projectSet-info-item {
                 display: flex;
-                height: 40px;
-                line-height: 40px;
+                align-items: center;
+                height: 60px;
+                line-height: 60px;
                 font-size: 13px;
-                min-width: 200px;
-                width: 50%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
+                gap: 10px;
+                margin-bottom: 10px;
+
+                .item-group {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    width: 100%; /* 默认宽度为100%，避免换行 */
+                    flex-wrap: nowrap; /* 禁止换行 */
+                }
                 .svg-icon {
                     margin-top: 10px;
                     margin-right: 5px;
@@ -104,6 +121,19 @@
                 }
                 .projectSet-info-result {
                     white-space: nowrap;
+                }
+
+                .info-item-content {
+                    .content-top,
+                    .content-bottom {
+                        height: 30px;
+                        line-height: 30px;
+                    }
+
+                    .content-bottom {
+                        color: var(--tiklab-gray-500);
+                        font-size: 12px;
+                    }
 
                     .projectSet-status-select {
                         .ant-select-selector {
@@ -121,27 +151,20 @@
                         }
                     }
                 }
+
+
+
             }
 
             .projectSet-info-item-progress {
-                display: inline-flex;
-                align-items: center;
-                height: 40px;
-                font-size: 13px;
-                width: 200px;
-                min-width: 50%;
-                vertical-align: middle;
+                width: calc(100% - 60px);
 
-                .projectSet-info-item-progress-title {
-                    flex-shrink: 0;
-                    width: 100px;
-                    color: #999;
+                .info-item-content {
+                    width: calc(100% - 150px);
                 }
-
                 .projectSet-info-item-progress-result {
-                    flex: 1;
-                    min-width: 0;
-                    width: 150px;
+                    display: flex;
+                    align-items: center;
 
                     .ant-progress {
                         width: 100%;
@@ -157,7 +180,7 @@
             margin-left: 20px;
             padding: var(--tiklab-padding);
             background-color: var(--tiklab-gray-800);
-            height: 270px;
+            //height: 270px;
             width: calc(50% - 10px);
 
             &-list {

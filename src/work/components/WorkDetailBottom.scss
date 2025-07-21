@@ -4,7 +4,7 @@
     overflow-y: auto;
     scrollbar-gutter: stable;
     background: #fff;
-    padding: 20px 15px;
+    padding: 10px 15px;
     .workitem-tabs-content {
         height: 100%;
         .detail-top {
@@ -68,16 +68,6 @@
             .left {
                 width: 50%;
                 border-radius: 4px;
-
-                .workLog-input{
-                    width: 100px;
-                }
-
-                @media (max-width: 1241px) {
-                    .workLog-input {
-                        width: 80px;
-                    }
-                }
             }
 
             
@@ -258,13 +248,15 @@
         background-color: #f7f8fa;
     }
 
-    //.ant-picker-borderless {
-    //    cursor: pointer;
-    //}
+    .ant-picker-borderless {
+        background-color: var(--tiklab-gray) !important;
+        cursor: pointer;
+        width: 100%;
+    }
 
-    //.ant-picker-borderless:hover {
-    //    background-color: #f7f8fa !important;
-    //}
+    .ant-picker-borderless:hover {
+        background-color: var(--tiklab-gray) !important;
+    }
 
     .ant-input-number {
         margin-right: 10px;
@@ -292,7 +284,7 @@
     }
 
     .ant-form-item-label>label {
-        color: var(--tiklab-gray-500);
+        color: var(--tiklab-black);
         font-size: 13px;
         font-weight: normal;
     }
@@ -305,6 +297,9 @@
     }
     .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
         color: #2b2b2b;
+    }
+    .ant-select-selector{
+        background-color: var(--tiklab-gray) !important;
     }
     .ant-picker-input>input[disabled] {
         color: #2b2b2b;
@@ -345,7 +340,9 @@
     }
 
     .workLog-input{
-        width: 100px;
+        width: 50%;
+        border-radius: 0px;
+        background-color: var(--tiklab-gray);
     }
 
     //@media (max-width: 1241px) {

@@ -20,7 +20,7 @@ export class WorkTestStore {
     @observable unRelationWorkCondition = {
         pageParam: {
             currentPage: 1,
-            pageSize: 10
+            pageSize: 5
         }
     };
     @observable unRelationTotal = 0;
@@ -106,6 +106,12 @@ export class WorkTestStore {
         }
         const data = await Service("/workTestCase/findTesthuboRepositoryUserList", params)
 
+        return data;
+    }
+
+    @action
+    findCategoryListTreeTable = async (params) => {
+        const data = await Service("/projectTestRepositoryCategory/findCategoryListTreeTable", params)
         return data;
     }
 }

@@ -11,6 +11,7 @@
     flex-direction: column;
     height: 100%;
     .work-module-filter-sider-top{
+      //padding-top: 20px;
       //border-bottom: 1px solid #e7e7e7;
       //margin-bottom: 5px;
 
@@ -28,12 +29,12 @@
       }
 
       .work-module-filter-sider-top-item{
-        padding: 8px 15px 5px 22px;
+        padding: 8px 15px 5px 15px;
         margin-bottom: 5px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 5px;
+        gap: 8px;
         &:hover{
           background-color: #edf0f5;
           cursor: pointer;
@@ -60,9 +61,9 @@
         display: flex;
         align-items: center;
         margin-bottom: 5px;
-        padding: 8px 15px 5px 22px;
+        padding: 8px 15px 5px 15px;
         .content-module-title{
-          margin-left: 5px;
+          margin-left: 8px;
         }
         &:hover{
           background-color: #edf0f5;
@@ -74,7 +75,7 @@
         margin-top: 5px;
         overflow-y: auto;
         overflow-x: hidden;
-        padding: 0 8px 0 15px;
+        padding: 0 8px;
 
         .ant-tree-list{
           background-color: var(--tiklab-gray-800);

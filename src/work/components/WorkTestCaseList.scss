@@ -4,6 +4,11 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
+
+        .testcase-top-botton{
+            display: flex;
+            align-items: center;
+        }
     }
 
     .testcase-top-title {

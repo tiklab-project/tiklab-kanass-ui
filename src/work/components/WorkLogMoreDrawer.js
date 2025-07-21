@@ -79,7 +79,7 @@ const WorkLogMoreDrawer = (props) => {
             width={"40%"}
         >
             <div className="work-log" ref={workLog}>
-                <div className="work-log-list">
+                <div className="work-log-list" style={{width: "100%"}}>
                     {
                         workLogList && workLogList.length > 0 && workLogList.map(item => {
 
@@ -88,15 +88,11 @@ const WorkLogMoreDrawer = (props) => {
                                             <div style={{ flex: 1 }}>
                                                 <div className="work-log-item-first">
                                                     <div className="work-log-item-user">
-                                                        <UserIcon size="big">{item.user.nickname}</UserIcon>
-                                                        <span className="log-item-text">{item.user.nickname} 记录了 {item.takeupTime} 小时</span>
+                                                        <UserIcon size="big" name={item.user.nickname}/>
+                                                        <span>{item.user.nickname}</span>
+                                                        <div className="log-item-date">{item.workDate.slice(0,10)}</div>
+                                                        <span className="log-item-text">记录了 {item.takeupTime} 小时</span>
                                                     </div>
-                                                    <div className="log-item-date">{item.workDate}</div>
-
-                                                </div>
-                                                <div className="work-log-item-second">
-                                                    <div className="log-content">{item.workContent}</div>
-
                                                     <div className="log-action" ref={logAction}>
                                                         <WorkPrivilegeComponent workId={workId} code="WorkLogEdit">
                                                             <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}
@@ -110,6 +106,9 @@ const WorkLogMoreDrawer = (props) => {
 
                                                     </div>
                                                 </div>
+                                                <div className="work-log-item-second">
+                                                    <div className="log-content">{item.workContent}</div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -119,13 +118,13 @@ const WorkLogMoreDrawer = (props) => {
 
                             })
                     }
-                    {
-                        totalRecord > currentPage * pageSize ?
-                            <div className="work-log-more" onClick={loadNextPage}>加载更多</div>
-                            :
-                            <div className="work-log-more">到底啦~</div>
-                    }
                 </div>
+                {
+                    totalRecord > currentPage * pageSize ?
+                        <div className="work-log-more" onClick={loadNextPage}>加载更多</div>
+                        :
+                        <div className="work-log-more">到底啦~</div>
+                }
             </div>
         </Drawer>
     )

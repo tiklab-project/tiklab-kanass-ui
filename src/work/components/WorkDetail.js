@@ -493,104 +493,99 @@ const WorkDetail = (props) => {
                                                                     form={detailTopForm}
                                                                     initialValues={{ remember: true }}
                                                                     labelAlign="left"
-                                                                    layout="vertical"
+                                                                    // layout="vertical"
                                                                     onValuesChange={(changedValues, allValues) => changeWorkItemInfo(changedValues, allValues)}
                                                                 >
-                                                                    <Row style={{width: "100%"}}>
-                                                                        <Col span={4}>
-                                                                            <div style={{
-                                                                                display: "flex",
-                                                                                alignItems: "center",
-                                                                                gap: "5px"
-                                                                            }}>
-                                                                                <UserIcon name={nickName} size={"big"} />
-                                                                                <Form.Item label="负责人" name="assigner"
-                                                                                >
-                                                                                    <Select
-                                                                                        placeholder="无"
-                                                                                        className="work-select"
-                                                                                        key="selectAssigner"
-                                                                                        bordered={fieldName === "assigner" ? true : false}
-                                                                                        suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
-                                                                                        onFocus={() => changeStyle("assigner", "assigner")}
-                                                                                        onBlur={() => setFieldName("")}
-                                                                                        onMouseEnter={() => onMouseEnter("assigner")}
-                                                                                        onMouseLeave={() => setHoverFieldName("")}
-                                                                                        getPopupContainer={() => detailTopFormRef.current}
-                                                                                        disabled={!isPermissionField("assigner")}
-                                                                                        dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
-                                                                                    >
-                                                                                        {
-                                                                                            userList && userList.map((item) => {
-                                                                                                return <Select.Option value={item.user?.id} key={item.user?.id}>
-                                                                                                    <div style={{
-                                                                                                        display: "flex",
-                                                                                                        alignItems: "center",
-                                                                                                        gap: "10px"
-                                                                                                    }}>
+                                                                    <Row style={{width: "100%", display: "flex", gap: "20px"}}>
+                                                                        <div style={{
+                                                                            display: "flex",
+                                                                            alignItems: "center",
+                                                                            gap: "5px"
+                                                                        }}>
 
-                                                                                                        {item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                                                                                    </div>
-                                                                                                </Select.Option>
-                                                                                            })
-                                                                                        }
-                                                                                    </Select>
-                                                                                </Form.Item>
-                                                                            </div>
-                                                                        </Col>
-                                                                        <Col span={4} offset={1}>
-                                                                            <div style={{
-                                                                                display: "flex",
-                                                                                alignItems: "center",
-                                                                                gap: "5px"
-                                                                            }}>
-                                                                                <ImgComponent
-                                                                                    src={iconUrl}
-                                                                                    alt=""
-                                                                                    className="icon-25"
-                                                                                />
-                                                                                <Form.Item label="优先级" name="workPriority"
-                                                                                           hasFeedback={false}
-                                                                                           validateStatus={"validating"}
-                                                                                >
-                                                                                    <Select
-                                                                                        placeholder="无"
-                                                                                        className="work-select"
-                                                                                        key="selectWorkPriority"
-                                                                                        bordered={fieldName === "workPriority" ? true : false}
-                                                                                        suffixIcon={fieldName === "workPriority" || hoverFieldName == "workPriority" ? <CaretDownOutlined /> : false}
-                                                                                        onFocus={() => changeStyle("workPriority", "workPriority")}
-                                                                                        onBlur={() => setFieldName("")}
-                                                                                        onMouseEnter={() => onMouseEnter("workPriority")}
-                                                                                        onMouseLeave={() => setHoverFieldName("")}
-                                                                                        allowClear
-                                                                                        getPopupContainer={() => detailTopFormRef.current}
-                                                                                        disabled={!isPermissionField("workPriority")}
-                                                                                        dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
-                                                                                    >
-                                                                                        {
-                                                                                            priorityList && priorityList.map((item) => {
-                                                                                                return <Select.Option value={item.id} key={item.id}>
-                                                                                                    <div style={{
-                                                                                                        display: "flex",
-                                                                                                        alignItems: "center",
-                                                                                                        gap: "10px"
-                                                                                                    }}>
-                                                                                                        {item.name}
-                                                                                                    </div>
-                                                                                                </Select.Option>
-                                                                                            })
-                                                                                        }
-                                                                                    </Select>
-                                                                                </Form.Item>
-                                                                            </div>
-                                                                        </Col>
-                                                                        <Col span={4} offset={1}>
-                                                                            <Form.Item label="状态" name="workStatus"
+                                                                            <Form.Item label="负责人" name="assigner"
                                                                             >
-                                                                                <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
+                                                                                <Select
+                                                                                    placeholder="无"
+                                                                                    className="work-select"
+                                                                                    key="selectAssigner"
+                                                                                    bordered={fieldName === "assigner" ? true : false}
+                                                                                    suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
+                                                                                    onFocus={() => changeStyle("assigner", "assigner")}
+                                                                                    onBlur={() => setFieldName("")}
+                                                                                    onMouseEnter={() => onMouseEnter("assigner")}
+                                                                                    onMouseLeave={() => setHoverFieldName("")}
+                                                                                    getPopupContainer={() => detailTopFormRef.current}
+                                                                                    disabled={!isPermissionField("assigner")}
+                                                                                    dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
+                                                                                >
+                                                                                    {
+                                                                                        userList && userList.map((item) => {
+                                                                                            return <Select.Option value={item.user?.id} key={item.user?.id}>
+                                                                                                <div style={{
+                                                                                                    display: "flex",
+                                                                                                    alignItems: "center",
+                                                                                                    gap: "3px"
+                                                                                                }}>
+                                                                                                    <UserIcon name={nickName} size={"small"} />
+                                                                                                    {item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                                                                                </div>
+                                                                                            </Select.Option>
+                                                                                        })
+                                                                                    }
+                                                                                </Select>
                                                                             </Form.Item>
-                                                                        </Col>
+                                                                        </div>
+                                                                        <div style={{
+                                                                            display: "flex",
+                                                                            alignItems: "center",
+                                                                            gap: "5px"
+                                                                        }}>
+
+                                                                            <Form.Item label="优先级" name="workPriority"
+                                                                                       hasFeedback={false}
+                                                                                       validateStatus={"validating"}
+                                                                            >
+                                                                                <Select
+                                                                                    placeholder="无"
+                                                                                    className="work-select"
+                                                                                    key="selectWorkPriority"
+                                                                                    bordered={fieldName === "workPriority" ? true : false}
+                                                                                    suffixIcon={fieldName === "workPriority" || hoverFieldName == "workPriority" ? <CaretDownOutlined /> : false}
+                                                                                    onFocus={() => changeStyle("workPriority", "workPriority")}
+                                                                                    onBlur={() => setFieldName("")}
+                                                                                    onMouseEnter={() => onMouseEnter("workPriority")}
+                                                                                    onMouseLeave={() => setHoverFieldName("")}
+                                                                                    allowClear
+                                                                                    getPopupContainer={() => detailTopFormRef.current}
+                                                                                    disabled={!isPermissionField("workPriority")}
+                                                                                    dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
+                                                                                >
+                                                                                    {
+                                                                                        priorityList && priorityList.map((item) => {
+                                                                                            return <Select.Option value={item.id} key={item.id}>
+                                                                                                <div style={{
+                                                                                                    display: "flex",
+                                                                                                    alignItems: "center",
+                                                                                                    gap: "3px"
+                                                                                                }}>
+                                                                                                    <ImgComponent
+                                                                                                        src={item.iconUrl}
+                                                                                                        alt=""
+                                                                                                        className="img-icon"
+                                                                                                    />
+                                                                                                    {item.name}
+                                                                                                </div>
+                                                                                            </Select.Option>
+                                                                                        })
+                                                                                    }
+                                                                                </Select>
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                        <Form.Item label="状态" name="workStatus"
+                                                                        >
+                                                                            <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>
+                                                                        </Form.Item>
                                                                     </Row>
 
 

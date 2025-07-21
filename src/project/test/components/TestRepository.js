@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:35:15
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Space, Row, Col, message, Alert } from "antd";
+import {Table, Space, Row, Col, message, Alert, Empty, Input} from "antd";
 import { Provider, observer } from "mobx-react";
 import Button from "../../../common/button/Button";
 import "./TestRepository.scss";
@@ -18,6 +18,7 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import PaginationCommon from "../../../common/page/Page";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import TestPlanAdd  from "./TestPlanAdd";
+import {SettingOutlined} from "@ant-design/icons";
 const TestRepository = (props) => {
     const store = {
         testRepositoryStore: TestRepositoryStore
@@ -32,6 +33,9 @@ const TestRepository = (props) => {
     const projectId = props.match.params.id;
     const [testhuboUrl, setTesthuboUrl] = useState([]);
     const [planList, setPlanList] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+    const [totalPage, setTotalPage] = useState(1);
+    const [total, setTotal] = useState(0);
 
     const changePage = (currentPage) => {
         const value = {
@@ -45,11 +49,32 @@ const TestRepository = (props) => {
         findProjectTestRepositoryPlanPage(value).then(res => {
             if (res.code === 0) {
                 console.log(res.data)
+                setTotal(res.data.totalRecord)
+                setTotalPage(res.data.totalPage)
                 setPlanList(res.data.dataList)
             }
 
         })
         console.log(currentPage)
+    }
+
+    const inputChange = (value) => {
+        setInputValue(value)
+        const param = {
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            },
+            name: value
+        }
+        findProjectTestRepositoryPlanPage(param).then(res => {
+            if (res.code === 0) {
+                setTotalPage(res.data.totalPage)
+                setTotal(res.data.totalRecord)
+                setPlanList(res.data.dataList)
+            }
+
+        })
     }
 
     const delectTestCase = (id) => {
@@ -65,6 +90,8 @@ const TestRepository = (props) => {
             if (res.code === 0) {
                 findProjectTestRepositoryPlanPage({ projectId: projectId }).then(res => {
                     if (res.code === 0){
+                        setTotal(res.data.totalRecord)
+                        setTotalPage(res.data.totalPage)
                         setPlanList(res.data.dataList)
                     }
                 })
@@ -212,9 +239,13 @@ const TestRepository = (props) => {
     useEffect(() => {
 
         // findWorkTestCasePage({ projectId: projectId })
-        findProjectTestRepositoryPlanPage({ projectId: projectId }).then(res => {
+        findProjectTestRepositoryPlanPage({
+            projectId: projectId,
+            name: "",
+        }).then(res => {
             if (res.code === 0) {
-                console.log(JSON.stringify(res.data));
+                setTotal(res.data.totalRecord)
+                setTotalPage(res.data.totalPage)
                 setPlanList(res.data.dataList)
             }
         })
@@ -240,15 +271,7 @@ const TestRepository = (props) => {
                     <div className="test-repository-list">
                         <div style={{marginBottom: "24px"}}>
                             <Breadcumb firstText="测试">
-                                {/*<span*/}
-                                {/*    className="link-text"*/}
-                                {/*    onClick={() => props.history.push(`/project/${projectId}/set/integration`)}*/}
-                                {/*    style={{cursor: 'pointer'}}*/}
-                                {/*>*/}
-                                {/*    <SettingOutlined style={{marginRight: '5px'}}/>*/}
-                                {/*    关联用例库*/}
-                                {/*</span>*/}
-                                <Button type={"primary"} onClick={addTestPlan}>关联测试计划</Button>
+
                             </Breadcumb>
 
                         </div>
@@ -270,6 +293,33 @@ const TestRepository = (props) => {
                         }
 
                         <div>
+                            <div className="test-table-top">
+                                <div className="search-input">
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-search"></use>
+                                    </svg>
+                                    <Input bordered={false} allowClear
+                                           className="work-relation-search-input"
+                                           key={"search"}
+                                           onChange={(value) => inputChange(value.target.value)}
+                                           placeholder="搜索计划"
+                                           value={inputValue}
+                                    />
+                                </div>
+
+                                <div className="top-operate">
+                                    <span
+                                        className="link-text"
+                                        onClick={addTestPlan}
+                                        style={{cursor: 'pointer'}}
+                                    >
+                                    <SettingOutlined style={{marginRight: '5px'}}/>
+                                        {/*关联用例库*/}
+                                    </span>
+                                    {/*<Button type={"primary"} onClick={addTestPlan}>关联测试计划</Button>*/}
+                                </div>
+
+                            </div>
                             <Table
                                 columns={testPlanColumns}
                                 // dataSource={testCaseList}
@@ -278,6 +328,11 @@ const TestRepository = (props) => {
                                 pagination={false}
                                 onChange={false}
                                 scroll={{x: "100%"}}
+                                locale={{
+                                    emptyText: (
+                                        <Empty description={"暂无数据"}/>
+                                    )
+                                }}
                             />
                             <PaginationCommon
                                 currentPage={testCaseCondition.pageParam.currentPage}

@@ -1053,7 +1053,7 @@ const WorkBasicInfo = (props) => {
                     visible={moreVisible}
                     onClose={() => setMoreVisible(false)}
                     footer={null}
-                    width={500}
+                    width={400}
                     height={"100%"}
                 >
                     <div className={"work-detail-more-modal"} ref={moreFormRef}>
@@ -1075,7 +1075,7 @@ const WorkBasicInfo = (props) => {
                                     placeholder="无"
                                     className="work-select"
                                     key="selectWorkUser"
-                                    bordered={true}
+                                    bordered={false}
                                     suffixIcon={fieldName === "reporter" || hoverFieldName == "reporter" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("reporter", "reporter")}
                                     onBlur={() => setFieldName("")}
@@ -1103,7 +1103,7 @@ const WorkBasicInfo = (props) => {
                                     format={dateFormat}
                                     allowClear={false}
                                     className="work-select"
-                                    bordered={true}
+                                    bordered={false}
                                     suffixIcon={fieldName === "planTime" || hoverFieldName == "planTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("planTime", "planTime")}
                                     onBlur={() => setFieldName("")}
@@ -1122,7 +1122,7 @@ const WorkBasicInfo = (props) => {
                                     type="number"
                                     className="workLog-input"
                                     suffix="小时"
-                                    bordered={true}
+                                    bordered={false}
                                     suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("estimateTime", "estimateTime")}
                                     onBlur={() => setFieldName("")}
@@ -1137,7 +1137,7 @@ const WorkBasicInfo = (props) => {
                                     type="number"
                                     className="workLog-input"
                                     suffix="小时"
-                                    bordered={true}
+                                    bordered={false}
                                     suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
                                     onFocus={() => changeStyle("surplusTime", "surplusTime")}
                                     onBlur={() => setFieldName("")}
@@ -1363,7 +1363,7 @@ const WorkBasicInfo = (props) => {
                                 <Table columns={attachColums}
                                        dataSource={attachList}
                                        pagination={false}
-                                       bordered={true}
+                                       bordered={false}
                                        rowKey={(record) => record.id}
                                        scroll={{x: "100%"}}
                                 />

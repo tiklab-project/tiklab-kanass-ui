@@ -1,0 +1,81 @@
+.appraised-state{
+  padding: 10px 20px;
+
+  .appraised-state-top-title{
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  .appraised-state-bottom{
+    .appraised-state-bottom-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .history-list {
+    .history-item {
+      //margin-bottom: 20px;
+      padding: 10px 0;
+      .history-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .history-user {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          height: 40px;
+          gap: 10px;
+          .user-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+          }
+          .user-name {
+            font-size: 14px;
+            font-weight: var(--tiklab-font-14);
+            color: var(--tiklab-black);
+          }
+          .user-date {
+            color: #999;
+            font-size: 13px;
+          }
+        }
+      }
+
+
+      .history-content {
+        margin-left: 35px;
+        line-height: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        //margin-bottom: 20px;
+      }
+      .history-operate {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        margin-left: 26px;
+        font-size: 12px;
+        //color: rgb(56, 55, 55);
+        span {
+          margin-right: 10px;
+          cursor: pointer;
+        }
+        span:hover {
+          color: var(--tiklab-blue)
+        }
+      }
+    }
+
+    .history-list-bottom{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .loading-more{
+        cursor: pointer;
+      }
+    }
+  }
+}

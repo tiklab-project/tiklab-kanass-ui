@@ -96,7 +96,7 @@ const ProjectFilterQuick = (props) => {
     return (<div className="project-quick-filter">
         <SelectSimple name="quickFilter"
             onChange={(value) => selectMenu(value)}
-            title={`全部`}
+            title={`状态`}
             ismult={false}
             value={projectQuickFilter}
             suffixIcon={true}

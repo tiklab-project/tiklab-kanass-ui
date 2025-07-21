@@ -57,7 +57,7 @@ const WorkDocumentAddmodal = (props) => {
                             repositoryId: null, 
                             projectId: projectId,
                             pageParam:{
-                                pageSize:10,
+                                pageSize:5,
                                 currentPage: 1
                             }
                         }).then((data) => {
@@ -93,23 +93,23 @@ const WorkDocumentAddmodal = (props) => {
             title: "标题",
             dataIndex: "documentName",
             key: "title",
-            width: 150
+            width: "35%"
         },
         {
             title: "知识库",
             dataIndex: "kanassRepositoryName",
             key: "workStatus",
-            width: 150
+            width: "20%"
         },
         {
             title: "作者",
             dataIndex: "userName",
             key: "assigner",
-            width: 150
+            width: "10%"
         },
         {
             title: '操作',
-            width: "60",
+            width: "10%",
             key: 'action',
             render: (text, record) => (
                 <div style={{ display: "flex", gap: "15px" }}>
@@ -153,7 +153,7 @@ const WorkDocumentAddmodal = (props) => {
             params = {
                 repositoryIds: [value?.value],
                 pageParam: {
-                    pageSize: 10,
+                    pageSize: 5,
                     currentPage: 1
                 }
             }
@@ -162,7 +162,7 @@ const WorkDocumentAddmodal = (props) => {
             params = {
                 repositoryIds: repositoryallIdList,
                 pageParam: {
-                    pageSize: 10,
+                    pageSize: 5,
                     currentPage: 1
                 }
             }
@@ -192,7 +192,7 @@ const WorkDocumentAddmodal = (props) => {
         const categoryQuery = {
             name: value,
             pageParam: {
-                pageSize: 10,
+                pageSize: 5,
                 currentPage: 1
             }
         }
@@ -251,7 +251,7 @@ const WorkDocumentAddmodal = (props) => {
         }
         setUnRelationWorkCondition({
             pageParam:{
-                pageSize:10,
+                pageSize:5,
                 currentPage: page
             }
         })
@@ -268,6 +268,15 @@ const WorkDocumentAddmodal = (props) => {
     return (
         <>
             <div className="document-add" ref={documentAdd}>
+
+                <div className="document-add-modal-top">
+                    <div className="document-add-table-title">选择事项</div>
+                    <div className="document-add-submit">
+                        <span className="close-icon" onClick={() => showSelectDocument(false)}>
+                               ×
+                        </span>
+                    </div>
+                </div>
 
                 <div className="document-add-search">
                     <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索文档"} />
@@ -307,15 +316,6 @@ const WorkDocumentAddmodal = (props) => {
                         </SelectSimple>
                     }
 
-
-                    <div className="document-add-submit">
-                        {/*<span onClick={() => submitWorkDocumentList()}>*/}
-                        {/*    确定*/}
-                        {/*</span>*/}
-                        <span style={{ marginLeft: "auto", cursor: "pointer" }} onClick={() => showSelectDocument(false)}>
-                            X
-                        </span>
-                    </div>
                 </div>
                 <div className="document-add-model">
                     <Table

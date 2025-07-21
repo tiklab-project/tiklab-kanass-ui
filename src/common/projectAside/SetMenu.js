@@ -34,7 +34,7 @@ const SetMenu = (props) => {
                     </span>
                 </div>
                     :
-                    <div ref={setButton} className="project-setting-icon setting">
+                    <div ref={setButton} className="project-setting-icon setting" data-title-right="设置">
                         <svg className="icon-18" aria-hidden="true">
                             <use xlinkHref={`#icon-set-${theme}`}></use>
                         </svg>

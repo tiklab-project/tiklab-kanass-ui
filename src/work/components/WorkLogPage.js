@@ -31,20 +31,22 @@ const WorkLogPage = (props) => {
 
     return(
         <Provider>
-            <div className="log-page-content">
+            <div className="log-page">
 
-                <WorkDynamic {...props} />
+                <div className="log-page-content">
+                    <WorkDynamic {...props} />
 
-                <WorkLog
-                    closeModal = {closeModal}
-                    surplusTime={workInfo.surplusTime}
-                    workInfo={workInfo}
-                    planTakeupTime={workInfo.planTakeupTime}
-                    searchWorkById = {searchWorkById}
-                    {...props}
-                />
+                    <WorkLog
+                        closeModal = {closeModal}
+                        surplusTime={workInfo.surplusTime}
+                        workInfo={workInfo}
+                        planTakeupTime={workInfo.planTakeupTime}
+                        searchWorkById = {searchWorkById}
+                        {...props}
+                    />
 
-                <WorkComment workId={workId} />
+                    <WorkComment workId={workId} />
+                </div>
 
             </div>
         </Provider>

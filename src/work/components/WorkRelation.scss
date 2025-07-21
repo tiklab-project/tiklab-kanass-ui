@@ -1,7 +1,7 @@
 .work-relation {
     .relation-top {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
         line-height: 32px;
@@ -45,13 +45,21 @@
 
     .relation-top-title {
         font-size: 14px;
+
+        .search-input{
+            width: auto;
+            padding-left: 5px;
+            background-color: transparent;
+            border: none;
+        }
+
     }
 
     .relation-content {
         background: #fff;
         border-radius: 4px;
         position: relative;
-        height: calc(100% - 82px);
+        height: calc(100% - 30px);
         .ant-table {
             overflow: auto;
             // max-height: calc(100% - 100px);

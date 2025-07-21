@@ -43,21 +43,10 @@
   }
 
   .appraised-table-box {
-    .appraised-status {
-      padding: 2px 3px;
-      background: #e2e1e4;
-      border-radius: 4px;
-      font-size: 10px;
-      width: fit-content;
-      color: #2b333e;
-    }
+
     .appraised-master {
       display: flex;
       align-items: center;
-    }
-    .appraised-status-todo {
-      background: #e2e1e4;
-      color: #2b333e;
     }
 
     .appraised-status-pass {
@@ -108,6 +97,67 @@
     }
     .project-botton{
       margin-left: auto;
+    }
+  }
+
+  .appraised-top-info {
+    padding: 15px;
+    background-color: var(--tiklab-gray-800);
+    border-radius: 8px;
+    margin: 15px 0;
+
+    .top-info-content{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .left-info{
+        display: grid;
+        grid-template-columns: 80px 1fr 80px 1fr;
+        gap: 8px 15px;
+        flex: 1;
+
+        .appraised-status {
+          padding: 2px 3px;
+          background: #e2e1e4;
+          border-radius: 4px;
+          font-size: 10px;
+          width: fit-content;
+          color: #2b333e;
+        }
+
+        .appraised-status-todo {
+          background: #e2e1e4;
+          color: #2b333e;
+        }
+        .appraised-status-process {
+          background: #b0d5dfa1;
+          color: #132c33;
+        }
+        .appraised-status-done {
+          background: #dfecd5e3;
+          color: #5e5314;
+        }
+
+      }
+      .info-title{
+        color: var(--tiklab-gray-500);
+      }
+      .right-progress{
+        min-width: 200px;
+        text-align: left;
+
+        .progress-info{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          .progress-info-content{
+            display: flex;
+            align-items: center;
+            line-height: 1.5;
+          }
+        }
+      }
     }
   }
 

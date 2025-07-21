@@ -1,7 +1,7 @@
 .work-child {
     .child-top {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
         line-height: 32px;
@@ -74,6 +74,14 @@
 
     .child-top-title {
         font-size: 14px;
+
+        .search-input{
+            width: auto;
+            padding-left: 5px;
+            background-color: transparent;
+            border: none;
+        }
+
     }
     .child-top-botton {
         display: flex;

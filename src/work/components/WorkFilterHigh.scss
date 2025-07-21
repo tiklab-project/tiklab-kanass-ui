@@ -2,10 +2,11 @@
 .height-filter {
   display: flex;
   flex-direction: column;
-  height: 100%; /* 确保占满父容器高度 */
+  height: calc(100% - 43px); /* 确保占满父容器高度 */
 }
 .less-margin{
   margin-left: -25px;
+  height: 100%;
 }
 
 /* 内容区域 - 可滚动部分 */
@@ -29,6 +30,13 @@
       border-radius: 0;
     }
   }
+
+  .workitem-filter-height-more{
+    background: #f9f9f9;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 /* 底部区域 */
 .workitem-filter-height-buttom {
@@ -39,12 +47,7 @@
   align-items: center;
   gap: 10px;
 
-  .workitem-filter-height-more{
-    background: #f9f9f9;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+
 
   .workitem-filter-height-botton {
     display: flex;

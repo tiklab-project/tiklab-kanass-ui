@@ -1,6 +1,13 @@
 .wiki-repository {
     height: 100%;
     overflow: auto;
+
+    .wiki-table-top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     .wiki-repository-list {
         padding: var(--tiklab-padding);
         .wiki-repository-list-top {

@@ -74,7 +74,7 @@ const WorkTableHead = (props) => {
         }else if (moduleTitle){
             return moduleTitle;
         }else {
-            return "事项"
+            return "所有事项"
         }
     }
 

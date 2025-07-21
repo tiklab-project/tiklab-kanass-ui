@@ -20,6 +20,22 @@
   }
 }
 
-.log-page-content {
+.log-page {
   height: calc(100% - 100px);
+  //display: grid;
+
+  //justify-items: center;
+  //width: 70%;
+
+
+  //position: relative;
+
+  .log-page-content {
+    justify-content: center;
+    min-width: 500px;
+    max-width: 800px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

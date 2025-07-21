@@ -152,25 +152,24 @@ const WorkCommentMoreDrawer = (props) => {
                         {
                             <Fragment>
                                 {/*<div className="title">共{totalRecord}条</div>*/}
-                                <div className="work-comment-list">
+                                <div className="work-comment-list" style={{width: "100%"}}>
                                     {
                                         commentList && commentList.length > 0 && commentList.map(item => {
                                             return <div className="comment-item" key={item.id}>
-                                                <div className="comment-user">
-                                                    {/*<svg className="menu-icon" aria-hidden="true">*/}
-                                                    {/*    <use xlinkHref="#icon-icontouxiang1"></use>*/}
-                                                    {/*</svg>*/}
-                                                    <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
-                                                    <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
-                                                    <span className="user-date">{item.createTime}</span>
+                                                <div className="comment-top">
+                                                    <div className="comment-user">
+                                                        <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
+                                                        <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
+                                                        <span className="user-date">{item.createTime}</span>
+                                                    </div>
+                                                    <div className="comment-operate" ref={logAction}>
+                                                        <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
+                                                    </div>
                                                 </div>
                                                 {
                                                     <Fragment>
                                                         <div className="comment-content">
                                                             {item.details}
-                                                        </div>
-                                                        <div className="comment-operate" ref={logAction}>
-                                                            <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
                                                         </div>
                                                     </Fragment>
 
@@ -178,13 +177,13 @@ const WorkCommentMoreDrawer = (props) => {
                                             </div>
                                         })
                                     }
-                                    {
-                                        totalRecord > currentPage * pageSize ?
-                                            <div className="work-comment-more" onClick={loadNextPage}>加载更多</div>
-                                            :
-                                            <div className="work-comment-more">到底啦~</div>
-                                    }
                                 </div>
+                                {
+                                    totalRecord > currentPage * pageSize ?
+                                        <div className="work-comment-more" onClick={loadNextPage}>加载更多</div>
+                                        :
+                                        <div className="work-comment-more">到底啦~</div>
+                                }
                             </Fragment>
                         }
                     </div>

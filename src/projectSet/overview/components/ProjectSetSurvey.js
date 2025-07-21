@@ -17,8 +17,9 @@ import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
-import {CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
+import {ClockCircleOutlined, CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import projectList from "../../../project/project/components/ProjectList";
 const ProjectSetSurvey = props => {
 
     const { logList, findProjectList, createRecent, findProjectSet, updateProjectSet, statisticsProjectSetWorkCount } = BasicInfoStore;
@@ -27,6 +28,7 @@ const ProjectSetSurvey = props => {
     // const projectSet = JSON.parse(localStorage.getItem("projectSet"));
     const [projectSet, setProjectSet] = useState(JSON.parse(localStorage.getItem("projectSet")) || { projects: [] });
     const [processProjectList, setProcessProjectList] = useState(projectSet.projects || []);
+    const [projectList, setProjectList] = useState([]);
 
     const status = ["未开始", "进行中", "已结束"]
     // 进度
@@ -42,6 +44,7 @@ const ProjectSetSurvey = props => {
             const projectSetResponse = await findProjectSet(projectSetId);
             if (response.code === 0 && Array.isArray(response.data) && projectSetResponse.code === 0) {
                 const data = response.data;
+                setProjectList(data)
                 let estimateTime = 0;
                 let surplusTime = 0;
                 for (const project of data) {
@@ -116,8 +119,17 @@ const ProjectSetSurvey = props => {
         })
     }
 
-    // // 项目集进度
-    // const percent = 10.36;
+    const getProjectListCount = (status) => {
+        if (status === "0"){
+            return projectList.length
+        }else {
+            return projectList.filter(project => project.projectState === status).length
+        }
+    }
+
+    const goProjectList = (value) => {
+        // props.history.push(`/projectSet/${projectSetId}/project/${value}`)
+    }
 
     return (
         <Row className="projectSet-survey">
@@ -138,94 +150,164 @@ const ProjectSetSurvey = props => {
                             </div>
                             <div className="projectSet-info-bottom">
                                 <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">创建者</div>
-                                    {/*<div className="projectSet-info-result">{projectSet?.master?.name} </div>*/}
-                                    <div className="projectSet-info-result">
-                                        <Space>
-                                            <UserIcon name={projectSet?.master?.nickname} />
-                                        {projectSet?.master?.nickname}
-                                    </Space></div>
+                                    <UserIcon name={projectSet?.master?.nickname} size={"big"}/>
+                                    <div className="info-item-content">
+                                        <div className="content-top">
+                                            {projectSet?.master?.nickname}
+                                        </div>
+                                        <div className="content-bottom">创建者</div>
+                                    </div>
                                 </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">创建时间</div>
-                                    <div className="projectSet-info-result">{projectSet?.creatTime} </div>
-                                </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">可见范围</div>
-                                    <div className="projectSet-info-result">{projectSet?.projectSetLimits === 0 ? "所有人可见" : "成员可见"} </div>
-                                </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">项目数量</div>
-                                    <div className="projectSet-info-result">
-                                        {Array.isArray(projectSet?.projects) ? projectSet.projects.length : 0}
+                                <div className="project-status">
+                                    <div className="projectSet-info-item status-item" onClick={() => goProjectList("0")}>
+                                        <svg className="list-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-allwork"></use>
+                                        </svg>
+                                        <div className="info-item-content">
+                                            <div className="content-top">{getProjectListCount("0")}</div>
+                                            <div className="content-bottom">项目</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="projectSet-info-item status-item" onClick={() => goProjectList("1")}>
+                                        <svg className="list-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-not-start"></use>
+                                        </svg>
+                                        <div className="info-item-content">
+                                            <div className="content-top">{getProjectListCount("1")}</div>
+                                            <div className="content-bottom">未开始</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="projectSet-info-item status-item" onClick={() => goProjectList("2")}>
+                                        <svg className="list-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-progress"></use>
+                                        </svg>
+                                        <div className="info-item-content">
+                                            <div className="content-top">{getProjectListCount("2")}</div>
+                                            <div className="content-bottom">进行中</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="projectSet-info-item status-item" onClick={() => goProjectList("3")}>
+                                        <svg className="list-img" aria-hidden="true">
+                                            <use xlinkHref="#icon-endwork"></use>
+                                        </svg>
+                                        <div className="info-item-content">
+                                            <div className="content-top">{getProjectListCount("3")}</div>
+                                            <div className="content-bottom">已完成</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">计划开始日期</div>
-                                    <div className="projectSet-info-result">{projectSet?.startTime}</div>
-                                </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">计划结束时间</div>
-                                    <div className="projectSet-info-result">{projectSet?.endTime}</div>
-                                </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">状态</div>
-                                    <div className="projectSet-info-result">
-
-                                        <Select
-                                            className={`projectSet-status-select projectSet-status-select${projectSet?.status === "0" ? "-todo" : projectSet?.status === "1" ? "-process" : "-done"}`}
-                                            defaultValue={"--"}
-                                            dropdownMatchSelectWidth={false}
-                                            value={status[projectSet?.status || 0]}
-                                            bordered={false}
-                                            showArrow={false}
-                                            // disabled={project?.projectState === "3" ? true : false}
-                                            onChange={handleChange}
-                                        >
-                                            {
-                                                projectSet?.status === "0" ?
-                                                    <Select.Option value="1">
-                                                            <span style={{paddingRight:"10px"}}>
-                                                                <PlayCircleOutlined />
-                                                            </span>
-                                                        开始项目集
-                                                    </Select.Option>
-                                                    : projectSet?.status === "1" ?
-                                                        <Select.Option value="2">
-                                                            <span style={{paddingRight:"10px"}}>
-                                                                <CloseCircleOutlined />
-                                                            </span>
-                                                            结束项目集
-                                                        </Select.Option> :
+                                    <svg className="list-img" aria-hidden="true">
+                                        <use xlinkHref="#icon-status"></use>
+                                    </svg>
+                                    <div className="info-item-content">
+                                        <div className="content-top">
+                                            <Select
+                                                className={`projectSet-status-select projectSet-status-select${projectSet?.status === "0" ? "-todo" : projectSet?.status === "1" ? "-process" : "-done"}`}
+                                                defaultValue={"--"}
+                                                dropdownMatchSelectWidth={false}
+                                                value={status[projectSet?.status || 0]}
+                                                bordered={false}
+                                                showArrow={false}
+                                                // disabled={project?.projectState === "3" ? true : false}
+                                                onChange={handleChange}
+                                            >
+                                                {
+                                                    projectSet?.status === "0" ?
                                                         <Select.Option value="1">
-                                                            <span style={{paddingRight:"10px"}}>
-                                                                <PlayCircleOutlined />
-                                                            </span>
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
                                                             开始项目集
                                                         </Select.Option>
-                                            }
-                                        </Select>
+                                                        : projectSet?.status === "1" ?
+                                                            <Select.Option value="2">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <CloseCircleOutlined />
+                                                                </span>
+                                                                结束项目集
+                                                            </Select.Option> :
+                                                            <Select.Option value="1">
+                                                                <span style={{paddingRight:"10px"}}>
+                                                                    <PlayCircleOutlined />
+                                                                </span>
+                                                                开始项目集
+                                                            </Select.Option>
+                                                }
+                                            </Select>
+                                        </div>
+                                        <div className="content-bottom">状态</div>
+                                    </div>
+                                </div>
+                                {/*<div className="projectSet-info-item">*/}
+                                {/*    <div className="projectSet-info-title">创建时间</div>*/}
+                                {/*    <div className="projectSet-info-result">{projectSet?.creatTime} </div>*/}
+                                {/*</div>*/}
+                                {/*<div className="projectSet-info-item">*/}
+                                {/*    <div className="projectSet-info-title">可见范围</div>*/}
+                                {/*    <div className="projectSet-info-result">{projectSet?.projectSetLimits === 0 ? "所有人可见" : "成员可见"} </div>*/}
+                                {/*</div>*/}
+                                {/*<div className="projectSet-info-item">*/}
+                                {/*    <div className="projectSet-info-title">项目数量</div>*/}
+                                {/*    <div className="projectSet-info-result">*/}
+                                {/*        {Array.isArray(projectSet?.projects) ? projectSet.projects.length : 0}*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                <div className="projectSet-info-item">
+                                    <svg className="list-img" aria-hidden="true">
+                                        <use xlinkHref="#icon-date"></use>
+                                    </svg>
+                                    <div className="info-item-content">
+                                        <div className="content-top">{projectSet?.startTime} ~ {projectSet?.endTime}</div>
+                                        <div className="content-bottom">计划时间</div>
+                                    </div>
+                                </div>
+                                {/*<div className="projectSet-info-item">*/}
+                                {/*    <div className="projectSet-info-title">计划结束时间</div>*/}
+                                {/*    <div className="projectSet-info-result">{projectSet?.endTime}</div>*/}
+                                {/*</div>*/}
 
-                                    </div>
-                                </div>
-                                <div className="projectSet-info-item-progress">
-                                    <div className="projectSet-info-item-progress-title">进度</div>
-                                    <div className="projectSet-info-item-progress-result">
-                                        <Progress percent={percent} status="active" />
-                                    </div>
-                                </div>
-                                <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">预计工时</div>
-                                    <div className="projectSet-info-result">
-                                        {projectSet?.estimateTime}  小时
+                                <div className="projectSet-info-item projectSet-info-item-progress">
+                                    <svg className="list-img" aria-hidden="true">
+                                        <use xlinkHref="#icon-rate"></use>
+                                    </svg>
+                                    <div className="info-item-content">
+                                        <div className="content-top projectSet-info-item-progress-result">
+                                            <Progress percent={percent} status="active" />
+                                        </div>
+                                        <div className="content-bottom">进度</div>
                                     </div>
                                 </div>
                                 <div className="projectSet-info-item">
-                                    <div className="projectSet-info-title">剩余工时</div>
-                                    <div className="projectSet-info-result">
-                                        {projectSet?.surplusTime}  小时
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="info-item-content">
+                                            <div className="content-top">
+                                                {projectSet?.estimateTime}  小时
+                                            </div>
+                                            <div className="content-bottom">预计工时</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="item-group">
+                                        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+                                        <div className="info-item-content">
+                                            <div className="content-top">
+                                                {projectSet?.surplusTime}  小时
+                                            </div>
+                                            <div className="content-bottom">剩余工时</div>
+                                        </div>
                                     </div>
                                 </div>
+                                {/*<div className="projectSet-info-item">*/}
+                                {/*    <div className="projectSet-info-title">剩余工时</div>*/}
+                                {/*    <div className="projectSet-info-result">*/}
+                                {/*        {projectSet?.surplusTime}  小时*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                         <div className="projectSet-process-project">

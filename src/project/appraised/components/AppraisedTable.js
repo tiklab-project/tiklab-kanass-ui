@@ -162,12 +162,12 @@ const AppraisedTable = (props) => {
                 {status[text].name}
             </div>
         },
-        {
-            title: "描述",
-            dataIndex: "description",
-            key: "description",
-            align: "left"
-        },
+        // {
+        //     title: "描述",
+        //     dataIndex: "description",
+        //     key: "description",
+        //     align: "left"
+        // },
         {
             title: "创建者",
             dataIndex: "builder",

@@ -7,7 +7,7 @@ export class WikiRepositoryStore {
             orderType: "desc"
         }],
         pageParam: {
-            pageSize: 20,
+            pageSize: 10,
             currentPage: 1,
             totalPage: 1
         }

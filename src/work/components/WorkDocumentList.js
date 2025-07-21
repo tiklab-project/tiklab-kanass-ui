@@ -141,7 +141,7 @@ const WorkDocumentList = (props) => {
                             <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
                                 <use xlinkHref="#icon-add2"></use>
                             </svg>
-                            添加文档
+                            关联文档
                         </Button>
                     </WorkPrivilegeComponent>
 
