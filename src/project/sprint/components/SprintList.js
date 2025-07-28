@@ -86,6 +86,7 @@ const Sprint = (props) => {
         }
         createRecent(params)
         props.history.push({ pathname: `/${projectId}/sprint/${id}/workitem` })
+        // props.history.push(`/project/${projectId}/sprintDetail/${id}/workitem`)
         localStorage.setItem("sprintId", id);
     }
 
@@ -337,6 +338,9 @@ const Sprint = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", record.id)}>
+                        <use xlinkHref="#icon-edit"></use>
+                    </svg>
                     <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
                         <DeleteModal deleteFunction={deleSprintList} id={record.id} />
                     </PrivilegeProjectButton>

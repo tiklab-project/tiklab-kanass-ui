@@ -117,7 +117,7 @@ export class VersionStore {
 
         const param = new FormData()
         param.append("id", params.id)
-        const data = await Service("/projectVersion/findVersion", params);
+        const data = await Service("/projectVersion/findVersion", param);
         if (data.code === 0) {
             this.versionItem = data.data;
         }
@@ -131,17 +131,17 @@ export class VersionStore {
      */
     @action
     editVersion = async (value) => {
-        let params = {
-            id: value.id,
-            name: value.name,
-            publishTime: value.publishTime,
-            startTime: value.startTime,
-            project: {
-                id: value.project
-            },
-            versionState: value.versionState
-        }
-        const data = await Service("/projectVersion/updateVersion", params);
+        // let params = {
+        //     id: value.id,
+        //     name: value.name,
+        //     publishTime: value.publishTime,
+        //     startTime: value.startTime,
+        //     project: {
+        //         id: value.project
+        //     },
+        //     versionState: value.versionState
+        // }
+        const data = await Service("/projectVersion/updateVersion", value);
         return data;
     }
 

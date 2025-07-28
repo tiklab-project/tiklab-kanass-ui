@@ -15,7 +15,7 @@ import Button from "../../../common/button/Button";
 const { RangePicker } = DatePicker;
 const VersionAddmodal = (props) => {
     const { versionStore, userList, getUseList, setActiveTabs, selectTabs } = props;
-    const { editVersion, addVersion, searchVersionById, status, findAllVersionState } = versionStore;
+    const { editVersion, addVersion, searchVersionById, status, findAllVersionState, getVersionList } = versionStore;
     const [form] = Form.useForm();
     const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 弹窗显示
@@ -54,9 +54,11 @@ const VersionAddmodal = (props) => {
                 // 'publishTime': fieldsValue['publishTime'].format(dateFormat),
                 // 'startTime': fieldsValue['startTime'].format(dateFormat)
             };
+            console.log(values)
             if (props.type === "edit") {
                 values.id = props.id
                 editVersion(values).then(() => {
+                    getVersionList();
                     form.resetFields();
                     setVisible(false);
                 })
@@ -66,10 +68,12 @@ const VersionAddmodal = (props) => {
                         setActiveTabs("all")
                         selectTabs("all", 1)
                     }
+                    getVersionList();
                     setVisible(false);
                     form.resetFields();
                 })
             }
+
         })
 
     }
@@ -98,11 +102,12 @@ const VersionAddmodal = (props) => {
         if (props.type === "edit") {
             searchVersionById({ id: props.id }).then((res) => {
                 form.setFieldsValue({
-                    name: res.name,
-                    project: res.project.id,
+                    name: res.data.name,
+                    project: res.data.project.id,
                     // publishTime: res.publishTime ? moment(res.publishTime) : null,
                     startTime: res.data.startTime ? [moment(res.data.startTime, dateFormat), moment(res.data.publishTime, dateFormat)] : null,
-                    versionState: res.versionState
+                    versionState: res.data.versionState.id,
+                    master: res.data.master.id
                 })
             })
         }

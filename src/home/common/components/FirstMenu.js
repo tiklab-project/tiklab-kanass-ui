@@ -192,9 +192,9 @@ const FirstMenu = (props) => {
 
                         })
                     }
-                    {
-                        menuNum === 6 && <Search isShowText={isShowText} theme={theme} />
-                    }
+                    {/*{*/}
+                    {/*    menuNum === 6 && <Search isShowText={isShowText} theme={theme} />*/}
+                    {/*}*/}
                     {
                         menuNum < 6 && <FirstMoreMenuModal
                             isShowText={isShowText} moreMenu={moreMenu} theme={theme} morePath = {morePath}

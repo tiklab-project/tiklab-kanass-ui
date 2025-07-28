@@ -1,5 +1,5 @@
 .project-select-type {
-    padding: 10px 0;
+    padding: 10px;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -48,78 +48,81 @@
 }
 
 .project-addinfo {
-    .ant-form-item {
-        margin: 0 0 15px;
-    }
-    .ant-input {
-        border: 0;
-        background: #f9f9f9;
-    }
-    .ant-picker {
-        border: 0;
-        background: #f9f9f9;
-    }
-    .project-icon-box {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        .upload-icon {
-            width: 30px;
-            height: 30px;
+    .project-add-form-item{
+        overflow: auto;
+        height: calc(100% - 230px);
+        margin-bottom: 30px;
+        padding: 10px;
+
+        .ant-form-item {
+            margin: 0 0 15px;
         }
-    }
-
-
-
-    .project-type-head {
-        font-size: 20px;
-        font-weight: var(--tiklab-font-weight-bold);
-        margin-bottom: 10px;
-    }
-
-    .project-limit {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-
-        .project-limits {
-            padding: 5px 10px;
-            background-color: #fff;
-            border-radius: 4px;
-            width: 220px;
-
-            .limits-title {
-                font-size: 16px;
-                height: 20px;
-                line-height: 20px;
-            }
-
-            .limits-desc {
-                font-size: 13px;
-                color: #ccc;
+        .ant-input {
+            border: 0;
+            background: #f9f9f9;
+        }
+        .ant-picker {
+            border: 0;
+            background: #f9f9f9;
+        }
+        .project-icon-box {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            .upload-icon {
+                width: 30px;
+                height: 30px;
             }
         }
-
-        .limit-select {
-            border: 1px solid var(--tiklab-blue);
-            box-shadow: 0 0 3px var(--tiklab-gray-400)56;
+        .project-type-head {
+            font-size: 20px;
+            font-weight: var(--tiklab-font-weight-bold);
+            margin-bottom: 10px;
         }
-    }
+        .project-limit {
+            display: flex;
+            align-items: center;
+            gap: 30px;
 
-    .project-icon {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        box-sizing: content-box;
+            .project-limits {
+                padding: 5px 10px;
+                background-color: #fff;
+                border-radius: 4px;
+                width: 220px;
 
-        img {
-            width: 30px;
-            height: 30px;
+                .limits-title {
+                    font-size: 16px;
+                    height: 20px;
+                    line-height: 20px;
+                }
+
+                .limits-desc {
+                    font-size: 13px;
+                    color: #ccc;
+                }
+            }
+
+            .limit-select {
+                border: 1px solid var(--tiklab-blue);
+                box-shadow: 0 0 3px var(--tiklab-gray-400)56;
+            }
+        }
+        .project-icon {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-sizing: content-box;
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
         }
     }
 
     .project-add-submit {
         display: flex;
+        padding: 0 10px;
 
         .project-dashed {
             margin-right: 10px;

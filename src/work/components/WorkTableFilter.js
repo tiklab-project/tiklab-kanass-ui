@@ -17,6 +17,8 @@ import { useDebounce } from "../../common/utils/debounce";
 import { searchWorkList } from "./WorkSearch";
 import WorkTypeTab from "./WorkTypeTab";
 import WorkFilterQuick from "./WorkFilterQuick";
+import WorkTypeSelect from "./WorkTypeSelect";
+import WorkFilterSelect from "./WorkFilterSelect";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -25,7 +27,7 @@ const WorkTableFilter = (props) => {
     // 解析store数据
     const { projectList, searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree,
-        workShowType, viewType, findProjectList, getSelectUserList,
+        workShowType, viewType, findProjectList, getSelectUserList, setArchiveView, archiveView,
         getWorkTypeList, getWorkStatus, userList, getWorkBoardList } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
 
@@ -199,8 +201,12 @@ const WorkTableFilter = (props) => {
 
     return (
         <div className="work-table-second">
-            <WorkTypeTab />
+            {/*<WorkTypeTab/>*/}
+
+
             <div className="work-table-filter">
+                <WorkFilterSelect />
+                <WorkTypeSelect />
                 <div className="worklist-table-search">
                     <div className="search-input">
                         <svg className="svg-icon" aria-hidden="true">
@@ -349,14 +355,24 @@ const WorkTableFilter = (props) => {
                         }
                     </SelectSimple>
                 }
-
-                <WorkFilterModal layout={"horizontal"} {...props} />
-
-
                 {/*{*/}
                 {/*    (workShowType === "bodar" || workShowType === "gantt") && <WorkSort sorter={sorter} />*/}
                 {/*}*/}
+            </div>
 
+            <div style={{
+                display: "flex",
+                gap: "10px",
+                alignItems: "center",
+                justifyContent: "space-between",
+            }}>
+                {
+                    workShowType === "gantt" && <div className="work-gantt-view">
+                        <div className={`work-gantt-view-item work-gantt-view-week ${archiveView === "week" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
+                        <div className={`work-gantt-view-item work-gantt-view-month ${archiveView === "month" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("month")}>月</div>
+                    </div>
+                }
+                <WorkFilterModal layout={"horizontal"} {...props} />
             </div>
         </div>
 

@@ -8,13 +8,14 @@ import "./WorkLogPage.scss"
 import WorkDynamic from "./WorkDynamic";
 import WorkComment from "./WorkComment";
 import WorkLog from "./WorkLog";
+import WorkCommentStore from "../store/WorkCommentStore";
 
 const WorkLogPage = (props) => {
     const { workInfo, workId, closeModal, searchWorkById } = props;
-
+    const {dynamicAndCommentAndLogNum} = WorkCommentStore
     const tabValue = [
         {
-            label: "动态",
+            label: "所有",
             id: 0
         },
         {
@@ -27,25 +28,85 @@ const WorkLogPage = (props) => {
         }
     ]
 
+    const getNum = (id) => {
+        switch (id) {
+            case 0:
+                return dynamicAndCommentAndLogNum.dynamicNum;
+            case 1:
+                return dynamicAndCommentAndLogNum.commentNum;
+            case 2:
+                return dynamicAndCommentAndLogNum.workLogNum;
+            default:
+                return 0;
+        }
+    }
+
     const [selectTab, setSelectTab] = useState(0);
 
     return(
         <Provider>
             <div className="log-page">
 
+                <div className="log-page-top">
+                    {
+                        tabValue.map((item, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className={"log-page-tab " + (selectTab === index ? "log-page-tab-active" : "")}
+                                    onClick={() => {
+                                        console.log("index:  " + index)
+                                        setSelectTab(index)
+                                    }}
+                                >
+                                    <span>{item.label}</span>
+                                    <span className="log-page-tab-num">{getNum(item.id)}</span>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+
                 <div className="log-page-content">
-                    <WorkDynamic {...props} />
+                    {
+                        selectTab === 0 &&
+                        <div className="tabs-tabpanel">
+                            <WorkDynamic {...props} />
+                        </div>
+                    }
+                    {/*<WorkDynamic {...props} />*/}
 
-                    <WorkLog
-                        closeModal = {closeModal}
-                        surplusTime={workInfo.surplusTime}
-                        workInfo={workInfo}
-                        planTakeupTime={workInfo.planTakeupTime}
-                        searchWorkById = {searchWorkById}
-                        {...props}
-                    />
 
-                    <WorkComment workId={workId} />
+                    {
+                        selectTab === 2 &&
+                        <div className="tabs-tabpanel">
+                            <WorkLog
+                                closeModal = {closeModal}
+                                surplusTime={workInfo.surplusTime}
+                                workInfo={workInfo}
+                                planTakeupTime={workInfo.planTakeupTime}
+                                searchWorkById = {searchWorkById}
+                                {...props}
+                            />
+                        </div>
+                    }
+
+                    {/*<WorkLog*/}
+                    {/*    closeModal = {closeModal}*/}
+                    {/*    surplusTime={workInfo.surplusTime}*/}
+                    {/*    workInfo={workInfo}*/}
+                    {/*    planTakeupTime={workInfo.planTakeupTime}*/}
+                    {/*    searchWorkById = {searchWorkById}*/}
+                    {/*    {...props}*/}
+                    {/*/>*/}
+
+                    {
+                        selectTab === 1 &&
+                        <div className="tabs-tabpanel">
+                            <WorkComment workId={workId} />
+                        </div>
+                    }
+                    {/*<WorkComment workId={workId} />*/}
                 </div>
 
             </div>

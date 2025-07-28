@@ -106,7 +106,7 @@ const ProjectAdd = (props) => {
     )
 
     const step2 = (
-        <div>
+        <div className="add-model-page">
 
             <ProjectAddInfo
                 createProject={createProject}
@@ -140,7 +140,7 @@ const ProjectAdd = (props) => {
         <Modal
             title={"添加项目"}
             visible={projectAddVisible}
-            height={650}
+            height={550}
             width={700}
             footer={null}
             onCancel={onCancel}

@@ -36,14 +36,14 @@ const ProjectDetailAside = (props) => {
             key: "overview",
             encoded: "Survey"
         },
-        {
-            title: `${t('line_photo')}`,
-            icon: 'line-' + theme,
-            defaultIcon: "line-default",
-            id: `/project/${projectId}/linemap`,
-            key: "linemap",
-            encoded: "Pannel",
-        },
+        // {
+        //     title: `${t('line_photo')}`,
+        //     icon: 'line-' + theme,
+        //     defaultIcon: "line-default",
+        //     id: `/project/${projectId}/linemap`,
+        //     key: "linemap",
+        //     encoded: "Pannel",
+        // },
         {
             title: `${t('work')}`,
             icon: 'workitem-' + theme,
@@ -171,6 +171,100 @@ const ProjectDetailAside = (props) => {
             key: "statistics",
             encoded: "Statistic",
         },
+        {
+            title: `${t('milestone')}`,
+            icon: 'milestone-' + theme,
+            defaultIcon: "milestone-default",
+            id: `/project/${projectId}/milestone`,
+            key: "milestone",
+            encoded: "Milestone",
+        },
+        {
+            title: "文档",
+            icon: 'repository-' + theme,
+            defaultIcon: "repository-default",
+            id: `/project/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
+            title: "测试",
+            icon: 'test',
+            defaultIcon: "test",
+            id: `/project/${projectId}/test`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "评审",
+            icon: 'appraised',
+            defaultIcon: "appraised",
+            id: `/project/${projectId}/appraised`,
+            key: "appraised",
+            encoded: "appraised",
+        }
+
+    ];
+
+    const kanbanProrouter = (projectId) => [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
+            id: `/project/${projectId}/overview`,
+            key: "overview",
+            encoded: "Survey"
+        },
+        // {
+        //     title: `${t('line_photo')}`,
+        //     icon: 'line-' + theme,
+        //     defaultIcon: "line-default",
+        //     id: `/project/${projectId}/linemap`,
+        //     key: "linemap",
+        //     encoded: "Pannel",
+        // },
+        {
+            title: `${t('work')}`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            id: `/project/${projectId}/workitem`,
+            key: "workitem",
+            encoded: "Work",
+        },
+        {
+            title: `${t('sprint')}`,
+            icon: 'sprint-' + theme,
+            defaultIcon: "sprint-default",
+            id: `/project/${projectId}/sprint`,
+            key: "sprint",
+            encoded: "Sprint",
+        },
+
+        {
+            title: `${t('version')}`,
+            icon: 'version-' + theme,
+            defaultIcon: "version-default",
+            id: `/project/${projectId}/version`,
+            key: "version",
+            encoded: "Version",
+        },
+
+        {
+            title: "工时",
+            icon: 'log-' + theme,
+            defaultIcon: "log-default",
+            id: `/project/${projectId}/log`,
+            key: "log",
+            encoded: "log",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
+            id: `/project/${projectId}/statistics/overview`,
+            key: "statistics",
+            encoded: "Statistic",
+        },
         // {
         //     title: `${t('milestone')}`,
         //     icon: 'milestone-' + theme,
@@ -203,15 +297,133 @@ const ProjectDetailAside = (props) => {
             key: "appraised",
             encoded: "appraised",
         }
-
     ];
 
-    const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id));
+    const hybridProrouter = (projectId) => [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
+            id: `/project/${projectId}/overview`,
+            key: "overview",
+            encoded: "Survey"
+        },
+        {
+            title: `${t('line_photo')}`,
+            icon: 'line-' + theme,
+            defaultIcon: "line-default",
+            id: `/project/${projectId}/linemap`,
+            key: "linemap",
+            encoded: "Pannel",
+        },
+        {
+            title: "计划",
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
+            id: `/project/${projectId}/stage`,
+            key: "stage",
+            encoded: "stage",
+        },
+        {
+            title: `${t('work')}`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            id: `/project/${projectId}/workitem`,
+            key: "workitem",
+            encoded: "Work",
+        },
+        {
+            title: `${t('sprint')}`,
+            icon: 'sprint-' + theme,
+            defaultIcon: "sprint-default",
+            id: `/project/${projectId}/sprint`,
+            key: "sprint",
+            encoded: "Sprint",
+        },
+
+        {
+            title: `${t('version')}`,
+            icon: 'version-' + theme,
+            defaultIcon: "version-default",
+            id: `/project/${projectId}/version`,
+            key: "version",
+            encoded: "Version",
+        },
+
+        {
+            title: "工时",
+            icon: 'log-' + theme,
+            defaultIcon: "log-default",
+            id: `/project/${projectId}/log`,
+            key: "log",
+            encoded: "log",
+        },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
+            id: `/project/${projectId}/statistics/overview`,
+            key: "statistics",
+            encoded: "Statistic",
+        },
+        // {
+        //     title: `${t('milestone')}`,
+        //     icon: 'milestone-' + theme,
+        //     defaultIcon: "milestone-default",
+        //     id: `/project/${projectId}/milestone`,
+        //     key: "milestone",
+        //     encoded: "Milestone",
+        // },
+        {
+            title: "文档",
+            icon: 'repository-' + theme,
+            defaultIcon: "repository-default",
+            id: `/project/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+        {
+            title: "测试",
+            icon: 'test',
+            defaultIcon: "test",
+            id: `/project/${projectId}/test`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "评审",
+            icon: 'appraised',
+            defaultIcon: "appraised",
+            id: `/project/${projectId}/appraised`,
+            key: "appraised",
+            encoded: "appraised",
+        }
+    ];
+
+    // const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id));
+    const [allProjectRouter, setAllProjectRouter] = useState([]);
 
 
 
     useEffect(() => {
-        setAllProjectRouter(project?.projectType.type === "scrum" ? scrumProrouter(project.id) : normalProrouter(project.id))
+        switch (project?.projectType.type){
+            case "scrum":
+                setAllProjectRouter(scrumProrouter(project.id))
+                break;
+            case "nomal":
+                setAllProjectRouter(normalProrouter(project.id))
+                break;
+            case "kanban":
+                setAllProjectRouter(kanbanProrouter(project.id))
+                break;
+            case "hybrid":
+                setAllProjectRouter(hybridProrouter(project.id))
+                break;
+            default:
+                setAllProjectRouter(scrumProrouter(project.id))
+                break;
+        }
+        // setAllProjectRouter(project?.projectType.type === "scrum" ? scrumProrouter(project.id) : normalProrouter(project.id))
 
         return;
     }, [project])

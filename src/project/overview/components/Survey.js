@@ -356,26 +356,29 @@ const Survey = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="milestone-box">
-                        <div className="box-title">
-                            里程碑
-                            <div className="more" onClick={() => goMileStoneList()}>
-                                <svg aria-hidden="true" className="svg-icon">
-                                    <use xlinkHref="#icon-right"></use>
-                                </svg>
+                    {
+                        project?.projectType.type !== "scrum" &&
+                        <div className="milestone-box">
+                            <div className="box-title">
+                                里程碑
+                                <div className="more" onClick={() => goMileStoneList()}>
+                                    <svg aria-hidden="true" className="svg-icon">
+                                        <use xlinkHref="#icon-right"></use>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div className="milestone-box-timeline">
+                                {
+                                    milestoneList?.length > 0 ?
+                                        <MilestoneTimeline milestonelist={milestoneList} />
+                                        :
+                                        <ProjectEmpty description="暂时没有里程碑~" />
+                                }
+
                             </div>
                         </div>
-
-                        <div className="milestone-box-timeline">
-                            {
-                                milestoneList?.length > 0 ?
-                                    <MilestoneTimeline milestonelist={milestoneList} />
-                                    :
-                                    <ProjectEmpty description="暂时没有里程碑~" />
-                            }
-
-                        </div>
-                    </div>
+                    }
                     <TodoStatistics />
                     <div className="log-box">
                         <div className="log-box-title">

@@ -18,8 +18,8 @@ import WorkRelationPage from "./WorkRelationPage";
 import WorkLogPage from "./WorkLogPage";
 import WorkLinkPage from "./WorkLinkPage";
 import {withRouter} from "react-router";
-import WorkCommentInput from "./WorkCommentInput";
 import WorkRelationStore from "../store/WorkRelationStore";
+import WorkCommentStore from "../store/WorkCommentStore";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
@@ -28,6 +28,7 @@ const WorkDetailBottom = (props) => {
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
     const { findWorkRelateAndChildNum } = WorkRelationStore
+    const { findWorkDynamicAndCommentAndLogNum } = WorkCommentStore
     // 富文本内容
     
     // 事项类型     
@@ -40,7 +41,10 @@ const WorkDetailBottom = (props) => {
     const path = props.match.path;
 
     useEffect(() => {
+        // 获取关联事项、子事项记录个数
         findWorkRelateAndChildNum(workId);
+        // 获取动态、评论、工时记录个数
+        findWorkDynamicAndCommentAndLogNum(workId);
         if (workInfo) {
             if (workInfo.workTypeCode) {
                 switch (workInfo.workTypeCode) {
@@ -89,6 +93,10 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        deep={deep}
+                        taskType={taskType}
+                        workTypeText={workTypeText}
+                        workRelationStore={WorkRelationStore}
                     />;
                 case "demand":
                 case "epic":
@@ -100,6 +108,10 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        deep={deep}
+                        taskType={taskType}
+                        workTypeText={workTypeText}
+                        workRelationStore={WorkRelationStore}
                     />
                 case "defect":
                     return <WorkBasicInfoDefect
@@ -110,6 +122,10 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        deep={deep}
+                        taskType={taskType}
+                        workTypeText={workTypeText}
+                        workRelationStore={WorkRelationStore}
                     />
                 default:
                     return <WorkBasicInfoNomal
@@ -120,6 +136,10 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        deep={deep}
+                        taskType={taskType}
+                        workTypeText={workTypeText}
+                        workRelationStore={WorkRelationStore}
                     />
             }
         }

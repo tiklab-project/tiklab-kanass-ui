@@ -21,12 +21,13 @@ const WorkTableHead = (props) => {
     const { workStore } = props;
     const { workTypeList, workShowType, viewType, setViewType, setWorkShowType,
         getWorkConditionPageTree, getWorkConditionPage, searchCondition,
-        getWorkBoardList, exportWorkItemXml, setArchiveView, archiveView, tableTitle, moduleTitle } = workStore;
+        getWorkBoardList, exportWorkItemXml, tableTitle, moduleTitle } = workStore;
     const [stateType, setState] = useState();
     // console.log("**********id:"+props.match.params.id);
     // console.log("**********props*****:"+JSON.stringify(props))
     const projectId = props.match.params.id ? props.match.params.id : null;
     const workAddModel = useRef()
+    const project = JSON.parse(localStorage.getItem("project"));
 
         
 
@@ -74,7 +75,7 @@ const WorkTableHead = (props) => {
         }else if (moduleTitle){
             return moduleTitle;
         }else {
-            return "所有事项"
+            return "事项"
         }
     }
 
@@ -84,12 +85,6 @@ const WorkTableHead = (props) => {
             <div className="work-breadcrumb">
                 <div className="work-title">{getTitle()}</div>
                 <div className="work-top-right">
-                    {
-                        workShowType === "gantt" && <div className="work-gantt-view">
-                            <div className={`work-gantt-view-item work-gantt-view-week ${archiveView === "week" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("week")}>周</div>
-                            <div className={`work-gantt-view-item work-gantt-view-month ${archiveView === "month" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("month")}>月</div>
-                        </div>
-                    }
 
                     <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
                         <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
@@ -101,17 +96,20 @@ const WorkTableHead = (props) => {
                             </svg>
                         </Button>
                     </Dropdown>
-                    <WorkChangeView
-                        searchCondition={searchCondition}
-                        getWorkConditionPage={getWorkConditionPage}
-                        getWorkConditionPageTree={getWorkConditionPageTree}
-                        getWorkBoardList={getWorkBoardList}
-                        viewType={viewType}
-                        workShowType={workShowType}
-                        setWorkShowType={setWorkShowType}
-                        setViewType={setViewType}
-                        buttonType="button"
-                    />
+                    {
+                        project?.projectType.type !== "kanban" &&
+                        <WorkChangeView
+                            searchCondition={searchCondition}
+                            getWorkConditionPage={getWorkConditionPage}
+                            getWorkConditionPageTree={getWorkConditionPageTree}
+                            getWorkBoardList={getWorkBoardList}
+                            viewType={viewType}
+                            workShowType={workShowType}
+                            setWorkShowType={setWorkShowType}
+                            setViewType={setViewType}
+                            buttonType="button"
+                        />
+                    }
                 </div>
 
             </div>

@@ -41,7 +41,7 @@ const WorkFilterHigh = (props) => {
     const { workShowType, priorityList, findPriority, findSprintList, sprintList,
         getModuleList, moduleList, searchCondition, getWorkStatus, workStatusList,
         getSelectUserList, userList, setSearchConditionNull, tabValue, findVersionList,
-        versionList, setTabValue, setQuickFilterValue, findStateNodeList, setSearchCondition } = workStore;
+        versionList, setTabValue, setQuickFilterValue, findStateNodeList, setSearchCondition, getWorkBoardList } = workStore;
 
     /**
      * 获取事项各个属性列表
@@ -308,7 +308,12 @@ const WorkFilterHigh = (props) => {
      * 获取事项列表
      */
     const getWorkList = (initValues) => {
-        setWorkDeatilInList(workStore, initValues)
+        if (workShowType === "bodar"){
+            getWorkBoardList(initValues)
+        }else {
+            setWorkDeatilInList(workStore, initValues)
+        }
+
     }
 
     /**
@@ -437,7 +442,7 @@ const WorkFilterHigh = (props) => {
     );
 
     return (
-        <div className={`height-filter ${workShowType === "table" ? "":"less-margin"}`} ref={heightFilter}>
+        <div className={`height-filter`} ref={heightFilter}>
             <div className="height-filter-content">
                 <Form
                     form={form}
@@ -449,23 +454,26 @@ const WorkFilterHigh = (props) => {
                     {...formItemLayout}
 
                 >
-                    <Form.Item name="workQuickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
-                        <Select
-                            placeholder="快速筛选"
-                            className="work-select"
-                            key="workQuickFilter"
-                            maxTagCount={1}
-                            getPopupContainer={() => heightFilter.current}
-                            showArrow = {true}
-                            style={{backgroundColor: '#f0f0f0'}}
-                        >
-                            {
-                                quickFilterList && quickFilterList.map((item) => {
-                                    return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
+                    {
+                        workShowType === "list" &&
+                        <Form.Item name="workQuickFilter" label={labelHidden ? null : "快速筛选"} rules={[{ required: false }]} >
+                            <Select
+                                placeholder="快速筛选"
+                                className="work-select"
+                                key="workQuickFilter"
+                                maxTagCount={1}
+                                getPopupContainer={() => heightFilter.current}
+                                showArrow = {true}
+                                style={{backgroundColor: '#f0f0f0'}}
+                            >
+                                {
+                                    quickFilterList && quickFilterList.map((item) => {
+                                        return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                    }
 
                     {
                         workShowType === "list" && <>
@@ -530,7 +538,7 @@ const WorkFilterHigh = (props) => {
                     </Form.Item>
 
                     {
-                        (projectType === "scrum" && !sprintId) &&
+                        ((projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") && !sprintId) &&
                         <Form.Item name="currentSprintIds" label={labelHidden ? null : "所属迭代"} style={{ minWidth: '70px', flex: 1 }} rules={[{ required: false }]} >
                             <Select
                                 mode="multiple"

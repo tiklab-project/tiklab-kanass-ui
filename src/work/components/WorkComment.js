@@ -22,13 +22,14 @@ const { TextArea } = Input;
 
 const WorkComment = (props) => {
     const { workId, commentInputRef } = props;
-    const { createWorkComment, findWorkCommentPage, findWorkCommentList, updateWorkComment, deleteWorkComment, inputComment } = WorkCommentStore;
+    const { createWorkComment, findWorkCommentPage, commentList, updateWorkComment, deleteWorkComment, inputComment, workCommentPage } = WorkCommentStore;
     const [isInput, setIsInPut] = useState(false);
     const [commentContent, setCommentContent] = useState("")
     const useId = getUser().userId;
     const commentInput = useRef(null);
-
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalRecord, setTotalRecord] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
     const editInput = useRef(null);
     const [editCommentContent, setEditCommentContent] = useState();
     const [editCommentId, setEditCommentId] = useState()
@@ -38,6 +39,8 @@ const WorkComment = (props) => {
     const [workCommentList, setWorkCommentList] = useState([]);
     const [hasMore, setHasMore] = useState(false);
     const [moreDrawerVisible, setMoreDrawerVisible] = useState(false);
+    const [hoverItem, setHoverItem] = useState();
+
 
     /**
      * 提交评论
@@ -65,12 +68,15 @@ const WorkComment = (props) => {
      */
     const getCommentList = (value) => {
         findWorkCommentPage(value).then(res => {
-            setDisplayedComments(res.data.dataList.slice(0,3))
-            if (res.data.dataList.length > 3){
-                setHasMore(true)
-            }
-            setWorkCommentList(res.data.dataList)
+            // setDisplayedComments(res.data.dataList.slice(0,3))
+            // if (res.data.dataList.length > 3){
+            //     setHasMore(true)
+            // }
+            // setWorkCommentList(res.data.dataList)
             // setTotalRecord(res.data.totalRecord)
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+            setPageSize(res.data.pageSize)
         })
     }
     useEffect(() => {
@@ -149,14 +155,29 @@ const WorkComment = (props) => {
         getCommentList({pageParam:{currentPage: page, pageSize: 10}})
     }
 
+    const loadNextPage = () => {
+        const params = {
+            pageParam: {
+                ...workCommentPage.pageParam,
+                currentPage: currentPage + 1
+            }
+        }
+        findWorkCommentPage(params).then(res => {
+            // setDataList(res.data.dataList);
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+            setPageSize(res.data.pageSize)
+        })
+    }
+
     const showMore = () => {
         setMoreDrawerVisible(true)
     };
     const workComment = useRef(null);
     return (<>
-        <div className="other-title">
-            评论
-        </div>
+        {/*<div className="other-title">*/}
+        {/*    评论*/}
+        {/*</div>*/}
         <div className="work-comment" ref = {workComment}>
             <div className="work-comment-list-box">
                 <WorkCommentInput
@@ -165,23 +186,23 @@ const WorkComment = (props) => {
                     // reSetDetailRowHeight={reSetDetailRowHeight}
                 />
                 {
-                    workCommentList && workCommentList.length > 0 ?
+                    commentList && commentList.length > 0 ?
                         <Fragment>
                             {/*<div className="title">共{totalRecord}条</div>*/}
                             <div className="work-comment-list">
                                 {
-                                    workCommentList && workCommentList.length > 0 && workCommentList.map(item => {
-                                        if (displayedComments.includes(item)){
-                                            return <div className="comment-item" key={item.id}>
+                                    commentList && commentList.length > 0 && commentList.map(item => {
+                                        // if (displayedComments.includes(item)){
+                                            return <div className="comment-item" key={item.id}
+                                                        onMouseEnter={() => setHoverItem(item.id)}
+                                                        onMouseLeave={() => setHoverItem()}
+                                            >
                                                 <div className="comment-top">
                                                     <div className="comment-user">
                                                         <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
                                                         <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
-                                                        <span className="user-date">{item.createTime}</span>
                                                     </div>
-                                                    <div className="comment-operate" ref={logAction}>
-                                                        <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
-                                                    </div>
+
                                                 </div>
                                                 {
                                                     <Fragment>
@@ -191,17 +212,33 @@ const WorkComment = (props) => {
                                                     </Fragment>
 
                                                 }
+                                                <div className="comment-bottom">
+                                                    <span className="user-date">{item.createTime}</span>
+                                                    {
+                                                        hoverItem === item.id &&
+                                                        <div className="comment-operate" ref={logAction}>
+                                                            {/*<DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />*/}
+                                                            <div onClick={() => {deleteComment(item.id)}}
+                                                                 className={"operate-text"}
+                                                            >
+                                                                删除
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
-                                        }
+                                        // }
                                     })
                                 }
                             </div>
+                            {
+                                totalRecord > currentPage * pageSize ?
+                                    <div className="work-comment-more" onClick={loadNextPage}>加载更多</div>
+                                    :
+                                    <div className="work-comment-more">到底啦~</div>
+                            }
                         </Fragment> :
                         <div style={{textAlign: "center"}}>暂无评论</div>
-                }
-                {
-                    hasMore &&
-                    <div className="work-comment-more" onClick={showMore}>查看更多</div>
                 }
             </div>
 

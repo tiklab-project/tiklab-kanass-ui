@@ -22,6 +22,12 @@ export class WorkCommentStore {
 
     @observable commentList = []
 
+    @observable dynamicAndCommentAndLogNum = {
+        dynamicNum: 0,
+        commentNum: 0,
+        workLogNum: 0
+    }
+
     // 创建新的评论
     @observable inputComment = false;
 
@@ -75,6 +81,22 @@ export class WorkCommentStore {
         const params = new FormData();
         params.append("id", value.id)
         const data = await Service("/workComment/deleteWorkComment", params)
+        return data;
+    }
+
+    @action
+    findWorkDynamicAndCommentAndLogNum = async (value) => {
+        const params = {
+            workItemId: value
+        }
+        const data = await Service("/workComment/findWorkDynamicAndCommentAndLogNum", params)
+        if (data.code === 0){
+            this.dynamicAndCommentAndLogNum = {
+                dynamicNum: data.data.dynamicNum || 0,
+                commentNum: data.data.commentNum || 0,
+                workLogNum: data.data.workLogNum || 0
+            };
+        }
         return data;
     }
 }

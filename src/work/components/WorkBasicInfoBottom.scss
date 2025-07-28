@@ -1,0 +1,25 @@
+.work-basic-info-bottom-tab {
+  display: flex;
+  gap: 15px;
+  height: 32px;
+  line-height: 32px;
+  border-bottom: 1px solid var(--tiklab-gray);
+  margin-bottom: 15px;
+  .bottom-tab {
+    cursor: pointer;
+  }
+
+  .bottom-tab-active {
+    border-bottom: 2px solid var(--tiklab-blue);
+    color: var(--tiklab-blue);
+  }
+
+  .bottom-tab-num{
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+
+.work-basic-info-bottom-content{
+  min-height: 400px;
+}

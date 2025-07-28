@@ -263,7 +263,9 @@ export class WorkStore {
     // 设置事项详情tab渲染的值，1，2，3，4
     @action
     setTabValue = (value) => {
-        this.tabValue = value
+        console.log("Before update:", this.tabValue);
+        this.tabValue = { ...value };
+        console.log("After update:", this.tabValue);
     }
 
     // 设置快捷搜索选中值

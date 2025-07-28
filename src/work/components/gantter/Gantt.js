@@ -17,6 +17,7 @@ import ColScroll from "./ColScroll"
 import dayjs from 'dayjs';
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
+import CircleProgress from "../../../common/progress/CircleProgress";
 
 const Gantt = (props) => {
     // 获取当前年月日
@@ -499,19 +500,26 @@ const Gantt = (props) => {
                                         />
                                         <div>
                                             <div className="table-work-text" onClick={() => goWorkDetail(item, index)}>{item.title}</div>
-                                            <span className="table-work-id">
-                                                {/*<span>{item.code}</span>*/}
-                                                <span>{item.planBeginTime.slice(0, 10)}</span>
-                                                <span>-</span>
-                                                <span>{item.planEndTime.slice(0, 10)}</span>
-                                            </span>
+                                            {/*<span className="table-work-id">*/}
+                                            {/*    /!*<span>{item.code}</span>*!/*/}
+                                            {/*    <span>{item.planBeginTime.slice(0, 10)}</span>*/}
+                                            {/*    <span>-</span>*/}
+                                            {/*    <span>{item.planEndTime.slice(0, 10)}</span>*/}
+                                            {/*</span>*/}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
-                                    <span className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
-                                        {item.workStatusNode.name}
-                                    </span>
+                                    <CircleProgress
+                                        percent={
+                                            item?.estimateTime === 0 || null ? 0 : (item?.estimateTime - item?.surplusTime) * 100 / item?.estimateTime
+                                        }
+                                        size={"mini"}
+                                    />
+                                </div>
+                                <div className={`table-td table-border table-td-assigner`}>
+                                    <UserIcon name={item.assigner?.nickname} size="small" />
+                                    {item.assigner?.nickname}
                                 </div>
                                 <div className="table-gatter table-border"></div>
                             </div>
@@ -611,11 +619,11 @@ const Gantt = (props) => {
                                 标题
                             </div>
                             <div className="table-hearder-text table-border table-hearder-status">
-                                状态
+                                进度
                             </div>
-                            {/*<div className="table-hearder-text table-border table-hearder-assigner">*/}
-                            {/*    负责人*/}
-                            {/*</div>*/}
+                            <div className="table-hearder-text table-border table-hearder-assigner">
+                                负责人
+                            </div>
                             <div className="table-hearder-gatter table-border" id="table-timer" ref={timerOuter}>
                                 <div className="table-timer" >
                                     <div className="table-month" id="table-month" ref={timerCore}>

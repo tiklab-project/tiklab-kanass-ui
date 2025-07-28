@@ -224,93 +224,95 @@ const ProjectAddInfo = (props) => {
                     onFinish={onFinish}
                     layout="vertical"
                 >
-                    <Form.Item
-                        label="项目名称"
-                        name="projectName"
-                        rules={[
-                            {
-                                required: true,
-                                message: '项目名称不能为空！', // 优化必填提示
-                            },
-                            {
-                                max: 50, // 假设最大长度为50字符
-                                message: '项目名称不能超过50个字符！', // 长度超限提示
-                            },
-                            {
-                                pattern: /^[\w\s\u4e00-\u9fa5]+$/, // 限制为中英文、数字、空格
-                                message: '只能使用中英文、数字和空格！',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="只能使用中英文、数字、空格组合" onChange={(value)=> setProjectKey(value.target.value)}/>
-                    </Form.Item>
-                    <Form.Item
-                        label="项目Key"
-                        name="projectKey"
+                    <div className={"project-add-form-item"}>
+                        <Form.Item
+                            label="项目名称"
+                            name="projectName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '项目名称不能为空！', // 优化必填提示
+                                },
+                                {
+                                    max: 50, // 假设最大长度为50字符
+                                    message: '项目名称不能超过50个字符！', // 长度超限提示
+                                },
+                                {
+                                    pattern: /^[\w\s\u4e00-\u9fa5]+$/, // 限制为中英文、数字、空格
+                                    message: '只能使用中英文、数字和空格！',
+                                },
+                            ]}
+                        >
+                            <Input placeholder="只能使用中英文、数字、空格组合" onChange={(value)=> setProjectKey(value.target.value)}/>
+                        </Form.Item>
+                        <Form.Item
+                            label="项目Key"
+                            name="projectKey"
 
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入项目键值',
-                            },
-                            {
-                                pattern: /^[A-Za-z]+$/,
-                                message: '只能包含英文!'
-                            },
-                            {
-                                pattern: /^[\S]{2,10}$/,
-                                message: '请输入2-8位英文字符'
-                            }
-                        ]}
-                    >
-                        <Input placeholder="只能包含字母，添加成功后不可修改" maxLength={9} showCount />
-                        {/* <div>请输入字母</div> */}
-                    </Form.Item>
-                    <Form.Item
-                        label="可见范围"
-                        name="projectLimits"
-                        rules={[
-                            {
-                                validator: checkLimit,
-                            }
-                        ]}
-                    >
-                        <LimitComponents />
-                    </Form.Item>
-                    <Form.Item name="startTime" label="计划日期" {...rangeConfig}>
-                        <RangePicker locale={locale} />
-                    </Form.Item>
-                    <Form.Item
-                        label="项目描述"
-                        name="desc"
-                        rules={[
-                            {
-                                required: false,
-                                message: '请输入项目描述',
-                            },
-                        ]}
-                    >
-                        <TextArea rows={3} placeholder = "项目描述" />
-                    </Form.Item>
-                    {/*<Form.Item*/}
-                    {/*    label="图标"*/}
-                    {/*    name="icon"*/}
-                    {/*>*/}
-                    {/*    <div className="project-icon-box">*/}
-                    {/*        {*/}
-                    {/*            iconList && iconList.map((item) => {*/}
-                    {/*                return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>*/}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入项目键值',
+                                },
+                                {
+                                    pattern: /^[A-Za-z]+$/,
+                                    message: '只能包含英文!'
+                                },
+                                {
+                                    pattern: /^[\S]{2,10}$/,
+                                    message: '请输入2-8位英文字符'
+                                }
+                            ]}
+                        >
+                            <Input placeholder="只能包含字母，添加成功后不可修改" maxLength={9} showCount />
+                            {/* <div>请输入字母</div> */}
+                        </Form.Item>
+                        <Form.Item
+                            label="可见范围"
+                            name="projectLimits"
+                            rules={[
+                                {
+                                    validator: checkLimit,
+                                }
+                            ]}
+                        >
+                            <LimitComponents />
+                        </Form.Item>
+                        <Form.Item name="startTime" label="计划日期" {...rangeConfig}>
+                            <RangePicker locale={locale} />
+                        </Form.Item>
+                        <Form.Item
+                            label="项目描述"
+                            name="desc"
+                            rules={[
+                                {
+                                    required: false,
+                                    message: '请输入项目描述',
+                                },
+                            ]}
+                        >
+                            <TextArea rows={3} placeholder = "项目描述" />
+                        </Form.Item>
+                        {/*<Form.Item*/}
+                        {/*    label="图标"*/}
+                        {/*    name="icon"*/}
+                        {/*>*/}
+                        {/*    <div className="project-icon-box">*/}
+                        {/*        {*/}
+                        {/*            iconList && iconList.map((item) => {*/}
+                        {/*                return <div key={item.id} className={`project-icon  ${item.iconUrl === iconUrl ? "icon-select" : null}`} onClick={() => { setIconUrl(item.iconUrl) }}>*/}
 
-                    {/*                    <ImgComponent */}
-                    {/*                        alt="" */}
-                    {/*                        className="img-icon" */}
-                    {/*                        src={(`${item.iconUrl}`)}*/}
-                    {/*                    />*/}
-                    {/*                </div>*/}
-                    {/*            })*/}
-                    {/*        }*/}
-                    {/*    </div>*/}
-                    {/*</Form.Item>*/}
+                        {/*                    <ImgComponent */}
+                        {/*                        alt="" */}
+                        {/*                        className="img-icon" */}
+                        {/*                        src={(`${item.iconUrl}`)}*/}
+                        {/*                    />*/}
+                        {/*                </div>*/}
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*    </div>*/}
+                        {/*</Form.Item>*/}
+                    </div>
                     <div className="project-add-submit">
                         <Button style={{marginLeft: "auto"}} htmlType="button" onClick={() => setCurrentStep(0)}>
                             上一步

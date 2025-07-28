@@ -97,7 +97,17 @@ const WorkFilterModal = (props) => {
         }
 
     }
-    
+    const [selectTab, setSelectTab] = useState(1);
+    const tabValue=[
+        {
+            id: 1,
+            label: "排序"
+        },
+        {
+            id: 2,
+            label: "筛选"
+        }
+    ]
 
 
     return (
@@ -106,6 +116,12 @@ const WorkFilterModal = (props) => {
                 <svg className="botton-icon" aria-hidden="true" >
                     <use xlinkHref="#icon-filter"></use>
                 </svg>
+                {
+                    workShowType !== "list" ?
+                    <span>筛选</span>
+                    :
+                    null
+                }
             </div>
 
 
@@ -132,8 +148,26 @@ const WorkFilterModal = (props) => {
                         />
                         :
                         <div className="work-filter-tabs">
-                            <Tabs tabPosition="left" defaultActiveKey="1" className="filter-tabs">
-                                <Tabs.TabPane tab="筛选" key="1" className="filter-tab-content">
+                            <div className="work-filter-tab">
+                                {
+                                    tabValue.map((item, index) => {
+                                        return <>
+                                            <div
+                                                key={item.id}
+                                                className={"filter-tab " + (selectTab === item.id ? "filter-tab-active" : "")}
+                                                onClick={() => {
+                                                    setSelectTab(item.id)
+                                                }}
+                                            >
+                                                <span>{item.label}</span>
+                                            </div>
+                                        </>
+
+                                    })
+                                }
+                            </div>
+                            {
+                                selectTab === 1 ?
                                     <WorkFilterHigh
                                         labelHidden={false}
                                         layout={layout}
@@ -141,14 +175,26 @@ const WorkFilterModal = (props) => {
                                         setFiltetModal={setFiltetModal}
                                         {...props}
                                     />
-                                </Tabs.TabPane>
-                                {
-                                    (workShowType === "list" || workShowType === "bodar" || workShowType === "gantt") &&
-                                    <Tabs.TabPane tab="排序" key="2" className="filter-tab-content">
-                                        <WorkSortItem sorter={sorter} />
-                                    </Tabs.TabPane>
-                                }
-                            </Tabs>
+                                    :
+                                    <WorkSortItem sorter={sorter} />
+                            }
+                            {/*<Tabs tabPosition="left" defaultActiveKey="1" className="filter-tabs">*/}
+                            {/*    <Tabs.TabPane tab="筛选" key="1" className="filter-tab-content">*/}
+                            {/*        <WorkFilterHigh*/}
+                            {/*            labelHidden={false}*/}
+                            {/*            layout={layout}*/}
+                            {/*            filterModal={filterModal}*/}
+                            {/*            setFiltetModal={setFiltetModal}*/}
+                            {/*            {...props}*/}
+                            {/*        />*/}
+                            {/*    </Tabs.TabPane>*/}
+                            {/*    {*/}
+                            {/*        (workShowType === "list" || workShowType === "bodar" || workShowType === "gantt") &&*/}
+                            {/*        <Tabs.TabPane tab="排序" key="2" className="filter-tab-content">*/}
+                            {/*            <WorkSortItem sorter={sorter} />*/}
+                            {/*        </Tabs.TabPane>*/}
+                            {/*    }*/}
+                            {/*</Tabs>*/}
                         </div>
                 }
 

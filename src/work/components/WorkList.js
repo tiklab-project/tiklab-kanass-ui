@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import WorkAside from "./WorkAside";
-import { withRouter } from "react-router";
+import {useParams, withRouter} from "react-router";
 import { Provider, observer } from "mobx-react";
 import "./WorkList.scss";
 import WorkStore from "../store/WorkStore";
@@ -27,7 +27,8 @@ const WorkList = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
-    const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
+    const {sprint} = useParams();
+    const sprintId = sprint;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const stageId = props.match.params.stage ? props.match.params.stage : null;
 

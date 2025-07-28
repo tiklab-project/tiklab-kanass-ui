@@ -62,10 +62,7 @@
             align-items: center;
             line-height: 40px;
             justify-content: space-between;
-            .log-item-date {
-                font-size: 13px;
-                color: #999;
-            }
+
             .work-log-item-user {
                 display: flex;
                 align-items: center;
@@ -85,12 +82,33 @@
             .log-content {
                 line-height: 30px;
                 text-overflow: ellipsis;
-                //white-space: nowrap;
                 overflow: hidden;
-
+                width: 70%;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 3;
+            }
+        }
+        .work-log-item-third {
+            display: flex;
+            align-items: center;
+            margin-left: 32px;
+            .log-item-date {
+                font-size: 13px;
+                color: #999;
+            }
+            .log-item-operate {
+                display: flex;
+                align-items: center;
+                justify-content: right;
+                margin-left: 26px;
+                gap: 10px;
+
+                .operate-text {
+                    color: #999;
+                    font-size: 13px;
+                    cursor: pointer;
+                }
             }
         }
     }

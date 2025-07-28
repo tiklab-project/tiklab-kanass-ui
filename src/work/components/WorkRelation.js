@@ -115,21 +115,34 @@ const WorkRelation = (props) => {
             key: "title",
             ellipsis: true,
             width: "60%",
-            render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record.workItem)}>
-                <ImgComponent
-                    alt=""
-                    className="svg-icon"
-                    src={record.workItem?.workTypeSys?.iconUrl}
-                />
-                <div className="work-name">{text}</div>
-            </div>
+            render: (text, record) =>
+                <div className="work-title" onClick={() => goWorkItem(record.workItem)}>
+                    <div className="work-icon">
+                        <ImgComponent
+                            alt=""
+                            className="svg-icon"
+                            src={record.workItem?.workTypeSys?.iconUrl}
+                        />
+                    </div>
+                    <div className="work-title-content">
+                        <div className="work-title-top">
+                            {text}
+                        </div>
+                        <div className="work-title-bottom">
+                            <span>{record.workItem.builder.nickname}</span>
+                            <span>·</span>
+                            <span>{record.workItem.buildTime.slice(0, 10)}</span>
+                        </div>
+                    </div>
+                    {/*<div className="work-name">{text}</div>*/}
+                </div>
         },
-        {
-            title: "事项类型",
-            dataIndex: ["workItem", "workTypeSys", "name"],
-            key: "workType",
-            width: "10%"
-        },
+        // {
+        //     title: "事项类型",
+        //     dataIndex: ["workItem", "workTypeSys", "name"],
+        //     key: "workType",
+        //     width: "10%"
+        // },
         {
             title: "事项状态",
             dataIndex: ["workItem", "workStatusNode", "name"],
@@ -228,7 +241,7 @@ const WorkRelation = (props) => {
                         dataSource={selectWorkRelationList}
                         rowKey={record => record.id}
                         pagination={false}
-                        showHeader={false}
+                        // showHeader={false}
                         scroll={{ x: "100%" }}
                     />
                         :

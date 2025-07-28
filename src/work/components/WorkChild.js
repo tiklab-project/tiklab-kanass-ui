@@ -175,7 +175,7 @@ const WorkChild = (props) => {
             planEndTime: dayjs().format("YYYY-MM-DD 23:59:59")
         }
 
-        if (projectType === "scrum") {
+        if (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") {
             params.sprint = sprintList[0]?.id
         } else {
             if (workInfo.stage) {

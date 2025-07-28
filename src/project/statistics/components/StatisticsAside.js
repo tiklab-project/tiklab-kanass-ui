@@ -55,8 +55,8 @@ const StatisticsAsicde = (props) => {
      */
     const selectKey = (type) => {
         let url = '';
-        if (props.match.path === "/:id/sprint/:sprint/statistics") {
-            url = `/${projectId}/sprint/${sprintId}/statistics`;
+        if (props.match.path === "/project/:id/sprintDetail/:sprint/statistics") {
+            url = `/project/${projectId}/sprintDetail/${sprintId}/statistics`;
         }
         if (props.match.path === "/project/:id/statistics") {
             url = `/project/${projectId}/statistics`;

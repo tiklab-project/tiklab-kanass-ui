@@ -15,13 +15,16 @@ import WorkStore from "../store/WorkStore";
 import { observer, Provider } from "mobx-react";
 import WorkCalendarStore from '../store/WorkCalendarStore';
 import workStore from "../store/WorkStore";
+import {withRouter} from "react-router";
 const Work = (props) => {
     // const { WorkGantt } = props;
-    const { workShowType } = WorkStore;
+    const { workShowType, setWorkShowType } = WorkStore;
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+    const project = JSON.parse(localStorage.getItem("project"));
+    const path = props.match.path;
 
     /**
      * 根据页面显示类型加载页面
@@ -29,6 +32,11 @@ const Work = (props) => {
      */
     const view = () => {
         let dom = <WorkTable />;
+        if (path === "/project/:id/workitem" && project?.projectType.type === "kanban"){
+            setWorkShowType("bodar")
+            dom = <WorkBodar />;
+            return dom;
+        }
         switch (workShowType) {
             case "table":
                 dom = <WorkTable />;
@@ -55,4 +63,4 @@ const Work = (props) => {
     </Provider>
 }
 
-export default observer(Work);
+export default withRouter(observer(Work));

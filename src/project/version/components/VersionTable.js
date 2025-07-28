@@ -227,6 +227,17 @@ const VersionTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
+                    <VersionAddmodal
+                        name="编辑版本"
+                        type="edit"
+                        id={record.id}
+                        // findVersion={findVersion}
+                        getUseList={getUseList}
+                        userList={userList}
+                        setActiveTabs={setActiveTabs}
+                        selectTabs={selectTabs}
+                        {...props}
+                    />
                     <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
                         <DeleteModal deleteFunction={deletVersionList} id={record.id} />
                     </PrivilegeProjectButton>

@@ -22,52 +22,10 @@ const WorkDynamic = (props) => {
     const { logTimeList, findLogPageByTime, opLogTimeCondition } = WorkDynamicStore;
     const { workId } = workStore;
     const workDynamic = useRef();
-    useEffect(() => {
-        findLogPageByTime({ data: { workItemId: workId } })
-    }, [workId])
-
-    /**
-     * 分页
-     */
-    const onPageChange = (page) => {
-        const params = {
-            pageParam: {
-                ...opLogTimeCondition.pageParam,
-                currentPage: page
-            }
-
-        }
-        findLogPageByTime(params)
-    };
-
-    /**
-     * 时间范围选择
-     */
-    const changeData = (dateValue) => {
-        let values = {}
-        if(dateValue){
-            values = {
-                timestamp: [dateValue[0].format('YYYY-MM-DD'), dateValue[1].format('YYYY-MM-DD')]
-            }
-        }else {
-            values = {
-                timestamp: null
-            }
-        }
-        
-        findLogPageByTime(values)
-
-    }
 
     return <>
-        <div className="other-title">
-            事项动态
-        </div>
         <div className="work-dynamic" ref = {workDynamic}>
-            {
-                logTimeList && logTimeList.length > 0 ? <WorkDynamicTimeAxis logList={logTimeList} workId={workId} /> :
-                    <ProjectEmpty description={"暂无动态"} />
-            }
+            <WorkDynamicTimeAxis workId={workId} workDynamicStore={WorkDynamicStore}/>
         </div>
 
     </>

@@ -11,6 +11,7 @@
 
 /* 内容区域 - 可滚动部分 */
 .height-filter-content {
+  scrollbar-gutter: stable;
   flex: 1; /* 占据剩余空间 */
   overflow-y: auto; /* 垂直滚动 */
   padding: 16px; /* 可选：添加内边距 */

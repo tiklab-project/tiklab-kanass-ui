@@ -116,6 +116,50 @@ const WorkAddPage = (props) => {
                     })
                 }
 
+                // 看板模型
+                if (projectType === 'kanban'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+
+                // 混合模型
+                if (projectType === 'hybrid'){
+
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
                 if (versionId) {
                     form.setFieldsValue({
                         projectVersion: versionId
@@ -205,7 +249,7 @@ const WorkAddPage = (props) => {
         })
 
         // 如果是敏捷试开发，则获取迭代列表
-        if (projectType === "scrum") {
+        if (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") {
             findSelectSprintList(projectId).then(res => {
                 if (res.code === 0) {
                     if (sprintId) {
@@ -229,7 +273,7 @@ const WorkAddPage = (props) => {
         }
 
         // 如果是瀑布式开发，获取计划
-        if (projectType === "nomal") {
+        if ((projectType === "nomal" || projectType === "hybrid")) {
             findStageList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     form.setFieldsValue({
@@ -628,7 +672,7 @@ const WorkAddPage = (props) => {
                                 </Select>
                             </Form.Item>
                             {
-                                projectType === "nomal" && <Form.Item
+                                (projectType === "nomal" || projectType === "hybrid") && <Form.Item
                                     label="所属计划"
                                     name="stage"
                                     rules={[{ required: true, message: '请输入所属计划!' }]}
@@ -652,7 +696,7 @@ const WorkAddPage = (props) => {
                                 </Form.Item>
                             }
                             {
-                                projectType === "scrum" && <Form.Item
+                                (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") && <Form.Item
                                     label="所属迭代"
                                     name="sprint"
                                     rules={[{ required: false, message: '请输入所属迭代!' }]}

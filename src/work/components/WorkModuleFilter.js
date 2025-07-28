@@ -23,7 +23,7 @@ const WorkModuleFilter = (props) => {
         getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle,
         viewType, findUserCreateAndTodoWorkNum, workList } = workStore;
     const {findModuleListTree, deleteModule} = ModuleStore
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -60,8 +60,8 @@ const WorkModuleFilter = (props) => {
      */
     const getWorkStatusRangeWorkItem = (value,label) => {
         setQuickFilterValue(value)
-        setTableTitle(label)
-        setModuleTitle(null)
+        // setTableTitle(label)
+        // setModuleTitle(null)
         setModuleSelect(null)
         console.log("筛选条件++++++" + JSON.stringify(value))
         if (!value) {
@@ -305,15 +305,15 @@ const WorkModuleFilter = (props) => {
         if (viewType === "tree"){
             getWorkConditionPageTree(param).then(res => {
                 setModuleSelect(id)
-                setModuleTitle(moduleName)
-                setTableTitle(null)
+                // setModuleTitle(moduleName)
+                // setTableTitle(null)
                 setQuickFilterValue("all")
             })
         }else if (viewType === "tile"){
             getWorkConditionPage(param).then(res => {
                 setModuleSelect(id)
-                setModuleTitle(moduleName)
-                setTableTitle(null)
+                // setModuleTitle(moduleName)
+                // setTableTitle(null)
                 setQuickFilterValue("all")
             })
         }
@@ -401,39 +401,38 @@ const WorkModuleFilter = (props) => {
                 isOpen ?
                     <div className="work-module-filter-sider">
                         <div className="work-module-filter-sider-top" style={{ paddingTop: "10px" }}>
-                            {/*<div className="work-module-filter-sider-top-title">*/}
-                                {/*<div className="module-search">*/}
-                                {/*    <div className="search-input">*/}
-                                {/*        <svg className="svg-icon" aria-hidden="true">*/}
-                                {/*            <use xlinkHref="#icon-search"></use>*/}
-                                {/*        </svg>*/}
-                                {/*        <Input bordered={false} allowClear*/}
-                                {/*               className="module-filter-search-input"*/}
-                                {/*               key={"search"}*/}
-                                {/*               onChange={(value) => inputChange(value.target.value)}*/}
-                                {/*               placeholder="搜索模块"*/}
-                                {/*               value={inputValue}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*事项*/}
-                            {/*</div>*/}
-                            {
-                                quickFilterList.map((item, index) => {
-                                    return (
-                                        <div className={`work-module-filter-sider-top-item ${quickFilterValue === item.value ? "work-module-filter-sider-top-item-active" : ""}`} onClick={() => getWorkStatusRangeWorkItem(item.value, item.label)}>
-                                            {
-                                                index === 0 && <ScheduleOutlined style={{fontSize: "16px"}} />
-                                                || index === 1 && <UserOutlined style={{fontSize: "16px"}} />
-                                            }
-                                            <div className="work-module-filter-sider-top-item-title">
-                                                <span>{item.label}</span>
-                                                <span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
+                            <div className="work-module-filter-sider-top-title">
+                                <div className="module-search">
+                                    <div className="search-input">
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-search"></use>
+                                        </svg>
+                                        <Input bordered={false} allowClear
+                                               className="module-filter-search-input"
+                                               key={"search"}
+                                               onChange={(value) => inputChange(value.target.value)}
+                                               placeholder="搜索模块"
+                                               value={inputValue}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*{*/}
+                            {/*    quickFilterList.map((item, index) => {*/}
+                            {/*        return (*/}
+                            {/*            <div className={`work-module-filter-sider-top-item ${quickFilterValue === item.value ? "work-module-filter-sider-top-item-active" : ""}`} onClick={() => getWorkStatusRangeWorkItem(item.value, item.label)}>*/}
+                            {/*                {*/}
+                            {/*                    index === 0 && <ScheduleOutlined style={{fontSize: "16px"}} />*/}
+                            {/*                    || index === 1 && <UserOutlined style={{fontSize: "16px"}} />*/}
+                            {/*                }*/}
+                            {/*                <div className="work-module-filter-sider-top-item-title">*/}
+                            {/*                    <span>{item.label}</span>*/}
+                            {/*                    <span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        )*/}
+                            {/*    })*/}
+                            {/*}*/}
                         </div>
                         <div className="work-module-filter-sider-content">
                             <div className="content-module-head"
