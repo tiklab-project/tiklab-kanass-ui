@@ -117,6 +117,14 @@ const WorkBasicInfo = (props) => {
 
     const [moreVisible, setMoreVisible] = useState(false)
 
+    const [moreDesc, setMoreDesc] = useState(false);
+    const [descPreviewHeight, setDescPreviewHeight] = useState(0);
+    const descPreviewRef = (node) => {
+        if (node) {
+            setDescPreviewHeight(node.getBoundingClientRect().height);
+        }
+    };
+
     /**
      * 初始化事项的信息
      * @param {事项信息} workInfo 
@@ -626,6 +634,13 @@ const WorkBasicInfo = (props) => {
     const openCustomForm = () => {
         setVisableCustomForm(!visableCustomForm)
         setMoreVisible(!moreVisible)
+    }
+
+    /**
+     * 展开更多描述
+     */
+    const showMoreDesc = () => {
+        setMoreDesc(!moreDesc);
     }
 
     /**
@@ -1311,7 +1326,7 @@ const WorkBasicInfo = (props) => {
                         <div className="other-title">描述</div>
                     </div>
 
-                    <div className="work-detail-box desc-box">
+                    <div className={`work-detail-box desc-box ${moreDesc ? "more-desc":""}`}>
 
                         <Fragment>
                             {
@@ -1337,7 +1352,7 @@ const WorkBasicInfo = (props) => {
                                         </div>
                                     </Fragment>
                                     :
-                                    <div onClick={() => switchEditorDesc()} className="desc-preview">
+                                    <div onClick={() => switchEditorDesc()} className="desc-preview" ref={descPreviewRef}>
                                         {
                                             slateValue && <PreviewEditor
                                                 value={slateValue}
@@ -1354,7 +1369,16 @@ const WorkBasicInfo = (props) => {
                             }
                         </Fragment>
                     </div>
-
+                    <div className="work-detail-box more-desc-box">
+                        {
+                            descPreviewHeight > 342 &&
+                            <div className="form-custom-open" onClick={() => showMoreDesc()}>
+                                <svg className={`img-icon ${moreDesc ? "open" : "close"}`} aria-hidden="true">
+                                    <use xlinkHref="#icon-left"></use>
+                                </svg>
+                            </div>
+                        }
+                    </div>
                     <div className="work-detail-box comment-box">
                         <WorkBasicInfoBottom {...props}/>
                     </div>

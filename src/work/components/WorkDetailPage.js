@@ -36,8 +36,8 @@ const WorkDetailPage = (props) => {
         if (props.match.path === "/:id/version/:version/work/:workId") {
             props.history.push(`/${projectId}/version/${versionId}/workitem`)
         }
-        if (props.match.path === "/:id/sprint/:sprint/work/:workId") {
-            props.history.push(`/${projectId}/sprint/${sprintId}/workitem`)
+        if (props.match.path === "/project/:id/sprint/:sprintDetail/work/:workId") {
+            props.history.push(`/project/${projectId}/sprintDetail/${sprintId}/workitem`)
         }
     }
 

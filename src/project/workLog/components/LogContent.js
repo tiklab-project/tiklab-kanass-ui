@@ -273,15 +273,12 @@ const LogContent = (props) => {
         <Row style={{ height: "100%", background: "#fff", overflow: "auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "20", offset: "2" }}>
                 <div style={{ padding: "20px" }} className="workItem-log">
-                    <Breadcumb
-                        {...props}
-                        firstText="工时"
-                    >
-                        <Button type="primary" onClick={() => setShowLogAdd(true)}>
-                            添加工时
-                        </Button>
+                    {/*<Breadcumb*/}
+                    {/*    {...props}*/}
+                    {/*    firstText="工时"*/}
+                    {/*>*/}
 
-                    </Breadcumb>
+                    {/*</Breadcumb>*/}
                     <div className="log-tab-filter">
                         <div className="log-tabs">
                             <div
@@ -300,7 +297,12 @@ const LogContent = (props) => {
                             </div>
 
                         </div>
-                        <LogFilter type={activeTab} dateValue={dateValue} setDateValue={setDateValue} />
+                        <div className="log-tab-filter-operate">
+                            <LogFilter type={activeTab} dateValue={dateValue} setDateValue={setDateValue} />
+                            <Button type="primary" onClick={() => setShowLogAdd(true)}>
+                                添加工时
+                            </Button>
+                        </div>
                     </div>
                     <Table
                         className="log-table"

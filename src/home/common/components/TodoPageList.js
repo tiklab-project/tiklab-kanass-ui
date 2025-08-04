@@ -104,7 +104,7 @@ const TodoPageList = (props) => {
             })
         }
 
-        if (props.route?.path === "/:id/sprint/:sprint/workTodo") {
+        if (props.route?.path === "project/:id/sprintDetail/:sprint/workTodo") {
             setFirstText("迭代概况")
             findTodopage({ ...params, data: { sprintId: sprintId, projectId: projectId } }).then(res => {
                 setLoading(false)

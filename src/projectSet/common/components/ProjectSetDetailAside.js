@@ -44,6 +44,14 @@ const ProjectSetDetailAside = (props) => {
             encoded: "Pannel",
         },
         {
+            title: `事项`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            key: "workitem",
+            id: `/projectSet/${projectSetId}/workitem`,
+            encoded: "workitem",
+        },
+        {
             title: `统计`,
             icon: 'statistics-' + theme,
             defaultIcon: "statistics-default",

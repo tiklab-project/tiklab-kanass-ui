@@ -6,7 +6,7 @@
  * @Description: 事项列表页面，甘特图页面，看板页面顶部的筛选
  */
 import React, { useEffect, useState, useRef } from "react";
-import { Input } from 'antd';
+import {Dropdown, Input, Menu} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTableFilter.scss";
 import { withRouter } from "react-router";
@@ -19,6 +19,11 @@ import WorkTypeTab from "./WorkTypeTab";
 import WorkFilterQuick from "./WorkFilterQuick";
 import WorkTypeSelect from "./WorkTypeSelect";
 import WorkFilterSelect from "./WorkFilterSelect";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import WorkCreatDropdown from "./workCreatDropdown";
+import Button from "../../common/button/Button";
+import WorkChangeView from "./WorkChangeView";
+import WorkAddModel from "./WorkAddModel";
 
 const WorkTableFilter = (props) => {
     // 查找表单
@@ -26,10 +31,13 @@ const WorkTableFilter = (props) => {
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     // 解析store数据
     const { projectList, searchCondition,
-        workStatusList, getWorkConditionPage, getWorkConditionPageTree,
+        workStatusList, getWorkConditionPage, getWorkConditionPageTree, setViewType, setWorkShowType,
         workShowType, viewType, findProjectList, getSelectUserList, setArchiveView, archiveView,
-        getWorkTypeList, getWorkStatus, userList, getWorkBoardList } = workStore;
+        getWorkTypeList, getWorkStatus, userList, getWorkBoardList, workTypeList, quickFilterVisible, workTypeVisible } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
+    const [stateType, setState] = useState();
+    const workAddModel = useRef()
+    const project = JSON.parse(localStorage.getItem("project"));
 
     const [groupStatus, setGroupStatus] = useState({
         todo: { statusType: 'todo', allChecked: false, partialChecked: false },
@@ -39,6 +47,25 @@ const WorkTableFilter = (props) => {
 
     const progressRef = useRef(null);
 
+    const menuPlugin = (
+        <Menu>
+            {/* <Menu.Item>
+                {
+                    pluginStore.filter(item => item.point === "import-modal").length > 0 ? <div onClick={() => importFile()}>导入</div> :
+                        <Popconfirm
+                            title="此服务需要购买，确认购买?"
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <div onClick={() => buy()}>导入ss?</div>
+                        </Popconfirm>
+                }
+            </Menu.Item> */}
+            <Menu.Item>
+                <div onClick={() => exportFile()}>导出</div>
+            </Menu.Item>
+        </Menu>
+    );
 
     useEffect(() => {
         findProjectList();
@@ -205,8 +232,8 @@ const WorkTableFilter = (props) => {
 
 
             <div className="work-table-filter">
-                <WorkFilterSelect />
-                <WorkTypeSelect />
+                {quickFilterVisible && <WorkFilterSelect />}
+                {workTypeVisible && <WorkTypeSelect />}
                 <div className="worklist-table-search">
                     <div className="search-input">
                         <svg className="svg-icon" aria-hidden="true">
@@ -222,7 +249,7 @@ const WorkTableFilter = (props) => {
                     </div>
                 </div>
                 {
-                    (props.match.path === "/workitem") &&
+                    (props.match.path === "/projectSet/:projectSetId/workitem") &&
                     <SelectSimple
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
@@ -372,7 +399,44 @@ const WorkTableFilter = (props) => {
                         <div className={`work-gantt-view-item work-gantt-view-month ${archiveView === "month" ? "work-gantt-view-select" : ""}`} onClick={() => setArchiveView("month")}>月</div>
                     </div>
                 }
-                <WorkFilterModal layout={"horizontal"} {...props} />
+                <div style={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "center",
+                }}>
+                    {
+                        (props.match.path === "/project/:id/sprintDetail/:sprint/workitem" || props.match.path === "/project/:id/versionDetail/:version/workitem") &&
+                        <div className="work-top-right">
+
+                            <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
+                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
+                            </PrivilegeProjectButton>
+                            <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
+                                <Button>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-more`}></use>
+                                    </svg>
+                                </Button>
+                            </Dropdown>
+                            {
+                                project?.projectType.type !== "kanban" &&
+                                <WorkChangeView
+                                    searchCondition={searchCondition}
+                                    getWorkConditionPage={getWorkConditionPage}
+                                    getWorkConditionPageTree={getWorkConditionPageTree}
+                                    getWorkBoardList={getWorkBoardList}
+                                    viewType={viewType}
+                                    workShowType={workShowType}
+                                    setWorkShowType={setWorkShowType}
+                                    setViewType={setViewType}
+                                    buttonType="button"
+                                />
+                            }
+                        </div>
+                    }
+                    <WorkFilterModal layout={"horizontal"} {...props} />
+                    <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
+                </div>
             </div>
         </div>
 

@@ -1,0 +1,115 @@
+.worklist-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    gap: 6px;
+    margin: 0 10px 10px 10px;
+    padding-right: 10px;
+    background: #ebebeb;
+    border-radius: 5px;
+    .select-content {
+        padding: 5px;
+        background: #edf0f5;
+        height: 30px;
+    }
+
+    .worklist-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .worklist-search {
+        .workList-search-input {
+            outline: none;
+            border: 0;
+            width: 100%;
+            margin-right: 10px;
+           
+        }
+    }
+
+    
+    .worklist-search-botton {
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        background: #edf0f5;
+        padding: 0 10px;
+        cursor: pointer;
+        overflow: hidden;
+        .search-icon {
+            width: 15px;
+        }
+    }
+    
+}
+
+.worklist-search-large {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    // padding: 10px;
+    gap: 10px;
+    .search-icon {
+        height: 15px;
+        width: 15px;
+    }
+    .search-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ebebeb;
+        border: 0;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 4px;
+        padding-left: 10px;
+        flex: 1;
+    }
+
+    .search-cancel {
+        cursor: pointer;
+    }
+
+    .search-cancel:hover {
+        color: var(--tiklab-blue);
+    }
+
+    .worklist-icon {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+
+.show-worklist-filter {
+    display: flex;
+}
+
+@keyframes show-animate {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 42px;
+    }
+}
+
+@keyframes hidden-animate {
+    from {
+        height: 42px;
+    }
+
+    to {
+        height: 0;
+    }
+}
+
+.hidden-worklist-filter {
+    display: none;
+}

@@ -64,21 +64,6 @@
                 display: flex;
                 justify-content: space-between;
 
-                .form-custom-open {
-                    width: 30px;
-                    height: 30px;
-                    padding: 6px 0;
-                    margin-right: 10px;
-                }
-                .close {
-                    transform: rotate(-90deg);
-                    transition: all 0.2s;
-                }
-
-                .open {
-                    transform: rotate(90deg);
-                    transition: all 0.2s;
-                }
             }
             .workLog-input{
                 width: 40%;
@@ -287,8 +272,8 @@
 
         .desc-box{
             max-height: 342px;
-            overflow-y: auto;
-            scrollbar-gutter: stable;
+            overflow-y: hidden;
+            overflow-x: hidden;
             .edit-small-content{
                 width: 100%;
 
@@ -308,6 +293,29 @@
                     left: -200px !important;
                 }
             }
+        }
+        .more-desc {
+            max-height: fit-content;
+        }
+        .more-desc-box {
+            display: flex;
+            justify-content: center;
+            margin-top: -10px;
+        }
+
+        .form-custom-open {
+            width: 30px;
+            height: 30px;
+            padding: 6px 0;
+            margin-right: 10px;
+        }
+        .close {
+            transform: rotate(-90deg);
+            transition: all 0.2s;
+        }
+        .open {
+            transform: rotate(90deg);
+            transition: all 0.2s;
         }
     }
 }

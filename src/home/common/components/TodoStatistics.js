@@ -39,7 +39,7 @@ const TodoStatistics = (props) => {
             }
         }
 
-        if (path === "/:id/sprint/:sprint/overview") {
+        if (path === "project/:id/sprintDetail/:sprint/overview") {
             params = {
                 sprintId: sprintId
             }
@@ -146,7 +146,7 @@ const TodoStatistics = (props) => {
             props.history.push(`/projectSet/${projectSetId}/workTodo`)
         }
 
-        if (path === "/:id/sprint/:sprint/overview") {
+        if (path === "project/:id/sprintDetail/:sprint/overview") {
             props.history.push(`/${projectId}/sprint/${sprintId}/workTodo`)
         }
         if (path === "/:id/version/:version/overview") {

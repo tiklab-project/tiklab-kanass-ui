@@ -201,7 +201,7 @@ const WorkChild = (props) => {
                 findWorkItemAndChidren({ id: res.data }).then(res => {
 
                     if (res.code === 0) {
-                        if (path === "/:id/sprint/:sprint/plan") {
+                        if (path === "project/:id/sprintDetail/:sprint/plan") {
                             planSprintWorkList.unshift(res.data)
                             // 更新迭代规划列表
                             setPlanSprintWorkList(planSprintWorkList)

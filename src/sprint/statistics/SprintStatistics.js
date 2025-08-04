@@ -31,6 +31,22 @@ const SprintStatistics = (props) => {
                 </Row>
             </Layout>
         </Layout>
+
+
+    // <Layout className="statistics">
+    //     <Layout className="statistics-content" style={{ background: "#fff" }}>
+    //         <Row>
+    //             <Col sm={1} md={21} lg={{ span: 1 }} xl={{ span: "1", offset: "1" }} xxl={{ span: "1", offset: "3" }}>
+    //                 <SprintStatisticsAside
+    //                     {...props}
+    //                 />
+    //             </Col>
+    //             <Col sm={23} md={23} lg={{ span: 23 }} xl={{ span: "19", offset: "2" }} xxl={{ span: "17", offset: "0" }}>
+    //                 {renderRoutes(route.routes)}
+    //             </Col>
+    //         </Row>
+    //     </Layout>
+    // </Layout>
     )
 
 }

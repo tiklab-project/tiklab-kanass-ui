@@ -9,15 +9,14 @@
  */
 import React, { Fragment, useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
-import "../components/HomePage.scss";
-import { Row, Col } from 'antd';
+import "./HomePage.scss";
+import {Row, Col, Layout} from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import { CalendarOutlined, BarChartOutlined } from '@ant-design/icons';
 
 
 /**
- * 废弃
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -33,20 +32,25 @@ const Home = (props) => {
     useEffect(() => {
         getInsightUrl()
 
-        if (path.includes("overview") > -1) {
-            setActiveKey("overview")
-        }
-
-        if (path.indexOf("insight") > -1) {
-            setActiveKey("insight")
-        }
-
-        if (path.indexOf("todoList") > -1) {
-            setActiveKey("todoList")
-        }
+        // console.log(path)
+        // if (path.includes("overview") > -1) {
+        //     setActiveKey("overview")
+        // }
+        //
+        // if (path.indexOf("insightlist") > -1 || path.indexOf("viewInsight") > -1) {
+        //     setActiveKey("insight")
+        // }
+        //
+        // if (path.indexOf("todoList") > -1) {
+        //     setActiveKey("todoList")
+        // }
+        //
+        // if (path.indexOf("todoList") > -1) {
+        //     setActiveKey("todoList")
+        // }
         return null;
 
-    }, [path])
+    }, [])
 
     /**
      * 获取仪表盘跳转的url 地址，
@@ -69,34 +73,50 @@ const Home = (props) => {
      * @param {tab key} activeKey
      */
     const selectRouter = (url, activeKey) => {
-            props.history.push(url)
-            setActiveKey(activeKey)
+        setActiveKey(activeKey)
+        props.history.push(url)
     }
 
     return (
-        <Row className="home" >
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <div className="home-tab">
+        <div>
+            <Row className="index-home" >
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                        }}>
+                        <div className="index-home-tabs">
 
-                    <div className={` ${activeKey === "overview" ? "home-tab-select" : ""}`}
-                         key={1}
-                         onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
+                            <div className={` index-home-tab ${activeKey === "overview" ? "index-home-tab-select" : ""}`}
+                                 key={1}
+                                 onClick={() => selectRouter("/index/overview", "overview")}>
+                                概况</div>
 
-                    <div className="right-tabs-container">
-                        <div className={` ${activeKey === "todoList" ? "home-tab-select" : ""}`}
-                             key={2}
-                             onClick={() => selectRouter("/index/todoList", "todoList")}>
-                            待办</div>
-                        <div className={` ${activeKey === "insight" ? "home-tab-select" : ""}`}
-                             key={3}
-                             onClick={() => selectRouter(insightUrl, "insight")}>
-                            仪表盘</div>
+                            <div className={` index-home-tab ${activeKey === "insight" ? "index-home-tab-select" : ""}`}
+                                 key={3}
+                                 onClick={() => selectRouter(insightUrl, "insight")}>
+                                仪表盘</div>
+
+                            <div className={` index-home-tab ${activeKey === "todoList" ? "index-home-tab-select" : ""}`}
+                                 key={2}
+                                 onClick={() => selectRouter("/index/todoList", "todoList")}>
+                                待办</div>
+
+                            <div className={` index-home-tab ${activeKey === "appraised" ? "index-home-tab-select" : ""}`}
+                                 key={4}
+                                 onClick={() => selectRouter("/index/appraised", "appraised")}>
+                                评审</div>
+                        </div>
                     </div>
-                </div>
-
-                {renderRoutes(route.routes)}
-            </Col>
-        </Row>
+                </Col>
+            </Row>
+            <Row>
+                <Layout className={"index-home-content"}>
+                    {renderRoutes(route.routes)}
+                </Layout>
+            </Row>
+        </div>
     );
 }
 

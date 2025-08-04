@@ -36,14 +36,14 @@ const ProjectDetailAside = (props) => {
             key: "overview",
             encoded: "Survey"
         },
-        // {
-        //     title: `${t('line_photo')}`,
-        //     icon: 'line-' + theme,
-        //     defaultIcon: "line-default",
-        //     id: `/project/${projectId}/linemap`,
-        //     key: "linemap",
-        //     encoded: "Pannel",
-        // },
+        {
+            title: "规划",
+            icon: 'planning-' + theme,
+            defaultIcon: "planning-default",
+            id: `/project/${projectId}/planning`,
+            key: "planning",
+            encoded: "Planning",
+        },
         {
             title: `${t('work')}`,
             icon: 'workitem-' + theme,
@@ -69,15 +69,23 @@ const ProjectDetailAside = (props) => {
             key: "version",
             encoded: "Version",
         },
-
         {
-            title: "工时",
-            icon: 'log-' + theme,
-            defaultIcon: "log-default",
-            id: `/project/${projectId}/log`,
-            key: "log",
-            encoded: "log",
+            title: `${t('line_photo')}`,
+            icon: 'line-' + theme,
+            defaultIcon: "line-default",
+            id: `/project/${projectId}/linemap`,
+            key: "linemap",
+            encoded: "Pannel",
         },
+
+        // {
+        //     title: "工时",
+        //     icon: 'log-' + theme,
+        //     defaultIcon: "log-default",
+        //     id: `/project/${projectId}/log`,
+        //     key: "log",
+        //     encoded: "log",
+        // },
         {
             title: `${t('statistic')}`,
             icon: 'statistics-' + theme,
@@ -155,14 +163,14 @@ const ProjectDetailAside = (props) => {
             encoded: "Version",
         },
 
-        {
-            title: "工时",
-            icon: 'log-' + theme,
-            defaultIcon: "log-default",
-            id: `/project/${projectId}/log`,
-            key: "log",
-            encoded: "log",
-        },
+        // {
+        //     title: "工时",
+        //     icon: 'log-' + theme,
+        //     defaultIcon: "log-default",
+        //     id: `/project/${projectId}/log`,
+        //     key: "log",
+        //     encoded: "log",
+        // },
         {
             title: `${t('statistic')}`,
             icon: 'statistics-' + theme,
@@ -215,14 +223,6 @@ const ProjectDetailAside = (props) => {
             key: "overview",
             encoded: "Survey"
         },
-        // {
-        //     title: `${t('line_photo')}`,
-        //     icon: 'line-' + theme,
-        //     defaultIcon: "line-default",
-        //     id: `/project/${projectId}/linemap`,
-        //     key: "linemap",
-        //     encoded: "Pannel",
-        // },
         {
             title: `${t('work')}`,
             icon: 'workitem-' + theme,
@@ -248,15 +248,23 @@ const ProjectDetailAside = (props) => {
             key: "version",
             encoded: "Version",
         },
-
         {
-            title: "工时",
-            icon: 'log-' + theme,
-            defaultIcon: "log-default",
-            id: `/project/${projectId}/log`,
-            key: "log",
-            encoded: "log",
+            title: `${t('line_photo')}`,
+            icon: 'line-' + theme,
+            defaultIcon: "line-default",
+            id: `/project/${projectId}/linemap`,
+            key: "linemap",
+            encoded: "Pannel",
         },
+
+        // {
+        //     title: "工时",
+        //     icon: 'log-' + theme,
+        //     defaultIcon: "log-default",
+        //     id: `/project/${projectId}/log`,
+        //     key: "log",
+        //     encoded: "log",
+        // },
         {
             title: `${t('statistic')}`,
             icon: 'statistics-' + theme,
@@ -309,14 +317,6 @@ const ProjectDetailAside = (props) => {
             encoded: "Survey"
         },
         {
-            title: `${t('line_photo')}`,
-            icon: 'line-' + theme,
-            defaultIcon: "line-default",
-            id: `/project/${projectId}/linemap`,
-            key: "linemap",
-            encoded: "Pannel",
-        },
-        {
             title: "计划",
             icon: 'plan-' + theme,
             defaultIcon: "plan-default",
@@ -349,15 +349,23 @@ const ProjectDetailAside = (props) => {
             key: "version",
             encoded: "Version",
         },
-
         {
-            title: "工时",
-            icon: 'log-' + theme,
-            defaultIcon: "log-default",
-            id: `/project/${projectId}/log`,
-            key: "log",
-            encoded: "log",
+            title: `${t('line_photo')}`,
+            icon: 'line-' + theme,
+            defaultIcon: "line-default",
+            id: `/project/${projectId}/linemap`,
+            key: "linemap",
+            encoded: "Pannel",
         },
+
+        // {
+        //     title: "工时",
+        //     icon: 'log-' + theme,
+        //     defaultIcon: "log-default",
+        //     id: `/project/${projectId}/log`,
+        //     key: "log",
+        //     encoded: "log",
+        // },
         {
             title: `${t('statistic')}`,
             icon: 'statistics-' + theme,

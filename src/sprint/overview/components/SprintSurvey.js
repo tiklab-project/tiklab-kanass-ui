@@ -198,9 +198,198 @@ const SprintSurvey = (props) => {
     }
 
     return (
-        <Row className="sprint-survey-row">
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
-                <div className="sprint-survey">
+        // <Row className="sprint-survey-row">
+        //     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+        //         <div className="sprint-survey">
+        //             <div className="sprint-survey-top">
+        //                 <div className="sprint-info-box">
+        //                     <div className="sprint-info-top">
+        //                         <div className="sprint-info-title">
+        //                             <ColorIcon name={sprintInfo?.sprintName} className="icon-24" color={sprintInfo?.color} />
+        //                             {sprintInfo && sprintInfo.sprintName}
+        //                         </div>
+        //                     </div>
+        //
+        //                     <div className="sprint-container">
+        //                         <div className="sprint-item">
+        //                             <UserIcon userInfo={sprintInfo?.master} size="big" className="item-icon" name={sprintInfo?.master.nickname} />
+        //                             <div className="item-content">
+        //                                 <div className="item-top">{sprintInfo?.master?.nickname}</div>
+        //                                 <div className="item-bottom">迭代负责人</div>
+        //                             </div>
+        //                         </div>
+        //                         <div className="sprint-work">
+        //                             <div className="sprint-item" onClick={() => goWorkItemList("all")}>
+        //                                 <svg className="list-img" aria-hidden="true">
+        //                                     <use xlinkHref="#icon-allwork"></use>
+        //                                 </svg>
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{workStatusList && workStatusList.all}</div>
+        //                                     <div className="item-bottom">全部事项</div>
+        //                                 </div>
+        //                             </div>
+        //                             <div className="sprint-item" onClick={() => goWorkItemList("pending")}>
+        //                                 <svg className="list-img" aria-hidden="true">
+        //                                     <use xlinkHref="#icon-progress"></use>
+        //                                 </svg>
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{workStatusList && workStatusList.pending}</div>
+        //                                     <div className="item-bottom">待办</div>
+        //                                 </div>
+        //                             </div>
+        //                             <div className="sprint-item" onClick={() => goWorkItemList("ending")}>
+        //                                 <svg className="list-img" aria-hidden="true">
+        //                                     <use xlinkHref="#icon-endwork"></use>
+        //                                 </svg>
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{workStatusList && workStatusList.ending}</div>
+        //                                     <div className="item-bottom">已完成</div>
+        //                                 </div>
+        //                             </div>
+        //                             <div className="sprint-item" onClick={() => goWorkItemList("overdue")}>
+        //                                 <svg className="list-img" aria-hidden="true">
+        //                                     <use xlinkHref="#icon-overdue"></use>
+        //                                 </svg>
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{workStatusList && workStatusList.overdue}</div>
+        //                                     <div className="item-bottom">已逾期</div>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //
+        //
+        //                         <div className="sprint-item">
+        //                             <svg className="list-img" aria-hidden="true">
+        //                                 <use xlinkHref="#icon-status"></use>
+        //                             </svg>
+        //                             <div className="item-content">
+        //                                 <div className="item-top">
+        //                                     <Select
+        //                                         className={`sprint-state-select sprint-state-select${sprintInfo?.sprintState?.id === "000000" ? "-todo" : sprintInfo?.sprintState?.id === "111111" ? "-process" : "-done"}`}
+        //                                         defaultValue={"--"}
+        //                                         dropdownMatchSelectWidth={false}
+        //                                         value={sprintInfo?.sprintState?.name}
+        //                                         bordered={false}
+        //                                         showArrow={false}
+        //                                         // disabled={project?.projectState === "3" ? true : false}
+        //                                         onChange={handleChange}
+        //                                     >
+        //                                         {
+        //                                             sprintInfo?.sprintState?.id === "000000" ?
+        //                                                 <Select.Option value="111111">
+        //                                                         <span style={{paddingRight:"10px"}}>
+        //                                                             <PlayCircleOutlined />
+        //                                                         </span>
+        //                                                     开始迭代
+        //                                                 </Select.Option>
+        //                                                 : sprintInfo?.sprintState?.id === "111111" ?
+        //                                                     <Select.Option value="222222">
+        //                                                         <span style={{paddingRight:"10px"}}>
+        //                                                             <CloseCircleOutlined />
+        //                                                         </span>
+        //                                                         结束迭代
+        //                                                     </Select.Option> :
+        //                                                     <Select.Option value="111111">
+        //                                                         <span style={{paddingRight:"10px"}}>
+        //                                                             <PlayCircleOutlined />
+        //                                                         </span>
+        //                                                         开始迭代
+        //                                                     </Select.Option>
+        //                                         }
+        //                                     </Select>
+        //                                 </div>
+        //                                 <div className="item-bottom">迭代状态</div>
+        //                             </div>
+        //                         </div>
+        //
+        //                         <div className="sprint-item">
+        //                             <svg className="list-img" aria-hidden="true">
+        //                                 <use xlinkHref="#icon-date"></use>
+        //                             </svg>
+        //                             <div className="item-content">
+        //                                 <div className="item-top">{sprintInfo?.startTime.slice(0, 10)} ~ {sprintInfo?.endTime.slice(0, 10)}</div>
+        //                                 <div className="item-bottom">迭代计划周期</div>
+        //                             </div>
+        //                         </div>
+        //
+        //                         <div className="sprint-item">
+        //                             <svg className="list-img" aria-hidden="true">
+        //                                 <use xlinkHref="#icon-date"></use>
+        //                             </svg>
+        //                             <div className="item-content">
+        //                                 <div className="item-top">{sprintInfo?.relaStartTime ? sprintInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {sprintInfo?.sprintState?.id === "222222" ? sprintInfo?.relaEndTime.slice(0, 10) : "未结束"}</div>
+        //                                 <div className="item-bottom">迭代实际周期</div>
+        //                             </div>
+        //                         </div>
+        //
+        //                         <div className="sprint-item">
+        //                             <svg className="list-img" aria-hidden="true">
+        //                                 <use xlinkHref="#icon-rate"></use>
+        //                             </svg>
+        //                             <div className="item-content">
+        //                                 <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
+        //                                 <div className="item-bottom">迭代进度</div>
+        //                             </div>
+        //                         </div>
+        //                         <div className="sprint-item">
+        //                             <div className="item-group">
+        //                                 <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{sprintInfo?.estimateTime}  小时</div>
+        //                                     <div className="item-bottom">迭代预计工时</div>
+        //                                 </div>
+        //                             </div>
+        //                             <div className="item-group">
+        //                                 <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />
+        //                                 <div className="item-content">
+        //                                     <div className="item-top">{sprintInfo?.surplusTime}  小时</div>
+        //                                     <div className="item-bottom">迭代剩余工时</div>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //                 <div className="burn-down-box">
+        //                     <div className="sprint-title">迭代燃尽图</div>
+        //                     <div className="burn-down" id="sprint-burn-down">
+        //
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //
+        //             {/* <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"sprint"} /> */}
+        //             <TodoStatistics />
+        //
+        //             <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
+        //         </div>
+        //         <SprintStartState
+        //             visible={startStateVisable}
+        //             projectId={projectId}
+        //             sprintId={sprintId}
+        //             SprintSurveyStore={SprintSurveyStore}
+        //             setVisible={setStartStateVisable}
+        //             sprintInfo={sprintInfo}
+        //             setSprintInfo={setSprintInfo}
+        //         />
+        //         <SprintEndState
+        //             visible={endStateVisable}
+        //             projectId={projectId}
+        //             sprintId={sprintId}
+        //             SprintSurveyStore={SprintSurveyStore}
+        //             setVisible={setEndStateVisable}
+        //             sprintInfo={sprintInfo}
+        //             setSprintInfo={setSprintInfo}
+        //         />
+        //     </Col>
+        // </Row>
+
+
+    <Row className="sprint-survey-row">
+        <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+            <div className="sprint-survey">
+                <div style={{
+                    height: "100%"
+                }}>
                     <div className="sprint-survey-top">
                         <div className="sprint-info-box">
                             <div className="sprint-info-top">
@@ -362,27 +551,27 @@ const SprintSurvey = (props) => {
 
                     <DynamicList logList={logList} goDynamicList={goDynamicList} goOpLogDetail={goOpLogDetail} />
                 </div>
-                <SprintStartState
-                    visible={startStateVisable}
-                    projectId={projectId}
-                    sprintId={sprintId}
-                    SprintSurveyStore={SprintSurveyStore}
-                    setVisible={setStartStateVisable}
-                    sprintInfo={sprintInfo}
-                    setSprintInfo={setSprintInfo}
-                />
-                <SprintEndState
-                    visible={endStateVisable}
-                    projectId={projectId}
-                    sprintId={sprintId}
-                    SprintSurveyStore={SprintSurveyStore}
-                    setVisible={setEndStateVisable}
-                    sprintInfo={sprintInfo}
-                    setSprintInfo={setSprintInfo}
-                />
-            </Col>
-        </Row>
-
+            </div>
+            <SprintStartState
+                visible={startStateVisable}
+                projectId={projectId}
+                sprintId={sprintId}
+                SprintSurveyStore={SprintSurveyStore}
+                setVisible={setStartStateVisable}
+                sprintInfo={sprintInfo}
+                setSprintInfo={setSprintInfo}
+            />
+            <SprintEndState
+                visible={endStateVisable}
+                projectId={projectId}
+                sprintId={sprintId}
+                SprintSurveyStore={SprintSurveyStore}
+                setVisible={setEndStateVisable}
+                sprintInfo={sprintInfo}
+                setSprintInfo={setSprintInfo}
+            />
+        </Col>
+    </Row>
     )
 }
 

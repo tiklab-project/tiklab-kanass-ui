@@ -51,7 +51,7 @@ const DynamicList = (props) => {
             findProjectSetLogpage({ ...params, data: { projectSetId: projectSetId } })
         }
 
-        if (props.route.path === "/:id/sprint/:sprint/dynamic") {
+        if (props.route.path === "project/:id/sprintDetail/:sprint/dynamic") {
             findLogPageByTime({ ...params, data: { sprintId: sprintId, projectId: projectId } })
             setFirstText("迭代概况")
         }

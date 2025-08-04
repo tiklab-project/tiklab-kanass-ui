@@ -1,0 +1,17 @@
+
+.work-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .work-title {
+        font-size: var(--tiklab-font-16);
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+    .work-top-right {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    
+}

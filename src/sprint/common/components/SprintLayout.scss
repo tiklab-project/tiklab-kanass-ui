@@ -3,7 +3,9 @@
     overflow: hidden;
     .sprint-detail-content {
         background: #fff;
-        height: 100%;
+        //height: 100%;
+        height: calc(100vh - 55px);
+        width: 100%;
     }
     .sprint-aside-more {
         text-align: center;
@@ -16,6 +18,43 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .sprint-title{
+        font-size: var(--tiklab-font-16);
+        font-weight: var(--tiklab-font-weight-bold);
+        margin: 0;
+    }
+
+    .sprint-detail-tabs {
+        display: flex;
+        gap: 15px;
+        height: 55px;
+        line-height: 55px;
+        //margin-left: -130px;
+        //border-bottom: 1px solid var(--tiklab-gray);
+        .sprint-tab {
+            cursor: pointer;
+        }
+
+        .sprint-tab-active {
+            border-bottom: 2px solid var(--tiklab-blue);
+            color: var(--tiklab-blue);
+        }
+
+    }
+
+    .sprint-detail-operate{
+        margin-left: auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .sprint-detail-content{
+        .work-bodar-content{
+            height: calc(100vh - 212px);
+        }
     }
 }
 

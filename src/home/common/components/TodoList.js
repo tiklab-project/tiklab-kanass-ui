@@ -16,6 +16,7 @@ import HomeStore from "../store/HomeStore";
 import {getUser} from "tiklab-core-ui";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectStore from "../../../project/project/store/ProjectStore";
+import WorkTypeSelect from "../../../work/components/WorkTypeSelect";
 
 const TodoList = (props) => {
     const store = {
@@ -171,7 +172,7 @@ const TodoList = (props) => {
             setFirstText("项目集概况")
         }
 
-        if (props.route?.path === "/:id/sprint/:sprint/workTodo") {
+        if (props.route?.path === "project/:id/sprintDetail/:sprint/workTodo") {
             setFirstText("迭代概况")
         }
         if (props.route?.path === "/:id/version/:version/workTodo") {
@@ -289,7 +290,6 @@ const TodoList = (props) => {
     }
 
     const searchWorkList = (values) => {
-        console.log("查询的参数：    " + JSON.stringify(values))
         setTodoListPageCondition(values)
         // 事项类型下的事项个数
         findWorkItemNumWhenTodo(todoListPageCondition);
@@ -304,8 +304,7 @@ const TodoList = (props) => {
     // 当 searchParam 变化时触发搜索
     useEffect(() => {
         if (searchParam != null){
-            console.log("更新后的参数", JSON.stringify(searchParam));
-            searchWorkList();
+            searchWorkList(searchParam);
         }
     }, [searchParam]); // 依赖项为 searchParam
 
@@ -498,79 +497,62 @@ const TodoList = (props) => {
             <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="todo-list-page">
-                        <div className="todo-header">
-                        <Breadcrumb
-                            {...props}
-                            firstText={firstText}
-                            secondText={"待办"}
-                        />
-                        </div>
+                        {/*<div className="todo-header">*/}
+                        {/*<Breadcrumb*/}
+                        {/*    {...props}*/}
+                        {/*    firstText={firstText}*/}
+                        {/*    secondText={"待办"}*/}
+                        {/*/>*/}
+                        {/*</div>*/}
                         <div className="table-top">
-                            <div className="worktype-tabs">
-                                <div
-                                    className={`tabs-bar ${tabValue?.id === "all" ? "tabs-bar-select" : ""}`}
-                                    onClick={() => selectType("all")} key={"all"}
-                                >
-                                    全部
-                                    <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum.all)}</span>
-                                </div>
-                                {
-                                    workSystem && workSystem.map(item => {
-                                        return <div
-                                            key={item.id}
-                                            className={`tabs-bar ${tabValue?.id === item.workType.id ? "tabs-bar-select" : ""}`}
-                                            onClick={() => selectType(item.workType)}
-                                        >
-                                            {item.workType.name}
-                                            <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum[item.workType.code])}</span>
-                                        </div>
-                                    })
-                                }
-                                {
-                                    workCustom && workCustom.length === 1 && <div className="tabs-more">
-                                        <div className="tabs-more-button" onClick={() => selectCustomType(moreTabValue)}>
-                                            <div className={`tabs-bar ${tabValue?.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
-                                        </div>
-                                    </div>
-                                }
-                                {
-                                    workCustom && workCustom.length > 1 && <div className="tabs-more">
-                                        <div className="tabs-more-button" onClick={() => setShowMoreTab(true)}>
-                                            <div className={`tabs-bar ${tabValue.type === "custom" ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>
-                                            <svg className="svg-icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-downdrop"></use>
-                                            </svg>
-                                        </div>
+                            {/*<div className="worktype-tabs">*/}
+                            {/*    <div*/}
+                            {/*        className={`tabs-bar ${tabValue?.id === "all" ? "tabs-bar-select" : ""}`}*/}
+                            {/*        onClick={() => selectType("all")} key={"all"}*/}
+                            {/*    >*/}
+                            {/*        全部*/}
+                            {/*        <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum.all)}</span>*/}
+                            {/*    </div>*/}
+                            {/*    {*/}
+                            {/*        workSystem && workSystem.map(item => {*/}
+                            {/*            return <div*/}
+                            {/*                key={item.id}*/}
+                            {/*                className={`tabs-bar ${tabValue?.id === item.workType.id ? "tabs-bar-select" : ""}`}*/}
+                            {/*                onClick={() => selectType(item.workType)}*/}
+                            {/*            >*/}
+                            {/*                {item.workType.name}*/}
+                            {/*                <span className="tabe-bar-num">{setWorkNum(eveWorkTypeNum[item.workType.code])}</span>*/}
+                            {/*            </div>*/}
+                            {/*        })*/}
+                            {/*    }*/}
+                            {/*    {*/}
+                            {/*        workCustom && workCustom.length === 1 && <div className="tabs-more">*/}
+                            {/*            <div className="tabs-more-button" onClick={() => selectCustomType(moreTabValue)}>*/}
+                            {/*                <div className={`tabs-bar ${tabValue?.id === moreTabValue?.id ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    }*/}
+                            {/*    {*/}
+                            {/*        workCustom && workCustom.length > 1 && <div className="tabs-more">*/}
+                            {/*            <div className="tabs-more-button" onClick={() => setShowMoreTab(true)}>*/}
+                            {/*                <div className={`tabs-bar ${tabValue.type === "custom" ? "tabs-bar-select" : ""}`}>{moreTabValue?.name}</div>*/}
+                            {/*                <svg className="svg-icon" aria-hidden="true">*/}
+                            {/*                    <use xlinkHref="#icon-downdrop"></use>*/}
+                            {/*                </svg>*/}
+                            {/*            </div>*/}
 
-                                        <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>
-                                            {
-                                                workCustom.map(item => {
-                                                    return <div key={item.id} className={`tabs-dropdown-item ${tabValue?.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name.length > 5 ? item.workType.name.substring(0,4) + "..." : item.workType.name}</div>
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                            <div className="table-top-right">
-                                <div className="worklist-table-todo-label">
-                                    {todoLabel}
-                                </div>
-                                {/*搜索框*/}
-                                <div className="worklist-table-search">
-                                    <div className="search-input">
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-search"></use>
-                                        </svg>
-                                        <Input bordered={false} allowClear
-                                               className="workList-search-input"
-                                               key={"search"}
-                                               onChange={(value) => inputChange("keyWord", value.target.value)}
-                                               placeholder="搜索标题、ID"
-                                               value={inputValue}
-                                        />
-                                    </div>
-                                </div>
+                            {/*            <div ref={tabsDropDown} className={`tabs-dropdown ${showMoreTab ? "tabs-dropdown-show" : "tabs-dropdown-hidden"}`}>*/}
+                            {/*                {*/}
+                            {/*                    workCustom.map(item => {*/}
+                            {/*                        return <div key={item.id} className={`tabs-dropdown-item ${tabValue?.id === item.workType.id ? "tabs-dropdown-select" : ""}`} onClick={() => selectCustomType(item.workType)}>{item.workType.name.length > 5 ? item.workType.name.substring(0,4) + "..." : item.workType.name}</div>*/}
+                            {/*                    })*/}
+                            {/*                }*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    }*/}
+                            {/*</div>*/}
+                            <div className="table-top-left">
+                                <WorkTypeSelect/>
                                 {/*项目下拉框*/}
                                 {
                                     (props.route.path === "/index/todoList" || props.route.path === "/projectSet/:projectSetId/workTodo") &&
@@ -593,6 +575,28 @@ const TodoList = (props) => {
                                         }
                                     </SelectSimple>
                                 }
+                            </div>
+
+                            <div className="table-top-right">
+                                <div className="worklist-table-todo-label">
+                                    {todoLabel}
+                                </div>
+                                {/*搜索框*/}
+                                <div className="worklist-table-search">
+                                    <div className="search-input">
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-search"></use>
+                                        </svg>
+                                        <Input bordered={false} allowClear
+                                               className="workList-search-input"
+                                               key={"search"}
+                                               onChange={(value) => inputChange("keyWord", value.target.value)}
+                                               placeholder="搜索标题、ID"
+                                               value={inputValue}
+                                        />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 

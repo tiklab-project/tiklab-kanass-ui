@@ -19,11 +19,12 @@ const {TreeNode} = Tree;
 
 const WorkModuleFilter = (props) => {
     const { workStore } = props;
-    const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList,
-        getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle,
-        viewType, findUserCreateAndTodoWorkNum, workList } = workStore;
+    const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, tabValue,
+        getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle, setTabValue,
+        viewType, findUserCreateAndTodoWorkNum, workList, findWorkTypeDmList, setQuickFilterVisible,
+        setWorkTypeVisible } = workStore;
     const {findModuleListTree, deleteModule} = ModuleStore
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -34,6 +35,7 @@ const WorkModuleFilter = (props) => {
     const [hoverNodeKey, setHoverNodeKey] = useState(null);
     const [hoverTitle, setHoverTitle] = useState(false);
     const [moduleVisible, setModuleVisible] = useState(false);
+    const [moduleTreeVisible, setModuleTreeVisible] = useState(false);
     const [parentId, setParentId] = useState(null);
     const [moduleSelect, setModuleSelect] = useState(null);
     const [inputValue, setInputValue] = useState("");
@@ -41,15 +43,33 @@ const WorkModuleFilter = (props) => {
         pending:0,
         create:0
     });
+    const [workSystem, setWorkSystem] = useState([]);
+    const [workCustom, setWorkCustom] = useState([]);
+
+    // useEffect(() => {
+    //     console.log("当前状态：  ", moduleTreeVisible)
+    // },[moduleTreeVisible])
 
     const quickFilterList = [
         {
             value: "pending",
-            label: "我的待办"
+            label: "我的待办",
+            icon: "my-pending"
+        },
+        {
+            value: "ending",
+            label: "我的已办",
+            icon: "my-ending"
         },
         {
             value: "creat",
-            label: "我创建的"
+            label: "我创建的",
+            icon: "my-creat"
+        },
+        {
+            value: "overdue",
+            label: "已逾期",
+            icon: "my-overdue"
         }
     ]
 
@@ -60,9 +80,17 @@ const WorkModuleFilter = (props) => {
      */
     const getWorkStatusRangeWorkItem = (value,label) => {
         setQuickFilterValue(value)
-        // setTableTitle(label)
+        setTableTitle(label)
         // setModuleTitle(null)
         setModuleSelect(null)
+        setQuickFilterVisible(false)
+        setWorkTypeVisible(true)
+        setTabValue({
+            id: "all",
+            type: "system",
+            value: null,
+            label: null
+        })
         console.log("筛选条件++++++" + JSON.stringify(value))
         if (!value) {
             getAllWorkItem();
@@ -101,7 +129,107 @@ const WorkModuleFilter = (props) => {
         findUserCreateAndTodoWorkNum(param).then(res =>{
             setWorkNum(res.data)
         })
-    }, workList);
+    }, [workList]);
+
+    useEffect(() => {
+        //获取系统内置事项类型
+        findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
+            if (res.code === 0) {
+                setWorkSystem(res.data)
+            }
+        })
+
+        //获取自定义事项类型
+        findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
+            if (res.code === 0) {
+                setWorkCustom(res.data)
+            }
+        })
+        return;
+    }, [projectId])
+
+    /**
+     * 选择自定义事项类型
+     * @param {事项类型} value
+     */
+    const selectCustomType = (value) => {
+        search({
+            workTypeId: value.id,
+            overdue: false,
+            builderId: null,
+            assignerId: null,
+            workStatusIds: []
+        })
+        setTabValue({
+            id: value.id,
+            type: "custom",
+            value: value.id,
+            label: value.name
+        })
+        setTableTitle(value.name)
+        setQuickFilterValue("all")
+        setModuleSelect(null)
+        setQuickFilterVisible(true)
+        setWorkTypeVisible(false)
+    }
+
+    /**
+     * 选择事项类型
+     * @param {事项类型} value
+     */
+    const selectType = (value) => {
+        if (value === "all") {
+            search({
+                workTypeId: "",
+                overdue: false,
+                builderId: null,
+                assignerId: null,
+                workStatusIds: [], })
+            setTabValue({
+                id: "all",
+                type: "system",
+                value: null,
+                label: null
+            })
+            setTableTitle(value.name)
+            setQuickFilterValue("all")
+            setModuleSelect(null)
+            setQuickFilterVisible(true)
+            setWorkTypeVisible(false)
+        } else {
+            setTabValue({
+                id: value.id,
+                type: "system",
+                value: value.id,
+                label: value.name,
+                code: value.code
+            })
+            setTableTitle(value.name)
+            setQuickFilterValue("all")
+            setModuleSelect(null)
+            setQuickFilterVisible(true)
+            setWorkTypeVisible(false)
+            search({
+                workTypeId: value.id,
+                overdue: false,
+                builderId: null,
+                assignerId: null,
+                workStatusIds: [],
+                pageParam: {
+                    pageSize: 20,
+                    currentPage: 1,
+                }
+            })
+        }
+    }
+
+    /**
+     * 搜索事项
+     * @param {搜索条件} values
+     */
+    const search = values => {
+        searchWorkList(workStore, values)
+    };
 
     /**
      * 获取全部事项
@@ -111,6 +239,7 @@ const WorkModuleFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            workTypeId: "",
             overdue: false,
             builderId: null,
             assignerId: null,
@@ -134,6 +263,7 @@ const WorkModuleFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            workTypeId: "",
             overdue: false,
             builderId: null,
             assignerId: userId,
@@ -158,6 +288,7 @@ const WorkModuleFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            workTypeId: "",
             overdue: false,
             builderId: null,
             assignerId: userId,
@@ -182,6 +313,7 @@ const WorkModuleFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            workTypeId: "",
             overdue: false,
             builderId: userId,
             assignerId: null,
@@ -204,6 +336,7 @@ const WorkModuleFilter = (props) => {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
+            workTypeId: "",
             overdue: true,
             builderId: null,
             assignerId: userId,
@@ -291,6 +424,7 @@ const WorkModuleFilter = (props) => {
                 overdue: false,
                 builderId: null,
                 workStatusIds: [],
+                workTypeId: "",
                 moduleIds: [id]
             }
         }else {
@@ -298,23 +432,39 @@ const WorkModuleFilter = (props) => {
                 overdue: false,
                 builderId: null,
                 workStatusIds: [],
+                workTypeId: "",
                 moduleIds: []
             }
+            setModuleTreeVisible(!moduleTreeVisible);
+            setQuickFilterVisible(true)
+            setWorkTypeVisible(true)
         }
 
         if (viewType === "tree"){
             getWorkConditionPageTree(param).then(res => {
                 setModuleSelect(id)
                 // setModuleTitle(moduleName)
-                // setTableTitle(null)
+                setTableTitle(moduleName)
                 setQuickFilterValue("all")
+                setTabValue({
+                    id: "all",
+                    type: "system",
+                    value: null,
+                    label: null
+                })
             })
         }else if (viewType === "tile"){
             getWorkConditionPage(param).then(res => {
                 setModuleSelect(id)
                 // setModuleTitle(moduleName)
-                // setTableTitle(null)
+                setTableTitle(moduleName)
                 setQuickFilterValue("all")
+                setTabValue({
+                    id: "all",
+                    type: "system",
+                    value: null,
+                    label: null
+                })
             })
         }
 
@@ -323,10 +473,12 @@ const WorkModuleFilter = (props) => {
 
 
     // 构建模块树节点
-    const buildTreeNode = (data) => {
+    const buildTreeNode = (data, parentPath) => {
         return (
             data && data.map(item => {
                 const isExpand = expandedKeys.includes(item.id);
+                // 拼接当前节点的完整路径（如果是顶级节点就直接用自己名称，否则用父路径+自己名称）
+                const currentPath = parentPath ? `${parentPath}\\${item.moduleName}` : item.moduleName;
                 return (
                     <TreeNode
                         key={item.id}
@@ -344,15 +496,15 @@ const WorkModuleFilter = (props) => {
                                     }}
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleNodeClick(item.id, item.moduleName)
+                                        handleNodeClick(item.id, currentPath)
                                     }}
                                 >
                                     <div className="module-tree-node-title">
                                         {
                                             isExpand ?
-                                                <FolderOpenOutlined style={{ fontSize: '17px' }} />
+                                                <FolderOpenOutlined style={{ fontSize: '15px' }} />
                                                 :
-                                                <FolderOutlined style={{ fontSize: '17px' }} />
+                                                <FolderOutlined style={{ fontSize: '15px' }} />
                                         }
                                         <span style={{marginLeft: "8px"}}>{item.moduleName}</span>
                                     </div>
@@ -362,7 +514,7 @@ const WorkModuleFilter = (props) => {
                                                 <div
                                                     onClick={() => handleAddNodeClick(item.id)}
                                                 >
-                                                    <PlusOutlined style={{ fontSize: '17px' }}/>
+                                                    <PlusOutlined style={{ fontSize: '15px' }}/>
                                                 </div>
                                                 <WorkModuleFilterOperateSelectModal
                                                     moduleInfo={item}
@@ -380,7 +532,7 @@ const WorkModuleFilter = (props) => {
                         }
                     >
                         {
-                            item.children && buildTreeNode(item.children)
+                            item.children && buildTreeNode(item.children, currentPath)
                         }
                     </TreeNode>
                 )
@@ -401,40 +553,83 @@ const WorkModuleFilter = (props) => {
                 isOpen ?
                     <div className="work-module-filter-sider">
                         <div className="work-module-filter-sider-top" style={{ paddingTop: "10px" }}>
-                            <div className="work-module-filter-sider-top-title">
-                                <div className="module-search">
-                                    <div className="search-input">
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-search"></use>
-                                        </svg>
-                                        <Input bordered={false} allowClear
-                                               className="module-filter-search-input"
-                                               key={"search"}
-                                               onChange={(value) => inputChange(value.target.value)}
-                                               placeholder="搜索模块"
-                                               value={inputValue}
-                                        />
-                                    </div>
-                                </div>
+                            <div className="work-module-filter-sider-title">
+                                快速筛选
                             </div>
-                            {/*{*/}
-                            {/*    quickFilterList.map((item, index) => {*/}
-                            {/*        return (*/}
-                            {/*            <div className={`work-module-filter-sider-top-item ${quickFilterValue === item.value ? "work-module-filter-sider-top-item-active" : ""}`} onClick={() => getWorkStatusRangeWorkItem(item.value, item.label)}>*/}
-                            {/*                {*/}
-                            {/*                    index === 0 && <ScheduleOutlined style={{fontSize: "16px"}} />*/}
-                            {/*                    || index === 1 && <UserOutlined style={{fontSize: "16px"}} />*/}
-                            {/*                }*/}
-                            {/*                <div className="work-module-filter-sider-top-item-title">*/}
-                            {/*                    <span>{item.label}</span>*/}
-                            {/*                    <span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        )*/}
-                            {/*    })*/}
-                            {/*}*/}
+                            {/*<div className="work-module-filter-sider-top-title">*/}
+                            {/*    <div className="module-search">*/}
+                            {/*        <div className="search-input">*/}
+                            {/*            <svg className="svg-icon" aria-hidden="true">*/}
+                            {/*                <use xlinkHref="#icon-search"></use>*/}
+                            {/*            </svg>*/}
+                            {/*            <Input bordered={false} allowClear*/}
+                            {/*                   className="module-filter-search-input"*/}
+                            {/*                   key={"search"}*/}
+                            {/*                   onChange={(value) => inputChange(value.target.value)}*/}
+                            {/*                   placeholder="搜索模块"*/}
+                            {/*                   value={inputValue}*/}
+                            {/*            />*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {
+                                quickFilterList.map((item, index) => {
+                                    return (
+                                        <div className={`work-module-filter-sider-top-item ${quickFilterValue === item.value ? "work-module-filter-sider-top-item-active" : ""}`} onClick={() => getWorkStatusRangeWorkItem(item.value, item.label)}>
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref={`#icon-${item.icon}`}></use>
+                                            </svg>
+                                            <div className="work-module-filter-sider-top-item-title">
+                                                <span>{item.label}</span>
+                                                {/*<span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>*/}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
-                        <div className="work-module-filter-sider-content">
+                        <div className="work-module-filter-sider-middle">
+                            <div className="work-module-filter-sider-title">
+                                事项类型
+                            </div>
+                            {workSystem?.map(item => (
+                                <div
+                                    key={item.id}
+                                    className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
+                                    onClick={() => {
+                                        selectType(item.workType);
+                                        // setShowDropdown(false);
+                                    }}
+                                >
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-${item.workType.code}`}></use>
+                                    </svg>
+                                    {item.workType.name}
+                                    {/*<span className="select-number">*/}
+                                    {/*{setWorkNum(eveWorkTypeNum[item.workType.code])}*/}
+                                {/*</span>*/}
+                                </div>
+                            ))}
+                            {workCustom?.map(item => (
+                                <div
+                                    key={item.id}
+                                    className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
+                                    onClick={() => {
+                                        selectCustomType(item.workType);
+                                        // setShowDropdown(false);
+                                    }}
+                                >
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-normal`}></use>
+                                    </svg>
+                                    {item.workType.name}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="work-module-filter-sider-bottom">
+                            <div className="work-module-filter-sider-title">
+                                模块筛选
+                            </div>
                             <div className="content-module-head"
                                  onClick={(e) => {
                                     e.stopPropagation()
@@ -443,11 +638,12 @@ const WorkModuleFilter = (props) => {
                                  onMouseEnter={() => setHoverTitle(true)}
                                  onMouseLeave={() => setHoverTitle(false)}
                             >
-                                <svg className="icon-18" aria-hidden="true">
-                                    <use xlinkHref="#icon-module"></use>
-                                </svg>
+                                {/*<svg className="icon-18" aria-hidden="true">*/}
+                                {/*    <use xlinkHref="#icon-rightBlue"></use>*/}
+                                {/*</svg>*/}
+                                <DownOutlined className={moduleTreeVisible ? "content-module-icon-open" : "content-module-icon"} />
                                 <div className="content-module-title">
-                                    所有事项
+                                    所有模块
                                 </div>
                                 <div
                                     style={{
@@ -456,22 +652,25 @@ const WorkModuleFilter = (props) => {
                                         cursor: "pointer",
                                     }}
                                     onClick={addRootModule}>
-                                    <PlusOutlined style={{ fontSize: '17px' }} />
+                                    <PlusOutlined style={{ fontSize: '14px' }} />
                                 </div>
                             </div>
-                            <div className="content-module-tree">
-                                <Tree
-                                    onExpand={handleExpand}
-                                    switcherIcon={<DownOutlined />}
-                                    showLine={false}
-                                >
-                                    {
-                                        buildTreeNode(treeList)
-                                    }
-                                </Tree>
-                            </div>
+                            {
+                                moduleTreeVisible &&
+                                <div className="content-module-tree">
+                                    <Tree
+                                        onExpand={handleExpand}
+                                        switcherIcon={<DownOutlined style={{ fontSize: '14px' }} />}
+                                        showLine={false}
+                                    >
+                                        {
+                                            buildTreeNode(treeList)
+                                        }
+                                    </Tree>
+                                </div>
+                            }
                         </div>
-                        <div className="work-module-filter-sider-bottom">
+                        <div className="work-module-filter-sider-bottom-icon">
                             <div className="work-module-filter-close-icon" onClick={()=>{setIsOpen(false)}}>
                                 <svg className="icon-20" aria-hidden="true">
                                     <use xlinkHref="#icon-indent-decrease"></use>

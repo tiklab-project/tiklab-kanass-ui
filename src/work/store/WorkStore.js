@@ -163,6 +163,20 @@ export class WorkStore {
     @observable workItemStatusCurrentPage = [];
     @observable permissionFieldList = [];
 
+    // 筛选框是否可见
+    @observable quickFilterVisible = true;
+    @observable workTypeVisible = true;
+
+    @action
+    setQuickFilterVisible = (value) => {
+        this.quickFilterVisible = value
+    }
+
+    @action
+    setWorkTypeVisible = (value) => {
+        this.workTypeVisible = value
+    }
+
     @action
     setTableTitle = (value) => {
         this.tableTitle = value

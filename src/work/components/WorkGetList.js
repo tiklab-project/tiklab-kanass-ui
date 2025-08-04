@@ -14,16 +14,20 @@ const finWorkList = (router, workStore, params) => {
             type = "project"
 
         }
-        if (router.indexOf("/:id/sprint/:sprint/work") > -1) {
+        if (router.indexOf("/project/:id/sprintDetail/:sprint/work") > -1) {
             type = "sprint"
 
         }
-        if (router.indexOf("/:id/version/:version/work") > -1) {
+        if (router.indexOf("/project/:id/versionDetail/:version/work") > -1) {
             type = "version"
 
         }
         if (router.indexOf("/:id/stagedetail/:stage/work") > -1) {
             type = "stage"
+
+        }
+        if (router.indexOf("project/:id/planning") > -1) {
+            type = "planning"
 
         }
         goWorkItem(type, workStore, params)
@@ -59,6 +63,9 @@ const goWorkItem = (type, workStore, params) => {
             break;
         case "system":
             initValues = { ...initValues, projectIds: [], quickFilter: quickFilter };
+            break;
+        case "planning":
+            initValues = { ...initValues, projectIds: [projectId] };
             break;
         default:
             break;

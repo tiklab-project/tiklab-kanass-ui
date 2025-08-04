@@ -27,6 +27,12 @@
     flex-wrap: wrap;
     gap: 10px;
 
+    .table-top-left{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .table-top-right{
 
         display: flex;
@@ -91,8 +97,6 @@
           height: 15px;
         }
       }
-
-
 
     }
   }

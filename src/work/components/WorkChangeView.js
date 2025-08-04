@@ -14,7 +14,8 @@ import WorkGanttFree from "./WorkGanttFree";
 const WorkChangeView = (props) => {
     const { buttonType, workStore } = props;
     const { getWorkConditionPage, getWorkConditionPageTree, viewType, workShowType, setWorkShowType,
-        setViewType, setWorkId, setWorkIndex, setWorkList , setSearchConditionNull, setSearchCondition} = workStore;
+        setViewType, setWorkId, setWorkIndex, setWorkList , setSearchConditionNull, setSearchCondition, setQuickFilterVisible,
+        setWorkTypeVisible} = workStore;
     const projectId = props.match.params.id;
     // 视图下拉框
     const [showViewDropDown, setShowViewDropDown] = useState(false);
@@ -51,21 +52,21 @@ const WorkChangeView = (props) => {
             path: "Table",
             title: "列表"
         },
-        {
-            value: "list",
-            path: "List",
-            title: "详情"
-        },
+        // {
+        //     value: "list",
+        //     path: "List",
+        //     title: "详情"
+        // },
         {
             value: "bodar",
             path: "Bodar",
             title: "看板"
         },
-        {
-            value: "gantt",
-            path: "Gantt",
-            title: "甘特图"
-        }
+        // {
+        //     value: "gantt",
+        //     path: "Gantt",
+        //     title: "甘特图"
+        // }
     ]
 
     /**
@@ -98,6 +99,9 @@ const WorkChangeView = (props) => {
 
         setWorkShowType(item.value)
         setWorkId()
+
+        setQuickFilterVisible(true)
+        setWorkTypeVisible(true)
 
         removeSessionStorage("detailCrumbArray");
         setShowViewDropDown(false)

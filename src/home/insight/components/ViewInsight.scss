@@ -8,8 +8,7 @@
 .view-insight {
     justify-content: space-between;
     height: calc(100% - 32px);
-    padding-top: 10px;
-    max-width: 1200px;
+    padding: var(--tiklab-padding);
     margin: 0 auto;
 
     // background-color: #fff;

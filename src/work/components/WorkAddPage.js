@@ -6,8 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-25 15:53:16
  */
-import React, { useState, useEffect, useImperativeHandle, Fragment } from "react";
-import { Form, Input, Select, DatePicker, message } from "antd";
+import React, {useState, useEffect, useImperativeHandle, Fragment, useRef} from "react";
+import {Form, Input, Select, DatePicker, message, Checkbox} from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import moment from 'moment';
@@ -43,12 +43,13 @@ const WorkAddPage = (props) => {
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
     const [selectItem, setSelectItem] = useState();
     const [loading, setLoading] = useState(false);
+    const [createNext, setCreateNext] = useState(false);
     const path = props.match.path;
     const urlParams = new URLSearchParams(props.history.location.search)
     let workItemType = urlParams.get("workItemType")
     let caseId = urlParams.get("caseId")
     const [editorType, setEditorType] = useState(false);
-
+    const editorRef = useRef(null);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -357,7 +358,6 @@ const WorkAddPage = (props) => {
                     findWorkItemById(res.data).then(data => {
                         if (data.code === 0) {
                             setSessionStorage("detailCrumbArray", [{ id: data.data.id, code: data.data.code, title: values.title, iconUrl: workType.workType.iconUrl }])
-                            setShowAddModel(false)
                             if (path === "/project/:id/stage") {
                                 appendNodeInTree(stageTreeList, values.stage, data.data)
                                 message.success({
@@ -414,6 +414,14 @@ const WorkAddPage = (props) => {
                     });
                 }
 
+                if (createNext){
+                    // 继续创建  清空标题和描述
+                    form.resetFields(['title']);
+                    editorRef.current.clearEditorContent();
+                    setSlateValue("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
+                }else {
+                    setShowAddModel(false)
+                }
                 setLoading(false)
             })
 
@@ -516,7 +524,7 @@ const WorkAddPage = (props) => {
                                 <Input placeholder="事项标题" />
                             </Form.Item>
                             {
-                                (props.match.path === "/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
+                                (props.match.path === "/projectSet/:projectSetId/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"
@@ -545,8 +553,9 @@ const WorkAddPage = (props) => {
                             >
                                 {
                                     <div className="work-desc">
-                                            <div className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
+                                            <div ref={editorRef} className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
                                                 <DocumentEditor
+                                                    ref={editorRef}
                                                     focusEditor={true}
                                                     value={slateValue}
                                                     onChange={(value) => changeDesc(value)}
@@ -752,6 +761,7 @@ const WorkAddPage = (props) => {
                     </div>
 
                     <div className="work-add-button">
+                        <Checkbox style={{marginRight: "auto"}} onChange={() => setCreateNext(!createNext)}>继续创建下一条</Checkbox>
                         <Button loading={loading} type="primary" onClick={() => onFinish()}>创建</Button>
                         <Button onClick={() => handleCancel()}>取消</Button>
                     </div>

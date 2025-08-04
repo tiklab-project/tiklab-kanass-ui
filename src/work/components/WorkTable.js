@@ -73,6 +73,7 @@ const WorkTable = (props) => {
             stageId: stageId,
             epicView: null
         }
+        console.log(params)
         await finWorkList(path, WorkStore, params);
         setLoading(false)
         return;

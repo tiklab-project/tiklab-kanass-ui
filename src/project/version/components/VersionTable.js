@@ -70,8 +70,9 @@ const VersionTable = (props) => {
         }
         createRecent(params)
 
-        props.history.push({ pathname: `/${projectId}/version/${id}/workitem` })
-        localStorage.setItem("sprintId", id);
+        // props.history.push({ pathname: `/${projectId}/version/${id}/workitem` })
+        props.history.push({ pathname: `/project/${projectId}/versionDetail/${id}/workitem` })
+        localStorage.setItem("versionId", id);
     }
 
 

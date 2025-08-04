@@ -87,7 +87,6 @@ const AppraisedWorkItemTable = (props) => {
         setSessionStorage("detailCrumbArray", [{ id: record.workItem.id, code: record.workItem.code, title: record.workItem.title, iconUrl: record.workItem.workTypeSys.iconUrl }])
         props.history.push(`${pathname}/${record.workItem.id}`)
         setDetailVisible(true);
-
     }
 
     const goAppraisedStatus = (record) => {
@@ -456,9 +455,6 @@ const AppraisedWorkItemTable = (props) => {
             />
         </div>
     </Provider>
-
-
-
 }
 
 export default withRouter(observer(AppraisedWorkItemTable));

@@ -1,17 +1,20 @@
 
-.work-breadcrumb {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .work-title {
-        font-size: var(--tiklab-font-16);
-        font-weight: var(--tiklab-font-weight-bold);
-    }
-    .work-top-right {
+.work-table-first {
+    margin-bottom: 15px;
+    .work-breadcrumb {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
+        .work-title {
+            font-size: var(--tiklab-font-16);
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        .work-top-right {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
     }
-    
 }

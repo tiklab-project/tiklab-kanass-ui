@@ -221,9 +221,9 @@ const WorkDetail = (props) => {
     useEffect(() => {
         console.log("进入详情了     " + props.match.path)
         console.log("进入详情了workid     " + props.match.params.workId)
-        console.log(props.match.path === "/project/:id/sprintDetail/:sprint/work/:workId")
+        console.log(props.match.path === "/project/:id/sprintDetail/:sprint/workitem/:workId")
         if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
-            || props.match.path === "/project/:id/sprintDetail/:sprint/work/:workId" || props.match.path === "/index/todoList/:workId") {
+            || props.match.path === "/project/:id/sprintDetail/:sprint/workitem/:workId" || props.match.path === "/index/todoList/:workId") {
             const id = props.match.params.workId;
             setWorkId(id)
             if (id) {
@@ -244,7 +244,7 @@ const WorkDetail = (props) => {
         setWorkInfo()
         setWorkDetailMetaData();
         if (props.match.path !== "/project/:id/work/:workId" && props.match.path !== "/:id/version/:version/work/:workId"
-            && props.match.path !== "/project/:id/sprintDetail/:sprint/work/:workId") {
+            && props.match.path !== "/project/:id/sprintDetail/:sprint/workitem/:workId") {
                 if (workId && workId.length > 0) {
                     findPriority()
                     getWorkDetail(workId)

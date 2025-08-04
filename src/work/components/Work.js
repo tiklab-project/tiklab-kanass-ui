@@ -6,7 +6,7 @@
  * @Description: 事项页面
  */
 
-import React from "react";
+import React, {useEffect} from "react";
 import WorkTable from "./WorkTable";
 import WorkList from "./WorkList";
 import WorkBodar from "./WorkBodar";
@@ -32,7 +32,7 @@ const Work = (props) => {
      */
     const view = () => {
         let dom = <WorkTable />;
-        if (path === "/project/:id/workitem" && project?.projectType.type === "kanban"){
+        if (project?.projectType.type === "kanban"){
             setWorkShowType("bodar")
             dom = <WorkBodar />;
             return dom;

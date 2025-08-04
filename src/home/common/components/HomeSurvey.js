@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import { observer, inject } from "mobx-react";
 import { getUser } from 'tiklab-core-ui';
-import "./HomePage.scss";
+import "./HomeSurvey.scss";
 import {Empty, Tabs, Spin, Tooltip, Row, Col} from 'antd';
 import { withRouter } from 'react-router';
 import WorkItemTrend from './WorkItemTrend';
@@ -120,26 +120,26 @@ const HomeSurvey = (props) => {
 
     return (
 
-        <Row className="home" >
+        <Row className="home-survey" >
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="home-content">
-                <div className="home-tab">
+                {/*<div className="home-tab">*/}
 
-                    <div style={{cursor:"pointer"}}
-                         key={1}
-                         onClick={() => selectRouter("/index/overview", "overview")}>概况</div>
+                {/*    <div style={{cursor:"pointer"}}*/}
+                {/*         key={1}*/}
+                {/*         onClick={() => selectRouter("/index/overview", "overview")}>概况</div>*/}
 
-                    <div className="right-tabs-container">
-                        <div style={{cursor:"pointer"}}
-                             key={2}
-                             onClick={() => selectRouter("/index/todoList", "todoList")}>
-                            待办</div>
-                        <div style={{cursor:"pointer"}}
-                             key={3}
-                             onClick={() => selectRouter('/index/insightlist', "insight")}>
-                            仪表盘</div>
-                    </div>
-                </div>
+                {/*    <div className="right-tabs-container">*/}
+                {/*        <div style={{cursor:"pointer"}}*/}
+                {/*             key={2}*/}
+                {/*             onClick={() => selectRouter("/index/todoList", "todoList")}>*/}
+                {/*            待办</div>*/}
+                {/*        <div style={{cursor:"pointer"}}*/}
+                {/*             key={3}*/}
+                {/*             onClick={() => selectRouter('/index/insightlist', "insight")}>*/}
+                {/*            仪表盘</div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 <div className="recent-project">
                     <div className="title">

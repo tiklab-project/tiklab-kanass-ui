@@ -42,6 +42,7 @@
     margin-bottom: 15px;
 
     .log-tabs {
+        width: fit-content;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -67,5 +68,8 @@
         }
     }
 
-    
+    .log-tab-filter-operate{
+        display: flex;
+        gap: 10px;
+    }
 }

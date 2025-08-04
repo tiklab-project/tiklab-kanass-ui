@@ -15,6 +15,7 @@ const Dynamic = AsyncComponent(() => import("./home/common/components/DynamicLis
 const WorkTodoPage = AsyncComponent(() => import("./home/common/components/TodoPage"))
 const WorkTodo = AsyncComponent(() => import("./home/common/components/TodoPageList"))
 const TodoList = AsyncComponent(() => import('./home/common/components/TodoList'))
+const HomeAppraised = AsyncComponent(() => import('./home/common/components/HomeAppraisedTable'))
 
 const WorkGantt = AsyncComponent(() => import('./work/components/WorkGantt'))
 
@@ -102,6 +103,8 @@ const VersionBasicInfo = AsyncComponent(() => import('./version/setting/componen
 const PrivilegeDomainUser = AsyncComponent(() => import('./project/setting/user/User.js'));
 const Plan = AsyncComponent(() => import('./project/plan/components/Plan'));
 const PlanWorkItem = AsyncComponent(() => import('./project/plan/components/PlanWorkItem'));
+
+const Planning = AsyncComponent(() => import('./project/planning/components/Planning'))
 
 const Module = AsyncComponent(() => import('./project/setting/module/components/ModuleList'))
 const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/components/BasicInfo'))
@@ -202,6 +205,7 @@ const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'))
 const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
 const Backups = AsyncComponent(() => import('./setting/backups/Backups'));
 const Log = AsyncComponent(() => import("./workLog/components/Log"))
+const LogStatistics = AsyncComponent(() => import("./workLog/statistics/components/LogStatisticsLayout"))
 const LogAllList = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
 
 const Statistics = AsyncComponent(() => import('./statistics/components/Statistics'))
@@ -282,51 +286,70 @@ const Routers = [
         path: "/",
         routes: [
             {
-                path: "/index/overview",
-                exact: false,
-                component: HomeSurvey,
-                key: "ProjectSet"
-
-            },
-            {
-                path: "/index/todoPage",
-                exact: false,
-                component: WorkTodoPage,
-                key: "ProjectSet"
-
-            },
-            {
-              path: "/index/todoList",
-              exact: false,
-              component: TodoList,
-              key: "TodoList",
+                path: "/index",
+                component: HomePage,
+                key: "Home",
                 routes: [
                     {
-                        path: "/index/todoList/:workId",
+                        path: "/index/overview",
                         exact: false,
+                        component: HomeSurvey,
+                        key: "ProjectSet"
+
+                    },
+                    {
+                        path: "/index/todoPage",
+                        exact: false,
+                        component: WorkTodoPage,
+                        key: "ProjectSet"
+
+                    },
+                    {
+                        path: "/index/todoList",
+                        exact: false,
+                        component: TodoList,
+                        key: "TodoList",
+                        routes: [
+                            {
+                                path: "/index/todoList/:workId",
+                                exact: false,
+                                component: WorkDetailPage,
+                                key: "TodoListDetail"
+                            }
+                        ]
+                    },
+                    {
+                        path: "/index/insightlist",
+                        exact: false,
+                        component: InsightList,
+                        key: "InsightList"
+                    },
+                    {
+                        path: "/index/newInsight/:id",
+                        exact: false,
+                        component: NewInsight,
+                        key: "NewInsight"
+                    },
+                    {
+                        path: "/index/viewInsight/:id",
+                        exact: false,
+                        component: ViewInsight,
+                        key: "ViewInsight"
+                    },
+                    {
+                        path: "/index/appraised",
+                        exact: false,
+                        component: HomeAppraised,
+                        key: "ViewInsight"
+                    },
+                    {
+                        path: "/index/appraised/:workId",
                         component: WorkDetailPage,
-                        key: "TodoListDetail"
-                    }
+                    },
                 ]
             },
-            {
-                path: "/index/insightlist",
-                exact: false,
-                component: InsightList,
-                key: "InsightList"
-            },
-            {
-                path: "/index/newInsight/:id",
-                exact: false,
-                component: NewInsight,
-                key: "NewInsight"
-            },
-            {
-                path: "/index/viewInsight/:id",
-                exact: false,
-                component: ViewInsight,
-                key: "ViewInsight"
-            },
+
+
 
             // {
             //     path: "/log",
@@ -344,11 +367,24 @@ const Routers = [
             //     ]
             // },
             {
-                path: "/log/list",
-                exact: false,
-                component: LogAllList,
-                key: "LogAllList",
+              path: "/log",
+              component: Log,
+              routes: [
+                  {
+                      path: "/log/list",
+                      exact: false,
+                      component: LogAllList,
+                      key: "LogAllList",
+                  },
+                  {
+                      path: "/log/statistics",
+                      exact: false,
+                      component: LogStatistics,
+                      key: "LogStatistics"
+                  }
+              ]
             },
+
             {
                 path: "/statistics",
                 component: Statistics,
@@ -797,6 +833,80 @@ const Routers = [
 
                     },
                     {
+                        path: "/project/:id/sprintDetail/:sprint",
+                        component: SprintHome,
+                        routes: [
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/statistics",
+                                component: SprintStatistics,
+                                routes: [
+                                    {
+                                        path: "/project/:id/sprintDetail/:sprint/statistics/overview",
+                                        component: ProjectStatisticsOverview,
+                                        exact: true
+                                    },
+                                    {
+                                        path: "/project/:id/sprintDetail/:sprint/statistics/workItem",
+                                        component: StatisticsWork,
+                                        exact: true
+                                    }
+                                ]
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workitem",
+                                component: Work,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workitem/:workId",
+                                component: WorkDetailPage,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workDetail",
+                                component: WorkTableDetail,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/overview",
+                                component: Sprintsurvey,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/plan",
+                                component: SprintPlan,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/setting",
+                                component: SprintBasicInfo,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/dynamic",
+                                exact: false,
+                                component: Dynamic
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workTodo",
+                                exact: false,
+                                component: TodoList
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workList",
+                                component: WorkList,
+                            },
+
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workGantt",
+                                component: WorkGantt,
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workTable",
+                                component: WorkTable,
+
+                            },
+                            {
+                                path: "/project/:id/sprintDetail/:sprint/workBodar",
+                                component: WorkBodar,
+                            }
+                        ]
+                    },
+                    {
                         path: "/project/:id/wiki",
                         component: WikiRepository
                     },
@@ -820,6 +930,60 @@ const Routers = [
                     {
                         path: "/project/:id/version",
                         component: Version,
+                    },
+                    {
+                        path: "/project/:id/versionDetail/:version",
+                        component: VersionHome,
+                        routes: [
+                            {
+                                path: "/project/:id/versionDetail/:version/work/:workId",
+                                component: WorkDetailPage,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workDetail",
+                                component: WorkTableDetail,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/overview",
+                                component: Versionsurvey,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/plan",
+                                component: VersionWorkItemPlan,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/setting",
+                                component: VersionBasicInfo,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/dynamic",
+                                component: Dynamic
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workitem",
+                                component: Work,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workList",
+                                component: WorkList,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workGantt",
+                                component: WorkGantt,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workTable",
+                                component: WorkTable,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workBodar",
+                                component: WorkBodar,
+                            },
+                            {
+                                path: "/project/:id/versionDetail/:version/workTodo",
+                                component: TodoList,
+                            },
+                        ]
                     },
                     {
                         path: "/project/:id/versionPlan",
@@ -874,6 +1038,10 @@ const Routers = [
                     {
                         path: "/project/:id/milestone",
                         component: Milestone,
+                    },
+                    {
+                        path: "/project/:id/planning",
+                        component: Planning,
                     },
                     {
                         path: "/project/:id/plan",
@@ -1067,6 +1235,12 @@ const Routers = [
                         key: "ProjectSetProjectList"
                     },
                     {
+                        path: "/projectSet/:projectSetId/workitem",
+                        exact: false,
+                        component: Work,
+                        key: "ProjectSetWorkItem"
+                    },
+                    {
                         path: "/projectSet/:projectSetId/dominRole",
                         exact: false,
                         component: ProjectSetDomainRole,
@@ -1098,135 +1272,135 @@ const Routers = [
                 ]
             },
 
-            {
-                path: "/:id/sprint/:sprint",
-                component: SprintHome,
-                routes: [
-                    {
-                        path: "/:id/sprint/:sprint/statistics",
-                        component: SprintStatistics,
-                        routes: [
-                            {
-                                path: "/:id/sprint/:sprint/statistics/overview",
-                                component: ProjectStatisticsOverview,
-                                exact: true
-                            },
-                            {
-                                path: "/:id/sprint/:sprint/statistics/workItem",
-                                component: StatisticsWork,
-                                exact: true
-                            }
-                        ]
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workitem",
-                        component: Work,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/work/:workId",
-                        component: WorkDetailPage,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workDetail",
-                        component: WorkTableDetail,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/overview",
-                        component: Sprintsurvey,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/plan",
-                        component: SprintPlan,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/setting",
-                        component: SprintBasicInfo,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/dynamic",
-                        exact: false,
-                        component: Dynamic
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workTodo",
-                        exact: false,
-                        component: TodoList
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workList",
-                        component: WorkList,
-                    },
+            // {
+            //     path: "/:id/sprint/:sprint",
+            //     component: SprintHome,
+            //     routes: [
+            //         {
+            //             path: "/:id/sprint/:sprint/statistics",
+            //             component: SprintStatistics,
+            //             routes: [
+            //                 {
+            //                     path: "/:id/sprint/:sprint/statistics/overview",
+            //                     component: ProjectStatisticsOverview,
+            //                     exact: true
+            //                 },
+            //                 {
+            //                     path: "/:id/sprint/:sprint/statistics/workItem",
+            //                     component: StatisticsWork,
+            //                     exact: true
+            //                 }
+            //             ]
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workitem",
+            //             component: Work,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/work/:workId",
+            //             component: WorkDetailPage,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workDetail",
+            //             component: WorkTableDetail,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/overview",
+            //             component: Sprintsurvey,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/plan",
+            //             component: SprintPlan,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/setting",
+            //             component: SprintBasicInfo,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/dynamic",
+            //             exact: false,
+            //             component: Dynamic
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workTodo",
+            //             exact: false,
+            //             component: TodoList
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workList",
+            //             component: WorkList,
+            //         },
+            //
+            //         {
+            //             path: "/:id/sprint/:sprint/workGantt",
+            //             component: WorkGantt,
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workTable",
+            //             component: WorkTable,
+            //
+            //         },
+            //         {
+            //             path: "/:id/sprint/:sprint/workBodar",
+            //             component: WorkBodar,
+            //         }
+            //     ]
+            // },
 
-                    {
-                        path: "/:id/sprint/:sprint/workGantt",
-                        component: WorkGantt,
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workTable",
-                        component: WorkTable,
-
-                    },
-                    {
-                        path: "/:id/sprint/:sprint/workBodar",
-                        component: WorkBodar,
-                    }
-                ]
-            },
-
-            {
-                path: "/:id/version/:version",
-                component: VersionHome,
-                routes: [
-                    {
-                        path: "/:id/version/:version/work/:workId",
-                        component: WorkDetailPage,
-                    },
-                    {
-                        path: "/:id/version/:version/workDetail",
-                        component: WorkTableDetail,
-                    },
-                    {
-                        path: "/:id/version/:version/overview",
-                        component: Versionsurvey,
-                    },
-                    {
-                        path: "/:id/version/:version/plan",
-                        component: VersionWorkItemPlan,
-                    },
-                    {
-                        path: "/:id/version/:version/setting",
-                        component: VersionBasicInfo,
-                    },
-                    {
-                        path: "/:id/version/:version/dynamic",
-                        component: Dynamic
-                    },
-                    {
-                        path: "/:id/version/:version/workitem",
-                        component: Work,
-                    },
-                    {
-                        path: "/:id/version/:version/workList",
-                        component: WorkList,
-                    },
-                    {
-                        path: "/:id/version/:version/workGantt",
-                        component: WorkGantt,
-                    },
-                    {
-                        path: "/:id/version/:version/workTable",
-                        component: WorkTable,
-                    },
-                    {
-                        path: "/:id/version/:version/workBodar",
-                        component: WorkBodar,
-                    },
-                    {
-                        path: "/:id/version/:version/workTodo",
-                        component: TodoList,
-                    },
-                ]
-            },
+            // {
+            //     path: "/:id/version/:version",
+            //     component: VersionHome,
+            //     routes: [
+            //         {
+            //             path: "/:id/version/:version/work/:workId",
+            //             component: WorkDetailPage,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workDetail",
+            //             component: WorkTableDetail,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/overview",
+            //             component: Versionsurvey,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/plan",
+            //             component: VersionWorkItemPlan,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/setting",
+            //             component: VersionBasicInfo,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/dynamic",
+            //             component: Dynamic
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workitem",
+            //             component: Work,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workList",
+            //             component: WorkList,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workGantt",
+            //             component: WorkGantt,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workTable",
+            //             component: WorkTable,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workBodar",
+            //             component: WorkBodar,
+            //         },
+            //         {
+            //             path: "/:id/version/:version/workTodo",
+            //             component: TodoList,
+            //         },
+            //     ]
+            // },
             // {
             //     path: "/:id/appraised/:appraised",
             //     component: AppraisedHome,

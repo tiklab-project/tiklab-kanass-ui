@@ -18,7 +18,7 @@ const WorkDetailCrumb = (props) => {
     const isDetail = () => {
         let isView = false;
         if (props.match.path === "/project/:id/work/:workId" || props.match.path === "/:id/version/:version/work/:workId"
-            || props.match.path === "/:id/sprint/:sprint/work/:workId") {
+            || props.match.path === "project/:id/sprintDetail/:sprint/workitem/:workId") {
             isView = true;
         }
         return isView;
@@ -34,8 +34,8 @@ const WorkDetailCrumb = (props) => {
         if (props.match.path === "/:id/version/:version/work/:workId") {
             props.history.push(`/${projectId}/version/${versionId}/workitem`)
         }
-        if (props.match.path === "/:id/sprint/:sprint/work/:workId") {
-            props.history.push(`/${projectId}/sprint/${sprintId}/workitem`)
+        if (props.match.path === "project/:id/sprintDetail/:sprint/workitem/:workId") {
+            props.history.push(`project/${projectId}/sprintDetail/${sprintId}/workitem`)
         }
 
     }
