@@ -20,18 +20,36 @@
         align-items: center;
     }
 
-    .sprint-title{
-        font-size: var(--tiklab-font-16);
-        font-weight: var(--tiklab-font-weight-bold);
-        margin: 0;
+    .sprint-detail-top{
+        padding: 0 20px;
+        display: flex;
+        line-height: 55px;
+        justify-content: space-between;
     }
+
+    .sprint-detail-title{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .sprint-title{
+            width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: var(--tiklab-font-16);
+            font-weight: var(--tiklab-font-weight-bold);
+            margin: 0;
+        }
+    }
+
 
     .sprint-detail-tabs {
         display: flex;
         gap: 15px;
         height: 55px;
         line-height: 55px;
-        //margin-left: -130px;
+        font-size: 16px;
+        margin-left: -230px;
         //border-bottom: 1px solid var(--tiklab-gray);
         .sprint-tab {
             cursor: pointer;
@@ -45,7 +63,7 @@
     }
 
     .sprint-detail-operate{
-        margin-left: auto;
+        //margin-left: auto;
         display: flex;
         gap: 10px;
         align-items: center;

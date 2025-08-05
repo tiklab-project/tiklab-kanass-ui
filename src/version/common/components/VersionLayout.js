@@ -8,7 +8,7 @@
  */
 import React, {useEffect, useState} from "react";
 import { Provider, observer } from "mobx-react";
-import {Col, Empty, Layout, Row} from "antd";
+import {Col, Empty, Layout, Row, Tooltip} from "antd";
 import "../components/VersionLayout.scss";
 import { renderRoutes } from "react-router-config";
 import VersionDetailAside from "./VersionDetailAside";
@@ -19,6 +19,7 @@ import VersionAddmodal from "../../../project/version/components/VersionAdd";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import VersionStore from "../../../project/version/store/VersionStores";
+import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 // import { UserVerify } from "tiklab-user-extension-ui";
 
 const Versiondetail = (props) => {
@@ -120,23 +121,20 @@ const Versiondetail = (props) => {
         <Layout className="version-detail">
             {/*<VersionDetailAside />*/}
             <Row style={{
-                // borderBottom: "1px solid var(--tiklab-gray)",
+                borderBottom: "1px solid var(--tiklab-gray)",
                 backgroundColor: "#fff"
             }}>
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
-                    <div style={{
-                        padding: "0 20px ",
-                        display: "flex",
-                        lineHeight: "55px",
-                        gap: "60px"
-                    }}>
+                    <div className="version-detail-top">
                         {
                             version &&
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                <svg className="icon-22" aria-hidden="true" onClick={goBack}>
+                            <div className="version-detail-title" onClick={goBack}>
+                                <svg className="icon-22" aria-hidden="true">
                                     <use xlinkHref="#icon-left"></use>
                                 </svg>
-                                <p className="version-title">{project?.projectName}</p>
+                                <Tooltip title={version?.name}>
+                                    <p className="version-title">{version?.name}</p>
+                                </Tooltip>
                             </div>
                         }
                         {/*<SprintDetailAside />*/}

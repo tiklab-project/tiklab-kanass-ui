@@ -48,32 +48,26 @@ const SetStatisticsAside = (props) => {
     // 日志菜单
     const logMenuList = [
         {
-            title: '工时统计',
-            path: "/log/statistics",
-            key: "statistics",
-            type: "statistics",
-            icon: "log-statistics",
-            children: [
-                {
-                    title: "项目成员统计",
-                    path: "/log/statistic/projectuser",
-                    key: "projectStatistic",
-                    type: "statistics"
-                },
-                {
-                    title: "日志事项统计",
-                    path: "/log/statistic/projectwork",
-                    key: "workStatistic",
-                    type: "statistics"
-                },
-                {
-                    title: "日志项目统计",
-                    path: "/log/statistic/userproject",
-                    key: "userProject",
-                    type: "statistics"
-                }
-            ]
+            title: "项目成员统计",
+            path: "/log/statistic/projectuser",
+            key: "projectStatistic",
+            icon: "cuservice",
+            type: "statistics"
         },
+        {
+            title: "日志事项统计",
+            path: "/log/statistic/projectwork",
+            key: "workStatistic",
+            icon: "statistics-work",
+            type: "statistics"
+        },
+        {
+            title: "日志项目统计",
+            path: "/log/statistic/userproject",
+            key: "userProject",
+            icon: "statistics-project",
+            type: "statistics"
+        }
     ]
 
     // 渲染菜单
@@ -163,9 +157,9 @@ const SetStatisticsAside = (props) => {
     return (
         <Fragment>
             <div className="log-aside">
-                <div className="log-aside-name">
-                    统计
-                </div>
+                {/*<div className="log-aside-name">*/}
+                {/*    统计*/}
+                {/*</div>*/}
                 <ul style={{ padding: 0 }} key="0" className="log-aside-content">
                     {
                         logMenuList && logMenuList.map((firstItem, index) => {

@@ -12,10 +12,28 @@
         line-height: 40px;
     }
 
-    .version-title{
-        font-size: var(--tiklab-font-16);
-        font-weight: var(--tiklab-font-weight-bold);
-        margin: 0;
+
+
+    .version-detail-top{
+        padding: 0 20px;
+        display: flex;
+        line-height: 55px;
+        justify-content: space-between;
+    }
+
+    .version-detail-title{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .version-title{
+            width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: var(--tiklab-font-16);
+            font-weight: var(--tiklab-font-weight-bold);
+            margin: 0;
+        }
     }
 
     .version-detail-tabs {
@@ -23,6 +41,8 @@
         gap: 15px;
         height: 55px;
         line-height: 55px;
+        font-size: 16px;
+        margin-left: -230px;
         //border-bottom: 1px solid var(--tiklab-gray);
         .version-tab {
             cursor: pointer;
@@ -36,7 +56,7 @@
     }
 
     .version-detail-operate{
-        margin-left: auto;
+        //margin-left: auto;
         display: flex;
         gap: 10px;
         align-items: center;

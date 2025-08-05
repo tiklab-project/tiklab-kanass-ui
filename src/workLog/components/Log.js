@@ -50,15 +50,15 @@ const LogContent = (props) => {
             {/*</Sider>*/}
 
             <Row style={{
-                // borderBottom: "1px solid var(--tiklab-gray)"
+                borderBottom: "1px solid var(--tiklab-gray)"
                 // backgroundColor: "var(--tiklab-gray)"
             }}>
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "20", offset: "2" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
                     <div style={{
                         padding: "0px 20px",
                         display: "flex",
                         alignItems: "center",
-                        gap: "60px",
+                        // gap: "60px",
                         lineHeight: "55px"
                     }}>
                         <Breadcrumb firstText={"工时"}/>

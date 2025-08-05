@@ -8,21 +8,18 @@
  */
 import React, { useEffect, useState, useRef } from "react";
 import { Provider, inject, observer } from "mobx-react";
-import {Breadcrumb, Col, Empty, Layout, Row} from "antd";
+import { Col, Empty, Layout, Row} from "antd";
 import "../components/SprintLayout.scss";
 import { renderRoutes } from "react-router-config";
-import SprintDetailAside from "./SprintDetailAside";
 import SprintDetailStore from "../store/SprintDetailStore";
 import WorkStore from "../../../work/store/WorkStore";
 import { getUser } from "tiklab-core-ui";
-// import { UserVerify } from "tiklab-user-extension-ui";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
-import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import {withRouter} from "react-router";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import SprintAddmodal from "../../../project/sprint/components/SpintAddEditModal";
 import SprintStore from "../../../project/sprint/store/SprintStore";
+import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 
 const Sprintdetail = (props) => {
     const { route, systemRoleStore } = props;
@@ -176,22 +173,17 @@ const Sprintdetail = (props) => {
             <div className="sprint-detail">
 
                 <Row style={{
-                    // borderBottom: "1px solid var(--tiklab-gray)"
+                    borderBottom: "1px solid var(--tiklab-gray)"
                 }}>
                     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
-                        <div style={{
-                            padding: "0 20px",
-                            display: "flex",
-                            gap: "60px",
-                            lineHeight: "55px"
-                        }}>
+                        <div className={"sprint-detail-top"}>
                             {
                                 sprint &&
-                                <div style={{ display: "flex", alignItems: "center" }}>
-                                    <svg className="icon-22" aria-hidden="true" onClick={goBack}>
+                                <div className="sprint-detail-title"  onClick={goBack}>
+                                    <svg className="icon-22" aria-hidden="true">
                                         <use xlinkHref="#icon-left"></use>
                                     </svg>
-                                    <p className="sprint-title">{project?.projectName}</p>
+                                    <p className="sprint-title">{sprint?.sprintName}</p>
                                 </div>
                             }
                             {/*<SprintDetailAside />*/}

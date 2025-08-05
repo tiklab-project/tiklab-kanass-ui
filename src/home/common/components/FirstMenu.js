@@ -109,6 +109,13 @@ const FirstMenu = (props) => {
             icon: 'projectset-' + theme,
             actionIcon: 'projectset-' + theme + "-active",
         },
+        {
+            to: '/product',
+            title: '产品',
+            key: 'product',
+            icon: 'product-' + theme,
+            actionIcon: 'product-' + theme + "-active",
+        },
         // {
         //     to: '/workitem',
         //     title: '事项',

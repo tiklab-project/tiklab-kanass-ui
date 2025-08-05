@@ -26,7 +26,7 @@ const PlanningGantt = (props) => {
     const { workList, workStore, WorkDetailDrawer, setImageUrl, projectId, useDebounce, archiveView, workTypeDmList,
         defaultSprint, defaultStage, defaultVersion } = props;
     const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total, getWorkConditionPageTree, viewType,
-        addWork } = workStore;
+        addWork, priorityList } = workStore;
     const userId = getUser().userId;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -602,6 +602,8 @@ const PlanningGantt = (props) => {
                 builder: userId,
                 assigner: userId,
                 workType: newWorkType ? newWorkType : workTypeDmList[0].id,
+                desc: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]",
+                workPriority: priorityList[0]?.id,
             };
             if (defaultSprint){
                 params = {

@@ -8,6 +8,9 @@
         font-weight: var(--tiklab-font-weight-bold);
         display: flex;
         align-items: center;
+        .back-text {
+            color: var(--tiklab-gray-500);
+        }
         .page-back:hover {
             cursor: pointer;
             color: var(--tiklab-blue);

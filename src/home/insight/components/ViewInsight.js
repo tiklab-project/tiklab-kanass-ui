@@ -66,7 +66,7 @@ const ViewInsight = (props) => {
 
     return (
         <Row className="home" >
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                 <Provider {...store}>
             <div className="view-insight">
                 <Breadcumb firstText="仪表盘" firstUrl="/index/insightlist" secondText={insightDetail && insightDetail.insightName}>
