@@ -28,25 +28,25 @@ const PlanDetailMenu = (props) => {
             "icon":"test-case-group",
             "title":"测试用例",
             "key":1,
-            "router":`/project/${projectId}/planDetail/case`
+            "router":`/project/${projectId}/testcase/planDetail/case`
         },
         {
             "icon":"baogao",
             "title":"测试历史",
             "key":2,
-            "router":`/project/${projectId}/planDetail/functionTestInstance`
+            "router":`/project/${projectId}/testcase/planDetail/functionTestInstance`
         },
         {
             "icon":"quexian",
             "title":"缺陷列表",
             "key":3,
-            "router":`/project/${projectId}/planDetail/defect`
+            "router":`/project/${projectId}/testcase/planDetail/defect`
         },
         {
             "icon":"baogao",
             "title":"测试报告",
             "key":4,
-            "router":`/project/${projectId}/planDetail/report`
+            "router":`/project/${projectId}/testcase/planDetail/report`
         }
     ]
 
@@ -63,7 +63,7 @@ const PlanDetailMenu = (props) => {
     }
 
     const toPlanList = () => {
-        props.history.push(`/project/${projectId}/testplan`)
+        props.history.push(`/project/${projectId}/testcase/testplan`)
     }
 
 

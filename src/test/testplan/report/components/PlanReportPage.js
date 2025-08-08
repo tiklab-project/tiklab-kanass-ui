@@ -10,7 +10,7 @@ const PlanReportPage = (props) => {
     // 去往详情页
     const toReportDetail = (record) => {
         sessionStorage.setItem('testReportId', record.id);
-        props.history.push(`/project/${projectId}/planDetail/reportDetail`);
+        props.history.push(`/project/${projectId}/testcase/planDetail/reportDetail`);
     };
 
     return (

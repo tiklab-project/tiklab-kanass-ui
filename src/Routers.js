@@ -1196,51 +1196,51 @@ const Routers = [
                                 exact: true,
                                 component: FunctionContentListView,
                             },
+                            {
+                                path: "/project/:id/testcase/testplan",
+                                exact: true,
+                                component:TestPlan,
+                            },
+                            {
+                                path: "/project/:id/testcase/planDetail",
+                                component:PlanDetailContent,
+                                routes: [
+                                    {
+                                        path: "/project/:id/testcase/planDetail/case",
+                                        exact: true,
+                                        component: TestPlanBindCaseList,
+                                    },
+                                    {
+                                        path: "/project/:id/testcase/planDetail/functionTestInstance",
+                                        exact: true,
+                                        component: FunctionTestInstance,
+                                    },
+                                    //
+                                    {
+                                        path: "/project/:id/testcase/planDetail/defect",
+                                        exact: true,
+                                        component: PlanDefect
+                                    },
+                                    {
+                                        path: "/project/:id/testcase/planDetail/report",
+                                        exact: true,
+                                        component: PlanReportPage
+                                    },
+                                    {
+                                        path: "/project/:id/testcase/planDetail/reportDetail",
+                                        exact: true,
+                                        component: PlanReportDetail
+                                    },
+                                    // {
+                                    //     path: "/project/:id/testcase/planDetail/reportInfo",
+                                    //     exact: true,
+                                    //     component: PlanReportInstanceDetail,
+                                    // },
+                                ]
+                            },
+                        ]
+                    },
 
-                        ]
-                    },
-                    {
-                        path: "/project/:id/testplan",
-                        exact: true,
-                        component:TestPlan,
-                    },
-                    {
-                        path: "/project/:id/planDetail",
-                        component:PlanDetailContent,
-                        routes: [
-                            {
-                                path: "/project/:id/planDetail/case",
-                                exact: true,
-                                component: TestPlanBindCaseList,
-                            },
-                            {
-                                path: "/project/:id/planDetail/functionTestInstance",
-                                exact: true,
-                                component: FunctionTestInstance,
-                            },
-                            //
-                            {
-                                path: "/project/:id/planDetail/defect",
-                                exact: true,
-                                component: PlanDefect
-                            },
-                            {
-                                path: "/project/:id/planDetail/report",
-                                exact: true,
-                                component: PlanReportPage
-                            },
-                            {
-                                path: "/project/:id/planDetail/reportDetail",
-                                exact: true,
-                                component: PlanReportDetail
-                            },
-                            // {
-                            //     path: "/project/:id/planDetail/reportInfo",
-                            //     exact: true,
-                            //     component: PlanReportInstanceDetail,
-                            // },
-                        ]
-                    },
 
                 ]
             },

@@ -112,7 +112,7 @@ const TestPlan = (props) => {
     // 去往详情页
     const toPlanDetail = (record) => {
         sessionStorage.setItem('testPlanId',record.id);
-        props.history.push(`/project/${projectId}/planDetail/case`);
+        props.history.push(`/project/${projectId}/testcase/planDetail/case`);
     };
 
     // 分页
@@ -170,7 +170,6 @@ const TestPlan = (props) => {
             <div className={"content-box-center"}>
                 <div className='header-box-space-between'>
                     <div className={'header-box-title'}>
-                        <LeftOutlined onClick={()=>props.history.push(`/project/${projectId}/testcase/cases`)}/>
                         测试计划
                     </div>
                     <TestPlanEdit

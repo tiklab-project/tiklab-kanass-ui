@@ -318,7 +318,7 @@ const CaseCategoryTree = ({
                         <div className={"collapse-bottom-box"} style={{display:"flex",justifyContent:"space-between"}}>
                             <div
                                 onClick={() => {
-                                    history.push(`/project/${projectId}/testplan`)
+                                    history.push(`/project/${projectId}/testcase/testplan`)
                                 }}
                                 style={{
                                     cursor: "pointer",

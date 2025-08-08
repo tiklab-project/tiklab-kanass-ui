@@ -23,7 +23,7 @@ const PlanReportDetail = (props) => {
                     <Breadcrumb>
                         <Breadcrumb.Item
                             className="breadcrumb-link"
-                            onClick={() => props.history.push(`/project/${projectId}/planDetail/report`)}
+                            onClick={() => props.history.push(`/project/${projectId}/testcase/planDetail/report`)}
                         >
                             <LeftOutlined/>
                              测试报告

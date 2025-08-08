@@ -6,6 +6,7 @@ import TestCaseStore from "../store/testcaseStore";
 import CategoryStore from "../../category/store/CategoryStore";
 import FuncUnitStore from "../../function/store/funcUnitStore";
 import "../../common/styles/base.scss"
+import TestCaseMenu from "./TestCaseMenu";
 const TestCaseTableMain = (props) => {
     let stores = {
         testcaseStore:TestCaseStore,
@@ -14,7 +15,7 @@ const TestCaseTableMain = (props) => {
     }
     return (
         <Provider {...stores}>
-            <TestCaseTabs {...props} />
+            <TestCaseMenu {...props} />
         </Provider>
 
     );

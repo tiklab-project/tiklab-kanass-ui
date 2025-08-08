@@ -197,8 +197,10 @@ const TestCaseTable = (props) => {
     return (
         <Row style={{height:"100%"}}>
             <Col
-                xl={{ span: 24 }}
-                xll={{ span: 16 }}
+                md={{ span: 24, offset: 0 }}
+                lg={{ span: 20, offset: 2 }}
+                xl={{ span: 20, offset: 2 }}
+                xll={{ span: 16, offset: 4 }}
             >
                 <div className={"content-box-center"}>
                     <div className={"display-flex-between"}>
