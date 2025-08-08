@@ -18,9 +18,9 @@ module.exports = merge(baseWebpackConfig, {
     devtool: 'source-map',
     mode:'development',
     entry: [
-            'react-hot-loader/patch',
-            `webpack-dev-server/client?http://127.0.0.1:${PORT}/`,
-            path.resolve(__dirname, './src/index.js')
+        'react-hot-loader/patch',
+        `webpack-dev-server/client?http://127.0.0.1:${PORT}/`,
+        path.resolve(__dirname, './src/index.js')
     ],
     optimization:{
         namedModules: true,

@@ -1,0 +1,253 @@
+.test-report-box {
+
+  // 面包屑导航
+  .breadcrumb-section {
+    margin: 20px 0;
+
+    .ant-breadcrumb {
+      font-size: 16px;
+      font-weight: bold;
+
+      .breadcrumb-link {
+        cursor: pointer;
+        //color: #1890ff;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #40a9ff;
+        }
+      }
+    }
+  }
+
+  // 报告标题区域
+  .report-header {
+    margin-bottom: 32px;
+
+    .header-content {
+      .title-section {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+
+        .report-title {
+          margin: 0;
+          font-size: 28px;
+          font-weight: 600;
+          color: #1a1a1a;
+          line-height: 1.2;
+        }
+
+        .ant-tag {
+          font-size: 12px;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-weight: 500;
+        }
+      }
+
+      .report-description {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+      }
+    }
+  }
+
+  // 报告信息卡片
+  .report-info-card {
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: #f7f8f9;
+
+    .ant-card-body {
+      padding: 32px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+
+      .info-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(24, 144, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .info-content {
+        flex: 1;
+        min-width: 0;
+
+        .info-label {
+          display: block;
+          font-size: 13px;
+          color: #999;
+          margin-bottom: 4px;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .info-value {
+          display: block;
+          font-size: 16px;
+          color: #1a1a1a;
+          font-weight: 600;
+          line-height: 1.4;
+        }
+      }
+    }
+
+    .ant-divider {
+      margin: 32px 0 20px 0;
+      border-color: #f5f5f5;
+    }
+
+    .creation-info {
+      text-align: center;
+
+      .ant-typography {
+        font-size: 14px;
+        color: #999;
+      }
+    }
+  }
+
+  // 内容卡片
+  .report-content-card {
+    border-radius: 12px;
+    //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    //border: 1px solid #f0f0f0;
+    border: 0;
+
+    .ant-card-body {
+      padding: 0;
+    }
+
+    .report-tabs {
+      .ant-tabs-nav {
+        margin: 0;
+        //padding: 0 32px;
+        //background: #fafafa;
+        //border-bottom: 1px solid #f0f0f0;
+        border-radius: 12px 12px 0 0;
+
+        .ant-tabs-tab {
+          padding: 10px 0;
+          font-size: 15px;
+          font-weight: 500;
+          margin: 0 20px 0 0;
+
+          .anticon {
+            margin-right: 8px;
+            font-size: 16px;
+          }
+
+          &.ant-tabs-tab-active {
+            background: white;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: -1px;
+            border-bottom: 1px solid white;
+
+            .ant-tabs-tab-btn {
+              color: #1890ff;
+            }
+          }
+        }
+      }
+
+      .ant-tabs-content-holder {
+        background: white;
+        border-radius: 0 0 12px 12px;
+
+        .tab-content {
+          padding: 10px 0;
+          min-height: 400px;
+        }
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    padding: 0 16px 32px 16px;
+
+    .report-header {
+      .header-content {
+        .title-section {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+
+          .report-title {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+
+    .report-info-card {
+      .ant-card-body {
+        padding: 24px;
+      }
+
+      .info-item {
+        .info-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 16px;
+        }
+
+        .info-content {
+          .info-value {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    .report-content-card {
+      .report-tabs {
+        .ant-tabs-nav {
+          padding: 0 16px;
+
+          .ant-tabs-tab {
+            padding: 16px 16px;
+            font-size: 14px;
+          }
+        }
+
+        .tab-content {
+          padding: 24px 16px;
+        }
+      }
+    }
+  }
+
+  // 加载状态优化
+  .ant-card-loading-content {
+    .ant-card-loading-block {
+      border-radius: 6px;
+    }
+  }
+
+  // Empty 组件样式优化
+  .ant-empty {
+    margin: 60px 0;
+
+    .ant-empty-description {
+      color: #999;
+      font-size: 15px;
+    }
+  }
+}

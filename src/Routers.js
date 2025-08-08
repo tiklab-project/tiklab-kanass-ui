@@ -2,6 +2,7 @@ import React from "react";
 import AsyncComponent from './common/lazy/AsyncComponent'
 import { Redirect } from "react-router-dom";
 import {AccessToken} from "tiklab-openapi-ui";
+
 // import WorkGantt from "./work/components/WorkGantt";
 
 
@@ -150,10 +151,10 @@ const MantisLoadData = AsyncComponent(() => import('./setting/systemIntegration/
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/LoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
-const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
-const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
-const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
-const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
+// const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
+// const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
+// const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
+// const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
 // const ViewInsight1 = AsyncComponent(() => import("./home/insight/components/ViewInsight1.js"))
 
 // 首页
@@ -231,6 +232,19 @@ const AppraisedWorkItemDetail = AsyncComponent(() => import('./project/appraised
 
 // requestError
 const RequestErrorContent = AsyncComponent(() => import('./common/requestError/RequestErrorContent'))
+
+//测试用例
+let TestCaseTableMain = AsyncComponent(() => import( "./test/testcase/components/TestCaseTableMain"));
+let TestCaseTable = AsyncComponent(() => import("./test/testcase/components/TestCaseTable"));
+let FunctionContentListView = AsyncComponent(() => import("./test/function/components/listView/FunctionContentListView"));
+
+let PlanDetailContent = AsyncComponent(()=>import("./test/testplan/common/PlanDetailContent"))
+let TestPlan = AsyncComponent(() => import("./test/testplan/plan/components/testPlan"));
+let TestPlanBindCaseList = AsyncComponent(() => import("./test/testplan/plan/components/testPlanBindCaseList"));
+let FunctionTestInstance = AsyncComponent(() => import( "./test/testplan/function/components/FunctionTestInstance"));
+let PlanDefect = AsyncComponent(() => import("./test/testplan/defect/PlanDefect"));
+let PlanReportPage  = AsyncComponent(() => import( "./test/testplan/report/components/PlanReportPage"));
+let PlanReportDetail = AsyncComponent(() => import("./test/testplan/report/components/PlanReportDetail"));
 
 const Routers = [
     {
@@ -318,24 +332,24 @@ const Routers = [
                             }
                         ]
                     },
-                    {
-                        path: "/index/insightlist",
-                        exact: false,
-                        component: InsightList,
-                        key: "InsightList"
-                    },
-                    {
-                        path: "/index/newInsight/:id",
-                        exact: false,
-                        component: NewInsight,
-                        key: "NewInsight"
-                    },
-                    {
-                        path: "/index/viewInsight/:id",
-                        exact: false,
-                        component: ViewInsight,
-                        key: "ViewInsight"
-                    },
+                    // {
+                    //     path: "/index/insightlist",
+                    //     exact: false,
+                    //     component: InsightList,
+                    //     key: "InsightList"
+                    // },
+                    // {
+                    //     path: "/index/newInsight/:id",
+                    //     exact: false,
+                    //     component: NewInsight,
+                    //     key: "NewInsight"
+                    // },
+                    // {
+                    //     path: "/index/viewInsight/:id",
+                    //     exact: false,
+                    //     component: ViewInsight,
+                    //     key: "ViewInsight"
+                    // },
                     {
                         path: "/index/appraised",
                         exact: false,
@@ -1167,10 +1181,69 @@ const Routers = [
                     {
                         path: "/project/:id/appraised",
                         component: Appraised,
-                    }
+                    },
+                    {
+                        path: "/project/:id/testcase",
+                        component: TestCaseTableMain,
+                        routes: [
+                            {
+                                path: "/project/:id/testcase/cases",
+                                exact: true,
+                                component: TestCaseTable,
+                            },
+                            {
+                                path: "/project/:id/testcase/function/:caseId",
+                                exact: true,
+                                component: FunctionContentListView,
+                            },
+
+                        ]
+                    },
+                    {
+                        path: "/project/:id/testplan",
+                        exact: true,
+                        component:TestPlan,
+                    },
+                    {
+                        path: "/project/:id/planDetail",
+                        component:PlanDetailContent,
+                        routes: [
+                            {
+                                path: "/project/:id/planDetail/case",
+                                exact: true,
+                                component: TestPlanBindCaseList,
+                            },
+                            {
+                                path: "/project/:id/planDetail/functionTestInstance",
+                                exact: true,
+                                component: FunctionTestInstance,
+                            },
+                            //
+                            {
+                                path: "/project/:id/planDetail/defect",
+                                exact: true,
+                                component: PlanDefect
+                            },
+                            {
+                                path: "/project/:id/planDetail/report",
+                                exact: true,
+                                component: PlanReportPage
+                            },
+                            {
+                                path: "/project/:id/planDetail/reportDetail",
+                                exact: true,
+                                component: PlanReportDetail
+                            },
+                            // {
+                            //     path: "/project/:id/planDetail/reportInfo",
+                            //     exact: true,
+                            //     component: PlanReportInstanceDetail,
+                            // },
+                        ]
+                    },
+
                 ]
             },
-
 
             {
                 path: "/projectSet/:projectSetId",

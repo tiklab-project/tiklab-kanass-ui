@@ -1,0 +1,28 @@
+.pagination-box{
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .pagination-total-record{
+        font-size: 12px;
+        color: var(--pi-font-color-grey);
+        width: 50px;
+        margin: 0 20px 0 0
+    }
+
+
+    .pagination-box-ban{
+        cursor:not-allowed;
+        color: var(--tiklab-gray-500);
+    }
+    .pagination-box-allow{
+        cursor: pointer;
+        &:hover{
+          color: var(--tiklab-blue);
+        }
+    }
+    .pagination-box-current{
+        color: var(--tiklab-blue);
+    }
+}

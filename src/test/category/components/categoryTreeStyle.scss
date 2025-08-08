@@ -1,0 +1,207 @@
+.sidebar-container {
+    display: flex;
+    height: 100%;
+    position: relative;
+
+    .collapse-button-right {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1 !important;
+        }
+    }
+
+    .ant-tree-title{
+        width: 98%;
+    }
+
+    &:hover {
+        .collapse-button-right {
+            opacity: 0.8;
+        }
+    }
+
+    .expand-button-floating {
+        position: absolute;
+        left: 0;
+        bottom: 16px;
+        top: auto;
+        transform: none;
+        z-index: 10;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .collapsed-container {
+        display: none;
+    }
+
+    .category-tree-item,
+    .category-tree-item-ex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+        cursor: pointer;
+        padding: 5px 0;
+
+        &.ant-tree-node-selected {
+            background: var(--pi-action-color);
+        }
+
+        .ant-space {
+            flex: 1;
+            min-width: 0;
+            .anticon,
+            span {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: inline-block;
+                vertical-align: middle;
+                max-width: 120px;
+            }
+        }
+    }
+
+    .category-tree-item{
+        margin: 5px 0;
+    }
+
+    .category-tree-item-ex{
+        margin: 0;
+    }
+
+    .ant-tree-switcher{
+        align-self: center;
+    }
+}
+
+.case-category-tree-box{
+    width: 240px;
+    height: 100%;
+    background: #f1f3fa69;
+    display: flex;
+    flex-direction: column;
+
+    .ant-spin-nested-loading{
+        height: 100%;
+
+        .ant-spin-container{
+            height: 100%;
+        }
+    }
+
+    .category-tree-item-box{
+        padding: 0 11px 0 35px;
+    }
+    .ant-tree{
+        background: transparent;
+    }
+
+    .category-param-search{
+        //padding: 10px 8px 0;
+        border-bottom: 1px solid #e3e3e3;
+        margin: 6px 0;
+
+        .category-item-box {
+            margin-bottom: 10px;
+            
+            .category-tree-item-ex {
+                border-radius: 6px;
+                padding: 5px 8px;
+                margin: 0;
+                transition: background-color 0.2s ease;
+                
+                &:hover {
+                    background: var(--pi-hover-color);
+                }
+                
+                &.ant-tree-node-selected {
+                    background: var(--pi-action-color);
+                }
+            }
+        }
+    }
+
+    .module-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 8px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+        margin: 0 8px 5px;
+        height: 32px;
+        
+        &:hover {
+            background: var(--pi-hover-color);
+        }
+        
+        &.ant-tree-node-selected {
+            background: var(--pi-action-color);
+        }
+
+        .module-header-title {
+            font-weight: 500;
+            flex: 1;
+            margin-left: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .anticon-plus {
+            cursor: pointer;
+        }
+    }
+
+    .case-category-tree{
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0 8px 0 5px;
+        margin-top: 5px;
+        flex-grow: 1;
+
+        .ant-tree-indent-unit{
+            width: 10px;
+        }
+
+        .ant-tree-node-content-wrapper {
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            
+            &:hover {
+                background: var(--pi-hover-color);
+            }
+            
+            &.ant-tree-node-selected {
+                background: var(--pi-action-color);
+            }
+        }
+
+        .ant-tree-node-selected {
+            background: var(--pi-action-color);
+        }
+    }
+    
+    .collapse-bottom-box {
+        padding: 8px;
+        border-top: 1px solid #e8ebee;
+        display: flex;
+        justify-content: flex-end;
+        
+        .collapse-bottom-btn {
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            height: 32px;
+        }
+    }
+}

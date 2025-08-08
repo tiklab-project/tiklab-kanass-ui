@@ -1,0 +1,39 @@
+.mf-listname-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: black;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+
+    &-mar {
+        margin-right: 10px;
+    }
+}
+
+// 使用更具描述性的类名
+.mf-icon-bg-pastel-red {
+    background: #f3caca;
+}
+.mf-icon-bg-pastel-blue {
+    background: #cadbf3;
+}
+.mf-icon-bg-lavender {
+    background: #e8eaf6;
+}
+.mf-icon-bg-light-pink {
+    background: #ffebee;
+}
+.mf-icon-bg-pale-green {
+    background: #deedd7;
+}
+.mf-icon-bg-powder-blue {
+    background: #caf3ef;
+}
+
+// 可以轻松添加更多颜色
+// .mf-icon-bg-light-yellow {
+//   background: #fff59d;
+// }

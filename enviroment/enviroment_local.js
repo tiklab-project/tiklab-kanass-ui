@@ -6,7 +6,7 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.5:8080';
+const api =  'http://192.168.10.22:8080';
 const base_url = JSON.stringify(api);
 
 // 决定请求那边的css, js 一定要写这个!!!!!!!!

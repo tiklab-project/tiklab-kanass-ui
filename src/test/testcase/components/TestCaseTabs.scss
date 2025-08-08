@@ -1,0 +1,126 @@
+// 使用更强的选择器来确保样式优先级
+.testcase-tabs-container {
+    display: flex;
+    height: 100%;
+    overflow-x: hidden;
+
+
+    //.ant-spin-nested-loading{
+    //    height: 100%;
+    //
+    //    .ant-spin-container{
+    //        height: 100%;
+    //    }
+    //}
+
+
+    .right-panel {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        
+        // 只针对当前组件的tabs，不影响tabPane内部的tabs
+        > .ant-tabs.testcase-specific-tabs {
+            // 使用更强的选择器来提高优先级
+            &.ant-tabs-top {
+                > .ant-tabs-nav {
+                    margin: 0 !important;
+                }
+            }
+            height: 100%;
+            
+            > .ant-tabs-nav {
+                margin: 0;
+                padding: 0 16px;
+                background: #f9fafd;
+                border-bottom: 1px solid #f0f0f0;
+     
+                
+                // 移除默认的底部边框线
+                &::before {
+                    display: none !important;
+                }
+                
+                &::after {
+                    display: none !important;
+                }
+
+                .ant-tabs-tab-active {
+                    border-top: 2px solid #2196f3 !important;
+                }
+                
+                > .ant-tabs-tab {
+                    margin: 0 4px 0 0;
+                    padding: 8px 16px;
+                    border-radius: 6px 6px 0 0;
+                    border: 1px solid transparent;
+                    border-bottom: none;
+                    border-top: 3px solid transparent;
+                    background: transparent;
+                    transition: all 0.3s;
+                    width: 120px;
+                    min-width: 120px;
+                    max-width: 120px;
+
+                    &:hover {
+                        background: #f0f0f0;
+                    }
+
+                 
+
+                    .ant-tabs-tab-remove {
+                        margin-left: 8px;
+                        color: #999;
+                        
+                        &:hover {
+                            color: #ff4d4f;
+                        }
+                    }
+                    
+                    .ant-tabs-tab-btn {
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        
+                        > span {
+                            display: flex;
+                            align-items: center;
+                            width: 100%;
+                            
+                            > span:first-child {
+                                flex-shrink: 0;
+                            }
+                            
+                            > span:last-child {
+                                flex: 1;
+                                min-width: 0;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                        }
+                    }
+                 }
+            }
+            
+            > .ant-tabs-content-holder {
+                flex: 1;
+                overflow-x: hidden;
+                
+                > .ant-tabs-content {
+                    height: 100%;
+                    overflow-x: hidden;
+                    
+                    > .ant-tabs-tabpane {
+                        height: 100%;
+                        overflow: auto;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}

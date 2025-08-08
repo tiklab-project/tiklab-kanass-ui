@@ -1,0 +1,17 @@
+.pi-icon-btn-box{
+
+    .pi-icon-btn{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        //width: 55px;
+    }
+
+    .pi-icon-btn-grey{
+        background: var(--pi-bg-grey-100);
+        border: 1px solid #e5e8ed;
+        border-radius: var(--pi-border-radius);
+    }
+
+
+}

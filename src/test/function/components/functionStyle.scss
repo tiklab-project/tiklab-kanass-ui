@@ -1,0 +1,102 @@
+.function-edit_show{
+    display: block;
+}
+
+.function-edit_hide{
+    display: none;
+}
+
+.function-edit_content{
+    margin: 10px 0;
+
+    .ant-form-inline .ant-form-item{
+        flex: 1;
+    }
+
+    .ant-popover-buttons{
+        display: flex;
+    }
+}
+.function-edit_form {
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+
+.function-edit_submit{
+    display: flex;
+    align-items: end;
+}
+
+.function-step_add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border: 1px dashed #eee;
+    cursor: pointer;
+    margin: -1px 0 0;
+}
+
+.function-step_add:hover{
+    background: var(--pi-bg-color);
+}
+
+
+.function-step-item-box{
+    margin: 5px 0;
+    position: relative;
+
+    &-icon{
+        margin-right: 10px;
+        cursor: move;
+        color: #e4e4e4;
+
+        &:hover{
+            color: #666;
+        }
+    }
+
+    .link-text:hover{
+        background: var(--pi-bg-grey-100);
+    }
+
+    .step-item-null{
+        padding: 0 2px;
+        border: 1px solid #dadada;
+        border-radius: 4px
+    }
+
+
+    .step-item-delete{
+        display: none;
+        position: absolute;
+        top: 9px;
+        right: 20px;
+    }
+
+    &:hover .step-item-delete{
+        display: block;
+    }
+
+}
+
+.case-save-cancel-btn{
+    position: absolute;
+    padding: 15px;
+    bottom: 0;
+    left: 0;
+    background: white;
+    width: 100%;
+}
+
+.function-add-textarea{
+    border: 1px solid #eee;
+    background: white !important;
+    border-radius: 5px;
+}
+
+.case-detail-textarea{
+    border-color: #efefef;
+    background: #f9fafd;
+}

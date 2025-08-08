@@ -1,0 +1,34 @@
+
+.ant-picker-range{
+    width: 100%;
+}
+
+.defect_project_select{
+    padding: 10px 5px;
+    box-shadow: 0 0 10px #e4e4e4;
+    margin: 10px
+}
+
+.defect_project_select .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    background: var(--pi-bg-grey-100);
+    border-radius: 5px;
+    border: none;
+}
+
+.content-box-center{
+    .ant-tabs{
+        height: 100%;
+
+        .ant-tabs-content{
+            height: 100%;
+
+            .ant-tabs-tabpane{
+                height: 100%;
+            }
+        }
+
+
+    }
+
+
+}

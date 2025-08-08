@@ -1,0 +1,514 @@
+
+
+
+//面包屑
+.breadcrumb-contant{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d9d9d9;
+  margin: 0 0 10px 0;
+}
+
+.breadcrumb{
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 0;
+  //border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bread-cursor{
+  cursor: pointer;
+}
+
+.search-btn{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+
+$blue-main: #0053ca;
+.ant-tabs-tab .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: $blue-main;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  margin:0 5px  ;
+}
+
+// 表头设置
+.ant-table-thead>tr .ant-table-cell{
+  font-weight: 600;
+  padding: 5px;
+  font-size: 13px;
+}
+
+
+.search-input{
+  width: 230px!important;
+  border-radius: 15px;
+}
+
+//表单内组件背景
+.ant-select-selector {
+  background-color: #fff;
+}
+
+.ant-input-affix-wrapper {
+  background-color: #fff;
+}
+
+.ant-input {
+  background-color: #fff;
+}
+
+//弹出框表单的弹框样式，遮罩层背景
+.ant-modal-mask {
+  background-color: #4a60848f!important;
+}
+
+//弹框标题
+.ant-modal-title {
+  font-weight: 600!important;
+}
+
+
+.table-delete{
+  color: #ff0000;
+}
+
+table .icon{
+  margin:0   ;
+}
+
+
+.ant-collapse-icon-position-right>.ant-collapse-item>.ant-collapse-header {
+  padding: 8px 40px 8px 16px;
+}
+
+.ant-collapse-content>.ant-collapse-content-box {
+  padding: 16px 26px;
+}
+
+//
+.header-flexbox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+// antd
+.ant-btn{
+  font-size: 13px;
+}
+
+.ant-table{
+  font-size: 13px;
+}
+
+.title-space-between{
+  display: flex;
+  margin: 10px  0;
+  justify-content: space-between;
+  font-weight: bold;
+
+  .test-title{
+    height: 35px;
+    line-height: 35px;
+    padding: 0 0 0 5px;
+  }
+}
+//详情页中的表单
+.form-info{
+  .form-header-title-btn{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .ant-form-item{
+      .ant-input{
+        font-size: 28px;
+        //padding: 0 0 0 10px;
+        width: 300px;
+      }
+    }
+  }
+}
+
+.icon-ss {
+  width: var(--pi-icon-ss);
+  height: var(--pi-icon-ss);
+}
+
+.icon-s {
+  width: var(--pi-icon-s);
+  height: var(--pi-icon-s);
+}
+
+.icon-m {
+  width: var(--pi-icon-m);
+  height: var(--pi-icon-m);
+}
+
+.icon-l {
+  width: var(--pi-icon-l);
+  height: var(--pi-icon-l);
+}
+.icon-x {
+  width: var(--pi-icon-x);
+  height: var(--pi-icon-x);
+}
+.icon-xl {
+  width: var(--pi-icon-xl);
+  height: var(--pi-icon-xl);
+}
+//头部公共css  左边title，右边一般添加
+.header-box-space-between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  .ant-space .ant-input{
+    width: 200px!important;
+  }
+}
+.header-box-title{
+  font-weight: bold;
+  font-size: 16px;
+}
+//搜索框
+.search-input-common{
+  //width: 200px!important;
+  height: 32px!important;
+  border-radius: var(--pi-border-radius)!important;
+  border: 1px solid #fff !important;
+  background: #f1f1f1 !important;
+
+  .ant-input{
+    background: #f1f1f1;
+  }
+}
+
+
+//flex  between
+.display-flex-between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.display-flex-gap{
+  display: flex;
+  gap:10px;
+  align-items: center;
+}
+
+
+.ws-img-icon{
+  width: var(--pi-icon-x);
+  height: var(--pi-icon-x);
+}
+
+.testhubo-show{
+  display: block;
+}
+
+.testhubo-hide{
+  display: none;
+}
+
+
+.ws-detail-contant{
+  height: 100%;
+  display: flex;
+}
+
+.ws-detail-left{
+  height: 100%;
+  position:relative;
+  background: var(--pi-bg-grey-100);
+  box-shadow: 2px 0 5px -5px rgb(0 0 0 / 30%);
+  border-right: 1px solid #e3e3e3;
+}
+
+.ws-detail-right{
+  width: calc(100% - 74px);
+  overflow: auto;
+}
+
+.link-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+  flex: 1;
+  &:hover{
+    color: var(--tiklab-blue);
+    cursor: pointer;
+  }
+}
+
+
+.ant-table {
+  border-bottom: 1px solid var(--pi-border-color);
+
+  .ant-table-thead > tr > th{
+    background:var(--pi-bg-color);
+    font-weight: 600;
+    color: var(--pi-font-color-grey);
+    font-size: 13px;
+  }
+
+  .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before{
+    content: none;
+  }
+}
+
+.table-list-box{
+  //height: 100%;
+
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td{
+    padding: 8px;
+  }
+
+  .ant-table-tbody > tr > td{
+    border-bottom: 0;
+  }
+
+  .tablelist  .ant-spin-nested-loading .ant-spin-container .ant-table-container .ant-table-tbody{
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .ant-table-tbody>tr>td,  .ant-table tfoot>tr>td, .ant-table tfoot>tr>th{
+    padding: 8px ;
+  }
+
+  //空状态
+  .ant-empty{
+    margin: 20px;
+  }
+
+  .ant-input, .ant-input-affix-wrapper, .ant-select-selector{
+    background-color: unset;
+  }
+
+
+}
+
+.breadcrumb-title_between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //border-bottom: 1px solid #e4e4e4;
+  padding: 10px 0;
+
+  .case-breadcrumb{
+    font-weight: bold;
+
+    .first-item:hover{
+      cursor: pointer;
+      color: #48a8d9;
+    }
+  }
+
+  ol{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .breadcrumb-left{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .case-header_title{
+    border: none;
+    font-weight: bold;
+  }
+}
+
+.ws-delete-box{
+  height: 180px;
+
+
+  .ws-delete-tip{
+    padding: 5px;
+    background: #ffe7bb;
+    border-radius: 5px;
+  }
+
+  .ws-delete-text-bold{
+    font-weight: var(--pi-font-weight-title);
+  }
+
+  .ws-delete-input-title{
+    margin: 25px 5px 5px;
+  }
+
+  .ant-btn-dangerous.ant-btn-primary{
+    background: #ff4d4f!important;
+    color: #f8f8f8;
+  }
+
+  .ws-delete-modal-btn{
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+.title-bold{
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.repository-icon{
+  width:var(--pi-icon-x);
+  height:var(--pi-icon-x);
+}
+
+.text-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.title-font-weight-500{
+  font-weight: 600;
+}
+
+
+.ant-form-vertical .ant-form-item-label > label{
+  color: var(--pi-font-color-grey);
+  //font-size: 12px;
+  font-weight: 600;
+}
+
+.ant-modal-content{
+  .ant-modal-body{
+    padding:16px 24px
+  }
+}
+
+.header-title{
+  font-weight: bold;
+}
+
+.padding-left-right{
+  padding-right:30px;
+  padding-left: 30px;
+}
+
+.padding-top-bottom{
+  padding-top:20px;
+  padding-bottom: 20px;
+}
+
+.font-12{
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+//去除对话框中的横线
+.ant-modal-content {
+  .ant-modal-body{
+    padding: 10px 24px;
+  }
+  .ant-modal-header{
+    border: none;
+  }
+
+  .ant-modal-footer{
+    border: none;
+    padding:  10px 24px;
+  }
+}
+
+.product-logo-box{
+  display: flex;
+  align-items: center;
+  padding: 15px 21px;
+  gap: 10px;
+  cursor:pointer;
+
+  .product-logo{
+    width: var(--pi-icon-x);
+    height: var(--pi-icon-x);
+  }
+
+  .product-logo-expanded{
+    width: var(--pi-icon-l);
+    height: var(--pi-icon-l);
+  }
+
+  .productName{
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.list-size-title{
+  color: #999;
+  font-size: 13px;
+}
+
+//抽屉
+.drawer-content-main{
+  .ant-drawer-header-title {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .drawer-content-padding{
+    padding: 0 16px;
+  }
+
+  .ant-drawer-header{
+    padding:16px 20px  5px;
+  }
+
+  .ant-tabs-bottom>.ant-tabs-nav, .ant-tabs-bottom>div>.ant-tabs-nav, .ant-tabs-top>.ant-tabs-nav, .ant-tabs-top>div>.ant-tabs-nav{
+    margin: 0!important;
+  }
+
+  .ant-drawer-footer{
+    z-index: 10;
+    box-shadow: 0 0 5px 5px rgb(0 0 0 / 5%);
+    background: #fbfbfb;
+  }
+}
+
+.drawer-content-header-no-bottom{
+  .ant-drawer-header{
+    border-bottom: 0;
+  }
+}
+
+.content-box-center{
+  min-width: 790px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 10px 30px;
+  background: white;
+
+  .ant-tabs-bottom>.ant-tabs-nav, .ant-tabs-bottom>div>.ant-tabs-nav, .ant-tabs-top>.ant-tabs-nav, .ant-tabs-top>div>.ant-tabs-nav{
+    margin: 0!important;
+  }
+}
+

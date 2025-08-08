@@ -1,0 +1,100 @@
+.detail-box{
+    padding: 5px;
+    min-width: 670px;
+
+    .toggle-extra-info-btn {
+        color: #afafaf;
+        
+        // &:hover {
+        //     color: var(--pi-base-color);
+        // }
+        
+        .anticon {
+            color: inherit;
+        }
+    }
+
+    .base-info-form{
+        .ant-form-item-label{
+            text-align: left;
+            width: 100%;
+        }
+        .ant-form-item-label > label{
+            color: rgb(138 138 138 / 85%);
+            font-weight: 500;
+            width: 100%;
+            text-align: left;
+        }
+    
+        .ant-form-item-control{
+            text-align: left;
+        }
+    
+        .ant-input{
+            border: none;
+            text-align: left;
+    
+            &:hover{
+                background: var(--pi-bg-grey-100);
+            }
+        }
+    
+        .ant-input[disabled]{
+            background: white;
+            cursor: auto;
+            color: #8a8a8a;
+            &:hover{
+                background: white;
+            }
+        }
+    
+        .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+            border: none;
+            text-align: left;
+    
+            &:hover{
+                background: var(--pi-bg-grey-100);
+            }
+    
+            &:hover +.ant-select-arrow{
+                display: block;
+            }
+        }
+    
+        .ant-select-arrow{
+            display: none;
+        }
+    
+    }
+    
+    
+
+    .detail-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 10px 0;
+        height: 41px;
+    }
+
+    .detail-bottom{
+
+        .detail-bottom-item{
+            margin: 0 80px 0 0;
+            color: #999;
+            max-width: 28%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-indent: 0;
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .ant-form .ant-form-item .ant-form-item-label, .ant-form .ant-form-item .ant-form-item-control {
+            flex: none;
+        }
+    }
+}

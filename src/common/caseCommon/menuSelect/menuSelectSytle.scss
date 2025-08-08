@@ -1,0 +1,39 @@
+.select-menu-box{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 300px;
+
+    .select-menu-item{
+        padding: 10px 0;
+        flex: 1;
+        text-align: center;
+        cursor: pointer;
+        border-bottom: 2px solid #ffffff00;
+        white-space: nowrap;
+    }
+
+    .select-menu-item:hover{
+        border-bottom:2px solid  var(--pi-base-color);
+        color:  var(--pi-base-color);
+    }
+
+    .select-menu-item-selected{
+        color:  var(--pi-base-color);
+        border-bottom:2px solid  var(--pi-base-color);
+    }
+
+
+}
+
+
+.filter-case-select{
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        border-radius: var(--pi-border-radius);
+        border: var(--pi-input-border);
+        background-color: #f1f1f1;
+        font-size: 12px!important;
+        //border: 1px solid var(--tiklab-gray-200);
+    }
+
+}

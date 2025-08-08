@@ -1,0 +1,414 @@
+.work-item-drawer{
+    .ant-drawer-header{
+        display: none;
+    }
+
+
+}
+.work-flow-transition {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+
+    .work-flow-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #f5f5f5;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .work-flow-name {
+            font-size: 14px;
+            color: #262626;
+            font-weight: 500;
+        }
+
+        .work-flow-arrow {
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+
+        .work-flow-text {
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            background: #f6f6f6;
+            color: #595959;
+            font-weight: 500;
+            white-space: nowrap;
+            border: 1px solid #e8e8e8;
+        }
+    }
+
+    .work-flow-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .work-flow-empty {
+        padding: 16px;
+        text-align: center;
+        color: #8c8c8c;
+        font-size: 14px;
+    }
+
+    .project-dashed{
+        color: #42526e;
+        font-weight: 500;
+        background-color: #efefef;
+    }
+
+    .work-flow-loading {
+        padding: 16px;
+        text-align: center;
+        color: #8c8c8c;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        &::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1890ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    }
+
+}
+
+
+.workItem-header-action{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 12px;
+        border-bottom: 1px solid #f0f0f0;
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #262626;
+            }
+
+            .close-btn {
+                cursor: pointer;
+                color: #8c8c8c;
+                font-size: 14px;
+                padding: 4px;
+                border-radius: 4px;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: #595959;
+                }
+            }
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .code {
+                font-size: 14px;
+                color: #595959;
+                font-weight: 500;
+            }
+
+            .work-status-dropdown {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 12px;
+                font-weight: 500;
+                background-color: #efefef;
+                border: 0;
+
+                .anticon {
+                    font-size: 12px;
+                }
+            }
+
+            .ant-btn:hover, .ant-btn:focus, .ant-btn:active{
+                background-color: #ececec;
+                color: #707070;
+            }
+        }
+    }
+
+
+.pi-work-info-box {
+    // height: calc(100% - 32px);
+    // overflow: auto;
+    background: #fff;
+    padding: 20px 15px;
+    height: 100%;
+
+
+    .detail-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 23px;
+
+        .work-item-title {
+            border-bottom: 1px solid rgb(223, 225, 230);
+        }
+
+
+        .right {
+            width: 50%;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        .left {
+            width: 50%;
+            border-radius: 4px;
+        }
+
+
+        .ant-empty {
+            margin-bottom: 10px;
+        }
+    }
+
+    .detail-bottom {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+
+        .ant-form {
+            flex: 1;
+        }
+
+        .ant-row {
+            overflow: inherit;
+        }
+
+        .select-view {
+            height: 30px;
+            padding: 0 11px;
+        }
+
+        .select-view:hover {
+            background-color: #f7f8fa;
+        }
+
+    }
+
+    .work-detail-box {
+        margin-bottom: 20px;
+        border-radius: 4px;
+        width: 100%;
+
+        .edit {
+            border: 1px solid #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .ant-select-selection-placeholder {
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .ant-select:hover {
+            background-color: #f7f8fa;
+        }
+
+        .ant-picker-borderless {
+            cursor: pointer;
+        }
+
+        .ant-picker-borderless:hover {
+            background-color: #f7f8fa !important;
+        }
+
+        .ant-input-number {
+            margin-right: 10px;
+        }
+
+        .ant-input-number:hover {
+            background-color: #f7f8fa;
+        }
+
+        .ant-upload-drag {
+            border: 0;
+            background-color: var(--tiklab-gray-600);
+        }
+
+        .ant-avatar {
+            width: 20px;
+            height: 20px;
+        }
+
+        .ant-upload-drag-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0 !important;
+        }
+
+        .ant-form-item-label > label {
+            color: var(--tiklab-gray-500);
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .ant-upload-select-text {
+            margin-bottom: 10px;
+        }
+
+        .ant-checkbox-group {
+            padding-left: 11px;
+        }
+
+        .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            color: #2b2b2b;
+        }
+
+        .ant-picker-input > input[disabled] {
+            color: #2b2b2b;
+        }
+
+        .ant-input-number-disabled {
+            background-color: transparent;
+        }
+
+        .ant-input-number-disabled {
+            color: #2b2b2b;
+        }
+
+        .ant-radio-group {
+            padding: 0 11px;
+        }
+
+        .ant-input:focus {
+            border: none;
+            box-shadow: none;
+            background-color: #F7F8FA;
+        }
+
+        .ant-input:hover {
+            border: none;
+            box-shadow: none;
+            background-color: #F7F8FA;
+        }
+
+        .ant-radio-disabled + span {
+            color: #2b2b2b;
+        }
+
+        .ant-checkbox-disabled + span {
+            color: #2b2b2b;
+        }
+
+        .ant-switch {
+            margin: 0 11px;
+        }
+
+        .ant-input[disabled] {
+            color: #2b2b2b;
+        }
+
+        .work-detail-upload {
+            height: 80px;
+            border: 0;
+            background-color: #fafbfc;
+        }
+
+        .ant-upload-drag-icon{
+            cursor: pointer;
+        }
+
+
+        .desc-botton {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        // .edit-context-box {
+        //     padding: 10px;
+        //     max-height: 600px;
+        //     overflow: auto;
+        // }
+        .edit-context-box::-webkit-scrollbar {
+            width: 0;
+        }
+    }
+
+
+    .form-custom-open {
+        height: 30px;
+        margin-bottom: 10px;
+        padding: 6px 0;
+    }
+
+    .close {
+        transition: all 0.2s;
+        transform: rotate(-180deg);
+    }
+
+    .open {
+        transition: all 0.2s;
+    }
+    .work-detail-box:last-child {
+        margin-bottom: 0;
+    }
+
+    .ant-form-item {
+        margin-bottom: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .desc-preview {
+        padding: 10px;
+        border-radius: 4px;
+        background: #fafbfc;
+    }
+
+    .ant-input{
+        border: 0;
+    }
+
+    .other-title{
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .ant-table-tbody>tr>td {
+        border-bottom: 0 !important;
+        padding: 8px !important;
+    }
+}
+
+.work-item-drawer{
+    .ant-drawer-close{
+        position: absolute;
+        right: 0;
+        padding: 12px;
+        transition: color 0.3s;
+
+        &:hover {
+            color: rgba(0, 0, 0, 0.75);
+        }
+    }
+}

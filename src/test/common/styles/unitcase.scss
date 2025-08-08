@@ -1,0 +1,618 @@
+.api-status-add-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border: 1px dashed #eee;
+    cursor: pointer;
+    margin: -1px 0 0;
+}
+
+.api-status-add-box:hover{
+    background: var(--pi-bg-color);
+}
+
+
+
+.case-header{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.api-unit-base{
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        height: 32px;
+        border: none;
+        padding: 0;
+        border-radius:var(--pi-border-radius);
+
+        span{
+            line-height: 32px;
+        }
+
+        .ant-select-selection-item{
+            span{
+                line-height: 32px;
+            }
+
+        }
+    }
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector:hover{
+        background: var(--pi-hover-color);
+    }
+
+    .api-base-edit-url-box{
+        
+
+        input{
+            width: 480px;
+            border: none;
+        }
+        input:hover{
+            background: var(--pi-hover-color);
+        }
+
+        .ant-form-item{
+            margin: 0;
+        }
+    }
+
+
+    .api-base-info-box-name{
+        input{
+            width: 480px;
+            border: none;
+        }
+        input:hover{
+            background: var(--pi-hover-color);
+        }
+
+        .ant-form-item{
+            margin: 0;
+        }
+    }
+
+
+
+    .method{
+        //padding: 0 0 0 5px;
+        margin: 0 0 10px 0 ;
+
+        .method-info{
+
+
+            .method-info-item{
+                margin: 0 10px 0 0;
+            }
+
+            .method-info-path{
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+
+        .info-item{
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            height: 41px;
+        }
+
+        .method-people-info{
+            display: flex;
+
+            .people-item{
+                margin: 0 70px 0 0;
+                color: #999;
+                max-width: 28%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
+                white-space: nowrap;
+                text-indent: 0;
+                font-size: var(--pi-font-size-13);
+                line-height: 32px;
+
+                .ant-select-selection-placeholder{
+                    color: black;
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+            border: none;
+        }
+
+        .api-base-info-desc{
+            margin: 15px 0 0 ;
+
+            &-text{
+                color: #9b9b9b;
+                font-size: var(--pi-font-size-13);
+                cursor: text;
+                width: 700px;
+                //height: 32px;
+                //line-height: 32px;
+            }
+
+            &-text-show{
+                height: 32px;
+                line-height: 32px;
+            }
+
+            &-text-show:hover{
+                background: var(--pi-hover-color);
+            }
+
+
+            &-hide{
+                display: none;
+            }
+
+        }
+
+    }
+
+
+}
+
+.test-response-before{
+    position: relative;
+    margin: 10px 0 0 0;
+    height: 300px;
+    //border: 1px solid #eaeaea
+}
+.test-response-before-alert{
+    // width: 200px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -70px;
+    margin-top: -10px;
+
+}
+
+.test-response-after{
+    min-height: 400px;
+}
+
+.test-response-error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    border: 1px solid #f0f0f0
+}
+
+.test-response-before-img-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.test-response-before-img{
+    width: 150px;
+}
+
+
+.test-response-show{
+    display: block;
+}
+.test-response-hide{
+    display: none;
+}
+
+
+.test-responseInfo{
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.form-info{
+    padding: 10px 25px;
+    .ant-input[disabled] {
+        font-size: 14px;
+        color: #000;
+        cursor: text;
+    }
+}
+
+.ex-title{
+    margin: 5px 0;
+}
+
+.baseInfo{
+    padding: 10px;
+}
+
+.detail-info-box{
+    margin: 0 10px;
+}
+
+// step
+$backgroud-color: #fff;
+.step-header{
+    line-height: 47px;
+    background-color:$backgroud-color;
+    height: 50px;
+    border-bottom:1px solid #d9d9d9 ;
+}
+
+.step-menu-box>.ant-menu-horizontal{
+    border-bottom:0px
+}
+
+.step-content{
+    background-color:$backgroud-color;
+    padding:10px 0 0  0;
+}
+
+.step-menu{
+    background-color:$backgroud-color;
+}
+.tabPane-item-box{
+    min-height: 120px;
+    overflow: auto;
+}
+
+.request-body-none{
+    border: 1px solid #e4e4e4;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.request-radio{
+    margin: 8px 0;
+}
+// --------------------------------
+// Detail
+.apidetail-header-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apidetail-title-tool{
+    display: flex;
+}
+
+/* 可编辑框初始宽度 */
+.editable-cell-value-wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 21px;
+
+}
+
+.step-request{
+    margin: 0 10px 15px 10px  ;
+    padding: 10px ;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.step-response{
+    margin: 15px 10px;
+    padding: 10px ;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+// 可编辑表格，当鼠标移入行时，显示单元格
+.editable-row{
+    .editable-cell-value-wrap {
+        height: 31.6px;
+        padding: 5px 12px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .ant-select{
+        height: 31.6px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .ant-select-arrow{
+        display: none;
+    }
+
+    .ant-checkbox-inner{
+        border:none
+    }
+}
+
+.editable-row:hover .editable-cell-value-wrap {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 11px;
+}
+
+.editable-row:hover .ant-select {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+
+.editable-row:hover .ant-select-arrow{
+    display: block;
+}
+
+.editable-row:hover .ant-checkbox-inner{
+    border: 1px solid #d9d9d9;
+}
+
+
+// request
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color:#0053ca;
+}
+
+.mock-textarea{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.textArea-focus{
+    display: block;
+}
+
+.textArea-blur{
+    display: none;
+}
+
+//detail
+.apidetail-header-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apidetail-title-tool{
+    display: flex;
+}
+
+.method-name{
+    font-size: 20px;
+    font-weight: 600;
+    margin: 15px 0 10px 0;
+}
+
+.method{
+    //padding: 0 0 0 25px;
+    //border-bottom: 1px solid #d9d9d9;
+    margin: 0 0 30px 0 ;
+
+    .method-info{
+
+
+        .method-info-item{
+            margin: 0 10px 10px 0;
+        }
+
+        .method-info-path{
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+
+    .info-item{
+        margin: 0 0 25px 0;
+    }
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        border: none;
+    }
+
+}
+
+.method-people-info{
+    display: flex;
+
+    .people-item{
+        margin: 0 80px 0 0;
+        color: #999;
+        max-width: 28%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-indent: 0;
+    }
+}
+
+
+//instance
+.header-item{
+    padding: 8px;
+    background: var(--pi-bg-grey-100);
+}
+
+.back-contant:hover{
+    color: #48a8d9;
+    cursor: pointer;
+}
+
+.back-ex-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+    border-bottom: 1px solid #e4e4e4;
+    height: 42px;
+}
+
+.unit-instance{
+    height: 100%;
+    display: flex;
+}
+
+.unit-instance-detail{
+    height: 100%;
+    flex: 1;
+
+
+
+}
+
+.test-detail-history{
+    height: 100%;
+    width: 240px;
+    border: 1px solid #e4e4e4;
+    border-top: none;
+    overflow: auto;
+
+}
+
+.test-detail-history-title{
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    background: var(--pi-bg-grey-100);
+}
+
+.history-item-box{
+    position: relative;
+}
+
+.history-item{
+    font-size: 13px;
+    display: flex;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+}
+.history-delete-icon{
+    display: none;
+    cursor: pointer;
+}
+.history-item-box:hover .history-delete-icon{
+    display: block;
+    position: absolute;
+    top: 35px;
+    right: 10px;
+}
+
+
+.history-item:hover{
+    background: #e2f3ff;
+    cursor: pointer;
+}
+
+.history-item-selected{
+    background: #e2f3ff;
+}
+
+.history-item-result{
+    color: #fff;
+    height: 22px;
+    padding: 1px;
+    border-radius: 3px;
+    margin:  auto 20px;
+}
+
+
+.isSucceed{
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    background: #4f9854;
+}
+.isFailed{
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    background: #f04949;
+}
+
+.isNotRun{
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    background: #c7c7c7;
+}
+
+
+
+
+.history-list{
+    height:calc(100% - 38px);
+    overflow: auto;
+}
+
+.history-step-item{
+    display: flex;
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #e4e4e4;
+}
+.history-step-item:hover{
+    background: #e2f3ff;
+}
+
+.apiscene-test{
+    padding: 10px 100px;
+    border: 1px solid #e4e4e4;
+}
+
+
+.test-report-detail{
+    background: #d2d2d2;
+    padding: 10px;
+
+}
+
+//表格
+.tabPane-item-box{
+    th{
+        background:  var(--pi-bg-color) !important;
+    }
+
+    // 表头设置
+    .ant-table-thead>tr .ant-table-cell{
+        font-weight: var(--pi-font-weight-light);
+        padding: 7px;
+        font-size: 13px;
+    }
+
+    .ant-table-tbody>tr>td,  .ant-table tfoot>tr>td, .ant-table tfoot>tr>th{
+        padding: 2px !important;
+    }
+
+
+    .newRow-action-hidden{
+        display: none;
+    }
+    .newRow-action-show{
+        display: block;
+    }
+
+    .table-edit-icon{
+        cursor: pointer;
+        margin: 0 0 0 5px
+    }
+
+    .table-item-title{
+        font-size: var(--pi-font-size-12);
+        color: var(--pi-font-color-grey);
+    }
+
+
+}
+
+.test-step-box{
+    padding: 10px;
+    overflow: auto;
+    height: calc(100% - 175px);
+}

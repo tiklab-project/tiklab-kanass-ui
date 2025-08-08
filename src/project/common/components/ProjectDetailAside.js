@@ -110,11 +110,19 @@ const ProjectDetailAside = (props) => {
             key: "wiki",
             encoded: "wiki",
         },
+        // {
+        //     title: "测试",
+        //     icon: 'test',
+        //     defaultIcon: "test",
+        //     id: `/project/${projectId}/test`,
+        //     key: "test",
+        //     encoded: "test",
+        // },
         {
             title: "测试",
             icon: 'test',
             defaultIcon: "test",
-            id: `/project/${projectId}/test`,
+            id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
         },
@@ -199,7 +207,7 @@ const ProjectDetailAside = (props) => {
             title: "测试",
             icon: 'test',
             defaultIcon: "test",
-            id: `/project/${projectId}/test`,
+            id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
         },
@@ -293,7 +301,7 @@ const ProjectDetailAside = (props) => {
             title: "测试",
             icon: 'test',
             defaultIcon: "test",
-            id: `/project/${projectId}/test`,
+            id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
         },
@@ -394,7 +402,7 @@ const ProjectDetailAside = (props) => {
             title: "测试",
             icon: 'test',
             defaultIcon: "test",
-            id: `/project/${projectId}/test`,
+            id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
         },
@@ -414,6 +422,10 @@ const ProjectDetailAside = (props) => {
 
 
     useEffect(() => {
+        if(project&&project.id){
+            localStorage.setItem("projectId",project.id)
+        }
+
         switch (project?.projectType.type){
             case "scrum":
                 setAllProjectRouter(scrumProrouter(project.id))
