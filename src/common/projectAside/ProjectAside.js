@@ -33,7 +33,7 @@ const ProjectAside = (props) => {
         const menuHeight = documentHeight - 250;
         const menuNum = Math.floor(menuHeight / 60);
         let num = 0;
-        num = menuNum > 7 ? 7 : menuNum;
+        num = menuNum > 6 ? 6 : menuNum;
         setProjectRouter(initRouters.slice(0, num))
         const hiddenMenu = initRouters.slice(num, initRouters.length)
 

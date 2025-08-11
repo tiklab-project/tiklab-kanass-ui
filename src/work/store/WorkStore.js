@@ -7,7 +7,7 @@
  */
 import { Service } from "../../common/utils/requset";
 import axios from "axios";
-import { getUser } from "tiklab-core-ui";
+import { getAPIgateway, getUser } from "tiklab-core-ui";
 import { observable, action } from "mobx";
 export class WorkStore {
     @observable workBoardList = [];
@@ -36,7 +36,7 @@ export class WorkStore {
     @observable workStatusList = [];
     @observable workInfo = [];
     // 快捷搜索选中值
-    @observable quickFilterValue = null;
+    @observable quickFilterValue = "all";
     // 默认页数，总页数
     @observable defaultCurrent = 1;
     @observable total = 1
@@ -164,7 +164,7 @@ export class WorkStore {
     @observable permissionFieldList = [];
 
     // 筛选框是否可见
-    @observable quickFilterVisible = true;
+    @observable quickFilterVisible = false;
     @observable workTypeVisible = true;
 
     @action
@@ -593,20 +593,16 @@ export class WorkStore {
     // 设置搜索条件为空
     @action
     setSearchConditionNull = async () => {
-        const that = this;
-        function setValue() {
-            that.searchCondition = {
-                orderParams: [{
-                    name: "code",
-                    orderType: "desc"
-                }],
-                pageParam: {
-                    pageSize: 20,
-                    currentPage: 1,
-                }
+        this.searchCondition = {
+            orderParams: [{
+                name: "code",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
             }
         }
-        await setValue();
     }
 
     // 获取事项树形列表
@@ -1146,6 +1142,7 @@ export class WorkStore {
     // 导出事项表格
     @action
     exportWorkItemXml = async () => {
+        const value = getAPIgateway();
         // const data = await Axios("/exportfile/exportWorkItemXml", this.searchCondition);
         const data = axios.request({
             baseURL: base_url,
@@ -1153,6 +1150,9 @@ export class WorkStore {
             method: "post",
             data: this.searchCondition,
             headers: {
+                appkey: value.appKey,
+                timestamp: value.timestamp,
+                sign: value.sign,
                 ticket: getUser().ticket,
                 tenant: getUser().tenant
             },

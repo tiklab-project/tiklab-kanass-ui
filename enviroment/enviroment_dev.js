@@ -6,11 +6,11 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.5:8080';
+const api =  'http://192.168.10.24:8080';
 const base_url = JSON.stringify(api);
 
 
-const plugin_base_url = JSON.stringify("http://192.168.10.5:8080/");
+const plugin_base_url = JSON.stringify("http://192.168.10.24:8080/");
 
 let plugin_url = `/pluginConfig/getPluginConfig`;
 // let plugin_url = `http://192.168.10.19:3000/plugin.json`;

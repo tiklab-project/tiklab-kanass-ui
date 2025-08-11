@@ -25,6 +25,7 @@ import { PrivilegeButton } from "tiklab-privilege-ui";
 import CircleProgress from "../../../common/progress/CircleProgress";
 import ProjectAdd from "./ProjectAdd";
 import ProjectOperateSelectModal from "./ProjectOperateSelectModal";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const ProjectList = (props) => {
     const { projectStore } = props;
@@ -237,17 +238,12 @@ const ProjectList = (props) => {
             render: (text, record) =>
                 <div className="project-name" onClick={() => goProdetail(record)} >
                     <div className="project-icon">
-                        <ImgComponent
-                            src={record.iconUrl}
-                            alt=""
-                            className="icon-32"
-                        />
+                        <ColorIcon color={record.color} name={record.projectName} className="icon-32" />
                     </div>
                     <div className="project-name-content">
                         <Tooltip title={text}>
                             <div className="project-text">{text}</div>
                         </Tooltip>
-                        <div className="project-key">{record.projectKey}</div>
                     </div>
 
                 </div>
@@ -371,11 +367,7 @@ const ProjectList = (props) => {
 
                                 return <div className="project-item" key={item.id} onClick={() => goProdetail(item)}>
                                     <div className="item-title">
-                                        <ImgComponent
-                                            src={item.iconUrl}
-                                            alt=""
-                                            className="icon-32"
-                                        />
+                                        <ColorIcon color={item.color} name={item.projectName} className="icon-32" />
                                         <Tooltip title={item.projectName}>
                                         <span className="item-name">{item.projectName}</span>
                                         </Tooltip>

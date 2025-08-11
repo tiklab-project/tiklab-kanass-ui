@@ -56,7 +56,7 @@ const TestCaseMenu = (props) => {
                         // gap: "60px",
                         lineHeight: "55px"
                     }}>
-                        <Breadcrumb firstText={"测试用例"}/>
+                        <Breadcrumb firstText={"测试"}/>
                         <div className="log-top-tabs">
                             {
                                 logTabs.map(item => {

@@ -18,6 +18,7 @@ import WorkItemSurvey from './WorkItemSurvey';
 import TodoStatistics from './TodoStatistics';
 import ImgComponent from '../../../common/imgComponent/ImgComponent';
 import ProjectEmpty from '../../../common/component/ProjectEmpty';
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const { TabPane } = Tabs;
 
 const HomeSurvey = (props) => {
@@ -154,11 +155,7 @@ const HomeSurvey = (props) => {
                                     recentProjectList.map((item, index) => {
                                         return <div className="project-item" key={item.id} onClick={() => goProjectDetail(item)}>
                                             <div className="item-title">
-                                                <ImgComponent
-                                                    src={item.iconUrl}
-                                                    alt=""
-                                                    className="icon-32"
-                                                />
+                                                <ColorIcon color={item.color} name={item.projectName} className="icon-32" />
                                                 <Tooltip title={item.projectName}>
                                                     <span className="item-name">{item.projectName}</span>
                                                 </Tooltip>

@@ -180,7 +180,7 @@ const Sprintdetail = (props) => {
                             {
                                 sprint &&
                                 <div className="sprint-detail-title"  onClick={goBack}>
-                                    <svg className="icon-22" aria-hidden="true">
+                                    <svg className="icon-18" aria-hidden="true">
                                         <use xlinkHref="#icon-left"></use>
                                     </svg>
                                     <p className="sprint-title">{sprint?.sprintName}</p>

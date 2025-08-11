@@ -17,10 +17,19 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import Button from "../../../../common/button/Button";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import InputSearch from "../../../../common/input/InputSearch";
+import ProductModuleStore from "../../../../product/module/store/ProductModuleStore";
+
+const getStore = (project) =>{
+    if (project?.productId){
+        return ProductModuleStore
+    }else {
+        return ModuleStore
+    }
+}
 const ModuleList = (props) => {
     // 解析 moduleStore
-    const { moduleList, findModuleListTree, createModule, deleteModule, editModuleById} = ModuleStore;
-
+    const project = JSON.parse(localStorage.getItem('project'));
+    const { moduleList, findModuleListTree, createModule, deleteModule, editModuleById} = getStore(project);
     const [type, setType] = useState("add")
     const [moduleId, setModuleId] = useState()
     const [visible, setVisible] = useState(false);
@@ -32,11 +41,18 @@ const ModuleList = (props) => {
     // 加载中
     const [loading, setLoading] = useState(false)
 
+    const [bindProduct, setBindProduct] = useState(false);
+
 
     // 初始化
     useEffect(() => {
-        const params = {projectId: projectId};
-        findModule(params)
+        if (project?.productId){
+            const params = {productId: project?.productId};
+            findModule(params)
+        }else {
+            const params = {projectId: projectId};
+            findModule(params)
+        }
         return null;
     }, []);
 
@@ -55,11 +71,19 @@ const ModuleList = (props) => {
      * @param {*} values 
      */
     const onSearch = (values) => {
-        const params = {
-            projectId: projectId,
-            moduleName: values
+        if (project?.productId){
+            const params = {
+                productId: project?.productId,
+                moduleName: values
+            }
+            findModule(params)
+        }else {
+            const params = {
+                projectId: projectId,
+                moduleName: values
+            }
+            findModule(params)
         }
-        findModule(params)
     };
 
 
@@ -90,24 +114,6 @@ const ModuleList = (props) => {
             key: "desc",
             width: "20%",
         },
-        {
-            title: "操作",
-            key: "action",
-            width: "15%",
-            render: (text, record) => (
-                <Space size="middle">
-                    <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
-                        <svg className="svg-icon" aria-hidden="true" onClick={() => showModal(record, "添加子模块")} style={{ cursor: "pointer" }}>
-                            <use xlinkHref="#icon-add2"></use>
-                        </svg>
-                    </PrivilegeProjectButton>
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg>
-                    <DeleteModal deleteFunction = {deleteModuleList} id = {record.id}/>
-                </Space>
-            )
-        }
     ];
 
     const deleteModuleList = (id) => {
@@ -118,6 +124,33 @@ const ModuleList = (props) => {
                 findModule({projectId: projectId})
             }
         })
+    }
+
+    const actionColumn = {
+        title: "操作",
+        key: "action",
+        width: "15%",
+        render: (text, record) => (
+            <Space size="middle">
+                <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => showModal(record, "添加子模块")} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-add2"></use>
+                    </svg>
+                </PrivilegeProjectButton>
+                <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
+                    <use xlinkHref="#icon-edit"></use>
+                </svg>
+                <DeleteModal deleteFunction = {deleteModuleList} id = {record.id}/>
+            </Space>
+        )
+    }
+
+    const getColumns = () => {
+        if (project?.productId){
+            return columns
+        }else {
+            return [...columns, actionColumn]
+        }
     }
 
     return (
@@ -151,7 +184,7 @@ const ModuleList = (props) => {
                         </div>
                         <div className="module-table-box">
                             <Table
-                                columns={columns}
+                                columns={getColumns()}
                                 dataSource={moduleList}
                                 rowKey={(record) => record.id}
                                 loading={loading}

@@ -17,25 +17,36 @@ import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
 import { appendNodeInTree } from "../../project/stage/component/StageListTreeChange";
+import ProductModuleStore from "../../product/module/store/ProductModuleStore";
+import ModuleStore from "../../project/setting/module/store/ModuleStore";
 
 const { RangePicker } = DatePicker;
 
+const getStore = (project) =>{
+    if (project?.productId){
+        return ProductModuleStore
+    }else {
+        return ModuleStore
+    }
+}
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
+    // 全局不一定存在
+    const project = JSON.parse(localStorage.getItem("project"));
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel, stageTreeList } = props;
-    const { moduleList, selectSprintList, userList, findProjectList, projectList,
+    const { selectSprintList, userList, findProjectList, projectList,
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, workId, findFormConfig,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
         selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition,
         findWorkItemCreateMetaData
     } = workStore;
+    const {moduleList, findModuleList} = getStore(project)
 
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
-    // 全局不一定存在
-    const project = JSON.parse(localStorage.getItem("project"));
+
     // console.log(project)
     const [projectType, setProjectType] = useState(project ? project?.projectType?.type : null);
     const ticket = getUser().ticket;
@@ -84,10 +95,10 @@ const WorkAddPage = (props) => {
                     planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
                 })
 
-                // 设置模块
-                form.setFieldsValue({
-                    module: res.data.moduleList[0]?.id
-                })
+                // // 设置模块
+                // form.setFieldsValue({
+                //     module: res.data.moduleList[0]?.id
+                // })
 
                 // 设置所选版本、迭代、计划
                 // 敏捷模型
@@ -181,8 +192,48 @@ const WorkAddPage = (props) => {
 
         });
 
+        if (project?.productId){
+            findModuleList({ productId: project?.productId }).then(res => {
+                form.setFieldsValue({
+                    module: res.data[0]?.id
+                })
+            });
+        }else{
+            findModuleList({ projectId: projectId }).then(res => {
+                form.setFieldsValue({
+                    module: res.data[0]?.id
+                })
+            });
+        }
         return;
     }, [])
+
+    const containerRef = useRef(null);
+    const [isEditorFocused, setIsEditorFocused] = useState(false);
+    useEffect(() => {
+        const handleWheel = (e) => {
+            if (isEditorFocused && editorRef.current && editorRef.current.contains(e.target)) {
+                // 阻止事件冒泡，让编辑器内部处理滚动
+                e.stopPropagation();
+            }
+            // 否则由外部容器处理滚动
+        };
+
+        const container = containerRef.current;
+        container.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            container.removeEventListener('wheel', handleWheel);
+        };
+    }, [isEditorFocused]);
+
+    const handleMouseEnter = () => {
+        setIsEditorFocused(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsEditorFocused(false);
+    };
 
     /**
      * 获取不同的事项类型的类型的选项，比如缺陷类型，需求类型
@@ -524,7 +575,7 @@ const WorkAddPage = (props) => {
                                 <Input placeholder="事项标题" />
                             </Form.Item>
                             {
-                                (props.match.path === "/projectSet/:projectSetId/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
+                                (props.match.path === "/projectSet/:projectSetId/workitem" || props.match.path === "/product/:productId/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"
@@ -553,7 +604,10 @@ const WorkAddPage = (props) => {
                             >
                                 {
                                     <div className="work-desc">
-                                            <div ref={editorRef} className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
+                                            <div
+                                                ref={containerRef}
+                                                onMouseEnter={handleMouseEnter}
+                                                onMouseLeave={handleMouseLeave} className="work-item-desc" style={{ width: "fit-content", border: " #f0f0f0 solid 1px" }}>
                                                 <DocumentEditor
                                                     ref={editorRef}
                                                     focusEditor={true}

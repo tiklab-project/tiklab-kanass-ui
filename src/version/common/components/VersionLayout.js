@@ -129,7 +129,7 @@ const Versiondetail = (props) => {
                         {
                             version &&
                             <div className="version-detail-title" onClick={goBack}>
-                                <svg className="icon-22" aria-hidden="true">
+                                <svg className="icon-18" aria-hidden="true">
                                     <use xlinkHref="#icon-left"></use>
                                 </svg>
                                 <Tooltip title={version?.name}>

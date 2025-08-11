@@ -113,6 +113,16 @@ export class ModuleStore {
         return data;
     }
 
+    @action
+    findModuleList = async (value) => {
+        Object.assign(this.searchCondition, { ...value })
+        const data = await Service("/productModule/findModuleList", this.searchCondition)
+        if(data.code===0){
+            this.moduleList = data.data
+        }
+        return data;
+    }
+
     /**
      * 设置分页参数
      * @param {*} value 

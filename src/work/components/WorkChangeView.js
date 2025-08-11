@@ -62,11 +62,11 @@ const WorkChangeView = (props) => {
             path: "Bodar",
             title: "看板"
         },
-        // {
-        //     value: "gantt",
-        //     path: "Gantt",
-        //     title: "甘特图"
-        // }
+        {
+            value: "gantt",
+            path: "Gantt",
+            title: "甘特图"
+        }
     ]
 
     /**

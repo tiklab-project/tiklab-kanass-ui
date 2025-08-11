@@ -24,6 +24,8 @@ import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { getColumn, getWorkColumn } from "./WorkTableColumn";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkModuleFilter from "./WorkModuleFilter";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 
 /**
  * 获取屏幕类型
@@ -45,13 +47,23 @@ const getScreenType = () => {
         return 'xs';
     }
 }
+const getStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkTable = (props) => {
     const screenSize = useBreakpoint();
     const screenCode = getScreenType();
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
         createRecent, setWorkIndex, setWorkList, haveChildren } = WorkStore;
-        
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const {findProjectList} = getStore(productId)
+
     const projectId = props.match.params.id;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
@@ -66,14 +78,24 @@ const WorkTable = (props) => {
     useEffect(async () => {
         // 设置事项列表页面类型
         setWorkShowType("table")
-        const params = {
+        let params = {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
             stageId: stageId,
             epicView: null
         }
-        console.log(params)
+        if (path === "/product/:productId/workitem"){
+            const res = await findProjectList({productId: productId})
+            const ids = res.data.map(item => item.id);
+            console.log("项目ids: ", ids)
+            params = {projectIds: ids, workTypeCode: "demand", ...params}
+        }
+        if (path === "/projectSet/:projectSetId/workitem"){
+            const res = await findProjectList({projectSetId: projectSetId})
+            const ids = res.data.map(item => item.id);
+            params = {projectIds: ids, ...params}
+        }
         await finWorkList(path, WorkStore, params);
         setLoading(false)
         return;

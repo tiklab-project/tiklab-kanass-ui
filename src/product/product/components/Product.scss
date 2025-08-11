@@ -1,0 +1,188 @@
+.product {
+  overflow: auto;
+  height: 100%;
+
+  .product-content {
+    height: 100%;
+    .product-list {
+      padding: var(--tiklab-padding);
+      height: 100%;
+      background-color: #fff;
+
+
+
+      .product-recent-box {
+        overflow: hidden;
+        background-color: #fff;
+        border-radius: 4px;
+        margin-top: 15px;
+
+        .recent-product {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          margin-top: 10px;
+          overflow: hidden;
+          gap: 10px;
+          margin-bottom: 20px;
+          height: 104px;
+
+          .product-item:hover {
+            border-radius: 4px 4px 0 0;
+            border-bottom: 2px solid var(--tiklab-blue);
+            transition: 500;
+          }
+
+          .product-item {
+            max-width: 260px;
+            min-width: 204px;
+            flex: 1;
+            padding: 12px;
+            box-sizing: content-box;
+            flex-shrink: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: var(--tiklab-gray-800);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--tiklab-gray-800);
+
+            .item-title {
+              margin-bottom: 10px;
+
+              display: inline-flex;
+              align-items: center;
+              gap: 5px;
+              .item-icon {
+                width: 32px;
+                height: 32px;
+              }
+              .product-color-1 {
+                background-color: #cadbf3;
+              }
+              .product-color-2 {
+                background-color: #deedd7;
+              }
+              .product-color-3 {
+                background-color: #ffebee;
+              }
+              .product-color-4 {
+                background-color: #e8eaf6;
+              }
+              .item-name {
+                font-size: 16px;
+                text-overflow: ellipsis;
+                font-weight: var(--tiklab-font-weight-bold);
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 140px;
+              }
+
+            }
+
+            .item-info {
+              display: flex;
+              gap: 10px;
+            }
+
+            .info-master,
+            .info-project {
+              font-size: 12px;
+              display: inline-flex;
+              width: 100%;
+              justify-content: space-between;
+              height: 30px;
+              line-height: 30px;
+              gap: 5px;
+
+              .info-label {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 60px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+
+              .info-value {
+                width: 50;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+            }
+          }
+
+          .ant-empty {
+            width: 100%;
+          }
+        }
+      }
+      .product-search-tab {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .product-tabs {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          height: 40px;
+          line-height: 40px;
+          gap: 10px;
+
+          .product-tab {
+            font-size: var(--tiklab-font-13);
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            .tabs-bar-num {
+              font-size: 12px;
+              padding-left: 3px;
+              color: #999;
+            }
+          }
+
+          .active-tabs {
+            color: #000;
+            border-bottom: 2px solid var(--tiklab-blue);
+          }
+        }
+
+      }
+      .product-table-box {
+        margin-top: 15px;
+        .product-table-item {
+          .product-table-icon {
+            width: 32px;
+            height: 32px;
+          }
+        }
+
+        .product-action-icon {
+          cursor: pointer;
+        }
+
+        .project-status {
+          padding: 5px 6px;
+          background: var(--tiklab-gray-400);
+          border-radius: 4px;
+          font-size: 12px;
+          width: fit-content;
+          &-todo {
+            background: #e2e1e4;
+          }
+          &-process {
+            background: #b0d5dfa1;
+          }
+          &-done {
+            background: #dfecd5e3;
+          }
+        }
+
+      }
+
+    }
+  }
+
+
+}

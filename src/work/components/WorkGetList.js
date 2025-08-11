@@ -30,6 +30,14 @@ const finWorkList = (router, workStore, params) => {
             type = "planning"
 
         }
+        if (router.indexOf("product/:productId/workitem") > -1) {
+            type = "product"
+
+        }
+        if (router.indexOf("/projectSet/:projectSetId/workitem") > -1) {
+            type = "projectSet"
+
+        }
         goWorkItem(type, workStore, params)
     }
     setValue();
@@ -39,13 +47,16 @@ const finWorkList = (router, workStore, params) => {
  * 获取事项列表
  */
 const goWorkItem = (type, workStore, params) => {
-    const { sprintId, versionId, stageId, projectId, quickFilter } = params;
+    const { sprintId, versionId, stageId, projectId, quickFilter, projectIds, workTypeCode } = params;
     const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
     let initValues = {
-        ...searchCondition,
+        orderParams: [{
+            name: "code",
+            orderType: "desc"
+        }],
         pageParam: {
             pageSize: 20,
-            currentPage: 1
+            currentPage: 1,
         }
     }
     switch (type) {
@@ -67,10 +78,18 @@ const goWorkItem = (type, workStore, params) => {
         case "planning":
             initValues = { ...initValues, projectIds: [projectId] };
             break;
+        case "product":
+            initValues = { ...initValues, projectIds: projectIds, workTypeCode: workTypeCode };
+            break;
+        case "projectSet":
+            initValues = { ...initValues, projectIds: projectIds };
+            break;
         default:
             break;
     }
     setSearchConditionNull().then(res => {
+        console.log(type)
+        console.log("请求参数：   ",initValues)
         setSearchCondition(initValues)
         getWorkList(workStore);
     })

@@ -53,9 +53,18 @@ import WorkChild from "./WorkChild";
 import WorkRepository from "./WorkDocumentList";
 import WorkTestCaseList from "./WorkTestCaseList";
 import WorkBasicInfoBottom from "./WorkBasicInfoBottom";
+import ProductModuleStore from "../../product/module/store/ProductModuleStore";
+import ModuleStore from "../../project/setting/module/store/ModuleStore";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
+const getStore = (project) =>{
+    if (project?.productId){
+        return ProductModuleStore
+    }else {
+        return ModuleStore
+    }
+}
 const WorkBasicInfo = (props) => {
     const { detailForm, getTransitionList } = props;
     // const [detailForm] = Form.useForm();
@@ -90,11 +99,12 @@ const WorkBasicInfo = (props) => {
 
     const { workStore, workInfo, setWorkInfo, workDetailMetaData, setWorkDetailMetaData, workRelationStore, workTypeText, deep, setTabValue, taskType } = props;
     const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
+        attachList, findFormConfig, formList, selectVersionList, sprintList, priorityList, editWork,
         findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, findChildrenLevel, stageList, createSelectItemRelation,
         createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList
     } = workStore;
+    const {moduleList, findModuleList} = getStore(project)
     const store = {
         workRelation: workRelationStore,
         workStore: workStore
@@ -111,6 +121,7 @@ const WorkBasicInfo = (props) => {
     const [eachTypeField, setEachTypeField] = useState();
     // 项目id
     const projectId = props.match.params.id;
+    const project = JSON.parse(localStorage.getItem("project"));
     // 项目类型
     const projectType = workInfo?.project?.projectType.type;
 
@@ -229,6 +240,12 @@ const WorkBasicInfo = (props) => {
         // })
         setPreWorkList(workDetailMetaData.canBeRelationPerWorkItemList);
 
+
+        if (project?.productId){
+            findModuleList({ productId: project?.productId });
+        }else{
+            findModuleList({ projectId: projectId });
+        }
 
         return null;
     }, [workInfo])

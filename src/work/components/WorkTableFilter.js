@@ -24,20 +24,35 @@ import WorkCreatDropdown from "./workCreatDropdown";
 import Button from "../../common/button/Button";
 import WorkChangeView from "./WorkChangeView";
 import WorkAddModel from "./WorkAddModel";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 
+const getStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkTableFilter = (props) => {
     // 查找表单
     const { workStore } = props;
     const projectId = JSON.parse(localStorage.getItem("project"))?.id;
     // 解析store数据
-    const { projectList, searchCondition,
+    const { searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree, setViewType, setWorkShowType,
-        workShowType, viewType, findProjectList, getSelectUserList, setArchiveView, archiveView,
+        workShowType, viewType, getSelectUserList, setArchiveView, archiveView,
         getWorkTypeList, getWorkStatus, userList, getWorkBoardList, workTypeList, quickFilterVisible, workTypeVisible } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
     const [stateType, setState] = useState();
     const workAddModel = useRef()
     const project = JSON.parse(localStorage.getItem("project"));
+    const path = props.match.path;
+
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const {findProjectList} = getStore(productId)
+    const [projectList, setProjectList] = useState([])
 
     const [groupStatus, setGroupStatus] = useState({
         todo: { statusType: 'todo', allChecked: false, partialChecked: false },
@@ -72,6 +87,16 @@ const WorkTableFilter = (props) => {
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
         getWorkStatus()
+        if (path === "/product/:productId/workitem"){
+            findProjectList({productId: productId}).then(res => {
+                setProjectList(res.data)
+            })
+        }
+        if (path === "/projectSet/:projectSetId/workitem"){
+            findProjectList({projectSetId: projectSetId}).then(res => {
+                setProjectList(res.data)
+            })
+        }
         return
     }, [])
 
@@ -233,23 +258,10 @@ const WorkTableFilter = (props) => {
 
             <div className="work-table-filter">
                 {quickFilterVisible && <WorkFilterSelect />}
-                {workTypeVisible && <WorkTypeSelect />}
-                <div className="worklist-table-search">
-                    <div className="search-input">
-                        <svg className="svg-icon" aria-hidden="true">
-                            <use xlinkHref="#icon-search"></use>
-                        </svg>
-                        <Input bordered={false} allowClear
-                            className="workList-search-input"
-                            key={"search"}
-                            onChange={(value) => inputChange("keyWord", value.target.value)}
-                            placeholder="搜索标题、ID"
-                            value={inputValue}
-                        />
-                    </div>
-                </div>
+                {workTypeVisible && path !== "/product/:productId/workitem"  && <WorkTypeSelect />}
+
                 {
-                    (props.match.path === "/projectSet/:projectSetId/workitem") &&
+                    (path === "/projectSet/:projectSetId/workitem" || path === "/product/:productId/workitem") &&
                     <SelectSimple
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}
@@ -263,7 +275,7 @@ const WorkTableFilter = (props) => {
                                     value={item.id}
                                     label={item.projectName}
                                     key={item.id}
-                                    imgUrl={item.iconUrl}
+                                    color={item.color}
                                 />
                             })
                         }
@@ -404,36 +416,20 @@ const WorkTableFilter = (props) => {
                     gap: "10px",
                     alignItems: "center",
                 }}>
-                    {
-                        (props.match.path === "/project/:id/sprintDetail/:sprint/workitem" || props.match.path === "/project/:id/versionDetail/:version/workitem") &&
-                        <div className="work-top-right">
-
-                            <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
-                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
-                            </PrivilegeProjectButton>
-                            <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
-                                <Button>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-more`}></use>
-                                    </svg>
-                                </Button>
-                            </Dropdown>
-                            {
-                                project?.projectType.type !== "kanban" &&
-                                <WorkChangeView
-                                    searchCondition={searchCondition}
-                                    getWorkConditionPage={getWorkConditionPage}
-                                    getWorkConditionPageTree={getWorkConditionPageTree}
-                                    getWorkBoardList={getWorkBoardList}
-                                    viewType={viewType}
-                                    workShowType={workShowType}
-                                    setWorkShowType={setWorkShowType}
-                                    setViewType={setViewType}
-                                    buttonType="button"
-                                />
-                            }
+                    <div className="worklist-table-search">
+                        <div className="search-input">
+                            <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-search"></use>
+                            </svg>
+                            <Input bordered={false} allowClear
+                                   className="workList-search-input"
+                                   key={"search"}
+                                   onChange={(value) => inputChange("keyWord", value.target.value)}
+                                   placeholder="搜索标题、ID"
+                                   value={inputValue}
+                            />
                         </div>
-                    }
+                    </div>
                     <WorkFilterModal layout={"horizontal"} {...props} />
                     <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
                 </div>

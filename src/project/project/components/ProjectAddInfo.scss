@@ -54,6 +54,18 @@
         margin-bottom: 30px;
         padding: 10px;
 
+        .project-select{
+            .ant-select-selector{
+                padding: 0 2px;
+            }
+            .ant-select-arrow{
+                right: 5px
+            }
+            .ant-select-clear{
+                right: 5px
+            }
+        }
+
         .ant-form-item {
             margin: 0 0 15px;
         }

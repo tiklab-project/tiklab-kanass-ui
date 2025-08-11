@@ -21,6 +21,7 @@ import TodoStatistics from "../../../home/common/components/TodoStatistics";
 import DyncmicTimeAxis from "./DyncmicTimeAxis";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const Survey = (props) => {
     const { statWorkItemByBusStatus, findProject, findProjectBurnDowmChartPage, 
@@ -205,12 +206,8 @@ const Survey = (props) => {
                     <div className="upper-box">
                         <div className="project-box">
                             <div className="box-title">
-                                <span>
-                                    <ImgComponent
-                                        alt=""
-                                        className="list-img"
-                                        src={project?.iconUrl}
-                                    />
+                                <span style={{ display: "flex" }}>
+                                    <ColorIcon color={project?.color} name={project?.projectName} className="box-title-icon" />
                                     {project && project.projectName}
                                 </span>
                             </div>

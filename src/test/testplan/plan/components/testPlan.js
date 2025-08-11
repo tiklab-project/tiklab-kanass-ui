@@ -168,16 +168,16 @@ const TestPlan = (props) => {
     return(
         <PageCenter>
             <div className={"content-box-center"}>
-                <div className='header-box-space-between'>
-                    <div className={'header-box-title'}>
-                        测试计划
-                    </div>
-                    <TestPlanEdit
-                        name={`添加计划`}
-                        findPage={findPage}
-                        type={"add"}
-                    />
-                </div>
+                {/*<div className='header-box-space-between'>*/}
+                {/*    <div className={'header-box-title'}>*/}
+                {/*        测试计划*/}
+                {/*    </div>*/}
+                {/*    <TestPlanEdit*/}
+                {/*        name={`添加计划`}*/}
+                {/*        findPage={findPage}*/}
+                {/*        type={"add"}*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 <div className={"display-flex-between"} style={{margin:"0 0 10px 0"}}>
                     <Input
@@ -188,6 +188,11 @@ const TestPlan = (props) => {
                         prefix={<SearchOutlined />}
                         onChange={debounce(onSearch,500) }
                         allowClear
+                    />
+                    <TestPlanEdit
+                        name={`添加计划`}
+                        findPage={findPage}
+                        type={"add"}
                     />
                 </div>
 

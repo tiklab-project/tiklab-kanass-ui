@@ -20,6 +20,7 @@ import ImgComponent from '../../../common/imgComponent/ImgComponent';
 import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import CircleProgress from "../../../common/progress/CircleProgress";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -74,15 +75,9 @@ const ProjectSetProjectList = (props) => {
             align: "left",
             render: (text, record) => <div className="project-name" onClick={() => goProdetail(record)} >
                 <div className="project-icon">
-                    <ImgComponent
-                        src={record.iconUrl}
-                        alt=""
-                        className="img-32"
-                    />
-
+                    <ColorIcon color={record?.color} name={record.projectName} className={"img-32"} />
                 </div>
                 <div>
-                    <div className="project-key">{record.projectKey}</div>
                     {
                         text.length > 10 ?
                             <Tooltip title={text}>
@@ -90,7 +85,6 @@ const ProjectSetProjectList = (props) => {
                             </Tooltip>
                             :<div className="project-text">{text}</div>
                     }
-                    {/*<div className="project-text">{text}</div>*/}
                 </div>
 
             </div>
@@ -117,6 +111,22 @@ const ProjectSetProjectList = (props) => {
             )
         },
         {
+            title: "项目进度",
+            dataIndex: "workItemNumber",
+            key: "workItemNumber",
+            align: "left",
+            render: (text, record) => (
+                <>
+                    <CircleProgress
+                        percent={
+                            record.workItemNumber === 0 ? 0 :
+                                (100 * record.endWorkItemNumber / record.workItemNumber)
+                        }
+                    />
+                </>
+            )
+        },
+        {
             title: "负责人",
             dataIndex: ["master", "nickname"],
             key: "master",
@@ -140,29 +150,6 @@ const ProjectSetProjectList = (props) => {
                     {record.startTime} - {record.endTime}
                 </>
             )
-        },
-        {
-            title: "项目进度",
-            dataIndex: "workItemNumber",
-            key: "workItemNumber",
-            align: "left",
-            render: (text, record) => (
-                <>
-                    <CircleProgress
-                        percent={
-                            record.workItemNumber === 0 ? 0 :
-                                (100 * record.endWorkItemNumber / record.workItemNumber)
-                        }
-                    />
-                </>
-            )
-        },
-        {
-            title: "成员",
-            dataIndex: "member",
-            key: "member",
-            align: "left",
-            width: "5%"
         },
         {
             title: "操作",

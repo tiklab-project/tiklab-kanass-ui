@@ -43,9 +43,11 @@ const SetAside = (props) => {
             window.open(authUrl, '_blank');
         } else {
             if (versionInfo.expired === true && id === "/setting/logo"){
-                setLicenceVisible(true);
+                // setLicenceVisible(true);
+                setSelectKey(id);
             }else if (versionInfo.expired === true && id === "/setting/ipRoster"){
-                setSecurityVisible(true);
+                // setSecurityVisible(true);
+                setSelectKey(id);
             }else if(id === "/openapi"){
                 window.open( `/#${id}`, '_blank');
             }else{

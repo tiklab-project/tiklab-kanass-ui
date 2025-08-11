@@ -14,6 +14,7 @@ import { withRouter } from "react-router";
 import { observer, inject } from "mobx-react";
 import { Tooltip } from "antd";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 const ProjectChangeModal = (props) => {
     const { isShowText, projectStore, theme } = props;
     const { findMyAllProjectList,allProlist, findProjectSortRecentTime, project, createRecent, searchpro } = projectStore;
@@ -119,11 +120,7 @@ const ProjectChangeModal = (props) => {
             <div ref={setButton}>
                 {
                     isShowText ? <div className="project-title title" onClick={showMoreMenu}>
-                        <ImgComponent
-                            src={project?.iconUrl}
-                            className="icon-24"
-                            alt=""
-                        />
+                        <ColorIcon color={project?.color} name={project?.projectName} className="icon-32" />
                         <div className={`project-text `} >
                             <div className='name'>
                                 {project?.projectName}
@@ -141,12 +138,7 @@ const ProjectChangeModal = (props) => {
                     :
                     <Tooltip placement="right" title={project?.projectName}>
                         <div className='project-title-icon' onClick={showMoreMenu} >
-                            <ImgComponent
-                                src={project?.iconUrl}
-                                title={project?.projectName}
-                                // alt={project?.projectName}
-                                className="img-32"
-                            />
+                            <ColorIcon color={project?.color} name={project?.projectName} className="icon-32" />
                             {/* <div className={`project-toggleCollapsed`}>
                                 <svg className="icon-15" aria-hidden="true">
                                     <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
@@ -169,12 +161,7 @@ const ProjectChangeModal = (props) => {
                     onMouseOver={() => handleMouseOver(project.id)}
                     onMouseOut={handleMouseOut}
                 >
-                    <ImgComponent
-                        src={project.iconUrl}
-                        className="icon-24"
-                        title={project.projectName}
-                        alt=""
-                    />
+                    <ColorIcon color={project?.color} name={project?.projectName} className="icon-24" />
                     <div className="project-item-info">
                         <div className="project-name">
                             {project.projectName}
@@ -196,12 +183,7 @@ const ProjectChangeModal = (props) => {
                                 onMouseOver={() => handleMouseOver(item.id)}
                                 onMouseOut={handleMouseOut}
                             >
-                                <ImgComponent
-                                    src={item.iconUrl}
-                                    className="icon-24"
-                                    title={item.projectName}
-                                    alt=""
-                                />
+                                <ColorIcon color={item?.color} name={item?.projectName} className="icon-24" />
                                 <div className="project-item-info">
                                     <div className="project-name">
                                         {item.projectName}

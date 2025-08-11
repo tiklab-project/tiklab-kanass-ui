@@ -45,6 +45,7 @@ const Layout = (props) => {
         '/index/insightlist',
         '/project',
         '/projectSet',
+        '/product',
         '/workitem',
         '/log/list',
         '/log/statistics',

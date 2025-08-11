@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Table, Input, Col,Row} from "antd";
 import {inject, observer} from "mobx-react";
-import PaginationCommon from "../../../../common/pagination/Page";
-import IconCommon from "../../../../common/IconCommon";
-import {debounce} from "../../../../common/utils/commonFn";
-import projectBindStore from "../../../../repository/setting/projectIntegration/ProjectBindStore";
-const {findProjectBind} = projectBindStore
+import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
+import IconCommon from "../../../../common/caseCommon/IconCommon";
+import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
+// import projectBindStore from "../../../../repository/setting/projectIntegration/ProjectBindStore";
+// const {findProjectBind} = projectBindStore
 
 
 const DemandSelect = (props) =>{
@@ -117,57 +117,57 @@ const DemandSelect = (props) =>{
         findDemandList(param)
     }
 
-    return(
-        <>
-            <div style={{padding:"0 0 15px"}}>
-                <Row gutter={16}>
-                    <Col className="gutter-row" span={18}>
-                        <Input
-                            placeholder={`搜索需求名称`}
-                            onPressEnter={onSearch}
-                            onChange={onSearch}
-                            className='demand_project_search'
-                            prefix={<IconCommon
-                                icon={"sousuo"}
-                                className={"icon-s"}
-                            />}
-                            onChange={debounce(onSearch,500) }
-                            allowClear
-                        />
-                    </Col>
-                    <Col className="gutter-row" span={6}>
-                        {/*<ProjectSelect*/}
-                        {/*    clickProject={clickProject}*/}
-                        {/*    {...props}*/}
-                        {/*/>*/}
-                    </Col>
-
-                </Row>
-            </div>
-            <div style={{"overflow": "auto","height": "350px"}}>
-                <div className={"table-list-box"} >
-                    <Table
-                        columns={columns}
-                        dataSource={workItemList}
-                        rowKey = {record => record.id}
-                        onRow={(record) => {
-                            return {
-                                onClick: () => {onFinish(record.id)},
-                                style: {cursor: 'pointer'}
-                            };
-                        }}
-                        pagination={false}
-                    />
-                    <PaginationCommon
-                        currentPage={currentPage}
-                        totalPage={totalPage}
-                        changePage={onTableChange}
-                    />
-                </div>
-            </div>
-
-        </>
-    )
+    // return(
+    //     <>
+    //         <div style={{padding:"0 0 15px"}}>
+    //             <Row gutter={16}>
+    //                 <Col className="gutter-row" span={18}>
+    //                     <Input
+    //                         placeholder={`搜索需求名称`}
+    //                         onPressEnter={onSearch}
+    //                         onChange={onSearch}
+    //                         className='demand_project_search'
+    //                         prefix={<IconCommon
+    //                             icon={"sousuo"}
+    //                             className={"icon-s"}
+    //                         />}
+    //                         onChange={debounce(onSearch,500) }
+    //                         allowClear
+    //                     />
+    //                 </Col>
+    //                 <Col className="gutter-row" span={6}>
+    //                     {/*<ProjectSelect*/}
+    //                     {/*    clickProject={clickProject}*/}
+    //                     {/*    {...props}*/}
+    //                     {/*/>*/}
+    //                 </Col>
+    //
+    //             </Row>
+    //         </div>
+    //         <div style={{"overflow": "auto","height": "350px"}}>
+    //             <div className={"table-list-box"} >
+    //                 <Table
+    //                     columns={columns}
+    //                     dataSource={workItemList}
+    //                     rowKey = {record => record.id}
+    //                     onRow={(record) => {
+    //                         return {
+    //                             onClick: () => {onFinish(record.id)},
+    //                             style: {cursor: 'pointer'}
+    //                         };
+    //                     }}
+    //                     pagination={false}
+    //                 />
+    //                 <PaginationCommon
+    //                     currentPage={currentPage}
+    //                     totalPage={totalPage}
+    //                     changePage={onTableChange}
+    //                 />
+    //             </div>
+    //         </div>
+    //
+    //     </>
+    // )
 }
 
 export default inject("workItemStore")(observer(DemandSelect));

@@ -24,7 +24,15 @@ import ProjectEmpty from "../../common/component/ProjectEmpty";
 import setImageUrl from "../../common/utils/setImageUrl";
 import {applySubscription} from "tiklab-core-ui";
 import Gantt from "./gantter/Gantt";
+import WorkModuleFilter from "./WorkModuleFilter";
 
+const getStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkGantt = (props) => {
     // const { Gantt } = props;
     const { workList, editWork, setWorkShowType, archiveView } = WorkStore;
@@ -34,16 +42,30 @@ const WorkGantt = (props) => {
     const path = props.match.path;
     const versionInfo = getVersionInfo();
 
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const {findProjectList} = getStore(productId)
+
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
-    useEffect(() => {
+    useEffect(async () => {
         setWorkShowType("gantt")
-        const params = {
+        let params = {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId
+        }
+        if (path === "/product/:productId/workitem"){
+            const res = await findProjectList({productId: productId})
+            const ids = res.data.map(item => item.id);
+            params = {projectIds: ids, workTypeCode: "demand", ...params}
+        }
+        if (path === "/projectSet/:projectSetId/workitem"){
+            const res = await findProjectList({projectSetId: projectSetId})
+            const ids = res.data.map(item => item.id);
+            params = {projectIds: ids, ...params}
         }
         finWorkList(path, WorkStore, params);
         return;
@@ -57,53 +79,60 @@ const WorkGantt = (props) => {
     }
 
     return (<Provider {...store}>
-        <div style={{height: "100%"}}>
-            <Row style={{ background: "#fff" }}>
-                <Col
-                    className="work-col"
-                    sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "24", offset: "0" }}
-                    style={{ background: "#fff", padding: "20px" }}
-                >
-                    <div className="work-list-col">
-                        <WorkTableHead />
-                        <WorkTableFilter />
-                    </div>
-                </Col>
-            </Row>
-            <div>
-                {
-                      <>
+        <div style={{display: "flex", height:"100%", width: "100%"}}>
+            <div style={{flex: "0 0 250px", overflow: "auto"}}>
+                <WorkModuleFilter workStore={WorkStore}/>
+            </div>
+            <div style={{display: "flex", height:"100%", flex:1, minWidth: "0", flexDirection: "column"}}>
+                <div style={{height: "100%"}}>
+                    <Row style={{ background: "#fff" }}>
+                        <Col
+                            className="work-col"
+                            sm={24} md={24} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: "24", offset: "0" }}
+                            style={{ background: "#fff", padding: "20px" }}
+                        >
+                            <div className="work-list-col">
+                                <WorkTableHead />
+                                <WorkTableFilter />
+                            </div>
+                        </Col>
+                    </Row>
+                    <div>
                         {
-                            workList && workList.length > 0 ?
-                                <Gantt 
-                                    workList={workList} 
-                                    editWork={editWork} 
-                                    projectId = {projectId}
-                                    workStore = {WorkStore}
-                                    WorkDetailDrawer = {WorkDetailDrawer}
-                                    useDebounce = {useDebounce}
-                                    archiveView = {archiveView}
-                                    setImageUrl = {setImageUrl}
-                                    {...props}
-                                />
-                                :
-                                <div style={{ marginTop: "50px" }}>
-                                    <ProjectEmpty description="暂时没有事项~" />
-                                </div>
+                            <>
+                                {
+                                    workList && workList.length > 0 ?
+                                        <Gantt
+                                            workList={workList}
+                                            editWork={editWork}
+                                            projectId = {projectId}
+                                            workStore = {WorkStore}
+                                            WorkDetailDrawer = {WorkDetailDrawer}
+                                            useDebounce = {useDebounce}
+                                            archiveView = {archiveView}
+                                            setImageUrl = {setImageUrl}
+                                            {...props}
+                                        />
+                                        :
+                                        <div style={{ marginTop: "50px" }}>
+                                            <ProjectEmpty description="暂时没有事项~" />
+                                        </div>
 
+                                }
+                            </>
+                            // :
+                            // <div style={{ marginTop: "50px" }}>
+                            //     <ProjectEmpty description="付费功能请去购买~">
+                            //         <Button type="primary" size={"middle"} onClick={() => goBuy()}>
+                            //             立即购买
+                            //         </Button>
+                            //     </ProjectEmpty>
+                            //
+                            // </div>
                         }
-                    </>
-                        // :
-                        // <div style={{ marginTop: "50px" }}>
-                        //     <ProjectEmpty description="付费功能请去购买~">
-                        //         <Button type="primary" size={"middle"} onClick={() => goBuy()}>
-                        //             立即购买
-                        //         </Button>
-                        //     </ProjectEmpty>
-                        //
-                        // </div>
-                }
 
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -10,6 +10,13 @@
         overflow: hidden;
    }
 
+  .img-icon-right{
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    font-size: 10px;
+  }
+
 }
 .select-item:hover {
     background-color: var(--tiklab-gray-400);

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 16:54:28
  */
 import React, { Fragment,useEffect } from "react";
-import {  Form, Input, DatePicker, message, Upload } from 'antd';
+import {Form, Input, DatePicker, message, Upload, Select} from 'antd';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import "./ProjectAddInfo.scss";
 import Button from "../../../common/button/Button"
@@ -18,6 +18,7 @@ import { observer, inject } from "mobx-react";
 import ProjectStore from "../store/ProjectStore";
 import { useDebounce } from "../../../common/utils/debounce";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ProductStore from "../../../product/product/store/ProductStore";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -30,8 +31,9 @@ const layout = {
 
 
 const ProjectAddInfo = (props) => {
-    const { createProject, workType, setCurrentStep, setLoading, onCancel } = props;
+    const { createProject, workType, setCurrentStep, setLoading, onCancel, productId } = props;
     const {findIconList, creatIcon, creatProjectKey} = ProjectStore;
+    const {findProduct, getProductlist, productList} = ProductStore;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -47,9 +49,21 @@ const ProjectAddInfo = (props) => {
 
     const [iconList, setIconList] = useState();
     const [key, setKey] = useState();
+
+    const [product, setProduct] = useState(null);
    
     useEffect(() => {
         getIconList()
+        console.log("productId:      ", productId)
+        if (productId){
+            // 有指定的产品信息
+            findProduct(productId).then(res => {
+                setProduct(res.data)
+            })
+        }else {
+            // 没有指定的产品信息
+            getProductlist();
+        }
         return;
     },[])
 
@@ -124,7 +138,8 @@ const ProjectAddInfo = (props) => {
                 projectState: values.projectState,
                 projectLimits: values.projectLimits,
                 // iconUrl: iconUrl
-                iconUrl: workType.iconUrl
+                iconUrl: workType.iconUrl,
+                productId: productId ? productId : values.product
             }
             createProject(data).then(res => {
                 setLoading(false);
@@ -281,6 +296,42 @@ const ProjectAddInfo = (props) => {
                         <Form.Item name="startTime" label="计划日期" {...rangeConfig}>
                             <RangePicker locale={locale} />
                         </Form.Item>
+                        {
+                            !productId &&
+                            <Form.Item
+                                label="所属产品"
+                                name="product"
+                                // rules={[{ required: true, message: '请选择产品!' }]}
+                                bordered={false}
+                            >
+                                <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
+                                    placeholder="产品"
+                                    allowClear
+                                    className="project-select"
+                                    key="selectProduct"
+                                    // onSelect={selectProject}
+                                >
+                                    {
+                                        productList && productList.map((item) => {
+                                            return <Select.Option project={item} value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        }
+                        {
+                            productId &&
+                            <Form.Item
+                                label="所属产品"
+                                name="product"
+                                // rules={[{ required: true, message: '请选择产品!' }]}
+                                bordered={false}
+                            >
+                                {product?.name}
+                            </Form.Item>
+                        }
                         <Form.Item
                             label="项目描述"
                             name="desc"

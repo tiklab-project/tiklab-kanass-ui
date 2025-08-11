@@ -82,43 +82,40 @@ const WorkTableHead = (props) => {
 
     return (
         <Fragment>
-            {
-                (props.match.path !== "/project/:id/sprintDetail/:sprint/workitem" && props.match.path !== "/project/:id/versionDetail/:version/workitem") &&
-                <div className="work-table-first">
-                    <div className="work-breadcrumb">
-                        <div className="work-title">{getTitle()}</div>
-                        <div className="work-top-right">
+            <div className="work-table-first">
+                <div className="work-breadcrumb">
+                    <div className="work-title">{getTitle()}</div>
+                    <div className="work-top-right">
 
-                            <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
-                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
-                            </PrivilegeProjectButton>
-                            <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
-                                <Button>
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-more`}></use>
-                                    </svg>
-                                </Button>
-                            </Dropdown>
-                            {
-                                project?.projectType.type !== "kanban" &&
-                                <WorkChangeView
-                                    searchCondition={searchCondition}
-                                    getWorkConditionPage={getWorkConditionPage}
-                                    getWorkConditionPageTree={getWorkConditionPageTree}
-                                    getWorkBoardList={getWorkBoardList}
-                                    viewType={viewType}
-                                    workShowType={workShowType}
-                                    setWorkShowType={setWorkShowType}
-                                    setViewType={setViewType}
-                                    buttonType="button"
-                                />
-                            }
-                        </div>
-
+                        <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
+                            <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
+                        </PrivilegeProjectButton>
+                        <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
+                            <Button>
+                                <svg className="svg-icon" aria-hidden="true">
+                                    <use xlinkHref={`#icon-more`}></use>
+                                </svg>
+                            </Button>
+                        </Dropdown>
+                        {
+                            project?.projectType.type !== "kanban" &&
+                            <WorkChangeView
+                                searchCondition={searchCondition}
+                                getWorkConditionPage={getWorkConditionPage}
+                                getWorkConditionPageTree={getWorkConditionPageTree}
+                                getWorkBoardList={getWorkBoardList}
+                                viewType={viewType}
+                                workShowType={workShowType}
+                                setWorkShowType={setWorkShowType}
+                                setViewType={setViewType}
+                                buttonType="button"
+                            />
+                        }
                     </div>
-                    <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
+
                 </div>
-            }
+                <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
+            </div>
         </Fragment>
     )
 }

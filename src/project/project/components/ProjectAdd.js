@@ -22,7 +22,7 @@ const ProjectAdd = (props) => {
     const [currentStep, setCurrentStep] = useState(0)
     const [workType, setWorkType] = useState()
     const [loading, setLoading] = useState(false)
-    const {projectAddVisible, setProjectAddVisible} = props
+    const {projectAddVisible, setProjectAddVisible, productId} = props
 
     const getIconList = () => {
         findIconList({ iconType: "project" })
@@ -115,6 +115,7 @@ const ProjectAdd = (props) => {
                 setCurrentStep={setCurrentStep}
                 setLoading = {setLoading}
                 onCancel = {onCancel}
+                productId = {productId}
             />
         </div>
 

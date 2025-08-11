@@ -260,41 +260,44 @@ const lgColumn = (goWorkItemDetail, sortArray, actionColumn) => {
 const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
     return [
         {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
+            title: 'ID',
+            dataIndex: 'code',
+            key: 'code',
             className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
             },
             render: (text, record, index) => (
-                <div className="work-title  work-first-col" title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                <div className="work-id  work-first-col" title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                    <div className="work-key">
+                        {record.code}
+                    </div>
+                </div>
+            )
+        },
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => (
+                <div className="work-title " title = {text} onClick={() => goWorkItemDetail(record, index)}>
                     <div className="work-icon">
                         <ImgComponent
                             src={record.workTypeSys?.iconUrl}
                             alt=""
-                            className="icon-28"
+                            className="icon-18"
                         />
                     </div>
                     <div className="work-title-content">
-                        <div className="work-title-top">
-                            {text}
-                        </div>
-                        <div className="work-title-bottom">
-                            <span>{record.code}</span>
-                            {/*<span style={{*/}
-                            {/*    paddingLeft: "5px"*/}
-                            {/*}}>{record.builder.nickname}</span>*/}
-                            {/*<span>·</span>*/}
-                            {/*<span>{record.buildTime.slice(0, 10)}</span>*/}
-                        </div>
+                        {text}
                     </div>
-
                 </div>
             )
         },
-
-
         {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
@@ -389,36 +392,41 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
 const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
     return [
         {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            width: "450px",
+            title: 'ID',
+            dataIndex: 'code',
+            key: 'code',
             className: `work-first-col ${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
             sorter: {
                 multiple: 1
             },
             render: (text, record, index) => (
-                <div className="work-title work-first-col " title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                <div className="work-id work-first-col " title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                    <div className="work-key">
+                        {text}
+                    </div>
+
+                </div>
+            )
+        },
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            className: `${sortArray.indexOf("title") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 1
+            },
+            render: (text, record, index) => (
+                <div className="work-title " title = {text} onClick={() => goWorkItemDetail(record, index)}>
                     <div className="work-icon">
                         <ImgComponent
                             src={record.workTypeSys?.iconUrl}
                             alt=""
-                            className="icon-28"
-
+                            className="icon-18"
                         />
                     </div>
                     <div className="work-title-content">
-                        <div className="work-title-top">
-                            {text}
-                        </div>
-                        <div className="work-title-bottom">
-                            <span>{record.code}</span>
-                            {/*<span style={{*/}
-                            {/*    paddingLeft: "5px"*/}
-                            {/*}}>{record.builder.nickname}</span>*/}
-                            {/*<span>·</span>*/}
-                            {/*<span>{record.buildTime.slice(0, 10)}</span>*/}
-                        </div>
+                        {text}
                     </div>
 
                 </div>

@@ -145,6 +145,13 @@ const ProjectSetSet = AsyncComponent(() => import("./projectSet/setting/common/c
 const ProjectSetBasicInfo = AsyncComponent(() => import("./projectSet/setting/basicInfo/components/ProjectSetBasicInfo"))
 const ProjectSetStatistics = AsyncComponent(() => import("./projectSet/statistics/ProjectSetStatistics"))
 
+//产品
+const Product = AsyncComponent(() => import('./product/product/components/Product'))
+const ProductDetail = AsyncComponent(() => import('./product/common/components/ProductLayout'))
+const ProductProjectList = AsyncComponent(() => import('./product/projectList/components/ProductProjectList'))
+const ProductModule = AsyncComponent(() => import('./product/module/components/ProductModuleList'))
+const ProductLineMap = AsyncComponent(() => import('./product/lineMap/components/ProductLineMap'))
+const ProductBasicInfo = AsyncComponent(() => import("./product/setting/basicInfo/components/ProductBasicInfo"))
 // 导入外部数据
 const JiraLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const MantisLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/MantisLoadData'))
@@ -354,7 +361,7 @@ const Routers = [
                         path: "/index/appraised",
                         exact: false,
                         component: HomeAppraised,
-                        key: "ViewInsight"
+                        key: "HomeAppraised"
                     },
                     {
                         path: "/index/appraised/:workId",
@@ -1345,6 +1352,45 @@ const Routers = [
                 ]
             },
 
+            {
+                path: "/product/:productId",
+                exact: false,
+                component: ProductDetail,
+                key: "ProductDetail",
+                routes: [
+                    {
+                        path: "/product/:productId/project",
+                        exact: false,
+                        component: ProductProjectList,
+                        key: "ProductProjectList"
+                    },
+                    {
+                        path: "/product/:productId/module",
+                        exact: false,
+                        component: ProductModule,
+                        key: "ProductModule"
+                    },
+                    {
+                        path: "/product/:productId/linemap",
+                        exact: false,
+                        component: ProductLineMap,
+                        key: "ProductLineMap"
+                    },
+                    {
+                        path: "/product/:productId/workitem",
+                        exact: false,
+                        component: Work,
+                        key: "ProductWork"
+                    },
+                    {
+                        path: "/product/:productId/set/basicInfo",
+                        exact: false,
+                        component: ProductBasicInfo,
+                        key: "ProductBasicInfo"
+                    },
+                ]
+            },
+
             // {
             //     path: "/:id/sprint/:sprint",
             //     component: SprintHome,
@@ -1538,7 +1584,12 @@ const Routers = [
             //     key: "ProjectSet"
             // },
 
-
+            {
+                path: "/product",
+                exact: false,
+                component: Product,
+                key: "Product",
+            },
             {
                 path: "/searchResult",
                 exact: false,

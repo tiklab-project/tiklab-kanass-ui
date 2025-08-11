@@ -22,8 +22,18 @@ import { Row, Col, Spin, Empty } from "antd";
 import { finWorkList } from "./WorkGetList"
 import ImgComponent from '../../common/imgComponent/ImgComponent';
 import WorkBodarContent from "./WorkBodarContent";
+import WorkModuleFilter from "./WorkModuleFilter";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 
 
+const getStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkBodar = (props) => {
     const { workBoardList, editWork, setIndexParams, changeBorderList, reductionWorkBoardList, boardGroup,
         workUserGroupBoardList, findTransitionList,
@@ -49,17 +59,30 @@ const WorkBodar = (props) => {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
     };
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const {findProjectList} = getStore(productId)
 
     // 项目id
     const projectId = props.match.params.id;
 
     useEffect(async () => {
         setWorkShowType("bodar")
-        const params = {
+        let params = {
             projectId: projectId,
             sprintId: sprintId,
             versionId: versionId,
             stageId: stageId
+        }
+        if (path === "/product/:productId/workitem"){
+            const res = await findProjectList({productId: productId})
+            const ids = res.data.map(item => item.id);
+            params = {projectIds: ids, workTypeCode: "demand", ...params}
+        }
+        if (path === "/projectSet/:projectSetId/workitem"){
+            const res = await findProjectList({projectSetId: projectSetId})
+            const ids = res.data.map(item => item.id);
+            params = {projectIds: ids, ...params}
         }
         setLoading(true)
         await finWorkList(path, WorkStore, params);
@@ -235,57 +258,62 @@ const WorkBodar = (props) => {
     }
     return (
         <Provider {...store}>
-            <div className="work-bordar">
-                <Row style={{ background: "#fff" }}>
-                    <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
-                        <div className="work-bodar-filter" style={{ background: "#fff" }}>
-                            <WorkTableHead />
-                            <WorkTableFilter />
-                        </div>
-                        {/*{*/}
-                        {/*    ( workBoardList && workBoardList.length <= 4 ) &&*/}
-                        {/*        <WorkBodarContent*/}
-                        {/*            loading = {loading}*/}
-                        {/*            workStore = {WorkStore}*/}
-                        {/*            dragover = {dragover}*/}
-                        {/*            isSameFlowBox = {isSameFlowBox}*/}
-                        {/*            changeStatus = {changeStatus}*/}
-                        {/*            cancelDrag = {cancelDrag}*/}
-                        {/*            moveStart = {moveStart}*/}
-                        {/*            moveWorkId = {moveWorkId}*/}
-                        {/*            changePage = {changePage}*/}
-                        {/*            moveWorkItem = {moveWorkItem}*/}
-                        {/*            showModal ={showModal}*/}
-                        {/*            isModalVisible = {isModalVisible}*/}
-                        {/*            setIsModalVisible = {setIsModalVisible}*/}
-                        {/*            delectCurrentWorkItem = {delectCurrentWorkItem}*/}
-                        {/*            {...props}*/}
-                        {/*        />*/}
-                        {/*}*/}
-                    </Col>
-                </Row>
-                <Row style={{ background: "#fff" }}>
-                    <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
-                        <WorkBodarContent
-                            loading = {loading}
-                            workStore = {WorkStore}
-                            dragover = {dragover}
-                            isSameFlowBox = {isSameFlowBox}
-                            changeStatus = {changeStatus}
-                            cancelDrag = {cancelDrag}
-                            moveStart = {moveStart}
-                            moveWorkId = {moveWorkId}
-                            changePage = {changePage}
-                            moveWorkItem = {moveWorkItem}
-                            showModal = {showModal}
-                            isModalVisible = {isModalVisible}
-                            setIsModalVisible = {setIsModalVisible}
-                            delectCurrentWorkItem = {delectCurrentWorkItem}
-                            {...props}
-                        />
-                    </Col>
-                </Row>
+            <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+                <WorkModuleFilter workStore={WorkStore}/>
+                <div style={{flex:"1 1 0%"}}>
+                    <div className="work-bordar">
+                        <Row style={{ background: "#fff" }}>
+                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
+                                <div className="work-bodar-filter" style={{ background: "#fff" }}>
+                                    <WorkTableHead />
+                                    <WorkTableFilter />
+                                </div>
+                                {/*{*/}
+                                {/*    ( workBoardList && workBoardList.length <= 4 ) &&*/}
+                                {/*        <WorkBodarContent*/}
+                                {/*            loading = {loading}*/}
+                                {/*            workStore = {WorkStore}*/}
+                                {/*            dragover = {dragover}*/}
+                                {/*            isSameFlowBox = {isSameFlowBox}*/}
+                                {/*            changeStatus = {changeStatus}*/}
+                                {/*            cancelDrag = {cancelDrag}*/}
+                                {/*            moveStart = {moveStart}*/}
+                                {/*            moveWorkId = {moveWorkId}*/}
+                                {/*            changePage = {changePage}*/}
+                                {/*            moveWorkItem = {moveWorkItem}*/}
+                                {/*            showModal ={showModal}*/}
+                                {/*            isModalVisible = {isModalVisible}*/}
+                                {/*            setIsModalVisible = {setIsModalVisible}*/}
+                                {/*            delectCurrentWorkItem = {delectCurrentWorkItem}*/}
+                                {/*            {...props}*/}
+                                {/*        />*/}
+                                {/*}*/}
+                            </Col>
+                        </Row>
+                        <Row style={{ background: "#fff" }}>
+                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
+                                <WorkBodarContent
+                                    loading = {loading}
+                                    workStore = {WorkStore}
+                                    dragover = {dragover}
+                                    isSameFlowBox = {isSameFlowBox}
+                                    changeStatus = {changeStatus}
+                                    cancelDrag = {cancelDrag}
+                                    moveStart = {moveStart}
+                                    moveWorkId = {moveWorkId}
+                                    changePage = {changePage}
+                                    moveWorkItem = {moveWorkItem}
+                                    showModal = {showModal}
+                                    isModalVisible = {isModalVisible}
+                                    setIsModalVisible = {setIsModalVisible}
+                                    delectCurrentWorkItem = {delectCurrentWorkItem}
+                                    {...props}
+                                />
+                            </Col>
+                        </Row>
 
+                    </div>
+                </div>
             </div>
         </Provider>
 

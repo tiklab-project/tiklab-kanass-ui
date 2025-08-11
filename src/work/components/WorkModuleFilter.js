@@ -15,15 +15,40 @@ import {Button, Input, message, Modal, Tree} from "antd";
 import WorkModuleAddModal from "./WorkModuleAddModal";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkModuleFilterOperateSelectModal from "./WorkModuleFilterOperateSelectModal";
+import ProductModuleStore from "../../product/module/store/ProductModuleStore";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 const {TreeNode} = Tree;
 
+const getModuleStore = (project, path) =>{
+    if (project?.productId || path === "/product/:productId/workitem"){
+        return ProductModuleStore
+    }else {
+        return ModuleStore
+    }
+}
+const getStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkModuleFilter = (props) => {
     const { workStore } = props;
     const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, tabValue,
         getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle, setTabValue,
         viewType, findUserCreateAndTodoWorkNum, workList, findWorkTypeDmList, setQuickFilterVisible,
         setWorkTypeVisible } = workStore;
-    const {findModuleListTree, deleteModule} = ModuleStore
+
+    const project = JSON.parse(localStorage.getItem('project'));
+    const path = props.match.path;
+    const {findModuleListTree, deleteModule} = getModuleStore(project, path)
+
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const {findProjectList} = getStore(productId)
+
     const [isOpen, setIsOpen] = useState(true);
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
@@ -52,15 +77,20 @@ const WorkModuleFilter = (props) => {
 
     const quickFilterList = [
         {
+            value: "all",
+            label: "所有事项",
+            icon: "module"
+        },
+        {
             value: "pending",
             label: "我的待办",
             icon: "my-pending"
         },
-        {
-            value: "ending",
-            label: "我的已办",
-            icon: "my-ending"
-        },
+        // {
+        //     value: "ending",
+        //     label: "我的已办",
+        //     icon: "my-ending"
+        // },
         {
             value: "creat",
             label: "我创建的",
@@ -381,12 +411,20 @@ const WorkModuleFilter = (props) => {
 
 
 
-    useEffect(() => {
-        const param = {
-            projectId: projectId
+    useEffect(async () => {
+        let param = {}
+        if (path === "/product/:productId/workitem" ){
+            param = {productId: productId, projectIds:[]}
+        }else if(path === "/projectSet/:projectSetId/workitem"){
+            const res = await findProjectList({projectSetId: projectSetId})
+            const ids = res.data.map(item => item.id);
+            param = {projectIds: ids, projectId: null}
+        } else {
+            param = {
+                projectId: projectId, projectIds:[]
+            }
         }
         selectTreeData(param)
-
     }, [moduleVisible]);
 
     const handleExpand = (expandedKeys, { node }) => {
@@ -435,7 +473,6 @@ const WorkModuleFilter = (props) => {
                 workTypeId: "",
                 moduleIds: []
             }
-            setModuleTreeVisible(!moduleTreeVisible);
             setQuickFilterVisible(true)
             setWorkTypeVisible(true)
         }
@@ -509,7 +546,7 @@ const WorkModuleFilter = (props) => {
                                         <span style={{marginLeft: "8px"}}>{item.moduleName}</span>
                                     </div>
                                     {
-                                        (hoverNodeKey === item.id || moduleSelect === item.id) &&
+                                        (!project?.productId &&(hoverNodeKey === item.id || moduleSelect === item.id)) &&
                                             <div className="module-tree-node-action">
                                                 <div
                                                     onClick={() => handleAddNodeClick(item.id)}
@@ -588,44 +625,47 @@ const WorkModuleFilter = (props) => {
                                 })
                             }
                         </div>
-                        <div className="work-module-filter-sider-middle">
-                            <div className="work-module-filter-sider-title">
-                                事项类型
+                        {
+                            path !== "/product/:productId/workitem" &&
+                            <div className="work-module-filter-sider-middle">
+                                <div className="work-module-filter-sider-title">
+                                    事项类型
+                                </div>
+                                {workSystem?.map(item => (
+                                    <div
+                                        key={item.id}
+                                        className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
+                                        onClick={() => {
+                                            selectType(item.workType);
+                                            // setShowDropdown(false);
+                                        }}
+                                    >
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-${item.workType.code}`}></use>
+                                        </svg>
+                                        {item.workType.name}
+                                        {/*<span className="select-number">*/}
+                                        {/*{setWorkNum(eveWorkTypeNum[item.workType.code])}*/}
+                                        {/*</span>*/}
+                                    </div>
+                                ))}
+                                {workCustom?.map(item => (
+                                    <div
+                                        key={item.id}
+                                        className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
+                                        onClick={() => {
+                                            selectCustomType(item.workType);
+                                            // setShowDropdown(false);
+                                        }}
+                                    >
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-normal`}></use>
+                                        </svg>
+                                        {item.workType.name}
+                                    </div>
+                                ))}
                             </div>
-                            {workSystem?.map(item => (
-                                <div
-                                    key={item.id}
-                                    className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
-                                    onClick={() => {
-                                        selectType(item.workType);
-                                        // setShowDropdown(false);
-                                    }}
-                                >
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.workType.code}`}></use>
-                                    </svg>
-                                    {item.workType.name}
-                                    {/*<span className="select-number">*/}
-                                    {/*{setWorkNum(eveWorkTypeNum[item.workType.code])}*/}
-                                {/*</span>*/}
-                                </div>
-                            ))}
-                            {workCustom?.map(item => (
-                                <div
-                                    key={item.id}
-                                    className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
-                                    onClick={() => {
-                                        selectCustomType(item.workType);
-                                        // setShowDropdown(false);
-                                    }}
-                                >
-                                    <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-normal`}></use>
-                                    </svg>
-                                    {item.workType.name}
-                                </div>
-                            ))}
-                        </div>
+                        }
                         <div className="work-module-filter-sider-bottom">
                             <div className="work-module-filter-sider-title">
                                 模块筛选
@@ -638,22 +678,34 @@ const WorkModuleFilter = (props) => {
                                  onMouseEnter={() => setHoverTitle(true)}
                                  onMouseLeave={() => setHoverTitle(false)}
                             >
-                                {/*<svg className="icon-18" aria-hidden="true">*/}
-                                {/*    <use xlinkHref="#icon-rightBlue"></use>*/}
-                                {/*</svg>*/}
-                                <DownOutlined className={moduleTreeVisible ? "content-module-icon-open" : "content-module-icon"} />
+                                <svg className="icon-18" aria-hidden="true">
+                                    <use xlinkHref="#icon-module"></use>
+                                </svg>
                                 <div className="content-module-title">
                                     所有模块
                                 </div>
-                                <div
-                                    style={{
-                                        marginLeft: "auto",
-                                        marginRight: "7px",
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={addRootModule}>
-                                    <PlusOutlined style={{ fontSize: '14px' }} />
+
+                                <div style={{marginLeft: "auto",display: "flex", alignItems: "center"}}>
+                                    {
+                                        !project?.productId && hoverTitle && <div
+                                            style={{
+                                                marginRight: "7px",
+                                                cursor: "pointer",
+                                            }}
+                                            onClick={addRootModule}>
+                                            <PlusOutlined style={{ fontSize: '14px' }} />
+                                        </div>
+                                    }
+                                    <svg className="icon-18" aria-hidden="true" onClick={() => setModuleTreeVisible(!moduleTreeVisible)}>
+                                        {
+                                            moduleTreeVisible ?
+                                                <use xlinkHref="#icon-show"></use>
+                                                :
+                                                <use xlinkHref="#icon-hidden"></use>
+                                        }
+                                    </svg>
                                 </div>
+
                             </div>
                             {
                                 moduleTreeVisible &&

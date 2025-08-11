@@ -18,7 +18,8 @@
         .work-first-col {
             display: inline-flex;
             align-items: center;
-            width: 450px;
+            min-width: 80px;
+            max-width: 120px;
         }
         .ant-pagination-total-text {
             color: #666;
@@ -133,7 +134,6 @@
             align-items: center; /* 确保整体垂直居中 */
             gap: 12px;
             cursor: pointer;
-            width: 480px;
             height: 48px; /* 固定高度确保对齐 */
             padding: 4px 5px;
 
@@ -142,21 +142,21 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 24px;
-                height: 24px;
+                width: 18px;
+                height: 18px;
                 flex-shrink: 0;
             }
 
             /* 右侧内容容器 */
             .work-title-content {
-                display: flex;
-                flex-direction: column;
-                justify-content: center; /* 内容垂直居中 */
-                flex: 1;
-                width: 0;
-                overflow: hidden;
+                display: block;
+                line-height: 2.5;
                 height: 100%; /* 继承父级高度 */
                 gap: 5px;
+                width: 300px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
                 /* 标题行 */
                 .work-title-top {
@@ -188,7 +188,7 @@
                 }
             }
         }
-        .work-title-top:hover {
+        .work-title-content:hover {
             color: var(--tiklab-blue);
             text-decoration: underline;
         }

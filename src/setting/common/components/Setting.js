@@ -15,10 +15,13 @@ import { SystemNav } from "tiklab-privilege-ui";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
 import { getUser } from 'tiklab-core-ui';
 import { inject, observer } from 'mobx-react';
+import EnhanceEntranceModal from "./EnhanceEntranceModal";
+import SettingHomeStore from "../../home/store/SettingHomeStore";
 // import { UserVerify } from 'tiklab-user-extension-ui';
 const { Sider, Content } = Layout;
 const Setting = (props) => {
     const { systemRoleStore } = props;
+    const { selectKey } = SettingHomeStore;
     const route = props.route;
     const [router, setRouterMenu] = useState(setDevRouter);
     useEffect(() => {
@@ -58,7 +61,23 @@ const Setting = (props) => {
                         className="orga-background"
                     >
                         {renderRoutes(commonRouter)}
-                        <Row style={{ height: "calc(100% - 49px)" }}>
+                        <Row style={{
+                            height: "calc(100% - 49px)",
+                            // position: "relative"
+                        }}>
+                            {
+                                selectKey === "/setting/logo" &&
+                                <EnhanceEntranceModal
+                                    config={{title:"自定义LOGO"}}
+                                />
+                            }
+                            {
+                                selectKey === "/setting/ipRoster" &&
+                                <EnhanceEntranceModal
+                                    config={{title:"IP黑白名单"}}
+                                />
+                            }
+
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                                 {renderRoutes(selfRouter)}
                             </Col>

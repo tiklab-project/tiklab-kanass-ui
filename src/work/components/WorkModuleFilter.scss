@@ -12,7 +12,9 @@
     height: 100%;
     overflow-y: auto;
     min-width: 250px;
+    max-width: 250px;
     gap: 10px;
+    scrollbar-gutter: stable;
 
     .work-module-filter-sider-title{
       padding: 0 10px;
@@ -184,7 +186,17 @@
       }
     }
   }
-
+  .work-module-filter-sider::-webkit-scrollbar{
+    width: 5px;
+  }
+  .work-module-filter-sider::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: var(--tiklab-gray-400);
+  }
+  .work-module-filter-sider::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: var(--tiklab-gray-800);
+  }
 
   .work-module-filter-open-icon{
     width: 30px;
